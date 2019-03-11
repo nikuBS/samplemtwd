@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -23,7 +21,7 @@
             <!-- #contents -->
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
-                <div class="container">
+                <div id="contents" class="container">
                     <hr class="cont-sp type1" aria-hidden="true">
                     <!-- .cont-box -->
                     <div class="cont-box nogaps">
@@ -90,7 +88,7 @@
                                                                            type="number" maxlength="8" placeholder="최소 1,000포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
-                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" style="display:none;"></span>
+                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;"></span>
 																<p class="comm-indent-txt mt20">※ T포인트는 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
@@ -108,7 +106,7 @@
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                                     <% } %>
 																</span>
-                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
+                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호가 올바르지 않습니다.</span>
 															</span>
                                                         </li>
                                                         <li>
@@ -121,7 +119,7 @@
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
                                                                 <span id="aria-exp-desc2" class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
-																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password">OK캐쉬백 비밀번호 찾기 ></button></p>
+																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password" title="새창">OK캐쉬백 비밀번호 찾기 ></button></p>
 															</span>
                                                         </li>
                                                     </ul>
@@ -140,7 +138,7 @@
                                                                         <%= autoInfo.amtText %><span class="ico"></span>
                                                                     </button>
 																</span>
-                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" style="display:none;">납부할 포인트를 선택해 주세요.</span>
+                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">납부할 포인트를 선택해 주세요.</span>
 																<p class="comm-indent-txt mt10">자동납부 종료예정일<span class="pl10"><%= autoInfo.endDate %></span></p>
 																<p class="comm-indent-txt mt20">※ 본인명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
 															</span>
@@ -164,7 +162,7 @@
                                                                     <% } %>
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
-                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
+                                                                <span id="aria-exp-desc2" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호가 올바르지 않습니다.</span>
 															</span>
                                                         </li>
                                                     </ul>

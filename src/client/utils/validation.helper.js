@@ -288,9 +288,12 @@ Tw.ValidationHelper = (function () {
     }
     if (isValid) {
       $message.hide();
+      $message.attr('aria-hidden', 'true');
       return true;
     } else {
       $message.show();
+      $message.attr('aria-hidden', 'false');
+
       if (message) {
         $message.text(message);
       }

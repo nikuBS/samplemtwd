@@ -46,7 +46,7 @@ Tw.MyTFareBillBankList.prototype = {
     $selectedBank.attr('id', $target.attr('id'));
     $selectedBank.text($target.parents('label').text());
 
-    this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
+    this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     this._popupService.close();
 
     if (this._callbackFunction !== undefined) {
@@ -56,7 +56,7 @@ Tw.MyTFareBillBankList.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$currentTarget.attr('id'))) {
-      this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').show();
+      this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').show().attr('aria-hidden', 'false');
       this.$currentTarget.focus();
     }
     this._popupService.close();

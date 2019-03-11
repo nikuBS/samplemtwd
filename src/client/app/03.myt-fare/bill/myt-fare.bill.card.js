@@ -60,8 +60,8 @@ Tw.MyTFareBillCard.prototype = {
       $target.siblings().removeClass('checked');
       this.$refundBank.attr('disabled', 'disabled');
       this.$refundNumber.attr('disabled', 'disabled');
-      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
-      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     }
   },
   _showAndHideAccount: function (event) {

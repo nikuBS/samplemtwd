@@ -77,27 +77,27 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _validateForm: function () {
     if ( !this.typeCd ) {
-      $('.fe-alarm-status').closest('li').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-status').closest('li').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-status').closest('li').find('.error-txt').addClass('blind');
+      $('.fe-alarm-status').closest('li').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.term ) {
-      $('.fe-alarm-category').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-category').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-category').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-category').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.day ) {
-      $('.fe-alarm-date').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-date').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-date').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-date').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.amt ) {
-      $('.fe-alarm-amount').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-amount').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( this.typeCd === '1' && !!this.term && !!this.day ) {

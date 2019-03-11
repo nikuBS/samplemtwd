@@ -42,8 +42,12 @@ Tw.CommonPostcodeDetail.prototype = {
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
     $selectedTarget.attr('aria-selected', 'true');
+
+    if ($addressObject.tabId === 'tab2') {
+      $selectedTarget.css('marginLeft', '0');
+    }
     $selectedTarget.siblings().attr('aria-selected', 'false');
-    $selectedTarget.siblings().find('a').addClass('disabled');
+    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none');
   },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;

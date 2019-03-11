@@ -47,7 +47,7 @@
                                             required>발신기간
                                     </button>
                                     만료
-                                    <span class="error-txt blind">기준 항목을 선택해주세요</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
                                 </div>
                                 <% } else if ( alarmInfo.term === '2' ) { %>
                                 <div>
@@ -55,7 +55,7 @@
                                             required>수신기간
                                     </button>
                                     만료
-                                    <span class="error-txt blind">기준 항목을 선택해주세요</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
                                 </div>
                                 <% } else if ( alarmInfo.term === '3' ) { %>
                                 <div>
@@ -63,7 +63,7 @@
                                             required>번호유지기간
                                     </button>
                                     만료
-                                    <span class="error-txt blind">기준 항목을 선택해주세요</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
                                 </div>
                                 <% } else { %>
                                 <div>
@@ -71,7 +71,7 @@
                                         선택
                                     </button>
                                     만료
-                                    <span class="error-txt blind">기준 항목을 선택해주세요</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
                                 </div>
                                 <% } %>
 
@@ -81,7 +81,7 @@
                                             required>1일
                                     </button>
                                     전 알람
-                                    <span class="error-txt blind">기준일을 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
                                 </div>
                                 <% } else if ( alarmInfo.day === '2' ) { %>
                                 <div class="mt10">
@@ -89,7 +89,7 @@
                                             required>2일
                                     </button>
                                     전 알람
-                                    <span class="error-txt blind">기준일을 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
                                 </div>
                                 <% } else if ( alarmInfo.day === '3' ) { %>
                                 <div class="mt10">
@@ -97,14 +97,14 @@
                                             required>3일
                                     </button>
                                     전 알람
-                                    <span class="error-txt blind">기준일을 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
                                 </div>
                                 <% } else { %>
                                 <div class="mt10">
                                     <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" required>기준일 선택
                                     </button>
                                     전 알람
-                                    <span class="error-txt blind">기준일을 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
                                 </div>
                                 <% } %>
                             </div>
@@ -124,7 +124,7 @@
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="1"
                                             required>1,000원
                                     </button>
-                                    <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } else if ( alarmInfo.amt === '2' ) { %>
@@ -132,7 +132,7 @@
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="2"
                                             required>2,000원
                                     </button>
-                                    <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } else if ( alarmInfo.amt === '3' ) { %>
@@ -140,7 +140,7 @@
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="3"
                                             required>3,000원
                                     </button>
-                                    <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } else if ( alarmInfo.amt === '5' ) { %>
@@ -148,14 +148,14 @@
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="5"
                                             required>5,000원
                                     </button>
-                                    <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } else { %>
                                 <div class="mt10">
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" required>금액 선택
                                     </button>
-                                    <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } %>
@@ -171,7 +171,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <span class="error-txt blind">자동알람 설정 정보를 선택해 주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">자동알람 설정 정보를 선택해 주세요.</span>
                         </li>
                         <% } %>
 
@@ -185,7 +185,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <span class="error-txt blind">자동알람 설정 정보를 선택해 주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">자동알람 설정 정보를 선택해 주세요.</span>
                         </li>
                         <% } %>
                     </ul>
@@ -242,12 +242,12 @@
             <div>
                 <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" required>기준 항목 선택</button>
                 만료
-                <span class="error-txt blind">기준 항목을 선택해주세요</span>
+                <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
             </div>
             <div class="mt10">
                 <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" required>기준일 선택</button>
                 전 알람
-                <span class="error-txt blind">기준일을 선택해 주세요.</span>
+                <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
             </div>
         </div>
     </li>
@@ -262,7 +262,7 @@
             </div>
             <div class="mt10">
                 <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" required>금액 선택</button>
-                <span class="error-txt blind">금액 선택 정보를 선택해 주세요.</span>
+                <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
                 <span class="section">정도에 도달하면 알람</span>
             </div>
         </div>
@@ -279,7 +279,7 @@
                 </button>
             </div>
         </div>
-        <span class="error-txt blind">자동알람 설정 정보를 선택해 주세요.</span>
+        <span class="error-txt blind" aria-hidden="true">자동알람 설정 정보를 선택해 주세요.</span>
     </li>
 </script>
 
