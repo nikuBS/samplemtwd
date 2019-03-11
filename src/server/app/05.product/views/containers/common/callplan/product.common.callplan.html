@@ -81,7 +81,8 @@
 $(function () {
   new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>',
     '<%- JSON.stringify(basicInfo.linkBtnList.setting) %>', '<%= lineProcessCase %>',
-    '<%= isPreview ? "Y" : "N" %>', '<%= isAllowJoinCombine ? "Y" : "N" %>');
+    '<%= isPreview ? "Y" : "N" %>', '<%= isAllowJoinCombine ? "Y" : "N" %>',
+    '<%= svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : "" %>', '<%= bpcpServiceId %>', '<%= eParam %>');
 });
 </script>
 <% include ../../../components/end.component.html %>

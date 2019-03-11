@@ -4,7 +4,8 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase, isPreview, isAllowJoinCombine) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
+  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -21,6 +22,9 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._lineProcessCase = lineProcessCase;
   this._isPreview = isPreview === 'Y';
   this._isAllowJoinCombine = isAllowJoinCombine === 'Y';
+  this._svcMgmtNum = svcMgmtNum;
+  this._bpcpServiceId = bpcpServiceId;
+  this._eParam = eParam;
 
   this._convertSettingBtnList();
   this._cachedElement();
@@ -44,6 +48,15 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contents.find('.fe-btn_roaming_auto').length > 0) {
       this._bindRoamingAuto();
     }
+
+    if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
+      this._initBpcp();
+    }
+  },
+
+  _initBpcp: function() {
+    this._getBpcp(this._bpcpServiceId);
+    history.replaceState(null, document.title, location.origin + '/product/callplan?prod_id=' + this._prodId);
   },
 
   _cachedElement: function() {
@@ -300,7 +313,16 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getBpcp: function(url) {
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: url.replace('BPCP:', '') })
+    var reqParams = {
+      svcMgmtNum: this._svcMgmtNum,
+      bpcpServiceId: url.replace('BPCP:', '')
+    };
+
+    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
+      reqParams.eParam = this._eParam;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
       .done($.proxy(this._resBpcp, this));
   },
 
@@ -330,8 +352,20 @@ Tw.ProductCommonCallplan.prototype = {
 
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
+
+    // BPCP 팝업 닫기
     if (data === 'popup_close') {
       this._popupService.close();
+    }
+
+    // BPCP 팝업 닫고 링크 이동
+    if (data.indexOf('goLink:') !== -1) {
+      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
+    }
+
+    // BPCP 팝업 닫고 로그인 호출
+    if (data.indexOf('goLogin:') !== -1) {
+      this._tidLanding.goLogin('/product/callplan?prod_id=' + this._prodId + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
     }
   },
 
