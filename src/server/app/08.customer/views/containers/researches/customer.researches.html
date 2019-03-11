@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -142,7 +142,7 @@
                     </div>
                     <!--// .widget -->
                     <!-- .bt-more -->
-                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>">
+                    <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>" aria-hidden="<%= leftCount <= 0 %>">
                         <button>더보기</button>
                     </div>
                     <!-- // .bt-more -->

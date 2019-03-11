@@ -36,7 +36,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _cachedElement: function() {
-    this.$moreBtn = this.$container.find('.bt-more > button');
+    this.$moreBtn = this.$container.find('.bt-more');
     this.$selectBtn = this.$container.find('.bt-select');
     this.$totalCount = this.$container.find('.num > em');
     this.$list = this.$container.find('ul.comp-box');
@@ -80,19 +80,25 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     var isEmpty = !this.$empty.hasClass('none');
     if (!isEmpty) {
-      this.$list.find('li.fe-prepaid-' + this._currentType).addClass('none');
+      this.$list
+        .find('li.fe-prepaid-' + this._currentType)
+        .addClass('none')
+        .attr('aria-hidden', true);
     }
 
     if (count === 0) {
       if (!isEmpty) {
-        this.$empty.removeClass('none');
+        this.$empty.removeClass('none').attr('aria-hidden', false);
       }
     } else {
       if (isEmpty) {
-        this.$empty.addClass('none');
+        this.$empty.addClass('none').attr('aria-hidden', true);
       }
 
-      this.$list.find('li.fe-prepaid-' + type).removeClass('none');
+      this.$list
+        .find('li.fe-prepaid-' + type)
+        .removeClass('none')
+        .attr('aria-hidden', false);
     }
 
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
@@ -169,14 +175,14 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _setMoreButton: function() {
-    var hasNone = this.$moreBtn.addClass('none'),
+    var hasNone = this.$moreBtn.hasClass('none'),
       type = this._currentType;
     if (this._leftCount[type] > 0) {
       if (hasNone) {
-        this.$moreBtn.removeClass('none');
+        this.$moreBtn.removeClass('none').attr('aria-hidden', false);
       }
     } else if (!hasNone) {
-      this.$moreBtn.addClass('none');
+      this.$moreBtn.addClass('none').attr('aria-hidden', true);
     }
   },
 

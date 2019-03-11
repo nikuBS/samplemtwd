@@ -40,7 +40,7 @@ Tw.MyTDataHistory.prototype = {
 
   _cachedElement: function() {
     this.$list = this.$container.find('ul.comp-box');
-    this.$moreBtn = this.$container.find('.bt-more > button');
+    this.$moreBtn = this.$container.find('.bt-more');
     this.$empty = this.$container.find('.result-none');
   },
 
@@ -59,13 +59,13 @@ Tw.MyTDataHistory.prototype = {
     this._displayCount[type] += items.length;
     var leftCount = this._histories[type].length - this._displayCount[type];
 
-    var hasNone = this.$moreBtn.addClass('none');
+    var hasNone = this.$moreBtn.addClass('none').attr('aria-hidden', true);
     if (leftCount > 0) {
       if (hasNone) {
-        this.$moreBtn.removeClass('none');
+        this.$moreBtn.removeClass('none').attr('aria-hidden', false);
       }
     } else if (!hasNone) {
-      this.$moreBtn.addClass('none');
+      this.$moreBtn.addClass('none').attr('aria-hidden', true);
     }
   },
 
@@ -75,7 +75,7 @@ Tw.MyTDataHistory.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01',
-        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {
@@ -126,7 +126,7 @@ Tw.MyTDataHistory.prototype = {
 
     if (nData.length > 0) {
       if (!this.$empty.hasClass('none')) {
-        this.$empty.addClass('none');
+        this.$empty.addClass('none').attr('aria-hidden', true);
       }
 
       this.$container.find('.num > em').text(nData.length);
@@ -134,9 +134,9 @@ Tw.MyTDataHistory.prototype = {
     } else {
       this.$container.find('.num > em').text(0);
       if (!this.$moreBtn.hasClass('none')) {
-        this.$moreBtn.addClass('none');
+        this.$moreBtn.addClass('none').attr('aria-hidden', true);
       }
-      this.$empty.removeClass('none');
+      this.$empty.removeClass('none').attr('aria-hidden', false);
     }
   },
 

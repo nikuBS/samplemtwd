@@ -1,23 +1,23 @@
-<script id="fe-tmpl-ing" type="text/x-handlebars-template">
+<script id="fe-tmpl-ing" type="text/x-handlebars-template" aria-hidden="true">
     <div class="use fe-ing">
         <span class="modify">조회중입니다.</span>
     </div>
 </script>
 
-<script id="fe-tmpl-after" type="text/x-handlebars-template">
+<script id="fe-tmpl-after" type="text/x-handlebars-template" aria-hidden="true">
     <div class="use fe-after">
         <span class="modify"><strong>{{data}}</strong><span>변경가능</span></span>
         <button class="bt-link-tx underline fe-edit" data-gb="{{gb}}" data-mb="{{mb}}">변경하기</button>
     </div>
 </script>
 
-<script id="fe-tmpl-after-none" type="text/x-handlebars-template">
+<script id="fe-tmpl-after-none" type="text/x-handlebars-template" aria-hidden="true">
     <div class="use fe-after">
         <span class="modify"><strong>0MB</strong>변경불가</span>
     </div>
 </script>
 
-<script id="fe-tmpl-items" type="text/x-handlebars-template">
+<script id="fe-tmpl-items" type="text/x-handlebars-template" aria-hidden="true">
     {{#each items}}
         <li data-idx="{{idx}}" data-serial-number="{{shrPotSerNum}}">
             <span class="stit"><strong>{{shrPotGbQty}}GB</strong> 공유</span>

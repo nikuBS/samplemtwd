@@ -128,16 +128,14 @@ Tw.CustomerHelpline.prototype = {
     if (!isValid) { // valid하지 않은 경우, error 메세지 설정
       if (!errorState) {
         this.$areaPhone.addClass('error');
-        $input.attr('aria-describedby', 'aria-exp-desc2 aria-exp-desc3');
-        $errorText.removeClass('none');
+        $errorText.removeClass('none').attr('aria-hidden', false);
       }
 
       this._setSubmitState(false);  // submit 버튼 비활성화
     } else { // valid하지 않은 경우, error 메세지 삭제
       if (errorState) {
         this.$areaPhone.removeClass('error');
-        $input.attr('aria-describedby', 'aria-exp-desc2');
-        $errorText.addClass('none');
+        $errorText.addClass('none').attr('aria-hidden', true);
       }
 
       this._setSubmitState(this._isCheckedLen); // submit 버튼 활성화
