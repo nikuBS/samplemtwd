@@ -24,7 +24,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.templateIndex = 0;
     this.amt = $('.fe-select-amount').attr('data-amount');
     this.chargeCd = $('.fe-charge').attr('data-amount');
-    this.wrap_template.html(this.tpl_recharge_once());
 
     this._getPpsInfo();
   },
@@ -32,8 +31,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _cachedElement: function () {
     this.wrap_template = $('.fe-wrap-template');
     this.$request_recharge_auto = $('.fe-request-recharge');
-    this.tpl_recharge_once = Handlebars.compile($('#tpl_recharge_once').html());
-    this.tpl_recharge_amount = Handlebars.compile($('#tpl_recharge_amount').html());
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
@@ -199,13 +196,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $elTarget = $(e.currentTarget);
     var currentTemplateIndex = $elTarget.parent().find('li').index($elTarget);
 
-    if ( this.templateIndex !== currentTemplateIndex ) {
-      if ( currentTemplateIndex === 0 ) {
-        this.wrap_template.html(this.tpl_recharge_once());
-      } else {
-        this.wrap_template.html(this.tpl_recharge_amount());
-      }
-    }
+    var chargeWrap = this.$container.find('.fe-charge-wrap:visible');
+    chargeWrap.siblings().removeClass('none').attr({ 'aria-hidden': 'false', 'required': '' });
+    chargeWrap.addClass('none').attr('aria-hidden', 'true').removeClass('required');
+
+
+    // if ( this.templateIndex !== currentTemplateIndex ) {
+    //   if ( currentTemplateIndex === 0 ) {
+    //     this.wrap_template.html(this.tpl_recharge_once());
+    //   } else {
+    //     this.wrap_template.html(this.tpl_recharge_amount());
+    //   }
+    // }
 
     this.templateIndex = currentTemplateIndex;
     this._checkIsAbled();

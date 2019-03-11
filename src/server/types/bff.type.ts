@@ -596,5 +596,14 @@ export enum BENEFIT_SUBMAIN_CATEGORY {
   F01424 = 'participation'
 }
 
+export enum PREPAID_AMT_CD {
+  '01' = '15일',
+  '02' = '26일',
+  '03' = '1,000원',
+  '04' = '2,000원',
+  '05' = '3,000원',
+  '06' = '5,000원'
+}
+
 export const HOME_SEGMENT = {};
 export const HOME_SEGMENT_ORDER = {};
