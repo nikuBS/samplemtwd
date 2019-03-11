@@ -65,9 +65,6 @@ class MainMenuRefund extends TwViewController {
           return;
         }
 
-        console.log('hakjoon~~~~~~~~~~~~~~~');
-        console.log(data);
-
         res.render('menu/main.menu.refund.html', {
           svcInfo,
           pageInfo,
