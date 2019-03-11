@@ -165,9 +165,9 @@
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
                                 <% if ( AutoInfo ) { %>
-                                <button id="formInput01" class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
                                 <% } else { %>
-                                <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
                                 <% } %>
                             </span>
                             <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
@@ -179,7 +179,7 @@
                                     <% if ( AutoInfo.amtCd === '01' || AutoInfo.amtCd === '02' ) {  %>
                                         <div aria-hidden="false" class="fe-charge-wrap">
                                             매달
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                            <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
                                                     data-amount="<%= AutoInfo.amtCd %>" title="날짜 선택" aria-haspopup="true" required>
                                                 <%= AutoInfo.amtValue %>
                                             </button>
@@ -187,7 +187,7 @@
                                         </div>
                                         <div aria-hidden="true" class="fe-charge-wrap none">
                                             잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                            <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
                                                     title="금액 선택" aria-haspopup="true">
                                                 금액 선택
                                             </button>
@@ -196,7 +196,7 @@
                                     <% } else { %>
                                         <div aria-hidden="true" class="fe-charge-wrap none">
                                             매달
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                            <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
                                                     title="날짜 선택" aria-haspopup="true">
                                                 날짜 선택
                                             </button>
@@ -204,7 +204,7 @@
                                         </div>
                                         <div aria-hidden="false" class="fe-charge-wrap">
                                             잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                            <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
                                                     data-amount="<%= AutoInfo.amtCd %>" title="금액 선택" aria-haspopup="true" required>
                                                 <%= AutoInfo.amtValue %>
                                             </button>
@@ -214,7 +214,7 @@
                                 <% } else { %>
                                 <div aria-hidden="false" class="fe-charge-wrap">
                                     매달
-                                    <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                    <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
                                             title="날짜 선택" aria-haspopup="true" required>
                                         날짜 선택
                                     </button>
@@ -222,7 +222,7 @@
                                 </div>
                                 <div aria-hidden="true" class="fe-charge-wrap none">
                                     잔액이
-                                    <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                    <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
                                             title="금액 선택" aria-haspopup="true">
                                         금액 선택
                                     </button>
