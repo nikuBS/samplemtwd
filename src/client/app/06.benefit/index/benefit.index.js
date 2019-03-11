@@ -81,7 +81,7 @@ Tw.BenefitIndex.prototype = {
     var $target = this.$categoryTab.find('[data-category="' + categoryId + '"]').parent();
     var x = parseInt($target.position().left, 10);
     var parentLeft = parseInt(this.$categoryTab.position().left, 10);
-    this.$categoryTab.scrollLeft(x - parentLeft);
+    this.$categoryTab.find('ul').scrollLeft(x - parentLeft);
   },
 
   /**
