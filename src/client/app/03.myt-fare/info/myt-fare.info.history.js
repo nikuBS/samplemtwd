@@ -292,6 +292,7 @@ Tw.MyTFareInfoHistory.prototype = {
       data: Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE,
       btnfloating: {
         txt: '닫기',
+        attr: 'type="button"',
         'class': 'tw-popup-closeBtn'
       }
     }, $.proxy(this._openTypeSelectHandler, this), $.proxy(this._closeTypeSelect, this));
@@ -301,15 +302,25 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$typeSelectActionsheetButtons = $container.find('.ac-list>li');
     $(this.$typeSelectActionsheetButtons[0]).find('input').prop('checked', false);
     $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).find('input').prop('checked', true);
-    this.$typeSelectActionsheetButtons.on('click', $.proxy(this._moveByPaymentType, this));
+    this.$typeSelectActionsheetButtons.on('click', $.proxy(this._clickPaymentType, this));
+    $container.on('change', 'input', $.proxy(this._moveByPaymentType, this));
   },
+
+  _clickPaymentType: function (e) {
+    if ($(e.currentTarget).is('li')) {
+      e.stopPropagation();
+      $(e.currentTarget).siblings().find('input').prop('checked', false);
+      $(e.currentTarget).find('input').prop('checked', true).trigger('change');
+    }
+  },
+
   _moveByPaymentType: function (e) {
-    var target    = $(e.currentTarget).find('input'),
+    var target    = $(e.currentTarget),
         targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
     
     if (Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] !== this.queryParams.sortType) {
-      this.$typeSelectActionsheetButtons.find('input').prop('checked', false);
-      target.prop('checked', true);
+      // this.$typeSelectActionsheetButtons.find('input').prop('checked', false);
+      // target.prop('checked', true);
       targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] ?
           targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()];
 

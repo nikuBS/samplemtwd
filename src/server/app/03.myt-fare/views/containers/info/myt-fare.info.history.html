@@ -47,20 +47,31 @@
 
                 </div>
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
                 <% if(data.isAutoWithdrawalUse || data.refundPaymentCnt) { %>
                 <div class="cont-box nogaps">
-                    <div class="all-menu-setting">
-                        <ul class="link-long-list">
-                            <% if(data.isAutoWithdrawalUse) { %>
-                            <li><div class="link-long"><button id="fe-go-refund-quit">자동납부 통합인출 해지<span class="tx-sub"><span class="ico"></span></span></button></div></li>
-                            <% } %>
-                            <% if(data.refundPaymentCnt) { %>
-                            <li><div class="link-long"><button id="fe-go-refund-list">환불 처리 내역<span class="tx-sub"><span class="ico"></span></span></button></div></li>
-                            <% } %>
-                        </ul>
-                    </div>
+                    <ul class="full-link-list">
+                        <% if(data.isAutoWithdrawalUse) { %>
+                        <li>
+                            <button id="fe-go-refund-quit">
+                                <span class="inner">
+                                    <span class="tit">자동납부 통합인출 해지</span>
+                                </span>
+                            </button>
+                        </li>
+                        <% } %>
+                        <% if(data.refundPaymentCnt) { %>
+                        <li>
+                            <button id="fe-go-refund-list">
+                                <span class="inner">
+                                    <span class="tit">환불 처리내역</span>
+                                </span>
+                            </button>
+                        </li>
+                        <% } %>
+                    </ul>
                 </div>
                 <% } %>
                 <!--// .cont-box -->
