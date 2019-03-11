@@ -54,6 +54,7 @@ Tw.CustomerEmailQualityOption.prototype = {
     var filteredLine = [];
     var fnSelectLine;
 
+
     if ( isInternetLine ) {
       filteredLine = this.allSvc.s.filter(function (item) {
         return item.svcGr === 'I' || item.svcGr === 'T';
@@ -110,7 +111,7 @@ Tw.CustomerEmailQualityOption.prototype = {
       return $.extend({}, item, {
         'label-attr': ' ',
         'txt': dashNumber,
-        'radio-attr': 'data-svcmgmtnum="' + item.svcMgmtNum + '"' + isChecked ? ' checked' : ' '
+        'radio-attr': 'data-svcmgmtnum="' + item.svcMgmtNum + '"' + (isChecked ? ' checked' : ' ')
       });
     };
 
@@ -127,12 +128,13 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   // 품질상담 > 회선변경 선택시
   _handleOpenSelectType: function ($target, $layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this, $target));
+    $layer.on('change', 'li.type1 input', $.proxy(this._handleSelectType, this, $target));
   },
 
   // 품질상담 > 회선변경 처리
   _handleSelectType: function ($target, e) {
     var $currentTarget = $(e.currentTarget);
+    
     var svcNum = $currentTarget.parents('li').find('.txt').text().trim();
     var svcMgmtNum = $currentTarget.data('svcmgmtnum');
 
