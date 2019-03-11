@@ -35,9 +35,17 @@ $(window).on('resize', function () {
   if ( Math.abs( current_size - skt_landing._originalSize ) > 100 ){
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
+    $(".searchbox-layer01").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
+    if ( !$(".searchbox-layer01").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
+      skt_landing.action.checkScroll.lockScroll();
+    }
   } else {
     $(".bt-fixed-area").css("position","fixed");
-    $(".actionsheet_full .container").css("height", "auto") // 19.02.26 팝업구조 변경시
+    $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
+    $(".searchbox-layer01").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
+    if ( !$(".searchbox-layer01").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
+      skt_landing.action.checkScroll.unLockScroll();
+    }
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {

@@ -1287,9 +1287,15 @@
         margin: -1.0625rem; }
     .popup .popup-info.full {
       /* MV_01_02_02_01 */
-      padding: 0; }
+      padding: 0;
+      width: calc(100% - 3.5rem);
+      max-width: 30.5rem;
+      left: 50%;
+      right: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
       .popup .popup-info.full .popup-contents {
-        margin-bottom: 0; }
+        margin: 0; }
       .popup .popup-info.full .img-type img {
         width: 100%;
         vertical-align: top; }
