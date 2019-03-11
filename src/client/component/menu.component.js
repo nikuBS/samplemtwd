@@ -154,6 +154,8 @@ Tw.MenuComponent.prototype = {
       this.$container.find('.fe-search-section').addClass('none');
     }
 
+    this.$container.attr('aria-hidden', 'false');
+
     this._isOpened = true;
     if ( !this._isMenuSet ) {
       // retrieve redis
@@ -213,6 +215,7 @@ Tw.MenuComponent.prototype = {
   },
   _onClose: function () {
     this._isOpened = false;
+    this.$container.attr('aria-hidden', 'true');
     if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
