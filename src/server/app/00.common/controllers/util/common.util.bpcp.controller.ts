@@ -25,7 +25,10 @@ class CommonUtilBpcp extends TwViewController {
 
     // BPCP에서 사용자 세션을 갱신하고자 왔는데 Node도 사용자 세션이 없다
     if (FormatHelper.isEmpty(svcInfo)) {
-      return res.render('util/common.util.bpcp.login.html', { bpcpInfo: { bpcpServiceId, eParam } });
+      return res.render('util/common.util.bpcp.login.html', {
+        bpcpInfo: { bpcpServiceId, eParam },
+        target: '/common/util/bpcp?bpcpServiceId=' + bpcpServiceId + '&eParam=' + eParam
+      });
     }
 
     this.apiService.request(API_CMD.BFF_01_0039, { svcMgmtNum: svcInfo.svcMgmtNum, bpcpServiceId, eParam })

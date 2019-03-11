@@ -79,11 +79,11 @@
       e.preventDefault();
       e.stopPropagation();
 
-      window.postMessage('goLink:' + $(e.currentTarget).attr('href'), location.origin);
+      window.top.postMessage('goLink:' + $(e.currentTarget).attr('href'), location.origin);
     });
 
     $('.fe-common-back').on('click', function() {
-      window.postMessage('popup_close', location.origin);
+      window.top.postMessage('popup_close', location.origin);
     });
   });
 </script>
