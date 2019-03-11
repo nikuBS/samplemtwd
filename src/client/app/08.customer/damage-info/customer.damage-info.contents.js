@@ -50,11 +50,12 @@ Tw.CustomerDamageInfoContents.prototype = {
 
     // accordian
     $container.find('.idpt-accordian > li > a').on('click', function(){
-      $container.find('.idpt-accordian > li > a').removeClass('open');
+      $container.find('.idpt-accordian > li > a').removeClass('open').attr('aria-pressed', 'false');
       $container.find('.idpt-accordian-cont').slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
+        $(this).attr('aria-pressed', 'true');
       }
     });
 
@@ -62,6 +63,11 @@ Tw.CustomerDamageInfoContents.prototype = {
     $container.find('.idpt-toggle-btn').each(function(){
       $(this).on('click', function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+        if ($(this).hasClass('open')){
+          $(this).attr('aria-pressed', 'true');
+        } else {
+          $(this).attr('aria-pressed', 'false');
+        }
       });
     });
   },

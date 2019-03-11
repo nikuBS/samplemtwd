@@ -121,19 +121,21 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     if ($elem.hasClass('fe-num_input') && $elem.val().length < 9) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.LESS_LENGTH);
+    } else {
+      this.$error0.hide();
     }
 
     if ($elem.hasClass('fe-num_input') && !Tw.ValidationHelper.isCellPhone($elem.val())) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.WRONG_NUM);
+    } else {
+      this.$error0.hide();
     }
-
-    this.$error0.hide();
 
     if ($elem.hasClass('fe-input_birth') && this.$inputBirth.val().length !== 8) {
       return this._setErrorText(this.$error1, Tw.PRODUCT_TFAMILY.WRONG_BIRTH);
+    } else {
+      this.$error1.hide();
     }
-
-    this.$error1.hide();
   },
 
   _setErrorText: function ($elem, text) {
@@ -190,13 +192,16 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       return;
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0172, {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
-    }).done($.proxy(this._procCheckJoinRes, this));
+    }).done($.proxy(this._procCheckJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procCheckJoinRes: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
     this.$btnAddLine.parent().hide();
     this.$btnRetry.parent().hide();
 
