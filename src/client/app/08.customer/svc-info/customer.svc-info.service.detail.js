@@ -307,6 +307,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
+      'tagStyle-div': 'div',
       'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     }, $.proxy(function($container){
       $container.find('.popup-info').show();
