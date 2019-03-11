@@ -127,8 +127,17 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     }, this));
 
     this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동
+    this.$container.on('click', '[data-target="goProdPageBtn"]', $.proxy(this._goProdPage, this)); // 상품원장페이지로 이동
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * 상품원장 페이지로 이동
+   * @private
+   */
+  _goProdPage: function (event) {
+    var url = $(event.target).data('prod-page-url');
+    this._history.goLoad(url);
+  },
   _feePayBtnEvt: function () {
     // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
     this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd);
@@ -296,7 +305,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
 
       //위젯 아코디언 초기화
       skt_landing.widgets.widget_accordion($('.widget'));
-
+      this._insertAsteMark();
     }
   },
   //--------------------------------------------------------------------------[SVC]
@@ -344,6 +353,22 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     return {id: '', nm: ''};
   },
 
+  /**
+   * 웹접근성 부가세 제외대상 * -> icon으로 변경
+   * @private
+   */
+  _insertAsteMark: function(){
+    $('.basic-list .title').each(function(){
+      var str = $(this).text().trim();
+      if(str.indexOf(Tw.MYT_FARE_BILL_GUIDE_TPL.ASTERISK_TPL.SCH_ID) === str.length-1){
+        $(this).html(
+          $(this).text().replace(
+            Tw.MYT_FARE_BILL_GUIDE_TPL.ASTERISK_TPL.SCH_ID,
+            Tw.MYT_FARE_BILL_GUIDE_TPL.ASTERISK_TPL.ELEMENT)
+        );
+      }
+    });
+  },
   //--------------------------------------------------------------------------[COM]
   _comTraverse: function ($data, $groupKey, $priceKey) {
     var thisMain = this;
