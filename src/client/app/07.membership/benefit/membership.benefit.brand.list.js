@@ -24,9 +24,12 @@ Tw.MembershipBenefitBrandList = function (rootEl, options) {
   this._initParamHasArea = false;    // 페이지 진입시 파라메터에 지역이 있는 경우
 
   // 초기 파라메터로 area가 들어온 경우 지역을 먼저 검색하고 지역을 기반으로 가맹점 검색함
-  if(options.area && options.area.split(' ').length >= 2){
+  if(decodeURI(options.area) ){
+    var tmpArr = decodeURI(options.area).split(' ');
+    if(tmpArr.length < 2){
+      return;
+    }
     this._initParamHasArea = true;
-    var tmpArr = options.area.split(' ');
     this._options.area1 = tmpArr[0];
     this._options.area2_1 = tmpArr[1];
     if(tmpArr.length >= 3){
