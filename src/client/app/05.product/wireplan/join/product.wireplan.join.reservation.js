@@ -52,15 +52,15 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _restoreLocalStorage: function() {
-    if (!Tw.CommonHelper.getLocalStorage('productJoinReservation')) {
+    if (!Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION)) {
       return;
     }
 
     if (!this._logged) {
-      return Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+      return Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     }
 
-    var data = Tw.CommonHelper.getLocalStorage('productJoinReservation');
+    var data = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     if (Tw.FormatHelper.isEmpty(data)) {
       return;
     }
@@ -91,7 +91,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._procApplyCheck();
-    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
   },
 
   _cachedElement: function() {
@@ -590,7 +590,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isCombineInfo = false;
 
-    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
       this._isCombineInfo = true;
 
@@ -696,7 +696,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _setLocalStorage: function() {
-    Tw.CommonHelper.setLocalStorage('productJoinReservation', JSON.stringify({
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION, JSON.stringify({
       name: this.$reservName.val(),
       number: this.$reservNumber.val(),
       typeCd: this._typeCd,

@@ -151,7 +151,7 @@ Tw.MyTDataUsage.prototype = {
   },
 
   _setDailyUsed: function (event) {
-    this._apiService.request(Tw.API_CMD.BFF_05_0001)
+    this._apiService.request(Tw.SESSION_CMD.BFF_05_0001)
       .done($.proxy(function (resp) {
         if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
           this._showErrorAlert(resp.code, resp.msg);

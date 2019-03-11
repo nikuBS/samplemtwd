@@ -13,7 +13,6 @@ Tw.BenefitTerminateTbCombination = function(rootEl, prodId, prodNm, svcCd) {
   this._prodId = prodId;
   this._prodNm = prodNm;
   this._svcCd = svcCd;
-  this._reqLock = false;
 
   this._cachedElement();
   this._bindEvent();
@@ -32,10 +31,6 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _openConfirmAlert: function() {
-    if (this._reqLock) {
-      return;
-    }
-
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this));
@@ -58,7 +53,6 @@ Tw.BenefitTerminateTbCombination.prototype = {
       return;
     }
 
-    this._reqLock = true;
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
@@ -67,16 +61,13 @@ Tw.BenefitTerminateTbCombination.prototype = {
 
   _joinCancel: function() {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-  },
-
-  _bindJoinCancelPopupEvent: function($popupContainer) {
-    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._setCancelFlag, this));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
+      null, $.proxy(this._setCancelFlag, this), $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
   _setCancelFlag: function() {
     this._cancelFlag = true;
+    this._popupService.close();
   },
 
   _bindJoinCancelPopupCloseEvent: function() {
@@ -88,7 +79,6 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _resTerminate: function(resp) {
-    this._reqLock = false;
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {

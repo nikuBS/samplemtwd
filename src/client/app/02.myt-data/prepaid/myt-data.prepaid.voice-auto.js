@@ -340,9 +340,16 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     };
     // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
 
+    var type = 'auto';
+    var btn = this.$container.find('.fe-request-recharge');
+
+    if (btn.text() === Tw.BUTTON_LABEL.CHANGE) {
+      type = 'change';
+    }
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
-      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=' + type + '&' + $.param(htParams));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

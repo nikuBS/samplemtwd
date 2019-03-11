@@ -97,12 +97,15 @@ Tw.CustomerEmailTemplate.prototype = {
     this._afterChangeTemp(this.$wrap_tpl_service, serviceCategory.depth2);
 
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.bt-link-tx'));
   },
 
-  _changeQualityTemplate: function (e, qualityCategory, qualityType) {
+  _changeQualityTemplate: function (e, opt) {
     e.stopPropagation();
     e.preventDefault();
+
+    var qualityCategory = opt.qualityCategory || 'cell', // 기본선택값 cell 
+        qualityType= opt.qualityType;
 
     // before temp changed
     this._beforeChangeTemp(this.$wrap_tpl_quality);
@@ -111,12 +114,12 @@ Tw.CustomerEmailTemplate.prototype = {
     if (this.prevTopic !== 'Quality') {
       this.prevServiceTemp = this.prevTabTemp;
     } else {
-      this.prevTabTemp = qualityCategory.depth1;
+      this.prevTabTemp = qualityType;
     }
     this.prevTopic = 'Quality';
 
     // 같은카테고리 반복시에는 갱신 x
-    if (this.prevServiceTemp === qualityCategory.depth1) {
+    if (this.prevServiceTemp === qualityType ) {
       return ;
     }
 
@@ -131,7 +134,7 @@ Tw.CustomerEmailTemplate.prototype = {
       case 'internet':
         if ( qualityType && qualityType.isPhone ) {
           this.$wrap_tpl_quality.html(this.tpl_quality_phone());
-        } else {
+        } else {          
           this.$wrap_tpl_quality.html(this.tpl_quality_internet());
         }
         break;
@@ -143,7 +146,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this._afterChangeTemp(this.$wrap_tpl_quality, qualityCategory.depth1);
 
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.bt-link-tx'));
   },
 
 
@@ -196,22 +199,22 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _onChangeQualityLineType: function (e) {
-    var nTabIndex = $(e.currentTarget).find('.focus').index();
+    var nTabIndex = $(e.currentTarget).find('.focus').index() || 0;
     var category = this.$container.triggerHandler('getCategory');
 
     if ( category.quality.depth1 === 'cell' ) {
       if ( nTabIndex === 0 ) {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: false }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isWibro: false }});
       } else {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: true }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isWibro: true }});
       }
     }
 
     if ( category.quality.depth1 === 'internet' ) {
       if ( nTabIndex === 0 ) {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: false }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isPhone: false }});
       } else {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: true }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isPhone: true }});
       }
     }
   }

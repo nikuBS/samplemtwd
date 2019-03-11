@@ -162,12 +162,11 @@ Tw.ProductRoamingPlanAdd.prototype = {
     _handleSelectRomaingAddTag: function(target) {
         var selectedTag = target.getAttribute('data-rmtag-id');
 
-        this._popupService.close();
         if(selectedTag) {
             this.selectTag = true;
         }
         if (this._params.searchTagId === selectedTag) {
-            this._popupService.close();
+            this._popupService.closeAll();
             return;
         }
 
@@ -224,7 +223,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
   },
   _bindAddFilterBtnEvent: function ($layer, e) {
       var $target = $(e.currentTarget);
-      if(this.selectTag){
+      var $selectTag = $layer.find('.suggest-tag-list .link.active');
+      if($selectTag.length > 0){
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
           this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag,
             this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
@@ -244,23 +244,21 @@ Tw.ProductRoamingPlanAdd.prototype = {
   },
   _handleResetTag: function ($layer, $target) {
     this._popupService.close();
-      this._params.searchTagId = '';
-      this.$selectBtn =  $target.find('input');
+    this.selectTag = false;
+    this.$selectBtn =  $target.find('input');
 
-      var selectedTag = $layer.find('.suggest-tag-list .link.active');
-      if (selectedTag.length > 0) {
-          selectedTag.removeClass('active');
-      }
+    var selectedTag = $layer.find('.suggest-tag-list .link.active');
+    if (selectedTag.length > 0) {
+        selectedTag.removeClass('active');
+    }
 
-      if($target.hasClass('checked')){
-          $target.removeClass('checked');
-          this.$selectBtn.removeAttr('checked');
-      }else {
-          $target.addClass('checked');
-          this.$selectBtn.attr('checked','checked');
-      }
-
-      this.selectTag = false;
+    if($target.hasClass('checked')){
+        $target.removeClass('checked');
+        this.$selectBtn.removeAttr('checked');
+    }else {
+        $target.addClass('checked');
+        this.$selectBtn.attr('checked','checked');
+    }
   },
   _openRmAddOrderPopup: function () {
       var searchType = this._params.searchOrder || this.DEFAULT_ORDER;

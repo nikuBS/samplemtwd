@@ -27,6 +27,8 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this.$standardNode = this.$selectList.find('li:first');
     this.$moreBtn = this.$container.find('.fe-more-btn');
 
+    this._standardAmount = this.$container.find('.fe-standard-amount').attr('id');
+
     this._page = 1;
     this._defaultCnt = Tw.DEFAULT_LIST_COUNT;
     this._totalCnt = this.$selectList.attr('data-cnt');
@@ -38,7 +40,11 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
   _changeAutoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
+    if (this._standardAmount > 0) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
+    } else {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
+    }
   },
   _cancelAutoPrepay: function () {
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,

@@ -124,20 +124,17 @@ class ProductCommonLineChange extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [targetProdId]),
-      this.apiService.request(API_CMD.BFF_03_0030, {}, {})
-    ).subscribe(([basicInfo, allSvcInfo]) => {
-      const apiError = this.error.apiError([basicInfo, allSvcInfo]);
-      if (!FormatHelper.isEmpty(apiError)) {
-        return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: apiError.code,
-          msg: apiError.msg
-        }));
-      }
+    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [targetProdId])
+      .subscribe((basicInfo) => {
+        if (basicInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: basicInfo.code,
+            msg: basicInfo.msg
+          }));
+        }
 
       const allowedLineList: any = this._getAllowedLineList(basicInfo.result.prodTypCd, pageMode,
-        targetProdId, allSvcInfo.result, svcInfo.svcMgmtNum, svcInfo.svcAttrCd);
+        targetProdId, allSvc, svcInfo.svcMgmtNum, svcInfo.svcAttrCd);
 
       if (FormatHelper.isEmpty(allowedLineList)) {
         return this.error.render(res, renderCommonInfo);

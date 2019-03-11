@@ -1097,16 +1097,16 @@ button.bt-link-tx, a.bt-link-tx {
     border-bottom: 0; }
   .link-long a, .link-long button {
     display: block;
-    padding: 1.25rem 0;
+    padding: 1.25rem 1.5625rem 1.25rem 0;
     font-size: 1rem;
     line-height: 1rem;
     color: #000;
     font-weight: 400;
     width: 100%;
-    padding-right: 10%;
     text-align: left;
     overflow: hidden;
-    text-overflow: ellipsis; }
+    text-overflow: ellipsis;
+    word-break: break-all; }
     .link-long a .tx-explain, .link-long button .tx-explain {
       margin-top: 0.25rem;
       padding-right: 4.375rem;
@@ -4451,7 +4451,8 @@ a.ui-button:active,
   bottom: 0;
   background: #000;
   z-index: 25;
-  opacity: 0.7; }
+  opacity: 0.7;
+  -webkit-overflow-scrolling: touch; }
 
 .popup {
   position: fixed;

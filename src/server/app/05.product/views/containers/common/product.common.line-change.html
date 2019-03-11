@@ -81,7 +81,7 @@
                                     <% } else { %>
                                     <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none">
                                     <% } %>
-                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" title="<%= allowedLineList[i].fullNm %>"
+                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" data-svc_num="<%= allowedLineList[i].svcNum %>" title="<%= allowedLineList[i].fullNm %>"
                                                aria-labelledby="aria-comp-radio<%= i %>">
                                         <div class="comp-list-layout" id="aria-comp-radio<%= i %>">
                                             <p class="layout-text">

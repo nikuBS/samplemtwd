@@ -31,6 +31,7 @@ interface RefundItem {
   donaObjYn: string;
   setAddr: string;
   svcCdNm: string;
+  svcText?: string;
 }
 
 interface RefundItemSubmitted extends RefundItem {
@@ -115,6 +116,14 @@ class MainMenuRefund extends TwViewController {
       }).map((item: RefundItem) => {
         item.svcBamt = FormatHelper.convNumFormat(parseInt(item.svcBamt, 10));
         item.svcCdNm = item.svcCdNm.includes('이동전화') ? '휴대폰' : item.svcCdNm;
+        if (item.svcCdNm.includes('인터넷')) {
+          item.svcText = item.setAddr;
+        } else {
+          item.svcText = item.svcNum;
+          if (item.svcCdNm.includes('휴대폰')) {
+            item.svcText = FormatHelper.conTelFormatWithDash(item.svcText);
+          }
+        }
         return item;
       }),
       submittedArr: data.cancelRefund.filter((item: RefundItem) => {
@@ -127,6 +136,7 @@ class MainMenuRefund extends TwViewController {
         item.svcCdNm = item.svcCdNm.includes(MAIN_MENU_REFUND_SVC_TYPE.PHONE_TYPE_0) ?
           MAIN_MENU_REFUND_SVC_TYPE.PHONE_TYPE_1 : item.svcCdNm;
         item.svcNum = FormatHelper.conTelFormatWithDash(item.svcNum);
+
         item.canChangeAccount = (() => {
           if (item.donaReqYn === 'Y') {
             return false;
@@ -138,6 +148,7 @@ class MainMenuRefund extends TwViewController {
           }
           return false;
         })();
+
         item.msg = ((msg) => {
           if (msg.includes(MAIN_MENU_REFUND_STATE.ORIGIN_MSG_COMPLETE)) {
             return MAIN_MENU_REFUND_STATE.COMPLTE;
@@ -146,6 +157,16 @@ class MainMenuRefund extends TwViewController {
           }
           return MAIN_MENU_REFUND_STATE.APPLY;
         })(item.msg);
+
+        item.svcCdNm = item.svcCdNm.includes('이동전화') ? '휴대폰' : item.svcCdNm;
+        if (item.svcCdNm.includes('인터넷')) {
+          item.svcText = item.setAddr;
+        } else {
+          item.svcText = item.svcNum;
+          if (item.svcCdNm.includes('휴대폰')) {
+            item.svcText = FormatHelper.conTelFormatWithDash(item.svcText);
+          }
+        }
         return item;
       }),
       totalAmount: '',

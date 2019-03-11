@@ -758,7 +758,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0115: {
-    path: '/core-product/:version/wire/additions/:args0/join-set-term-infos',
+    path: '/core-product/:version/wire/additions/:args0/joins/join-set-term-infos',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: true

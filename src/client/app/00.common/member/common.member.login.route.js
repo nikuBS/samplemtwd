@@ -53,6 +53,8 @@ Tw.CommonMemberLoginRoute.prototype = {
       this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.replaceURL('/common/member/login/exceed-fail?');
+    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236) {
+      this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
     }

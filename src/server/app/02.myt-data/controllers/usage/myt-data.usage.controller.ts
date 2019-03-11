@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
@@ -74,7 +74,7 @@ class MyTDataUsage extends TwViewController {
     // svcInfo.svcAttrCd = 'M2';
 
     const reqArr = new Array();
-    reqArr.push(this.apiService.request(API_CMD.BFF_05_0001, {}));
+    reqArr.push(this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}));
     switch ( svcInfo.svcAttrCd ) {
       case 'M1' :
         reqArr.push(this.apiService.request(API_CMD.BFF_05_0002, {})); // 부가 서비스

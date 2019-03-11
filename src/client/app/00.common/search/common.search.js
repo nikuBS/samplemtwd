@@ -5,7 +5,8 @@
  */
 
 Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
-  this._cdn = cdn;
+  //this._cdn = cdn;
+  this._cdn = 'http://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;

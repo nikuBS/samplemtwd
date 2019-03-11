@@ -16,7 +16,7 @@ Tw.InputHelper = (function () {
 
   function inputNumberAndAlphabet(input) {
     var $input = $(input);
-    $input.val($input.val().replace(/[^A-Za-z0-9+]/g, ''));
+    $input.val($input.val().replace(/[^A-Za-z0-9]/g, ''));
   }
 
   function inputNumberMaxLength(input) {

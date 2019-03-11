@@ -4,10 +4,13 @@
  * Date: 2018.07.26
  */
 
-Tw.CommonTidRoute = function () {
-  console.log('route');
+Tw.CommonTidRoute = function (target) {
+  this._historyService = new Tw.HistoryService();
+  this._init(target);
 };
 
 Tw.CommonTidRoute.prototype = {
-
+  _init: function (target) {
+    this._historyService.replaceURL(target);
+  }
 };

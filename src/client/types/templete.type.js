@@ -554,7 +554,7 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
+    '<span class="ico-wrap"><i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}' +
     '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>' +
@@ -592,7 +592,20 @@ Tw.MYT_TPL = {
       '<span class="info-title">{{nickNm}}</span><span class="info-sub">{{number}}</span>' +
       '</span></button></li>'
   },
-  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
+  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>',
+  SWITCH_LINE_POPUP:
+    {
+      TITLE: '다른 회선의 정보를 조회하려면 현재 조회중인 회선({{svcNum}})을 아래의 회선으로 변경해야 합니다.',
+      CONTENTS:
+      '<p class="tl change-txt">변경할 회선</p>' +
+      '<div class="pop-device-type">' +
+      '<span class="ico-wrap"><i class="icon-{{clsNm}}-80"><span class="blind">{{clsNm}}</span></i></span>' +
+      '<div class="user-info">' +
+      '<span class="device"><span class="blind">디바이스 펜네임/닉네임</span>{{desc}}</span>' +
+      '<div class="p-num"><span class="blind">회선정보</span>{{svcNum}}</div>' +
+      '</div>' +
+      '</div>'
+    }
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [

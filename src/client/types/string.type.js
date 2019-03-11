@@ -590,6 +590,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CANCEL_AUTO_PREPAY: '자동 선결제가 해지되었습니다.',
   NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
   NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
+  NOT_ALLOWED_AUTO_PREPAY: '자동 선결제는 한도가 2만원 이상인 경우 신청 가능합니다. 소액결제 한도상향 후 변경해 주세요.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
@@ -729,7 +730,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
 Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1: { TITLE: '선택하신 상품 가입을 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A2: {
-    TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품으로\n가입하시겠습니까?',
+    TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품으로 가입하시겠습니까?',
     MSG: '사용 중인 요금제는 자동으로 해지되며,\n1개월 동안 다른 상품으로 가입하실 수 없습니다.',
     BUTTON: '가입하기'
   },
@@ -1517,7 +1518,7 @@ Tw.BENEFIT = {
   PAYMENT: {
     TITLE: '포인트 요금 납부',
     TYPE: {
-      OK: 'OK캐쉬백',
+      OK: 'OK캐쉬백포인트',
       T: 'T포인트',
       RAINBOW: '레인보우포인트'
     },

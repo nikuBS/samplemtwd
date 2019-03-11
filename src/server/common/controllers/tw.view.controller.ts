@@ -233,6 +233,8 @@ abstract class TwViewController {
       res.redirect('/common/member/login/reactive?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
       res.redirect('/common/member/login/exceed-fail');
+    } else if ( errorCode === API_LOGIN_ERROR.ATH3236) {
+      res.redirect('/common/member/login/lost?target=' + target);
     } else {
       res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + target);
     }

@@ -26,11 +26,16 @@ $(window).on('resize', function () {
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
   }
-  if($(window).width() + $(window).height() != skt_landing._originalSize){
-    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","relative");  
-    $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
+  if(current_size != skt_landing._originalSize){
+    $("#gnb.on .g-wrap").css("position","relative");
   }else{
-    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","fixed");  
+    $("#gnb.on .g-wrap").css("position","fixed");
+  }
+  if ( Math.abs( current_size - skt_landing._originalSize ) > 100 ){
+    $(".bt-fixed-area").css("position","relative");
+    $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
+  } else {
+    $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto") // 19.02.26 팝업구조 변경시
   }
 }).on('scroll', function () {
@@ -139,13 +144,27 @@ skt_landing.action = {
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? popups.eq(popups.length-2).find('.container-wrap') : $('#contents'),
         scroll_value = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? fix_target.scrollTop() : $(window).scrollTop();
     this.scroll_gap.push(scroll_value);
-    fix_target.css({
-      'position':'fixed',
-      'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
-      'width':'100%',
-      'z-index': -1,
-      'overflow-y':'visible'
-    }).find('input').attr('tabindex',-1);
+    if ($(".idpt-popup").length > 0 ){
+      fix_target.css({
+        'position':'fixed',
+        'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
+        'width':'100%',
+        'top': 0,
+        'z-index': 100,
+        'overflow-y':'visible'
+      }).find('input').attr('tabindex',-1);
+      $('.idpt-popup').css({
+        'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
+      });
+    } else {
+      fix_target.css({
+        'position':'fixed',
+        'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
+        'width':'100%',
+        'z-index': -1,
+        'overflow-y':'visible'
+      }).find('input').attr('tabindex',-1);
+    }
     if($('.container-wrap').length == 1){
       $('body,html').css('height','100%');
        $('.wrap').css({
@@ -159,11 +178,6 @@ skt_landing.action = {
         'transform': 'translate(0 ,' + (this.scroll_gap[this.scroll_gap.length -1] - page_height)  + 'px)'
       });
     }
-    if($('.idpt-popup').length > 0){
-      $('.idpt-popup').css({
-        'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
-      });
-    }
     $('.skip_navi, .container-wrap:last, .header-wrap:last, .gnb-wrap').attr({
       'aria-hidden':true,
       'tabindex':-1
@@ -172,12 +186,25 @@ skt_landing.action = {
   auto_scroll: function () {
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 0 ? popups.eq(popups.length-1).find('.container-wrap') : $('#contents');
-    fix_target.css({
-      'position':'',
-      'transform': '',
-      'z-index':'',
-      'overflow-y':''
-    }).find('input').attr('tabindex','');
+    if ($(".idpt-popup").length > 1 ){
+      fix_target.css({
+        'position':'',
+        'transform': '',
+        'top': '',
+        'z-index': '',
+        'overflow-y':''
+      }).find('input').attr('tabindex','');
+      $('.idpt-popup').css({
+        'transform': ''
+      });
+    } else {
+      fix_target.css({
+        'position':'',
+        'transform': '',
+        'z-index':'',
+        'overflow-y':''
+      }).find('input').attr('tabindex','');
+    }      
     if($('.container-wrap').length == 1){
       $('body,html').css('height','');
       $('.wrap').css({
@@ -187,11 +214,6 @@ skt_landing.action = {
     }
     if($('.footer-wrap.fixed').length > 0){
       $('.container-wrap:last').find('.footer-wrap.fixed').css({
-        'transform': ''
-      });
-    }
-    if($('.idpt-popup').length > 0){
-      $('.idpt-popup').css({
         'transform': ''
       });
     }
