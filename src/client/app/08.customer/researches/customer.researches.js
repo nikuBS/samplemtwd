@@ -29,7 +29,7 @@ Tw.CustomerResearches.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('click', '.fe-submit', $.proxy(this._handleSubmit, this));
+    this.$container.find('.fe-submit').click(_.debounce($.proxy(this._handleSubmit, this), 300));
     this.$container.on('change', 'ul.select-list > li input', $.proxy(this._setEnableSubmit, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
     this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
