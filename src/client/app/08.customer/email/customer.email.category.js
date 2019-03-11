@@ -160,15 +160,14 @@ Tw.CustomerEmailCategory.prototype = {
     this.service.depth1 = sDepth1Value;
 
     if ( sDepth1Value === 'CELL' || sDepth1Value === 'INTERNET' ) {
-      this.$wrap_tpl_faq.show();
-
-      if ( sDepth1Value === 'INTERNET' ) {
-        this.$wrap_service_category.find('.emailconsulting-wrap').show();
-      }
-
+      this.$wrap_tpl_faq.show().attr('aria-hidden', false);
     } else {
-      this.$wrap_tpl_faq.hide();
-      this.$wrap_service_category.find('.emailconsulting-wrap').hide();
+      this.$wrap_tpl_faq.hide().attr('aria-hidden', true);
+    }
+    if ( sDepth1Value === 'INTERNET' ) {
+      this.$wrap_service_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
+    } else {
+      this.$wrap_service_category.find('.emailconsulting-wrap').hide().attr('aria-hidden', true);
     }
 
     var sDepth2Category = this.$select_service_depth2.data('service-depth2');
@@ -210,9 +209,9 @@ Tw.CustomerEmailCategory.prototype = {
     var sDepth1Text = $(e.currentTarget).parents('li').find('.txt').text();    
     
     if ( sDepth1Value === 'internet' ) {
-      this.$wrap_quality_category.find('.emailconsulting-wrap').show();
+      this.$wrap_quality_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
     } else {
-      this.$wrap_quality_category.find('.emailconsulting-wrap').hide();
+      this.$wrap_quality_category.find('.emailconsulting-wrap').hide().attr('aria-hidden', true);
     }
 
     this.$select_quality_depth1.addClass('tx-bold');
