@@ -29,6 +29,8 @@ Tw.CustomerPraise.prototype = {
 
   _bindEvent: function() {
     this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this, false));
+    this.$container.on('keydown', '.input > input', $.proxy(this._handleKeydownInput, this));
+    this.$reasons.on('keydown', $.proxy(this._handleKeydownInput, this));
     this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
     // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
@@ -46,6 +48,10 @@ Tw.CustomerPraise.prototype = {
     this.$subject = this.$container.find('.fe-subject');
     this.$pRole = this.$container.find('p.fe-role');
     this.$divRole = this.$container.find('div.fe-role');
+  },
+
+  _handleKeydownInput: function(e) {
+    e.stopPropagation();
   },
 
   _openSelectTypePopup: function() {
