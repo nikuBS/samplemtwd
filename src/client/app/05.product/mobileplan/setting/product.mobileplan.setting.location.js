@@ -130,11 +130,17 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // $(event.target).val(num);
     var $inputNumber = $(event.target);
 
-    if ($inputNumber.length > 8) {
-      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
+    if ( Tw.ValidationHelper.isTelephone($inputNumber.val()) ) {
+      $inputNumber.val(Tw.FormatHelper.getDashedPhoneNumber($inputNumber.val()));
     } else {
       $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
     }
+
+    /*if ($inputNumber.length > 8) {
+      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
+    } else {
+      $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
+    }*/
   },
 
   /**
