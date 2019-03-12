@@ -383,26 +383,25 @@ Tw.MenuComponent.prototype = {
             if (userInfo.actRepYn === 'Y') {
               cmd = Tw.API_CMD.BFF_04_0009;
             }
-            this._apiService.request(cmd, {})
-              .then($.proxy(function (res) {
-                if ( res.code === Tw.API_CODE.CODE_00 ) {
-                  var info = res.result;
-                  var total = info.amt;
-                  var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
-                  if (month) {
-                    month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
-                    $(elem).text(
-                      month + ' ' + total + Tw.CURRENCY_UNIT.WON);
+            var storeBill = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_BILL));
+            if (Tw.FormatHelper.isEmpty(storeBill) ||
+                Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ||
+                userInfo.svcMgmtNum !== storeBill.svcMgmtNum) {
+
+              this._apiService.request(cmd, {})
+                .then($.proxy(function (res) {
+                  if ( res.code === Tw.API_CODE.CODE_00 ) {
+                    this._showBillInfo(elem, res, true);
                   } else {
                     $(elem).remove();
                   }
-                } else {
+                }, this))
+                .fail(function () {
                   $(elem).remove();
-                }
-              }, this))
-              .fail(function () {
-                $(elem).remove();
-              });
+                });
+            } else {
+              this._showBillInfo(elem, storeBill.data, false);
+            }
             break;
           case 'data':
             this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
@@ -470,6 +469,28 @@ Tw.MenuComponent.prototype = {
         this._checkNewTNoti();
       }
     }, this));
+  },
+
+  _showBillInfo: function(elem, resp, needToStore) {
+    var info = resp.result;
+    var total = info.amt;
+    var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
+    if (month) {
+      month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
+      $(elem).text(
+        month + ' ' + total + Tw.CURRENCY_UNIT.WON);
+    } else {
+      $(elem).remove();
+    }
+
+    if (needToStore) {
+      var storeData = {
+        data: resp,
+        expired: Tw.DateHelper.add5min(new Date()),
+        svcMgmtNum: this._svcMgmtNum
+      };
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
+    }
   },
 
   tideUpMenuInfo: function (menuInfo, userInfo) {

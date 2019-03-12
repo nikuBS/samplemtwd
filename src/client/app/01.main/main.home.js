@@ -82,7 +82,7 @@ Tw.MainHome.prototype = {
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
-    this._svcMgmtNum = this.$container.find('.fe-bt-line').data('svcmgmtnum');
+    this._svcMgmtNum = this.$container.find('.fe-bt-line').data('svcmgmtnum').toString();
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
