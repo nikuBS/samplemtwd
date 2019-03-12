@@ -26,8 +26,7 @@
                                 <ul class="select-list fe-bill-isue-typs" role="radiogroup">
                                     <% for (var i = 0; i < data.billIsueTyps.length; i++) { %>
                                         <li class="radiobox <%= (i === 0) ? 'checked': ''%>" role="radio" aria-checked="<%= (i === 0) ? 'checked': ''%>">
-                                            <input type="radio" name="radio1" value="<%= data.billIsueTyps[i] %>" aria-labelledby="aria-comp2-radio<%=i%>"
-                                                   title="재발행 할 요금안내서" <%= (i === 0) ? 'checked': ''%>/>
+                                            <input type="radio" name="radio1" value="<%= data.billIsueTyps[i] %>" aria-labelledby="aria-comp2-radio<%=i%>" title="재발행 할 요금안내서" <%= (i === 0) ? 'checked': ''%>/>
                                             <span class="radio-txt" id="aria-comp2-radio<%=i%>">
                                                 <span><%= data.billIsueTypNms[i] %></span>
                                             </span>
@@ -76,12 +75,9 @@
                             <div class="widget-box radio">
                                 <ul class="select-list fe-reisu-rsn-cd" role="group">
                                     <% for (var i = 0; i < data.reasons.length; i++) { %>
-                                    <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>"
-                                        role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
-                                        <input type="radio" name="radio2" value="<%= data.reasons[i].commCdVal %>"
-                                               title="재발행 사유" aria-labelledby="aria-comp1-radio<%=i%>"
-                                        <%= (i === 0 ? 'checked="checked"': '') %> />
-                                        <div class="comp-list-layout" id="aria-comp1-radio<%=i%>" aria-hidden="true">
+                                    <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>" role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
+                                        <input type="radio" name="radio2" value="<%= data.reasons[i].commCdVal %>" title="재발행 사유" aria-labelledby="aria-comp1-radio<%=i%>" <%= (i === 0 ? 'checked="checked"': '') %> />
+                                        <div class="comp-list-layout" id="aria-comp1-radio<%=i%>">
                                             <p class="layout-text">
                                                 <span class="mtext"><%= data.reasons[i].commCdValNm %></span>
                                             </p>
@@ -104,12 +100,9 @@
                             <div class="widget-box radio">
                                 <ul class="select-list fe-inv-yms" role="group">
                                     <% for (var i = 0; i < data.halfYear.length; i++) { %>
-                                    <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>"
-                                        role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
-                                        <input type="radio" name="radio" value="<%= data.halfYear[i].type3 %>"
-                                               title="재발행 월" aria-labelledby="aria-comp-radio<%=i%>"
-                                        <%= (i === 0 ? 'checked="checked"': '') %> />
-                                        <div class="comp-list-layout" id="aria-comp-radio<%=i%>" aria-hidden="true">
+                                    <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>" role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
+                                        <input type="radio" name="radio" value="<%= data.halfYear[i].type3 %>" title="재발행 월" aria-labelledby="aria-comp-radio<%=i%>" <%= (i === 0 ? 'checked="checked"': '') %> />
+                                        <div class="comp-list-layout" id="aria-comp-radio<%=i%>">
                                             <p class="layout-text">
                                                 <span class="mtext"><%= data.halfYear[i].type1%></span> <span class="tx-normal">(<%= data.halfYear[i].type2%>)</span>
                                             </p>
@@ -133,7 +126,7 @@
                     <ul class="noti-list02">
                         <% let tipId = data.billIsueTypCd === '1' ? 'MF_04_01_tip_02':'MF_04_01_tip_01'%>
                         <li>
-                            <button id="<%=tipId%>" type="button" class="tip-view-btn" title="요금안내서 재발행 이용안내" aria-haspopup="true">
+                            <button id="<%=tipId%>" type="button" class="tip-view-btn" aria-haspopup="true">
                                 요금안내서 재발행 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>
