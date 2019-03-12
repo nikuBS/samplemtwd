@@ -46,6 +46,12 @@ class MyTFarePaymentOver extends TwViewController {
         if ( nonpayment ) {
           data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
           data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
+
+          for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
+            const tmp = data.unPaidAmtList[i];
+            tmp.fmtUnPaidInvDt =
+              DateHelper.getShortDateWithFormatAddByUnit(tmp.unPaidInvDt, 1, 'months', 'YYYYMM');
+          }
         }
         if ( possibleDay ) {
           data.possibleDay = possibleDay;
