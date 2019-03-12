@@ -6,6 +6,7 @@
 
 Tw.CommonTidRoute = function (target) {
   this._historyService = new Tw.HistoryService();
+  target = target || '/main/home';
   this._init(target);
 };
 

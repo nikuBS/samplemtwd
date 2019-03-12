@@ -23,7 +23,6 @@ class MainStore extends TwViewController {
 
     this.getRedisData(noticeCode)
       .subscribe((resp) => {
-        console.log(resp);
         res.render(`main.store.html`, { svcInfo, redisData: resp, pageInfo });
       });
   }
