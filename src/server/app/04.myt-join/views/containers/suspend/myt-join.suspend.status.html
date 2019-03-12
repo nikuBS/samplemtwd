@@ -7,11 +7,6 @@
 <% include ../../components/javascript.component.html %>
 
 <!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
 <div id="fe-myt-join-suspend" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../../common/views/components/header.component.html',
@@ -51,14 +46,14 @@
                 <ul class="noti-list02">
                     <% if(!status || status.type === 'long-term' || status.isProgressing) { %>
                     <li>
-                        <button type="button" class="tip-view-btn" id="MS_03_05_03_01_tip_03" title="장기일시정지 안내 TIP보기" aria-haspopup="true">장기일시정지 안내<span class="tip-view">TIP</span></button>
+                        <button type="button" class="tip-view-btn" id="MS_03_05_03_01_tip_03" aria-haspopup="true">장기일시정지 안내<span class="tip-view">TIP</span></button>
                     </li>
                     <% } else { %>
                     <li>
-                        <button type="button" class="tip-view-btn" id="MS_03_05_01_tip_06" title="일시정지 기간안내 TIP보기" aria-haspopup="true">일시정지 기간안내<span class="tip-view">TIP</span></button>
+                        <button type="button" class="tip-view-btn" id="MS_03_05_01_tip_06" aria-haspopup="true">일시정지 기간안내<span class="tip-view">TIP</span></button>
                     </li>
                     <li>
-                        <button type="button" class="tip-view-btn" id="MS_03_05_01_tip_07" title="일시정지 요금안내 TIP보기" aria-haspopup="true">일시정지 요금안내<span class="tip-view">TIP</span></button>
+                        <button type="button" class="tip-view-btn" id="MS_03_05_01_tip_07" aria-haspopup="true">일시정지 요금안내<span class="tip-view">TIP</span></button>
                     </li>
                     <% } %>
                 </ul>

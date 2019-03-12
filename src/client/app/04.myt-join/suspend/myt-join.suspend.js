@@ -63,11 +63,16 @@ Tw.MyTJoinSuspend.prototype = {
         if ( !this._temp ) {
           this._temp = new Tw.MyTJoinSuspendTemporary(this.$tabTemp);
         }
+        this.$tabTemp.attr('aria-hidden', false);
+        this.$tabLong.attr('aria-hidden', true);
+
         break;
       case this.TYPE.LONG_TERM:
         if ( !this._long ) {
           this._long = new Tw.MyTJoinSuspendLongTerm(this.$tabLong, this._params);
         }
+        this.$tabTemp.attr('aria-hidden', true);
+        this.$tabLong.attr('aria-hidden', false);
         break;
     }
   },
