@@ -218,7 +218,7 @@ Tw.POPUP_TPL = {
     DATA: '데이터 충전',
     ONCE: '1회 충전',
     AUTO: '자동 충전',
-    AUTO_CHANGE: '자동 충전 변경/해제'
+    AUTO_CHANGE: '자동 충전 변경/해지'
   },
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
