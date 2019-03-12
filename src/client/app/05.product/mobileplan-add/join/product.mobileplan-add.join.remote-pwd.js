@@ -38,13 +38,14 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     this.$error0 = this.$container.find('.fe-error0');
     this.$error1 = this.$container.find('.fe-error1');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
+    this.$btnCancel = this.$container.find('.fe-btn_cancel');
   },
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
     this.$container.on('keypress keydown', 'input', $.proxy(this._preventDot, this));
 
-    this.$container.on('click', '.fe-btn_cancel', $.proxy(this._clear, this));
+    this.$btnCancel.on('click', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
@@ -53,6 +54,13 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       $elemParent = $elem.parents('li');
 
     this._toggleError($elemParent.find('.error-txt'), false);
+    this.$btnSetupOk.attr('disabled', 'disabled');
+
+    if ($elemParent.find('input').hasClass('fe-input-password') && this.$confirmPassword.val().length > 0) {
+      setTimeout(function() {
+        this._isPasswordConfirmInputError(true);
+      }.bind(this), 100);
+    }
   },
 
   _procWebkitCheck: function() {
@@ -75,10 +83,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _checkIsAbled: function (e) {
     var $elem = $(e.currentTarget),
-      $inputPasswordVal = $.trim(this.$inputPassword.val()),
-      $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+      onlyNumber = $(e.currentTarget).val();
 
-    var onlyNumber = $(e.currentTarget).val();
     $(e.currentTarget).val('');
     $(e.currentTarget).val(onlyNumber);
 
@@ -90,42 +96,74 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return this.$btnSetupOk.trigger('click');
     }
 
-    this.$btnSetupOk.attr('disabled', 'disabled');
-    this._toggleError(this.$error0, false);
-    this._toggleError(this.$error1, false);
+    var isPasswordInput = $elem.hasClass('fe-input-password'),
+      isPasswordConfirmInput = $elem.hasClass('fe-confirm-password'),
+      isPasswordInputError = this._isPasswordInputError(isPasswordInput),
+      isPasswordConfirmInputError = this._isPasswordConfirmInputError(isPasswordConfirmInput);
+
+    if (!isPasswordInputError && !isPasswordConfirmInputError) {
+      this.$btnSetupOk.removeAttr('disabled');
+    } else {
+      this.$btnSetupOk.attr('disabled', 'disabled');
+    }
+  },
+
+  _isPasswordInputError: function(isSetError) {
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      isPasswordInputError = false;
 
     if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
+      isPasswordInputError = true;
     }
 
     if (!this._validation.checkIsSameLetters($inputPasswordVal)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
+      isPasswordInputError = true;
     }
 
     if (!this._validation.checkIsStraight($inputPasswordVal, 4)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
+      isPasswordInputError = true;
     }
 
-    this._toggleError(this.$error0, false);
+    if (!isPasswordInputError) {
+      this._toggleError(this.$error0, false);
+    }
+
+    return isPasswordInputError;
+  },
+
+  _isPasswordConfirmInputError: function(isSetError) {
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      $confirmPasswordVal = $.trim(this.$confirmPassword.val()),
+      isPasswordConfirmInputError = false;
 
     if (!this._validation.checkIsLength($confirmPasswordVal, 4)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (!this._validation.checkIsSameLetters($confirmPasswordVal)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (!this._validation.checkIsStraight($confirmPasswordVal, 4)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (this._validation.checkIsDifferent($inputPasswordVal, $confirmPasswordVal)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
-    this._toggleError(this.$error1, false);
-    this.$btnSetupOk.removeAttr('disabled');
+    if (!isPasswordConfirmInputError) {
+      this._toggleError(this.$error1, false);
+    }
+
+    return isPasswordConfirmInputError;
   },
 
   _toggleError: function($elem, isError) {
@@ -136,7 +174,11 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     }
   },
 
-  _setErrorText: function ($elem, text) {
+  _setErrorText: function ($elem, text, isSetError) {
+    if (!isSetError) {
+      return;
+    }
+
     $elem.text(text);
     this._toggleError($elem, true);
   },
