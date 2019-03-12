@@ -61,9 +61,9 @@ Tw.CustomerEmail.prototype = {
     var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
     var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
     if ( radioIndex === 0 ) {
-      $wrap_sms.show();
+      $wrap_sms.show().attr('aria-hidden', false);
     } else {
-      $wrap_sms.hide();
+      $wrap_sms.hide().attr('aria-hidden', true);
     }
   },
 
@@ -85,9 +85,9 @@ Tw.CustomerEmail.prototype = {
     var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
 
     if ( this._isValidPhone($elPhone.val()) || Tw.FormatHelper.isEmpty($elPhone.val()) ) {
-      $elErrorPhone.addClass('blind');
+      $elErrorPhone.addClass('blind').attr('aria-hidden', true);
     } else {
-      $elErrorPhone.removeClass('blind');
+      $elErrorPhone.removeClass('blind').attr('aria-hidden', false);
     }
   },
 
@@ -100,7 +100,7 @@ Tw.CustomerEmail.prototype = {
   },
 
   // 영문대문자 + 숫자
-  _onKeyUpValidNumberUpperCase: function (e) {
+  _onKeyUpValidNumberUpperCase: function (e) {    
     var $el = $(e.currentTarget);
     var value = !!$el.val() ? $el.val() : '';
     var sValue = value.match(/[\dA-Z]+/gi);
@@ -113,9 +113,9 @@ Tw.CustomerEmail.prototype = {
     var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email');
 
     if ( this._isValidEmail($elEmail.val()) || Tw.FormatHelper.isEmpty($elEmail.val())) {
-      $elErrorEmail.addClass('blind');
+      $elErrorEmail.addClass('blind').attr('aria-hidden', true);
     } else {
-      $elErrorEmail.removeClass('blind');
+      $elErrorEmail.removeClass('blind').attr('aria-hidden', false);
     }
   },
 
@@ -129,7 +129,7 @@ Tw.CustomerEmail.prototype = {
 
   // 이메일인풋, 전화번호 삭제버튼 클릭 후 추가 밸리데이션 정보 가리기
   _onTextInputClear: function (e) {
-    $(e.currentTarget).closest('.inputbox').siblings('.error-txt').addClass('blind');
+    $(e.currentTarget).closest('.inputbox').siblings('.error-txt').addClass('blind').attr('aria-hidden', true);
   },
 
   _onChangeTitle: function (e) {
@@ -188,7 +188,8 @@ Tw.CustomerEmail.prototype = {
         Tw.CUSTOMER_EMAIL.SMS_ALARM,
         null,
         //Tw.POPUP_TITLE.NOTIFY,
-        Tw.BUTTON_LABEL.CONFIRM
+        Tw.BUTTON_LABEL.CONFIRM,
+        null
       );
     }
   },

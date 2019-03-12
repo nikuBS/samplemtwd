@@ -14,11 +14,11 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup fixed-bottom">
+    <div class="popup-page tw-popup fixed-bottom ">
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '이메일 상담', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
-        <div class="container-wrap">
-        <h2 class="blind">내용</h2>
+        <div id="contents" class="container-wrap">
+        <h2 class="blind">이메일 상담</h2>
         <div class="container">
             <!-- .cont-box -->
             <div class="cont-box nogaps">
