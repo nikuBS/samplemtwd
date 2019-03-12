@@ -71,7 +71,15 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onChangeFidoUse: function ($event) {
-    if ( $($event.currentTarget).attr('checked') === 'checked' ) {
+    var $currentTarget = $($event.currentTarget);
+    var $field = $currentTarget.parents('.fe-setting');
+    if ( $field.hasClass('disabled') ) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      return;
+    }
+
+    if ( $currentTarget.attr('checked') === 'checked' ) {
       // off
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
