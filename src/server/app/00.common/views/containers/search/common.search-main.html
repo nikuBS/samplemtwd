@@ -15,12 +15,12 @@
     </div>
     // #skip_navigation -->
 <div class="wrap">
-<div class="searchbox-header">
+<div class="searchbox-header" aria-hidden="false">
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
                     <input type="hidden" id="selected_keyword" value="<%= recommendKeyword.keywordNm %>">
-                    <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordDs?recommendKeyword.keywordDs:'검색어를 입력하세요.' %>" title="검색" >
+                    <input type="text" class="fe-nofocus-move" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordDs?recommendKeyword.keywordDs:'검색어를 입력하세요.' %>" title="검색" >
                     <button class="cancel" style="display: none;" ><span class="blind">삭제</span></button>
                 </span>
             </span>

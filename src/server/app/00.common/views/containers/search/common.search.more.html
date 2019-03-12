@@ -26,12 +26,12 @@
     // #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+    <div id="header" class="header-wrap search-height fe-header-wrap"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
         <div class="h-belt"><!-- border-bottom : 1px -->
             <div class="sch-form">
                     <span class="inputbox">
                         <span class="input">
-                            <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                            <input id="keyword" class="fe-nofocus-move" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                         </span>
                     </span>
@@ -53,7 +53,7 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap none">
+    <div id="contents" class="container-wrap none fe-container-wrap">
         <div class="container">
 
             <% if(searchInfo.suggestQuery.length>0){ %>
@@ -178,13 +178,13 @@
                 <div class="contheader-box">
                     <div class="totalfilter-wrap"></div>
                     <div class="filter-select">
-                        <a type="button" class="filterselect-btn" data-type="<%= searchInfo.search[0].direct.sort %>">
+                        <button type="button" class="filterselect-btn" aria-haspopup="true" data-type="<%= searchInfo.search[0].direct.sort %>">
                             <%=
                                 searchInfo.search[0].direct.sort==='R'?'정확도순':
                                 searchInfo.search[0].direct.sort==='D'?'최신순':
                                 searchInfo.search[0].direct.sort==='L'?'낮은가격순':'높은가격순'
                             %>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

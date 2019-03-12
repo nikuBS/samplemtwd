@@ -18,7 +18,7 @@
 <!--// Grand open 접근성 수정 -->
 <div class="wrap" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000480' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 fe-main-content"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="unit" aria-describedby="aria-timeset2">
                                     <span class="subtit">시각</span>
-                                    <button disabled class="bt-dropdown big placeholder time" id="end_time" title="종료일 시각 선택" aria-haspopup="true">선택<span class="ico"></span></button>
+                                    <button disabled class="bt-dropdown big placeholder time" id="end_time" title="종료일 시각 선택" aria-hidden="true" aria-haspopup="true">선택<span class="ico"></span></button>
                                 </div>
                             </div>
                             <p id="aria-val-tx2" class="error-txt end none">서비스 종료일 설정은 당일 이후만 가능합니다.</p>
