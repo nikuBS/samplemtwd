@@ -26,15 +26,11 @@ Tw.CustomerEmail.prototype = {
 
   _cachedElement: function () {
     this.$btn_faq = this.$container.find('.fe-btn_faq');
-    this.$wrap_faq = this.$container.find('.fe-wrap_faq');
-    this.$close_faq = this.$container.find('.fe-close_faq');
-    this.tpl_email_faq = Handlebars.compile($('#tpl_email_faq').html());
   },
 
   _bindEvent: function () {
     var inputKeyUps = 'keyup input blur';
     this.$btn_faq.on('click', $.proxy(this._openFaq, this));
-    this.$close_faq.on('click', $.proxy(this._closeFaq, this));
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
@@ -171,21 +167,19 @@ Tw.CustomerEmail.prototype = {
     $tab2.attr('aria-selected', true);
   },
 
-  _openFaq: function () {
-    $(document.body).css('overflow', 'hidden');
-
-    if ( $('.fe-service_depth1').data('serviceDepth1') === 'CELL' ) {
-      this.$wrap_faq.find('.container-wrap').html(this.tpl_email_faq({ isCell: true }));
-    } else {
-      this.$wrap_faq.find('.container-wrap').html(this.tpl_email_faq({ isCell: false }));
-    }
-
-    this.$wrap_faq.show();
-  },
-
-  _closeFaq: function () {
-    $(document.body).css('overflow', 'auto');
-    this.$wrap_faq.hide();
+  _openFaq: function (e) {
+    e.preventDefault();
+    var isCell = $('.fe-service_depth1').data('serviceDepth1') === 'CELL';
+    this._popupService.open({
+        hbs: 'CS_04_01_L01',
+        layer: true,
+        // title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        data: {isCell: isCell}
+      },
+      null,
+      null
+    );
   },
 
   _openSMSAlert: function (e) {
