@@ -60,7 +60,9 @@ Tw.PopupService.prototype = {
 
     // 포커스 영역 저장 후 포커스 이동
     var thisHash = this._prevHashList[this._prevHashList.length -1];
-    if ($(':focus').length && thisHash && !$(':focus').is('.tw-popup')) {
+    var $focusEl = $(':focus');
+    if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
+      && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
     }
     $currentPopup.attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
