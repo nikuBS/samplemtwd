@@ -117,9 +117,13 @@ Tw.MenuComponent.prototype = {
             if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
+              self.$container.find('.fe-empty-t-noti').attr('aria-hidden', 'true');
+              self.$container.find('.fe-new-t-noti').attr('aria-hidden', 'false');
             }
           } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
             self.$container.find('.fe-t-noti').addClass('on');
+            self.$container.find('.fe-empty-t-noti').attr('aria-hidden', 'true');
+            self.$container.find('.fe-new-t-noti').attr('aria-hidden', 'false');
           }
         }, self)
       );
@@ -198,6 +202,9 @@ Tw.MenuComponent.prototype = {
     }
     this._tNotifyComp.openWithHash(this._tid, 'menu');
     this.$container.find('.fe-t-noti').removeClass('on');
+    this.$container.find('.fe-empty-t-noti').attr('aria-hidden', 'false');
+    this.$container.find('.fe-new-t-noti').attr('aria-hidden', 'true');
+
     $('.h-menu').removeClass('on');
   },
   _onUserInfo: function () {
