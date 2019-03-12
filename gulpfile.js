@@ -58,11 +58,11 @@ gulp.task('js-vendor', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(rev.manifest(dist + 'tmp/vendor-manifest.json'))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest(dist + 'js'));
+    // .pipe(rev())
+    // .pipe(gulp.dest(dist + 'js'))
+    // .pipe(rev.manifest(dist + 'tmp/vendor-manifest.json'))
+    // .pipe(gulp.dest('.'));
 });
 
 gulp.task('js-vendor-ex', function () {
