@@ -82,6 +82,7 @@ Tw.MainHome.prototype = {
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
+    this._svcMgmtNum = this.$container.find('.fe-bt-line').data('svcmgmtnum');
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
@@ -127,8 +128,8 @@ Tw.MainHome.prototype = {
     $event.stopPropagation();
   },
   _onClickLine: function ($event) {
-    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
-    this._lineComponent.onClickLine(svcMgmtNum);
+    // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    this._lineComponent.onClickLine(this._svcMgmtNum);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
@@ -376,7 +377,8 @@ Tw.MainHome.prototype = {
       command = Tw.API_CMD.BFF_04_0009;
     }
     var storeBill = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_BILL));
-    if ( Tw.FormatHelper.isEmpty(storeBill) || Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ) {
+    if ( Tw.FormatHelper.isEmpty(storeBill) || Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ||
+      this._svcMgmtNum !== storeBill.svcMgmtNum ) {
       this._apiService.request(command, {})
         .done($.proxy(this._successBillData, this, element))
         .fail($.proxy(this._failBillData, this));
@@ -387,7 +389,8 @@ Tw.MainHome.prototype = {
   _successBillData: function (element, resp) {
     var storeData = {
       data: resp,
-      expired: Tw.DateHelper.add5min(new Date())
+      expired: Tw.DateHelper.add5min(new Date()),
+      svcMgmtNum: this._svcMgmtNum
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
 
@@ -436,7 +439,8 @@ Tw.MainHome.prototype = {
   },
   _getMicroContentsData: function (element) {
     var microContentsStore = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS));
-    if ( Tw.FormatHelper.isEmpty(microContentsStore) || Tw.DateHelper.convDateFormat(microContentsStore.expired).getTime() < new Date().getTime() ) {
+    if ( Tw.FormatHelper.isEmpty(microContentsStore) || Tw.DateHelper.convDateFormat(microContentsStore.expired).getTime() < new Date().getTime() ||
+      this._svcMgmtNum !== microContentsStore.svcMgmtNum ) {
       this._apiService.requestArray([
         { command: Tw.API_CMD.BFF_04_0006, params: {} },
         { command: Tw.API_CMD.BFF_04_0007, params: {} }
@@ -453,7 +457,8 @@ Tw.MainHome.prototype = {
         contents: contentsResp,
         micro: microResp
       },
-      expired: Tw.DateHelper.add5min(new Date())
+      expired: Tw.DateHelper.add5min(new Date()),
+      svcMgmtNum: this._svcMgmtNum
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS, JSON.stringify(storeData));
     this._drawMicroContentsData(element, contentsResp, microResp);
