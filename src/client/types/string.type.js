@@ -1257,9 +1257,6 @@ Tw.MYT_JOIN_SUSPEND = {
   CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />장기일시정지 기간 : {DURATION}',
-  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
-  SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',
   TYPE: {
     ALL: '걸기/받기 모두 정지',

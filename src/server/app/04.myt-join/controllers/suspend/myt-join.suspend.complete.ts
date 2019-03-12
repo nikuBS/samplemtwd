@@ -29,11 +29,19 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
-        data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC
-          .replace('{DURATION}', duration)
-          .replace('{SVC_INFO}', FormatHelper.conTelFormatWithDash(params.svcNum));
+
+        if ( params.svcChgRsnCd === '21' ) {
+          duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
+            DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
+          data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_MILITARY
+            .replace('{DURATION}', duration)
+            .replace('{SVC_INFO}', FormatHelper.conTelFormatWithDash(params.svcNum));
+        } else {
+          duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.');
+          data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_ABROAD
+            .replace('{DURATION}', duration)
+            .replace('{SVC_INFO}', FormatHelper.conTelFormatWithDash(params.svcNum));
+        }
         break;
 
       case 'resuspend':
@@ -66,7 +74,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         break;
     }
     return data;
-  }
+  };
 }
 
 export default MyTJoinSuspendComplete;
