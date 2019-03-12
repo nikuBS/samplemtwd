@@ -134,7 +134,7 @@ Tw.MembershipSubmain.prototype = {
           ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
           link_list: [{style_class: 'fe-link-term', txt: Tw.BRANCH.VIEW_LOCATION_TERM}],
           bt: [{style_class: 'bt-blue1', txt: Tw.BRANCH.AGREE},
-              {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
+            {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
         }, $.proxy(function (root) {
           root.on('click', '.fe-link-term', $.proxy(function () {
             this._historyService.goLoad('/main/menu/settings/terms?id=33&type=a');
@@ -165,13 +165,13 @@ Tw.MembershipSubmain.prototype = {
   },
   _getMembershipBanner: function (){
     this._apiService.requestArray([
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
-     ]).done($.proxy(this._successTosBanner, this));
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+    ]).done($.proxy(this._successTosBanner, this));
   },
   _successTosBanner: function (banner1, banner2) {
-      var result = [{ target: 'S', banner: banner1 },
-                    { target: 'B', banner: banner2 }];
+    var result = [{ target: 'S', banner: banner1 },
+      { target: 'B', banner: banner2 }];
     var adminList = [];
     _.map(result, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner) ) {

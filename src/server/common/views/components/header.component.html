@@ -80,7 +80,8 @@
         <!-- //로그인 후 -->
         <button class="c-notify fe-when-app-and-login fe-t-noti none" data-tid="<%= typeof svcInfo === 'undefined' || svcInfo === null ? '' : svcInfo.userId %>"
             data-xt_eid="CMMA_A11_B3-3" data-xt_csid="NO" data-xt_action="BC">
-            <span class="blind">알림</span>
+            <span class="blind" id="fe-empty-t-noti" aria-hidden="false">알림</span>
+            <span class="blind" id="fe-new-t-noti" aria-hidden="true">알림을 확인하세요</span>
         </button><!-- 새로운 알림 있는경우 on 추가 -->
         <button class="c-option fe-when-app-or-login fe-menu-link none" value="/main/menu/settings" data-xt_eid="CMMA_A11_B3-4"
             data-xt_csid="NO" data-xt_action="BC">

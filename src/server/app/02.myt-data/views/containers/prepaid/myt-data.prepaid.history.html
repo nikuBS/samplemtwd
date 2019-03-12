@@ -26,7 +26,7 @@
             <div class="container">
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <% const visibleVoice = voice.histories.hasOwnProperty(recentDate);
+                    <% const visibleVoice = visible === 'voice';
                     const totalCount = visibleVoice? voice.count : data.count; 
                     const BADGE = {
                         1: { icon: 'auto', name: '1회' },
