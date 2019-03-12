@@ -145,6 +145,7 @@ class ProductCommonCallplan extends TwViewController {
       termBtnList: any = [];
 
     let isJoinReservation: any = false;
+    console.log(basicInfo);
 
     basicInfo.linkBtnList.forEach((item) => {
       if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') {
@@ -737,6 +738,21 @@ class ProductCommonCallplan extends TwViewController {
     };
   }
 
+  /**
+   * basicInfo 10_0001의 plmProdList value중 plmProdId 들을 배열로 만들기
+   * @param plmProdList
+   * @private
+   */
+  private _getPlmProdIdsByList(plmProdList: any): any {
+    if (FormatHelper.isEmpty(plmProdList)) {
+      return [];
+    }
+
+    return plmProdList.map((item) => {
+      return item.plmProdId;
+    });
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
@@ -846,7 +862,8 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
-            isJoined: this._isJoined(basicInfo.result.prodTypCd, [...basicInfo.result.plmProdList, prodId], isJoinedInfo, svcProdId),  // 가입 여부
+            isJoined: this._isJoined(basicInfo.result.prodTypCd,
+              [...this._getPlmProdIdsByList(basicInfo.result.plmProdList), prodId], isJoinedInfo, svcProdId),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입

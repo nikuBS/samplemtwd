@@ -25,6 +25,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._svcMgmtNum = svcMgmtNum;
   this._bpcpServiceId = bpcpServiceId;
   this._eParam = eParam;
+  this._templateBtn = Handlebars.compile($('#fe-templ-btn').html());
+  this._templateSetting = Handlebars.compile($('#fe-templ-setting').html());
 
   this._convertSettingBtnList();
   this._cachedElement();
@@ -42,7 +44,7 @@ Tw.ProductCommonCallplan.prototype = {
     this._showReadyOn();
 
     if (this._historyService.isBack()) {
-      this._historyService.reload();
+      this._procJoinedCheck();
     }
 
     if (this.$contents.find('.fe-btn_roaming_auto').length > 0) {
@@ -68,6 +70,9 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
+    this.$btnWrap = this.$container.find('.fe-btn_wrap');
+    this.$settingWrap = this.$container.find('.fe-setting_wrap');
+    this.$reservationWrap = this.$container.find('.fe-reservation_wrap');
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
     this.$comparePlans = this.$container.find('.fe-compare_plans');
     this.$goProd = this.$container.find('.fe-go_prod');
@@ -78,12 +83,13 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
-    this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
-    this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
     this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$goProd.on('click', $.proxy(this._goProd, this));
+
+    this.$container.on('click', '.fe-btn_join', $.proxy(this._goJoinTerminate, this, '01'));
+    this.$container.on('click', '.fe-btn_terminate', $.proxy(this._goJoinTerminate, this, '03'));
+    this.$container.on('click', '.fe-btn_setting', $.proxy(this._procSetting, this));
 
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
@@ -445,14 +451,18 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: 'MP_02_02_06',
       layer: true,
       list: this._contentsDetailList
-    }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail');
+    }, $.proxy(this._focusContentsDetail, this, contentsIndex), function() {
+      $item.focus();
+    }, 'contents_detail');
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
-    $target.focus();
 
-    $popupContainer.scrollTop($target.offset().top - 60);
+    $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+    setTimeout(function() {
+      $target.focus();
+    }, 100);
   },
 
   _openCombineNeedWireError: function() {
@@ -623,6 +633,180 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80.TITLE);
+  },
+
+  // 페이지 Back 으로 진입시 가입 여부를 체크한다.
+  _procJoinedCheck: function() {
+    var apiList = [
+      {
+        command: Tw.NODE_CMD.UPDATE_SVC,  // 세션 리로드
+        params: {}
+      },
+      {
+        command: Tw.NODE_CMD.GET_SVC_INFO,  // 리로드된 세션정보 가져오기
+        params: {}
+      }
+    ];
+
+    this._apiService.requestArray(apiList)
+      .done($.proxy(function(updateSvcResp, svcInfoResp) {
+        if (svcInfoResp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(svcInfoResp.result)) {
+          return;
+        }
+
+        // 가입여부 체크, 그 여부에 따른 버튼 생성을 위해 10_0001 에서 plmProdList, linkBtnList 값을 사용해야 한다.
+        this._apiService.request(Tw.API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [this._prodId])
+          .done($.proxy(this._procJoinCheckReq, this, svcInfoResp.result));
+      }, this));
+  },
+
+  // 그외 케이스 가입여부 체크
+  _procJoinCheckReq: function(svcInfoResp, basicInfoResp) {
+    if (basicInfoResp.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1) {
+      return this._procJoinCheckRes(svcInfoResp, basicInfoResp.result, { code: '00', result: null });
+    }
+
+    var reqParams = Tw.FormatHelper.isEmpty(basicInfoResp.result.plmProdList) ? {} : {
+      mappProdIds: (_.map(basicInfoResp.result.plmProdList, function(item) {
+        return item.plmProdId;
+      })).join(',')
+    };
+
+    // 모바일 부가서비스, 로밍 요금제/부가서비스 가입여부 체크
+    if (['C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+      return this.apiService.request(Tw.API_CMD.BFF_05_0040, reqParams, {}, [this._prodId])
+        .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+    }
+
+    // 유선 부가서비스 가입여부 체크
+    if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      return this.apiService.request(Tw.API_CMD.BFF_10_0109, reqParams, {}, [this._prodId])
+        .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+    }
+
+    // 결합상품/할인프로그램 가입여부 체크
+    this.apiService.request(Tw.API_CMD.BFF_10_0119, {}, {}, [this._prodId])
+      .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+  },
+
+  // 가입 여부 체크 API 응답 처리
+  _procJoinCheckRes: function(svcInfoResp, basicInfoResp, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
+
+    var isJoinCheck = this._isJoinCheck(svcInfoResp, basicInfoResp, resp.result),
+      linkBtnList = this._convertLinkBtnList(basicInfoResp.linkBtnList, basicInfoResp.prodSetYn),
+      isProdScrb = basicInfoResp.prodScrbYn === 'Y',
+      isProdTerm = basicInfoResp.prodTermYn === 'Y',
+      isProdSet = basicInfoResp.prodSetYn === 'Y';
+
+    this.$btnWrap.empty();
+    this.$settingWrap.empty();
+
+    // 가입 되어 있으며, 해지 가능 할 경우
+    if (isJoinCheck && isProdTerm && linkBtnList.terminate.length > 0) {
+      this._appendButton(linkBtnList.terminate[0], false);
+    }
+
+    // 가입 되어 있으며, 설정 버튼 있고, 설정 가능할 경우
+    if (isJoinCheck && isProdSet && linkBtnList.setting.length > 0) {
+      this._appendSettingWrap(linkBtnList.setting);
+    }
+
+    // 가입 되어 있으며, 예약 영역이 노출되어 있을 경우 삭제
+    if (isJoinCheck && this.$reservationWrap.length > 0) {
+      this.$reservationWrap.remove();
+    }
+
+    // 가입 안되어 있으며, 가입 가능 할 경우
+    if (!isJoinCheck && isProdScrb && basicInfoResp.prodStCd === 'E1000' && linkBtnList.join.length > 0) {
+      this._appendButton(linkBtnList.join[0], true);
+    }
+  },
+
+  _appendButton: function(btnData, isJoinBtn) {
+    this.$btnWrap.html(this._templateBtn({
+      btClass: isJoinBtn ? 'fe-btn_join' : 'fe-btn_terminate',
+      url: btnData.linkUrl,
+      btName: btnData.linkNm
+    }));
+  },
+
+  _appendSettingWrap: function(btnData) {
+    this._settingBtnList = btnData.map(function(item) {
+      return {
+        'url': item.linkUrl,
+        'button-attr': 'data-url="' + item.linkUrl + '"',
+        'txt': item.linkNm
+      };
+    });
+
+    this.$settingWrap.html(this._templateSetting({
+      settingBtn: btnData[0].linkNm,
+      isSettingBtnList: btnData.length > 1
+    }));
+  },
+
+  _convertLinkBtnList: function(linkBtnList, prodSetYn) {
+    var joinBtnList = [],
+      settingBtnList = [],
+      termBtnList = [],
+      isJoinReservation = false;
+
+    _.each(linkBtnList, function(item) {
+      if (item.linkTypCd === 'SE' && prodSetYn !== 'Y') {
+        return true;
+      }
+
+      if (item.linkTypCd === 'SC') {
+        joinBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'SE' && prodSetYn === 'Y') {
+        settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'CT') {
+        isJoinReservation = true;
+        return true;
+      }
+
+      termBtnList.push(item);
+    });
+
+    return {
+      join: joinBtnList,
+      setting: settingBtnList,
+      terminate: termBtnList,
+      isJoinReservation: isJoinReservation
+    };
+  },
+
+  _isJoinCheck: function(svcInfoResp, basicInfoResp, joinedInfoResp) {
+    var plmProdList = $.extend([this._prodId], _.map(basicInfoResp.plmProdList, function(item) {
+      return item.plmProdId;
+    }));
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1) {
+      return plmProdList.indexOf(svcInfoResp.prodId) !== -1;
+    }
+
+    if (['C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+      return joinedInfoResp.isAdditionUse === 'Y';
+    }
+
+    if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      return joinedInfoResp.wiredSuplSvcScrbYn === 'Y';
+    }
+
+    return joinedInfoResp.combiProdScrbYn === 'Y';
   }
 
 };
