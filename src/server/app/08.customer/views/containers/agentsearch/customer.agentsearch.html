@@ -188,7 +188,7 @@
                                         <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
                                         <li>
                                             <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
-                                                <dt><%= result.regionInfoList[i].locName %></dt>
+                                                <dt><%= result.regionInfoList[i].storeName %></dt>
                                                 <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
                                                     <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
                                                 </dd>
@@ -294,7 +294,7 @@
   {{#list}}
   <li>
       <dl class="type02 fe-branch-detail" value={{locCode}}>
-          <dt>{{locName}}</dt>
+          <dt>{{storeName}}</dt>
           <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span role="img" class="blind">매장으로 전화하기</span></a></dd>
       </dl>
   </li>
