@@ -95,21 +95,21 @@ Tw.CustomerPraise.prototype = {
 
     this._selectedType = code;
 
-    this.$container.find('.fe-subject').removeClass('none');
+    this.$container.find('.fe-subject').removeClass('none').attr('aria-hidden', false);
 
     if (!this.$pRole.hasClass('none')) {
-      this.$pRole.addClass('none');
+      this.$pRole.addClass('none').attr('aria-hidden', true);
     }
 
     if (!this.$area.hasClass('none')) {
-      this.$area.addClass('none');
+      this.$area.addClass('none').attr('aria-hidden', true);
     }
 
     switch (code) {
       case this.TYPES.STORE: {
         this._setInputField(selectedValue);
         this._setInputMaxLength(10, 10);
-        this.$area.removeClass('none');
+        this.$area.removeClass('none').attr('aria-hidden', false);
         break;
       }
       case this.TYPES.OFFICE:
@@ -127,7 +127,7 @@ Tw.CustomerPraise.prototype = {
         var currentContents = this.$pRole.text();
         this.$pRole.text(selectedValue.split('(')[0] + currentContents.charAt(currentContents.length - 1));
 
-        this.$pRole.removeClass('none');
+        this.$pRole.removeClass('none').attr('aria-hidden', false);
         break;
       }
     }
@@ -148,7 +148,7 @@ Tw.CustomerPraise.prototype = {
       return this.nodeType === 3;
     })[1];
     $span.nodeValue = $span.nodeValue.replace(originalContent, replace);
-    this.$divRole.removeClass('none');
+    this.$divRole.removeClass('none').attr('aria-hidden', false);
   },
 
   _setInputMaxLength: function(role, subject) {
@@ -291,10 +291,10 @@ Tw.CustomerPraise.prototype = {
   },
 
   _clearForm: function() {
-    this.$divRole.addClass('none');
-    this.$pRole.addClass('none');
-    this.$area.addClass('none');
-    this.$subject.addClass('none');
+    this.$divRole.addClass('none').attr('aria-hidden', true);
+    this.$pRole.addClass('none').attr('aria-hidden', true);
+    this.$area.addClass('none').attr('aria-hidden', true);
+    this.$subject.addClass('none').attr('aria-hidden', true);
     this.$divRole.find('input').val('');
     this.$subject.find('input').val('');
     this.$reasons.val('');
@@ -305,5 +305,4 @@ Tw.CustomerPraise.prototype = {
     this.$area.find('button').text(Tw.CUSTOMER_PRAISE_DEFAULT.AREA);
     this._setAvailableSubmit(true);
   }
-
 };

@@ -78,9 +78,15 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
         this.$container.find('.btn-type01').removeAttr('disabled');
         this.$amountInput.removeAttr('disabled');
       } else {
-        this.$container.find('#fe-share').addClass('none');
+        this.$container
+          .find('#fe-share')
+          .addClass('none')
+          .attr('aria-hidden', true);
         this.$container.find('.fe-submit').remove();
-        this.$container.find('#fe-share-none').removeClass('none');
+        this.$container
+          .find('#fe-share-none')
+          .removeClass('none')
+          .attr('aria-hidden', false);
       }
     } else {
       setTimeout($.proxy(this._setRetrieveStatus, this), 3000);

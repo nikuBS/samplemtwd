@@ -35,7 +35,7 @@ Tw.ProductWireServiceArea.prototype = {
     };
 
     var $addr = this.$container.find('#fe-addr');
-    $addr.removeClass('none');
+    $addr.removeClass('none').attr('aria-hidden', false);
     $addr.find('#fe-post').text('[' + result.zip + ']');
     $addr.find('#fe-base-addr').text(result.main);
     $addr.find('#fe-detail-addr').text(result.detail);

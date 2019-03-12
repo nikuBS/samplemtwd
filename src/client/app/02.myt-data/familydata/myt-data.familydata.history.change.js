@@ -53,7 +53,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       this.$input.val('');
       this.$input.removeAttr('disabled');
       this.$all.siblings('.fe-enable').removeAttr('disabled');
-      this.$cancel.css('display', 'none');
+      this.$cancel.css('display', 'none').attr('aria-hidden', true);
       this.$all.removeClass('btn-on');
       this._all = false;
     } else {
@@ -86,15 +86,15 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
-      this.$error.removeClass('none');
+      this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else if (value > this._changable.data) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.GREATER_THAN_CHANGABLE_DATA);
-      this.$error.removeClass('none');
+      this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else {
       if (!this.$error.hasClass('none')) {
-        this.$error.addClass('none');
+        this.$error.addClass('none').attr('aria-hidden', true);
       }
       this._setDisableSubmit(false);
     }
@@ -121,13 +121,16 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       gb = this.$input.val(),
       mb = 0,
       data = this._changable.data - Number(gb),
-      remain = data >= 1 ? {
-        data: Number(data.toFixed(2)),
-        unit: Tw.DATA_UNIT.GB
-      } : {
-        data: 0,
-        unit: Tw.DATA_UNIT.MB
-      }
+      remain =
+        data >= 1
+          ? {
+              data: Number(data.toFixed(2)),
+              unit: Tw.DATA_UNIT.GB
+            }
+          : {
+              data: 0,
+              unit: Tw.DATA_UNIT.MB
+            };
 
     if (this._all) {
       type = 'A';
@@ -156,7 +159,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
         this.$item.find('.fe-after').remove();
-        this.$item.find('.fe-before').removeClass('none');
+        this.$item
+          .find('.fe-before')
+          .removeClass('none')
+          .attr('aria-hidden', false);
 
         setTimeout(
           $.proxy(function() {
@@ -200,7 +206,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this._setDisableChange(true);
 
     if (hasClass) {
-      this.$retrieveBtn.addClass('none');
+      this.$retrieveBtn.addClass('none').attr('aria-hidden', true);
     }
 
     this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4');
@@ -230,8 +236,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _setRetrieveStatus: function() {
-    this.$retrieveBtn.removeClass('none');
-    this.$strong.addClass('none');
+    this.$retrieveBtn.removeClass('none').attr('aria-hidden', false);
+    this.$strong.addClass('none').attr('aria-hidden', true);
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
   },
 

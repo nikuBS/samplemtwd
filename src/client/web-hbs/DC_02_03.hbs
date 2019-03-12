@@ -44,7 +44,7 @@
                     <ul>
                         <li>
                             <span class="form">
-                                <input type="radio" name="sradio1" id="sradio1" class="formradio-small" {{#unless hasLimit}}checked="checked"{{/unless}}><label for="sradio1">라디오박스</label>
+                                <input type="radio" name="sradio1" id="sradio1" class="formradio-small" {{#unless hasLimit}}checked="checked"{{/unless}}><label for="sradio1">자유 사용</label>
                             </span>
                             <div class="cont">
                                 <span class="stit">자유 사용</span>
@@ -52,13 +52,13 @@
                         </li>
                         <li>
                             <span class="form">
-                                <input type="radio" name="sradio1" id="sradio2" {{#if hasLimit}}checked="checked"{{/if}} class="formradio-small"><label for="sradio2">라디오박스</label>
+                                <input type="radio" name="sradio1" id="sradio2" {{#if hasLimit}}checked="checked"{{/if}} class="formradio-small"><label for="sradio2">한도 설정</label>
                             </span>
                             <div class="cont">
                                 <span class="stit">한도 설정</span>
                                 <p class="inputbox pt14">
                                     <span class="input">
-                                        <input type="text" placeholder="데이터(GB) 입력" title="한도 설정" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" {{#if hasLimit}}{{#if limitation}}value={{limitation}}{{else}}value="0"{{/if}}{{else}}disabled{{/if}} inputmode="numeric" min="0" pattern="[0-9]*">
+                                        <input type="text" placeholder="데이터(GB) 입력" title="한도 설정" {{#if hasLimit}}{{#if limitation}}value={{limitation}}{{else}}value="0"{{/if}}{{else}}disabled{{/if}} inputmode="numeric" min="0" pattern="[0-9]*">
                                     </span>
                                 </p>
                                 <p class="fs-type2 mt8">설정한 한도 안에서 T가족모아데이터를 이용하실 수 있습니다.</p>

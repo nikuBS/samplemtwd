@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -43,17 +43,17 @@
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="option-box">
-                            <div class="none fe-area">
+                            <div class="none fe-area" aria-hidden="true">
                                 <!-- 선택완료후 .tx-bold css 추가 -->
                                 <button class="bt-dropdown big" title="지역명 선택" aria-haspopup="true">지역명 선택</button> 지역
                             </div>
-                            <div class="inputbox none fe-role">
+                            <div class="inputbox none fe-role" aria-hidden="true">
                                 <span class="input">
                                     <input type="text" placeholder="대리점명 입력" maxlength="25" title="대리점명 입력">
                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                 </span> 대리점의</div>
-                            <p class="none fe-role">통화품질 기준 매니저인</p>
-                            <div class="inputbox fe-subject none">
+                            <p class="none fe-role" aria-hidden="true">통화품질 기준 매니저인</p>
+                            <div class="inputbox fe-subject none" aria-hidden="true">
                                 <span class="input">
                                     <input type="text" placeholder="사람이름 입력" maxlength="25" title="사람이름 입력">
                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>

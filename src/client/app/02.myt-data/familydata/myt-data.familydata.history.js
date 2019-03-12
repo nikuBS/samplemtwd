@@ -39,7 +39,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     var $target = $(e.currentTarget),
       $parent = $target.parent('li');
 
-    $target.addClass('none');
+    $target.addClass('none').attr('aria-hidden', true);
     $parent.append(this._ingTmpl());
     this._requestRetrieve('0', $target, $parent);
   },
@@ -68,8 +68,11 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   _setRetrieveStatus: function($before, resp) {
-    $before.removeClass('none');
-    $before.siblings('.fe-ing').addClass('none');
+    $before.removeClass('none').attr('aria-hidden', false);
+    $before
+      .siblings('.fe-ing')
+      .addClass('none')
+      .attr('aria-hidden', true);
     if (resp && resp.code) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
