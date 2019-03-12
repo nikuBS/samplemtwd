@@ -250,9 +250,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -266,7 +264,7 @@
         <div class="container">
 
             <div class="user-greeting">
-                <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
+                <i class="icon-dialog-emoji-56"><span class="blind"></span></i>
                 <% if(commDataInfo.discount != 0 ){ %>
                 <p class="msg">이번 달에는 요금할인을 <%=commDataInfo.discount %>원 받으셨어요.<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
                 <% } else { %>
@@ -277,13 +275,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
-                    <a href="/product/callplan?prod_id=<%= svcInfo.prodId %>">
-                    <button class="wrap-link">
+                    <button class="wrap-link" data-target="goProdPageBtn" data-prod-page-url="/product/callplan?prod_id=<%= svcInfo.prodId %>">
                         <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
-                        <i class="badge icon-badge-plan-my use"><span class="blind">my</span></i>
+                        <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>
                     </button>
-                    </a>
                 </div>
             </div>
             <!--// .cont-box -->
