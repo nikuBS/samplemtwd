@@ -158,15 +158,15 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
 
   _clearNum: function() {
     this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+      this.$btnClearNum.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClearNum.hide();
+      this.$btnClearNum.hide().attr('aria-hidden', 'true');
     }
   },
 

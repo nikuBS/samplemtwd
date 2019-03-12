@@ -145,7 +145,6 @@ class ProductCommonCallplan extends TwViewController {
       termBtnList: any = [];
 
     let isJoinReservation: any = false;
-    console.log(basicInfo);
 
     basicInfo.linkBtnList.forEach((item) => {
       if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') {

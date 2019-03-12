@@ -46,7 +46,7 @@
                             <input type="tel" class="fe-input_ting_receiver" placeholder="숫자만 입력" title="input" value=""
                                    aria-labelledby="aria-exp-label1"
                                    aria-describedby="aria-exp-desc1" maxlength="13">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                         </span>
                             <% if ( isApp ) { %>
                         <span class="bt-box skyblue1">
@@ -276,7 +276,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="result-none fe-block-history-empty" style="display: none">
+                    <div class="result-none fe-block-history-empty" style="display: none" aria-hidden="true">
                         설정내역이 없습니다.
                     </div>
                     <!--// .cont-box -->

@@ -113,7 +113,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _showReadyOn: function() {
-    this.$btnReadyOn.show();
+    this.$btnReadyOn.show().attr('aria-hidden', 'false');
   },
 
   _goProd: function(e) {

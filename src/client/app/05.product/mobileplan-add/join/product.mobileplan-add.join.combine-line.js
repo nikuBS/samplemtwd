@@ -96,7 +96,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
 
     this._clearNum();
     this._toggleSetupButton(true);
-    this.$lineWrap.show();
+    this.$lineWrap.show().attr('aria-hidden', 'false');
   },
 
   _delNum: function(e) {
@@ -106,7 +106,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
 
     $item.remove();
     if (this.$lineList.find('li').length < 1) {
-      this.$lineWrap.hide();
+      this.$lineWrap.hide().attr('aria-hidden', 'true');
       this._toggleSetupButton(false);
     }
   },
@@ -161,15 +161,15 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
 
   _clearNum: function() {
     this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+      this.$btnClearNum.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClearNum.hide();
+      this.$btnClearNum.hide().attr('aria-hidden', 'true');
     }
   },
 

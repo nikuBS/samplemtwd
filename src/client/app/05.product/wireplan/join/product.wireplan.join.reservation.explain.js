@@ -37,7 +37,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._familyType = null;
 
     if (this._familyList.length > 0) {
-      this.$familyWrap.show();
+      this.$familyWrap.show().attr('aria-hidden', 'false');
     }
   },
 
@@ -140,7 +140,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._clearFamilyAddWrap();
 
     this.$familyList.append(this._familyTemplate(familyAddData));
-    this.$familyWrap.show();
+    this.$familyWrap.show().attr('aria-hidden', 'false');
 
     this.$familyWrap.find('.check').off();
     skt_landing.widgets.widget_init('.fe-family_wrap');
@@ -165,7 +165,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     $item.remove();
 
     if (this._familyList.length < 1) {
-      this.$familyWrap.hide();
+      this.$familyWrap.hide().attr('aria-hidden', 'true');
     }
 
     this._procEnableApplyBtn();
@@ -218,7 +218,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     $item.remove();
 
     if (this._fileList.length < 1) {
-      this.$fileWrap.hide();
+      this.$fileWrap.hide().attr('aria-hidden', 'true');
     }
 
     this._clearExplainFile();
@@ -275,7 +275,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this._fileList.push(fileInfo);
     this.$fileList.append(this._fileTemplate(fileInfo));
-    this.$fileWrap.show();
+    this.$fileWrap.show().attr('aria-hidden', 'false');
 
     this._clearExplainFile();
     this._procEnableApplyBtn();
@@ -314,7 +314,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this._fileList.push(resp.result);
     this.$fileList.append(this._fileTemplate(resp.result[0]));
-    this.$fileWrap.show();
+    this.$fileWrap.show().attr('aria-hidden', 'false');
 
     this._clearExplainFile();
     this._procEnableApplyBtn();

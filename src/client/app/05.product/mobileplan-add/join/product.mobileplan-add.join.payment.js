@@ -86,7 +86,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
     }
 
-    this.$sendMsgResult.hide();
+    this.$sendMsgResult.hide().attr('aria-hidden', 'true');
     this._apiService.request(Tw.API_CMD.BFF_01_0059, {
       jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
       receiverNum: number
@@ -97,7 +97,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$sendMsgResult.show();
+    this.$sendMsgResult.show().attr('aria-hidden', 'false');
   },
 
   _resAuthCode: function(resp) {
@@ -180,7 +180,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$validateResult.show();
+    this.$validateResult.show().attr('aria-hidden', 'false');
   },
 
   _toggleButton: function($button, isEnable) {
@@ -216,15 +216,15 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     $input.val('');
-    $btnClear.hide();
+    $btnClear.hide().attr('aria-hidden', 'true');
   },
 
   _toggleClearBtn: function($input) {
     var $btnClear = $input.parent().find('.fe-btn_clear_num');
     if ($input.val().length > 0) {
-      $btnClear.show();
+      $btnClear.show().attr('aria-hidden', 'false');
     } else {
-      $btnClear.hide();
+      $btnClear.hide().attr('aria-hidden', 'true');
     }
   },
 

@@ -61,7 +61,7 @@ Tw.ProductCommonLineChange.prototype = {
         return false;
       }
 
-      $(elem).show();
+      $(elem).show().attr('aria-hidden', 'false');
     });
 
     if (this.$lineList.find('li:not(:visible)').length < 1) {
