@@ -91,7 +91,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
     this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
 
-    this.$container.on('focusin', '#fe-search-input', $.proxy(this._searchFocus, this));
+    this.$container.on('click', '#fe-search-input', $.proxy(this._searchFocus, this));
     this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
   },
   _componentReady: function () {
