@@ -65,7 +65,7 @@ Tw.TNotifyComponent.prototype = {
       target.showDate = Tw.DateHelper.getKoreanDateWithDay(target.regDate);
       target.showTime = Tw.DateHelper.getKoreanTime(target.regDate);
       target.isShow = index < Tw.DEFAULT_LIST_COUNT;
-      target.hasUrl = target.imgLinkUrl.trim() !== 'https://app.tworld.co.kr';
+      target.hasUrl = !Tw.FormatHelper.isEmpty(target.imgLinkUrl);
       return target;
     }, this));
   },
