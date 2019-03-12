@@ -26,17 +26,17 @@
             </div>
             <% if (locals.home && locals.home === 'web') { %>
             <div class="h-home-logo">
-                <a href="/main/home" type="button" class="icon-gnb-bi"><span class="blind">홈으로</span></a>
+                <a href="/main/home" type="button" class="icon-gnb-bi"><span class="blind"><h1>홈으로</h1></span></a>
             </div>
             <div class="h-home-tit">
-                <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
+                <button type="button" class="twrold on"><h1>T world</h1></button> <!-- 활성화시 .on // -->
                 <a href="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</a>
                 <!-- 활성화시 .on // -->
             </div>
             <% } else { %>
-            <div class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
+            <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
-            </div>
+            </h1>
             <% } %>
             <div class="h-serarch">
                 <a href="/common/search-main" class="icon-gnb-search"><span class="blind">검색</span></a>
