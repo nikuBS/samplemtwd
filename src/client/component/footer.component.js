@@ -31,6 +31,7 @@ Tw.FooterComponent.prototype = {
         this.$backDisable.removeClass('none');
         this.$backEnable.addClass('none');
       }
+      this.$backEnable.attr('data-history', resp.params.historySize);
 
       if ( resp.params.forward === 'N' ) {
         this.$forwardDisable.removeClass('none');

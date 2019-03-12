@@ -9,9 +9,14 @@ Tw.UIService = function () {
 Tw.UIService.prototype = {
   setBack: function () {
     /* 뒤로가기 추가 */
-    $('.fe-common-back').on('click', function () {
+    $('.fe-common-back').on('click', function ($event) {
       Tw.Logger.info('[Common Back]');
-      window.history.back();
+      if ( Tw.BrowserHelper.isApp() && $($event.currentTarget).parent().data('history') <= 1 &&
+        !(/\/main\/home/.test(location.href) || /\/main\/store/.test(location.href))) {
+        location.replace('/main/home');
+      } else {
+        window.history.back();
+      }
     });
   },
   setForward: function () {
@@ -58,8 +63,8 @@ Tw.UIService.prototype = {
   setMaxValue: function (event) {
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
-    if ($target.attr('maxLength')) {
-      if ($target.val().length >= maxLength) {
+    if ( $target.attr('maxLength') ) {
+      if ( $target.val().length >= maxLength ) {
         $target.val($target.val().slice(0, maxLength));
       }
     }
