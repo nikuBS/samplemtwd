@@ -28,11 +28,11 @@
                                             <li>
                                                 <div class="inner-top">
                                                     {{#if noVAT}}
-                                                    <span class="title" role="note" aria-labelledby="aria-footnote-02">{{@key}}<i class="icon-fnote"><span class="blind">각주 참고</span></i></span>
+                                                    <span class="title" role="note" aria-labelledby="aria-footnote-05">{{@key}}
+                                                        <i class="icon-fnote"><span class="blind">각주 참고</span></i></span>
                                                     {{else}}
                                                     {{#if is3rdParty}}
-                                                    <span class="title" role="note" aria-labelledby="aria-footnote-03">
-                                                        <button class="bt-link-tx underline">{{@key}}</button>
+                                                    <span class="title" role="note" aria-labelledby="aria-footnote-06">{{@key}}
                                                         <i class="icon-acompany"><span class="blind">타사</span></i>
                                                     </span>
                                                     {{else}}
@@ -45,25 +45,31 @@
                                                     <span class="tx-cont">{{this.total}}원</span>
                                                     {{/if}}
                                                 </div>
+                                                {{#if items.length}}
                                                 <div class="inner-row">
                                                     <ul>
                                                         {{#items}}
                                                         <li>
-                                                            <span class="title" role="note" aria-labelledby="aria-footnote-06">{{name}}
-                                                                {{#if noVAT}}
-                                                                <i class="icon-fnote"><span class="blind">각주 참고</span></i>
-                                                                {{else}}
-                                                                {{#if is3rdParty}}
-                                                                <i class="icon-acompany"><span class="blind">타사</span></i>
-                                                                {{/if}}
-                                                                {{/if}}
+                                                            {{#if noVAT}}
+                                                            <span class="title" role="note" aria-labelledby="aria-footnote-05">{{name}}
+                                                                 <i class="icon-fnote"><span class="blind">각주 참고</span></i>
                                                             </span>
+                                                            {{else}}
+                                                            {{#if is3rdParty}}
+                                                            <span class="title" role="note" aria-labelledby="aria-footnote-06">{{name}}
+                                                                 <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                            </span>
+                                                            {{else}}
+                                                            <span class="title">{{name}}</span>
+                                                            {{/if}}
+                                                            {{/if}}
                                                             <span class="tx-cont">{{amount}}원</span>
                                                         </li>
                                                         {{/items}}
                                                     </ul>
                                                 </div>
                                             </li>
+                                            {{/if}}
                                             {{/isBill}}
                                             {{/each}}
                                         </ul>

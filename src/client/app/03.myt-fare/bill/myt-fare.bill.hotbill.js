@@ -453,7 +453,7 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     $.each(itemL, function (key2, itemS) {
       if ( groupInfoFields.indexOf(key2) < 0 ) {
         if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
-          delete itemS.items[0];
+          itemS.items.splice(0,1);
         }
         itemS.discount = itemS.total < 0;
         itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
@@ -462,5 +462,6 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });
+  console.log(group);
   return group;
 };
