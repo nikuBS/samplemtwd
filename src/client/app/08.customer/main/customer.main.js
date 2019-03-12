@@ -31,9 +31,13 @@ Tw.CustomerMain.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._activateFaqSearch, this));
   },
 
-  _activateFaqSearch: function () {
+  _activateFaqSearch: function (e) {
+    var isEnter = Tw.InputHelper.isEnter(e);
     if ( !!this.$fe_faq_search_text.val() ) {
       this.$fe_faq_search.prop('disabled', false);
+      if (isEnter) {
+        this._goToFaq();
+      }
     } else {
       this.$fe_faq_search.prop('disabled', true);
     }
