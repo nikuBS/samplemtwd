@@ -214,7 +214,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$layerIsJoinCheck.show();
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
 
-    if (this.$groupList.find('li').length < 6) {
+    if (this.$groupList.find('li').length < 5) {
       this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddLine.attr('disabled', 'disabled').prop('disabled', true);
@@ -251,6 +251,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _addLine: function() {
+    if (this.$groupList.find('li').length > 4) {
+      return;
+    }
+
     this._svcMgmtNumList.push(this._addData.svcMgmtNum.toString());
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
