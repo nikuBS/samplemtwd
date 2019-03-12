@@ -227,37 +227,34 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _openCancel: function(e) {
-    
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $(e.currentTarget)));
-  },
-  
-  _handleCancel: function($target) {
-    var code = $target.data('charge-code'),
-      id = $target.data('cancel-id'),
-      pageNum = $target.data('page-number');
+    var code = e.currentTarget.getAttribute('data-charge-code'),
+      id = e.currentTarget.getAttribute('data-cancel-id'),
+      pageNum = e.currentTarget.getAttribute('data-page-number');
 
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, pageNum, code));
+  },
+
+  _handleCancel: function(id, pageNum, code) {
     skt_landing.action.loading.on({ ta: this.$container });
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     } else {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     }
     this._popupService.close();
   },
 
-  _handleSuccessCancel: function($target, resp) {
+  _handleSuccessCancel: function(resp) {
     skt_landing.action.loading.off({ ta: this.$container });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      $target.closest('li').find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
-      $target.remove();
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
   },
