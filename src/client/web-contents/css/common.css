@@ -4518,7 +4518,8 @@ a.ui-button:active,
         .popup .popup-info .popup-header .popup-title.sub {
           margin: 0 0 0 0;
           font-size: 1.125rem;
-          text-align: left; }
+          text-align: left;
+          word-break: break-all; }
         .popup .popup-info .popup-header .popup-title.sub-c {
           margin: 0 0 0 0;
           font-size: 0.8125rem;
