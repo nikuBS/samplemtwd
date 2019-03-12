@@ -883,6 +883,9 @@ Tw.MainHome.prototype = {
       _.map(adminList, $.proxy(function (target) {
         var banner = _.filter(resp.result.banners, function (banner) {
           return banner.bnnrLocCd === target.target;
+        }).map(function(target) {
+          target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+          return target;
         });
         if ( banner.length > 0 ) {
           if ( target.target === '7' ) {
