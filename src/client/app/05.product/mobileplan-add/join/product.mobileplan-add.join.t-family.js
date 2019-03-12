@@ -123,24 +123,23 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _checkError: function($elem) {
-    this.$error0.hide();
-    this.$error1.hide();
-
     if ($elem.hasClass('fe-num_input') && $elem.val().length < 9) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.LESS_LENGTH);
-    } else {
-      this.$error0.hide();
     }
 
     if ($elem.hasClass('fe-num_input') && !Tw.ValidationHelper.isCellPhone($elem.val())) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.WRONG_NUM);
-    } else {
+    }
+
+    if ($elem.hasClass('fe-num_input')) {
       this.$error0.hide();
     }
 
     if ($elem.hasClass('fe-input_birth') && this.$inputBirth.val().length !== 8) {
       return this._setErrorText(this.$error1, Tw.PRODUCT_TFAMILY.WRONG_BIRTH);
-    } else {
+    }
+
+    if ($elem.hasClass('fe-input_birth')) {
       this.$error1.hide();
     }
   },
@@ -215,7 +214,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$layerIsJoinCheck.show();
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
 
-    if (this.$groupList.find('li').length < 6) {
+    if (this.$groupList.find('li').length < 5) {
       this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddLine.attr('disabled', 'disabled').prop('disabled', true);
@@ -252,6 +251,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _addLine: function() {
+    if (this.$groupList.find('li').length > 4) {
+      return;
+    }
+
     this._svcMgmtNumList.push(this._addData.svcMgmtNum.toString());
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
