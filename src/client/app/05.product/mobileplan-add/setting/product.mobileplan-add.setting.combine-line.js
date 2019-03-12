@@ -95,7 +95,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
 
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
-      $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('svc_mgmt_num')));
+      $.proxy(this._delNumReq, this, $(e.currentTarget).data('svc_mgmt_num')));
   },
 
   _delNumReq: function(svcMgmtNum) {
