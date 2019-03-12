@@ -200,7 +200,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
 
   _appendAutoPaymentBlockHandler: function (callback) {
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
-      idpg: this.detailData.idpg,
+      idPg: this.detailData.idpg,
       tySvc: this.detailData.tySvc,
       cpCode: this.detailData.cpCode,
       state: 'C'
