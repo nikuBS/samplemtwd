@@ -32,7 +32,7 @@ $(window).on('resize', function () {
   }else{
     $("#gnb.on .g-wrap").css("position","fixed");
   }
-  if ( Math.abs( current_size - skt_landing._originalSize ) > 100 ){
+  if ( Math.abs( current_size - skt_landing._originalSize ) > 200 ){
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
     $(".searchbox-layer01").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값

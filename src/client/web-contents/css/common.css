@@ -7234,3 +7234,40 @@ a.ui-button:active,
     opacity: 1; }
   100% {
     opacity: 0; } }
+
+/* 공통 휴대폰인증 */
+.certification-list .category-type {
+  position: relative;
+  display: inline-block;
+  padding-left: 10px;
+  color: #666;
+  font-size: 0.75rem;
+  line-height: 1.2; }
+  .certification-list .category-type:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.3125rem;
+    width: 0.125rem;
+    height: 0.125rem;
+    border-radius: 50%;
+    background: #7A8899; }
+
+.forminbox-wrap:after {
+  content: '';
+  clear: both;
+  display: block; }
+
+.forminbox-wrap .title {
+  float: left; }
+
+.forminbox-wrap .widget {
+  float: right;
+  margin-top: -0.3125rem; }
+  .forminbox-wrap .widget .text {
+    display: inline-block;
+    margin: 0.125rem 0 0 0.1875rem; }
+
+.otherway-certification {
+  margin: 0.625rem 0;
+  font-size: 0.75rem; }

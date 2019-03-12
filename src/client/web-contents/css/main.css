@@ -2755,7 +2755,6 @@ body.apphome {
 .main-charge-box {
   overflow: hidden;
   height: 12.75rem;
-  background: #3583e3;
   color: #fff; }
   .main-charge-box.section-swiper-box {
     min-height: 12.75rem;
@@ -3072,7 +3071,13 @@ body.apphome {
   left: 0;
   bottom: 0;
   z-index: 25;
-  width: 100%; }
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
 
 .fixed-b {
   position: fixed;
