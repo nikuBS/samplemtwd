@@ -251,6 +251,6 @@ Tw.MyTJoinWireHistory.prototype = {
       }
     }
 
-    this._historyService.goLoad('./historydetail?data='+JSON.stringify(item));
+    this._historyService.goLoad('/myt-join/submain/wire/historydetail?data='+encodeURI(JSON.stringify(item)));
   }
 };
