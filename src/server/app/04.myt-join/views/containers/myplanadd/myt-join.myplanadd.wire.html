@@ -24,9 +24,9 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <div class="add-prd-top-wrap">
-                    <span class="select">
-                        <button class="on fe-all-btn">전체</button>
-                        <button class="fe-pay-btn">유료만 보기</button>
+                    <span class="select" role="tablist">
+                        <button role="tab" aria-selected="true" class="on fe-all-btn">전체</button>
+                        <button role="tab" aria-selected="false" class="fe-pay-btn">유료만 보기</button>
                     </span>
                     <span class="counts">총 <em><%= joined.length %></em>개</span>
                 </div>
@@ -53,7 +53,7 @@
                                             <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                             <% } %>
-                                            <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
+                                            <% if (hasLink) { %><span class="ico"><span class="blind">자세히 보기</span></span><% } %>
                                         </div>
                                         <% if (hasButtons) { %>
                                         <span class="bt-wrap">
@@ -105,7 +105,7 @@
                                             <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                             <% } %>
-                                            <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
+                                            <% if (hasLink) { %><span class="ico"><span class="blind">자세히 보기</span></span><% } %>
                                         </div>
                                     <% if (hasButtons) { %>
                                         <span class="bt-wrap">

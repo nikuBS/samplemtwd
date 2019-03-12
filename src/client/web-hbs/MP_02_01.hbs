@@ -32,11 +32,9 @@
                             <div class="productfilter">
                                 <ul class="select-list" role="group">
                                     {{#each subFilters}}
-                                    <li class="checkbox" role="checkbox">
+                                    <li class="checkbox">
+                                        <span class="text" aria-hidden="true">{{prodFltNm}}</span>
                                         <input type="checkbox" name="checkbox" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
-                                        <span class="text">
-                                            {{prodFltNm}}
-                                        </span>
                                     </li>
                                     {{/each}}
                                 </ul>
