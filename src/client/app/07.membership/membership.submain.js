@@ -50,10 +50,6 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-membership-location', $.proxy(this._selectLocationAgreement, this));
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
   },
-  /**
-   * 내주변 제휴 브랜드 위치 선택 시
-   * 위치동의 여부 확인
-   */
   _selectLocationAgreement:function () {
     if(this._svcInfo) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
@@ -76,10 +72,6 @@ Tw.MembershipSubmain.prototype = {
       this._goLogin();
     }
   },
-  /**
-   * 위치 동의 여부 확인 후
-   * 현재 위치 요청
-   */
   _checkLocationAgreement:function () {
     if(this._svcInfo) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
@@ -108,9 +100,6 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
-  /**
-   * 혜택바로가기 T Day
-   */
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
@@ -122,9 +111,6 @@ Tw.MembershipSubmain.prototype = {
       this._goTday();
     }
   },
-  /**
-   * 혜택바로가기 초콜릿
-   */
   _selectChocolate: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
@@ -136,29 +122,19 @@ Tw.MembershipSubmain.prototype = {
       this._goChocolate();
     }
   },
-  /**
-   * T Day 링크 이동
-   */
   _goTday: function () {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
-  /**
-   * 로그인페이지 이동
-   */
   _goLogin: function () {
     this._tidLanding.goLogin();
   },
-  /**
-   * 위치 정보 이용 동의 여부 'N'일 경우
-   * 위치 정보 이용 동의 팝업 호출
-   */
   _showAgreementPopup: function () {
     this._popupService.open({
           ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
           link_list: [{style_class: 'fe-link-term', txt: Tw.BRANCH.VIEW_LOCATION_TERM}],
           bt: [{style_class: 'bt-blue1', txt: Tw.BRANCH.AGREE},
-              {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
+            {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
         }, $.proxy(function (root) {
           root.on('click', '.fe-link-term', $.proxy(function () {
             this._historyService.goLoad('/main/menu/settings/terms?id=33&type=a');
@@ -187,19 +163,15 @@ Tw.MembershipSubmain.prototype = {
         }, this)
     );
   },
-  /**
-   * 멤버십 서브메인 및 멤버십 바코드 팝업
-   * Tos 배너 정보요청.
-   */
   _getMembershipBanner: function (){
     this._apiService.requestArray([
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
-     ]).done($.proxy(this._successTosBanner, this));
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+    ]).done($.proxy(this._successTosBanner, this));
   },
   _successTosBanner: function (banner1, banner2) {
-      var result = [{ target: 'S', banner: banner1 },
-                    { target: 'B', banner: banner2 }];
+    var result = [{ target: 'S', banner: banner1 },
+      { target: 'B', banner: banner2 }];
     var adminList = [];
     _.map(result, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner) ) {
@@ -242,10 +214,6 @@ Tw.MembershipSubmain.prototype = {
       }, this));
     }
   },
-  /**
-   * Tos 배너 정보 없는 경우
-   * Redis 배너 정보 요청
-   */
   _getAdminBanner: function (adminList) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
         .done($.proxy(this._successAdminBanner, this, adminList));
@@ -264,9 +232,6 @@ Tw.MembershipSubmain.prototype = {
     }
     return false;
   },
-  /**
-   * 나의 멤버십 화면으로 이동
-   */
   _goMyMembership: function() {
     this._historyService.goLoad('/membership/my');
   },
@@ -294,9 +259,6 @@ Tw.MembershipSubmain.prototype = {
     };
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
-  /**
-   * 초콜릿 링크 이동
-   */
   _goChocolate: function () {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.CHOCOLATE,'');
@@ -317,9 +279,6 @@ Tw.MembershipSubmain.prototype = {
       this._askCurrentLocation();
     }
   },
-  /**
-   * 현재 사용자 위치 정보 요청
-   */
   _askCurrentLocation: function() {
     Tw.Logger.info('[_askCurrentLocation]');
     if(this._svcInfo){
@@ -361,10 +320,6 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
-  /**
-   * 현재 사용자 위치 정보 요청 실패한 경우,
-   * 서울 중구를 기본값으로 지역정보 요청.
-   */
   _failGeolocation: function (resp) {
     Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
@@ -376,11 +331,6 @@ Tw.MembershipSubmain.prototype = {
           });
         }, this));
   },
-  /**
-   * 현재 사용자 위치 정보 요청 성공한 경우,
-   * 현재 위치의 지역정보 요청.
-   * @param location
-   */
   _successGeolocation: function (location) {
     Tw.Logger.info('_success geolocation getCurrentPosition');
     this._getAreaByGeo({
@@ -388,10 +338,6 @@ Tw.MembershipSubmain.prototype = {
       latitude: location.coords.latitude
     });
   },
-  /**
-   * 사용자 위치의 지역정보 요청
-   * @param location
-   */
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
     this.currentLocation = {
@@ -405,10 +351,6 @@ Tw.MembershipSubmain.prototype = {
         .done($.proxy(this._handleSuccessAreaByGeo, this))
         .fail($.proxy(this._handleFailCallBack, this));
   },
-  /**
-   * 사용자 위치의 지역정보 요청 성공 시,
-   * 지역정보로 내주변 제휴 브랜드 요청
-   */
   _handleSuccessAreaByGeo: function (resp) {
     var _result = resp.result;
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -432,10 +374,6 @@ Tw.MembershipSubmain.prototype = {
           }, this));
     }
   },
-  /**
-   * 내 주변 제휴브랜드 등급별 혜택 아이콘 정렬
-   * @param ico
-   */
   _changeIcoGrade: function(ico) {
     var iconGrade = ico.split('');
     var iconArr = [];
@@ -444,9 +382,6 @@ Tw.MembershipSubmain.prototype = {
     }
     return iconArr;
   },
-  /**
-   * 내 주변 제휴브랜드 노출
-   */
   _handleSuccessNeaBrand: function (resp) {
     Tw.Logger.info('near brand resp :', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -480,9 +415,6 @@ Tw.MembershipSubmain.prototype = {
   _handleFailCallBack: function () {
 
   },
-  /**
-   * 멤버십 바코드 팝업 호출
-   */
   _showBarCodePopup : function () {
     var cardNum = this.$barCode.data('cardnum');
     this._mbrGrStr = this._membershipData.mbrGrStr;
@@ -502,11 +434,6 @@ Tw.MembershipSubmain.prototype = {
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
   },
-  /**
-   * 멤버십 바코드 생성 및 배너 그리기
-   * @param cardNum
-   * @param $popupContainer
-   */
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
@@ -519,5 +446,9 @@ Tw.MembershipSubmain.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._membershipPopupBanner) ) {
       new Tw.BannerService($popupContainer, this._membershipPopupBanner.type, this._membershipPopupBanner.list, '7');
     }
+  },
+
+  _reload: function() {
+    this._historyService.reload();
   }
 };
