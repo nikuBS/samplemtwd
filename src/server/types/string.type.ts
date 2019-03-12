@@ -499,6 +499,14 @@ export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
   TITLE: '명의 변경 신청 방법 안내'
 };
 
+export const MYT_JOIN_WIRE_HIST_DTL_TIT_MAP = {
+  '167' : '신규가입 상세내역',
+  '162' : '설치장소 변경 상세내역',
+  '168' : '가입상품 변경 상세내역',
+  '143' : '약정기간 변경 상세내역',
+  '153' : '요금상품 변경 상세내역'
+};
+
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
   TITLE: '약정 기간 변경'
 };

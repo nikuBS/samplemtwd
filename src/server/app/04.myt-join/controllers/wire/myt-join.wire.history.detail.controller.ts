@@ -7,18 +7,11 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
+import { MYT_JOIN_WIRE_HIST_DTL_TIT_MAP } from '../../../../types/string.type';
 
 
 class MyTJoinWireHistoryDetail extends TwViewController {
 
-  // titles
-  private TITLE_MAP: Object = {
-    '167' : '신규가입 상세내역',
-    '162' : '설치 장소 변경 상세내역',
-    '168' : '가입 상품 변경 상세내역',
-    '143' : '약정기간 변경 상세내역',
-    '153' : '요금 상품 변경 상세내역'
-  };
 
   constructor() {
     super();
@@ -33,7 +26,7 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     // }
 
     const data = JSON.parse(req.query.data);
-    const title = this.TITLE_MAP[data.atype];
+    const title = MYT_JOIN_WIRE_HIST_DTL_TIT_MAP[data.atype];
     const options = {title: title, svcInfo: svcInfo, pageInfo: pageInfo, data: this._formatData(data) };
     res.render('wire/myt-join.wire.history.detail.html', options);
   }
@@ -93,7 +86,7 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     data[key] = data[key] ? StringHelper.phoneStringToDash( data[key] ) : '';
   }
   private _formatDt(data: any, key: string): void {
-    data[key] = data[key] ? DateHelper.getShortDateNoDot( data[key] ) : '';
+    data[key] = data[key] ? DateHelper.getShortDate( data[key] ) : '';
   }
   private _formatDtm(data: any, key: string): void {
     data[key] = data[key] ? DateHelper.getShortDateAndTime( data[key] ) : '';
