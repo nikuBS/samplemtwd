@@ -256,7 +256,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      $target.closest('li').find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
+      var $parents = $target.closest('li');
+      $parents.find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
+      $parents.find('button.data-tx').switchClass('blue-tx', 'gray-tx');
       $target.remove();
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
