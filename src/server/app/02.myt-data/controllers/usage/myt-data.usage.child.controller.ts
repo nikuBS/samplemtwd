@@ -34,7 +34,8 @@ class MyTDataUsageChild extends TwViewController {
     Observable.combineLatest(
       this.reqBalances(),
       this.reqTingSubscriptions()
-    ).subscribe(([usageDataResp, tingSubscriptionsResp]) => {
+    ).subscribe(([_usageDataResp, tingSubscriptionsResp]) => {
+      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
       const apiError = this.error.apiError([
         usageDataResp
       ]);
