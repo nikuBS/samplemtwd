@@ -97,6 +97,9 @@ Tw.PopupService.prototype = {
       closeCallback();
     }
     skt_landing.action.popup.close();
+
+    var $lastPopup = $('.tw-popup').last();
+    $lastPopup.attr('aria-hidden', 'false');
   },
   _addHash: function (closeCallback, hashName) {
     var curHash = location.hash || '#';
