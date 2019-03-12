@@ -1,0 +1,18 @@
+<script id="fe-templ-setting" type="text/x-handlebars-template">
+    <hr class="cont-sp type1" aria-hidden="true"/>
+
+    <div class="joinconsulting-wrap">
+        <p class="text">이용중인 상품 입니다.</p>
+        {{#if settingBtn}}
+        <div class="btn">
+            <button class="fe-btn_setting btn-round3 btn-style3">
+                {{#if isSettingBtnList}}
+                설정
+                {{else}}
+                {{settingBtn}}
+                {{/if}}
+            </button>
+        </div>
+        {{/if}}
+    </div>
+</script>

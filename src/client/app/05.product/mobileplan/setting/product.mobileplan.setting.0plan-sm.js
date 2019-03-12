@@ -148,7 +148,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
 
   _getBasicText: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked'),
-      txt = $checked.attr('title') + '<br>';
+      txt = $checked.parent().find('.mtext').text() + '<br>';
 
     if ($checked.val() === 'NA00006163') {
       txt += this.$msg.text();
