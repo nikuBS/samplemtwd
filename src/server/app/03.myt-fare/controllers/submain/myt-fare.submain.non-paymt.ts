@@ -47,10 +47,13 @@ class MyTFarePaymentOver extends TwViewController {
           data.unPaidAmtList = nonpayment.unPaidAmtMonthInfoList;
           data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
 
-          for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
-            const tmp = data.unPaidAmtList[i];
-            tmp.fmtUnPaidInvDt =
-              DateHelper.getShortDateWithFormatAddByUnit(tmp.unPaidInvDt, 1, 'months', 'YYYYMM');
+          if ( data.unPaidAmtList ) {
+            for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
+              const tmp = data.unPaidAmtList[i];
+              // DV001-16851 청구월은 +1 해야함
+              tmp.fmtUnPaidInvDt =
+                DateHelper.getShortDateWithFormatAddByUnit(tmp.unPaidInvDt, 1, 'months', 'YYYYMM');
+            }
           }
         }
         if ( possibleDay ) {
@@ -76,6 +79,15 @@ class MyTFarePaymentOver extends TwViewController {
           const convChildInfo = this._convChildInfo(childPayment);
           data.unPaidAmtList = convChildInfo.list;
           data.unPaidTotSum = FormatHelper.addComma(convChildInfo.totSum);
+
+          if ( data.unPaidAmtList ) {
+            for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
+              const tmp = data.unPaidAmtList[i];
+              // DV001-16851 청구월은 +1 해야함
+              tmp.fmtUnPaidInvDt =
+                DateHelper.getShortDateWithFormatAddByUnit(tmp.unPaidInvDt, 1, 'months', 'YYYYMM');
+            }
+          }
         }
         res.render('submain/myt-fare.submain.non-paymt.html', { data });
       });
