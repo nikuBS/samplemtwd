@@ -283,7 +283,11 @@ Tw.ProductRoamingSearchResult.prototype = {
             voiceShown: true,
             ableShown: true,
             attentionShown: false,
-            svcAttention: _result.svcAttention
+            svcAttention: _result.svcAttention,
+            hanaroMtCharge: _result.hanaroMtCharge,
+            dacomMtCharge: _result.dacomMtCharge,
+            ktMtCharge: _result.ktMtCharge,
+            onseMtCharge: _result.onseMtCharge
         };
 
         if(this.reqParams.manageType === 'L'){
