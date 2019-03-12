@@ -68,7 +68,7 @@ Tw.MembershipBenefitBrand.prototype = {
   _bindEvnets: function () {
     this.$btnShowCategories.on('click', $.proxy(this._toggleCategoryLayer, this, true));
     this.$btnCloseCategories.on('click', $.proxy(this._toggleCategoryLayer, this, false));
-    this.$contLayer.on('click', '.fe-category-list-in-layer input[type="radio"]', $.proxy(this._onClickBtnCategoryInLayer, this));
+    this.$contLayer.on('click', '.fe-category-list-in-layer li', $.proxy(this._onClickBtnCategoryInLayer, this));
     this.$container.on('click', '.fe-btn-category', $.proxy(this._onClickBtnCategory, this));
     this.$container.on('click', '.fe-btn-more', $.proxy(this._onClickBtnMore, this));
     this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
@@ -99,11 +99,35 @@ Tw.MembershipBenefitBrand.prototype = {
     this._setScrollLeft(this._reqOptions.cateCd);
   },
 
+  _setAreaHiddenAttr: function(type) {
+    var attr = {
+      hidden: {
+        'aria-hidden':true,
+        'tabindex':-1
+      },
+      visible: {
+        'aria-hidden':false,
+        'tabindex':''
+      }
+    };
+    $('.skip_navi, .content-wrap, .header-wrap:last, .gnb-wrap').attr(attr[type]);
+  },
+
   _toggleCategoryLayer: function (open) {
     if ( open ) {
       this.$contLayer.show();
+      this.$btnShowCategories.attr('aria-pressed', 'true');
+      this._setAreaHiddenAttr('hidden');
+      window.setTimeout($.proxy(function() {
+        this.$contLayer.focus();
+      }, this), 300);
     } else {
       this.$contLayer.hide();
+      this._setAreaHiddenAttr('visible');
+      window.setTimeout($.proxy(function() {
+        this.$btnShowCategories.attr('aria-pressed', 'false');
+        this.$btnShowCategories.focus();
+      }, this), 300);
     }
   },
 
@@ -187,7 +211,9 @@ Tw.MembershipBenefitBrand.prototype = {
   _setCategory: function () {
     var $buttons = this.$categoryList.find('button');
     $buttons.removeClass('on');
+    $buttons.attr('aria-selected', 'false');
     $buttons.filter('[cate-cd="' + this._reqOptions.cateCd + '"]').addClass('on');
+    $buttons.filter('[cate-cd="' + this._reqOptions.cateCd + '"]').attr('aria-selected', 'true');
   },
 
   _setCategoryInLayer: function () {
@@ -311,10 +337,10 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   _onClickBtnCategoryInLayer: function (event) {
-    var $currentTarget = $(event.currentTarget);
-    this._selectCategory($currentTarget.val());
+    var cateCd = $(event.currentTarget).attr('cate-cd');
+    this._selectCategory(cateCd);
     this._toggleCategoryLayer(false);
-    this._setScrollLeft($currentTarget.val());
+    this._setScrollLeft(cateCd);
   },
 
   _onClickBtnSelectGrade: function () {
