@@ -98,13 +98,13 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   _appendLocationLi: function(list){
 
     if(!list || list.length === 0){
-      $('#divSearchResult').hide();
-      $('#divNoSearchResult').show();
+      $('#divSearchResult').hide().attr('aria-hidden', true);
+      $('#divNoSearchResult').show().attr('aria-hidden', false);
       $('.ti-caption-gray em', this.$container).text('0');
       return;
     } else {
-      $('#divSearchResult').show();
-      $('#divNoSearchResult').hide();
+      $('#divSearchResult').show().attr('aria-hidden', false);
+      $('#divNoSearchResult').hide().attr('aria-hidden', true);
     }
 
     var html = '';

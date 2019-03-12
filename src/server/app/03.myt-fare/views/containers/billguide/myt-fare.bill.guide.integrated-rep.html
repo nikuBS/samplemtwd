@@ -143,9 +143,13 @@
                     {{/if_icon}}
                     <span class="in-tx">{{rootItem.label}}<span class="val">{{rootItem.svcInfoNm}}</span></span>
                     {{#if rootItem.prodId }}
-                    <button class="bt-link-tx underline"><a href="/product/callplan?prod_id={{rootItem.prodId}}">{{rootItem.prodNm}}</a></button>
+                    <button class="bt-link-tx underline" data-target="goProdPageBtn" data-prod-page-url="/product/callplan?prod_id={{rootItem.prodId}}">
+                        {{rootItem.prodNm}}
+                    </button>
                     {{else}}
-                    <button>{{rootItem.prodNm}}</button>
+                        {{#if rootItem.prodId }}
+                        <button>{{rootItem.prodNm}}</button>
+                        {{/if}}
                     {{/if}}
 
                 </span>
@@ -395,8 +399,8 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree" title="이용요금 안내">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree" title="로밍 이용요금 안내">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <!--
                     <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
                     <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>

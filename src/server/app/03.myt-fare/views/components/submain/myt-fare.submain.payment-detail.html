@@ -12,7 +12,7 @@
 <div class="cont-box nogaps">
     <ul class="full-link-list">
         <li>
-            <button type="button" data-id="non-payment" title="미납요금" aria-haspopup="true">
+            <button type="button" data-id="non-payment">
                 <span class="inner">
                     <span class="tit">미납요금</span>
                     <span class="text type2"><%= data.unPaidTotSum %>원</span>
@@ -30,7 +30,7 @@
     <ul class="full-link-list">
         <% if (data.isRealTime && data.isNotFirstDate) { %>
         <li>
-            <button type="button" data-id="realtime-pay" title="실시간 요금 조회" aria-haspopup="true">
+            <button type="button" data-id="realtime-pay">
                 <span class="inner">
                     <span class="tit">실시간 요금 조회</span>
                     <span class="text type2"></span>
@@ -41,7 +41,7 @@
         <% if (data.paymentInfo) { %>
             <% if (data.type !== 'UF') { %>
             <li>
-                <button type="button" data-id="bill-type" title="요금안내서 설정" aria-haspopup="true">
+                <button type="button" data-id="bill-type">
                     <span class="inner">
                         <span class="tit">요금안내서 설정</span>
                         <span class="text type2"><%= data.paymentInfo.billTypeNm %></span>
@@ -50,7 +50,7 @@
             </li>
             <% } %>
             <li>
-                <button type="button" data-id="pay-mthd" title="납부방법" aria-haspopup="true"
+                <button type="button" data-id="pay-mthd"
                         class="<%= data.type === 'UF'? 'no-link':''; %>">
                     <span class="inner">
                         <span class="tit">납부방법</span>
