@@ -92,6 +92,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
 
     this.$container.on('focusin', '#fe-search-input', $.proxy(this._searchFocus, this));
+    this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
   },
   _componentReady: function () {
     /* history back에서 메뉴 삭제
@@ -226,6 +227,7 @@ Tw.MenuComponent.prototype = {
     if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
+    $('.h-menu a').focus();
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
@@ -519,6 +521,7 @@ Tw.MenuComponent.prototype = {
         item.hasChildren = item.children.length > 0 ? true : false;
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
         item.isLink = !!item.menuUrl && item.menuUrl !== '/';
+        item.isExternalLink = !!item.menuUrl && item.menuUrl.indexOf('http') !== -1;
 
         // Edit: Kim inhwan
         var menu_url = item.menuUrl;
@@ -658,5 +661,14 @@ Tw.MenuComponent.prototype = {
     }
 
     // this._menuSearchComponent.focus();
+  },
+  _onDepthOpened: function (e) {  // 웹접근성 aria-pressed 적용
+    var $btn = $(e.currentTarget);
+    var pressed = $btn.attr('aria-pressed');
+    if (pressed === 'true') {
+      $btn.attr('aria-pressed', false);
+    } else {
+      $btn.attr('aria-pressed', true);
+    }
   }
 };

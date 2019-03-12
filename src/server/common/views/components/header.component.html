@@ -145,9 +145,6 @@
         <!-- //footer -->
     </div>
 
-    <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
-
-
     <div class="searchbox-header fe-search-section none">
         <div class="sch-form">
             <span class="inputbox">
@@ -176,6 +173,8 @@
             </ul>
         </div>
     </div>
+
+    <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
 </div>
 <!-- // #common-menu -->
 
@@ -190,7 +189,7 @@
                     {{#if loginNeed}}
                     <button class="bt fe-bt-login">
                     {{else if isLink}}
-                    <button class="bt fe-menu-link" value="{{menuUrl}}">
+                    <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>
                     {{else}}
                     <button class="bt">
                     {{/if}}
@@ -207,7 +206,7 @@
                         </span>
                     </button>
                     {{#if hasChildren}}
-                    <button class="more">하위메뉴 보기</button>
+                    <button class="more" aria-pressed="false">하위메뉴 보기</button>
                     {{/if}}
                 </div>
                 {{#if hasChildren}}
@@ -221,7 +220,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -230,7 +229,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
                         {{/if}}
                     </ul>
                     {{/if}}
@@ -243,7 +242,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -264,7 +263,7 @@
                         {{#if loginNeed}}
                         <button class="bt fe-bt-login">
                             {{else if isLink}}
-                            <button class="bt fe-menu-link" value="{{menuUrl}}">
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>
                                 {{else}}
                                 <button class="bt">
                                     {{/if}}
@@ -282,7 +281,7 @@
                                     </span>
                                 </button>
                                 {{#if hasChildren}}
-                                <button class="more">하위메뉴 보기</button>
+                                <button class="more" aria-pressed="false">하위메뉴 보기</button>
                                 {{/if}}
                     </div>
                     {{#if hasChildren}}
@@ -292,7 +291,7 @@
                             {{#if loginNeed}}
                             <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                             {{else}}
-                            <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                            <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
                             {{/if}}
                             {{/each}}
                         <ul>
