@@ -90,13 +90,11 @@
                 <!--</div>-->
                 <% } %>
             </li>
-
-            <!--<% if (locals.pageInfo) { %>-->
-            <!--<li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>-->
-            <!--<% } else { %>-->
-            <!--<li><button type="button"><i class="icon-gnb-share-d"><span class="blind">share disabled</span></i></button></li>-->
-            <!--<% } %>-->
-            <li><button type="button"><i class="icon-gnb-share-d"><span class="blind">share disabled</span></i></button></li>
+            <% if (locals.pageInfo && pageInfo.menuShrYn === 'Y') { %>
+            <li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
+            <% } else { %>
+            <li><button type="button <%= pageInfo.menuShrYn %>"><i class="icon-gnb-share-d"><span class="blind">share disabled</span></i></button></li>
+            <% } %>
         </ul>
     </div>
     <% } else { %>
