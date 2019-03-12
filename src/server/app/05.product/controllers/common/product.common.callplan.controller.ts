@@ -56,6 +56,10 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({});
     }
 
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {
+      return Observable.of({ code: '00' });
+    }
+
     const reqParams = FormatHelper.isEmpty(plmProdList) ? {} : { mappProdIds: (plmProdList.map((item) => {
         return item.plmProdId;
       })).join(',') };
