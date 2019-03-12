@@ -293,9 +293,9 @@ Tw.MembershipBenefitBrandList.prototype = {
           }
 
           if(parseInt(this._lastSchParam.pageNo,10) * 20 < parseInt(resp.result.totalCnt, 10)){
-            $('#frchs-bt-more').show();
+            $('#frchs-bt-more').show().attr('aria-hidden', false);
           }else {
-            $('#frchs-bt-more').hide();
+            $('#frchs-bt-more').hide().attr('aria-hidden', true);
           }
         }
       }, this))

@@ -33,13 +33,13 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     if ( this.resData.childLineInfo && this.resData.childLineInfo.length > 0 ) {
       this._getChildBillInfo();
     } else {
-      $('#divChildListHaeder').hide();
+      $('#divChildListHaeder').hide().attr('aria-hidden', true);
     }
 
     if ( this.resData.reqQuery.line ) {
       //특정 회선 선택
       this.$wrapHbPaidAmtSvcCdListArea.hide();
-      $('#fe-bill-sum-list').hide();
+      $('#fe-bill-sum-list').hide().attr('aria-hidden', true);
       this._getUseBillsInfo();
       this._searchNmSvcTypeFun();
     }

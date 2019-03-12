@@ -135,10 +135,10 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
       .done($.proxy(function(resp){
         if(!resp.result.list || resp.result.list.length === 0){
-          $('#fe-contents-empty').show();
+          $('#fe-contents-empty').show().attr('aria-hidden', false);
           return;
         } else {
-          $('#fe-contents-empty').hide();
+          $('#fe-contents-empty').hide().attr('aria-hidden', true);
         }
 
         var list = resp.result.list;
@@ -217,6 +217,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
    */
   _goTmbrshpApp: function(){
     var url = $(this).attr('href');
+    $(this).attr('target', '_blank');
     $(this).on('click', function(){
 
       Tw.Popup.openModalTypeATwoButton(

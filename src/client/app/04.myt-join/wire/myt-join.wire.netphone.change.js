@@ -46,15 +46,15 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
    * @private
    */
   _onBlurInputPhone: function(event){
-    this.$errNoPhoneNum.hide();
-    this.$errNotPhoneNum.hide();
+    this.$errNoPhoneNum.hide().attr('aria-hidden', true);
+    this.$errNotPhoneNum.hide().attr('aria-hidden', true);
 
     if(!$(event.target).val()){
-      this.$errNoPhoneNum.show();
+      this.$errNoPhoneNum.show().attr('aria-hidden', false);
       return;
     }
     if(!this._isPhoneNum($(event.target).val())){
-      this.$errNotPhoneNum.show();
+      this.$errNotPhoneNum.show().attr('aria-hidden', false);
     }
   },
 
@@ -79,8 +79,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     this._resetPhoneNum($input);
 
     if($input.val()){
-      this.$errNoPhoneNum.hide();
-      this.$errNotPhoneNum.hide();
+      this.$errNoPhoneNum.hide().attr('aria-hidden', true);
+      this.$errNotPhoneNum.hide().attr('aria-hidden', true);
     }
 
     // 전화번호 체크
@@ -89,7 +89,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
       this.$btnSearch.removeAttr('disabled');
     } else {
       if(value && value.length >= 9){
-        this.$errNotPhoneNum.show();
+        this.$errNotPhoneNum.show().attr('aria-hidden', false);
       }
 
       if( !this.$inputBoxPhone.hasClass('error') ){
@@ -103,8 +103,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     //this.$inputPhone.val('');
     this.$inputBoxPhone.removeClass('error');
     this.$btnSearch.attr('disabled', true);
-    this.$errNotPhoneNum.hide();
-    this.$errNoPhoneNum.show();
+    this.$errNotPhoneNum.hide().attr('aria-hidden', true);
+    this.$errNoPhoneNum.show().attr('aria-hidden', false);
   },
 
   _isPhoneNum: function(val){
@@ -113,7 +113,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
 
   _resetPhoneNum: function($input){
     var value = $input.val();
-    // this.$errNotPhoneNum.hide();
+    // this.$errNotPhoneNum.hide().attr('aria-hidden', true);
     // if(value.length >= 4 && value.indexOf('-') === -1){
     //   $input.val(value + '-');
     // }
@@ -135,7 +135,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
    */
   _requestData: function() {
 
-    $('.process-list').hide();
+    $('.process-list').hide().attr('aria-hidden', true);
     //$('.process-list li').removeClass('complete');
     $('.process-list li').removeClass('off').addClass('off');
 
@@ -185,7 +185,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
           compIdx = 2;
         }
         if ( compIdx >= 0 ) {
-          $('.process-list').show();
+          $('.process-list').show().attr('aria-hidden', false);
           $('.process-list li').each(function(idx){
             if( idx <= compIdx ){
               // $(this).addClass('complete');

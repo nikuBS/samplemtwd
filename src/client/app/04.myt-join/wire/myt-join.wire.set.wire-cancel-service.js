@@ -161,7 +161,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     if( !this.dataModel.dcRefdSearch ){
       // 할인 반환금을 조회해 주세요.
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V54);
-      $('#span-err-dcrefund').show();
+      $('#span-err-dcrefund').show().attr('aria-hidden', false);
       return;
     }
 
@@ -185,7 +185,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
             this.infoLi.attr('aria-checked', true);
             this.infoLi.addClass('checked');
             this.infoLi.find('input[type=checkbox]').prop('checked', true);
-            $('#span-err-guide').hide();
+            $('#span-err-guide').hide().attr('aria-hidden', true);
             this.dataModel.infoConfirmBol = true;
             this._formValidateionChk();
           }, this));
@@ -200,15 +200,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.infoLi.attr('aria-checked', false);
       this.infoLi.removeClass('checked');
       this.infoLi.find('input[type=checkbox]').attr('checked', false);
-      $('#span-err-guide').show();
+      $('#span-err-guide').show().attr('aria-hidden', false);
     }
 
   },
   $productLiEvt: function(event) {
     if(this.productLi.find('input[type=checkbox]:checked').length === 0){
-      $('#span-err-prod').show();
+      $('#span-err-prod').show().attr('aria-hidden', false);
     } else {
-      $('#span-err-prod').hide();
+      $('#span-err-prod').hide().attr('aria-hidden', true);
     }
 
     this.dataModel.productList =  this._productChkConfirm(event); // 선택한 항목을 배열에 저장
@@ -221,9 +221,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   select_Termination_inputEvt: function () {
 
     if(this.select_Termination_input.val().length === 0){
-      $('#span-err-date').show();
+      $('#span-err-date').show().attr('aria-hidden', false);
     } else {
-      $('#span-err-date').hide();
+      $('#span-err-date').hide().attr('aria-hidden', true);
     }
     Tw.Logger.info('[해지 요청일]');
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
@@ -266,10 +266,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   _showInputPhoneValid: function(){
 
     var val = this.input_hp.val();
-    $('#spanHpValid').text('');
+    $('#spanHpValid').text('').hide().attr('aria-hidden', true);
 
     if(!val){
-      $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_PHONE);   // 2_V55
+      $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_PHONE)
+        .show().attr('aria-hidden', false);// 2_V55
 
     } else {
 
@@ -280,11 +281,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       if(this.hpAndTelType.find('input:radio[name=radio1]:checked').val() === 'hp'){
         if(!Tw.ValidationHelper.isCellPhone(val)){
-          $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+          $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9).show().attr('aria-hidden', false);
         }
       } else {
         if(!Tw.ValidationHelper.isTelephone(val)){
-          $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.INVALID_PHONE);
+          $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.INVALID_PHONE)
+            .show().attr('aria-hidden', false);
         }
       }
     }
@@ -358,7 +360,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.uncheckPhoneLi();
     this.dataModel.memberPhoneBol = false;
 
-    $('#spanHpValid').text('');
+    $('#spanHpValid').text('').hide().attr('aria-hidden', true);
     Tw.Logger.info('[연락 가능한 연락처 타입]', this.dataModel);
     this._showInputPhoneValid();
     this._formValidateionChk();
@@ -442,7 +444,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
 
     if(!this.memberPhoneObj.hp && !this.memberPhoneObj.tel){
-      $('#span-err-noregcontr').show();
+      $('#span-err-noregcontr').show().attr('aria-hidden', false);
     }
 
     Tw.Logger.info('[회원정보 등록된 연락처 셋팅 완료]', this.memberPhoneObj);
@@ -562,8 +564,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   _getWireCancelFee: function() {
     Tw.Logger.info('[할인반환금조회]');
     // var thisMain = this;
-    this.dataLoading.show();
-    $('#divEmpty').hide();
+    this.dataLoading.show().attr('aria-hidden', false);
+    $('#divEmpty').hide().attr('aria-hidden', true);
     Tw.CommonHelper.startLoading('[data-target="dataLoading"]', 'grey');
     // 스크롤시에 로딩바의 위치가 바뀌므로 조정한다.
     var loadingBarY = parseInt($('.tw-loading').css('top'),0);
@@ -573,12 +575,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     $('.tw-loading').css('top',  loadingBarY);
     $('.tw-loading').css('z-index',  10);
 
-    $('#span-err-dcrefund').hide();
+    $('#span-err-dcrefund').hide().attr('aria-hidden', true);
 
     // $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
     //   .done(function (resp) {
     //     Tw.Logger.info(resp);
-    //     thisMain.dataLoading.hide();
+    //     thisMain.dataLoading.hide().attr('aria-hidden', true);
     //     thisMain._getWireCancelFeeInit(resp);
     //   })
     //   .fail(function (err) {
@@ -588,14 +590,14 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this))
       .fail($.proxy(function(err){
         Tw.CommonHelper.endLoading('[data-target="dataLoading"]');
-        this.dataLoading.hide();
+        this.dataLoading.hide().attr('aria-hidden', true);
         Tw.Error(err.status, err.statusText).pop();
       }, this));
 
   },
   _getWireCancelFeeInit: function(res) {
     Tw.CommonHelper.endLoading(this.dataLoading);
-    this.dataLoading.hide();
+    this.dataLoading.hide().attr('aria-hidden', true);
 
     if( !res || (res.code !== Tw.API_CODE.CODE_00 && res.code !== 'ZINVE8888')){
       Tw.Error(res.code, res.msg).pop();
@@ -608,7 +610,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.cancelFeeInfo = res.result;
 
       if(res.result.penaltyInfo && res.result.penaltyInfo.length <= 0){
-        $('#divEmpty').show();
+        $('#divEmpty').show().attr('aria-hidden', false);
         this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
       }
 
@@ -633,7 +635,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       Tw.Tooltip.separateInit();
 
     } else if ( res.code === 'ZINVE8888' ) {
-      $('#divEmpty').show();
+      $('#divEmpty').show().attr('aria-hidden', false);
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
       this.dataModel.dcRefdSearch = true;
     }
