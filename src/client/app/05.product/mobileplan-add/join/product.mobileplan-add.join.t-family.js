@@ -215,6 +215,12 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$layerIsJoinCheck.show();
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
 
+    if (this.$groupList.find('li').length < 6) {
+      this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnAddLine.attr('disabled', 'disabled').prop('disabled', true);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       var resultText = !Tw.FormatHelper.isEmpty(Tw.PRODUCT_TFAMILY[resp.code]) ?
           Tw.PRODUCT_TFAMILY[resp.code] : resp.msg;
