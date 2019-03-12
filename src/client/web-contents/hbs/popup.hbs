@@ -13,12 +13,7 @@
         </div>
         <div class="popup-contents {{notice_has}} {{tooltip}}" id="alertText"> <!-- tooltip 변수 추가 -->
             <div class="inner-contents">
-                {{#if tagStyle-p}}
-		        <{{tagStyle-p}} class="{{cont_align}}">{{{breaklines contents}}}</{{tagStyle-p}}>
-                {{/if}}
-                {{#if tagStyle-div}}
-		        <{{tagStyle-div}} class="{{cont_align}}">{{{breaklines contents}}}</{{tagStyle-div}}>
-                {{/if}}
+                <div class="{{cont_align}}">{{{breaklines contents}}}</div>
             </div>
             {{#if tooltip_cont}}
             <ul class="cont-tooltip-li">

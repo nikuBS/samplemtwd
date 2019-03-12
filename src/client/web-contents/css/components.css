@@ -29473,6 +29473,8 @@ body.apphome {
     font-size: 1rem; }
   .survey-researchbox .category-type .adminbox-wrap {
     margin-top: 0.625rem; }
+  .survey-researchbox .category-type + .category-type {
+    margin-top: 0.9375rem; }
   .survey-researchbox.type2 {
     margin-top: -0.9375rem; }
     .survey-researchbox.type2 > li {
