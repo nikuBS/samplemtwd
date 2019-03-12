@@ -25,6 +25,9 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _init : function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
     if(this._twoMonthFlag){
       this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,

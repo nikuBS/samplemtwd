@@ -28,6 +28,9 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
 
 Tw.ProductRoamingJoinConfirmInfo.prototype = {
   _pageInit : function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     if(isNaN(this._popupData.preinfo.reqProdInfo.basFeeInfo)){
       this.$rootContainer.find('.tx-bold.vbl').text(this._popupData.preinfo.reqProdInfo.basFeeInfo);
       this.$rootContainer.find('#tex').hide();

@@ -22,6 +22,9 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
 
 Tw.ProductRoamingJoinRoamingSetup.prototype = {
   _bindBtnEvents: function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
