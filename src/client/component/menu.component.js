@@ -6,6 +6,7 @@ Tw.MenuComponent = function (notAboutMenu) {
   $(document).ready($.proxy(function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
+    this.$header = $('#header');
 
     if ( !this.$container.length || !this.$gnbBtn.length ) {
       return;
@@ -93,6 +94,7 @@ Tw.MenuComponent.prototype = {
 
     this.$container.on('click', '#fe-search-input', $.proxy(this._searchFocus, this));
     this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
+    this.$header.on('click', '[data-url]', this._onClickUrlButton);
   },
   _componentReady: function () {
     /* history back에서 메뉴 삭제
@@ -691,5 +693,8 @@ Tw.MenuComponent.prototype = {
     } else {
       $btn.attr('aria-pressed', true);
     }
+  },
+  _onClickUrlButton: function(e) {
+    location.href = e.currentTarget.dataset.url;
   }
 };

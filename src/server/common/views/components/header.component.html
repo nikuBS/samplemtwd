@@ -22,15 +22,15 @@
 
         <div class="h-default">
             <div class="h-menu">
-                <a href="#menu" id="fe-bt-gnb" type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
+                <button type="button" id="fe-bt-gnb" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
             </div>
             <% if (locals.home && locals.home === 'web') { %>
             <div class="h-home-logo">
-                <a href="/main/home" type="button" class="icon-gnb-bi"><span class="blind"><h1>홈으로</h1></span></a>
+                <button data-url="/main/home" type="button" class="icon-gnb-bi"><span class="blind"><h1>홈으로</h1></span></button>
             </div>
             <div class="h-home-tit">
                 <button type="button" class="twrold on"><h1>T world</h1></button> <!-- 활성화시 .on // -->
-                <a href="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</a>
+                <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</button>
                 <!-- 활성화시 .on // -->
             </div>
             <% } else { %>
@@ -39,7 +39,7 @@
             </h1>
             <% } %>
             <div class="h-serarch">
-                <a href="/common/search-main" class="icon-gnb-search"><span class="blind">검색</span></a>
+                <button data-url="/common/search-main" class="icon-gnb-search"><span class="blind">검색</span></button>
             </div>
         </div>
     </div>
