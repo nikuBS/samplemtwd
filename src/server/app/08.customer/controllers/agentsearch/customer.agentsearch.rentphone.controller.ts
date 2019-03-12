@@ -51,7 +51,7 @@ class CustomerAgentsearchRentPhone extends TwViewController {
   private getRentPhoneStores(res: Response, svcInfo: any, pageInfo: any): Observable<Array<Store> | null> {
     return this.apiService.request(API_CMD.BFF_08_0067, {}).map(((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        return resp.result;
+        return resp.result.regionInfoList;
       }
 
       this.error.render(res, {
