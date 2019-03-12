@@ -25,17 +25,17 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
 
   this._lineComponent = new Tw.LineComponent();
 
-  if ( location.hash === '#store' ) {
-    setTimeout($.proxy(function () {
-      skt_landing.action.home_slider({ initialSlide: 1, callback: $.proxy(this._onChangeSlider, this) });
-      skt_landing.action.notice_slider();
-    }, this), 40);
-  } else {
-    setTimeout($.proxy(function () {
-      skt_landing.action.home_slider({ initialSlide: 0, callback: $.proxy(this._onChangeSlider, this) });
-      skt_landing.action.notice_slider();
-    }, this), 40);
-  }
+  // if ( location.hash === '#store' ) {
+  //   setTimeout($.proxy(function () {
+  //     skt_landing.action.home_slider({ initialSlide: 1, callback: $.proxy(this._onChangeSlider, this) });
+  //     skt_landing.action.notice_slider();
+  //   }, this), 40);
+  // } else {
+  //   setTimeout($.proxy(function () {
+  //     skt_landing.action.home_slider({ initialSlide: 0, callback: $.proxy(this._onChangeSlider, this) });
+  //     skt_landing.action.notice_slider();
+  //   }, this), 40);
+  // }
 
   this._cachedDefaultElement();
   this._bindEventStore();
@@ -711,9 +711,9 @@ Tw.MainHome.prototype = {
     }
   },
   _resetHeight: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
-    }
+    // if ( Tw.BrowserHelper.isApp() ) {
+    //   Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+    // }
   },
   _initWelcomeMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -817,7 +817,6 @@ Tw.MainHome.prototype = {
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
     ]).done($.proxy(this._successTosAppBanner, this));
   },
@@ -825,11 +824,10 @@ Tw.MainHome.prototype = {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0005' })
       .done($.proxy(this._successTosWebBanner, this));
   },
-  _successTosAppBanner: function (banner1, banner2, banner3, banner4, banner7) {
+  _successTosAppBanner: function (banner1, banner2, banner3, banner7) {
     var result = [{ target: '1', banner: banner1 },
       { target: '2', banner: banner2 },
       { target: '3', banner: banner3 },
-      { target: '4', banner: banner4 },
       { target: '7', banner: banner7 }];
     this._drawBanner(result);
   },
@@ -975,11 +973,11 @@ Tw.MainHome.prototype = {
     }
   },
   _startLazyRendering: function () {
-    var $homeStore = $('#fe-home-store');
-    if ( $homeStore.length > 0 ) {
-      var tplHomeStore = Handlebars.compile($homeStore.html());
-      this.$container.find('#fe-div-home-store').html(tplHomeStore());
-    }
+    // var $homeStore = $('#fe-home-store');
+    // if ( $homeStore.length > 0 ) {
+    //   var tplHomeStore = Handlebars.compile($homeStore.html());
+    //   this.$container.find('#fe-div-home-store').html(tplHomeStore());
+    // }
     var $doLikeThis = $('#fe-home-do-like-this');
     if ( $doLikeThis.length > 0 ) {
       var tplDoLikeThis = Handlebars.compile($doLikeThis.html());

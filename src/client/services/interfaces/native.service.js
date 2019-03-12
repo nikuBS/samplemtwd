@@ -85,7 +85,7 @@ Tw.NativeService.prototype = {
         $(window).trigger(Tw.NATIVE_BACK);
       }
     } else {
-      if ( /\/main\/home/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
         if ( !!this._gnb && this._gnb.isOpened() ) {
           this._gnb.close();
         } else {

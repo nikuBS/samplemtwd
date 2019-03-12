@@ -429,7 +429,7 @@ Tw.PopupService.prototype = {
       history.back();
       this._historyBack = true;
 
-      if ( /\/main\/home/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
         setTimeout($.proxy(function () {
           Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
           if ( this._historyBack && this._prevHashList.length > 0) {
