@@ -168,10 +168,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           'txt': Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.VALUE.TING
         });
       }
-      data.push({
-        title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.TYPE,
-        list: subList
-      });
+      if (subList && subList.length > 0) {
+        data.push({
+          title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.CHARGE.TYPE,
+          list: subList
+        });
+      }
     }
     this._popupService.open({
         hbs: 'DC_04',// hbs의 파일명
