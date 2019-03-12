@@ -189,6 +189,14 @@ export enum MYT_DATA_RECHARGE_COUPON {
   A20 = '선물받은 리필쿠폰'
 }
 
+export const MYT_DATA_HISTORY = {
+  send: '보냄',
+  recieve: '받음',
+  once: '1회',
+  auto: '자동',
+  recharge: '충전'
+};
+
 export enum PRODUCT_INFINITY_BENEFIT {
   NA00006114 = 'T로밍 OnePass 1개월에 1개,<br>마티나 라운지 이용권 3개월에 1회 제공',
   NA00006115 = '영화예매권 월 2장 무료',
@@ -438,6 +446,12 @@ export const MYT_FARE_COMPLETE_MSG = {
   NUMBER: '번호로',
   SMS: '문자 전송 완료',
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
+};
+
+export const MYT_DATA_HISTORY_BADGE_NAMES = {
+  CHARGE: '충전',
+  RECEIVE: '받음',
+  SEND: '보냄'
 };
 
 export const MYT_DATA_COMPLETE_MSG = {

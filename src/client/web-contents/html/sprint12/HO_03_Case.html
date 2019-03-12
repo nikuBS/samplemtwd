@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li><!--타이틀, 푸터 바로가기 삭제 Grand open 접근성-->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <div style="color:red; margin:40px 0 0 0;">CASE 1. 미 로그인</div>
+                <div class="section-box">
+                    <div class="member-info-box">
+                        <strong class="ti">반갑습니다. 고객님</strong>
+                        <span class="tx">로그인 후 고객님의 정보를 확인하세요.</span>
+                        <div class="btn-area">
+                            <!-- <button type="button" class="btn-round1 btn-style4">간편 로그인하기</button> -->
+                            <button type="button" class="btn-round1 btn-style1">로그인하기</button>
+                        </div>
+                        <p class="desc">아직 T월드 회원이 아니시라면 <button class="bt">회원가입</button> 후 이용해 주세요</p>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 2. 휴대폰 로그인</div>
+                <div class="section-box">
+                    <div class="member-info-box">
+                        <button class="num ff-tg-light">010-12**-34**</button>
+                        <strong class="user">반갑습니다, 윤*연 고객님.</strong>
+                        <strong class="name">패밀리<i class="icon-arrowmore-32"><span class="blind">more</span></i></strong>
+                        <div class="chart-group">
+                            <button class="chart-box">
+                                <!-- .donut-chart.small -->
+                                <div class="donut-chart small">
+                                    <div class="donut-chart-area">
+                                        <!-- loop -->
+                                        <div class="c100 p70"><!-- .p+(0~100) // -->
+                                            <div class="blue"><!-- red, yellow, green, blue // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
+                                        <!-- loop -->
+                                        <div class="c100 p50"><!-- .p+(0~100) // -->
+                                            <div class="red"><!-- red, yellow, green, blue // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
+                                    </div>
+                                </div>
+                                <!-- // .donut-chart.small -->
+                                <div class="legend"><span class="category0"><span>나의 데이터</span></span><span class="category1"><span>T가족모아데이터</span></span> <a href="#none" class="bt">가입하기</a></div>
+                                <!-- 2019.02.22 남은 데이터 화살표 아이콘 수정 -->
+                                <div class="ti-num">
+                                    <strong class="ti">남은 데이터</strong>
+                                    <em class="num"><span class="ff-tg-medium">36.78</span>GB</em>
+                                </div>
+                            </button>
+                            <!-- 2019.02.12 터치 영역 수정 -->
+                            <button class="data-add"><span>데이터</span></button>
+                        </div>
+
+                        <div class="call-message call-message-top">
+                            <button class="call"><i class="icon-call-48"><span class="blind">통화</span></i> <span class="ff-tg-light">1</span>시간 <span class="ff-tg-light">45</span>분</button>
+                            <button class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> 기본제공</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 3. PPS/T Pocket-Fi/T Login 로그인</div>
+                <div class="section-box">
+                    <div class="member-info-box">
+                        <button class="num ff-tg-light">010-12**-34**</button>
+                        <strong class="user">반갑습니다, 윤*연 고객님.</strong>
+                        <strong class="name">패밀리<i class="icon-arrowmore-32"><span class="blind">more</span></i></strong>
+                        <div class="chart-group">
+                            <button class="chart-box">
+                                <!-- .donut-chart.small -->
+                                <div class="donut-chart small">
+                                    <div class="donut-chart-area">
+                                        <!-- loop -->
+                                        <div class="c100 p70"><!-- .p+(0~100) // -->
+                                            <div class="blue"><!-- red, yellow, green, blue // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
+                                        <!-- loop -->
+                                        <div class="c100 p50"><!-- .p+(0~100) // -->
+                                            <div class="red"><!-- red, yellow, green, blue // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
+                                    </div>
+                                </div>
+                                <!-- // .donut-chart.small -->
+                                <!-- 2019.02.22 남은 데이터 화살표 아이콘 수정 -->
+                                <div class="ti-num">
+                                    <strong class="ti">남은 데이터</strong>
+                                    <em class="num"><span class="ff-tg-medium">36.78</span>GB</em>
+                                </div>
+                            </button>
+                            <!-- 2019.02.12 터치 영역 수정 -->
+                            <button class="data-add"><span>데이터</span></button>
+                        </div>
+
+                        <div class="call-message call-message-top">
+                            <button class="call"><i class="icon-call-48"><span class="blind">통화</span></i> <span class="ff-tg-light">1</span>시간 <span class="ff-tg-light">45</span>분</button>
+                            <button class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> 기본제공</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 4. 인터넷.전화.IPTV 로그인</div>
+                <div class="section-box">
+                    <div class="member-info-box">
+                        <button class="num ff-tg-light">010-12**-34**</button>
+                        <strong class="user">반갑습니다, 윤*연 고객님.</strong>
+
+                        <button class="price">
+                            <strong class="ti"><span class="ff-tg-light">8</span>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
+                            <em class="sum"><span class="ff-tg-medium">82,500</span>원</em>
+                            <span class="date"><span class="ff-tg-light">2018.7.1.</span>~<span class="ff-tg-light">2018.7.31.</span></span>
+                            <i class="icon-arrowmore-32"><span class="blind">more</span></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 5. 회선 미 등록</div>
+                <div class="section-box">
+                    <div class="member-non-box">
+                        <strong class="ti"><i class="icon-warning-120"></i> 회선 등록이 필요합니다.</strong>
+                        <p class="tx">아직 등록되지 않은 회선이 <span class="ff-tg-light">12</span>개 있습니다.<br>원활한 서비스 이용을 위해서 적어도 <span class="ff-tg-light">1</span>개의 회선은 등록하셔야 합니다.</p>
+                        <div class="btn-area">
+                            <button type="button" class="btn-round1 btn-style1">회선 등록하기</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 6. 회선 미 보유</div>
+                <div class="section-box">
+                    <div class="member-non-box">
+                        <strong class="ti"><i class="icon-warning-120"></i> 가입하신 회선이 없습니다.</strong>
+                        <p class="tx">SK텔레콤의 가족이 되어 다양하고 편리한 서비스를 이용해 보세요.</p>
+                        <div class="btn-area">
+                            <button type="button" class="btn-round1 btn-style4">휴대폰 보러가기</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

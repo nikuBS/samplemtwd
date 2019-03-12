@@ -32,6 +32,7 @@ Tw.CustomerPraise.prototype = {
     this.$container.on('keydown', '.input > input', $.proxy(this._handleKeydownInput, this));
     this.$reasons.on('keydown', $.proxy(this._handleKeydownInput, this));
     this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
+    this.$container.on('click', '.textarea-type .cancel', $.proxy(this._resetCount, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$reasons.on('keyup', $.proxy(this._handleTypeReasons, this));
@@ -94,21 +95,21 @@ Tw.CustomerPraise.prototype = {
 
     this._selectedType = code;
 
-    this.$container.find('.fe-subject').removeClass('none');
+    this.$container.find('.fe-subject').removeClass('none').attr('aria-hidden', false);
 
     if (!this.$pRole.hasClass('none')) {
-      this.$pRole.addClass('none');
+      this.$pRole.addClass('none').attr('aria-hidden', true);
     }
 
     if (!this.$area.hasClass('none')) {
-      this.$area.addClass('none');
+      this.$area.addClass('none').attr('aria-hidden', true);
     }
 
     switch (code) {
       case this.TYPES.STORE: {
         this._setInputField(selectedValue);
         this._setInputMaxLength(10, 10);
-        this.$area.removeClass('none');
+        this.$area.removeClass('none').attr('aria-hidden', false);
         break;
       }
       case this.TYPES.OFFICE:
@@ -126,7 +127,7 @@ Tw.CustomerPraise.prototype = {
         var currentContents = this.$pRole.text();
         this.$pRole.text(selectedValue.split('(')[0] + currentContents.charAt(currentContents.length - 1));
 
-        this.$pRole.removeClass('none');
+        this.$pRole.removeClass('none').attr('aria-hidden', false);
         break;
       }
     }
@@ -147,7 +148,7 @@ Tw.CustomerPraise.prototype = {
       return this.nodeType === 3;
     })[1];
     $span.nodeValue = $span.nodeValue.replace(originalContent, replace);
-    this.$divRole.removeClass('none');
+    this.$divRole.removeClass('none').attr('aria-hidden', false);
   },
 
   _setInputMaxLength: function(role, subject) {
@@ -209,6 +210,10 @@ Tw.CustomerPraise.prototype = {
 
     this.$reasonBytes.text(Tw.FormatHelper.addComma(String(byteCount)));
     this._setAvailableSubmit();
+  },
+
+  _resetCount: function() {
+    this.$reasonBytes.text('0');
   },
 
   _setAvailableSubmit: function(disabled) {
@@ -286,18 +291,18 @@ Tw.CustomerPraise.prototype = {
   },
 
   _clearForm: function() {
-    this.$divRole.addClass('none');
-    this.$pRole.addClass('none');
-    this.$area.addClass('none');
-    this.$subject.addClass('none');
+    this.$divRole.addClass('none').attr('aria-hidden', true);
+    this.$pRole.addClass('none').attr('aria-hidden', true);
+    this.$area.addClass('none').attr('aria-hidden', true);
+    this.$subject.addClass('none').attr('aria-hidden', true);
     this.$divRole.find('input').val('');
     this.$subject.find('input').val('');
     this.$reasons.val('');
+    this.$container.find('.cancel').css('display', 'none');
     delete this._selectedType;
     delete this._selectedArea;
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);
     this.$area.find('button').text(Tw.CUSTOMER_PRAISE_DEFAULT.AREA);
     this._setAvailableSubmit(true);
   }
-
 };

@@ -554,7 +554,7 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap"><i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i></span>' +
+    '<span class="ico-wrap"><i class="icon-{{svcType}}-80"><span class="blind"></span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}' +
     '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>' +
@@ -567,7 +567,7 @@ Tw.MYT_TPL = {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
       'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
       '<span class="ico-wrap">' +
-      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+      '<i class="icon-{{svcType}}-80"><span class="blind"></span></i>' +
       '</span>' +
       '<span class="cont">' +
       '<span class="info-title">{{nickNm}}' +
@@ -588,7 +588,7 @@ Tw.MYT_TPL = {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
       'data-name="{{nickNm}}" data-num="{{number}}"><button>' +
       '<span class="ico-wrap"><i class="icon-{{className}}-80">' +
-      '<span class="blind">{{className}}</span></i></span><span class="cont">' +
+      '<span class="blind"></span></i></span><span class="cont">' +
       '<span class="info-title">{{nickNm}}</span><span class="info-sub">{{number}}</span>' +
       '</span></button></li>'
   },
@@ -637,19 +637,20 @@ Tw.TERMS_ACTION = {
 
 Tw.MYT_FARE_BILL_GUIDE_TPL = {
   TIT_ICON:[
-    {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
-    {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
-    {SCH_LB:'인터넷', ELEMENT : '<span class="ico-wrap"><i class="icon-internet-48"><span class="blind">internet</span></i></span>'},
-    {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind">pc</span></i></span>'}
+    {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"></span></i></span>'},
+    {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"></span></i></span>'},
+    {SCH_LB:'인터넷', ELEMENT : '<span class="ico-wrap"><i class="icon-internet-48"><span class="blind"></span></i></span>'},
+    {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind"></span></i></span>'}
   ],
   DETAIL_BTN: [
     {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
     {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
+  ASTERISK_TPL: {SCH_ID : '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>'},
   PRICE_DC_POINT: { LABEL:'요금할인', CLASS : 'txt-point'},
   SVC_TYPE_TPL :{
-    ALL: '<i class="icon-whole"><span class="blind">{{svcType}}</span></i>',
+    ALL: '<i class="icon-whole"><span class="blind"></span></i>',
     OTHER: '<span class="bar"></span>{{svcType}}'
   }
 };

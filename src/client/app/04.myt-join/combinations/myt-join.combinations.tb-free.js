@@ -131,7 +131,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       return false;
     } else {  // 입력된 번호 유효할 때
       if (!$error.hasClass('none')) {
-        $error.addClass('none');
+        $error.addClass('none').attr('aria-hidden', true);
       }
       return true;
     }
@@ -149,7 +149,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
 
   _setInvalidInput: function($error, msg) { // 에러스테이트 설정
     if ($error.hasClass('none')) {
-      $error.removeClass('none');
+      $error.removeClass('none').attr('aria-hidden', false);
     }
     $error.text(msg);
   },

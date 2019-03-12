@@ -246,10 +246,6 @@ Tw.MyTFareBillSetChange.prototype = {
     }
     // 우편문 발송주기
     this._checkedElement('billSndCyclCd', this._data.billSndCyclCd);
-    // App 이 아니면 주소록 버튼 숨김
-    if (!Tw.BrowserHelper.isApp()) {
-      this._btnAddr.parent().hide();
-    }
 
     // 복합 안내서 일 경우
     if (this._data.togetherList) {

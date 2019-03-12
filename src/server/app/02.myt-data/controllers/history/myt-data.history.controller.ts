@@ -14,7 +14,8 @@ import {
   ETC_CENTER,
   MYT_DATA_REFILL_TYPES,
   CURRENCY_UNIT,
-  MYT_DATA_CHARGE_TYPES
+  MYT_DATA_CHARGE_TYPES,
+  MYT_DATA_HISTORY_BADGE_NAMES
 } from '../../../../types/string.type';
 
 import DateHelper from '../../../../utils/date.helper';
@@ -109,6 +110,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.DATA_GIFT,
           date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: item.type === '1' ? 'send' : 'recieve',
+          badgeName: item.type === '1' ? MYT_DATA_HISTORY_BADGE_NAMES.SEND : MYT_DATA_HISTORY_BADGE_NAMES.RECEIVE,
           right: amount.data + amount.unit,
           bottom:
             item.giftType === 'GC' ? 
@@ -139,6 +141,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.LIMIT_CHARGE,
           date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: 'recharge',
+          badgeName: MYT_DATA_HISTORY_BADGE_NAMES.CHARGE,
           refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom
@@ -175,6 +178,7 @@ export default class MyTDataHistory extends TwViewController {
             typeName: TypeNames.TING_CHARGE,
             date: DateHelper.getShortDate(key.substring(0.8)),
             badge: 'recharge',
+            badgeName: MYT_DATA_HISTORY_BADGE_NAMES.CHARGE,
             refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
             right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
             bottom
@@ -197,6 +201,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.TING_GIFT,
           date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
+          badgeName: item.opTypCd === '1' ? MYT_DATA_HISTORY_BADGE_NAMES.SEND : MYT_DATA_HISTORY_BADGE_NAMES.RECEIVE,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
@@ -222,6 +227,7 @@ export default class MyTDataHistory extends TwViewController {
             typeName: TypeNames.REFILL_USAGE,
             date: DateHelper.getShortDate(key.substring(0, 8)),
             badge: 'recharge',
+            badgeName: MYT_DATA_HISTORY_BADGE_NAMES.CHARGE,
             right: REFILL_USAGE_DATA_CODES.indexOf(item.copnDtlClCd) >= 0 ? MYT_DATA_REFILL_TYPES.DATA : MYT_DATA_REFILL_TYPES.VOICE,
             bottom: [item.opOrgNm || ETC_CENTER]
           };
@@ -247,6 +253,7 @@ export default class MyTDataHistory extends TwViewController {
             typeName: TypeNames.REFILL_GIFT,
             date: DateHelper.getShortDate(key.substring(0, 8)),
             badge: item.type === '1' ? 'send' : 'recieve',
+            badgeName: item.type === '1' ? MYT_DATA_HISTORY_BADGE_NAMES.SEND : MYT_DATA_HISTORY_BADGE_NAMES.RECEIVE,
             bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
           };
         });

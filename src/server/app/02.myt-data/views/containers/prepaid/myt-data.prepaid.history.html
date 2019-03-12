@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -42,7 +42,7 @@
                     <div class="list-comp-history">
                         <ul class="comp-box">
                             <% Object.keys(voice.histories).reverse().map(date => { %>
-                                <li class="list-box fe-prepaid-voice <%= visibleVoice ? '': 'none' %>" data-key="<%= date %>">
+                                <li class="list-box fe-prepaid-voice <%= visibleVoice ? '': 'none' %>" aria-hidden="<%= !visibleVoice %>" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= voice.histories[date][0].date %></span>
                                     </p>
@@ -55,9 +55,9 @@
                                                     <% if (badge) { %>
                                                         <i class="badge badge-<%= badge.icon %>"><span class="blind"><%= badge.name %></span></i>
                                                     <% } %>
-                                                음성 충전</span>
+                                                    음성 충전</span>
                                                 <span class="stext">
-                                                    <span class="gray-tx"><%= history.payNm %></span>
+                                                    <span class="black-tx"><%= history.payNm %></span>
                                                     <span class="gray-tx"><%= history.cardNm || '신용카드' %></span>
                                                 </span>
                                             </p>
@@ -73,7 +73,7 @@
                                 </li>
                             <% }); %>
                             <%  Object.keys(data.histories).reverse().map(date => { %>
-                                <li class="list-box fe-prepaid-data <%= visibleVoice ? 'none' : ''%>" data-key="<%= date %>">
+                                <li class="list-box fe-prepaid-data <%= visibleVoice ? 'none' : ''%>" aria-hidden="<%= visibleVoice %>" data-key="<%= date %>">
                                     <p class="list-date">
                                         <span class="date-tx"><%= data.histories[date][0].date %></span>
                                     </p>
@@ -106,10 +106,11 @@
                             <% }); %>
                         </ul>
                     </div>
-                    <div class="bt-more <%= totalCount - 20 > 0 ? '' : 'none'%>">
+                    <% const leftCount = totalCount - 20; %>
+                    <div class="bt-more <%= leftCount > 0 ? '' : 'none'%>" aria-hidden="<%= leftCount <= 0 %>">
                         <button>더 보기</button>
                     </div>
-                    <div class="contents-empty <%= totalCount === 0 ? '' : 'none'%>">
+                    <div class="contents-empty <%= totalCount === 0 ? '' : 'none'%>" aria-hidden="<%= totalCount > 0 %>">
                         <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                         <p class="desc">선불폰 충전 내역이 없습니다.</p>
                     </div>

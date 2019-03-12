@@ -15,7 +15,7 @@
         <div class="statement-cont type2">
             <div class="single-list">
                 <span class="title">
-                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind"></span></i></span>
                     <span class="in-tx type2">휴대폰</span>
                 </span>
             </div>
@@ -116,9 +116,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -142,13 +140,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
-                    <a href="/product/callplan?prod_id=<%= commDataInfo.intBillLineList[0].prodId %>">
-                    <button class="wrap-link">
+                    <button class="wrap-link" data-target="goProdPageBtn" data-prod-page-url="/product/callplan?prod_id=<%= commDataInfo.intBillLineList[0].prodId %>">
                             <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
                             <span class="stit"><%= commDataInfo.intBillLineList[0].prodNm %></span>
 
                     </button>
-                    </a>
                 </div>
             </div>
             <!--// .cont-box -->

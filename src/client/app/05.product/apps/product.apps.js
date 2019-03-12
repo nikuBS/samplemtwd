@@ -89,7 +89,10 @@ Tw.ProductApps.prototype = {
       });
 
       this._appendApps();
-      this.$container.find('.etc-page-list').removeClass('none');
+      this.$container
+        .find('.etc-page-list')
+        .removeClass('none')
+        .attr('aria-hidden', false);
     }
   },
 
@@ -118,11 +121,17 @@ Tw.ProductApps.prototype = {
     });
 
     if (Tw.FormatHelper.isEmpty(list)) {
-      this.$container.find('div.app-list-top').addClass('none');
+      this.$container
+        .find('div.app-list-top')
+        .addClass('none')
+        .attr('aria-hidden', true);
     }
 
     this._appendApps();
-    this.$container.find('.etc-page-list').removeClass('none');
+    this.$container
+      .find('.etc-page-list')
+      .removeClass('none')
+      .attr('aria-hidden', false);
   },
 
   _appendApps: function() {
@@ -213,11 +222,17 @@ Tw.ProductApps.prototype = {
 
   _toggleShowInstalled: function(isOn) {
     if (isOn) {
-      this.$list.find('.i-atv').removeClass('none');
-      this.$news.addClass('none');
+      this.$list
+        .find('.i-atv')
+        .removeClass('none')
+        .attr('aria-hidden', false);
+      this.$news.addClass('none').attr('aria-hidden', true);
     } else {
-      this.$list.find('.i-atv').addClass('none');
-      this.$news.removeClass('none');
+      this.$list
+        .find('.i-atv')
+        .addClass('none')
+        .attr('aria-hidden', true);
+      this.$news.removeClass('none').attr('aria-hidden', false);
     }
   }
 };

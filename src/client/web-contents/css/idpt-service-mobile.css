@@ -338,7 +338,8 @@
 .idpt-container .idpt-imgline-list li.five_line { min-height:8.2rem !important; }
 .idpt-container .idpt-imgline-list li > div {display:block; float:left; }
 .idpt-container .idpt-imgline-list li .imgline-subject {display:inline-block; width:30%; max-width:4.5rem}
-.idpt-container .idpt-imgline-list li .imgline-cont {display:inline-block; width:70%; }
+.idpt-container .idpt-imgline-list li .imgline-cont {display:inline-block; width:calc(100% - 4.5rem); -webkit-box-sizing: border-box; box-sizing: border-box; }
+.idpt-container .idpt-imgline-list li.right-arrow .imgline-cont { padding-right:1rem; }
 .idpt-container .idpt-imgline-list li .imgline-first {display:inline-block; width:20%}
 .idpt-container .idpt-imgline-list li .imgline-second {display:inline-block; width:40%; }
 .idpt-container .idpt-imgline-list li .imgline-third {display:inline-block; width:60%; }

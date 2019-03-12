@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <div style="color:red; margin:40px 0 0 0;">CASE 1. 조회 오류</div>
+                <div class="section-box">
+                    <div class="member-non-box">
+                        <strong class="ti"><i class="icon-warning-120"></i> 잠시 후 다시 이용해 주세요</strong>
+                        <p class="tx">안정적으로 실시간 조회를 하실 수 있도록 조회 횟수를 제한하고 있습니다.</p>
+                        <p class="desc"><span class="ff-tg-light">2</span>시간 동안 최대 <span class="ff-tg-light">12</span>회 조회 가능</p>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 2. 이용정지 상태</div>
+                <div class="section-box">
+                    <div class="member-non-box">
+                        <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
+                        <p class="tx">정지 이력이 있어 잔여량 조회 서비스를 이용하실 수 없습니다. 자세한 사항은 고객센터나 <button class="bt">이메일</button>로 문의해 주시기 바랍니다.</p>
+                    </div>
+                </div>
+
+                <div style="color:red; margin:40px 0 0 0;">CASE 3. 점검 중</div>
+                <div class="section-box">
+                    <div class="member-non-box">
+                        <strong class="ti"><i class="icon-warning-120"></i> 서비스 점검 중 입니다.</strong>
+                        <p class="tx">잠시 후 다시 이용해 주세요</p>
+                        <p class="desc">2019.3.1. 00:00 ~ 2019.3.1. 06:00</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

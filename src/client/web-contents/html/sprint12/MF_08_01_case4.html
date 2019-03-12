@@ -27,7 +27,7 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
 
@@ -35,87 +35,95 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="h-belt">
-                <div class="h-default">
-                    <div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-                    <div class="h-tit">납부 상세  내역</div>
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">납부 상세내역</div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
-                <div class="cont-box noborder nogaps bgnone">
-                    <div class="myfare-result-wrap">
-                        <div class="myfare-list">
-                            <ul>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>납부 금액</dt>
-                                        <dd class="tx-bold"><span class="number">11,000</span>원</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>납부 내용</dt>
-                                        <dd class="tx-bold"><span class="number">2018.05</span>월 청구분</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>요청 내역</dt>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>요청 결과</dt>
-                                        <dd>납부 완료</dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>요청 일시</dt>
-                                        <dd><span class="number">2018.5.23.</span></dd>
-                                    </dl>
-                                    <dl class="show-data detail">
-                                        <dt>승인 일시</dt>
-                                        <dd><span class="number">2018.05.26</span></dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>카드 종류</dt>
-                                        <dd class="tx-bold">현대카드</dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>카드번호</dt>
-                                        <dd class="tx-bold"><span class="number">O12312*********</span></dd>
-                                    </dl>
-                                </li>
-                                <li>
-                                    <dl class="show-data">
-                                        <dt>승인번호</dt>
-                                        <dd class="tx-bold"><span class="number">1234566</span></dd>
-                                    </dl>
-                                </li>
-                            </ul>
-                        </div>
+                <div class="cont-box nogaps-hoz bg-payment">
+                    <div class="user-bill-detail">
+                        <ul>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">납부일자</span>
+                                    <span class="val">2018.5.23.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">납부금액</span>
+                                    <span class="val">27,000원</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">청구금액</span>
+                                    <span class="val">27,000원</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">청구년월</span>
+                                    <span class="val">2018.4.</span>
+                                </div>
+                                <div class="sub-text">
+                                    <span class="tit">이용기간</span>
+                                    <span class="val">2018.3.23.~2018.4.23.</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">은행명</span>
+                                    <span class="val">국민은행</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">계좌번호</span>
+                                    <span class="val">12312*********</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">사유</span>
+                                    <span class="val">인출 청구전</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="head-text">
+                                    <span class="tit">구분</span>
+                                    <span class="val">당월 + 미납</span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+                    <!-- 개인일 경우 -->
+                    <ul class="bt-slice solid mt20">
+                        <li><button type="button" class="btn-round1 btn-style4">현금영수증 발행내역</button></li>
+                    </ul>
+                    <!-- 기업일 경우 -->
+                    <ul class="bt-slice solid mt20">
+                        <li><button type="button" class="btn-round1 btn-style4">세금계산서 발행내역</button></li>
+                    </ul>
                 </div>
                 <!--// .cont-box -->
             </div>

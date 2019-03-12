@@ -1287,9 +1287,15 @@
         margin: -1.0625rem; }
     .popup .popup-info.full {
       /* MV_01_02_02_01 */
-      padding: 0; }
+      padding: 0;
+      width: calc(100% - 3.5rem);
+      max-width: 30.5rem;
+      left: 50%;
+      right: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
       .popup .popup-info.full .popup-contents {
-        margin-bottom: 0; }
+        margin: 0; }
       .popup .popup-info.full .img-type img {
         width: 100%;
         vertical-align: top; }
@@ -2749,7 +2755,6 @@ body.apphome {
 .main-charge-box {
   overflow: hidden;
   height: 12.75rem;
-  background: #3583e3;
   color: #fff; }
   .main-charge-box.section-swiper-box {
     min-height: 12.75rem;
@@ -3066,7 +3071,13 @@ body.apphome {
   left: 0;
   bottom: 0;
   z-index: 25;
-  width: 100%; }
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
 
 .fixed-b {
   position: fixed;
@@ -3753,7 +3764,9 @@ body.apphome {
     font-size: 0.9375rem;
     font-weight: 400;
     text-align: left;
-    line-height: 3.75rem; }
+    line-height: 3.75rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
     .member-info-box .call-message .message .icon-sms-48 {
       position: relative;
       top: -2px; }

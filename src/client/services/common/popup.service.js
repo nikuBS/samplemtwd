@@ -20,6 +20,11 @@ Tw.PopupService.prototype = {
   _onHashChange: function (hash) {
     this._historyBack = false;
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
+    var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
+    if (lastHash) {
+      var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
+      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null; 
+    }
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
       if ( ('#' + hash.base) === lastHash.curHash ) {
@@ -27,6 +32,9 @@ Tw.PopupService.prototype = {
         this._prevHashList.pop();
         Tw.Logger.info('[Popup Close]');
         this._popupClose(closeCallback);
+        if ($popupLastFocus) {
+          $popupLastFocus.focus();
+        }
       }
     } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
       if ( Tw.BrowserHelper.isSamsung() ) {
@@ -49,6 +57,13 @@ Tw.PopupService.prototype = {
       this._sendOpenCallback($currentPopup);
     }
     Tw.Tooltip.popInit($popups.last());
+
+    // 포커스 영역 저장 후 포커스 이동
+    var thisHash = this._prevHashList[this._prevHashList.length -1];
+    if ($(':focus').length && thisHash && !$(':focus').is('.tw-popup')) {
+      $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
+    }
+    $currentPopup.attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {

@@ -42,7 +42,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
-    this.$container.on('keypress', 'input', $.proxy(this._preventDot, this));
+    this.$container.on('keypress keydown', 'input', $.proxy(this._preventDot, this));
 
     this.$container.on('click', '.fe-btn_cancel', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
@@ -50,7 +50,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _clear: function(e) {
     var $elem = $(e.currentTarget),
-      $elemParent = $elem.parens('li');
+      $elemParent = $elem.parents('li');
 
     this._toggleError($elemParent.find('.error-txt'), false);
   },
@@ -66,6 +66,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _preventDot: function(e) {
     var key = e.charCode ? e.charCode : e.keyCode;
+
     if (key === 46) {
       e.preventDefault();
       return false;
@@ -76,6 +77,10 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     var $elem = $(e.currentTarget),
       $inputPasswordVal = $.trim(this.$inputPassword.val()),
       $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+
+    var onlyNumber = $(e.currentTarget).val();
+    $(e.currentTarget).val('');
+    $(e.currentTarget).val(onlyNumber);
 
     if ($elem.hasClass('fe-input-password') && Tw.InputHelper.isEnter(e)) {
       return this.$confirmPassword.focus();

@@ -95,7 +95,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _detectInput: function(maxLength, e) {
-    var $elem = $(e.currentTarget);
+    var $elem = $(e.currentTarget),
+      elemVal = $elem.val();
+
+    // input number 에 점(.) 입력 되는 것 차단
+    $elem.val('');
+    $elem.val(elemVal);
+
+    // 숫자만 입력되도록 처리
     $elem.val($elem.val().replace(/[^0-9]/g, ''));
 
     if ($elem.val().length > maxLength) {
@@ -121,19 +128,21 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     if ($elem.hasClass('fe-num_input') && $elem.val().length < 9) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.LESS_LENGTH);
+    } else {
+      this.$error0.hide();
     }
 
     if ($elem.hasClass('fe-num_input') && !Tw.ValidationHelper.isCellPhone($elem.val())) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.WRONG_NUM);
+    } else {
+      this.$error0.hide();
     }
-
-    this.$error0.hide();
 
     if ($elem.hasClass('fe-input_birth') && this.$inputBirth.val().length !== 8) {
       return this._setErrorText(this.$error1, Tw.PRODUCT_TFAMILY.WRONG_BIRTH);
+    } else {
+      this.$error1.hide();
     }
-
-    this.$error1.hide();
   },
 
   _setErrorText: function ($elem, text) {
@@ -190,18 +199,27 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       return;
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0172, {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
-    }).done($.proxy(this._procCheckJoinRes, this));
+    }).done($.proxy(this._procCheckJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procCheckJoinRes: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
     this.$btnAddLine.parent().hide();
     this.$btnRetry.parent().hide();
 
     this.$layerIsJoinCheck.show();
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
+
+    if (this.$groupList.find('li').length < 6) {
+      this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnAddLine.attr('disabled', 'disabled').prop('disabled', true);
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       var resultText = !Tw.FormatHelper.isEmpty(Tw.PRODUCT_TFAMILY[resp.code]) ?
@@ -344,11 +362,12 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        btList: [{ link: '/myt-data/familydata', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
+        btList: [{ link: '/myt-data/familydata', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.TFAMILY }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
+        basicTxt: Tw.PRODUCT_TFAMILY.SUCCESS_GUIDE,
         isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''

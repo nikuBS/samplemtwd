@@ -24,7 +24,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.templateIndex = 0;
     this.amt = $('.fe-select-amount').attr('data-amount');
     this.chargeCd = $('.fe-charge').attr('data-amount');
-    this.wrap_template.html(this.tpl_recharge_once());
 
     this._getPpsInfo();
   },
@@ -32,8 +31,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _cachedElement: function () {
     this.wrap_template = $('.fe-wrap-template');
     this.$request_recharge_auto = $('.fe-request-recharge');
-    this.tpl_recharge_once = Handlebars.compile($('#tpl_recharge_once').html());
-    this.tpl_recharge_amount = Handlebars.compile($('#tpl_recharge_amount').html());
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
@@ -91,18 +88,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _validateCard: function (e) {
     var $cardNumber = $(e.currentTarget);
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
     } else {
       this._getCardInfo();
     }
 
     if ( $cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind');
-      $($error.get(1)).removeClass('blind');
+      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -126,7 +123,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
     } else {
       var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
-      $($credit_error).removeClass('blind');
+      $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
       this.$request_recharge_auto.prop('disabled', true);
     }
   },
@@ -136,13 +133,13 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var cardY = $('.fe-card-y');
     var cardM = $('.fe-card-m');
 
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( cardY.val() === '' || cardM.val() === '' ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) &&
       this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -171,9 +168,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       }
 
       if (!$target.val()) {
-        $($error.get(0)).removeClass('blind');
+        $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
       } else {
-        $($error.get(0)).addClass('blind');
+        $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
       }
     }
 
@@ -199,13 +196,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $elTarget = $(e.currentTarget);
     var currentTemplateIndex = $elTarget.parent().find('li').index($elTarget);
 
-    if ( this.templateIndex !== currentTemplateIndex ) {
-      if ( currentTemplateIndex === 0 ) {
-        this.wrap_template.html(this.tpl_recharge_once());
-      } else {
-        this.wrap_template.html(this.tpl_recharge_amount());
-      }
-    }
+    var chargeWrap = this.$container.find('.fe-charge-wrap:visible');
+    chargeWrap.siblings().removeClass('none').attr({ 'aria-hidden': 'false', 'required': '' });
+    chargeWrap.addClass('none').attr('aria-hidden', 'true').removeClass('required');
+
+
+    // if ( this.templateIndex !== currentTemplateIndex ) {
+    //   if ( currentTemplateIndex === 0 ) {
+    //     this.wrap_template.html(this.tpl_recharge_once());
+    //   } else {
+    //     this.wrap_template.html(this.tpl_recharge_amount());
+    //   }
+    // }
 
     this.templateIndex = currentTemplateIndex;
     this._checkIsAbled();
@@ -281,10 +283,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton[0]).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty($($elButton[0]).attr('data-amount')) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 

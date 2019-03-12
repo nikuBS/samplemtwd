@@ -37,6 +37,7 @@
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">
+                <h2 class="blind">내용</h2>
                 <div class="container">
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- .cont-box -->
@@ -94,7 +95,7 @@
                                                             <li class="<%= options[i].isTplan ? 'type01' : ''; %>" >
                                                                 <span class="form">
                                                                     <input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small <%= options[i].dataVoiceClCd === 'V' ? 'type2' : '' %>" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
-                                                                    <label for="sradio<%= i + 1 %>">라디오박스</label>
+                                                                    <label for="sradio<%= i + 1 %>"><%= options[i].copnDtlClNm %>리필</label>
                                                                 </span>
                                                                 <div class="cont">
                                                                     <span class="stit"><%= options[i].copnDtlClNm %>리필</span>

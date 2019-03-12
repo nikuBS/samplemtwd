@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -51,7 +51,7 @@
                         research.questions.map((question, qIdx) => { 
                         const isEssential = question.mndtAnswYn === 'Y';
                         let hasEnd = false; %>
-                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" aria-hidden="<%= qIdx !== 0 %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
                             <div class="poll-sub-tit"><%= question.inqDtlCtt %></div>
                             <% switch (question.inqItmTypCd) { 
                                 case '0': {
@@ -73,10 +73,10 @@
                                                 <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <% if (exam.image) { %>
                                                         <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>" data-next-question="<%= exam.nxtInqItmNum %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>" data-next-question="<%= exam.nxtInqItmNum %>" data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
                                                         <div class="poll-text" id="aria-comp-q<%= qIdx %>-radio<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                     <% } else { %>
-                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>"  data-next-question="<%= exam.nxtInqItmNum %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>"  data-next-question="<%= exam.nxtInqItmNum %>"  data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
                                                         <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
                                                     <% } %>
                                                 </li>
@@ -84,7 +84,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea><% } %>
                                 <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
                                 <% break;
                                 }
@@ -107,10 +107,10 @@
                                                 <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <% if (exam.image) { %>
                                                         <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"/><!-- 체크상태일 경우 checked="checked" -->
+                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx%>-checkbox<%= idx %>" data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
                                                         <div class="poll-text" id="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                     <% } else { %>
-                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>"  data-is-etc="<%= exam.isEtc %>"/><!-- 체크상태일 경우 checked="checked" -->
                                                         <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
                                                     <% } %>
                                                 </li>
@@ -118,7 +118,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea><% } %>
                                 <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
                                 <% break;
                                 }

@@ -17,6 +17,7 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this._init();
+  this._showAuthState = false;
   //this._changeList();
 };
 
@@ -59,12 +60,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this.$inputElement.val(tempVal);
   },
 
-  _addPhoneNumOnList : function () {
+  _addPhoneNumOnList : function (evt) {
     if(this._addedList.length>=5){
 
       this._openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,evt);
       return;
     }
     var targetValue = this.$inputElement.val();
@@ -79,7 +80,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       'serviceNumber3' : tempPhoneNum[2]
     };
     if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE,evt);
       return;
     }
     var requestValue = {
@@ -90,10 +91,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
     }, this));
   },
   _changeList : function(){
@@ -149,13 +150,14 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$confirmBtn.attr('disabled','disabled');
     }
   },
-  _openAlert : function (msg,title) {
+  _openAlert : function (msg,title,evt) {
     this._popupService.openAlert(
       msg,
       title,
       null,
       $.proxy(function () {
         this.$addBtn.removeAttr('style');
+        $(evt.currentTarget).focus();
       }, this)
     );
     if(!this.$addBtn.attr('disabled')){
@@ -174,7 +176,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _removeEvt : function (btnEvt) {
     if(this._addedList.length<=1){
-      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN,btnEvt);
       return;
     }
     this._popupService.openConfirmButton(
@@ -184,12 +186,14 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._popupService.close();
         this._removeOnList(btnEvt);
       },this),
-      null,
+      function () {
+        $(btnEvt.currentTarget).focus();
+      },
       Tw.BUTTON_LABEL.CLOSE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
-  _removeOnList : function ($args) {
-    var $target = $($args.currentTarget);
+  _removeOnList : function (evt) {
+    var $target = $(evt.currentTarget);
     //var selectedIndex = $target.data('idx');
     var selectedIndex = $target.parents('li').index();
     var requestValue = {
@@ -201,10 +205,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._addedList.splice(selectedIndex,1);
         $target.parents('li').remove();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
     }, this));
   },
   _bindRemoveEvt : function () {
@@ -238,16 +242,23 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     }
     return returnVal;
   },
-  _openAuthAlert : function () {
+  _openAuthAlert : function (evt) {
     this._popupService.openConfirmButton(
       Tw.PRODUCT_AUTH_ALERT_STR.MSG,
       Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
       $.proxy(this._showAuth,this),
-      null,
+      $.proxy(function () {
+        if(!this._showAuthState){
+          $(evt.currentTarget).focus();
+        }else{
+          this._showAuthState = false;
+        }
+      },this),
       Tw.BUTTON_LABEL.CANCEL,
       Tw.BUTTON_LABEL.CONFIRM);
   },
   _showAuth : function () {
+    this._showAuthState = true;
     this._popupService.close();
     $('.fe-bt-masking').trigger('click');
   }

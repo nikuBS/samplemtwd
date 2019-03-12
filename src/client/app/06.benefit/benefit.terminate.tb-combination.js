@@ -31,6 +31,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _openConfirmAlert: function() {
+    this._isTerminate = false;
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this));
@@ -60,6 +61,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _joinCancel: function() {
+    this._cancelFlag = false;
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.TITLE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null, $.proxy(this._setCancelFlag, this), $.proxy(this._bindJoinCancelPopupCloseEvent, this));

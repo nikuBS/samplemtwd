@@ -32,11 +32,11 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
-    this.$container.on('click', '#confirm_info', $.proxy(this._confirmInformationSetting, this));
+    this.$container.on('click', '#do_confirm', $.proxy(this._confirmInformationSetting, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
-    this.$confirmBtn = this.$container.find('#confirm_info');
+    this.$confirmBtn = this.$container.find('#do_confirm');
     this.$alarmTemplate = this.$container.find('#alarm_template');
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },

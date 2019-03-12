@@ -34,7 +34,10 @@ Tw.CustomerResearch.prototype = {
   _handleSelectAnswer: function(e) {
     var $root = this.$questions[this._currentIdx],
       next = e.currentTarget.getAttribute('data-next-question'),
-      $btn = $root.find('.bt-blue1 button');
+      isEtc = e.currentTarget.getAttribute('data-is-etc'),
+      $btn = $root.find('.bt-blue1 button'),
+      $etc = $root.find('.fe-etc-area'),
+      enable = false;
 
     if ($root.find('li.checked').length > 0) {
       this._nextIdx = this._currentIdx + 1;
@@ -58,10 +61,27 @@ Tw.CustomerResearch.prototype = {
           }
         }
       }
-      $btn.attr('disabled', false);
+
+      enable = true;
+      if ($etc.length > 0) {
+        if (isEtc === 'true') {
+          $etc.removeAttr('disabled');
+          enable = $etc.text().length > 0;
+        } else {
+          $etc.attr('disabled', true).val('');
+        }
+      }
+    }
+
+    this._setButtonStatus($btn, enable);
+  },
+
+  _setButtonStatus: function($btn, enable) {
+    if (enable) {
+      $btn.removeAttr('disabled');
       this._setProgress(this._nextIdx);
     } else {
-      $root.find('.bt-blue1 button').attr('disabled', true);
+      $btn.attr('disabled', true);
       this._setProgress(this._currentIdx);
       delete this._nextIdx;
     }
@@ -77,10 +97,10 @@ Tw.CustomerResearch.prototype = {
     var $next = this.$questions[next];
 
     e.currentTarget.setAttribute('data-next-question', next);
-    this.$questions[this._currentIdx].addClass('none');
+    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true);
 
     if ($next) {
-      $next.removeClass('none');
+      $next.removeClass('none').attr('aria-hidden', false);
       $next.find('.fe-go-prev').attr('data-prev-question', this._currentIdx);
     }
 
@@ -94,9 +114,9 @@ Tw.CustomerResearch.prototype = {
     var prev = Number(e.currentTarget.getAttribute('data-prev-question')),
       $prev = this.$questions[prev];
 
-    this.$questions[this._currentIdx].addClass('none');
+    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true);
     if ($prev) {
-      $prev.removeClass('none');
+      $prev.removeClass('none').attr('aria-hidden', false);
     }
 
     this._nextIdx = this._currentIdx;

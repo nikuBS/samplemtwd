@@ -27,88 +27,72 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
-
 
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
+		<div id="header" class="header-wrap">
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-					<div class="h-tit">나의 가입 정보</div>
-					<div class="h-serarch">
-						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
 					</div>
+
+                    <div class="h-tit">나의 가입 정보</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
 				</div>
 			</div>
-        </div>
-        <!--// #header -->
+		</div>
+        <!--// #header --> 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <div class="myinfo-wrap">
-                        <div class="myinfo-cont">
-                            <div class="subtitle">
-                                <span class="name"><span class="blind">디바이스 펜네임</span>갤럭시 S9</span>
-                                <button class="nickname-ico"><span class="blind">닉네임 등록 페이지 이동</span></button>
+
+                    <div class="my-subscription-wrap">
+                        <div class="my-device-type">
+                            <!-- Grand open 접근성 수정 -->
+                            <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind"></span></i></span>
+                            <!-- // Grand open 접근성 수정 -->
+                            <div class="user-info">
+                                <span class="username"><span class="blind">가입자명</span>홍*동</span>
+                                <span class="device"><span class="blind">디바이스 펜네임/닉네임</span>갤럭시 S9</span>
+                                <!--접근성 수정-->
+                                <button class="btn-edit"><i class="icon-name-edit-32"><span class="blind"></span></i><span class="blind">닉네임 등록 페이지 이동</span></button>
+                                <!-- //접근성 수정-->
                             </div>
-                            <div class="title">
-                                <span><span class="blind">가입자명</span>홍*동</span>
-                                <span><span class="blind">회선정보</span>010-12**45**</span>
-                            </div>
-                            <span class="subtitle2"><span class="blind">현재 가입되어 있는 상품 정보</span>PPS 스마트폰 플러스</span>
-                        </div>
-                        <div class="ico-wrap">
-                            <span class="ico-ill-type1"></span>
+                            <div class="p-num"><span class="blind">회선정보</span>010-12**45**</div>
                         </div>
 
-                        <div class="info-detail">
-                            <!-- 더보기 -->
-                            <div class="widget">
-                                <div class="widget-box toggle">
-                                    <button class="bt-toggle bt-detail" role="button" aria-pressed="false" title="나의 가입 정보 상세 더보기">더보기</button>
-                                    <div class="toggler">
-                                        <div class="basic-list">
-                                            <ul>
-                                                <li>
-                                                    <span class="title">개통 일자</span>
-                                                    <span class="tx-cont">2018.05.23</span>
-                                                </li>
-                                                <li>
-                                                    <span class="title">고객보호 비밀번호</span>
-                                                    <span class="tx-cont">사용중 <button class="bt-link-tx underline">비밀번호 변경</button></span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--// 더보기 -->
+                        <div class="basic-list mt20">
+                            <ul>
+                                <li>
+                                    <span class="title">개통일자</span>
+                                    <span class="tx-cont">2018.5.23.</span>
+                                </li>
+                                <li class="pt10">
+                                    <span class="title">고객보호 비밀번호<button class="bt-link-tx underline ml8">변경</button></span>
+                                    <span class="tx-cont">사용 중</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-					<ul class="bt-slice mt36">
-						<li class="bt-white2">
-							<button>나의 요금제</button>
-						</li>
-					</ul>
+
                 </div>
                 <!--// .cont-box -->
 				
@@ -116,79 +100,101 @@
                 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                   <ul class="link-long-list">
+                   <ul class="full-link-list">
                         <li>
-                            <div class="link-long">
-                                <button>나의 부가 상품
-                                    <span class="tx-sub">
-                                        <span class="normal">유료 2개 / 무료 15개</span>
-                                        <span class="ico"><span class="blind">나의 부가 상품 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">나의 요금제</span>
+                                    <span class="text">PPS 스마트폰 플러스</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">나의 부가서비스</span>
+                                    <span class="text">유료 2개 / 무료15개</span>
+                                </span>
+                            </button>
+                        </li>
+						<li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">가입상담예약 신청 및 조회</span>
+                                </span>
+                            </button>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
-                <div class="banner-area">
-                    <a href=""><img src="/img/dummy/MS-bn01.jpg" title="T 건강걷기 X AIA Vitality 런칭" alt="T멤버십 회원이라면 아메리카노 5잔 득템 기회!"/></a>
-                </div>
-                
-                <!-- .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <div class="cont-box nogaps noborder">
-                    <ul class="link-long-list nobg">
-                        <li>
-                            <div class="link-long">
-                                <button>
-                                    <span class="ico-thum"></span>회원정보관리
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">회원정보관리 자세히보기</span></span>
-                                    </span>
-                                </button>
+                    <div class="main-slide-banner slide-pagingtype pg-rtop">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button>
-                                    <span class="ico-thum"></span>공인인증 등록/변경
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">공인인증 등록/변경 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button><span class="ico-thum"></span>회선관리
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">회선관리 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button><span class="ico-thum"></span>납부방법
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">납부방법 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="link-long">
-                                <button><span class="ico-thum"></span>나의 혜택
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">나의 혜택 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
+                        </div>
+                        <!--// .widget -->
+                    </div>
                 </div>
                 <!--// .cont-box -->
 
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <!--Grand open 접근성 수정-->
+                    <ul class="pg-link-list">
+                        <li>
+                            <button>
+                                <i class="icon-member-40"><span class="blind"></span></i>회원정보관리
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-certify-40"><span class="blind"></span></i>공인인증 등록 / 변경 
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-member-40"><span class="blind"></span></i>회원정보관리 &gt; 회선관리
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 납부방법
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 나의 혜택 / 할인  
+                            </button>
+                        </li>
+                    </ul>
+                    <!--접근성 수정-->
+                </div>
+                <!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->

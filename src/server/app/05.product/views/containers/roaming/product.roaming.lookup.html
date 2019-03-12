@@ -7,15 +7,17 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body data-gr-c-s-loaded="true">
-<!-- #skip_navigation
-<div id="skipNav" class="skip_navi">
-    <ul>
+<!-- Grand open 접근성 수정 -->
+<!-- #skip_navigation -->
+<!--<div id="skipNav" class="skip_navi">
+   <ul>
         <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
-</div>
+</div>-->
 <!--// #skip_navigation -->
+<!--// Grand open 접근성 수정 -->
 <div class="wrap" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000489' %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup">
@@ -31,7 +33,7 @@
                     <div class="myinfo-wrap">
                         <div class="myinfo-cont">
                             <div class="subtitle">
-                                <button type="button" title="데이터 로밍 요금상품 정보보기" class="tip-view-btn" aria-haspopup="true">
+                                <button type="button" class="tip-view-btn" aria-haspopup="true">
                                     데이터 로밍 요금상품<span class="tip-view">TIP</span>
                                 </button>
                             </div>

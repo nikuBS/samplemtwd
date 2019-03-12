@@ -61,6 +61,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     return returnActionSheetData;
   },
   _btnDateEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var $currentTarget = $(eventObj.currentTarget);
     var nowTargetId = $currentTarget.attr('id');
     var nowValue = $currentTarget.text().trim();
@@ -71,14 +74,17 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       actionSheetData[0].list[0].option = 'checked';
     }
     actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
   _btnTimeEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var nowValue = $(eventObj.currentTarget).text().trim();
     var timeArr = this._getTimeArr();
     var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
 
   _bindActionSheetElementEvt : function($layer){
@@ -191,7 +197,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     }
     return returnValue;
   },
-  _openSelectDatePop: function (data,title) {
+  _openSelectDatePop: function (data,title,targetEvt) {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',// hbs의 파일명
         layer: true,
@@ -199,7 +205,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      null,
+      function () {
+        $(targetEvt.currentTarget).focus();
+      },
       'select_date');
   },
   _doJoin : function(data,apiService,historyService,$containerData){

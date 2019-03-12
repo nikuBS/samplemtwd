@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">실시간 잔여량</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="tit-caption-type">
+						<h2 class="tit">다이렉트샵</h2>
+						<span class="num">12</span>
+					</div>
+					<div class="direct-shop-wrap">
+						<ul>
+							<li>
+								<span class="img"><img src="/img/etc/img-phone01.png" alt="샤오미 포코폰" /></span>
+								<div class="cont">
+									<span class="tit"><em>샤오미</em> 포코폰</span>
+									<span class="price">8,800원~/월</span>
+								</div>
+							</li>
+							<li>
+								<span class="img"><img src="/img/etc/img-phone02.png" alt="샤오미 포코폰" /></span>
+								<div class="cont">
+									<span class="tit"><em>엘지</em> V30S 플러스 ThinQ</span>
+									<span class="price">13,725원~/월</span>
+								</div>
+							</li>
+							<li>
+								<span class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰" /></span>
+								<div class="cont">
+									<span class="tit">[타거스]<em>링버클</em> 충전/싱크 라이트닝 USB 8핀 케이블 9cm</span>
+									<span class="price">17,900원~/월<span class="price2">18,900원</span></span>
+								</div>
+							</li>
+						</ul>
+						<div class="btn-more">
+							<button>다이렉트샵 전체보기</button>
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="tit-caption-type">
+						<h2 class="tit">T멤버십</h2>
+						<span class="num">3</span>
+					</div>
+					<div class="t-membership-wrap">
+						<ul>
+							<li>
+								<button class="link" title="T멤버십 상세보기">
+									<span class="img"><img src="/img/ico/icon-brand-logo01.png" alt="CGV" /></span>
+									<div class="cont">
+										<span class="tit">CGV</span>
+										<span class="txt1">영화관</span>
+									</div>
+								</button>
+							</li>
+							<li>
+								<button class="link" title="T멤버십 상세보기">
+									<span class="img"><img src="/img/ico/icon-brand-logo02.png" alt="파리바게트" /></span>
+									<div class="cont">
+										<span class="tit">파리바게트</span>
+										<span class="txt1">베이커리</span>
+									</div>
+								</button>
+							</li>
+							<li>
+								<button class="link" title="T멤버십 상세보기">
+									<span class="img"><img src="/img/ico/icon-brand-logo03.png" alt="이마트" /></span>
+									<div class="cont type1">
+										<span class="tit">이마트(상품권)</span>
+										<span class="txt1">쇼핑</span>
+									</div>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box bgnone noborder">
+					<div class="tit-caption-type pb0">
+						<h2 class="tit">진행 중인 이벤트</h2>
+						<span class="num">3</span>
+					</div>
+					<div class="card-visual-list">
+                        <ul class="type1">
+                            <li>
+                                <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-1.jpg" alt="키자니아 X T 멤버십 키자니아 서울 &amp; 부산최대 40% 할인"></button>
+                                <div class="extra-info">
+                                    <span class="tit">키자니아 X T 멤버십 <em>할인</em>혜택</span>
+									<span class="txt1">기간 2018.10.15.~2018.11.30.</span>
+                                </div>
+                            </li>
+							<li>
+                                <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-2.jpg" alt="Sk텔레콤 중고생이라면?무료 데이터 2GB에 선착순 인싸템까지"></button>
+                                <div class="extra-info">
+                                    <span class="tit">시험 끝, <em>0틴</em> 위크</span>
+									<span class="txt1">기간 2018.10.15.~2018.10.36.</span>
+                                </div>
+                            </li>
+							<li>
+                                <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-3.jpg" alt="T 멤버십 컬처 프로젝트 #21영화 &lt;완벽한 타인&gt;시사회 초대 이벤트"></button>
+                                <div class="extra-info">
+                                    <span class="tit">T <em>멤버십</em> 컬처 프로젝트 #21</span>
+									<span class="txt1">기간 2018.10.12.~2018.10.25.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+				</div>
+				<!--// .cont-box -->
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="tit-caption-type">
+						<h2 class="tit">혜택/할인</h2>
+						<span class="num">3</span>
+					</div>
+					<div class="t-membership-wrap">
+						df
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

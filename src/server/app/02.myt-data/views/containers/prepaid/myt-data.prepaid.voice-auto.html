@@ -10,9 +10,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -24,7 +22,7 @@
     <!-- #contents -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
-        <div class="container">
+        <div id="contents" class="container">
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="unpaid-charges">
@@ -36,23 +34,10 @@
                         </dd>
                     </dl>
                     <% if ( AutoInfo ) { %>
-                        <% if ( AutoInfo.amtCd === '01' ) {  %>
-                        <p class="ctext3 mb20">매월 15일 자동 충전</p>
-                        <% } %>
-                        <% if ( AutoInfo.amtCd === '02' ) {  %>
-                        <p class="ctext3 mb20">매월 26일 자동 충전</p>
-                        <% } %>
-                        <% if ( AutoInfo.amtCd === '03' ) {  %>
-                        <p class="ctext3 mb20">잔액 1,000인 경우 자동 충전</p>
-                        <% } %>
-                        <% if ( AutoInfo.amtCd === '04' ) {  %>
-                        <p class="ctext3 mb20">잔액 2,000인 경우 자동 충전</p>
-                        <% } %>
-                        <% if ( AutoInfo.amtCd === '05' ) {  %>
-                        <p class="ctext3 mb20">잔액 3,000인 경우 자동 충전</p>
-                        <% } %>
-                        <% if ( AutoInfo.amtCd === '06' ) {  %>
-                        <p class="ctext3 mb20">잔액 5,000인 경우 자동 충전</p>
+                        <% if ( AutoInfo.amtCd === '01' || AutoInfo.amtCd === '02' ) {  %>
+                        <p class="ctext3 mb20">매달 <%= AutoInfo.amtValue %> 자동 충전</p>
+                        <% } else { %>
+                        <p class="ctext3 mb20">잔액 <%= AutoInfo.amtValue %>인 경우 자동 충전</p>
                         <% } %>
                     <% } %>
                     <ul class="point-box mb20">
@@ -103,7 +88,7 @@
                                                    checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1">
                                                 <p class="layout-text">
-                                                    <span class="mtext">매월 1회 자동 충전</span>
+                                                    <span class="mtext">매달 1회 자동 충전</span>
                                                 </p>
                                             </div>
                                         </li>
@@ -124,7 +109,7 @@
                                             <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1"><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1">
                                                 <p class="layout-text">
-                                                    <span class="mtext">매월 1회 자동 충전</span>
+                                                    <span class="mtext">매달 1회 자동 충전</span>
                                                 </p>
                                             </div>
                                         </li>
@@ -146,7 +131,7 @@
                                            checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-radio1">
                                         <p class="layout-text">
-                                            <span class="mtext">매월 1회 자동 충전</span>
+                                            <span class="mtext">매달 1회 자동 충전</span>
                                         </p>
                                     </div>
                                 </li>
@@ -178,88 +163,85 @@
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
                                 <% if ( AutoInfo ) { %>
-                                <button id="formInput01" class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
                                 <% } else { %>
-                                <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
                                 <% } %>
                             </span>
-                            <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">충전 금액을 선택해 주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput02">충전 방법</label>
                             <div class="option-box">
                                 <% if ( AutoInfo ) { %>
-                                    <% if ( AutoInfo.amtCd === '01' ) {  %>
-                                        <div>
-                                            매월
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge" data-amount="01" title="날짜 선택"
-                                                    aria-haspopup="true" required>15일
+                                    <% if ( AutoInfo.amtCd === '01' || AutoInfo.amtCd === '02' ) {  %>
+                                        <div aria-hidden="false" class="fe-charge-wrap">
+                                            매달
+                                            <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                                    data-amount="<%= AutoInfo.amtCd %>" title="날짜 선택" aria-haspopup="true" required>
+                                                <%= AutoInfo.amtValue %>
                                             </button>
                                             마다 충전
                                         </div>
-                                    <% } %>
-                                    <% if ( AutoInfo.amtCd === '02' ) {  %>
-                                        <div>
-                                            매월
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge" data-amount="02" title="날짜 선택"
-                                                    aria-haspopup="true" required>26일
+                                        <div aria-hidden="true" class="fe-charge-wrap none">
+                                            잔액이
+                                            <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                                    title="금액 선택" aria-haspopup="true">
+                                                금액 선택
+                                            </button>
+                                            이하 시 충전
+                                        </div>
+                                    <% } else { %>
+                                        <div aria-hidden="true" class="fe-charge-wrap none">
+                                            매달
+                                            <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                                    title="날짜 선택" aria-haspopup="true">
+                                                날짜 선택
                                             </button>
                                             마다 충전
                                         </div>
-                                    <% } %>
-                                    <% if ( AutoInfo.amtCd === '03' ) {  %>
-                                        <div>
+                                        <div aria-hidden="false" class="fe-charge-wrap">
                                             잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="03" title="금액 선택"
-                                                    aria-haspopup="true">1,000원
+                                            <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                                    data-amount="<%= AutoInfo.amtCd %>" title="금액 선택" aria-haspopup="true" required>
+                                                <%= AutoInfo.amtValue %>
                                             </button>
                                             이하 시 충전
                                         </div>
                                     <% } %>
-                                    <% if ( AutoInfo.amtCd === '04' ) {  %>
-                                        <div>
-                                            잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="04" title="금액 선택"
-                                                    aria-haspopup="true">2,000원
-                                            </button>
-                                            이하 시 충전
-                                        </div>
-                                    <% } %>
-                                    <% if ( AutoInfo.amtCd === '05' ) {  %>
-                                        <div>
-                                            잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="05" title="금액 선택"
-                                                    aria-haspopup="true">3,000원
-                                            </button>
-                                            이하 시 충전
-                                        </div>
-                                    <% } %>
-                                    <% if ( AutoInfo.amtCd === '06' ) {  %>
-                                        <div>
-                                            잔액이
-                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="06" title="금액 선택"
-                                                    aria-haspopup="true">5,000원
-                                            </button>
-                                            이하 시 충전
-                                        </div>
-                                    <% } %>
+                                <% } else { %>
+                                <div aria-hidden="false" class="fe-charge-wrap">
+                                    매달
+                                    <button class="bt-dropdown big w110 ml10 fe-select-date fe-charge"
+                                            title="날짜 선택" aria-haspopup="true" required>
+                                        날짜 선택
+                                    </button>
+                                    마다 충전
+                                </div>
+                                <div aria-hidden="true" class="fe-charge-wrap none">
+                                    잔액이
+                                    <button class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge"
+                                            title="금액 선택" aria-haspopup="true">
+                                        금액 선택
+                                    </button>
+                                    이하 시 충전
+                                </div>
                                 <% } %>
-
                             </div>
-                            <span class="error-txt blind">날짜를 선택해주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">날짜를 선택해주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
                             <span class="inputbox">
                                 <span class="input">
                                     <% if ( AutoInfo ) { %>
-                                    <input class="fe-select-expire" value="<%-convertDashDate(AutoInfo.endDt)%>" type="date" title="자동 충전 유효기간 날짜 선택" required>
+                                    <input class="fe-select-expire" value="<%= AutoInfo.endDate %>" type="date" title="자동 충전 유효기간 날짜 선택" required>
                                     <% } else { %>
                                     <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" required>
                                     <% } %>
                                 </span>
                             </span>
-                            <span class="error-txt blind">날짜를 선택해 주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">날짜를 선택해 주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput04">카드번호</label>
@@ -273,9 +255,9 @@
                                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
-                            <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
-                            <span class="error-txt blind">카드 번호를 입력해주세요.</span>
-                            <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
+                            <span class="error-txt blind" aria-hidden="true">카드번호가 올바르지 않습니다.</span>
+                            <span class="error-txt blind" aria-hidden="true">카드 번호를 입력해주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">해당 카드사가 등록되어 있지 않습니다.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput05">유효기간</label>
@@ -293,8 +275,8 @@
                                     </span>
                                 </span>
                             </div>
-                            <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
-                            <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
+                            <span class="error-txt blind" aria-hidden="true">유효기간이 올바르지 않습니다.</span>
+                            <span class="error-txt blind" aria-hidden="true">카드 유효기간을 입력해 주세요.</span>
                         </li>
                     </ul>
                 </div>
@@ -331,156 +313,6 @@
     </div>
 </div>
 <% include ../../components/javascript.component.html %>
-
-<script type="text/template" id="tpl_recharge_once">
-    <div class="cont-box">
-        <ul class="form-data-list">
-            <li>
-                <label class="tit" for="formInput01">충전금액</label>
-                <span class="inputbox">
-                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
-                </span>
-                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput02">충전 방법</label>
-                <div class="option-box">
-                    <div>
-                        매달
-                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택" aria-haspopup="true"
-                                required>날짜 선택
-                        </button>
-                        마다 충전
-                    </div>
-                </div>
-                <span class="error-txt blind">날짜를 선택해주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
-                <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
-                    </span>
-                </span>
-                <span class="error-txt blind">날짜를 선택해 주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput02">카드번호</label>
-                <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-card-number" id="formInput02" type="tel"
-                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16" required>
-                        <button class="cancel" style="display: none;">
-                            <span class="blind">삭제</span>
-                        </button>
-                    </span>
-                </span>
-                <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
-                <span class="error-txt blind">카드 번호를 입력해주세요.</span>
-                <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput03">유효기간</label>
-                <div class="input-wrap-half">
-                    <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
-                                   title="유효 년" maxlength="4" required>
-                            <button class="cancel" style="display: none;"><span
-                                class="blind">삭제</span></button>
-                        </span>
-                    </span>
-                    <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
-                                   maxlength="2" required>
-                            <button class="cancel" style="display: none;"><span
-                                class="blind">삭제</span></button>
-                        </span>
-                    </span>
-                </div>
-                <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
-                <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
-            </li>
-        </ul>
-    </div>
-</script>
-
-<script type="text/template" id="tpl_recharge_amount">
-    <div class="cont-box">
-        <ul class="form-data-list">
-            <li>
-                <label class="tit" for="formInput01">충전금액</label>
-                <span class="inputbox">
-                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">금액 선택<span
-                        class="ico"></span></button>
-                </span>
-                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput02">충전 방법</label>
-                <div class="option-box">
-                    <div>
-                        잔액이
-                        <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount" title="금액 선택"
-                                aria-haspopup="true">금액 선택
-                        </button>
-                        이하 시 충전
-                    </div>
-                </div>
-                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
-                <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03">
-                    </span>
-                </span>
-                <span class="error-txt blind">날짜를 선택해 주세요.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput02">카드번호</label>
-                <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-card-number" id="formInput02" type="tel"
-                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
-                               value="" required>
-                        <button class="cancel" style="display: none;">
-                            <span class="blind">삭제</span>
-                        </button>
-                    </span>
-                </span>
-                <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
-                <span class="error-txt blind">카드 번호를 입력해주세요.</span>
-                <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
-            </li>
-            <li>
-                <label class="tit" for="formInput03">유효기간</label>
-                <div class="input-wrap-half">
-                    <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
-                                   title="유효 년" maxlength="4" value="" required>
-                            <button class="cancel" style="display: none;"><span
-                                class="blind">삭제</span></button>
-                        </span>
-                    </span>
-                    <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
-                                   maxlength="2" value="" required>
-                            <button class="cancel" style="display: none;"><span
-                                class="blind">삭제</span></button>
-                        </span>
-                    </span>
-                </div>
-                <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
-                <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
-            </li>
-        </ul>
-    </div>
-</script>
 
 <script>
   $(document).ready(function () {

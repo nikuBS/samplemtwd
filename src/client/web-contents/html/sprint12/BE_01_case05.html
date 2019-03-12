@@ -28,15 +28,16 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body class="apphome">
+    <!-- Grand open 접근성 수정 -->  
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->  
+
     <div class="wrap">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup pt0"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -56,9 +57,10 @@
                                 연간 누적혜택
                                 <p><strong>119,090</strong>원</p>
                             </div>
-                            <div class="bar-code">
-                                <img src="/img/benefit/membership-bar-code.png" alt="bar code"><!-- 웹접근성 수정 - title 값이 'bar code - 2497 4150 4581 3416' 형태로 수정이 필요, 고객마다 바코드 번호가 다르므로 개발에서 진행필요함 -->
-                            </div>
+                            <span class="bar-code">
+                                <img src="/img/main/bar_code.png" alt="bar code">
+                                <p class="bar-code-num">2496 5530 4263 1514</p> <!-- 2019-01-25 추가 -->
+                            </span>
                         </div>
 
                         <div class="membership-event-box">

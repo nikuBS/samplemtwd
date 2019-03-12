@@ -4732,9 +4732,15 @@ a.ui-button:active,
         margin: -1.0625rem; }
     .popup .popup-info.full {
       /* MV_01_02_02_01 */
-      padding: 0; }
+      padding: 0;
+      width: calc(100% - 3.5rem);
+      max-width: 30.5rem;
+      left: 50%;
+      right: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
       .popup .popup-info.full .popup-contents {
-        margin-bottom: 0; }
+        margin: 0; }
       .popup .popup-info.full .img-type img {
         width: 100%;
         vertical-align: top; }
@@ -4745,7 +4751,7 @@ a.ui-button:active,
         padding-right: 1.3125rem;
         font-size: 0.8125rem;
         font-weight: 700;
-        color: #358ed8; }
+        color: #ef4b49; }
   .popup .popup-sns {
     padding: 20px 10px 0 10px;
     overflow: hidden; }
@@ -4952,10 +4958,6 @@ a.ui-button:active,
     top: 0;
     bottom: 0;
     margin: auto; }
-    .profile-main-loader .loader :before {
-      content: '';
-      display: block;
-      padding-top: 100%; }
 
 .circular-loader {
   -webkit-animation: rotate 2s linear infinite;
@@ -7232,3 +7234,40 @@ a.ui-button:active,
     opacity: 1; }
   100% {
     opacity: 0; } }
+
+/* 공통 휴대폰인증 */
+.certification-list .category-type {
+  position: relative;
+  display: inline-block;
+  padding-left: 10px;
+  color: #666;
+  font-size: 0.75rem;
+  line-height: 1.2; }
+  .certification-list .category-type:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.3125rem;
+    width: 0.125rem;
+    height: 0.125rem;
+    border-radius: 50%;
+    background: #7A8899; }
+
+.forminbox-wrap:after {
+  content: '';
+  clear: both;
+  display: block; }
+
+.forminbox-wrap .title {
+  float: left; }
+
+.forminbox-wrap .widget {
+  float: right;
+  margin-top: -0.3125rem; }
+  .forminbox-wrap .widget .text {
+    display: inline-block;
+    margin: 0.125rem 0 0 0.1875rem; }
+
+.otherway-certification {
+  margin: 0.625rem 0;
+  font-size: 0.75rem; }

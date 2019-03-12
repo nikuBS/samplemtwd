@@ -931,6 +931,8 @@ body.bg-gray {
     padding: 0.3125rem 1rem 0rem; }
   .cont-box.gaps-style07 {
     padding: 0.3125rem 1rem 1.75rem; }
+  .cont-box.gaps-style08 {
+    padding: 0.875rem 1rem; }
   .cont-box.bgtype {
     margin-bottom: -0.0625rem;
     background: #f5f5f5; }
@@ -1159,6 +1161,8 @@ body.bg-gray {
           padding-top: 0;
           background: #fff;
           -webkit-overflow-scrolling: touch; }
+  .popup-page.popup-static {
+    position: static; }
   .popup-page .container-wrap {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
@@ -1886,6 +1890,19 @@ body.bg-gray {
     .box-citation .citation-form .form-cell {
       position: relative;
       margin-bottom: 1rem; }
+      .box-citation .citation-form .form-cell.linebox {
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid #E5E5E5; }
+        .box-citation .citation-form .form-cell.linebox .txt {
+          margin: -0.3125rem 0 0.625rem;
+          color: #000;
+          font-size: 0.8125rem; }
+          .box-citation .citation-form .form-cell.linebox .txt .time {
+            display: inline-block;
+            margin-left: 0.625rem;
+            color: #358ED8;
+            font-size: 0.75rem; }
       .box-citation .citation-form .form-cell .form-ti {
         display: block;
         margin-bottom: 0.625rem;

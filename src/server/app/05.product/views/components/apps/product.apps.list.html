@@ -13,7 +13,7 @@
                     <span class="app-ico">
                         {{#if iconImg}}<img src="{{iconImg}}" alt="{{imgAlt}}" class="ico" />{{/if}}
                         {{#if isInstalled}}<span class="i-atv"><span class="blind">active</span></span>{{/if}}
-                        {{#if isNew}}<span class="i-new {{#if isInstalled}}none{{/if}}"><span class="blind">new</span></span>{{/if}}                        
+                        {{#if isNew}}<span class="i-new {{#if isInstalled}}none{{/if}}" {{#if isInstalled}}aria-hidden="true"{{/if}}><span class="blind">new</span></span>{{/if}}                        
                     </span>
                     <span class="app-name">{{prodNm}}</span>
                 </a>

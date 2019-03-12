@@ -1125,7 +1125,8 @@ Tw.MYT_DATA_PREPAID = {
   A70_CONTENT: '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
   A70_BTN_CONFIRM: '해지하기',
   DATA_TITLE: '데이터 1회 충전 내역 확인',
-  INVALID_DATE: '익일부터 선택가능합니다.'
+  INVALID_DATE: '익일부터 선택가능합니다.',
+  CANCEL_ON_SAME_DAY: '당일취소'
 };
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {
@@ -1876,7 +1877,8 @@ Tw.PRODUCT_TFAMILY = {
   WRONG_BIRTH: '생년월일 자릿수를 확인해 주세요. (8자리)',
   PRD0066: 'T가족모아데이터 가입 정보가 정확하지 않습니다.',
   PRD0067: 'T가족모아 데이터 가입 가능 요금제로 변경이 필요합니다.',
-  IS_EXISTS: '중복된 휴대폰 번호가 존재합니다.\n다시 입력해주세요.'
+  IS_EXISTS: '중복된 휴대폰 번호가 존재합니다.\n다시 입력해주세요.',
+  SUCCESS_GUIDE: 'MMS통한 [가족결합 인증]을 마쳐야 [데이터 공유 설정하기] 에서 공유가 가능합니다.'
 };
 
 Tw.PREMTERM_MSG = {
