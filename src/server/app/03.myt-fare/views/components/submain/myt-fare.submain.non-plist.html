@@ -5,7 +5,7 @@
 %>
 <li>
     <dl>
-        <dt><%= unPaidInvDt.slice(0, 4) %>년 <%= unPaidInvDt.slice(4, 6) %>월</dt>
+        <dt><%= fmtUnPaidInvDt.slice(0, 4) %>년 <%= fmtUnPaidInvDt.slice(4, 6) %>월</dt>
         <dd><%= unPaidAmt.replace(/\B(?=(\d{3})+(?!\d))/g, ',') %> 원</dd>
     </dl>
 </li>
