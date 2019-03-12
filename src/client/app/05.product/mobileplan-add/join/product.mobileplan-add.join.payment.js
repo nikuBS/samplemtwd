@@ -153,6 +153,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _replaceErrMsg: function(code, msg) {
+    if (code === 'ATH2006') {
+      return Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME;
+    }
+
     if (code === 'ATH2007') {
       return Tw.SMS_VALIDATION.NOT_MATCH_CODE;
     }
