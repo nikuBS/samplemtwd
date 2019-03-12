@@ -172,9 +172,9 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
         $.proxy(this._requestOrder,this,'remove',reuqestPhoneNum,targetEvt),
-        function () {
-          $(targetEvt.currentTarget).focus();
-        },
+        $.proxy(function(){
+          this.$container.find('.fe-main-content').attr('aria-hidden',false);
+        },this),
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
     }
@@ -195,7 +195,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       null,
       $.proxy(function () {
         this.$addBtn.removeAttr('style');
-        $(evt.currentTarget).focus();
+        //$(evt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
       }, this)
     );
     if(!this.$addBtn.attr('disabled')){
@@ -212,7 +213,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       $.proxy(this._showAuth,this),
       $.proxy(function () {
         if(!this._showAuthState){
-          $(evt.currentTarget).focus();
+          //$(evt.currentTarget).focus();
+          this.$container.find('.fe-main-content').attr('aria-hidden',false);
         }else{
           this._showAuthState = false;
         }

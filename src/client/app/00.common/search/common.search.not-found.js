@@ -13,6 +13,7 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod)
   this._surveyList = surveyList;
   this._popupService = Tw.Popup;
   this._step = step;
+  this.$ariaHiddenEl = this.$container.find('.fe-aria-hidden-el');
   this._init(from,keywrod);
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
@@ -85,6 +86,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._requestKeyword));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
     this.$requestKeywordPopup.on('click','.cancel',$.proxy(this._activateRequestKeywordBtn,this));
+    this._changeAriaHidden('open');
   },
   _bindEventForSelectClaim : function(popupObj){
     //claim select
@@ -93,9 +95,11 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$selectClaimPopup = $(popupObj);
     this.$selectClaimPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A41,this._selectClaim));
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
+    this._changeAriaHidden('open');
   },
   _removeInputDisabled : function(){
     this.$inputElement.removeAttr('disabled');
+    this._changeAriaHidden('close');
   },
   _activateRequestKeywordBtn : function(inputEvt){
     var $inputEvt = $(inputEvt.currentTarget);
@@ -211,6 +215,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
     if(endCharIdx>0){
       this.$container.find('#suggest_comment').text('으'+this.$container.find('#suggest_comment').text());
+    }
+  },
+  _changeAriaHidden : function (type) {
+    if(type==='open'){
+      this.$ariaHiddenEl.attr('aria-hidden',true);
+    }else{
+      this.$ariaHiddenEl.attr('aria-hidden',false);
     }
   }
 });

@@ -138,9 +138,9 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(evt.currentTarget).focus();
-      },
+      $.proxy(function (){
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
 

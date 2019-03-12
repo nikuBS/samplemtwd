@@ -194,6 +194,8 @@ Tw.CommonSearchMain.prototype = {
   _closeKeywordListBase  : function () {
     this._popupService.close();
     this.$container.find('.keyword-list-base').remove();
+    this.$container.find('.search-content').attr('aria-hidden',false);
+    this.$inputElement.blur();
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
@@ -258,6 +260,8 @@ Tw.CommonSearchMain.prototype = {
     $('.latelylist-wrap').scroll($.proxy(function () {
       this.$inputElement.blur();
     },this));
+    this.$container.find('.search-content').attr('aria-hidden',true);
+    $('.keyword-list-base').insertAfter('.searchbox-header');
   }
 
 

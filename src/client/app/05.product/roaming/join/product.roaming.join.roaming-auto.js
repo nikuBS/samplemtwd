@@ -186,9 +186,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(targetEvt.currentTarget).focus();
-      },
+      $.proxy(function () {
+        //$(targetEvt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _doJoin : function(data,apiService,historyService,$containerData){

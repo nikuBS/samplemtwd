@@ -210,9 +210,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(evt.currentTarget).focus();
-      },
+      $.proxy(function () {
+        //$(evt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _settingInformationSetting : function () {
