@@ -25,17 +25,17 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
 
   this._lineComponent = new Tw.LineComponent();
 
-  if ( location.hash === '#store' ) {
-    setTimeout($.proxy(function () {
-      skt_landing.action.home_slider({ initialSlide: 1, callback: $.proxy(this._onChangeSlider, this) });
-      skt_landing.action.notice_slider();
-    }, this), 40);
-  } else {
-    setTimeout($.proxy(function () {
-      skt_landing.action.home_slider({ initialSlide: 0, callback: $.proxy(this._onChangeSlider, this) });
-      skt_landing.action.notice_slider();
-    }, this), 40);
-  }
+  // if ( location.hash === '#store' ) {
+  //   setTimeout($.proxy(function () {
+  //     skt_landing.action.home_slider({ initialSlide: 1, callback: $.proxy(this._onChangeSlider, this) });
+  //     skt_landing.action.notice_slider();
+  //   }, this), 40);
+  // } else {
+  //   setTimeout($.proxy(function () {
+  //     skt_landing.action.home_slider({ initialSlide: 0, callback: $.proxy(this._onChangeSlider, this) });
+  //     skt_landing.action.notice_slider();
+  //   }, this), 40);
+  // }
 
   this._cachedDefaultElement();
   this._bindEventStore();
@@ -82,6 +82,7 @@ Tw.MainHome.prototype = {
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
+    this._svcMgmtNum = this.$container.find('.fe-bt-line').data('svcmgmtnum');
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
@@ -91,8 +92,8 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
-    this.$container.find('.fe-bt-line').click(_.debounce($.proxy(this._onClickLine, this), 300));
-    this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 300));
+    this.$container.find('.fe-bt-line').click(_.debounce($.proxy(this._onClickLine, this), 500));
+    this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 500));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
   },
@@ -127,8 +128,8 @@ Tw.MainHome.prototype = {
     $event.stopPropagation();
   },
   _onClickLine: function ($event) {
-    var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
-    this._lineComponent.onClickLine(svcMgmtNum);
+    // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
+    this._lineComponent.onClickLine(this._svcMgmtNum);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
@@ -376,7 +377,8 @@ Tw.MainHome.prototype = {
       command = Tw.API_CMD.BFF_04_0009;
     }
     var storeBill = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_BILL));
-    if ( Tw.FormatHelper.isEmpty(storeBill) || Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ) {
+    if ( Tw.FormatHelper.isEmpty(storeBill) || Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ||
+      this._svcMgmtNum !== storeBill.svcMgmtNum ) {
       this._apiService.request(command, {})
         .done($.proxy(this._successBillData, this, element))
         .fail($.proxy(this._failBillData, this));
@@ -387,7 +389,8 @@ Tw.MainHome.prototype = {
   _successBillData: function (element, resp) {
     var storeData = {
       data: resp,
-      expired: Tw.DateHelper.add5min(new Date())
+      expired: Tw.DateHelper.add5min(new Date()),
+      svcMgmtNum: this._svcMgmtNum
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
 
@@ -436,7 +439,8 @@ Tw.MainHome.prototype = {
   },
   _getMicroContentsData: function (element) {
     var microContentsStore = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS));
-    if ( Tw.FormatHelper.isEmpty(microContentsStore) || Tw.DateHelper.convDateFormat(microContentsStore.expired).getTime() < new Date().getTime() ) {
+    if ( Tw.FormatHelper.isEmpty(microContentsStore) || Tw.DateHelper.convDateFormat(microContentsStore.expired).getTime() < new Date().getTime() ||
+      this._svcMgmtNum !== microContentsStore.svcMgmtNum ) {
       this._apiService.requestArray([
         { command: Tw.API_CMD.BFF_04_0006, params: {} },
         { command: Tw.API_CMD.BFF_04_0007, params: {} }
@@ -453,7 +457,8 @@ Tw.MainHome.prototype = {
         contents: contentsResp,
         micro: microResp
       },
-      expired: Tw.DateHelper.add5min(new Date())
+      expired: Tw.DateHelper.add5min(new Date()),
+      svcMgmtNum: this._svcMgmtNum
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS, JSON.stringify(storeData));
     this._drawMicroContentsData(element, contentsResp, microResp);
@@ -711,9 +716,9 @@ Tw.MainHome.prototype = {
     }
   },
   _resetHeight: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
-    }
+    // if ( Tw.BrowserHelper.isApp() ) {
+    //   Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+    // }
   },
   _initWelcomeMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -817,7 +822,6 @@ Tw.MainHome.prototype = {
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
     ]).done($.proxy(this._successTosAppBanner, this));
   },
@@ -825,11 +829,10 @@ Tw.MainHome.prototype = {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0005' })
       .done($.proxy(this._successTosWebBanner, this));
   },
-  _successTosAppBanner: function (banner1, banner2, banner3, banner4, banner7) {
+  _successTosAppBanner: function (banner1, banner2, banner3, banner7) {
     var result = [{ target: '1', banner: banner1 },
       { target: '2', banner: banner2 },
       { target: '3', banner: banner3 },
-      { target: '4', banner: banner4 },
       { target: '7', banner: banner7 }];
     this._drawBanner(result);
   },
@@ -978,11 +981,11 @@ Tw.MainHome.prototype = {
     }
   },
   _startLazyRendering: function () {
-    var $homeStore = $('#fe-home-store');
-    if ( $homeStore.length > 0 ) {
-      var tplHomeStore = Handlebars.compile($homeStore.html());
-      this.$container.find('#fe-div-home-store').html(tplHomeStore());
-    }
+    // var $homeStore = $('#fe-home-store');
+    // if ( $homeStore.length > 0 ) {
+    //   var tplHomeStore = Handlebars.compile($homeStore.html());
+    //   this.$container.find('#fe-div-home-store').html(tplHomeStore());
+    // }
     var $doLikeThis = $('#fe-home-do-like-this');
     if ( $doLikeThis.length > 0 ) {
       var tplDoLikeThis = Handlebars.compile($doLikeThis.html());
