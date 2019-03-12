@@ -35,7 +35,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on(inputKeyUps, '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
-    this.$container.on(inputKeyUps, '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
+    this.$container.on('blur', '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
     this.$container.on(inputKeyUps, '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on(inputKeyUps, '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on(inputKeyUps, '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
