@@ -14,10 +14,10 @@
 <!--// #skip_navigation -->
 
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역'}); %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '세금계산서 발급내역'}); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
+        <h2 class="blind">세금계산서 발급내역</h2>
         <div id="fe-tax-list-wrapper" >
 
         </div>
@@ -88,13 +88,13 @@
                 </li>
                 <li>
                     <dl class="show-data">
-                        <dt>사업자 번호</dt>
+                        <dt>사업자번호</dt>
                         <dd class="tx-bold"><span class="number">{{ctzBizNum}}</span></dd>
                     </dl>
                 </li>
                 <li>
                     <dl class="show-data">
-                        <dt>납부 금액</dt>
+                        <dt>납부금액</dt>
                         <dd></dd>
                     </dl>
                     <dl class="show-data detail">
@@ -117,7 +117,7 @@
                 <button class="fe-btn-fax" data-list-id="{{listId}}" data-list-date="{{taxBillYearMonth}}">팩스 재발행하기</button>
             </li>
             <li class="bt-white1">
-                <button class="fe-btn-email" data-list-id="{{listId}}" data-list-date="{{taxBillYearMonth}}">이메일 재발행 하기</button>
+                <button class="fe-btn-email" data-list-id="{{listId}}" data-list-date="{{taxBillYearMonth}}">이메일 재발행하기</button>
             </li>
         </ul>
     </div>

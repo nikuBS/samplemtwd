@@ -27,16 +27,18 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
   _cachedElement: function() {
     this.$faxNumberInput = this.$container.find('.input input[type="tel"]');
     this.$rerequestSendBtn = this.$container.find('.fe-submit button');
+    // validation text
+    this.$validataionTxt = this.$container.find('.fe-validation');
   },
 
   _bindEvent: function() {
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByFax, this));
-    this.$faxNumberInput.on('keyup', $.proxy(this._checkFaxNumber, this));
+    this.$faxNumberInput.on('keyup focusout', $.proxy(this._checkFaxNumber, this));
     this.$faxNumberInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$faxNumberInput.val('').trigger('keyup');
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
-    this.$faxNumberInput.trigger('keyup');
+    // this.$faxNumberInput.trigger('keyup');
     this.$container.find('.fe-btn-back').on('click', $.proxy(this._goBack, this)); // _closeResendByFax -> _goBack
   },
 
@@ -58,7 +60,22 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
 
   _checkFaxNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
-    this.$rerequestSendBtn.attr('disabled', ( $(e.currentTarget).val().length < 8 ));
+    var isTel = Tw.ValidationHelper.isTelephone($(e.currentTarget).val());
+    var isEmpty = Tw.FormatHelper.isEmpty($(e.currentTarget).val());
+    if (isEmpty) {
+      this.$validataionTxt.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V73);
+    } 
+    else if (!isTel) {
+      this.$validataionTxt.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V74);
+    }
+    if(!isEmpty && isTel) {
+      this.$rerequestSendBtn.attr('disabled', false);
+      this.$validataionTxt.attr('aria-hidden', true).addClass('blind').text('');
+    } else {
+      this.$rerequestSendBtn.attr('disabled', true);
+      this.$validataionTxt.attr('aria-hidden', false).removeClass('blind');
+    }
+    // this.$rerequestSendBtn.attr('disabled', ( $(e.currentTarget).val().length < 8 ));
   },
   
   _sendRerequestByFax: function () {    
@@ -79,8 +96,7 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
       Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
-      $.proxy(this._closePopAndBack, this),
-      $.proxy(this._closePopAndBack, this)
+      $.proxy(this._goBack, this)
     );
   },
 

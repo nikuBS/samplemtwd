@@ -27,19 +27,20 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   _cachedElement: function() {
     this.$emailInput = this.$container.find('.input input[type="text"]');
     this.$rerequestSendBtn = this.$container.find('.fe-submit button');
-    this.$textValidation = this.$container.find('.fe-txt-wrong-email');
+    this.$validataionTxt = this.$container.find('.fe-validation');
+    // this.$textValidation = this.$container.find('.fe-txt-wrong-email');
   },
 
   _bindEvent: function() {
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByEmail, this));
-    this.$emailInput.on('keyup', $.proxy(this._checkEmailValue, this));
-    this.$emailInput.on('focusout', $.proxy(this._checkEmailValidation, this));
+    this.$emailInput.on('keyup focusout', $.proxy(this._checkEmailValue, this));
+    // this.$emailInput.on('focusout', $.proxy(this._checkEmailValidation, this));
     this.$emailInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$emailInput.val('').trigger('keyup');
       this.$rerequestSendBtn.attr('disabled', true);
       this._checkEmailValidation();
     }, this));
-    this.$emailInput.trigger('keyup');
+    // this.$emailInput.trigger('keyup');
     this.$container.find('.fe-btn-back').on('click', $.proxy(this._goBack, this)); // _closeResendByEmail -> _goBack
   },
 
@@ -71,7 +72,22 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   },
 
   _checkEmailValue: function (e) {
-    this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
+    var isEmail = Tw.ValidationHelper.isEmail($(e.currentTarget).val());
+    var isEmpty = Tw.FormatHelper.isEmpty($(e.currentTarget).val());
+    if (isEmpty) {
+      this.$validataionTxt.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V42);
+    } 
+    else if (!isEmail) {
+      this.$validataionTxt.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V21);
+    }
+    if(!isEmpty && isEmail) {
+      this.$rerequestSendBtn.attr('disabled', false);
+      this.$validataionTxt.attr('aria-hidden', true).addClass('blind').text('');
+    } else {
+      this.$rerequestSendBtn.attr('disabled', true);
+      this.$validataionTxt.attr('aria-hidden', false).removeClass('blind');
+    }
+    // this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
   },
   
   _sendRerequestByEmail: function () {    
@@ -91,8 +107,7 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
       this.$emailInput.val()+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
-      $.proxy(this._closePopAndBack, this),
-      $.proxy(this._closePopAndBack, this)
+      $.proxy(this._goBack, this)
     );
   },
 
