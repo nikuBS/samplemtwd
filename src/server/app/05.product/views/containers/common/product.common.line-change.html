@@ -75,9 +75,9 @@
                                 <ul class="select-list fe-line_list" role="group">
                                     <% for (var i in allowedLineList) { %>
                                     <% if ( i < 20 ) { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-hidden="false">
                                     <% } else { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none" aria-hidden="true">
                                     <% } %>
                                         <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" data-svc_num="<%= allowedLineList[i].svcNum %>" title="<%= allowedLineList[i].fullNm %>"
                                                aria-labelledby="aria-comp-radio<%= i %>">

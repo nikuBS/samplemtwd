@@ -110,7 +110,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
     var endTime = parseInt(timeStr, 10) + 3;
     this.$hour.text(timeStr + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
 
-    this.$msg.show();
+    this.$msg.show().attr('aria-hidden', 'false');
     this.$msg.removeClass('disabled');
   },
 

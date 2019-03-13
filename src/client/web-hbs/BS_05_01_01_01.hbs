@@ -13,23 +13,22 @@
         <h2 class="blind">내용</h2>
         <div class="container">
 
-            <div class="fe-family_wrap" style="display: none">
+            <div class="fe-family_wrap" style="display: none" aria-hidden="true">
                 <!-- 결합가족 목록 -->
                 <div class="cont-box nogaps-btm">
-                    <h3 class="suggest-tag-title">결합가족 정보</h3>
+                    <h3 class="suggest-tag-title" tabindex="0">결합가족 정보</h3>
                     <div class="list-comp-input-agree fusion">
                         <div class="widget">
                             <div class="widget-box check">
                                 <ul class="select-list fe-family_list" role="group">
                                     {{#list}}
                                         <li>
-                                            <div class="checkbox type01 deletebtn-box" role="checkbox" aria-checked="false">
+                                            <div class="checkbox type01 deletebtn-box" role="checkbox" aria-checked="false" aria-labelledby="aria-comp-checkbox{{@index}}">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="family_checkbox{{@index}}" value=""
-                                                       title="결합가족 정보{{@index}}"
-                                                       aria-labelledby="aria-comp-checkbox{{@index}}"/>
+                                                       title="결합가족 정보{{@index}}" aria-hidden="true" />
                                                 <!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox{{@index}}">
+                                                <div class="comp-list-layout" id="aria-comp-checkbox{{@index}}" aria-hidden="true">
                                                     <div class="layout-text fusion-family">
                                                         <span class="mtext">
                                                         <strong>{{name}}</strong>
@@ -49,8 +48,8 @@
                                                         {{#if number}}<span class="ntext">{{number}}</span>{{/if}}
                                                     </div>
                                                 </div>
-                                                <div class="bt-alone"><button class="bt-line-gray1 fe-btn_family_del">삭제</button></div>
                                             </div>
+                                            <div class="bt-alone"><button class="bt-line-gray1 fe-btn_family_del">삭제</button></div>
                                         </li>
                                     {{/list}}
                                 </ul>
@@ -62,21 +61,20 @@
             </div>
 
             <div class="ti-caption-gray">
-                <h3 class="tit">결합가족 입력</h3>
+                <h3 class="tit" id="fe-add-family" tabindex="0">결합가족 입력</h3>
             </div>
 
             <!-- .cont-box -->
             <div class="cont-box">
                 <ul class="form-data-list fe-family_add_wrap">
                     <li>
-                        <label class="tit" for="flab01">가족관계</label>
+                        <label class="tit" for="flab01" aria-hidden="true">가족관계</label>
                         <span class="inputbox">
-                            <button id="flab01" class="bt-dropdown big fe-btn_family_type" title="가족관계 선택"
-                                    aria-haspopup="true">선택<span class="ico"></span></button>
+                            <button id="flab01" class="bt-dropdown big fe-btn_family_type" title="선택" aria-haspopup="true">선택<span class="ico"></span></button>
                         </span>
                     </li>
                     <li>
-                        <label class="tit" for="flab03">이름</label>
+                        <label class="tit" for="flab03" aria-hidden="true">이름</label>
                         <span class="inputbox">
                             <span class="input">
                                 <input id="flab03" class="fe-input_name" type="text" placeholder="이름 입력" title="이름 입력" maxlength="30" />
@@ -85,10 +83,10 @@
                         </span>
                     </li>
                     <li>
-                        <label class="tit" for="flab05">휴대폰 번호</label>
+                        <label class="tit" for="flab05" aria-hidden="true">휴대폰 번호</label>
                         <span class="inputbox">
                             <span class="input">
-                                <input id="flab05" class="fe-input_phone_number" type="tel" placeholder="숫자만 입력" title="휴대폰 숫자만 입력">
+                                <input id="flab05" class="fe-input_phone_number" type="tel" placeholder="숫자만 입력" title="숫자만 입력" pattern="[0-9]*" inputmode="numeric">
                                 <button class="fe-btn_cancel cancel"><span class="blind">삭제</span></button>
                             </span>
                         </span>
@@ -114,12 +112,12 @@
                     <div class="widget">
                         <div class="widget-box file">
                             <span class="inputbox bt-add inp-btn">
-                                <span class="input">
+                                <span class="input" aria-hidden="true">
                                     <input class="fileview fe-explain_file_view" type="text" placeholder="서류를 등록해 주세요" title="필요서류 첨부"/>
                                 </span>
                                 <span class="space"></span>
                                 <span class="bt-box">
-                                    파일찾기
+                                    <span aria-hidden="true">파일찾기</span>
                                     <input class="file fe-explain_file" type="file" title="필요서류 첨부" value="파일찾기"/>
                                 </span>
                             </span>
@@ -140,7 +138,7 @@
             </div>
             <!--// .cont-box -->
 
-            <div class="fe-file_wrap" style="display: none">
+            <div class="fe-file_wrap" style="display: none" aria-hidden="true">
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->

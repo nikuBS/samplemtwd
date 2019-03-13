@@ -40,12 +40,12 @@ Tw.CustomerDamageInfoContents.prototype = {
         var btnLeft = $(this).offset().left - 28;
         var btnRem = btnLeft/remStandard;
         $container.find('.idpt-tooltip-layer').css('left', btnRem + 'rem');
-        $(this).next('div').show();
+        $(this).next('div').show().attr('aria-hidden', 'false');
       });
     });
 
     $container.find('.btn-tooltip-close').on('click', function(){
-      $container.find('.idpt-tooltip-layer').hide();
+      $container.find('.idpt-tooltip-layer').hide().attr('aria-hidden', 'true');
     });
 
     // accordian
