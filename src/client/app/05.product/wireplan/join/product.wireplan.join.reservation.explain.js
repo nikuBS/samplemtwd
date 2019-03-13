@@ -144,6 +144,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this.$familyWrap.find('.check').off();
     skt_landing.widgets.widget_init('.fe-family_wrap');
+    this.$familyWrap.find('h3').focus();
   },
 
   _delFamily: function(e) {
@@ -166,6 +167,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     if (this._familyList.length < 1) {
       this.$familyWrap.hide().attr('aria-hidden', 'true');
+      this.$container.find('#fe-add-family').focus();
     }
 
     this._procEnableApplyBtn();

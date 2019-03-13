@@ -8,6 +8,13 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/roaming/product.roaming.fi.inquire.component.html %>
 <body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -101,8 +108,8 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li id="fe-before-tip"><button aria-haspopup="true" id="RM_14_03_01_tip_01" type="button" class="tip-view-btn">조회/취소 확인사항<span class="tip-view">TIP</span></button></li>
-                        <li id="fe-after-tip"><button aria-haspopup="true" id="RM_14_03_02_01_tip_01" type="button" class="tip-view-btn">진행 상태 확인 사항<span class="tip-view">TIP</span></button></li>
+                        <li id="fe-before-tip"><button id="RM_14_03_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">조회/취소 확인사항<span class="tip-view">TIP</span></button></li>
+                        <li id="fe-after-tip"><button id="RM_14_03_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">진행 상태 확인 사항<span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
