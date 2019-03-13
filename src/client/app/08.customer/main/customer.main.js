@@ -28,9 +28,13 @@ Tw.CustomerMain.prototype = {
   _bindEvent: function () {
     this.$fe_faq_search.on('click', $.proxy(this._goToFaq, this));
     this.$fe_faq_search_text.on('keyup', $.proxy(this._activateFaqSearch, this));
-    this.$container.on('click', '.cancel', $.proxy(this._activateFaqSearch, this));
+    this.$fe_faq_search_text.siblings('.cancel').on('click', $.proxy(this._faqDelete, this));
   },
 
+  _faqDelete: function (e) {
+    this.$fe_faq_search_text.val('').trigger('keyup');
+      this.$fe_faq_search.prop('disabled', true);
+  },
   _activateFaqSearch: function (e) {
     var isEnter = Tw.InputHelper.isEnter(e);
     if ( !!this.$fe_faq_search_text.val() ) {
