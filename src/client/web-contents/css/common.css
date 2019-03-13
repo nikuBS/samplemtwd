@@ -4484,6 +4484,10 @@ a.ui-button:active,
     overflow: hidden;
     z-index: 30;
     font-size: 0.875rem; }
+    .popup .popup-info.nobg {
+      background: transparent; }
+      .popup .popup-info.nobg .bt-slice {
+        background: #fff; }
     .popup .popup-info .popup-header {
       position: relative;
       text-align: center; }
@@ -4576,6 +4580,8 @@ a.ui-button:active,
           color: #858585; }
         .popup .popup-info .popup-contents .inner-contents .tl p {
           text-align: left !important; }
+        .popup .popup-info .popup-contents .inner-contents .tl div {
+          word-break: break-all; }
         .popup .popup-info .popup-contents .inner-contents .fe-link-internal {
           text-decoration: underline;
           color: #178BCE; }
@@ -5994,7 +6000,8 @@ a.ui-button:active,
   .paymentcharge-box .str {
     display: block;
     margin-top: 0.3125rem;
-    font-size: 1.5625rem; }
+    font-size: 1.5625rem;
+    word-break: break-all; }
     .paymentcharge-box .str .money {
       color: #000;
       text-decoration: underline; }
