@@ -94,7 +94,7 @@ class MyTDataUsageChild extends TwViewController {
    * return {Observable}
    */
   private reqBalances(): Observable<any> {
-    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {
+    return this.apiService.request(API_CMD.BFF_05_0001, {
       childSvcMgmtNum: this.childSvcMgmtNum
     });
     // return Observable.create((observer) => {
