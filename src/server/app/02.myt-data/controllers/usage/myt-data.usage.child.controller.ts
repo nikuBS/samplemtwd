@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import MyTDataHotData from './myt-data.hotdata.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import {  MYT_DATA_CHILD_USAGE } from '../../../../types/string.type';
+import StringHelper from '../../../../utils/string.helper';
 
 const VIEW = {
   DEFAULT: 'usage/myt-data.usage.child.html',
@@ -51,7 +52,7 @@ class MyTDataUsageChild extends TwViewController {
       }
       const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
-      usageData['childSvcNum'] = childInfo.svcNum;
+      usageData['childSvcNum'] = StringHelper.phoneStringToDash(childInfo.svcNum);
       usageData['childSvcMgmtNum'] = childInfo.svcMgmtNum;
       usageData['childProdId'] = childInfo.prodId;
       usageData['childProdNm'] = childInfo.prodNm;
