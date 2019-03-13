@@ -223,7 +223,12 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.BenefitIndex($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo)%>')  );
+    new Tw.BenefitIndex(
+      $('.wrap'),
+      JSON.parse('<%- JSON.stringify(svcInfo)%>'),
+      '<%=bpcpServiceId%>',
+      '<%=eParam%>'
+    );
   });
 </script>
 <% include ../../components/end.component.html %>
