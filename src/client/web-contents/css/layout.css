@@ -1039,7 +1039,13 @@ body.bg-gray {
   z-index: 200;
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
-  -webkit-overflow-scrolling: touch; }
+  -webkit-overflow-scrolling: touch;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
   .popup-page .page-header {
     border-bottom: 1px solid #e5e5e5; }
     .popup-page .page-header.noborder {
@@ -1184,7 +1190,13 @@ body.bg-gray {
             box-sizing: border-box;
     background: #fff;
     border-bottom-color: transparent;
-    z-index: 20; }
+    z-index: 20;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0); }
     .popup-page .header-wrap .page-header .header-ti {
       text-align: center;
       text-overflow: ellipsis;
@@ -1367,12 +1379,6 @@ body.bg-gray {
 
 .device_ios #common-menu .section-userinfo .userinfo .tx + .bt {
   top: -5px; }
-
-.device_android .popup-page .page-header {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
 
 /* 페이지 사이즈 100% */
 .fixed-wrap {

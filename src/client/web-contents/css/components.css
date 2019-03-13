@@ -4475,7 +4475,13 @@
   left: 0;
   bottom: 0;
   z-index: 25;
-  width: 100%; }
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
 
 .user-info {
   position: relative; }
@@ -7592,9 +7598,6 @@ a.bt-link-tx.underline.small {
   padding-bottom: 1.0625rem;
   margin-bottom: 1.0625rem; }
 
-.set-roaming-time .set .tit {
-  font-size: 0.9375rem; }
-
 .set-roaming-time .btn-wrap {
   margin-top: 0.25rem; }
   .set-roaming-time .btn-wrap:after {
@@ -9319,12 +9322,8 @@ a.bt-link-tx.underline.small {
       background-color: #fff;
       opacity: .3; }
     .main-slide-banner .slider-box .slick-dots li.slick-active {
-      width: 0.375rem;
-      height: 0.375rem;
       background: #fff; }
       .main-slide-banner .slider-box .slick-dots li.slick-active span {
-        width: 0.375rem;
-        height: 0.375rem;
         background-color: transparent; }
 
 .main-slide-banner .slider-box .w100 {
@@ -9360,8 +9359,6 @@ a.bt-link-tx.underline.small {
         border: 1px solid #000;
         background: #fff; }
       .main-slide-banner.ta-02 .slick-dots li.slick-active {
-        width: 0.375rem;
-        height: 0.375rem;
         border: 1px solid #000;
         background: #000; }
 
@@ -16129,25 +16126,12 @@ a.bt-link-tx.underline.small {
         height: 1.5rem; }
 
 .bg-type .t-none {
-  display: block !important;
-  text-indent: 0; }
+  display: block !important; }
 
 .device_ios .h-belt .h-default .h-tit {
   height: 51px;
   overflow: hidden;
   line-height: 3.4375rem; }
-
-.device_android .h-belt {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
-
-.device_android .bt-fixed-area {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
 
 /* home 에서 scroll발생시 */
 .fly .header-wrap .h-belt .h-default .h-logo {
@@ -18252,12 +18236,8 @@ a.bt-link-tx.underline.small {
         background: #000;
         opacity: .18; }
       .slide-show .slick-dots li.slick-active {
-        width: 0.375rem;
-        height: 0.375rem;
         background: #000; }
         .slide-show .slick-dots li.slick-active span {
-          width: 0.375rem;
-          height: 0.375rem;
           background-color: transparent; }
 
 /* EV_01_02 ~ EV_01_05 : 이벤트 타이틀 */
@@ -23223,7 +23203,7 @@ a.bt-link-tx.underline.small {
     line-height: 2.125rem; }
 
 .device_android .btn-round3 {
-  line-height: 1.75rem; }
+  line-height: 1.875rem; }
 
 .device_android .bt-slice .btn-round2 {
   line-height: 2.5rem; }
@@ -29502,8 +29482,7 @@ body.apphome {
   .survey-researchbox .poll-img + .chkform-wrap {
     margin-top: 0.6875rem; }
   .survey-researchbox .category-type {
-    margin-bottom: 0.9375rem;
-    font-size: initial; }
+    margin-bottom: 0.9375rem; }
     .survey-researchbox .category-type .chkform-wrap label {
       display: block;
       top: 0.0625rem;
@@ -29556,44 +29535,3 @@ body.apphome {
     top: 0; }
   .survey-researchbox img {
     width: 100%; }
-
-/* 가입 RM_11_01_02_02_case1 */
-.f-m16 {
-  font-weight: 500;
-  font-size: 1rem; }
-
-.tip-gift {
-  margin-top: 0.75rem;
-  font-weight: 300;
-  font-size: 0.8125rem; }
-
-.tel-area {
-  margin-top: 2.1875rem; }
-  .tel-area .subtit {
-    font-size: 0.9375rem;
-    font-weight: 400; }
-  .tel-area .tel-box {
-    position: relative;
-    margin-top: 0.9375rem;
-    padding-left: 5.375rem; }
-    .tel-area .tel-box .bt-dropdown {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5.4375rem; }
-    .tel-area .tel-box .inputbox .input {
-      float: left;
-      padding-left: 0.5rem;
-      width: 50%;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
-    .tel-area .tel-box .inputbox:after {
-      display: block;
-      clear: both;
-      content: ""; }
-  .tel-area .btn-round1 {
-    margin: 1.25rem 0; }
-  .tel-area .announcement-box {
-    padding: 0 0.9375rem; }
-    .tel-area .announcement-box li {
-      color: rgba(102, 102, 102, 0.6); }
