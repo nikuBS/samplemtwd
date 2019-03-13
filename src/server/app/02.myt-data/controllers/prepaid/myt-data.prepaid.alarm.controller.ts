@@ -10,7 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { Observable } from 'rxjs/Observable';
+import {PREPAID_ALARM_AMT, PREPAID_ALARM_TYPE} from '../../../../types/bff.type';
 
 class MyTDataPrepaidAlarm extends TwViewController {
   constructor() {
@@ -38,11 +38,24 @@ class MyTDataPrepaidAlarm extends TwViewController {
   public getAlarmInfo = () => this.apiService.request(API_CMD.BFF_06_0075, {})
     .map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
-        return res.result;
+        return this.parseInfo(res.result);
       } else {
         return null;
       }
     })
+
+  public parseInfo = (result) => {
+    if (result.term) {
+      result.termText = PREPAID_ALARM_TYPE[result.term];
+    }
+
+    if (result.amt) {
+      result.amtText = PREPAID_ALARM_AMT[result.amt];
+    }
+
+    return result;
+  }
+
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }

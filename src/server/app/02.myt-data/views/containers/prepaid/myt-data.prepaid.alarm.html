@@ -17,17 +17,20 @@
     <div class="popup-page tw-popup fixed-bottom nobg">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
-        <%- include('../components/header.component.html', { title: '자동알람 서비스', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <%- include('../components/header.component.html', { title: '자동 알람 서비스', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="container">
+            <div id="contents" class="container">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <p class="con-txt1">
-                        충전이 필요한 시기에<br><span class="tx-bold">SMS 알람</span>을 받고 싶으시다면<br><span class="tx-bold">자동알람 서비스</span>를 설정하세요.
+                        충전이 필요할 때 <br>
+                        <span class="tx-bold">문자 알람</span>을 받고 싶으시다면<br>
+                        <span class="tx-bold">자동 알람 서비스</span>를 설정하세요.
                     </p>
+                    <p class="sub-txt-type01 pt16">음성 1회 충전인 경우에만 자동 알람 서비스가 제공됩니다.</p>
                     <ul class="form-data-list mt40 fe-wrap-alarm">
                         <% if ( alarmInfo ) { %>
                         <% if ( alarmInfo.typeCd === '1' ) { %>
@@ -39,26 +42,10 @@
                                             data-value="1" required>기준 시간으로 알람
                                     </button>
                                 </div>
-                                <% if ( alarmInfo.term === '1' ) { %>
+                                <% if ( alarmInfo.term ) { %>
                                 <div>
-                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" data-value="1"
-                                            required>발신기간
-                                    </button>
-                                    만료
-                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
-                                </div>
-                                <% } else if ( alarmInfo.term === '2' ) { %>
-                                <div>
-                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" data-value="2"
-                                            required>수신기간
-                                    </button>
-                                    만료
-                                    <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
-                                </div>
-                                <% } else if ( alarmInfo.term === '3' ) { %>
-                                <div>
-                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" data-value="3"
-                                            required>번호유지기간
+                                    <button class="bt-dropdown big fe-alarm-category" title="기준 항목 선택" aria-haspopup="true" data-value="<%= alarmInfo.term %>"
+                                            required><%= alarmInfo.termText %>
                                     </button>
                                     만료
                                     <span class="error-txt blind" aria-hidden="true">기준 항목을 선택해주세요</span>
@@ -73,26 +60,10 @@
                                 </div>
                                 <% } %>
 
-                                <% if ( alarmInfo.day === '1' ) { %>
+                                <% if ( alarmInfo.day ) { %>
                                 <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" data-value="1"
-                                            required>1일
-                                    </button>
-                                    전 알람
-                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
-                                </div>
-                                <% } else if ( alarmInfo.day === '2' ) { %>
-                                <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" data-value="2"
-                                            required>2일
-                                    </button>
-                                    전 알람
-                                    <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
-                                </div>
-                                <% } else if ( alarmInfo.day === '3' ) { %>
-                                <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" data-value="3"
-                                            required>3일
+                                    <button class="bt-dropdown big fe-alarm-date" title="기준일 선택" aria-haspopup="true" data-value="<%= alarmInfo.day %>"
+                                            required><%= alarmInfo.day %>일
                                     </button>
                                     전 알람
                                     <span class="error-txt blind" aria-hidden="true">기준일을 선택해 주세요.</span>
@@ -117,43 +88,19 @@
                                     </button>
                                 </div>
 
-                                <% if ( alarmInfo.amt === '1' ) { %>
+                                <% if ( alarmInfo.amt ) { %>
                                 <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="1"
-                                            required>1,000원
+                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="<%= alarmInfo.amt %>"
+                                            required><%= alarmInfo.amtText %>
                                     </button>
-                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
-                                    <span class="section">정도에 도달하면 알람</span>
-                                </div>
-                                <% } else if ( alarmInfo.amt === '2' ) { %>
-                                <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="2"
-                                            required>2,000원
-                                    </button>
-                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
-                                    <span class="section">정도에 도달하면 알람</span>
-                                </div>
-                                <% } else if ( alarmInfo.amt === '3' ) { %>
-                                <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="3"
-                                            required>3,000원
-                                    </button>
-                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
-                                    <span class="section">정도에 도달하면 알람</span>
-                                </div>
-                                <% } else if ( alarmInfo.amt === '5' ) { %>
-                                <div class="mt10">
-                                    <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" data-value="5"
-                                            required>5,000원
-                                    </button>
-                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액을 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } else { %>
                                 <div class="mt10">
                                     <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" required>금액 선택
                                     </button>
-                                    <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
+                                    <span class="error-txt blind" aria-hidden="true">금액을 선택해 주세요.</span>
                                     <span class="section">정도에 도달하면 알람</span>
                                 </div>
                                 <% } %>
@@ -172,7 +119,6 @@
                             <span class="error-txt blind" aria-hidden="true">자동알람 설정 정보를 선택해 주세요.</span>
                         </li>
                         <% } %>
-
                         <% } else { %>
                         <li class="tpl_default">
                             <label class="tit" for="formInput01">자동 알람 설정 정보</label>
@@ -260,7 +206,7 @@
             </div>
             <div class="mt10">
                 <button class="bt-dropdown big fe-alarm-amount" title="금액 선택" aria-haspopup="true" required>금액 선택</button>
-                <span class="error-txt blind" aria-hidden="true">금액 선택 정보를 선택해 주세요.</span>
+                <span class="error-txt blind" aria-hidden="true">금액을 선택해 주세요.</span>
                 <span class="section">정도에 도달하면 알람</span>
             </div>
         </div>
