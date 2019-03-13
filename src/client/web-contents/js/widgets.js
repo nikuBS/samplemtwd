@@ -396,7 +396,8 @@ skt_landing.widgets = {
           $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
-      if($('.home-slider').length > 0){
+
+      /*if($('.home-slider').length > 0){//@190313: 메인탭 분리
         _this.on({
           'mousedown' : function(){
             $('.home-slider .home-slider-belt')[0].slick.setOption({
@@ -448,7 +449,7 @@ skt_landing.widgets = {
           'swipe' : function(){
           }
         })
-      }
+      }*/
     });
   },
   widget_slider2: function (ta) {

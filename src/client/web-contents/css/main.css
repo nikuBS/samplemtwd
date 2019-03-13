@@ -1,11 +1,14 @@
 @charset "UTF-8";
 /** main **/
 /* home-slider(slick slider) */
-.home-slider .home-slider-my {
-  visibility: hidden; }
-
+/*.home-slider .home-slider-my { // 홈슬라이더 분리후 제거
+    visibility: hidden;
+}
 .home-slider .home-slider-belt-active .home-slider-my {
-  visibility: visible; }
+    visibility: visible;
+}*/
+.home-slider-store {
+  overflow-x: hidden; }
 
 .quick-menu-list {
   padding: 0 0.3125rem;
@@ -87,7 +90,8 @@
       float: left;
       width: 0.4375rem;
       height: 0.4375rem;
-      margin: 0 0 0 0.5625rem;
+      margin: 0 0 0 0;
+      padding: 5px;
       color: transparent; }
       .section-swiper-box .slider-box .slick-dots li span {
         display: block;
@@ -1125,11 +1129,19 @@
         padding-bottom: 1.0625rem; }
       .popup .popup-info .popup-contents .inner-contents {
         color: #333; }
+        .popup .popup-info .popup-contents .inner-contents.font-only-black .tl,
+        .popup .popup-info .popup-contents .inner-contents.font-only-black div,
+        .popup .popup-info .popup-contents .inner-contents.font-only-black p {
+          color: #000 !important; }
         .popup .popup-info .popup-contents .inner-contents p {
           font-size: 0.875rem;
           word-break: keep-all;
           text-align: center;
           color: #858585; }
+        .popup .popup-info .popup-contents .inner-contents .font-only-black {
+          color: #333 !important; }
+        .popup .popup-info .popup-contents .inner-contents .font-only-gray {
+          color: #858585 !important; }
         .popup .popup-info .popup-contents .inner-contents .tl p {
           text-align: left !important; }
         .popup .popup-info .popup-contents .inner-contents .tl div {
@@ -1637,8 +1649,12 @@ body.apphome {
       background-color: #fff;
       opacity: .3; }
     .main-slide-banner .slider-box .slick-dots li.slick-active {
+      width: 0.5rem;
+      height: 0.5rem;
       background: #fff; }
       .main-slide-banner .slider-box .slick-dots li.slick-active span {
+        width: 0.5rem;
+        height: 0.5rem;
         background-color: transparent; }
 
 .main-slide-banner .slider-box .w100 {
@@ -1674,6 +1690,8 @@ body.apphome {
         border: 1px solid #000;
         background: #fff; }
       .main-slide-banner.ta-02 .slick-dots li.slick-active {
+        width: 0.5rem;
+        height: 0.5rem;
         border: 1px solid #000;
         background: #000; }
 
@@ -3109,7 +3127,7 @@ body.apphome {
     line-height: 1.75rem; }
 
 .device_android .btn-round3 {
-  line-height: 1.875rem; }
+  line-height: 1.75rem; }
 
 .bt-slice > li button.btn-round1,
 .btn-round1 {
@@ -3215,9 +3233,13 @@ body.apphome {
       background: none;
       border-color: #fff; }
     .main-banner-box .slider-box .slick-dots li.slick-active {
+      width: 0.4375rem;
+      height: 0.4375rem;
       background: #fff;
       margin-top: 0.05rem; }
       .main-banner-box .slider-box .slick-dots li.slick-active span {
+        width: 0.4375rem;
+        height: 0.4375rem;
         border: none;
         background-color: transparent; }
 
@@ -3555,7 +3577,7 @@ body.apphome {
       height: 0.5625rem;
       border-radius: 100%; }
       .accessories-box .slider-box .slick-dots li + li {
-        margin: 0 0 0 0.5625rem; }
+        margin: 0 0 0 0; }
       .accessories-box .slider-box .slick-dots li span {
         display: block;
         margin: 0.0625rem auto;
@@ -3567,9 +3589,14 @@ body.apphome {
         background: none;
         border-color: #000; }
       .accessories-box .slider-box .slick-dots li.slick-active {
+        width: 0.4375rem;
+        height: 0.4375rem;
         background: #000;
-        margin-top: 0.05rem; }
+        margin: 0.3625rem 0.3125rem 0 0.3125rem;
+        padding: 0; }
         .accessories-box .slider-box .slick-dots li.slick-active span {
+          width: 0.4375rem;
+          height: 0.4375rem;
           border: none;
           background-color: transparent; }
 
