@@ -22,7 +22,7 @@
 
         <div class="h-default">
             <div class="h-menu">
-                <button type="button" id="fe-bt-gnb" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
             </div>
             <% if (locals.home && locals.home === 'web') { %>
             <div class="h-home-logo">
@@ -31,7 +31,7 @@
             <h1 class="h-home-tit">
                 <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</button>
-                <!-- 활성화시 .on // -->
+            <!-- 활성화시 .on // -->
             </h1>
             <% } else { %>
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
