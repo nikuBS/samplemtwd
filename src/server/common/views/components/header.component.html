@@ -28,11 +28,11 @@
             <div class="h-home-logo">
                 <button data-url="/main/home" type="button" class="icon-gnb-bi"><span class="blind"><h1>홈으로</h1></span></button>
             </div>
-            <div class="h-home-tit">
-                <button type="button" class="twrold on"><h1>T world</h1></button> <!-- 활성화시 .on // -->
+            <h1 class="h-home-tit">
+                <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
                 <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</button>
                 <!-- 활성화시 .on // -->
-            </div>
+            </h1>
             <% } else { %>
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
