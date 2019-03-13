@@ -30,7 +30,7 @@ class ShortcutRouter {
             this.redisService.getData(REDIS_KEY.MENU_URL + menuUrl).subscribe((menuResp) => {
               if ( menuResp.code === API_CODE.CODE_00 ) {
                 if ( !FormatHelper.isEmpty(menuResp.result.menuUrl) ) {
-                  res.redirect('/common/share/bridge?target=' + menuResp.result.menuUrl );
+                  res.redirect('/common/share/bridge?target=' + menuResp.result.menuUrl + '&loginType=N' );
                 } else {
                   next();
                 }
