@@ -4,7 +4,7 @@
  * Date: 2018.12.26
  */
 
-Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheckData, menuId) {
+Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, menuId) {
   this.$container = rootEl;
   this._membershipData = membershipData;
   this._svcInfo = svcInfo;
