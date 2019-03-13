@@ -55,6 +55,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     this.$btnAddLine = this.$container.find('.fe-btn_add_line');
     this.$btnRetry = this.$container.find('.fe-btn_retry');
+    this.$btnCancel = this.$container.find('.fe-btn_cancel');
 
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnCheckJoin = this.$container.find('.fe-btn_check_join');
@@ -74,6 +75,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.on('click', $.proxy(this._clearCheckInput, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnCheckJoin.on('click', $.proxy(this._procCheckJoinReq, this));
+    this.$btnCancel.on('click', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
 
     this.$container.on('click', '.fe-btn_delete', $.proxy(this._onDeleteLineItem, this));
@@ -92,6 +94,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
+  },
+
+  _clear: function(e) {
+    var $elem = $(e.currentTarget),
+      $elemParent = $elem.parents('li');
+
+    $elemParent.find('.error-txt').hide().attr('aria-hidden', 'true');
+    this.$btnCheckJoin.attr('disabled', 'disabled').prop('disabled', true);
   },
 
   _detectInput: function(maxLength, e) {
@@ -208,11 +218,13 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
   _procCheckJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
+
     this.$btnAddLine.parent().hide().attr('aria-hidden', 'true');
     this.$btnRetry.parent().hide().attr('aria-hidden', 'true');
 
     this.$layerIsJoinCheck.show().attr('aria-hidden', 'false');
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
+    this.$layerIsJoinCheck.find('h3').focus();
 
     if (this.$groupList.find('li').length < 5) {
       this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
@@ -291,6 +303,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     $elemParent.remove();
     this._checkSetupButton();
+
+    if (this.$groupList.find('li').length < 5) {
+      this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
+    }
   },
 
   _onLineCheck: function(e) {
