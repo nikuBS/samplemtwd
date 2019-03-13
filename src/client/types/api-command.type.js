@@ -63,7 +63,7 @@ Tw.API_CMD = {
   BFF_01_0061: { path: '/core-auth/:version/user-email', method: Tw.API_METHOD.GET },
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
   BFF_01_0064: { path: '/:version/mask-methods', method: Tw.API_METHOD.GET },
-  BFF_01_0065: { path: '/:version/share-scuturl', method: Tw.API_METHOD.GET },
+  BFF_01_0065: { path: '/core-modification/:version/share-scuturl', method: Tw.API_METHOD.GET },
   // AUTH
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/:version/user/accounts', method: Tw.API_METHOD.DELETE },
