@@ -25,6 +25,22 @@ Tw.BannerService.prototype = {
       $.proxy(function(hbs) {
         this._bannerTmpl = Handlebars.compile(hbs);
 
+        this.$banners.on({
+          init: function(e, slick) {
+            slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
+          },
+          beforeChange: function(e, slick, before, after) {
+            var dots = slick.$dots.find('li');
+            $(dots[before]).find('> span').text(before + 1);
+            $(dots[after]).find('> span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+          },
+          afterChange: function(e, slick) {
+            // if (slick.$slider.find('*:focus').length > 0) {
+            slick.$slider.find('.slick-current').focus();
+            // }
+          }
+        });
+
         if (this.$banners) {
           if (!this._banners || this._banners.length === 0) {
             this.$banners.parents('div.nogaps').addClass('none');
@@ -62,14 +78,6 @@ Tw.BannerService.prototype = {
                 }
               });
             }
-
-            this.$banners.on({
-              afterChange: function(e, slickSlider) {
-                // if (slickSlider.$slider.find('*:focus').length > 0) {
-                  slickSlider.$slider.find('.slick-current').focus();
-                // }
-              }
-            });
 
             // var $mainSlider = $('.home-slider .home-slider-belt');
             // if ($mainSlider.length > 0) {
