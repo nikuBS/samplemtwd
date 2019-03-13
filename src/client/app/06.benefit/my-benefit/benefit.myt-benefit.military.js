@@ -59,6 +59,8 @@ Tw.BenefitMyBenefitMilitary.prototype = {
       if ( resp.result.length < 1 ) {
         this.$list.hide();
         this.$noItem.show();
+        this.$list.attr('aria-hidden', true);
+        this.$noItem.attr('aria-hidden', false);
       } else {
         this._items = $.extend(true, [], resp.result);
         _.map(this._items, $.proxy(function (point) {
@@ -68,6 +70,8 @@ Tw.BenefitMyBenefitMilitary.prototype = {
         }, this));
         this._idxLastItem = 0;
         this._renderItems();
+        this.$list.attr('aria-hidden', false);
+        this.$noItem.attr('aria-hidden', true);
       }
     } else {
       Tw.Error(resp.code, resp.msg).page();
