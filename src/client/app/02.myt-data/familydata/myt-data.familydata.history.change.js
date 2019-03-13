@@ -42,7 +42,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       this._setButtonStatus(this._all);
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
-      this.$cancel.css('display', 'inline-block');
+      this.$cancel.css('display', 'inline-block').attr('aria-hidden', false);
     }
 
     this._validateChangeAmount();
@@ -209,7 +209,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       this.$retrieveBtn.addClass('none').attr('aria-hidden', true);
     }
 
-    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4');
+    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4').attr('aria-hidden', false);
     // setTimeout($.proxy(this._handleDoneRetrieve, this, { code: '00', result: { remGbGty: '1', remMbGty: '0' } }), 1000);
     this._requestRetrieve('0');
   },

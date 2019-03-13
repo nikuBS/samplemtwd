@@ -33,11 +33,11 @@
                         <label class="tit" for="flab01">혜택2 선택(휴대폰 번호 입력)</label>
                         <span class="inputbox">
                             <span class="input">
-                                <input id="flab01" type="number" inputmode="numeric" min="0" pattern="[0-9]*" value="{{benefit}}" placeholder="숫자만 입력" title="혜택2 선택(휴대폰 번호 숫자만 입력)">
-                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                <input id="flab01" type="number" inputmode="numeric" min="0" pattern="[0-9]*" aria-describedby="fe-phone-error" value="{{benefit}}" placeholder="숫자만 입력" title="혜택2 선택(휴대폰 번호 숫자만 입력)">
+                                <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                             </span>
                         </span>
-                        <p class="val-txt none">휴대폰 번호가 올바르지 않습니다.</p><!-- 휴대폰번호 잘못입력시 -->
+                        <p class="val-txt none" id="fe-phone-error" aria-hidden="true">휴대폰 번호가 올바르지 않습니다.</p><!-- 휴대폰번호 잘못입력시 -->
                     </li>
                 </ul>
             </div>

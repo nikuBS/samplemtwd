@@ -298,7 +298,7 @@ Tw.CustomerPraise.prototype = {
     this.$divRole.find('input').val('');
     this.$subject.find('input').val('');
     this.$reasons.val('');
-    this.$container.find('.cancel').css('display', 'none');
+    this.$container.find('.cancel').css('display', 'none').attr('aria-hidden', true);
     delete this._selectedType;
     delete this._selectedArea;
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);

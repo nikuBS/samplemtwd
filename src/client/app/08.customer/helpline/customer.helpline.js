@@ -69,7 +69,7 @@ Tw.CustomerHelpline.prototype = {
     if (resp.params && resp.params.phoneNumber) {
       var number = resp.params.phoneNumber.replace(/-/g, '');
       this.$phoneInput.val(number);
-      this.$cancel.css('display', 'inline');
+      this.$cancel.css('display', 'inline').attr('aria-hidden', false);
       if (Tw.ValidationHelper.isCellPhone(number)) {  // 선택된 번호가 핸드폰 번호 일 경우
         this.$cellphone.trigger('click');
       } else {  // 선택된 번호가 집전화 번호 일 경우
