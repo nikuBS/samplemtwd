@@ -1,6 +1,4 @@
 // for APM
-import StoreRouter from './common/route/store.router';
-
 const os = require('os');
 process.env.WHATAP_NAME = os.hostname();
 const WhatapAgent = require('whatap').NodeAgent;
@@ -31,6 +29,7 @@ import TeventRouter from './app/09.tevent/tevent.router';
 import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
+import StoreRouter from './common/route/store.router';
 import TestRouter from './app/99.test/test.router';
 
 // Application Modules
