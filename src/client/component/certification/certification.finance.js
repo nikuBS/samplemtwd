@@ -59,8 +59,7 @@ Tw.CertificationFinance.prototype = {
     var methods = {
       skSms: {
         use: true,
-        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ||
-          this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y'
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y'
       },
       otherSms: {
         use: true,

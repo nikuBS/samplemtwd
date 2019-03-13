@@ -327,25 +327,17 @@ Tw.MyTBenefitMembershipJoin.prototype = {
             params.sms_agree_yn = 'Y';
           }
           break;
-        case 'ovc':
-          if ( this._checkOkCashbag && checked ) {
-            cashbagCnt = 1;
-          }
-          break;
-        case 'odi':
-          if ( this._checkOkCashbag && checked ) {
-            cashbagCnt = 2;
-          }
-          break;
         case 'mak':
           if ( this._checkOkCashbag && checked ) {
             params.mktg_agree_yn = 'Y';
           }
           break;
+        case 'osi':
+          if ( checked ) {
+            params.ocb_accum_agree_yn = 'Y';
+          }
+          break;
       }
-    }
-    if ( cashbagCnt === 2 ) {
-      params.ocb_accum_agree_yn = 'Y';
     }
     this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
       .done($.proxy(this._onSuccessJoinMembership, this))

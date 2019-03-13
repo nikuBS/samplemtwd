@@ -605,5 +605,18 @@ export enum PREPAID_AMT_CD {
   '06' = '5,000원'
 }
 
+export const PREPAID_ALARM_TYPE = {
+  '1': '발신기간',
+  '2': '수신기간',
+  '3': '번호유지기간'
+};
+
+export const PREPAID_ALARM_AMT = {
+  '1': '1,000원',
+  '2': '2,000원',
+  '3': '3,000원',
+  '5': '5,000원'
+};
+
 export const HOME_SEGMENT = {};
 export const HOME_SEGMENT_ORDER = {};

@@ -868,7 +868,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   },
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인' },
   ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' },
-  ALERT_1_A71: { TITLE: '알림', MSG: '멤버십에 가입한 당일에는 해지할 수 없습니다.' }
+  ALERT_1_A71: { TITLE: '알림', MSG: '멤버십에 가입한 당일에는 해지할 수 없습니다.' },
+  ALERT_1_A72: { TITLE: '알림', MSG: '간편 로그인 상태에서 조회할 수 없습니다. T아이디(아이디/비밀번호) 로그인 후 이용해 주세요.' }
 };
 
 Tw.ALERT_CANCEL = {
@@ -1339,7 +1340,8 @@ Tw.CUSTOMER_PRAISE_OFFICE = '지점';
 Tw.CUSTOMER_VOICE = {
   LINE_CHOICE: '회선선택',
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
-  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해 주세요.'
+  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해 주세요.',
+  NOLINE: '회선번호가 확인되지 않아 서비스를 이용하실 수 없습니다.'
 };
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',

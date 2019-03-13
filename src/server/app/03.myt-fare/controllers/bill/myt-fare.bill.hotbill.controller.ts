@@ -14,6 +14,7 @@ import { delay, mergeMap } from 'rxjs/operators';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import FormatHelper from '../../../../utils/format.helper';
 
 class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
@@ -139,6 +140,7 @@ class MyTFareBillHotbill extends TwViewController {
     }
     return svcs.map(svc => {
       svc.clsNm =  [ 'M3', 'M4'].indexOf(svc.svcAttrCd) > -1 ? 'tablet' : 'cellphone';
+      svc.svcDashedNum = FormatHelper.conTelFormatWithDash(svc.svcNum);
       return JSON.parse(JSON.stringify(svc));
     });
   }

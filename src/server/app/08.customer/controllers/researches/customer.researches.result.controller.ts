@@ -58,7 +58,7 @@ export default class CustomerResearchesResult extends TwViewController {
           ...result,
           staDtm: DateHelper.getShortDate(result.staDtm),
           endDtm: DateHelper.getShortDate(result.endDtm),
-          isProceeding: result.endDtm && DateHelper.getDifference(result.endDtm.replace(/\./g, '')) > 0,
+          isProceeding: result.endDtm && DateHelper.getDifference(result.endDtm) > 0,
           examples,
           totalCount,
           maxIdx

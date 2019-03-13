@@ -5,13 +5,6 @@
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="bg-white">
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- #header -->
@@ -58,7 +51,7 @@
                         </div>
                     </div>
                     <div class="ti-caption-type01 pb20">
-                        <h2 class="tit">충전 금액<button class="btn-tip" title="충전 금액 정보보기" id="DC_04_03_tip_01" page-id="DC_04_03" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                        <h2 class="tit">충전 금액<button class="btn-tip" id="DC_04_03_tip_01" page-id="DC_04_03" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
                         <!-- 2019.02.12 title,aria-haspopup 접근성 추가 -->
                     </div>
                     <div class="widget">
@@ -212,10 +205,10 @@
                     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                     <ul class="pg-chk-list02">
                         <!--접근성 수정-->
-                        <li><button class="btn-tip" title="선물 취소/환불/승계 안내" id="DC_04_03_tip_02" page-id="DC_04_03" aria-haspopup="true">선물 취소/환불/승계 안내<i class="icon-badge-tip"><span class="blind">선물 취소/환불/승계 안내</span></i></button></li>
-                        <li><button class="btn-tip" title="결제 방법 안내" id="DC_04_03_tip_03" page-id="DC_04_03" aria-haspopup="true">결제 방법 안내<i class="icon-badge-tip"><span class="blind">결제 방법 안내</span></i></button></li>
-                        <li><button class="btn-tip" title="충전 선물 유의사항" id="DC_04_03_tip_04" page-id="DC_04_03" aria-haspopup="true">충전 선물 유의사항<i class="icon-badge-tip"><span class="blind">충전 선물 유의사항</span></i></button></li>
-                        <li><button class="btn-tip" title="SMS 인증 안내" id="DC_04_03_tip_05" page-id="DC_04_03" aria-haspopup="true">SMS 인증 안내<i class="icon-badge-tip"><span class="blind">SMS 인증 안내</span></i></button></li>
+                        <li><button class="btn-tip" id="DC_04_03_tip_02" page-id="DC_04_03" aria-haspopup="true">선물 취소/환불/승계 안내<i class="icon-badge-tip"><span class="blind">선물 취소/환불/승계 안내</span></i></button></li>
+                        <li><button class="btn-tip" id="DC_04_03_tip_03" page-id="DC_04_03" aria-haspopup="true">결제 방법 안내<i class="icon-badge-tip"><span class="blind">결제 방법 안내</span></i></button></li>
+                        <li><button class="btn-tip" id="DC_04_03_tip_04" page-id="DC_04_03" aria-haspopup="true">충전 선물 유의사항<i class="icon-badge-tip"><span class="blind">충전 선물 유의사항</span></i></button></li>
+                        <li><button class="btn-tip" id="DC_04_03_tip_05" page-id="DC_04_03" aria-haspopup="true">SMS 인증 안내<i class="icon-badge-tip"><span class="blind">SMS 인증 안내</span></i></button></li>
                         <!-- //접근성 수정-->
                     </ul>
                 </div>

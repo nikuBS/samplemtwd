@@ -56,7 +56,7 @@ Tw.CertificationPassword.prototype = {
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL || resp.resultCode === this.ERROR_CODE.OVERCOUNT ) {
       //
     } else {
-      Tw.Error(resp.resultCode, '').pop();
+      Tw.Error(resp.resultCode, resp.errorDescription).pop();
     }
   },
   _confirmPasswordCert: function () {

@@ -28,7 +28,7 @@ Tw.ErrorService.prototype = {
   pop: function(closeCallback) {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
-      'title': Tw.POPUP_TITLE.ERROR + '\n' + this._data.code,
+      'title': Tw.POPUP_TITLE.NOTIFY,
       'title_type': 'sub',
       'cont_align': 'tl',
       'contents': this._data.msg,
