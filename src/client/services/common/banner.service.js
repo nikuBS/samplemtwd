@@ -65,9 +65,9 @@ Tw.BannerService.prototype = {
 
             this.$banners.on({
               afterChange: function(e, slickSlider) {
-                if (slickSlider.$slider.find('*:focus').length > 0) {
+                // if (slickSlider.$slider.find('*:focus').length > 0) {
                   slickSlider.$slider.find('.slick-current').focus();
-                }
+                // }
               }
             });
 
