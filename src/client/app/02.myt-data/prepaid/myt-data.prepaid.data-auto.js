@@ -143,7 +143,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       amt: this.$dataSelector.attr('data-amount'),
       cardNum: $.trim(this.$cardNumber.val()),
       expireMM: $.trim(this.$cardM.val()),
-      expireYY: $.trim(this.$cardY.val()).substr(2,2)
+      expireYY: $.trim(this.$cardY.val()).substr(2,2),
+      maskedYn: ''
     };
   },
   _onClose: function () {
