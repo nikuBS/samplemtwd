@@ -52,28 +52,33 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectLocationAgreement:function () {
     if(this._svcInfo) {
-      this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
-          .done($.proxy(function (res) {
-            if (res.code === Tw.API_CODE.CODE_00) {
-              Tw.Logger.info('check loc agreement : ', res);
-              if (res.result.twdLocUseAgreeYn === 'Y') {
-                this._askCurrentLocation();
+      if(this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY){
+        this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+            .done($.proxy(function (res) {
+              if (res.code === Tw.API_CODE.CODE_00) {
+                Tw.Logger.info('check loc agreement : ', res);
+                if (res.result.twdLocUseAgreeYn === 'Y') {
+                  this._askCurrentLocation();
+                } else {
+                  this._showAgreementPopup();
+                }
               } else {
-                this._showAgreementPopup();
+                Tw.Error(res.code, res.msg).pop();
               }
-            } else {
-              Tw.Error(res.code, res.msg).pop();
-            }
-          }, this))
-          .fail(function (err) {
-            Tw.Error(err.code, err.msg).pop();
-          });
+            }, this))
+            .fail(function (err) {
+              Tw.Error(err.code, err.msg).pop();
+            });
+      } else {
+        this._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A72.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A72.TITLE);
+      }
+
     } else {
       this._goLogin();
     }
   },
   _checkLocationAgreement:function () {
-    if(this._svcInfo) {
+    if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
           .done($.proxy(function (res) {
             if (res.code === Tw.API_CODE.CODE_00) {
@@ -85,6 +90,7 @@ Tw.MembershipSubmain.prototype = {
                   latitude: '37.5600420',
                   longitude: '126.9858500'
                 });
+
               }
             } else {
               Tw.Error(res.code, res.msg).pop();
