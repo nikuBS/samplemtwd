@@ -8,7 +8,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup fixed-bottom h60 nobg">
+    <div class="popup-page tw-popup fixed-bottom h60">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '요금안내서 변경', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -272,7 +272,7 @@
                                     </span>
                                 </span>
                             </li>
-                            <!--법정대리인 함께 수령 > 핸드폰 번호 area-->
+
                             <li class="fe-ccurNotiYn none">
                                 법정대리인 함께 수령
                                 <span class="widget">
@@ -286,15 +286,16 @@
                                         </span>
                                     </span>
                                 </span>
-                                <div id="fe-ccurNotiSvcNum" class="none">
-                                    <%- include( '../../components/bill/myt-fare.bill.set.change.cell-phone.html', data.deputyHpParam) %>
-                                    <ul class="con-star-txt0 pt16 pb10">
-                                        <li>미성년고객의 요금안내서는 법정대리인 휴대폰번호로<br/>동시 안내됩니다.</li>
-                                    </ul>
-                                </div>
                             </li>
-                            <!--// 법정대리인 함께 수령 > 핸드폰 번호 area-->
                         </ul>
+                        <!--법정대리인 함께 수령 > 핸드폰 번호 area-->
+                        <div id="fe-ccurNotiSvcNum" class="none">
+                            <%- include( '../../components/bill/myt-fare.bill.set.change.cell-phone.html', data.deputyHpParam) %>
+                            <ul class="con-star-txt0 pt16 pb10">
+                                <li>미성년고객의 요금안내서는 법정대리인 휴대폰번호로<br/>동시 안내됩니다.</li>
+                            </ul>
+                        </div>
+                        <!--법정대리인 함께 수령 > 핸드폰 번호 area-->
                     </div>
                     <%}%>
                     <!--// 옵션설정 끝-->
@@ -303,11 +304,11 @@
                 <!--// .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true"/><!-- 2018-11-02 수정 -->
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
                         <li>
-                            <button id="<%=data.tipId%>" page-id="" type="button" class="tip-view-btn" aria-haspopup="true">요금안내서 이용안내<span class="tip-view">TIP</span>
+                            <button id="<%=data.tipId%>" page-id="" class="tip-view-btn" aria-haspopup="true">요금안내서 이용안내<i class="icon-badge-tip"><span class="blind">요금안내서 이용안내 tip</span></i>
                             </button>
                         </li>
                     </ul>

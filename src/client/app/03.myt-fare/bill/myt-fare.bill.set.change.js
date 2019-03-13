@@ -306,6 +306,7 @@ Tw.MyTFareBillSetChange.prototype = {
     var lineType = this._data.lineType;
 
     this._options.addClass('none').removeClass('bb0').find('input').data('state', false);
+    this.$container.find('#fe-ccurNotiSvcNum').addClass('none').find('input').data('state', false);
     var _data = this._data;
 
     var _selectOptions = function (name, isShow) {
