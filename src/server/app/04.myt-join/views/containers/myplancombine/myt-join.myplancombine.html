@@ -67,7 +67,7 @@
                                 <li>
                                     <div class="inner">
                                         <% const tip = comb.prodNm.includes('개인') && (comb.prodId === 'TW00000062' || comb.prodId === 'NH00000039') ? '10' : TIPS[comb.prodId] %>
-                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> TIP보기" aria-haspopup="true">TIP</button><% } %></strong>
+                                        <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> TIP보기" aria-haspopup="true"><%= comb.prodNm %> TIP</button><% } %></strong>
                                         <p class="txt"><%= comb.prodSmryDesc %></p>
                                         <p class="date">신청일  <%= comb.scrbDt %></p>
                                         <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
@@ -79,7 +79,7 @@
                                         <% if (comb.prodLinkYn === "Y") { %>
                                         <a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= comb.prodId %>">상품정보 보기</a>
                                         <% } %>
-                                        <span class="visual-area"><img src="<%= comb.prodIconImgUrl %>"></span>
+                                        <span class="visual-area"><img src="<%= comb.prodIconImgUrl %>" alt=""></span>
                                     </div>
                                 </li>
                                 <% }); %>

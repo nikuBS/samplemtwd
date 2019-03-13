@@ -26,9 +26,9 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <div class="add-prd-top-wrap">
-                    <span class="select">
-                        <button class="on" id="fe-all-btn" aria-selected="true">전체</button>
-                        <button id="fe-pay-btn" aria-selected="false">유료만 보기</button>
+                    <span class="select" role="tablist">
+                        <button role="tab" class="on" id="fe-all-btn" aria-selected="true">전체</button>
+                        <button role="tab" id="fe-pay-btn" aria-selected="false">유료만 보기</button>
                     </span>
                     <span class="counts">총 <em><%= additions.length %></em>개</span>
                 </div>
@@ -60,7 +60,7 @@
                                         <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
+                                        <% if (hasLink) { %><span class="ico"><span class="blind">자세히 보기</span></span><% } %>
                                     </div>
                                 <% if (hasLink) { %>
                                 </a>
@@ -100,7 +100,7 @@
                                         <% } else { %>
                                             <%= roaming.addRoamingProdCnt %>건
                                         <% } %>
-                                        <span class="ico"><span class="blind">나의 로밍 요금제 및 부가서비스 자세히 보기</span></span>
+                                        <span class="ico"><span class="blind">자세히 보기</span></span>
                                     </div>
                                 </a>
                             </li>

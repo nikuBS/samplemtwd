@@ -41,6 +41,8 @@ Tw.BannerService.prototype = {
                 lazyLoad: 'progressive',
                 focusOnSelect: true,
                 pauseOnFocus: true,
+                pauseOnHover: true,
+                pauseOnDotsHover: true,
                 accessibility: true,
                 customPaging: function(slider, i) {
                   return $('<span role="button" />').text(i + 1);
