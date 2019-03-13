@@ -48,8 +48,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
-    this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
-    this.$container.on('click', '.fe-quality-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.fe-service-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.fe-quality-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
     this.$container.on('click', '.tab-linker a', $.proxy(this._TabLinker, this));
   },
 
@@ -64,7 +64,7 @@ Tw.CustomerEmail.prototype = {
   },
 
   _onChangeReceiveContact: function (e) {
-    var radioIndex = $(e.currentTarget).find('.radiobox.focus').index();
+    var radioIndex = $(e.currentTarget).index();
     var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
     var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
     if ( radioIndex === 0 ) {
