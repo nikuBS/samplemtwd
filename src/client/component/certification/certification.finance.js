@@ -28,14 +28,19 @@ Tw.CertificationFinance.prototype = {
     '0': Tw.FIDO_TYPE.FINGER,
     '1': Tw.FIDO_TYPE.FACE
   },
-  open: function (svcInfo, authUrl, authKind, prodAuthKey, command, callback) {
+  open: function (svcInfo, authUrl, authKind, prodAuthKey, command, authBlock, callback) {
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._callback = callback;
     this._authKind = authKind;
     this._prodAuthKey = prodAuthKey;
     this._command = command;
+    this._authBlock = authBlock;
 
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      return;
+    }
     this._fidoType();
   },
   _fidoType: function () {
@@ -51,10 +56,41 @@ Tw.CertificationFinance.prototype = {
     this._openFinance(enableFido);
   },
   _openFinance: function (enableFido) {
+    var methods = {
+      skSms: {
+        use: true,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ||
+          this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y'
+      },
+      otherSms: {
+        use: true,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'
+      },
+      ipin: {
+        use: true,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.IPIN] === 'Y'
+      },
+      bio: {
+        use: enableFido,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.BIO] === 'Y'
+      }
+    };
+
+    var checkBlock = _.find(methods, $.proxy(function (method) {
+      return method.use && !method.block;
+    }, this));
+
+    if ( Tw.FormatHelper.isEmpty(checkBlock) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      return;
+    }
+
     this._popupService.open({
       hbs: 'CO_02_02_01',
       layer: true,
-      enableFido: enableFido
+      data: {
+        methods: methods
+      }
     }, $.proxy(this._onOpenFinancePopup, this), null);
   },
   _onOpenFinancePopup: function ($popupContainer) {

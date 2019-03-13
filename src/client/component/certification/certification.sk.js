@@ -258,7 +258,7 @@ Tw.CertificationSk.prototype = {
 
     this._callbackParam = {
       code: Tw.API_CODE.CERT_SELECT,
-      target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD
+      target: Tw.AUTH_CERTIFICATION_METHOD.SK_SMS
     };
     this._popupService.close();
   },
