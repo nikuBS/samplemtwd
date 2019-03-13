@@ -12,6 +12,10 @@ Tw.MyTDataSubMain = function (params) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this.data = params.data;
+  this._bpcpServiceId = this.data.bpcpServiceId;
+  this._eParam = this.data.eParam;
+  this._svcMgmtNum = this.data.svcInfo.svcMgmtNum;
+  this._tidLanding = new Tw.TidLandingComponent();
   this._rendered();
   this._bindEvent();
   this._initialize();
@@ -61,6 +65,10 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
+
+    if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
+      this._initBpcp();
+    }
   },
 
   _bindEvent: function () {
@@ -94,6 +102,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
+    // BPCP 페이지에서 이벤트 받기 위한 처리
+    $(window).on('message', $.proxy(this._getWindowMessage, this));
   },
 
   _initialize: function () {
@@ -526,7 +536,7 @@ Tw.MyTDataSubMain.prototype = {
         this._historyService.goLoad('/myt-data/hotdata');
         break;
       default:
-        new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
+        this.immediatelyRechargeLayer = new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
         break;
     }
   },
@@ -692,22 +702,60 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _getBPCP: function (url) {
-    var replaceUrl = url.replace('BPCP:', '');
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+    var reqParams = {
+      svcMgmtNum: this._svcMgmtNum,
+      bpcpServiceId: url.replace('BPCP:', '')
+    };
+
+    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
+      reqParams.eParam = this._eParam;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
       .done($.proxy(this._responseBPCP, this));
   },
 
   _responseBPCP: function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+    if (resp.code === 'BFF0003') {
+      return this._tidLanding.goLogin(location.origin + '/myt-data/submain');
+    }
+
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+      msg = msg.pop().match(/(\d+)/);
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+          serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     var url = resp.result.svcUrl;
-    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+    if (Tw.FormatHelper.isEmpty(url)) {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
+    }
+
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
-    Tw.CommonHelper.openUrlInApp(url);
+    url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    this._popupService.open({
+      hbs: 'product_bpcp',
+      iframeUrl: url
+    }, null, $.proxy(function() {
+      this._historyService.replaceURL('/myt-data/submain');
+    }, this));
   },
 
   _successPattern: function (resp) {
@@ -742,5 +790,34 @@ Tw.MyTDataSubMain.prototype = {
       };
     }
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  _initBpcp: function() {
+    this._getBPCP(this._bpcpServiceId);
+    history.replaceState(null, document.title, location.origin + '/myt-data/submain');
+  },
+
+  // BPCP 페이지에서 X 버튼 누른 경우에 대한 이벤트 처리
+  _getWindowMessage: function (e) {
+    var data = e.data || e.originalEvent.data;
+    var popupService = this._popupService;
+    if (this.immediatelyRechargeLayer && this.immediatelyRechargeLayer._popupService) {
+      popupService = this.immediatelyRechargeLayer._popupService;
+    }
+
+    // BPCP 팝업 닫기
+    if (data === 'popup_close') {
+      popupService.close();
+    }
+
+    // BPCP 팝업 닫고 링크 이동
+    if (data.indexOf('goLink:') !== -1) {
+      popupService.closeAllAndGo(data.replace('goLink:', ''));
+    }
+
+    // BPCP 팝업 닫고 로그인 호출
+    if (data.indexOf('goLogin:') !== -1) {
+      this._tidLanding.goLogin('/myt-data/submain?' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
   }
 };

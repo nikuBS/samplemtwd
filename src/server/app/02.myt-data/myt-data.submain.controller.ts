@@ -56,8 +56,11 @@ class MytDataSubmainController extends TwViewController {
       ppsInfo: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      bpcpServiceId: req.query.bpcpServiceId || '',
+      eParam: req.query.eParam || '',
     };
+
     this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
       this._getRemnantData(),
