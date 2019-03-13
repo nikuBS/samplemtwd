@@ -168,7 +168,7 @@ Tw.MyTDataPrepaidData.prototype = {
     $layer.find('.fe-email-address').text($.trim(this.$emailAddress.text()));
   },
   _setEvent: function ($layer) {
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._close, this));
     $layer.on('click', '.fe-recharge', $.proxy(this._recharge, this, $layer));
   },
   _recharge: function ($layer) {
@@ -207,17 +207,7 @@ Tw.MyTDataPrepaidData.prototype = {
   _rechargeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _checkClose: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.BUTTON);
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
+  _close: function () {
+    this._popupService.close();
   }
 };
