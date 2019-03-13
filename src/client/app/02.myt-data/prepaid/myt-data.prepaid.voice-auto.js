@@ -239,7 +239,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var fnSelectDate = function (item) {
       return {
         value: item.text,
-        option: false,
+        option: $elButton.text().trim() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.chargeCd
       };
     };
