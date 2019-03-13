@@ -65,7 +65,8 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
+    ICAS3101: 'ICAS3101'
   },
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
@@ -124,6 +125,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorCertTime = this.$container.find('#aria-cert-num3');
     this.$errorCertCount = this.$container.find('#aria-cert-num4');
     this.$errorCertAddTime = this.$container.find('#aria-cert-num5');
+    this.$errorCertBlock = this.$container.find('#aria-cert-num6');
     this.$errorLoginCert = this.$container.find('#aria-phone-err1');
     this.$errorLoginTime = this.$container.find('#aria-phone-err2');
     this.$errorLoginCnt = this.$container.find('#aria-phone-err3');
@@ -239,6 +241,9 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCount.removeClass('none');
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
+      this._clearCertError();
+      this.$errorCertBlock.removeClass('none');
     } else if ( errorCode === this.SMS_ERROR.ATH1004 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
@@ -342,6 +347,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertBlock.addClass('none');
   },
   _clearLoginError: function () {
     this.$errorLoginCert.addClass('none');

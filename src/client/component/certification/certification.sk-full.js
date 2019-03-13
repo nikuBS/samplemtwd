@@ -35,7 +35,8 @@ Tw.CertificationSkFull.prototype = {
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
-    ATH8007: 'ATH8007'
+    ATH8007: 'ATH8007',
+    ICAS3101: 'ICAS3101'
   },
   open: function (authUrl, authKind, callback) {
     this._authUrl = authUrl;
@@ -77,6 +78,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertCount = $popupContainer.find('#aria-cert-num4');
     this.$errorCertAddTime = $popupContainer.find('#aria-cert-num5');
     this.$errorCertStop = $popupContainer.find('#aria-cert-num6');
+    this.$errorCertBlock = $popupContainer.find('#aria-cert-num7');
     this.$errorLoginCert = $popupContainer.find('#aria-phone-err1');
     this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
     this.$errorLoginCnt = $popupContainer.find('#aria-phone-err3');
@@ -214,6 +216,8 @@ Tw.CertificationSkFull.prototype = {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else if ( errorCode === this.SMS_ERROR.ATH8007 ) {
       this.$errorCertStop.removeClass('none');
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
+      this.$errorCertBlock.removeClass('none');
     } else {
       Tw.Error(errorCode, errorMsg).pop();
     }
@@ -317,6 +321,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertCount.addClass('none');
     this.$errorCertAddTime.addClass('none');
     this.$errorCertStop.addClass('none');
+    this.$errorCertBlock.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorLoginCert.addClass('none');
