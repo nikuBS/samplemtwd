@@ -5,7 +5,7 @@ $(document).on('ready', function () {
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
-  if ( $(window).scrollTop() > 0 ){     //@190313: 메인탭 분리
+  if ( $(window).scrollTop > 0 ){
     $('body').addClass("scroll fly");
     if(skt_landing.util.win_info.get_scrollT() > 39){
       $('.home-tab-belt').addClass('fixed');
@@ -35,15 +35,15 @@ $(window).on('resize', function () {
   if ( Math.abs( current_size - skt_landing._originalSize ) > 200 ){
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
-    $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
-    if ( !$(".searchbox-lock").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
+    $(".searchbox-layer01").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
+    if ( !$(".searchbox-layer01").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
       skt_landing.action.checkScroll.lockScroll();
     }
   } else {
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
-    $(".searchbox-lock").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
-    if ( !$(".searchbox-lock").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
+    $(".searchbox-layer01").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
+    if ( !$(".searchbox-layer01").hasClass("none") ){ // 19.03.11 search 자동완성 scroll lock
       skt_landing.action.checkScroll.unLockScroll();
     }
   }
@@ -51,19 +51,6 @@ $(window).on('resize', function () {
   for (var fn in scroll_fn) {
     eval(scroll_fn[fn]);
   }
-
-  //190313: 메인탭 분리
-  if(skt_landing.util.win_info.get_scrollT() == 0){
-      $('body').removeClass('fly');
-  }else{
-      $('body').addClass('fly');
-  }
-  if(skt_landing.util.win_info.get_scrollT() > 39){
-      $('.home-tab-belt').addClass('fixed');
-  }else{
-      $('.home-tab-belt').removeClass('fixed');
-  }
-  
 }).on('orientationchange', function () {
   for (var fn in resize_fn) {
     eval(resize_fn[fn]);
