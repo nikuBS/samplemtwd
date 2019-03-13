@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <!--<div id="skipNav" class="skip_navi">-->
     <!--<ul>-->
-        <!--<li><a href="#gnb">메뉴 바로가기</a></li>-->
-        <!--<li><a href="#contents">본문 바로가기</a></li>-->
-        <!--<li><a href="#footer">푸터 바로가기</a></li>-->
+        <!--<li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>-->
     <!--</ul>-->
 <!--</div>-->
 <!--// #skip_navigation -->
@@ -97,7 +95,7 @@
                                 <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
                                 <% } %>
                                 <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                                <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                                <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" aria-selected="<%= (paging.curPage == i) ? 'true' : 'false' %>" ><%= i %></a>
                                 <% } %>
                                 <% if (paging.nextPageIdx) { %>
                                 <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
@@ -118,12 +116,12 @@
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
                         <li>
-                            <button class="tip-view-btn" title="이용안내 TIP보기" aria-haspopup="true" id="BS_01_01_04_tip_01">
+                            <button type="button" class="tip-view-btn" aria-haspopup="true" id="BS_01_01_04_tip_01">
                                 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>
                         <li>
-                            <button class="tip-view-btn" title="양도/양수 가능 청소년 기준 TIP보기" aria-haspopup="true" id="BS_01_01_04_tip_02">
+                            <button type="button" class="tip-view-btn" aria-haspopup="true" id="BS_01_01_04_tip_02">
                                 양도/양수 가능 청소년 기준<span class="tip-view">TIP</span>
                             </button>
                         </li>

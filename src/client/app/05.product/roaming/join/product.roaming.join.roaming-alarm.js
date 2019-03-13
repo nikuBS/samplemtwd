@@ -15,11 +15,15 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this.$mainContent = this.$container.find('.fe-main-content');
   this._init();
 };
 
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _init : function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     if(!Tw.BrowserHelper.isApp()){
       this.$container.find('#phone_book').hide();
     }
@@ -169,7 +173,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         this._popupService.close();
         this._removeOnList(btnEvt);
       },this),
-      null,
+      $.proxy(this._resetAriaHidden,this),
       Tw.BUTTON_LABEL.CLOSE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
@@ -230,7 +234,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _openAlert : function (msg,title) {
     this._popupService.openAlert(
@@ -239,6 +243,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       null,
       $.proxy(function () {
         this.$addBtn.removeAttr('style');
+        this._resetAriaHidden();
       }, this)
     );
     if(!this.$addBtn.attr('disabled')){
@@ -270,6 +275,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
     new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
 
+  },
+  _resetAriaHidden : function () {
+    this.$mainContent.attr('aria-hidden',false);
   }
 
 

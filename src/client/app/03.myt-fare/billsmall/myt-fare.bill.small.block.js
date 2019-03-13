@@ -63,7 +63,7 @@ Tw.MyTFareBillSmallBlock.prototype = {
     this.$li.find('.btn-switch.type1').removeClass('on');
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
-      idpg: this.blockData.idpg,
+      idPg: this.blockData.idpg,
       tySvc: this.blockData.tySvc,
       cpCode: this.blockData.cpCode,
       state: 'C'

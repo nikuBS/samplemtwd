@@ -92,7 +92,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
+        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').parent().find('.mtext').text()
       }],
       downgrade: this._getDowngrade()
     });
@@ -151,7 +151,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this.$btnTimeSelect.html(time + ' ' + Tw.PERIOD_UNIT.HOUR + $('<div\>').append(this.$btnTimeSelect.find('.ico')).html());
     this.$hour.text(time + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
 
-    this.$msg.show();
+    this.$msg.show().attr('aria-hidden', 'false');
     this.$msg.removeClass('disabled');
 
     this._startTime = time;
@@ -271,7 +271,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
   _getBasicText: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked'),
-      txt = $checked.attr('title') + '<br>';
+      txt = $checked.parent().find('.mtext').text() + '<br>';
 
     if ($checked.val() === 'NA00006163') {
       txt += this.$msg.text();

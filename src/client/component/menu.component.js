@@ -6,6 +6,7 @@ Tw.MenuComponent = function (notAboutMenu) {
   $(document).ready($.proxy(function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
+    this.$header = $('#header');
 
     if ( !this.$container.length || !this.$gnbBtn.length ) {
       return;
@@ -91,7 +92,9 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
     this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
 
-    this.$container.on('focusin', '#fe-search-input', $.proxy(this._searchFocus, this));
+    this.$container.on('click', '#fe-search-input', $.proxy(this._searchFocus, this));
+    this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
+    this.$header.on('click', '[data-url]', this._onClickUrlButton);
   },
   _componentReady: function () {
     /* history back에서 메뉴 삭제
@@ -117,9 +120,13 @@ Tw.MenuComponent.prototype = {
             if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
+              self.$container.find('#fe-empty-t-noti').attr('aria-hidden', 'true');
+              self.$container.find('#fe-new-t-noti').attr('aria-hidden', 'false');
             }
           } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
             self.$container.find('.fe-t-noti').addClass('on');
+            self.$container.find('#fe-empty-t-noti').attr('aria-hidden', 'true');
+            self.$container.find('#fe-new-t-noti').attr('aria-hidden', 'false');
           }
         }, self)
       );
@@ -198,6 +205,9 @@ Tw.MenuComponent.prototype = {
     }
     this._tNotifyComp.openWithHash(this._tid, 'menu');
     this.$container.find('.fe-t-noti').removeClass('on');
+    this.$container.find('#fe-empty-t-noti').attr('aria-hidden', 'false');
+    this.$container.find('#fe-new-t-noti').attr('aria-hidden', 'true');
+
     $('.h-menu').removeClass('on');
   },
   _onUserInfo: function () {
@@ -219,6 +229,7 @@ Tw.MenuComponent.prototype = {
     if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
+    $('.h-menu a').focus();
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
@@ -374,26 +385,25 @@ Tw.MenuComponent.prototype = {
             if (userInfo.actRepYn === 'Y') {
               cmd = Tw.API_CMD.BFF_04_0009;
             }
-            this._apiService.request(cmd, {})
-              .then($.proxy(function (res) {
-                if ( res.code === Tw.API_CODE.CODE_00 ) {
-                  var info = res.result;
-                  var total = info.amt;
-                  var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
-                  if (month) {
-                    month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
-                    $(elem).text(
-                      month + ' ' + total + Tw.CURRENCY_UNIT.WON);
+            var storeBill = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_BILL));
+            if (Tw.FormatHelper.isEmpty(storeBill) ||
+                Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ||
+                userInfo.svcMgmtNum !== storeBill.svcMgmtNum) {
+
+              this._apiService.request(cmd, {})
+                .then($.proxy(function (res) {
+                  if ( res.code === Tw.API_CODE.CODE_00 ) {
+                    this._showBillInfo(elem, res, true);
                   } else {
                     $(elem).remove();
                   }
-                } else {
+                }, this))
+                .fail(function () {
                   $(elem).remove();
-                }
-              }, this))
-              .fail(function () {
-                $(elem).remove();
-              });
+                });
+            } else {
+              this._showBillInfo(elem, storeBill.data, false);
+            }
             break;
           case 'data':
             this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
@@ -463,6 +473,28 @@ Tw.MenuComponent.prototype = {
     }, this));
   },
 
+  _showBillInfo: function(elem, resp, needToStore) {
+    var info = resp.result;
+    var total = info.amt;
+    var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
+    if (month) {
+      month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
+      $(elem).text(
+        month + ' ' + total + Tw.CURRENCY_UNIT.WON);
+    } else {
+      $(elem).remove();
+    }
+
+    if (needToStore) {
+      var storeData = {
+        data: resp,
+        expired: Tw.DateHelper.add5min(new Date()),
+        svcMgmtNum: this._svcMgmtNum
+      };
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
+    }
+  },
+
   tideUpMenuInfo: function (menuInfo, userInfo) {
     var sorted = [];
     sorted = _.chain(menuInfo)
@@ -512,6 +544,7 @@ Tw.MenuComponent.prototype = {
         item.hasChildren = item.children.length > 0 ? true : false;
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
         item.isLink = !!item.menuUrl && item.menuUrl !== '/';
+        item.isExternalLink = !!item.menuUrl && item.menuUrl.indexOf('http') !== -1;
 
         // Edit: Kim inhwan
         var menu_url = item.menuUrl;
@@ -651,5 +684,17 @@ Tw.MenuComponent.prototype = {
     }
 
     // this._menuSearchComponent.focus();
+  },
+  _onDepthOpened: function (e) {  // 웹접근성 aria-pressed 적용
+    var $btn = $(e.currentTarget);
+    var pressed = $btn.attr('aria-pressed');
+    if (pressed === 'true') {
+      $btn.attr('aria-pressed', false);
+    } else {
+      $btn.attr('aria-pressed', true);
+    }
+  },
+  _onClickUrlButton: function(e) {
+    location.href = e.currentTarget.dataset.url;
   }
 };

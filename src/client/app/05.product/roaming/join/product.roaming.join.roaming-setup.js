@@ -12,7 +12,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
-  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this.$serviceTipElement = this.$container.find('.tip-view-btn.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
@@ -22,6 +22,9 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
 
 Tw.ProductRoamingJoinRoamingSetup.prototype = {
   _bindBtnEvents: function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
@@ -205,9 +208,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(targetEvt.currentTarget).focus();
-      },
+      $.proxy(function () {
+        //$(targetEvt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _doJoin : function(data,apiService,historyService,$containerData){

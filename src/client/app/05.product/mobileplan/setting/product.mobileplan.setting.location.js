@@ -81,7 +81,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     // 웹인 경우 주소록버튼 숨김
     if(!Tw.BrowserHelper.isApp()){
-      $('#btnAddr', this.$container).parent().hide();
+      $('#btnAddr', this.$container).parent().hide().attr('aria-hidden', true);
     }
   },
 
@@ -109,7 +109,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     // 웹인 경우 주소록버튼 숨김
     if(!Tw.BrowserHelper.isApp()){
-      $('#btnAddr', this.$container).parent().hide();
+      $('#btnAddr', this.$container).parent().hide().attr('aria-hidden', true);
     }
   },
 
@@ -622,7 +622,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
         if(opClCd === '1'){
           $('#num-input').val('');
-          $('#num-inputbox .cancel').hide();
+          $('#num-inputbox .cancel').hide().attr('aria-hidden', true);
           $('#btnNumAdd').prop('disabled', true);
         }
 
@@ -657,7 +657,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       var phoneNum = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       $('#num-input').val(phoneNum);
       this._checkAddNumberBtn();
-      $('#num-inputbox .cancel').show();
+      $('#num-inputbox .cancel').show().attr('aria-hidden', false);
     }
   },
 

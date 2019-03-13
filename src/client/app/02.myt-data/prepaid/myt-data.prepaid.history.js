@@ -187,7 +187,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _sortHistory: function(histories, history, idx) {
-    var key = history.chargeDt;
+    var key = (history.chargeDtm || history.chargeDt).substring(0, 8);
 
     if (!histories[key]) {
       histories[key] = [];

@@ -60,10 +60,12 @@ Tw.PopupService.prototype = {
 
     // 포커스 영역 저장 후 포커스 이동
     var thisHash = this._prevHashList[this._prevHashList.length -1];
-    if ($(':focus').length && thisHash && !$(':focus').is('.tw-popup')) {
+    var $focusEl = $(':focus');
+    if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
+      && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
+      $currentPopup.attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
     }
-    $currentPopup.attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -95,6 +97,9 @@ Tw.PopupService.prototype = {
       closeCallback();
     }
     skt_landing.action.popup.close();
+
+    var $lastPopup = $('.tw-popup').last();
+    $lastPopup.attr('aria-hidden', 'false');
   },
   _addHash: function (closeCallback, hashName) {
     var curHash = location.hash || '#';
@@ -427,7 +432,7 @@ Tw.PopupService.prototype = {
       history.back();
       this._historyBack = true;
 
-      if ( /\/main\/home/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
         setTimeout($.proxy(function () {
           Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
           if ( this._historyBack && this._prevHashList.length > 0) {

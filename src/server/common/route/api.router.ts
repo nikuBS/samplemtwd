@@ -18,6 +18,7 @@ import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+
 const os = require('os');
 
 class ApiRouter {
@@ -84,7 +85,8 @@ class ApiRouter {
       target: this.getDefaultQuickMenu
     },
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
-    GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo }
+    GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
+    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethosBlock }
   };
 
   private setApi() {
@@ -500,6 +502,13 @@ class ApiRouter {
       .subscribe((resp) => {
         res.json(resp);
       });
+  }
+
+  private getAuthMethosBlock(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_KEY.AUTH_METHOD_BLOCK)
+      .subscribe((resp) => {
+        res.json(resp);
+      })
   }
 
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {

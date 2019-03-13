@@ -22,6 +22,9 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodTypeInfo,prodApiIn
 
 Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
   _bindBtnEvents: function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
@@ -124,9 +127,10 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(targetEvn.currentTarget).focus();
-      },
+      $.proxy(function () {
+        //$(targetEvn.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _doJoin : function(data,apiService,historyService,$containerData){

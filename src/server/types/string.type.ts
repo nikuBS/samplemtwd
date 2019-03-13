@@ -499,6 +499,14 @@ export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
   TITLE: '명의 변경 신청 방법 안내'
 };
 
+export const MYT_JOIN_WIRE_HIST_DTL_TIT_MAP = {
+  '167' : '신규가입 상세내역',
+  '162' : '설치장소 변경 상세내역',
+  '168' : '가입상품 변경 상세내역',
+  '143' : '약정기간 변경 상세내역',
+  '153' : '요금상품 변경 상세내역'
+};
+
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
   TITLE: '약정 기간 변경'
 };
@@ -1116,7 +1124,8 @@ export const MYT_SUSPEND_REASON = {
 };
 
 export const MYT_SUSPEND_COMPLETE_MSG = {
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_MILITARY: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_ABROAD: '회선번호: {SVC_INFO}<br />장기일시정지 시작일: {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호: {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',

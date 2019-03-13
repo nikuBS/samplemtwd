@@ -6,7 +6,7 @@
 
 Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   //this._cdn = cdn;
-  this._cdn = 'http://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -356,6 +356,9 @@ Tw.CommonSearch.prototype = {
     $('.latelylist-wrap').scroll($.proxy(function () {
       this.$inputElement.blur();
     },this));
+    $('.keyword-list-base').insertAfter('.fe-header-wrap');
+    this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
+    this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -380,6 +383,7 @@ Tw.CommonSearch.prototype = {
   _closeKeywordListBase  : function () {
     this._popupService.close();
     this.$container.find('.keyword-list-base').remove();
+    this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();

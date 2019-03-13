@@ -73,7 +73,7 @@
                         data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"><%-allSvc.s[0].addr%><span class="ico"></span></button>
                 <% } %>
             </div>
-            <% } else if( allSvc.s && allSvc.s.length === 1 ) { %>all
+            <% } else if( allSvc.s && allSvc.s.length === 1 ) { %>
             <div class="inputbox">
                 <div class="input">
                     <% if ( allSvc.s[0].svcGr === 'U' ) { %>
@@ -241,7 +241,7 @@
 </script>
 
 <script type="text/template" id="tpl_service_direct_order">
-    <div class="popup-page tw-popup fixed-btn fe-wrap_direct_order">
+    <div class="popup-page tw-popup fixed-btn fixed-bottom fe-wrap_direct_order">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <div class="header-wrap">
@@ -254,7 +254,6 @@
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container" style="padding-bottom: 4.5rem">
                 <!-- .cont-box -->
                 <div class="cont-box">

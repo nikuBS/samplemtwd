@@ -123,30 +123,29 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _checkError: function($elem) {
-    this.$error0.hide();
-    this.$error1.hide();
-
     if ($elem.hasClass('fe-num_input') && $elem.val().length < 9) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.LESS_LENGTH);
-    } else {
-      this.$error0.hide();
     }
 
     if ($elem.hasClass('fe-num_input') && !Tw.ValidationHelper.isCellPhone($elem.val())) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.WRONG_NUM);
-    } else {
-      this.$error0.hide();
+    }
+
+    if ($elem.hasClass('fe-num_input')) {
+      this.$error0.hide().attr('aria-hidden', 'true');
     }
 
     if ($elem.hasClass('fe-input_birth') && this.$inputBirth.val().length !== 8) {
       return this._setErrorText(this.$error1, Tw.PRODUCT_TFAMILY.WRONG_BIRTH);
-    } else {
-      this.$error1.hide();
+    }
+
+    if ($elem.hasClass('fe-input_birth')) {
+      this.$error1.hide().attr('aria-hidden', 'true');
     }
   },
 
   _setErrorText: function ($elem, text) {
-    $elem.text(text).show();
+    $elem.text(text).show().attr('aria-hidden', 'false');
   },
 
   _toggleJoinCheckBtn: function() {
@@ -181,16 +180,16 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     var $elem = $(e.currentTarget);
 
     $elem.parent().find('input').val('');
-    $elem.hide();
+    $elem.hide().attr('aria-hidden', 'true');
 
     this._toggleJoinCheckBtn();
   },
 
   _toggleClearBtn: function($elem) {
     if ($elem.val().length > 0) {
-      $elem.parent().find('.fe-btn_clear_num').show();
+      $elem.parent().find('.fe-btn_clear_num').show().attr('aria-hidden', 'false');
     } else {
-      $elem.parent().find('.fe-btn_clear_num').hide();
+      $elem.parent().find('.fe-btn_clear_num').hide().attr('aria-hidden', 'true');
     }
   },
 
@@ -209,13 +208,13 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
   _procCheckJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
-    this.$btnAddLine.parent().hide();
-    this.$btnRetry.parent().hide();
+    this.$btnAddLine.parent().hide().attr('aria-hidden', 'true');
+    this.$btnRetry.parent().hide().attr('aria-hidden', 'true');
 
-    this.$layerIsJoinCheck.show();
+    this.$layerIsJoinCheck.show().attr('aria-hidden', 'false');
     this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
 
-    if (this.$groupList.find('li').length < 6) {
+    if (this.$groupList.find('li').length < 5) {
       this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddLine.attr('disabled', 'disabled').prop('disabled', true);
@@ -231,13 +230,13 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       }
 
       this.$joinCheckResult.text(resultText);
-      this.$btnRetry.parent().show();
+      this.$btnRetry.parent().show().attr('aria-hidden', 'false');
       return;
     }
 
     if (this._svcMgmtNumList.indexOf(resp.result.svcMgmtNum) !== -1) {
       this.$joinCheckResult.text(Tw.PRODUCT_TFAMILY.IS_EXISTS);
-      this.$btnRetry.parent().show();
+      this.$btnRetry.parent().show().attr('aria-hidden', 'false');
       return;
     }
 
@@ -248,10 +247,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
       Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
     this.$joinCheckResult.text(Tw.PRODUCT_TFAMILY.IS_JOIN);
-    this.$btnAddLine.parent().show();
+    this.$btnAddLine.parent().show().attr('aria-hidden', 'false');
   },
 
   _addLine: function() {
+    if (this.$groupList.find('li').length > 4) {
+      return;
+    }
+
     this._svcMgmtNumList.push(this._addData.svcMgmtNum.toString());
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
@@ -272,8 +275,8 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   _clearCheckInput: function() {
     this.$inputNumber.val('');
     this.$inputBirth.val('');
-    this.$btnClearNum.hide();
-    this.$layerIsJoinCheck.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
+    this.$layerIsJoinCheck.hide().attr('aria-hidden', 'true');
     this._toggleJoinCheckBtn();
   },
 

@@ -20,6 +20,9 @@ class CommonTidRoute extends TwViewController {
     if ( !FormatHelper.isEmpty(query.error) ) {
       if ( query.error === '3601' ) {
         res.render('tid/common.tid.route.html', { pageInfo, target });
+      } else if ( query.error === '3602' || query.error === '4503' ) {
+        // find-pw, find-id 뒤로가기 버튼 클릭시
+        res.render('tid/common.tid.route.html', { pageInfo, target: '/common/member/tid-pwd' });
       } else {
         this.error.render(res, {
           code: query.error,

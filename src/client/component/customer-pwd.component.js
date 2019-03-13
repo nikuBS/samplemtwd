@@ -60,8 +60,8 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _init: function () {
     this._hideErrMsg();
-    this._firstFocus();
     this._removeValue();
+    this._firstFocus();
   },
   _bindEvent: function () {
     this.$pwdWrap.on('input', 'input', $.proxy(this._onInput, this));
@@ -98,7 +98,9 @@ Tw.CustomerPwdComponent.prototype = {
     this.$errMsg.hide();
   },
   _firstFocus: function () {
-    this.$firstPwd.focus();
+    setTimeout($.proxy(function () {
+      this.$firstPwd.focus();
+    }, this), 300);
   },
   _removeValue: function () {
     this.$pwd.val('');

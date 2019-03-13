@@ -49,7 +49,7 @@ Tw.MyTDataFamilyShare.prototype = {
       }
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
-      this.$cancel.css('display', 'inline-block');
+      this.$cancel.css('display', 'inline-block').attr('aria-hidden', false);
     }
 
     this._validateShareAmount();

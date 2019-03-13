@@ -61,15 +61,15 @@ Tw.ProductWireplanJoinLettering.prototype = {
 
   _clear: function() {
     this.$inputText.val('');
-    this.$btnClear.hide();
+    this.$btnClear.hide().attr('aria-hidden', 'true');
     this._toggleSetupButton(false);
   },
 
   _toggleClearBtn: function() {
     if (this.$inputText.val().length > 0) {
-      this.$btnClear.show();
+      this.$btnClear.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClear.hide();
+      this.$btnClear.hide().attr('aria-hidden', 'true');
     }
   },
 

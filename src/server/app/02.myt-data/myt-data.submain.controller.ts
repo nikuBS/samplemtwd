@@ -524,7 +524,8 @@ class MytDataSubmainController extends TwViewController {
 
   // 실시간잔여량
   _getRemnantData(): Observable<any> {
-    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
+      const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {

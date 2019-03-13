@@ -13,6 +13,7 @@ Tw.CertificationSelect = function () {
   this._openCert = false;
   this._niceKind = null;
   this._authKind = null;
+  this._authBlock = '';
 
   this._opMethods = '';
   this._optMethods = '';
@@ -58,8 +59,32 @@ Tw.CertificationSelect.prototype = {
   _successGetSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = resp.result;
-      this._selectKind();
+      this._getMethodBlock();
     }
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    this._selectKind();
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
   },
   _selectKind: function () {
     this._authKind = this._certInfo.authClCd;
@@ -122,7 +147,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkSmsPri: function () {
-    if ( this._includeSkSms() ) {
+    if ( this._includeSkSms() && !this._checkSmsBlock() ) {
       this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
     } else {
       this._openSelectPopup(true);
@@ -134,10 +159,14 @@ Tw.CertificationSelect.prototype = {
     }
 
     if ( this._methodCnt === 1 ) {
-      this._openCertPopup(this._opMethods);
+      if ( this._authBlock[this._opMethods] === 'Y' ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      } else {
+        this._openCertPopup(this._opMethods);
+      }
     } else {
       // 인증그룹2 인경우 App/Web 에 따라 FIDO/SMS 우선인증 체크필요
-      if ( this._includeFido() ) {
+      if ( this._includeFido() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.BIO] === 'N' ) {
         this._fidoType();
       } else {
         this._checkSmsPri();
@@ -150,6 +179,22 @@ Tw.CertificationSelect.prototype = {
   _includeSkSms: function () {
     return this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
       this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1;
+  },
+  _checkSmsBlock: function () {
+    if ( this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 &&
+      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      return true;
+    } else if ( this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 &&
+      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE] === 'Y' ) {
+      return true;
+    } else if ( this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 &&
+      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y' ) {
+      return true;
+    } else if ( this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 &&
+      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY] === 'Y' ) {
+      return true;
+    }
+    return false;
   },
   _openMaskingCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
@@ -179,30 +224,77 @@ Tw.CertificationSelect.prototype = {
     this._openOpCert();
   },
   _openRefundCert: function () {
+    var methods = {
+      skSms: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ||
+          this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y'
+      },
+      otherSms: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'
+      },
+      save: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SAVE] === 'Y'
+      },
+      ipin: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.IPIN] === 'Y'
+      }
+    };
     this._popupService.open({
       hbs: 'CO_CE_02_01_refund',
+      data: {
+        methods: methods
+      },
       layer: true
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
 
-  _openSelectPopup: function (isWelcome) {
+  _openSelectPopup: function (isWelcome, before) {
     var methods = {
-      skSms: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
-        this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
-      otherSms: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
-      save: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
-      publicCert: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
-      ipin: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
-      bio: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 &&
-        ((this._enableFido && !this._registerFido) || (this._enableFido && this._registerFido && this._useFido))
+      skSms: {
+        use: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
+          this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
+        block: this._checkSmsBlock()
+      },
+      otherSms: {
+        use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'
+      },
+      save: {
+        use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SAVE] === 'Y'
+      },
+      publicCert: {
+        use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH] === 'Y'
+      },
+      ipin: {
+        use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.IPIN] === 'Y'
+      },
+      bio: {
+        use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 &&
+          ((this._enableFido && !this._registerFido) || (this._enableFido && this._registerFido && this._useFido)),
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.BIO] === 'Y'
+      }
     };
 
-    var enableMethod = _.find(methods, $.proxy(function (method) {
-      return method === true;
+    var enableMethod = _.filter(methods, $.proxy(function (method) {
+      return method.use;
     }, this));
 
     if ( Tw.FormatHelper.isEmpty(enableMethod) ) {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
+      return;
+    }
+    var checkBlock = _.filter(enableMethod, $.proxy(function (method) {
+      return !method.block;
+    }, this));
+
+    if ( Tw.FormatHelper.isEmpty(checkBlock) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      return;
+    } else if ( !Tw.FormatHelper.isEmpty(before) && checkBlock.length === 1 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
       return;
     }
 
@@ -254,7 +346,7 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance = new Tw.CertificationFinance();
-        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completeCert, this));
+        this._certFinance.open(this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, this._command, this._authBlock, $.proxy(this._completeCert, this));
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND:
         (new Tw.CertificationSkSmsRefund()).openSmsPopup($.proxy(this._completeCert, this));
@@ -349,9 +441,9 @@ Tw.CertificationSelect.prototype = {
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
       if ( !Tw.FormatHelper.isEmpty(resp.target) && resp.target === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
-        this._openSelectPopup(false);
+        this._openSelectPopup(false, resp.target);
       } else {
-        this._checkSmsEnable();
+        this._checkSmsEnable(resp.target);
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
@@ -361,13 +453,13 @@ Tw.CertificationSelect.prototype = {
       this._callback(resp, this._deferred, this._command);
     }
   },
-  _checkSmsEnable: function () {
-    this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt, $.proxy(this._completeCheckSmsEnable, this));
+  _checkSmsEnable: function (target) {
+    this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt, $.proxy(this._completeCheckSmsEnable, this, target));
   },
-  _completeCheckSmsEnable: function (resp) {
+  _completeCheckSmsEnable: function (target, resp) {
     if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
     }
-    this._openSelectPopup(false);
+    this._openSelectPopup(false, target);
   }
 };

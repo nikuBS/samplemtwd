@@ -21,7 +21,8 @@ export enum REDIS_KEY {
   HOME_NOTICE = 'HomeNotice:',
   HOME_HELP = 'HomeCicntsList',
   MENU_URL = 'MenuUrl:',
-  SUBMAIN_BANNER = 'SubmainBanner:'
+  SUBMAIN_BANNER = 'SubmainBanner:',
+  AUTH_METHOD_BLOCK = 'AuthMethodBlock'
 }
 
 export enum REDIS_TOS_KEY {

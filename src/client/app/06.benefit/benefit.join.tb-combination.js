@@ -97,7 +97,7 @@ Tw.BenefitJoinTbCombination.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this.$lineList.hide();
+    this.$lineList.hide().attr('aria-hidden', 'true');
     this.$lineListHtml.empty();
 
     var useLineInfo = this._getCurrentUseLineInfo(resp.result),
@@ -105,7 +105,7 @@ Tw.BenefitJoinTbCombination.prototype = {
 
     if (convertCombiWireProductList.list.length > 0) {
       this.$lineListHtml.html(this._template(convertCombiWireProductList));
-      this.$lineList.show();
+      this.$lineList.show().attr('aria-hidden', 'false');
     }
 
     skt_landing.widgets.widget_init('.fe-line_list');
@@ -130,10 +130,10 @@ Tw.BenefitJoinTbCombination.prototype = {
   },
 
   _setValidation: function(isError, statusText) {
-    this.$msg.hide();
+    this.$msg.hide().attr('aria-hidden', 'true');
 
     var $msgElem = isError ? this.$msgUnValid : this.$msgValid;
-    $msgElem.text(statusText).show();
+    $msgElem.text(statusText).show().attr('aria-hidden', 'false');
   },
 
   _getCurrentUseLineInfo: function(joinInfo) {

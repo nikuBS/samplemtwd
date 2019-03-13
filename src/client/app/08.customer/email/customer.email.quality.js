@@ -44,7 +44,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_phone').click();
             $('.fe-quality_phone').focus();
           }, 500);
-        }, this)
+        }, this),
+        null
       );
 
       return false;
@@ -60,7 +61,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_email').click();
             $('.fe-quality_email').focus();
           }, 500);
-        }, this)
+        }, this),
+        null
       );
 
       return false;

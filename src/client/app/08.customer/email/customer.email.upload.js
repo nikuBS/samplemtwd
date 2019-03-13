@@ -149,6 +149,10 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.append(this.tpl_upload_file({ uploadFiles: this.uploadFiles }));
 
     this._checkUploadButton();
+
+    // 웹접근성 열리고 포커스
+    $('.fe-page-wrap').attr('aria-hidden', true);
+    $('.tw-popup:last').attr('tabindex',0).focus();
   },
 
   _onClickServiceUpload: function () {
@@ -210,6 +214,9 @@ Tw.CustomerEmailUpload.prototype = {
 
   _hideUploadPopup: function () {
     $('.fe-wrap-file-upload').remove();
+    // 웹접근성 닫히고 포커스
+    $('.fe-page-wrap').attr('aria-hidden', false);
+    $('.fe-upload-file-service').focus();
   },
 
   _successUploadFile: function (res) {

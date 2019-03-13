@@ -782,6 +782,9 @@ Tw.MyTFareSubMain.prototype = {
   _onOtherPages: function (event) {
     var $target = $(event.target);
     var href = $target.attr('data-href');
+    if(!href) {
+      return;
+    }
     this._historyService.goLoad(href);
   }
 };

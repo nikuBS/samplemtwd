@@ -116,7 +116,7 @@ Tw.CustomerAgentsearchRentPhone.prototype = {
   },
   _getItemCompiled: function (item) {
     return '<li class="fe-shop" data-id="' + item.locCode +'"><dl class="type02">' +
-      '<dt>' + item.locName + '</dt>' +
+      '<dt>' + item.storeName + '</dt>' +
       '<dd>' + item.searchAddr + '<br>' + item.jibunAddr +
       '<a href="tel://' + item.tel + '" class="bt-tel">' +
       '<span role="img" class="blind">매장으로 전화하기</span></a></dd></dl></li>';

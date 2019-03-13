@@ -68,7 +68,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
     this._userChanged = true;
 
     if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.EXT){
-      $('#div-alarmtype').show();
+      $('#div-alarmtype').show().attr('aria-hidden', false);
     }else{
       $('#div-alarmtype').hide();
     }

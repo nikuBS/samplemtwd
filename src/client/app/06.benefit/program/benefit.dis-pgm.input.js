@@ -107,15 +107,10 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _procJoinRes: function (resp) {
     Tw.CommonHelper.endLoading('.container');
-
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
-
-    this._popupService.close();
-    setTimeout($.proxy(function () {
-      this._openSuccessPop();
-    }, this), 100);
+    this._openSuccessPop();
   },
 
   _openSuccessPop: function () {

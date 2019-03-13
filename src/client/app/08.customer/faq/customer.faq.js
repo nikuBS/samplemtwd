@@ -22,6 +22,7 @@ Tw.CustomerFaq.prototype = {
     this.$container.on('click', '.fe-external', $.proxy(this._onExternalLinks, this));
     this.$container.on('click', '.cancel', $.proxy(this._onQueryDeleted, this));
     this.$inputSearch.on('keyup', $.proxy(this._onSearchInput, this));
+    this.$inputSearch.on('focusin', $.proxy(this._onSearchInputFocused, this));
     this.$btnSearch.on('click', $.proxy(this._onSearchRequested, this));
   },
   _onExternalLinks: function (e) {
@@ -33,6 +34,11 @@ Tw.CustomerFaq.prototype = {
       this.$btnSearch.attr('disabled', 'disabled');
     } else {
       this.$btnSearch.removeAttr('disabled');
+    }
+  },
+  _onSearchInputFocused: function (e) {
+    if (Tw.FormatHelper.isEmpty(e.currentTarget.value.trim())) {
+      this.$btnSearch.attr('disabled', 'disabled'); // 검색버튼 비활성화
     }
   },
   _onQueryDeleted: function () {

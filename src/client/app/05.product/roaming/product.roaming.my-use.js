@@ -19,25 +19,32 @@ Tw.ProductRoamingMyUse = function(rootEl, options) {
 
 Tw.ProductRoamingMyUse.prototype = {
   _cachedElement: function () {
-    this.$tabOrTabpanel = this.$container.find('[role=tab],[role=tabpanel]');
+    this.$tabLinker = this.$container.find('.fe-tab-linker');
   },
   _bindEvent: function () {
-    $(window).on('hashchange', $.proxy(this._setTab, this));
+    this.$tabLinker.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
   },
   _init : function() {
-    this._initHash();
-    this._setTab();
+    this._initTab();
     this._checkLogin();
   },
-  _initHash: function() {
-    if (Tw.FormatHelper.isEmpty(window.location.hash)) {
-      window.location.replace('#fee');
+  _initTab: function() {
+    var hash = window.location.hash;
+    if (Tw.FormatHelper.isEmpty(hash)) {
+      hash = this.$tabLinker.find('.fe-custom-replace-history').eq(0).attr('href');
     }
+
+    this._prevTab = hash;
+    setTimeout($.proxy(function () {
+      this.$tabLinker.find('a[href="' + hash + '"]').trigger('click');
+    }, this), 0);
   },
-  _setTab: function() {
-    var initTabKey = window.location.hash.replace('#', '');
-    this.$tabOrTabpanel.attr('aria-selected','false')
-        .filter('.' + initTabKey + '-tab').attr('aria-selected','true');
+  _onTabChanged: function (e) {
+    var currTab = $(e.currentTarget).attr('href');
+    if (this._prevTab !== currTab) {
+      this._prevTab = currTab;
+    }
+    location.replace(e.currentTarget.href);
   },
   _checkLogin: function() {
     if (!this._options.isLogin) {

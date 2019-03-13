@@ -453,6 +453,10 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
+  CERT_ADMIN_BLOCK: {
+    TITLE: '서비스 이용에<br/>불편을 드려 죄송합니다.',
+    MSG: '현재 인증 수단을 점검하고 있어 정상적인 서비스 제공이 어렵습니다.<br />잠시 후 다시 시도해 주시기 바랍니다.'
+  },
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?',
   BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
@@ -645,6 +649,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V16: '공유 가능 데이터를 초과했습니다.',
   ALERT_2_V17: '가족에게 공유할 데이터를 입력해주세요.',
   ALERT_2_V18: '휴대폰번호 자릿수를 확인해 주세요. (10~11자리)',
+  ALERT_2_V21: '이메일 주소가 올바르지 않습니다.',
   ALERT_2_V26: '카드번호가 올바르지 않습니다',
   ALERT_2_V27: '보유하신 포인트보다 초과 입력하셨습니다.',
   ALERT_2_V28: '해당 카드사가 등록되어 있지 않습니다.',
@@ -657,6 +662,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V60: '카드번호를 입력해 주세요.',
   ALERT_2_V65: '납부할 포인트를 입력해 주세요.',
   ALERT_2_V66: '납부할 포인트를 선택해 주세요.',
+  ALERT_2_V73: '팩스번호를 입력해주세요.',
+  ALERT_2_V74: '팩스번호가 올바르지 않습니다.',
   ALERT_2_V75: '은행을 선택해 주세요.',
   ALERT_2_A28: '팩스 전송이 완료되었습니다.',
   ALERT_2_A29: '이메일로 전송 완료되었습니다.',
@@ -730,12 +737,12 @@ Tw.ALERT_MSG_MYT_JOIN = {
 Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1: { TITLE: '선택하신 상품 가입을 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A2: {
-    TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품으로 가입하시겠습니까?',
+    TITLE: '가입 시 유의사항을 모두 확인하였으며, 선택하신 상품으로 가입하시겠습니까?',
     MSG: '사용 중인 요금제는 자동으로 해지되며,\n1개월 동안 다른 상품으로 가입하실 수 없습니다.',
     BUTTON: '가입하기'
   },
-  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인 하였으며,\n선택하신 상품으로 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
-  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인 하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
+  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인 하였으며, 선택하신 상품으로 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
+  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인 하였으며, 선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
   ALERT_3_A5: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지하시면, 해당 회선은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -1254,9 +1261,6 @@ Tw.MYT_JOIN_SUSPEND = {
   CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />장기일시정지 기간 : {DURATION}',
-  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
-  SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',
   TYPE: {
     ALL: '걸기/받기 모두 정지',

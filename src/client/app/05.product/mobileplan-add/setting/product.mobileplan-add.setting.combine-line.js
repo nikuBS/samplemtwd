@@ -95,7 +95,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
 
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
-      $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('svc_mgmt_num')));
+      $.proxy(this._delNumReq, this, $(e.currentTarget).data('svc_mgmt_num')));
   },
 
   _delNumReq: function(svcMgmtNum) {
@@ -158,15 +158,15 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
 
   _clearNum: function() {
     this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+      this.$btnClearNum.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClearNum.hide();
+      this.$btnClearNum.hide().attr('aria-hidden', 'true');
     }
   },
 

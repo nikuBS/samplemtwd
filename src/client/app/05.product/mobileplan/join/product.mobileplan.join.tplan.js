@@ -164,7 +164,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       downgrade: this._getDowngrade(),
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
+        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').parent().find('.mtext').text()
       }]
     });
 

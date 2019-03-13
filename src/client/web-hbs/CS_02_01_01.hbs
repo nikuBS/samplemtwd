@@ -25,7 +25,7 @@
                         <div class="widget-box radio">
                             <ul class="select-list btm-line" role="group">
                                 <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="radio" name="radio" value="0" title="값1" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                    <input type="radio" name="radio" value="0" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-radio1">
                                         <p class="layout-text">
                                             <span class="ntext">전체</span>
@@ -33,7 +33,7 @@
                                     </div>
                                 </li>
                                 <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="radio" name="radio" value="1" title="값2" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <input type="radio" name="radio" value="1" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-radio2">
                                         <p class="layout-text">
                                             <span class="ntext">지점</span>
@@ -41,8 +41,8 @@
                                     </div>
                                 </li>
                                 <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="radio" name="radio" value="2" title="값2" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-radio2">
+                                    <input type="radio" name="radio" value="2" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="comp-list-layout" id="aria-comp-radio3">
                                         <p class="layout-text">
                                             <span class="ntext">대리점</span>
                                         </p>
@@ -65,38 +65,38 @@
                             <div class="productfilter">
                                 <ul class="select-list" role="group">
                                     <li class="checkbox" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox" value="premium" title="값1"><!-- 체크상태일 경우 checked="checked" -->
-                                        <span class="text">
+                                        <input type="checkbox" name="checkbox" value="premium" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+                                        <span class="text" id="aria-comp-checkbox1">
                                             T프리미엄스토어
                                         </span>
                                     </li>
                                     <li class="checkbox" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox" value="direct" title="값1"><!-- 체크상태일 경우 checked="false" -->
-                                        <span class="text">
+                                        <input type="checkbox" name="checkbox" value="direct" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                        <span class="text" id="aria-comp-checkbox2">
                                             바로 픽업
                                         </span>
                                     </li>
                                     <li class="checkbox" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox" value="rent" title="값1"><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                        <input type="checkbox" name="checkbox" value="rent" aria-labelledby="aria-comp-checkbox3"><!-- 비활성화상태일 경우 disabled="disabled" --aria-labelledby="aria-comp-radio1">
                                         <span class="text">
                                             임대폰
                                         </span>
                                     </li>
                                     <li class="checkbox" role="checkbox" aria-checked="false">
                                         <input type="checkbox" name="checkbox" value="skb" title="값1"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                                        <span class="text">
+                                        <span class="text" id="aria-comp-checkbox3">
                                             SK브로드밴드
                                         </span>
                                     </li>
                                     <li class="checkbox" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox" value="apple" title="값1"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                                        <span class="text">
+                                        <input type="checkbox" name="checkbox" value="apple" aria-labelledby="aria-comp-checkbox4"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                        <span class="text" id="aria-comp-checkbox4">
                                             애플취급점
                                         </span>
                                     </li>
                                     <li class="checkbox" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox" value="authAgnYn" title="값1"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                                        <span class="text">
+                                        <input type="checkbox" name="checkbox" value="authAgnYn" aria-labelledby="aria-comp-checkbox5"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                                        <span class="text" id="aria-comp-checkbox5">
                                             공식인증 대리점
                                         </span>
                                     </li>

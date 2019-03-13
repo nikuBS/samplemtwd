@@ -1216,6 +1216,8 @@ button.bt-link-tx, a.bt-link-tx {
       right: 0;
       top: 50%;
       margin-top: -13px; }
+  .link-long a {
+    width: auto; }
 
 .box-chk-link .chk-link-list {
   padding: 0.3125rem 0 0.4375rem; }
@@ -4441,6 +4443,9 @@ a.ui-button:active,
     top: 50%;
     -webkit-transform: translate(-50%, -50%) rotate(-45deg);
             transform: translate(-50%, -50%) rotate(-45deg); }
+  .bt-close.fixed-size {
+    left: 50%;
+    bottom: 10px; }
 
 /* popup style */
 .popup-blind {
@@ -7146,6 +7151,96 @@ a.ui-button:active,
     font-size: 0.9375rem; }
 
 /* 공통 로딩바 */
+.spinner_loading {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-right: 100px;
+  vertical-align: top; }
+
+.spinner_loading .line {
+  -webkit-transform-origin: 40px 40px;
+          transform-origin: 40px 40px;
+  -webkit-animation: spinnerLoading 1.2s linear infinite;
+          animation: spinnerLoading 1.2s linear infinite; }
+  .spinner_loading .line:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 20px;
+    left: 38px;
+    width: 4px;
+    height: 11px;
+    border-radius: 20%;
+    background: #fff; }
+
+.spinner_loading .line:nth-child(1) {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s; }
+
+.spinner_loading .line:nth-child(2) {
+  -webkit-transform: rotate(40deg);
+          transform: rotate(40deg);
+  -webkit-animation-delay: -0.96s;
+          animation-delay: -0.96s; }
+
+.spinner_loading .line:nth-child(3) {
+  -webkit-transform: rotate(80deg);
+          transform: rotate(80deg);
+  -webkit-animation-delay: -0.82s;
+          animation-delay: -0.82s; }
+
+.spinner_loading .line:nth-child(4) {
+  -webkit-transform: rotate(120deg);
+          transform: rotate(120deg);
+  -webkit-animation-delay: -0.68s;
+          animation-delay: -0.68s; }
+
+.spinner_loading .line:nth-child(5) {
+  -webkit-transform: rotate(160deg);
+          transform: rotate(160deg);
+  -webkit-animation-delay: -0.54s;
+          animation-delay: -0.54s; }
+
+.spinner_loading .line:nth-child(6) {
+  -webkit-transform: rotate(200deg);
+          transform: rotate(200deg);
+  -webkit-animation-delay: -0.4s;
+          animation-delay: -0.4s; }
+
+.spinner_loading .line:nth-child(7) {
+  -webkit-transform: rotate(240deg);
+          transform: rotate(240deg);
+  -webkit-animation-delay: -0.26s;
+          animation-delay: -0.26s; }
+
+.spinner_loading .line:nth-child(8) {
+  -webkit-transform: rotate(280deg);
+          transform: rotate(280deg);
+  -webkit-animation-delay: -0.12s;
+          animation-delay: -0.12s; }
+
+.spinner_loading .line:nth-child(9) {
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
+  -webkit-animation-delay: 0.02s;
+          animation-delay: 0.02s; }
+
+@-webkit-keyframes spinnerLoading {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
+@keyframes spinnerLoading {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
 .spinner_loading2 {
   display: inline-block;
   position: relative;
@@ -7223,12 +7318,6 @@ a.ui-button:active,
           transform: rotate(320deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
-
-@-webkit-keyframes spinnerLoading {
-  0% {
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
 
 @keyframes spinnerLoading {
   0% {

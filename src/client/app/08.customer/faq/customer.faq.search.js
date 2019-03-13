@@ -27,6 +27,7 @@ Tw.CustomerFaqSearch.prototype = {
   _bindEvents: function () {
     this.$btnSearch.on('click', $.proxy(this._onSearchRequested, this));
     this.$inputSearch.on('keyup', $.proxy(this._onSearchInput, this));
+    this.$inputSearch.on('focusin', $.proxy(this._onSearchInputFocused, this));
     this.$container.on('click', '#fe-more', $.proxy(this._onMoreClicked, this));
     this.$container.on('click', '.cancel', $.proxy(this._onQueryDeleted, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
@@ -36,6 +37,11 @@ Tw.CustomerFaqSearch.prototype = {
       this.$btnSearch.attr('disabled', 'disabled');
     } else {
       this.$btnSearch.removeAttr('disabled');
+    }
+  },
+  _onSearchInputFocused: function (e) {
+    if (Tw.FormatHelper.isEmpty(e.currentTarget.value.trim())) {
+      this.$btnSearch.attr('disabled', 'disabled'); // 검색버튼 비활성화
     }
   },
   _onQueryDeleted: function () {

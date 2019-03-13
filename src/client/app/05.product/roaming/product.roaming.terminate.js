@@ -15,6 +15,7 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodTyp
   this._prodBffInfo = this._arrangeAgree(prodBffInfo);
   this._prodTypeInfo= prodTypeInfo;
   this._page = true;
+  this.$mainContent = this.$rootContainer.find('.fe-main-content');
   this._init();
   this._bindPopupElementEvt();
 };
@@ -51,7 +52,7 @@ Tw.ProductRoamingTerminate.prototype = {
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _allAgree : function(){
     var nowAllAgree = this._$allAgreeElement.attr('checked');
@@ -89,7 +90,7 @@ Tw.ProductRoamingTerminate.prototype = {
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._confirmInfo,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _confirmInfo : function () {
     this._popupService.close();
@@ -115,10 +116,12 @@ Tw.ProductRoamingTerminate.prototype = {
           $.proxy(this._goPlan,this),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR,null,
+            $.proxy(this._resetAriaHidden,this));
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR,null,
+          $.proxy(this._resetAriaHidden,this));
     }, this));
 
   },
@@ -158,9 +161,7 @@ Tw.ProductRoamingTerminate.prototype = {
         html: $currentTarget.data('txt')
       }
     },$.proxy(this._bindDetailAgreePopupEvt,this),
-        function () {
-          $currentTarget.focus();
-        }, 'agree_pop');
+      $.proxy(this._resetAriaHidden,this), 'agree_pop');
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -190,8 +191,9 @@ Tw.ProductRoamingTerminate.prototype = {
       'tagStyle-div': 'div',
       'contents': tooltipData.txt,
       'tooltip': 'tooltip-pd'
-    },null,function () {
-      $target.focus();
-    });
+    },null,$.proxy(this._resetAriaHidden,this));
+  },
+  _resetAriaHidden : function () {
+    this.$mainContent.attr('aria-hidden',false);
   }
 };

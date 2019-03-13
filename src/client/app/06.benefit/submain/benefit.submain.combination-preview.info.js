@@ -27,6 +27,9 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
 
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._initTab, this));
+    }
   },
 
   _onClickTabHeader: function(e) {
@@ -43,12 +46,23 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
     this._showTab(tabId);
   },
 
+  _initTab: function() {
+    var hash = this._historyService.getHash();
+    var tabId = 'tab1';
+    if ( hash && hash === '2' ) {
+      tabId = 'tab2';
+    }
+    this._showTab(tabId);
+  },
+
   _showTab: function(tabId) {
     this._$tabHeaders.attr('aria-selected', 'false');
-    this.$container.find('#'+tabId).attr('aria-selected', 'true');
+    this._$tabHeaders.filter('#'+tabId).attr('aria-selected', 'true');
 
-    this._$tabContents.attr('aria-selected', 'false');
-    this.$container.find('#'+tabId+'-tab').attr('aria-selected', 'true');
+    this._$tabContents.attr('aria-hidden', 'true');
+    this._$tabContents.hide();
+    this.$container.find('#'+tabId+'-tab').attr('aria-hidden', 'false');
+    this.$container.find('#'+tabId+'-tab').show();
   }
 
 };

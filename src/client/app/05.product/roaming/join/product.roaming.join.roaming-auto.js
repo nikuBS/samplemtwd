@@ -25,6 +25,9 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _init : function () {
+    if(this._historyService.isBack()){
+      this._historyService.goBack();
+    }
     this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
     if(this._twoMonthFlag){
       this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
@@ -183,9 +186,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      function () {
-        $(targetEvt.currentTarget).focus();
-      },
+      $.proxy(function () {
+        //$(targetEvt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _doJoin : function(data,apiService,historyService,$containerData){

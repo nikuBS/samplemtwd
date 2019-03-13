@@ -108,16 +108,16 @@ Tw.ProductWireplanSettingBasicInfo.prototype = {
     var $elem = $(e.currentTarget);
 
     $elem.parent().find('input').val('');
-    $elem.hide();
+    $elem.hide().attr('aria-hidden', 'true');
 
     this._checkSetupButton();
   },
 
   _toggleClearBtn: function($elem) {
     if ($elem.val().length > 0) {
-      $elem.parent().find('.fe-btn_clear').show();
+      $elem.parent().find('.fe-btn_clear').show().attr('aria-hidden', 'false');
     } else {
-      $elem.parent().find('.fe-btn_clear').hide();
+      $elem.parent().find('.fe-btn_clear').hide().attr('aria-hidden', 'true');
     }
   },
 

@@ -33,7 +33,8 @@ class MyTDataHotdata extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.reqBalances()).subscribe(([usageDataResp]) => {
+    Observable.combineLatest(this.reqBalances()).subscribe(([_usageDataResp]) => {
+      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
       if ( usageDataResp.code === API_CODE.CODE_00 ) {
         let extraDataReq;
         switch ( svcInfo.svcAttrCd ) {

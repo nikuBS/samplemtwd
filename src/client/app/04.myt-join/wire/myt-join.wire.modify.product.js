@@ -157,10 +157,10 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
     if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
       this.productFormData.cntcPrefrMblPhonNum = '';
-      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9).show().attr('aria-hidden', false);
     } else {
       this.productFormData.cntcPrefrMblPhonNum = tempNum;
-      $('#spanHpValid').text('');
+      $('#spanHpValid').text('').hide().attr('aria-hidden', true);
     }
     this._formValidateionChk();
     Tw.Logger.info('[productFormData]', this.productFormData);
