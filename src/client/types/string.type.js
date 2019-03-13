@@ -1340,7 +1340,8 @@ Tw.CUSTOMER_PRAISE_OFFICE = '지점';
 Tw.CUSTOMER_VOICE = {
   LINE_CHOICE: '회선선택',
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
-  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해 주세요.'
+  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해 주세요.',
+  NOLINE: '회선번호가 확인되지 않아 서비스를 이용하실 수 없습니다.'
 };
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',

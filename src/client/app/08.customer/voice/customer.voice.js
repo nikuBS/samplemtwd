@@ -41,6 +41,11 @@ Tw.CustomerVoice.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.historiesYn = res.result.hitoriesYn;
       this._onClickRegister();
+    } else if (Tw.API_CODE.COM001) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_VOICE.NOLINE,
+        Tw.POPUP_TITLE.NOTIFY
+      );
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
