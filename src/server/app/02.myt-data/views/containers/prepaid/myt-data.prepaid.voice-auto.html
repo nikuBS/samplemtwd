@@ -249,8 +249,10 @@
                                 <span class="input">
                                     <% if ( AutoInfo ) { %>
                                     <input class="fe-card-number" value="<%=AutoInfo.cardNum%>" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <input class="none fe-hidden" value="<%= AutoInfo.cardNum %>" />
                                     <% } else { %>
                                     <input class="fe-card-number" value="" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <input class="none fe-hidden" value="" />
                                     <% } %>
                                     <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                                 </span>

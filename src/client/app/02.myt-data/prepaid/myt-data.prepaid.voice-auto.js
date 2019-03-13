@@ -326,8 +326,15 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         endDt: $('.fe-select-expire').val().replace(/-/g, ''),
         cardNum: $('.fe-card-number').val(),
         expireYY: $('.fe-card-y').val(),
-        expireMM: $('.fe-card-m').val()
+        expireMM: $('.fe-card-m').val(),
+        maskedYn: ''
       };
+
+      if ($('.fe-hidden').val() !== '') {
+        if ($.trim($('.fe-card-number').val()) === $('.fe-hidden').val()) {
+          htParams.maskedYn = 'Y';
+        }
+      }
 
       this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
         .done($.proxy(this._onCompleteRechargeAuto, this));
