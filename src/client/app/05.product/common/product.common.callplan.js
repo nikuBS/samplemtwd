@@ -341,6 +341,21 @@ Tw.ProductCommonCallplan.prototype = {
       return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
     }
 
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+        msg = msg.pop().match(/(\d+)/);
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+        toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+        serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -678,18 +693,18 @@ Tw.ProductCommonCallplan.prototype = {
 
     // 모바일 부가서비스, 로밍 요금제/부가서비스 가입여부 체크
     if (['C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
-      return this.apiService.request(Tw.API_CMD.BFF_05_0040, reqParams, {}, [this._prodId])
+      return this._apiService.request(Tw.API_CMD.BFF_05_0040, reqParams, {}, [this._prodId])
         .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
     }
 
     // 유선 부가서비스 가입여부 체크
     if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
-      return this.apiService.request(Tw.API_CMD.BFF_10_0109, reqParams, {}, [this._prodId])
+      return this._apiService.request(Tw.API_CMD.BFF_10_0109, reqParams, {}, [this._prodId])
         .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
     }
 
     // 결합상품/할인프로그램 가입여부 체크
-    this.apiService.request(Tw.API_CMD.BFF_10_0119, {}, {}, [this._prodId])
+    this._apiService.request(Tw.API_CMD.BFF_10_0119, {}, {}, [this._prodId])
       .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
   },
 
