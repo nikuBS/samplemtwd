@@ -64,7 +64,7 @@ Tw.PopupService.prototype = {
     if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
       && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
-      $currentPopup.attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
+      $currentPopup.children(':not(.popup-blind)').attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
     }
   },
   _onFailPopup: function (retryParams) {
