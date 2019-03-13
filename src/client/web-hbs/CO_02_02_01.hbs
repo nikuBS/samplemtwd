@@ -33,11 +33,20 @@
             <div class="cont-box nogaps">
                 <div class="box-certifi-list">
                     <ul class="certifi-sel-list">
-                        <li>
+                        {{#if data.methods.skSms.use}}
+                        <li class="{{#if data.methods.skSms.block}}lock{{/if}}">
+                            {{#if data.methods.skSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-sk">
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type01" aria-hidden="false"></span>
-                                    </span>
+                                <span class="list-cell">
+                                    <span class="ico-certifi-list type01" aria-hidden="false"></span>
+                                </span>
                                 <span class="list-cell">
                                         <span class="list-ti">SK텔레콤 SMS 인증</span>
                                         <span class="list-tx">고객님 명의의 SK텔레콤 휴대폰 번호로 SMS 인증합니다.</span>
@@ -45,23 +54,41 @@
                                 <span class="ico"></span>
                             </button>
                         </li>
-                        <li>
+                        {{/if}}
+                        {{#if data.methods.otherSms.use}}
+                        <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                            {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-kt">
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type02" aria-hidden="false"></span>
-                                    </span>
                                 <span class="list-cell">
-                                        <span class="list-ti">KT SMS 인증</span>
+                                    <span class="ico-certifi-list type02" aria-hidden="false"></span>
+                                </span>
+                                <span class="list-cell">
+                                    <span class="list-ti">KT SMS 인증</span>
                                         <span class="list-tx">고객님 명의의 KT 휴대폰 번호로  SMS 인증합니다.</span>
                                     </span>
                                 <span class="ico"></span>
                             </button>
                         </li>
-                        <li>
+                        <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                            {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-lg">
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type03" aria-hidden="false"></span>
-                                    </span>
+                                <span class="list-cell">
+                                    <span class="ico-certifi-list type03" aria-hidden="false"></span>
+                                </span>
                                 <span class="list-cell">
                                         <span class="list-ti">LG U+ 인증</span>
                                         <span class="list-tx">고객님 명의의 LG U+ 휴대폰 번호로 SMS 인증합니다.</span>
@@ -69,11 +96,21 @@
                                 <span class="ico"></span>
                             </button>
                         </li>
-                        <li>
+                        {{/if}}
+                        {{#if data.methods.ipin.use}}
+                        <li class="{{#if data.methods.ipin.block}}lock{{/if}}">
+                            {{#if data.methods.ipin.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-ipin">
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type04" aria-hidden="false"></span>
-                                    </span>
+                                <span class="list-cell">
+                                    <span class="ico-certifi-list type04" aria-hidden="false"></span>
+                                </span>
                                 <span class="list-cell">
                                         <span class="list-ti">아이핀 인증</span>
                                         <span class="list-tx">고객님 명의의 아이핀으로 인증합니다.</span>
@@ -81,12 +118,21 @@
                                 <span class="ico"></span>
                             </button>
                         </li>
-                        {{#if enableFido}}
-                        <li>
+                        {{/if}}
+                        {{#if data.methods.bio.use}}
+                        <li class="{{#if data.methods.bio.block}}lock{{/if}}">
+                            {{#if data.methods.bio.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-bio">
-                                    <span class="list-cell">
-                                        <span class="ico-certifi-list type05" aria-hidden="false"></span>
-                                    </span>
+                                <span class="list-cell">
+                                    <span class="ico-certifi-list type05" aria-hidden="false"></span>
+                                </span>
                                 <span class="list-cell">
                                         <span class="list-ti">생체 인증</span>
                                         <span class="list-tx">고객님의 생체정보(지문,Face ID)로 인증합니다.</span>

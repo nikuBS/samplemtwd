@@ -42,7 +42,15 @@
             <div class="cont-box nogaps">
                 <div class="box-certifi-list">
                     <ul class="certifi-sel-list">
-                        <li>
+                        <li class="{{#if data.methods.skSms.block}}lock{{/if}}">
+                            {{#if data.methods.skSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-sk">
                                 <span class="list-cell">
                                     <span class="ico-certifi-list type01" aria-hidden="false"></span>
@@ -54,7 +62,15 @@
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
                         </li>
-                        <li>
+                        <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                            {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-kt">
                                 <span class="list-cell">
                                     <span class="ico-certifi-list type02" aria-hidden="false"></span>
@@ -66,7 +82,15 @@
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
                         </li>
-                        <li>
+                        <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                            {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-lg">
                                 <span class="list-cell">
                                     <span class="ico-certifi-list type03" aria-hidden="false"></span>
@@ -78,7 +102,15 @@
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
                         </li>
-                        <li>
+                        <li class="{{#if data.methods.ipin.block}}lock{{/if}}">
+                            {{#if data.methods.ipin.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-ipin">
                                 <span class="list-cell">
                                     <span class="ico-certifi-list type04" aria-hidden="false"></span>
@@ -90,7 +122,15 @@
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
                         </li>
-                        <li>
+                        <li class="{{#if data.methods.publicCert.block}}lock{{/if}}">
+                            {{#if data.methods.publicCert.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <button id="fe-bt-public">
                                 <span class="list-cell">
                                     <span class="ico-certifi-list type06" aria-hidden="false"></span>
