@@ -650,9 +650,11 @@ export const FEE_PLAN_TIP_TXT = {
 export const MAIN_MENU_REFUND_STATE = {
   ORIGIN_MSG_ING: '송금중',
   ORIGIN_MSG_COMPLETE: '송금완료',
+  ORIGIN_MSG_BRANCH_COMPLETE: '영업점환불',
   ORIGIN_MSG_ERROR: '송금오류',
   APPLY: '신청',
   COMPLTE: '완료',
+  COMPLTE_B: '영업점 환불',
   ERROR: '송금오류'
 };
 
