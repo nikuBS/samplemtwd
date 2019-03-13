@@ -75,13 +75,13 @@
                                 <ul class="select-list fe-line_list" role="group">
                                     <% for (var i in allowedLineList) { %>
                                     <% if ( i < 20 ) { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-hidden="false">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-hidden="false" aria-labelledby="aria-comp-radio<%= i %>">
                                     <% } else { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none" aria-hidden="true">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none" aria-hidden="true" aria-labelledby="aria-comp-radio<%= i %>">
                                     <% } %>
-                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" data-svc_num="<%= allowedLineList[i].svcNum %>" title="<%= allowedLineList[i].fullNm %>"
-                                               aria-labelledby="aria-comp-radio<%= i %>">
-                                        <div class="comp-list-layout" id="aria-comp-radio<%= i %>">
+                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>"
+                                               data-svc_num="<%= allowedLineList[i].svcNum %>" title="<%= allowedLineList[i].fullNm %>" aria-hidden="true">
+                                        <div class="comp-list-layout" id="aria-comp-radio<%= i %>" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext">
                                                     <strong><%= allowedLineList[i].ctgNm %></strong>

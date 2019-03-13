@@ -48,6 +48,7 @@ class ProductMobileplanJoin extends TwViewController {
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
     ).subscribe(([joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo]) => {
+      console.log(joinTermInfo.result);
       if (joinTermInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: joinTermInfo.code,
