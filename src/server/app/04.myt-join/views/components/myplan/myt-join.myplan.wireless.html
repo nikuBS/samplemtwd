@@ -21,7 +21,7 @@
                 <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
                 <% } %>
                 <% } else { %>
-                <li class="last-line"><button class="disabled">옵션 변경</button></li>
+                <li class="last-line"><button class="disabled" disabled>옵션 변경</button></li>
                 <% } %>
             </ul>
         </div>
@@ -56,8 +56,8 @@
                 <ul>
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
                     <li>
-                        <div class="txt-area" id="aria-separate-list<%= i %>">
-                            <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
+                        <div class="txt-area">
+                            <span class="tit" id="aria-separate-list<%= i %>"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
                             <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
                             <a title="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>" href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="bt-link-tx underline">
@@ -66,7 +66,7 @@
                             <% } %>
                         </div>
                         <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
-                        <a href="/product/callplan?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" aria-labelledby="aria-separate-list<%= i %>" class="btn">상세보기</a>
+                        <a href="/product/callplan?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="btn" aria-labelledby="aria-separate-list<%= i %>">상세보기</a>
                         <% } %>
                     </li>
                     <% } %>
@@ -99,7 +99,7 @@
             <ul class="pg-chk-list02">
                 <% for ( var i in tipList) { %>
                 <li>
-                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>">
+                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
                         <%= tipList[i].title %><i class="icon-badge-tip"><span class="blind">tip</span></i>
                     </button>
                 </li>
