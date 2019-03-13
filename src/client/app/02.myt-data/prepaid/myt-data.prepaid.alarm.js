@@ -114,7 +114,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     var fnSelectStatus = function ($target, item) {
       return {
         value: item.text,
-        option: $target.text() === item.text ? 'checked' : '',
+        option: $.trim($target.text()) === $.trim(item.text) ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
