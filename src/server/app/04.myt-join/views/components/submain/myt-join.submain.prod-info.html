@@ -29,12 +29,7 @@
                             나의 부가서비스
                         </span>
                         <span class="text">
-                            <% if (data.type === 2 || data.type === 3) { %>
-                                <%= data.myAddProduct.addTotCnt %>개
-                            <% } else { %>
-                                유료 <%= data.myAddProduct.addProdPayCnt %>개 /
-                                무료 <%= data.myAddProduct.addProdPayFreeCnt %>개
-                            <% } %>
+                            <%= data.myAddProduct.addTotCnt %>개
                         </span>
                     </span>
                 </button>
