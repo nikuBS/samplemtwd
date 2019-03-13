@@ -91,9 +91,9 @@ Tw.TooltipService.prototype = {
       $target.append($children);
     }
 
-    $target.on('click', $.proxy(this._openTip, this, $result));
+    $target.on('click', $.proxy(this._openTip, this, $result, $target));
   },
-  _openTip: function ($result) {
+  _openTip: function ($result, $target) {
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
@@ -106,7 +106,9 @@ Tw.TooltipService.prototype = {
       'tooltip': 'tooltip-pd'
     },
       $.proxy(this._onOpen, this),
-      $.proxy(this._onClose, this));
+      $.proxy(this._onClose, this),
+      null, $target
+    );
   },
   _onOpen: function ($layer) {
     $layer.on('click', 'a', $.proxy(this._onClick, this));
