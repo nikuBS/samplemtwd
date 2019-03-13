@@ -131,6 +131,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _resAuthCode: function(resp) {
+    if (resp.code === 'ATH2003') {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
+    }
+
+    if (resp.code === 'ATH2006') {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._setSendResultText(true, resp.msg);
     }
