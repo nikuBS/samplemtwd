@@ -67,6 +67,7 @@ Tw.MYT_FARE_HISTORY_MICRO_METHOD = {
 Tw.MYT_PAYMENT_HISTORY_TYPE = ['', 'direct', 'auto', 'auto-all', 'micro-prepay', 'content-prepay', 'point-reserve', 'point-auto'];
 
 Tw.AUTH_LOGIN_TYPE = {
+  NONE: 'N',
   TID: 'T',
   EASY: 'S'
 };
