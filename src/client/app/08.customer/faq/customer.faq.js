@@ -34,6 +34,10 @@ Tw.CustomerFaq.prototype = {
       this.$btnSearch.attr('disabled', 'disabled');
     } else {
       this.$btnSearch.removeAttr('disabled');
+
+      if (e.key === 'Enter') {
+        this._onSearchRequested();
+      }
     }
   },
   _onSearchInputFocused: function (e) {
