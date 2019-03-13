@@ -64,7 +64,7 @@ Tw.PopupService.prototype = {
     if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
       && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
-      $currentPopup.attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
+      $currentPopup.children(':not(.popup-blind)').attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
     }
   },
   _onFailPopup: function (retryParams) {
@@ -338,6 +338,20 @@ Tw.PopupService.prototype = {
     this._open(option);
   },
   openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
+
+    // 회선 정보
+    _.each([from, target], function(item){
+      if ( item.svcAttrCd.indexOf('S') > -1 ) {
+        if ( target.svcAttrCd === 'S3' ) {
+          item.descSvcNum = Tw.FormatHelper.getDashedPhoneNumber(item.svcNum.replace(/-/g, ''));
+        } else {
+          item.descSvcNum = item.addr;
+        }
+      } else {
+        item.descSvcNum = Tw.FormatHelper.getDashedCellPhoneNumber(item.svcNum.replace(/-/g, ''));
+      }
+    });
+
     // 회선 타입
     var clsNm = 'cellphone';
     if ( target.svcAttrCd.indexOf('S') > -1 ) {
@@ -353,13 +367,13 @@ Tw.PopupService.prototype = {
 
     var template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.CONTENTS);
     var contents = template({
-      svcNum: Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')),
+      svcNum: target.descSvcNum,
       desc: _.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm,
       clsNm: clsNm
     });
     template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.TITLE);
     var title = template({
-      svcNum: Tw.FormatHelper.getDashedCellPhoneNumber(from.svcNum.replace(/-/g, ''))
+      svcNum: from.descSvcNum
     });
 
     // openModalTypeA

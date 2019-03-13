@@ -57,8 +57,7 @@ Tw.BiometricsCert.prototype = {
   _openPopup: function () {
     var methods = {
       skSms: {
-        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ||
-          this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y'
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y'
       },
       otherSms: {
         block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'

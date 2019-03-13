@@ -48,7 +48,7 @@ Tw.BiometricsDeregister.prototype = {
       });
       this._openComplete();
     } else {
-      Tw.Error(resp.resultCode, '').pop();
+      Tw.Error(resp.resultCode, resp.errorDescription).pop();
     }
   },
   _openComplete: function () {

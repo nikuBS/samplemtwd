@@ -82,7 +82,7 @@ export default class CustomerResearches extends TwViewController {
             examples,
             staDtm: DateHelper.getShortDate(research.staDtm),
             endDtm: DateHelper.getShortDate(research.endDtm),
-            isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
+            isProceeding: DateHelper.getDifference(research.endDtm) > 0
           };
         }),
         showCount: quizIdx && quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT

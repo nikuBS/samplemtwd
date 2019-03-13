@@ -105,7 +105,7 @@ Tw.CommonMemberLineEdit.prototype = {
     this._resetCount();
 
     var svcGr = $target.parents('.fe-item').data('svcgr');
-    if ( svcGr === 'E' ) {
+    if ( svcGr === 'R' || svcGr === 'D' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
     }
   },

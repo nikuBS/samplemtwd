@@ -7,7 +7,7 @@
 Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
   this.$container = rootEl;
   this._target = target || '/main/home';
-  this._loginType = loginType || 'T';
+  this._loginType = loginType || 'N';
 
   this._popupService = Tw.Popup;
 
@@ -28,7 +28,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
     Tw.CommonHelper.openUrlExternal($target.attr('data-link'));
   },
   _onClickTworld: function () {
-    var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + this._loginType;
+    var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType);
 
     if (this._isAndroid) {
       setTimeout($.proxy(this._checkStoreForAndroid, this), 1000);

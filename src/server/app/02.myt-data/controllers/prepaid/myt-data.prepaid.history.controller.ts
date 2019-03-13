@@ -23,19 +23,6 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       // const voice: any = this.getVoiceRecharges(),
       //   data: any = this.getDataRecharges();
 
-      const error = {
-        code: voice.code || data.code,
-        msg: voice.msg || data.msg
-      };
-
-      if (error.code) {
-        return this.error.render(res, {
-          ...error,
-          pageInfo: pageInfo,
-          svcInfo
-        });
-      }
-
       const visible = voice.histories.latest >= data.histories.latest ? 'voice' : 'data';
       delete voice.histories.latest;
       delete data.histories.latest;
@@ -48,7 +35,11 @@ export default class MyTDataPrepaidHistory extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0062, this.DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_VOICE;
       if (resp.code !== API_CODE.CODE_00) {
-        return resp;
+        return {
+          histories: { latest: '' },
+          count: 0,
+          origin: []
+        };
       }
 
       return {
@@ -63,7 +54,11 @@ export default class MyTDataPrepaidHistory extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0063, this.DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_DATA;
       if (resp.code !== API_CODE.CODE_00) {
-        return resp;
+        return {
+          histories: { latest: '' },
+          count: 0,
+          origin: []
+        };
       }
 
       return {
