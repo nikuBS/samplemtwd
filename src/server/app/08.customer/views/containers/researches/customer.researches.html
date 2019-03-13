@@ -66,7 +66,7 @@
                                                             <ul class="survey-researchbox <%= research.bnnrRsrchSortMthdCd === 'D' ? 'type2' : '' %> <%= research.hasHtml ? 'btn-dtl' : ''%>">
                                                                 <% research.examples.map((exam, idx) =>  {%>
                                                                 <li class="category-type" aria-checked="false">
-                                                                    <% if (exam.image) { %><div class="poll-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" /></div><% } %>
+                                                                    <% if (exam.image) { %><div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div><% } %>
                                                                     <div class="chkform-wrap">
                                                                         <span class="custom-form"><input type="radio" id="radio<%= research.bnnrRsrchId %>_<%= idx %>" name="radio<%= research.bnnrRsrchId %>"><span class="r-type1"></span></span>
                                                                         <label for="radio<%= research.bnnrRsrchId %>_<%= idx %>"><%= exam.content %></label>
