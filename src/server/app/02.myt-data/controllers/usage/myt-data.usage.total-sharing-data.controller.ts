@@ -23,8 +23,8 @@ class MyTDataUsageTotalSharingData extends TwViewController {
     Observable.combineLatest(
       this.reqBalances(),
       this.reqBalanceAddOns(),
-    ).subscribe(([balancesResp, balanceAddOnsResp]) => {
-      // console.log('~~~~~~~resp', balancesResp, balanceAddOnsResp);
+    ).subscribe(([_balancesResp, balanceAddOnsResp]) => {
+      const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([
         balancesResp, balanceAddOnsResp
       ]);
