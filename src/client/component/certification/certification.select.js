@@ -147,7 +147,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkSmsPri: function () {
-    if ( this._includeSkSms() && !this._checkSmsBlock() ) {
+    if ( this._includeSkSms() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'N' ) {
       this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
     } else {
       this._openSelectPopup(true);
@@ -180,22 +180,6 @@ Tw.CertificationSelect.prototype = {
     return this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
       this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1;
   },
-  _checkSmsBlock: function () {
-    if ( this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 &&
-      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
-      return true;
-    } else if ( this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 &&
-      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE] === 'Y' ) {
-      return true;
-    } else if ( this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 &&
-      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y' ) {
-      return true;
-    } else if ( this._optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 &&
-      this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY] === 'Y' ) {
-      return true;
-    }
-    return false;
-  },
   _openMaskingCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
     this._opMethods = methods.opAuthMethods;
@@ -226,8 +210,7 @@ Tw.CertificationSelect.prototype = {
   _openRefundCert: function () {
     var methods = {
       skSms: {
-        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ||
-          this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN] === 'Y'
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y'
       },
       otherSms: {
         block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'
@@ -253,7 +236,7 @@ Tw.CertificationSelect.prototype = {
       skSms: {
         use: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
           this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
-        block: this._checkSmsBlock()
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y'
       },
       otherSms: {
         use: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
@@ -454,7 +437,8 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkSmsEnable: function (target) {
-    this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt, $.proxy(this._completeCheckSmsEnable, this, target));
+    this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt,
+      $.proxy(this._completeCheckSmsEnable, this, target));
   },
   _completeCheckSmsEnable: function (target, resp) {
     if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {

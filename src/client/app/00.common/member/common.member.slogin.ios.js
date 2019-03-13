@@ -13,6 +13,7 @@ Tw.CommonMemberSloginIos = function (rootEl) {
 
   this.mdn = '';
   this.certSeq = '';
+  this._authBlock = '';
 
   this.$inputName = null;
   this.$inputBirth = null;
@@ -42,7 +43,9 @@ Tw.CommonMemberSloginIos = function (rootEl) {
   this._addTimer = null;
   this._addTime = null;
   window.onRefresh = $.proxy(this._onRefreshCallback, this);
+
   this._bindEvent();
+  this._getMethodBlock();
 };
 
 Tw.CommonMemberSloginIos.prototype = {
@@ -63,6 +66,36 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014'
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+        null, $.proxy(this._onCloseBlockPopup, this));
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _onCloseBlockPopup: function () {
+    this._historyService.goBack();
   },
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));

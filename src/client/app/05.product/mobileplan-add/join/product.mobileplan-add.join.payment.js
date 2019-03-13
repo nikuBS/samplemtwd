@@ -29,10 +29,40 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
+  this._getMethodBlock();
 };
 
 Tw.ProductMobileplanAddJoinPayment.prototype = {
-
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+        null, $.proxy(this._onCloseBlockPopup, this));
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _onCloseBlockPopup: function () {
+    this._historyService.goBack();
+  },
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-input_num');
     this.$inputAuthCode = this.$container.find('.fe-input_auth_code');

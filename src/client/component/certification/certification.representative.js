@@ -44,6 +44,7 @@ Tw.CertificationRepresentative.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
+
     this._popupService.open({
       hbs: 'MV_01_02_01_01',
       layer: true,
