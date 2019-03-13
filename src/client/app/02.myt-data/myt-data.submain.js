@@ -413,7 +413,7 @@ Tw.MyTDataSubMain.prototype = {
     var requestCommand = [];
     for ( var idx = from; idx < end; idx++ ) {
       this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
-      var param = { command: Tw.SESSION_CMD.BFF_05_0001 };
+      var param = { command: Tw.API_CMD.BFF_05_0001 };
       if ( this.data.otherLines[idx].child ) {
         param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
       }
