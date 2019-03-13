@@ -303,6 +303,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     $elemParent.remove();
     this._checkSetupButton();
+
+    if (this.$groupList.find('li').length < 5) {
+      this.$btnAddLine.removeAttr('disabled').prop('disabled', false);
+    }
   },
 
   _onLineCheck: function(e) {
