@@ -26,7 +26,7 @@
                         <div class="content-wrap">
                         <h2 class="blind">내용</h2>
                             <h3 class="link-long type01">
-                                <button title="전체 카테고리 보기" class="fe-btn-show-categories">
+                                <button title="전체 카테고리 보기" class="fe-btn-show-categories" aria-pressed="false">
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
@@ -36,10 +36,10 @@
                             <div class="widget">
                                 <div class="widget-box horizontal">
                                     <div class="horizontal-slide fe-category-list">
-                                        <ul class="horizontal-list brand_link">
+                                        <ul class="horizontal-list brand_link" role="tablist">
                                             <% for (var i = 0; i < cateList.length; i++) { %>
-                                            <li>
-                                                <button type="button" class="unit fe-btn-category <%= selectedCateCd === cateList[i].cateCd ? 'on': '' %>" cate-cd="<%= cateList[i].cateCd %>" aria-selected="<%= selectedCateCd === cateList[i].cateCd ? 'true': 'false' %>" ><%= cateList[i].cateName %></button>
+                                            <li role="presentation">
+                                                <button type="button" role="tab" class="unit fe-btn-category <%= selectedCateCd === cateList[i].cateCd ? 'on': '' %>" cate-cd="<%= cateList[i].cateCd %>" aria-selected="<%= selectedCateCd === cateList[i].cateCd ? 'true': 'false' %>" ><%= cateList[i].cateName %></button>
                                             </li>
                                             <% } %>
                                         </ul>
@@ -184,7 +184,7 @@
                         <div class="cont-layer fe-cont-layer" style="display:none;"><!-- 전체 카테고리 영역 -->
                             <div class="cont-layer-info">
                                 <h3 class="link-long">
-                                    <button class="fe-btn-close-categories">전체 카테고리
+                                    <button class="fe-btn-close-categories" aria-pressed="false">전체 카테고리
                                         <span class="tx-sub">
                                             <span class="ico"></span>
                                         </span>
@@ -193,9 +193,9 @@
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box radio fe-category-list-in-layer">
-                                        <ul class="select-list horizontal-list" role="radiogroup">
+                                        <ul class="select-list horizontal-list" role="tablist">
                                             <% for (var i = 0; i < cateList.length; i++) { %>
-                                                <li class="radiobox type05 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" cate-cd="<%= cateList[i].cateCd %>" id="aria-comp-radio<%= i+1 %>" cate-cd="<%= cateList[i].cateCd %>">
+                                                <li class="radiobox type05 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" cate-cd="<%= cateList[i].cateCd %>" id="aria-comp-radio<%= i+1 %>" role="tab" aria-selected="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>">
                                                     <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="" />
                                                     <!--<input type="radio" name="radio01" title="<%= cateList[i].cateName %>" value="<%= cateList[i].cateCd %>" <%= (selectedCateCd === cateList[i].cateCd) ? 'checked="checked"': '' %>  aria-labelledby="aria-comp-radio<%= i+1 %>">-->
                                                     <%= cateList[i].cateName %>
