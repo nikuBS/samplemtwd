@@ -163,51 +163,37 @@
                 <!--&lt;!&ndash;// .widget &ndash;&gt;-->
             <!--</div>-->
 
-            <div class="survey-box">
+           
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- 2019.03.13 배너-->
+            <div class="survey-box3">
+                <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider1">
-                        <div class="coupon-genre-banner-slide">
-                            <div class="slider-box">
-                                <ul class="slider">
-                                    <% researchList.map( item => { %>
-
+                        <ul class="slider">
+                        <% researchList.map( item => { %>
+                            <li>
+                                <div class="operation-guide-banner01"> 
+                                    <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
+                                    <ul>
                                     <% if ( item.bnnrRsrchTypCd === 'R' ) { %>
-                                    <li>
-                                        <div class="survey-banner">
-                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
-                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?id=<%-item.hintExUrl%>">오늘의 설문 참여하기</a></div>
-                                            <a href="/customer/svc-info/researches?id=<%-item.hintExUrl%>" class="icon">설문 참여하기</a>
-                                        </div>
-                                    </li>
+                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?id=<%-item.hintExUrl%>">설문 참여하기</button></li>
+                                    <% } else if ( item.bnnrRsrchTypCd === 'P' ) { %>
+                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">설문 참여하기</button></li>
+                                    <% } else if ( item.bnnrRsrchTypCd === 'Q' ) { %>
+                                        <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">설문 참여하기</button></li>
                                     <% } %>
-
-                                    <% if ( item.bnnrRsrchTypCd === 'P' ) { %>
-                                    <li>
-                                        <div class="survey-banner">
-                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
-                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">퀵 서베이 투표 및 결과보기</a></div>
-                                            <a href="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>" class="icon">설문 참여하기</a>
-                                        </div>
-                                    </li>
-                                    <% } %>
-
-                                    <% if ( item.bnnrRsrchTypCd === 'Q' ) { %>
-                                    <li>
-                                        <div class="survey-banner">
-                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
-                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">퀴즈 참여 및 결과보기</a></div>
-                                            <a href="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>" class="icon">설문 참여하기</a>
-                                        </div>
-                                    </li>
-                                    <% } %>
-
-                                    <% }) %>
-                                </ul>
-                            </div>
-                        </div>
+                                    </ul>
+                                    <img src="<%=CDN%><%=item.custCntrSubmImgflPathNm%>" alt="<%=item.bnnrRsrchTitleNm%>" /> 
+                                </div>
+                            </li>
+                        <% }) %>
+                        </ul>
                     </div>
                 </div>
+                <!--// .widget -->
             </div>
+            <!-- //2019.03.13 배너-->
 
             <% } %>
 
