@@ -17,8 +17,6 @@ class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
   private logger: LoggerService = new LoggerService();
-  private req;
-  private res;
 
   constructor() {
   }
@@ -26,8 +24,6 @@ class ApiService {
   public setCurrentReq(res, req) {
     this.loginService.setCurrentReq(res, req);
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
-    this.req = req;
-    this.res = res;
   }
 
   public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
@@ -128,10 +124,19 @@ class ApiService {
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
-        if ( contentType.includes('json') && respData.code === API_CODE.BFF_0003 ) {
-          this.logger.error(this, '[API RESP] Session Expired', resp.code, resp.msg, this.loginService.getFullPath());
-          // TODO: session expired
-          // go /common/member/login/expired?target=this.loginService.getFullPath();
+        if ( contentType.includes('json') ) {
+          if ( respData.code === API_CODE.BFF_0003 ) {
+            this.logger.error(this, '[API RESP] Session Expired', resp.code, resp.msg, this.loginService.getFullPath());
+            this.loginService.getResponse().redirect('/common/member/logout/expire?target=' + this.loginService.getFullPath());
+            return;
+
+          } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0007 ) {
+            this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+            const path = this.loginService.getFullPath();
+            if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+              this.checkServiceBlock(resp.result);
+            }
+          }
         }
 
         observer.next(respData);
@@ -499,6 +504,17 @@ class ApiService {
         .map((resp) => resp.data);
     } else {
       return Observable.of(storeData.data);
+    }
+  }
+
+  private checkServiceBlock(block) {
+    const today = new Date().getTime();
+    const startTime = DateHelper.convDateFormat(block.fromDtm).getTime();
+    const endTime = DateHelper.convDateFormat(block.toDtm).getTime();
+    if ( today > startTime && today < endTime ) {
+      const blockUrl = '/common/util/service-block';
+      this.loginService.getResponse().redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
+      return;
     }
   }
 }

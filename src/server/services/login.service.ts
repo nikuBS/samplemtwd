@@ -425,6 +425,10 @@ class LoginService {
     }
     return '';
   }
+
+  public getResponse(): any {
+    return this.response;
+  }
 }
 
 export default LoginService;
