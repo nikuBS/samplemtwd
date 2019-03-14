@@ -397,13 +397,17 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
-      root.on('click', 'li button', $.proxy(this._onBranchTypeChanged, this));
+      root.on('click', 'li button', $.proxy(function (e) {
+        this._popupService.close();
+        setTimeout($.proxy(function () {
+          this._onBranchTypeChanged(e);
+        }, this), 300);
+      }, this));
     }, this));
   },
   _onBranchTypeChanged: function (e) {
     this._currentBranchType = parseInt(e.currentTarget.value, 10);
     this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
-    this._popupService.close();
     switch (this._currentBranchType) {
       case 0:
         this._markerLayer1.setVisibility(true);
