@@ -18,6 +18,7 @@ Tw.CertificationFinance = function () {
   this._isCompleteIden = false;
   this._isCheckTerm = true;
   this._fidoTarget = '';
+  this._result = null;
 
   this.$privacyCheck = null;
 };
@@ -90,7 +91,7 @@ Tw.CertificationFinance.prototype = {
       data: {
         methods: methods
       }
-    }, $.proxy(this._onOpenFinancePopup, this), null);
+    }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this), 'finance');
   },
   _onOpenFinancePopup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
@@ -98,6 +99,11 @@ Tw.CertificationFinance.prototype = {
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
     $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
     $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
+  },
+  _onCloseFinancePopup: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._result) ) {
+      this._callback(this._result);
+    }
   },
   _onClickSkSms: function () {
     this._certSkFull = new Tw.CertificationSkFull();
@@ -144,7 +150,7 @@ Tw.CertificationFinance.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_05_02',
       layer: true
-    }, $.proxy(this._onOpenPublicPopup, this), $.proxy(this._onClosePublicPopup, this));
+    }, $.proxy(this._onOpenPublicPopup, this), $.proxy(this._onClosePublicPopup, this), 'public-terms');
   },
   _onOpenPublicPopup: function ($popupContainer) {
     this.$privacyCheck = $popupContainer.find('#fe-cb-privacy');
@@ -169,10 +175,15 @@ Tw.CertificationFinance.prototype = {
   },
   _onClickConfirm: function () {
     this._certPublic = new Tw.CertificationPublic();
-    this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, this._callback);
+    this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, $.proxy(this._completePublicCert, this));
   },
   _onClickCancel: function () {
     this._allClose = true;
+    this._popupService.close();
+  },
+  _completePublicCert: function (resp) {
+    this._allClose = true;
+    this._result = resp;
     this._popupService.close();
   }
 };
