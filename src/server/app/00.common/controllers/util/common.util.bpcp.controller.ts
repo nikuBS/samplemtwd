@@ -50,7 +50,7 @@ class CommonUtilBpcp extends TwViewController {
         }
 
         res.redirect(bpcpInfo.result.svcUrl + (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ?
-          '&tParam=' : '?tParam=') + bpcpInfo.result.svcUrl);
+          '&tParam=' : '?tParam=') + bpcpInfo.result.tParam + '&ref_origin=' + req.protocol + '//' + req.headers.host);
       });
   }
 }
