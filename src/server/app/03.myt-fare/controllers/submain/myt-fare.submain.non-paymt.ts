@@ -48,6 +48,9 @@ class MyTFarePaymentOver extends TwViewController {
           data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
 
           if ( data.unPaidAmtList ) {
+            // 데이터가 [null, null, object] 와 같은 형식으로 오는 경우가 있어 null인 경우는 필터함 (DV001-10125 미납요금 이용정지 계정)
+            data.unPaidAmtList = data.unPaidAmtList.filter( obj => !FormatHelper.isEmpty(obj) );
+
             for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
               const tmp = data.unPaidAmtList[i];
               // DV001-16851 청구월은 +1 해야함
@@ -81,6 +84,9 @@ class MyTFarePaymentOver extends TwViewController {
           data.unPaidTotSum = FormatHelper.addComma(convChildInfo.totSum);
 
           if ( data.unPaidAmtList ) {
+            // 데이터가 [null, null, object] 와 같은 형식으로 오는 경우가 있어 null인 경우는 필터함 (DV001-10125 미납요금 이용정지 계정)
+            data.unPaidAmtList = data.unPaidAmtList.filter( obj => !FormatHelper.isEmpty(obj) );
+
             for ( let i = 0; i < data.unPaidAmtList.length; i++ ) {
               const tmp = data.unPaidAmtList[i];
               // DV001-16851 청구월은 +1 해야함

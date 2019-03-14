@@ -7,11 +7,14 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
-import { MYT_JOIN_WIRE_HIST_DTL_TIT_MAP } from '../../../../types/string.type';
+import { MYT_JOIN_WIRE, MYT_JOIN_WIRE_HIST_DTL_TIT_MAP } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import MyTJoinWireHistory from './myt-join.wire.history.controller';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 class MyTJoinWireHistoryDetail extends TwViewController {
-
 
   constructor() {
     super();
@@ -25,10 +28,78 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     //   });
     // }
 
-    const data = JSON.parse(req.query.data);
-    const title = MYT_JOIN_WIRE_HIST_DTL_TIT_MAP[data.atype];
-    const options = {title: title, svcInfo: svcInfo, pageInfo: pageInfo, data: this._formatData(data) };
-    res.render('wire/myt-join.wire.history.detail.html', options);
+    // 인증해제 이슈로 상세화면에서 다시 조회함
+
+    const atype = req.query.atype;
+    const dataKey = req.query.key;
+    const dt = req.query.dt;
+    const title = MYT_JOIN_WIRE_HIST_DTL_TIT_MAP[atype];
+
+    let apiCmd: any = null;
+
+    if ( atype === MyTJoinWireHistory._ATYPE_167 ) {
+      apiCmd = API_CMD.BFF_05_0167;
+    } else if ( atype === MyTJoinWireHistory._ATYPE_162 ) {
+      apiCmd = API_CMD.BFF_05_0162;
+    } else if ( atype === MyTJoinWireHistory._ATYPE_168 ) {
+      apiCmd = API_CMD.BFF_05_0168;
+    } else if ( atype === MyTJoinWireHistory._ATYPE_143 ) {
+      apiCmd = API_CMD.BFF_05_0143;
+    } else if ( atype === MyTJoinWireHistory._ATYPE_153 ) {
+      apiCmd = API_CMD.BFF_05_0153;
+    }
+
+    this.apiService.request(apiCmd, {})
+      .subscribe((resp) => {
+
+        const list: any = resp.result;
+        let data  = null;
+
+        if ( resp.code === API_CODE.CODE_00 && list ) {
+
+          if ( Array.isArray(list) ) {
+
+            for ( let i = list.length; i >= 0; i-- ) {
+              if ( !FormatHelper.isEmpty(list[i]) ) {
+                if ( dataKey === MyTJoinWireHistory.getDetailKey(list[i], atype)) {
+                  data = list[i];
+                }
+              }
+            }
+
+          } else if ( typeof(list) === 'object' && !FormatHelper.isEmpty(list) ) {
+            if ( dataKey === MyTJoinWireHistory.getDetailKey(list, atype)) {
+              data = list;
+            }
+          }
+
+          if ( data ) {
+            data['atype'] = atype;
+            data['dt'] = dt;
+
+            const options = {title: title, svcInfo: svcInfo, pageInfo: pageInfo, data : this._formatData(data) };
+            res.render('wire/myt-join.wire.history.detail.html', options);
+
+          } else {
+            this.error.render(res, {
+              title: MYT_JOIN_WIRE.HISTORY.TITLE,
+              code: '',
+              msg: 'not found data',
+              pageInfo: pageInfo,
+              svcInfo: svcInfo
+            });
+          }
+        }
+      }, (resp) => {
+        return this.error.render(res, {
+          title: MYT_JOIN_WIRE.HISTORY.TITLE,
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
+      });
+
   }
 
   private _formatData(data: any): any {
