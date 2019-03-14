@@ -376,7 +376,7 @@ Tw.ProductCommonCallplan.prototype = {
       iframeUrl: url
     }, null, $.proxy(function() {
       this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
-    }, this));
+    }, this), 'bpcp_pop');
   },
 
   _getWindowMessage: function(e) {

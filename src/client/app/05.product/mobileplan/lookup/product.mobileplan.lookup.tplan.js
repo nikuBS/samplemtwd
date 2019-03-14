@@ -64,7 +64,7 @@ Tw.ProductMobileplanLookupTplan.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._bindPopupEvent, this), $.proxy(this._onClosePopup, this), 'inifinity_category_popup');
+    }, $.proxy(this._bindPopupEvent, this), $.proxy(this._onClosePopup, this), 'inifinity_category_popup', this.$btnCategory);
   },
 
   _bindPopupEvent: function($popupContainer) {

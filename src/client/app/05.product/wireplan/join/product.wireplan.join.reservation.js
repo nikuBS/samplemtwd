@@ -176,7 +176,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._typeCdPopupBindEvent, this), $.proxy(this._typeCdPopupClose, this), 'type_cd_select');
+    }, $.proxy(this._typeCdPopupBindEvent, this), $.proxy(this._typeCdPopupClose, this), 'type_cd_select', this.$btnSelectTypeCd);
   },
 
   _typeCdPopupBindEvent: function($popupContainer) {
@@ -259,7 +259,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_select');
+    }, $.proxy(this._bindCombinePop, this), $.proxy(this._setCombineResult, this), 'combine_select', this.$btnSelectCombine);
   },
 
   _bindCombinePop: function($popupContainer) {

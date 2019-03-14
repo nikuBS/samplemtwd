@@ -121,7 +121,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._bindTimePopup, this), null, 'select_time_select');
+    }, $.proxy(this._bindTimePopup, this), null, 'select_time_select', this.$btnTimeSelect);
   },
 
   _getTimeList: function() {
