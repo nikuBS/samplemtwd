@@ -60,6 +60,8 @@ import CommonSearchInResult from './controllers/search/common.search.in-result.c
 import CommonUtilServiceReady from './controllers/util/common.util.service-ready.controller';
 import CommonMemberLoginLost from './controllers/member/common.member.login.lost.controller';
 import CommonUtilBpcp from './controllers/util/common.util.bpcp.controller';
+import CommonAutoSmsCert from './controllers/auto-sms/common.auto-sms.cert.controller';
+import CommonAutoSmsResult from './controllers/auto-sms/common.auto-sms.result.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -140,5 +142,7 @@ export default class CommonRouter extends TwRouter {
 
     // bpcp
     this.controllers.push({ url: '/util/bpcp', controller: CommonUtilBpcp });
+    this.controllers.push({ url: '/auto-sms/cert', controller: CommonAutoSmsCert });
+    this.controllers.push({ url: '/auto-sms/result', controller: CommonAutoSmsResult });
   }
 }
