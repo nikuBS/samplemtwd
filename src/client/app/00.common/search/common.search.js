@@ -194,8 +194,8 @@ Tw.CommonSearch.prototype = {
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?keyword='+this._searchInfo.query+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
@@ -404,7 +404,7 @@ Tw.CommonSearch.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentKeyworList[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -440,7 +440,7 @@ Tw.CommonSearch.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
   _getRecentKeywordListBySearch : function (keyword) {

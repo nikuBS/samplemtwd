@@ -21,7 +21,7 @@ class CommonSearch extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const query =  encodeURI(req.query.keyword) || '';
+    const query =  StringHelper.encodeURIAllCase(req.query.keyword);
     const collection = 'all';
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
@@ -77,7 +77,7 @@ class CommonSearch extends TwViewController {
       requestObj = { query , collection };
     } else {
       researchCd = 1;
-      researchQuery = encodeURI(req.query.in_keyword) || null;
+      researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || null;
       requestObj = { query , collection , researchQuery , researchCd};
     }
 

@@ -91,9 +91,9 @@ $.extend(Tw.CommonSearchMore.prototype,
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+
-      this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?category='+(encodeURIComponent(this._category))+'&keyword='+
+        (encodeURIComponent(this._accessKeyword))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);

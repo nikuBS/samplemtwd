@@ -146,7 +146,7 @@ Tw.CommonSearchMain.prototype = {
     }
     setTimeout($.proxy(function () {
       this._addRecentlyKeywordList(searchKeyword);
-      this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
     },this));
   },
   _closeSearch : function () {
@@ -215,7 +215,7 @@ Tw.CommonSearchMain.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -251,7 +251,7 @@ Tw.CommonSearchMain.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
   _bindKeyworListBaseEvent : function (layer) {
