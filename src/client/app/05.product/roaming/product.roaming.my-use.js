@@ -5,6 +5,9 @@
  */
 
 Tw.ProductRoamingMyUse = function(rootEl, options) {
+  this.FE_TAB = '.fe-myuse-tab';
+  this.FE_TABLIST = '.fe-myuse-tablist';
+
   this.$container = rootEl;
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
@@ -19,10 +22,10 @@ Tw.ProductRoamingMyUse = function(rootEl, options) {
 
 Tw.ProductRoamingMyUse.prototype = {
   _cachedElement: function () {
-    this.$tabLinker = this.$container.find('.fe-tab-linker');
+    this.$tabLinker = this.$container.find(this.FE_TABLIST);
   },
   _bindEvent: function () {
-    this.$tabLinker.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
+    this.$tabLinker.on('click', this.FE_TAB, $.proxy(this._onTabChanged, this));
   },
   _init : function() {
     this._initTab();
@@ -31,20 +34,20 @@ Tw.ProductRoamingMyUse.prototype = {
   _initTab: function() {
     var hash = window.location.hash;
     if (Tw.FormatHelper.isEmpty(hash)) {
-      hash = this.$tabLinker.find('.fe-custom-replace-history').eq(0).attr('href');
+      hash = this.$tabLinker.find(this.FE_TAB).eq(0).attr('href');
     }
 
-    this._prevTab = hash;
     setTimeout($.proxy(function () {
       this.$tabLinker.find('a[href="' + hash + '"]').trigger('click');
     }, this), 0);
   },
   _onTabChanged: function (e) {
-    var currTab = $(e.currentTarget).attr('href');
-    if (this._prevTab !== currTab) {
-      this._prevTab = currTab;
-    }
+    // li 태그에 aria-selected 설정 (pub js 에서 제어)
     location.replace(e.currentTarget.href);
+
+    // a 태그에 aria-selected 설정 (FE 에서 제어)
+    this.$tabLinker.find(this.FE_TAB).attr('aria-selected', false);
+    $(e.currentTarget).attr('aria-selected', true);
   },
   _checkLogin: function() {
     if (!this._options.isLogin) {
