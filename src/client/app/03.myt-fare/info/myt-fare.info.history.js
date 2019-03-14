@@ -295,7 +295,10 @@ Tw.MyTFareInfoHistory.prototype = {
         attr: 'type="button"',
         'class': 'tw-popup-closeBtn'
       }
-    }, $.proxy(this._openTypeSelectHandler, this), $.proxy(this._closeTypeSelect, this));
+    }, 
+    $.proxy(this._openTypeSelectHandler, this), 
+    $.proxy(this._closeTypeSelect, this)
+    );
   },
 
   _openTypeSelectHandler: function ($container) {
@@ -347,8 +350,9 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+    // Tw.Logger.error(err.code, err.msg);
+    Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop();
+    // this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
   }
 };

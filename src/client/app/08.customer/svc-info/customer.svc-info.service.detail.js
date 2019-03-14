@@ -287,9 +287,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
-    return false;
+    // Tw.Logger.error(err.code, err.msg);
+    return Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop();
+    // this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+    // return false;
   },
 
   _openTooltipPop: function (e) {
