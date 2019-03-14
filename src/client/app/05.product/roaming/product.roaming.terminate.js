@@ -116,11 +116,11 @@ Tw.ProductRoamingTerminate.prototype = {
           $.proxy(this._goPlan,this),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR,null,
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,
             $.proxy(this._resetAriaHidden,this));
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR,null,
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,
           $.proxy(this._resetAriaHidden,this));
     }, this));
 

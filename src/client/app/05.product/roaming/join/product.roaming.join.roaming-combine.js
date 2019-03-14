@@ -99,11 +99,11 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
         if(res.code==='PRD0027'){
           this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE,targetEvt);
         }else{
-          this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
+          this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,targetEvt);
         }
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,targetEvt);
     }, this));
   },
   _showPhoneBook : function () {
