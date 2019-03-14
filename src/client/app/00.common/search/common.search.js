@@ -136,7 +136,8 @@ Tw.CommonSearch.prototype = {
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
+    $barcodElement.JsBarcode(barcodNum,{background : '#edeef0',height : 60, displayValue : false});
+    this.$container.find('.bar-code-num').text(barcodNum);
   },
   _showShortcutList : function (data,dataKey,cdn) {
     this.$contents.append(Handlebars.compile(this.$container.find('#'+dataKey+'_base').html()));

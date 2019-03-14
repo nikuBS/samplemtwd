@@ -172,7 +172,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
-                searchResult.result.search[0].immediate.data[0].barcode = resultData.result.mbrCardNum;
+                searchResult.result.search[0].immediate.data[0].barcode = FormatHelper.addCardSpace(resultData.result.mbrCardNum);
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });
