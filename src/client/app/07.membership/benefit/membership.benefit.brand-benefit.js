@@ -63,7 +63,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   },
 
   _registHbsHelper: function(){
-    Handlebars.registerHelper('tel', Tw.StringHelper.phoneStringToDash);
+    Handlebars.registerHelper('tel', Tw.FormatHelper.getDashedPhoneNumber);
   },
 
   /**
