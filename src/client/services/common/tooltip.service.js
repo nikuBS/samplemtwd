@@ -98,12 +98,11 @@ Tw.TooltipService.prototype = {
       url: '/hbs/',
       hbs: 'popup',
       'title': $result.ttipTitNm,
-      'btn-close':'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'tagStyle-div': 'div',
       'contents': $result.ttipCtt,
-      'tooltip': 'tooltip-pd'
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     },
       $.proxy(this._onOpen, this),
       $.proxy(this._onClose, this));

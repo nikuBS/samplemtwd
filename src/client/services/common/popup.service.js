@@ -192,7 +192,6 @@ Tw.PopupService.prototype = {
       cont_align: 'tl',
       contents: contents,
       bt_b: [{
-        margin: 'mt32',
         style_class: 'pos-left tw-popup-closeBtn',
         txt: Tw.BUTTON_LABEL.CANCEL
       }, {
@@ -211,7 +210,6 @@ Tw.PopupService.prototype = {
       cont_align: 'tl',
       contents: contents,
       bt_b: [{
-        margin: 'mt32',
         style_class: 'pos-left tw-popup-closeBtn',
         txt: cancelButton || Tw.BUTTON_LABEL.CANCEL
       }, {
