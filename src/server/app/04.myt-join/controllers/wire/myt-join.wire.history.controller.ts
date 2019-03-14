@@ -12,17 +12,38 @@ import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 
 class MyTJoinWireHistory extends TwViewController {
 
+  constructor() {
+    super();
+  }
+
   // BFF API TYPEs
-  private _ATYPE_167: String = '167';  // 신규가입상세내역
-  private _ATYPE_162: String = '162';  // 설치장소변경상세
-  private _ATYPE_168: String = '168';  // 가입상품변경 상세내역
-  private _ATYPE_143: String = '143';  // 유선 약정기간 상세내역
-  private _ATYPE_153: String = '153';  // 요금상품변경 상세내역
+  static _ATYPE_167: String = '167';  // 신규가입상세내역
+  static _ATYPE_162: String = '162';  // 설치장소변경상세
+  static _ATYPE_168: String = '168';  // 가입상품변경 상세내역
+  static _ATYPE_143: String = '143';  // 유선 약정기간 상세내역
+  static _ATYPE_153: String = '153';  // 요금상품변경 상세내역
 
   private _list: Array<Object> = [];
 
-  constructor() {
-    super();
+  /**
+   * api 조회시 키가 없으므로 값들을 조합해 key를 만들고 상세화면 조회시 데이터를 파악할 수 있도록 함.
+   * @param obj
+   * @param atype
+   */
+  static getDetailKey( obj: Object, atype: String ): String {
+
+    if ( atype === MyTJoinWireHistory._ATYPE_167 ) {
+      return obj['rcvDt'] + obj['rcvSeq'];
+    } else if ( atype === MyTJoinWireHistory._ATYPE_162 ) {
+      return obj['occrDt'] + obj['occrTm'];
+    } else if ( atype === MyTJoinWireHistory._ATYPE_168 ) {
+      return obj['rcvDt'] + obj['svcPrefrDtm'] + obj['svcNm'] + obj['svcNmDtl'];
+    } else if ( atype === MyTJoinWireHistory._ATYPE_143 ) {
+      return obj['rcvDt'] + obj['stNm'] + obj['svcNm'] + obj['beforeTerm'] + obj['afterTerm'];
+    } else if ( atype === MyTJoinWireHistory._ATYPE_153 ) {
+      return obj['rcvDt'] + obj['stNm'] + obj['svcNm'] + obj['mediaNm'] + obj['prodNm'];
+    }
+    return '';
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -258,11 +279,11 @@ class MyTJoinWireHistory extends TwViewController {
         };*/
 
 
-        this._resultHandler(r0167newJoin, this._ATYPE_167);
-        this._resultHandler(r0162chgAddr, this._ATYPE_162);
-        this._resultHandler(r0168prodChg, this._ATYPE_168);
-        this._resultHandler(r0143periChg, this._ATYPE_143);
-        this._resultHandler(r0153prodChg, this._ATYPE_153);
+        this._resultHandler(r0167newJoin, MyTJoinWireHistory._ATYPE_167);
+        this._resultHandler(r0162chgAddr, MyTJoinWireHistory._ATYPE_162);
+        this._resultHandler(r0168prodChg, MyTJoinWireHistory._ATYPE_168);
+        this._resultHandler(r0143periChg, MyTJoinWireHistory._ATYPE_143);
+        this._resultHandler(r0153prodChg, MyTJoinWireHistory._ATYPE_153);
 
         const option = { svcInfo: svcInfo, pageInfo: pageInfo, list: this._list };
         res.render('wire/myt-join.wire.history.html', option);
@@ -290,6 +311,7 @@ class MyTJoinWireHistory extends TwViewController {
             list.splice(i, 1);
           } else {
             list[i]['atype'] = apiType;
+            list[i]['detailkey'] = MyTJoinWireHistory.getDetailKey(list[i], apiType);
           }
         }
 
@@ -299,6 +321,7 @@ class MyTJoinWireHistory extends TwViewController {
           return false;
         }
         list['atype'] = apiType;
+        list['detailkey'] = MyTJoinWireHistory.getDetailKey(list, apiType);
       } else {
         return false;
       }
