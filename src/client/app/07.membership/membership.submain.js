@@ -108,22 +108,22 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
+      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
           $.proxy(this._goTday, this),
           $.proxy(function () {
             this._popupService.close();
-          }, this));
+          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
     } else {
       this._goTday();
     }
   },
   _selectChocolate: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
+      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
           $.proxy(this._goChocolate, this),
           $.proxy(function () {
             this._popupService.close();
-          }, this));
+          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
     } else {
       this._goChocolate();
     }
