@@ -271,14 +271,9 @@ Tw.ProductList.prototype = {
 
   _handleResetFilters: function($layer) {
     var selectedFilters = $layer.find('li[aria-checked="true"]'),
-      selectedTag = $layer.find('.suggest-tag-list .link.active'),
-      i = 0;
-
-    for (; i < selectedFilters.length; i++) {
-      selectedFilters[i].setAttribute('aria-checked', false);
-      selectedFilters[i].className = selectedFilters[i].className.replace('checked', '');
-      $(selectedFilters[i].children[0]).removeAttr('checked');
-    }
+      selectedTag = $layer.find('.suggest-tag-list .link.active');
+    selectedFilters.attr('aria-checked', false).removeClass('checked');
+    selectedFilters.find('input').removeAttr('checked');
 
     if (selectedTag.length > 0) {
       selectedTag.removeClass('active');
