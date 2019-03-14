@@ -40,6 +40,8 @@ export default class MembershipMyUpdate extends TwViewController {
     myInfoData.smsAgreeChecked = myInfoData.smsAgreeYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktNewsChecked = myInfoData.sktNewsYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktTmChecked = myInfoData.sktTmYn === 'Y' ? 'checked' : '' ;
+    myInfoData.mktgAgreeChecked = myInfoData.mktgAgreeYn === 'Y' ? 'checked' : '' ;
+    myInfoData.ocbAccumAgreeChecked = myInfoData.ocbAccumAgreeYn === 'Y' ? 'checked' : '' ;
 
     return myInfoData;
   }
