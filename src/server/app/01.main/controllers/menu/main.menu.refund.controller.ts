@@ -165,9 +165,6 @@ class MainMenuRefund extends TwViewController {
           item.svcText = item.setAddr;
         } else {
           item.svcText = item.svcNum;
-          if (item.svcCdNm.includes('휴대폰')) {
-            item.svcText = FormatHelper.conTelFormatWithDash(item.svcText);
-          }
         }
         return item;
       }),
