@@ -121,7 +121,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _onOpenResetPopup: function ($popup) {
-    $popup.one('click', '#fe-reset', $.proxy(this._requestReset, this));
+    $popup.on('click', '#fe-reset', $.proxy(this._requestReset, this));
   },
 
   _requestReset: function () {
