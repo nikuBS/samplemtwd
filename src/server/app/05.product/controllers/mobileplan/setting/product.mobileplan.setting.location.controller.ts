@@ -41,12 +41,15 @@ class ProductMobileplanSettingLocation extends TwViewController {
     if (['NA00002585'].indexOf(prodId) !== -1) {
       showNumberSetting = true;
     } else {
+      /*
       // DV001-16828
       // 할인지역 번경만인 경우 location-only(마스킹인증 없는 화면)로 url이 지정되지 않은 경우 redirect 시켜줌
+      // -> admin에 등록되서 강제 처리하는것은 주석처리 함
       if ( req.url.indexOf('/mobileplan/setting/location-only') === -1) {
         res.redirect('/product/mobileplan/setting/location-only?prod_id=' + prodId);
         return;
       }
+      */
     }
 
     const apiArr = [this.apiService.request(API_CMD.BFF_10_0043, {})];
@@ -94,7 +97,7 @@ class ProductMobileplanSettingLocation extends TwViewController {
 
 
         if ( respArr[0].code === API_CODE.CODE_00 ) {
-          if( respArr.length === 2 ){
+          if ( respArr.length === 2 ) {
             respArr[0]['result']['snumSetInfoList'] = respArr[1]['result']['snumSetInfoList'];
           }
 
