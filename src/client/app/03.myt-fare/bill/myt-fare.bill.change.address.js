@@ -67,7 +67,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
   _deleteAddress: function (e) {
     if (this._firstTouch) {
       this.$container.find('.fe-zip').val('');
-      this.$container.find('.fe-main-address').val();
+      this.$container.find('.fe-main-address').val('');
       e.target.value = '';
 
       this._firstTouch = false;
