@@ -191,7 +191,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
-    this._moveUrl('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
+    this._moveUrl('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(Number(this._step)+1));
   },
   _showAndHidePopKeywordList : function () {
     if(this.$popKeywordElement.hasClass('none')){
