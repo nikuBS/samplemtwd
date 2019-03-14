@@ -71,12 +71,28 @@ Tw.CustomerEmailUpload.prototype = {
       this._showUploadPopup();
       this._checkUploadButton();
 
+      this.$container.find('input[type=file]').eq(0).focus();
+
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG);
+      return this._popupService.openAlert(
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE, 
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, null, null, 
+        $target
+      );
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
-      return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      return this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_FILE, 
+        Tw.POPUP_TITLE.NOTIFY,
+        null, null,
+        $target
+      );
     } else {
-      return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      return this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_FILE, 
+        Tw.POPUP_TITLE.NOTIFY,
+        null, null, 
+        $target
+      );
     }
   },
 
@@ -151,8 +167,14 @@ Tw.CustomerEmailUpload.prototype = {
     this._checkUploadButton();
 
     // 웹접근성 열리고 포커스
-    $('.fe-page-wrap').attr('aria-hidden', true);
-    $('.tw-popup:last').attr('tabindex',0).focus();
+    $('.skip_navi, .fe-page-wrap').attr('aria-hidden', true);
+    if (this.uploadFiles.length) {
+      // 파일 첨부된 갯수가 있으면 마지막 줄에 포커스
+      this.$container.find('input[type=file]').eq(0).focus();
+    } else {
+      // 파일 첨부된 갯수가 없으면 팝업에 포커스
+      $('.fe-wrap-file-upload').attr('tabindex',-1).focus();
+    }
   },
 
   _onClickServiceUpload: function () {
@@ -215,7 +237,7 @@ Tw.CustomerEmailUpload.prototype = {
   _hideUploadPopup: function () {
     $('.fe-wrap-file-upload').remove();
     // 웹접근성 닫히고 포커스
-    $('.fe-page-wrap').attr('aria-hidden', false);
+    $('.fe-page-wrap, .skip_navi').attr('aria-hidden', false);
     $('.fe-upload-file-service').focus();
   },
 
