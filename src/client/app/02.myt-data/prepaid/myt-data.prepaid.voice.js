@@ -371,7 +371,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var htParams = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),
-      expireYY: this.$cardY.val(),
+      expireYY: this.$cardY.val().substr(2,2),
       expireMM: this.$cardM.val(),
       pwd: this.$cardPwd.val()
     };
