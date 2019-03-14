@@ -14,10 +14,13 @@ class BenefitIndex extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const bpcpServiceId = req.query.bpcpServiceId || '', eParam = req.query.eParam || '';
 
     res.render('index/benefit.index.html', {
       svcInfo,
-      pageInfo
+      pageInfo,
+      bpcpServiceId,
+      eParam
     });
   }
 }

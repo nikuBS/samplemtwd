@@ -343,12 +343,12 @@ Tw.PopupService.prototype = {
     _.each([from, target], function(item){
       if ( item.svcAttrCd.indexOf('S') > -1 ) {
         if ( target.svcAttrCd === 'S3' ) {
-          item.descSvcNum = Tw.FormatHelper.getDashedPhoneNumber(item.svcNum.replace(/-/g, ''));
+          item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
         } else {
           item.descSvcNum = item.addr;
         }
       } else {
-        item.descSvcNum = Tw.FormatHelper.getDashedCellPhoneNumber(item.svcNum.replace(/-/g, ''));
+        item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
       }
     });
 

@@ -29,12 +29,7 @@
                             나의 부가서비스
                         </span>
                         <span class="text">
-                            <% if (data.type === 2 || data.type === 3) { %>
-                                <%= data.myAddProduct.addTotCnt %>개
-                            <% } else { %>
-                                유료 <%= data.myAddProduct.addProdPayCnt %>개 /
-                                무료 <%= data.myAddProduct.addProdPayFreeCnt %>개
-                            <% } %>
+                            <%= data.myAddProduct.addTotCnt %>개
                         </span>
                     </span>
                 </button>
@@ -63,7 +58,7 @@
             <li>
                 <button type="button" data-id="wire-inq" title="인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회" aria-haspopup="true">
                         <span class="inner">
-                            <span class="tit">인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회</span>
+                            <span class="tit">인터넷/집전화/IPTV 신청내역 및 조회</span>
                         </span>
                 </button>
             </li>
@@ -81,7 +76,7 @@
             <li>
                 <button type="button" data-id="installement" title="약정할인 &middot; 기기상환 정보" aria-haspopup="true">
                         <span class="inner">
-                            <span class="tit">약정할인 &middot; 기기상환 정보</span>
+                            <span class="tit">약정할인/기기상환 정보</span>
                             <span class="text"><%= data.myInstallement.disProdNm %> <%= data.myInstallement.disMthCnt %>개월</span>
                         </span>
                 </button>

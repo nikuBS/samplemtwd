@@ -1007,7 +1007,6 @@ Tw.URL_PATH = {
   MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit',
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
-  CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
   SMART_CHOICE: 'http://www.smartchoice.or.kr',
   MEMBERSHIP_MOVIE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_168',
   MEMBERSHIP_MOVIE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_169',
