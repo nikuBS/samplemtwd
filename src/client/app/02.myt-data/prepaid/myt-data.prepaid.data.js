@@ -67,7 +67,7 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
-    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$container.on('click', '.fe-close-popup', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
   },
   _setData: function (result) {
