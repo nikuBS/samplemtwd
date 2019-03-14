@@ -52,16 +52,6 @@ class MyTFareBillOptionChangeAddress extends TwViewController {
     if (info.svcNum) {
       info.phoneNum = StringHelper.phoneStringToDash(info.svcNum);
     }
-
-    if (info.basAddr) {
-      info.baseAddr = info.basAddr.replace('<br>', '');
-      info.baseAddr = info.basAddr.replace('<br/>', '');
-    }
-
-    if (info.dtlAddr) {
-      info.detailAddr = info.dtlAddr.replace('<br>', '');
-      info.detailAddr = info.dtlAddr.replace('<br/>', '');
-    }
     return info;
   }
 }

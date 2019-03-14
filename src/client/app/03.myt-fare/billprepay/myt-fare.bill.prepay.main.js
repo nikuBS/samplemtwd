@@ -41,7 +41,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
-    this._remainAmount = this.$container.find('.fe-remain-amount').attr('id');
+    this._remainAmount = this.$container.find('.fe-remain').text();
     this._name = this.$container.find('.fe-name').text();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
