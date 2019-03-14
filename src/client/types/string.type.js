@@ -1781,7 +1781,7 @@ Tw.TOOLTIP_TITLE = {
 Tw.MEMBERSHIP = {
   MOVIE_CULTURE_CINFIRM: {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
-    MESSAGE: '컬처 예매는 T멤버십 앱을 통해서만 가능합니다.'
+    MESSAGE: '예매/조회는 T멤버십 앱에서 가능합니다.'
   },
   BENEFIT: {
     BRAND: {
