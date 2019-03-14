@@ -152,6 +152,8 @@ class MainMenuRefund extends TwViewController {
         item.msg = ((msg) => {
           if (msg.includes(MAIN_MENU_REFUND_STATE.ORIGIN_MSG_COMPLETE)) {
             return MAIN_MENU_REFUND_STATE.COMPLTE;
+          } else if (msg.includes(MAIN_MENU_REFUND_STATE.ORIGIN_MSG_BRANCH_COMPLETE)) {
+            return MAIN_MENU_REFUND_STATE.COMPLTE_B;
           } else if (msg.includes(MAIN_MENU_REFUND_STATE.ORIGIN_MSG_ERROR)) {
             return MAIN_MENU_REFUND_STATE.ERROR;
           }
@@ -163,9 +165,6 @@ class MainMenuRefund extends TwViewController {
           item.svcText = item.setAddr;
         } else {
           item.svcText = item.svcNum;
-          if (item.svcCdNm.includes('휴대폰')) {
-            item.svcText = FormatHelper.conTelFormatWithDash(item.svcText);
-          }
         }
         return item;
       }),
