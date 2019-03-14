@@ -27,7 +27,6 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
@@ -36,137 +35,120 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
+		<div id="header" class="header-wrap">
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-					<div class="h-tit">case</div>
-					<div class="h-serarch">
-						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
 					</div>
+
+                    <div class="h-tit">나의 가입 정보</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
 				</div>
 			</div>
-        </div>
-        <!--// #header -->
+		</div>
+        <!--// #header --> 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-                <!-- Case 1. 일시정지 진행중 -->
+
+                <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                	<ul class="link-long-list">
+                   <ul class="full-link-list">
+                       <!-- Case 1. 일시정지 진행 중 -->
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">2018.05.23 ~ 2018.09.23</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">일시정지 중</span>
+                                </span>
+                            </button>
                         </li>
-                   </ul>
-                </div>
-                <!--// Case 1. 일시정지 진행중 -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- Case 2. 장기일시정지 신청접수 진행 중 -->
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
+                        <!-- Case 2. 장기일시정지 신청접수 절차 진행 시 -->
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">장기일시정지 / 접수 중</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황</span>
+                                    <span class="text">장기일시정지 접수 중</span>
+                                </span>
+                            </button>
                         </li>
-                   </ul>
-                </div>
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">장기일시정지 / 서류확인 중</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황</span>
+                                    <span class="text">장기일시정지 서류확인 중</span>
+                                </span>
+                            </button>
                         </li>
-                   </ul>
-                </div>
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">장기일시정지 / 처리불가</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황</span>
+                                    <span class="text">장기일시정지 처리불가</span>
+                                </span>
+                            </button>
                         </li>
-                   </ul>
-                </div>
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">장기일시정지 / 처리완료</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </li>
-                   </ul>
-                </div>
-                <!--// Case 2. 장기일시정지 신청접수 진행 중 -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- Case 2. 장기일시정지 기간 중 -->
-                <div class="cont-box nogaps">
-                    <ul class="link-long-list">
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황</span>
+                                    <span class="text">장기일시정지 처리완료</span>
+                                </span>
+                            </button>
+                        <!-- Case 3. 일시정지가 진행중인 상태에서 장기일시정지 신청접수 절차 진행 시 -->
                         <li>
-                            <div class="link-long">
-                                <button>일시 정지
-                                    <span class="tx-sub">
-                                        <span class="normal">2018.05.23 ~ 2018.09.23</span>
-                                        <span class="ico"><span class="blind">일시 정지 내용 자세히보기</span></span>
-                                    </span>
-                                </button>
-                            </div>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">장기일시정지 접수 중</span>
+                                </span>
+                            </button>
                         </li>
-                   </ul>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">장기일시정지 서류확인 중</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">장기일시정지 처리불가</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">장기일시정지 처리완료</span>
+                                </span>
+                            </button>
+                        </li>
+                        <!-- Case 4. 장기일시정지 진행 중 -->
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">일시정지 현황<span class="sub">2018.5.23.~2018.9.23.</span></span>
+                                    <span class="text">장기일시정지 중</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
-                <!--// Case 2. 장기일시정지 기간 중 -->                
+                <!--// .cont-box -->
 
             </div>
         </div>

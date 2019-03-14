@@ -10,9 +10,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -37,7 +35,7 @@
                     <a href="/product/callplan?prod_id=<%= svcInfo.prodId %>">
                     <button class="wrap-link">
                         <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
-                        <i class="badge icon-badge-plan-my use"><span class="blind">my</span></i>
+                        <i class="badge icon-badge-plan-my use"><span class="blind">이용 중</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>
                     </button>
                     </a>
@@ -64,8 +62,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="tree" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
-                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="tree" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="tree">이용요금 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="tree">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

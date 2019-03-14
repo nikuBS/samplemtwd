@@ -18,7 +18,13 @@ Tw.PopupService.prototype = {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
   },
   _onHashChange: function (hash) {
+    this._historyBack = false;
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
+    var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
+    if (lastHash) {
+      var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
+      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null; 
+    }
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
       if ( ('#' + hash.base) === lastHash.curHash ) {
@@ -26,9 +32,20 @@ Tw.PopupService.prototype = {
         this._prevHashList.pop();
         Tw.Logger.info('[Popup Close]');
         this._popupClose(closeCallback);
+        if ($popupLastFocus) {
+          $popupLastFocus.focus();
+        }
       }
-    } else if(hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0) {
-      this._historyService.goBack();
+    } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
+      if ( Tw.BrowserHelper.isSamsung() ) {
+        if ( window.performance && performance.navigation.type === 1 ) {
+          this._emptyHash();
+        } else {
+          this._goBack();
+        }
+      } else {
+        this._goBack();
+      }
     }
   },
   _onOpenPopup: function () {
@@ -40,6 +57,15 @@ Tw.PopupService.prototype = {
       this._sendOpenCallback($currentPopup);
     }
     Tw.Tooltip.popInit($popups.last());
+
+    // 포커스 영역 저장 후 포커스 이동
+    var thisHash = this._prevHashList[this._prevHashList.length -1];
+    var $focusEl = $(':focus');
+    if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
+      && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
+      $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
+      $currentPopup.children(':not(.popup-blind)').attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
+    }
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -71,6 +97,9 @@ Tw.PopupService.prototype = {
       closeCallback();
     }
     skt_landing.action.popup.close();
+
+    var $lastPopup = $('.tw-popup').last();
+    $lastPopup.attr('aria-hidden', 'false');
   },
   _addHash: function (closeCallback, hashName) {
     var curHash = location.hash || '#';
@@ -306,6 +335,63 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
+  openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
+
+    // 회선 정보
+    _.each([from, target], function(item){
+      if ( item.svcAttrCd.indexOf('S') > -1 ) {
+        if ( target.svcAttrCd === 'S3' ) {
+          item.descSvcNum = Tw.FormatHelper.getDashedPhoneNumber(item.svcNum.replace(/-/g, ''));
+        } else {
+          item.descSvcNum = item.addr;
+        }
+      } else {
+        item.descSvcNum = Tw.FormatHelper.getDashedCellPhoneNumber(item.svcNum.replace(/-/g, ''));
+      }
+    });
+
+    // 회선 타입
+    var clsNm = 'cellphone';
+    if ( target.svcAttrCd.indexOf('S') > -1 ) {
+      if ( target.svcAttrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
+    }
+    else if ( ['M3', 'M4'].indexOf(target.svcAttrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+
+    var template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.CONTENTS);
+    var contents = template({
+      svcNum: target.descSvcNum,
+      desc: _.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm,
+      clsNm: clsNm
+    });
+    template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.TITLE);
+    var title = template({
+      svcNum: from.descSvcNum
+    });
+
+    // openModalTypeA
+    var option = {
+      title: title,
+      title_type: 'sub',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback, hashName);
+    this._open(option);
+  },
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title,
@@ -352,10 +438,25 @@ Tw.PopupService.prototype = {
     });
   },
   close: function () {
-    Tw.Logger.log('[Popup] Call Close', location.hash);
+    Tw.Logger.log('[Popup] Call Close', location.hash, window.history.length, document.referrer, window.history.state, window.history);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
       Tw.Logger.log('[Popup] history back');
       history.back();
+      this._historyBack = true;
+
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+        setTimeout($.proxy(function () {
+          Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
+          if ( this._historyBack && this._prevHashList.length > 0) {
+            this._historyBack = false;
+            var lastHash = this._prevHashList[this._prevHashList.length - 1];
+            var closeCallback = lastHash.closeCallback;
+            location.hash = lastHash.curHash;
+            this._prevHashList.pop();
+            this._popupClose(closeCallback);
+          }
+        }, this), 500);
+      }
     }
   },
   closeAll: function () {
@@ -420,5 +521,8 @@ Tw.PopupService.prototype = {
   },
   _goBack: function () {
     history.back();
+  },
+  _emptyHash: function () {
+    history.pushState('', document.title, window.location.pathname);
   }
 };

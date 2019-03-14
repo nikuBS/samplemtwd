@@ -7,6 +7,7 @@ interface ErrorOptions {
   code?: any;
   msg?: any;
   isBackCheck?: boolean;
+  isBpcp?: boolean;
   svcInfo: any;
   pageInfo?: any;
 }
@@ -33,6 +34,7 @@ class ErrorService {
       msg: this._replaceBreakLines(options.msg) || '',
       svcInfo: options.svcInfo || null,
       isBackCheck: options.isBackCheck || false,
+      isBpcp: options.isBpcp || false,
       pageInfo: options.pageInfo
     });
   }

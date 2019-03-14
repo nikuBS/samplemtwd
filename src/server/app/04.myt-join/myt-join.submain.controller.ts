@@ -15,6 +15,7 @@ import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+import BrowserHelper from '../../utils/browser.helper';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -55,14 +56,19 @@ class MyTJoinSubmainController extends TwViewController {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc))
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
+      // 현재 회선의 아이콘 클래스 이름
+      currLineIconClass: this.getLineIconClassName(svcInfo.svcAttrCd),
+      isApp: BrowserHelper.isApp(req) // App 여부
     };
+    // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
     // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
+    // 30: 변경
     // 70: 비밀번호 잠김 -> 지점에서만 초기화 가능
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     // 비밀번호 사용중 및 등록완료인 상태에서만 노
-    if ( data.svcInfo.pwdStCd === '20' || data.svcInfo.pwdStCd === '21' ) {
+    if ( data.svcInfo.pwdStCd === '20' || data.svcInfo.pwdStCd === '21' || data.svcInfo.pwdStCd === '30' ) {
       this.isPwdSt = true;
     }
     // PPS, 휴대폰이 아닌 경우는 서비스명 노출
@@ -81,11 +87,11 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState(),
       this._getLongPausedState(),
-      this._getWireFreeCall(),
-      // this._getOldNumberInfo(), // 성능이슈로 해당 API 호춯 하지 않도록 변경 (DV001-14167)
+      // this._getWireFreeCall(data.svcInfo.svcNum), // 성능개선건으로 해당 API 호출 하지 않도록 변경[DV001-15523]
+      // this._getOldNumberInfo(), // 성능이슈로 해당 API 호출 하지 않도록 변경 (DV001-14167)
       this._getChangeNumInfoService()
       // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, /*oldnum,*/ numSvc/*, banner*/]) => {
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, /*wirefree,*/ /*oldnum,*/ numSvc/*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {
         if ( myhs.info ) {
@@ -131,7 +137,8 @@ class MyTJoinSubmainController extends TwViewController {
           break;
         case 2:
           data.myInfo = this._convertWireInfo(myif);
-          if ( wirefree && wirefree.freeCallYn === 'Y' ) {
+          // 집전화/인터넷전화인 경우 B끼리 무료통화대상 조회 버튼 노출
+          if ( data.svcInfo.svcAttrCd === 'S3' ) {
             data.isWireFree = true;
           }
           break;
@@ -184,11 +191,14 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myInstallement && data.myInstallement.disProdNm ) {
         data.isInstallement = true;
       }
-      // 무약정플랜 노출여부 - 약정할부이 있는 경우에는 보여주지 않도록 수정 (DV001-13767)
-      if ( data.myContractPlan && !data.isInstallement ) {
-        data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
-        data.myContractPlan.count = data.myContractPlan.muPointCnt;
-        data.isContractPlan = true;
+      // 무약정플랜은 PPS인 경우 비노출 처리[DVI001-15576]
+      if ( this.type !== 1 ) {
+        // 무약정플랜 노출여부 - 약정할부이 있는 경우에는 보여주지 않도록 수정 (DV001-13767)
+        if ( data.myContractPlan && !data.isInstallement ) {
+          data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
+          data.myContractPlan.count = data.myContractPlan.muPointCnt;
+          data.isContractPlan = true;
+        }
       }
       // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
       if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
@@ -213,6 +223,14 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
+        if ( data.myPausedState.svcStCd === 'AC' && data.myPausedState.armyDt && data.myPausedState.armyDt !== '' ) {
+          const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+          if ( days < 0) {
+            data.myPausedState.state = false;
+            data.myLongPausedState.state = false;
+            delete data.myPausedState.armyDt;
+          }
+        }
       }
 
       if ( numSvc ) {
@@ -231,6 +249,7 @@ class MyTJoinSubmainController extends TwViewController {
             } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
               data.numberChanged = false;
+              data.isNotChangeNumber = false;
             }
           }
         }
@@ -330,6 +349,25 @@ class MyTJoinSubmainController extends TwViewController {
     return comparison;
   }
 
+  /**
+   * 선택 회선에 해당하는 아이콘 클래스 이름 반환
+   * @param svcAttrCd : 회선정보
+   */
+  getLineIconClassName(svcAttrCd: string): string {
+    let clsNm = 'cellphone';
+    if ( svcAttrCd.indexOf('S') > -1 ) {
+      if ( svcAttrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
+    } else if ( ['M3', 'M4'].indexOf(svcAttrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+
+    return clsNm;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
     const SPC = (items && items['s']) || [];
@@ -343,16 +381,6 @@ class MyTJoinSubmainController extends TwViewController {
       nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-          let clsNm = 'cellphone';
-          if ( item.svcAttrCd.indexOf('S') > -1 ) {
-            if ( item.svcAttrCd === 'S1' ) {
-              clsNm = 'internet';
-            } else {
-              clsNm = 'pc';
-            }
-          } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
-            clsNm = 'tablet';
-          }
           // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
           // item.nickNm = item.nickNm || item.eqpMdlNm;
           item.nickNm = item.nickNm || SVC_ATTR_NAME[item.svcAttrCd];
@@ -361,7 +389,7 @@ class MyTJoinSubmainController extends TwViewController {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
           item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
-          item.className = clsNm;
+          item.className = this.getLineIconClassName(item.svcAttrCd);
           list.push(item);
         }
       });
@@ -390,6 +418,7 @@ class MyTJoinSubmainController extends TwViewController {
       (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.setPrdStaDt) : data.setPrdStaDt);
     result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
       (data.setPrdEndDt ? DateHelper.getShortDateNoDot(data.setPrdEndDt) : data.setPrdEndDt);
+    result.setAgrmtMth = data.setAgrmtMth;
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
@@ -507,15 +536,20 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   // B끼리 무료통화 조회
-  _getWireFreeCall() {
+  _getWireFreeCall(number) {
+    const params = {
+      tel01: number.split('-')[0],
+      tel02: number.split('-')[1],
+      tel03: number.split('-')[2]
+    };
     // dummy 전화번호 값으로 요청 하여 freeCallYn 값 체크
-    return this.apiService.request(API_CMD.BFF_05_0160, {
-      tel01: '012',
-      tel02: '345',
-      tel03: '6789'
-    }).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0160, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( resp.result && resp.freeCallYn === 'Y' && resp.noChargeYn === 'Y' ) {
+          return 'Y';
+        } else {
+          return null;
+        }
       } else {
         // error
         return null;

@@ -28,7 +28,8 @@ class MembershipBenefitBrandList extends TwViewController {
     // Mocked resposne
     const data = {
       brandCd : req.query.brandCd ,   // 2012001524 파리바게트(임시)
-      brandNm : req.query.brandNm    // 파리바게트(임시)
+      brandNm : req.query.brandNm,    // 파리바게트(임시)
+      area: req.query.area || ''   // 지역이 있는 경우
     };
 
     res.render('benefit/membership.benefit.brand.list.html', {

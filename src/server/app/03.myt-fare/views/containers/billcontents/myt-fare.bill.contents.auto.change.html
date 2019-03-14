@@ -9,14 +9,12 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div id="myt-fare-bill-contents-auto-change" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <div class="popup-page tw-popup fixed-bottom h60">
+        <div class="popup-page tw-popup fixed-bottom h60 nobg">
             <!-- #header -->
             <%- include('../components/header.component.html', { title: '자동 선결제 변경', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
@@ -89,7 +87,7 @@
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                                 </button>
-                                <span class="error-txt fe-error-msg" style="display:none;">
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
                                     선결제 가능 최대금액을 초과하였습니다.
                                 </span>
                             </li>
@@ -124,7 +122,7 @@
                                                type="number" inputmode="numeric" min="0" pattern="[0-9]*" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
                                 </span>
                             </li>
                             <li>
@@ -147,7 +145,7 @@
                                         </span>
                                     </span>
                                 </div>
-                                <span class="error-txt fe-error-msg" style="display:none;">
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
                                     유효기간이 올바르지 않습니다.
                                 </span>
                             </li>
@@ -160,7 +158,7 @@
                                                placeholder="앞 2자리" title="비밀번호 앞 2자리 입력" maxlength="2" minlength="2" style="-webkit-text-security: disc;" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">비밀번호가 올바르지 않습니다.</span>
                                 </span>
                             </li>
                         </ul>

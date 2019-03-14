@@ -1,0 +1,135 @@
+<div class="popup-page tw-popup fixed-btn fe-wrap_faq">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>자주 찾는 질문</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    {{#if isCell}}
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-join/myplan">요금제를 변경하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-fare/bill/hotbill">이 달 실시간 요금을 확인하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-join/submain/suspend">휴대폰을 일시정지하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-fare/bill/small/history">소액결제 이용내역을 확인하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-fare/bill/small">소액결제 한도를 상향(하향)하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    {{else}}
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-join/submain_w">약정기간을 알고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-join/submain/wire/discountrefund">인터넷/전화/인터넷전화/Btv 위약금 내역을 알고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/product/wireplan/service-area">서비스 가능지역을 조회(설치가능 여부)하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/product/wireplan">가입신청/접수를 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="/myt-join/submain/wire/cancelsvc">해약 신청을 하고 싶어요.
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    {{/if}}
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn fe-close_faq"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+

@@ -100,6 +100,7 @@ Tw.TooltipService.prototype = {
       'title': $result.ttipTitNm,
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
+      'tagStyle-div': 'div',
       'contents': $result.ttipCtt,
       'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     },
@@ -133,7 +134,13 @@ Tw.TooltipService.prototype = {
       Tw.CommonHelper.openUrlExternal(this._link);
       this._isExternal = false;
     }
-    if (this._isLink) {
+
+    var $wrap = $('.wrap');
+    if (this._isLink && $wrap.hasClass('fe-tooltip-replaced-link')) {
+      this._popupService.closeAllAndGo(this._link);
+      this._isLink = false;
+    }
+    if (this._isLink && !$wrap.hasClass('fe-tooltip-replaced-link')) {
       window.location.href = this._link;
       this._isLink = false;
     }

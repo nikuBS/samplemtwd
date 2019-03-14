@@ -60,10 +60,11 @@ class MyTFareSubmainController extends TwViewController {
               // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
               res.redirect('/myt-fare/submain');
             }
-            if ( claim.coClCd === 'B' ) {
-              data.type = 'UF';
-              data.isBroadBand = true;
-            }
+          }
+          // [DV001-15583] Broadband 인 경우에 대한 예외처리 수정
+          if ( claim.coClCd === 'B' ) {
+            data.type = 'UF';
+            data.isBroadBand = true;
           }
           // PPS, 휴대폰이 아닌 경우는 서비스명 노출
           if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {

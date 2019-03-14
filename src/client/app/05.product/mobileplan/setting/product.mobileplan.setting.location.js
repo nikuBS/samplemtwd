@@ -42,6 +42,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // 지정번호 tab
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
+    $('.discount-number').on('click', '.fe-bt-masking-alert', $.proxy(this._openMaskingAlert, this));
     $('.discount-number').on('click', '.fe-bt-num-cancel', $.proxy(this._removeNumber, this));
     $('#num-input').on('input', $.proxy(this._oninputTelNumber, this));
     $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
@@ -80,7 +81,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     // 웹인 경우 주소록버튼 숨김
     if(!Tw.BrowserHelper.isApp()){
-      $('#btnAddr', this.$container).parent().hide();
+      $('#btnAddr', this.$container).parent().hide().attr('aria-hidden', true);
     }
   },
 
@@ -108,7 +109,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     // 웹인 경우 주소록버튼 숨김
     if(!Tw.BrowserHelper.isApp()){
-      $('#btnAddr', this.$container).parent().hide();
+      $('#btnAddr', this.$container).parent().hide().attr('aria-hidden', true);
     }
   },
 
@@ -129,11 +130,17 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // $(event.target).val(num);
     var $inputNumber = $(event.target);
 
-    if ($inputNumber.length > 8) {
-      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
+    if ( Tw.ValidationHelper.isTelephone($inputNumber.val()) ) {
+      $inputNumber.val(Tw.FormatHelper.getDashedPhoneNumber($inputNumber.val()));
     } else {
       $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
     }
+
+    /*if ($inputNumber.length > 8) {
+      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
+    } else {
+      $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
+    }*/
   },
 
   /**
@@ -545,6 +552,34 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
   },
 
+  /**
+   * 지정번호 해지시 마스킹이 걸려있는 경우 alert
+   * @private
+   */
+  _openMaskingAlert: function() {
+
+    if ($('.discount-number li').length === 1) {
+      this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      return;
+    }
+
+    this._popupService.openConfirmButton(
+      Tw.PRODUCT_AUTH_ALERT_STR.MSG,
+      Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
+      $.proxy(this._showAuth,this),
+      null,
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.CONFIRM);
+  },
+
+  /**
+   * 마스킹 해제 인증창 띄우기
+   * @private
+   */
+  _showAuth : function () {
+    this._popupService.close();
+    $('.fe-bt-masking').trigger('click');
+  },
 
   /**
    * 지정번호 추가/삭제 api 호출
@@ -587,7 +622,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
         if(opClCd === '1'){
           $('#num-input').val('');
-          $('#num-inputbox .cancel').hide();
+          $('#num-inputbox .cancel').hide().attr('aria-hidden', true);
           $('#btnNumAdd').prop('disabled', true);
         }
 
@@ -622,7 +657,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       var phoneNum = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       $('#num-input').val(phoneNum);
       this._checkAddNumberBtn();
-      $('#num-inputbox .cancel').show();
+      $('#num-inputbox .cancel').show().attr('aria-hidden', false);
     }
   },
 

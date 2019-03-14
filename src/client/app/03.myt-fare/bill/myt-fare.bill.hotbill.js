@@ -155,7 +155,7 @@ Tw.MyTFareHotBill.prototype = {
           this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.M.D.'
         );
         var toDt = Tw.DateHelper.getShortDateWithFormat(
-          this._isPrev ? resp.result.beforetoDt : resp.result.toDt, 'YYYY.M.D.'
+          this._isPrev ? resp.result.beforeToDt : resp.result.toDt, 'YYYY.M.D.'
         );
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
         var fieldInfo = {
@@ -237,7 +237,6 @@ Tw.MyTFareHotBill.prototype = {
     var moreItems = this._lines.length - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
-      // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
     }
@@ -351,14 +350,8 @@ Tw.MyTFareHotBill.prototype = {
    * @private
    */
   _confirmSwitchLine: function (target) {
-    var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm);
-    var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm);
-    this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-      defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target),
-      null, null, 'tc');
+    this._popupService.openSwitchLine(this._svcInfo, target,Tw.REMNANT_OTHER_LINE.BTNAME, null,
+      $.proxy(this._requestSwitchLine, this, target), null, null )
   },
   /**
    * Request to switch the current line.
@@ -369,7 +362,7 @@ Tw.MyTFareHotBill.prototype = {
     var lineComponent = new Tw.LineComponent();
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container');
-    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    lineComponent.changeLine(target.svcMgmtNum, target.svcNum, $.proxy(this._onChangeSessionSuccess, this));
   },
   /**
    * Success callback for _requestSwitchLine.
@@ -428,7 +421,6 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       }
     }
 
-    // 빠지는 부분이 발생하여 아래와 같이 groupS 체크하는 부분 상위로 이동 (Edit: Kiminhwan)
     if ( groupS.indexOf('*') > -1 ) {
       groupS = groupS.replace(/\*/g, '');
       noVAT = true;
@@ -461,7 +453,7 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     $.each(itemL, function (key2, itemS) {
       if ( groupInfoFields.indexOf(key2) < 0 ) {
         if ( itemS.items.length === 1 && itemS.items[0].name === key2 ) {
-          delete itemS.items[0];
+          itemS.items.splice(0,1);
         }
         itemS.discount = itemS.total < 0;
         itemS.total = Tw.StringHelper.commaSeparatedString(itemS.total);
@@ -470,5 +462,6 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });
+  console.log(group);
   return group;
 };

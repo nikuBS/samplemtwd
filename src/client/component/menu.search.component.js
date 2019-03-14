@@ -56,10 +56,15 @@ Tw.MenuSearchComponent.prototype = {
       return;
     }
 
+    if (window.location.hash.indexOf('alert') !== -1) {
+      return;
+    }
+
     var keyword = $(e.currentTarget).val();
     if (keyword.trim() === '') {  // 검색어가 비어 있을 경우 취소
       this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,
         undefined, undefined, undefined, 'menu_search_alert');
+      this.$searchInput.blur();
       return;
     }
 

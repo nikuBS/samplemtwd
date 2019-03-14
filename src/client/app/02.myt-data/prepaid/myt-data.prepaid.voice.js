@@ -32,10 +32,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _init: function () {
     this._getPpsInfo();
+    this._getEmailAddress();
   },
 
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
@@ -43,7 +44,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._bindEvent();
       this._setData(res.result);
     } else {
@@ -52,8 +53,26 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _getFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
+  },
+
+  _getEmailAddress: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
+      .done($.proxy(this._emailSuccess, this))
+      .fail($.proxy(this._emailFail, this));
+  },
+
+  _emailSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this.$emailAddress = res.result.email;
+    } else {
+      this._emailFail();
+    }
+  },
+
+  _emailFail: function () {
+    this.$emailAddress = '';
   },
 
   _bindEvent: function () {
@@ -91,40 +110,42 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _validatePrepaidNumber: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty(this.$prepaid_card.val()) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _validatePrepaidSerial: function (e) {
+    Tw.InputHelper.inputNumberAndAlphabet(e.target);
+
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty(this.$prepaid_serial.val()) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _validateCard: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
     } else {
       this._getCardInfo();
     }
 
     if ( this.$cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind');
-      $($error.get(1)).removeClass('blind');
+      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -145,29 +166,29 @@ Tw.MyTDataPrepaidVoice.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
     } else {
       var $credit_error = this.$cardNumber.closest('li').find('.error-txt').get(2);
-      $($credit_error).removeClass('blind');
+      $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
       this.$btnRequestCreditCard.prop('disabled', true);
     }
   },
 
   _validateExpired: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
       this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _validatePwd: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( this.$cardPwd.val() === '' ) {
-      $error.removeClass('blind');
+      $error.removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -250,7 +271,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           cardCompany: result.prchsCardName,
           previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
           afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
-          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
+          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString()),
+          emailAddress: this.$emailAddress
         }
       });
     } else if ( res.code === 'BIL0080' ) {
@@ -311,23 +333,26 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( Tw.FormatHelper.isEmpty($($elButton).data('amount')) ) {
-      $($error.get(0)).removeClass('blind');
+    if ( Tw.FormatHelper.isEmpty($($elButton).attr('data-amount')) ) {
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _setSelectedValue: function ($target, e) {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
-    $target.data('amount', $(e.currentTarget).data('value'));
+    $target.attr('data-amount', $(e.currentTarget).find('button').attr('data-value'));
+
+    this._validSelectedValue($target);
+    this._checkIsAbled();
   },
 
   _onShowExampleCard: function () {

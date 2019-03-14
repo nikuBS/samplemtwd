@@ -46,7 +46,7 @@ Tw.MainMenuRefund.prototype = {
         list: _.map(this._data.refundArr, function (item) {
           return {
             value: item.svcCdNm,
-            explain: item.svcNum,
+            explain: item.svcText,
             text1: item.svcBamt + Tw.CURRENCY_UNIT.WON
           };
         })

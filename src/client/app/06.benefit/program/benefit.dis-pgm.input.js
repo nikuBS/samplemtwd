@@ -38,19 +38,8 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _bindEvent: function () {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
-  },
-
-  _getJoinConfirmContext: function () {
-    $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
-  },
-
-  _setConfirmBodyIntoContainer: function (context) {
-    var tmpl = Handlebars.compile(context),
-        html = tmpl(this._confirmOptions);
-
-    this.$container.html(html);
-    this._callConfirmCommonJs();
+    // window 'env' 이벤트 발생시 페이지를 팝업으로 호출 - 상품 쪽과 동일
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._callConfirmCommonJs, this));
   },
 
   _convConfirmOptions: function () {
@@ -118,15 +107,10 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _procJoinRes: function (resp) {
     Tw.CommonHelper.endLoading('.container');
-
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
-
-    this._popupService.close();
-    setTimeout($.proxy(function () {
-      this._openSuccessPop();
-    }, this), 100);
+    this._openSuccessPop();
   },
 
   _openSuccessPop: function () {

@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -23,7 +21,7 @@
             <!-- #contents -->
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
-                <div class="container">
+                <div id="contents" class="container">
                     <div class="cont-box nogaps">
                         <div class="form-data-tit-wrap ml16">
                             <strong class="tit">자동납부 방법</strong>
@@ -75,16 +73,18 @@
                                                title="휴대폰번호(숫자만 입력)" placeholder="숫자만 입력" data-valid-label="phone" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
                                 </span>
                             </li>
                             <li class="fe-bank-wrap">
-                                <label class="tit" for="flab07">계좌정보 <button id="MF_05_01_01_tip_02" class="tip-view" type="button">TIP</button></label>
+                                <label class="tit" for="flab07">계좌정보
+                                    <button id="MF_05_01_01_tip_02" title="계좌정보 tip" aria-haspopup="true" class="tip-view" type="button">TIP</button>
+                                </label>
                                 <button class="bt-dropdown big fe-select-bank fe-required-select" title="은행 선택" aria-haspopup="true" type="button">
                                     은행 선택<span class="ico"></span>
                                 </button>
                                 <span class="fe-bank-list none"><%= paymentOption.bankList %></span>
-                                <span class="error-txt fe-bank-error-msg" style="display:none;">은행을 선택해 주세요.</span>
+                                <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
                                 <span class="inputbox mt6">
                                     <span class="input">
                                         <input id="flab07" class="fe-account-number required-input-field fe-only-number"
@@ -92,7 +92,7 @@
                                                title="계좌번호(숫자만 입력)" placeholder="계좌번호(숫자만 입력)" data-valid-label="account" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
                                 </span>
                             </li>
                         </ul>
@@ -108,7 +108,7 @@
                                                title="휴대폰번호(숫자만 입력)" placeholder="숫자만 입력" data-valid-label="phone" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
                                 </span>
                             </li>
                             <li>
@@ -120,7 +120,7 @@
                                                inputmode="numeric" min="0" pattern="[0-9]*" title="카드번호(숫자만 입력)" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
                                 </span>
                             </li>
                             <li>
@@ -142,7 +142,7 @@
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
                                         유효기간이 올바르지 않습니다.
                                     </span>
                                 </div>

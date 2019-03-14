@@ -55,7 +55,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       layer: true,
       data : data
     },$.proxy(this._popupOpenCallback,this),
-      null,hash);
+      $.proxy(function () {
+        //this.$rootContainer.find('#do_confirm').focus();
+        this.$rootContainer.find('.fe-main-content').attr('aria-hidden',false);
+      },this),hash);
   },
   _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
@@ -135,22 +138,22 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $element.attr('checked',value==='checked'?true:false);
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
-  _doJoin : function () {
+  _doJoin : function (evt) {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
       null,
-      $.proxy(this._confirmInfo,this),
-      null);
+      $.proxy(this._confirmInfo,this,evt),
+      $.proxy(this._resetAriaHidden,this,evt));
   },
-  _confirmInfo : function () {
+  _confirmInfo : function (evt) {
     this._popupService.close();
     if(this._page===true){
-      this._excuteJoin();
+      this._excuteJoin(evt);
     }else{
       this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
     }
   },
-  _excuteJoin : function () {
+  _excuteJoin : function (evt) {
     var userJoinInfo = {
       'svcStartDt' : '{}',
       'svcEndDt' : '{}',
@@ -182,10 +185,17 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
           'complete');
 
       } else {
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(
+            res.msg,
+            Tw.POPUP_TITLE.ERROR,null,
+            $.proxy(this._resetAriaHidden,this,evt)
+        );
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(
+          err.msg,
+          Tw.POPUP_TITLE.ERROR,null,
+          $.proxy(this._resetAriaHidden,this,evt));
     }, this));
 
   },
@@ -198,7 +208,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         title: $currentTarget.data('tit'),
         html: $currentTarget.data('txt')
       }
-    },$.proxy(this._bindDetailAgreePopupEvt,this), null, 'agree_pop');
+    },$.proxy(this._bindDetailAgreePopupEvt,this),
+        $.proxy(this._resetAriaHidden,this,targetEvt), 'agree_pop');
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -248,12 +259,12 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
     this._popupService.closeAllAndGo(targetUrl);
   },
-  _showCancelAlart : function (){
+  _showCancelAlart : function (evt){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      $.proxy(this._resetAriaHidden,this,evt));
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
@@ -386,7 +397,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         break;
       case 'NA00005633':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_30', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_31', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
+        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_28', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00003196':
@@ -411,22 +422,32 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     }
   },
   _showBffToolTip : function (evt) {
-    var tooltipData = $(evt.currentTarget).data();
+    var $target = $(evt.currentTarget);
+    var tooltipData = $target.data();
+    console.log(tooltipData.txt);
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
-      'pop_name': 'type_tx_scroll',
       'title': tooltipData.tit,
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
+      'tagStyle-div': 'div',
       'contents': tooltipData.txt,
-      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
-    },null,null);
+      'tooltip': 'tooltip-pd'
+    },null,$.proxy(this._resetAriaHidden,this,evt));
   },
   _convertPrice : function (priceVal) {
     if(!isNaN(priceVal)){
       priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
     }
     return priceVal;
+  },
+  _resetAriaHidden : function (evt) {
+    if(this._page){
+      this.$rootContainer.find('.fe-main-content').attr('aria-hidden',false);
+    }else{
+      $(evt.delegateTarget).attr('aria-hidden',false);
+    }
   }
 };

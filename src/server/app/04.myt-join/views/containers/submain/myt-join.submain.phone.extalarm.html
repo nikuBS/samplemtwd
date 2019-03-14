@@ -6,14 +6,6 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
@@ -95,7 +87,7 @@
 
                     <ul class="form-data-list">
                         <li>
-                            <label class="tit pt40">알림방법</label>
+                            <label class="tit" for="flab01">알림방법</label>
                             <div class="list-comp-input type3">
                                 <div class="widget">
                                     <div class="widget-box radio">
@@ -143,9 +135,9 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button id="MS_03_01_03_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="금융기관 알림 안내 자세히 보기">금융기관 알림 안내<span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_03_01_03_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="신청 안내 자세히 보기">신청 안내<span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_03_01_03_tip_03" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 이용 중 번호변경 자세히 보기">서비스 이용 중 번호변경<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">금융기관 알림 안내<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_02" type="button" class="tip-view-btn" aria-haspopup="true">신청 안내<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_03" type="button" class="tip-view-btn" aria-haspopup="true">서비스 이용 중 번호변경<span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

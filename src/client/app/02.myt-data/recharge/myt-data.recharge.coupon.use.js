@@ -109,6 +109,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         var number = res.params.phoneNumber.replace(/[^0-9]/gi, '').trim();
         number = Tw.FormatHelper.getDashedCellPhoneNumber(number);
         this.$numberInput.val(number);
+        this.$numberInput.trigger('keyup'); // x버튼 표시되도록 keyup 이벤트 임의로 발생
         this._onNumberChanged();
       }
     }, this));
@@ -203,21 +204,21 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         }
 
         if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
-          this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
+          this._showAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
           return;
         }
 
         if (res.code === 'RCG3003') {
-          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A211);
+          this._showAlert(Tw.REFILL_COUPON_ALERT.A211);
           return;
         }
 
         if (res.code === 'RCG3006') {
-          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A212);
+          this._showAlert(Tw.REFILL_COUPON_ALERT.A212);
           return;
         }
 
-        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A213);
+        this._showAlert(Tw.REFILL_COUPON_ALERT.A213);
         return;
       }
 
@@ -245,6 +246,13 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _showAlert: function (content) {  // alert 후 focus 를 다시 input 창으로 (웹접근성)
+    this._popupService.openAlert(content, null, null, $.proxy(function () {
+      setTimeout($.proxy(function () {
+        this.$numberInput.focus();
+      }, this), 300)
+    }, this));
   }
   /* 취소팝업 삭제
   _onCancel: function () {

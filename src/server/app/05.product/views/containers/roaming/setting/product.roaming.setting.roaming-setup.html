@@ -7,18 +7,18 @@
 
 <%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body data-gr-c-s-loaded="true">
-<!-- #skip_navigation
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+<!-- Grand open 접근성 수정 -->
+<!-- #skip_navigation -->
+<!--<div id="skipNav" class="skip_navi">
+   <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
-</div>
+</div>-->
 <!--// #skip_navigation -->
+<!--// Grand open 접근성 수정 -->
 <div class="wrap" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000486' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 fe-main-content"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -27,7 +27,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <div class="ti-caption-gray">
-                    <button title="로밍 서비스 기간 설정 정보보기" type="button" class="tip-view-btn" id="RM_11_01_02_02_tip_01_01" aria-haspopup="true">
+                    <button type="button" class="tip-view-btn" id="RM_11_01_02_02_tip_01_01" aria-haspopup="true">
                         로밍 서비스 기간 설정<span class="tip-view">TIP</span>
                     </button>
                 </div>
@@ -47,10 +47,10 @@
                                     <button class="bt-dropdown big time" id="start_time" title="개시일 시각 선택" aria-haspopup="true">00<span class="ico"></span></button>
                                 </div>
                             </div>
-                            <p id="aria-val-tx2" class="error-txt start none">서비스 개시일 설정은 당일 현재시간 이후만 가능합니다.</p>
+                            <p id="aria-val-tx1" class="error-txt start none">서비스 개시일 설정은 당일 현재시간 이후만 가능합니다.</p>
                             <ul class="announcement-box">
                                 <li id="aria-dateset1" class="announcement-bullet type01">1개월 이내의 날짜를 선택하세요.</li>
-                                <li id="aria-timeset1" class="announcement-bullet type01">한국시간 기준 00시~23입니다.</li>
+                                <li id="aria-timeset1" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
                             </ul>
                         </div>
                         <div class="set">
@@ -62,13 +62,13 @@
                                 </div>
                                 <div class="unit" aria-describedby="aria-timeset2">
                                     <span class="subtit">시각</span>
-                                    <button disabled class="bt-dropdown big time" id="end_time" title="종료일 시각 선택" aria-haspopup="true">12<span class="ico"></span></button>
+                                    <button disabled class="bt-dropdown big time" id="end_time" title="종료일 시각 선택" aria-hidden="true" aria-haspopup="true">12<span class="ico"></span></button>
                                 </div>
                             </div>
                             <p id="aria-val-tx2" class="error-txt end none">서비스 종료일 설정은 당일 이후만 가능합니다.</p>
                             <ul class="announcement-box">
                                 <li id="aria-dateset2" class="announcement-bullet type01">서비스 개시일 30이내의 날짜를 선택하세요.</li>
-                                <li id="aria-timeset2" class="announcement-bullet type01">한국시간 기준 00시~23입니다.</li>
+                                <li id="aria-timeset2" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
                             </ul>
                         </div>
                     </div>

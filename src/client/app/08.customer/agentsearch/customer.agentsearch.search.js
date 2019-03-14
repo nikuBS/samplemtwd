@@ -63,6 +63,12 @@ Tw.CustomerAgentsearch.prototype = {
       this._lastQueryParams.searchText = encodeURIComponent(params.searchText);
       */
 
+      delete params.searchText;
+      delete params.searchAreaNm;
+      delete params.searchLineNm;
+      delete params.currentPage;
+      $.extend(true, this._options, params);
+
       this._isSearched = true;
     }
 

@@ -13,6 +13,7 @@ Tw.CommonMemberSloginIos = function (rootEl) {
 
   this.mdn = '';
   this.certSeq = '';
+  this._authBlock = '';
 
   this.$inputName = null;
   this.$inputBirth = null;
@@ -42,7 +43,9 @@ Tw.CommonMemberSloginIos = function (rootEl) {
   this._addTimer = null;
   this._addTime = null;
   window.onRefresh = $.proxy(this._onRefreshCallback, this);
+
   this._bindEvent();
+  this._getMethodBlock();
 };
 
 Tw.CommonMemberSloginIos.prototype = {
@@ -62,7 +65,38 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
+    ICAS3101: 'ICAS3101'
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+        null, $.proxy(this._onCloseBlockPopup, this));
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _onCloseBlockPopup: function () {
+    this._historyService.goBack();
   },
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
@@ -91,6 +125,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorCertTime = this.$container.find('#aria-cert-num3');
     this.$errorCertCount = this.$container.find('#aria-cert-num4');
     this.$errorCertAddTime = this.$container.find('#aria-cert-num5');
+    this.$errorCertBlock = this.$container.find('#aria-cert-num6');
     this.$errorLoginCert = this.$container.find('#aria-phone-err1');
     this.$errorLoginTime = this.$container.find('#aria-phone-err2');
     this.$errorLoginCnt = this.$container.find('#aria-phone-err3');
@@ -206,6 +241,9 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCount.removeClass('none');
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
+      this._clearCertError();
+      this.$errorCertBlock.removeClass('none');
     } else if ( errorCode === this.SMS_ERROR.ATH1004 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
@@ -309,6 +347,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertBlock.addClass('none');
   },
   _clearLoginError: function () {
     this.$errorLoginCert.addClass('none');

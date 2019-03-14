@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -43,7 +41,8 @@
                         <!-- BETA 버젼 임시로 외부 링크로
                         <a href="/membership/submain" class="bt-link-tx underline">나의 멤버쉽</a>
                         -->
-                        <button data-id="fe-membership" href="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp" class="bt-link-tx underline">
+                        <button data-id="fe-membership" href="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp"
+                                class="bt-link-tx underline" title="새창">
                             나의 멤버쉽
                         </button>
                     </div>
@@ -60,9 +59,9 @@
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
                             <span class="sub-disc01">포인트</span>
-                            <span class="tit tx-blue"><span class="charge-txt"><%= total %></span>점</span>
-                            <span class="sub-disc04"><span class="elem">OK캐쉬백 <%= okCashback %>점</span>
-                            <span class="elem">T포인트 <%= t %>점</span></span>
+                            <span class="tit tx-blue"><span class="charge-txt"><%= total %></span>P</span>
+                            <span class="sub-disc04"><span class="elem">OK캐쉬백 <%= okCashback %>P</span>
+                            <span class="elem">T포인트 <%= t %>P</span></span>
                         </div>
                         <div class="right-area">
                             <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
@@ -75,7 +74,7 @@
                         <div class="link-long">
                             <a href="/benefit/my/rainbowpoint">레인보우포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
+                                            <span class="normal"><i class="tx-bold"><%= rainbow %></i> P</span>
                                             <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
                                         </span>
                             </a>
@@ -85,9 +84,9 @@
                     <% if(locals.noContract) {%>
                     <li>
                         <div class="link-long">
-                            <a href="/myt/join/join-info/no-contract">무약정플랜포인트
+                            <a href="/myt-join/myplancombine/noagreement">무약정플랜포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
+                                            <span class="normal"><i class="tx-bold"><%= noContract %></i> P</span>
                                             <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
                                         </span>
                             </a>
@@ -99,7 +98,7 @@
                         <div class="link-long">
                             <a href="/benefit/my/military">지켜줘서 고마워 현역플랜포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= military %></i> 점</span>
+                                            <span class="normal"><i class="tx-bold"><%= military %></i> P</span>
                                             <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
                                         </span>
                             </a>
@@ -111,7 +110,7 @@
                         <div class="link-long">
                             <a href="/benefit/my/cookiz">쿠키즈팅포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= cookiz %></i> 점</span>
+                                            <span class="normal"><i class="tx-bold"><%= cookiz %></i> P</span>
                                             <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
                                         </span>
                             </a>

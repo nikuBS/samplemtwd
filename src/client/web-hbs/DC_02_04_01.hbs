@@ -23,18 +23,18 @@
                 <div class="recently-tel-box">
                     <div class="inputbox bt-add">
                         <span class="input new">
-                            <input id="fe-changable" type="text" title="변경할 데이터" aria-describedby="fe-error" inputmode="numeric" min="0" pattern="[0-9]*">
+                            <input id="fe-changable" type="text" title="변경할 데이터" placeholder="데이터(GB) 입력" aria-describedby="fe-error" inputmode="numeric" min="0" pattern="[0-9]*">
                             <button class="cancel"><span class="blind">삭제</span></button>
                         </span>
                         <span class="r-btn type01">
-                            <button type="button" class="btn-type01" data-value="1">+1<span class="blind">GB</span></button>
-                            <button type="button" class="btn-type01" data-value="5">+5<span class="blind">GB</span></button>
-                            <button type="button" class="btn-type01" data-value="all">전체</button>
+                            <button type="button" class="btn-type01 {{#unless lessThanOne}}fe-enable{{/unless}}" data-value="1" {{#if lessThanOne}}disabled{{/if}}>+1<span class="blind">GB</span></button>
+                            <button type="button" class="btn-type01 {{#unless lessThanOne}}fe-enable{{/unless}}" data-value="5" {{#if lessThanOne}}disabled{{/if}}>+5<span class="blind">GB</span></button>
+                            <button type="button" class="btn-type01 fe-all" data-value="all">전체</button>
                         </span>
                     </div>
-                    <p class="input-txt-type02 pt4 none" id="fe-error">공유 가능 데이터를 초과했습니다.</span></p>
+                    <p class="input-txt-type02 pt4 none" id="fe-error" aria-hidden="true">공유 가능 데이터를 초과했습니다.</span></p>
                     <p class="input-txt-type01 pt10">공유한 데이터 : <strong class="txt-c1">{{detail.shrPotGbQty}}GB</strong> <span class="txt-c3">{{detail.shrPotDonaAplyDt}}</span></p>
-                    <p class="input-txt-type01 pt4">변경 가능 데이터 : <strong class="txt-c2">{{data}}GB</strong><button class="btn-link fe-retrieve none">조회하기</button></p>
+                    <p class="input-txt-type01 pt4">변경 가능 데이터 : <strong class="txt-c2">{{data}}GB</strong><button class="btn-link fe-retrieve none" aria-hidden="true">조회하기</button></p>
                 </div>
             </div>
             <!--// .cont-box -->

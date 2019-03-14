@@ -40,8 +40,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.$container.on('click', '.fe-alarm-date', $.proxy(this._onChangeStatus, this, 'date_list'));
     this.$container.on('click', '.fe-alarm-amount', $.proxy(this._onChangeStatus, this, 'price_list'));
     this.$container.on('click', '.fe-setting-alarm', $.proxy(this._requestAlarmSetting, this));
-    this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.tw-popup-closeBtn', $.proxy(this._validateForm, this));
+    this.$container.on('click', '.fe-back', $.proxy(this._goBack, this));
   },
 
   _getPrepaidAlarmInfo: function () {
@@ -77,27 +77,27 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _validateForm: function () {
     if ( !this.typeCd ) {
-      $('.fe-alarm-status').closest('li').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-status').closest('li').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-status').closest('li').find('.error-txt').addClass('blind');
+      $('.fe-alarm-status').closest('li').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.term ) {
-      $('.fe-alarm-category').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-category').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-category').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-category').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.day ) {
-      $('.fe-alarm-date').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-date').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-date').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-date').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( !this.amt ) {
-      $('.fe-alarm-amount').closest('div').find('.error-txt').removeClass('blind');
+      $('.fe-alarm-amount').closest('div').find('.error-txt').removeClass('blind').attr('aria-hidden', 'false');
     } else {
-      $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind');
+      $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind').attr('aria-hidden', 'true');
     }
 
     if ( this.typeCd === '1' && !!this.term && !!this.day ) {
@@ -114,7 +114,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     var fnSelectStatus = function ($target, item) {
       return {
         value: item.text,
-        option: $target.text() === item.text ? 'checked' : '',
+        option: $.trim($target.text()) === $.trim(item.text) ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
@@ -207,7 +207,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         $('.fe-alarm-category').text().trim() +
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
         this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
-        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -221,7 +221,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
-        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -267,22 +267,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this._historyService.replaceURL('/myt-data/submain');
   },
 
-  _stepBack: function () {
-    var confirmed = false;
-    this._popupService.openConfirmButton(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        confirmed = true;
-        this._popupService.close();
-      }, this),
-      $.proxy(function () {
-        if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data/submain');
-        }
-      }, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
+  _goBack: function () {
+    this._historyService.goBack();
   }
 };

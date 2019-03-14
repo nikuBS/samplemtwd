@@ -27,10 +27,63 @@ Tw.BiometricsCert.prototype = {
   open: function (callback, closeCallback) {
     this._callback = callback;
     this._closeCallback = closeCallback;
+
+    this._getMethodBlock();
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    this._openPopup();
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _openPopup: function () {
+    var methods = {
+      skSms: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y'
+      },
+      otherSms: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS] === 'Y'
+      },
+      ipin: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.IPIN] === 'Y'
+      },
+      publicCert: {
+        block: this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH] === 'Y'
+      }
+    };
+
+    var checkBlock = _.find(methods, $.proxy(function (method) {
+      return !method.block;
+    }, this));
+
+    if ( Tw.FormatHelper.isEmpty(checkBlock) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+      return;
+    }
+
     this._popupService.open({
       hbs: 'MA_03_01_02_01_02',
       layer: true,
       data: {
+        methods: methods,
         isFinger: this._target === Tw.FIDO_TYPE.FINGER
       }
     }, $.proxy(this._onOpenBioCert, this), $.proxy(this._onCloseBioCert, this), 'cert');

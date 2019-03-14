@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -24,7 +22,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="franchisee-search">
-                        <h3 class="franchisee-tit"><%= data.brandNm %></h3>
+                        <h3 class="franchisee-tit"><%= decodeURI(data.brandNm) %></h3>
                         <h4 class="search-stit">가맹점 검색</h4>
                         <div class="input-wrap-half">
                             <span class="inputbox">
@@ -104,7 +102,7 @@
                         </li>
                         -->
                     </ul>
-                    <div class="bt-more" id="frchs-bt-more" style="display: none;">
+                    <div class="bt-more" id="frchs-bt-more" style="display: none;" aria-hidden="true">
                         <button>더 보기</button>
                     </div>
 

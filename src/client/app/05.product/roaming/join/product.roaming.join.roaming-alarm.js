@@ -15,6 +15,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this.$mainContent = this.$container.find('.fe-main-content');
   this._init();
 };
 
@@ -32,11 +33,11 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
-    this.$container.on('click', '#confirm_info', $.proxy(this._confirmInformationSetting, this));
+    this.$container.on('click', '#do_confirm', $.proxy(this._confirmInformationSetting, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
-    this.$confirmBtn = this.$container.find('#confirm_info');
+    this.$confirmBtn = this.$container.find('#do_confirm');
     this.$alarmTemplate = this.$container.find('#alarm_template');
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },
@@ -150,8 +151,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       serviceNumber1 : phoneNum.serviceNumber1,
-      serviceNumber2 : phoneNum.serviceNumber2.substring(0,(phoneNum.serviceNumber2.length-2))+'**',
-      serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+      serviceNumber2 : phoneNum.serviceNumber2,
+      serviceNumber3 : phoneNum.serviceNumber3
     };
     var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
     var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
@@ -159,7 +160,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _removeEvt : function (btnEvt) {
     if(this._addedList.length<=1){
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
       return;
     }
     this._popupService.openConfirmButton(
@@ -169,7 +170,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         this._popupService.close();
         this._removeOnList(btnEvt);
       },this),
-      null,
+      $.proxy(this._resetAriaHidden,this),
       Tw.BUTTON_LABEL.CLOSE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
@@ -230,7 +231,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _openAlert : function (msg,title) {
     this._popupService.openAlert(
@@ -239,6 +240,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       null,
       $.proxy(function () {
         this.$addBtn.removeAttr('style');
+        this._resetAriaHidden();
       }, this)
     );
     if(!this.$addBtn.attr('disabled')){
@@ -270,6 +272,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
     new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
 
+  },
+  _resetAriaHidden : function () {
+    this.$mainContent.attr('aria-hidden',false);
   }
 
 

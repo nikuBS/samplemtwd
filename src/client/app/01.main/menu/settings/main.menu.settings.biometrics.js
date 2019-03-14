@@ -47,7 +47,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
       } else {
         this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_ON);
       }
-      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE }, $.proxy(this._onFidoUse, this));
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum }, $.proxy(this._onFidoUse, this));
     } else {
       if ( this._target === Tw.FIDO_TYPE.FINGER ) {
         this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_OFF);
@@ -71,17 +71,25 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onChangeFidoUse: function ($event) {
-    if ( $($event.currentTarget).attr('checked') === 'checked' ) {
+    var $currentTarget = $($event.currentTarget);
+    var $field = $currentTarget.parents('.fe-setting');
+    if ( $field.hasClass('disabled') ) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      return;
+    }
+
+    if ( $currentTarget.attr('checked') === 'checked' ) {
       // off
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
         value: 'N'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
     } else {
       // on
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
         value: 'Y'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_USE);

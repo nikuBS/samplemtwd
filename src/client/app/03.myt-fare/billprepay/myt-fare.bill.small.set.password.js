@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.small.set.password.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.09
+ * Annotation: 소액결제 비밀번호 설정
  */
 
 Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
@@ -197,15 +198,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.customerInfo.resultCd === 'VS000') {
-        this._popupService.close();
-
-        var message = '';
-        if (this.$type === 'change') {
-          message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_PASSWORD;
-        } else {
-          message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_REGISTER_PASSWORD;
-        }
-        this._commonHelper.toast(message);
+        this._setNewPasswordData();
       } else {
         this._popupService.openAlert(res.result.returnMessage);
       }
@@ -215,6 +208,23 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _setNewPasswordData: function () {
+    var message = '';
+    var code = 'AC';
+
+    if (this.$type === 'change') {
+      message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_PASSWORD;
+    } else {
+      message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_REGISTER_PASSWORD;
+    }
+
+    var $changeBtn = this.$container.find('.fe-set-password');
+    $changeBtn.attr('data-cpin', code);
+    $changeBtn.find('span').text(Tw.MYT_FARE_PAYMENT_NAME.CHANGE);
+
+    this._popupService.close();
+    this._commonHelper.toast(message);
   },
   _confirmCallback: function () {
     this._close = true;

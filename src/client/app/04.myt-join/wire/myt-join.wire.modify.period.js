@@ -77,15 +77,6 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   _phoneNum: '',
   // _isDirty: false,
 
-  _openErrorAlert: function () {
-    this._popupService.openModalTypeATwoButton(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT,
-      Tw.BUTTON_LABEL.CLOSE, undefined, $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK)
-    );
-  },
-
   _cachedElement: function () {
     this._$main = this.$container.find('#main');
     this._$btnSelectPeriod = this._$main.find('.fe-btn-select-period');
@@ -109,7 +100,6 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   },
 
   _bindEvent: function () {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkBroadbancJoined, this));
     this._$btnSelectPeriod.on('click', $.proxy(this._onClickBtnSelectPeriod, this));
     this._$btnRequest.on('click', $.proxy(this._onClickBtnRequest, this));
     this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
@@ -121,16 +111,13 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   },
 
   _init: function () {
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
+    }
     this._periodPopupTplList = Tw.POPUP_TPL.MYT_JOIN_WIRE_MODIFY_PERIOD[0].list;
     this._phonePopupTplList = this._PHONE_NUMS[0].list;
 
     // this._setSelectPopup(this._periodPopupTplList, this._options.beforeTerm);
-  },
-
-  _checkBroadbancJoined: function() {
-    if ( this._options.isBroadbandJoined === 'Y' ) {
-      this._openErrorAlert();
-    }
   },
 
   _getPeriodTermCnt: function (term) {

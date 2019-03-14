@@ -9,7 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -50,13 +50,13 @@
                     <ul class="coupon-list-wrap">
                         <% for (let i = 0; i < (list.length > 20 ? 20 : list.length); i++) { %>
                         <li>
-                            <span class="icon"><i class="<%= list[i].isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"><span class="blind"><%= list[i].isGift ? 'gift' : 'discount' %></span></i></span>
+                            <span class="icon"><i class="<%= list[i].isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"></i></span>
                             <div class="cont">
                                 <h2 class="tit"><%= list[i].copnNm %></h2>
                                 <span class="txt1"><%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %></span>
                             </div>
                             <% if (available !== 'NONE') { %>
-                            <div class="btn-wrap two">
+                            <div class="btn-wrap <%= list[i].isGift ? '' : 'two' %>">
                                 <% if (!list[i].isGift) { %>
                                 <button class="btn fe-btn-gift" id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::N">선물하기</button>
                                 <% } %>
@@ -98,7 +98,7 @@
 <script type="text/template" id="tpl_coupon_item">
   {{#list}}
   <li>
-        <span class="icon"><i class="icon-discount1-80"><span class="blind">discount</span></i></span>
+        <span class="icon"><i class="icon-discount1-80"></i></span>
         <div class="cont">
             <h2 class="tit">{{copnNm</h2>
             <span class="txt1">{{usePsblStaDt}}~{{usePsblEndDt}}</span>

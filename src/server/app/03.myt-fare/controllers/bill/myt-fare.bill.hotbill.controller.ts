@@ -4,17 +4,17 @@
  * Date: 2018. 9. 20.
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import { LINE_NAME } from '../../../../types/bff.type';
-import FormatHelper from '../../../../utils/format.helper';
 import StringHelper from '../../../../utils/string.helper';
 import { MYT_FARE_HOTBILL_TITLE } from '../../../../types/title.type';
 import { Observable } from 'rxjs/Observable';
-import { mergeMap, delay } from 'rxjs/operators';
+import { delay, mergeMap } from 'rxjs/operators';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import FormatHelper from '../../../../utils/format.helper';
 
 class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
@@ -139,6 +139,8 @@ class MyTFareBillHotbill extends TwViewController {
           ( svc.svcMgmtNum !== svcInfo['svcMgmtNum'])));
     }
     return svcs.map(svc => {
+      svc.clsNm =  [ 'M3', 'M4'].indexOf(svc.svcAttrCd) > -1 ? 'tablet' : 'cellphone';
+      svc.svcDashedNum = FormatHelper.conTelFormatWithDash(svc.svcNum);
       return JSON.parse(JSON.stringify(svc));
     });
   }

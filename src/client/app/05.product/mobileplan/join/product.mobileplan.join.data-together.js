@@ -95,15 +95,15 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
   _clearNum: function() {
     this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleSetupButton(false);
   },
 
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+      this.$btnClearNum.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClearNum.hide();
+      this.$btnClearNum.hide().attr('aria-hidden', 'true');
     }
   },
 
@@ -257,7 +257,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
         isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
-          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+          Tw.DATE_UNIT.MONTH_S + this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 

@@ -42,8 +42,12 @@ Tw.CommonPostcodeDetail.prototype = {
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
     $selectedTarget.attr('aria-selected', 'true');
+
+    if ($addressObject.tabId === 'tab2') {
+      $selectedTarget.css('marginLeft', '0');
+    }
     $selectedTarget.siblings().attr('aria-selected', 'false');
-    $selectedTarget.siblings().find('a').addClass('disabled');
+    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none');
   },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
@@ -125,7 +129,12 @@ Tw.CommonPostcodeDetail.prototype = {
     if (this._selectedTabId === 'tab1') {
       reqData.stNmCd = this.$selectedAddress.attr('id');
       if (this.$searchTarget.hasClass('fe-search-number')) {
-        reqData.bldMainNum = $searchValue;
+        if ($searchValue.indexOf('-') !== -1) {
+          reqData.bldMainNum = $searchValue.split('-')[0];
+          reqData.bldSubNum = $searchValue.split('-')[1];
+        } else {
+          reqData.bldMainNum = $searchValue;
+        }
       } else {
         reqData.bldNm = encodeURI($searchValue);
       }
@@ -181,8 +190,15 @@ Tw.CommonPostcodeDetail.prototype = {
       if ($content[i].bldNm.indexOf('N/A') !== -1) {
         bldNm = '(' + Tw.POSTCODE_MESSAGE.NONE + ')';
       }
+
+      var number = '';
+      if (this.$selectedTab.attr('id') === 'tab1-tab') {
+        number = $content[i].bldTotNum;
+      } else {
+        number = $content[i].totHouse_numCtt;
+      }
       $cloneNode.find('.fe-building').text(bldNm);
-      $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
+      $cloneNode.find('.fe-number').text(number);
       $cloneNode.find('.fe-zip').text($content[i].zip);
 
       $cloneNode.on('click', $.proxy(this._goNextPage, this));

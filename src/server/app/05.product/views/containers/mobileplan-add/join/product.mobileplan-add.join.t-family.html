@@ -8,9 +8,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -49,24 +47,24 @@
                                     <span class="inputbox bt-add">
                                         <span class="input">
                                             <!--접근성 수정-->
-                                            <input type="tel" id="flab03" class="fe-num_input" placeholder="숫자만 입력" title="휴대폰번호 숫자만 입력해 주세요">
+                                            <input type="tel" id="flab03" class="fe-num_input" placeholder="숫자만 입력" title="휴대폰번호 숫자만 입력해 주세요" pattern="[0-9]*" inputmode="numeric">
                                             <!-- //접근성 수정-->
-                                            <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
+                                            <button class="cancel fe-btn_clear_num" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
-                                    <span id="aria-exp-desc1" class="error-txt fe-error0" style="display: none"></span>
+                                    <span id="aria-exp-desc1" class="error-txt fe-error0" style="display: none" aria-hidden="true"></span>
                                 </li>
                                 <li class="radio-stype">
                                     <label class="tit mb0" for="flab02">법정 생년월일</label>
                                     <span class="inputbox">
                                         <span class="input">
                                             <!--접근성 수정-->
-                                            <input id="flab02" type="number" class="fe-input_birth" placeholder="숫자만 입력 (ex. 19900101)" title="법정 생년월일 숫자만 입력해 주세요 (ex. 19900101)" maxlength="8">
+                                            <input id="flab02" type="number" class="fe-input_birth" placeholder="숫자만 입력 (ex. 19900101)" title="법정 생년월일 숫자만 입력해 주세요 (ex. 19900101)" pattern="[0-9]*" inputmode="numeric" maxlength="8">
                                             <!-- //접근성 수정-->
-                                            <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
+                                            <button class="cancel fe-btn_clear_num" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
-                                    <span id="aria-exp-desc2" class="error-txt fe-error1" style="display: none"></span>
+                                    <span id="aria-exp-desc2" class="error-txt fe-error1" style="display: none" aria-hidden="true"></span>
                                 </li>
                             </ul>
                             <span id="aria-phone-tx1" class="input-comment">최소 2개~최대 5개 번호까지 T가족모아데이터<br>가족결합으로 가입할 수 있습니다.</span>
@@ -81,7 +79,7 @@
                 <!--// .cont-box -->
 
                 <!-- .cont-box -->
-                <div class="cont-box fe-is_join_check" style="display: none">
+                <div class="cont-box fe-is_join_check" style="display: none" aria-hidden="true">
                     <h3 class="tx-normal">가입가능여부 결과</h3>
                     <div class="pg-member join-able">
                         <dl>
@@ -90,10 +88,10 @@
                         <p class="txt fe-join_check_result"></p>
                     </div>
                     <ul class="bt-slice pt20">
-                        <li class="bt-blue1" style="display: none">
+                        <li class="bt-blue1" style="display: none" aria-hidden="true">
                             <button class="fe-btn_add_line">추가하기</button>
                         </li>
-                        <li class="bt-white2" style="display: none">
+                        <li class="bt-white2" style="display: none" aria-hidden="true">
                             <button class="fe-btn_retry">다시 입력하기</button>
                         </li>
                     </ul>

@@ -17,7 +17,7 @@ Tw.ValidationHelper = (function () {
    * @returns {Boolean}
    */
   function isTelephone(str) {
-    return regExpTest(/^0(2|[3-9]\d?)-?(\d{3,4})-?(\d{4})$/, str);
+    return regExpTest(/^0(2|([3-9]\d))-?(\d{3,4})-?(\d{4})$/, str);
   }
 
   /**
@@ -288,9 +288,12 @@ Tw.ValidationHelper = (function () {
     }
     if (isValid) {
       $message.hide();
+      $message.attr('aria-hidden', 'true');
       return true;
     } else {
       $message.show();
+      $message.attr('aria-hidden', 'false');
+
       if (message) {
         $message.text(message);
       }

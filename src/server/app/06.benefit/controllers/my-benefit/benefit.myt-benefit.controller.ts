@@ -7,7 +7,6 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import DateHelper from '../../../../utils/date.helper';
 import { MY_BENEFIT } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
 
@@ -81,7 +80,7 @@ class BenefitMyBenefit extends TwViewController {
         }
         options['rainbow'] = this._dataPreprocess(rainbow.result.usblPoint);
 
-        if ( noContract.muPointYn === 'Y' ) {
+        if ( noContract.result.muPointYn === 'Y' ) {
           options['noContract'] = this._dataPreprocess(noContract.result.muPoint);
         }
 

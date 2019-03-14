@@ -11,9 +11,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -36,7 +34,7 @@
                         <div class="info-inner">
                             <span class="title-l"><%= myInfoData.custNm %> 님</span>
                             <span class="subtx"><%= myInfoData.mbrTypStr %>
-                            <% if( myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
+                            <% if( myInfoData.cardChangeShown ) { %>
                                 <button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
                             <% } %>
                         </div>
@@ -69,12 +67,12 @@
                     </div>
                 </div>
                 <ul class="bt-slice
-                <% if( myInfoData.mbrTypCd !== '8'){ %>
+                <% if( myInfoData.mbrTypCd !== '5'){ %>
                     item-two
                 <% } %>
                 mt20">
                     <li><button id="fe-go-update" data-type="<%= myInfoData.mbrStCd %>" type="button" class="btn-round1 btn-style4" title="나의 멤버십">정보 수정</button></li>
-                    <% if( myInfoData.mbrTypCd === '0' || myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
+                    <% if( myInfoData.mbrTypCd !== '5' ) { %>
                     <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4" title="나의 멤버십">재발급 신청</button></li>
                     <% } %>
                 </ul>
@@ -104,7 +102,7 @@
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="bt-detail type1">
-                                <span class="tx-title">이용내역<button id="BE_02_tip_01" class="btn-tip" title="이용내역"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                <span class="tx-title">이용내역<button aria-haspopup="true" id="BE_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button>
                             </div>
                             <div class="toggler">
@@ -156,7 +154,7 @@
                                 </span>
                         </a>
                     </li>
-                    <% if( myInfoData.mbrTypCd !== '8'){ %>
+                    <% if( myInfoData.mbrTypCd !== '5'){ %>
                     <li>
                         <a href="/membership/my/cancel">
                                 <span class="inner">

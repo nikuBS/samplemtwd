@@ -30,15 +30,15 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
         </div>
         <div class="expect-benefit">
             <h4 class="tit">예상 혜택</h4>
-            <% if (memberCount === 2) { %>
+            <% if (groupInfo.mblSvcCnt === 2) { %>
             <!-- 2회선일 경우 -->
             <p class="txt"><span class="str">집전화 무료</span> 또는<br /><span class="str">초고속 인터넷 할인</span></p>
             <!--// 2회선일 경우 -->
-            <% } else if (memberCount === 3) { %>
+            <% } else if (groupInfo.mblSvcCnt === 3) { %>
             <!-- 3회선일 경우 -->
             <p class="txt"><span class="str">초고속 인터넷 할인</span></p>
             <!--// 3회선일 경우 -->
-            <% } else if (memberCount > 3) { %>
+            <% } else if (groupInfo.mblSvcCnt > 3) { %>
             <!-- 4회선일 경우 -->
             <p class="txt"><span class="str">집전화 + <br />초고속 인터넷 할인</span></p>
             <!--// 4회선일 경우 -->

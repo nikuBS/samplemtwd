@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
@@ -33,7 +33,8 @@ class MyTDataHotdata extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.reqBalances()).subscribe(([usageDataResp]) => {
+    Observable.combineLatest(this.reqBalances()).subscribe(([_usageDataResp]) => {
+      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
       if ( usageDataResp.code === API_CODE.CODE_00 ) {
         let extraDataReq;
         switch ( svcInfo.svcAttrCd ) {
@@ -277,7 +278,7 @@ class MyTDataHotdata extends TwViewController {
    * return Observable
    */
   private reqBalances(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {});
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {});
   }
 
   /**

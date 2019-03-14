@@ -37,14 +37,14 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this._typeCd = this.$container.data('type_cd');
 
     if (this._typeCd !== 'combine') {
-      this.$nonCombineTip.show();
+      this.$nonCombineTip.show().attr('aria-hidden', 'false');
     }
 
     this._reqSvcMgmtNum();
   },
 
   _initCombineProduct: function() {
-    this.$combineWrap.show();
+    this.$combineWrap.show().attr('aria-hidden', 'false');
 
     if (this._logged) {
       this._getCurrentCombineList();
@@ -52,15 +52,15 @@ Tw.ProductWireplanJoinReservation.prototype = {
   },
 
   _restoreLocalStorage: function() {
-    if (!Tw.CommonHelper.getLocalStorage('productJoinReservation')) {
+    if (!Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION)) {
       return;
     }
 
     if (!this._logged) {
-      return Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+      return Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     }
 
-    var data = Tw.CommonHelper.getLocalStorage('productJoinReservation');
+    var data = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     if (Tw.FormatHelper.isEmpty(data)) {
       return;
     }
@@ -91,7 +91,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._procApplyCheck();
-    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
   },
 
   _cachedElement: function() {
@@ -191,11 +191,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _typeCdPopupClose: function() {
     if (this._typeCd !== 'combine') {
       this._resetCombineWrap();
-      this.$combineWrap.hide();
-      this.$nonCombineTip.show();
+      this.$combineWrap.hide().attr('aria-hidden', 'true');
+      this.$nonCombineTip.show().attr('aria-hidden', 'false');
     } else {
-      this.$combineWrap.show();
-      this.$nonCombineTip.hide();
+      this.$combineWrap.show().attr('aria-hidden', 'false');
+      this.$nonCombineTip.hide().attr('aria-hidden', 'true');
       this._getCurrentCombineList();
     }
 
@@ -211,15 +211,15 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _changeCombineSelected: function() {
     if (this.$combineSelected.is(':checked')) {
-      this.$combineExplainAllWrap.show();
+      this.$combineExplainAllWrap.show().attr('aria-hidden', 'false');
       return;
     }
 
     this._prodId = null;
     this._setBtnCombineTxt(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NONE.TITLE);
 
-    this.$combineExplainAllWrap.hide();
-    this.$combineExplainCheckboxWrap.hide();
+    this.$combineExplainAllWrap.hide().attr('aria-hidden', 'true');
+    this.$combineExplainCheckboxWrap.hide().attr('aria-hidden', 'true');
     this.$combineExplain.attr('aria-disabled', true).addClass('disabled').removeClass('checked');
     this.$combineExplain.find('input[type=checkbox]').attr('disabled', 'disabled').prop('disabled', true)
       .prop('checked', false);
@@ -305,11 +305,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
         .attr('disabled', 'disabled').prop('disabled', true);
       this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
-      this.$combineExplainCheckboxWrap.hide();
+      this.$combineExplainCheckboxWrap.hide().attr('aria-hidden', 'true');
     } else {
       this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
       this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
-      this.$combineExplainCheckboxWrap.show();
+      this.$combineExplainCheckboxWrap.show().attr('aria-hidden', 'false');
     }
   },
 
@@ -416,7 +416,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     // 결합상품, 상품 선택 없이 상담 예약
-    if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
+    if (this._typeCd === 'combine' && this.$combineSelected.is(':checked') && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
@@ -590,7 +590,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isCombineInfo = false;
 
-    Tw.CommonHelper.removeLocalStorage('productJoinReservation');
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
     if (this._typeCd === 'combine' && !Tw.FormatHelper.isEmpty(combinationInfo)) {
       this._isCombineInfo = true;
 
@@ -692,11 +692,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isGoLogin = false;
     this._setLocalStorage();
-    this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
+    this._tidLanding.goLogin(location.href);
   },
 
   _setLocalStorage: function() {
-    Tw.CommonHelper.setLocalStorage('productJoinReservation', JSON.stringify({
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION, JSON.stringify({
       name: this.$reservName.val(),
       number: this.$reservNumber.val(),
       typeCd: this._typeCd,

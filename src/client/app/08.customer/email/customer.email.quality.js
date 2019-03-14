@@ -44,7 +44,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_phone').click();
             $('.fe-quality_phone').focus();
           }, 500);
-        }, this)
+        }, this),
+        null
       );
 
       return false;
@@ -60,7 +61,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_email').click();
             $('.fe-quality_email').focus();
           }, 500);
-        }, this)
+        }, this),
+        null
       );
 
       return false;
@@ -97,9 +99,10 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestCell: function () {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
-    var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
+    var $elInputline = this.$wrap_tpl_quality.find('.fe-quality-line');
+    var elInputlineVal = $elInputline.is('button') ? $elInputline.text() : $elInputline.val();
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
-    var selSvcNum = !!elInputline ? elInputline : '';
+    var selSvcNum = !!elInputlineVal ? elInputlineVal : '';
 
     var htParams = $.extend(this._makeParams(), {
       inptZip: $('.fe-zip').val(),

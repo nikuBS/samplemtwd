@@ -246,10 +246,6 @@ Tw.MyTFareBillSetChange.prototype = {
     }
     // 우편문 발송주기
     this._checkedElement('billSndCyclCd', this._data.billSndCyclCd);
-    // App 이 아니면 주소록 버튼 숨김
-    if (!Tw.BrowserHelper.isApp()) {
-      this._btnAddr.parent().hide();
-    }
 
     // 복합 안내서 일 경우
     if (this._data.togetherList) {
@@ -446,6 +442,7 @@ Tw.MyTFareBillSetChange.prototype = {
       var params = resp.params;
       var _inputName = $(e.currentTarget).data('el');
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).val(Tw.StringHelper.phoneStringToDash(params.phoneNumber));
+      $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).trigger('change');
     }
     this._onDisableSubmitButton();
   },

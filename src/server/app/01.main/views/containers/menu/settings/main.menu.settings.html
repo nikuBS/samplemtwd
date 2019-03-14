@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -36,6 +34,8 @@
                                 </a>
                             </div>
                         </li>
+                        <% } %>
+                        <% if (isApp && isLogin) { %>
                         <li>
                             <div class="link-long">
                                 <a href="/main/menu/settings/notification">
@@ -48,8 +48,6 @@
                                 </a>
                             </div>
                         </li>
-                        <% } %>
-                        <% if (isApp && isLogin) { %>
                         <!-- <li> -->
                             <!-- <button> -->
                                 <!-- <span class="inner"> -->
@@ -57,8 +55,6 @@
                                 <!-- </span> -->
                             <!-- </button> -->
                         <!-- </li> -->
-                        <% } %>
-                        <% if (isApp && isLogin) { %>
                         <li>
                             <div class="link-long">
                                 <a id="fe-go-certificates" href="/main/menu/settings/certificates">
@@ -71,8 +67,6 @@
                                 </a>
                             </div>
                         </li>
-                        <% } %>
-                        <% if (isApp && isLogin) { %>
                         <li id="fe-bio">
                             <div class="link-long">
                                 <a id="fe-bio-link" href="">

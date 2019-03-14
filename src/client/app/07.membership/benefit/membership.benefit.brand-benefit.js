@@ -26,6 +26,7 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._registHbsHelper();
   this._cacheElements();
@@ -37,60 +38,16 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
   this._options.mapX = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_X;
   this._options.mapY = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_Y;
 
-  if ( Tw.BrowserHelper.isApp() ) {
-    this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onCurrentLocation, this));
+  if(this._options.loginYn === 'Y' && this._options.locAgreeYn === 'Y'){
+    this._getCurrentLocation();
   }else {
     this._reqeustNearShopList();
   }
+
   this._reqeustPopBrandList();
 };
 
 Tw.MembershipBenefitBrandBenefit.prototype = {
-
-  /**
-   * app location 파악
-   * @param result
-   * @private
-   */
-  _onCurrentLocation: function(result){
-    // console.log('location 파악  result');
-
-    if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
-      this._options.mapX = result.params.latitude;
-      this._options.mapY = result.params.longitude;
-      this._getAreaByMapXY(this._options.mapX, this._options.mapY);
-    } else {
-
-      this._reqeustNearShopList();
-    }
-
-  },
-
-  /**
-   * 위경도로 주소가져오기
-   * @private
-   */
-  _getAreaByMapXY: function(x,y){
-    this._apiService.request(Tw.API_CMD.BFF_11_0026, { mapX: x, mapY: y })
-      .done($.proxy(function(resp){
-        if(resp.result){
-          this._setArea(resp.result.cityDo, resp.result.guGun);
-          this._reqeustNearShopList();
-        }
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.status, err.statusText).pop();
-      });
-  },
-
-  _setArea: function(area1, area2){
-    if(area1 && area2) {
-      this._options.area1 = area1;
-      this._options.area2 = area2;
-      $('#fe-area-name').text(this._options.area1 + ' ' + this._options.area2);
-    }
-  },
-
 
   _cacheElements: function () {
     this._feFrchListItem = Handlebars.compile($('#fe-franchisee-list-item').html());
@@ -102,6 +59,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this.$container.on('click', '.franchisee-list .bt-map', $.proxy(this._goMap, this));
     this.$container.on('click', '.brand-logo-list .bt-logo', $.proxy(this._goBrandView, this));
     this.$container.on('click', '#frchs-bt-all', $.proxy(this._goFrchAllView, this));
+    this.$container.on('click', '.fe-btn-location', $.proxy(this._onclickGpsBtn, this));
   },
 
   _registHbsHelper: function(){
@@ -177,10 +135,10 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
       .done($.proxy(function(resp){
         if(!resp.result.list || resp.result.list.length === 0){
-          $('#fe-contents-empty').show();
+          $('#fe-contents-empty').show().attr('aria-hidden', false);
           return;
         } else {
-          $('#fe-contents-empty').hide();
+          $('#fe-contents-empty').hide().attr('aria-hidden', true);
         }
 
         var list = resp.result.list;
@@ -238,15 +196,16 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   },
 
   /**
-   * 가맹점 전체보기
+   * 가맹점 전체보기로 이동
    * @param event
    * @private
    */
   _goFrchAllView: function(){
     var param = {
       brandCd: this._options.brandCd,
-      brandNm: $('.brand-tit').text(),
-      cateCd: this._options.cateCd
+      brandNm: encodeURI($('.brand-tit').text()),
+      cateCd: this._options.cateCd,
+      area : encodeURI(this._options.area1 + ' ' + this._options.area2)
     };
 
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(param));
@@ -258,6 +217,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
    */
   _goTmbrshpApp: function(){
     var url = $(this).attr('href');
+    $(this).attr('target', '_blank');
     $(this).on('click', function(){
 
       Tw.Popup.openModalTypeATwoButton(
@@ -274,6 +234,154 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
 
       return false;
     });
-  }
+  },
 
+
+  /**
+   * 위치 버튼을 누른 경우
+   * @private
+   */
+  _onclickGpsBtn: function(){
+    if( this._options.loginYn === 'Y'){
+      if(this._options.locAgreeYn === 'Y'){
+        this._getCurrentLocation();
+      } else {
+        this._showAgreementPopup();
+      }
+    } else {
+      // 로그인 안한 경우 로그인
+      this._tidLanding = new Tw.TidLandingComponent();
+      this._tidLanding.goLogin();
+    }
+  },
+
+
+  /**
+   * 현재 지역 파악하기
+   * @private
+   */
+  _getCurrentLocation: function(){
+    //app인 경우
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeService.send(
+        Tw.NTV_CMD.GET_LOCATION, {},
+        $.proxy(function(result){
+
+          if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
+            this._getAreaByMapXY(result.params.latitude, result.params.longitude);
+          } else {
+
+            this._notAbleGps();
+          }
+        }, this));
+
+      // browser인 경우
+    } else {
+
+      if ('geolocation' in navigator) {
+        // Only works in secure mode(Https) - for test, use localhost for url
+        navigator.geolocation.getCurrentPosition(
+          $.proxy(function(location){
+            this._getAreaByMapXY(location.coords.latitude, location.coords.longitude);
+          }, this),
+          $.proxy(this._notAbleGps, this),
+          {timeout: 1000});
+      } else {
+        this._notAbleGps();
+
+      }
+    }
+
+  },
+
+
+  /**
+   * 기기에서 위치정보 동의를 하지 않았거나 gps를 사용할 수 없는 경우
+   * @private
+   */
+  _notAbleGps: function(){
+    setTimeout(function(){
+    this._popupService.openAlert(
+      Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.MSG,
+      Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.TITLE,
+      Tw.BUTTON_LABEL.CONFIRM,
+      $.proxy(this._reqeustNearShopList, this))}.bind(this)
+    , 200);
+  },
+
+  /**
+   * 위경도로 주소가져오기
+   * @private
+   */
+  _getAreaByMapXY: function(x,y){
+
+    this._options.mapX = x;
+    this._options.mapY = y;
+
+    this._apiService.request(Tw.API_CMD.BFF_11_0026, { mapX: x, mapY: y })
+      .done($.proxy(function(resp){
+        if(resp.result){
+          this._setArea(resp.result.area1, resp.result.area2);
+          this._reqeustNearShopList();
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText).pop();
+      });
+  },
+
+  /**
+   * 지역1, 지역2 화면 및 변수 세팅
+   * @param area1
+   * @param area2
+   * @private
+   */
+  _setArea: function(area1, area2){
+    if(area1 && area2) {
+      this._options.area1 = area1;
+      this._options.area2 = area2;
+      $('#fe-area-name').text(this._options.area1 + ' ' + this._options.area2);
+    }
+  },
+
+
+  /**
+   * 위치 이용동의 api 호출
+   * @private
+   */
+  _showAgreementPopup: function () {
+    this._popupService.open({
+        ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
+        link_list: [{style_class: 'fe-link-term', txt: Tw.BRANCH.VIEW_LOCATION_TERM}],
+        bt: [{style_class: 'bt-blue1', txt: Tw.BRANCH.AGREE},
+          {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
+      }, $.proxy(function (root) {
+        root.on('click', '.fe-link-term', $.proxy(function () {
+          this._historyService.goLoad('/main/menu/settings/terms?id=33&type=a');
+        }, this));
+        root.on('click', '.bt-white2', $.proxy(function () {
+          this._popupService.close();
+        }, this));
+        root.on('click', '.bt-blue1', $.proxy(function () {
+          this._popupService.close();
+          var data = { twdLocUseAgreeYn: 'Y' };
+          this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
+            .done($.proxy(function (res) {
+              if (res.code === Tw.API_CODE.CODE_00) {
+                this._options.locAgreeYn = 'Y';
+                this._getCurrentLocation();
+              } else {
+                Tw.Error(res.code, res.msg).pop();
+              }
+            }, this))
+            .fail(function (err) {
+              Tw.Error(err.code, err.msg).pop();
+            });
+        }, this));
+      }, this),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this)
+    );
+  }
 };

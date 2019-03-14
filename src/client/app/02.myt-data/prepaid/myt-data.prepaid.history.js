@@ -36,7 +36,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _cachedElement: function() {
-    this.$moreBtn = this.$container.find('.bt-more > button');
+    this.$moreBtn = this.$container.find('.bt-more');
     this.$selectBtn = this.$container.find('.bt-select');
     this.$totalCount = this.$container.find('.num > em');
     this.$list = this.$container.find('ul.comp-box');
@@ -80,19 +80,25 @@ Tw.MyTDataPrepaidHistory.prototype = {
 
     var isEmpty = !this.$empty.hasClass('none');
     if (!isEmpty) {
-      this.$list.find('li.fe-prepaid-' + this._currentType).addClass('none');
+      this.$list
+        .find('li.fe-prepaid-' + this._currentType)
+        .addClass('none')
+        .attr('aria-hidden', true);
     }
 
     if (count === 0) {
       if (!isEmpty) {
-        this.$empty.removeClass('none');
+        this.$empty.removeClass('none').attr('aria-hidden', false);
       }
     } else {
       if (isEmpty) {
-        this.$empty.addClass('none');
+        this.$empty.addClass('none').attr('aria-hidden', true);
       }
 
-      this.$list.find('li.fe-prepaid-' + type).removeClass('none');
+      this.$list
+        .find('li.fe-prepaid-' + type)
+        .removeClass('none')
+        .attr('aria-hidden', false);
     }
 
     this.$selectBtn.text(Tw.PREPAID_TYPES[type.toUpperCase()]);
@@ -169,19 +175,19 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _setMoreButton: function() {
-    var hasNone = this.$moreBtn.addClass('none'),
+    var hasNone = this.$moreBtn.hasClass('none'),
       type = this._currentType;
     if (this._leftCount[type] > 0) {
       if (hasNone) {
-        this.$moreBtn.removeClass('none');
+        this.$moreBtn.removeClass('none').attr('aria-hidden', false);
       }
     } else if (!hasNone) {
-      this.$moreBtn.addClass('none');
+      this.$moreBtn.addClass('none').attr('aria-hidden', true);
     }
   },
 
   _sortHistory: function(histories, history, idx) {
-    var key = history.chargeDt;
+    var key = (history.chargeDtm || history.chargeDt).substring(0, 8);
 
     if (!histories[key]) {
       histories[key] = [];
@@ -221,34 +227,39 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _openCancel: function(e) {
-    var code = e.currentTarget.getAttribute('data-charge-code'),
-      id = e.currentTarget.getAttribute('data-cancel-id'),
-      pageNum = e.currentTarget.getAttribute('data-page-number');
-
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, id, pageNum, code));
+    
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $(e.currentTarget)));
   },
+  
+  _handleCancel: function($target) {
+    var code = $target.data('charge-code'),
+      id = $target.data('cancel-id'),
+      pageNum = $target.data('page-number');
 
-  _handleCancel: function(id, pageNum, code) {
     skt_landing.action.loading.on({ ta: this.$container });
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
-        .done($.proxy(this._handleSuccessCancel, this))
+        .done($.proxy(this._handleSuccessCancel, this, $target))
         .fail($.proxy(this._fail, this));
     } else {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code })
-        .done($.proxy(this._handleSuccessCancel, this))
+        .done($.proxy(this._handleSuccessCancel, this, $target))
         .fail($.proxy(this._fail, this));
     }
     this._popupService.close();
   },
 
-  _handleSuccessCancel: function(resp) {
+  _handleSuccessCancel: function($target, resp) {
     skt_landing.action.loading.off({ ta: this.$container });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
+      var $parents = $target.closest('li');
+      $parents.find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
+      $parents.find('button.data-tx').switchClass('blue-tx', 'gray-tx');
+      $target.remove();
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
   },

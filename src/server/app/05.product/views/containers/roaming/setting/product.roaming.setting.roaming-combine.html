@@ -7,18 +7,18 @@
 
 <%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body data-gr-c-s-loaded="true">
-<!-- #skip_navigation
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+<!-- Grand open 접근성 수정 -->
+<!-- #skip_navigation -->
+<!--<div id="skipNav" class="skip_navi">
+   <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
-</div>
+</div>-->
 <!--// #skip_navigation -->
+<!--// Grand open 접근성 수정 -->
 <div class="wrap step" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000490' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup nobg fe-main-content"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -68,17 +68,35 @@
                         </div>
                     </li>
                 </script>
+                <% if(prodBffInfo.togetherMemList.length>0){ %>
                 <hr class="cont-sp type1 list_contents" aria-hidden="true">
                 <div class="cont-box nogaps list_contents">
                     <div class="input-number-wrap">
                         <h3 class="tit type1">함께쓰기 신청하신 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="combine_list">
-
+                                <% for(var i=0;i<prodBffInfo.togetherMemList.length;i++){ %>
+                                <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
+                                    <p class="list-text">
+                                        <span class="mtext">
+                                            <%= prodBffInfo.togetherMemList[i].svcNum %></span>
+                                    </p>
+                                    <div class="list-btn">
+                                        <div class="bt-alone">
+                                            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                            <button class="bt-line-gray1 fe-bt-masking-alert" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button>
+                                            <% } else { %>
+                                            <button class="bt-line-gray1 fe-remove" id="list<%= i %>" data-idx="<%= i %>">해지</button>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <% } %>
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1" aria-hidden="true">
@@ -89,7 +107,7 @@
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
                         <li>
-                            <button title="서비스 이용안내 정보보기" type="button" class="tip-view-btn" id="RM_11_01_02_07_tip_01" aria-haspopup="true">
+                            <button type="button" class="tip-view-btn" id="RM_11_01_02_07_tip_01" aria-haspopup="true">
                                 서비스 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>

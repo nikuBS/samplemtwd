@@ -92,7 +92,7 @@ Tw.LineComponent.prototype = {
 
   _onCloseListPopup: function () {
     if ( this._changeLine ) {
-      this._completeLogin();
+      this._completeLogin({ code: Tw.CALLBACK_CODE.SUCCESS });
     } else if ( this._customerLogin ) {
       this._customerPwd.openLayer(this._mdn, this._svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
     } else if ( this._customerSetting ) {
@@ -205,15 +205,17 @@ Tw.LineComponent.prototype = {
       this.$btMore.hide();
     }
   },
-  _completeLogin: function () {
+  _completeLogin: function (resp) {
     // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
-      this._callback();
+      this._callback(resp);
     } else {
-      this._historyService.reload();
+      if ( resp.code === Tw.CALLBACK_CODE.SUCCESS ) {
+        this._historyService.reload();
+      }
     }
   },
-  _completeCustomerLogin: function () {
-    this._completeLogin();
+  _completeCustomerLogin: function (resp) {
+    this._completeLogin(resp);
   }
 };

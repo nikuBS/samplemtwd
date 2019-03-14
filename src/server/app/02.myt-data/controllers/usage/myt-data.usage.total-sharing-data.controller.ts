@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTDataHotData from './myt-data.hotdata.controller';
 import FormatHelper from '../../../../utils/format.helper';
@@ -23,8 +23,8 @@ class MyTDataUsageTotalSharingData extends TwViewController {
     Observable.combineLatest(
       this.reqBalances(),
       this.reqBalanceAddOns(),
-    ).subscribe(([balancesResp, balanceAddOnsResp]) => {
-      // console.log('~~~~~~~resp', balancesResp, balanceAddOnsResp);
+    ).subscribe(([_balancesResp, balanceAddOnsResp]) => {
+      const balancesResp = JSON.parse(JSON.stringify(_balancesResp));
       const apiError = this.error.apiError([
         balancesResp, balanceAddOnsResp
       ]);
@@ -55,7 +55,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
   }
 
   private reqBalances(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {});
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {});
   }
 
   private reqBalanceAddOns(): Observable<any> {

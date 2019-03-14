@@ -8,9 +8,7 @@
   <!-- #skip_navigation -->
   <div id="skipNav" class="skip_navi">
     <ul>
-      <li><a href="#gnb">메뉴 바로가기</a></li>
-      <li><a href="#contents">본문 바로가기</a></li>
-      <li><a href="#footer">푸터 바로가기</a></li>
+      <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
   </div>
   <!--// #skip_navigation -->
@@ -24,7 +22,7 @@
         <!-- .cont-box -->
         <div class="cont-box nogaps noborder topborder">
           <div class="ti-caption-gray">
-            <button class="bt-select fe-btn_category" aria-haspopup="true" title="대상 선택"><%= categoryLabel %></button>
+            <button class="bt-select fe-btn_category" aria-haspopup="true" title="카테고리 선택"><%= categoryLabel %></button>
           </div>
         </div>
         <!--// .cont-box -->
@@ -43,7 +41,12 @@
                     <li class="acco-box" data-ntc_id="<%= data.list[i].ntcId %>">
                       <div class="acco-tit <%= data.list[i].itemClass %>"><!-- new : 새로운 글 뱃지 --> <!-- impo : 중요 공지 -->
                         <button role="button" aria-pressed="false">
-                          <span class="acco-notice-tit"><%= data.list[i].title %></span>
+                          <span class="acco-notice-tit">
+                            <%= data.list[i].title %>
+                            <% if ( data.list[i].itemClass.indexOf('new') !== -1 ) { %>
+                            <span class="blind">새글</span>
+                            <% } %>
+                          </span>
                           <% if (data.list[i].type) { %>
                           <span class="acco-notice-type"><%= data.list[i].type %></span>
                           <% } %>
@@ -66,27 +69,27 @@
                     <div class="paging">
                       <% if (paging.totalPage > 3) { %>
                         <% if (paging.curPage.toString() === '1') { %>
-                        <a href="javascript:void(0)" role="button" class="first disabled"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <a href="javascript:void(0)" role="button" class="first disabled" aria-hidden="true"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
                         <% } else { %>
                         <a href="<%= paging.uri%>?category=<%= category %>&page=1" role="button" class="first"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
                         <% } %>
                       <% } %>
                       <% if (paging.curPage.toString() === '1') { %>
-                      <a href="javascript:void(0)" role="button" class="prev disabled"><span class="pg-blind">이전 페이지로 이동</span></a>
+                      <a href="javascript:void(0)" role="button" class="prev disabled" aria-hidden="true"><span class="pg-blind">이전 페이지로 이동</span></a>
                       <% } else { %>
                       <a href="<%= paging.uri%>?category=<%= category %>&page=<%= (parseInt(paging.curPage) - 1) %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
                       <% } %>
                       <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                      <a title="현재페이지" href="<%= paging.uri%>?category=<%= category %>&page=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                      <a title="<%= i %>페이지" href="<%= paging.uri%>?category=<%= category %>&page=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" aria-hidden="<%= (paging.curPage == i) ? 'true' : 'false' %>"><span aria-hidden="true"><%= i %></span></a>
                       <% } %>
                       <% if (paging.curPage.toString() === paging.totalPage.toString()) { %>
-                      <a href="javascript:void(0)" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a>
+                      <a href="javascript:void(0)" role="button" class="next disabled" aria-hidden="true"><span class="pg-blind">다음 페이지로 이동</span></a>
                       <% } else { %>
                       <a href="<%= paging.uri%>?category=<%= category %>&page=<%= (parseInt(paging.curPage) + 1) %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
                       <% } %>
                       <% if (paging.totalPage > 3) { %>
                         <% if (paging.curPage.toString() === paging.totalPage.toString()) { %>
-                        <a href="javascript:void(0)" role="button" class="last disabled"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <a href="javascript:void(0)" role="button" class="last disabled" aria-hidden="true"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
                         <% } else { %>
                         <a href="<%= paging.uri%>?category=<%= category %>&page=<%= paging.totalPage %>" role="button" class="last"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
                         <% } %>

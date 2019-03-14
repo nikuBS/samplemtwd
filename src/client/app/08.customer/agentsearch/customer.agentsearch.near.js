@@ -191,7 +191,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }, this)
     );
   },
-  _onCurrentLocation: function (location) {
+  _onCurrentLocation: function (location, isManuallyChanged) { // isManuallyChanged: true - 임의로 현재 위치를 변경한 경우
     var $tmapBox = this.$container.find('#fe-tmap-box');
     // init Tmap and show
     if (Tw.FormatHelper.isEmpty(this._map)) {
@@ -202,6 +202,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         httpsMode: true
       });
     }
+
     this._map.setCenter(
       new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'),
       15
@@ -212,15 +213,17 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._currentMarker = new Tmap.Layer.Markers();
       this._map.addLayer(this._currentMarker);
     } else {
-      this._currentMarker.clearMarkers();
+      // this._currentMarker.clearMarkers();
     }
-    var size = new Tmap.Size(24, 38);
+    var size = new Tmap.Size(38, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
     var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
     var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
-    this._currentMarker.addMarker(marker);
+    if (!isManuallyChanged) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함
+      this._currentMarker.addMarker(marker);
+    }
 
     // Retrieve current region
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_REGION, {
@@ -293,7 +296,14 @@ Tw.CustomerAgentsearchNear.prototype = {
       marker.events.register('touchstart', marker, this._onMarkerClicked);
     }
 
-    this.$resultCount.text(shops.length);
+    if (this._currentBranchType === 0) {
+      this.$resultCount.text(shops.length);
+    } else {
+      var branchType = this._currentBranchType;
+      this.$resultCount.text(_.filter(this._nearShops, function (item) {
+          return item.storeType === (branchType + '');
+        }).length);
+    }
     this.$resultList.empty();
     this._onMore();
   },
@@ -322,6 +332,18 @@ Tw.CustomerAgentsearchNear.prototype = {
       // this.$btnMore.addClass('none');
       this.$container.find('#fe-more-div').addClass('none');
     }
+
+    if (shops.length === 0) {
+      this.$container.find('.bt-top').addClass('none');
+      this.$container.find('#fe-empty-result').removeClass('none');
+      if (!this.$divMap.hasClass('none') && this._regionChanged) {
+        this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
+        this._regionChanged = false;
+      }
+    } else {
+      this.$container.find('.bt-top').removeClass('none');
+      this.$container.find('#fe-empty-result').addClass('none');
+    }
   },
   _onMarkerClicked: function () {
     window.location.href = '/customer/agentsearch/detail?code=' + this.popup.contentHTML;
@@ -343,6 +365,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._popupService.close();
 
     this._regions = regions;
+    this._regionChanged = true;
 
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_POI, {
       version: 1,
@@ -353,16 +376,16 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._onCurrentLocation({
         longitude: res.searchPoiInfo.pois.poi[0].frontLon,
         latitude: res.searchPoiInfo.pois.poi[0].frontLat
-      });
+      }, true);
     }, this)).fail(function (err) {
       Tw.Error(err.status, err.statusText).pop();
     });
   },
   _onTypeOption: function () {
     var list = [
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], attr: 'class="fe-type" value="0"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], attr: 'class="fe-type" value="1"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], attr: 'class="fe-type" value="2"' }
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], option: 'fe-type', attr: 'value="0"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], option: 'fe-type', attr: 'value="1"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], option: 'fe-type', attr: 'value="2"' }
     ];
     list[this._currentBranchType].option = 'checked';
 
@@ -374,7 +397,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
-      root.on('click', '.fe-type', $.proxy(this._onBranchTypeChanged, this));
+      root.on('click', 'li button', $.proxy(this._onBranchTypeChanged, this));
     }, this));
   },
   _onBranchTypeChanged: function (e) {

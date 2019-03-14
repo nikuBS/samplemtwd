@@ -5,6 +5,12 @@ $(document).on('ready', function () {
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
+  if ( $(window).scrollTop() > 0 ){     //@190313: 메인탭 분리
+    $('body').addClass("scroll fly");
+    if(skt_landing.util.win_info.get_scrollT() > 39){
+      $('.home-tab-belt').addClass('fixed');
+    }
+  }
   /*if($('.home-slider').length > 0){
     skt_landing.action.home_slider();
   }*/
@@ -17,20 +23,51 @@ $(document).on('ready', function () {
   skt_landing._originalSize = $(window).width() + $(window).height();
 });
 $(window).on('resize', function () {
+  var current_size = $(window).width() + $(window).height();
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
   }
-  if($(window).width() + $(window).height() != skt_landing._originalSize){
-    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","relative");  
-    $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
+  if(current_size != skt_landing._originalSize){
+    $("#gnb.on .g-wrap").css("position","relative");
   }else{
-    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","fixed");  
-    $(".actionsheet_full .container").css("height", "auto") // 19.02.26 팝업구조 변경시
+    $("#gnb.on .g-wrap").css("position","fixed");
+  }
+  if ( Math.abs( current_size - skt_landing._originalSize ) > 200 ){
+    $(".bt-fixed-area").css("position","relative");
+    $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
+    $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
+    if ( !$(".searchbox-lock").hasClass("none") && $(".searchbox-lock").css("display") == "block" ){ // 19.03.11 search 자동완성 scroll lock // 03.13 조건추가
+      skt_landing.action.checkScroll.lockScroll();
+    } else {
+      skt_landing.action.checkScroll.unLockScroll();
+    }
+  } else {
+    $(".bt-fixed-area").css("position","fixed");
+    $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
+    $(".searchbox-lock").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
+    if ( $(".searchbox-lock").hasClass("none") && $(".searchbox-lock").css("display") == "block" ){ // 19.03.11 search 자동완성 scroll lock // 03.13 조건추가
+      skt_landing.action.checkScroll.lockScroll();
+    } else {
+      skt_landing.action.checkScroll.unLockScroll();      
+    }
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
     eval(scroll_fn[fn]);
   }
+
+  //190313: 메인탭 분리
+  if(skt_landing.util.win_info.get_scrollT() == 0){
+      $('body').removeClass('fly');
+  }else{
+      $('body').addClass('fly');
+  }
+  if(skt_landing.util.win_info.get_scrollT() > 39){
+      $('.home-tab-belt').addClass('fixed');
+  }else{
+      $('.home-tab-belt').removeClass('fixed');
+  }
+  
 }).on('orientationchange', function () {
   for (var fn in resize_fn) {
     eval(resize_fn[fn]);
@@ -133,13 +170,27 @@ skt_landing.action = {
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? popups.eq(popups.length-2).find('.container-wrap') : $('#contents'),
         scroll_value = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? fix_target.scrollTop() : $(window).scrollTop();
     this.scroll_gap.push(scroll_value);
-    fix_target.css({
-      'position':'fixed',
-      'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
-      'width':'100%',
-      'z-index': -1,
-      'overflow-y':'visible'
-    }).find('input').attr('tabindex',-1);
+    if ($(".idpt-popup").length > 0 ){
+      fix_target.css({
+        'position':'fixed',
+        'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
+        'width':'100%',
+        'top': 0,
+        'z-index': 100,
+        'overflow-y':'visible'
+      }).find('input').attr('tabindex',-1);
+      $('.idpt-popup').css({
+        'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
+      });
+    } else {
+      fix_target.css({
+        'position':'fixed',
+        'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
+        'width':'100%',
+        'z-index': -1,
+        'overflow-y':'visible'
+      }).find('input').attr('tabindex',-1);
+    }
     if($('.container-wrap').length == 1){
       $('body,html').css('height','100%');
        $('.wrap').css({
@@ -153,11 +204,6 @@ skt_landing.action = {
         'transform': 'translate(0 ,' + (this.scroll_gap[this.scroll_gap.length -1] - page_height)  + 'px)'
       });
     }
-    if($('.idpt-popup').length > 0){
-      $('.idpt-popup').css({
-        'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
-      });
-    }
     $('.skip_navi, .container-wrap:last, .header-wrap:last, .gnb-wrap').attr({
       'aria-hidden':true,
       'tabindex':-1
@@ -166,12 +212,25 @@ skt_landing.action = {
   auto_scroll: function () {
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 0 ? popups.eq(popups.length-1).find('.container-wrap') : $('#contents');
-    fix_target.css({
-      'position':'',
-      'transform': '',
-      'z-index':'',
-      'overflow-y':''
-    }).find('input').attr('tabindex','');
+    if ($(".idpt-popup").length > 1 ){
+      fix_target.css({
+        'position':'',
+        'transform': '',
+        'top': '',
+        'z-index': '',
+        'overflow-y':''
+      }).find('input').attr('tabindex','');
+      $('.idpt-popup').css({
+        'transform': ''
+      });
+    } else {
+      fix_target.css({
+        'position':'',
+        'transform': '',
+        'z-index':'',
+        'overflow-y':''
+      }).find('input').attr('tabindex','');
+    }      
     if($('.container-wrap').length == 1){
       $('body,html').css('height','');
       $('.wrap').css({
@@ -181,11 +240,6 @@ skt_landing.action = {
     }
     if($('.footer-wrap.fixed').length > 0){
       $('.container-wrap:last').find('.footer-wrap.fixed').css({
-        'transform': ''
-      });
-    }
-    if($('.idpt-popup').length > 0){
-      $('.idpt-popup').css({
         'transform': ''
       });
     }
@@ -301,7 +355,21 @@ skt_landing.action = {
           svg = '';
       svg_id = skt_landing.action.loading.svg_id = skt_landing.action.ran_id_create();
 
-      svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
+      //svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
+      svg = [
+        '<div class="spinner_loading">',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '</div>'
+      ];
+      svg = svg.join('');
 
       loading_box
         .css({
@@ -333,6 +401,25 @@ skt_landing.action = {
     }
   },
   popup: { //popup 
+    //포커스 리턴용 레이어 팝업
+    popupWrap: function (el, popup_info,callback_open,callback_fail,toggle_btn) {
+      var _this = this;
+      _this.open(popup_info,callback_open,callback_fail,toggle_btn);
+
+      //레이어 팝업이 열렸을 경우 해당 첫번째 항목으로 포커스 이동
+      var timer = null;
+      timer = setInterval(function () {
+          var $dialog = $('[role="dialog"]');
+          if($dialog.length > 0)               clearTimeout(timer);
+          $('[role="dialog"]').attr('tabindex', -1).focus();
+      }, 300);
+
+      //닫기 버튼시 포커스 이동
+      $(document).one('click', '.close-modal button, .close-modal a', function () {
+          skt_landing.action.popup.allClose();
+          $(el).focus();      //포커스 리턴
+      });
+    },
     open: function (popup_info,callback_open,callback_fail,toggle_btn) {
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';

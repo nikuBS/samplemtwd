@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.point.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.18
+ * Annotation: 포인트 요금납부
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -21,8 +22,8 @@ class MyTFareBillPoint extends TwViewController {
       pageInfo: pageInfo
     };
 
-    if (BrowserHelper.isApp(req)) {
-      this.getUnpaidList().subscribe((unpaidList) => {
+    if (BrowserHelper.isApp(req)) { // 앱 환경 여부 체크
+      this.getUnpaidList().subscribe((unpaidList) => { // 미납요금 대상자 조회
         if (unpaidList.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.point.html', {
             ...data,
@@ -37,7 +38,7 @@ class MyTFareBillPoint extends TwViewController {
     } else {
       res.render('share/common.share.app-install.info.html', {
         svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-      });
+      }); // 앱이 아닐 경우 앱 설치 유도 페이지로 이동
     }
   }
 
@@ -60,7 +61,7 @@ class MyTFareBillPoint extends TwViewController {
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
-          FormatHelper.conTelFormatWithDash(data.svcNum);
+          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 M(모바일)일 경우 '-' 추가
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;

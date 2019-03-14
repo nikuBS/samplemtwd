@@ -6,6 +6,8 @@ export interface IUrlMeta {
   gnbShrYn: string;
   seoMetaTagTitNm: string;
   seoMetaTagKwdCtt: string;
+  exUrlNoti: string;
+  menuShrYn: string;
   auth: any;
   block: any;
   masking: boolean;
@@ -21,6 +23,8 @@ export class UrlMetaModel implements IUrlMeta {
   gnbShrYn: string = '';
   seoMetaTagTitNm: string = '';
   seoMetaTagKwdCtt: string = '';
+  exUrlNoti: string = '';
+  menuShrYn: string = '';
   auth: any = {};
   block: any = {};
   masking: boolean = false;
@@ -34,6 +38,8 @@ export class UrlMetaModel implements IUrlMeta {
     this.gnbShrYn = object.gnbShrYn || this.gnbShrYn;
     this.seoMetaTagTitNm = object.seoMetaTagTitNm || this.seoMetaTagTitNm;
     this.seoMetaTagKwdCtt = object.seoMetaTagKwdCtt || this.seoMetaTagKwdCtt;
+    this.exUrlNoti = object.exUrlNoti || this.exUrlNoti;
+    this.menuShrYn = object.menuShrYn || this.menuShrYn;
     this.auth = object.auth || this.auth;
     this.block = object.block || this.block;
     this.masking = object.masking || this.masking;

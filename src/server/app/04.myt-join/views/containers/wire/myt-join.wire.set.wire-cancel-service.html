@@ -55,16 +55,6 @@
 </script>
 
 
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-
 
 <!-- .popup hbs -->
 <div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-bottom" data-menuId="<%= pageInfo.menuId %>"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -107,7 +97,7 @@
                     </div>
                 </div>
                 <!--// .list-comp-input -->
-                <span class="error-txt ml60 mb20" id="span-err-guide" style="display: none;">안내사항을 확인해 주세요.</span>
+                <span class="error-txt ml60 mb20" id="span-err-guide" style="display: none;" aria-hidden="true">안내사항을 확인해 주세요.</span>
             </div>
             <!--// .cont-box -->
 
@@ -145,7 +135,7 @@
                             </div>
                         </div>
                     </div>
-                    <span class="error-txt" style="display: none;" id="span-err-prod">해지 신청 상품을 선택해 주세요.</span>
+                    <span class="error-txt" style="display: none;" aria-hidden="true" id="span-err-prod">해지 신청 상품을 선택해 주세요.</span>
                     <!--// .list-comp-input -->
                     <h3 class="form-title pt36">해지 요청일</h3>
                     <span class="inputbox">
@@ -153,7 +143,7 @@
                             <input type="date" title="해지 요청일 선택" data-target="select_Termination_input" />
                         </span>
                     </span>
-                    <span class="error-txt" style="display: none;" id="span-err-date">해지 요청일을 선택해 주세요.</span>
+                    <span class="error-txt" style="display: none;" aria-hidden="true" id="span-err-date">해지 요청일을 선택해 주세요.</span>
                     <div class="cont-noti mt20">
                         <span class="type1">신청일 기준 2일 이후부터 최대 30일 안에 신청하실 수 있습니다.</span>
                     </div>
@@ -185,11 +175,11 @@
                                         <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
-                            <span class="error-txt" id="spanHpValid"></span>
-                            <span class="error-txt" id="span-err-noregcontr" style="display: none;">휴대폰 또는 일반전화를 등록해 주세요.</span>
+                            <span class="error-txt" id="spanHpValid" style="display: none;" aria-hidden="true"></span>
+                            <span class="error-txt" id="span-err-noregcontr" style="display: none;" aria-hidden="true">휴대폰 또는 일반전화를 등록해 주세요.</span>
                         </div>
 
-                        <div class="widget mt20" style="display: none;">
+                        <div class="widget mt20" style="display: none;" aria-hidden="true">
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li data-target="phoneLi" class="checkbox type01" role="checkbox" aria-checked="false">
@@ -221,8 +211,8 @@
                 </ul>
 
                 <!-- 데이터 불러올때 화면 -->
-                <span class="error-txt" style="display: none;" id="span-err-dcrefund">할인 반환금을 조회해 주세요.</span>
-                <div data-target="dataLoading" class="contents-empty mt10" style="display: none;">
+                <span class="error-txt" style="display: none;" id="span-err-dcrefund" aria-hidden="true">할인 반환금을 조회해 주세요.</span>
+                <div data-target="dataLoading" class="contents-empty mt10" style="display: none;" aria-hidden="true">
                     <!--<span class="ico type-loading"></span>-->
                     <p class="desc-s">데이터를 불러오는 중입니다.<br />잠시만 기다려 주세요</p>
                 </div>
@@ -246,10 +236,10 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="MS_04_08_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 해지 TIP보기">서비스 해지 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="해지 신청이 불가능한 경우 TIP보기">해지 신청이 불가능한 경우 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_03" type="button" class="tip-view-btn" aria-haspopup="true" title="범용 공인인증서 TIP보기">범용 공인인증서 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_04" type="button" class="tip-view-btn" aria-haspopup="true" title="콜센터 해지 요청 TIP보기">콜센터 해지 요청 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">서비스 해지 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_02" type="button" class="tip-view-btn" aria-haspopup="true">해지 신청이 불가능한 경우 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_03" type="button" class="tip-view-btn" aria-haspopup="true">범용 공인인증서 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_04" type="button" class="tip-view-btn" aria-haspopup="true">콜센터 해지 요청 <span class="tip-view">TIP</span></button></li>
 
                     <!--<li>서비스 해지 <button id="MS_04_08_tip_01" type="button" class="tip-view">TIP</button></li>-->
                     <!--<li>해지 신청이 불가능한 경우 <button id="MS_04_08_tip_02" type="button" class="tip-view">TIP</button></li>-->

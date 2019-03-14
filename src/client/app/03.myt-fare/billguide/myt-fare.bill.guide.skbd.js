@@ -23,9 +23,11 @@ Tw.MyTFareBillGuideSKBD.prototype = {
   /**
    * sk브로드밴드인 경우 진입할 수 없다는 알림창을 오픈한다.
    */
-  _openSkbdPopup: function(){
+  _openSkbdPopup: function() {
     Tw.Logger.info('cdn:', Tw.Environment.cdn);
 
+    // 일부 구형 기기에서 화면에서 바로 popup을 띄울경우 location.hash가 history에 쌓이지 않아 timeout을 줌
+    setTimeout(function(){
 
     Tw.Popup.openModalTypeATwoButton(
       Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
@@ -35,11 +37,12 @@ Tw.MyTFareBillGuideSKBD.prototype = {
       undefined,
       $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK),
       $.proxy(function () {
-        Tw.CommonHelper.startLoading('.wrap', 'grey', true);
+
         // this._historyService.goBack();
         // 동일 화면에서 회선변경 등으로 들어오는 경우 back하면 동일화면으로 이동되기 때문에 서브메인가도록 수정
-        this._historyService.go('/myt-fare/submain');
+        this._historyService.goLoad('/myt-fare/submain');
       }, this)
     );
+    }.bind(this),200);
   }
 };

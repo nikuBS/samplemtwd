@@ -584,24 +584,16 @@ Tw.MyTFareSubMain.prototype = {
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
-        mgmtNum = $target.attr('data-svc-mgmt-num'),
-        number  = $target.attr('data-num'),
-        name    = $target.attr('data-name');
+      mgmtNum = $target.attr('data-svc-mgmt-num');
     if ( mgmtNum ) {
+      this.changeLineMgmtNum = mgmtNum;
+      this.changeLineMdn = $target.attr('data-num');
+
       // 기준회선변경
       // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
-      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' +
-        (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
-      var selectLineInfo = number + ' ' + name;
-      if ( ['S1', 'S2'].indexOf(this.data.svcInfo.svcAttrCd) > -1 ) {
-        defaultLineInfo = this.data.svcInfo.addr + ' ' +
-          (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
-      }
-      this.changeLineMgmtNum = mgmtNum;
-      this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-        defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this),
-        null, 'change_line', 'tc');
+      var target  = _.find(this.data.otherLines,  {svcMgmtNum: mgmtNum});
+      this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
+        $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
     }
   },
 
@@ -662,17 +654,20 @@ Tw.MyTFareSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     var lineService = new Tw.LineComponent();
-    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+  _onChangeSessionSuccess: function (resp) {
+
+    if(resp.code === Tw.CALLBACK_CODE.SUCCESS){
+      if ( Tw.BrowserHelper.isApp() ) {
+        Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      }
+      setTimeout($.proxy(function () {
+        this._historyService.reload();
+      }, this), 500);
     }
-    setTimeout($.proxy(function () {
-      this._historyService.reload();
-    }, this), 500);
   },
 
   _errorRequest: function (resp) {
@@ -787,6 +782,9 @@ Tw.MyTFareSubMain.prototype = {
   _onOtherPages: function (event) {
     var $target = $(event.target);
     var href = $target.attr('data-href');
+    if(!href) {
+      return;
+    }
     this._historyService.goLoad(href);
   }
 };

@@ -370,23 +370,23 @@ export enum RAINBOW_FARE {
 }
 
 export enum RAINBOW_FARE_CODE {
-  '국내음성통화' = 'CCBBAE0',
-  '무료컬러링' = 'CCBCOE0',
-  '로밍통화' = 'CCRMRBE',
-  '무료퍼펙트콜' = 'CCPCRBE',
-  '무료퍼펙트콜라이트' = 'CCPLRBE',
-  '데이터통화료' = 'CCRPDDC',
-  '기본료 및 월정액' = 'CCRPGDC'
+  U13 = 'CCBBAE0',
+  U15 = 'CCBCOE0',
+  U46 = 'CCRMRBE',
+  U47 = 'CCPCRBE',
+  U48 = 'CCPLRBE',
+  U51 = 'CCRPDDC',
+  U18 = 'CCRPGDC'
 }
 
 export enum RAINBOW_FARE_NAME {
-  '국내음성통화' = '국내 음성 통화료',
-  '무료컬러링' = '부가서비스(컬러링)',
-  '로밍통화' = '로밍사용요금',
-  '무료퍼펙트콜' = '부가서비스(퍼펙트콜)',
-  '무료퍼펙트콜라이트' = '부가서비스(퍼펙트콜 라이트)',
-  '데이터통화료' = '국내 데이터 통화료',
-  '기본료 및 월정액' = '기본료 및 월정액'
+  U13 = '국내 음성 통화료',
+  U15 = '부가서비스(컬러링)',
+  U46 = '로밍사용요금',
+  U47 = '부가서비스(퍼펙트콜)',
+  U48 = '부가서비스(퍼펙트콜 라이트)',
+  U51 = '국내 데이터 통화료',
+  U18 = '기본료 및 월정액'
 }
 
 export enum PROMOTION_TYPE {
@@ -576,8 +576,15 @@ export enum SHORTCUT_LOGIN_TYPE {
 
 export const MEMBERSHIP_TYPE = {
   '0': 'Leaders Club',
+  '1': 'ting junior',
+  '2': 'Leaders Club',
   '3': 'T`PLE',
-  '4': 'COUPLE'
+  '4': 'COUPLE',
+  '5': 'SK Family',
+  '6': 'Leaders Club',
+  '7': 'Leaders Club',
+  '8': 'TTL',
+  '9': 'Ting'
 };
 
 export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];
@@ -588,6 +595,28 @@ export enum BENEFIT_SUBMAIN_CATEGORY {
   F01423 = 'long-term',
   F01424 = 'participation'
 }
+
+export enum PREPAID_AMT_CD {
+  '01' = '15일',
+  '02' = '26일',
+  '03' = '1,000원',
+  '04' = '2,000원',
+  '05' = '3,000원',
+  '06' = '5,000원'
+}
+
+export const PREPAID_ALARM_TYPE = {
+  '1': '발신기간',
+  '2': '수신기간',
+  '3': '번호유지기간'
+};
+
+export const PREPAID_ALARM_AMT = {
+  '1': '1,000원',
+  '2': '2,000원',
+  '3': '3,000원',
+  '5': '5,000원'
+};
 
 export const HOME_SEGMENT = {};
 export const HOME_SEGMENT_ORDER = {};

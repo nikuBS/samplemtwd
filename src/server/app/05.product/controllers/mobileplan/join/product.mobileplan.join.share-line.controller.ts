@@ -82,7 +82,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
         toolTip: FormatHelper.isEmpty(this._toolTip[prodId]) ? null : this._toolTip[prodId],
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
         joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
-          sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? null : prodRedisInfo.result.summary.sktProdBenfCtt
+          sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt
         })
       }));
     });

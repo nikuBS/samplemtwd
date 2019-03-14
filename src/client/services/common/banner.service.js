@@ -39,12 +39,13 @@ Tw.BannerService.prototype = {
                 infinite: true,
                 speed: 500,
                 lazyLoad: 'progressive',
-                centerMode: false,
-                focusOnSelect: false,
-                touchMove: false,
-                pauseOnFocus: false,
+                focusOnSelect: true,
+                pauseOnFocus: true,
+                pauseOnHover: true,
+                pauseOnDotsHover: true,
+                accessibility: true,
                 customPaging: function(slider, i) {
-                  return $('<span />').text(i + 1);
+                  return $('<span role="button" />').text(i + 1);
                 }
               });
             } else {
@@ -53,40 +54,48 @@ Tw.BannerService.prototype = {
                 infinite: false,
                 speed: 300,
                 lazyLoad: 'progressive',
-                centerMode: false,
-                focusOnSelect: false,
+                focusOnSelect: true,
                 touchMove: false,
+                accessibility: true,
                 customPaging: function(slider, i) {
-                  return $('<span />').text(i + 1);
+                  return $('<span role="button" />').text(i + 1);
                 }
               });
             }
 
-            var $mainSlider = $('.home-slider .home-slider-belt');
-            if ($mainSlider.length > 0) {
-              this.$banners.on({
-                mousedown: function() {
-                  $mainSlider[0].slick.setOption({
-                    swipe: false
-                  });
-                },
-                touchstart: function() {
-                  $mainSlider[0].slick.setOption({
-                    swipe: false
-                  });
-                },
-                beforeChange: function() {
-                  $mainSlider[0].slick.setOption({
-                    swipe: false
-                  });
-                },
-                afterChange: function() {
-                  $mainSlider[0].slick.setOption({
-                    swipe: true
-                  });
-                }
-              });
-            }
+            this.$banners.on({
+              afterChange: function(e, slickSlider) {
+                // if (slickSlider.$slider.find('*:focus').length > 0) {
+                  slickSlider.$slider.find('.slick-current').focus();
+                // }
+              }
+            });
+
+            // var $mainSlider = $('.home-slider .home-slider-belt');
+            // if ($mainSlider.length > 0) {
+            //   this.$banners.on({
+            //     mousedown: function() {
+            //       $mainSlider[0].slick.setOption({
+            //         swipe: false
+            //       });
+            //     },
+            //     touchstart: function() {
+            //       $mainSlider[0].slick.setOption({
+            //         swipe: false
+            //       });
+            //     },
+            //     beforeChange: function() {
+            //       $mainSlider[0].slick.setOption({
+            //         swipe: false
+            //       });
+            //     },
+            //     afterChange: function() {
+            //       $mainSlider[0].slick.setOption({
+            //         swipe: true
+            //       });
+            //     }
+            //   });
+            // }
 
             if (callback) {
               this.$banners.find('img').on('load', callback);

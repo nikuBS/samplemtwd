@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.point.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.17
+ * Annotation: 포인트 요금납부
  */
 
 Tw.MyTFareBillPoint = function (rootEl) {

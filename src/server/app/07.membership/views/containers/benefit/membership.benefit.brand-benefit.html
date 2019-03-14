@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -70,7 +68,7 @@
                 <div class="national-brand" style="padding:10px;">
                     <h3>전국 베이커리 제휴 브랜드</h3>
                     <!-- 2019-01-18 아이프레임 추가 -->
-                    <iframe src="http://www.sktmembership.co.kr:90/mobile/html/iframe/bakery_iframe.html"
+                    <iframe src="https://www.sktmembership.co.kr/mobile/html/iframe/bakery_iframe.html"
                             frameborder="0" style="height: 3230px; width:100%; overflow: hidden;" scrolling="no" title="전국 베이커리 제휴 브랜드"></iframe><!-- 웹접근성 수정 -->
                     <!-- //2019-01-18 아이프레임 추가 -->
                 </div>
@@ -80,14 +78,14 @@
 
             <div class="add-prd-top-wrap add-top-type">
                 <span class="counts type-l">내 주변 가맹점 <!--<em class="t-point">46</em>--></span>
-                <button class="bt-gps type-r" title="내 주변 가맹점 보기">
+                <button class="bt-gps type-r fe-btn-location" title="내 주변 가맹점 보기">
                     <strong id="fe-area-name">서울 중구</strong>
                 </button>
             </div>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <div class="cont-box" style="display: none;" id="fe-contents-empty">
+                <div class="cont-box" style="display: none;" aria-hidden="true" id="fe-contents-empty">
                     <p class="no-brand">내 주변에 가맹점이 없습니다.</p>
                 </div>
 
@@ -151,41 +149,41 @@
                 <div class="popularity-brand">
 
                     <% if ( data.cateCd === '3' ) { %>
-                    <h3><i class="ico-brand-bakery"><span class="blind">베이커리</span></i>베이커리 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-bakery"><span class="blind"></span></i>베이커리 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '43' ) { %>
-                    <h3><i class="ico-brand-store"><span class="blind">편의점</span></i>편의점 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-store"><span class="blind"></span></i>편의점 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '6' ) { %>
-                    <h3><i class="ico-brand-cinema"><span class="blind">영화관</span></i>영화관 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-cinema"><span class="blind"></span></i>영화관 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '4' ) { %>
-                    <h3><i class="ico-brand-pizza"><span class="blind">피자</span></i>피자 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-pizza"><span class="blind"></span></i>피자 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '5' ) { %>
-                    <h3><i class="ico-brand-coffee"><span class="blind">커피</span></i>커피 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-coffee"><span class="blind"></span></i>커피 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '2' ) { %>
-                    <h3><i class="ico-brand-restaurant"><span class="blind">패밀리레스토랑</span></i>패밀리레스토랑 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-restaurant"><span class="blind"></span></i>패밀리레스토랑 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '44' ) { %>
-                    <h3><i class="ico-brand-fb"><span class="blind">F&B</span></i>F&B 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-fb"><span class="blind"></span></i>F&B 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '15' ) { %>
-                    <h3><i class="ico-brand-theme"><span class="blind">테마파크</span></i>테마파크 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-theme"><span class="blind"></span></i>테마파크 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '37' ) { %>
-                    <h3><i class="ico-brand-mobile"><span class="blind">모바일&미디어</span></i>모바일&미디어 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-mobile"><span class="blind"></span></i>모바일&미디어 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '11' ) { %>
-                    <h3><i class="ico-brand-shopping"><span class="blind">쇼핑</span></i>쇼핑 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-shopping"><span class="blind"></span></i>쇼핑 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '30' ) { %>
-                    <h3><i class="ico-brand-traffic"><span class="blind">교통</span></i>교통 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-traffic"><span class="blind"></span></i>교통 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '45' ) { %>
-                    <h3><i class="ico-brand-show"><span class="blind">공연</span></i>공연 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-show"><span class="blind"></span></i>공연 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '46' ) { %>
-                    <h3><i class="ico-brand-travel"><span class="blind">여행</span></i>여행 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-travel"><span class="blind"></span></i>여행 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '20' ) { %>
-                    <h3><i class="ico-brand-education"><span class="blind">교육</span></i>교육 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-education"><span class="blind"></span></i>교육 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '21' ) { %>
-                    <h3><i class="ico-brand-finance"><span class="blind">금융</span></i>금융 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-finance"><span class="blind"></span></i>금융 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '7' ) { %>
-                    <h3><i class="ico-brand-beauty"><span class="blind">뷰티/패션</span></i>뷰티/패션 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-beauty"><span class="blind"></span></i>뷰티/패션 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '48' ) { %>
-                    <h3><i class="ico-brand-sports"><span class="blind">스포츠</span></i>스포츠 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-sports"><span class="blind"></span></i>스포츠 인기 제휴 브랜드</h3>
                     <% } else if ( data.cateCd === '49' ) { %>
-                    <h3><i class="ico-brand-jeju"><span class="blind">제주도</span></i>제주도 인기 제휴 브랜드</h3>
+                    <h3><i class="ico-brand-jeju"><span class="blind"></span></i>제주도 인기 제휴 브랜드</h3>
                     <% } %>
 
                     <!-- .widget -->

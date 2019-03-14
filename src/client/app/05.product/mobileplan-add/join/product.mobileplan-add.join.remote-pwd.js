@@ -38,11 +38,29 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     this.$error0 = this.$container.find('.fe-error0');
     this.$error1 = this.$container.find('.fe-error1');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
+    this.$btnCancel = this.$container.find('.fe-btn_cancel');
   },
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keypress keydown', 'input', $.proxy(this._preventDot, this));
+
+    this.$btnCancel.on('click', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+  },
+
+  _clear: function(e) {
+    var $elem = $(e.currentTarget),
+      $elemParent = $elem.parents('li');
+
+    this._toggleError($elemParent.find('.error-txt'), false);
+    this.$btnSetupOk.attr('disabled', 'disabled');
+
+    if ($elemParent.find('input').hasClass('fe-input-password') && this.$confirmPassword.val().length > 0) {
+      setTimeout(function() {
+        this._isPasswordConfirmInputError(true);
+      }.bind(this), 100);
+    }
   },
 
   _procWebkitCheck: function() {
@@ -54,10 +72,21 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     this.$confirmPassword.attr('type', 'password');
   },
 
+  _preventDot: function(e) {
+    var key = e.charCode ? e.charCode : e.keyCode;
+
+    if (key === 46) {
+      e.preventDefault();
+      return false;
+    }
+  },
+
   _checkIsAbled: function (e) {
     var $elem = $(e.currentTarget),
-      $inputPasswordVal = $.trim(this.$inputPassword.val()),
-      $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+      onlyNumber = $(e.currentTarget).val();
+
+    $(e.currentTarget).val('');
+    $(e.currentTarget).val(onlyNumber);
 
     if ($elem.hasClass('fe-input-password') && Tw.InputHelper.isEnter(e)) {
       return this.$confirmPassword.focus();
@@ -67,46 +96,91 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return this.$btnSetupOk.trigger('click');
     }
 
-    this.$btnSetupOk.attr('disabled', 'disabled');
-    this.$error0.hide();
-    this.$error1.hide();
+    var isPasswordInput = $elem.hasClass('fe-input-password'),
+      isPasswordConfirmInput = $elem.hasClass('fe-confirm-password'),
+      isPasswordInputError = this._isPasswordInputError(isPasswordInput),
+      isPasswordConfirmInputError = this._isPasswordConfirmInputError(isPasswordConfirmInput);
+
+    if (!isPasswordInputError && !isPasswordConfirmInputError) {
+      this.$btnSetupOk.removeAttr('disabled');
+    } else {
+      this.$btnSetupOk.attr('disabled', 'disabled');
+    }
+  },
+
+  _isPasswordInputError: function(isSetError) {
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      isPasswordInputError = false;
 
     if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
+      isPasswordInputError = true;
     }
 
     if (!this._validation.checkIsSameLetters($inputPasswordVal)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
+      isPasswordInputError = true;
     }
 
     if (!this._validation.checkIsStraight($inputPasswordVal, 4)) {
-      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18);
+      this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
+      isPasswordInputError = true;
     }
 
-    this.$error0.hide();
+    if (!isPasswordInputError) {
+      this._toggleError(this.$error0, false);
+    }
+
+    return isPasswordInputError;
+  },
+
+  _isPasswordConfirmInputError: function(isSetError) {
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      $confirmPasswordVal = $.trim(this.$confirmPassword.val()),
+      isPasswordConfirmInputError = false;
 
     if (!this._validation.checkIsLength($confirmPasswordVal, 4)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (!this._validation.checkIsSameLetters($confirmPasswordVal)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (!this._validation.checkIsStraight($confirmPasswordVal, 4)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
     if (this._validation.checkIsDifferent($inputPasswordVal, $confirmPasswordVal)) {
-      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17);
+      this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17, isSetError);
+      isPasswordConfirmInputError = true;
     }
 
-    this.$error1.hide();
-    this.$btnSetupOk.removeAttr('disabled');
+    if (!isPasswordConfirmInputError) {
+      this._toggleError(this.$error1, false);
+    }
+
+    return isPasswordConfirmInputError;
   },
 
-  _setErrorText: function ($elem, text) {
-    $elem.text(text).show();
+  _toggleError: function($elem, isError) {
+    if (isError) {
+      $elem.show().attr('aria-hidden', 'false');
+    } else {
+      $elem.hide().attr('aria-hidden', 'true');
+    }
+  },
+
+  _setErrorText: function ($elem, text, isSetError) {
+    if (!isSetError) {
+      return;
+    }
+
+    $elem.text(text);
+    this._toggleError($elem, true);
   },
 
   _convConfirmOptions: function() {

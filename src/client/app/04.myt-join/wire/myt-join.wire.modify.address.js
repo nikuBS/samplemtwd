@@ -137,10 +137,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){  //
       this.addressFormData.cntcPrefrMblPhonNum = '';
-      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+      $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9).show().attr('aria-hidden', false);
     } else {
       this.addressFormData.cntcPrefrMblPhonNum = tempNum;
-      $('#spanHpValid').text('');
+      $('#spanHpValid').text('').hide().attr('aria-hidden', true);
     }
     this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
@@ -228,9 +228,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   select_house_input_changeEvt: function () {
     Tw.Logger.info('[select_house_input_changeEvt]');
 
-    $('#fe-err-no-movdt').hide();
+    $('#fe-err-no-movdt').hide().attr('aria-hidden', true);
     if(!this.$select_house_input.val()){
-      $('#fe-err-no-movdt').show();
+      $('#fe-err-no-movdt').show().attr('aria-hidden', false);
     }
 
     var tempDt = this.$select_house_input.val();
@@ -246,9 +246,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   select_stop_input_changeEvt: function () {
     Tw.Logger.info('[select_stop_input_changeEvt]');
 
-    $('#fe-err-no-stopdt').hide();
+    $('#fe-err-no-stopdt').hide().attr('aria-hidden', true);
     if(!this.$select_stop_input.val()){
-      $('#fe-err-no-stopdt').show();
+      $('#fe-err-no-stopdt').show().attr('aria-hidden', false);
       this.addressFormData.stopPrefrDt = '';
       return;
     }
@@ -269,9 +269,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   select_install_input_changeEvt: function () {
     // Tw.Logger.info('[select_install_input_changeEvt]');
 
-    $('#fe-err-no-instdt').hide();
+    $('#fe-err-no-instdt').hide().attr('aria-hidden', true);
     if(!this.$select_install_input.val()){
-      $('#fe-err-no-instdt').show();
+      $('#fe-err-no-instdt').show().attr('aria-hidden', false);
       this.addressFormData.setPrefrDt = '';
       return;
     }

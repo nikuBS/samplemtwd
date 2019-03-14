@@ -1,4 +1,4 @@
-<div class="popup-page tw-popup fixed-bottom h60 nobg" data-menuId="M000434">
+<div class="popup-page tw-popup fixed-bottom h60 nobg" data-menuId="{{pageId}}">
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -15,8 +15,8 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="user-info">
-                    <span class="blind">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
-                    <span class="{{iconClass}}"><span class="blind">선택된 회선정보 아이콘</span></span>
+                    <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
+                    <span class="{{iconClass}}" aria-hidden="true"><span class="blind">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
                         <span class="number lh-full"><span class="blind">회선번호</span>{{svcNickname}}_{{svcNumMask}}</span>
                     </div>
@@ -255,16 +255,29 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list fe-noti-list">
+                        {{#if isTerm}}
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="TC000014" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                            <button type="button" class="tip-view-btn fe-product-tip" id="MV_01_02_03_tip_02_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
                                 서비스 이용안내 <span class="tip-view">TIP</span>
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="TC000015" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                            <button type="button" class="tip-view-btn fe-product-tip" id="MV_01_02_03_tip_02_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
                                 서비스 이용안내 <span class="tip-view">TIP</span>
                             </button>
                         </li>
+                        {{else}}
+                        <li>
+                            <button type="button" class="tip-view-btn fe-product-tip" id="WP_02_02_02_tip_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="tip-view-btn fe-product-tip" id="WP_02_02_02_tip_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                        {{/if}}
                         {{#noticeList}}
                             <li>
                                 <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}" title="{{noticeTit}}">

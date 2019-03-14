@@ -44,12 +44,12 @@ Tw.MyTDataFamilyShare.prototype = {
         this.$amountInput.attr('disabled', true);
         $target.siblings('.btn-type01').attr('disabled', true);
         $target.addClass('btn-on');
-        this.$cancel.css('display', 'none');
+        this.$cancel.css('display', 'none').attr('aria-hidden', true);
         this._all = true;
       }
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
-      this.$cancel.css('display', 'inline-block');
+      this.$cancel.css('display', 'inline-block').attr('aria-hidden', false);
     }
 
     this._validateShareAmount();
@@ -68,21 +68,23 @@ Tw.MyTDataFamilyShare.prototype = {
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
-      this.$error.removeClass('none');
+      this.$error.removeClass('none').attr('aria-hidden', false);
       this.$sRemained.text(limit + Tw.DATA_UNIT.GB);
-      this.$pRemained.removeClass('none');
+      this.$pRemained.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else if (value > limit) {
-      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
-      this.$error.removeClass('none');
-      this.$pRemained.addClass('none');
+      this.$error
+        .text(Tw.VALIDATE_MSG_MYT_DATA.V16)
+        .removeClass('none')
+        .attr('aria-hidden', false);
+      this.$pRemained.addClass('none').attr('aria-hidden', true);
       this._setDisableSubmit(true);
     } else {
       if (!this.$error.hasClass('none')) {
-        this.$error.addClass('none');
+        this.$error.addClass('none').attr('aria-hidden', true);
       }
       this.$sRemained.text(Number(limit - value) + Tw.DATA_UNIT.GB);
-      this.$pRemained.removeClass('none');
+      this.$pRemained.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(false);
     }
   },

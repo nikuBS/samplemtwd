@@ -1,5 +1,5 @@
 <div class="popup tw-popup">
-    <div class="popup-page nobg layer actionsheet_full">
+    <div class="popup-page layer actionsheet_full">
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -24,8 +24,8 @@
                                 </div>
                             {{else if data.masking}}
                                 <div class="sms-confirm-des">
-                                    고객님의 정보 보호를 위해 본인인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br/>
-                                    한번만 인증하시면 로그아웃 전까지 가려진 정보들을 모두 보실 수 있습니다.<br/>
+                                    고객님의 정보 보호를 위해 인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br/>
+                                    (회선 별 고객정보 기준으로 로그아웃 전까지 유지됩니다.)<br />
                                     <strong>고객님 휴대폰으로 전송 받으신 인증번호</strong>를 입력해 주세요.
                                 </div>
                             {{else}}
@@ -59,7 +59,7 @@
                                     <!-- 값이 미리 입력되있는 case -->
                                     <span id="fe-inputbox-mdn" class="inputbox bt-add inp-btn w163 readonly">
                                         <span class="input">
-                                            <input id="fe-input-mdn" type="tel" placeholder="숫자만 입력" value="{{data.svcNum}}" title="휴대폰 번호"
+                                            <input id="fe-input-mdn" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" value="{{data.svcNum}}" title="휴대폰 번호"
                                                    aria-labelledby="aria-citation-sms" aria-describedby="" readonly/>
                                             <!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
                                             <button class="cancel"><span class="blind none">삭제</span></button>
@@ -82,6 +82,7 @@
                                         <span id="aria-sms-exp-desc2" class="error-txt none">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>
                                         <span id="aria-sms-exp-desc7" class="error-txt none">인증시간이 만료되었습니다. 다시 받기를 해주세요.</span>
                                         <span id="aria-sms-exp-desc9" class="error-txt none">일시정지 또는 분실 상태에서는 본인인증을 할 수 없습니다.</span>
+                                        <span id="aria-sms-exp-desc10" class="error-txt none">인증번호를 전송할 수 없는 번호입니다.</span>
                                     <!-- 오류일 경우 class none 삭제 -->
                                         <span id="aria-sms-exp-desc3" class="validation-txt none">정상적으로 발송되었습니다.(유효시간 5분)</span>
                                         <span id="aria-sms-exp-desc4" class="validation-txt none">입력시간이 연장되었습니다.(유효시간 5분)</span>
@@ -92,7 +93,7 @@
                                 <div class="form-cell">
                                     <span class="inputbox"><!-- 오류일 경우 class error 추가, 통과일 경우 class validation 추가 -->
                                         <span class="input">
-                                            <input id="fe-input-cert" type="number" maxlength="6" placeholder="인증번호 숫자 6자리"
+                                            <input id="fe-input-cert" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="6" placeholder="인증번호 숫자 6자리"
                                                    title="휴대폰 인증번호 숫자 6자리" value="" aria-labelledby="aria-citation-phone"
                                                    aria-describedby=""/>
                                             <!-- 오류일 경우 aria-describedby에 aria-sms-exp-desc3 추가 --><!-- 웹접근성 수정 -->

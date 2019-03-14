@@ -61,7 +61,7 @@ Tw.ProductCommonLineChange.prototype = {
         return false;
       }
 
-      $(elem).show();
+      $(elem).show().attr('aria-hidden', 'false');
     });
 
     if (this.$lineList.find('li:not(:visible)').length < 1) {
@@ -74,7 +74,9 @@ Tw.ProductCommonLineChange.prototype = {
   },
 
   _procApply: function() {
-    this._svcMgmtNum = this.$lineList.find('input[type=radio]:checked').val();
+    var $checked = this.$lineList.find('input[type=radio]:checked');
+    this._svcMgmtNum = $checked.val();
+    this._svcNum = $checked.data('svc_num');
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     if (this._svcMgmtNum !== this._currentSvcMgmtNum) {
@@ -86,7 +88,7 @@ Tw.ProductCommonLineChange.prototype = {
 
   _procLineChange: function() {
     var lineService = new Tw.LineComponent();
-    lineService.changeLine(this._svcMgmtNum, null, $.proxy(this._procPreCheck, this));
+    lineService.changeLine(this._svcMgmtNum, this._svcNum, $.proxy(this._procPreCheck, this));
   },
 
   _getPreCheckApi: function() {

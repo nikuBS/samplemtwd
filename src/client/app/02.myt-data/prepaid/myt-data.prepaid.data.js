@@ -32,14 +32,14 @@ Tw.MyTDataPrepaidData.prototype = {
     this._getEmailAddress();
   },
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._bindEvent();
       this._setData(res.result);
     } else {
@@ -47,7 +47,7 @@ Tw.MyTDataPrepaidData.prototype = {
     }
   },
   _getFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
   },
   _getEmailAddress: function () {
@@ -168,7 +168,7 @@ Tw.MyTDataPrepaidData.prototype = {
     $layer.find('.fe-email-address').text($.trim(this.$emailAddress.text()));
   },
   _setEvent: function ($layer) {
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._close, this));
     $layer.on('click', '.fe-recharge', $.proxy(this._recharge, this, $layer));
   },
   _recharge: function ($layer) {
@@ -199,7 +199,7 @@ Tw.MyTDataPrepaidData.prototype = {
   _rechargeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isRechargeSuccess = true;
-      this._popupService.closeAll();
+      this._popupService.close();
     } else {
       this._rechargeFail(res);
     }
@@ -207,17 +207,7 @@ Tw.MyTDataPrepaidData.prototype = {
   _rechargeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _checkClose: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.BUTTON);
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
+  _close: function () {
+    this._popupService.close();
   }
 };

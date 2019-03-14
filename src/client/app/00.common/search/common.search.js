@@ -5,7 +5,8 @@
  */
 
 Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
-  this._cdn = cdn;
+  //this._cdn = cdn;
+  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -13,12 +14,13 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
-  this._accessKeyword = this._searchInfo.query;
-  this._init(from);
+  this._from = from;
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function (from) {
+  _init : function () {
+    this._recentKeywordDateFormat = 'YY.M.D.';
+    this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
     this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -63,8 +65,8 @@ Tw.CommonSearch.prototype = {
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
-    if(from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
-      this._addRecentlyKeyword(this._accessKeyword);
+    if(this._from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
+      this._addRecentlyKeyword(this._searchInfo.query);
     }
     new Tw.XtractorService(this.$container);
   },
@@ -112,7 +114,7 @@ Tw.CommonSearch.prototype = {
         // if(category==='prevent'&&key==='DOCID'){
         //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         // }
-        if(category==='direct'&&key==='ALIAS'){
+        if(category==='direct'&&key==='TYPE'){
           if(data[i][key]==='shopacc'){
             data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
           }else{
@@ -145,9 +147,18 @@ Tw.CommonSearch.prototype = {
     if(data.length<=0){
       $list.addClass('none');
     }
-    _.each(data,function (listData,index) {
+    _.each(data,$.proxy(function (listData,index) {
+      if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
+        var removeLength = data.length-1;
+        if(removeLength<=0){
+          $('.'+dataKey).addClass('none');
+        }else{
+          $('.'+dataKey+' .num').text(removeLength);
+        }
+        return;
+      }
       $list.append(templateData({listData : listData , CDN : cdn}));
-    });
+    },this));
   },
   _decodeEscapeChar : function (targetString) {
     var returnStr = targetString.replace(/\\/gi,'/').replace(/\n/g,'');
@@ -182,7 +193,7 @@ Tw.CommonSearch.prototype = {
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in-result?keyword='+this._searchInfo.query+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
@@ -190,21 +201,21 @@ Tw.CommonSearch.prototype = {
   },
   _showBanner : function (data) {
     var bannerPositionObj = {
-      AGN	 : 'as',
-      APP	: 'app',
+      AGN	 : 'as_outlet',
+      APP	: 'tapp',
       BENF : 'sale',
       CUG	 : 'manner',
       EVT	 : 'event',
       FAQ	: 'question',
       FEE	: 'rate',
       IUG	: 'siteInfo',
-      MBR	: 'membership',
+      MBR	: 'tmembership',
       NOTI : 'notice',
-      ROM	: 'raoming',
+      ROM	: 'troaming',
       SVC	: 'service',
       TWD	: 'direct',
       VUG	: 'serviceInfo',
-      WIRE : 'tv'
+      WIRE : 'tv_internet'
     };
     var bannerTemplate = Handlebars.compile($('#banner_template').html());
     _.each(data,$.proxy(function (bannerData) {
@@ -215,14 +226,15 @@ Tw.CommonSearch.prototype = {
   },
   _addRecentlyKeyword : function (keyword) {
     this._recentKeyworList[this._nowUser].push({
-      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      keyword : keyword,
+      searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
     while (this._recentKeyworList[this._nowUser].length>10){
       this._recentKeyworList[this._nowUser].shift();
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentKeyworList));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
   },
   _searchRelatedKeyword : function (targetEvt) {
     targetEvt.preventDefault();
@@ -253,6 +265,10 @@ Tw.CommonSearch.prototype = {
     }
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if(linkUrl.indexOf('Native:')>-1){
+      if(linkUrl.indexOf('freeSMS')>-1){
+        this._callFreeSMS();
+      }
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
@@ -298,7 +314,8 @@ Tw.CommonSearch.prototype = {
     });
   },
   _recentKeywordInit : function () {
-    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD));
+    var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
       recentlyKeywordData = {};
@@ -307,7 +324,16 @@ Tw.CommonSearch.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[this._nowUser] = [];
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
+      //recognize 10 days ago data from now
+      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+        removeIdx.push(index);
+      }
+    },this));
+    _.each(removeIdx,$.proxy(function (removeIdx) {
+      recentlyKeywordData[this._nowUser].splice(removeIdx,1);
+    },this));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
   _inputFocusEvt : function () {
@@ -330,6 +356,9 @@ Tw.CommonSearch.prototype = {
     $('.latelylist-wrap').scroll($.proxy(function () {
       this.$inputElement.blur();
     },this));
+    $('.keyword-list-base').insertAfter('.fe-header-wrap');
+    this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
+    this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -354,6 +383,7 @@ Tw.CommonSearch.prototype = {
   _closeKeywordListBase  : function () {
     this._popupService.close();
     this.$container.find('.keyword-list-base').remove();
+    this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
@@ -442,7 +472,7 @@ Tw.CommonSearch.prototype = {
     }else{
       this._recentKeyworList[this._nowUser].splice(removeIdx,1);
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentKeyworList));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
     this._recentKeywordInit();
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
@@ -483,6 +513,31 @@ Tw.CommonSearch.prototype = {
         $smartBase.find('.last-line').addClass('full');
       }
     }
+  },
+  _callFreeSMS : function () {
+    var memberType = this._svcInfo.totalSvcCnt > 0 ? (this._svcInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
+    if (memberType === 1) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms'
+      );
+      return ;
+    }
+
+    if (this._svcInfo.svcAttrCd==='M2') {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_PPS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_pps'
+      );
+      return;
+    }
+    Tw.CommonHelper.openFreeSms();
   }
 
 

@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.change.address.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.13
+ * Annotation: 자동납부 미사용자의 연락처 및 주소 변경
  */
 
 Tw.MyTFareBillChangeAddress = function (rootEl) {
@@ -9,6 +10,7 @@ Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$isValid = true;
   this._phoneModifyYn = 'N';
   this._addrModifyYn = 'N';
+  this._firstTouch = true;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -27,8 +29,8 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
+    this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this));
     this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
-    // this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.target);
@@ -36,8 +38,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
 
     if (this._phoneModifyYn === 'N') {
       if (Tw.InputHelper.isDeleteKey(event)) {
-        this._phoneModifyYn = 'Y';
         $target.val('');
+      }
+
+      if ($target.attr('data-origin-value') !== $target.val()) {
+        this._phoneModifyYn = 'Y';
       }
     }
 
@@ -59,12 +64,23 @@ Tw.MyTFareBillChangeAddress.prototype = {
   _getPostcode: function () {
     new Tw.CommonPostcodeMain(this.$container, $.proxy(this._setAddress, this));
   },
+  _deleteAddress: function (e) {
+    if (this._firstTouch) {
+      this.$container.find('.fe-zip').val('');
+      this.$container.find('.fe-main-address').val();
+      e.target.value = '';
+
+      this._firstTouch = false;
+    }
+  },
   _setAddress: function (address) {
     this.$container.find('.fe-zip').val(address.zip);
     this.$container.find('.fe-main-address').val(address.main);
-    this.$container.find('.fe-detail-address').val(address.detail);
+    this.$container.find('.fe-detail-address').removeAttr('disabled').val(address.detail);
 
     this._addrModifyYn = 'Y';
+    this._firstTouch = false;
+
     this._setChangeBtnAble();
   },
   _setChangeBtnAble: function () {
@@ -112,27 +128,5 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _changeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-  _onClose: function () {
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
-  },
-  _isChanged: function () {
-    this._checkIsChangedDetailAddress();
-    return Tw.FormatHelper.isEmpty(this.$container.find('.fe-phone').val()) || this._phoneModifyYn === 'Y' || this._addrModifyYn === 'Y';
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
   }
 };

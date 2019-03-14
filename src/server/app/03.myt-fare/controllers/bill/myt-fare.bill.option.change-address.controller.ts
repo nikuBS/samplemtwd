@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.change-address.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2019.01.18
+ * Annotation: 자동납부 미사용자 연락처 및 주소 변경 관리
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
@@ -52,24 +53,15 @@ class MyTFareBillOptionChangeAddress extends TwViewController {
       info.phoneNum = StringHelper.phoneStringToDash(info.svcNum);
     }
 
-    if (info.address) {
-      Object.assign({}, info, this.removeBr(info, 'address', 'addr'));
+    if (info.basAddr) {
+      info.baseAddr = info.basAddr.replace('<br>', '');
+      info.baseAddr = info.basAddr.replace('<br/>', '');
     }
 
-    if (info.account) {
-      Object.assign({}, info, this.removeBr(info, 'account', 'accn'));
+    if (info.dtlAddr) {
+      info.detailAddr = info.dtlAddr.replace('<br>', '');
+      info.detailAddr = info.dtlAddr.replace('<br/>', '');
     }
-    return info;
-  }
-
-  private removeBr(info: any, name: string, subName: string): any {
-    let brCode = '<br>';
-    if (info[name].match('<br/>')) {
-      brCode = '<br/>';
-    }
-    info[subName + '1'] = info[name].split(brCode)[0];
-    info[subName + '2'] = info[name].split(brCode)[1];
-
     return info;
   }
 }

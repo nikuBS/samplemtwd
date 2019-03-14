@@ -17,6 +17,7 @@ class CommonTidChangePw extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const target = req.query.target || '/main/home';
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -25,7 +26,8 @@ class CommonTidChangePw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.CHANGE_PW,
-          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() + '/common/tid/route',
+          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+            '/common/tid/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
@@ -34,7 +36,12 @@ class CommonTidChangePw extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.send('login fail');
+        this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
       }
     });
   }

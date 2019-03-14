@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.account.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.17
+ * Annotation: 계좌이체 즉시납부
  */
 
 Tw.MyTFareBillAccount = function (rootEl) {
@@ -74,8 +75,8 @@ Tw.MyTFareBillAccount.prototype = {
       $target.siblings().removeClass('checked');
       $bankTarget.attr('disabled', 'disabled');
       $numberTarget.attr('disabled', 'disabled');
-      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
-      $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     }
   },
   _showAndHideAccount: function (event) {
@@ -92,7 +93,11 @@ Tw.MyTFareBillAccount.prototype = {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
   _checkIsAbled: function () {
-    this._validationService.checkIsAbled();
+    if (this.$accountNumber.attr('disabled') === 'disabled' && this.$refundNumber.attr('disabled') === 'disabled') {
+      this.$payBtn.removeAttr('disabled');
+    } else {
+      this._validationService.checkIsAbled();
+    }
   },
   _onClose: function () {
     this._backAlert.onClose();

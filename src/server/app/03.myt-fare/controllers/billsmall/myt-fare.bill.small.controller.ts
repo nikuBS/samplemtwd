@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.small.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
+ * Annotation: 소액결제 메인화면
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

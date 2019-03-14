@@ -119,9 +119,9 @@
 </script>
 
 
-<script type="text/x-handlebars-template" id="tv_template">
+<script type="text/x-handlebars-template" id="tv_internet_template">
     <li class="category-type">
-        <a href="/product/callplan?prod_id={{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
+        <a href="/product/callplan?prod_id={{listData.PRID}}" class="link tv_internet-element list-data" data-id="{{listData.DOCID}}" data-category="tv_internet" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -140,9 +140,9 @@
     </li>
 </script>
 
-<script type="text/x-handlebars-template" id="roaming_template">
+<script type="text/x-handlebars-template" id="troaming_template">
     <li class="category-type">
-        <a class="link roaming-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link troaming-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="troaming" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -165,9 +165,9 @@
     </li>
 </script>
 
-<script type="text/x-handlebars-template" id="app_template">
+<script type="text/x-handlebars-template" id="tapp_template">
     <li>
-        <button class="app-element list-data" href="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
+        <button class="tapp-element list-data" href="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="tapp" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="app-img"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></div>
             <span class="txt">{{{listData.PROD_NM}}}</span>
         </button>
@@ -181,11 +181,11 @@
             <div class="cont">
                 <div class="tit">{{{listData.PRODUCT_NM}}}</div>
                 <div class="price">{{currencyComma listData.SALE_PRICE}}원
-                    {{#ifCond listData.ALIAS '===' 'shopmobile'}}
+                    {{#ifCond listData.TYPE '===' 'shopmobile'}}
                     ~/월
                     {{/ifCond}}
                 </div>
-                {{#ifCond listData.ALIAS '===' 'shopacc'}}
+                {{#ifCond listData.TYPE '===' 'shopacc'}}
                 <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
                 {{/ifCond}}
             </div>
@@ -193,9 +193,9 @@
     </li>
 </script>
 
-<script type="text/x-handlebars-template" id="membership_template">
+<script type="text/x-handlebars-template" id="tmembership_template">
     <li>
-        <a class="link membership-element list-data" href="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd={{listData.CATE_CD}}" title="{{removeTag listData.BRAND_NM}}" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
+        <a class="link tmembership-element list-data" href="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd={{listData.CATE_CD}}" title="{{removeTag listData.BRAND_NM}}" data-id="{{listData.DOCID}}" data-category="tmembership" data-tit="{{removeTag listData.BRAND_NM}}">
             <div class="img"><img src="{{{listData.APP_ICO_IMG_URL}}}" alt="{{removeTag listData.BRAND_NM}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.BRAND_NM}}}</div>
@@ -208,7 +208,7 @@
 <script id="event_template" type="text/x-handlebars-template">
     <li>
         <a href="/tevent/detail?id={{listData.DOCID}}" class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
-            <img src="{{CDN}}{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
+            <img src="{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
         </a>
         <div class="event-info">
             <span class="info-date">{{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</span>
@@ -232,18 +232,18 @@
                 {{/ifCond}}
                 {{/each}}
             </div>
-            <span class="img"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></span>
+            <span class="img none"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></span>
         </button>
     </li>
 </script>
 
-<script type="text/x-handlebars-template" id="as_template">
+<script type="text/x-handlebars-template" id="as_outlet_template">
     <li>
         <div class="b-cont">
-            {{#ifCond listData.ALIAS '===' 'as'}}
-                <a class="bt-t as-element list-data" href="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
+            {{#ifCond listData.TYPE '===' 'as'}}
+                <a class="bt-t as_outlet-element list-data" href="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as_outlet" data-tit="{{removeTag listData.STORE_NAME}}">
             {{else}}
-                <a class="bt-t as-element list-data" href="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
+                <a class="bt-t as_outlet-element list-data" href="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as_outlet" data-tit="{{removeTag listData.STORE_NAME}}">
             {{/ifCond}}
                 <strong class="ti">{{{listData.STORE_NAME}}}</strong>
                 <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>

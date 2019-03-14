@@ -11,9 +11,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -48,10 +46,8 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
-
             <% if(isLogin && svcInfo.loginType === 'T' && svcInfo.svcGr !== '') { %>
-            <% const checkData = membershipCheckData.joinCheckData; %>
-            <% if ( checkData.cardCreatableYn === 'N') { %>
+            <% if(membershipData && membershipData.mbrGrade) { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <button class="solid-link fe-mebership-my">나의 T멤버십
@@ -84,10 +80,24 @@
                 </div>
             </div>
             <% } else { %>
-            <% if (membershipCheckData.joinYn === 'N') { %>
+            <div class="cont-box nogaps-top">
+                <div class="card-wrap">
+                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
+                    <div class="box-card-apl">
+                        <p class="card-txt"><span class="point">T멤버십 카드를 신청</span>하시고<br />다양한 혜택을 받으세요</p>
+                        <div class="btn-wrap"><button class="btn-round1 btn-style1" id="fe-membership-join">가입하기</button></div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <% } else if(isLogin && svcInfo.loginType === 'S') { %>
             <div class="cont-box nogaps-hoz"><!--2019.02.19 수정-->
                 <div class="card-wrap">
-                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
+                    <button class="solid-link">T멤버십 카드·등급 안내<i class="ico"></i></button>
+                    <div class="card-desc1"><!--2019.03.06 추가-->
+                        <span>T멤버십</span>은 간편 로그인 상태에서 조회 할 수 없습니다.<br>
+                        <span>T아이디(아이디/비밀번호) 로그인</span> 후 이용해주세요.
+                    </div>
                 </div>
             </div>
             <% } else { %>
@@ -100,26 +110,6 @@
                     </div>
                 </div>
             </div>
-            <% } %>
-            <% } %>
-            <% } else { %>
-            <% if(isLogin && svcInfo.svcGr === '') { %>
-            <div class="cont-box nogaps-hoz">
-                <div class="card-wrap">
-                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
-                </div>
-            </div>
-            <% } else { %>
-            <div class="cont-box nogaps-top">
-                <div class="card-wrap">
-                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
-                    <div class="box-card-apl">
-                        <p class="card-txt"><span class="point">T멤버십 카드를 신청</span>하시고<br />다양한 혜택을 받으세요</p>
-                        <div class="btn-wrap"><button class="btn-round1 btn-style1" id="fe-membership-join">가입하기</button></div>
-                    </div>
-                </div>
-            </div>
-            <% } %>
             <% } %>
             <!--// .cont-box -->
 
@@ -130,8 +120,7 @@
                 <div class="main-quick-menu member-quick-menu type2">
                     <ul>
                         <li><a href="/membership/benefit/brand" class="brand"><span class="ico"></span>제휴브랜드</a></li>
-                        <li><a href="/membership/benefit/movieculture" class="movie"><span class="ico"></span>무비/컬처</a>
-                        </li>
+                        <li><a href="/membership/benefit/movieculture" class="movie"><span class="ico"></span>무비/컬처</a></li>
                         <li><a class="t-day fe-membership-tday"><span class="ico"></span>T Day</a></li>
                         <li><a class="data-plus"><span class="ico"></span>초콜릿</a></li>
                         <!-- <li><button class="my-plus"><span class="ico"></span>내맘대로 플러스</button></li> -->
@@ -179,7 +168,7 @@
                 <div class="benefit-popularity-wrap">
                     <div class="tit-wrap">
                         <h3 class="tit-type7">내 주변 제휴 브랜드</h3>
-                        <button class="bt-gps fe-membership-location" title="제휴브랜드 지도보기">서울 중구</button>
+                        <button class="bt-gps fe-membership-location" title="내 주변 제휴 브랜드 보기">서울 중구</button>
                     </div>
                     <ul class="coalition-brand-list type2" id="fe-memebership-near">
                     </ul>
@@ -207,11 +196,10 @@
 
 <% include ../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-      var membershipData = '<%- JSON.stringify(membershipData) %>';
-      var svcInfo = '<%- JSON.stringify(svcInfo) %>';
-      var membershipCheckData = '<%- JSON.stringify(membershipCheckData) %>';
-      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData), JSON.parse(svcInfo), JSON.parse(membershipCheckData), '<%= pageInfo.menuId %>');
-  });
+    $(document).ready(function () {
+        var membershipData = '<%- JSON.stringify(membershipData) %>';
+        var svcInfo = '<%- JSON.stringify(svcInfo) %>';
+        new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData), JSON.parse(svcInfo), '<%= pageInfo.menuId %>');
+    });
 </script>
 <% include ../components/end.component.html %>

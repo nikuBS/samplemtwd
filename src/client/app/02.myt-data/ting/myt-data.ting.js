@@ -32,7 +32,7 @@ Tw.MyTDataTing.prototype = {
   _bindEvent: function () {
     this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
+    this.$input_ting_receiver.on('input change', $.proxy(this._onInputChangeTingGiftNumber, this));
     this.$wrap_amount_select_list.on('click', $.proxy(this._checkValidateSendingButton, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
@@ -76,7 +76,8 @@ Tw.MyTDataTing.prototype = {
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
-      this.$input_ting_receiver.val(this._convertDashNumber(params.phoneNumber));
+      this.$input_ting_receiver.val(this._convertDashNumber(params.phoneNumber)).trigger('change');
+      this._validatePhoneNumber();
     }
   },
 
@@ -84,7 +85,7 @@ Tw.MyTDataTing.prototype = {
     return Tw.StringHelper.phoneStringToDash(sTelNumber);
   },
 
-  _onKeyUpTingGiftNumber: function () {
+  _onInputChangeTingGiftNumber: function () {
     this._checkValidateSendingButton();
 
     if ( this.$input_ting_receiver.val() ) {

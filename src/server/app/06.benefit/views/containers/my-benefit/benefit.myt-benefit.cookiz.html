@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -31,7 +29,7 @@
                     </div>
                     <div class="charge-cont">
                         <span class="sub-disc05">쿠키즈팅포인트</span>
-                        <span class="tit tx-blue"><span class="charge-txt"><%= point %></span>점</span>
+                        <span class="tit tx-blue"><span class="charge-txt"><%= point %></span>P</span>
                     </div>
 
                     <div class="charge-cont">
@@ -39,15 +37,15 @@
                             <ul>
                                 <li>
                                     <span class="title">총 적립</span>
-                                    <span class="tx-cont"><%= erndPoint %> 점</span>
+                                    <span class="tx-cont"><%= erndPoint %> P</span>
                                 </li>
                                 <li>
                                     <span class="title">총 사용</span>
-                                    <span class="tx-cont"><%= usdPoint %> 점</span>
+                                    <span class="tx-cont"><%= usdPoint %> P</span>
                                 </li>
                                 <li>
                                     <span class="title">총 소멸</span>
-                                    <span class="tx-cont"><%= exprdPoint %> 점</span>
+                                    <span class="tx-cont"><%= exprdPoint %> P</span>
                                 </li>
                             </ul>
                         </div>
@@ -60,7 +58,7 @@
                 <h4 class="tit">상세내역</h4>
             </div>
             <!-- .cont-box -->
-            <div class="cont-box nogaps" id="fe-no-item" style="display: none">
+            <div class="cont-box nogaps" id="fe-no-item" style="display: none" aria-hidden="true">
                 <div class="contents-empty">
                     <span class="ico type1"></span>
                     <p class="desc">내역이 없습니다.</p>
@@ -76,15 +74,13 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list02">
-                    <li><button class="tip-view-btn" id="BS_01_01_06_tip_01">이용안내 <span class="tip-view">tip</span></button></li>
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li><button class="btn-tip" id="BS_01_01_06_tip_01" aria-haspopup="true">이용안내 <i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
-
         </div>
     </div>
     <!--// #contents -->

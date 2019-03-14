@@ -46,7 +46,8 @@ Tw.CertificationSk.prototype = {
     ATH2011: 'ATH2011',     //
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
-    ATH8007: 'ATH8007'
+    ATH8007: 'ATH8007',
+    ICAS3101: 'ICAS3101'
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
@@ -182,6 +183,7 @@ Tw.CertificationSk.prototype = {
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
     this.$errorCertTime = $popupContainer.find('#aria-sms-exp-desc1');
     this.$errorCertCnt = $popupContainer.find('#aria-sms-exp-desc2');
+    this.$errorCertBlock = $popupContainer.find('#aria-sms-exp-desc10');
     this.$validCert = $popupContainer.find('#aria-sms-exp-desc3');
     this.$validAddCert = $popupContainer.find('#aria-sms-exp-desc4');
     this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc5');
@@ -258,7 +260,7 @@ Tw.CertificationSk.prototype = {
 
     this._callbackParam = {
       code: Tw.API_CODE.CERT_SELECT,
-      target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD
+      target: Tw.AUTH_CERTIFICATION_METHOD.SK_SMS
     };
     this._popupService.close();
   },
@@ -283,7 +285,7 @@ Tw.CertificationSk.prototype = {
     } else {
       this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
-      this.$inputMdn.val(this._svcInfo.svcNum);
+      this.$inputMdn.val(Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum));
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.parent().addClass('none');
       this.$btReCert.parent().removeClass('none');
@@ -376,6 +378,8 @@ Tw.CertificationSk.prototype = {
 
     } else if ( resp.code === this.SMS_ERROR.ATH8007 ) {
       this.$errorCertStop.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 ) {
+      this.$errorCertBlock.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -473,6 +477,7 @@ Tw.CertificationSk.prototype = {
     this.$errorCertCnt.addClass('none');
     this.$errorCertAddTime.addClass('none');
     this.$errorCertStop.addClass('none');
+    this.$errorCertBlock.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');

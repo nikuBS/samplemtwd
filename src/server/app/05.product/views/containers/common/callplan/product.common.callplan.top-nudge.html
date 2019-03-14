@@ -1,10 +1,12 @@
-<% if (( isWireplan && (!svcInfo || svcInfo && svcInfo.prodId !== prodId) || ( isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
+<% if ((( isWireplan || isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
+<div class="fe-reservation_wrap">
+    <hr class="cont-sp type1" aria-hidden="true"/>
 
-<div class="joinconsulting-wrap">
-    <p class="text">가입상담을 받아보시겠어요?</p>
-    <div class="btn">
-        <a href="/product/wireplan/join/reservation?type_cd=<%= reservationTypeCd %>&prod_id=<%= prodId %>" class="btn-round3 btn-style3">예약</a>
+    <div class="joinconsulting-wrap">
+        <p class="text">가입상담을 받아보시겠어요?</p>
+        <div class="btn">
+            <a href="/product/wireplan/join/reservation?type_cd=<%= reservationTypeCd %>&prod_id=<%= prodId %>" class="btn-round3 btn-style3">예약</a>
+        </div>
     </div>
 </div>
 <% } %>
@@ -22,26 +24,27 @@
 </div>
 <% } %>
 
-<% // 설정 버튼 영역
-if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
-    ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && isJoined ) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
+<div class="fe-setting_wrap">
+    <% // 설정 버튼 영역
+    if ( isJoined ) { %>
+    <hr class="cont-sp type1" aria-hidden="true"/>
 
-<div class="joinconsulting-wrap">
-    <p class="text">이용중인 상품 입니다.</p>
-    <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
-    <div class="btn">
-        <button class="fe-btn_setting btn-round3 btn-style3">
-            <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
-            설정
-            <% } else { %>
-            <%= basicInfo.linkBtnList.setting[0].linkNm %>
-            <% } %>
-        </button>
+    <div class="joinconsulting-wrap">
+        <p class="text">이용중인 상품 입니다.</p>
+        <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
+        <div class="btn">
+            <button class="fe-btn_setting btn-round3 btn-style3">
+                <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
+                설정
+                <% } else { %>
+                <%= basicInfo.linkBtnList.setting[0].linkNm %>
+                <% } %>
+            </button>
+        </div>
+        <% } %>
     </div>
     <% } %>
 </div>
-<% } %>
 
 <% if ( isMobileplan && mobilePlanCompareInfo ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>

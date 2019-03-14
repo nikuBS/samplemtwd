@@ -80,34 +80,87 @@
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">
-                                                    <!-- .widget -->
-                                                    <div class="widget">
-                                                        <div class="widget-box radio">
-                                                            <ul class="select-list alignment01 division-two has-image versus" role="radiogroup">
-                                                                <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                    <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
-                                                                    <input type="radio" name="radio5" value="" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                                    <div class="poll-text" id="aria-comp-radio1"><!-- 웹접근성 수정 -->
-                                                                        값1
-                                                                    </div>
-                                                                </li>
-                                                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                    <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
-                                                                    <input type="radio" name="radio5" value="" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" -->
-                                                                    <div class="poll-text" id="aria-comp-radio2"><!-- 웹접근성 수정 -->
-                                                                        긴텍스트 긴텍스트 긴텍스트 긴텍스트
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <!--// .widget -->
-                                                    <div class="detail-view">
-                                                        <ul>
-                                                            <li><button class="bt-link-tx underline">자세히보기</button></li>
-                                                            <li><button class="bt-link-tx underline">자세히보기</button></li>
-                                                        </ul>
-                                                    </div>
+                                                    <!-- 2019.03.11 이미지 + 라디오 case 수정 -->
+                                                    <!-- 2019.03.12 자세히보기 있는 case class btn-dtl 추가-->
+                                                    <ul class="survey-researchbox type2 btn-dtl">
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="rd1_1" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="rd1_1">가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라</label>
+                                                            </div>
+                                                            <button class="bt-link-tx underline">자세히보기</button>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="rd1_2" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="rd1_2">가나다라</label>
+                                                                <button class="bt-link-tx underline">자세히보기</button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="survey-researchbox type2 btn-dtl">
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="rd1_3" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="rd1_3">가나다라</label>
+                                                                <button class="bt-link-tx underline">자세히보기</button>
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="rd1_4" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="rd1_4">가나다라가나다라가나다라가나다라가나다라</label>
+                                                                <button class="bt-link-tx underline">자세히보기</button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.12 자세히보기 있는 case 추가-->
+                                                    <!-- //2019.03.11 이미지 + 라디오 case 수정 -->
+                                                    <ul class="bt-slice item-two">
+                                                        <!-- li갯수 별로(가로 정렬 버튼이 2개 이상일 경우) .item-two, three, four, five, six, seven -->
+                                                        <li class="bt-white2">
+                                                            <button>결과보기</button>
+                                                        </li>
+                                                        <li class="bt-blue1">
+                                                            <button>참여하기</button>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">[혜택안내] 개편된 메뉴에 대한 고객님의 전체적인 만족도는 어떠신가요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="true"><span class="blind">[혜택안내] 개편된 메뉴에 대한 고객님의 전체적인 만족도는 어떠신가요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.12 VS case 추가-->
+                                                    <ul class="survey-researchbox type2 btn-dtl sr_vs">
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="vs1_1" name="vs"><span class="r-type1"></span></span>
+                                                                <label for="vs1_1">가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라</label>
+                                                            </div>
+                                                            <button class="bt-link-tx underline">자세히보기</button>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="vs1_2" name="vs"><span class="r-type1"></span></span>
+                                                                <label for="vs1_2">가나다라</label>
+                                                                <button class="bt-link-tx underline">자세히보기</button>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.12 VS case 추가-->
                                                     <ul class="bt-slice item-two">
                                                         <!-- li갯수 별로(가로 정렬 버튼이 2개 이상일 경우) .item-two, three, four, five, six, seven -->
                                                         <li class="bt-white2">
@@ -129,34 +182,37 @@
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">
-                                                    <!-- .widget -->
-                                                    <div class="widget">
-                                                        <div class="widget-box check">
-                                                            <ul class="select-list alignment01 division-two has-image versus" role="group">
-                                                                <li class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                    <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
-                                                                    <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox3" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                                    <div class="poll-text" id="aria-comp-checkbox3"><!-- 웹접근성 수정 -->
-                                                                        값1
-                                                                    </div>
-                                                                </li>
-                                                                <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                    <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
-                                                                    <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" -->
-                                                                    <div class="poll-text" id="aria-comp-checkbox4"><!-- 웹접근성 수정 -->
-                                                                        긴텍스트 긴텍스트 긴텍스트 긴텍스트
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <!--// .widget -->
-                                                    <div class="detail-view">
-                                                        <ul>
-                                                            <li><button class="bt-link-tx underline">자세히보기</button></li>
-                                                            <li><button class="bt-link-tx underline">자세히보기</button></li>
-                                                        </ul>
-                                                    </div>
+                                                    <!-- 2019.03.11 이미지 + 체크박스 case 수정 -->
+                                                    <ul class="survey-researchbox type2">
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch1_1" name="ch1"><span class="c-type1"></span></span>
+                                                                <label for="ch1_1">가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch1_2" name="ch1"><span class="c-type1"></span></span>
+                                                                <label for="ch1_2">가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch1_3" name="ch1"><span class="c-type1"></span></span>
+                                                                <label for="ch1_3">가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch1_4" name="ch1"><span class="c-type1"></span></span>
+                                                                <label for="ch1_4">가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
                                                     <ul class="bt-slice item-two">
                                                         <!-- li갯수 별로(가로 정렬 버튼이 2개 이상일 경우) .item-two, three, four, five, six, seven -->
                                                         <li class="bt-white2">
@@ -169,7 +225,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="acco-box">
+                                        <li class="acco-box on">
                                             <div class="acco-tit">
                                                 <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
                                                 <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
@@ -178,11 +234,196 @@
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">
-                                                    내용
+                                                    <!-- 2019.03.07 추가-->
+                                                    <ul class="survey-researchbox">
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok1" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="ok1">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.07 추가-->
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="acco-box">
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="false"><span class="blind">SKT 중고 거래 앱 서비스는 무엇일까요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.12 어드민에서 불러오는 영역 없을 경우 추가 -->
+                                                    <ul class="survey-researchbox">
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok1_1" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="ok1_1">가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok1_2" name="r1"><span class="r-type1"></span></span>
+                                                                <label for="ok1_2">가나다라</label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.12 어드민에서 불러오는 영역 없을 경우 추가 -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="false"><span class="blind">SKT 중고 거래 앱 서비스는 무엇일까요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.11 어드민에서 불러오는 영역 textarea 일 경우 추가-->
+                                                    <ul class="survey-researchbox">
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok2" name="r2"><span class="r-type1"></span></span>
+                                                                <label for="ok2">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div>
+                                                                    <textarea></textarea>
+                                                                </div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.11 어드민에서 불러오는 영역 textarea 일 경우 추가-->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="false"><span class="blind">SKT 중고 거래 앱 서비스는 무엇일까요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.11 라디오 버튼만 있고 2개인 case 추가 -->
+                                                    <ul class="survey-researchbox type2">
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok3_1" name="r3"><span class="r-type1"></span></span>
+                                                                <label for="ok3_1">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="radio" id="ok3_2" name="r3"><span class="r-type1"></span></span>
+                                                                <label for="ok3_2">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.11 라디오 버튼만 있는 2개인 case 추가 -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="false"><span class="blind">SKT 중고 거래 앱 서비스는 무엇일까요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.11 체크박스만 있고 2개인 case 추가 -->
+                                                    <ul class="survey-researchbox type2">
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch2_1" name="ch2"><span class="c-type1"></span></span>
+                                                                <label for="ch2_1">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch2_2" name="ch2"><span class="c-type1"></span></span>
+                                                                <label for="ch2_2">가나다라</label>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.11 체크박스만 있고 2개인 case 추가 -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
+                                            <div class="acco-tit">
+                                                <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
+                                                <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
+                                                <em class="poll-condition">진행 중</em>
+                                                <button role="button" aria-pressed="false"><span class="blind">SKT 중고 거래 앱 서비스는 무엇일까요?</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+                                            </div>
+                                            <div class="acco-cont">
+                                                <div class="cont-box">
+                                                    <!-- 2019.03.11 이미지만 있는 체크박스 case 추가 -->
+                                                    <ul class="survey-researchbox type2 only-img">
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><label for="ch3_1"><img src="/img/dummy/dummy_poll01.jpg" alt=""/></label></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch3_1" name="ch3"><span class="c-type1"></span></span>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                        <li class="category-type">
+                                                            <div class="poll-img"><label for="ch3_2"><img src="/img/dummy/dummy_poll02.jpg" alt=""/></label></div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form"><input type="checkbox" id="ch3_2" name="ch3"><span class="c-type1"></span></span>
+                                                            </div>
+                                                            <div class="adminbox-wrap">
+                                                                <!-- 어드민에서 불러오는영역 -->
+                                                                <div style="MARGIN: 0px auto; WIDTH: 418px"><p><img alt="1번보기입니다." src="/twd/img/global/txt_poll_thanks.png"></p><p><img alt="티월드홈페이지" src="/twd/img/global/banner_poll_default.png"></p><div class="mt30 al_center"><span class="btn btn_o"><span><a href="http://www.tworld.co.kr/" class="fe-link-external" title="티월드 홈페이지" style="color: rgb(65, 49, 211) !important; line-height: 19px !important;"><span class="hidden" style="position: absolute; left: -9999px; font-size: 1px; line-height: 0; text-indent: -9999px; display: inline;">새창열림</span>www.tworld.co.kr</a></span> </span></div></div>
+                                                                <!-- //어드민에서 불러오는영역 -->
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <!-- //2019.03.11 이미지만 있는 체크박스 case 추가 -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box on">
                                             <div class="acco-tit">
                                                 <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
                                                 <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
@@ -195,7 +436,7 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <li class="acco-box">
+                                        <li class="acco-box on">
                                             <div class="acco-tit">
                                                 <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
                                                 <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
@@ -229,6 +470,20 @@
         </div>
         <!--// #contents -->
     </div>
+    <script>
+        $('[type="checkbox"]').change(function () {
+            var $this = $(this);
+            alert($this.prop('checked'));
+        });
+        $('[type="radio"]').change(function () {
+            var $this = $(this);
+            var $val = $('[name="'+($this.attr('name'))+'"]');
+            var $checked = $val.filter(':checked');
+            var checkedIndex = $val.index($checked);
+            alert('value = '+$checked.val()+'\n checkedIndex = '+ checkedIndex);
+        });
+    </script>
+
 </body>
 
 </html>

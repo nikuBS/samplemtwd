@@ -10,9 +10,9 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <!-- Grand open 접근성 수정 -->
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        <!--  //Grand open 접근성 수정 -->
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -52,7 +52,7 @@
                         </div>
                         <div class="cont">
                             <span class="stit">나의 T가족모아데이터<button id="DC_02_tip_01" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">나의 T가족모아데이터 tip</span></i></button></span>
-                            <span class="txt1"><span class="ff-type1" id="fe-remained-data"><%= familyInfo.mine.remained.data > 0 ? familyInfo.mine.remained.data + familyInfo.mine.remained.unit : '0KB' %> </span>남음</span>
+                            <span class="txt1"><span class="ff-type1" id="fe-remained-data"><%= familyInfo.mine.nRemained > 0 ? familyInfo.mine.remained.data + familyInfo.mine.remained.unit : '0KB' %> </span>남음</span>
                         </div>
                         <% if (familyInfo.mine.shrblYn === "Y") { %>
                         <span class="btn-r">
@@ -78,7 +78,7 @@
                         <% familyInfo.mbrList.map(member => { 
                             const isInfinity = member.prodId === INFINITY, isMine = member.svcMgmtNum === familyInfo.mine.svcMgmtNum; %>
                             <li data-member="<%= JSON.stringify({ name: member.custNm, svcNum: member.svcNum, isRepresentation: member.repYn === 'Y', mgmtNum: member.svcMgmtNum }) %>">
-                                <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                                <span class="icon"><i class="icon-cellphone-48"></i></span>
                                 <div class="info">
                                     <span class="stit">
                                         <%= member.custNm %>
@@ -137,8 +137,8 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <li><button id="DC_02_tip_02" class="btn-tip" aria-haspopup="true">T가족모아데이터 유의사항<i class="icon-badge-tip"><span class="blind">>T가족모아데이터 유의사항 tip</span></i></button></li>
-                    <li><button id="DC_02_tip_03" class="btn-tip" aria-haspopup="true">T가족모아데이터 이용한도 설정 안내<i class="icon-badge-tip"><span class="blind">>T가족모아데이터 이용한도 설정 안내 tip</span></i></button></li>
+                    <li><button id="DC_02_tip_02" class="btn-tip" aria-haspopup="true">T가족모아데이터 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="DC_02_tip_03" class="btn-tip" aria-haspopup="true">T가족모아데이터 이용한도 설정 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
         </div>

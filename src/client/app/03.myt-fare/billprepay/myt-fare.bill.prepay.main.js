@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.prepay.main.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
+ * Annotation: 소액결제/콘텐츠이용료 메인화면
  */
 
 Tw.MyTFareBillPrepayMain = function (rootEl, title) {
@@ -40,6 +41,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
+    this._remainAmount = this.$container.find('.fe-remain-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
@@ -131,11 +133,20 @@ Tw.MyTFareBillPrepayMain.prototype = {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    if (Tw.BrowserHelper.isApp()) {
-      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+    var isAvailable = this._checkLimit();
+
+    if (isAvailable) {
+      if (Tw.BrowserHelper.isApp()) {
+        this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
+      } else {
+        this._goAppInfo();
+      }
     } else {
-      this._goAppInfo();
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
     }
+  },
+  _checkLimit: function () {
+    return this._remainAmount > 10000;
   },
   _autoPrepayInfo: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');

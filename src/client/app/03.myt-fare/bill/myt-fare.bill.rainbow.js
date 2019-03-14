@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.rainbow.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.7
+ * Annotation: 레인보우포인트 1회 요금납부 예약 및 자동납부 관리
  */
 
 Tw.MyTFareBillRainbow = function (rootEl) {
@@ -119,7 +120,7 @@ Tw.MyTFareBillRainbow.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$fareSelector.parent().siblings('.fe-error-msg').hide();
+    this.$fareSelector.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');
     this._setSelectorValidation(true);
 
     this._checkIsAbled();
@@ -134,7 +135,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
-      this.$fareSelector.parent().siblings('.fe-error-msg').show();
+      this.$fareSelector.parent().siblings('.fe-error-msg').show().attr('aria-hidden', 'false');
       this.$fareSelector.focus();
       this._setSelectorValidation(false);
     }

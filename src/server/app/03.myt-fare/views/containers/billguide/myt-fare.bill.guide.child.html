@@ -15,7 +15,7 @@
         <div class="statement-cont type2">
             <div class="single-list">
                 <span class="title">
-                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                    <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind"></span></i></span>
                     <span class="in-tx type2">휴대폰</span>
                 </span>
             </div>
@@ -116,9 +116,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -131,7 +129,7 @@
         <div class="container">
 
             <div class="user-greeting">
-                <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
+                <i class="icon-dialog-emoji-56"><span class="blind"></span></i>
                 <% if(commDataInfo.discount != 0 ){ %>
                 <p class="msg">이번 달에는 요금할인을 <%=commDataInfo.discount %>원 받으셨어요.<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
                 <% } else { %>
@@ -142,13 +140,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
-                    <a href="/product/callplan?prod_id=<%= commDataInfo.intBillLineList[0].prodId %>">
-                    <button class="wrap-link">
+                    <button class="wrap-link" data-target="goProdPageBtn" data-prod-page-url="/product/callplan?prod_id=<%= commDataInfo.intBillLineList[0].prodId %>">
                             <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
                             <span class="stit"><%= commDataInfo.intBillLineList[0].prodNm %></span>
 
                     </button>
-                    </a>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -209,8 +205,8 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree" title="이용요금 안내">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree" title="로밍 이용요금 안내">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <!--
                     <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
                     <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>

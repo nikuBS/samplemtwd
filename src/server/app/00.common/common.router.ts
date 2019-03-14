@@ -57,8 +57,9 @@ import CommonMemberInit from './controllers/member/common.member.init.controller
 import CommonSearchMain from './controllers/search/common.search-main.controller';
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
 import CommonSearchInResult from './controllers/search/common.search.in-result.controller';
-import CommonUtilServiceReady from './controllers/util/commin.util.service-ready.controller';
+import CommonUtilServiceReady from './controllers/util/common.util.service-ready.controller';
 import CommonMemberLoginLost from './controllers/member/common.member.login.lost.controller';
+import CommonUtilBpcp from './controllers/util/common.util.bpcp.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -84,20 +85,24 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/login/cust-pwdfail', controller: CommonMemberLoginCustPwdFail });
     this.controllers.push({ url: '/member/login/reactive', controller: CommonMemberLoginReactive });
     this.controllers.push({ url: '/member/login/lost', controller: CommonMemberLoginLost });
+
     // member - slogin
     this.controllers.push({ url: '/member/slogin/aos', controller: CommonMemberSloginAos });
     this.controllers.push({ url: '/member/slogin/ios', controller: CommonMemberSloginIos });
     this.controllers.push({ url: '/member/slogin/fail', controller: CommonMemberSloginFail });
+
     // logout
     this.controllers.push({ url: '/member/logout/complete', controller: CommonMemberLogoutComplete });
     this.controllers.push({ url: '/member/logout/expire', controller: CommonMemberLogoutExpire });
     this.controllers.push({ url: '/member/logout/route', controller: CommonMemberLogoutRoute });
+
     // member - line
     this.controllers.push({ url: '/member/line', controller: CommonMemberLine });
     this.controllers.push({ url: '/member/line/edit', controller: CommonMemberLineEdit });
     this.controllers.push({ url: '/member/line/biz-register', controller: CommonMemberLineBizRegister });
     this.controllers.push({ url: '/member/line/empty', controller: CommonMemberLineEmpty });
     this.controllers.push({ url: '/member/line/register', controller: CommonMemberLineRegister });
+
     // member
     this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });
     this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });
@@ -116,10 +121,12 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/tid/guide', controller: CommonTidGuide });
     this.controllers.push({ url: '/tid/route', controller: CommonTidRoute });
     this.controllers.push( {url: '/tid/cert-pw', controller: CommonTidCertPw });
+
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
     this.controllers.push({ url: '/util/service-block', controller: CommonUtilServiceBlock });
     this.controllers.push({ url: '/util/service-ready', controller: CommonUtilServiceReady });
+
     // share
     this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
@@ -130,5 +137,8 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/search-main', controller: CommonSearchMain});
     this.controllers.push({ url: '/search/more', controller: CommonSearchMore });
     this.controllers.push({ url: '/search/in-result', controller: CommonSearchInResult });
+
+    // bpcp
+    this.controllers.push({ url: '/util/bpcp', controller: CommonUtilBpcp });
   }
 }

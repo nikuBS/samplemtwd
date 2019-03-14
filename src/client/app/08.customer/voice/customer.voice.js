@@ -9,7 +9,7 @@ Tw.CustomerVoice = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService();
+  this._history = new Tw.HistoryService(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -30,15 +30,22 @@ Tw.CustomerVoice.prototype = {
   },
 
   _checkHistories: function () {
+    this.$btn_register.prop('disabled', true);
     this._apiService.request(Tw.API_CMD.BFF_08_0009, {})
       .done($.proxy(this._onSuccessVoiceStatus, this));
   },
 
   _onSuccessVoiceStatus: function (res) {
     // this._history.goLoad('/customer/svc-info/voice/register');
+    this.$btn_register.prop('disabled', false);
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.historiesYn = res.result.hitoriesYn;
       this._onClickRegister();
+    } else if (Tw.API_CODE.COM001) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_VOICE.NOLINE,
+        Tw.POPUP_TITLE.NOTIFY
+      );
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

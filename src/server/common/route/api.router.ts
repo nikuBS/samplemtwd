@@ -18,6 +18,7 @@ import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+
 const os = require('os');
 
 class ApiRouter {
@@ -64,6 +65,7 @@ class ApiRouter {
     GET_VERSION: { path: '/app-version', method: API_METHOD.GET, target: this.getVersion },
     GET_SPLASH: { path: '/splash', method: API_METHOD.GET, target: this.getSplash },
     GET_APP_NOTICE: { path: '/app-notice', method: API_METHOD.GET, target: this.getAppNotice },
+    GET_XTINFO: { path: '/xtractor-info', method: API_METHOD.GET, target: this.getXtInfo },
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
@@ -83,7 +85,8 @@ class ApiRouter {
       target: this.getDefaultQuickMenu
     },
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
-    GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo }
+    GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
+    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethosBlock }
   };
 
   private setApi() {
@@ -213,6 +216,18 @@ class ApiRouter {
 
         res.json(resp);
       });
+  }
+
+  private getXtInfo(req: Request, res: Response, next: NextFunction) {
+    const loginService = new LoginService(),
+      svcInfo = loginService.getSvcInfo(req);
+
+    res.json({
+      code: API_CODE.CODE_00,
+      result: !svcInfo || FormatHelper.isEmpty(svcInfo.xtInfo) ? {} : Object.assign(svcInfo.xtInfo, {
+        XTLOGINTYPE: svcInfo.loginType === 'S' ? 'Z' : 'A'
+      })
+    });
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
@@ -489,6 +504,13 @@ class ApiRouter {
       });
   }
 
+  private getAuthMethosBlock(req: Request, res: Response, next: NextFunction) {
+    this.redisService.getData(REDIS_KEY.AUTH_METHOD_BLOCK)
+      .subscribe((resp) => {
+        res.json(resp);
+      })
+  }
+
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.MASKING_METHOD)
       .subscribe((resp) => {
@@ -510,8 +532,8 @@ class ApiRouter {
     const svcMgmtNum = req.body.svcMgmtNum;
 
     loginService.setCurrentReq(req, res);
-    apiService.updateSvcInfo({})
-      .switchMap((resp) => loginService.setMaskingCert(svcMgmtNum))
+    loginService.setMaskingCert(svcMgmtNum)
+      .switchMap((resp) => apiService.updateSvcInfo({}))
       .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00

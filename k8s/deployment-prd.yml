@@ -1,9 +1,10 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: bff-nodejs-mobile-0.0.1
+  name: bff-nodejs-mobile-0.11
   labels:
     app: bff-nodejs-mobile
+    version: '0.11'
 spec:
   replicas: 8
   strategy:
@@ -14,12 +15,12 @@ spec:
   selector:
     matchLabels:
       app: bff-nodejs-mobile
-      version: 0.0.1
+      version: '0.11'
   template:
     metadata:
       labels:
         app: bff-nodejs-mobile
-        version: 0.0.1
+        version: '0.11'
     spec:
       affinity:
         podAntiAffinity:
@@ -35,7 +36,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: bff-nodejs-mobile
-        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:0.0.1
+        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:0.11.0
         env:
         - name: REDIS_PWD_KEY
           valueFrom:
@@ -71,8 +72,8 @@ spec:
             cpu: 4000m
             memory: 3072Mi
         volumeMounts:
-        - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
-          name: upload-volume                            # volumes 의 name과 동일하게 설정
+        - mountPath: /tworld/uploads
+          name: upload-volume
       volumes:
       - name: upload-volume
         persistentVolumeClaim:

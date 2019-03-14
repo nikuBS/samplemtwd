@@ -7,16 +7,6 @@
 <%- include('../../components/start.component.html', { pageInfo: data.pageInfo }); %>
 
 <body>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-
-<!--// #skip_navigation -->
 <div class="wrap step" data-menuId="<%= data.pageInfo.menuId || 'M000551' %>">
     <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
@@ -37,7 +27,7 @@
                     <div class="charge-guide-wrap">
                         <div class="charge-cont">
                                     <span class="sub-disc01">
-                                        <span class="elem">T끼리 Plus 할인율</span>
+                                        <span class="elem">T끼리 플러스 할인율</span>
                                     </span>
                             <span class="tit txt-red"><span class="charge-txt"><%= data.percent %></span>%</span>
                             <p class="comment star_tx">장기가입 할인과 플러스 할인을 서로 한 번 변경하신 경우, 한 달 안에 다시 변경하실 수 없습니다.</p>
@@ -51,9 +41,9 @@
                     <ul class="link-list type2">
                         <li>
                             <dl>
-                                <dt>T끼리 Plus할인 적용 예시보기</dt>
+                                <dt>T끼리 플러스 할인 적용 예시</dt>
                                 <dd>
-                                    <button data-id="plus-example">T끼리 Plus할인 적용 예시 팝업</button>
+                                    <button data-id="plus-example">T끼리 플러스 할인 적용 예시 팝업</button>
                                 </dd>
                             </dl>
                         </li>
@@ -75,11 +65,11 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box --><!-- 2018-11-02 수정 -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list02">
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
                     <li>
-                        <button type="button" class="tip-view-btn" id="BS_03_02_01_01_tip_01">서비스 이용안내<span class="tip-view">TIP</span></button>
+                        <button class="tip-view-btn" id="BS_03_02_01_01_tip_01" aria-haspopup="true">서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내 tip</span></i></button>
                     </li>
                 </ul>
             </div>

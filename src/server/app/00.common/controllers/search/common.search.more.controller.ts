@@ -48,6 +48,10 @@ class CommonSearchMore extends TwViewController {
       searchApi = API_CMD.SEARCH_WEB;
     }
 
+    if (!FormatHelper.isEmpty(svcInfo)) {
+      requestObj.userId = svcInfo.userId;
+    }
+
 
     Observable.combineLatest(
       this.apiService.request( searchApi, requestObj, {}),
@@ -60,6 +64,9 @@ class CommonSearchMore extends TwViewController {
           code: searchResult.code !== 0 ? searchResult.code : relatedKeyword.code,
           msg: searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
+      }
+      if (FormatHelper.isEmpty(svcInfo) && searchResult.result.totalcount === 1 && collection === 'shortcut' && searchResult.result.search[0].shortcut.data[0].DOCID === 'M000083') {
+        searchResult.result.totalcount = 0;
       }
       if ( searchResult.result.totalcount === 0 ) {
         Observable.combineLatest(

@@ -42,9 +42,9 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth1.on('click', $.proxy(this._onClickService1Depth, this));
     this.$select_service_depth2.on('click', $.proxy(this._onClickService2Depth, this));
     this.$select_quality_depth1.on('click', $.proxy(this._onClickQuality1Depth, this));
-    this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
-    this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
-    this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+    // this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
+    // this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
+    // this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
     this.$container.on('getCategory', $.proxy(this._getCurrentCategory, this));
     this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
@@ -61,21 +61,22 @@ Tw.CustomerEmailCategory.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
-    var fnSelectLine = function (item) {
+    var fnSelectLine = function (item, index) {
       return {
-        value: item.title,
-        option: this.service.depth1 === item.category ? 'checked' : '',
-        attr: 'data-service-depth1="' + item.category + '"'
+        txt: item.title, 
+        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.service.depth1 === item.category ? ' checked' : ''),
+        'label-attr': ' '
       };
     };
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+        // title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: this.service_category.map($.proxy(fnSelectLine, this)) }]
       },
-      null,
+      $.proxy(this._handleServiceChange1Depth, this),
       null
     );
   },
@@ -89,23 +90,24 @@ Tw.CustomerEmailCategory.prototype = {
     if ( sDepth1Category ) {
       var service2DepthList = this.category[sDepth1Category];
 
-      var fnSelectLine = function (item) {
+      var fnSelectLine = function (item, index) {
         return {
-          value: item.ctgNm,
-          option: this.service.depth2 === item.ofrCtgSeq ? 'checked' : '',
-          attr: 'data-service-depth2="' + item.ofrCtgSeq + '"'
+          txt: item.ctgNm, 
+          'radio-attr': 'data-index="' + index + '" data-code="'+ item.ofrCtgSeq +'"' + (this.service.depth2 === item.ofrCtgSeq ? ' checked' : ''),
+          'label-attr': ' '
         };
       };
 
       this._popupService.open({
-          hbs: 'actionsheet_select_a_type',
+          hbs: 'actionsheet01',
           layer: true,
-          title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+          // title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+          btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
           data: [{
             list: service2DepthList.map($.proxy(fnSelectLine, this))
           }]
         },
-        null,
+        $.proxy(this._handleServiceChange2Depth, this),
         null
       );
     }
@@ -115,48 +117,57 @@ Tw.CustomerEmailCategory.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
-    var fnSelectLine = function (item) {
+    var fnSelectLine = function (item, index) {
       return {
-        value: item.title,
-        option: this.quality.depth1 === item.category ? 'checked' : '',
-        attr: 'data-quality-depth1="' + item.category + '"'
+        txt: item.title, 
+        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.quality.depth1 === item.category ? ' checked' : ''), 
+        'label-attr': ' '
       };
     };
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+        // title: Tw.CUSTOMER_EMAIL.SELECT_SERVICE,
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: this.quality_category.map($.proxy(fnSelectLine, this)) }]
       },
-      null,
+      $.proxy(this._handleQualityChange1Depth, this),
       null
     );
   },
+
+  _handleServiceChange1Depth: function ($layer) {
+    $layer.on('change', 'li input', $.proxy(this._onSelectService1Depth, this));
+  },
+  _handleServiceChange2Depth: function ($layer) {
+    $layer.on('change', 'li input', $.proxy(this._onSelectService2Depth, this));
+  },
+  _handleQualityChange1Depth: function ($layer) {
+    $layer.on('change', 'li input', $.proxy(this._onSelectQuality1Depth, this));
+  },
+
 
   _onSelectService1Depth: function (e) {
     e.stopPropagation();
     e.preventDefault();
 
-    this._popupService.close();
-
-    var sDepth1Value = $(e.currentTarget).data('service-depth1').toString();
-    var sDepth1Text = $(e.currentTarget).text().trim();
+    var sDepth1Value = $(e.currentTarget).data('code').toString();
+    var sDepth1Text = $(e.currentTarget).parents('li').find('.txt').text();
     this.$select_service_depth1.addClass('tx-bold');
     this.$select_service_depth1.text(sDepth1Text);
     this.$select_service_depth1.data('service-depth1', sDepth1Value);
     this.service.depth1 = sDepth1Value;
 
     if ( sDepth1Value === 'CELL' || sDepth1Value === 'INTERNET' ) {
-      this.$wrap_tpl_faq.show();
-
-      if ( sDepth1Value === 'INTERNET' ) {
-        this.$wrap_service_category.find('.emailconsulting-wrap').show();
-      }
-
+      this.$wrap_tpl_faq.show().attr('aria-hidden', false);
     } else {
-      this.$wrap_tpl_faq.hide();
-      this.$wrap_service_category.find('.emailconsulting-wrap').hide();
+      this.$wrap_tpl_faq.hide().attr('aria-hidden', true);
+    }
+    if ( sDepth1Value === 'INTERNET' ) {
+      this.$wrap_service_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
+    } else {
+      this.$wrap_service_category.find('.emailconsulting-wrap').hide().attr('aria-hidden', true);
     }
 
     var sDepth2Category = this.$select_service_depth2.data('service-depth2');
@@ -168,37 +179,39 @@ Tw.CustomerEmailCategory.prototype = {
       this.$select_service_depth2.data('service-depth2', null);
       this.service.depth2 = '';
     }
+
+    this._popupService.close();
+
   },
 
   _onSelectService2Depth: function (e) {
     e.stopPropagation();
     e.preventDefault();
 
-    this._popupService.close();
-
-    var sDepth2Value = $(e.currentTarget).data('service-depth2').toString();
-    var sDepth2Text = $(e.currentTarget).text().trim();
+    var sDepth2Value = $(e.currentTarget).data('code').toString();
+    var sDepth2Text = $(e.currentTarget).parents('li').find('.txt').text();    
     this.$select_service_depth2.addClass('tx-bold');
     this.$select_service_depth2.text(sDepth2Text);
     this.$select_service_depth2.data('service-depth2', sDepth2Value);
     this.service.depth2 = sDepth2Value;
 
     this.$container.trigger('changeServiceTemplate', this.service);
+
+    this._popupService.close();
+
   },
 
   _onSelectQuality1Depth: function (e) {
     e.stopPropagation();
     e.preventDefault();
 
-    this._popupService.close();
-
-    var sDepth1Value = $(e.currentTarget).data('quality-depth1');
-    var sDepth1Text = $(e.currentTarget).text().trim();
+    var sDepth1Value = $(e.currentTarget).data('code').toString();
+    var sDepth1Text = $(e.currentTarget).parents('li').find('.txt').text();    
     
     if ( sDepth1Value === 'internet' ) {
-      this.$wrap_quality_category.find('.emailconsulting-wrap').show();
+      this.$wrap_quality_category.find('.emailconsulting-wrap').show().attr('aria-hidden', false);
     } else {
-      this.$wrap_quality_category.find('.emailconsulting-wrap').hide();
+      this.$wrap_quality_category.find('.emailconsulting-wrap').hide().attr('aria-hidden', true);
     }
 
     this.$select_quality_depth1.addClass('tx-bold');
@@ -206,7 +219,9 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
     this.quality.depth1 = sDepth1Value;
 
-    this.$container.trigger('changeQualityTemplate', this.quality);
+    this.$container.trigger('changeQualityTemplate', {qualityCategory: this.quality});
+
+    this._popupService.close();
   },
 
   _getCurrentCategory: function () {

@@ -17,21 +17,21 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
 <!-- body -->
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
+<!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    // #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+    <div id="header" class="header-wrap search-height fe-header-wrap"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
         <div class="h-belt"><!-- border-bottom : 1px -->
             <div class="sch-form">
                     <span class="inputbox">
                         <span class="input">
-                            <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                            <input id="keyword" class="fe-nofocus-move" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                         </span>
                     </span>
@@ -53,7 +53,7 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap none">
+    <div id="contents" class="container-wrap none fe-container-wrap">
         <div class="container">
 
             <% if(searchInfo.suggestQuery.length>0){ %>
@@ -116,9 +116,9 @@
 
             <% } %>
 
-            <% if(accessQuery.category=='roaming'&&searchInfo.search[0]&&searchInfo.search[0].roaming){ %>
+            <% if(accessQuery.category=='troaming'&&searchInfo.search[0]&&searchInfo.search[0].troaming){ %>
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
-            <div class="cont-box bgnone noborder nogaps-btm roaming">
+            <div class="cont-box bgnone noborder nogaps-btm troaming">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T로밍</h2>
                     <div class="numberbox">
@@ -127,8 +127,8 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone noborder gaps-style07 roaming">
-                <ul class="extraservice-list" id="roaming_list">
+            <div class="cont-box bgnone noborder gaps-style07 troaming">
+                <ul class="extraservice-list" id="troaming_list">
 
                 </ul>
             </div>
@@ -153,9 +153,9 @@
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
-            <% if(accessQuery.category=='tv'&&searchInfo.search[0]&&searchInfo.search[0].tv){ %>
+            <% if(accessQuery.category=='tv_internet'&&searchInfo.search[0]&&searchInfo.search[0].tv_internet){ %>
             <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box bgnone noborder nogaps-btm tv">
+            <div class="cont-box bgnone noborder nogaps-btm tv_internet">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
                     <div class="numberbox">
@@ -164,8 +164,8 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone noborder gaps-style06 tv">
-                <ul class="extraservice-list" id="tv_list">
+            <div class="cont-box bgnone noborder gaps-style06 tv_internet">
+                <ul class="extraservice-list" id="tv_internet_list">
 
                 </ul>
             </div>
@@ -178,14 +178,13 @@
                 <div class="contheader-box">
                     <div class="totalfilter-wrap"></div>
                     <div class="filter-select">
-                        <a type="button" class="filterselect-btn" data-type="<%= searchInfo.search[0].direct.sort %>">
+                        <button type="button" class="filterselect-btn" aria-haspopup="true" data-type="<%= searchInfo.search[0].direct.sort %>">
                             <%=
-                                searchInfo.search[0].direct.sort==='R'?'추천순':
-                                searchInfo.search[0].direct.sort==='P'?'인기순':
+                                searchInfo.search[0].direct.sort==='R'?'정확도순':
                                 searchInfo.search[0].direct.sort==='D'?'최신순':
-                                searchInfo.search[0].direct.sort==='H'?'낮은가격순':'높은가격순'
+                                searchInfo.search[0].direct.sort==='L'?'낮은가격순':'높은가격순'
                             %>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -216,11 +215,11 @@
             <% } %>
             <!--// .cont-box -->
 
-            <% if(accessQuery.category=='membership'&&searchInfo.search[0]&&searchInfo.search[0].membership){ %>
+            <% if(accessQuery.category=='tmembership'&&searchInfo.search[0]&&searchInfo.search[0].tmembership){ %>
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
-            <div class="cont-box pb0 membership">
+            <div class="cont-box pb0 tmembership">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T멤버십</h2>
                     <div class="numberbox">
@@ -228,7 +227,7 @@
                     </div>
                 </div>
                 <div class="t-membership-wrap">
-                    <ul id="membership_list">
+                    <ul id="tmembership_list">
 
                     </ul>
                 </div>
@@ -271,20 +270,21 @@
             </div>
             <% } %>
 
-            <% if(accessQuery.category=='as'&&searchInfo.search[0]&&searchInfo.search[0].as){ %>
+            <% if(accessQuery.category=='as_outlet'&&searchInfo.search[0]&&searchInfo.search[0].as_outlet){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- 지점 · 대리점, A/S센터 -->
-            <div class="cont-box nogaps-btm as">
+            <div class="cont-box nogaps-btm as_outlet">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.totalcount %></span>건
                     </div>
                 </div>
-                <ul class="service-guide-s" id="as_list">
+                <ul class="service-guide-s" id="as_outlet_list">
 
                 </ul>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- //지점 · 대리점, A/S센터 -->
             <% } %>
             <% if(accessQuery.category=='question'&&searchInfo.search[0]&&searchInfo.search[0].question){ %>
@@ -300,6 +300,7 @@
 
                 </ul>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
             <% if(accessQuery.category=='notice'&&searchInfo.search[0]&&searchInfo.search[0].notice){ %>
             <hr class="cont-sp type1" aria-hidden="true">

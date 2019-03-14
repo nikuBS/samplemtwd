@@ -32,14 +32,14 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this._getPpsInfo();
   },
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._bindEvent();
       this._setData(res.result);
     } else {
@@ -47,7 +47,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     }
   },
   _getFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
   },
   _bindEvent: function () {
@@ -143,7 +143,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       amt: this.$dataSelector.attr('data-amount'),
       cardNum: $.trim(this.$cardNumber.val()),
       expireMM: $.trim(this.$cardM.val()),
-      expireYY: $.trim(this.$cardY.val()).substr(2,2)
+      expireYY: $.trim(this.$cardY.val()).substr(2,2),
+      maskedYn: ''
     };
   },
   _onClose: function () {

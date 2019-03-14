@@ -66,6 +66,9 @@ Tw.BenefitMyBenefitCookiz.prototype = {
       if ( resp.result.length < 1 ) {
         this.$list.hide();
         this.$noItem.show();
+
+        this.$list.attr('aria-hidden', true);
+        this.$noItem.attr('aria-hidden', false);
       } else {
         var _items = $.extend(true, [], resp.result.history);
         _.map(_items, $.proxy(function (point) {
@@ -75,6 +78,9 @@ Tw.BenefitMyBenefitCookiz.prototype = {
         }, this));
 
         this._renderItems(_items);
+
+        this.$list.attr('aria-hidden', false);
+        this.$noItem.attr('aria-hidden', true);
       }
     } else {
       Tw.Error(resp.code, resp.msg).page();

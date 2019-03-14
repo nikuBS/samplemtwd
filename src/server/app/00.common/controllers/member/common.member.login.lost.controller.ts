@@ -13,7 +13,8 @@ class CommonMemberLoginLost extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo, allSvc, chideInfo, pageInfo) {
-    res.render('member/common.member.login.lost.html', { svcInfo, pageInfo });
+    const target = req.query.target || '/main/home';
+    res.render('member/common.member.login.lost.html', { svcInfo, pageInfo, target });
   }
 }
 

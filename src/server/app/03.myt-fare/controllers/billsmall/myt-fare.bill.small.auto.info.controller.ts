@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.small.auto.info.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.08
+ * Annotation: 소액결제 자동선결제 신청/변경/해지 내역 관리
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

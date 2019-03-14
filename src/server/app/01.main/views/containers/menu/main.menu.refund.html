@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -31,9 +29,9 @@
                         <h3 class="tit">
                             <span class="pay-name"><%= data.refundArr[0].svcCdNm %></span>
                             <% if (data.refundArr.length - 1 !== 0) { %>
-                            <span class="pay-line mt4"><%= data.refundArr[0].svcNum %> 외 <%= data.refundArr.length - 1  %>건</span>
+                            <span class="pay-line mt4"><%= data.refundArr[0].svcText %> 외 <%= data.refundArr.length - 1  %>건</span>
                             <% } else { %>
-                            <span class="pay-line mt4"><%= data.refundArr[0].svcNum %></span>
+                            <span class="pay-line mt4"><%= data.refundArr[0].svcText %></span>
                             <% } %>
                             <span class="pay-sum">해지환급금액</span>
                             <span class="pay-fee"><span class="mt4"><%= data.totalAmount %></span>원</span>
@@ -187,7 +185,7 @@
                     <div class="app-details-box">
                         <% for (const item of data.submittedArr) { %>
                         <div class="phone-num-box">
-                            <span class="phone-num"><strong class="phone"><%= item.svcCdNm %></strong> <em class="num"><%= item.svcNum %></em></span>
+                            <span class="phone-num"><strong class="phone"><%= item.svcCdNm %></strong> <em class="num"><%= item.svcText %></em></span>
                         </div>
                         <div class="basic-list">
                             <ul>
@@ -254,13 +252,13 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button type="button" id="MN_01_04_01_01_tip_01" class="tip-view-btn" title="공공기관 사칭 주의! TIP보기" aria-haspopup="true">
+                        <li><button type="button" id="MN_01_04_01_01_tip_01" class="tip-view-btn" aria-haspopup="true">
                             공공기관 사칭 주의!<span class="tip-view">TIP</span>
                         </button></li>
-                        <li><button type="button" id="MN_01_04_01_01_tip_02" class="tip-view-btn" title="송금 오류가 난 경우! TIP보기" aria-haspopup="true">
+                        <li><button type="button" id="MN_01_04_01_01_tip_02" class="tip-view-btn" aria-haspopup="true">
                             송금 오류가 난 경우!<span class="tip-view">TIP</span>
                         </button></li>
-                        <li><button type="button" id="MN_01_04_01_01_tip_03" class="tip-view-btn" title="송금 기간 TIP보기" aria-haspopup="true">
+                        <li><button type="button" id="MN_01_04_01_01_tip_03" class="tip-view-btn" aria-haspopup="true">
                             송금 기간<span class="tip-view">TIP</span>
                         </button></li>
                     </ul>

@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.cashbag.tpoint.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.7
+ * Annotation: OK cashbag 및 Tpoint 1회 예약납부 및 자동납부 관리
  */
 
 Tw.MyTFareBillCashbagTpoint = function (rootEl, pointType) {
@@ -202,7 +203,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$pointSelector.parent().siblings('.fe-error-msg').hide();
+    this.$pointSelector.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');
     this.$isSelectValid = true;
 
     this._checkIsAbled();
@@ -210,7 +211,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id'))) {
-      this.$pointSelector.parent().siblings('.fe-error-msg').show();
+      this.$pointSelector.parent().siblings('.fe-error-msg').show().attr('aria-hidden', 'false');
       this.$pointSelector.focus();
       this.$isSelectValid = false;
     }

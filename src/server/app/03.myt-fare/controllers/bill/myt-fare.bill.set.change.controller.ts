@@ -9,6 +9,7 @@ import {Observable} from 'rxjs/Observable';
 import {API_CODE} from '../../../../types/api-command.type';
 import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
 import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
@@ -22,6 +23,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
       if (resBillType.code === API_CODE.CODE_00) {
         let data = resBillType.result;
         data.query = req.query;
+        data.isApp = BrowserHelper.isApp(req);
         data = this.getData(data, svcInfo, pageInfo);
 
         res.render('bill/myt-fare.bill.set.change.html', data);

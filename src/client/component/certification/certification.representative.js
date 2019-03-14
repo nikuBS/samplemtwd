@@ -35,7 +35,8 @@ Tw.CertificationRepresentative.prototype = {
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
+    ICAS3101: 'ICAS3101'
   },
   open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
@@ -43,6 +44,7 @@ Tw.CertificationRepresentative.prototype = {
     this._command = command;
     this._deferred = deferred;
     this._callback = callback;
+
 
     this._popupService.open({
       hbs: 'MV_01_02_01_01',
@@ -55,7 +57,8 @@ Tw.CertificationRepresentative.prototype = {
     this._smsNumbers = smsNumbers;
     return _.map(smsNumbers, $.proxy(function (number) {
       return {
-        txt: number.nameMask + ' ' + number.numberMask
+        txt: smsNumbers.length === 1 ? Tw.FormatHelper.conTelFormatWithDash(number.numberMask) :
+          number.nameMask + ' ' + Tw.FormatHelper.conTelFormatWithDash(number.numberMask)
         // option: smsNumbers.length === 1 && index === 0 ? 'checked' : ''
       };
     }, this));
@@ -68,6 +71,7 @@ Tw.CertificationRepresentative.prototype = {
     this.$validCert = $popupContainer.find('#fe-txt-cert');
     this.$errorCertTime = $popupContainer.find('#fe-error-cert-time');
     this.$errorCertCnt = $popupContainer.find('#fe-error-cert-cnt');
+    this.$errorCertBlock = $popupContainer.find('#fe-error-cert-block');
     this.$errorConfirm = $popupContainer.find('#fe-error-confirm');
     this.$errorConfirmTime = $popupContainer.find('#fe-error-confirm-time');
     this.$errorConfirmCnt = $popupContainer.find('#fe-error-confirm-cnt');
@@ -122,6 +126,8 @@ Tw.CertificationRepresentative.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCnt.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 ) {
+      this.$errorCertBlock.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -163,6 +169,7 @@ Tw.CertificationRepresentative.prototype = {
     this.$validCert.addClass('none');
     this.$errorCertTime.addClass('none');
     this.$errorCertCnt.addClass('none');
+    this.$errorCertBlock.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');

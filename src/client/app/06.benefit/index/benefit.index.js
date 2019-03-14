@@ -39,7 +39,9 @@ Tw.BenefitIndex.prototype = {
     this.$benefit = this.$container.find('#fe-benefit');
     this.$list = this.$container.find('#fe-list');
     this.$prodListArea = this.$container.find('#fe-prod-list-area');
-    this.$showDiscountBtn = this.$container.find('#fe-show-discount');
+    this.$showDiscountBtn = this.$container.find('#fe-show-discount'); // 할인금액 보기 버튼
+    this.$clearBtn = this.$container.find('#fe-clear'); // 할인금액 보기 초기화 버튼
+
     // 결합할인금액 미리보기 > (인터넷, 이동전화, TV) 설정
     this.$internetType = this.$container.find('[data-name="inetTypCd"]'); // 인터넷
     this.$mblPhonLineCnt = this.$container.find('[data-name="mblPhonLineCnt"]'); // 이동전화
@@ -60,10 +62,11 @@ Tw.BenefitIndex.prototype = {
     // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
-    this.$container.on('click', '.plus, .minus', $.proxy(this._onVariations, this));
+    this.$container.on('click', '.fe-plus, .fe-minus', $.proxy(this._onVariations, this));
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+    this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
     $(window).on(Tw.INIT_COMPLETE, $.proxy(function(){
       this._setScrollLeft(this._convertPathToCategory());
     }, this));
@@ -78,7 +81,7 @@ Tw.BenefitIndex.prototype = {
     var $target = this.$categoryTab.find('[data-category="' + categoryId + '"]').parent();
     var x = parseInt($target.position().left, 10);
     var parentLeft = parseInt(this.$categoryTab.position().left, 10);
-    this.$categoryTab.scrollLeft(x - parentLeft);
+    this.$categoryTab.find('ul').scrollLeft(x - parentLeft);
   },
 
   /**
@@ -207,7 +210,7 @@ Tw.BenefitIndex.prototype = {
     $this.siblings('button').prop('disabled', false).removeClass('disabled');
 
     // 감소 클릭
-    if ($this.hasClass('minus')) {
+    if ($this.hasClass('fe-minus')) {
       var _minCnt = 1;
       $lineCnt.text(_cnt-- < _minCnt ? _minCnt : _cnt);
       if (_cnt <= _minCnt) {
@@ -354,7 +357,7 @@ Tw.BenefitIndex.prototype = {
 
     this.$membership.text(data.membership);
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));
-    this.$benefit.prepend(data.benefitDiscount);
+    this.$benefit.text(this.$benefit.text() + ' ' + data.benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
     this.$benefitArea.removeClass('none');
   },
 
@@ -495,6 +498,9 @@ Tw.BenefitIndex.prototype = {
       this._onFail(resp);
       return;
     }
+    // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
+    this.$showDiscountBtn.addClass('none');
+    this.$clearBtn.removeClass('none').attr('aria-pressed', true);
     var _data = resp.result;
     // 데이터가 없을때
     if (Tw.FormatHelper.isEmpty(_data)) {
@@ -505,6 +511,31 @@ Tw.BenefitIndex.prototype = {
     this.$withTax.text(_data.dcPhrsAddDesc);
     this.$useCondition.html(_data.useCondHtmlCtt);
     this.$discountResult.removeClass('none');
+  },
+
+  /**
+   * 할인금액 미리보기 선택값 초기화
+   * @private
+   */
+  _previewClear: function() {
+    // 인터넷
+    this.$container.find('#fe-preview-internet li').removeClass('checked')
+      .attr('aria-checked', false)
+      .find('[name="inetTypCd"]').prop('checked', false);
+    // 이동전화
+    this.$mblPhonLineCnt.text('1');
+    this.$container.find('.fe-minus').addClass('disabled').prop('disabled', true);
+    this.$container.find('.fe-plus').removeClass('disabled').prop('disabled', false);
+    // TV
+    this.$container.find('#fe-preview-tv li').removeClass('checked')
+      .attr('aria-checked', false)
+      .find('[name="btvUseYn"]').prop('checked', false);
+
+    // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
+    this.$showDiscountBtn.removeClass('none');
+    this.$clearBtn.addClass('none');
+
+    this._onCheckDisabled();
   },
 
   /**

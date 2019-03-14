@@ -10,9 +10,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -33,8 +31,8 @@
                         <button class="wrap-link" data-url="/benefit/my">
                             <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
                             <i class="icon-badge-plan-use mr8"><span class="blind">my</span></i>
-                            <span class="stit">포인트 <span id="fe-point">점</span></span>
-                            <span class="view-tx">혜택 / 할인 <span id="fe-benefit">건</span></span>
+                            <span class="stit">포인트 <span id="fe-point">P</span></span>
+                            <span class="view-tx" id="fe-benefit">혜택 / 할인</span>
                         </button>
                     </div>
                 </div>
@@ -48,9 +46,9 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
                 <!-- .widget -->
-                <div class="widget">
+                <div>
                     <div class="widget-box horizontal">
-                        <div id="fe-category" class="horizontal-slide">
+                        <div id="fe-category" class="horizontal-slide slide-nopd">
                             <ul class="horizontal-list benefit-link">
                                 <li><button type="button" class="unit on" data-category="" data-url="/benefit/submain">전체</button></li>
                                 <li><button type="button" class="unit" data-category="F01421" data-url="/benefit/submain/discount">요금할인</button></li>
@@ -90,7 +88,7 @@
                             <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                        <ul id="fe-preview-internet" class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type02" role="radio">
                                                 <input type="radio" name="inetTypCd" value="F1" title="인터넷" data-name="inetTypCd" autocomplete="off" aria-labelledby="aria-comp-radio1"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt ff-tb" id="aria-comp-radio1">광랜 1회선</span>
@@ -110,16 +108,16 @@
                             <h4 class="dis-tit">이동전화</h4>
                             <div class="inner-wrap">
                                 <div class="line-control-wrap"><!-- 모든 버튼 비활성화의 경우 all-disabled 클래스 추가 -->
-                                    <button class="minus disabled" type="button" disabled="disabled">회선삭제</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                                    <button class="minus fe-minus disabled" type="button" disabled="disabled">회선삭제</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
                                     <span class="txt"><span data-name="mblPhonLineCnt">1</span>회선</span>
-                                    <button class="plus" type="button">회선추가</button>
+                                    <button class="plus fe-plus" type="button">회선추가</button>
                                 </div>
                             </div>
                             <h4 class="dis-tit">TV</h4>
                             <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                        <ul id="fe-preview-tv" class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type02" role="radio"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
                                                 <input type="radio" name="btvUseYn" value="Y" title="TV" data-name="btvUseYn" autocomplete="off" aria-labelledby="aria-comp-radio4"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt ff-tb" id="aria-comp-radio4">있음</span>
@@ -134,7 +132,8 @@
                             </div>
                         </div>
                         <div class="board-type-btn-wrap">
-                            <button id="fe-show-discount" class="btn disabled" type="button" disabled="disabled">할인금액 보기</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                            <button id="fe-show-discount" class="btn disabled" type="button" disabled="disabled" aria-pressed="false">할인금액 보기</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                            <button id="fe-clear" class="btn none" type="button" aria-pressed="false">초기화</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
                         </div>
                     </div>
                 </div>
@@ -191,22 +190,22 @@
                 <ul class="pg-link-list">
                     <li>
                         <button class="bt" data-url="/product/mobileplan">
-                            <i class="icon-price-plan-40"><span class="blind">요금제</span></i>요금제
+                            <i class="icon-price-plan-40"><span class="blind"></span></i>요금제
                         </button>
                     </li>
                     <li>
                         <button class="bt" data-url="/product/mobileplan-add">
-                            <i class="icon-vas-40"><span class="blind">부가서비스</span></i>부가서비스
+                            <i class="icon-vas-40"><span class="blind"></span></i>부가서비스
                         </button>
                     </li>
                     <li>
                         <button class="bt" data-url="/product/wireplan">
-                            <i class="icon-internet-40"><span class="blind">인터넷/집전화/IPTV</span></i>인터넷/전화/IPTV
+                            <i class="icon-internet-40"><span class="blind"></span></i>인터넷/전화/IPTV
                         </button>
                     </li>
                     <li>
                         <button class="bt" data-url="/product/roaming">
-                            <i class="icon-roaming-40"><span class="blind">T로밍</span></i>T로밍
+                            <i class="icon-roaming-40"><span class="blind"></span></i>T로밍
                         </button>
                     </li>
                 </ul>

@@ -470,6 +470,15 @@ $.fn.chart2 = function(o){
         d.unlimited = true;
       }
     }
+
+    //@190314 - DV001-16238: 그래프 크기 보완
+    var _gap = 1.5;
+    var _max = d.data_arry[1].v/d.data_arry[0].v;
+    if(_max>1 && _max<_gap){
+      d.data_arry[1].v = (d.data_arry[1].v * _gap);
+    }
+    //@190314 - DV001-16238: 그래프 크기 보완
+
     for(var i=0; i < d.data_arry.length; i++){
       if(d.unlimited){
         if(d.data_arry[i].v == 0){

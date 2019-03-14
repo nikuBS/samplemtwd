@@ -17,8 +17,8 @@ Tw.QuickMenuComponent.prototype = {
     this.$btQuickDisable = $('.fe-bt-quick-disable');
     if ( this.$btQuickAdd.length > 0 ) {
       this._menuId = this.$btQuickAdd.data('menuid');
-      this.$btQuickAdd.on('click', $.proxy(this._onClickRemoveQuickMenu, this));
-      this.$btQuickRemove.on('click', $.proxy(this._onClickAddQuickMenu, this));
+      this.$btQuickAdd.click(_.debounce($.proxy(this._onClickRemoveQuickMenu, this), 500));
+      this.$btQuickRemove.click(_.debounce($.proxy(this._onClickAddQuickMenu, this), 500));
       this._init();
     }
   },

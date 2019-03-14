@@ -15,19 +15,19 @@ function recognizeLastChar(keyword){
 }
 %>
 <!-- body -->
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
+<!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    // #skip_navigation -->
 <div class="wrap">
-<div class="searchbox-header">
+<div class="searchbox-header fe-header-wrap fe-aria-hidden-el">
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <input type="text" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                 </span>
             </span>
@@ -36,7 +36,7 @@ function recognizeLastChar(keyword){
     </div>
 </div>
 
-<div class="search-content">
+<div class="search-content fe-aria-hidden-el fe-container-wrap">
     <% if(suggestQuery.length>0){ %>
     <div class="cont-box noborder gaps-style03">
         <p class="re-searchword">

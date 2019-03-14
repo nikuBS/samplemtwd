@@ -27,52 +27,60 @@
                                             {{#isBill @key}}
                                             <li>
                                                 <div class="inner-top">
-                                                 <span class="title">{{@key}}
-                                                     {{#if noVAT}}
-                                                    <i class="icon-fnote"><span class="blind">각주 참고</span></i>
+                                                    {{#if noVAT}}
+                                                    <span class="title" role="note" aria-labelledby="aria-footnote-05">{{@key}}
+                                                        <i class="icon-fnote"><span class="blind">각주 참고</span></i></span>
                                                     {{else}}
                                                     {{#if is3rdParty}}
-                                                    <i class="icon-acompany"><span class="blind">타사</span></i>
-                                                    {{/if}}
-                                                    {{/if}}
-                                                </span>
-                                                    {{#if discount}}
-                                                    <span class="tx-cont tx-red">{{this.total}} 원</span>
+                                                    <span class="title" role="note" aria-labelledby="aria-footnote-06">{{@key}}
+                                                        <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                    </span>
                                                     {{else}}
-                                                    <span class="tx-cont">{{this.total}} 원</span>
+                                                    <span class="title">{{@key}}</span>
+                                                    {{/if}}
+                                                    {{/if}}
+                                                    {{#if discount}}
+                                                    <span class="tx-cont txt-point tx-bold">{{this.total}} 원</span>
+                                                    {{else}}
+                                                    <span class="tx-cont">{{this.total}}원</span>
                                                     {{/if}}
                                                 </div>
+                                                {{#if items.length}}
                                                 <div class="inner-row">
                                                     <ul>
                                                         {{#items}}
                                                         <li>
-                                                        <span class="title">{{name}}
                                                             {{#if noVAT}}
-                                                            <i class="icon-fnote"><span class="blind">각주 참고</span></i>
+                                                            <span class="title" role="note" aria-labelledby="aria-footnote-05">{{name}}
+                                                                 <i class="icon-fnote"><span class="blind">각주 참고</span></i>
+                                                            </span>
                                                             {{else}}
                                                             {{#if is3rdParty}}
-                                                            <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                            <span class="title" role="note" aria-labelledby="aria-footnote-06">{{name}}
+                                                                 <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                            </span>
+                                                            {{else}}
+                                                            <span class="title">{{name}}</span>
                                                             {{/if}}
                                                             {{/if}}
-                                                        </span>
-
-                                                            <span class="tx-cont">{{amount}} 원</span>
+                                                            <span class="tx-cont">{{amount}}원</span>
                                                         </li>
                                                         {{/items}}
                                                     </ul>
                                                 </div>
                                             </li>
+                                            {{/if}}
                                             {{/isBill}}
                                             {{/each}}
                                         </ul>
                                         {{#if showDesc}}
                                         <div class="noti-words">
-                                        <span class="inner-words" id="aria-footnote-02">
-                                            <i class="icon-fnote ml6"><span class="blind">각주 참고</span></i>부가가치세 제외 대상 표시
-                                        </span>
-                                            <span class="inner-words" id="aria-footnote-01">
-                                            <i class="icon-acompany"><span class="blind">타사</span></i>당사에서 청구 대행하는 타사 요금
-                                        </span>
+                                            <span class="inner-words" id="aria-footnote-05">
+                                                <i class="icon-fnote ml6"><span class="blind">각주 참고</span></i>부가가치세 제외 대상 표시
+                                            </span>
+                                            <span class="inner-words" id="aria-footnote-06">
+                                                 <i class="icon-acompany"><span class="blind">타사</span></i>당사에서 청구 대행하는 타사 요금
+                                            </span>
                                         </div>
                                         {{/if}}
                                     </div>

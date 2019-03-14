@@ -4,7 +4,7 @@
  * Date: 2018.11.16
  */
 
-Tw.CustomerEmailUpload = function (rootEl) {
+Tw.CustomerEmailUpload = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-  this._init();
+  this._init(data);
 };
 
 Tw.CustomerEmailUpload.prototype = {
@@ -23,7 +23,8 @@ Tw.CustomerEmailUpload.prototype = {
   serviceUploadFiles: [],
   qualityUploadFiles: [],
 
-  _init: function () {
+  _init: function (data) {
+    this.userAgent = data.userAgent;
   },
 
   _cachedElement: function () {
@@ -148,12 +149,27 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.append(this.tpl_upload_file({ uploadFiles: this.uploadFiles }));
 
     this._checkUploadButton();
+
+    // 웹접근성 열리고 포커스
+    $('.fe-page-wrap').attr('aria-hidden', true);
+    $('.tw-popup:last').attr('tabindex',0).focus();
   },
 
   _onClickServiceUpload: function () {
-    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
-      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      this._popupService.open({
+        hbs: 'popup',// hbs의 파일명
+        title: '',
+        title_type: 'sub',
+        cont_align: 'tl',
+        contents: Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD,
+        bt_b: [{
+          style_class: 'bt-red1 pos-right tw-popup-closeBtn',
+          txt: Tw.BUTTON_LABEL.CONFIRM
+        }]
+      }, $.proxy(this._bindAlertPopupClose, this), null);
       return false;
     }
 
@@ -162,9 +178,20 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickQualityUpload: function () {
-    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
-      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      this._popupService.open({
+        hbs: 'popup',// hbs의 파일명
+        title: '',
+        title_type: 'sub',
+        cont_align: 'tl',
+        contents: Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD,
+        bt_b: [{
+          style_class: 'bt-red1 pos-right tw-popup-closeBtn',
+          txt: Tw.BUTTON_LABEL.CONFIRM
+        }]
+      }, $.proxy(this._bindAlertPopupClose, this), null);
       return false;
     }
 
@@ -172,8 +199,24 @@ Tw.CustomerEmailUpload.prototype = {
     this._showUploadPopup();
   },
 
+  _bindAlertPopupClose: function($layer) {
+    $layer.on('click', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
+    try {
+      $layer.on('touchstart', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
+    } catch (err) {}
+  },
+
+  _execAlertPopupClose: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this._popupService.close();
+  },
+
   _hideUploadPopup: function () {
     $('.fe-wrap-file-upload').remove();
+    // 웹접근성 닫히고 포커스
+    $('.fe-page-wrap').attr('aria-hidden', false);
+    $('.fe-upload-file-service').focus();
   },
 
   _successUploadFile: function (res) {
@@ -246,7 +289,7 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _isLowerVersionAndroid: function () {
-    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion(this.userAgent);
 
     return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }

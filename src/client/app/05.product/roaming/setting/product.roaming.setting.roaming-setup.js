@@ -92,6 +92,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     return returnActionSheetData;
   },
   _btnDateEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var $currentTarget = $(eventObj.currentTarget);
     var nowTargetId = $currentTarget.attr('id');
     var nowValue = $currentTarget.text().trim();
@@ -102,14 +105,17 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       actionSheetData[0].list[0].option = 'checked';
     }
     actionSheetData[0].list[0].value+= ' (오늘)';
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
   _btnTimeEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var nowValue = $(eventObj.currentTarget).text().trim();
     var timeArr = this._getTimeArr();
     var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
 
   _bindActionSheetElementEvt : function($layer){
@@ -218,7 +224,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     }
     return returnValue;
   },
-  _openSelectDatePop: function (data,title) {
+  _openSelectDatePop: function (data,title,evt) {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',// hbs의 파일명
         layer: true,
@@ -226,7 +232,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      null,
+      $.proxy(function () {
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
 
@@ -241,6 +249,15 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
       'startEndTerm' : String(endDtIdx - startDtIdx)
     };
+    if(
+        userSettingInfo.svcStartDt===this._prodBffInfo.svcStartDt&&
+        userSettingInfo.svcEndDt===this._prodBffInfo.svcEndDt&&
+        userSettingInfo.svcStartTm===this._prodBffInfo.svcStartTm&&
+        userSettingInfo.svcEndTm===this._prodBffInfo.svcStartDt
+    ){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+      return;
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {

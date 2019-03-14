@@ -29,6 +29,7 @@ import TeventRouter from './app/09.tevent/tevent.router';
 import BypassRouter from './common/route/bypass.router';
 import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
+import StoreRouter from './common/route/store.router';
 import TestRouter from './app/99.test/test.router';
 
 // Application Modules
@@ -72,6 +73,7 @@ class App {
     this.setApis();
     this.setBypass();
     this.setNative();
+    this.setStore();
     this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
@@ -88,8 +90,12 @@ class App {
 
   private setNative() {
     this.app.use('/native', new NativeRouter().router);
-
   }
+
+  private setStore() {
+    this.app.use('/store', new StoreRouter().router);
+  }
+
 
   private setGlobalVariables() {
     const env = environment[String(process.env.NODE_ENV)];

@@ -12,15 +12,7 @@
     <p class="data"><em>{{resData.hh}}</em><span>시간</span> <em>{{resData.mm}}</em><span>분</span> <em>{{resData.ss}}</em><span>초</span></p>
 </script>
 
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
+
 <div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-btn" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
 
@@ -50,12 +42,12 @@
                         <span>원하시는 기간을 선택해주세요.</span>
                     </div>
 
-                    <div class="data-result mt20" data-target="dataResult" style="display: none;" >
+                    <div class="data-result mt20" data-target="dataResult" style="display: none;" aria-hidden="true">
                         <p class="tit">2017.12 ~ 2018.05</p>
                         <p class="data"><em>10</em><span>시간</span> <em>50</em><span>분</span> <em>20</em><span>초</span></p>
                     </div>
 
-                    <div class="no-data" data-target="noData" style="display: none;" >
+                    <div class="no-data" data-target="noData" style="display: none;" aria-hidden="true">
                         <span>이용내역이 없습니다.</span>
                     </div>
 
@@ -68,7 +60,7 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button id="MF_02_01_02_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="콜기프트 안내">콜기프트 안내<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MF_02_01_02_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">콜기프트 안내<span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

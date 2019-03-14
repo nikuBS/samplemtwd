@@ -28,6 +28,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     this.$btnAddNum = this.$container.find('.fe-btn_add_num');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
+    this.$btnMaskingAlert = this.$container.find('.fe-bt-masking-alert');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
@@ -36,6 +37,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
+    this.$btnMaskingAlert.on('click', $.proxy(this._openMaskingAlert, this));
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
@@ -159,15 +161,15 @@ Tw.ProductMobileplanSettingNumber.prototype = {
 
   _clearNum: function() {
     this.$inputNumber.val('');
-    this.$btnClearNum.hide();
+    this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
-      this.$btnClearNum.show();
+      this.$btnClearNum.show().attr('aria-hidden', 'false');
     } else {
-      this.$btnClearNum.hide();
+      this.$btnClearNum.hide().attr('aria-hidden', 'true');
     }
   },
 
@@ -195,6 +197,21 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     }.bind(this));
 
     return resultList;
+  },
+
+  _openMaskingAlert: function() {
+    this._popupService.openConfirmButton(
+      Tw.PRODUCT_AUTH_ALERT_STR.MSG,
+      Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
+      $.proxy(this._showAuth,this),
+      null,
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.CONFIRM);
+  },
+
+  _showAuth : function () {
+    this._popupService.close();
+    $('.fe-bt-masking').trigger('click');
   }
 
 };

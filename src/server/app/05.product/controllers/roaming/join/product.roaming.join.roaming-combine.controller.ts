@@ -43,6 +43,9 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
           msg: prodBffInfo.msg,
         });
       }
+      for (let i = 0; i < prodBffInfo.result.togetherMemList.length; i++) {
+        prodBffInfo.result.togetherMemList[i].svcNum = StringHelper.phoneStringToDash(prodBffInfo.result.togetherMemList[i].svcNum);
+      }
       res.render('roaming/join/product.roaming.join.roaming-combine.html', {
         svcInfo : svcInfo,
         prodRedisInfo : prodRedisInfo.result.summary,

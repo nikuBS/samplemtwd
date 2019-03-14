@@ -15,6 +15,7 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodTyp
   this._prodBffInfo = this._arrangeAgree(prodBffInfo);
   this._prodTypeInfo= prodTypeInfo;
   this._page = true;
+  this.$mainContent = this.$rootContainer.find('.fe-main-content');
   this._init();
   this._bindPopupElementEvt();
 };
@@ -51,7 +52,7 @@ Tw.ProductRoamingTerminate.prototype = {
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _allAgree : function(){
     var nowAllAgree = this._$allAgreeElement.attr('checked');
@@ -89,7 +90,7 @@ Tw.ProductRoamingTerminate.prototype = {
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._confirmInfo,this),
-      null);
+      $.proxy(this._resetAriaHidden,this));
   },
   _confirmInfo : function () {
     this._popupService.close();
@@ -115,10 +116,12 @@ Tw.ProductRoamingTerminate.prototype = {
           $.proxy(this._goPlan,this),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR,null,
+            $.proxy(this._resetAriaHidden,this));
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR,null,
+          $.proxy(this._resetAriaHidden,this));
     }, this));
 
   },
@@ -157,7 +160,8 @@ Tw.ProductRoamingTerminate.prototype = {
         title: $currentTarget.data('tit'),
         html: $currentTarget.data('txt')
       }
-    },$.proxy(this._bindDetailAgreePopupEvt,this), null, 'agree_pop');
+    },$.proxy(this._bindDetailAgreePopupEvt,this),
+      $.proxy(this._resetAriaHidden,this), 'agree_pop');
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -174,18 +178,22 @@ Tw.ProductRoamingTerminate.prototype = {
     return priceVal;
   },
   _showBffToolTip : function (evt) {
-    var tooltipData = $(evt.currentTarget).data();
+    var $target = $(evt.currentTarget);
+    var tooltipData = $target.data();
+    console.log(tooltipData.txt);
     this._popupService.open({
-      url: Tw.Environment.cdn + '/hbs/',
-      'pop_name': 'type_tx_scroll',
+      url: '/hbs/',
+      hbs: 'popup',
       'title': tooltipData.tit,
-      'title_type': 'sub',
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn',
+      'title_type': 'tit-tooltip',
       'cont_align': 'tl',
+      'tagStyle-div': 'div',
       'contents': tooltipData.txt,
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
-    },null,null);
+      'tooltip': 'tooltip-pd'
+    },null,$.proxy(this._resetAriaHidden,this));
+  },
+  _resetAriaHidden : function () {
+    this.$mainContent.attr('aria-hidden',false);
   }
 };

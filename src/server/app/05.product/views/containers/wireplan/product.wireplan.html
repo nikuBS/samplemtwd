@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -32,7 +32,7 @@
                     <div class="calling-plan">
                         <a class="wrap-link" href="/myt-join/myplan">
                             <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
-                            <span class="stit"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></span>
+                            <span class="stit"><%= myWire.prodNm %><% if (myWire.count > 0) { %> 외 <%= myWire.count %>건<% } %></span>
                         </a>
                     </div>
                 </div>
@@ -138,34 +138,19 @@
                     <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                     <ul class="pg-link-list">
                         <li>
-                            <a href="/product/mobileplan">
-                                <i class="icon-price-plan-40"><span class="blind">요금제</span></i>
-                                요금제
-                            </a>
+                            <a href="/product/mobileplan"><i class="icon-price-plan-40"></i>요금제</a>
                         </li>
                         <li>
-                            <a href="/product/mobileplan-add">
-                                <i class="icon-vas-40"><span class="blind">부가서비스</span></i>
-                                부가서비스
-                            </a>
+                            <a href="/product/mobileplan-add"><i class="icon-vas-40"></i>부가서비스</a>
                         </li>
                         <li>
-                            <a href="/product/roaming">
-                                <i class="icon-roaming-40"><span class="blind">T로밍</span></i>
-                                T로밍
-                            </a>
+                            <a href="/product/roaming"><i class="icon-roaming-40"></i>T로밍</a>
                         </li>
                         <li>
-                            <a href="/benefit/submain/discount">
-                                <i class="icon-discount-40"><span class="blind">혜택 / 할인 > 요금 할인</span></i>
-                                혜택 / 할인 > 요금 할인
-                            </a>
+                            <a href="/benefit/submain/discount"><i class="icon-discount-40"></i>혜택 / 할인 > 요금 할인</a>
                         </li>
                         <li>
-                            <a href="/benefit/submain/combinations">
-                                <i class="icon-discount-40"><span class="blind">혜택 / 할인 > 결합 할인</span></i>
-                                혜택 / 할인 > 결합 할인  
-                            </a>
+                            <a href="/benefit/submain/combinations"><i class="icon-discount-40"></i>혜택 / 할인 > 결합 할인  </a>
                         </li>
                     </ul>
                 </div>

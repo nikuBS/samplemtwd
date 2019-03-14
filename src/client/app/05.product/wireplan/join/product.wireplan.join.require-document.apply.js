@@ -87,7 +87,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
 
     this._fileList.push(fileInfo);
     this.$fileList.append(this._fileTemplate(fileInfo));
-    this.$fileWrap.show();
+    this.$fileWrap.show().attr('aria-hidden', 'false');
 
     this._clearExplainFile();
     this._procEnableApplyBtn();
@@ -127,7 +127,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     $item.remove();
 
     if (this._fileList.length < 1) {
-      this.$fileWrap.hide();
+      this.$fileWrap.hide().attr('aria-hidden', 'true');
     }
 
     this._clearExplainFile();
@@ -142,7 +142,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
 
     this._fileList.push(resp.result);
     this.$fileList.append(this._fileTemplate(resp.result[0]));
-    this.$fileWrap.show();
+    this.$fileWrap.show().attr('aria-hidden', 'false');
 
     this._clearExplainFile();
     this._procEnableApplyBtn();

@@ -291,7 +291,7 @@ export const CUSTOMER_PROTECT_REPORT_ORG = [
     LINK: 'http://m.msafer.or.kr/'
   },
   {
-    TEXT: '휴대폰∙ARS 결제 중재센터',
+    TEXT: '휴대폰/ARS 결제 중재센터',
     LINK: 'http://m.spayment.org/svc/'
   },
   {

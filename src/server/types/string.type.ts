@@ -189,6 +189,14 @@ export enum MYT_DATA_RECHARGE_COUPON {
   A20 = '선물받은 리필쿠폰'
 }
 
+export const MYT_DATA_HISTORY = {
+  send: '보냄',
+  recieve: '받음',
+  once: '1회',
+  auto: '자동',
+  recharge: '충전'
+};
+
 export enum PRODUCT_INFINITY_BENEFIT {
   NA00006114 = 'T로밍 OnePass 1개월에 1개,<br>마티나 라운지 이용권 3개월에 1회 제공',
   NA00006115 = '영화예매권 월 2장 무료',
@@ -432,10 +440,18 @@ export const MYT_FARE_COMPLETE_MSG = {
   PREPAY_HISTORY: '선결제내역 보기',
   REGISTER: '신청 완료',
   CHANGE: '변경 완료',
+  CANCEL: '해지 완료',
   CHANGE_HISTORY: '변경내역 보기',
+  CANCEL_HISTORY: '해지내역 보기',
   NUMBER: '번호로',
   SMS: '문자 전송 완료',
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
+};
+
+export const MYT_DATA_HISTORY_BADGE_NAMES = {
+  CHARGE: '충전',
+  RECEIVE: '받음',
+  SEND: '보냄'
 };
 
 export const MYT_DATA_COMPLETE_MSG = {
@@ -481,6 +497,14 @@ export const MYT_JOIN_WIRE = {
 
 export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
   TITLE: '명의 변경 신청 방법 안내'
+};
+
+export const MYT_JOIN_WIRE_HIST_DTL_TIT_MAP = {
+  '167' : '신규가입 상세내역',
+  '162' : '설치장소 변경 상세내역',
+  '168' : '가입상품 변경 상세내역',
+  '143' : '약정기간 변경 상세내역',
+  '153' : '요금상품 변경 상세내역'
 };
 
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
@@ -559,7 +583,7 @@ export const BRANCH_SEARCH_OPTIONS = {
   rent: '임대폰',
   skb: 'SK브로드밴드',
   apple: '애플취급점',
-  authAgnYn: '공식인증대리점',
+  authAgnYn: '공식인증 대리점',
   etc: ' 외 ',
   count: '건'
 };
@@ -1100,7 +1124,8 @@ export const MYT_SUSPEND_REASON = {
 };
 
 export const MYT_SUSPEND_COMPLETE_MSG = {
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_MILITARY: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_ABROAD: '회선번호: {SVC_INFO}<br />장기일시정지 시작일: {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호: {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',

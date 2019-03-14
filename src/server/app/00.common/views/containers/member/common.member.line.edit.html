@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -41,7 +39,7 @@
                                 <p class="mline-manage-ti">이용중인 회선 <span class="mline-num red"><span id="fe-txt-used" class="num"><%= expsY.cnt %></span>개</span></p>
                                 <ul id="sortable-enabled" class="connectedSortable enabled">
                                     <% expsY.list.map((line, index) => { %>
-                                    <li class="ui-state-default fe-item fe-item-active <% if(index >= 20) { %>none<% } %>" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>">
+                                    <li class="ui-state-default fe-item fe-item-active <% if(index >= 20) { %>none<% } %>" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>" data-svcgr="<%= line.svcGr %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %><!--<span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span>--></p>
                                             <span class="ph"><%= line.showDetail %></span>
@@ -67,7 +65,7 @@
                                 <p class="mline-manage-ti">추가 가능한 회선 <span class="mline-num blue"><span id="fe-txt-unused" class="num"><%= expsN.cnt %></span>개</span></p>
                                 <ul id="sortable-disabled" class="connectedSortable disabled fe-list-exposable">
                                     <% expsN.list.map((line) => { %>
-                                    <li class="ui-state-default fe-item fe-item-inactive" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>">
+                                    <li class="ui-state-default fe-item fe-item-inactive" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>" data-svcgr="<%= line.svcGr %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %></p>
                                             <span class="ph"><%= line.showDetail %></span>

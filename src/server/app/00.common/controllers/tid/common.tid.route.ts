@@ -15,10 +15,24 @@ class CommonTidRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
+    const target = req.query.target;
+
     if ( !FormatHelper.isEmpty(query.error) ) {
-      res.send(query.error_description);
+      if ( query.error === '3601' ) {
+        res.render('tid/common.tid.route.html', { pageInfo, target });
+      } else if ( query.error === '3602' || query.error === '4503' ) {
+        // find-pw, find-id 뒤로가기 버튼 클릭시
+        res.render('tid/common.tid.route.html', { pageInfo, target: '/common/member/tid-pwd' });
+      } else {
+        this.error.render(res, {
+          code: query.error,
+          msg: query.error_description,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
+      }
     } else {
-      res.render('tid/common.tid.route.html', { pageInfo });
+      res.render('tid/common.tid.route.html', { pageInfo, target });
     }
   }
 }

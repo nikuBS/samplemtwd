@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.card.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.17
+ * Annotation: 체크/신용카드 즉시납부
  */
 
 Tw.MyTFareBillCard = function (rootEl) {
@@ -59,8 +60,8 @@ Tw.MyTFareBillCard.prototype = {
       $target.siblings().removeClass('checked');
       this.$refundBank.attr('disabled', 'disabled');
       this.$refundNumber.attr('disabled', 'disabled');
-      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
-      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     }
   },
   _showAndHideAccount: function (event) {

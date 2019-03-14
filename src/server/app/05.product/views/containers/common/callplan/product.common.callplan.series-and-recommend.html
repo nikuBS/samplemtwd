@@ -11,12 +11,12 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                 <div class="tab-linker">
                     <ul role="tablist" class="tab-style01 <%= tabStyleClass %>" style="width: 100%;">
                         <% if ( series && series.list.length > 0 ) { %>
-                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button><%= series.prodGrpNm %></button></li>
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12" title="<%= series.prodGrpNm %>"><button aria-hidden="true"><%= series.prodGrpNm %></button></li>
                         <% } %>
                         <% if ( recommends && recommends.length > 0 ) {
                         const selected = !series || series.list.length < 1 ? 'true' : 'false';
                         %>
-                        <li role="tab" aria-selected="<%= selected %>" aria-controls="tab2-tab2" id="tab22"><button>함께하면 유용한 상품</button></li>
+                        <li role="tab" aria-selected="<%= selected %>" aria-controls="tab2-tab2" id="tab22" title="함께하면 유용한 상품"><button aria-hidden="true">함께하면 유용한 상품</button></li>
                         <% } %>
                     </ul>
                 </div>
@@ -29,7 +29,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                     <!-- .widget -->
                                     <div class="widget">
                                         <div class="widget-box horizontal">
-                                            <div class="horizontal-slide">
+                                            <div class="horizontal-slide slide-nopd">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for (var i in series.list) { %>
                                                     <li data-prod_id="<%= series.list[i].prodId %>" class="fe-go_prod">
@@ -40,7 +40,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                                                 <% if ( series.list[i].basFeeInfo.isNaN ) { %>
                                                                 <span class="unit"><%= series.list[i].basFeeInfo.value %></span>
                                                                 <% } else { %>
-                                                                <span class="money"><%= series.list[i].basFeeInfo.value %></span>원
+                                                                <span class="money money-noleft"><%= series.list[i].basFeeInfo.value %></span>원
                                                                 <% } %>
                                                             </p>
                                                             <% } %>
@@ -100,7 +100,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                     <!-- .widget -->
                                     <div class="widget">
                                         <div class="widget-box horizontal">
-                                            <div class="horizontal-slide">
+                                            <div class="horizontal-slide slide-nopd">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for ( var i in recommends ) { %>
                                                     <li data-prod_id="<%= recommends[i].prodId %>" class="fe-go_prod">
@@ -111,7 +111,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                                                 <% if ( recommends[i].basFeeInfo.isNaN ) { %>
                                                                 <span class="unit"><%= recommends[i].basFeeInfo.value %></span>
                                                                 <% } else { %>
-                                                                <span class="money"><%= recommends[i].basFeeInfo.value %></span>원
+                                                                <span class="money money-noleft"><%= recommends[i].basFeeInfo.value %></span>원
                                                                 <% } %>
                                                             </p>
                                                             <% } %>

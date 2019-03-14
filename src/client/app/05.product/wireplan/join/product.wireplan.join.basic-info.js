@@ -110,21 +110,22 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
     var $elem = $(e.currentTarget);
 
     $elem.parent().find('input').val('');
-    $elem.hide();
+    $elem.hide().attr('aria-hidden', 'true');
 
     this._checkSetupButton();
   },
 
   _toggleClearBtn: function($elem) {
     if ($elem.val().length > 0) {
-      $elem.parent().find('.fe-btn_clear').show();
+      $elem.parent().find('.fe-btn_clear').show().attr('aria-hidden', 'false');
     } else {
-      $elem.parent().find('.fe-btn_clear').hide();
+      $elem.parent().find('.fe-btn_clear').hide().attr('aria-hidden', 'true');
     }
   },
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
+      pageId: 'M000433',
       isTerm: false,
       isNoticeList: true,
       isWireplan: true,
@@ -138,7 +139,8 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P' ?
+        Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask) : this._confirmOptions.preinfo.svcNumMask,
       svcNickname: Tw.SVC_CD[this._confirmOptions.preinfo.reqProdInfo.svcCd],
       noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),

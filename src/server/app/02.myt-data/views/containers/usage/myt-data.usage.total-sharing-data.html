@@ -8,9 +8,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <div id="fe-myt-data-usage-total-sharing-data" class="wrap" data-menuId="<%= pageInfo.menuId %>">
@@ -35,12 +33,11 @@
                             <% } else if (defaultData.sharedData) { %>
                                 <em id="sharedDataUsed"></em>
                             <% } %>
-                            사용
                         </p>
                     </div>
                 </div>
                 <ul class="full-link-list type1">
-                    <li class="fe-tfamily-sharing" style="display: none;">
+                    <li class="fe-tfamily-sharing" style="display: none;" aria-hidden="true">
                         <button>
                                 <span class="inner">
                                     <span class="tit">T가족모아데이터</span>

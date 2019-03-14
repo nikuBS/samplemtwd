@@ -15,5 +15,7 @@ Tw.CommonMemberLogoutComplete = function (rootEl) {
 Tw.CommonMemberLogoutComplete.prototype = {
   _init: function () {
     this._apiService.sendNativeSession('');
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
   }
 };

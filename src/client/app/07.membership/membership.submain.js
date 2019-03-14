@@ -4,7 +4,7 @@
  * Date: 2018.12.26
  */
 
-Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheckData, menuId) {
+Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, menuId) {
   this.$container = rootEl;
   this._membershipData = membershipData;
   this._svcInfo = svcInfo;
@@ -34,6 +34,7 @@ Tw.MembershipSubmain.prototype = {
     this.$barCode = this.$container.find('#fe-barcode-img');
     this.$nearBrand = this.$container.find('#fe-memebership-near');
     this._nearBrandTmpl = Handlebars.compile($('#tmplList').html());
+    this._noBrandTmpl = Handlebars.compile($('#tmplList-no-data').html());
   },
 
   _bindEvent: function() {
@@ -51,28 +52,33 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectLocationAgreement:function () {
     if(this._svcInfo) {
-      this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
-          .done($.proxy(function (res) {
-            if (res.code === Tw.API_CODE.CODE_00) {
-              Tw.Logger.info('check loc agreement : ', res);
-              if (res.result.twdLocUseAgreeYn === 'Y') {
-                this._askCurrentLocation();
+      if(this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY){
+        this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+            .done($.proxy(function (res) {
+              if (res.code === Tw.API_CODE.CODE_00) {
+                Tw.Logger.info('check loc agreement : ', res);
+                if (res.result.twdLocUseAgreeYn === 'Y') {
+                  this._askCurrentLocation();
+                } else {
+                  this._showAgreementPopup();
+                }
               } else {
-                this._showAgreementPopup();
+                Tw.Error(res.code, res.msg).pop();
               }
-            } else {
-              Tw.Error(res.code, res.msg).pop();
-            }
-          }, this))
-          .fail(function (err) {
-            Tw.Error(err.code, err.msg).pop();
-          });
+            }, this))
+            .fail(function (err) {
+              Tw.Error(err.code, err.msg).pop();
+            });
+      } else {
+        this._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A72.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A72.TITLE);
+      }
+
     } else {
       this._goLogin();
     }
   },
   _checkLocationAgreement:function () {
-    if(this._svcInfo) {
+    if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
           .done($.proxy(function (res) {
             if (res.code === Tw.API_CODE.CODE_00) {
@@ -84,6 +90,7 @@ Tw.MembershipSubmain.prototype = {
                   latitude: '37.5600420',
                   longitude: '126.9858500'
                 });
+
               }
             } else {
               Tw.Error(res.code, res.msg).pop();
@@ -133,7 +140,7 @@ Tw.MembershipSubmain.prototype = {
           ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
           link_list: [{style_class: 'fe-link-term', txt: Tw.BRANCH.VIEW_LOCATION_TERM}],
           bt: [{style_class: 'bt-blue1', txt: Tw.BRANCH.AGREE},
-              {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
+            {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
         }, $.proxy(function (root) {
           root.on('click', '.fe-link-term', $.proxy(function () {
             this._historyService.goLoad('/main/menu/settings/terms?id=33&type=a');
@@ -164,13 +171,13 @@ Tw.MembershipSubmain.prototype = {
   },
   _getMembershipBanner: function (){
     this._apiService.requestArray([
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
-        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
-     ]).done($.proxy(this._successTosBanner, this));
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+    ]).done($.proxy(this._successTosBanner, this));
   },
   _successTosBanner: function (banner1, banner2) {
-      var result = [{ target: 'S', banner: banner1 },
-                    { target: 'B', banner: banner2 }];
+    var result = [{ target: 'S', banner: banner1 },
+      { target: 'B', banner: banner2 }];
     var adminList = [];
     _.map(result, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner) ) {
@@ -279,6 +286,7 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
+    Tw.Logger.info('[_askCurrentLocation]');
     if(this._svcInfo){
       if (Tw.BrowserHelper.isApp()){
         this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
@@ -298,12 +306,17 @@ Tw.MembershipSubmain.prototype = {
       } else {
         if ('geolocation' in navigator) {
           // Only works in secure mode(Https) - for test, use localhost for url
-          navigator.geolocation.getCurrentPosition($.proxy(function (location) {
-            this._getAreaByGeo({
-              longitude: location.coords.longitude,
-              latitude: location.coords.latitude
-            });
-          }, this));
+          var geoOptions = {timeout: 1000};
+          navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this), geoOptions);
+        } else {
+          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+              $.proxy(function () {
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
+              }, this));
         }
       }
     } else {
@@ -312,6 +325,24 @@ Tw.MembershipSubmain.prototype = {
         longitude: '126.9858500'
       });
     }
+  },
+  _failGeolocation: function (resp) {
+    Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
+    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          this._getAreaByGeo({
+            latitude: '37.5600420',
+            longitude: '126.9858500'
+          });
+        }, this));
+  },
+  _successGeolocation: function (location) {
+    Tw.Logger.info('_success geolocation getCurrentPosition');
+    this._getAreaByGeo({
+      longitude: location.coords.longitude,
+      latitude: location.coords.latitude
+    });
   },
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
@@ -358,17 +389,24 @@ Tw.MembershipSubmain.prototype = {
     return iconArr;
   },
   _handleSuccessNeaBrand: function (resp) {
+    Tw.Logger.info('near brand resp :', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.nearBrandData = resp.result.list;
-      for(var idx in this.nearBrandData){
-        this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
-        this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
-        this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
-        this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+      if(Number(resp.result.totalCnt) > 0){
+        this.nearBrandData = resp.result.list;
+        for(var idx in this.nearBrandData){
+          this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
+          this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
+          this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
+          this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+        }
+        Tw.Logger.info('near brand resp :', this.nearBrandData);
+        this.$nearBrand.empty();
+        this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
+      } else {
+        this.$nearBrand.empty();
+        this.$nearBrand.append(this._noBrandTmpl());
       }
-      Tw.Logger.info('near brand resp :', this.nearBrandData);
-      this.$nearBrand.empty();
-      this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
+
     } else {
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,

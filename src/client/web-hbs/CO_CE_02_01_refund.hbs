@@ -18,32 +18,72 @@
                     <div class="box-certifi-card">
                         <p class="certifi-ti-big pt8">본인 확인 후 미환급금을 조회하실 수 있습니다.<br />환급 신청은 고객보호를 위해 로그인 후 이용하실 수 있습니다.</p>
                         <ul class="certifi-card-list mt28 three"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
-                            <li>
+                            <li class="{{#if data.methods.skSms.block}}lock{{/if}}">
+                                {{#if data.methods.skSms.block}}
+                                    <div class="lock-layer">
+                                        <div class="txtBox">
+                                            <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                            <p>점검 중</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
                                 <button id="fe-bt-sk-refund">
                                     <span class="ico-certifi-card type05" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">SKT 텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
-                            <li>
+                            <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                                {{#if data.methods.otherSms.block}}
+                                    <div class="lock-layer">
+                                        <div class="txtBox">
+                                            <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                            <p>점검 중</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
                                 <button id="fe-bt-kt-refund">
                                     <span class="ico-certifi-card type06" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">KT 인증</span></span>
                                 </button>
                             </li>
-                            <li>
+                            <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                                {{#if data.methods.otherSms.block}}
+                                    <div class="lock-layer">
+                                        <div class="txtBox">
+                                            <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                            <p>점검 중</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
                                 <button id="fe-bt-lg-refund">
                                     <span class="ico-certifi-card type07" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
                                 </button>
                             </li>
-                            <li>
+                            <li class="{{#if data.methods.save.block}}lock{{/if}}">
+                                {{#if data.methods.save.block}}
+                                    <div class="lock-layer">
+                                        <div class="txtBox">
+                                            <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                            <p>점검 중</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
                                 <button id="fe-bt-save-refund">
                                     <span class="ico-certifi-card type04" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">알뜰폰 SMS<br />인증</span></span>
                                 </button>
                             </li>
 
-                            <li>
+                            <li class="{{#if data.methods.ipin.block}}lock{{/if}}">
+                                {{#if data.methods.ipin.block}}
+                                    <div class="lock-layer">
+                                        <div class="txtBox">
+                                            <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                            <p>점검 중</p>
+                                        </div>
+                                    </div>
+                                {{/if}}
                                 <button id="fe-bt-ipin-refund">
                                     <span class="ico-certifi-card type03" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>

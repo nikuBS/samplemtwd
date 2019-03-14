@@ -18,6 +18,11 @@ Tw.CustomerEmailTemplate = function (rootEl, allSvc) {
 
 Tw.CustomerEmailTemplate.prototype = {
   _init: function () {
+    this.tempTitle = '';
+    this.tempContent = '';
+    this.prevServiceTemp = '';
+    this.prevTopic = ''; // service or quality
+    this.prevTabTemp = '';
   },
 
   _cachedElement: function () {
@@ -46,6 +51,23 @@ Tw.CustomerEmailTemplate.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
+    // before temp changed
+    this._beforeChangeTemp(this.$wrap_tpl_service);
+
+    // template channel change prevServiceTemp init
+    if (this.prevTopic !== 'Service') {
+      this.prevServiceTemp = this.prevTabTemp;
+    } else {
+      this.prevTabTemp = serviceCategory.depth2;
+    }
+    this.prevTopic = 'Service';
+
+    // 같은카테고리 반복시에는 갱신 x
+    if (this.prevServiceTemp === serviceCategory) {
+      return ;
+    }
+
+
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
         var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
@@ -71,13 +93,35 @@ Tw.CustomerEmailTemplate.prototype = {
         this.$wrap_tpl_service.html(this.tpl_service_cell());
     }
 
+    // after temp changed
+    this._afterChangeTemp(this.$wrap_tpl_service, serviceCategory.depth2);
+
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.bt-link-tx'));
   },
 
-  _changeQualityTemplate: function (e, qualityCategory, qualityType) {
+  _changeQualityTemplate: function (e, opt) {
     e.stopPropagation();
     e.preventDefault();
+
+    var qualityCategory = opt.qualityCategory || 'cell', // 기본선택값 cell 
+        qualityType= opt.qualityType;
+
+    // before temp changed
+    this._beforeChangeTemp(this.$wrap_tpl_quality);
+
+    // template channel change prevServiceTemp init
+    if (this.prevTopic !== 'Quality') {
+      this.prevServiceTemp = this.prevTabTemp;
+    } else {
+      this.prevTabTemp = qualityType;
+    }
+    this.prevTopic = 'Quality';
+
+    // 같은카테고리 반복시에는 갱신 x
+    if (this.prevServiceTemp === qualityType ) {
+      return ;
+    }
 
     switch ( qualityCategory.depth1 ) {
       case 'cell':
@@ -90,7 +134,7 @@ Tw.CustomerEmailTemplate.prototype = {
       case 'internet':
         if ( qualityType && qualityType.isPhone ) {
           this.$wrap_tpl_quality.html(this.tpl_quality_phone());
-        } else {
+        } else {          
           this.$wrap_tpl_quality.html(this.tpl_quality_internet());
         }
         break;
@@ -98,12 +142,56 @@ Tw.CustomerEmailTemplate.prototype = {
         this.$wrap_tpl_quality.html(this.tpl_quality_cell());
     }
 
+    // after temp changed
+    this._afterChangeTemp(this.$wrap_tpl_quality, qualityCategory.depth1);
+
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.bt-link-tx'));
   },
 
+
+  // before change templete save title, content
+  _beforeChangeTemp: function ($tempContainer) {
+    this.tempTitle = $('.fe-text_title', $tempContainer).val();
+    this.tempContent = $('.fe-text_content', $tempContainer).val();
+  },
+
+  // after change templete enter saved title, content 
+  _afterChangeTemp: function($tempContainer, currentService) {
+    // apply saved title 
+    $('.fe-text_title', $tempContainer).val($('.fe-text_title', $tempContainer).val() || this.tempTitle);
+    // apply saved content
+    if (this._isApplySavedContent(currentService)) {
+      $('.fe-text_content', $tempContainer).val(this.tempContent);
+    }
+
+    // title, content init
+    this.tempTitle = '';
+    this.tempContent = '';
+    // prev Templete save
+    this.prevServiceTemp = currentService;
+  },
+
+  // 예외케이스 적용 후 콘텐츠 추가
+  _isApplySavedContent: function (currentSevice) {
+    // 예외케이스, 기본적용 콘텐츠가 있는 케이스 (초콜렛은 모두 같은 케이스 & 멤버십 = 500275)
+    // 기존입력value 유지 케이스
+    // 이전이후가 같은 내용이있는 컨텐츠거나, 
+    // 이전선택과 이후선택 서비스가 모두 기본제공 컨텐츠가 없는 경우에만 기존 입력 유지
+    var prev = this.prevServiceTemp;
+    var current = currentSevice;
+
+    return (this._getContentCase(prev) === this._getContentCase(current) || 
+        (!this._getContentCase(prev) && !this._getContentCase(current))); 
+  },
+
+  _getContentCase: function (serviceCategory) {
+    return Tw.CUSTOMER_EMAIL_FILLED_CONTENT_CASE[serviceCategory] || null;
+  },
+
+
   _setTemplatePlaceholder: function (serviceCategory) {
-    if ( serviceCategory.depth2 === '5000275' ) {
+    if ( serviceCategory.depth2 === '5000275' ) { // 멤버십 케이스 : 채워져있는 내용이 있음
       return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
     } else {
       return Tw.CUSTOMER_EMAIL.DEFAULT_PLACEHOLDER;
@@ -111,22 +199,22 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _onChangeQualityLineType: function (e) {
-    var nTabIndex = $(e.currentTarget).find('.focus').index();
+    var nTabIndex = $(e.currentTarget).find('.focus').index() || 0;
     var category = this.$container.triggerHandler('getCategory');
 
     if ( category.quality.depth1 === 'cell' ) {
       if ( nTabIndex === 0 ) {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: false }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isWibro: false }});
       } else {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: true }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isWibro: true }});
       }
     }
 
     if ( category.quality.depth1 === 'internet' ) {
       if ( nTabIndex === 0 ) {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: false }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isPhone: false }});
       } else {
-        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: true }]);
+        this.$container.trigger('changeQualityTemplate', {qualityCategory: category.quality, qualityType: { isPhone: true }});
       }
     }
   }

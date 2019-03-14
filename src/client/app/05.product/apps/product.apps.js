@@ -89,6 +89,10 @@ Tw.ProductApps.prototype = {
       });
 
       this._appendApps();
+      this.$container
+        .find('.etc-page-list')
+        .removeClass('none')
+        .attr('aria-hidden', false);
     }
   },
 
@@ -111,19 +115,27 @@ Tw.ProductApps.prototype = {
       app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
       app.isInstalled = list[app.prodNm] || false;
       app.iconImg = Tw.Environment.cdn + app.iconImg;
+      app.idxExpsSeq = Number(app.idxExpsSeq);
 
       return app;
     });
 
     if (Tw.FormatHelper.isEmpty(list)) {
-      this.$container.find('div.app-list-top').addClass('none');
+      this.$container
+        .find('div.app-list-top')
+        .addClass('none')
+        .attr('aria-hidden', true);
     }
 
     this._appendApps();
+    this.$container
+      .find('.etc-page-list')
+      .removeClass('none')
+      .attr('aria-hidden', false);
   },
 
   _appendApps: function() {
-    this._sort('storRgstDtm');
+    this._sortOrder('storRgstDtm');
     this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
   },
@@ -168,7 +180,7 @@ Tw.ProductApps.prototype = {
         .text()
     );
 
-    this._sort(nOrder);
+    this._sortOrder(nOrder);
     this.$list.empty();
     this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
@@ -178,18 +190,29 @@ Tw.ProductApps.prototype = {
     this._popupService.close();
   },
 
-  _sort: function(order) {
+  _sortOrder: function(order) {
     if (this._order === order) {
       return;
     }
 
     this._order = order;
-    this._apps.sort($.proxy(this._compare, this));
+
+    if (order === 'prodNm') {
+      this._apps.sort($.proxy(this._sort, this));
+    } else {
+      this._apps.sort($.proxy(this._sortDescending, this));
+    }
   },
 
-  _compare: function(a, b) {
+  _sort: function(a, b) {
     if (a[this._order] < b[this._order]) return -1;
     if (a[this._order] > b[this._order]) return 1;
+    return 0;
+  },
+
+  _sortDescending: function(a, b) {
+    if (a[this._order] > b[this._order]) return -1;
+    if (a[this._order] < b[this._order]) return 1;
     return 0;
   },
 
@@ -199,11 +222,17 @@ Tw.ProductApps.prototype = {
 
   _toggleShowInstalled: function(isOn) {
     if (isOn) {
-      this.$list.find('.i-atv').removeClass('none');
-      this.$news.addClass('none');
+      this.$list
+        .find('.i-atv')
+        .removeClass('none')
+        .attr('aria-hidden', false);
+      this.$news.addClass('none').attr('aria-hidden', true);
     } else {
-      this.$list.find('.i-atv').addClass('none');
-      this.$news.removeClass('none');
+      this.$list
+        .find('.i-atv')
+        .addClass('none')
+        .attr('aria-hidden', true);
+      this.$news.removeClass('none').attr('aria-hidden', false);
     }
   }
 };

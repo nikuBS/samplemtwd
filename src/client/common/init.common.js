@@ -56,9 +56,9 @@ Tw.Init.prototype = {
       // }
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
-      // if ( Tw.Environment.environment !== 'local' && /\/home/.test(location.href) ) {
-        // Tw.Popup.toast(Tw.Environment.version);
-      // }
+      if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
+        Tw.Popup.toast('QA_v5.6.2');
+      }
     }
   },
 
@@ -107,27 +107,37 @@ Tw.Init.prototype = {
   },
 
   _sendXtractorLoginDummy: function () {
-    var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
-    if ( Tw.FormatHelper.isEmpty(cookie) || cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
+    var cookie = Tw.CommonHelper.getCookie('XT_LOGIN_LOG');
+    if (!Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp()) {
       return;
     }
 
-    if (Tw.BrowserHelper.isApp()) {
-      return Tw.CommonHelper.setXtSvcInfo();
-    }
+    this._apiService.request(Tw.NODE_CMD.GET_XTINFO, {})
+      .done($.proxy(function(res) {
+        if (Tw.FormatHelper.isEmpty(res.result)) {
+          return;
+        }
 
-    try {
-      window.XtractorScript.xtrLoginDummy($.param({
-        V_ID: Tw.CommonHelper.getCookie('XTVID'),
-        L_ID: Tw.CommonHelper.getCookie('XTLID'),
-        T_ID: Tw.CommonHelper.getCookie('XTLOGINID'),
-        GRADE: Tw.CommonHelper.getCookie('XTSVCGR')
-      }));
-    } catch ( e ) {
-      console.log(e.message);
-    }
+        if (!Tw.BrowserHelper.isApp()) {
+          Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
+          window.XtractorScript.xtrLoginDummy($.param({
+            V_ID: Tw.CommonHelper.getCookie('XTVID'),
+            L_ID: res.result.XTLID,
+            T_ID: res.result.XTLOGINID,
+            GRADE: res.result.XTSVCGR
+          }));
+          return;
+        }
 
-    Tw.CommonHelper.setCookie('XTSVCGR', 'LOGGED');
+        if (res.result.XTLOGINTYPE !== 'Z') {
+          Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
+          Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
+            xtLid: res.result.XTLID,
+            xtLoginId: res.result.XTLOGINID,
+            xtSvcGr: res.result.XTSVCGR
+          });
+        }
+      }, this));
   },
   _setGesture: function () {
     if ( /\/home/.test(location.href) ) {

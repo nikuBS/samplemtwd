@@ -106,19 +106,19 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   //--------------------------------------------------------------------------[Validation]
   _vdPhoneNm:function( $phoneNm ) {
     Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);
-    $('#fe-err-no-phonenum').hide();
-    $('#fe-err-not-phonenum').hide();
+    $('#fe-err-no-phonenum').hide().attr('aria-hidden', true);
+    $('#fe-err-not-phonenum').hide().attr('aria-hidden', true);
 
     var phoneNm = $phoneNm;
 
     if(!phoneNm){
-      $('#fe-err-no-phonenum').show();
+      $('#fe-err-no-phonenum').show().attr('aria-hidden', false);
       return;
     }
 
     if(!Tw.ValidationHelper.isCellPhone(phoneNm) && !Tw.ValidationHelper.isTelephone(phoneNm)){
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
-      $('#fe-err-not-phonenum').show();
+      $('#fe-err-not-phonenum').show().attr('aria-hidden', false);
       //this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ALERT.TEL_NUM_ERROR);
       return;
     }
@@ -161,8 +161,8 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     var _$this = $(e.currentTarget);
 
     if(_$this.val()){
-      $('#fe-err-no-phonenum').hide();
-      $('#fe-err-not-phonenum').hide();
+      $('#fe-err-no-phonenum').hide().attr('aria-hidden', true);
+      $('#fe-err-not-phonenum').hide().attr('aria-hidden', true);
     }
 
     var data = this._noDash(_$this.val());

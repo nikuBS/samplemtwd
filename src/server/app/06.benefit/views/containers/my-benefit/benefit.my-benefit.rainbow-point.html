@@ -10,9 +10,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -32,7 +30,7 @@
                         <span class="sub-disc05">
                             레인보우 포인트
                         </span>
-                        <span class="tit tx-blue"><span class="charge-txt"><%= rainbowPointsInfo.usblPoint %></span>점</span>
+                        <span class="tit tx-blue"><span class="charge-txt"><%= rainbowPointsInfo.usblPoint %></span>P</span>
                     </div>
 
                     <div class="charge-cont">
@@ -40,20 +38,20 @@
                             <ul>
                                 <li>
                                     <span class="title">총 적립</span>
-                                    <span class="tx-cont"><%= rainbowPointsInfo.erndPoint %> 점</span>
+                                    <span class="tx-cont"><%= rainbowPointsInfo.erndPoint %> P</span>
                                 </li>
                                 <li>
                                     <span class="title">총 사용</span>
-                                    <span class="tx-cont"><%= rainbowPointsInfo.usdPoint %> 점</span>
+                                    <span class="tx-cont"><%= rainbowPointsInfo.usdPoint %> P</span>
                                 </li>
                                 <li>
                                     <span class="title">총 소멸</span>
-                                    <span class="tx-cont"><%= rainbowPointsInfo.exprdPoint %> 점</span>
+                                    <span class="tx-cont"><%= rainbowPointsInfo.exprdPoint %> P</span>
                                 </li>
                                 <% if (parseInt(rainbowPointsInfo.nearlyExprdPoint, 10) > 0) { %>
                                 <li>
                                     <span class="title">이번달 소멸 예정</span>
-                                    <span class="tx-cont"><%= rainbowPointsInfo.nearlyExprdPoint %> 점</span>
+                                    <span class="tx-cont"><%= rainbowPointsInfo.nearlyExprdPoint %> P</span>
                                 </li>
                                 <% } %>
                             </ul>
@@ -108,7 +106,7 @@
                             </div>
                             <div class="lineinfo-data">
                                 <span class="info-title">
-                                    <span class="num ff-tg-black"><%= rainbowPointHistories[i].point %></span><span class="unit ff-tg-medium">점</span>
+                                    <span class="num ff-tg-black"><%= rainbowPointHistories[i].point %></span><span class="unit ff-tg-medium">P</span>
                                 </span>
                             </div>
                         </li>
@@ -121,7 +119,7 @@
                             <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
                             <% } %>
                             <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" aria-selected="<%= (paging.curPage == i) ? 'true' : 'false' %>" ><%= i %></a>
                             <% } %>
                             <% if (paging.nextPageIdx) { %>
                             <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
@@ -145,17 +143,17 @@
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
                     <li>
-                        <button class="tip-view-btn" title="적립 안내 TIP보기" aria-haspopup="true" id="BS_01_01_tip_03">
+                        <button type="button" class="tip-view-btn" aria-haspopup="true" id="BS_01_01_tip_03">
                             적립 안내<span class="tip-view">TIP</span>
                         </button>
                     </li>
                     <li>
-                        <button class="tip-view-btn" title="사용 안내 TIP보기" aria-haspopup="true" id="BS_01_01_tip_04">
+                        <button type="button" class="tip-view-btn" aria-haspopup="true" id="BS_01_01_tip_04">
                             사용 안내<span class="tip-view">TIP</span>
                         </button>
                     </li>
                     <li>
-                        <button class="tip-view-btn" title="소멸예정포인트 안내 TIP보기" aria-haspopup="true" id="BS_01_01_tip_06">
+                        <button type="button" class="tip-view-btn" aria-haspopup="true" id="BS_01_01_tip_06">
                             소멸예정포인트 안내<span class="tip-view">TIP</span>
                         </button>
                     </li>

@@ -353,6 +353,14 @@ Tw.DateHelper = (function () {
     return moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
   };
 
+  var getDateCustomFormat = function (format) {
+    return moment().format(format);
+  };
+
+  var add5min = function(date) {
+    return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
+  };
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -396,6 +404,8 @@ Tw.DateHelper = (function () {
     getDifference: getDifference,
     getTomorrowDate: getTomorrowDate,
     AddMonth: AddMonth,
-    isBefore: isBefore
+    isBefore: isBefore,
+    getDateCustomFormat : getDateCustomFormat,
+    add5min: add5min
   };
 })();

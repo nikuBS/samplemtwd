@@ -7,6 +7,7 @@ import { XTRACTOR_KEY } from '../types/config.type';
 import EnvHelper from '../utils/env.helper';
 import CryptoHelper from '../utils/crypto.helper';
 import BrowserHelper from '../utils/browser.helper';
+import DateHelper from '../utils/date.helper';
 
 class LoginService {
   static instance;
@@ -102,25 +103,30 @@ class LoginService {
   }
 
   private setXtractorCookie(svcInfo: any): any {
-    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
-      this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    if ( FormatHelper.isEmpty(this.request.session.svcInfo) ) {
+      return;
     }
 
-    if ( !FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
-      this.response.cookie(COOKIE_KEY.XTUID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    const currentXtInfo = this.request.session.svcInfo.xtInfo || {},
+      xtInfo: any = {};
+
+    if ( FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+      xtInfo.XTLID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
     }
 
-    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINID]) && !FormatHelper.isEmpty(svcInfo.userId) ) {
-      this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    if ( !FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+      xtInfo.XTUID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
     }
 
-    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINTYPE]) && !FormatHelper.isEmpty(svcInfo.loginType) ) {
-      this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
+    if ( FormatHelper.isEmpty(currentXtInfo.XTLOGINID) && !FormatHelper.isEmpty(svcInfo.userId) ) {
+      xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
     }
 
-    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR]) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
-      this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);
+    if ( FormatHelper.isEmpty(currentXtInfo.XTSVCGR) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
+      xtInfo.XTSVCGR = svcInfo.svcGr;
     }
+
+    this.request.session.svcInfo.xtInfo = xtInfo;
   }
 
   public getAllSvcInfo(req?): any {
@@ -216,30 +222,10 @@ class LoginService {
     return this.request.cookies[COOKIE_KEY.CHANNEL];
   }
 
-  public setMenuName(menuName: string): Observable<any> {
-    return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
-        this.request.session.menuName = menuName;
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setMenuName]', this.request.session);
-          observer.next(this.request.session.menuName);
-          observer.complete();
-        });
-      }
-    });
-  }
-
-  public getMenuName(): string {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.menuName) ) {
-      return this.request.session.menuName;
-    }
-    return this.request.menuName;
-  }
-
   public setMaskingCert(svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.masking) ) {
+        if ( FormatHelper.isEmpty(this.request.session.masking) ) {
           this.request.session.masking = [];
         }
         this.request.session.masking.push(svcMgmtNum);
@@ -262,7 +248,7 @@ class LoginService {
   public setNoticeType(noticeType: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.masking) ) {
+        if ( FormatHelper.isEmpty(this.request.session.noticeType) ) {
           this.request.session.noticeType = '';
         }
         this.request.session.noticeType = noticeType;
@@ -280,7 +266,46 @@ class LoginService {
       return this.request.session.noticeType;
     }
     return '';
+  }
 
+  public setSessionStore(command: string, svcMgmtNum: string, result: any): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) ) {
+        if ( FormatHelper.isEmpty(this.request.session.store) ) {
+          this.request.session.store = {};
+        }
+        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) ) {
+          this.request.session.store[svcMgmtNum] = {};
+        }
+        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
+          this.request.session.store[svcMgmtNum][command] = {};
+        }
+        this.request.session.store[svcMgmtNum][command] = {
+          data: result,
+          expired: DateHelper.add5min(new Date())
+        };
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setSessionStore]', this.request.session.store);
+          observer.next(this.request.session.store[svcMgmtNum][command]);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getSessionStore(command: string, svcMgmtNum: string): any {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.store) &&
+      !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
+      this.logger.debug(this, '[getSessionStore]', this.request.session.store[svcMgmtNum][command]);
+      let result = null;
+      try {
+        result = JSON.parse(JSON.stringify(this.request.session.store[svcMgmtNum][command]));
+      } catch ( e ) {
+        this.logger.error(this, '[getSessionStore] JSON parse Error');
+      }
+      return result;
+    }
+    return null;
   }
 
   public logoutSession(): Observable<any> {

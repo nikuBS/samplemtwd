@@ -29,10 +29,40 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
+  this._getMethodBlock();
 };
 
 Tw.ProductMobileplanAddJoinPayment.prototype = {
-
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
+        null, $.proxy(this._onCloseBlockPopup, this));
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _onCloseBlockPopup: function () {
+    this._historyService.goBack();
+  },
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-input_num');
     this.$inputAuthCode = this.$container.find('.fe-input_auth_code');
@@ -86,7 +116,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
     }
 
-    this.$sendMsgResult.hide();
+    this.$sendMsgResult.hide().attr('aria-hidden', 'true');
     this._apiService.request(Tw.API_CMD.BFF_01_0059, {
       jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
       receiverNum: number
@@ -97,10 +127,18 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$sendMsgResult.show();
+    this.$sendMsgResult.show().attr('aria-hidden', 'false');
   },
 
   _resAuthCode: function(resp) {
+    if (resp.code === 'ATH2003') {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
+    }
+
+    if (resp.code === 'ATH2006') {
+      return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._setSendResultText(true, resp.msg);
     }
@@ -153,6 +191,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _replaceErrMsg: function(code, msg) {
+    if (code === 'ATH2003') {
+      return Tw.SMS_VALIDATION.WAIT_NEXT_TIME;
+    }
+
+    if (code === 'ATH2006') {
+      return Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME;
+    }
+
     if (code === 'ATH2007') {
       return Tw.SMS_VALIDATION.NOT_MATCH_CODE;
     }
@@ -172,7 +218,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$validateResult.show();
+    this.$validateResult.show().attr('aria-hidden', 'false');
   },
 
   _toggleButton: function($button, isEnable) {
@@ -208,15 +254,15 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     $input.val('');
-    $btnClear.hide();
+    $btnClear.hide().attr('aria-hidden', 'true');
   },
 
   _toggleClearBtn: function($input) {
     var $btnClear = $input.parent().find('.fe-btn_clear_num');
     if ($input.val().length > 0) {
-      $btnClear.show();
+      $btnClear.show().attr('aria-hidden', 'false');
     } else {
-      $btnClear.hide();
+      $btnClear.hide().attr('aria-hidden', 'true');
     }
   },
 

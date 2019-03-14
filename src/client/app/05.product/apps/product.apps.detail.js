@@ -25,7 +25,7 @@ Tw.ProductAppsDetail.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '#fe-images', $.proxy(this._handleOpenImgDetail, this));
-    this.$container.on('click', '#fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
+    // this.$container.on('click', '#fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
     this.$container.on('click', '#fe-open-btn', $.proxy(this._handleOpenApp, this));
     this.$container.on('click', '.bt.apple, .bt.google, .bt.one-store', $.proxy(this._handleOpenMarket, this));
     this.$container.on('click', '.ad-banner', $.proxy(this._handleOpenLink));
@@ -46,7 +46,7 @@ Tw.ProductAppsDetail.prototype = {
             {
               appKey: app.prodNm,
               scheme: app.lnkgAppScmCtt,
-              'package': app.lnkgAppPkgNm
+              package: app.lnkgAppPkgNm
             }
           ]
         },
@@ -113,52 +113,52 @@ Tw.ProductAppsDetail.prototype = {
     });
   },
 
-  _handleCheckAndOpenApp: function() {
-    var store = '',
-      isIos = Tw.BrowserHelper.isIos();
+  // _handleCheckAndOpenApp: function() {
+  //   var store = '',
+  //     isIos = Tw.BrowserHelper.isIos();
 
-    if (this._stores) {
-      if (isIos) {
-        store = this._stores.appStore || '';
-      } else {
-        store = this._stores.playStore || this._stores.oneStore || '';
-      }
-    }
+  //   if (this._stores) {
+  //     if (isIos) {
+  //       store = this._stores.appStore || '';
+  //     } else {
+  //       store = this._stores.playStore || this._stores.oneStore || '';
+  //     }
+  //   }
 
-    var openMarket = function() {
-        this._popupService.close();
-        window.location.replace(store);
-      },
-      openConfirm = $.proxy(function() {
-        if (document.webkitHidden) {
-          return;
-        }
+  //   var openMarket = function() {
+  //       this._popupService.close();
+  //       window.location.replace(store);
+  //     },
+  //     openConfirm = $.proxy(function() {
+  //       if (document.hidden || document.webkitHidden) {
+  //         return;
+  //       }
 
-        if (isIos) {
-          window.location.replace(store);
-        } else {
-          this._popupService.openConfirmButton(
-            this._app.prodNm + Tw.POPUP_CONTENTS.APP_NOT_INSTALLED,
-            undefined,
-            $.proxy(openMarket, this),
-            undefined,
-            Tw.BUTTON_LABEL.NO,
-            Tw.BUTTON_LABEL.YES
-          );
-        }
-      }, this);
+  //       if (isIos) {
+  //         window.location.replace(store);
+  //       } else {
+  //         this._popupService.openConfirmButton(
+  //           this._app.prodNm + Tw.POPUP_CONTENTS.APP_NOT_INSTALLED,
+  //           undefined,
+  //           $.proxy(openMarket, this),
+  //           undefined,
+  //           Tw.BUTTON_LABEL.NO,
+  //           Tw.BUTTON_LABEL.YES
+  //         );
+  //       }
+  //     }, this);
 
-    if (this._app.lnkgAppScmCtt) {
-      setTimeout(openConfirm, 1000);
-      window.location.href = this._app.lnkgAppScmCtt;
-    } else if (store.length > 0) {
-      openConfirm();
-    }
-  },
+  //   if (this._app.lnkgAppScmCtt) {
+  //     setTimeout(openConfirm, isIos ? 1000 : 500);
+  //     window.location.href = this._app.lnkgAppScmCtt;
+  //   } else if (store.length > 0) {
+  //     openConfirm();
+  //   }
+  // },
 
   _handleOpenApp: function() {
     var app = this._app;
-    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, 'package': app.lnkgAppPkgNm });
+    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, package: app.lnkgAppPkgNm });
   },
 
   _handleOpenMarket: function(e) {
@@ -174,10 +174,14 @@ Tw.ProductAppsDetail.prototype = {
     }
 
     if (url && url.length > 0) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-        type: Tw.NTV_BROWSER.EXTERNAL,
-        href: url
-      });
+      if (Tw.BrowserHelper.isApp()) {
+        this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+          type: Tw.NTV_BROWSER.EXTERNAL,
+          href: url
+        });
+      } else {
+        window.location = url;
+      }
     }
   },
 

@@ -52,8 +52,12 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getIsJoined(svcInfo: any, prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
-    if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1 || FormatHelper.isEmpty(svcInfo)) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return Observable.of({});
+    }
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {
+      return Observable.of({ code: '00' });
     }
 
     const reqParams = FormatHelper.isEmpty(plmProdList) ? {} : { mappProdIds: (plmProdList.map((item) => {
@@ -420,12 +424,18 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * @param prodTypCd
+   * @param plmProdList
    * @param isJoinedInfo
+   * @param svcProdId
    * @private
    */
-  private _isJoined (prodTypCd, isJoinedInfo): boolean {
+  private _isJoined (prodTypCd, plmProdList, isJoinedInfo, svcProdId): boolean {
     if (FormatHelper.isEmpty(isJoinedInfo) || isJoinedInfo.code !== API_CODE.CODE_00) {
       return false;
+    }
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {
+      return plmProdList.indexOf(svcProdId) !== -1;
     }
 
     if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
@@ -654,19 +664,38 @@ class ProductCommonCallplan extends TwViewController {
       return 'D';
     }
 
-    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 1) {
+    const allowedLineLength = this._getAllowedLineLength(allowedSvcAttrInfo.svcAttrCds, allSvc[allowedSvcAttrInfo.group]);
+
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength > 1) {
       return 'A';
     }
 
-    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length === 1) {
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength === 1) {
       return 'B';
     }
 
-    if (!isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 0) {
+    if (!isAllowedCurrentSvcAttrCd && allowedLineLength > 0) {
       return 'C';
     }
 
     return 'D';
+  }
+
+  /**
+   * @param svcAttrCds
+   * @param svcGroupList
+   * @private
+   */
+  private _getAllowedLineLength(svcAttrCds: any, svcGroupList: any): any {
+    let length: any = 0;
+
+    svcGroupList.forEach((item) => {
+      if (svcAttrCds.indexOf(item.svcAttrCd) !== -1) {
+        length++;
+      }
+    });
+
+    return length;
   }
 
   /**
@@ -708,9 +737,26 @@ class ProductCommonCallplan extends TwViewController {
     };
   }
 
+  /**
+   * basicInfo 10_0001의 plmProdList value중 plmProdId 들을 배열로 만들기
+   * @param plmProdList
+   * @private
+   */
+  private _getPlmProdIdsByList(plmProdList: any): any {
+    if (FormatHelper.isEmpty(plmProdList)) {
+      return [];
+    }
+
+    return plmProdList.map((item) => {
+      return item.plmProdId;
+    });
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
+      bpcpServiceId = req.query.bpcpServiceId || '',
+      eParam = req.query.eParam || '',
       renderCommonInfo = {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
@@ -797,11 +843,13 @@ class ProductCommonCallplan extends TwViewController {
             });
 
           // 사용자 svcAttrCd
-          const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null;
+          const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null,
+            svcProdId = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.prodId) ? svcInfo.prodId : null;
 
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             isPreview: false,
             prodId: prodId,
+            prodTitle: prodRedisInfo.result.summary.prodNm,
             basFeeSubText: basFeeSubText,
             series: seriesResult, // 시리즈 상품
             contents: contentsResult, // 상품 콘텐츠
@@ -813,12 +861,15 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
-            isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
+            isJoined: this._isJoined(basicInfo.result.prodTypCd,
+              [...this._getPlmProdIdsByList(basicInfo.result.plmProdList), prodId], isJoinedInfo, svcProdId),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
             isProductCallplan: true,
-            isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s)
+            isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s),
+            bpcpServiceId,
+            eParam
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));

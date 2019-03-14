@@ -283,7 +283,11 @@ Tw.ProductRoamingSearchResult.prototype = {
             voiceShown: true,
             ableShown: true,
             attentionShown: false,
-            svcAttention: _result.svcAttention
+            svcAttention: _result.svcAttention,
+            hanaroMtCharge: _result.hanaroMtCharge,
+            dacomMtCharge: _result.dacomMtCharge,
+            ktMtCharge: _result.ktMtCharge,
+            onseMtCharge: _result.onseMtCharge
         };
 
         if(this.reqParams.manageType === 'L'){
@@ -302,6 +306,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         _result.dMoChargeMin = Number(_result.dMoChargeMin);
+        _result.mTxtCharge =  Number(_result.mTxtCharge);;
+        _result.mMtmCharge =  Number(_result.mMtmCharge);;
         noticeParam.attentionShown = (_result.svcAttention) ? true : false;
 
         Tw.Logger.info('result noticeParam = ', JSON.stringify(noticeParam));

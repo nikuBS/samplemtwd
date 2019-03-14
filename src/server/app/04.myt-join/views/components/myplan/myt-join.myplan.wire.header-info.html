@@ -1,0 +1,27 @@
+<div class="plan">
+    <strong class="tit"><%= feePlan.feeProdNm %></strong>
+    <span class="val"><%= feePlan.basFeeAmt %></span>
+</div>
+<div class="sub">
+    <% if ( feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm ) { %>
+    <span class="rest">월정액(부가세 포함)</span>
+    <% } %>
+    <% if ( feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm ) { %>
+    <span class="rest"><%= feePlan.feeManlSetTitNm %></span>
+    <% } %>
+</div>
+<% if ( feePlan.prodBasBenfCtt && (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2') ) { %>
+<div class="service-wrap">
+    <div class="service">
+        <span class="sv-spec">
+            <% if (svcInfo.svcAttrCd === 'S1') { %>
+            <i class="ico-speed-plan" title="속도"></i>
+            <% } %>
+            <% if (svcInfo.svcAttrCd === 'S2') { %>
+            <i class="ico-chan-plan" title="채널"></i>
+            <% } %>
+            <%= feePlan.prodBasBenfCtt %>
+        </span>
+    </div>
+</div>
+<% } %>

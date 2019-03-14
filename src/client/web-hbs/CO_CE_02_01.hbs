@@ -21,8 +21,8 @@
                                 <p class="certifi-ti-big pt8">간편 로그인으로는 이용하실 수 없는 서비스 입니다.<br />서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.</p>
                             {{else if data.masking}}
                                 <p class="certifi-ti-big pt8">
-                                    고객님의 정보 보호를 위해 본인인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br />
-                                    한번만 인증하시면 로그아웃 전까지 가려진 정보들을 모두 보실 수 있습니다.<br />
+                                    고객님의 정보 보호를 위해 인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br />
+                                    (회선 별 고객정보 기준으로 로그아웃 전까지 유지됩니다.)<br />
                                     서비스를 이용하시려면 아래 인증방법 중 하나를 선택해 주세요.
                                 </p>
                             {{else}}
@@ -32,54 +32,110 @@
                             <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
                         {{/if}}
                         <ul class="certifi-card-list mt28 {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
-                            {{#if data.methods.skSms}}
-                            <li>
+                            {{#if data.methods.skSms.use}}
+                            <li class="{{#if data.methods.skSms.block}}lock{{/if}}">
+                                {{#if data.methods.skSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-sk">
                                     <span class="ico-certifi-card type05" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">SKT 텔레콤<br />SMS 인증</span></span>
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.methods.otherSms}}
-                            <li>
+                            {{#if data.methods.otherSms.use}}
+                            <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                                {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-kt">
                                     <span class="ico-certifi-card type06" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">KT 인증</span></span>
                                 </button>
                             </li>
-                            <li>
+                            <li class="{{#if data.methods.otherSms.block}}lock{{/if}}">
+                                {{#if data.methods.otherSms.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-lg">
                                     <span class="ico-certifi-card type07" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">LG U+ 인증</span></span>
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.methods.save}}
-                            <li>
+                            {{#if data.methods.save.use}}
+                            <li class="{{#if data.methods.save.block}}lock{{/if}}">
+                                {{#if data.methods.save.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-save">
                                     <span class="ico-certifi-card type04" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">알뜰폰 SMS<br />인증</span></span>
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.methods.publicCert}}
-                            <li>
+                            {{#if data.methods.publicCert.use}}
+                            <li class="{{#if data.methods.publicCert.block}}lock{{/if}}">
+                                {{#if data.methods.publicCert.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-public">
                                     <span class="ico-certifi-card type02" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">공인인증서<br />인증</span></span>
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.methods.ipin}}
-                            <li>
+                            {{#if data.methods.ipin.use}}
+                            <li class="{{#if data.methods.ipin.block}}lock{{/if}}">
+                                {{#if data.methods.ipin.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-ipin">
                                     <span class="ico-certifi-card type03" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">아이핀 인증</span></span>
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.methods.bio}}
-                            <li>
+                            {{#if data.methods.bio.use}}
+                            <li class="{{#if data.methods.bio.block}}lock{{/if}}">
+                                {{#if data.methods.bio.block}}
+                                <div class="lock-layer">
+                                    <div class="txtBox">
+                                        <img src="{{cdn}}/img/common/lock_layer_icon.png" alt="점검중 느낌표 아이콘">
+                                        <p>점검 중</p>
+                                    </div>
+                                </div>
+                                {{/if}}
                                 <button id="fe-bt-bio">
                                     <span class="ico-certifi-card type01" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">생체인증</span></span>

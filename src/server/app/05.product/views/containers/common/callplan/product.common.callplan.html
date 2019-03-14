@@ -10,9 +10,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -76,12 +74,15 @@
     <!--// #footer -->
 </div>
 </body>
+<% include ../../../components/common/callplan/product.common.callplan.btn.component.html %>
+<% include ../../../components/common/callplan/product.common.callplan.setting.component.html %>
 <% include ../../../components/javascript.component.html %>
 <script>
 $(function () {
   new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>',
     '<%- JSON.stringify(basicInfo.linkBtnList.setting) %>', '<%= lineProcessCase %>',
-    '<%= isPreview ? "Y" : "N" %>', '<%= isAllowJoinCombine ? "Y" : "N" %>');
+    '<%= isPreview ? "Y" : "N" %>', '<%= isAllowJoinCombine ? "Y" : "N" %>',
+    '<%= svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : "" %>', '<%= bpcpServiceId %>', '<%= eParam %>');
 });
 </script>
 <% include ../../../components/end.component.html %>

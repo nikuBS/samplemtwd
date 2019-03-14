@@ -146,8 +146,7 @@ Tw.MembershipMyUpdate.prototype = {
   _handleSuccessInfoUpdate: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       //완료 페이지 이동
-      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/my',
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.UPDATE);
+      this._popupService.afterRequestSuccess(null, '/membership/my', null, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.UPDATE);
     }else{
       this._onFail(res);
     }

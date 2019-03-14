@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -23,7 +21,7 @@
             <!-- .container-wrap -->
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
-                <div class="container">
+                <div id="contents" class="container">
                     <!-- .cont-box -->
                     <div class="cont-box noborder">
                         <ul class="form-data-list">
@@ -31,10 +29,11 @@
                                 <label class="tit" for="flab01">휴대폰번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="tel" value="<%= addrInfo.phoneNum %>" class="fe-phone required-input-field" maxlength="14" />
+                                        <input id="flab01" type="tel" value="<%= addrInfo.phoneNum %>" data-origin-value="<%= addrInfo.phoneNum %>"
+                                               class="fe-phone required-input-field" maxlength="13" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
                                 </span>
                             </li>
                             <li>
@@ -50,14 +49,14 @@
                                 </span>
                                 <span class="inputbox mt10">
                                     <span class="input">
-                                        <input type="text" class="fe-main-address" title="기본 주소" value="<%= addrInfo.addr1 %>" readonly />
+                                        <input type="text" class="fe-main-address" title="기본 주소" value="<%= addrInfo.baseAddr %>" readonly />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                                 <span class="inputbox mt10">
                                     <span class="input">
-                                        <input type="text" class="fe-detail-address required-input-field" value="<%= addrInfo.addr2 %>"
-                                               data-origin-value="<%= addrInfo.addr2 %>" placeholder="상세주소 입력" title="상세 주소" />
+                                        <input type="text" class="fe-detail-address required-input-field" value="<%= addrInfo.detailAddr %>"
+                                               data-origin-value="<%= addrInfo.detailAddr %>" placeholder="상세주소 입력" title="상세 주소" readonly />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>

@@ -6,11 +6,12 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTDataHotData from './myt-data.hotdata.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import {  MYT_DATA_CHILD_USAGE } from '../../../../types/string.type';
+import StringHelper from '../../../../utils/string.helper';
 
 const VIEW = {
   DEFAULT: 'usage/myt-data.usage.child.html',
@@ -25,7 +26,7 @@ class MyTDataUsageChild extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, children: any, pageInfo: any) {
     const self = this;
     this.childSvcMgmtNum = req.query.childSvcMgmtNum;
     if (FormatHelper.isEmpty(this.childSvcMgmtNum)) {
@@ -33,11 +34,11 @@ class MyTDataUsageChild extends TwViewController {
     }
     Observable.combineLatest(
       this.reqBalances(),
-      this.reqBaseFeePlan(),
       this.reqTingSubscriptions()
-    ).subscribe(([usageDataResp, baseFeePlanResp, tingSubscriptionsResp]) => {
+    ).subscribe(([_usageDataResp, tingSubscriptionsResp]) => {
+      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
       const apiError = this.error.apiError([
-        usageDataResp, baseFeePlanResp
+        usageDataResp
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
@@ -45,16 +46,16 @@ class MyTDataUsageChild extends TwViewController {
       }
 
       const usageDataResult = usageDataResp.result;
-      const baseFeePlan = baseFeePlanResp.result;
+      const childInfo = this.getChildInfo(children);
+      if (FormatHelper.isEmpty(childInfo)) {
+        return this.renderErr(res, svcInfo, pageInfo, {});
+      }
       const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
-      const child = childInfo.find((_child) => {
-        return _child.svcMgmtNum === this.childSvcMgmtNum;
-      });
-      usageData['childSvcNum'] = child.svcNum;
-      usageData['childSvcMgmtNum'] = child.svcMgmtNum;
-      usageData['childProdId'] = baseFeePlan.prodId;
-      usageData['childProdNm'] = baseFeePlan.prodName;
+      usageData['childSvcNum'] = StringHelper.phoneStringToDash(childInfo.svcNum);
+      usageData['childSvcMgmtNum'] = childInfo.svcMgmtNum;
+      usageData['childProdId'] = childInfo.prodId;
+      usageData['childProdNm'] = childInfo.prodNm;
       const option = {
         usageData,
         tingSubscription,
@@ -67,6 +68,14 @@ class MyTDataUsageChild extends TwViewController {
     });
   }
 
+  /**
+   * 에러 화면 렌더링
+   * @param res
+   * @param svcInfo
+   * @param pageInfo
+   * @param err
+   * @private
+   */
   private renderErr(res, svcInfo, pageInfo, err): any {
     const option = {
       title: MYT_DATA_CHILD_USAGE.TITLE,
@@ -79,6 +88,12 @@ class MyTDataUsageChild extends TwViewController {
     return this.error.render(res, option);
   }
 
+
+  /**
+   * 실시간 잔여량
+   * @private
+   * return {Observable}
+   */
   private reqBalances(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {
       childSvcMgmtNum: this.childSvcMgmtNum
@@ -220,15 +235,25 @@ class MyTDataUsageChild extends TwViewController {
     // });
   }
 
+  /**
+   * 팅/쿠키즈/안심음성 가입정보조회
+   * @private
+   * return {Observable}
+   */
   private reqTingSubscriptions(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0028, {
       childSvcMgmtNum: this.childSvcMgmtNum
     });
   }
 
-  private reqBaseFeePlan(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0041, {
-      childSvcMgmtNum: this.childSvcMgmtNum
+  /**
+   * 자녀회선 정보 반환
+   * @private
+   * return child
+   */
+  private getChildInfo(children): any {
+    return children.find((_child) => {
+      return _child.svcMgmtNum === this.childSvcMgmtNum;
     });
   }
 }

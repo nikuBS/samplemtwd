@@ -39,7 +39,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     var $target = $(e.currentTarget),
       $parent = $target.parent('li');
 
-    $target.addClass('none');
+    $target.addClass('none').attr('aria-hidden', true);
     $parent.append(this._ingTmpl());
     this._requestRetrieve('0', $target, $parent);
   },
@@ -68,8 +68,11 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   _setRetrieveStatus: function($before, resp) {
-    $before.removeClass('none');
-    $before.siblings('.fe-ing').addClass('none');
+    $before.removeClass('none').attr('aria-hidden', false);
+    $before
+      .siblings('.fe-ing')
+      .addClass('none')
+      .attr('aria-hidden', true);
     if (resp && resp.code) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
@@ -81,9 +84,13 @@ Tw.MyTDataFamilyHistory.prototype = {
     var serial = $parent.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
-    var nData = Number(share.remGbGty) + Tw.FormatHelper.customDataFormat(share.remMbGty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
+    var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
     if (nData > 0) {
-      $parent.append(this._afterTmpl({ data: nData, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      if (nData < 1) {
+        $parent.append(this._afterTmpl({ data: share.remMbGty + Tw.DATA_UNIT.MB, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      } else {
+        $parent.append(this._afterTmpl({ data: nData + Tw.DATA_UNIT.GB, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      }
     } else {
       $parent.append(this._noneTmpl({}));
     }
@@ -99,7 +106,7 @@ Tw.MyTDataFamilyHistory.prototype = {
         mb: $target.data('mb')
       };
 
-    changable.data = changable.gb + Tw.FormatHelper.customDataFormat(changable.mb, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
+    changable.data = Number((Number(changable.gb) + Number(changable.mb) / 1024 || 0).toFixed(2));
 
     if (serial) {
       this._apiService
@@ -125,7 +132,8 @@ Tw.MyTDataFamilyHistory.prototype = {
         layer: true,
         detail: detail,
         data: changable.data,
-        histories: histories
+        histories: histories,
+        lessThanOne: changable.data < 1
       },
       $.proxy(this._handleOpenChangePopup, this, $parent, changable),
       $.proxy(this._handleCloseChangePopup, this),
@@ -153,6 +161,9 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleOpenChangePopup: function($parent, changable, $layer) {
     this._historyChange.init($layer, $parent, changable);
+    if (changable.data < 1) {
+      $layer.find('.fe-all').trigger('click');
+    }
     $layer.on('click', '.prev-step', this._popupService.close);
   },
 

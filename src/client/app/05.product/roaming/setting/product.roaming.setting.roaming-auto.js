@@ -98,6 +98,9 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     return returnActionSheetData;
   },
   _btnDateEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var nowValue = $(eventObj.currentTarget).text().trim();
     var dateArr = this._getDateArrFromToDay(this._dateSelectRange);
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
@@ -106,14 +109,17 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       actionSheetData[0].list[0].option = 'checked';
     }
     actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
   _btnTimeEvent : function(eventObj){
+    if(this._historyService.getHash()==='#select_date_P'){
+      return;
+    }
     var nowValue = $(eventObj.currentTarget).text().trim();
     var timeArr = this._getTimeArr();
     var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
-    this._openSelectDatePop(actionSheetData,'');
+    this._openSelectDatePop(actionSheetData,'',eventObj);
   },
 
   _bindActionSheetElementEvt : function($layer){
@@ -196,7 +202,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     }
     return returnValue;
   },
-  _openSelectDatePop: function (data,title) {
+  _openSelectDatePop: function (data,title,evt) {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',// hbs의 파일명
         layer: true,
@@ -204,7 +210,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         data: data
       },
       $.proxy(this._bindActionSheetElementEvt, this),
-      null,
+      $.proxy(function () {
+        //$(evt.currentTarget).focus();
+        this.$container.find('.fe-main-content').attr('aria-hidden',false);
+      },this),
       'select_date');
   },
   _settingInformationSetting : function () {
@@ -216,6 +225,15 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
       'startEndTerm' : this._expireDate
     };
+    if(
+      userSettingInfo.svcStartDt===this._prodBffInfo.svcStartDt&&
+      userSettingInfo.svcEndDt===this._prodBffInfo.svcEndDt&&
+      userSettingInfo.svcStartTm===this._prodBffInfo.svcStartTm&&
+      userSettingInfo.svcEndTm===this._prodBffInfo.svcStartDt
+    ){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+      return;
+    }
 
 
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).

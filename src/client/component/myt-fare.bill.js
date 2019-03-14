@@ -130,7 +130,7 @@ Tw.MyTFareBill.prototype = {
       $cashbagSelector.find('.spot').text(Tw.FormatHelper.addComma(this._okCashbag) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
       $tpointSelector.find('.spot').text(Tw.FormatHelper.addComma(this._tPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
     } else {
-      $cashbagSelector.text(cashbagText + Tw.MYT_FARE_PAYMENT_NAME.POINT);
+      $cashbagSelector.text(cashbagText);
       $tpointSelector.text(tpointText);
     }
     $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);

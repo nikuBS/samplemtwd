@@ -8,7 +8,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -19,7 +19,7 @@
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">
-                <div class="container">
+                <div id="contents" class="container">
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- .cont-box -->
                     <div class="cont-box">
@@ -57,7 +57,7 @@
                                                            title="카드번호 숫자만 입력" class="fe-card-number required-input-field fe-only-number" data-valid-label="card" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
-                                                <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
+                                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
                                             </span>
                                         </span>
                                     </span>
@@ -83,7 +83,7 @@
                                         </span>
                                     </span>
                                 </li>
-                                <span class="error-txt fe-error-msg" style="display:none; text-align:center;">유효기간이 올바르지 않습니다.</span>
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none; text-align:center;">유효기간이 올바르지 않습니다.</span>
                                 <li>
                                     <span class="title">비밀번호</span>
                                     <span class="tx-cont">
@@ -91,11 +91,11 @@
                                             <span class="inputbox">
                                                 <span class="input">
                                                     <input type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field fe-only-number"
-                                                           inputmode="numeric" min="0" pattern="[0-9]*" placeholder="앞2자리" title="비밀번호 앞2자리 입력"
+                                                           inputmode="numeric" min="0" pattern="[0-9]*" placeholder="앞 2자리" title="비밀번호 앞2자리 입력"
                                                            minlength="2" maxlength="2" data-valid-label="password" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
-                                                <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">비밀번호가 올바르지 않습니다.</span>
                                             </span>
                                         </span>
                                     </span>
@@ -150,8 +150,8 @@
                                                         </span>
                                                     </span>
                                                 </span>
-                                                <span class="error-txt fe-bank-error-msg" style="display:none;">은행을 선택해 주세요.</span>
-                                                <span class="error-txt fe-error-msg" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                                <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
+                                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
                                             </label>
                                         </li>
                                     </ul>
@@ -174,8 +174,8 @@
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span class="error-txt fe-bank-error-msg" style="display:none;">은행을 선택해 주세요.</span>
-                                            <span class="error-txt fe-error-msg" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                            <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
+                                            <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
                                         </li>
                                     </ul>
                                     <% } %>

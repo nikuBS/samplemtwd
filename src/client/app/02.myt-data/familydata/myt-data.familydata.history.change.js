@@ -18,7 +18,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addChangeData, this));
-    this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
+    this.$cancel.on('click', $.proxy(this._handleClickCancel, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleRerieveChangable, this, true));
     this.$input.on('focusout', $.proxy(this._validateChangeAmount, this));
     this.$input.on('keyup', $.proxy(this._handleTypeAmount, this));
@@ -32,32 +32,42 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$strong = this.$container.find('strong.txt-c2');
     this.$retrieveBtn = this.$container.find('.fe-retrieve');
     this.$cancel = this.$container.find('.cancel');
+    this.$all = this.$container.find('.fe-all');
   },
 
   _addChangeData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value'),
-      $target = $(e.currentTarget);
+    var value = e.currentTarget.getAttribute('data-value');
 
     if (value === 'all') {
-      if (this._all) {
-        this.$input.val('');
-        this.$input.removeAttr('disabled');
-        $target.siblings('.btn-type01').removeAttr('disabled');
-        $target.removeClass('btn-on');
-        this._all = false;
-      } else {
-        this.$input.val(this._changable.data);
-        this.$input.attr('disabled', true);
-        $target.siblings('.btn-type01').attr('disabled', true);
-        $target.addClass('btn-on');
-        this.$cancel.css('display', 'none');
-        this._all = true;
-      }
+      this._setButtonStatus(this._all);
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
-      this.$cancel.css('display', 'inline-block');
+      this.$cancel.css('display', 'inline-block').attr('aria-hidden', false);
     }
 
+    this._validateChangeAmount();
+  },
+
+  _setButtonStatus: function(all) {
+    if (all) {
+      this.$input.val('');
+      this.$input.removeAttr('disabled');
+      this.$all.siblings('.fe-enable').removeAttr('disabled');
+      this.$cancel.css('display', 'none').attr('aria-hidden', true);
+      this.$all.removeClass('btn-on');
+      this._all = false;
+    } else {
+      this.$input.val(this._changable.data);
+      this.$input.attr('disabled', true);
+      this.$all.siblings('.fe-enable').attr('disabled', true);
+      this.$all.addClass('btn-on');
+      this.$cancel.css('display', 'inline');
+      this._all = true;
+    }
+  },
+
+  _handleClickCancel: function() {
+    this._setButtonStatus(true);
     this._validateChangeAmount();
   },
 
@@ -76,15 +86,15 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
-      this.$error.removeClass('none');
+      this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else if (value > this._changable.data) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.GREATER_THAN_CHANGABLE_DATA);
-      this.$error.removeClass('none');
+      this.$error.removeClass('none').attr('aria-hidden', false);
       this._setDisableSubmit(true);
     } else {
       if (!this.$error.hasClass('none')) {
-        this.$error.addClass('none');
+        this.$error.addClass('none').attr('aria-hidden', true);
       }
       this._setDisableSubmit(false);
     }
@@ -110,12 +120,26 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var type = 'R',
       gb = this.$input.val(),
       mb = 0,
-      remain = this._changable.data - Number(gb);
+      data = this._changable.data - Number(gb),
+      remain =
+        data >= 1
+          ? {
+              data: Number(data.toFixed(2)),
+              unit: Tw.DATA_UNIT.GB
+            }
+          : {
+              data: 0,
+              unit: Tw.DATA_UNIT.MB
+            };
+
     if (this._all) {
       type = 'A';
       gb = this._changable.gb;
       mb = this._changable.mb;
-      remain = 0;
+      remain = {
+        data: 0,
+        unit: Tw.DATA_UNIT.MB
+      };
     }
 
     this._popupService.close();
@@ -134,13 +158,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
-        this.$item.find('.modify strong').text(remain + 'GB');
-        if (remain > 0) {
-          this.$item.find('.fe-edit').data('gb', remain);
-        } else {
-          this.$item.find('.fe-edit').remove();
-          this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
-        }
+        this.$item.find('.fe-after').remove();
+        this.$item
+          .find('.fe-before')
+          .removeClass('none')
+          .attr('aria-hidden', false);
 
         setTimeout(
           $.proxy(function() {
@@ -184,10 +206,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this._setDisableChange(true);
 
     if (hasClass) {
-      this.$retrieveBtn.addClass('none');
+      this.$retrieveBtn.addClass('none').attr('aria-hidden', true);
     }
 
-    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4');
+    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4').attr('aria-hidden', false);
     // setTimeout($.proxy(this._handleDoneRetrieve, this, { code: '00', result: { remGbGty: '1', remMbGty: '0' } }), 1000);
     this._requestRetrieve('0');
   },
@@ -214,8 +236,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _setRetrieveStatus: function() {
-    this.$retrieveBtn.removeClass('none');
-    this.$strong.addClass('none');
+    this.$retrieveBtn.removeClass('none').attr('aria-hidden', false);
+    this.$strong.addClass('none').attr('aria-hidden', true);
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
   },
 
@@ -225,8 +247,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _handleSuccessRetrieve: function(share) {
-    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0;
-    this.$strong.text(nData + 'GB').switchClass('txt-c4', 'txt-c2');
+    var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
+    this.$strong.text(nData > 0 ? nData + 'GB' : '0MB').switchClass('txt-c4', 'txt-c2');
     this.$retrieveBtn.remove();
     if (nData > 0) {
       this._changable.gb = Number(share.remGbGty);

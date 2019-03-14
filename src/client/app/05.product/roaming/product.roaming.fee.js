@@ -168,8 +168,8 @@ Tw.ProductRoamingFee.prototype = {
       }
 
     if (this._params.searchTagId === selectedTag) {
-        this._popupService.close();
-        return;
+        this._popupService.closeAll();
+      return;
     }
     this._history.goLoad('/product/roaming/fee?tag=' + selectedTag);
   },
@@ -189,23 +189,21 @@ Tw.ProductRoamingFee.prototype = {
     this.$filterBtn = $(e.currentTarget);
     this.$selectBtn =  $(e.currentTarget).find('input');
     this.selectFilter = this.$selectBtn.attr('data-rmfilter-id');
-
-      if(this.selectPlanTag){
-          var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-          this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
-            $.proxy(this._handleResetTag, this, $layer, this.$filterBtn), null, Tw.BUTTON_LABEL.CLOSE);
-      } else {
-          if(this.$filterBtn.hasClass('checked')){
-              this.$filterBtn.removeClass('checked');
-              this.$selectBtn.removeAttr('checked');
-              // $layer.find('input[data-rmfilter-id=F01526]').removeAttr('checked');
-              // $layer.find('input[data-rmfilter-id=F01526]').parent().removeClass('checked');
-          }else {
-              this.$filterBtn.addClass('checked');
-              this.$selectBtn.attr('checked','checked');
-          }
-          this._reset = false;
+    var $selectTag = $layer.find('.suggest-tag-list .link.active');
+    if($selectTag.length > 0){
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
+      this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
+        $.proxy(this._handleResetTag, this, $layer, this.$filterBtn), null, Tw.BUTTON_LABEL.CLOSE);
+    } else {
+      if(this.$filterBtn.hasClass('checked')){
+          this.$filterBtn.removeClass('checked');
+          this.$selectBtn.removeAttr('checked');
+      }else {
+          this.$filterBtn.addClass('checked');
+          this.$selectBtn.attr('checked','checked');
       }
+      this._reset = false;
+    }
   },
   _handleRoamingSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
@@ -327,28 +325,14 @@ Tw.ProductRoamingFee.prototype = {
           selectedTag.removeClass('active');
       }
 
-      if(this.selectFilter!=='F01526'){
-          if(this.$filterBtn.hasClass('checked')){
-              this.$filterBtn.removeClass('checked');
-              this.$selectBtn.removeAttr('checked');
-              $layer.find('input[data-rmfilter-id=F01526]').removeAttr('checked');
-              $layer.find('input[data-rmfilter-id=F01526]').parent().removeClass('checked');
-          }else {
-              this.$filterBtn.addClass('checked');
-              this.$selectBtn.attr('checked','checked');
-          }
+      if(this.$filterBtn.hasClass('checked')){
+          this.$filterBtn.removeClass('checked');
+          this.$selectBtn.removeAttr('checked');
+          // $layer.find('input[data-rmfilter-id=F01526]').removeAttr('checked');
+          // $layer.find('input[data-rmfilter-id=F01526]').parent().removeClass('checked');
       }else {
-          if(this.$selectBtn.parent('li').hasClass('checked')){
-              this.$filterBtn.siblings().removeClass('checked');
-              this.$filterBtn.removeClass('checked');
-              this.$filterBtn.siblings().find('input').removeAttr('checked');
-              this.$selectBtn.removeAttr('checked');
-          }else {
-              this.$filterBtn.siblings().addClass('checked');
-              this.$filterBtn.addClass('checked');
-              this.$filterBtn.siblings().find('input').attr('checked','checked');
-              this.$selectBtn.attr('checked', 'checked');
-          }
+          this.$filterBtn.addClass('checked');
+          this.$selectBtn.attr('checked','checked');
       }
   },
   _handleSelectRoamingOrder: function (e) {

@@ -4,7 +4,8 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase, isPreview, isAllowJoinCombine) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
+  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -21,6 +22,11 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._lineProcessCase = lineProcessCase;
   this._isPreview = isPreview === 'Y';
   this._isAllowJoinCombine = isAllowJoinCombine === 'Y';
+  this._svcMgmtNum = svcMgmtNum;
+  this._bpcpServiceId = bpcpServiceId;
+  this._eParam = eParam;
+  this._templateBtn = Handlebars.compile($('#fe-templ-btn').html());
+  this._templateSetting = Handlebars.compile($('#fe-templ-setting').html());
 
   this._convertSettingBtnList();
   this._cachedElement();
@@ -38,12 +44,25 @@ Tw.ProductCommonCallplan.prototype = {
     this._showReadyOn();
 
     if (this._historyService.isBack()) {
-      this._historyService.reload();
+      this._procJoinedCheck();
     }
 
     if (this.$contents.find('.fe-btn_roaming_auto').length > 0) {
       this._bindRoamingAuto();
     }
+
+    if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
+      this._initBpcp();
+    }
+
+    if (this.$contents.find('.idpt-pc').length > 0) {
+      this.$contents.find('.idpt-pc').remove();
+    }
+  },
+
+  _initBpcp: function() {
+    this._getBpcp(this._bpcpServiceId);
+    history.replaceState(null, document.title, location.origin + '/product/callplan?prod_id=' + this._prodId);
   },
 
   _cachedElement: function() {
@@ -51,6 +70,9 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting = this.$container.find('.fe-btn_setting');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
+    this.$btnWrap = this.$container.find('.fe-btn_wrap');
+    this.$settingWrap = this.$container.find('.fe-setting_wrap');
+    this.$reservationWrap = this.$container.find('.fe-reservation_wrap');
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
     this.$comparePlans = this.$container.find('.fe-compare_plans');
     this.$goProd = this.$container.find('.fe-go_prod');
@@ -61,17 +83,17 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnJoin.on('click', $.proxy(this._goJoinTerminate, this, '01'));
-    this.$btnTerminate.on('click', $.proxy(this._goJoinTerminate, this, '03'));
-    this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
     this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$goProd.on('click', $.proxy(this._goProd, this));
 
+    this.$container.on('click', '.fe-btn_join', $.proxy(this._goJoinTerminate, this, '01'));
+    this.$container.on('click', '.fe-btn_terminate', $.proxy(this._goJoinTerminate, this, '03'));
+    this.$container.on('click', '.fe-btn_setting', $.proxy(this._procSetting, this));
+
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    // this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
 
@@ -91,7 +113,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _showReadyOn: function() {
-    this.$btnReadyOn.show();
+    this.$btnReadyOn.show().attr('aria-hidden', 'false');
   },
 
   _goProd: function(e) {
@@ -151,13 +173,6 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.openUrlExternal(href);
   },
 
-  _openInternalUrl: function(e) {
-    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
-
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
   _openCustomPopup: function(hbsCode) {
     this._popupService.open({
       hbs: hbsCode,
@@ -211,6 +226,10 @@ Tw.ProductCommonCallplan.prototype = {
     } else {
       if (this._settingBtnList[0].url.indexOf('BPCP:') !== -1) {
         return this._getBpcp(this._settingBtnList[0].url);
+      } else if (this._settingBtnList[0].url.indexOf('BEU:') !== -1) {
+        return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this._settingBtnList[0].url.replace('BEU:', '')));
+      } else if (this._settingBtnList[0].url.indexOf('NEU:') !== -1) {
+        return this._openExternalUrl(this._settingBtnList[0].url.replace('NEU:', ''));
       }
 
       this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
@@ -280,6 +299,10 @@ Tw.ProductCommonCallplan.prototype = {
     var url = $(e.currentTarget).data('url');
     if (url.indexOf('BPCP:') !== -1) {
       return this._getBpcp(url);
+    } else if (url.indexOf('BEU:') !== -1) {
+      return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url.replace('BEU:', '')));
+    } else if (url.indexOf('NEU:') !== -1) {
+      return this._openExternalUrl(url.replace('NEU:', ''));
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -300,11 +323,39 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getBpcp: function(url) {
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: url.replace('BPCP:', '') })
+    var reqParams = {
+      svcMgmtNum: this._svcMgmtNum,
+      bpcpServiceId: url.replace('BPCP:', '')
+    };
+
+    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
+      reqParams.eParam = this._eParam;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
       .done($.proxy(this._resBpcp, this));
   },
 
   _resBpcp: function(resp) {
+    if (resp.code === 'BFF0003') {
+      return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
+    }
+
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+        msg = msg.pop().match(/(\d+)/);
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+        toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+        serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -330,8 +381,20 @@ Tw.ProductCommonCallplan.prototype = {
 
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
+
+    // BPCP 팝업 닫기
     if (data === 'popup_close') {
       this._popupService.close();
+    }
+
+    // BPCP 팝업 닫고 링크 이동
+    if (data.indexOf('goLink:') !== -1) {
+      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
+    }
+
+    // BPCP 팝업 닫고 로그인 호출
+    if (data.indexOf('goLogin:') !== -1) {
+      this._tidLanding.goLogin('/product/callplan?prod_id=' + this._prodId + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
     }
   },
 
@@ -403,11 +466,18 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: 'MP_02_02_06',
       layer: true,
       list: this._contentsDetailList
-    }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail');
+    }, $.proxy(this._focusContentsDetail, this, contentsIndex), function() {
+      $item.focus();
+    }, 'contents_detail');
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
-    $popupContainer.scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
+    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
+
+    $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+    setTimeout(function() {
+      $target.focus();
+    }, 100);
   },
 
   _openCombineNeedWireError: function() {
@@ -547,14 +617,21 @@ Tw.ProductCommonCallplan.prototype = {
       $phoneNum01 = $form.find('#phoneNum01'),
       $phoneNum02 = $form.find('#phoneNum02');
 
-    if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
-      return;
-    }
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function(resp) {
+        if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+          return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
+        }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0174, {
-      roamCp1: $phoneNum01.val(),
-      roamCp2: $phoneNum02.val()
-    }).done($.proxy(this._procRoamingAutoRes, this));
+        if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
+          return;
+        }
+
+        this._apiService.request(Tw.API_CMD.BFF_10_0174, {
+          roamCp1: $phoneNum01.val(),
+          roamCp2: $phoneNum02.val()
+        }).done($.proxy(this._procRoamingAutoRes, this));
+      }, this));
   },
 
   _procRoamingAutoRes: function(resp) {
@@ -562,15 +639,189 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    if (resp.result.mySvcNumYN !== 'Y') {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81);
+    if (resp.result.mySvcNum !== 'Y' || resp.result.sktChk !== 'SKT') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81.TITLE);
     }
 
     if (resp.result.autoDialPhone === '1' || resp.result.autoDialPhone === '3') {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79);
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79.TITLE);
     }
 
-    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80);
+    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80.TITLE);
+  },
+
+  // 페이지 Back 으로 진입시 가입 여부를 체크한다.
+  _procJoinedCheck: function() {
+    var apiList = [
+      {
+        command: Tw.NODE_CMD.UPDATE_SVC,  // 세션 리로드
+        params: {}
+      },
+      {
+        command: Tw.NODE_CMD.GET_SVC_INFO,  // 리로드된 세션정보 가져오기
+        params: {}
+      }
+    ];
+
+    this._apiService.requestArray(apiList)
+      .done($.proxy(function(updateSvcResp, svcInfoResp) {
+        if (svcInfoResp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(svcInfoResp.result)) {
+          return;
+        }
+
+        // 가입여부 체크, 그 여부에 따른 버튼 생성을 위해 10_0001 에서 plmProdList, linkBtnList 값을 사용해야 한다.
+        this._apiService.request(Tw.API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [this._prodId])
+          .done($.proxy(this._procJoinCheckReq, this, svcInfoResp.result));
+      }, this));
+  },
+
+  // 그외 케이스 가입여부 체크
+  _procJoinCheckReq: function(svcInfoResp, basicInfoResp) {
+    if (basicInfoResp.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1) {
+      return this._procJoinCheckRes(svcInfoResp, basicInfoResp.result, { code: '00', result: null });
+    }
+
+    var reqParams = Tw.FormatHelper.isEmpty(basicInfoResp.result.plmProdList) ? {} : {
+      mappProdIds: (_.map(basicInfoResp.result.plmProdList, function(item) {
+        return item.plmProdId;
+      })).join(',')
+    };
+
+    // 모바일 부가서비스, 로밍 요금제/부가서비스 가입여부 체크
+    if (['C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+      return this._apiService.request(Tw.API_CMD.BFF_05_0040, reqParams, {}, [this._prodId])
+        .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+    }
+
+    // 유선 부가서비스 가입여부 체크
+    if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      return this._apiService.request(Tw.API_CMD.BFF_10_0109, reqParams, {}, [this._prodId])
+        .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+    }
+
+    // 결합상품/할인프로그램 가입여부 체크
+    this._apiService.request(Tw.API_CMD.BFF_10_0119, {}, {}, [this._prodId])
+      .done($.proxy(this._procJoinCheckRes, this, svcInfoResp, basicInfoResp.result));
+  },
+
+  // 가입 여부 체크 API 응답 처리
+  _procJoinCheckRes: function(svcInfoResp, basicInfoResp, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
+
+    var isJoinCheck = this._isJoinCheck(svcInfoResp, basicInfoResp, resp.result),
+      linkBtnList = this._convertLinkBtnList(basicInfoResp.linkBtnList, basicInfoResp.prodSetYn),
+      isProdScrb = basicInfoResp.prodScrbYn === 'Y',
+      isProdTerm = basicInfoResp.prodTermYn === 'Y',
+      isProdSet = basicInfoResp.prodSetYn === 'Y';
+
+    this.$btnWrap.empty();
+    this.$settingWrap.empty();
+
+    // 가입 되어 있으며, 해지 가능 할 경우
+    if (isJoinCheck && isProdTerm && linkBtnList.terminate.length > 0) {
+      this._appendButton(linkBtnList.terminate[0], false);
+    }
+
+    // 가입 되어 있으며, 설정 버튼 있고, 설정 가능할 경우
+    if (isJoinCheck && isProdSet && linkBtnList.setting.length > 0) {
+      this._appendSettingWrap(linkBtnList.setting);
+    }
+
+    // 가입 되어 있으며, 예약 영역이 노출되어 있을 경우 삭제
+    if (isJoinCheck && this.$reservationWrap.length > 0) {
+      this.$reservationWrap.remove();
+    }
+
+    // 가입 안되어 있으며, 가입 가능 할 경우
+    if (!isJoinCheck && isProdScrb && basicInfoResp.prodStCd === 'E1000' && linkBtnList.join.length > 0) {
+      this._appendButton(linkBtnList.join[0], true);
+    }
+  },
+
+  _appendButton: function(btnData, isJoinBtn) {
+    this.$btnWrap.html(this._templateBtn({
+      btClass: isJoinBtn ? 'fe-btn_join' : 'fe-btn_terminate',
+      url: btnData.linkUrl,
+      btName: btnData.linkNm
+    }));
+  },
+
+  _appendSettingWrap: function(btnData) {
+    this._settingBtnList = btnData.map(function(item) {
+      return {
+        'url': item.linkUrl,
+        'button-attr': 'data-url="' + item.linkUrl + '"',
+        'txt': item.linkNm
+      };
+    });
+
+    this.$settingWrap.html(this._templateSetting({
+      settingBtn: btnData[0].linkNm,
+      isSettingBtnList: btnData.length > 1
+    }));
+  },
+
+  _convertLinkBtnList: function(linkBtnList, prodSetYn) {
+    var joinBtnList = [],
+      settingBtnList = [],
+      termBtnList = [],
+      isJoinReservation = false;
+
+    _.each(linkBtnList, function(item) {
+      if (item.linkTypCd === 'SE' && prodSetYn !== 'Y') {
+        return true;
+      }
+
+      if (item.linkTypCd === 'SC') {
+        joinBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'SE' && prodSetYn === 'Y') {
+        settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.linkTypCd === 'CT') {
+        isJoinReservation = true;
+        return true;
+      }
+
+      termBtnList.push(item);
+    });
+
+    return {
+      join: joinBtnList,
+      setting: settingBtnList,
+      terminate: termBtnList,
+      isJoinReservation: isJoinReservation
+    };
+  },
+
+  _isJoinCheck: function(svcInfoResp, basicInfoResp, joinedInfoResp) {
+    var plmProdList = $.extend([this._prodId], _.map(basicInfoResp.plmProdList, function(item) {
+      return item.plmProdId;
+    }));
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1) {
+      return plmProdList.indexOf(svcInfoResp.prodId) !== -1;
+    }
+
+    if (['C', 'H_P', 'H_A'].indexOf(this._prodTypCd) !== -1) {
+      return joinedInfoResp.isAdditionUse === 'Y';
+    }
+
+    if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
+      return joinedInfoResp.wiredSuplSvcScrbYn === 'Y';
+    }
+
+    return joinedInfoResp.combiProdScrbYn === 'Y';
   }
 
 };

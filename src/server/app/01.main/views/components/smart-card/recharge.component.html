@@ -3,7 +3,7 @@
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.10.06
 %>
-<script id="fe-smart-recharge" type="text/x-handlebars-template">
+<script id="fe-smart-recharge" type="text/x-handlebars-template" data-usagecode="<%= usageData.code %>">
     <!-- .cont-box -->
     <div class="main-fee-box">
         <div class="fee-cont">
@@ -13,9 +13,13 @@
                     <% if(usageData.data && usageData.data.isShow) { %>
                     <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium"><%= usageData.data.showMyRemained %></span></em></li>
                     <% } else { %>
-                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">0</span>MB</em></li>
+                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">-</span></em></li>
                     <% } %>
-                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point">{{ refillCoupons }}</span>장</em></li>
+                    {{#if showRefill}}
+                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="ff-tg-medium">{{ refillCoupons }}</span>장</em></li>
+                    {{else}}
+                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="ff-tg-medium">-</span></em></li>
+                    {{/if}}
                 </ul>
             </a>
         </div>

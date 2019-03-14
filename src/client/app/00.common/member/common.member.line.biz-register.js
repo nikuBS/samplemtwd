@@ -100,12 +100,16 @@ Tw.CommonMemberLineBizRegister.prototype = {
   },
   _successRegisterBiz: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.goBack();
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
+        .done($.proxy(this._successUpdateSvc, this));
     } else if ( resp.code === this.ERROR_CODE.ICAS4027 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8);
     } else {
       this._popupService.openAlert(resp.code + ' ' + resp.msg);
     }
+  },
+  _successUpdateSvc: function (resp) {
+    this._historyService.goBack();
   },
   _failRegisterBiz: function (error) {
     Tw.Logger.error(error);

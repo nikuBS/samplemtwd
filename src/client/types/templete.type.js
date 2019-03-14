@@ -100,7 +100,7 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백포인트', 'option': 'fe-ok-cashbag' },
         { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
         { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
       ]
@@ -218,7 +218,7 @@ Tw.POPUP_TPL = {
     DATA: '데이터 충전',
     ONCE: '1회 충전',
     AUTO: '자동 충전',
-    AUTO_CHANGE: '자동 충전 변경/해제'
+    AUTO_CHANGE: '자동 충전 변경/해지'
   },
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
@@ -412,21 +412,21 @@ Tw.POPUP_TPL = {
   MEMBERSHIP_CORPORATE_LIST: [
     {
       'list': [
-        { 'option': '', 'attr': 'id="010" class="nominal"', value: '본인' },
-        { 'option': '', 'attr': 'id="090" class="nominal"', value: '직원' },
-        { 'option': '', 'attr': 'id="990" class="nominal"', value: '기타' }
+        { 'option': 'nominal', 'attr': 'id="010"', value: '본인' },
+        { 'option': 'nominal', 'attr': 'id="090"', value: '직원' },
+        { 'option': 'nominal', 'attr': 'id="990"', value: '기타' }
       ]
     }
   ],
   MEMBERSHIP_CLAUSE_ITEM: {
-    '01': { title: 'SK텔레콤 멤버십 회원 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html' },
-    '02': { title: '개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe2.html' },
-    '03': { title: '광고성 정보 수신 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe3.html' },
-    '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe4.html' },
-    '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe11.html' },
-    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe12.html' },
-    '07': { title: '마케팅 활동 동의', url: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.3_iframe13.html' },
-    '09': { title: '개인정보 처리방침', url: 'http://privacy.sktelecom.com/view.do?ctg=policy&name=policy'}
+    '01': { title: 'SK텔레콤 멤버십 회원 이용약관', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe1.html' },
+    '02': { title: '개인정보 수집 이용 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe2.html' },
+    '03': { title: '광고성 정보 수신 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe3.html' },
+    '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe4.html' },
+    '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe11.html' },
+    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe12.html' },
+    '07': { title: '마케팅 활동 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe13.html' },
+    '09': { title: '개인정보 처리방침', url: 'https://privacy.sktelecom.com/view.do?ctg=policy&name=policy'}
   },
   ROAMING_RETURN_PLACE: [
     {
@@ -554,7 +554,7 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
+    '<span class="ico-wrap"><i class="icon-{{svcType}}-80"><span class="blind"></span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}' +
     '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>' +
@@ -567,7 +567,7 @@ Tw.MYT_TPL = {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
       'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
       '<span class="ico-wrap">' +
-      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+      '<i class="icon-{{svcType}}-80"><span class="blind"></span></i>' +
       '</span>' +
       '<span class="cont">' +
       '<span class="info-title">{{nickNm}}' +
@@ -588,11 +588,24 @@ Tw.MYT_TPL = {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
       'data-name="{{nickNm}}" data-num="{{number}}"><button>' +
       '<span class="ico-wrap"><i class="icon-{{className}}-80">' +
-      '<span class="blind">{{className}}</span></i></span><span class="cont">' +
+      '<span class="blind"></span></i></span><span class="cont">' +
       '<span class="info-title">{{nickNm}}</span><span class="info-sub">{{number}}</span>' +
       '</span></button></li>'
   },
-  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
+  MORE_BTN: '<div class="bt-more"><button>더보기</button></div>',
+  SWITCH_LINE_POPUP:
+    {
+      TITLE: '다른 회선의 정보를 조회하려면 현재 조회중인 회선({{svcNum}})을 아래의 회선으로 변경해야 합니다.',
+      CONTENTS:
+      '<p class="tl change-txt">변경할 회선</p>' +
+      '<div class="pop-device-type">' +
+      '<span class="ico-wrap"><i class="icon-{{clsNm}}-80"><span class="blind">{{clsNm}}</span></i></span>' +
+      '<div class="user-info">' +
+      '<span class="device"><span class="blind">디바이스 펜네임/닉네임</span>{{desc}}</span>' +
+      '<div class="p-num"><span class="blind">회선정보</span>{{svcNum}}</div>' +
+      '</div>' +
+      '</div>'
+    }
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
@@ -624,19 +637,20 @@ Tw.TERMS_ACTION = {
 
 Tw.MYT_FARE_BILL_GUIDE_TPL = {
   TIT_ICON:[
-    {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
-    {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>'},
-    {SCH_LB:'인터넷', ELEMENT : '<span class="ico-wrap"><i class="icon-internet-48"><span class="blind">internet</span></i></span>'},
-    {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind">pc</span></i></span>'}
+    {SCH_LB:'이동전화', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"></span></i></span>'},
+    {SCH_LB:'휴대폰', ELEMENT : '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind"></span></i></span>'},
+    {SCH_LB:'인터넷', ELEMENT : '<span class="ico-wrap"><i class="icon-internet-48"><span class="blind"></span></i></span>'},
+    {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind"></span></i></span>'}
   ],
   DETAIL_BTN: [
     {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
     {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
+  ASTERISK_TPL: {SCH_ID : '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>'},
   PRICE_DC_POINT: { LABEL:'요금할인', CLASS : 'txt-point'},
   SVC_TYPE_TPL :{
-    ALL: '<i class="icon-whole"><span class="blind">{{svcType}}</span></i>',
+    ALL: '<i class="icon-whole"><span class="blind"></span></i>',
     OTHER: '<span class="bar"></span>{{svcType}}'
   }
 };
@@ -772,6 +786,14 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
       { text: '이사 또는 회사 이동 후부터' }
     ]
   }
+};
+
+Tw.CUSTOMER_EMAIL_FILLED_CONTENT_CASE = {
+  '5000275': 'MEMBERSHIP',
+  '010700': 'CHOCO',
+  '010600': 'CHOCO',
+  '010800': 'CHOCO',
+  '010900': 'CHOCO'
 };
 
 Tw.REGION_LIST_ITEM = {

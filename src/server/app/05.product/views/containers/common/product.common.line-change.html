@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -77,11 +75,11 @@
                                 <ul class="select-list fe-line_list" role="group">
                                     <% for (var i in allowedLineList) { %>
                                     <% if ( i < 20 ) { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" aria-hidden="false">
                                     <% } else { %>
-                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none">
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none" aria-hidden="true">
                                     <% } %>
-                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" title="<%= allowedLineList[i].fullNm %>"
+                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" data-svc_num="<%= allowedLineList[i].svcNum %>" title="<%= allowedLineList[i].fullNm %>"
                                                aria-labelledby="aria-comp-radio<%= i %>">
                                         <div class="comp-list-layout" id="aria-comp-radio<%= i %>">
                                             <p class="layout-text">
@@ -91,7 +89,11 @@
                                                      <%= allowedLineList[i].eqpMdlNm %>
                                                     <% } %>
                                                 </span>
+                                                <% if (allowedLineList[i].svcAttrCd === 'S1' || allowedLineList[i].svcAttrCd === 'S2') { %>
+                                                <span class="stext"><%= allowedLineList[i].addr %></span>
+                                                <% } else { %>
                                                 <span class="stext"><%= allowedLineList[i].svcNum %></span>
+                                                <% } %>
                                             </p>
                                         </div>
                                     </li>

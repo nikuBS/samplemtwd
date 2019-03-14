@@ -17,7 +17,12 @@ Tw.MembershipBenefitBrandMap = function (container, location, data) {
 
   this._render();
   this._bindEvent();
-  this._init();
+
+  if( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this));
+  } else {
+    this._init();
+  }
 };
 
 Tw.MembershipBenefitBrandMap.prototype = {
@@ -33,6 +38,13 @@ Tw.MembershipBenefitBrandMap.prototype = {
     this.$btnTmap.on('click', $.proxy(this._goTmap, this));
     this.$btnBenefit.on('click', $.proxy(this._onClickBenefit, this));
     this.$btnFranchiseeList.on('click', $.proxy(this._onClickFranchiseeList, this));
+
+    $(window).on("orientationchange", $.proxy(function(){
+      setTimeout($.proxy(function() {
+        this.$map.empty();
+        this._initMap(this.$map, this.location);
+      }, this), 300);
+    }, this));
   },
 
   _init: function () {
@@ -64,9 +76,8 @@ Tw.MembershipBenefitBrandMap.prototype = {
     var map = new Tmap.Map({
       div: mapEl[0].id,
       width: '100%',
-      height: mapEl.width() + 'px'
+      height: $(window).height() * 0.6 + 'px'
     });
-
     var shopLon = coord.lon + '';
     var shopLat = coord.lat + '';
 
@@ -85,10 +96,14 @@ Tw.MembershipBenefitBrandMap.prototype = {
   },
 
   _onClickBenefit: function () {
+    this.data.brandNm = encodeURI(this.data.brandNm);
+    this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand-benefit?' + $.param(this.data));
   },
 
   _onClickFranchiseeList: function () {
+    this.data.brandNm = encodeURI(this.data.brandNm);
+    this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(this.data));
   },
 

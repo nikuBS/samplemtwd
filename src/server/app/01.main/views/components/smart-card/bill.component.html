@@ -8,7 +8,7 @@
     <div class="main-fee-box">
         <div class="fee-cont">
             <a href="/myt-fare/submain" class="tit">나의 요금을 확인해 보세요</a>
-            <div class="fee-info">
+            <a href="/myt-fare/billguide/guide" class="fee-info">
                 <p class="target">
                     {{#if isActRep}}
                     <span class="tit">{{billMonth}}월 청구요금</span>
@@ -18,7 +18,7 @@
                     <span class="date"><span>{{invStartDt}}</span>~<span>{{invEndDt}}</span></span>
                 </p>
                 <p class="sum"><span>{{useAmtTot}}</span>원</p>
-            </div>
+            </a>
         </div>
         <div class="btn-area">
             {{#if isActRep}}

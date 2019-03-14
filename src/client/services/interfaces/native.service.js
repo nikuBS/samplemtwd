@@ -80,12 +80,12 @@ Tw.NativeService.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty($popupContainer) ) {
       if ( !$popupContainer.hasClass('fe-no-back') ) {
-        history.back();
+        this._popupService.close();
       } else {
         $(window).trigger(Tw.NATIVE_BACK);
       }
     } else {
-      if ( /\/main\/home/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
         if ( !!this._gnb && this._gnb.isOpened() ) {
           this._gnb.close();
         } else {
@@ -135,6 +135,8 @@ Tw.NativeService.prototype = {
   _completeLogout: function (isAutoLogin, resp) {
     Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
     if ( isAutoLogin === 'Y' ) {
+      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
+      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
       this._tidLanding.goActionSheetLogin(location.pathname + location.search);
     } else {
       this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);

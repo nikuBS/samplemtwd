@@ -9,7 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -37,6 +37,7 @@
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">
+                <h2 class="blind">내용</h2>
                 <div class="container">
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- .cont-box -->
@@ -44,7 +45,7 @@
                         <div class="coupon-resel">
                             <ul class="coupon-list-wrap type1">
                                 <li>
-                                    <span class="icon"><i class="<%= isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"><span class="blind"><%= isGift ? 'gift' : 'discount' %></span></i></span>
+                                    <span class="icon"><i class="<%= isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"></i></span>
                                     <div class="cont">
                                         <h2 class="tit"><%= name %></h2>
                                         <span class="txt1">유효기간 : <%= period %></span>
@@ -73,9 +74,9 @@
                                 <div class="tab-area new"><!-- 타입별 탭형태 변환 -->
                                     <div class="tab-linker">
                                         <ul role="tablist">
-                                            <li role="tab" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                             <% if (!isGift) { %>
-                                            <li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
+                                            <li aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
                                                 <a href="#gift" class="fe-replace-history">가족에게 선물하기</a>
                                                 <button class="btn-tip" id="DC_05_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                             </li>
@@ -94,7 +95,7 @@
                                                             <li class="<%= options[i].isTplan ? 'type01' : ''; %>" >
                                                                 <span class="form">
                                                                     <input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small <%= options[i].dataVoiceClCd === 'V' ? 'type2' : '' %>" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
-                                                                    <label for="sradio<%= i + 1 %>">라디오박스</label>
+                                                                    <label for="sradio<%= i + 1 %>"><%= options[i].copnDtlClNm %>리필</label>
                                                                 </span>
                                                                 <div class="cont">
                                                                     <span class="stit"><%= options[i].copnDtlClNm %>리필</span>
@@ -120,7 +121,7 @@
                                                         <div class="inputbox bt-add">
                                                             <span class="input new">
                                                                 <input type="tel" maxlength="13" placeholder="숫자만 입력" title="받는 분 번호" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                                                <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn">
                                                                 <button type="button" id="fe-btn-contacts" class="btn-round2 btn-style3">주소록</button>

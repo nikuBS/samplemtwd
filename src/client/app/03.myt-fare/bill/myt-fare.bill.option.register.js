@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.register.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
+ * Annotation: 자동납부 신청 및 변경
  */
 
 Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
@@ -120,18 +121,19 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+      this._historyService.replaceURL('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
       //this._aftetSuccessGetOption(res);
     } else {
       this._fail(res);
     }
   },
   _fail: function (err) {
-    if (err.code === 'BIL0006') {
-      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
-    } else {
-      Tw.Error(err.code, err.msg).pop();
-    }
+    // if (err.code === 'BIL0006') {
+    //   this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+    // } else {
+    //   Tw.Error(err.code, err.msg).pop();
+    // }
+    Tw.Error(err.code, err.msg).replacePage();
   },
   _aftetSuccessGetOption: function (res) {
     var reqData = {

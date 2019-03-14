@@ -8,9 +8,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -30,7 +28,7 @@
                     <% for (var i in outlinkReport) { %>
                     <li>
                         <div class="link-long">
-                            <a href="<%= outlinkReport[i].LINK %>" class="fe-link-external" rel="nofollow"><%= outlinkReport[i].TEXT %>
+                            <a href="<%= outlinkReport[i].LINK %>" class="fe-link-external" rel="nofollow" target="_blank"><%= outlinkReport[i].TEXT %>
                                 <span class="tx-sub">
                                     <span class="ico"><span class="blind">더보기</span></span>
                                 </span>
@@ -52,7 +50,7 @@
                     <% for (var i in outlinkRelate) { %>
                     <li>
                         <div class="link-long">
-                            <a href="<%= outlinkRelate[i].LINK %>" class="fe-link-external" rel="nofollow"><%= outlinkRelate[i].TEXT %>
+                            <a href="<%= outlinkRelate[i].LINK %>" class="fe-link-external" rel="nofollow" target="_blank"><%= outlinkRelate[i].TEXT %>
                                 <span class="tx-sub">
                                     <span class="ico"><span class="blind">더보기</span></span>
                                 </span>

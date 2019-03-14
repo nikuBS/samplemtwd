@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.prepay.auto.info.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.05
+ * Annotation: 소액결제/콘텐츠이용료 자동 선결제 신청/변경/해지 내역 관리
  */
 
 Tw.MyTFareBillPrepayAutoInfo = function (rootEl, title) {
@@ -26,6 +27,8 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this.$standardNode = this.$selectList.find('li:first');
     this.$moreBtn = this.$container.find('.fe-more-btn');
 
+    this._standardAmount = this.$container.find('.fe-standard-amount').attr('id');
+
     this._page = 1;
     this._defaultCnt = Tw.DEFAULT_LIST_COUNT;
     this._totalCnt = this.$selectList.attr('data-cnt');
@@ -37,7 +40,11 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
   _changeAutoPrepay: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
+    if (this._standardAmount > 0) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
+    } else {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
+    }
   },
   _cancelAutoPrepay: function () {
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
@@ -63,7 +70,8 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '?type=cancel');
+      //this._historyService.goLoad('/myt-fare/bill/' + this.$title + '?type=cancel');
+      this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel');
     } else {
       this._cancelFail(res);
     }

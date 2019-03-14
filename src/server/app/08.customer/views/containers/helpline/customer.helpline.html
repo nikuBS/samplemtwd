@@ -10,9 +10,9 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -49,7 +49,7 @@
                                         <span class="inputbox bt-add2">
                                             <span class="input">
                                                 <span class="small-tt">날짜</span>
-                                                <input type="text" title="날짜" aria-labelledby="aria-citation-reservations" aria-describedby="aria-exp-desc1" value="<%= timeInfo.curDate %>" readonly>
+                                                <input type="text" title="날짜" aria-labelledby="aria-citation-reservations" value="<%= timeInfo.curDate %>" readonly>
                                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                             </span>
                                             <span class="select">
@@ -79,19 +79,19 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <span class="inputbox bt-add mt20"><!-- error일 경우 error 클래스 추가 -->
+                                        <span class="inputbox bt-add inp-btn mt20"><!-- error일 경우 error 클래스 추가 -->
                                             <span class="input">
-                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실분 번호" title="휴대폰 번호" aria-describedby="aria-exp-desc2"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
-                                                <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
+                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실분 번호" title="휴대폰 번호" aria-describedby="aria-phone-tx1"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+                                                <a href="javascript:void(0)" class="cancel" id="fe-cancel"><span class="blind">삭제</span></a>
                                             </span>
                                             <% if (isApp) { %>
                                             <span class="bt-box">
                                                 <button type="button">주소록</button>
                                             </span>
                                             <% } %>
-                                            <span class="tx-box">
-                                                <span id="aria-phone-tx1" class="error-txt none">잘못된 형식입니다.</span><!-- 입력 필드 오류 나타내지 않을때는 .none 추가 -->
-                                            </span>
+                                        </span>
+                                        <span class="tx-box">
+                                            <span id="aria-phone-tx1" class="error-txt none" aria-hidden="true">잘못된 형식입니다.</span><!-- 입력 필드 오류 나타내지 않을때는 .none 추가 -->
                                         </span>
                                     </div>
                                 </div>
