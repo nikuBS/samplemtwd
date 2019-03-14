@@ -89,7 +89,7 @@
                                     <span class="input">
                                         <% if (autoInfo.isAuto) { %>
                                         <input id="formInput02" type="text" minlength="15" maxlength="16" value="<%= autoInfo.cardNum %>"
-                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
+                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1" data-code="mask"
                                                class="fe-card-number required-input-field fe-only-number" data-valid-label="card" />
                                         <input class="none fe-hidden" value="<%= autoInfo.cardNum %>" />
                                         <% } else { %>
