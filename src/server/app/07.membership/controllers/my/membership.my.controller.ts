@@ -80,8 +80,10 @@ export default class MembershipMy extends TwViewController {
     myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd];
     myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
     myInfoData.todayDate = DateHelper.getCurrentShortDate();
+    myInfoData.showEstimateGradeStart = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeStart, 'YYYY.M.', 'YYYYMM');
+    myInfoData.showEstimateGradeEnd = DateHelper.getShortDateWithFormat(myInfoData.estimateGradeEnd, 'YYYY.M.', 'YYYYMM');
 
-    //멤버십 종류가 Leaders Club 또는 SK Family 인 경우 재발급 신청 Hide
+    // 멤버십 종류가 Leaders Club 또는 SK Family 인 경우 재발급 신청 Hide
     if ( myInfoData.mbrTypStr === 'Leaders Club' || myInfoData.mbrTypStr === 'SK Family' ) {
       myInfoData.cardChangeShown = false;
     } else {
