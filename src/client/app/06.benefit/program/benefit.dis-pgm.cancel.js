@@ -160,7 +160,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       hbs: 'MV_01_02_02_01',
       bt: [
         {
-          style_class: 'bt-blue1 fe-btn_back',
+          style_class: 'unique fe-btn_back',
           txt: Tw.BUTTON_LABEL.CLOSE
         }
       ]
