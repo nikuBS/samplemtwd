@@ -4475,13 +4475,7 @@
   left: 0;
   bottom: 0;
   z-index: 25;
-  width: 100%;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  width: 100%; }
 
 .user-info {
   position: relative; }
@@ -5415,6 +5409,9 @@
   font-size: 0.75rem;
   color: #666; }
 
+.ti-caption-gray .tit .tip-view {
+  margin-top: -0.125rem; }
+
 .ico-noti-bgw {
   display: inline-block;
   padding: 0 0.375rem 0 0.3125rem;
@@ -5610,6 +5607,9 @@
     width: 100%;
     height: 2.5rem;
     line-height: 2.5rem; }
+
+.rdo-list-type .radiobox.type01:before, .rdo-list-type .shop-info .shop-txt .radiobox.type02:before, .shop-info .shop-txt .rdo-list-type .radiobox.type02:before, .rdo-list-type .shop-info .shop-txt .radiobox.type03:before, .shop-info .shop-txt .rdo-list-type .radiobox.type03:before {
+  margin-right: 0.1875rem; }
 
 .recommendedrate-list > li .product-infolink .products-titleinfo .title-l {
   display: block;
@@ -7598,6 +7598,9 @@ a.bt-link-tx.underline.small {
   padding-bottom: 1.0625rem;
   margin-bottom: 1.0625rem; }
 
+.set-roaming-time .set .tit {
+  font-size: 0.9375rem; }
+
 .set-roaming-time .btn-wrap {
   margin-top: 0.25rem; }
   .set-roaming-time .btn-wrap:after {
@@ -9322,8 +9325,12 @@ a.bt-link-tx.underline.small {
       background-color: #fff;
       opacity: .3; }
     .main-slide-banner .slider-box .slick-dots li.slick-active {
+      width: 0.375rem;
+      height: 0.375rem;
       background: #fff; }
       .main-slide-banner .slider-box .slick-dots li.slick-active span {
+        width: 0.375rem;
+        height: 0.375rem;
         background-color: transparent; }
 
 .main-slide-banner .slider-box .w100 {
@@ -9359,6 +9366,8 @@ a.bt-link-tx.underline.small {
         border: 1px solid #000;
         background: #fff; }
       .main-slide-banner.ta-02 .slick-dots li.slick-active {
+        width: 0.375rem;
+        height: 0.375rem;
         border: 1px solid #000;
         background: #000; }
 
@@ -16126,12 +16135,25 @@ a.bt-link-tx.underline.small {
         height: 1.5rem; }
 
 .bg-type .t-none {
-  display: block !important; }
+  display: block !important;
+  text-indent: 0; }
 
 .device_ios .h-belt .h-default .h-tit {
   height: 51px;
   overflow: hidden;
   line-height: 3.4375rem; }
+
+.device_android .h-belt {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
+
+.device_android .bt-fixed-area {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
 
 /* home 에서 scroll발생시 */
 .fly .header-wrap .h-belt .h-default .h-logo {
@@ -18236,8 +18258,12 @@ a.bt-link-tx.underline.small {
         background: #000;
         opacity: .18; }
       .slide-show .slick-dots li.slick-active {
+        width: 0.375rem;
+        height: 0.375rem;
         background: #000; }
         .slide-show .slick-dots li.slick-active span {
+          width: 0.375rem;
+          height: 0.375rem;
           background-color: transparent; }
 
 /* EV_01_02 ~ EV_01_05 : 이벤트 타이틀 */
@@ -18289,6 +18315,69 @@ a.bt-link-tx.underline.small {
         height: 0.4375rem;
         margin-top: -0.0625rem;
         background: #fff; }
+
+.operation-guide-banner01 {
+  position: relative;
+  height: 7rem;
+  padding: 0.9375rem 1rem 0 0.625rem;
+  background: #755cb0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .operation-guide-banner01 .banner-more {
+    position: relative;
+    display: inline-block;
+    padding: 0 0.6875rem 0 0;
+    color: #fff;
+    font-size: 0.6875rem; }
+  .operation-guide-banner01 .banner-tit {
+    position: relative;
+    display: block;
+    padding-top: 0.3125rem;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5625rem;
+    z-index: 1; }
+    .operation-guide-banner01 .banner-tit .tit-point {
+      font-weight: 500; }
+  .operation-guide-banner01 ul {
+    position: relative;
+    margin-top: 0.625rem;
+    z-index: 1; }
+    .operation-guide-banner01 ul li .banner-bt {
+      position: relative;
+      display: inline-block;
+      padding: 0 0.6875rem 0 0;
+      height: 1.5625rem;
+      line-height: 1.25rem;
+      color: #fff;
+      font-size: 0.9375rem; }
+      .operation-guide-banner01 ul li .banner-bt:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 0.375rem;
+        height: 0.625rem;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%);
+        background: url(/img/customer/bg_cs_01_01_04_01.png) no-repeat;
+        background-size: 100%; }
+    .operation-guide-banner01 ul li .banner-bt-no {
+      position: relative;
+      display: inline-block;
+      padding: 0 0.6875rem 0 0;
+      height: 1.5625rem;
+      line-height: 1.25rem;
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: normal; }
+  .operation-guide-banner01 img {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    width: 130px;
+    height: 100px; }
 
 .operation-guide-banner {
   position: relative;
@@ -21906,7 +21995,8 @@ a.bt-link-tx.underline.small {
 .map-box-wrap .shop-map {
   position: relative;
   margin: 0 -1rem;
-  border-top: 1px solid #e1e1e1; }
+  border-top: 1px solid #e1e1e1;
+  z-index: 1; }
 
 .map-box-wrap .franchisee-infor {
   position: relative;
@@ -23062,9 +23152,8 @@ a.bt-link-tx.underline.small {
     color: #959595;
     font-weight: 500; }
 
-.pg-member {
-  padding: 1.5625rem 1rem 0;
-  text-align: center; }
+.pg-member.join-able {
+  padding: 1.5625rem 1rem 0; }
   .pg-member.join-able .member-tit {
     font-size: 1.6875rem;
     font-weight: 500; }
@@ -23203,7 +23292,7 @@ a.bt-link-tx.underline.small {
     line-height: 2.125rem; }
 
 .device_android .btn-round3 {
-  line-height: 1.875rem; }
+  line-height: 1.75rem; }
 
 .device_android .bt-slice .btn-round2 {
   line-height: 2.5rem; }
@@ -26690,6 +26779,44 @@ body.apphome {
       width: 100%;
       vertical-align: top; }
 
+.survey-box3 {
+  background: #755cb0; }
+  .survey-box3 .slick-prev {
+    display: none !important; }
+  .survey-box3 .slick-next {
+    display: none !important; }
+  .survey-box3 .slick-dots {
+    right: 1rem;
+    top: 1.25rem;
+    width: auto;
+    height: 0.5rem;
+    text-align: left; }
+    .survey-box3 .slick-dots li {
+      width: auto;
+      height: auto;
+      margin: 0 0 0 0.5rem;
+      vertical-align: top; }
+      .survey-box3 .slick-dots li span {
+        display: block;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        border-radius: 100%;
+        border: 1px solid #fff;
+        font-size: 0;
+        line-height: 0;
+        cursor: pointer; }
+      .survey-box3 .slick-dots li.slick-active span {
+        width: 0.4375rem;
+        height: 0.4375rem;
+        margin-top: -0.0625rem;
+        background: #fff; }
+  .survey-box3 .slider-box button, .survey-box3 .slider-box a {
+    display: block;
+    width: 100%; }
+    .survey-box3 .slider-box button img, .survey-box3 .slider-box a img {
+      width: 100%;
+      vertical-align: top; }
+
 .filter-r {
   background: #e6f2fb;
   text-align: right; }
@@ -26907,7 +27034,6 @@ body.apphome {
   border-color: transparent; }
 
 .pg-member {
-  padding: 1.5625rem 1rem 0;
   text-align: center;
   /*폼 에러 문구, 간격, 버튼 색 변경, 우선 공통(회원)쪽에만 적용*/
   /* 라디오버튼 칼라변경, 우선 공통(회원)쪽만 적용*/ }
@@ -29482,7 +29608,8 @@ body.apphome {
   .survey-researchbox .poll-img + .chkform-wrap {
     margin-top: 0.6875rem; }
   .survey-researchbox .category-type {
-    margin-bottom: 0.9375rem; }
+    margin-bottom: 0.9375rem;
+    font-size: initial; }
     .survey-researchbox .category-type .chkform-wrap label {
       display: block;
       top: 0.0625rem;
@@ -29535,3 +29662,44 @@ body.apphome {
     top: 0; }
   .survey-researchbox img {
     width: 100%; }
+
+/* 가입 RM_11_01_02_02_case1 */
+.f-m16 {
+  font-weight: 500;
+  font-size: 1rem; }
+
+.tip-gift {
+  margin-top: 0.75rem;
+  font-weight: 300;
+  font-size: 0.8125rem; }
+
+.tel-area {
+  margin-top: 2.1875rem; }
+  .tel-area .subtit {
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .tel-area .tel-box {
+    position: relative;
+    margin-top: 0.9375rem;
+    padding-left: 5.375rem; }
+    .tel-area .tel-box .bt-dropdown {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5.4375rem; }
+    .tel-area .tel-box .inputbox .input {
+      float: left;
+      padding-left: 0.5rem;
+      width: 50%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+    .tel-area .tel-box .inputbox:after {
+      display: block;
+      clear: both;
+      content: ""; }
+  .tel-area .btn-round1 {
+    margin: 1.25rem 0; }
+  .tel-area .announcement-box {
+    padding: 0 0.9375rem; }
+    .tel-area .announcement-box li {
+      color: rgba(102, 102, 102, 0.6); }

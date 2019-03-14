@@ -629,7 +629,10 @@ li.checkbox.type01 {
     height: 1.5rem;
     background: url(/img/form/ico-radio-style01-default.png) no-repeat 0 0;
     background-size: 1.5rem auto;
-    vertical-align: middle; }
+    vertical-align: middle;
+    margin-right: 0.3125rem;
+    position: relative;
+    top: -0.0625rem; }
   .radiobox.type01.checked:before {
     background: url(/img/form/ico-radio-style01-checked.png) no-repeat 0 0;
     background-size: 1.5rem auto; }

@@ -470,6 +470,20 @@
         </div>
         <!--// #contents -->
     </div>
+    <script>
+        $('[type="checkbox"]').change(function () {
+            var $this = $(this);
+            alert($this.prop('checked'));
+        });
+        $('[type="radio"]').change(function () {
+            var $this = $(this);
+            var $val = $('[name="'+($this.attr('name'))+'"]');
+            var $checked = $val.filter(':checked');
+            var checkedIndex = $val.index($checked);
+            alert('value = '+$checked.val()+'\n checkedIndex = '+ checkedIndex);
+        });
+    </script>
+
 </body>
 
 </html>
