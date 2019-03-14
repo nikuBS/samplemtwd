@@ -136,7 +136,8 @@ Tw.CommonSearch.prototype = {
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
+    $barcodElement.JsBarcode(barcodNum,{background : '#edeef0',height : 60, displayValue : false});
+    this.$container.find('.bar-code-num').text(barcodNum);
   },
   _showShortcutList : function (data,dataKey,cdn) {
     this.$contents.append(Handlebars.compile(this.$container.find('#'+dataKey+'_base').html()));
@@ -225,14 +226,20 @@ Tw.CommonSearch.prototype = {
 
   },
   _addRecentlyKeyword : function (keyword) {
-    this._recentKeyworList[this._nowUser].push({
+    for(var i=0;i<this._recentKeyworList[this._nowUser].length;i++){
+      if(this._recentKeyworList[this._nowUser][i].keyword === keyword){
+        this._recentKeyworList[this._nowUser].splice(i,1);
+        break;
+      }
+    }
+    this._recentKeyworList[this._nowUser].unshift({
       keyword : keyword,
       searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
     while (this._recentKeyworList[this._nowUser].length>10){
-      this._recentKeyworList[this._nowUser].shift();
+      this._recentKeyworList[this._nowUser].pop();
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
   },
