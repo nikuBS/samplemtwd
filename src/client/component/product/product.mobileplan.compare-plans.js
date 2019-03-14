@@ -140,6 +140,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     $layer.find('#fe-btn-change').toggleClass('none', !this._isShowBtn);
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
     this._initChart($layer, _data);
+    // 화면이 아래로 떨어져서 위로 붙여준다.
+    setTimeout(function () {
+      $layer.scrollTop(0);
+    }, 50);
   },
 
   _closeComparePop: function () {
