@@ -6,6 +6,11 @@
 
 Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
 
+
+
+  $('.benefit-list').eq(0).html(this._convToHtml(options.coBenefitDtl || options.appCoBenefitDtl )).show();
+
+  /*
   // 데이터 내에 태그를 escape한 것이 있다면 컨텐츠를 다시 뿌림
   var tmp = options.coBenefitDtl.replace(/ /g, '').toLowerCase();
   if(tmp.indexOf('&lt;br/&gt;') !== -1 ||
@@ -14,7 +19,7 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
     $('.benefit-list').eq(0).html($('.benefit-list').eq(0).text()).show();
   }else{
     $('.benefit-list').eq(0).show();
-  }
+  }*/
 
   // DV001-14557 이슈로
   // 컨텐츠 내 url이 T맴버십의 url이라 T맴버십 앱(url)으로 이동 하도록 링크를 변경
@@ -383,5 +388,47 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
         this._popupService.close();
       }, this)
     );
+  },
+
+
+  /**
+   * contents를 html로 변경
+   * (as-is에 있는 로직을 javascript로 변경해서 그대로 사용함 DV001-17050)
+   * @param contents
+   * @returns {*}
+   * @private
+   */
+  _convToHtml: function(contents){
+    if(!contents) {
+      return '';
+    }
+
+    contents = contents.replace('&amp;', '&');
+    contents = contents.replace('&quot;', '\'');
+    contents = contents.replace('&acute;', '"');
+    contents = contents.replace('&#35;', '#');
+    contents = contents.replace('&#39;', '\'');
+    contents = contents.replace('&#40;', '(');
+    contents = contents.replace('&#41;', ')');
+
+    // 허용 가능 tag 목록
+    var ableTagArr = [
+      'table','caption','colgroup','col','thead','tbody','tfoot','th','tr','td',
+      'div','span',
+      'p','pre','br',
+      'b','strong','u','font','center','sub','sup','em',
+      'hr','blockquote','ul','ol','li',
+      'h1','h2','h3','h4','h5','article',
+      'a','img','dl','dt','dd'
+    ];
+
+    var reg = null;
+    var repl = null;
+    for( var i = 0; i < ableTagArr.length; i++ ){
+      reg = new RegExp('&lt;(.?)' + ableTagArr[i] + '(.*?)&gt;', 'gi');
+      repl = '<$1'+ableTagArr[i]+'$2>';
+      contents = contents.replace(reg, repl);
+    }
+    return contents;
   }
 };
