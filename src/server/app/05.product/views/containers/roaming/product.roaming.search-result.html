@@ -65,24 +65,25 @@
             <div class="cont-box">
                 <div class="roaming-info-wrap">
                     <p class="info-txt" data-search-conuntry="<%= searchInfo.countryCd %>"><strong><%= searchInfo.countryNm %></strong>의<br/>로밍 맞춤 정보를 안내해 드립니다.</p>
-                    <h4 class="txt">이용 가능 로밍 서비스</h4>
-                    <ul class="link-long-list">
-                        <% if (roamingTypeData.dataRoamingYn  === 'Y') {%>
-                        <li class="fe-rm-data">
-                            <div class="link-long">
-                                <button><span class="icon type1"></span>데이터로밍<span class="ico"></span></button>
-                            </div>
-                        </li>
-                        <% } %>
-                        <% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>
-                        <li class="fe-rm-voice">
-                            <div class="link-long">
-                                <button><span class="icon type2"></span>음성로밍<span class="ico"></span></button>
-                            </div>
-                        </li>
-                        <% } %>
-                    </ul>
-
+                    <!-- 2019.03.14 기획 변경으로 인한 내용삭제-->
+                    <!--<h4 class="txt">이용 가능 로밍 서비스</h4>-->
+                    <!--<ul class="link-long-list">-->
+                        <!--<% if (roamingTypeData.dataRoamingYn  === 'Y') {%>-->
+                        <!--<li class="fe-rm-data">-->
+                            <!--<div class="link-long">-->
+                                <!--<button><span class="icon type1"></span>데이터로밍<span class="ico"></span></button>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<% } %>-->
+                        <!--<% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>-->
+                        <!--<li class="fe-rm-voice">-->
+                            <!--<div class="link-long">-->
+                                <!--<button><span class="icon type2"></span>음성로밍<span class="ico"></span></button>-->
+                            <!--</div>-->
+                        <!--</li>-->
+                        <!--<% } %>-->
+                    <!--</ul>-->
+                    <!-- //2019.03.14 내용삭제-->
                     <h4 class="txt pt40">로밍 서비스 방식별 종량요금 안내</h4>
                     <div class="cont-noti">
                         <span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/>
