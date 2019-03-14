@@ -121,7 +121,6 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
-    // $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -181,6 +180,8 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       var apiName = this._changeLimitApiName();
       var reqData = this._makeRequestData();
 
+      this.$isChanged = parseInt(this.$monthSelector.attr('id'), 10) !== parseInt(this.$monthSelector.attr('origin-value'), 10);
+
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._changeLimitSuccess, this))
         .fail($.proxy(this._fail, this));
@@ -221,6 +222,9 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   _changeLimitSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      if (this.$isChanged) {
+        this._setRemainAmount();
+      }
       this._popupService.close();
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_LIMIT);
     } else {
@@ -230,20 +234,20 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _onClose: function () {
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._popupService.close();
-    // }
+  _setRemainAmount: function () {
+    var usedAmount = this.$container.find('.fe-max-amount').attr('id');
+    var remainAmount = this.$monthSelector.attr('id');
+    var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
+
+    if (remain < 0) {
+      remain = 0;
+    }
+    this.$container.find('.fe-remain-amount').attr('id', remain)
+      .text(Tw.FormatHelper.addComma(remain));
   },
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||
       this.$daySelector.attr('id') !== this.$daySelector.attr('origin-value') ||
       this.$onceSelector.attr('id') !== this.$onceSelector.attr('origin-value');
-  },
-  _closePop: function () {
-    this._popupService.closeAll();
   }
 };
