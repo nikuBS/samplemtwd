@@ -159,7 +159,6 @@ class MyTJoinSubmainController extends TwViewController {
           const h_chgDt = data.myHistory[0].chgDt;
           // 개통일자 DV001-13951 (마스킹시 ****.**.** 이와 같이 변경)
           data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDate(h_chgDt);
-          // data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
         } else {
           data.hsDate = null;
         }
@@ -203,8 +202,8 @@ class MyTJoinSubmainController extends TwViewController {
       // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
       if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
         const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
-        data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
-        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
+        data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
+        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
         data.myPausedState.state = true;
         if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
           data.myLongPausedState = {
@@ -218,8 +217,8 @@ class MyTJoinSubmainController extends TwViewController {
 
       if ( data.myLongPausedState ) {
         const fromDt = data.myLongPausedState.fromDt, toDt = data.myLongPausedState.toDt;
-        data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
-        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
+        data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
+        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
@@ -408,16 +407,16 @@ class MyTJoinSubmainController extends TwViewController {
     result.custNm = data.wireReqrNm;
     // 서비스 약정
     result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt :
-      (data.svcPrdStaDt ? DateHelper.getShortDateNoDot(data.svcPrdStaDt) : data.svcPrdStaDt);
+      (data.svcPrdStaDt ? DateHelper.getShortDate(data.svcPrdStaDt) : data.svcPrdStaDt);
     result.svcPrdEndDt = this.isMasking(data.setPrdStaDt) ? data.svcPrdEndDt :
-      (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.svcPrdEndDt) : data.svcPrdEndDt);
+      (data.setPrdStaDt ? DateHelper.getShortDate(data.svcPrdEndDt) : data.svcPrdEndDt);
     result.svcAgrmtMth = data.svcAgrmtMth;
     // 세트 약정
     result.setNm = data.setNm;
     result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt :
-      (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.setPrdStaDt) : data.setPrdStaDt);
+      (data.setPrdStaDt ? DateHelper.getShortDate(data.setPrdStaDt) : data.setPrdStaDt);
     result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
-      (data.setPrdEndDt ? DateHelper.getShortDateNoDot(data.setPrdEndDt) : data.setPrdEndDt);
+      (data.setPrdEndDt ? DateHelper.getShortDate(data.setPrdEndDt) : data.setPrdEndDt);
     result.setAgrmtMth = data.setAgrmtMth;
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
