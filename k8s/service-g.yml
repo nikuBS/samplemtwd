@@ -4,10 +4,10 @@ metadata:
   name: bff-nodejs-mobile-g
 spec:
   ports:
-    - name: http
-      port: 8080
-      targetPort: 3000
+  - name: http
+    port: 8080
+    targetPort: 3000
   selector:
     app: bff-nodejs-mobile
-    version: 0.0.1
+    version: '0.12'
   type: ClusterIP
