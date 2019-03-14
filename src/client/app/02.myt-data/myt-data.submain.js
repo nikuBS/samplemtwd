@@ -807,7 +807,7 @@ Tw.MyTDataSubMain.prototype = {
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
-      popupService.close();
+      popupService.closeAll();
     }
 
     // BPCP 팝업 닫고 링크 이동
