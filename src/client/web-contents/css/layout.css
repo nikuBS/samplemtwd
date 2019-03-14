@@ -6,6 +6,9 @@ body.bg-white {
 body.bg-gray {
   background-color: #f5f5f5; }
 
+body.hidden {
+  overflow: hidden; }
+
 .wrap {
   padding-bottom: 1.875rem; }
   .wrap > .container-wrap {
@@ -1039,19 +1042,14 @@ body.bg-gray {
   z-index: 200;
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
-  -webkit-overflow-scrolling: touch;
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  -webkit-overflow-scrolling: touch; }
   .popup-page .page-header {
     border-bottom: 1px solid #e5e5e5; }
     .popup-page .page-header.noborder {
       border-bottom-color: transparent; }
   .popup-page .header-wrap {
     position: fixed;
+    top: 0;
     border-bottom: 1px solid #e5e5e5; }
     .popup-page .header-wrap.noborder {
       border-bottom-color: transparent; }
@@ -1190,13 +1188,7 @@ body.bg-gray {
             box-sizing: border-box;
     background: #fff;
     border-bottom-color: transparent;
-    z-index: 20;
-    -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-    -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0); }
+    z-index: 20; }
     .popup-page .header-wrap .page-header .header-ti {
       text-align: center;
       text-overflow: ellipsis;
@@ -1374,11 +1366,26 @@ body.bg-gray {
     }
 }*/
 /* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
+.device_ios .popup-page .header-wrap {
+  position: -webkit-sticky;
+  position: sticky;
+  min-height: auto; }
+
+.device_ios .popup-page .page-header {
+  position: fixed;
+  top: 0; }
+
 .device_ios #common-menu .section-userinfo .userinfo .ti-tx + .bt {
   top: 0; }
 
 .device_ios #common-menu .section-userinfo .userinfo .tx + .bt {
   top: -5px; }
+
+.device_android .popup-page .page-header {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
 
 /* 페이지 사이즈 100% */
 .fixed-wrap {
@@ -1916,6 +1923,9 @@ body.bg-gray {
             margin-left: 0.625rem;
             color: #358ED8;
             font-size: 0.75rem; }
+      .box-citation .citation-form .form-cell .txt .sms-time {
+        margin-left: 0.625rem;
+        color: #178bce; }
       .box-citation .citation-form .form-cell .form-ti {
         display: block;
         margin-bottom: 0.625rem;
@@ -1970,18 +1980,20 @@ body.bg-gray {
     }
 }*/
 .sms-confirm-box {
-  min-height: 12.5rem; }
+  min-height: 12.5rem;
+  text-align: initial; }
   .sms-confirm-box + .sms-confirm-box {
     padding-top: 1.625rem;
     border-top: 1px solid #e1e1e1; }
   .sms-confirm-box .sms-confirm-des {
-    font-size: 0.9375rem;
-    font-weight: 400; }
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #666; }
     .sms-confirm-box .sms-confirm-des span {
       font-weight: 700;
       vertical-align: baseline; }
   .sms-confirm-box .box-citation .citation-form .form-cell {
-    margin-bottom: 1.25rem; }
+    margin-bottom: 0.75rem; }
     .sms-confirm-box .box-citation .citation-form .form-cell.division-line {
       border-top: 1px solid #e1e1e1;
       padding-top: 1.25rem; }
@@ -2023,6 +2035,16 @@ body.bg-gray {
       background-repeat: no-repeat;
       background-position: 0 -17.1875rem;
       background-size: 3.125rem; }
+  .sms-confirm-box button.disabled {
+    border-top: 1px solid #e5e5e5;
+    background: #fff;
+    color: #dcdcdc; }
+  .sms-confirm-box .inputbox + button {
+    margin-top: 0.875rem; }
+  .sms-confirm-box .tx-box + button {
+    margin-top: 1.5rem; }
+  .sms-confirm-box .bt-box3 .btn-round2 {
+    min-width: 6.875rem; }
 
 /* 고객센터 인증 */
 .certifi-ti-big {

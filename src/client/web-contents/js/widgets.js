@@ -117,8 +117,8 @@ skt_landing.widgets = {
         bt.show();
       }
       bt.on('click',function(e){//@텍스트 삭제 버튼 수정
-        e.preventDefault();
-        e.stopPropagation();
+        var $this = $(this);
+        if($this.hasClass('stop-bubble') == true) e.stopPropagation();    //@2019-03-12 stop-bubble 클래스 추가 ( 체크박스안에 삭제 버튼이 있는 경우 )
         field.val('').focus();
         bt.hide();
       });
@@ -318,7 +318,7 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span />').text(i + 1);
+            return $('<span class="set-aria" />').text(i + 1);//@DV001-16733 span.set-aria
           },
         });
       }else{
@@ -336,7 +336,7 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span />').text(i + 1);
+            return $('<span class="set-aria"/>').text(i + 1);//@DV001-16733 span.set-aria
           },
         });
       }
@@ -396,7 +396,8 @@ skt_landing.widgets = {
           $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
-      if($('.home-slider').length > 0){
+
+      /*if($('.home-slider').length > 0){//@190313: 메인탭 분리
         _this.on({
           'mousedown' : function(){
             $('.home-slider .home-slider-belt')[0].slick.setOption({
@@ -448,7 +449,7 @@ skt_landing.widgets = {
           'swipe' : function(){
           }
         })
-      }
+      }*/
     });
   },
   widget_slider2: function (ta) {
