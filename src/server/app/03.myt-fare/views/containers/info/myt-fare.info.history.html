@@ -40,7 +40,7 @@
 
                 <div class="sort-area">
                     <span class="total-qnt">총 <span class="num"><%=data.listData.mergedListData.length%></span>건</span>
-                    <button class="btn-select" id="fe-type-trigger"><%=currentString%></button>
+                    <button class="btn-select" aria-hashpopup='true' id="fe-type-trigger"><%=currentString%></button>
                 </div>
 
                 <div id="fe-list-wrapper">
@@ -84,8 +84,8 @@
                     <ul class="pg-chk-list02">
                         <% data.noticeInfo.forEach(function(info){ %>
                             <li data-list-id="<%=info.link%>">
-                                <button class="btn-tip" id="<%=info.link%>" title="정보보기"  aria-haspopup="true">
-                                    <%=info.title%><i class="icon-badge-tip"><span class="blind"><%=info.title%> tip</span></i>
+                                <button class="btn-tip" id="<%=info.link%>" aria-haspopup="true">
+                                    <%=info.title%><i class="icon-badge-tip"><span class="blind">tip</span></i>
                                 </button>
                             </li>
                         <% }); %>
