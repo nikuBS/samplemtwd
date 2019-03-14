@@ -162,7 +162,7 @@ Tw.FormatHelper = (function () {
       return v;
     }
 
-    var str            = $.trim(v),
+    var str            = $.trim(v).replace(/-/gi, ''),
         maskCharIndexs = [],
         j              = 0;
 

@@ -112,22 +112,22 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     var $inputPasswordVal = $.trim(this.$inputPassword.val()),
       isPasswordInputError = false;
 
-    if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
+    if (!isPasswordInputError && !this._validation.checkIsLength($inputPasswordVal, 4)) {
       this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
       isPasswordInputError = true;
     }
 
-    if (!this._validation.checkIsSameLetters($inputPasswordVal)) {
+    if (!isPasswordInputError && !this._validation.checkIsSameLetters($inputPasswordVal)) {
       this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
       isPasswordInputError = true;
     }
 
-    if (!this._validation.checkIsStraight($inputPasswordVal, 4)) {
+    if (!isPasswordInputError && !this._validation.checkIsStraight($inputPasswordVal, 4)) {
       this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
       isPasswordInputError = true;
     }
 
-    if (!isPasswordInputError) {
+    if (!isPasswordInputError || $inputPasswordVal.length < 1) {
       this._toggleError(this.$error0, false);
     }
 
@@ -139,27 +139,27 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       $confirmPasswordVal = $.trim(this.$confirmPassword.val()),
       isPasswordConfirmInputError = false;
 
-    if (!this._validation.checkIsLength($confirmPasswordVal, 4)) {
+    if (!isPasswordConfirmInputError && !this._validation.checkIsLength($confirmPasswordVal, 4)) {
       this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16, isSetError);
       isPasswordConfirmInputError = true;
     }
 
-    if (!this._validation.checkIsSameLetters($confirmPasswordVal)) {
+    if (!isPasswordConfirmInputError && !this._validation.checkIsSameLetters($confirmPasswordVal)) {
       this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19, isSetError);
       isPasswordConfirmInputError = true;
     }
 
-    if (!this._validation.checkIsStraight($confirmPasswordVal, 4)) {
+    if (!isPasswordConfirmInputError && !this._validation.checkIsStraight($confirmPasswordVal, 4)) {
       this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18, isSetError);
       isPasswordConfirmInputError = true;
     }
 
-    if (this._validation.checkIsDifferent($inputPasswordVal, $confirmPasswordVal)) {
+    if (!isPasswordConfirmInputError && this._validation.checkIsDifferent($inputPasswordVal, $confirmPasswordVal)) {
       this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17, isSetError);
       isPasswordConfirmInputError = true;
     }
 
-    if (!isPasswordConfirmInputError) {
+    if (!isPasswordConfirmInputError || $confirmPasswordVal.length < 1) {
       this._toggleError(this.$error1, false);
     }
 
@@ -255,6 +255,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {

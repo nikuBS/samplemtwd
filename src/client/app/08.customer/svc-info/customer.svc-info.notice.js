@@ -1,63 +1,66 @@
 /**
+ * 이용안내 > 공지사항
  * FileName: customer.svc-info.notice.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.23
  */
 
 Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {
+  // 컨테이너 레이어 설정
   this.$container = rootEl;
+
+  // 공통 모듈 설정
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
-  this._template = Handlebars.compile($('#tpl_notice_list_item').html());
+  // 기본 변수 설정
   this._category = category;
   this._ntcId = ntcId;
   this._tworldChannel = tworldChannel;
   this._setContentsList = [];
   this._page = 1;
 
+  // 캐싱, 이벤트 및 최초동작 실행
   this._cachedElement();
   this._bindEvent();
   this._init();
 };
 
 Tw.CustomerSvcInfoNotice.prototype = {
-  API_CMD: {
-    tworld: 'BFF_08_0029',
-    directshop: 'BFF_08_0039',
-    membership: 'BFF_08_0031',
-    roaming: 'BFF_08_0040'
-  },
 
+  // Element 캐싱
   _cachedElement: function() {
-    this.$list = this.$container.find('.fe-list');
-    this.$btnCategory = this.$container.find('.fe-btn_category');
-    this.$btnMoreList = this.$container.find('.fe-btn_more_list');
+    this.$list = this.$container.find('.fe-list');  // 목록
+    this.$btnCategory = this.$container.find('.fe-btn_category'); // 카테고리 버튼
   },
 
+  // 이벤트 바인딩
   _bindEvent: function() {
-    this.$list.on('cssClassChanged', 'li.acco-box', $.proxy(this._setContentsReq, this));
-    this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
-    this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
+    this.$list.on('cssClassChanged', 'li.acco-box', $.proxy(this._setContentsReq, this)); // 공지사항 제목이 최초 클릭 되었을 때
+    this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));  // 카테고리 설정 버튼 클릭시
 
+    // 외부 링크 지원
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
 
+    // addClass가 일어날때 cssClassChanged 이벤트를 발생시켜 공지사항 제목이 클릭되었음을 감지하고자 할때 사용
     var originalAddClassMethod = $.fn.addClass;
-
     $.fn.addClass = function() {
       $(this).trigger('cssClassChanged');
-
       return originalAddClassMethod.apply( this, arguments );
     };
   },
 
+  // 최초 동작
   _init: function() {
-    if (Tw.FormatHelper.isEmpty(this._ntcId)) {
+    if (Tw.FormatHelper.isEmpty(this._ntcId)) { // 파라미터로 ntcId 값이 없었다면 진입 하지 않아도 된다.
       return;
     }
 
+    // 목록에서 ntcId 값을 찾는다.
     var item = this.$list.find('[data-ntc_id="' + this._ntcId  + '"]');
+
+    // item 값이 있으면 클릭을 시켜주고, 해당 영역만큼 스크롤 이동을 시켜준다.
     if (item.length > 0) {
       setTimeout(function() {
         $.when(item.find('button').trigger('click'))
@@ -68,49 +71,61 @@ Tw.CustomerSvcInfoNotice.prototype = {
     }
   },
 
+  // 외부 링크 클릭시
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 즉시 외부 링크 실행
     if (!Tw.BrowserHelper.isApp()) {
       return this._openExternalUrl($(e.currentTarget).attr('href'));
     }
 
+    // 공통 과금팝업 노출 후 외부 링크 실행
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
+  // 외부 링크 실행
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   },
 
+  // 제목을 클릭시
   _setContentsReq: function(e) {
-    if (this._category !== 'tworld') {
+    if (this._category !== 'tworld') {  // T월드 카테고리 일때만 내용 값을 가져오는 동작이 필요하므로 다른 카테고리 일때는 진입 안되도록 함
       return;
     }
 
+    // 공지사항 키
     var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
+
+    // 제목 클릭하여 내용 노출 된 상태서 새로고침시 그대로 같은 화면을 보여주기 위해 URL을 조작한다.
+    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
+
+    // 이미 내용값을 API 통해 응답을 받은 키라면 다음 과정을 진행하지 않아도 된다.
     if (this._setContentsList.indexOf(ntcId) !== -1) {
       return;
     }
 
-    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
+    // API 요청하여 T 월드 공지사항 내용을 요청
     this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: this._tworldChannel, ntcId: ntcId })
       .done($.proxy(this._setContentsRes, this));
   },
 
+  // T월드 공지사항 내용 응답
   _setContentsRes: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {  // API 요청 실패시 오류 팝업 노출
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    // 추가 노출을 막기 위해, 배열에 키를 추가해둔다.
     this._setContentsList.push(parseInt(resp.result.ntcId, 10));
+
+    // API 에서 내려받은 응답 값을 replace
     this.$list.find('[data-ntc_id="' + resp.result.ntcId + '"] .notice-txt').html(this._fixHtml(resp.result.ntcCtt));
   },
 
-  _getApi: function() {
-    return Tw.API_CMD[this.API_CMD[this.$container.data('category')]];
-  },
-
+  // 카테고리 설정 팝업 오픈
   _openCategorySelectPopup: function() {
     this._isCategoryMove = false;
     this._popupService.open({
@@ -131,111 +146,36 @@ Tw.CustomerSvcInfoNotice.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category');
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category', this.$btnCategory);
   },
 
+  // 카테고리 이동
   _goCategory: function() {
-    if (!this._isCategoryMove) {
+    if (!this._isCategoryMove) {  // 카테고리 설정 창을 바로 닫았을 경우 카테고리 이동을 실행하지 않는다.
       return;
     }
 
     this._historyService.goLoad('/customer/svc-info/notice?category=' + this._category);
   },
 
+  // 카테고리 설정 팝업 이벤트 바인딩
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
   },
 
+  // 카테고리 선택됨을 boolean 처리
   _applyCategory: function(e) {
     this._isCategoryMove = true;
     this._category = $(e.currentTarget).data('category');
     this._popupService.close();
   },
 
-  _loadMoreList: function() {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    var customParams = {};
-    if (this._category === 'tworld') {
-      customParams.expsChnlCd = this._tworldChannel;
-    }
-
-    this._apiService.request(this._getApi(), $.extend(customParams, { page: this._page, size: 20 }))
-      .done($.proxy(this._appendMoreList, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
-  },
-
-  _getRemainCount: function(param) {
-    var count = param.total - ((++this._page) * param.size);
-    return count < 0 ? 0 : count;
-  },
-
-  _appendMoreList: function(res) {
-    Tw.CommonHelper.endLoading('.container');
-    if (res.code !== Tw.API_CODE.CODE_00) {
-      return this._apiError(res);
-    }
-
-    this.$container.find('.acco-tit button').off();
-    this.$list.append(this._template({
-      list: _.map(res.result.content, $.proxy(this._convertItem, this))
-    }));
-
-    skt_landing.widgets.widget_init('.wrap');
-
-    if (res.result.last) this.$btnMoreList.remove();
-    else {
-      this.$btnMoreList.find('span').text('(' + this._getRemainCount({
-        total: res.result.totalElements,
-        size: res.result.pageable.pageSize
-      })  + ')');
-    }
-  },
-
-  _convertItem: function(item) {
-    return $.extend(item, {
-      title: this._category === 'tworld' ? item.ntcTitNm : item.title,
-      type: this._setItemType(item),
-      date: this._setDate(item),
-      itemClass: this._setItemClass(item),
-      content: Tw.FormatHelper.isEmpty(item.content)? null : this._fixHtml(item.content)
-    });
-  },
-
-  _setDate: function(item) {
-    if (this._category === 'tworld') {
-      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.D.');
-    }
-
-    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.');
-  },
-
-  _setItemType: function(item) {
-    if (this._category === 'tworld') {
-      return Tw.FormatHelper.isEmpty(Tw.CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? null : Tw.CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd];
-    }
-
-    return Tw.FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm;
-  },
-
-  _setItemClass: function(item) {
-    if (this._category === 'tworld') {
-      return (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item['new'] ? 'new' : '');
-    }
-
-    return (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');
-  },
-
+  // Dirty Html 방지
   _fixHtml: function(html) {
     var doc = document.createElement('div');
     doc.innerHTML = html;
 
     return doc.innerHTML;
-  },
-
-  _apiError: function (res) {
-    this._popupService.openAlert(res.code + ' ' + res.msg);
-    return false;
   }
 
 };

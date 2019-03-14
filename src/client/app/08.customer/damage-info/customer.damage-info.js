@@ -1,24 +1,31 @@
 /**
+ * 이용안내 > 이용자피해예방센터 > 메인
  * FileName: customer.damage-info.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2019.02.11
  */
 
 Tw.CustomerDamageInfo = function(rootEl) {
+  // 컨테이너 레이어 설정
   this.$container = rootEl;
+
+  // 이벤트 바인딩
   this._bindEvent();
 };
 
 Tw.CustomerDamageInfo.prototype = {
 
+  // 이벤트 바인딩
   _bindEvent: function() {
-    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));  // 외부 링크 클릭시
   },
 
+  // 외부 링크 클릭시
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 바로 연결
     if (!Tw.BrowserHelper.isApp()) {
       return this._openExternalUrl($(e.currentTarget).attr('href'));
     }
@@ -26,6 +33,7 @@ Tw.CustomerDamageInfo.prototype = {
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
+  // 외부 링크 연결
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   }

@@ -20,52 +20,54 @@ class CustomerSvcInfoNotice extends TwViewController {
     super();
   }
 
-  private _category;
-  private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming'];
-  private _baseUrl = '/customer/svc-info/notice';
-  private _categoryApis = {
-    tworld: API_CMD.BFF_08_0029,
-    directshop: API_CMD.BFF_08_0039,
-    membership: API_CMD.BFF_08_0031,
-    roaming: API_CMD.BFF_08_0040
+  private _category;  // 카테고리
+  private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming']; // 허용되는 카테고리 변수 값
+  private _baseUrl = '/customer/svc-info/notice'; // 페이지 URL
+  private _categoryApis = { // 각 카테고리 별 사용 API BFF No.
+    tworld: API_CMD.BFF_08_0029,  // T월드
+    directshop: API_CMD.BFF_08_0039,  // T다이렉트
+    membership: API_CMD.BFF_08_0031,  // T멤버쉽
+    roaming: API_CMD.BFF_08_0040  // T로밍
   };
 
   /**
+   * API 응답 값 변환
    * @param resultData
    * @private
    */
   private _convertData(resultData): any {
     return {
-      remain: this._getRemainCount(resultData.totalElements, resultData.pageable.pageNumber, resultData.pageable.pageSize),
-      list: this._convertListItem(resultData.content)
+      list: this._convertListItem(resultData.content) // 게시물 목록 컨버팅
     };
   }
 
   /**
+   * 공지사항 게시물 값 변환
    * @param content
    * @private
    */
   private _convertListItem(content) {
     return content.map(item => {
-      if (this._category === 'tworld') {
+      if (this._category === 'tworld') {  // T월드 일때는 응답 변수값이 달라서 분기 처리
         return Object.assign(item, {
-          title: item.ntcTitNm,
-          date: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.D.'),
-          type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd],
-          itemClass: (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '')
+          title: item.ntcTitNm, // 제목
+          date: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.D.'),  // 날짜 포맷 처리
+          type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd], // 유형
+          itemClass: (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '') // 제목 중요 또는 신규 아이콘 처리
         });
       }
 
       return Object.assign(item, {
-        date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.'),
-        type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm,
-        itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''),
-        content: sanitizeHtml(item.content)
+        date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.'),  // 날짜 포맷 처리
+        type: FormatHelper.isEmpty(item.ctgNm) ? '' : item.ctgNm, // 유형
+        itemClass: (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : ''), // 제목 중요 또는 신규 아이콘 처리
+        content: sanitizeHtml(item.content) // 내용 값 Dirty HTML 방지
       });
     });
   }
 
   /**
+   * API 요청시 파라미터 처리
    * @private
    */
   private _getReqParams(page: any, tworldChannel: any): any {
@@ -74,6 +76,7 @@ class CustomerSvcInfoNotice extends TwViewController {
       size: 10
     };
 
+    // T월드 요청시에만 추가 파라미터가 필요하다.
     if (this._category === 'tworld') {
       params = Object.assign({
         expsChnlCd: tworldChannel
@@ -84,63 +87,58 @@ class CustomerSvcInfoNotice extends TwViewController {
   }
 
   /**
+   * T월드 공지사항 목록 API 요청시 채널값 분기 처리
    * @param isAndroid
    * @param isIos
    * @private
    */
   private _getTworldChannel(isAndroid, isIos): any {
-    if (isAndroid) {
+    if (isAndroid) {  // 안드로이드 일때
       return 'A';
     }
 
-    if (isIos) {
+    if (isIos) {  // IOS 일때
       return 'I';
     }
 
+    // 모웹 일때
     return 'M';
   }
 
-  /**
-   * @param total
-   * @param page
-   * @param pageSize
-   * @private
-   */
-  private _getRemainCount(total, page, pageSize): any {
-    const count = total - ((++page) * pageSize);
-    return count < 0 ? 0 : count;
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const page = req.query.page || 1,
-      ntcId = req.query.ntcId || null,
+    const page = req.query.page || 1, // 페이지
+      ntcId = req.query.ntcId || null,  // 게시물 키
       renderCommonInfo = {
-      svcInfo: svcInfo,
-      pageInfo: pageInfo,
-      title: CUSTOMER_NOTICE_CATEGORY.TWORLD
+      svcInfo: svcInfo, // 사용자 정보
+      pageInfo: pageInfo, // 페이지 정보
+      title: CUSTOMER_NOTICE_CATEGORY.TWORLD  // 페이지 제목
     };
 
+    // 카테고리 파라미터 값 없을 경우 예외처리
     this._category = req.query.category || 'tworld';
 
-    if (FormatHelper.isEmpty(this._category) || this._allowedCategoryList.indexOf(this._category) === -1) {
+    // 카테고리 값이 허용된 것이 아닐 경우 오류 페이지 노출
+    if (this._allowedCategoryList.indexOf(this._category) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
+    // T월드 카테고리 일때만 채널 값 계산
     const tworldChannel: any = this._category === 'tworld' ? this._getTworldChannel(BrowserHelper.isAndroid(req), BrowserHelper.isIos(req)) : null;
 
+    // 공지사항 API 요청
     this.apiService.request(this._categoryApis[this._category], this._getReqParams(page, tworldChannel))
       .subscribe((data) => {
-        if (data.code !== API_CODE.CODE_00) {
+        if (data.code !== API_CODE.CODE_00) { // 오류 응답시 오류 페이지 노출
           return this.error.render(res, renderCommonInfo);
         }
 
         res.render('svc-info/customer.svc-info.notice.html', Object.assign(renderCommonInfo, {
-          ntcId: ntcId,
-          category: this._category,
-          categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
-          data: this._convertData(data.result),
-          paging: CommonHelper.getPaging(this._baseUrl, 10, 3, page, data.result.totalElements),
-          tworldChannel: tworldChannel
+          ntcId: ntcId, // 게시물 키
+          category: this._category, // 카테고리 값
+          categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],  // 카테고리 값에 대한 텍스트
+          data: this._convertData(data.result), // 목록 데이터
+          paging: CommonHelper.getPaging(this._baseUrl, 10, 3, page, data.result.totalElements),  // 목록 페이징
+          tworldChannel: tworldChannel  // T월드 채널 정보 client에 전달
         }));
       });
   }

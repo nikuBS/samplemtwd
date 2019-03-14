@@ -21,7 +21,9 @@ class CommonUtilBpcp extends TwViewController {
       sp = req.query.sp || '';
 
     if (sp === 'session') {
-      return res.json({ code: '00', msg: 'success' });
+      res.write('');
+      res.end();
+      return;
     }
 
     if (FormatHelper.isEmpty(bpcpServiceId)) {
@@ -50,7 +52,7 @@ class CommonUtilBpcp extends TwViewController {
         }
 
         res.redirect(bpcpInfo.result.svcUrl + (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ?
-          '&tParam=' : '?tParam=') + bpcpInfo.result.svcUrl);
+          '&tParam=' : '?tParam=') + bpcpInfo.result.tParam + '&ref_origin=' + req.protocol + '//' + req.headers.host);
       });
   }
 }
