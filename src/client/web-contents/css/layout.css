@@ -962,6 +962,12 @@ body.hidden {
       top: 0;
       bottom: 0;
       background: #ebf5fe; }
+  .cont-box.flp-strong-sheet * {
+    font-size: 0.75rem !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+    line-height: 1.25rem !important;
+    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Roboto", "Noto Sans KR", sans-serif !important; }
   .cont-box .sub-title0 {
     padding: 0.875rem 1rem 1.0625rem 1rem;
     font-size: 0.8125rem;
@@ -1103,8 +1109,7 @@ body.hidden {
       padding-bottom: 0px;
       height: 100%;
       overflow: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch; }
+      overflow-y: auto; }
       .popup-page.layer .container-wrap .container {
         -webkit-box-sizing: border-box;
                 box-sizing: border-box;
@@ -1254,7 +1259,11 @@ body.hidden {
     background-size: 100% 100%;
     z-index: 30;
     font-size: 0;
-    line-height: 0; }
+    line-height: 0;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    -webkit-transform: rotate(0.001deg);
+            transform: rotate(0.001deg); }
   .popup-page .prev-step {
     position: fixed;
     left: auto;
@@ -1366,6 +1375,20 @@ body.hidden {
     }
 }*/
 /* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
+.device_ios .bt-fixed-area {
+  position: -webkit-sticky;
+  position: sticky;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0); }
+  .device_ios .bt-fixed-area.fixed-bt {
+    position: fixed;
+    -webkit-transform: none;
+            transform: none; }
+
 .device_ios .popup-page .header-wrap {
   position: -webkit-sticky;
   position: sticky;
