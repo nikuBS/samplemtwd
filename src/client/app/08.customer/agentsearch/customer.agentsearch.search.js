@@ -157,7 +157,7 @@ Tw.CustomerAgentsearch.prototype = {
         break;
     }
   },
-  _onOptionsClicked: function () {
+  _onOptionsClicked: function (e) {
     this._popupService.open({
         hbs: 'CS_02_01_01'
       },
@@ -166,7 +166,7 @@ Tw.CustomerAgentsearch.prototype = {
           $root, this._options, $.proxy(this._onOptionsChanged, this));
       }, this),
       null,
-      'options'
+      'options', e
     );
   },
   _onOptionsChanged: function (options) {
