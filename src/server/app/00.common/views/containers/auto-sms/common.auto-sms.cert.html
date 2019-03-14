@@ -1,0 +1,14 @@
+<%#
+* FileName: common.auto-sms.cert.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2019.03.14
+%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CommonAutoSmsCert();
+  });
+</script>
+<% include ../../components/end.component.html %>
