@@ -39,11 +39,7 @@
                 </li>
                 <li>
                     <span class="title">필요서류</span>
-                    <% if(opStateCd === 'E') { %>
                     <span class="tx-cont"><%= opDtm %> 첨부</span>
-                    <% } else { %>
-                    <span class="tx-cont"><%= opDtm %> 재첨부</span>
-                    <% } %>
                 </li>
                 <% if(locals.cntcNum) { %>
                 <li>

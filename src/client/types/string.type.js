@@ -822,7 +822,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   },
   JOIN: {
     TITLE: '멤버십에 가입하시겠습니까?',
-    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 〉 정보 수정에서 수정 가능합니다',
+    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 &#62; 정보 수정에서 수정 가능합니다',
     OK_BTN: '가입하기',
     CANCEL_BTN: '취소'
   },
@@ -1781,7 +1781,7 @@ Tw.TOOLTIP_TITLE = {
 Tw.MEMBERSHIP = {
   MOVIE_CULTURE_CINFIRM: {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
-    MESSAGE: '컬처 예매는 T멤버십 앱을 통해서만 가능합니다.'
+    MESSAGE: '예매/조회는 T멤버십 앱에서 가능합니다.'
   },
   BENEFIT: {
     BRAND: {

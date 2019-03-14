@@ -37,8 +37,8 @@ Tw.TPayJoinLayerPopup.prototype = {
   },
 
   _onClickSetup: function () {
-    // T Apps로 이동
-    this._historyService.goLoad('/product/apps');
+    // T페이 설치 페이지 이동
+    this._historyService.goLoad('/product/apps/app?appId=TW50000015');
   },
   _onCloseBtn: function(event) {
     this._popupService.close();

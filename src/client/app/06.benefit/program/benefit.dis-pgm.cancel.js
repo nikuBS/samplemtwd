@@ -197,6 +197,6 @@ Tw.BenefitDisPgmCancel.prototype = {
   },
 
   _onClosePop: function() {
-    this._historyService.goBack();
+    this._historyService.reload( this._historyService.goBack());
   }
 };
