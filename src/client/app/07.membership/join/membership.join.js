@@ -84,12 +84,12 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     var value = $target.val();
     var isVaild = Tw.ValidationHelper.isEmail(value) || Tw.FormatHelper.isEmpty(value);
     if ( isVaild ) {
-      if ( !this.$emailAddr.hasClass('blind') ) {
-        this.$emailError.addClass('blind');
+      if ( !this.$emailAddr.hasClass('blind-height0') ) {
+        this.$emailError.addClass('blind-height0');
       }
     }
     else {
-      this.$emailError.removeClass('blind');
+      this.$emailError.removeClass('blind-height0');
     }
     this.isEmailVaild = !isVaild;
   },
@@ -246,15 +246,15 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     var $target = $(event.currentTarget).find('input');
     var checked = $target.prop('checked');
     if ( checked ) {
-      this.$cashbagList.removeClass('blind');
+      this.$cashbagList.removeClass('blind-height0');
       this._checkOkCashbag = true;
     }
     else {
       // DV001-15097 OKcashbag 기능 취초 시 알럿 추가
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.TITLE,
         $.proxy(function () {
-          if ( !this.$cashbagList.hasClass('blind') ) {
-            this.$cashbagList.addClass('blind');
+          if ( !this.$cashbagList.hasClass('blind-height0') ) {
+            this.$cashbagList.addClass('blind-height0');
           }
           if ( this.$cAgreeCheckBox.find('input').prop('checked') ) {
             this.$cAgreeCheckBox.find('input').trigger('click');
