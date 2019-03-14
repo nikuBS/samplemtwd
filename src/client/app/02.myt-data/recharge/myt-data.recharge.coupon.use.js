@@ -59,6 +59,10 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this._onNumberChanged();
       this._currentTab = 'gift';
     }
+
+    // 웹접근성, 선택된 tab에 aria-selected - true 로 설정
+    this.$container.find('.fe-tab').attr('aria-selected', 'false');
+    this.$container.find('#fe-tab-' + this._currentTab).attr('aria-selected', 'true');
   },
   _onOptionSelected: function () {
     var checked = this.$container.find('input[type=radio]:checked');
