@@ -79,7 +79,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     for(var i=0;i<this._addedList.length;i++){
       if((this._addedList[i].serviceNumber1+this._addedList[i].serviceNumber2+this._addedList[i].serviceNumber3) ===
         (phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-        this._openAlert(Tw.ROAMING_JOIN_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(Tw.ROAMING_JOIN_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.NOTIFY);
         return;
       }
     }
@@ -205,10 +205,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        $containerData._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        $containerData._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
       }
     }, this)).fail($.proxy(function (err) {
-      $containerData._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      $containerData._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
     }, this));
   },
   _bindCompletePopupBtnEvt : function(args1,args2){

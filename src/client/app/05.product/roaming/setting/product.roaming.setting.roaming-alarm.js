@@ -91,10 +91,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },
   _changeList : function(){
@@ -207,10 +207,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._addedList.splice(selectedIndex,1);
         $target.parents('li').remove();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },
   _bindRemoveEvt : function () {

@@ -243,11 +243,11 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       }else if(res.code==='ZNGME0005'){
         this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
       }
     }, this)).
     fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
     }, this));
   },
   _showCompletePopup : function(data){
