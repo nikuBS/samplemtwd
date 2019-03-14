@@ -21,7 +21,9 @@ class CommonUtilBpcp extends TwViewController {
       sp = req.query.sp || '';
 
     if (sp === 'session') {
-      return res.json({ code: '00', msg: 'success' });
+      res.write('');
+      res.end();
+      return;
     }
 
     if (FormatHelper.isEmpty(bpcpServiceId)) {
