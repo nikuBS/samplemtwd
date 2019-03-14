@@ -21,9 +21,6 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
 
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _init : function () {
-    if(this._historyService.isBack()){
-      this._historyService.goBack();
-    }
     if(!Tw.BrowserHelper.isApp()){
       this.$container.find('#phone_book').hide();
     }
