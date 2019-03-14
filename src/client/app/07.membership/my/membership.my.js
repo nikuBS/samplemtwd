@@ -121,6 +121,7 @@ Tw.MembershipMy.prototype = {
       res[idx].hpnMm = this._dateHelper.getShortDateWithFormat(res[idx].hpnMm, 'M' , 'MM');
       res[idx].happenDate = res[idx].hpnYy + '.' + res[idx].hpnMm + '.' + res[idx].hpnDd + '.';
       res[idx].showUserDcAmt = Tw.FormatHelper.addComma(res[idx].userDcAmt.toString());
+      res[idx].storeName = res[idx].coName + ' ('+ res[idx].joinName + ')';
     }
 
     return res;
