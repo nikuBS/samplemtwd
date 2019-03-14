@@ -82,25 +82,6 @@ class MyTFareBillOption extends TwViewController {
     if (info.dispSvcNum) {
       info.phoneNum = StringHelper.phoneStringToDash(info.dispSvcNum);
     }
-
-    if (info.address) {
-      Object.assign({}, info, this.removeBr(info, 'address', 'addr'));
-    }
-
-    if (info.account) {
-      Object.assign({}, info, this.removeBr(info, 'account', 'accn'));
-    }
-    return info;
-  }
-
-  private removeBr(info: any, name: string, subName: string): any {
-    let brCode = '<br>';
-    if (info[name].match('<br/>')) {
-      brCode = '<br/>';
-    }
-    info[subName + '1'] = info[name].split(brCode)[0];
-    info[subName + '2'] = info[name].split(brCode)[1];
-
     return info;
   }
 }
