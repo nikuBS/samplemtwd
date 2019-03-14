@@ -76,7 +76,13 @@ Tw.CommonSearchMain.prototype = {
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
   _addRecentlyKeywordList : function (keyword) {
-    this._recentlyKeywordListData[this._nowUser].push(
+    for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
+      if(this._recentlyKeywordListData[this._nowUser][i].keyword === keyword){
+        this._recentlyKeywordListData[this._nowUser].splice(i,1);
+        break;
+      }
+    }
+    this._recentlyKeywordListData[this._nowUser].unshift(
       {
         keyword : keyword,
         searchTime : this._todayStr,
@@ -84,7 +90,7 @@ Tw.CommonSearchMain.prototype = {
         initial : Tw.StringHelper.getKorInitialChar(keyword)
       });
     while (this._recentlyKeywordListData[this._nowUser].length>10){
-      this._recentlyKeywordListData[this._nowUser].shift();
+      this._recentlyKeywordListData[this._nowUser].pop();
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
   },
