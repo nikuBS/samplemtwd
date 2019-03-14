@@ -87,7 +87,9 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinInfoSms($('.wrap'));
+    new Tw.MyTJoinInfoSms($('.wrap'), {
+      isBroadbandJoined: '<%= isBroadbandJoined %>'
+    });
   });
 </script>
 <% include ../../components/end.component.html %>

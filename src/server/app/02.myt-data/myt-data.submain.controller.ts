@@ -56,8 +56,11 @@ class MytDataSubmainController extends TwViewController {
       ppsInfo: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
-      isApp: BrowserHelper.isApp(req)
+      isApp: BrowserHelper.isApp(req),
+      bpcpServiceId: req.query.bpcpServiceId || '',
+      eParam: req.query.eParam || '',
     };
+
     this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
       this._getRemnantData(),
@@ -130,7 +133,7 @@ class MytDataSubmainController extends TwViewController {
         data.isBenefit = true;
         // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
         // TODO: GrandOpen 때 enable 처리
-        // data.isPrepayment = true;
+        data.isPrepayment = true;
       }
 
       if ( data.svcInfo.svcAttrCd === 'M2' || present ) {

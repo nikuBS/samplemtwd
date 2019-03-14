@@ -37,7 +37,8 @@ class MyTJoinInfoSms extends TwViewController {
     return {
       svcInfo,
       pageInfo,
-      data
+      data,
+      isBroadbandJoined: 'N'
     };
   }
 
@@ -63,6 +64,14 @@ class MyTJoinInfoSms extends TwViewController {
 
   // API Response fail
   private fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
+    if (data.code === 'MOD0040') { // SK브로드밴드 가입자
+      return res.render('info/myt-join.info.sms.html', {
+        svcInfo,
+        pageInfo,
+        data: {},
+        isBroadbandJoined: 'Y'
+      });
+    }
     this.error.render(res, {
       code: data.code,
       msg: data.msg,
