@@ -134,7 +134,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         });
       }
       // TODO: GrandOpen 때 enable 처리
-      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      // data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);
