@@ -55,12 +55,12 @@
                                 {{!-- 주석 : 조건변경 회선 --}}
                                 {{# each data as |rootItem rootIndex| }}
 
-                                    {{# each rootItem.lineList as |lineList|}}
+                                    {{# each rootItem.lineList as |lineList index|}}
 
                                         {{#if @first}}
                                             <li data-target="hbLineRadioBtn" class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio" value="" title="서비스 전체" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                                <input type="radio" name="radio" value="" title="서비스 전체" aria-labelledby="aria-comp-radio" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                                <div class="comp-list-layout" id="aria-comp-radio" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext ellipsis">{{lineList.svcType}}</span>
                                                     </p>
@@ -68,8 +68,8 @@
                                             </li>
                                         {{else}}
                                             <li data-target="hbLineRadioBtn" class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio" value="{{lineList.svcMgmtNum}}" title="{{lineList.svcType}}({{lineList.label}})" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
-                                                <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                                <input type="radio" name="radio" value="{{lineList.svcMgmtNum}}" title="{{lineList.svcType}}({{lineList.label}})" aria-labelledby="aria-comp-radio{{index}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                                <div class="comp-list-layout" id="aria-comp-radio{{index}}" aria-hidden="true">
                                                     <p class="layout-text">
                                                         <span class="mtext ellipsis">{{lineList.svcType}}({{lineList.label}})</span>
                                                     </p>
