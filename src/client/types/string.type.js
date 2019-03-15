@@ -58,6 +58,7 @@ Tw.BUTTON_LABEL = {
   HOME: '홈으로',
   YES: '예',
   NO: '아니요',
+  SELECTED: '선택됨',
   COMPLETE: '완료'
 };
 
