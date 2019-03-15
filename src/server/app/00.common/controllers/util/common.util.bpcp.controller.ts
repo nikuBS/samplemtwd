@@ -51,8 +51,14 @@ class CommonUtilBpcp extends TwViewController {
           return this.error.render(res, renderCommonInfo);
         }
 
+        let protocol: any = 'http://';
+
+        if (String(process.env.NODE_ENV) !== 'local') {
+          protocol = 'https://';
+        }
+
         res.redirect(bpcpInfo.result.svcUrl + (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ?
-          '&tParam=' : '?tParam=') + bpcpInfo.result.tParam + '&ref_origin=' + req.protocol + '//' + req.headers.host);
+          '&tParam=' : '?tParam=') + bpcpInfo.result.tParam + '&ref_origin=' + protocol + req.headers.host);
       });
   }
 }
