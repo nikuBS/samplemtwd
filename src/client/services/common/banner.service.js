@@ -26,6 +26,7 @@ Tw.BannerService.prototype = {
   },
 
   _handleSuccessBanners: function(target, callback, hbs) {
+    var CDN = Tw.Environment.cdn;
     this._bannerTmpl = Handlebars.compile(hbs);
 
     this.$banners.on({
@@ -58,10 +59,6 @@ Tw.BannerService.prototype = {
             infinite: true,
             speed: 500,
             lazyLoad: 'progressive',
-            focusOnSelect: true,
-            pauseOnFocus: true,
-            pauseOnHover: true,
-            pauseOnDotsHover: true,
             accessibility: true,
             customPaging: function(slider, i) {
               return $('<span role="button" />').text(i + 1);
@@ -73,8 +70,6 @@ Tw.BannerService.prototype = {
             infinite: false,
             speed: 300,
             lazyLoad: 'progressive',
-            focusOnSelect: true,
-            touchMove: false,
             accessibility: true,
             customPaging: function(slider, i) {
               return $('<span role="button" />').text(i + 1);
@@ -116,12 +111,12 @@ Tw.BannerService.prototype = {
     }
   },
   _bindEvent: function() {
-    this.$banners.on('click', '.fe-banner', $.proxy(this._openBannerLink, this));
+    this.$banners.on('click', '.slick-current', $.proxy(this._openBannerLink, this));
   },
 
   _openBannerLink: function(e) {
-    var target = e.currentTarget,
-      idx = target.getAttribute('data-idx'),
+    var $target = $(e.currentTarget).find('img'),
+      idx = $target.data('idx'),
       banner = this._banners[idx];
 
     if (!banner) {
