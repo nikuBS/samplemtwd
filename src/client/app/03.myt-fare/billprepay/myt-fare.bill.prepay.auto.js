@@ -23,9 +23,11 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
 
 Tw.MyTFareBillPrepayAuto.prototype = {
   _init: function () {
-    this._validationService.bindEvent();
     this._initVariables();
     this._bindEvent();
+
+    this._validationService.bindEvent();
+    setTimeout($.proxy(this._changeLimit, this), 100);
   },
   _initVariables: function () {
     this._standardAmountList = [];
@@ -53,6 +55,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('click', '.fe-amount-info', $.proxy(this._openAmountInfo, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._autoPrepay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+  },
+  _changeLimit: function () {
+    if (this.$standardAmount.attr('id') < 1) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, $.proxy(this._goBack, this));
+    }
+  },
+  _goBack: function () {
+    this._historyService.goBack();
   },
   _changeType: function (event) {
     var $target = $(event.target);
