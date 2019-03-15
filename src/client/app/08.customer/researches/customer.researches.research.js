@@ -63,13 +63,13 @@ Tw.CustomerResearch.prototype = {
       }
 
       enable = true;
-      if ($etc.length > 0) {
-        if (isEtc === 'true') {
-          $etc.removeAttr('disabled');
-          enable = $etc.text().length > 0;
-        } else {
-          $etc.attr('disabled', true).val('');
-        }
+    }
+    if ($etc.length > 0) {
+      if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {
+        $etc.removeAttr('disabled');
+        enable = $etc.text().length > 0;
+      } else {
+        $etc.attr('disabled', true).val('');
       }
     }
 
