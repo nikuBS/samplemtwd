@@ -2,8 +2,9 @@
  * FileName: myt-fare.bill.option.cancel.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.12.17
- * Annotation: 자동납부 해지
+ * Description: 자동납부 해지
  */
+
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';

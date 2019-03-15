@@ -2,7 +2,7 @@
  * FileName: myt-fare.bill.pay-complete.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.27
- * Annotation: 요금납부 및 선결제 완료 화면
+ * Description: 요금납부 및 선결제 완료 화면
  */
 
 import {NextFunction, Request, Response} from 'express';

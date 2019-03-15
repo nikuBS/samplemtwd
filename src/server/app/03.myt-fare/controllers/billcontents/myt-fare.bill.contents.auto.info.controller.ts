@@ -2,8 +2,9 @@
  * FileName: myt-fare.bill.contents.auto.info.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.08
- * Annotation: 콘텐츠이용료 자동선결제 신청/변경/해지 내역 관리
+ * Description: 콘텐츠이용료 자동선결제 신청/변경/해지 내역 관리
  */
+
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
@@ -19,15 +20,15 @@ class MyTFareBillContentsAutoInfo extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getAutoCardInfo(),
-      this.getAutoPrepayHistory()
+      this.getAutoCardInfo(), // 현재 신청된 카드정보 조회
+      this.getAutoPrepayHistory() // 신청 및 변경내역 조회
     ).subscribe(([ autoCardInfo, autoPrepay ]) => {
       if (autoCardInfo.code === API_CODE.CODE_00 && autoPrepay.code === API_CODE.CODE_00) {
         res.render('billcontents/myt-fare.bill.contents.auto.info.html', {
           autoCardInfo: this.parseCardInfo(autoCardInfo.result),
           autoPrepay: this.parsePrepayData(autoPrepay.result),
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
+          svcInfo: svcInfo, // 회선 정보 (필수)
+          pageInfo: pageInfo // 페이지 정보 (필수)
         });
       } else {
         const errorResponse = autoCardInfo.code === API_CODE.CODE_00 ? autoPrepay : autoCardInfo;
@@ -51,8 +52,8 @@ class MyTFareBillContentsAutoInfo extends TwViewController {
 
   private parseCardInfo(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.autoChargeAmount = FormatHelper.addComma(result.autoChrgAmt);
-      result.autoChargeStandardAmount = FormatHelper.addComma(result.autoChrgStrdAmt);
+      result.autoChargeAmount = FormatHelper.addComma(result.autoChrgAmt); // 선결제 신청금액에 콤마(,) 추가
+      result.autoChargeStandardAmount = FormatHelper.addComma(result.autoChrgStrdAmt); // 기준금액에 콤마(,) 추가
     }
     return result;
   }
@@ -61,10 +62,10 @@ class MyTFareBillContentsAutoInfo extends TwViewController {
     const record = result.useContentsAutoPrepayRecord;
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
-        data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd];
-        data.date = DateHelper.getFullDateAndTime(data.operDtm);
-        data.autoChrgStrdAmount = FormatHelper.addComma(parseInt(data.autoChrgStrdAmt, 10).toString());
-        data.autoChrgAmount = FormatHelper.addComma(parseInt(data.autoChrgAmt, 10).toString());
+        data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd]; // 신청, 변경, 해지
+        data.date = DateHelper.getFullDateAndTime(data.operDtm); // 신청일 YYYY.M.D. hh:mm:ss
+        data.autoChrgStrdAmount = FormatHelper.addComma(parseInt(data.autoChrgStrdAmt, 10).toString()); // 기준금액에 콤마(,) 추가
+        data.autoChrgAmount = FormatHelper.addComma(parseInt(data.autoChrgAmt, 10).toString()); // 선결제 신청금액에 콤마(,) 추가
       });
     }
     record.code = API_CODE.CODE_00;

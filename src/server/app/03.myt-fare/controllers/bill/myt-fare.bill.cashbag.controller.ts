@@ -2,7 +2,7 @@
  * FileName: myt-fare.bill.cashbag.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.7
- * Annotation: OK cashbag 포인트 요금납부 1회 예약 및 자동납부 관리
+ * Description: OK cashbag 포인트 요금납부 1회 예약 및 자동납부 관리
  */
 
 import {NextFunction, Request, Response} from 'express';
