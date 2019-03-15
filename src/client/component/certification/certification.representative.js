@@ -160,6 +160,7 @@ Tw.CertificationRepresentative.prototype = {
   _successCert: function (reCert, resp) {
     this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.$btCertAdd.attr('disabled', false);
       this._seqNo = resp.result.seqNo;
       this.$validCert.removeClass('none');
       this.$validCert.attr('aria-hidden', false);

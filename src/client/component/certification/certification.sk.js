@@ -275,6 +275,12 @@ Tw.CertificationSk.prototype = {
     this._clearCertError();
     this._clearConfirmError();
 
+    this.$btCertAdd.attr('disabled', true);
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearInterval(this._addTimer);
+    }
+    this.$showTime.text('');
+
     if ( $target.is(':checked') ) {
       this._onKeyin = true;
       this.$inputMdn.prop('readonly', false);
@@ -354,6 +360,7 @@ Tw.CertificationSk.prototype = {
     this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._seqNo = resp.result.seqNo;
+      this.$btCertAdd.attr('disabled', false);
       if ( resp.result.corpPwdAuthYn === 'Y' ) {
         new Tw.CertificationBiz().open();
       } else {
