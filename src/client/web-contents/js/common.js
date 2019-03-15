@@ -7,6 +7,7 @@ $(document).on('ready', function () {
   }
   if ( $(window).scrollTop() > 0 ){     //@190313: 메인탭 분리
     $('body').addClass("scroll fly");
+    $('#header').addClass('bg-type');
     if(skt_landing.util.win_info.get_scrollT() > 39){
       $('.home-tab-belt').addClass('fixed');
     }
@@ -164,13 +165,30 @@ skt_landing.util = {
   }
 };
 skt_landing.action = {
+  /** IOS일경우 스크롤 끝에 도달했을시 버튼이 따라 올라가지 않게 
+   * ex) skt_landing.action.bottom_fixed()
+  */
+  bottom_fixed: function () {
+    //IOS일경우 스크롤 끝에 도달했을시 버튼이 따라 올라가지 않게
+    $('.popup-page.tw-popup').off('scroll.popup').on('scroll.popup', function () { 
+      var isIOS = skt_landing.util.win_info.get_device().toUpperCase() === 'IOS';
+      if(!isIOS) return;
+      var $this = $(this);
+      var $header = $('.header-wrap');
+      var $footer = $('.bt-fixed-area').addClass('fixed-bt');      
+      var r = $this[0].scrollHeight-($this.height()+$header.height());
+      
+      if($this.scrollTop() < (r-$footer.height())) $footer.removeClass('fixed-bt');
+    });
+
+  },
   scroll_gap: [],
   fix_scroll: function () {
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? popups.eq(popups.length-2).find('.container-wrap') : $('#contents'),
         scroll_value = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? fix_target.scrollTop() : $(window).scrollTop();
     this.scroll_gap.push(scroll_value);
-    if ($(".idpt-popup").length > 0 ){
+    if ( $(".idpt-popup").length > 0 ){
       fix_target.css({
         'position':'fixed',
         'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
@@ -212,7 +230,7 @@ skt_landing.action = {
   auto_scroll: function () {
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 0 ? popups.eq(popups.length-1).find('.container-wrap') : $('#contents');
-    if ($(".idpt-popup").length > 1 ){
+    if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
       fix_target.css({
         'position':'',
         'transform': '',
@@ -340,6 +358,45 @@ skt_landing.action = {
         });
     return ranid;
   },
+  loading2: {
+    on: function (obj) {
+      var ta = obj.ta,
+      size = obj.size,
+      tit_id = skt_landing.action.ran_id_create(),
+      loading_box = $('<div class="loading tw-loading profile-main-loader" role="region" aria-labelledby="'+tit_id+'" onclick="return false;"></div>'),
+      loading_ico = $('<div class="loader" onclick="return false;"></div>'),
+      loading_txt = $('<em id="'+tit_id+'" onclick="return false;">로딩중입니다.</em>'),
+      svg_id = '',
+      svg = '';
+      svg_id = skt_landing.action.loading.svg_id = skt_landing.action.ran_id_create();
+
+      svg = [
+          '<div class="spinner_loading2" onclick="return false;"></div>'
+      ];
+      svg = svg.join('');
+
+      loading_box
+      .css({
+          width : $(ta).outerWidth(true),
+          height : $(ta).outerHeight(true),
+          left : $(ta).offset().left,
+          top : $(ta).offset().top,
+          'z-index' : 1000
+      })
+      .attr('id', 'loading' + Math.floor(Math.random()*1000))
+      .appendTo($('body').find('.wrap:eq(0)'))
+      $(ta).data('mate', loading_box.attr('id'))
+      loading_ico.appendTo(loading_box);
+      loading_ico.append(svg);
+      if(!ta || ta == '.wrap'){
+        skt_landing.action.fix_scroll();
+      }
+      if(size){
+        loading_box.addClass('full');
+        loading_ico.append(loading_txt);
+      }
+    }
+  },
   loading: {
     svg_id:'',
     on: function(obj){
@@ -347,17 +404,16 @@ skt_landing.action = {
           //co = obj.co,
           size = obj.size,
           tit_id = skt_landing.action.ran_id_create(),
-          loading_box = $('<div class="loading tw-loading profile-main-loader" role="region" aria-labelledby="'+tit_id+'"></div>'),
-          loading_ico = $('<div class="loader"></div>'),
-          loading_txt = $('<em id="'+tit_id+'">로딩중입니다.</em>'),
+          loading_box = $('<div class="loading tw-loading profile-main-loader" role="region" aria-labelledby="'+tit_id+'" onclick="return false;"></div>'),
+          loading_ico = $('<div class="loader" onclick="return false;"></div>'),
+          loading_txt = $('<em id="'+tit_id+'" onclick="return false;">로딩중입니다.</em>'),
           svg_id = '',
           //svg_color = '',
           svg = '';
       svg_id = skt_landing.action.loading.svg_id = skt_landing.action.ran_id_create();
 
-      //svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
       svg = [
-        '<div class="spinner_loading">',
+        '<div class="spinner_loading" onclick="return false;">',
         '    <div class="line"></div>',
         '    <div class="line"></div>',
         '    <div class="line"></div>',
@@ -546,11 +602,17 @@ skt_landing.action = {
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
       }
+      if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
+        skt_landing.action.auto_scroll();
+      }
     },
     allClose : function (){
       var popups = $('.wrap > .popup,.wrap > .popup-page');
       popups.empty().remove();
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
+        skt_landing.action.auto_scroll();
+      }
+      if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
       }
     },
@@ -667,6 +729,7 @@ skt_landing.action = {
             }          
           }
       });
+      //skt_landing.widgets.widget_accessability(t);  //@190315 - 접근성 aria
     });
 
     $(window).bind('scroll', function(){
@@ -772,6 +835,7 @@ skt_landing.action = {
           autoplay:true,
           autoplaySpeed:5000
       });
+      //skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
 
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;

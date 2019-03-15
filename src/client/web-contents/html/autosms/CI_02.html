@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 2018.07.16 수정-->
+    <meta charset="euc-kr">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="keywords" content="SK 텔레콤, SKT 가입정보"><!--2018. 07.18 수정-->
+    <meta name="description" content="SK 텔레콤 고객 가입정보 확인 페이지"><!--2018. 07.18 수정-->
+    <!-- 170117 추가_01 -->
+    <meta name="naver-site-verification" content="312a5ea6c83e837c3a184051f827704955721b2f">
+    <meta name="google-site-verification" content="NpHbK0Su01BksHo-oP5xDTvBGtT-sh365tkME06JBQA">
+    <!-- //170117 추가_01 -->
+    <title>정보보기 | SKT 가입정보 안내</title><!--2018. 07.18 수정-->
+    <link rel="icon" type="image/x-icon"  href="/mpoc/img/autosms/common/tworld.ico">
+    <link rel="apple-touch-icon-precomposed" href="/mpoc/img/autosms/common/tworld_ico.png">
+    <!-- <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/common.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/layout.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/widgets.css" media="all" /> -->
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/style.min.css" media="all" /><!-- [C] 스타일 -->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <!-- <script type="text/javascript" src="/mpoc/inc/autosms/js/common.js"></script> 2018. 07.18 삭제-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti">
+                    <h1 class="tworld">
+                        <span class="ico-logo" role="img" aria-label="Tworld">
+                            <span class="logo-name">Tworld</span>
+                        </span>
+                        <p class="more-txt">T world에서 더 많은 정보와 서비스를 이용하실 수 있습니다.</p>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">요약정보</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top-2"><!--2018. 07.18  클래스 수정-->
+                    <!--text case 1-->
+                    <p class="welcome-box"><!--2018. 07.18 <em>태그 삭제-->
+                        <span>홍*동 고객님<br />SK텔레콤을 선택해 주셔서 감사합니다.</span>
+                        <span>SK텔레콤의 가족이 되신 것을<br /> 진심으로 환영합니다.</span>
+                    </p>
+                    <!--text case 2 2018. 07.18 <em>태그 삭제
+                    <p class="welcome-box">
+                        <span>SK텔레콤을 10년간 변함없이<br /> 이용해 주신 홍*동 고객님 감사합니다.</span>
+                        <span>고객님의 믿음에 최고의 서비스와 품질로 보답하는 SK텔레콤이 되겠습니다.</span>
+                    </p>
+                     -->
+                </div>
+                <!--<hr class="cont-sp type1" aria-hidden="true"/> 2018. 07.18  삭제-->
+                <div class="cont-box nogaps-hoz">
+                    <div class="inner">
+                        <h3 class="blind">생년월일 입력</h3>
+                        <div class="my-device-cont">
+                            <ul class="plan-data">
+                                <li>
+                                    <dl>
+                                        <dt>내 휴대폰</dt>
+                                        <dd>
+                                            <strong>갤럭시 노트 8_256G (692,800원)</strong><!--2018. 07.18  문구, <strong>태그 닫기 수정-->
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>약정</dt>
+                                        <dd>
+                                            <strong>T지원금 약정 (24개월)</strong><!--2018. 07.18  문구, <strong>태그 닫기 수정-->
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>요금제</dt>
+                                        <dd>
+                                            <strong>전국민 무한 100</strong><!--2018. 07.18  문구, <strong>태그 닫기 수정-->
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--<hr class="cont-sp type1" aria-hidden="true"/> 2018. 07.18  삭제-->
+                <div class="cont-box nogaps no-bottom-border"><!-- 2018. 07.18 클래스 추가-->
+                    <!-- .widget -->
+                    <div class="widget p-data-detail">
+                        <div class="widget-box accordion">
+                            <h3 class="tit-a blind">고객 가입정보</h3>
+                            <div class="acco-cover toggle">
+                                <div class="acco-style">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">내 휴대폰</button></div>
+                                            <div class="acco-cont">
+                                                <div class="info-box">
+                                                    <h4 class="info-title">휴대폰/할부 안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">휴대폰 명: </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>아이폰 6s</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">휴대폰 할부 원금(약정개월) : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>819,830원 (24개월)</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">분할 상환 수수료(5.9%) : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>매월 31,320원</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span>*수수료 포함</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">USIM:  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>5,000원 수납완료</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box">
+                                                    <h4 class="info-title">가입정보</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">휴대폰 가입 매장명: </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>압구정 SK</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">휴대폰 가입 매장 연락처 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>02-3664-1234</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">법정대리인 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>홍길동</span>
+                                                        </li>
+                                                        <li class="list"><!--2018. 07.18  <li> 추가-->
+                                                            <span class="d-tit">고객님의 휴대폰은 SK텔레콤에서 유통하거나 정식으로
+                                                                품질 검사를 하지 않은 자급제 휴대폰입니다. 신청하신
+                                                                부가 서비스는 이용할 수 있지만, 휴대폰의 특성상 일부
+                                                                사용이 안될 경우, 개별적으로 해지하셔야 합니다. 
+                                                                자세한 내용은 <a class="bt-link-tx underline font-type1" title="휴대폰에 대한 자세한 내용 새창열림" href=""  target="_blank">여기</a>를 클릭하면 확인하실 수 있습니다.
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- <div class="info-box no-pd-top"> 삭제
+                                                    <span class="comment-box">
+                                                            고객님의 휴대폰은 SK텔레콤에서 유통하거나 정식으로
+                                                            품질 검사를 하지 않은 자급제 휴대폰입니다. 신청하신
+                                                            부가 서비스는 이용할 수 있지만, 휴대폰의 특성상 일부
+                                                            사용이 안될 경우, 개별적으로 해지하셔야 합니다. 
+                                                            자세한 내용은 <a class="bt-link-tx underline font-type1" title="휴대폰에 대한 자세한 내용 새창열림" href=""  target="_blank">여기</a>를 클릭하면 확인하실 수 있습니다.
+                                                    </span>
+                                                </div> -->
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="false">약정할인혜택</button></div>
+                                            <div class="acco-cont">
+                                                <div class="info-box">
+                                                    <h4 class="info-title">약정안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">요금제명 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>band 데이터 6.5G</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">약정명 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>약정플랜</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">요금 약정기간 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>24개월</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">할인혜택 :  </span><!-- //20180808 수정 (em삭제) -->
+                                                            <span>매월 29,000원(기본 요금제 기준)</span><!-- //20180808 수정 (em삭제) -->
+                                                        </li>
+                                                        <li class="list"><!--2018. 07.23 no-pd-left 클래스 삭제-->
+                                                            <span class="txt-smaller">※ 약정기간 중 할인제도 중도 해지 시 총 할인금액과 이용기간
+                                                                에 따라 할인반환금이 부과됩니다.
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box">
+                                                    <h4 class="info-title">할인혜택 안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">제휴카드 할인 여부 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>Y</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">제휴카드(할인금액) :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>신한 퍼펙트S카드<br />
+                                                                    (33,100원 우선 납부처리, 이달부터 적용)
+                                                            </span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">복지 요금 감면대상 여부 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>Y</span>
+                                                        </li>
+                                                        <li class="list"><!--2018. 07.23 no-pd-left 클래스 삭제-->
+                                                            <span class="txt-smaller">
+                                                                ※ 요금 감면 미대상으로 변동 시, 요금 감면혜택은 자동 삭제
+                                                                됩니다.                                                                    
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="false">요금제부가서비스</button></div>
+                                            <div class="acco-cont">
+                                                <div class="info-box no-bd-bottom"><!-- //20180813 수정 (class 원래대로, goods-title 삭제) -->
+                                                    <h4 class="info-title">요금제 안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">요금제 명: </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>band데이터 6.5G(65,000원)</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box no-bd-bottom"><!--2018. 07.23  클래스 추가-->
+                                                    <h4 class="info-title">데이터 리필 쿠폰 안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">리필 쿠폰 수량: </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>5개</span>
+                                                        </li>
+                                                        <li class="list no-pd-left"><!--2018. 07.18  클래스 추가-->
+                                                            <span><a class="bt-link-tx underline" title="새창 열림" href="" target="_blank">리필쿠폰 활용 방법</a></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box" style="margin-top:-30px;"><!-- //20180822 수정 (style 추가) -->
+                                                    <h4 class="info-title">유료 부가서비스 3건</h4>
+                                                    <div class="paid-service-list">
+                                                        <ul class="list-none">
+                                                            <li class="service-table">
+                                                                <div class="service-cell center ti-service c1"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">상품명</span>
+                                                                </div>
+                                                                <div class="service-cell center ti-service c2"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">신청일</span>
+                                                                </div>
+                                                                <div class="service-cell center ti-service c3"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span>이용요금</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="service-table">
+                                                                <div class="service-cell left pd-align c1"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">분실/파손보상60파손보상60</span>
+                                                                </div>
+                                                                <div class="service-cell center gray-color c2 pd-align"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">2018.05.02</span>
+                                                                </div>
+                                                                <div class="service-cell right pd-align c3"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span>4,800원</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="service-table">
+                                                                <div class="service-cell left pd-align c1"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">스마트공인인증</span>
+                                                                </div>
+                                                                <div class="service-cell center gray-color c2 pd-align"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">2018.04.13</span>
+                                                                </div>
+                                                                <div class="service-cell right pd-align c3"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span>990원</span>
+                                                                </div>
+                                                            </li>
+                                                            <li class="service-table">
+                                                                <div class="service-cell left pd-align c1 pd-btm"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">휴대폰인증서</span>
+                                                                </div>
+                                                                <div class="service-cell center gray-color c2 pd-align pd-btm"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span class="">2018.05.02</span>
+                                                                </div>
+                                                                <div class="service-cell right pd-align c3 pd-btm"><!-- //20180808 수정 (class 수정) -->
+                                                                    <span>4,800원</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <!-- 2018.07.13 수정-->
+                                                        <div class="contents-note">
+                                                            <span class="txt-smaller">
+                                                                ※ 고객님께서 가입한 부가 서비스(유·무료)의 자세한 내용은
+                                                            </span>
+                                                        </div>
+                                                        <div class="contents-note">
+                                                            <span><a class="bt-link-tx underline" title="새창 열림" href="" target="_blank">모바일  T world 설치하기</a></span>
+                                                        </div>
+                                                        <!-- // 2018.07.13 수정-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="false">납부 / 청구정보</button></div>
+                                            <div class="acco-cont">
+                                                <div class="info-box">
+                                                    <h4 class="info-title">요금안내서<span class="bullet-dot"></span>납부정보</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">요금안내서 유형 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>이메일(문자/빌레터/이메일 등)</span>
+                                                        </li>
+                                                        <li class="list no-pd-left"><!--2018. 07.18  클래스 추가-->
+                                                            <span class="up-down-height"><a class="bt-link-tx underline" title="새창 열림"  href="" target="_blank">Bill Letter 설치하기</a></span><!--2018. 07.18  클래스 추가-->
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">요금 납부 유형 :  </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>지로(지로/카드/은행 등)</span>
+                                                        </li>
+                                                        <li class="list"><!--2018. 07.18  <li> 추가-->
+                                                            <span class="d-tit"><!--2018. 07.18  클래스 추가-->요금안내서 유형/납부 방법의 상세 내용 확인 및 변경은 모바일 T월드에서 가능합니다. 
+                                                                <a class="bt-link-tx underline font-type1" title="요금 안내서 납부정보 확인하기" href="" target="_blank">확인하기</a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- 삭제<div class="info-box no-pd-top">
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">요금 납부 유형 :  </span>
+                                                            <span>지로(지로/카드/은행 등)</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">
+                                                                요금안내서 유형/납부 방법의 상세 내용 확인 및 변경은 모바일 T월드에서 가능합니다. 
+                                                                <a class="bt-link-tx underline font-type1" title="요금 안내서 납부정보 확인하기" href="" target="_blank">확인하기</a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box no-pd-top"> 
+                                                    <span class="comment-box">
+                                                        요금안내서 유형/납부 방법의 상세 내용 확인 및 변경은 모바일 T월드에서 가능합니다. 
+                                                        <a class="bt-link-tx underline font-type1" title="요금 안내서 납부정보 확인하기" href="" target="_blank">확인하기</a>
+                                                    </span>
+                                                </div> -->
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="false">가족결합</button></div>
+                                            <div class="acco-cont">
+                                                <div class="info-box">
+                                                    <h4 class="info-title">가족결합안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit"><!--2018. 07.18  클래스 추가-->고객님의 휴대폰은 아직 가족구성원의 휴대폰과 결합되어
+                                                                있지 않습니다.
+                                                                SK텔레콤을 이용하는 가족구성원과 휴대폰을 결합하면
+                                                                더욱 풍성한 할인혜택을 누리실 수 있습니다. 
+                                                                자세한 내용은 가까운 T월드 매장 또는 모바일 T월드에서
+                                                                확인하세요.
+                                                            </span>
+                                                        </li>
+                                                        <li class="list no-pd-left"><!--2018. 07.18  클래스 추가-->
+                                                            <span><a class="bt-link-tx underline" title="가족결합안내 확인하기" href="" target="_blank">확인하기</a></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box">
+                                                    <h4 class="info-title">T멤버십 안내</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">멤버십 등급 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span> VIP</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">멤버십 이용 안내 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>안내</span>
+                                                        </li>
+                                                        <li class="list no-pd-left"><!--2018. 07.18  클래스 추가-->
+                                                            <span><a class="bt-link-tx underline" title="새창 열림"  href="" target="_blank">T멤버십 설치하기</a></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="false">필수 안내 사항</button></div>
+                                            <div class="acco-cont">
+                                                <!-- 20180808 추가 (요금 납부 정보) -->
+                                                <div class="info-box">
+                                                    <h4 class="info-title">요금 납부 정보</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">- 요금안내서 수신 방법 : 우편 요금안내서</li>
+                                                        <li class="list">- 요금 납부 방법(신청기준) : 입금전용계좌납부</li>
+                                                        <li class="list">[고객님만을 위한 입금전용계좌 안내]<br>
+                                                        - 농협 : 111-1111-111111<br>
+                                                        - 국민 : 111-1111-222222<br>
+                                                        ( 예금주 : SKT 윤*정 )</li>
+                                                        <li class="list">※ 고객님은 입금전용계좌납부를 신청하셨습니다.<br>
+                                                        실제 신청하신 내용과 다른 경우 고객센터로 연락바랍니다.<br>
+                                                        ※ 자동납부를 신청하시면 매월 요금을 납부하셔야 하는 번거로움 없이 편리하게 이용하실 수 있습니다.</li>
+                                                    </ul>
+                                                </div>
+                                                <!-- //20180808 추가 (요금 납부 정보) -->
+
+                                                <!-- 20180808 수정 (내용) -->
+                                                <div class="info-box">
+                                                    <h4 class="info-title">불법 지원금 관련 안내사항</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">
+                                                            고객님께서 불법 지원금, 고가요금제 강요 등의 위법행위를 경험하셨다면, ‘단말기유통법 위반행위 신고센터’ (www.cleanict.or.kr, 080-2040-119)에 신고하실 수 있으며 위법행위에 대한 사실증빙이 가능할 경우 포상신고 를 통해 포상금을 지급 받으실 수 있습니다.아울러, 위법행 위 신고시 불이익이 발생한다는 내용의 확약서는 원천무 효임을 알려 드리니 유의하시기 바랍니다.<br>
+                                                            "개인정보보협회(OPA)"와 이동통신3사(SKT, KT, LG U+)가, 통신유통점의 개인정보 부정이용 행위에 대해서 "개인정보신고포상제"를 시행중에 있습니다. 이용자가 아래의 위반행위 확인하시고, 5일 이내에 개인정보보호 자율감시센터 (www.notm.or.kr)에 접수하신후 해당사항이 위반으로 확정되면 신고포상금을 지급하여 드립니다.</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            1) 이용자의 동의 없는 개인정보열람인증이 SMS로 확인되는 경우<br>
+                                                            2) 이용자의 신분증을 24시간 이상 장시간 보관하여 개통하는 경우<br>
+                                                            3) 이용자의 신분증을 이미지 파일형태로 전송하여 약식 개통하는 경우<br>
+                                                            4) 개통후 이용자의 정보가 기록된 가입신청서를 제공하지 않는 경우<br>개인정보신고포상제 관련한 "상세접수조건, 금액 및 유의사항" 등은 www.notm.or.kr / 1661-9558 통해서 사전에 꼭 확인하여 주시기 바랍니다.
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <!-- //20180808 수정 (내용) -->
+
+                                                <div class="info-box">
+                                                    <h4 class="info-title">고객 동의 관련 안내사항</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit"><!--2018. 07.18  클래스 추가-->SGI 서울보증 개인정보 처리 안내- 정보제공처: 에스케이
+                                                                텔레콤(주)- 정보처리목적: 에스케이텔레콤(주)의 상업신
+                                                                용보험[이동전화요금] 가입- 이 안내는 고객님께서 에스케
+                                                                이텔레콤(주)와 거래를 위하여 기재한 개인정보를 수집하
+                                                                여, 개인정보보호법 제20조에 따라 고지하는 내용입니다.
+                                                                고객님께는 개인정보 처리정지 요구권이 있습니다. 
+                                                                문의 : 02-1670-7000
+                                                                홈페이지 : www.sgic.co.kr                                                                    
+                                                            </span>
+                                                        </li>
+                                                        <li class="list no-pd-left"><!--2018. 07.18  클래스 추가-->
+                                                            <span><a class="bt-link-tx underline" title="개인정보 처리안내 상세내용보기" href="" target="_blank">상세내용보기</a></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="info-box">
+                                                    <h4 class="info-title">SK텔레콤 이용 관련 안내사항</h4>
+                                                    <ul class="list-none">
+                                                        <li class="list">
+                                                            <span class="d-tit">SK텔레콤 고객센터 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>114</span>
+                                                        </li>
+                                                        <li class="list">
+                                                            <span class="d-tit">SK텔레콤 로밍고객센터 : </span><!--2018. 07.18  클래스 추가-->
+                                                            <span>02-6343-9000</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- footer-->
+        <footer>
+            <div class="foot-container">
+                <div class="widget">
+                    <div class="widget-box accordion">
+                        <h3 class="tit-a blind">사업자 정보</h3>
+                        <div class="acco-cover">
+                            <div class="acco-style">
+                                <ul class="acco-list">
+                                    <li class="acco-box">
+                                        <div class="acco-tit">
+                                            <div class="provider-wrap">
+                                                <span class="copyright">ⓒ SK TELECOM CO.,LTD<br />ALL RIGHTS RESERVED</span>
+                                                <span class="provider-box" role="heading">
+                                                    <button class="business-txt" id="provider-info" aria-pressed="false" aria-controls="provider-cont">사업자 정보</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="acco-cont no-pd">
+                                            <div class="business-wrap">
+                                                <div class="provider-info">
+                                                    <span>
+                                                        <strong>대표이사/사장 : 박정호</strong><br />주소 : 서울특별시 중구 을지로 65<br />사업자등록번호 : 104-81-37225<br />판매허가번호 : 중구 02923호 
+                                                        <a class="provider-link bt-link-tx pd-right" title="새창 열림" href="" target="_blank">사업자정보확인
+                                                            <span class="ico"></span><span class="blind">새창 열림</span>
+                                                        </a>
+                                                    </span>
+                                                    <span>고객센터 : 휴대폰 국번없이 T. 114(무료) <br />또는 080-011-6000 국번없이 1599-0011(유료)</span>
+                                                    <span>인터넷/집전화 고객센터 : 080-816-2000(무료)<br />또는 1600-2000(유료)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--// .footer -->
+    </div>
+</body>
+
+</html>

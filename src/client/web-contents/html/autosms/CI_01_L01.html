@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 2018.07.16 수정-->
+    <meta charset="euc-kr">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="keywords" content="SK 텔레콤, SKT 가입정보"><!--2018. 07.18 수정-->
+    <meta name="description" content="SK 텔레콤 고객 가입정보 확인 페이지"><!--2018. 07.18 수정-->
+    <!-- 170117 추가_01 -->
+    <meta name="naver-site-verification" content="312a5ea6c83e837c3a184051f827704955721b2f">
+    <meta name="google-site-verification" content="NpHbK0Su01BksHo-oP5xDTvBGtT-sh365tkME06JBQA">
+    <!-- //170117 추가_01 -->
+    <title>인증하기 | SKT 가입정보 안내</title><!--2018. 07.18 수정-->
+    <link rel="icon" type="image/x-icon"  href="/mpoc/img/autosms/common/tworld.ico">
+    <link rel="apple-touch-icon-precomposed" href="/mpoc/img/autosms/common/tworld_ico.png">
+    <!-- <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/common.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/layout.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/widgets.css" media="all" /> -->
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/style.min.css" media="all" /><!-- [C] 스타일 -->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <!-- <script type="text/javascript" src="/mpoc/inc/autosms/js/common.js"></script> 2018. 07.18 삭제-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+<body>
+    <!-- 2018.07.16 페이지 전체 수정-->
+    <div class="wrap fixed-wrap"><!-- .fixed-wrap : 페이지 100% 고정 -->
+        <!-- #contents 생년월일 규격에 맞지않는 정보 입력 후 인증 실행 시-->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">생년월일 입력형식이 잘못되었습니다.<br/>다시 확인해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+
+        <!-- #contents SMS 인증번호를 잘못 입력한 경우-->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">입력하신 인증번호가 맞지 않습니다.<br/>다시 입력 해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+        <!-- // #contents SMS 인증번호를 잘못 입력한 경우-->
+
+        <!-- #contents 5분 내 인증번호를 입력하지 못한 경우(세션종료 시) -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">인증번호를 입력할 수 있는 시간이 초과하였습니다.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+        <!-- // #contents 5분 내 인증번호를 입력하지 못한 경우(세션종료 시) -->
+
+        <!-- #contents 기타 case 인증실패 alert1-->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">입력하신 정보가 확인되지 않습니다.<br/>주의하여 다시 한번 입력해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+        <!-- // #contents 기타 case 인증실패 alert1-->
+
+        <!-- #contents 기타 case 인증실패 alert2-->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">법인등록번호 입력형식이 잘못되었습니다.<br/>다시 확인해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+        <!-- // #contents 기타 case 인증실패 alert2-->
+
+        <!-- #contents 기타 case 인증실패 alert3 -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="popup">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                                <div class="inner-contents">정보가 모두 입력되지 않았습니다.<br/>다시 확인해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+            </div>
+        </div>
+       <!-- //  #contents 기타 case 인증실패 alert3 -->
+    </div>
+</body>
+
+</html>

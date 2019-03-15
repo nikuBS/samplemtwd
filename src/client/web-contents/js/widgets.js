@@ -286,6 +286,36 @@ skt_landing.widgets = {
       });
 */
   },
+  widget_accessability: function ($slick) {
+    var _this = $slick;
+    _this.on('afterChange', function (e, _slick) {
+      if(!_slick.$dots) return;      
+      var $dots = _slick.$dots.find('span');        
+      $dots.each(function (idx, key) {
+        $(this).attr({
+          'role': 'tab',
+          'aria-label': (idx + 1) + ' of ' + $dots.length,
+          'aria-selected': 'false'
+        });
+      }).eq(_slick.currentSlide).attr({
+        'aria-selected': 'true'
+      });
+    }).on('setPosition', function (e, _slick) {
+      if(!_slick.$dots) return;
+      var $dots = _slick.$dots.find('span');
+      $dots.each(function (idx, key) {
+        $(this).attr({
+          'role': 'tab',
+          'aria-label': (idx + 1) + ' of ' + $dots.length,
+          'aria-selected': 'false',
+          'id': 'slick-slide-control' + _slick.instanceUid + idx,
+          'aria-controls': 'slick-slide' + _slick.instanceUid + idx
+        });
+      }).eq(_slick.currentSlide).attr({
+        'aria-selected': 'true'
+      });
+    });
+  },
   widget_slider1: function (ta) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
     $(widget).each(function(){
@@ -357,35 +387,8 @@ skt_landing.widgets = {
           $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
-
-      //@190315 - 접근성
-      _this.on('afterChange', function (e, _slick) {
-        var $dots = _slick.$dots.find('span');        
-        $dots.each(function (idx, key) {
-          $(this).attr({
-            'role': 'tab',
-            'aria-label': (idx + 1) + ' of ' + $dots.length,
-            'aria-selected': 'false'
-          });
-        }).eq(_slick.currentSlide).attr({
-          'aria-selected': 'true'
-        });
-      }).on('setPosition', function (e, _slick) {
-        var $dots = _slick.$dots.find('span');        
-        $dots.each(function (idx, key) {
-          $(this).attr({
-            'role': 'tab',
-            'aria-label': (idx + 1) + ' of ' + $dots.length,
-            'aria-selected': 'false',
-            'id': 'slick-slide-control' + _slick.instanceUid + idx,
-            'aria-controls': 'slick-slide' + _slick.instanceUid + idx
-          });
-        }).eq(_slick.currentSlide).attr({
-          'aria-selected': 'true'
-        });
-      });
-      //@190315 - 접근성
-
+      
+      skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
   widget_slider2: function (ta) {
@@ -430,6 +433,7 @@ skt_landing.widgets = {
           $slides.eq(slideIndex).triggerHandler('click');
         }, 0);
       });
+      //skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
   widget_accordion: function (ta) {

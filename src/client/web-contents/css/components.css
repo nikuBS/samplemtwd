@@ -7725,6 +7725,9 @@ a.bt-link-tx.underline.small {
     font-size: 0.75rem;
     color: #666; }
 
+.loaming-slide .widget-box .horizontal-slide {
+  padding-left: 0; }
+
 .loaming-tit {
   padding: 1.75rem 1rem 0;
   margin: 0 -1rem;
@@ -14349,8 +14352,6 @@ a.bt-link-tx.underline.small {
   overflow-y: auto;
   height: 16.1875rem;
   -webkit-overflow-scrolling: touch; }
-  .discount-area .select-list > li:last-child .comp-list-layout:before {
-    display: none; }
 
 .badge.badge-fam-members2 {
   background-position: 0 -13.75rem;
@@ -26707,6 +26708,19 @@ body.apphome {
 
 .box-main-type {
   position: relative; }
+  .box-main-type .use-info-form .inputbox {
+    padding-right: 4.1875rem; }
+    .box-main-type .use-info-form .inputbox .input {
+      float: none;
+      width: 100%; }
+      .box-main-type .use-info-form .inputbox .input input[type=text] {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box; }
+      .box-main-type .use-info-form .inputbox .input .btn-round2 {
+        float: none;
+        position: absolute;
+        right: 0;
+        top: 0; }
   .box-main-type .main-faq-menu {
     margin-top: 0.625rem;
     padding-bottom: 1.25rem; }

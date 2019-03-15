@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <!-- 2018.07.16 수정-->
+    <meta charset="euc-kr">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="keywords" content="SK 텔레콤, SKT 가입정보"><!--2018. 07.18 수정-->
+    <meta name="description" content="SK 텔레콤 고객 가입정보 확인 페이지"><!--2018. 07.18 수정-->
+    <!-- 170117 추가_01 -->
+    <meta name="naver-site-verification" content="312a5ea6c83e837c3a184051f827704955721b2f">
+    <meta name="google-site-verification" content="NpHbK0Su01BksHo-oP5xDTvBGtT-sh365tkME06JBQA">
+    <!-- //170117 추가_01 -->
+    <title>인증하기 | SKT 가입정보 안내</title><!--2018. 07.18 수정-->
+    <link rel="icon" type="image/x-icon"  href="/mpoc/img/autosms/common/tworld.ico">
+    <link rel="apple-touch-icon-precomposed" href="/mpoc/img/autosms/common/tworld_ico.png">
+    <!-- <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/common.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/layout.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/widgets.css" media="all" /> -->
+    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/style.min.css" media="all" /><!-- [C] 스타일 -->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <!-- <script type="text/javascript" src="/mpoc/inc/autosms/js/common.js"></script> 2018. 07.18 삭제-->
+    <script type="text/javascript" src="/mpoc/inc/autosms/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+<body class="bg-fixed">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap"><!-- .fixed-wrap : 페이지 100% 고정 -->
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti">
+                    <h1 class="tworld-center">
+                        <span class="ico-logo" role="img" aria-label="Tworld">
+                            <span class="logo-name">Tworld</span>
+                        </span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box noborder nogaps-top">
+                    <p class="privacy-desc">개인정보 보호를 위해<br /><strong>본인확인</strong>이 필요합니다.</p>
+                    <!-- .widget -->
+                    <div class="widget id-check">
+                        <div class="widget-box tube">
+                            <ul class="tube-list two" role="radiogroup">
+                                <li class="checked" role="radio" aria-checked="true"><input type="radio" name="category" checked="" title="일반">일반</li>
+                                <li role="radio" aria-checked="false"><input type="radio" name="category" title="법인">법인</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- //.widget -->
+                    <div class="inner">
+                        <h3 class="blind">생년월일 입력</h3>
+                        <div class="contents-formbox">
+                            <!-- 180828 수정_01 -->
+                            <div class="inputbox personal-info">
+                                <span class="my-notice" id="birthday">
+                                    <span class="noti-type1">생년월일을 입력해주세요.(예 : 1998/01/01)</span>
+                                </span>
+                                <span class="input" aria-labelledby="birthday" aria-describedby="birthday">
+                                    <span class="input-cell birth-info-1"><input type="number" class="width-1" placeholder="생일년도(4자리)" title="생년월일 년도(4자리)"></span><!--2018. 07.18 수정-->
+                                    <span class="input-cell birth-info-2"><input type="number" class="width-2" placeholder="월" title="생년월일 월"></span><!--2018. 07.18 수정-->
+                                    <span class="input-cell birth-info-2"><input type="number" class="width-3" placeholder="일" title="생년월일 일"></span><!--2018. 07.18 수정-->
+                                </span>
+                            </div>                            
+                            <div class="inputbox bt-add personal-info">
+                                <span class="my-notice">
+                                    <span class="noti-type1">휴대폰 번호(‘-’ 제외)를 입력하신 후, <br>‘인증번호 전송’을 누르세요.</span>
+                                </span>
+                                <span class="input">
+                                   <input type="number" placeholder="휴대폰 번호" title="휴대폰 번호 입력" aria-describedby="cellphone"><!--2018. 07.18 수정-->
+                                </span>
+                                <span class="bt-box" id="cellphone">
+                                    <button type="button">인증번호전송</button>
+                                </span>
+                                <!-- 인증번호 버튼 활성화 -->
+                                <!-- 
+                                <span class="bt-box on">
+                                    <button type="button">인증번호전송</button>
+                                </span>
+                                 -->
+                                <!-- 시간연장하기 버튼 활성화 -->
+                                <!-- 
+                                <span class="bt-box on">
+                                    <button type="button">시간연장하기</button>
+                                </span>
+                                 -->
+                            </div>
+                            <!-- //180828 수정_01 -->
+                            <div class="inputbox">
+                                <span class="input">
+                                    <input type="number" placeholder="인증번호 입력(5분 이내)" title="인증번호 입력(5분 이내)" aria-describedby="verify-number" disabled=""><!--2018. 07.18 수정-->
+                                </span>
+                            </div>
+                            <div class="my-notice" id="verify-number">
+                                <span class="noti-type1">인증번호가 발송되었습니다.</span>
+                                <span class="noti-type2">(남은시간 : <span id="timer">03:40</span>)</span>
+                            </div>
+                        </div>
+                        <div class="contents-btn">
+                            <ul class="bt-slice">
+                                <li class="bt-red1">
+                                    <button type="button">인증하기</button>
+                                </li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                
+                <!--2018. 07.16 팝업 테스트: 나중에 지워주세요-->
+                <div class="popup" style="display: none;">
+                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
+                        <div class="popup-header">
+                            <h5 class="popup-title" id="alertHeading">알림</h5>
+                        </div>
+                        <div class="popup-contents" id="alertText">
+                            <dl>
+                                <dt></dt>
+                                <dd></dd>
+                            </dl>
+                            <div class="inner-contents">생년월일 입력형식이 잘못되었습니다.<br/>다시 확인해주세요.</div>
+                        </div>
+                        <div class="btn-box">
+                            <ul class="bt-slice item-two">
+                            <li class="bt-red1">
+                                <button>확인</button>
+                            </li>
+                            </ul>
+                        </div>
+                        <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+                    </div>
+                    <div class="popup-blind"></div>
+                </div>
+                <!-- // 2018. 07.16 팝업 테스트: 나중에 지워주세요-->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <!-- 2018. 07.16 팝업 테스트: 지워주세요 -->
+    <script>
+        $('.contents-btn button').on('click', function(){
+            $('.popup').show();
+        });
+
+        $('.popup-closeBtn').on('click', function(){
+            $('.popup').hide();
+        });
+    </script>
+</body>
+
+</html>

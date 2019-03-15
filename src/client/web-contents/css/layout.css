@@ -968,6 +968,33 @@ body.hidden {
     word-break: break-all !important;
     line-height: 1.25rem !important;
     font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Roboto", "Noto Sans KR", sans-serif !important; }
+  .cont-box.flp-other-pd-st {
+    padding: 1.25rem 0; }
+    .cont-box.flp-other-pd-st .horizon-fullbox .widget-box {
+      margin: 0; }
+      .cont-box.flp-other-pd-st .horizon-fullbox .widget-box .horizontal-slide {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        padding-left: 0; }
+        .cont-box.flp-other-pd-st .horizon-fullbox .widget-box .horizontal-slide .horizontal-list {
+          padding-right: 1rem; }
+    .cont-box.flp-other-pd-st .bundle-tit-wrap, .cont-box.flp-other-pd-st .expect-benefit-slide .tit, .cont-box.flp-other-pd-st .expect-benefit-slide .ext-txt {
+      padding: 0 1rem; }
+    .cont-box.flp-other-pd-st .basic-list.bg-type {
+      margin-left: 1rem;
+      margin-right: 1rem; }
+    .cont-box.flp-other-pd-st .expect-benefit-slide .horizontal-slide li:first-child {
+      padding-left: 1rem; }
+    .cont-box.flp-other-pd-st .expect-benefit {
+      padding-left: 1rem;
+      padding-right: 1rem; }
+    .cont-box.flp-other-pd-st .bt-slice {
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      padding-left: 1rem;
+      padding-right: 1rem; }
   .cont-box .sub-title0 {
     padding: 0.875rem 1rem 1.0625rem 1rem;
     font-size: 0.8125rem;
@@ -1258,7 +1285,6 @@ body.hidden {
     background: url(/img/svg/icon_48px_titlebar_exit.svg) no-repeat 0 0;
     background-size: 100% 100%;
     z-index: 30;
-    font-size: 0;
     line-height: 0;
     -webkit-transform: translateZ(0);
             transform: translateZ(0);
@@ -1334,22 +1360,40 @@ body.hidden {
     .popup-page.coupon-type .popup-closeBtn {
       top: auto;
       bottom: 1.25rem; }
-  .popup-page.fixed-bottom .container {
-    padding-bottom: 5.375rem; }
-  .popup-page.fixed-bottom.h30 .container {
-    padding-bottom: 3.75rem; }
-  .popup-page.fixed-bottom.h60 .container {
-    padding-bottom: 5.375rem; }
-  .popup-page.fixed-bottom.h90 .container {
-    padding-bottom: 7.5rem; }
-  .popup-page.fixed-bottom.h120 .container {
-    padding-bottom: 9.375rem; }
-  .popup-page.fixed-bottom.h150 .container {
-    padding-bottom: 11.25rem; }
-  .popup-page.fixed-bottom.h180 .container {
-    padding-bottom: 13.125rem; }
-  .popup-page.fixed-bottom.h210 .container {
-    padding-bottom: 15rem; }
+  .popup-page.fixed-bottom {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto; }
+    .popup-page.fixed-bottom .container-wrap, .popup-page.fixed-bottom .container {
+      height: 100%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+    .popup-page.fixed-bottom .container {
+      padding-bottom: 3.75rem;
+      height: 100%;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .popup-page.fixed-bottom .container .section-menu-box {
+        padding-bottom: 1.625rem; }
+        .popup-page.fixed-bottom .container .section-menu-box .menu-guide-img {
+          font-size: 0; }
+    .popup-page.fixed-bottom.h30 .container {
+      padding-bottom: 3.75rem; }
+    .popup-page.fixed-bottom.h60 .container {
+      padding-bottom: 5.375rem; }
+    .popup-page.fixed-bottom.h90 .container {
+      padding-bottom: 7.5rem; }
+    .popup-page.fixed-bottom.h120 .container {
+      padding-bottom: 9.375rem; }
+    .popup-page.fixed-bottom.h150 .container {
+      padding-bottom: 11.25rem; }
+    .popup-page.fixed-bottom.h180 .container {
+      padding-bottom: 13.125rem; }
+    .popup-page.fixed-bottom.h210 .container {
+      padding-bottom: 15rem; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }
