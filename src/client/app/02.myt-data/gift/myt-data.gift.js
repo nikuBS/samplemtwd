@@ -198,6 +198,7 @@ Tw.MyTDataGift.prototype = {
 
     $btn_show_data.closest('.data-gift-wrap').find('li').show();
     $btn_show_data.remove();
+    $('.fe-more-focus').focus(); //웹 접근성 강제 초점 이동
   },
 
   _onClickShowAvailableProduct: function () {

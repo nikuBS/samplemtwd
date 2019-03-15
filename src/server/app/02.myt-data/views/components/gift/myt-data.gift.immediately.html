@@ -8,9 +8,9 @@
     <hr class="cont-sp type1" aria-hidden="true">
     <div class="cont-box b-line">
         <div class="ti-caption-type01">
-            <h2 class="tit">선물 받는 분 번호
-                <button class="btn-tip" id="DC_03_01_tip_02" page-id="DC_03_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
-            </h2>
+            <!--접근성 수정-->
+            <button class="tit" aria-haspopup="true" id="DC_03_01_tip_02" page-id="DC_03_01">선물 받는 분 번호<span class="btn-tip"><i class="icon-badge-tip"><span class="blind">선물 받는 분 번호 tip</span></i></span></button>
+            <!-- //접근성 수정-->
         </div>
         <div class="recently-tel-box new">
             <div class="inputbox bt-add">
@@ -27,9 +27,9 @@
             </span>
             <% } %>
             </div>
-            <span class="error-txt blind fe-error-phone01">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
-            <span class="error-txt blind fe-error-phone02">휴대폰 번호가 올바르지 않습니다.</span>
-            <span class="error-txt blind fe-error-phone03">휴대폰 번호를 입력해 주세요.</span>
+            <span class="error-txt blind fe-error-phone01" aria-hidden="true">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
+            <span class="error-txt blind fe-error-phone02" aria-hidden="true">휴대폰 번호가 올바르지 않습니다.</span>
+            <span class="error-txt blind fe-error-phone03" aria-hidden="true">휴대폰 번호를 입력해 주세요.</span>
             <ul class="recently-tel on"><!-- show : on 클래스 추가  -->
                 <!--<li>-->
                     <!--<button class="tel-select">010-1234-1234</button>-->
@@ -51,9 +51,10 @@
     <hr class="cont-sp type1" aria-hidden="true">
     <div class="cont-box pb0">
         <div class="ti-caption-type01 pb0">
-            <h2 class="tit">선물할 데이터양
-                <button class="btn-tip" id="DC_03_01_tip_01" page-id="DC_03_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
-            </h2>
+            <!--접근성 수정-->
+            <button class="tit fe-more-focus" aria-haspopup="true" id="DC_03_01_tip_01" page-id="DC_03_01" >선물할 데이터양<span class="btn-tip"><i class="icon-badge-tip"><span class="blind">선물할 데이터양 tip</span></i></span></button>
+            <!-- //접근성 수정-->
+
             <p class="num fe-err-api">한도 <span class="txt_gray fe-txt-remain">조회 중입니다</span> <button class="btn_blue fe-btn-remain" style="display:none">조회하기</button></p>
             <p class="num fe-remain-api" style="display: none" aria-hidden="true">한도 <em class="fe-remain_data">0.00GB</em> <span class="ft-medium">남음</span></p>
             <p class="tit-txt">데이터를 발송하고 나면 취소할 수 없습니다.</p>
@@ -62,62 +63,62 @@
             <div class="discount-look-ahead round">
                 <div class="widget">
                     <div class="widget-box radio">
-                        <ul class="select-list fe-immediately_data_select_list" role="radiogroup">
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="true">
+                        <ul class="select-list fe-immediately_data_select_list" role="taplist">
+                            <li class="radiobox btn-type02 disabled" role="tap-1" aria-checked="true">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="1024" title="1GB" aria-labelledby="aria-comp-radio1">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio1">1<span class="light">GB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-2" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="900" title="900MB" aria-labelledby="aria-comp-radio2">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio2">900<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-3" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="800" title="800MB" aria-labelledby="aria-comp-radio3">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio3">800<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-4" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="700" title="700MB" aria-labelledby="aria-comp-radio4">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio4">700<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-5" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="600" title="600MB" aria-labelledby="aria-comp-radio5">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio5">600<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false">
+                            <li class="radiobox btn-type02 disabled" role="tap-6" aria-checked="false">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="500" title="500MB" aria-labelledby="aria-comp-radio6">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio6">500<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-7" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="400" title="400MB" aria-labelledby="aria-comp-radio7">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio7">400<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false">
+                            <li class="radiobox btn-type02 disabled" role="tap-8" aria-checked="false">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="300" title="300MB" aria-labelledby="aria-comp-radio8">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio8">300<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false" style="display:none">
+                            <li class="radiobox btn-type02 disabled" role="tap-9" aria-checked="false" style="display:none">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="200" title="200MB" aria-labelledby="aria-comp-radio9">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio9">200<span class="light">MB</span></span>
                                 </div>
                             </li>
-                            <li class="radiobox btn-type02 disabled" role="radio" aria-checked="false">
+                            <li class="radiobox btn-type02 disabled" role="tap-10" aria-checked="false">
                                 <div class="form">
                                     <input type="radio" disabled name="radio4" value="100" title="100MB" aria-labelledby="aria-comp-radio10">
                                     <span class="radio-txt ff-tb" id="aria-comp-radio10">100<span class="light">MB</span></span>
