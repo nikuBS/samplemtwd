@@ -36,7 +36,7 @@
                             <li>
                                 <span class="custom-form pos2"><input class="fe-agree-check" type="checkbox" id="fe-oka3" name="r1" <%= myInfoData.sktTmChecked %>><span class="c-type1"></span></span>
                                 <label for="fe-oka3" class="rad-lab">고객님께 혜택을 드리기 위한 개인정보<br />수집/이용 동의(선택)</label>
-                                <p class="agr-sub-txt">2018년 10월 4일 T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</p>
+                                <p class="agr-sub-txt"><%= myInfoData.showMbrAgreeDate %> T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</p>
                             </li>
                         </ul>
                     </div>
@@ -54,14 +54,14 @@
                         <ul>
                             <li>
                                 <span class="custom-form"><input class="fe-agree-check fe-part fe-select" type="checkbox" id="fe-okb1" name="r2" <%= myInfoData.mktgAgreeChecked %>><span class="c-type1"></span></span>
-                                <label for="okb1" class="rad-lab">마케팅 활용 동의 (선택)</label>
+                                <label for="fe-okb1" class="rad-lab">마케팅 활용 동의 (선택)</label>
                                 <button class="arr-right fe-more-view">
                                     <span class="ico"><span class="blind">보기</span></span>
                                 </button>
                             </li>
                             <li>
                                 <span class="custom-form pos2"><input class="fe-agree-check fe-part fe-select" type="checkbox" id="fe-okb2" name="r2" <%= myInfoData.ocbAccumAgreeChecked %>><span class="c-type1"></span></span>
-                                <label for="okb2" class="rad-lab">OK캐쉬백 사용할인 금액에 대한 <br />OK캐쉬백 적립안내 (선택)</label>
+                                <label for="fe-okb2" class="rad-lab">OK캐쉬백 사용할인 금액에 대한 <br />OK캐쉬백 적립안내 (선택)</label>
                             </li>
                         </ul>
                     </div>

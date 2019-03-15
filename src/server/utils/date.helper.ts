@@ -167,6 +167,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2919년 3월 5일
+   */
+  static getFullKoreanDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY년 M월 D일');
+  }
+
+  /**
    * @input 11월
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 12월
