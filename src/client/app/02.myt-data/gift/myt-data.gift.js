@@ -52,13 +52,14 @@ Tw.MyTDataGift.prototype = {
     this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
   },
 
-  _getRemainDataInfo: function () {
+  _getRemainDataInfo: function (e) {
+    var $target = e ? $(e.currentTarget) : null;
     this.$remainBtn.hide();
     this.$remainTxt.show();
 
     setTimeout(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt })
-        .done($.proxy(this._onSuccessRemainDataInfo, this));
+        .done($.proxy(this._onSuccessRemainDataInfo, this, $target));
     }.bind(this), 3000);
   },
 
@@ -66,7 +67,7 @@ Tw.MyTDataGift.prototype = {
     return this.currentRemainDataInfo ? this.currentRemainDataInfo : null;
   },
 
-  _onSuccessRemainDataInfo: function (res) {
+  _onSuccessRemainDataInfo: function ($target, res) {
     // MOCK DATA
     // var mockDataQty = '900';
     // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
@@ -75,7 +76,7 @@ Tw.MyTDataGift.prototype = {
     // this._setAmountUI(Number(mockDataQty));
 
     // if ( Number(this.reqCnt) > 3 ) {
-    //   this._remainApiError();
+    //   this._remainApiError($target);
     //   return;
     // }
     var nLimitedGiftUsage = 500;
@@ -84,7 +85,7 @@ Tw.MyTDataGift.prototype = {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) {
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
-          this._remainApiError();
+          this._remainApiError($target);
         } else if ( Number(result.dataRemQty) < nLimitedGiftUsage ) {
           this.$container.trigger('showUnableGift', 'GFT0004');
         } else {
@@ -98,7 +99,7 @@ Tw.MyTDataGift.prototype = {
         }
       } else {
         this.reqCnt = result.reqCnt;
-        this._getRemainDataInfo();
+        this._getRemainDataInfo($target);
       }
     } else if ( res.code === 'GFT0004' ) {
       this.$container.trigger('showUnableGift', res.code);
@@ -108,12 +109,12 @@ Tw.MyTDataGift.prototype = {
     }
   },
 
-  _remainApiError: function () {
+  _remainApiError: function ($target) {
     this.$wrapSuccessRemainApi.hide();
     this.$wrapErrorRemainApi.show();
     this.$remainBtn.show();
     this.$remainTxt.hide();
-    // this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
+    // this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217, null, null, null, null, $target);
   },
 
   _remainApiSuccess: function () {
@@ -230,7 +231,7 @@ Tw.MyTDataGift.prototype = {
     this.wrap_available_product.hide();
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -245,7 +246,8 @@ Tw.MyTDataGift.prototype = {
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
+      Tw.BUTTON_LABEL.YES,
+      $(e.currentTarget)
     );
   }
 };

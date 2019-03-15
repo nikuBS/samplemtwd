@@ -97,24 +97,25 @@ Tw.MyTDataTing.prototype = {
     this._validatePhoneNumber();
   },
 
-  _getReceiveUserInfo: function () {
+  _getReceiveUserInfo: function (e) {
+    var $target = $(e.currentTarget);
     this.befrSvcNum = this.$input_ting_receiver.val().match(/\d+/g).join('');
 
     var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
 
     if ( isValidPhone ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0022, { chrgSvcNum: this.befrSvcNum })
-        .done($.proxy(this._onSuccessReceiveUserInfo, this));
+        .done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     }
   },
 
-  _onSuccessReceiveUserInfo: function (res) {
+  _onSuccessReceiveUserInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestSendingData();
     } else if ( res.code === 'ZPAYE0077' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.V31);
+      this._popupService.openAlert(Tw.MYT_DATA_TING.V31, null, null, null, null, $target);
     } else if ( res.code === 'ZINVE8164' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT);
+      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT, null, null, null, null, $target);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -168,7 +169,8 @@ Tw.MyTDataTing.prototype = {
     return true;
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
+    var $target = $(e.currentTarget);
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -183,7 +185,8 @@ Tw.MyTDataTing.prototype = {
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
+      Tw.BUTTON_LABEL.YES,
+      $target
     );
   },
 

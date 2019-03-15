@@ -159,11 +159,11 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
 
     if (isAndroid || isNotFirst) {
-      var $error = $(e.currentTarget).closest('li').find('.error-txt');
       var $target = $(e.currentTarget);
+      var $error = $target.closest('li').find('.error-txt');
 
       if (Tw.DateHelper.isBefore($target.val())) {
-        this._popupService.openAlert(Tw.MYT_DATA_PREPAID.INVALID_DATE);
+        this._popupService.openAlert(Tw.MYT_DATA_PREPAID.INVALID_DATE, null, null, null, null, $target);
         $target.val(Tw.DateHelper.getTomorrowDate());
       }
 
@@ -230,7 +230,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         data: [{ list: Tw.MYT_PREPAID_DATE.list.map($.proxy(fnSelectDate, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, [$elButton, true]),
-      null
+      null, null, $elButton
     );
   },
 
@@ -251,7 +251,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         data: [{ list: Tw.MYT_PREPAID_RECHARGE_AMOUNT.list.map($.proxy(fnSelectDate, this)) }]
       },
       $.proxy(this._selectPopupCallback, this, [$elButton, true]),
-      null
+      null, null, $elButton
     );
   },
 
@@ -272,7 +272,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, [$elButton, false]),
-      null
+      null, null, $elButton
     );
   },
 
@@ -364,14 +364,17 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _onClickUnsubscribeAutoRecharge: function () {
+  _onClickUnsubscribeAutoRecharge: function (e) {
     this._popupService.openModalTypeA(
       Tw.MYT_DATA_PREPAID.A70_TITLE,
       Tw.MYT_DATA_PREPAID.A70_CONTENT,
       Tw.MYT_DATA_PREPAID.A70_BTN_CONFIRM,
       null,
       $.proxy(this._unsubscribeAutoRecharge, this),
-      $.proxy(this._closeUnsubscribeAutoRecharge, this)
+      $.proxy(this._closeUnsubscribeAutoRecharge, this),
+      null,
+      null,
+      $(e.currentTarget)
     );
   },
 
@@ -393,7 +396,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
     this._backAlert.onClose();
     // var confirmed = false;
     // this._popupService.openConfirmButton(
@@ -409,7 +412,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     //     }
     //   }, this),
     //   Tw.BUTTON_LABEL.NO,
-    //   Tw.BUTTON_LABEL.YES
+    //   Tw.BUTTON_LABEL.YES,
+    //   $(e.currentTarget)
     // );
   }
 };

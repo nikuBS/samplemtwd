@@ -131,7 +131,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._validateInputNumber();
   },
 
-  _getReceiveUserInfo: function () {
+  _getReceiveUserInfo: function (e) {
+    var $target = $(e.currentTarget);
     this.befrSvcNum = this.$inputImmediatelyGift.val();
     this.opDtm = this.$inputImmediatelyGift.data('opdtm');
 
@@ -139,26 +140,26 @@ Tw.MyTDataGiftImmediately.prototype = {
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
 
     if ( isCellPhone && this._validatePhoneNumber(svcNum) ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     }
   },
 
-  _onSuccessReceiveUserInfo: function (res) {
+  _onSuccessReceiveUserInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
-      this._requestSendingData();
+      this._requestSendingData($target);
     } else if ( res.code === 'ZNGME0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _requestSendingData: function () {
+  _requestSendingData: function ($target) {
     var htParams = {
       befrSvcNum: this.$inputImmediatelyGift.val(),
       dataQty: this.$wrap_data_select_list.find('li.checked input').val(),
@@ -174,11 +175,12 @@ Tw.MyTDataGiftImmediately.prototype = {
       Tw.FormatHelper.convDataFormat(this.paramData.dataQty, 'MB').unit +
       Tw.ALERT_MSG_MYT_DATA.GIFT_DATA_QUESTION,
       Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
-      $.proxy(this._onSuccessSendingData, this)
+      $.proxy(this._onSuccessSendingData, this, $target),
+      $target
     );
   },
 
-  _onSuccessSendingData: function () {
+  _onSuccessSendingData: function ($target) {
     this._popupService.close();
 
     // MOCK DATA
@@ -188,14 +190,14 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_06_0016, {
       befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
       dataQty: this.$wrap_data_select_list.find('li.checked input').val()
-    }).done($.proxy(this._onRequestSuccessGiftData, this));
+    }).done($.proxy(this._onRequestSuccessGiftData, this, $target));
   },
 
-  _onRequestSuccessGiftData: function (res) {
+  _onRequestSuccessGiftData: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

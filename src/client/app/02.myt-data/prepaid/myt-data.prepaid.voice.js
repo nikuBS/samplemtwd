@@ -212,7 +212,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
-  _validateCreditCard: function () {
+  _validateCreditCard: function (e) {
+    var $elButton = $(e.currentTarget);
     var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
       this._validation.checkLength(this.$cardY.val(), 4) &&
       this._validation.checkLength(this.$cardM.val(), 2) &&
@@ -225,7 +226,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       };
 
       this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
-        .done($.proxy(this._getCreditCardInfo, this));
+        .done($.proxy(this._getCreditCardInfo, this, $elButton));
     }
   },
 
@@ -248,17 +249,18 @@ Tw.MyTDataPrepaidVoice.prototype = {
     return isValid;
   },
 
-  _requestPrepaidCard: function () {
+  _requestPrepaidCard: function (e) {
+    var $elButton = $(e.currentTarget);
     var htParams = {
       cardNum: $('.fe-prepaid-card').val(),
       serialNum: $('.fe-prepaid-serial').val()
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0067, htParams)
-      .done($.proxy(this._getPrepaidCardInfo, this));
+      .done($.proxy(this._getPrepaidCardInfo, this, $elButton));
   },
 
-  _getCreditCardInfo: function (res) {
+  _getCreditCardInfo: function ($elButton, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
@@ -281,15 +283,15 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString()),
           emailAddress: this.$emailAddress
         }
-      });
+      }, null, null, null, $elButton);
     } else if ( res.code === 'BIL0080' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _getPrepaidCardInfo: function (resp) {
+  _getPrepaidCardInfo: function ($elButton, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var previousAmount = Number(resp.result.curAmt);
       var rechargeAmount = Number(resp.result.cardAmt);
@@ -310,9 +312,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
           afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
-      });
+      }, null, null, null, $elButton);
     } else if ( resp.code === 'BIL0102' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -335,7 +337,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
         data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
-      $.proxy(this._validSelectedValue, this, $elButton)
+      $.proxy(this._validSelectedValue, this, $elButton),
+      null,
+      $elButton
     );
   },
 
@@ -396,7 +400,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
     this._backAlert.onClose();
     // var confirmed = false;
     // this._popupService.openConfirmButton(
@@ -412,7 +416,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
     //     }
     //   }, this),
     //   Tw.BUTTON_LABEL.NO,
-    //   Tw.BUTTON_LABEL.YES
+    //   Tw.BUTTON_LABEL.YES,
+    //   $(e.currentTarget)
     // );
   }
 };
