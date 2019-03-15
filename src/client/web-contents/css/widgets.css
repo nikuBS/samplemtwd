@@ -815,15 +815,13 @@ li.checkbox.type01 {
     border-color: #178BCE; }
 
 .device_android .radiobox {
-  position: relative;
-  overflow: hidden; }
+  position: relative; }
   .device_android .radiobox input[type=radio] {
     -webkit-transform: scale(100);
             transform: scale(100); }
 
 .device_android .checkbox {
-  position: relative;
-  overflow: hidden; }
+  position: relative; }
   .device_android .checkbox input[type=checkbox] {
     -webkit-transform: scale(100);
             transform: scale(100); }
