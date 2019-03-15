@@ -65,6 +65,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   _onClickResetNotification: function (e) {
     if ( e.currentTarget.getAttribute('data-noti') === 'true' ) {
       this.$restoreNotiGroup.show();
+      this.$restoreNotiGroup.attr('aria-hidden', false);
       if ( !this.$checkEmailNoti.attr('checked') ) {
         this.$checkEmailNoti.click();
       }
@@ -75,6 +76,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       this._checkSuspendable(true);
     } else {
       this.$restoreNotiGroup.hide();
+      this.$restoreNotiGroup.attr('aria-hidden', true);
       this._checkSuspendable(false);
     }
 
@@ -114,11 +116,13 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     // 일시정지 종료일 안내 타입별 입력값 확인
     if ( this.$radioResetNotification.filter('[data-noti="true"]').attr('checked') ) {
       if ( this.$checkEmailNoti.attr('checked') && !Tw.ValidationHelper.isEmail(this.$inputEmail.val()) ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_EMAIL);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_EMAIL,
+          null, null, null, null, $(event.currentTarget));
         return;
       }
       if ( this.$checkSMSnoti.attr('checked') && !Tw.ValidationHelper.isCellPhone(this.$inputTel.val()) ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PHONE_NUMBER);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PHONE_NUMBER,
+          null, null, null, null, $(event.currentTarget));
         return;
       }
     }
@@ -128,10 +132,12 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$dateTo = this.$container.find('[data-role="fe-date-to"]');
 
     if ( this.$dateTo.val() < this.$dateFrom.val()) {// 종료일자가 시작일 이전일 경우
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
+        null, null, null, null, $(event.currentTarget));
       return;
     } else if (this.$dateTo.val() > this._defaultDate) {// 3개월 초과 설정
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02,
+        null, null, null, null, $(event.currentTarget));
       return;
     }
 
@@ -169,7 +175,8 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,
+        null, null, null, null, $(event.currentTarget));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
