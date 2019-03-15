@@ -375,7 +375,7 @@ Tw.MenuComponent.prototype = {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
           case 'svcCnt':
-            if (Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum) || Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
               $(elem).remove();
             } else {
               $(elem).text(userInfo.prodNm);
@@ -383,6 +383,10 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'bill':
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
             var cmd = Tw.API_CMD.BFF_04_0008;
             if (userInfo.actRepYn === 'Y') {
               cmd = Tw.API_CMD.BFF_04_0009;
@@ -408,7 +412,11 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'data':
-            this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
+            this._apiService.request(Tw.SESSION_CMD.BFF_05_0001, {})
               .then($.proxy(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var text = this._parseUsage(res.result);
@@ -426,6 +434,10 @@ Tw.MenuComponent.prototype = {
               });
             break;
           case 'membership':
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
             this._apiService.request(Tw.SESSION_CMD.BFF_04_0001, {})
               .then(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
