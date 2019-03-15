@@ -66,7 +66,8 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
-    ICAS3101: 'ICAS3101'
+    ICAS3101: 'ICAS3101',
+    ICAS3162: 'ICAS3162'
   },
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
@@ -244,10 +245,10 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
       this.$errorCertCount.removeClass('none');
       this.$errorCertCount.attr('aria-hidden', false);
-    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162 ) {
       this.$errorCertBlock.removeClass('none');
       this.$errorCertBlock.attr('aria-hidden', false);
-    } else if ( errorCode === this.SMS_ERROR.ATH1004 ) {
+    } else if ( errorCode === this.SMS_ERROR.ATH1004 || errorCode === this.SMS_ERROR.ATH1005 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
       Tw.Error(errorCode, errorMsg).pop();

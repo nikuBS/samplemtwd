@@ -38,7 +38,8 @@ Tw.CertificationSkFull.prototype = {
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
     ATH8007: 'ATH8007',
-    ICAS3101: 'ICAS3101'
+    ICAS3101: 'ICAS3101',
+    ICAS3162: 'ICAS3162'
   },
   open: function (authUrl, authKind, callback) {
     this._authUrl = authUrl;
@@ -218,7 +219,7 @@ Tw.CertificationSkFull.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH8007 ) {
       this.$errorCertStop.removeClass('none');
       this.$errorCertStop.attr('aria-hidden', false);
-    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162) {
       this.$errorCertBlock.removeClass('none');
       this.$errorCertBlock.attr('aria-hidden', false);
     } else {
