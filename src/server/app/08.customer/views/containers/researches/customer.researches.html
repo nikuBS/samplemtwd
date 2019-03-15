@@ -22,7 +22,6 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
                 <% if (researches.length > 0) { %>
@@ -47,7 +46,7 @@
                                         for (let i = 0; i < len; i++) {
                                             const research = researches[i]; %>
                                         <a style="display: block;position: relative;top: -52px;visibility: hidden;" id="research<%= research.bnnrRsrchId %>" aria-hidden="true"></a>
-                                        <li class="acco-box <%= research.isProceeding && 'on' %>" data-research-id="<%= research.bnnrRsrchId %>" data-type-code="<%= research.bnnrRsrchTypCd %>" data-answer-num="<%= research.canswNum %>">
+                                        <li class="acco-box <%= research.isProceeding ? 'on' : '' %>" data-research-id="<%= research.bnnrRsrchId %>" data-type-code="<%= research.bnnrRsrchTypCd %>" data-answer-num="<%= research.canswNum %>">
                                             <div class="acco-tit">
                                                 <span class="poll-question"><%= research.bnnrRsrchTitleNm %></span>
                                                 <span class="poll-date"><%= research.staDtm %><span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.endDtm %></span>
@@ -64,45 +63,18 @@
                                                         <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="<%= research.hintExUrl %>">힌트 보기</button></div><% }
                                                         const examCount = research.examples.length;
                                                         if (examCount > 0) { %>
-                                                            <!-- .widget -->
-                                                            <div class="widget">
-                                                                <% if (research.bnnrRsrchRpsTypCd === 'C') { %>
-                                                                    <div class="widget-box check">
-                                                                        <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="group">
-                                                                            <% research.examples.map((exam, idx) => { %>
-                                                                            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                                <% if (exam.image) { %>
-                                                                                    <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                                                    <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" aria-labelledby="aria-comp-<%= research.bnnrRsrchId + idx %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                    <div class="poll-text" id="aria-comp-<%= research.bnnrRsrchId + idx %>"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
-                                                                                <% } else { %>
-                                                                                    <input type="checkbox" name="checkbox" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                    <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
-                                                                                <% } %>
-                                                                            </li>
-                                                                            <% }); %>
-                                                                        </ul>
+                                                            <ul class="survey-researchbox <%= research.bnnrRsrchSortMthdCd === 'D' ? 'type2' : '' %> <%= research.hasHtml ? 'btn-dtl' : ''%>">
+                                                                <% research.examples.map((exam, idx) =>  {%>
+                                                                <li class="category-type" aria-checked="false">
+                                                                    <% if (exam.image) { %><div class="poll-img"><img src="https://cdnm-stg.tworld.co.kr<%= exam.image %>" /></div><% } %>
+                                                                    <div class="chkform-wrap">
+                                                                        <span class="custom-form"><input type="radio" id="radio<%= research.bnnrRsrchId %>_<%= idx %>" name="radio<%= research.bnnrRsrchId %>"><span class="r-type1"></span></span>
+                                                                        <label for="radio<%= research.bnnrRsrchId %>_<%= idx %>"><%= exam.content %></label>
                                                                     </div>
-                                                                <% } else { %>
-                                                                    <div class="widget-box radio">
-                                                                        <ul class="select-list alignment01 <%= research.bnnrRsrchSortMthdCd === 'D' ? 'division-two' : '' %> <%= research.examples[0].image ? 'has-image' : '' %>" role="radiogroup">
-                                                                            <% research.examples.map((exam, idx) =>  {%>
-                                                                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                                <% if (exam.image) { %>
-                                                                                    <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
-                                                                                    <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" aria-labelledby="aria-comp-<%= research.bnnrRsrchId + idx %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                    <div class="poll-text" id="aria-comp-<%= research.bnnrRsrchId + idx %>"><%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
-                                                                                <% } else { %>
-                                                                                    <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= exam.content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                                    <%= exam.content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
-                                                                                <% } %>
-                                                                            </li>
-                                                                            <% }); %>
-                                                                        </ul>
-                                                                    </div>
-                                                                <% } %>
-                                                            </div>
-                                                            <!--// .widget -->
+                                                                    <%- exam.motHtml %>
+                                                                </li>
+                                                                <% }); %>
+                                                            </ul>
                                                             <% if (research.examples[examCount - 1].isEtc) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
                                                             <% if (research.motMsgHtmlCtt) { %><div class="mb20"><%- research.motMsgHtmlCtt %></div><% } %>
                                                         <% } %>

@@ -30,7 +30,7 @@ Tw.CustomerResearches.prototype = {
 
   _bindEvent: function() {
     this.$container.find('.fe-submit').click(_.debounce($.proxy(this._handleSubmit, this), 300));
-    this.$container.on('change', 'ul.select-list > li input', $.proxy(this._setEnableSubmit, this));
+    this.$container.on('change', 'ul.survey-researchbox > li input', $.proxy(this._handleChangeSelect, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
     this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.fe-nResearch li', $.proxy(this._toggleSelect, this));
@@ -40,9 +40,22 @@ Tw.CustomerResearches.prototype = {
     this.$list = this.$container.find('.acco-list');
   },
 
+  _handleChangeSelect: function(e) {
+    var $target = $(e.currentTarget);
+
+    $target
+      .closest('.survey-researchbox')
+      .find('li[aria-checked="true"]')
+      .attr('aria-checked', false);
+    $target.closest('li').attr('aria-checked', true);
+
+    this._setEnableSubmit(e);
+  },
+
   _handleSubmit: function(e) {
-    var $root = $(e.currentTarget).parents('li.acco-box');
-    var $list = $root.find('ul.select-list > li');
+    var $target = $(e.currentTarget),
+      $root = $target.parents('li.acco-box');
+    var $list = $root.find('ul.survey-researchbox > li');
     var $etcText = $root.find('textarea.poll-area');
     var answerNumber = $root.data('answer-num');
 
@@ -65,6 +78,10 @@ Tw.CustomerResearches.prototype = {
         options['rpsCtt' + (i + 1)] = i + 1;
       }
     }
+
+    $list.prop('aria-checked', false);
+    $list.find('input').prop('checked', false);
+    $target.prop('disabled', true);
 
     this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this));
   },
@@ -90,9 +107,7 @@ Tw.CustomerResearches.prototype = {
     var $root = $target.parents('li.acco-box');
     var $btn = $root.find('.item-two > .bt-blue1 button');
 
-    if ($target.attr('type') === 'checkbox' && $root.find('ul.select-list li[aria-checked="true"]').length === 0) {
-      $btn.attr('disabled', true);
-    } else if ($btn.attr('disabled')) {
+    if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
     }
   },

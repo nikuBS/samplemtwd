@@ -240,26 +240,23 @@ Tw.MyTDataPrepaidHistory.prototype = {
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     } else {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     }
     this._popupService.close();
   },
 
-  _handleSuccessCancel: function($target, resp) {
+  _handleSuccessCancel: function(resp) {
     skt_landing.action.loading.off({ ta: this.$container });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      var $parents = $target.closest('li');
-      $parents.find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
-      $parents.find('button.data-tx').switchClass('blue-tx', 'gray-tx');
-      $target.remove();
+      window.location.replace('/myt-data/recharge/prepaid/history');
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
   },
