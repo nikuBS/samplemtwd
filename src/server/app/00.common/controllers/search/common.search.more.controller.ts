@@ -106,7 +106,8 @@ class CommonSearchMore extends TwViewController {
           relatedKeyword : relatedKeyword,
           inKeyword : searchResult.result.researchQuery,
           accessQuery : req.query,
-          step : step
+          step : step,
+          nowUrl : req.originalUrl
         });
       }
     });
