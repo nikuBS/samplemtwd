@@ -54,7 +54,6 @@ class MyTFareBillCashbag extends TwViewController {
   /* 데이터 가공 */
   private parseData(data: any): any {
     data.point = FormatHelper.addComma(data.availPt); // 사용 가능한 OK cashbag 포인트에 콤마(,) 추가
-    data.cardNumber = StringHelper.masking(data.ocbCcno, '*', 10); // 포인트 카드에 마스킹 적용
     data.endDate = DateHelper.getNextYearShortDate(); // 자동납부 종료일을 포맷에 맞게 변경
 
     return data;
