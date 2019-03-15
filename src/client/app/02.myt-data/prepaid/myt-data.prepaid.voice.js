@@ -98,8 +98,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _changeTab: function (event) {
     var $target = $(event.currentTarget);
-    $target.find('a').attr('title', Tw.BUTTON_LABEL.SELECTED);
-    $target.siblings().find('a').removeAttr('title');
+    $target.find('a').attr('aria-selected', 'true');
+    $target.siblings().find('a').attr('aria-selected', 'false');
   },
 
   _setData: function (result) {

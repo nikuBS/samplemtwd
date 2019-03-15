@@ -86,8 +86,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _changeTab: function (event) {
     var $target = $(event.currentTarget);
-    $target.find('button').attr('title', Tw.BUTTON_LABEL.SELECTED);
-    $target.siblings().find('button').removeAttr('title');
+    $target.find('button').attr('aria-selected', 'true');
+    $target.siblings().find('button').attr('aria-selected', 'false');
 
     var $targetId = $target.attr('id');
     this._initVariables($targetId);
