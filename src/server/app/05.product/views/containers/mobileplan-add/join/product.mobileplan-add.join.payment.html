@@ -30,46 +30,53 @@
                     </div>
                 </div>
 
-                <div class="cont-box">
-                    <p>입력하신 휴대폰번호로 전송된 인증번호를 입력해 주세요.</p>
-                </div>
-
                 <div class="ti-caption-gray">
                     <h4 class="tit">보호자 회선 설정 <button type="button" class="tip-view" page-id="<%= pageInfo.menuId %>" id="MV_02_02_04_tip_01" title="보호자 회선 설정 정보보기" aria-haspopup="true">TIP</button></h4>
                     <p class="num"><%= svcInfo.svcNumDash %></p>
                 </div>
 
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <ul class="form-data-list">
-                        <li>
-                            <label class="tit">보호자(수신인) 회선</label>
-                            <span class="inputbox bt-add inp-btn">
-                                <span class="input">
-                                    <input type="tel" class="fe-input_num" placeholder="숫자만 입력" title="보호자(수신인) 회선번호를 입력하세요">
-                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
-                                </span>
-                                <span class="bt-box disabled">
-                                    <button type="button" class="fe-btn_get_auth_code" disabled="disabled">인증번호 받기</button>
-                                </span>
-                            </span>
-                            <span class="tx-box fe-send_msg_result" style="display: none" aria-hidden="true"></span>
-                            <span class="inputbox pt20">
-                                <span class="input">
-                                    <input type="number" maxlength="6" class="fe-input_auth_code" placeholder="인증번호 숫자 6자리" title="보호자(수신인) 회선 인증번호 숫자 6자리 입력하세요">
-                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                            <span class="tx-box fe-validate_result" style="display: none" aria-hidden="true"></span>
-                        </li>
-                    </ul>
-                    <ul class="bt-slice pt26">
-                        <li class="bt-blue1">
-                            <button class="fe-btn_validate" disabled="disabled">인증하기</button>
-                        </li>
-                    </ul>
+                <div class="cont-box nogaps-top">
+                    <div class="sms-confirm-box">
+                        <div class="sms-confirm-box">
+                            <div class="box-citation">
+                                <div class="citation-form">
+                                    <div class="form-cell">
+                                        <div class="forminbox-wrap">
+                                            <p id="aria-citation-sms-parent" class="form-ti title">보호자(수신인) 회선</p>
+                                        </div>
+                                        <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                            <span class="input">
+                                                <input type="tel" placeholder="SK텔레콤 휴대폰 번호" title="휴대폰 번호" class="fe-input_num" aria-labelledby="aria-citation-sms-parent" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                            </span>
+                                            <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                                <button type="button" class="btn-round2 btn-style3 fe-btn_get_auth_code" disabled>인증번호전송</button>
+                                            </span>
+                                        </span>
+                                        <span class="tx-box"><!-- error-txt // validation-txt -->
+                                            <span id="aria-sms-exp-desc1" class="fe-send_msg_result" aria-hidden="true" style="display: none"></span><!-- 오류일 경우 class none 삭제 -->
+                                        </span>
+                                    </div>
+                                    <div class="form-cell linebox">
+                                        <p id="aria-citation-sms-code" class="form-ti title">인증번호</p>
+                                        <p class="txt">전송 받으신 인증번호를 입력해주세요. <span class="sms-time fe-sms_time">04:59</span></p>
+                                        <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                                <span class="input">
+                                                    <input type="number" placeholder="인증번호 6자리 입력" title="인증번호" class="fe-input_auth_code" aria-labelledby="aria-citation-sms-code" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                </span>
+                                                <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                                   <button type="button" class="btn-round2 btn-style3 fe-btn_extend" disabled>시간연장</button>
+                                                </span>
+                                            </span>
+                                        <span class="tx-box">
+                                            <span id="aria-sms-exp-desc2" class="fe-validate_result" aria-hidden="true" style="display: none"></span><!-- 통과일 경우 class none 삭제 -->
+                                        </span>
+                                        <button type="button" class="btn-round1 btn-style4 fe-btn_validate" disabled>인증하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--// .cont-box -->
 
                 <!-- .cont-box -->
                 <div class="cont-box bgnone noborder">
