@@ -2,7 +2,7 @@
  * FileName: myt-fare.bill.card.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.18
- * Annotation: 체크/신용카드 요금납부
+ * Description: 체크/신용카드 요금납부
  */
 
 import {NextFunction, Request, Response} from 'express';

@@ -2,8 +2,9 @@
  * FileName: myt-fare.bill.option.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
- * Annotation: 납부방법 조회
+ * Description: 납부방법 조회
  */
+
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';

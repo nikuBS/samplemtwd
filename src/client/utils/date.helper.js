@@ -361,6 +361,27 @@ Tw.DateHelper = (function () {
     return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
   };
 
+  var getRemainedSec = function(startTime, diff) {
+    diff = diff || Tw.SMS_CERT_TIME;
+    var currentTime = new Date().getTime();
+    var passed = currentTime - startTime.getTime();
+    var remained = Math.round((diff - passed) / 1000);
+    remained = remained > 0 ? remained : 0;
+
+    return remained;
+  };
+
+  var convertMinSecFormat = function (target) {
+    var min = parseInt(target / 60, 10);
+    var sec = target % 60;
+
+    min = min < 10 ? '0' + min : min;
+    sec = sec < 10 ? '0' + sec : sec;
+
+    return min + ':' + sec;
+  };
+
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -406,6 +427,8 @@ Tw.DateHelper = (function () {
     AddMonth: AddMonth,
     isBefore: isBefore,
     getDateCustomFormat : getDateCustomFormat,
-    add5min: add5min
+    add5min: add5min,
+    getRemainedSec: getRemainedSec,
+    convertMinSecFormat: convertMinSecFormat
   };
 })();

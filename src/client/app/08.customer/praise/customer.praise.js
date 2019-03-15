@@ -35,7 +35,7 @@ Tw.CustomerPraise.prototype = {
     this.$container.on('click', '.textarea-type .cancel', $.proxy(this._resetCount, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
-    this.$reasons.on('keyup', $.proxy(this._handleTypeReasons, this));
+    this.$reasons.on('keyup input', $.proxy(this._handleTypeReasons, this));
     this.$area.on('click', $.proxy(this._openSelectAreaPopup, this));
     this.$submitBtn.on('click', $.proxy(this._handleSubmit, this));
   },

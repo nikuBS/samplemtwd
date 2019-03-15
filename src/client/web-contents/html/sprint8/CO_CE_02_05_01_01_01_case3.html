@@ -63,7 +63,7 @@
                                         <span id="aria-citation-name" class="form-ti">이름</span>
                                         <span class="inputbox">
                                             <span class="input">
-                                                <input type="text" value="홍길동" placeholder="휴대폰 명의자 이름" title="이름"/><!-- 오류일 경우 aria-sms-exp-desc1로 변경 --><!-- 웹접근성 수정 -->
+                                                <input type="text" value="홍길동" placeholder="휴대폰 명의자 이름" title="휴대폰 명의자 이름"/><!-- 오류일 경우 aria-sms-exp-desc1로 변경 --><!-- 웹접근성 수정 -->
                                                 <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                             </span>
                                             <span id="aria-sms-exp-desc1" class="error-txt none" aria-hidden="true">이름을 입력해 주세요.</span>
@@ -74,7 +74,7 @@
                                         <span id="aria-citation-birth" class="form-ti">법정 생년월일</span>
                                         <span class="inputbox">
                                             <span class="input">
-                                                <input type="number" placeholder="명의자의 생년월일 6자리" value="180829" title="법정 생년월일"/><!-- 오류일 경우 aria-sms-exp-desc2로 변경 --><!-- 웹접근성 수정 -->
+                                                <input type="number" placeholder="명의자의 생년월일 6자리" value="180829" title="명의자의 법정 생년월일 6자리"/><!-- 오류일 경우 aria-sms-exp-desc2로 변경 --><!-- 웹접근성 수정 -->
                                                 <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                             </span>
                                             <!--<span id="aria-sms-exp-desc2" class="error-txt none" aria-hidden="true">생년월일 6자리를 정확히 입력해 주세요.-->
@@ -118,15 +118,15 @@
                                             </div>
                                             <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                                 <span class="input">
-                                                        <input type="text" placeholder="SK텔레콤 휴대폰 번호" title="휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                        <input type="text" placeholder="SK텔레콤 휴대폰 번호" title="SK텔레콤 휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby="aria-sms-exp-desc6 aria-sms-exp-desc7"><!-- 정상 발송일 경우 aria-sms-exp-desc7, 오류일 경우 aria-sms-exp-desc6로 변경 -->
                                                 </span>
                                                 <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
                                                     <button type="button" class="btn-round2 btn-style3">인증번호전송</button>
                                                 </span>
                                             </span>
                                             <span class="tx-box">
-                                                <span id="aria-sms-exp-desc1" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span><!-- 오류일 경우 class none 삭제 -->
-                                                <span id="aria-sms-exp-desc2" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc6" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span><!-- 오류일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc7" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
                                             </span>
                                         </div>
                                         <div class="form-cell linebox">
@@ -134,15 +134,15 @@
                                             <p class="txt">전송 받으신 인증번호를 입력해주세요. <span class="sms-time">04:59</span></p>
                                             <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                                 <span class="input">
-                                                    <input type="text" placeholder="인증번호 6자리 입력" title="인증번호" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                    <input type="text" placeholder="인증번호 6자리 입력" title="인증번호 6자리 입력" aria-labelledby="aria-citation-sms" aria-describedby="aria-sms-exp-desc8 aria-sms-exp-desc9"><!-- 정상 발송일 경우 aria-sms-exp-desc9, 오류일 경우 aria-sms-exp-desc8로 변경 -->
                                                 </span>
                                                 <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
                                                 <button type="button" class="btn-round2 btn-style3">시간연장</button>
                                                 </span>
                                             </span>    
                                             <span class="tx-box">
-                                                <span id="aria-sms-exp-desc1" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 오류일 경우 class none 삭제 -->
-                                                <span id="aria-sms-exp-desc2" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc8" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 오류일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc9" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
                                             </span>                    
                                         </div>
                                     </div>

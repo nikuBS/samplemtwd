@@ -1375,20 +1375,6 @@ body.hidden {
     }
 }*/
 /* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
-.device_ios .bt-fixed-area {
-  position: -webkit-sticky;
-  position: sticky;
-  top: auto;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
-  .device_ios .bt-fixed-area.fixed-bt {
-    position: fixed;
-    -webkit-transform: none;
-            transform: none; }
-
 .device_ios .popup-page .header-wrap {
   position: -webkit-sticky;
   position: sticky;
@@ -2067,7 +2053,12 @@ body.hidden {
   .sms-confirm-box .tx-box + button {
     margin-top: 1.5rem; }
   .sms-confirm-box .bt-box3 .btn-round2 {
-    min-width: 6.875rem; }
+    min-width: 8.125rem; }
+
+@media all and (max-width: 359px) {
+  .sms-confirm-box .bt-box3 .btn-round2 {
+    min-width: 7.0625rem;
+    padding: 0 0.625rem; } }
 
 /* 고객센터 인증 */
 .certifi-ti-big {

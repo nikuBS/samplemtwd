@@ -318,7 +318,7 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span class="set-aria" />').text(i + 1);//@DV001-16733 span.set-aria
+            return $('<span/>').text(i + 1);//@190315 - 접근성
           },
         });
       }else{
@@ -336,49 +336,10 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span class="set-aria"/>').text(i + 1);//@DV001-16733 span.set-aria
+            return $('<span/>').text(i + 1);//@190315 - 접근성
           },
         });
       }
-      /*_this.slick({
-        dots: true,
-        arrows: true,
-        infinite: false,
-        speed : 300,
-        // useTransform : false,
-        // mobileFirst : true,
-        // useCSS : false,
-        // useTransform : false,
-        lazyLoad: 'ondemand',
-        centerMode: false,
-        focusOnSelect: false,
-        touchMove : true,
-        customPaging: function(slider, i) {
-          return $('<span />').text(i + 1);
-        },
-      });
-      if($(this).hasClass('slider1-auto')) {
-        _this.slick('destroy');
-        _this.slick({
-          autoplay: true,
-          autoplaySpeed: 4000,
-          dots: true,
-          arrows: true,
-          infinite: true,
-          speed : 300,
-          // useTransform : false,
-          // mobileFirst : true,
-          // useCSS : false,
-          // useTransform : false,
-          lazyLoad: 'ondemand',
-          centerMode: false,
-          focusOnSelect: false,
-          touchMove : true,
-          customPaging: function(slider, i) {
-            return $('<span />').text(i + 1);
-          },
-        });
-      }*/
       if(_this.find('.slick-slide').length == 1){
         _this.addClass('slick-dotted-none');
       }
@@ -397,59 +358,34 @@ skt_landing.widgets = {
         }, 0);
       });
 
-      /*if($('.home-slider').length > 0){//@190313: 메인탭 분리
-        _this.on({
-          'mousedown' : function(){
-            $('.home-slider .home-slider-belt')[0].slick.setOption({
-              swipe: false
-            })
-          },
-          'touchstart' : function(){
-            $('.home-slider .home-slider-belt')[0].slick.setOption({
-              swipe: false
-            })
-          },
-          'mouseup' : function(){
-            setTimeout(function(){
-              $('.home-slider .home-slider-belt')[0].slick.setOption({
-                swipe: true
-              })
-            },200)
-          },
-          'edge' : function(){
-            setTimeout(function(){
-              $('.home-slider .home-slider-belt')[0].slick.setOption({
-                swipe: true
-              })
-            },200)
-          },
-          'setPosition' : function(){
-            setTimeout(function(){
-              $('.home-slider .home-slider-belt')[0].slick.setOption({
-                swipe: true
-              })
-            },200)
-          },
-          'beforeChange' : function(){
-            setTimeout(function(){
-              $('.home-slider .home-slider-belt')[0].slick.setOption({
-                swipe: true
-              })
-            },200)
-          },
-          'afterChange' : function(){
-            setTimeout(function(){
-              $('.home-slider .home-slider-belt')[0].slick.setOption({
-                swipe: true
-              })
-            },200)
-          },
-          'mousemove' : function(){
-          },
-          'swipe' : function(){
-          }
-        })
-      }*/
+      //@190315 - 접근성
+      _this.on('afterChange', function (e, _slick) {
+        var $dots = _slick.$dots.find('span');        
+        $dots.each(function (idx, key) {
+          $(this).attr({
+            'role': 'tab',
+            'aria-label': (idx + 1) + ' of ' + $dots.length,
+            'aria-selected': 'false'
+          });
+        }).eq(_slick.currentSlide).attr({
+          'aria-selected': 'true'
+        });
+      }).on('setPosition', function (e, _slick) {
+        var $dots = _slick.$dots.find('span');        
+        $dots.each(function (idx, key) {
+          $(this).attr({
+            'role': 'tab',
+            'aria-label': (idx + 1) + ' of ' + $dots.length,
+            'aria-selected': 'false',
+            'id': 'slick-slide-control' + _slick.instanceUid + idx,
+            'aria-controls': 'slick-slide' + _slick.instanceUid + idx
+          });
+        }).eq(_slick.currentSlide).attr({
+          'aria-selected': 'true'
+        });
+      });
+      //@190315 - 접근성
+
     });
   },
   widget_slider2: function (ta) {

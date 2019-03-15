@@ -24646,8 +24646,6 @@ input[type="radio"].formradio-small.type2 + label {
         content: '';
         background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 23% 50%;
         background-size: 100%; }
-  .separate-link-list.nogaps-m-top {
-    margin-top: 0; }
 
 .plan-compact-wrap {
   overflow: hidden;
@@ -26281,8 +26279,6 @@ input[type="radio"].formradio-small.type2 + label {
       margin: 1.25rem 1.5rem 0.3125rem 1.5rem; }
   .section-box.nogaps-top {
     padding: 0 1.5rem 1.25rem; }
-  .section-box.nogaps-m-top {
-    margin-top: 0; }
   .section-box.nogaps-btm {
     padding: 1.5rem 1.25rem 0; }
   .section-box.nogaps-ver {
