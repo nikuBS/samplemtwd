@@ -151,6 +151,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _onChangeModel: function () {
     this._phoneInfo.eqpMdlNm = '';
     this._phoneInfo.eqpMdlCd = '';
+    this.cdValue = '';
+    this.cdName = '';
     this.modelValue = '';
     this.modelCode = '';
     this.cdName = '';
