@@ -4,7 +4,7 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,nowUrl) {
   this.$container = rootEl;
   //this._category = category;
   this._historyService = new Tw.HistoryService();
@@ -18,6 +18,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
   this._svcInfo = svcInfo;
   this._accessKeyword = this._searchInfo.query;
   this._category = accessQuery.category;
+  this._nowUrl = nowUrl;
   this._init(this._searchInfo,accessQuery.category);
 };
 Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
