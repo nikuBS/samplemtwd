@@ -37,7 +37,7 @@ Tw.CustomerResearch.prototype = {
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
       $btn = $root.find('.bt-blue1 button'),
       $etc = $root.find('.fe-etc-area'),
-      enable = false;
+      enable = !$root.data('is-essential');
 
     if ($root.find('li.checked').length > 0) {
       this._nextIdx = this._currentIdx + 1;
@@ -63,13 +63,13 @@ Tw.CustomerResearch.prototype = {
       }
 
       enable = true;
-      if ($etc.length > 0) {
-        if (isEtc === 'true') {
-          $etc.removeAttr('disabled');
-          enable = $etc.text().length > 0;
-        } else {
-          $etc.attr('disabled', true).val('');
-        }
+    }
+    if ($etc.length > 0) {
+      if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {
+        $etc.removeAttr('disabled');
+        enable = $etc.text().length > 0;
+      } else {
+        $etc.attr('disabled', true).val('');
       }
     }
 
