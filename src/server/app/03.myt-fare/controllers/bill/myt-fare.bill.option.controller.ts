@@ -60,14 +60,14 @@ class MyTFareBillOption extends TwViewController {
   private parseData(data: any, svcInfo: any): any {
     if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK) { // 계좌이체 자동납부일 경우
       data.fstDrwSchdDate = FormatHelper.isEmpty(data.fstDrwSchdDt) ? '' : DateHelper.getShortDate(data.fstDrwSchdDt); // 최초 승인예정일
-      data.phoneNum = svcInfo.svcAttrCd.indexOf('M') !== -1 ? StringHelper.phoneStringToDash(data.cntcNum)
-        : (FormatHelper.isEmpty(data.cntcNum) ? svcInfo.phoneNum : data.cntcNum); // 모바일이면 '-' 추가
+      data.phoneNum = FormatHelper.isEmpty(data.cntcNum) ? StringHelper.phoneStringToDash(svcInfo.svcNum)
+        : StringHelper.phoneStringToDash(data.cntcNum); // 값이 있으면 cntcNum, 없으면 svcNum에 '-' 추가
       data.isAuto = true;
     } else if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) { // 카드자동납부일 경우
       data.cardYm = FormatHelper.makeCardYymm(data.cardEffYm); // 유효기간 표시 포맷에 맞게 수정 (YYYY/MM)
       data.fstDrwSchdDate = FormatHelper.isEmpty(data.fstDrwSchdDt) ? '' : DateHelper.getShortDate(data.fstDrwSchdDt); // 승인예정일 YYYY.M.D.
-      data.phoneNum = svcInfo.svcAttrCd.indexOf('M') !== -1 ? StringHelper.phoneStringToDash(data.cntcNum)
-        : (FormatHelper.isEmpty(data.cntcNum) ? svcInfo.phoneNum : data.cntcNum); // 모바일이면 '-'  추가
+      data.phoneNum = FormatHelper.isEmpty(data.cntcNum) ? StringHelper.phoneStringToDash(svcInfo.svcNum)
+        : StringHelper.phoneStringToDash(data.cntcNum); // 값이 있으면 cntcNum, 없으면 svcNum에 '-' 추가
       data.isAuto = true;
     } else {
       data.isAuto = false;
