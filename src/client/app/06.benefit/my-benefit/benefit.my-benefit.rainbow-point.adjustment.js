@@ -18,6 +18,7 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     this._$btnLineToGive = this.$container.find('.fe-btn-line-to-give');
     this._$btnLineToReceive = this.$container.find('.fe-btn-line-to-receive');
     this._$inputPoint = this.$container.find('.fe-input-point');
+    this._$btnPreview = this.$container.find('.fe-btn-preview');
   },
 
   _bindEvent: function () {
@@ -50,15 +51,15 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     var pointToGive = parseInt(this._lineToGive.point, 10);
 
     if ( Tw.FormatHelper.isEmpty(inputPoint) || inputPoint <= 0 ) {
-      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A1);
+      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A1, null, null, null, null, this._$btnPreview);
       return;
     }
     if ( inputPoint > pointToGive ) {
-      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A8);
+      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A8, null, null, null, null, this._$btnPreview);
       return;
     }
     if ( svcMgmtNumToGive === svcMgmtNumToReceive ) {
-      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A13);
+      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A13, null, null, null, null, this._$btnPreview);
       return;
     }
     return true;
@@ -69,12 +70,12 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
       this._historyService.replacePathName(this._URL.ROOT);
       this._historyService.goLoad(this._URL.COMPLETE);
     } else {
-      this._popupService.openAlert(resp.msg, resp.code);
+      this._popupService.openAlert(resp.msg, resp.code, null, null, null, this.$btnSubmit);
     }
   },
 
   _reqFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+    this._popupService.openAlert(err.msg, err.code, null, null, null, this.$btnSubmit);
   },
 
   _openPreviewPopup: function () {
@@ -86,14 +87,14 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     };
 
     Tw.Popup.open(_.extend({}, option, previewData), $.proxy(function ($layer) {
-      var $btnSubmit = $layer.find('.fe-btn-submit');
-      $btnSubmit.click($.proxy(this._submit, this));
-    }, this), null, 'confirm');
+      this.$btnSubmit = $layer.find('.fe-btn-submit');
+      this.$btnSubmit.click($.proxy(this._submit, this));
+    }, this), null, 'confirm', this._$btnPreview);
   },
 
-  _onClickBtnLineToReceive: function () {
+  _onClickBtnLineToReceive: function (evt) {
     this._linesToReceiveActionsheet = this._getReceiveLine();
-    this._openLineActionsheet(this._linesToReceiveActionsheet, this._lineToReceiveActionsheetOpenCallback);
+    this._openLineActionsheet(this._linesToReceiveActionsheet, this._lineToReceiveActionsheetOpenCallback, $(evt.target));
   },
 
   _onClickBtnPreview: function () {
@@ -103,13 +104,13 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     }
   },
 
-  _openLineActionsheet: function (data, callback) {
+  _openLineActionsheet: function (data, callback, $target) {
     this._popupService.open({
       hbs: this._LINE_SELECT_ACTIONSHEET_HBS,
       layer: true,
       title: Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.SELECT_TITLE,
       data: data
-    }, $.proxy(callback, this), null);
+    }, $.proxy(callback, this), null, null, $target);
   },
 
 
@@ -152,10 +153,10 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
     this._lines = this.$container.data('lines');
   },
 
-  _onClickBtnLineToGive: function () {
+  _onClickBtnLineToGive: function (evt) {
     var svcMgmtNumToGive = this._$btnLineToGive.data('svc-mgmt-num').toString();
     this._linesToGiveActionsheet = this._getLinesAttrToSelect(this._lines, svcMgmtNumToGive);
-    this._openLineActionsheet(this._linesToGiveActionsheet, this._lineToGiveActionsheetOpenCallback);
+    this._openLineActionsheet(this._linesToGiveActionsheet, this._lineToGiveActionsheetOpenCallback, $(evt.target));
   },
 
   _lineToGiveActionsheetOpenCallback: function ($container) {

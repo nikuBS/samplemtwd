@@ -41,14 +41,14 @@
                                 <div class="widget-box radio">
                                     <div class="fe-amts-container">
                                         <script id="fe-amt-item" type="text/x-handlebars-template">
-                                            <li class="radiobox btn-type02 {{ disabled }}" role="radio" aria-disabled="true" style="flex: auto;"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-                                                <input type="radio" name="radio4" value="{{ amt }}" title="{{ amtWithComma }}원" {{ disabled }} />
+                                            <li class="radiobox btn-type02" role="radio" aria-checked="false" style="flex: auto;"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                                                <input type="radio" name="radio4" value="{{ amt }}" title="{{ amtWithComma }}원" />
                                                 <span class="radio-txt ff-tb">{{ amtWithComma }}원</span>
                                             </li>
                                         </script>
                                         <div class="select-list pb20 summary-amts" role="radiogroup">
                                         </div>
-                                        <div class="select-list pb20 all-amts" role="radiogroup" style="display: none;">
+                                        <div class="select-list pb20 all-amts" role="radiogroup" style="display: none;" aria-hidden="true">
                                         </div>
                                     </div>
                                 </div>
