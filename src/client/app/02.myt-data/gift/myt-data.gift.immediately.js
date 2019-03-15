@@ -232,12 +232,15 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( sPhoneNumber.length !== 0 && sPhoneNumber.length < 10 ) {
       this._removeErrorComment();
       this.$container.find('.fe-error-phone01').removeClass('blind');
+      this.$container.find('.fe-error-phone01').attr('aria-hidden', false);
     } else if ( sPhoneNumber.length === 0 ) {
       this._removeErrorComment();
       this.$container.find('.fe-error-phone03').removeClass('blind');
+      this.$container.find('.fe-error-phone03').attr('aria-hidden', false);
     } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
       this._removeErrorComment();
       this.$container.find('.fe-error-phone02').removeClass('blind');
+      this.$container.find('.fe-error-phone02').attr('aria-hidden', false);
     }
 
     if ( Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
@@ -247,6 +250,7 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _removeErrorComment: function () {
     this.$container.find('[class*="fe-error"]').addClass('blind');
+    this.$container.find('[class*="fe-error"]').attr('aria-hidden', true);
   },
 
   _hideRecentNumberLayer: function () {
