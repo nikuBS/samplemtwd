@@ -270,7 +270,6 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {

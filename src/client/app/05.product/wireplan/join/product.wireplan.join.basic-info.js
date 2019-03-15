@@ -218,7 +218,6 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {
