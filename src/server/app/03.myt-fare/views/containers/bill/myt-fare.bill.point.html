@@ -12,10 +12,10 @@
             <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
-    <!--// #skip_navigation -->
+    <!--// #skip_navigation // data-menuId는 tooltip 오픈 시 사용됨 -->
     <div id="myt-fare-bill-point" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
-            <!-- #header -->
+            <!-- #header (공통 component 사용) -->
             <%- include('../components/header.component.html', { title: 'OK캐쉬백/T포인트 납부', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
@@ -24,6 +24,7 @@
                 <div id="contents" class="container">
                     <!-- .cont-box -->
                     <div class="cont-box">
+                        <!-- 미납 회선정보 공통 컴포넌트 -->
                         <% include ../../components/bill/myt-fare.bill.common.component.html %>
                     </div>
                     <!--// .cont-box -->

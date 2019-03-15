@@ -28,7 +28,7 @@
         <% for (var i in contents.LIST) { %>
         <li>
             <div class="link-long">
-                <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>">
+                <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>" aria-haspopup="true">
                     <%= contents.LIST[i].titleNm %>
                     <span class="tx-sub">
                         <span class="ico"><span class="blind">보기</span></span>

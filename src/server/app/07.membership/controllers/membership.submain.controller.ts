@@ -19,7 +19,7 @@ export default class MembershipSubmain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
       if (svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U'
-          || svcInfo.svcGr === 'E' || svcInfo.svcGr === '') {
+          || svcInfo.svcGr === '') {
         Observable.combineLatest(
             this.getPopBrandData()
         ).subscribe(([popBrandData]) => {

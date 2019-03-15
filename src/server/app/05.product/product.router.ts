@@ -108,6 +108,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/setting/number', controller: ProductMobileplanSettingNumber });
     this.controllers.push({ url: '/mobileplan/setting/number-friend', controller: ProductMobileplanSettingNumberFriend });
     this.controllers.push({ url: '/mobileplan/setting/location', controller: ProductMobileplanSettingLocation });
+    this.controllers.push({ url: '/mobileplan/setting/location-only', controller: ProductMobileplanSettingLocation });
     this.controllers.push({ url: '/mobileplan/setting/no-limit', controller: ProductMobileplanSettingBandYT });
     this.controllers.push({ url: '/mobileplan/lookup/couple', controller: ProductMobileplanSettingCouple });
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });

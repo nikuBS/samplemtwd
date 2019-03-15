@@ -76,7 +76,13 @@ Tw.CommonSearchMain.prototype = {
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
   _addRecentlyKeywordList : function (keyword) {
-    this._recentlyKeywordListData[this._nowUser].push(
+    for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
+      if(this._recentlyKeywordListData[this._nowUser][i].keyword === keyword){
+        this._recentlyKeywordListData[this._nowUser].splice(i,1);
+        break;
+      }
+    }
+    this._recentlyKeywordListData[this._nowUser].unshift(
       {
         keyword : keyword,
         searchTime : this._todayStr,
@@ -84,7 +90,7 @@ Tw.CommonSearchMain.prototype = {
         initial : Tw.StringHelper.getKorInitialChar(keyword)
       });
     while (this._recentlyKeywordListData[this._nowUser].length>10){
-      this._recentlyKeywordListData[this._nowUser].shift();
+      this._recentlyKeywordListData[this._nowUser].pop();
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
   },
@@ -140,7 +146,7 @@ Tw.CommonSearchMain.prototype = {
     }
     setTimeout($.proxy(function () {
       this._addRecentlyKeywordList(searchKeyword);
-      this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+      this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
     },this));
   },
   _closeSearch : function () {
@@ -209,7 +215,7 @@ Tw.CommonSearchMain.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -245,7 +251,7 @@ Tw.CommonSearchMain.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
   _bindKeyworListBaseEvent : function (layer) {

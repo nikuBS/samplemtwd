@@ -29,6 +29,10 @@ class StringHelper {
 
     return phoneArr.join('-');
   }
+
+  static encodeURIAllCase(param: string) {
+    return encodeURIComponent(param).replace(/[!'()]/g, escape).replace(/\*/g, '%2A');
+  }
 }
 
 export default StringHelper;

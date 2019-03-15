@@ -147,11 +147,13 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _confirmInfo : function (evt) {
     this._popupService.close();
-    if(this._page===true){
-      this._excuteJoin(evt);
-    }else{
-      this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
-    }
+    setTimeout($.proxy(function () {
+      if(this._page===true){
+        this._excuteJoin(evt);
+      }else{
+        this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
+      }
+    },this),100);
   },
   _excuteJoin : function (evt) {
     var userJoinInfo = {
@@ -187,14 +189,14 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       } else {
         this._popupService.openAlert(
             res.msg,
-            Tw.POPUP_TITLE.ERROR,null,
+            Tw.POPUP_TITLE.NOTIFY,null,
             $.proxy(this._resetAriaHidden,this,evt)
         );
       }
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(
           err.msg,
-          Tw.POPUP_TITLE.ERROR,null,
+          Tw.POPUP_TITLE.NOTIFY,null,
           $.proxy(this._resetAriaHidden,this,evt));
     }, this));
 
@@ -391,7 +393,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005049':
       case 'NA00005501':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_26', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_27', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
+        tooltipArr.push({ tipId : 'TC000032 ', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_28', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;

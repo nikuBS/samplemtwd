@@ -153,6 +153,7 @@ Tw.ProductWireplanTerminate.prototype = {
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {
@@ -167,7 +168,7 @@ Tw.ProductWireplanTerminate.prototype = {
       hbs: 'MV_01_02_02_01',
       bt: [
         {
-          style_class: 'bt-blue1 fe-btn_back',
+          style_class: 'unique fe-btn_back',
           txt: Tw.BUTTON_LABEL.CLOSE
         }
       ]

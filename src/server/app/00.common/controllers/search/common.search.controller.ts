@@ -21,7 +21,7 @@ class CommonSearch extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const query =  encodeURI(req.query.keyword) || '';
+    const query =  StringHelper.encodeURIAllCase(req.query.keyword);
     const collection = 'all';
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
@@ -77,7 +77,7 @@ class CommonSearch extends TwViewController {
       requestObj = { query , collection };
     } else {
       researchCd = 1;
-      researchQuery = encodeURI(req.query.in_keyword) || null;
+      researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || null;
       requestObj = { query , collection , researchQuery , researchCd};
     }
 
@@ -172,7 +172,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
-                searchResult.result.search[0].immediate.data[0].barcode = resultData.result.mbrCardNum;
+                searchResult.result.search[0].immediate.data[0].barcode = FormatHelper.addCardSpace(resultData.result.mbrCardNum);
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });

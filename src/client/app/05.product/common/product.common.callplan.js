@@ -376,7 +376,7 @@ Tw.ProductCommonCallplan.prototype = {
       iframeUrl: url
     }, null, $.proxy(function() {
       this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
-    }, this));
+    }, this), 'bpcp_pop');
   },
 
   _getWindowMessage: function(e) {
@@ -384,7 +384,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
-      this._popupService.close();
+      this._popupService.closeAll();
     }
 
     // BPCP 팝업 닫고 링크 이동
@@ -473,10 +473,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
-
     $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+
     setTimeout(function() {
       $target.focus();
+
+      if (contentsIndex === 0) {
+        $popupContainer.scrollTop(0);
+      }
     }, 100);
   },
 

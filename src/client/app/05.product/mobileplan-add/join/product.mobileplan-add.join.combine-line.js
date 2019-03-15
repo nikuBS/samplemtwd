@@ -148,11 +148,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   },
 
   _blurInputNumber: function() {
-    if (this.$inputNumber.length > 8) {
-      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
-    } else {
-      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
-    }
+    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
@@ -267,6 +263,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {

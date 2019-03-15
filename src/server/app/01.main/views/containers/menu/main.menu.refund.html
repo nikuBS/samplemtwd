@@ -197,7 +197,7 @@
                                 <% } %>
                                 <li>
                                     <span class="title">계좌번호</span>
-                                    <% if (item.donaReqYn !== 'Y') { %>
+                                    <% if (item.donaReqYn !== 'Y' && item.rfndBankNm !== '') { %>
                                     <span class="tx-cont"><%= item.rfndBankNm %><br><%= item.rfndBankNum %></span>
                                     <% } else { %>
                                     <span class="tx-cont">-</span>

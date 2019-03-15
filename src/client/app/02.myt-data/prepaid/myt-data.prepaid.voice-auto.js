@@ -325,7 +325,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         chargeCd: this.chargeCd,
         endDt: $('.fe-select-expire').val().replace(/-/g, ''),
         cardNum: $('.fe-card-number').val(),
-        expireYY: $('.fe-card-y').val(),
+        expireYY: $('.fe-card-y').val().substr(2,2),
         expireMM: $('.fe-card-m').val(),
         maskedYn: ''
       };

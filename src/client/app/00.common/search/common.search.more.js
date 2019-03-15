@@ -10,8 +10,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
   this._historyService = new Tw.HistoryService();
   //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
   this._apiService = Tw.Api;
-  //this._cdn = cdn;
-  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = cdn;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessQuery = accessQuery;
   this._popupService = Tw.Popup;
@@ -91,9 +90,9 @@ $.extend(Tw.CommonSearchMore.prototype,
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+
-      this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?category='+(encodeURIComponent(this._category))+'&keyword='+
+        (encodeURIComponent(this._accessKeyword))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);

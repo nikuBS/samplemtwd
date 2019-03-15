@@ -40,25 +40,25 @@
                 <div class="cont-box">
                     <ul class="form-data-list">
                         <li>
-                            <label class="tit">비밀번호 입력</label>
+                            <label class="tit" aria-hidden="true" for="input_password">비밀번호 입력</label>
                             <span class="inputbox">
                                 <span class="input">
                                     <input type="number" style="-webkit-text-security:disc;" class="fe-input-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요"
-                                           maxlength="4" pattern="[0-9]*" inputmode="numeric">
-                                    <button class="cancel fe-btn_cancel"><span class="blind">삭제</span></button>
+                                           placeholder="4자리 숫자 입력" title="4자리 숫자 입력하세요"
+                                           maxlength="4" pattern="[0-9]*" inputmode="numeric" id="input_password">
+                                    <button class="cancel fe-btn_cancel" aria-hidden="true"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
                             <span id="aria-exp-desc1" aria-hidden="true" class="error-txt fe-error0" style="display: none"></span>
                         </li>
                         <li>
-                            <label class="tit">비밀번호 확인</label>
+                            <label class="tit" aria-hidden="true" for="input_password_confirm">비밀번호 확인</label>
                             <span class="inputbox">
                                 <span class="input">
                                     <input type="number" style="-webkit-text-security:disc;" class="fe-confirm-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요"
-                                           maxlength="4" pattern="[0-9]*" inputmode="numeric">
-                                    <button class="cancel fe-btn_cancel"><span class="blind">삭제</span></button>
+                                           placeholder="4자리 숫자 입력" title="4자리 숫자 입력하세요"
+                                           maxlength="4" pattern="[0-9]*" inputmode="numeric" id="input_password_confirm">
+                                    <button class="cancel fe-btn_cancel" aria-hidden="true"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
                             <span id="aria-exp-desc2" aria-hidden="true" class="error-txt fe-error1" style="display: none"></span>

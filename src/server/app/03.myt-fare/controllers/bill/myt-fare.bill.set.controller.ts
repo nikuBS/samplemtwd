@@ -131,7 +131,7 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
       }
 
       // 법정 대리인 함께 수령
-      if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) > -1 && (data.kidsYn + data.ccurNotiYn) === 'YY') {
+      if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) > -1 && data.kidsYn === 'Y') {
         options.push('4');
       }
     }

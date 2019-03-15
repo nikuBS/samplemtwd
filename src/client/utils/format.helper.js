@@ -162,7 +162,7 @@ Tw.FormatHelper = (function () {
       return v;
     }
 
-    var str            = $.trim(v),
+    var str            = $.trim(v).replace(/-/gi, ''),
         maskCharIndexs = [],
         j              = 0;
 
@@ -280,7 +280,7 @@ Tw.FormatHelper = (function () {
 
   var _getDashedRepresentPhoneNumber = function (phoneNumber) {
     var str = '';
-    str += phoneNumber.substring(0, 3);
+    str += phoneNumber.substring(0, 4);
     str += '-';
     str += phoneNumber.substring(4);
     return str;

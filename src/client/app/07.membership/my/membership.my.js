@@ -119,8 +119,10 @@ Tw.MembershipMy.prototype = {
   _parseList: function(res) {
     for(var idx in res){
       res[idx].hpnMm = this._dateHelper.getShortDateWithFormat(res[idx].hpnMm, 'M' , 'MM');
+      res[idx].hpnDd = this._dateHelper.getShortDateWithFormat(res[idx].hpnDd, 'D' , 'DD');
       res[idx].happenDate = res[idx].hpnYy + '.' + res[idx].hpnMm + '.' + res[idx].hpnDd + '.';
       res[idx].showUserDcAmt = Tw.FormatHelper.addComma(res[idx].userDcAmt.toString());
+      res[idx].storeName = res[idx].coName + ' ('+ res[idx].joinName + ')';
     }
 
     return res;

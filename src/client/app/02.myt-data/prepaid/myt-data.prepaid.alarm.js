@@ -190,6 +190,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _requestAlarmSetting: function () {
+    var isChange = this.$container.find('.fe-setting-alarm').text() === Tw.BUTTON_LABEL.CHANGE;
     var htParams = {};
     if ( this.typeCd === '0' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A220, null, null, $.proxy(this._requestAlarm, this));
@@ -207,7 +208,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         $('.fe-alarm-category').text().trim() +
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
         this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
+        isChange ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -221,7 +222,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
+        isChange ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,

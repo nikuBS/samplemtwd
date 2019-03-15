@@ -402,7 +402,7 @@
 @media all and (max-width: 360px) {
   .main-error-box .btn-area .btn-round1 {
     display: inline-block;
-    max-width: 8.75rem; }
+    max-width: 8.5rem; }
   .member-info-box .call-message .message {
     padding-left: 0.625rem; } }
 
@@ -1127,21 +1127,21 @@
           margin-top: 0; }
       .popup .popup-info .popup-contents.tooltip-pd {
         padding-bottom: 1.0625rem; }
+      .popup .popup-info .popup-contents .font-only-black {
+        color: #333 !important; }
+        .popup .popup-info .popup-contents .font-only-black .tl, .popup .popup-info .popup-contents .font-only-black div, .popup .popup-info .popup-contents .font-only-black p {
+          color: #333 !important; }
+      .popup .popup-info .popup-contents .font-only-gray {
+        color: #858585 !important; }
+        .popup .popup-info .popup-contents .font-only-gray .tl, .popup .popup-info .popup-contents .font-only-gray div, .popup .popup-info .popup-contents .font-only-gray p {
+          color: #858585 !important; }
       .popup .popup-info .popup-contents .inner-contents {
         color: #333; }
-        .popup .popup-info .popup-contents .inner-contents.font-only-black .tl,
-        .popup .popup-info .popup-contents .inner-contents.font-only-black div,
-        .popup .popup-info .popup-contents .inner-contents.font-only-black p {
-          color: #000 !important; }
         .popup .popup-info .popup-contents .inner-contents p {
           font-size: 0.875rem;
           word-break: keep-all;
           text-align: center;
           color: #858585; }
-        .popup .popup-info .popup-contents .inner-contents .font-only-black {
-          color: #333 !important; }
-        .popup .popup-info .popup-contents .inner-contents .font-only-gray {
-          color: #858585 !important; }
         .popup .popup-info .popup-contents .inner-contents .tl p {
           text-align: left !important; }
         .popup .popup-info .popup-contents .inner-contents .tl div {
@@ -2749,8 +2749,8 @@ body.apphome {
   line-height: 3.4375rem; }
 
 .device_ios .h-belt .h-default .h-logo {
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
+  -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0); }
 
 .device_android .h-belt {
   -webkit-backface-visibility: hidden;

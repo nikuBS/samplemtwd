@@ -1,11 +1,15 @@
-<div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+<div class="popup-page tw-popup pt0 fixed-bottom" tabindex="-1"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- .container-wrap -->
     <div class="container-wrap">
         <div class="container">
             <div class="complete-wrap">
                 <div class="title-box">
                     <i class="icon-complete-120"></i>
-                    <p class="tx-tit">{{data.prodNm}} ({{data.isBasFeeInfo}})<br>
+                    <p class="tx-tit">{{data.prodNm}}
+                        {{#ifCond data.isBasFeeInfo '!==' '무료'}}
+                            ({{data.isBasFeeInfo}})
+                        {{/ifCond}}
+                        <br>
                         <span class="tx-highlight pt10"><em>{{data.typeNm}} {{data.processNm}}</em> 완료</span></p>
                 </div>
                 <div class="tx-contents">

@@ -68,42 +68,53 @@
                     </div>
 
                     <!-- .cont-box -->
-                    <div class="cont-box">
-						<p class="pb20 fs15">입력하신 휴대폰번호로 전송된 인증번호를 입력해 주세요.</p>
-                        <ul class="form-data-list">
-                            <li>
-                                <label class="tit">보호자(수신인) 회선</label>
-                                <!-- 2019-01-17 inp-btn 추가 -->
-                                <span class="inputbox bt-add inp-btn">
-                                    <span class="input">
-                                        <input type="number" value="01012345678" placeholder="숫자만 입력" title="보호자(수신인) 회선번호를 입력하세요 숫자만 입력" aria-describedby="aria-phone-tx1" />
-                                        <!-- 2019.01.15  title값 수정 sblee -->
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                    <span class="bt-box">
-                                        <button type="button">인증번호 받기</button>
-                                    </span>
-                                </span>
-                                <span class="tx-box">
-                                    <span id="aria-phone-tx1" class="error-txt">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
-                                </span>
-                                <span class="inputbox pt20">
-                                    <span class="input">
-                                        <input type="number" value="1234" title="보호자(수신인) 회선 인증번호 숫자 6자리 입력하세요" aria-describedby="aria-phone-tx2"/>
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                    <span class="tx-box">
-                                        <span id="aria-phone-tx1" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
-                                    </span>
-                                </span>
-                            </li>
-                        </ul>
-                        <ul class="bt-slice pt26">
-                            <li class="bt-blue1">
-                                <button>인증하기</button>
-                            </li>
-                        </ul>
+                    <!-- 2019.03.13 전체 수정 -->
+                    <div class="cont-box nogaps-top">
+						<div class="sms-confirm-box">
+                            <div class="sms-confirm-box">
+                                <div class="box-citation">
+                                    <div class="citation-form">
+                                        <div class="form-cell">
+                                            <div class="forminbox-wrap">
+                                                <p id="aria-citation-sms" class="form-ti title">보호자(수신인) 회선</p>
+                                            </div>
+                                            <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                                <span class="input">
+                                                    <input type="text" placeholder="SK텔레콤 휴대폰 번호" title="휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                </span>
+                                                <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                                    <button type="button" class="btn-round2 btn-style3">인증번호전송</button>
+                                                </span>
+                                            </span>
+                                            <span class="tx-box">
+                                                <span id="aria-sms-exp-desc1" class="error-txt">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span><!-- 오류일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc2" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                                            </span>
+                                        </div>
+                                        <div class="form-cell linebox">
+                                            
+                                            <p id="aria-citation-sms" class="form-ti title">인증번호</p>
+                                            <p class="txt">전송 받으신 인증번호를 입력해주세요. <span class="sms-time">04:59</span></p>
+                                            <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                                <span class="input">
+                                                    <input type="text" placeholder="인증번호 6자리 입력" title="인증번호" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                </span>
+                                                <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                                   <button type="button" class="btn-round2 btn-style3">시간연장</button>
+                                                </span>
+                                            </span>    
+                                            <span class="tx-box">
+                                                <span id="aria-sms-exp-desc1" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 오류일 경우 class none 삭제 -->
+                                                <span id="aria-sms-exp-desc2" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                                            </span>   
+                                            <button type="button" class="btn-round1 btn-style4">인증하기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <!-- //2019.03.13 전체 수정 -->
                     <!--// .cont-box -->
                     
                     <!-- .cont-box -->
@@ -114,7 +125,7 @@
                         </div>
                     </div>
                     <!--// .cont-box -->
-
+                    <!-- Grand open 접근성 수정 -->
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
@@ -122,6 +133,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- // Grand open 접근성 수정 -->
                 </div>
             </div>
             <!--// #contents -->

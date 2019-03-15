@@ -5,11 +5,10 @@
 %>
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -21,28 +20,30 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="app-info-wrap">
-                    <ul>
-                        <% if (isAndroid) { %>
-                        <li><a href="https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8"><img src="<%= CDN %>/img/common/icon-app-ios.png" alt="ios" /></a></li>
-                        <li><a href="https://play.google.com/store/apps/details?id=Com.sktelecom.minit"><img src="<%= CDN %>/img/common/icon-app-play-store.png" alt="google play store" /></a></li>
-                        <% } else { %>
-                        <li><a href="https://www.onestore.co.kr/userpoc/game/view?pid=0000032819"><img src="<%= CDN %>/img/common/icon-app-one-store.png" alt="One Store" /></a></li>
-                        <% } %>
-                    </ul>
-                    <p>Copyright ⓒ SK Telecom</p>
-
-                    <div class="link-wrap pt26">
-                        <a href="/main/home" class="bt-link-tx underline">괜찮습니다. 모바일웹으로 볼게요.</a>
+                <div class="service-check-wrap">
+                    <h1><img src="<%= CDN %>/img/common/logo-t.png" alt="T world" /></h1>
+                    <div class="cont-box noborder">
+                        <p class="stit">
+                            T world에서 제공되는<br/>다양한 서비스를<br/>App에서 이용해보세요!
+                        </p>
+                        <div class="brand-benefit-wrap mem-bt">
+                            <ul class="benefit-list mem-benefit">
+                                <li>잔여기본통화 조회</li>
+                                <li>공유/충전/리필하기</li>
+                                <li>요금조회/납부</li>
+                                <li>멤버십 혜택</li>
+                            </ul>
+                        </div>
+                        <ul class="bt-slice pt26">
+                            <li class="bt-red1">
+                                <button class="mem-benefit-btn fe-tworld">T world App 바로가기</button>
+                            </li>
+                        </ul>
+                        <div class="link-wrap pt26">
+                            <a href="/main/home" class="bt-link-tx underline">괜찮습니다. 모바일웹으로 볼게요.</a>
+                        </div>
+                        <p class="stxt pt26">※ ‘T world App 바로가기’에서 App 다운로드 가능</p>
                     </div>
-                </div>
-
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button class="fe-tworld">T world App 바로가기</button>
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -51,6 +52,8 @@
     <!-- // .popup hbs -->
 </div>
 </body>
+
+
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

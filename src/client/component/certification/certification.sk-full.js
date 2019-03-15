@@ -12,6 +12,7 @@ Tw.CertificationSkFull = function () {
   this.mdn = '';
   this.certSeq = '';
   this._jobCode = null;
+  this._result = null;
 
   this._addTimer = null;
   this._addTime = null;
@@ -46,7 +47,7 @@ Tw.CertificationSkFull.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_05_01_01_01',
       layer: true
-    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this));
+    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this), 'sms-full');
 
   },
   _onOpenSmsFull: function ($popupContainer) {
@@ -95,7 +96,9 @@ Tw.CertificationSkFull.prototype = {
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
   },
   _onCloseSmsFull: function () {
-
+    if ( !Tw.FormatHelper.isEmpty(this._result) ) {
+      this._callback(this._result);
+    }
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -243,7 +246,8 @@ Tw.CertificationSkFull.prototype = {
   _successRequestConfirm: function (resp) {
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._callback(resp);
+      this._result = resp;
+      this._popupService.close();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this.$errorLoginCert.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {

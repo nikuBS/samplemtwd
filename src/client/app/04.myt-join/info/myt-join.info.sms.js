@@ -4,11 +4,12 @@
  * Date: 2018. 10. 15
  * 망 작업 SMS 알림 신청
  */
-Tw.MyTJoinInfoSms = function (rootEl) {
+Tw.MyTJoinInfoSms = function (rootEl, options) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._options = options;
   this._init();
 };
 
@@ -20,6 +21,9 @@ Tw.MyTJoinInfoSms.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
+    }
   },
   /**
    * 초기값 설정

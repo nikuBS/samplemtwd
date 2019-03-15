@@ -134,7 +134,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._claimCallback(res,52);
     }, this))
       .fail($.proxy(function (err) {
-        this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
       }, this));
   },
   _selectClaim : function () {
@@ -144,7 +144,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._claimCallback(res,51);
     }, this))
     .fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
     }, this));
   },
   _claimCallback : function (res,srchId) {
@@ -159,7 +159,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       });
       this._popupService.close();
     }else{
-      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
     }
   },
   _inputKeyupEvt : function (evt) {
@@ -191,7 +191,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
-    this._moveUrl('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
+    this._moveUrl('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(Number(this._step)+1));
   },
   _showAndHidePopKeywordList : function () {
     if(this.$popKeywordElement.hasClass('none')){

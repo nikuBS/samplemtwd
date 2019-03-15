@@ -346,15 +346,19 @@
                             <% if(homeData.billData.isBroadband) { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
@@ -366,15 +370,19 @@
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
@@ -402,18 +410,21 @@
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
                                 <div class="main-breakdown-box">
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
                                 </div>

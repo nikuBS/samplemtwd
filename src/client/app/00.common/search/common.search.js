@@ -5,8 +5,7 @@
  */
 
 Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
-  //this._cdn = cdn;
-  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -136,7 +135,8 @@ Tw.CommonSearch.prototype = {
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
+    $barcodElement.JsBarcode(barcodNum,{background : '#edeef0',height : 60, displayValue : false});
+    this.$container.find('.bar-code-num').text(barcodNum);
   },
   _showShortcutList : function (data,dataKey,cdn) {
     this.$contents.append(Handlebars.compile(this.$container.find('#'+dataKey+'_base').html()));
@@ -193,8 +193,8 @@ Tw.CommonSearch.prototype = {
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?keyword='+this._searchInfo.query+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
@@ -225,14 +225,20 @@ Tw.CommonSearch.prototype = {
 
   },
   _addRecentlyKeyword : function (keyword) {
-    this._recentKeyworList[this._nowUser].push({
+    for(var i=0;i<this._recentKeyworList[this._nowUser].length;i++){
+      if(this._recentKeyworList[this._nowUser][i].keyword === keyword){
+        this._recentKeyworList[this._nowUser].splice(i,1);
+        break;
+      }
+    }
+    this._recentKeyworList[this._nowUser].unshift({
       keyword : keyword,
       searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
     while (this._recentKeyworList[this._nowUser].length>10){
-      this._recentKeyworList[this._nowUser].shift();
+      this._recentKeyworList[this._nowUser].pop();
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
   },
@@ -397,7 +403,7 @@ Tw.CommonSearch.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentKeyworList[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -433,7 +439,7 @@ Tw.CommonSearch.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
   _getRecentKeywordListBySearch : function (keyword) {

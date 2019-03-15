@@ -147,7 +147,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkSmsPri: function () {
-    if ( this._includeSkSms() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'N' ) {
+    if ( this._includeSkSms() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] !== 'Y' ) {
       this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
     } else {
       this._openSelectPopup(true);
@@ -166,7 +166,7 @@ Tw.CertificationSelect.prototype = {
       }
     } else {
       // 인증그룹2 인경우 App/Web 에 따라 FIDO/SMS 우선인증 체크필요
-      if ( this._includeFido() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.BIO] === 'N' ) {
+      if ( this._includeFido() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.BIO] !== 'Y' ) {
         this._fidoType();
       } else {
         this._checkSmsPri();

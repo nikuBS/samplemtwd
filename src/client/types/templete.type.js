@@ -1029,3 +1029,6 @@ Tw.LINE_RESITTER_TMPL =
   '</div>' +
   '</li>' +
   '{{/each}}';
+
+
+Tw.BANNER_DOT_TMPL = '<span class="blind">{{index}} 선택됨</span>'

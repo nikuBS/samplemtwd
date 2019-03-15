@@ -10,13 +10,14 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
+import StringHelper from '../../../../utils/string.helper';
 
 class CommonSearchMore extends TwViewController {
   constructor() {
     super();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const query =  encodeURI(req.query.keyword) || '';
+    const query =  StringHelper.encodeURIAllCase(req.query.keyword) || null;
     const collection = req.query.category || null;
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const pageNum = req.query.page || 1;
@@ -26,7 +27,7 @@ class CommonSearchMore extends TwViewController {
       requestObj = { query , collection , pageNum , sort };
     } else {
       researchCd = 1;
-      researchQuery = encodeURI(req.query.in_keyword) || '';
+      researchQuery = StringHelper.encodeURIAllCase(req.query.in_keyword) || '';
       requestObj = { query , collection , researchQuery , researchCd , pageNum , sort };
     }
 

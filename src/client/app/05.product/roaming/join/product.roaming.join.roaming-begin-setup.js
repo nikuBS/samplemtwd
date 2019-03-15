@@ -152,10 +152,10 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){

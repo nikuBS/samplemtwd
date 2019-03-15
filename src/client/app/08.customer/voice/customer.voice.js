@@ -43,8 +43,8 @@ Tw.CustomerVoice.prototype = {
       this._onClickRegister();
     } else if (Tw.API_CODE.COM001) {
       this._popupService.openAlert(
-        Tw.CUSTOMER_VOICE.NOLINE,
-        Tw.POPUP_TITLE.NOTIFY
+        Tw.CUSTOMER_VOICE.NOLINE
+        // Tw.POPUP_TITLE.NOTIFY
       );
     } else {
       Tw.Error(res.code, res.msg).pop();

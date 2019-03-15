@@ -74,8 +74,13 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
     this.$container.on('click', '.fe-btn-search', $.proxy(this._onClickBtnSearch, this));
     this.$container.on('keyup', '.fe-input-co-ptnr-nm', $.proxy(this._onKeyupInputCoPtnrNm, this));
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._onInitComplete, this));
     // this.$container.on('click', '.fe-orders button', $.proxy(this._onClickBtnOrder, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._onInitComplete, this));
+    $(window).bind("pageshow", function(event) {
+      if (event.originalEvent.persisted) {
+        window.location.reload();
+      }
+    });
   },
 
   _init: function () {
@@ -117,16 +122,19 @@ Tw.MembershipBenefitBrand.prototype = {
     if ( open ) {
       this.$contLayer.show();
       this.$btnShowCategories.attr('aria-pressed', 'true');
+      this.$btnCloseCategories.attr('aria-pressed', 'false');
       this._setAreaHiddenAttr('hidden');
       window.setTimeout($.proxy(function() {
-        this.$contLayer.focus();
+        this.$contLayer.find('.fe-btn-close-categories').focus();
       }, this), 300);
     } else {
+      this.$contLayer.attr('tabindex', '');
       this.$contLayer.hide();
       this._setAreaHiddenAttr('visible');
       window.setTimeout($.proxy(function() {
         this.$btnShowCategories.attr('aria-pressed', 'false');
         this.$btnShowCategories.focus();
+        this.$btnCloseCategories.attr('aria-pressed', 'true');
       }, this), 300);
     }
   },
@@ -218,17 +226,11 @@ Tw.MembershipBenefitBrand.prototype = {
 
   _setCategoryInLayer: function () {
     var $lis = this.$categoryListInLayer.find('li');
-    // var $imgs = this.$categoryListInLayer.find('img');
     $lis.removeClass('checked');
-    $lis.attr('aria-checked', false);
-    // $imgs.each(function () {
-    //   $(this).attr('src', $(this).attr('offSrc'));
-    // });
+    $lis.attr('aria-selected', false);
     var $selectedli = $lis.filter('li[cate-cd="' + this._reqOptions.cateCd + '"]');
     $selectedli.addClass('checked');
-    $selectedli.attr('aria-checked', true);
-    // var $img = $selectedli.find('img');
-    // $img.attr('src', $img.attr('onSrc'));
+    $selectedli.attr('aria-selected', true);
   },
 
   _setKeywords: function () {

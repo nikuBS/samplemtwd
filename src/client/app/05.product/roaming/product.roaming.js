@@ -27,10 +27,14 @@ Tw.ProductRoaming.prototype = {
   },
   _init : function() {
     this._historyService.goHash('');
-
     this.nMax = this._options.banners.centerBanners.length - 1;
-
     this.$container.find('.fe-slide-banner').show();
+    this._renderTopBanner();
+  },
+  _renderTopBanner: function() {
+    setTimeout($.proxy(function () {
+      new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this._options.banners.topBanners, 'T');
+    }, this), 0);
   },
   _onOpenFormInfo: function ($layer) {
     this.$prevBtn = $layer.find('#_dev_prev');

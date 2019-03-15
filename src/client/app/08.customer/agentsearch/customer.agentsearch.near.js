@@ -82,7 +82,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       callback();
     }
   },
-  _checkTermAgreement: function (location) {
+  _checkTermAgreement: function (location) {  // 위치권한 설정여부 확인 후 미동의 시 동의받기 위한 팝업 발생
     var isAgreed = false;
     this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
       .done($.proxy(function (res) {
@@ -105,7 +105,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         Tw.Error(err.code, err.msg).pop();
       });
   },
-  _askCurrentLocation: function () {
+  _askCurrentLocation: function () {  // app인 경우, mweb인 경우에 대한 각각의 현재위치 조회
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) {
@@ -127,7 +127,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       }
     }
   },
-  _showPermission: function (location) {
+  _showPermission: function (location) {  // 위치정보 이용동의를 위한 팝업 보여줌
     var shouldGoBack = false;
     this._popupService.open({
       title: Tw.BRANCH.PERMISSION_TITLE,
@@ -203,6 +203,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       });
     }
 
+    // Tmap 에 중심좌표 설정
     this._map.setCenter(
       new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'),
       15
@@ -344,6 +345,8 @@ Tw.CustomerAgentsearchNear.prototype = {
       this.$container.find('.bt-top').removeClass('none');
       this.$container.find('#fe-empty-result').addClass('none');
     }
+
+    this._regionChanged = false; // 검색 결과 없음 popup 은 지점/대리점/전체 옵견 변경과 상관없이 최초 한번만 보여줌
   },
   _onMarkerClicked: function () {
     window.location.href = '/customer/agentsearch/detail?code=' + this.popup.contentHTML;
@@ -397,13 +400,17 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
-      root.on('click', 'li button', $.proxy(this._onBranchTypeChanged, this));
+      root.on('click', 'li button', $.proxy(function (e) {
+        this._popupService.close();
+        setTimeout($.proxy(function () {
+          this._onBranchTypeChanged(e);
+        }, this), 300);
+      }, this));
     }, this));
   },
   _onBranchTypeChanged: function (e) {
     this._currentBranchType = parseInt(e.currentTarget.value, 10);
     this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
-    this._popupService.close();
     switch (this._currentBranchType) {
       case 0:
         this._markerLayer1.setVisibility(true);
