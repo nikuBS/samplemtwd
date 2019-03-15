@@ -328,6 +328,9 @@ Tw.MembershipSubmain.prototype = {
   },
   _failGeolocation: function (resp) {
     Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
+    setTimeout($.proxy(this._openFailNoticePopup, this), 500);
+  },
+  _openFailNoticePopup: function () {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
         $.proxy(function () {
