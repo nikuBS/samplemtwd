@@ -6,7 +6,7 @@
 
 <script type="text/x-handlebars-template" id="shortcut_template">
     <li>
-        <a href="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
+        <a href="{{listData.MENU_URL}}" title="{{listData.tagTitle}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <span class="main-category">{{{listData.MENU_NM}}}</span>
             <span class="sub-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}}</span>
         </a>
@@ -176,7 +176,7 @@
 
 <script id="direct_template" type="text/x-handlebars-template">
     <li>
-        <a class="direct-element list-data" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
+        <a class="direct-element list-data" title="새창열림" href="{{listData.linkUrl}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
             <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.PRODUCT_NM}}}</div>

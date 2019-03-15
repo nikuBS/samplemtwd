@@ -108,14 +108,7 @@ Tw.CommonSearch.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          //data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
-        // if(key==='MENU_URL'){
-        //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
-        // }
-        // if(category==='prevent'&&key==='DOCID'){
-        //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
-        // }
         if(category==='direct'&&key==='TYPE'){
           if(data[i][key]==='shopacc'){
             data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
@@ -132,6 +125,9 @@ Tw.CommonSearch.prototype = {
           if(tempArr[1]){
             data[i].IMG_ALT = tempArr[1];
           }
+        }
+        if(key==='MENU_URL'&&data[i][key].includes('http')){
+          data[i].tagTitle = Tw.COMMON_STRING.OPEN_NEW_TAB;
         }
       }
     }
