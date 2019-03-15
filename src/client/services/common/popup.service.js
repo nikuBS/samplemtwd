@@ -18,35 +18,39 @@ Tw.PopupService.prototype = {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
   },
   _onHashChange: function (hash) {
-    this._historyBack = false;
-    var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
-    if (lastHash) {
-      var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
-      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null; 
-    }
-    Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
-    if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
-      if ( ('#' + hash.base) === lastHash.curHash ) {
-        var closeCallback = lastHash.closeCallback;
-        this._prevHashList.pop();
-        Tw.Logger.info('[Popup Close]');
-        this._popupClose(closeCallback);
-        if ($popupLastFocus) {
-          $popupLastFocus.focus();
-        }
+    setTimeout($.proxy(function () {
+      this._historyBack = false;
+      var lastHash = this._prevHashList[this._prevHashList.length - 1];
+      var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
+      if (lastHash) {
+        var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
+        $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
+      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
+        $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
       }
-    } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
-      if ( Tw.BrowserHelper.isSamsung() ) {
-        if ( window.performance && performance.navigation.type === 1 ) {
-          this._emptyHash();
+      Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
+      if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
+        if ( ('#' + hash.base) === lastHash.curHash ) {
+          var closeCallback = lastHash.closeCallback;
+          this._prevHashList.pop();
+          Tw.Logger.info('[Popup Close]');
+          this._popupClose(closeCallback);
+          if ($popupLastFocus) {
+            $popupLastFocus.focus();
+          }
+        }
+      } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
+        if ( Tw.BrowserHelper.isSamsung() ) {
+          if ( window.performance && performance.navigation.type === 1 ) {
+            this._emptyHash();
+          } else {
+            this._goBack();
+          }
         } else {
           this._goBack();
         }
-      } else {
-        this._goBack();
       }
-    }
+    }, this), 100);
   },
   _onOpenPopup: function (evt) {
     var $popups = $('.tw-popup');
@@ -65,7 +69,7 @@ Tw.PopupService.prototype = {
     if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
       && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
-      $currentPopup.children(':not(.popup-blind)').attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
+      $currentPopup.children(':not(.popup-blind)').attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스
     }
   },
   _onFailPopup: function (retryParams) {
@@ -440,15 +444,9 @@ Tw.PopupService.prototype = {
     });
   },
   close: function () {
-    Tw.Logger.log('[Popup] Call Close', location.hash, window.history.length, document.referrer, window.history.state, window.history);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      Tw.Logger.log('[Popup] history back');
-      history.back();
-      this._historyBack = true;
-
-      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
-        setTimeout($.proxy(function () {
-          Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
+      setTimeout($.proxy(function () {
+        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
           if ( this._historyBack && this._prevHashList.length > 0) {
             this._historyBack = false;
             var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -457,8 +455,11 @@ Tw.PopupService.prototype = {
             this._prevHashList.pop();
             this._popupClose(closeCallback);
           }
-        }, this), 500);
-      }
+        }
+      }, this), 500);
+
+      this._historyBack = true;
+      history.back();
     }
   },
   closeAll: function () {
