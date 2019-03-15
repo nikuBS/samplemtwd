@@ -172,7 +172,7 @@ Tw.MenuComponent.prototype = {
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._isLogin = res.result.isLogin;
             if ( this._isLogin ) {
-              this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
+              this._isMultiLine = parseInt(res.result.userInfo.expsSvcCnt, 10)  > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttrCd;
               this._tid = res.result.userInfo.userId;
