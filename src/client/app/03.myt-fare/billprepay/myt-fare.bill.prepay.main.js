@@ -41,7 +41,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
-    this._remainAmount = this.$container.find('.fe-remain').text();
     this._name = this.$container.find('.fe-name').text();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
@@ -133,20 +132,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
   _autoPrepay: function () {
-    var isAvailable = this._checkLimit();
-
-    if (isAvailable) {
-      if (Tw.BrowserHelper.isApp()) {
-        this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
-      } else {
-        this._goAppInfo();
-      }
+    if (Tw.BrowserHelper.isApp()) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
+      this._goAppInfo();
     }
-  },
-  _checkLimit: function () {
-    return this._remainAmount > 10000;
   },
   _autoPrepayInfo: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
