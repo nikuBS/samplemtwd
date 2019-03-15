@@ -281,8 +281,8 @@ Tw.ProductCommonConfirm.prototype = {
     $popupContainer.find('.fe-btn_ok').on('click', $.proxy(this._setAgreeAndclosePop, this, $wrap));
   },
 
-  _openComparePlans: function() {
-    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId, false);
+  _openComparePlans: function(e) {
+    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId, false, e);
   },
 
   _setAgreeAndclosePop: function($wrap) {

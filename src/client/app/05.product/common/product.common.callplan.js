@@ -134,8 +134,8 @@ Tw.ProductCommonCallplan.prototype = {
     });
   },
 
-  _openComparePlans: function() {
-    this._comparePlans.openCompare(this._prodId);
+  _openComparePlans: function(e) {
+    this._comparePlans.openCompare(this._prodId, true, e);
   },
 
   _onBannerLink: function(e) {
