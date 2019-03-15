@@ -240,15 +240,18 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     if ( svcInfoResp.code === Tw.API_CODE.CODE_00 && tFamilySharingResp.code === Tw.API_CODE.CODE_00 ) {
       var data = this._getSharedData(svcInfoResp.result.svcMgmtNum, tFamilySharingResp.result.mbrList);
       this._$tfamilySharing.show();
+      this._$tfamilySharing.attr('aria-hidden','false');
       this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
       if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
         // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
+        this._$tfamilySharing.attr('aria-hidden','false');
         this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
       } else {
         this._$tfamilySharing.hide();
+        this._$tfamilySharing.attr('aria-hidden','true');
       }
     }
   },
@@ -384,7 +387,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     };
     Tw.Popup.open(option, $.proxy(function ($layer) {
       $layer.find('.fe-btn-used-data').click($.proxy(this._onClickBtnDataSharingUsedData, this));
-    }, this), null, 'datashare');
+    }, this), null, 'datashare', this.$container.find('.fe-data-sharing button'));
   },
 
   _onClickBtnDataSharingUsedData: function (event) {

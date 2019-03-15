@@ -79,8 +79,12 @@ Tw.MyTDataUsageChildRecharge.prototype = {
 
   _onClickBtnMore: function () {
     this._$summaryAmts.hide();
+    this._$summaryAmts.attr('aria-hidden', 'true');
     this._$btnMore.hide();
+    this._$btnMore.attr('aria-hidden', 'true');
     this._$allAmts.show();
+    this._$allAmts.attr('aria-hidden', 'false');
+    this._$allAmts.find('li:eq(0)').attr('tabindex', -1).focus();
   },
 
   _onClickBtnSubmit: function () {

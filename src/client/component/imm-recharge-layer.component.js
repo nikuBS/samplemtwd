@@ -175,7 +175,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         layer: true,
         data: data
       }, $.proxy(this._onImmediatelyPopupOpened, this),
-      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04');
+      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04', this.$container.find('[data-id=immCharge] button'));
   },
 
   // DC_O4 팝업 호출 후
@@ -208,6 +208,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this.$popupContainer.find('.fe-common-back').on('click', function () {
       window.history.back();
     });
+    window.setTimeout($.proxy(function() {
+      var $focusTarget = this.$popupContainer.find('.ac-tit:eq(0)');
+      if ($focusTarget && $focusTarget.length > 0) {
+        $focusTarget.attr('tabindex', -1).focus();
+      }
+    }, this), 500);
   },
 
   // DC_04 팝업 close 이후 처리 부분
