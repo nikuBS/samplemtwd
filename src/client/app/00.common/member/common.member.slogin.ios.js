@@ -207,8 +207,9 @@ Tw.CommonMemberSloginIos.prototype = {
       .done($.proxy(this._successRequestCertAdd, this));
   },
   _successRequestCert: function (reCert, resp) {
+    this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._clearCertError();
+      this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
       this.$validSendCert.removeClass('none');
       if ( !reCert ) {
