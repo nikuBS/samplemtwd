@@ -51,7 +51,11 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
-    var $targetId = $(event.currentTarget).attr('id');
+    var $target = $(event.currentTarget);
+    $target.find('button').attr('title', Tw.BUTTON_LABEL.SELECTED);
+    $target.siblings().find('button').removeAttr('title');
+
+    var $targetId = $target.attr('id');
     this._initVariables($targetId);
     this._checkIsAbled();
   },
