@@ -198,6 +198,8 @@ Tw.MenuComponent.prototype = {
         }, this));
         */
     }
+
+    this.$container.find('#fe-close').focus();  // 웹 접근성, 포커스 메뉴 div로 이동
   },
   _onTNoti: function () {
     if ( !this._tNotifyComp ) {
