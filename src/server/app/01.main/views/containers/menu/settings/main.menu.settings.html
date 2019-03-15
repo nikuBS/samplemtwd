@@ -5,6 +5,7 @@
 %>
 
 <%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -18,91 +19,82 @@
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <div class="container">
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" />
                 <div class="cont-box nogaps">
-                    <ul class="link-long-list">
+                    <ul class="full-link-list type02">
                         <% if (isLogin) { %>
                         <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/location">
-                                    <span class="inner">
-                                        <span class="tit tx-medium">위치정보 이용동의 설정</span>
+                            <a href="/main/menu/settings/location">
+                                <span class="inner">
+                                    <span class="tit tx-medium">위치정보 이용동의 설정</span>
+                                </span>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">더보기</span>
                                     </span>
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">더보기</span>
-                                    </span>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                         <% } %>
                         <% if (isApp && isLogin) { %>
                         <li>
-                            <div class="link-long">
-                                <a href="/main/menu/settings/notification">
-                                    <span class="inner">
-                                        <span class="tit tx-medium">T알림 설정</span>
+                            <a href="/main/menu/settings/notification">
+                                <span class="inner">
+                                    <span class="tit tx-medium">T알림 설정</span>
+                                </span>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">더보기</span>
                                     </span>
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">더보기</span>
-                                    </span>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                         <!-- <li> -->
-                            <!-- <button> -->
-                                <!-- <span class="inner"> -->
-                                    <!-- <span class="tit tx-medium">위젯 설정</span> -->
-                                <!-- </span> -->
-                            <!-- </button> -->
+                        <!-- <button> -->
+                        <!-- <span class="inner"> -->
+                        <!-- <span class="tit tx-medium">위젯 설정</span> -->
+                        <!-- </span> -->
+                        <!-- </button> -->
                         <!-- </li> -->
                         <li>
-                            <div class="link-long">
-                                <a id="fe-go-certificates" href="/main/menu/settings/certificates">
-                                    <span class="inner">
-                                        <span class="tit tx-medium">공인인증 센터</span>
+                            <a id="fe-go-certificates" href="/main/menu/settings/certificates">
+                                <span class="inner">
+                                    <span class="tit tx-medium">공인인증 센터</span>
+                                </span>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">더보기</span>
                                     </span>
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">더보기</span>
-                                    </span>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                         <li id="fe-bio">
-                            <div class="link-long">
-                                <a id="fe-bio-link" href="">
-                                    <span class="inner">
-                                        <span class="tit tx-medium">생체인증 설정</span>
+                            <a id="fe-bio-link" href="">
+                                <span class="inner">
+                                    <span class="tit tx-medium">생체인증 설정</span>
+                                </span>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">더보기</span>
                                     </span>
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">더보기</span>
-                                    </span>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                         <% } %>
                         <% if (isApp) { %>
                         <li id="fe-oss">
-                            <div class="link-long">
-                                <a id="fe-oss-link" href="/main/menu/settings/oss">
-                                    <span class="inner">
-                                        <span class="tit tx-medium">오픈소스 라이선스</span>
-                                    </span>
-                                    <span class="tx-sub">
-                                        <span class="ico"><span class="blind">더보기</span>
+                            <a id="fe-oss-link" href="/main/menu/settings/oss">
+                                <span class="inner">
+                                    <span class="tit tx-medium">오픈소스 라이선스</span>
+                                </span>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">더보기</span>
                                     </span>
                                 </span>
-                                </a>
-                            </div>
+                            </a>
                         </li>
                         <li>
                             <div class="link-version">
-                                <span class="ver-title">버전정보</span>
-                                <div class="ver-number">
-                                    <span id="fe-version"></span>
-                                    <div id="fe-update-box" class="bt-alone none">
-                                        <button id="fe-btn-update" class="bt-bg-blue1">업데이트</button>
-                                    </div>
-                                </div>
+                                <span class="inner">
+                                    <span class="tit tx-medium">
+                                        버전정보
+                                        <span class="version-info point" id="fe-version"></span>
+                                    </span>
+                                    <span class="text none" id="fe-update-box">
+                                        <button class="bt-link-tx underline" id="fe-btn-update">업데이트</button>
+                                    </span>
                             </div>
                         </li>
                         <% } %>
@@ -119,8 +111,8 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.MainMenuSettings($('.wrap'));
-  });
+    $(document).ready(function () {
+        new Tw.MainMenuSettings($('.wrap'));
+    });
 </script>
 <% include ../../../components/end.component.html %>
