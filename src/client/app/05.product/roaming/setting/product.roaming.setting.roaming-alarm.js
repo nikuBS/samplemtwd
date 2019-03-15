@@ -159,7 +159,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this.$addBtn.removeAttr('style');
         //$(evt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
-      }, this)
+      }, this),null,$(evt.currentTarget)
     );
     if(!this.$addBtn.attr('disabled')){
       this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
@@ -192,7 +192,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
       Tw.BUTTON_LABEL.CLOSE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON,$(btnEvt.currentTarget));
   },
   _removeOnList : function (evt) {
     var $target = $(evt.currentTarget);
@@ -258,7 +258,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         }
       },this),
       Tw.BUTTON_LABEL.CANCEL,
-      Tw.BUTTON_LABEL.CONFIRM);
+      Tw.BUTTON_LABEL.CONFIRM,$(evt.currentTarget));
   },
   _showAuth : function () {
     this._showAuthState = true;

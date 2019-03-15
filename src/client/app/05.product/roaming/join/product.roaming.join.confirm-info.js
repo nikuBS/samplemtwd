@@ -4,7 +4,7 @@
  * Date: 2018.11.30
  */
 
-Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData,pageProdId) {
+Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData,pageProdId,targetEvt) {
   this.$rootContainer = rootEl;
   this._page = hash === null;
   this._popupData = this._arrangeAgree(data);
@@ -19,6 +19,7 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
     this._prodId = pageProdId;
     this._pageInit();
   }else{
+    this._callTarget = targetEvt;
     this._doJoinCallBack = doJoinCallBack;
     this._popupInit(hash);
     this._rootData = rootData;
@@ -58,7 +59,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       $.proxy(function () {
         //this.$rootContainer.find('#do_confirm').focus();
         this.$rootContainer.find('.fe-main-content').attr('aria-hidden',false);
-      },this),hash);
+      },this),hash,$(this._callTarget.currentTarget));
   },
   _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
@@ -143,7 +144,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
       null,
       $.proxy(this._confirmInfo,this,evt),
-      $.proxy(this._resetAriaHidden,this,evt));
+      $.proxy(this._resetAriaHidden,this,evt),null,$(evt.currentTarget));
   },
   _confirmInfo : function (evt) {
     this._popupService.close();
@@ -151,7 +152,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       if(this._page===true){
         this._excuteJoin(evt);
       }else{
-        this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
+        this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData,evt);
       }
     },this),100);
   },
@@ -190,14 +191,18 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         this._popupService.openAlert(
             res.msg,
             Tw.POPUP_TITLE.NOTIFY,null,
-            $.proxy(this._resetAriaHidden,this,evt)
+            $.proxy(this._resetAriaHidden,this,evt),
+            null,
+            $(evt.currentTarget)
         );
       }
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(
           err.msg,
           Tw.POPUP_TITLE.NOTIFY,null,
-          $.proxy(this._resetAriaHidden,this,evt));
+          $.proxy(this._resetAriaHidden,this,evt),
+          null,
+          $(evt.currentTarget));
     }, this));
 
   },
@@ -211,7 +216,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         html: $currentTarget.data('txt')
       }
     },$.proxy(this._bindDetailAgreePopupEvt,this),
-        $.proxy(this._resetAriaHidden,this,targetEvt), 'agree_pop');
+        $.proxy(this._resetAriaHidden,this,targetEvt), 'agree_pop',$currentTarget);
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -266,7 +271,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      $.proxy(this._resetAriaHidden,this,evt));
+      $.proxy(this._resetAriaHidden,this,evt),null,$(evt.currentTarget));
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
@@ -437,7 +442,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       'tagStyle-div': 'div',
       'contents': tooltipData.txt,
       'tooltip': 'tooltip-pd'
-    },null,$.proxy(this._resetAriaHidden,this,evt));
+    },null,$.proxy(this._resetAriaHidden,this,evt),null,$target);
   },
   _convertPrice : function (priceVal) {
     if(!isNaN(priceVal)){

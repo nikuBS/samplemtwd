@@ -47,12 +47,12 @@ Tw.ProductRoamingTerminate.prototype = {
       this.$rootContainer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
     }
   },
-  _doCancel : function(){
+  _doCancel : function(evt){
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG,
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      $.proxy(this._resetAriaHidden,this));
+      $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
   },
   _allAgree : function(){
     var nowAllAgree = this._$allAgreeElement.attr('checked');
@@ -85,14 +85,14 @@ Tw.ProductRoamingTerminate.prototype = {
     $element.attr('checked',value==='checked'?true:false);
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
-  _doJoin : function () {
+  _doJoin : function (evt) {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
       Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
-      $.proxy(this._confirmInfo,this),
-      $.proxy(this._resetAriaHidden,this));
+      $.proxy(this._confirmInfo,this,evt),
+      $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
   },
-  _confirmInfo : function () {
+  _confirmInfo : function (evt) {
     this._popupService.close();
 
     this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},[this._prodId]).
@@ -117,11 +117,11 @@ Tw.ProductRoamingTerminate.prototype = {
           'complete');
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,
-            $.proxy(this._resetAriaHidden,this));
+            $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
       }
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,
-          $.proxy(this._resetAriaHidden,this));
+          $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
     }, this));
 
   },
@@ -161,7 +161,7 @@ Tw.ProductRoamingTerminate.prototype = {
         html: $currentTarget.data('txt')
       }
     },$.proxy(this._bindDetailAgreePopupEvt,this),
-      $.proxy(this._resetAriaHidden,this), 'agree_pop');
+      $.proxy(this._resetAriaHidden,this), 'agree_pop',$currentTarget);
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -191,7 +191,7 @@ Tw.ProductRoamingTerminate.prototype = {
       'tagStyle-div': 'div',
       'contents': tooltipData.txt,
       'tooltip': 'tooltip-pd'
-    },null,$.proxy(this._resetAriaHidden,this));
+    },null,$.proxy(this._resetAriaHidden,this),null,$target);
   },
   _resetAriaHidden : function () {
     this.$mainContent.attr('aria-hidden',false);

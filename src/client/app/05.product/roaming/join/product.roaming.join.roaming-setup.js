@@ -209,9 +209,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         //$(targetEvt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
-      'select_date');
+      'select_date',$(targetEvt.currentTarget));
   },
-  _doJoin : function(data,apiService,historyService,$containerData){
+  _doJoin : function(data,apiService,historyService,$containerData,targetEvt){
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
@@ -231,10 +231,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
@@ -249,17 +249,17 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     this._popupService.closeAll();
     setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
-  _showCancelAlart : function (){
+  _showCancelAlart : function (evt){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      null,$(evt.currentTarget));
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
-  _confirmInformationSetting : function () {
+  _confirmInformationSetting : function (evt) {
     var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
     var endDtIdx = parseInt(this.$container.find('#end_date').attr('data-idx'),10);
 
@@ -286,7 +286,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       joinType : 'setup'
 
     };
-    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
+    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this,null,evt);
 
   },
   _tooltipInit : function (prodId) {

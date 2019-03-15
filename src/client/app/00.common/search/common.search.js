@@ -165,7 +165,7 @@ Tw.CommonSearch.prototype = {
   },
   _inputChangeEvent : function (args) {
     if(Tw.InputHelper.isEnter(args)){
-      this._doSearch();
+      this._doSearch(args);
     }else{
       if(this._historyService.getHash()==='#input_P'){
         if(this.$inputElement.val().trim().length>0){
@@ -176,7 +176,7 @@ Tw.CommonSearch.prototype = {
       }
     }
   },
-  _doSearch : function () {
+  _doSearch : function (event) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
       var closeCallback;
@@ -188,7 +188,7 @@ Tw.CommonSearch.prototype = {
         },this);
       }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(event.currentTarget));
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -269,10 +269,10 @@ Tw.CommonSearch.prototype = {
       );
     }
     if(linkUrl.indexOf('BPCP')>-1){
-      this._getBpcp(linkUrl);
+      this._getBpcp(linkUrl,$linkData);
     }else if(linkUrl.indexOf('Native:')>-1){
       if(linkUrl.indexOf('freeSMS')>-1){
-        this._callFreeSMS();
+        this._callFreeSMS($linkData);
       }
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
@@ -502,7 +502,7 @@ Tw.CommonSearch.prototype = {
       }
     }
   },
-  _callFreeSMS : function () {
+  _callFreeSMS : function ($linkData) {
     var memberType = this._svcInfo.totalSvcCnt > 0 ? (this._svcInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
     if (memberType === 1) {
       this._popupService.openAlert(
@@ -510,7 +510,7 @@ Tw.CommonSearch.prototype = {
         '',
         Tw.BUTTON_LABEL.CONFIRM,
         null,
-        'menu_free_sms'
+        'menu_free_sms',$linkData
       );
       return ;
     }
@@ -521,13 +521,13 @@ Tw.CommonSearch.prototype = {
         '',
         Tw.BUTTON_LABEL.CONFIRM,
         null,
-        'menu_free_sms_pps'
+        'menu_free_sms_pps',$linkData
       );
       return;
     }
     Tw.CommonHelper.openFreeSms();
   },
-  _getBpcp: function(url) {
+  _getBpcp: function(url,$target) {
     var reqParams = {
       svcMgmtNum: this._svcMgmtNum,
       bpcpServiceId: url.replace('BPCP:', '')
@@ -538,10 +538,10 @@ Tw.CommonSearch.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
-        .done($.proxy(this._resBpcp, this));
+        .done($.proxy(this._resBpcp, this, $target));
   },
 
-  _resBpcp: function(resp) {
+  _resBpcp: function(resp,$target) {
     if (resp.code === 'BFF0003') {
       return this._tidLanding.goLogin(location.origin + this._nowUrl);
     }
@@ -581,7 +581,7 @@ Tw.CommonSearch.prototype = {
       iframeUrl: url
     }, null, $.proxy(function() {
       this._historyService.replaceURL(this._nowUrl);
-    }, this));
+    }, this),null,$target);
   },
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
