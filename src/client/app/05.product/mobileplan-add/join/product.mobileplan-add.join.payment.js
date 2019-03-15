@@ -118,7 +118,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
     this.$sendMsgResult.hide().attr('aria-hidden', 'true');
     this._apiService.request(Tw.API_CMD.BFF_01_0059, {
-      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
+      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPR2_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
       receiverNum: number
     }).done($.proxy(this._resAuthCode, this));
   },
@@ -171,7 +171,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
   _reqValidateAuthCode: function() {
     this._apiService.request(Tw.API_CMD.BFF_01_0063, {
-      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
+      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPR2_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
       receiverNum: this.$inputNumber.val().replace(/-/gi, ''),
       authNum: this.$inputAuthCode.val()
     }).done($.proxy(this._resValidateAuthCode, this));
