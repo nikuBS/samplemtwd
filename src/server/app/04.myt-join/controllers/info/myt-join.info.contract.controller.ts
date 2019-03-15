@@ -43,7 +43,7 @@ class MyTJoinInfoContract extends TwViewController {
   }
 
   private parseData(data: any): void {
-    data.svsetPrefrDtm = DateHelper.getShortDateNoDot(data.svsetPrefrDtm);
+    data.svsetPrefrDtm = DateHelper.getShortDate(data.svsetPrefrDtm);
     // 가입유형은 "신규가입/번호이동가입" 으로 2개의 값을 주기 때문에 슬러시 뒤에 값으로 보여주도록 한다.
     if ( data.svcChgNm.indexOf('/') > 0 ) {
       data.svcChgNm = data.svcChgNm.split('/')[1];
