@@ -389,7 +389,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       new Tw.MembershipClauseLayerPopup({
         $element: this.$container,
         callback: $.proxy(this._agreeViewCallback, this)
-      }).open(type);
+      }).open(type, event);
     }
   },
   /**

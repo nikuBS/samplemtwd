@@ -47,24 +47,24 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
   },
 
-  _searchCountryCode: function(){
+  _searchCountryCode: function(e){
     var inputNumber = this.$inputPhone.val();
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE, null, null, null, $(e.currentTarget));
     }
 
     //시작일을 종료일 이후로 설정
     if (Tw.DateHelper.getDifference(this.$inputEdate.val(), this.$inputSdate.val()) < 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE, null, null, null, $(e.currentTarget));
     }
 
     //시작일이 minDate(이틀 뒤)보다 작게 설정
     var getMinDate = this.$inputSdate.attr('min');
     if (Tw.DateHelper.getDifference(getMinDate, this.$inputSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
     }
 
     this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''})
@@ -148,7 +148,7 @@ Tw.ProductRoamingFiReservation.prototype = {
     //추가된 국가가 5개이상이면 리턴처리
     if(this.countryArr.length > 4){
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.TITLE, null, null, null, $(e.currentTarget));
     }
 
     //중복되는 국가는 추가안함
@@ -194,7 +194,7 @@ Tw.ProductRoamingFiReservation.prototype = {
         data: data,
         btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, selected, currentCenter)
+      $.proxy(this._onActionSheetOpened, this, selected, currentCenter), null, null, $(e.currentTarget)
     );
 
   },
@@ -238,11 +238,11 @@ Tw.ProductRoamingFiReservation.prototype = {
     this._popupService.close();
   },
 
-  _openAgreeView: function(){
+  _openAgreeView: function(e){
     this._popupService.open({
       hbs: 'RM_14_02_02_01',
       layer: true
-    },$.proxy(this._onAgreePopOpened, this), null, 'agree');
+    },$.proxy(this._onAgreePopOpened, this), null, 'agree', $(e.currentTarget));
 
   },
 

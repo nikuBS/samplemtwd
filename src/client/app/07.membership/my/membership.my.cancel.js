@@ -25,27 +25,27 @@ Tw.MembershipMyCancel.prototype = {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
-  _cancelAlert: function() {
+  _cancelAlert: function(e) {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A56;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleCancelAlert, this),
-      null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A56.BUTTON);
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleCancelAlert, this, e),
+      null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A56.BUTTON, $(e.currentTarget));
   },
 
-  _handleCancelAlert: function() {
+  _handleCancelAlert: function(e) {
     this._popupService.close();
     this._apiService
       .request(Tw.API_CMD.BFF_11_0014, {})
-      .done($.proxy(this._cancleComplete, this))
+      .done($.proxy(this._cancleComplete, this, e))
       .fail($.proxy(this._onFail, this));
   },
 
-  _cancleComplete: function(res) {
+  _cancleComplete: function(e, res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       //완료 페이지 이동
       this._popupService.afterRequestSuccess(null, '/membership/submain', null, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CANCEL);
     }else if(res.code === 'ZMBRE0003') { //가입 당일 해지불가 에러
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A71;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
     }else{
       this._onFail(res);
     }
