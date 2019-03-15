@@ -40,6 +40,14 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', '.fe-nResearch .fe-submit', $.proxy(this._handleSubmit, this));
     this.$container.on('click', '.fe-nResearch .acco-tit', $.proxy(this._toggleShowDetail, this));
     this.$container.on('click', 'a', $.proxy(this._clearForm, this));
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+  },
+
+  _openExternalUrl: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
   },
 
   _cachedElement: function() {
