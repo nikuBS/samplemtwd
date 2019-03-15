@@ -4,7 +4,8 @@ Tw.COMMON_STRING = {
   DISAGREE: '비동의',
   UNLIMIT: '무제한',
   TERM: '이용약관',
-  STANDARD: '기본제공'
+  STANDARD: '기본제공',
+  OPEN_NEW_TAB: '새창열림'
 };
 
 Tw.DATA_UNIT = {
