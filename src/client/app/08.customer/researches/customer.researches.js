@@ -163,8 +163,14 @@ Tw.CustomerResearches.prototype = {
   },
 
   _setSelect: function(e) {
-    var $target = $(e.currentTarget),
-      $parent = $target.closest('.survey-researchbox'),
+    var $target = $(e.currentTarget);
+
+    if ($target.find('input').prop('disabled')) {
+      $target.prop('checked', false);
+      return;
+    }
+
+    var $parent = $target.closest('.survey-researchbox'),
       $checkedLi = $parent.find('li.checked').not($target);
 
     $checkedLi
