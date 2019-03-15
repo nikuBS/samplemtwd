@@ -39,6 +39,7 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', '.fe-nResearch li.category-type', $.proxy(this._setSelect, this));
     this.$container.on('click', '.fe-nResearch .fe-submit', $.proxy(this._handleSubmit, this));
     this.$container.on('click', '.fe-nResearch .acco-tit', $.proxy(this._toggleShowDetail, this));
+    this.$container.on('click', 'a', $.proxy(this._clearForm, this));
   },
 
   _cachedElement: function() {
@@ -89,6 +90,13 @@ Tw.CustomerResearches.prototype = {
     $target.prop('disabled', true);
 
     this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this));
+  },
+
+  _clearForm: function() {
+    var $list = this.$container.find('ul.survey-researchbox > li');
+    $list.prop('aria-checked', false);
+    $list.find('input').prop('checked', false);
+    this.$container.find('.fe-submit').prop('disabled', true);
   },
 
   _handleSuccessSubmit: function(resp) {
