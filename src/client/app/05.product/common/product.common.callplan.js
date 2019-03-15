@@ -343,7 +343,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     if (resp.code === 'BFF0504') {
       var msg = resp.msg.match(/\(.*\)/);
-        msg = msg.pop().match(/(\d+)/);
+        msg = msg && msg.length > 0 ? msg.pop().match(/(\d+)/) : '';
 
       var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
         toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
