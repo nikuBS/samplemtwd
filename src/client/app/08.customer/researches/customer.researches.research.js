@@ -141,12 +141,14 @@ Tw.CustomerResearch.prototype = {
 
     var $btn = $root.find('.bt-blue1 button');
 
-    if (!this._nextIdx || this._nextIdx === this._currentIdx) {
+    if (target.value.length === 0) {
+      if (this._nextIdx !== this._currentIdx) {
+        this._setProgress(this._currentIdx);
+        this._nextIdx = this._currentIdx;
+      }
+    } else if (!this._nextIdx || this._nextIdx === this._currentIdx) {
       this._setProgress(this._currentIdx + 1);
       this._nextIdx = this._currentIdx + 1;
-    } else if (target.value.length === 0) {
-      this._setProgress(this._currentIdx);
-      this._nextIdx = this._currentIdx;
     }
 
     if ($root.data('is-essential') && !target.value.length) {
