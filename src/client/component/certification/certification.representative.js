@@ -48,12 +48,43 @@ Tw.CertificationRepresentative.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
+    this._getMethodBlock();
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
 
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+    } else {
+      this._openPopup();
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _openPopup: function () {
     this._popupService.open({
       hbs: 'MV_01_02_01_01',
       layer: true,
-      list: this._makeShowData(certInfo.smsNumbers),
-      one: certInfo.smsNumbers.length === 1
+      list: this._makeShowData(this._certInfo.smsNumbers),
+      one: this._certInfo.smsNumbers.length === 1
     }, $.proxy(this._onOpenCert, this), $.proxy(this._onCloseCert, this));
   },
   _makeShowData: function (smsNumbers) {
