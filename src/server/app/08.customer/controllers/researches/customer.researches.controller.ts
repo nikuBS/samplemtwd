@@ -124,8 +124,13 @@ export default class CustomerResearches extends TwViewController {
         }
       }
 
+      const info = resp.result.surveyQstnMaster[0];
       return {
-        info: resp.result.surveyQstnMaster[0] || {},
+        info: {
+          ...info,
+          staDtm: DateHelper.getShortDate(info.staDtm),
+          endDtm: DateHelper.getShortDate(info.endDtm)
+        },
         questions
       };
     });
