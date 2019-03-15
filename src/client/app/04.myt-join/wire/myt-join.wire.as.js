@@ -180,9 +180,9 @@ Tw.MyTJoinWireAS.prototype = {
    */
   _showOrHideMoreBtn: function () {
     if( parseInt(this._listTotCnt, 10) > this._list.length ) {
-      $('.bt-more').show();
+      $('.bt-more').show().attr('aria-hidden', false);
     } else {
-      $('.bt-more').hide();
+      $('.bt-more').hide().attr('aria-hidden', true);
     }
   },
 

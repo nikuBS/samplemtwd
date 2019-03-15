@@ -188,7 +188,7 @@ Tw.MyTJoinWireHistory.prototype = {
     var nowYear = new Date().getFullYear();
     $('.data-select-wrap').each(function(){
       if($(this).text().trim() === String(nowYear)){
-        $(this).hide();
+        $(this).hide().attr('aria-hidden', true);
       }
     });
 

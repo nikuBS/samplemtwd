@@ -92,7 +92,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
 
     if ( this.detailListObj.curLen <= 0 ) {
-      this.$addBtnArea.hide();
+      this.$addBtnArea.hide().attr('aria-hidden', true);
     }
 
   },
@@ -109,7 +109,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
     // Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj.curLen);
     if ( this.detailListObj.curLen <= 0 ) {
-      this.$addBtnArea.hide();
+      this.$addBtnArea.hide().attr('aria-hidden', true);
     }
   },
   //--------------------------------------------------------------------------[API]
@@ -137,15 +137,15 @@ Tw.MyTFareBillGuideDonation.prototype = {
         totalCount: totalCount
       };
 
-      this.$dateSelect.hide();
+      this.$dateSelect.hide().attr('aria-hidden', true);
       this.$dataResult.empty();
 
       if ( dataArr.length === 0 ) {
-        this.$dataResult.hide();
-        this.$noData.show();
+        this.$dataResult.hide().attr('aria-hidden', true);
+        this.$noData.show().attr('aria-hidden', false);
       } else {
-        this.$dataResult.show();
-        this.$noData.hide();
+        this.$dataResult.show().attr('aria-hidden', false);
+        this.$noData.hide().attr('aria-hidden', true);
       }
 
       this._svcHbDetailList(resData, this.$dataResult, this.$entryTpl);
@@ -154,7 +154,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
       /*
       * 상세 내역 리스트
        */
-      this.$addBtnArea.show();
+      this.$addBtnArea.show().attr('aria-hidden', false);
       this.$detailList.empty();
       this._listDataInit(dataArr); // 데이터 초기화
       this._proData(); // 데이터 가공
