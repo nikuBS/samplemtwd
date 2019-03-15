@@ -76,6 +76,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-tab-wrap > li', $.proxy(this._changeTab, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-close-example-card', $.proxy(this._onCloseExampleCard, this));
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
@@ -93,6 +94,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardPwd.on('keyup blur', $.proxy(this._validatePwd, this));
     this.$prepaid_card.on('keyup blur', $.proxy(this._validatePrepaidNumber, this));
     this.$prepaid_serial.on('keyup blur', $.proxy(this._validatePrepaidSerial, this));
+  },
+
+  _changeTab: function (event) {
+    var $target = $(event.currentTarget);
+    $target.find('a').attr('title', Tw.BUTTON_LABEL.SELECTED);
+    $target.siblings().find('a').removeAttr('title');
   },
 
   _setData: function (result) {
