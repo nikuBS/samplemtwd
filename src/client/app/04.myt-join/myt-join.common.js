@@ -33,7 +33,9 @@ Tw.MyTJoinCommon.prototype = {
    * @param fnCloseCallback - popup close function
    */
   openSkbdAlert: function(fnCloseCallback){
-
+    // 이슈1 : 저사양 기기 문제로 setTimeout
+    // 이슈2 : 저사양기기 팝업닫히지 않는 현상으로 popup.service 수정 후 -> 이곳에 setTimeout 을 적용하지 않으면 화면이 뒤로가는 현상 있으니 수정시 주의(DV001-17470)
+    setTimeout(function(){
     Tw.Popup.openModalTypeATwoButton(
       Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
       Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
@@ -43,7 +45,7 @@ Tw.MyTJoinCommon.prototype = {
       $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK),
       fnCloseCallback
     );
-
+    }.bind(this),200);
   }
 
 };
