@@ -589,6 +589,7 @@ Tw.MainHome.prototype = {
       $btGoGift.parent().addClass('none');
       $textError.text(resp.msg);
       $textError.removeClass('none');
+      $textError.attr('aria-hidden', false);
 
       $loading.parent().addClass('none');
       $textErrorBalance.removeClass('none');
