@@ -19,6 +19,9 @@ Tw.CustomerSvcInfoSite.prototype = {
   _init : function() {
     this._hasTab();
     this._activeCurrentHashTab();
+    this._addExternalTitle(); // 새창열림 타이틀 넣기
+
+   
   },
   _cachedElement: function () {
 
@@ -31,6 +34,14 @@ Tw.CustomerSvcInfoSite.prototype = {
 
     // from idpt
     this._bindUIEvent(this.$container);
+  },
+
+  _addExternalTitle: function () {
+    this.$container.find('.fe-link-external:not([href^="#"])').each(function(_ind, target){
+      if(!$(target).attr('title')) {
+        $(target).attr('title', Tw.COMMON_STRING.OPEN_NEW_TAB);
+      }
+    });
   },
 
   _openExternalUrl: function (e) {
@@ -69,6 +80,7 @@ Tw.CustomerSvcInfoSite.prototype = {
       prev.push(next.hash.replace(/#/, ''));
       return prev;
     }, []);
+    this.$tabWrapper.on('click', 'li', $.proxy(this._tabClickLi, this));
     this.$tabLinker.on('click', $.proxy(this._tabClickHandler, this));
   },
   _activeCurrentHashTab: function() {
@@ -81,9 +93,14 @@ Tw.CustomerSvcInfoSite.prototype = {
       $(o).attr('aria-selected', this._currentHashIndex === i);
     }, this);
   },
+  // 웹 접근성 li 클릭시 a 클릭되도록
+  _tabClickLi: function (e) {
+    $(e.currentTarget).find('a').click();
+  },
   _tabClickHandler: function(e) {
-    this.$tabContentsWrapper.addClass('blind');
-    this.$tabContentsWrapper.eq(this.$tabLinker.index(e.target)).removeClass('blind');
+    
+    this.$tabContentsWrapper.hide().addClass('blind').attr('aria-hidden', true);
+    this.$tabContentsWrapper.eq(this.$tabLinker.index(e.target)).show().removeClass('blind').attr('aria-hidden', false);
   },
 
   _parse_query_string: function () {

@@ -203,7 +203,9 @@ Tw.CustomerEmail.prototype = {
         null,
         //Tw.POPUP_TITLE.NOTIFY,
         Tw.BUTTON_LABEL.CONFIRM,
-        null
+        null,
+        null,
+        $(e.currentTarget)
       );
     }
   },

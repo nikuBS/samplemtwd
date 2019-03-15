@@ -20,7 +20,7 @@ Tw.CustomerSvcInfoSiteDetail = function (rootEl, data) {
 
 Tw.CustomerSvcInfoSiteDetail.prototype = {
   _init : function() {
-
+    this._addExternalTitle(); // 새창열림 타이틀 넣기
   },
   _cachedElement: function () {
     this.$InfoBtn = this.$container.find('#ti-select-btn');
@@ -37,6 +37,14 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
 
     // from idpt
     this._bindUIEvent(this.$container);
+  },
+
+  _addExternalTitle: function () {
+    this.$container.find('.fe-link-external:not([href^="#"])').each(function(_ind, target){
+      if(!$(target).attr('title')) {
+        $(target).attr('title', Tw.COMMON_STRING.OPEN_NEW_TAB);
+      }
+    });
   },
 
   _openExternalUrl: function (e) {
