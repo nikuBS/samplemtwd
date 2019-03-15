@@ -195,10 +195,12 @@
                                     <div class="widget-box radio fe-category-list-in-layer">
                                         <ul class="select-list horizontal-list" role="tablist">
                                             <% for (var i = 0; i < cateList.length; i++) { %>
-                                                <li class="radiobox type05 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" cate-cd="<%= cateList[i].cateCd %>" id="aria-comp-radio<%= i+1 %>" role="tab" aria-selected="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>">
-                                                    <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="" />
+                                                <li class="radiobox type05" role="presentation">
+                                                    <button aria-selected="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>" cate-cd="<%= cateList[i].cateCd %>" role="tab" style="<%= (selectedCateCd === cateList[i].cateCd) ? 'color: #178BCE; font-weight: 700': 'color: #3c3c3c' %>">
+                                                        <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="" />
+                                                        <%= cateList[i].cateName %>
+                                                    </button>
                                                     <!--<input type="radio" name="radio01" title="<%= cateList[i].cateName %>" value="<%= cateList[i].cateCd %>" <%= (selectedCateCd === cateList[i].cateCd) ? 'checked="checked"': '' %>  aria-labelledby="aria-comp-radio<%= i+1 %>">-->
-                                                    <%= cateList[i].cateName %>
                                                 </li>
                                             <% } %>
                                         </ul>
