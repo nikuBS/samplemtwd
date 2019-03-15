@@ -333,16 +333,20 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
         if(_result.dablYn === 'Y') {
-            this._popupService.open({
-                'pop_name': 'type_tx_scroll',
-                'title': Tw.ROAMING_ERROR.TITLE,
-                'title_type': 'sub',
-                'cont_align': 'tl',
-                'contents': _result.dablCtt,
-                'bt_b': Tw.ROAMING_ERROR.BUTTON
-            }, null, $.proxy(this._onCloseRoamingNotice, this));
+            var popupDesc = _result.dablCtt;
+            setTimeout($.proxy(this._openNoticePopup, this, popupDesc), 450);
         }
 
+    },
+    _openNoticePopup: function (desc) {
+        this._popupService.open({
+            'pop_name': 'type_tx_scroll',
+            'title': Tw.ROAMING_ERROR.TITLE,
+            'title_type': 'sub',
+            'cont_align': 'tl',
+            'contents': desc,
+            'bt_b': Tw.ROAMING_ERROR.BUTTON
+        }, null, $.proxy(this._onCloseRoamingNotice, this));
     },
     _onCloseRoamingNotice: function() {
         this._popupService.close();
@@ -436,6 +440,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._srchInfo.eqpMdlCd = '';
         this.modelValue = '';
         this.modelCode = '';
+        this.cdValue = '';
+        this.cdName = '';
         this.cdName = '';
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
