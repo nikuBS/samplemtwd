@@ -16,7 +16,7 @@ Tw.CustomerResearch.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('change', 'li input', $.proxy(this._handleSelectAnswer, this));
+    this.$container.on('change click', 'li input', $.proxy(this._handleSelectAnswer, this));
     this.$container.on('click', '.fe-go-next', $.proxy(this._goNext, this));
     this.$container.on('click', '.fe-go-prev', $.proxy(this._goPrev, this));
     this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
