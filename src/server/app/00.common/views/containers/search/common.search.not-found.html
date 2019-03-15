@@ -29,7 +29,7 @@ function recognizeLastChar(keyword){
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= encodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
+                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                 </span>
             </span>
@@ -65,7 +65,7 @@ function recognizeLastChar(keyword){
     <% } %>
 
     <div class="search-didnot-generatehits">
-        <p class="title">‘<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>’에 대한<br>검색 결과가 없습니다.</p>
+        <p class="title">‘<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>’에 대한<br>검색 결과가 없습니다.</p>
         <p class="text">검색어의 맞춤법이 정확한지 확인해 주세요.<br>검색어의 길이를 줄이거나 비슷한 다른<br>검색어를 입력해 보세요.</p>
     </div>
 
