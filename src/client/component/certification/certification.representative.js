@@ -39,7 +39,8 @@ Tw.CertificationRepresentative.prototype = {
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
-    ICAS3101: 'ICAS3101'
+    ICAS3101: 'ICAS3101',
+    ICAS3162: 'ICAS3162'
   },
   open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
@@ -210,7 +211,7 @@ Tw.CertificationRepresentative.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
       this.$errorCertCnt.removeClass('none');
       this.$errorCertCnt.attr('aria-hidden', false);
-    } else if ( resp.code === this.SMS_ERROR.ICAS3101 ) {
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162 ) {
       this.$errorCertBlock.removeClass('none');
       this.$errorCertBlock.attr('aria-hidden', false);
     } else {
