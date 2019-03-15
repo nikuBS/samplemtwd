@@ -2,8 +2,9 @@
  * FileName: myt-fare.bill.option.change-address.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2019.01.18
- * Annotation: 자동납부 미사용자 연락처 및 주소 변경 관리
+ * Description: 자동납부 미사용자 연락처 및 주소 변경 관리
  */
+
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';

@@ -2,7 +2,7 @@
  * FileName: myt-fare.bill.sms.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.18
- * Annotation: 요금납부 시 입금전용계좌 SMS 신청
+ * Description: 요금납부 시 입금전용계좌 SMS 신청
  */
 
 import {NextFunction, Request, Response} from 'express';
