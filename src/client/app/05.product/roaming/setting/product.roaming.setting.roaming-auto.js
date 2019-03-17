@@ -214,9 +214,9 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         //$(evt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
-      'select_date');
+      'select_date',$(evt.currentTarget));
   },
-  _settingInformationSetting : function () {
+  _settingInformationSetting : function (targetEvt) {
 
     var userSettingInfo = {
       'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
@@ -231,7 +231,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       userSettingInfo.svcStartTm===this._prodBffInfo.svcStartTm&&
       userSettingInfo.svcEndTm===this._prodBffInfo.svcStartDt
     ){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE,null,null,null,$(targetEvt.currentTarget));
       return;
     }
 
@@ -239,18 +239,18 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._showCompletePopup(this._prodBffInfo);
+        this._showCompletePopup(this._prodBffInfo,targetEvt);
       }else if(res.code==='ZNGME0005'){
-        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE,null,null,null,$(targetEvt.currentTarget));
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
       }
     }, this)).
     fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },
-  _showCompletePopup : function(data){
+  _showCompletePopup : function(data,targetEvt){
     var completePopupData = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.SETTING,
