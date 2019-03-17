@@ -26,10 +26,10 @@ Tw.MembershipMyReissue.prototype = {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
-  _openReissueAlert: function() {
+  _openReissueAlert: function(e) {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
-      $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
+      $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON, $(e.currentTarget));
   },
 
   _handleReissueAlert: function() {

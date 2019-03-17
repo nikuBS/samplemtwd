@@ -88,7 +88,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
         data: data,
         btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, currentCenter)
+      $.proxy(this._onActionSheetOpened, this, currentCenter), null, null, $(e.currentTarget)
     );
 
   },
