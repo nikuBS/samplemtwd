@@ -83,7 +83,10 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea><% } %>
+                                <% if (etcIdx > 0) { %>
+                                    <textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                <% } %>
                                 <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
                                 <% break;
                                 }
@@ -117,12 +120,16 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea><% } %>
+                                <% if (etcIdx > 0) { %>
+                                    <textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." disabled></textarea>
+                                    <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
+                                <% } %>
                                 <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
                                 <% break;
                                 }
                                 case '2': {%> 
                                 <textarea class="poll-area mt10 mb10" cols="20" rows="3" placeholder="내용을 입력해주세요."></textarea>
+                                <div class="max-byte"><em>0</em> <span>/ 최대 100byte</span></div>
                                 <% break;
                                 }
                             } %>
