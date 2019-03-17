@@ -75,7 +75,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
         Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, $.proxy(this._onOpenTypeChange, this, type),
-        $.proxy(this._changeSuspendType, this, type), null);
+        $.proxy(this._changeSuspendType, this, type), null, null, null,  $(e.currentTarget));
     } else {
       this._changeSuspendType(type);
     }
@@ -91,10 +91,14 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._popupService.close();
     if ( type === 'military' ) {
       this.$container.find('.fe-military').show();
+      this.$container.find('.fe-military').attr('aria-hidden', false);
       this.$container.find('.fe-abroad').hide();
+      this.$container.find('.fe-abroad').attr('aria-hidden', true);
     } else {
       this.$container.find('.fe-military').hide();
+      this.$container.find('.fe-military').attr('aria-hidden', true);
       this.$container.find('.fe-abroad').show();
+      this.$container.find('.fe-abroad').attr('aria-hidden', false);
     }
     this.$btSuspend.prop('disabled', true);
   },
@@ -143,7 +147,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       };
       count = 1;
     }
-    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this), count, this._files, null, popup);
+    this._fileDialog.show($.proxy(this._onCommonFileDialogConfirmed, this),
+      count, this._files, null, popup,  $(e.currentTarget));
   },
 
   /**
@@ -227,7 +232,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       data: [
         { list: _.assign(options, selected) }
       ]
-    }, $.proxy(this._selectRelationCallback, this));
+    }, $.proxy(this._selectRelationCallback, this), null, null,  $(event.currentTarget));
   },
 
   _selectRelationCallback: function ($layer) {
@@ -249,7 +254,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    *  3. 장기일시정지 신청(BFF_01_0046)
    * @private
    */
-  _onClickSuspend: function () {
+  _onClickSuspend: function (event) {
     var option = {};
     var from, to, diff, $period;
     if ( this.$optionType.filter('[checked]').val() === 'military' ) {
@@ -259,10 +264,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
       if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
+          null, null, null, null, $(event.currentTarget));
         return;
       } else if ( diff > 24 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD,
+          null, null, null, null,  $(event.currentTarget));
         return;
       }
       option.svcChgRsnCd = '21';
@@ -275,10 +282,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
       if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
+          null, null, null, null,  $(event.currentTarget));
         return;
       } else if ( diff > 30 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01,
+          null, null, null, null,  $(event.currentTarget));
         return;
       }
       option.svcChgRsnCd = '22';
@@ -323,7 +332,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this._suspendOptions.svcNum = this._svcInfo.svcNum;
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg,
+        null, null, null, null,  $(event.currentTarget));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
