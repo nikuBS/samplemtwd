@@ -68,53 +68,54 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _unSubscribeAutoGift: function (e) {
-    var elTarget = $(e.currentTarget);
-    var serNum = elTarget.data('sernum');
-    var svcNum = elTarget.closest('li').find('.txt1.fs14').text();
+    var $target = $(e.currentTarget);
+    var serNum = $target.data('sernum');
+    var svcNum = $target.closest('li').find('.txt1.fs14').text();
 
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT + svcNum + Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_END,
       Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_TITLE,
-      $.proxy(this._requestUnsubscribeAutoGift, this, serNum),
+      $.proxy(this._requestUnsubscribeAutoGift, this, $target, serNum),
       $.proxy(function () {
         this._popupService.close();
       }, this),
       Tw.BUTTON_LABEL.CANCEL,
-      Tw.BUTTON_LABEL.TERMINATE
+      Tw.BUTTON_LABEL.TERMINATE,
+      $target
     );
   },
 
-  _requestUnsubscribeAutoGift: function (serNum) {
+  _requestUnsubscribeAutoGift: function ($target, serNum) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
-      .done($.proxy(this._onSuccessUnsubscribeAutoGift, this));
+      .done($.proxy(this._onSuccessUnsubscribeAutoGift, this, $target));
   },
 
-  _getReceiveUserInfo: function () {
+  _getReceiveUserInfo: function (e) {
     this.befrSvcNum = this.$input_auto_gift.val().match(/\d+/g).join('');
     var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
 
     if ( isValidPhone ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
     }
   },
 
-  _onSuccessReceiveUserInfo: function (res) {
+  _onSuccessReceiveUserInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
-      this._subscribeAutoGift();
+      this._subscribeAutoGift($target);
       return false;
     }
 
     if ( res.code === 'ZNGME0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
       return false;
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _subscribeAutoGift: function () {
+  _subscribeAutoGift: function ($target) {
     var htParams = {
       befrSvcNum: this.$input_auto_gift.val().match(/\d+/g).join(''),
       dataQty: this.$wrap_auto_select_list.find('li.checked input').val()
@@ -123,21 +124,21 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.paramData = $.extend({}, this.paramData, htParams);
 
     this._apiService.request(Tw.API_CMD.BFF_06_0004, htParams)
-      .done($.proxy(this._onSuccessAutoGift, this));
+      .done($.proxy(this._onSuccessAutoGift, this, $target));
   },
 
-  _onSuccessAutoGift: function (res) {
+  _onSuccessAutoGift: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
       return false;
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _onSuccessUnsubscribeAutoGift: function (res) {
+  _onSuccessUnsubscribeAutoGift: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
         Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
@@ -145,7 +146,7 @@ Tw.MyTDataGiftMonthly.prototype = {
       } else {
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE, null, null, $.proxy(function () {
           this._historyService.reload();
-        }, this));
+        }, this), null, $target);
       }
       return true;
     } else {

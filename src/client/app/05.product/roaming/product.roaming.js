@@ -55,18 +55,19 @@ Tw.ProductRoaming.prototype = {
     event.stopPropagation();
   },
   _onClickFormInfo: function(e) {
-    this.idxSelect = $(e.currentTarget).data('index');
+    var $target = $(e.currentTarget);
+    this.idxSelect = $target.data('index');
     if (this.idxSelect < 0 || this.idxSelect > this.nMax) {
       return;
     }
 
-    var hbsName = 'RM_01_XX';
     this._popupService.open({
-      hbs: hbsName,
-      data: {
-        banners: this._options.banners
-      }
-    }, $.proxy(this._onOpenFormInfo, this), null, 'info');
+        hbs: 'RM_01_XX',
+        data: {
+          banners: this._options.banners
+        }
+      },
+      $.proxy(this._onOpenFormInfo, this), null, 'info', $target);
   },
 
   _onClickPrevBtn: function() {
