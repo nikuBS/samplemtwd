@@ -75,16 +75,16 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this.$container.on('click', '.fe-rmadd-order', $.proxy(this._openRmAddOrderPopup, this));
       this.$container.on('click', '.fe-rmadd-filter', $.proxy(this._handleRoamingAddFilters, this));
   },
-  _handleRoamingAddFilters: function() {
+  _handleRoamingAddFilters: function(event) {
       if (!this._rmAddFilters) {
           this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.RMADD_CODE })
           // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0032.json')
-              .done($.proxy(this._handleGetRmAddFilters, this));
+              .done($.proxy(this._handleGetRmAddFilters, this, event));
       } else {
-          this._openRmAddFiltersPopup();
+          this._openRmAddFiltersPopup(event);
       }
   },
-  _openRmAddFiltersPopup: function () {
+  _openRmAddFiltersPopup: function (event) {
 
       var rmAddFilters = _.chain(this._rmAddFilters.filters)
           .map(
@@ -131,7 +131,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
           },
           $.proxy(this._handleOpenAddFilterPopup, this),
           $.proxy(this._handleCloseAddFilterPopup, this),
-          'search'
+          'search', $(event.currentTarget)
       );
   },
   _handleOpenAddFilterPopup: function ($layer) {
@@ -154,7 +154,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _openRoamingAddTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
           this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
-              $.proxy(this._handleSelectRomaingAddTag, this, e.currentTarget), null, Tw.BUTTON_LABEL.CLOSE);
+              $.proxy(this._handleSelectRomaingAddTag, this, e.currentTarget), null, Tw.BUTTON_LABEL.CLOSE, null, $(e.currentTarget));
       } else {
           this._handleSelectRomaingAddTag(e.currentTarget);
       }
@@ -178,7 +178,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }).join(','),
       originParams = this._params;
 
-      if(searchRmFltIds === '' && !this._reset){
+      if(searchRmFltIds === '' && $layer.find('button.active').length > 0){
           this._popupService.close();
           return;
       }
@@ -213,13 +213,13 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._reset = true;
       this.selectTag = false;
   },
-  _handleGetRmAddFilters: function(resp) {
+  _handleGetRmAddFilters: function(event, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(resp.code, resp.msg).pop();
         return;
     }
     this._rmAddFilters = resp.result;
-    this._openRmAddFiltersPopup();
+    this._openRmAddFiltersPopup(event);
   },
   _bindAddFilterBtnEvent: function ($layer, e) {
       var $target = $(e.currentTarget);
@@ -227,7 +227,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       if($selectTag.length > 0){
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
           this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag,
-            this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
+            this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE, null, $(e.currentTarget));
       } else {
           this.$filterBtn = $(e.currentTarget);
           this.$selectBtn =  $(e.currentTarget).find('input');

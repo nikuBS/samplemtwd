@@ -123,9 +123,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
           );
       }
   },
-  _onClickSelectBtn: function () {
+  _onClickSelectBtn: function (e) {
       if(this.modelValue === undefined || this.modelValue === ''){
-          this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+          this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG,
+              Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE, null, null, null, $(e.currentTarget));
       } else {
           this._phoneInfo.eqpMdlNm = this.modelValue;
           this._phoneInfo.eqpMdlCd = this.modelCode;
@@ -134,13 +135,13 @@ Tw.ProductRoamingSearchBefore.prototype = {
           this._desciptionInit();
       }
   },
-  _onBtnClicked : function () {
+  _onBtnClicked : function (e) {
     this.keyword = this.$inputContrySearch.val().trim();
     this.searchKeyword = encodeURI(this.$inputContrySearch.val().trim());
     var ALERT = Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A23;
     Tw.Logger.info(this.searchKeyword);
     if(this.searchKeyword === ''){
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
     }else {
 
       this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
