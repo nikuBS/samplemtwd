@@ -7,10 +7,12 @@
 Tw.ProductRoamingMyUse = function(rootEl, options) {
   this.FE_TAB = '.fe-myuse-tab';
   this.FE_TABLIST = '.fe-myuse-tablist';
+  this.FE_LINK_BTN = '.fe-myuse-link-btn';
 
   this.$container = rootEl;
   this._hash = Tw.Hash;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
   this._options = options;
 
@@ -26,6 +28,7 @@ Tw.ProductRoamingMyUse.prototype = {
   },
   _bindEvent: function () {
     this.$tabLinker.on('click', this.FE_TAB, $.proxy(this._onTabChanged, this));
+    this.$container.on('click', this.FE_LINK_BTN, $.proxy(this._onLinkBtn, this));
   },
   _init : function() {
     this._initTab();
@@ -48,6 +51,22 @@ Tw.ProductRoamingMyUse.prototype = {
     // a 태그에 aria-selected 설정 (FE 에서 제어)
     this.$tabLinker.find(this.FE_TAB).attr('aria-selected', false);
     $(e.currentTarget).attr('aria-selected', true);
+  },
+  _onLinkBtn: function (e) {
+    var $target = $(e.currentTarget),
+      url = $target.data('url'),
+      prodId = $target.data('prod_id');
+
+    if (url.indexOf('BEU:') !== -1) {
+      return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url.replace('BEU:', '')));
+    } else if (url.indexOf('NEU:') !== -1) {
+      return this._openExternalUrl(url.replace('NEU:', ''));
+    }
+
+    this._historyService.goLoad(url + '?prod_id=' + prodId);
+  },
+  _openExternalUrl: function(url) {
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _checkLogin: function() {
     if (!this._options.isLogin) {
