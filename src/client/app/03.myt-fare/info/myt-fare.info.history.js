@@ -284,7 +284,7 @@ Tw.MyTFareInfoHistory.prototype = {
   // 자동납부 통합인출 해지 end
 
   // 분류선택 
-  _typeActionSheetOpen: function () {
+  _typeActionSheetOpen: function (evt) {
     this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
@@ -297,7 +297,8 @@ Tw.MyTFareInfoHistory.prototype = {
       }
     }, 
     $.proxy(this._openTypeSelectHandler, this), 
-    $.proxy(this._closeTypeSelect, this)
+    $.proxy(this._closeTypeSelect, this),
+    null, $(evt.currentTarget)
     );
   },
 
