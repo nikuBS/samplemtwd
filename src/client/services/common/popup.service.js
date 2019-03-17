@@ -24,8 +24,6 @@ Tw.PopupService.prototype = {
     if (lastHash) {
       var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
       $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
-    $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
-      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
     }
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
@@ -85,7 +83,7 @@ Tw.PopupService.prototype = {
         // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
         //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
     }
-    // 포커스 영역 저장 후 포커스 이동
+    // 포커스 영역 저장 후 포커스 이동 end
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
