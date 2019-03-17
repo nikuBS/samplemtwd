@@ -25,7 +25,7 @@ Tw.ErrorService.prototype = {
     return msg.replace(/\\n/g, '<br>');
   },
 
-  pop: function(closeCallback) {
+  pop: function(closeCallback, $target) {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'title': Tw.POPUP_TITLE.NOTIFY,
@@ -38,7 +38,10 @@ Tw.ErrorService.prototype = {
       }]
     },
       $.proxy(this._request, this),
-      $.proxy(this._close, this, closeCallback));
+      $.proxy(this._close, this, closeCallback),
+      null,
+      $target
+    );
   },
 
   _request: function ($layer) {
