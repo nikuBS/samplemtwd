@@ -188,10 +188,8 @@ Tw.MyTDataGift.prototype = {
   },
 
   _goAutoGiftTab: function () {
-    var $tab1 = this.$container.find('#tab1');
-    var $tab2 = this.$container.find('#tab2');
-    $tab1.attr('aria-selected', false);
-    $tab2.attr('aria-selected', true);
+    this.$container.find('#tab1').attr('aria-selected', false).find('a').attr('aria-selected', false);
+    this.$container.find('#tab2').attr('aria-selected', true).find('a').attr('aria-selected', true);
   },
 
   _onShowMoreData: function (e) {
