@@ -59,12 +59,12 @@ Tw.MyTJoinWireGifts.prototype = {
 
     this._listTotCnt = initData.totalCnt;
     if ( this._listTotCnt <= 0 ) {
-      $('#divListBox').hide();
-      $('#divNoListBox').show();
+      $('#divListBox').hide().attr('aria-hidden', true);
+      $('#divNoListBox').show().attr('aria-hidden', false);
     }
     else {
-      $('#divListBox').show();
-      $('#divNoListBox').hide();
+      $('#divListBox').show().attr('aria-hidden', false);
+      $('#divNoListBox').hide().attr('aria-hidden', true);
       this._printList(initData.giftProvideList);
     }
   },
@@ -162,10 +162,10 @@ Tw.MyTJoinWireGifts.prototype = {
    */
   _showOrHideMoreBtn: function () {
     if ( parseInt(this._listTotCnt, 10) > this._list.length ) {
-      $('.bt-more').show();
+      $('.bt-more').show().attr('aria-hidden', false);
     }
     else {
-      $('.bt-more').hide();
+      $('.bt-more').hide().attr('aria-hidden', true);
     }
   },
 

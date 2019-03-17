@@ -237,7 +237,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         }
         if(unpayTot > 0){
           $('#spanUnpaidTot').text(Tw.FormatHelper.convNumFormat(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
-          $('#divUnpaidBill').show();
+          $('#divUnpaidBill').show().attr('aria-hidden', false);
         }
       }
     }

@@ -29,7 +29,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     if ( this.resData.childLineInfo && this.resData.childLineInfo.length > 0 ) {
       this._getChildBillInfo();
     } else {
-      $('#divChildListHaeder').hide();
+      $('#divChildListHaeder').hide().attr('aria-hidden', true);
     }
 
     this._getUseBillsInfo();
