@@ -366,6 +366,7 @@ Tw.CertificationSk.prototype = {
         new Tw.CertificationBiz().open();
       } else {
         this.$validCert.removeClass('none');
+        this.$validCert.attr('aria-hidden', false);
         if ( !reCert ) {
           this.$btCert.addClass('none');
           this.$btReCert.removeClass('none');
