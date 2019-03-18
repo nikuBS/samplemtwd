@@ -163,6 +163,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$smsTime.text(Tw.DateHelper.convertMinSecFormat(remainedSec));
     this.$smsTime.show().attr('aria-hidden', 'false');
 
+    this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
+
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
