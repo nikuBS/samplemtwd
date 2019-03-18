@@ -123,8 +123,8 @@ Tw.ProductMobileplanSettingNumber.prototype = {
 
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
-    if (this.$inputNumber.val().length > 11) {
-      this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
+    if (this.$inputNumber.val().length > 12) {
+      this.$inputNumber.val(this.$inputNumber.val().substr(0, 12));
     }
 
     if (this.$lineWrap.length < 1) {
