@@ -217,6 +217,7 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _successRequestCert: function (reCert, $target, resp) {
     this._clearCertError();
+    this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
@@ -263,6 +264,7 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
     }
+    this._clearCertError();
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);

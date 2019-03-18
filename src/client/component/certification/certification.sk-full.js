@@ -191,6 +191,7 @@ Tw.CertificationSkFull.prototype = {
   },
   _successRequestCert: function (reCert, resp) {
     this._clearCertError();
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
