@@ -66,24 +66,36 @@ Tw.PopupService.prototype = {
     if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
       && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
         $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
-
-        $currentPopup.attr('tabindex', 0).focus();
-        if ($currentPopup.find('.popup-page, .popup-info').length) {
-          $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
-          if(Tw.BrowserHelper.isIos()) {
-            $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){return !$(this).attr('tabindex'); }).attr('tabindex', 0).focus();
+        // this._popupFocus($currentPopup); // 팝업포커스
+        var timeT = 0;
+        var timeLimit = 3;
+        var timeD = setInterval(function(){
+          timeT ++;
+          if (timeT>timeLimit){
+            clearTimeout(timeD);
           }
-        }
-        if($currentPopup.find('h1').length) {
-          $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
-        }
-        if($currentPopup.find('.focus-elem').length) {
-          $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
-        }
+          $currentPopup.attr('tabindex', 0).focus();
+          if ($currentPopup.find('.popup-page, .popup-info').length) {
+            $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
+            if(Tw.BrowserHelper.isIos()) {
+              $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){return !$(this).attr('tabindex'); }).attr('tabindex', 0).focus();
+            }
+          }
+          if($currentPopup.find('h1').length) {
+            $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
+          }
+          if($currentPopup.find('.popup-header').length) {
+            $currentPopup.find('.popup-header').attr('tabindex',0).eq(0).focus();
+          }
+          if($currentPopup.find('.focus-elem').length) {
+            $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
+          }
+        }, 300);
         // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
         //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
     }
     // 포커스 영역 저장 후 포커스 이동 end
+    
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
