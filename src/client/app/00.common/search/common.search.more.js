@@ -4,20 +4,22 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,nowUrl) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,paramObj,pageNum,nowUrl) {
   this.$container = rootEl;
   //this._category = category;
   this._historyService = new Tw.HistoryService();
   //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
   this._apiService = Tw.Api;
   this._cdn = cdn;
-  this._step = Tw.FormatHelper.isEmpty(step)?1:step;
+  this._step = Tw.FormatHelper.isEmpty(step)?1:parseInt(step,10);
   this._accessQuery = accessQuery;
   this._popupService = Tw.Popup;
   this._searchInfo = searchInfo;
   this._svcInfo = svcInfo;
   this._accessKeyword = this._searchInfo.query;
   this._category = accessQuery.category;
+  this._paramObj = paramObj;
+  this._pageNum = parseInt(pageNum,10);
   this._nowUrl = nowUrl;
   this._init(this._searchInfo,accessQuery.category);
 };
@@ -48,6 +50,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
+    this.$container.on('click','#page_selector',$.proxy(this._openPageSelector,this));
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
@@ -126,6 +129,50 @@ $.extend(Tw.CommonSearchMore.prototype,
     changeFilterUrl+='&step='+(Number(this._step)+1);
     this._popupService.close();
     this._moveUrl(changeFilterUrl);
-  }
+  },
+  _openPageSelector : function (targetEvt) {
+    var totalPageNum = parseInt(((this._searchInfo.totalcount/20)+(this._searchInfo.totalcount%20>0?1:0)),10);
+    var data = this._makePageSelectorData(totalPageNum , this._pageNum);
 
+    this._popupService.open({
+          hbs: 'actionsheet_select_a_type',// hbs의 파일명
+          layer: true,
+          data: [{list : data}]
+        },
+        $.proxy(this._bindPageSelectorEvt,this),
+        null,
+        null,$(targetEvt.currentTarget));
+  },
+  _makePageSelectorData : function (pageLimit , nowPage) {
+    var _returnData = [];
+
+    for(var i=1;i<=pageLimit;i++){
+      if(nowPage===i){
+        _returnData.push({option : 'checked' , value : i , attr : 'data-idx='+i});
+      }else{
+        _returnData.push({option : '' , value : i , attr : 'data-idx='+i});
+      }
+    }
+    return _returnData;
+  },
+  _bindPageSelectorEvt : function (evt) {
+    $(evt).on('click', '.chk-link-list button', $.proxy(this._changePageNum, this));
+  },
+  _changePageNum : function (evt) {
+    var selectedPageNum = $(evt.currentTarget).data('idx');
+    this._popupService.close();
+    if(selectedPageNum!==this._pageNum){
+      this._paramObj.page = selectedPageNum;
+      this._paramObj.step = this._step+1;
+      this._paramObj.keyword = encodeURIComponent(this._paramObj.keyword);
+      this._moveUrl(this._makeUrl(this._paramObj));
+    }
+  },
+  _makeUrl : function (paramObj) {
+    var targetUrl = this._nowUrl.split('?')[0]+'?';
+    for( var key in paramObj ){
+      targetUrl+=key+'='+paramObj[key]+'&';
+    }
+    return targetUrl.substring(0,targetUrl.length-1);
+  }
 });
