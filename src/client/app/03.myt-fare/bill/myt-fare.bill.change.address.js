@@ -62,8 +62,8 @@ Tw.MyTFareBillChangeAddress.prototype = {
       }
     }
   },
-  _getPostcode: function () {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._setAddress, this));
+  _getPostcode: function (e) {
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this));
   },
   _deleteAddress: function (e) {
     if (this._firstTouch) {
