@@ -97,7 +97,7 @@ Tw.CustomerResearches.prototype = {
     $list.find('input').prop('checked', false);
     $target.prop('disabled', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this));
+    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this, $target));
   },
 
   _clearForm: function() {
@@ -107,18 +107,18 @@ Tw.CustomerResearches.prototype = {
     this.$container.find('.fe-submit').prop('disabled', true);
   },
 
-  _handleSuccessSubmit: function(resp) {
+  _handleSuccessSubmit: function($target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     switch (resp.result) {
       case 'DUPLICATE':
-        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01);
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, undefined, undefined, $target);
         break;
       case 'SUCCESSY':
       case 'SUCCESSN':
-        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02);
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, undefined, undefined, $target);
         break;
     }
   },

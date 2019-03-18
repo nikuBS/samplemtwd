@@ -94,7 +94,8 @@ Tw.MyTDataFamily.prototype = {
       },
       $.proxy(this._handleOpenChangeLimitation, this, member.mgmtNum, limitation),
       undefined,
-      'limit'
+      'limit',
+      $target
     );
   },
 
@@ -104,18 +105,18 @@ Tw.MyTDataFamily.prototype = {
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
 
-  _handleSubmitLimitation: function(mgmtNum, originLimit) {
-    var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation);
+  _handleSubmitLimitation: function(mgmtNum, originLimit, e) {
+    var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation), $target = $(e.currentTarget);
 
     // this._successChangeLimitation({ code: '00' });
 
     if (originLimit === limitation) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5, undefined, undefined, undefined);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5, undefined, undefined, undefined, undefined, $target);
     } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
     } else if (this.MAX_LIMITATION < Number(limitation)) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6.MSG, Tw.ALERT_MSG_MYT_DATA.A6.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6.MSG, Tw.ALERT_MSG_MYT_DATA.A6.TITLE, undefined, undefined, undefined, $target);
     } else {
       this._popupService.close();
       this._apiService

@@ -73,7 +73,10 @@ Tw.CustomerPraise.prototype = {
         btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }]
       },
-      $.proxy(this._handleOpenSelectType, this)
+      $.proxy(this._handleOpenSelectType, this),
+      undefined,
+      undefined,
+      this.$typeBtn
     );
   },
 
@@ -175,7 +178,10 @@ Tw.CustomerPraise.prototype = {
         layer: true,
         data: [{ list: list }]
       },
-      $.proxy(this._handleOpenSelectArea, this)
+      $.proxy(this._handleOpenSelectArea, this),
+      undefined,
+      undefined,
+      this.$area
     );
   },
 
