@@ -160,7 +160,10 @@ Tw.CustomerHelpline.prototype = {
         btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
-      $.proxy(this._handleOpenSelectTypePopup, this)
+      $.proxy(this._handleOpenSelectTypePopup, this),
+      undefined,
+      undefined,
+      this.$btnType
     );
   },
 
@@ -180,7 +183,10 @@ Tw.CustomerHelpline.prototype = {
         btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
-      $.proxy(this._handleOpenSelectAreaPopup, this)
+      $.proxy(this._handleOpenSelectAreaPopup, this),
+      undefined,
+      undefined,
+      this.$btnArea
     );
   },
 
@@ -206,7 +212,10 @@ Tw.CustomerHelpline.prototype = {
         btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: times }]
       },
-      $.proxy(this._handleOpenSelectTimePopup, this)
+      $.proxy(this._handleOpenSelectTimePopup, this),
+      undefined,
+      undefined,
+      this.$btnTime
     );
   },
 

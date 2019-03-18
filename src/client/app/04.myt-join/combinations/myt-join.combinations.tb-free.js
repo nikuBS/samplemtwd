@@ -32,7 +32,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       },
       $.proxy(this._handleOpenChangeBenefitPopup, this),
       null,
-      'benefit' + this._bIdx
+      'benefit' + this._bIdx,
+      this.$changeBtn
     );
   },
 

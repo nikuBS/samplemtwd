@@ -1,3 +1,10 @@
+/**
+ * FileName: myt-data.prepaid.history.js
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2019.03.15
+ */
+
+
 Tw.MyTDataPrepaidHistory = function(rootEl, histories) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -43,7 +50,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$empty = this.$container.find('.contents-empty');
   },
 
-  _openChangeHistories: function() {
+  _openChangeHistories: function(e) {
     var type = this._currentType;
 
     this._popupService.open(
@@ -62,7 +69,10 @@ Tw.MyTDataPrepaidHistory.prototype = {
           }
         ]
       },
-      $.proxy(this._handleOpenChangeHistories, this)
+      $.proxy(this._handleOpenChangeHistories, this),
+      undefined,
+      undefined,
+      $(e.currentTarget)
     );
   },
 
@@ -223,12 +233,12 @@ Tw.MyTDataPrepaidHistory.prototype = {
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
-    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
+    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail }, undefined, undefined, undefined, $(e.currentTarget));
   },
 
   _openCancel: function(e) {
-    
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $(e.currentTarget)));
+    var $target = $(e.currentTarget);
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $target), undefined, $target);
   },
   
   _handleCancel: function($target) {

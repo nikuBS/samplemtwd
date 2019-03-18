@@ -156,7 +156,10 @@ Tw.ProductApps.prototype = {
         data: [{ list: list }],
         layer: true
       },
-      $.proxy(this._handleOpenOrderPopup, this)
+      $.proxy(this._handleOpenOrderPopup, this),
+      undefined,
+      undefined,
+      this.$orderBtn
     );
   },
 
