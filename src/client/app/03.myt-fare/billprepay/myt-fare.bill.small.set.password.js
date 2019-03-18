@@ -62,6 +62,8 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _openPassword: function (birth, $layer) {
+    this._focusService = new Tw.InputFocusService($layer, $layer.find('.fe-set'));
+
     this._initVariables($layer, birth);
     this._setData();
     this._bindEvent();

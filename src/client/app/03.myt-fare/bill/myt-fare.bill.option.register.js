@@ -12,6 +12,7 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay'));
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
