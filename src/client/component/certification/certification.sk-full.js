@@ -96,6 +96,7 @@ Tw.CertificationSkFull.prototype = {
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
+    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     new Tw.InputFocusService($popupContainer, this.$btConfirm);

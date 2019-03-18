@@ -199,6 +199,7 @@ Tw.CertificationSk.prototype = {
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
+    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     this.$checkKeyin.on('change', $.proxy(this._onChangeKeyin, this));
@@ -232,6 +233,7 @@ Tw.CertificationSk.prototype = {
   },
   _onInputMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
+    console.log('inputMdn', this.$inputMdn.val());
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
     } else {

@@ -119,6 +119,8 @@ Tw.CertificationRepresentative.prototype = {
     this.$inputboxMdn = $popupContainer.find('#fe-inputbox-mdn');
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
+    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
