@@ -333,10 +333,10 @@ Tw.MembershipSubmain.prototype = {
     Tw.Logger.info('[_askCurrentLocation]');
     if(this._svcInfo){
       if (Tw.BrowserHelper.isApp()){
-        this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-          if (res.resultCode === Tw.NTV_CODE.CODE_00 ) {
-            this._getAreaByGeo(res.params);
-          } else {
+        // 기기 gps에 문제가 있는 경우 native에서 리턴없으므로 자체적으로 처리 (DV001-13593)
+        this._getCurrentLocationTimeout = setTimeout($.proxy(function(){
+          if(this._getCurrentLocationTimeout){
+            this._getCurrentLocationTimeout = null;
             var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
             this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
                 $.proxy(function () {
@@ -346,7 +346,22 @@ Tw.MembershipSubmain.prototype = {
                   });
                 }, this));
           }
-        }, this));
+        }, this), 2000);
+        this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function(result){
+              this._getCurrentLocationTimeout = null;
+              if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
+                this._getAreaByGeo(result.params);
+              } else {
+                var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+                this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+                    $.proxy(function () {
+                      this._getAreaByGeo({
+                        latitude: '37.5600420',
+                        longitude: '126.9858500'
+                      });
+                    }, this));
+              }
+            }, this));
       } else {
         if ('geolocation' in navigator) {
           // Only works in secure mode(Https) - for test, use localhost for url
