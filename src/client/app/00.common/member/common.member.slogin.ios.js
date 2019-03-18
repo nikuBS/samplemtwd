@@ -146,6 +146,8 @@ Tw.CommonMemberSloginIos.prototype = {
 
     this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
     this.$container.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
+
+    new Tw.InputFocusService(this.$container, this.$btLogin);
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;

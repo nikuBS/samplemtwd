@@ -215,6 +215,8 @@ Tw.CertificationSk.prototype = {
     } else {
       this._checkCertType();
     }
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
     // if ( this._securityAuth ) {
     //   this.$btReCert.parent().addClass('none');
     // }

@@ -130,6 +130,8 @@ Tw.CertificationRepresentative.prototype = {
     // if ( this.$list.find(':checked').length > 0 ) {
     //   this.$btCert.attr('disabled', false);
     // }
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
   _onCloseCert: function () {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
