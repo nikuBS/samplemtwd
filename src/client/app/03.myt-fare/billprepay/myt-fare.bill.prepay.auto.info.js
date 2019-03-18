@@ -39,16 +39,16 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this.$container.on('click', '.fe-auto-cancel', $.proxy(this._cancelAutoPrepay, this));
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
-  _changeAutoPrepay: function () {
+  _changeAutoPrepay: function (e) {
     if (this._standardAmount > 0) {
       this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, null, null, $(e.currentTarget));
     }
   },
-  _cancelAutoPrepay: function () {
+  _cancelAutoPrepay: function (e) {
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
-      $.proxy(this._cancel, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME);
+      $.proxy(this._cancel, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $(e.currentTarget));
   },
   _cancel: function () {
     var $api = this._getCancelApiName();
@@ -70,7 +70,6 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      //this._historyService.goLoad('/myt-fare/bill/' + this.$title + '?type=cancel');
       this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel');
     } else {
       this._cancelFail(res);

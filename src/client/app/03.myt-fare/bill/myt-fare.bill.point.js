@@ -49,8 +49,8 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
-  _openGetPoint: function () {
-    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
+  _openGetPoint: function (e) {
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e);
   },
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));

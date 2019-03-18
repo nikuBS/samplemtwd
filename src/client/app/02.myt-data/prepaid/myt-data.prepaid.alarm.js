@@ -18,7 +18,6 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
-    this.isInitializeInfo = false;
     this.typeCd = false; // 알람 기준(0: 설정안함 1 : 시간, 2 : 잔액)
     this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
     this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
@@ -51,7 +50,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onSuccessAlarmInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.isInitializeInfo = true;
       var result = res.result;
 
       if ( !!result.typeCd ) {
@@ -69,9 +67,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       if ( !!result.amt ) {
         this.amt = result.amt;
       }
-    } else {
-      this.isInitializeInfo = false;
-      // Tw.Error(res.code, res.msg).pop();
     }
   },
 
@@ -128,7 +123,9 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         }]
       },
       $.proxy(this._selectPopupCallback, this, sListName, $target),
-      null
+      null,
+      null,
+      $target
     );
   },
 
@@ -189,11 +186,12 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     $target.text($.trim($(e.currentTarget).text()));
   },
 
-  _requestAlarmSetting: function () {
+  _requestAlarmSetting: function (e) {
+    var $target = $(e.currentTarget);
     var isChange = this.$container.find('.fe-setting-alarm').text() === Tw.BUTTON_LABEL.CHANGE;
     var htParams = {};
     if ( this.typeCd === '0' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A220, null, null, $.proxy(this._requestAlarm, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A220, null, null, $.proxy(this._requestAlarm, this), null, $target);
 
     } else if ( this.typeCd === '1' ) {
       htParams = $.extend(htParams, {
@@ -212,7 +210,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.BUTTON);
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.BUTTON,
+        $target);
 
     } else {
       htParams = $.extend(htParams, {
@@ -224,9 +223,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
         isChange ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
-        $.proxy(this._requestAlarm, this, htParams),
+        $.proxy(this._requestAlarm, this, htParams, $target),
         null,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.BUTTON);
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.BUTTON,
+        $target);
     }
   },
 
@@ -235,10 +235,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this._popupService.close();
   },
 
-  _requestAlarm: function (htParams) {
+  _requestAlarm: function (htParams, $target) {
     if ( this.typeCd === '0' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0076, {})
-        .done($.proxy(this._onCompleteUnsubscribeAlarm, this));
+        .done($.proxy(this._onCompleteUnsubscribeAlarm, this, $target));
     } else {
       if ( this._isCancel ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
@@ -255,9 +255,9 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     }
   },
 
-  _onCompleteUnsubscribeAlarm: function (res) {
+  _onCompleteUnsubscribeAlarm: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A210, null, null, $.proxy(this._gotoSubmain, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A210, null, null, $.proxy(this._gotoSubmain, this), null, $target);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

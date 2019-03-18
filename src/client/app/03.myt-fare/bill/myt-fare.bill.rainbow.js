@@ -78,9 +78,9 @@ Tw.MyTFareBillRainbow.prototype = {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
-  _cancel: function () {
+  _cancel: function (e) {
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON);
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
   _onCancel: function () {
     this._isCancel = true;
@@ -109,7 +109,7 @@ Tw.MyTFareBillRainbow.prototype = {
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW,
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');

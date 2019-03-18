@@ -119,7 +119,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       layer: true,
       data: this._getAmountList($list, $amount),
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -167,8 +167,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     return $amountList;
   },
-  _openAmountInfo: function () {
-    this._popupService.openAlert(Tw.AMOUNT_INFO[this.$title.toUpperCase() + '_CONTENTS'], Tw.AMOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
+  _openAmountInfo: function (e) {
+    this._popupService.openAlert(Tw.AMOUNT_INFO[this.$title.toUpperCase() + '_CONTENTS'], Tw.AMOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM, null, null, $(e.currentTarget));
   },
   _autoPrepay: function () {
     if (this._isAmountValid() && this._validationService.isAllValid()) {
