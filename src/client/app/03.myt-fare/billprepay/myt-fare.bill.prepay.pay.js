@@ -124,13 +124,14 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
       $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON, $(e.currentTarget));
   },
-  _pay: function ($layer) {
+  _pay: function ($layer, e) {
     var apiName = this._getApiName();
     var reqData = this._makeRequestData($layer);
+    var $target = $(e.currentTarget);
 
     this._apiService.request(apiName, reqData)
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      .done($.proxy(this._paySuccess, this, $target))
+      .fail($.proxy(this._payFail, this, $target));
   },
   _getApiName: function () {
     var apiName = '';
@@ -155,19 +156,19 @@ Tw.MyTFareBillPrepayPay.prototype = {
     };
     return reqData;
   },
-  _paySuccess: function (res) {
+  _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isPaySuccess = true;
       this._popupService.closeAll();
     } else {
-      this._payFail(res);
+      this._payFail($target, res);
     }
   },
-  _payFail: function (err) {
+  _payFail: function ($target, err) {
     if (err.code === 'BIL0006') {
-      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
-      Tw.Error(err.code, err.msg).pop();
+      Tw.Error(err.code, err.msg).pop(null, $target);
     }
   }
 };

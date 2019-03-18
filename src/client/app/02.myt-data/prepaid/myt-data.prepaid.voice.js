@@ -288,7 +288,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     } else if ( res.code === 'BIL0080' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $elButton);
     }
   },
 
@@ -317,7 +317,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     } else if ( resp.code === 'BIL0102' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD, null, null, null, null, $elButton);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $elButton);
     }
   },
 
@@ -379,7 +379,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._popupService.close();
   },
 
-  _requestCreditCard: function () {
+  _requestCreditCard: function (e) {
     var htParams = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),
@@ -389,15 +389,15 @@ Tw.MyTDataPrepaidVoice.prototype = {
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0053, htParams)
-      .done($.proxy(this._onCompleteRechargeByCreditCard, this));
+      .done($.proxy(this._onCompleteRechargeByCreditCard, this, $(e.currentTarget)));
   },
 
-  _onCompleteRechargeByCreditCard: function (res) {
+  _onCompleteRechargeByCreditCard: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 

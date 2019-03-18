@@ -63,19 +63,20 @@ Tw.TeventCommon.prototype = {
 
     this._popupService.close();
   },
-  _setMoreData: function () {
+  _setMoreData: function (e) {
+    var $target = $(e.currentTarget);
     if (this._page < this._totalPage) {
       this._page++;
-      this._requestForList();
+      this._requestForList($target);
     }
   },
-  _requestForList: function () {
+  _requestForList: function ($target) {
     var $apiName = this._getApiName();
     var $reqData = this._makeRequestData();
 
     this._apiService.request($apiName, $reqData)
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
+      .done($.proxy(this._getSuccess, this, $target))
+      .fail($.proxy(this._getFail, this, $target));
   },
   _getApiName: function () {
     var $apiName = '';
@@ -96,15 +97,15 @@ Tw.TeventCommon.prototype = {
       size: Tw.DEFAULT_LIST_COUNT
     };
   },
-  _getSuccess: function (res) {
+  _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setData(res.result.content);
     } else {
-      this._getFail(res);
+      this._getFail($target, res);
     }
   },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _getFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setData: function ($content) {
     if (!this.$standardNode.hasClass('fe-done')) {

@@ -175,11 +175,12 @@ Tw.MyTFareBillCard.prototype = {
       this._historyService.goBack();
     }
   },
-  _pay: function () {
+  _pay: function (e) {
+    var $target = $(e.currentTarget);
     var reqData = this._makeRequestData();
     this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      .done($.proxy(this._paySuccess, this, $target))
+      .fail($.proxy(this._payFail, this, $target));
   },
   _makeRequestData: function () {
     var reqData = {
@@ -197,19 +198,19 @@ Tw.MyTFareBillCard.prototype = {
     };
     return reqData;
   },
-  _paySuccess: function (res) {
+  _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isPaySuccess = true;
       this._popupService.close();
     } else {
-      this._payFail(res);
+      this._payFail($target, res);
     }
   },
-  _payFail: function (err) {
+  _payFail: function ($target, err) {
     if (err.code === 'BIL0006') {
-      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
-      Tw.Error(err.code, err.msg).pop();
+      Tw.Error(err.code, err.msg).pop(null, $target);
     }
   }
 };

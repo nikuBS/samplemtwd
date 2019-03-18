@@ -91,11 +91,12 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this.$container.find('.fe-change').attr('disabled', 'disabled');
     }
   },
-  _changeAddress: function () {
+  _changeAddress: function (e) {
+    var $target = $(e.currentTarget);
     if (this.$isValid) {
       this._apiService.request(Tw.API_CMD.BFF_05_0147, this._makeRequestData())
-        .done($.proxy(this._changeSuccess, this))
-        .fail($.proxy(this._changeFail, this));
+        .done($.proxy(this._changeSuccess, this, $target))
+        .fail($.proxy(this._changeFail, this, $target));
     } else {
       this.$container.find('.fe-phone').focus();
     }
@@ -120,14 +121,14 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this._addrModifyYn = 'Y';
     }
   },
-  _changeSuccess: function (res) {
+  _changeSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.goLoad('/myt-fare/bill/option?type=change');
     } else {
-      this._changeFail(res);
+      this._changeFail($target, res);
     }
   },
-  _changeFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _changeFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };

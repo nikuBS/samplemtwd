@@ -157,25 +157,26 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _cancel: function (e) {
+    var $target = $(e.currentTarget);
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this, $target), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $target);
   },
   _onCancel: function () {
     this._isCancel = true;
     this._popupService.close();
   },
-  _autoCancel: function () {
+  _autoCancel: function ($target) {
     if (this._isCancel) {
       this._apiService.request(Tw.API_CMD.BFF_07_0054, {reqClCd: '3', ptClCd: this.$pointType})
-        .done($.proxy(this._cancelSuccess, this))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._cancelSuccess, this, $target))
+        .fail($.proxy(this._fail, this, $target));
     }
   },
-  _cancelSuccess: function (res) {
+  _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=' + this.$pointType + '&type=cancel');
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
   _selectPoint: function (event) {
@@ -249,17 +250,19 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       }
     }
   },
-  _onePay: function () {
+  _onePay: function (e) {
+    var $target = $(e.currentTarget);
     if (this._validationService.isAllValid()) {
       if (this.$isOneValid) {
         var reqData = this._makeRequestDataForOne();
         this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
-          .done($.proxy(this._paySuccess, this, ''))
-          .fail($.proxy(this.fail, this));
+          .done($.proxy(this._paySuccess, this, $target, ''))
+          .fail($.proxy(this._fail, this, $target));
       }
     }
   },
-  _autoPay: function () {
+  _autoPay: function (e) {
+    var $target = $(e.currentTarget);
     if (this._validationService.isAllValid()) {
       if (this.$isAutoValid && this.$isAutoCardValid && this.$isSelectValid) {
         var reqData = this._makeRequestDataForAuto();
@@ -268,18 +271,18 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
           type = 'change';
         }
         this._apiService.request(Tw.API_CMD.BFF_07_0054, reqData)
-          .done($.proxy(this._paySuccess, this, type))
-          .fail($.proxy(this.fail, this));
+          .done($.proxy(this._paySuccess, this, $target, type))
+          .fail($.proxy(this._fail, this, $target));
       }
     }
   },
-  _paySuccess: function (type, res) {
+  _paySuccess: function ($target, type, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var point = this._getPointValue(type);
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=' +
         this.$pointType + '&type=' + type + '&point=' + point);
     } else {
-      this.fail(res);
+      this._fail($target, res);
     }
   },
   _getPointValue: function (type) {
@@ -289,11 +292,11 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
     return point;
   },
-  fail: function (err) {
+  _fail: function ($target, err) {
     if (err.code === 'BIL0006') {
-      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
     } else {
-      Tw.Error(err.code, err.msg).pop();
+      Tw.Error(err.code, err.msg).pop(null, $target);
     }
   },
   _makeRequestDataForOne: function () {

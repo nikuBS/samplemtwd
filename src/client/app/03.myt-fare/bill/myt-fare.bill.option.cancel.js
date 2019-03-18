@@ -25,12 +25,13 @@ Tw.MyTFareBillOptionCancel.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-go-cancel', $.proxy(this._cancel, this));
   },
-  _cancel: function () {
+  _cancel: function (e) {
+    var $target = $(e.currentTarget);
     var reqData = this._makeRequestData();
 
     this._apiService.request(Tw.API_CMD.BFF_07_0063, reqData)
-      .done($.proxy(this._cancelSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .done($.proxy(this._cancelSuccess, this, $target))
+      .fail($.proxy(this._fail, this, $target));
   },
   _makeRequestData: function () {
     var $selectBox = this.$container.find('.fe-select-payment-option');
@@ -47,7 +48,7 @@ Tw.MyTFareBillOptionCancel.prototype = {
     };
     return reqData;
   },
-  _cancelSuccess: function (res) {
+  _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var completeUrl = '/myt-fare/bill/option/cancel-complete';
 
@@ -56,10 +57,10 @@ Tw.MyTFareBillOptionCancel.prototype = {
       }
       this._historyService.replaceURL(completeUrl);
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).page();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };
