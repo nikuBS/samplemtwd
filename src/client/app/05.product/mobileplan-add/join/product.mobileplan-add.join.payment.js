@@ -163,8 +163,6 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$smsTime.text(Tw.DateHelper.convertMinSecFormat(remainedSec));
     this.$smsTime.show().attr('aria-hidden', 'false');
 
-    this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
-
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
@@ -191,8 +189,12 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this._isSend = true;
       this._seqNo = resp.result.seqNo;
       this.$inputAuthCode.val('');
+      this.$btnGetAuthCode.text(Tw.BUTTON_LABEL.SMS_RESEND);
       this._toggleButton(this.$btnExtend, true);
       this._toggleButton(this.$btnValidate, false);
+      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+    } else {
+      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
     }
 
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
@@ -201,8 +203,6 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
     this._addTime = new Date();
     this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
-
-    this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
 
     this._sendCount++;
     this._nextEnableSendTime = new Date().getTime() + 60000;

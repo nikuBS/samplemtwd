@@ -60,7 +60,8 @@ Tw.BUTTON_LABEL = {
   YES: '예',
   NO: '아니요',
   SELECTED: '선택됨',
-  COMPLETE: '완료'
+  COMPLETE: '완료',
+  SMS_RESEND: '인증번호 재전송'
 };
 
 Tw.SMS_VALIDATION = {
