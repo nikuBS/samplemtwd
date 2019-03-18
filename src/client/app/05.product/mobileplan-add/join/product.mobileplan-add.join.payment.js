@@ -179,6 +179,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
     }
 
+    if (resp.code === 'ATH1221') {
+      return this._setValidateResultText(true, Tw.SMS_VALIDATION.ATH1221);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._setSendResultText(true, resp.msg);
     }
