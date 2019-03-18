@@ -86,10 +86,14 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( isVaild ) {
       if ( !this.$emailAddr.hasClass('blind-height0') ) {
         this.$emailError.addClass('blind-height0');
+        this.$emailError.hide();
+        this.$emailError.attr('aria-hidden', 'true');
       }
     }
     else {
       this.$emailError.removeClass('blind-height0');
+      this.$emailError.show();
+      this.$emailError.attr('aria-hidden', 'false');
     }
     this.isEmailVaild = !isVaild;
   },
