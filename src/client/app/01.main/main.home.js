@@ -129,8 +129,9 @@ Tw.MainHome.prototype = {
     $event.stopPropagation();
   },
   _onClickLine: function ($event) {
+    var $target = $($event.currentTarget);
     // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
-    this._lineComponent.onClickLine(this._svcMgmtNum);
+    this._lineComponent.onClickLine(this._svcMgmtNum, $target);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');

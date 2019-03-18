@@ -106,7 +106,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
     } else if ( resp.code === this.ERROR_CODE.ICAS4027 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _successUpdateSvc: function (resp) {
@@ -127,7 +127,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
     } else if ( code === this.ERROR_CODE.ATH0022 && code === this.ERROR_CODE.ATH0023 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7, null, null, null, null, $target);
     } else {
-      Tw.Error(code, message).pop();
+      Tw.Error(code, message).pop(null, $target);
     }
   }
 };

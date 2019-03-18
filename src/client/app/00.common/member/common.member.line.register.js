@@ -96,7 +96,7 @@ Tw.CommonMemberLineRegister.prototype = {
       }, this));
       this._registerLineList(svcNumList.join('~'), svcNumList.length, $target);
     } else {
-      Tw.Error(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _getExposedSvcNumList: function (lineList) {
@@ -112,14 +112,15 @@ Tw.CommonMemberLineRegister.prototype = {
     }, this));
     return list;
   },
-  _onClickMore: function () {
+  _onClickMore: function ($event) {
+    var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0029, {
       svcCtg: Tw.LINE_NAME.All,
       pageSize: Tw.DEFAULT_LIST_COUNT,
       pageNo: this._pageNo
-    }).done($.proxy(this._successMoreExposable, this));
+    }).done($.proxy(this._successMoreExposable, this, $target));
   },
-  _successMoreExposable: function (resp) {
+  _successMoreExposable: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._pageNo * Tw.DEFAULT_LIST_COUNT >= resp.result.totalCnt ) {
         this.$btMore.hide();
@@ -127,7 +128,7 @@ Tw.CommonMemberLineRegister.prototype = {
       this._pageNo = this._pageNo + 1;
       this._addList(resp.result);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _addList: function (list) {
@@ -165,7 +166,7 @@ Tw.CommonMemberLineRegister.prototype = {
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList }
     }).done($.proxy(this._successRegisterLineList, this, length, $target))
-      .fail($.proxy(this._failRegisterLineList, this));
+      .fail($.proxy(this._failRegisterLineList, this, $target));
   },
   _successRegisterLineList: function (registerLength, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -175,11 +176,11 @@ Tw.CommonMemberLineRegister.prototype = {
         this._openCompletePopup($target);
       }
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
-  _failRegisterLineList: function (error) {
-    Tw.Error(error.code, error.msg).pop();
+  _failRegisterLineList: function ($target, error) {
+    Tw.Error(error.code, error.msg).pop(null, $target);
   },
   _openCompletePopup: function ($target) {
     this._popupService.open({
@@ -188,24 +189,24 @@ Tw.CommonMemberLineRegister.prototype = {
       data: {
         registerLength: this._registerLength
       }
-    }, $.proxy(this._onOpenCompletePopup, this), $.proxy(this._onCloseCompletePopup, this), 'line-complete', $target);
+    }, $.proxy(this._onOpenCompletePopup, this, $target), $.proxy(this._onCloseCompletePopup, this), 'line-complete', $target);
   },
-  _onOpenCompletePopup: function ($layer) {
+  _onOpenCompletePopup: function ($target, $layer) {
     $layer.on('click', '#fe-bt-home', $.proxy(this._goHome, this));
     $layer.on('click', '#fe-bt-line', $.proxy(this._goAuthLine, this));
 
-    this._openMarketingOfferPopup();
+    this._openMarketingOfferPopup($target);
   },
   _openMarketingOfferPopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
 
       this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, [this._marketingSvc])
-        .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
+        .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum'), $target))
         .fail($.proxy(this._failGetMarketingOffer, this));
     }
   },
-  _successGetMarketingOffer: function (showName, svcNum, resp) {
+  _successGetMarketingOffer: function (showName, svcNum, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
         setTimeout($.proxy(function () {
@@ -214,7 +215,7 @@ Tw.CommonMemberLineRegister.prototype = {
         }, this), 0);
       }
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _failGetMarketingOffer: function () {

@@ -190,13 +190,15 @@ Tw.CommonMemberSloginIos.prototype = {
     $currentTarget.parent().addClass('checked');
     $currentTarget.attr('aria-checked', true);
   },
-  _onClickCert: function () {
-    this._sendCert();
+  _onClickCert: function ($event) {
+    var $target = $($event.currentTarget);
+    this._sendCert(false, $target);
   },
-  _onClickReCert: function () {
-    this._sendCert(true);
+  _onClickReCert: function ($event) {
+    var $target = $($event.currentTarget);
+    this._sendCert(true, $target);
   },
-  _sendCert: function (reCert) {
+  _sendCert: function (reCert, $target) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -205,14 +207,15 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, [this.mdn])
-        .done($.proxy(this._successRequestCert, this, reCert));
+        .done($.proxy(this._successRequestCert, this, reCert, $target));
     }
   },
-  _onClickCertAdd: function () {
+  _onClickCertAdd: function ($event) {
+    var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
-      .done($.proxy(this._successRequestCertAdd, this));
+      .done($.proxy(this._successRequestCertAdd, this, $target));
   },
-  _successRequestCert: function (reCert, resp) {
+  _successRequestCert: function (reCert, $target, resp) {
     this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
@@ -228,7 +231,7 @@ Tw.CommonMemberSloginIos.prototype = {
       this._addTime = new Date();
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else {
-      this._checkCertError(resp.code);
+      this._checkCertError(resp.code, resp.msg, $target);
     }
   },
   _showTimer: function (startTime) {
@@ -242,7 +245,7 @@ Tw.CommonMemberSloginIos.prototype = {
   //   this.$btReCert.removeClass('none');
   //   this.$btCertAdd.addClass('none');
   // },
-  _checkCertError: function (errorCode, errorMsg) {
+  _checkCertError: function (errorCode, errorMsg, $target) {
     // this._clearCertError();
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
@@ -253,10 +256,10 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( errorCode === this.SMS_ERROR.ATH1004 || errorCode === this.SMS_ERROR.ATH1005 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
-      Tw.Error(errorCode, errorMsg).pop();
+      Tw.Error(errorCode, errorMsg).pop(null, $target);
     }
   },
-  _successRequestCertAdd: function (resp) {
+  _successRequestCertAdd: function ($target, resp) {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
     }
@@ -271,7 +274,7 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _onClickLogin: function ($event) {
@@ -311,7 +314,7 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, null, null, null, null, $target);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _checkCertValidation: function () {

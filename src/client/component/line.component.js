@@ -34,10 +34,10 @@ Tw.LineComponent.prototype = {
     BFF0014: 'BFF0014',
     ICAS3216: 'ICAS3216'   // 고객비밀번호가 잠김
   },
-  onClickLine: function (selectedMgmt) {
+  onClickLine: function (selectedMgmt, $target) {
     this._init(selectedMgmt);
     this._openLineList = true;
-    this._getLineList();
+    this._getLineList($target);
   },
   _init: function (selectedMgmt) {
     this._index = 0;
@@ -52,10 +52,10 @@ Tw.LineComponent.prototype = {
     this._svcMgmtNum = '';
     this._mdn = '';
   },
-  _getLineList: function () {
+  _getLineList: function ($target) {
     // if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successGetLineList, this));
+      .done($.proxy(this._successGetLineList, this, $target));
     // $.ajax('/mock/auth.line.json')
     //   .done($.proxy(this._successGetLineList, this));
     // } else {
@@ -63,11 +63,11 @@ Tw.LineComponent.prototype = {
     // }
 
   },
-  _successGetLineList: function (resp) {
+  _successGetLineList: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._lineList = this._parseLineList(resp.result);
       if ( this._index > 1 ) {
-        this._openListPopup(this._lineList);
+        this._openListPopup(this._lineList, $target);
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -79,7 +79,7 @@ Tw.LineComponent.prototype = {
       layer: true,
       data: lineData,
       btMore: this._index > Tw.DEFAULT_LIST_COUNT
-    }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line');
+    }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
   },
   _onOpenListPopup: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-item');
