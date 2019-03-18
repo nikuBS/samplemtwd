@@ -472,11 +472,11 @@ $.fn.chart2 = function(o){
     }
 
     //@190314 - DV001-16238: 그래프 크기 보완
-    var _gap = 1.5;
+    /*var _gap = 1.5;
     var _max = d.data_arry[1].v/d.data_arry[0].v;
     if(_max>1 && _max<_gap){
       d.data_arry[1].v = (d.data_arry[1].v * _gap);
-    }
+    }*/
     //@190314 - DV001-16238: 그래프 크기 보완
 
     for(var i=0; i < d.data_arry.length; i++){
@@ -503,8 +503,18 @@ $.fn.chart2 = function(o){
       }
     }
     for(var i=0; i < style_pattern.length; i++){
-      style_pattern[i] = Math.floor(style_pattern[i])
+      style_pattern[i] = Math.floor(style_pattern[i]);
     }
+
+    //@190315 - DV001-16238: 그래프 크기 보완
+    var _avg = style_pattern[0];
+    var _max = style_pattern[1];
+    //if(_max>=_avg && _max-_avg < 10){
+    if(d.data_arry[1].v>d.data_arry[0].v && _max-_avg < 5){
+      style_pattern[1]+= 10;
+    }
+    //@190314 - DV001-16238: 그래프 크기 보완
+
     $(d.target)
       .append(
         $('<div>').addClass('circle-belt')

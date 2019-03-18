@@ -816,15 +816,9 @@ li.checkbox.type01 {
 
 .device_android .radiobox {
   position: relative; }
-  .device_android .radiobox input[type=radio] {
-    -webkit-transform: scale(100);
-            transform: scale(100); }
 
 .device_android .checkbox {
   position: relative; }
-  .device_android .checkbox input[type=checkbox] {
-    -webkit-transform: scale(100);
-            transform: scale(100); }
 
 .radiobox.alignment {
   display: block; }
