@@ -357,9 +357,9 @@ Tw.CertificationSkFull.prototype = {
   _clearConfirmError: function () {
     this._clearError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
-    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCert);
-    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
-    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
   }
 };
 
