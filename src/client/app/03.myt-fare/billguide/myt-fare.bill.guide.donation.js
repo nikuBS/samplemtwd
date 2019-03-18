@@ -78,7 +78,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
     _.map(this.detailListObj.listData, function (item) {
-      item.billTcDt = Tw.DateHelper.getShortDateNoDot( item.billTcDt );
+      item.billTcDt = Tw.DateHelper.getShortDate( item.billTcDt );
       item.sponAmt = thisMain._comComma(item.sponAmt);
       return item;
     });
