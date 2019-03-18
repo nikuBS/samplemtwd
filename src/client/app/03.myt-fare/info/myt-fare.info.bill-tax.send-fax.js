@@ -43,7 +43,7 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
   },
 
   // 닫기 확인
-  _closeResendByFax: function () {
+  _closeResendByFax: function (e) {
     if(!Tw.FormatHelper.isEmpty(this.$faxNumberInput.val())) { 
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -51,7 +51,8 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
         $.proxy(this._closePopAndBack, this),
         null,
         Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES
+        Tw.BUTTON_LABEL.YES,
+        $(e.currentTarget)
       );
     } else {
       this._goBack();
@@ -78,25 +79,28 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
     // this.$rerequestSendBtn.attr('disabled', ( $(e.currentTarget).val().length < 8 ));
   },
   
-  _sendRerequestByFax: function () {    
+  _sendRerequestByFax: function (e) {    
     this._apiService.request(Tw.API_CMD.BFF_07_0019, {
         fax:this.$faxNumberInput.val(),
         selSearch: this.data.taxBillYearMonth,
         selType:'M'
       })
-        .done($.proxy(this._resSendCallback, this)).fail();
+        .done($.proxy(this._resSendCallback, this, $(e.currentTarget)))
+        .fail($.proxy(this._apiError, this, $(e.currentTarget)));
   },
 
-  _resSendCallback: function(res) {
+  _resSendCallback: function($target, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(res.code, res.msg).pop();
+      return this._apiError($target, res); // Tw.Error(res.code, res.msg).pop();
     }
 
     this._popupService.openAlert(
       Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
-      $.proxy(this._goBack, this)
+      $.proxy(this._goBack, this),
+      null,
+      $target
     );
   },
 
@@ -107,5 +111,9 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
 
   _goBack: function() {
     this._historyService.goBack();
+  },
+
+  _apiError: function ($target, err) {
+    return Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };
