@@ -665,7 +665,9 @@ Tw.MyTFareSubMain.prototype = {
         Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       }
       setTimeout($.proxy(function () {
-        this._historyService.reload();
+        // ios에서 reload하니까 앱이 멈춰버리는 현상이 있어서 url 이동으로 변경(DV001-17774)
+        // this._historyService.reload();
+        this._historyService.goLoad('/myt-fare/submain');
       }, this), 500);
     }
   },
