@@ -15,9 +15,14 @@ Tw.CustomerDamageInfoContents = function(rootEl) {
 
   // 이벤트 바인딩
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerDamageInfoContents.prototype = {
+
+  _init: function() {
+    Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
+  },
 
   _bindEvent: function() {
     this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));  // 레이어 팝업 공통 처리
@@ -104,7 +109,7 @@ Tw.CustomerDamageInfoContents.prototype = {
   _openPop: function(e) {
     this._popupService.open({
       hbs: 'idpt_' + $(e.currentTarget).data('pop')
-    }, $.proxy(this._bindPop, this), null, 'idpt_pop');
+    }, $.proxy(this._bindPop, this), null, 'idpt_pop', $(e.currentTarget));
   },
 
   // 레이어 팝업 띄운 후 이벤트 바인딩
