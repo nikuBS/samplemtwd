@@ -128,7 +128,12 @@ Tw.CustomerAgentsearchNear.prototype = {
     }
   },
   _showPermission: function (location) {  // 위치정보 이용동의를 위한 팝업 보여줌
-    var shouldGoBack = false;
+    if (this._permissionShowed) {
+      return;
+    }
+
+    this._permissionShowed = true;
+    var shouldGoBack = true;
     this._popupService.open({
       title: Tw.BRANCH.PERMISSION_TITLE,
       title_type: 'sub',
