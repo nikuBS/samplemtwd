@@ -316,6 +316,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     $input.val('');
+    $input.parents('.form-cell').find('.fe-msg').hide();
     $btnClear.hide().attr('aria-hidden', 'true');
   },
 
