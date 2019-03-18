@@ -282,8 +282,10 @@ Tw.MembershipBenefitBrand.prototype = {
   _setScrollLeft: function (cateCd) {
     var $buttons = this.$categoryList.find('button');
     var $target = $buttons.filter('[cate-cd="' + cateCd + '"]').parent();
-    var x = parseInt($target.position().left, 10);
-    this.$categoryList.scrollLeft(x);
+    if ( $target && $target.length > 0) {
+      var x = parseInt($target.position().left, 10);
+      this.$categoryList.scrollLeft(x);
+    }
   },
 
   _searchWithKeyword: function () {
