@@ -684,6 +684,7 @@ Tw.MenuComponent.prototype = {
 
   // 검색창 포커스 인/아웃 처리
   _searchFocus: function () {
+    this.$container.find(':focus').blur();
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
     var $menu = $('#common-menu');
