@@ -11,6 +11,7 @@ Tw.MyTDataPrepaidVoice = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService();
   this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-request:visible'));
 
   this._cachedElement();
   this._init();

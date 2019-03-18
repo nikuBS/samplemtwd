@@ -11,13 +11,16 @@ Tw.TNotifyComponent = function () {
 
   this._goSetting = false;
 
+  this._evt = undefined;
 };
 
 Tw.TNotifyComponent.prototype = {
-  open: function (userId) {
+  open: function (userId, evt) {
+    this._evt = evt;
     this._getPushDate(userId);
   },
-  openWithHash: function (userId, hash) {
+  openWithHash: function (userId, evt, hash) {
+    this._evt = evt;
     this._extraHash = hash;
     this._getPushDate(userId);
   },
@@ -32,7 +35,11 @@ Tw.TNotifyComponent.prototype = {
         list: list,
         showMore: list.length > Tw.DEFAULT_LIST_COUNT
       }
-    }, $.proxy(this._onOpenTNotify, this), $.proxy(this._onCloseTNotify, this), this._extraHash ? this._extraHash + '-t-notify' : 't-notify');
+    },
+    $.proxy(this._onOpenTNotify, this),
+    $.proxy(this._onCloseTNotify, this),
+    this._extraHash ? this._extraHash + '-t-notify' : 't-notify',
+    this._evt);
   },
   _onOpenTNotify: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-list-item');

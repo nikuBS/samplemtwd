@@ -13,6 +13,7 @@ Tw.MyTFareBillRainbow = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay:visible'));
 
   this._init();
 };

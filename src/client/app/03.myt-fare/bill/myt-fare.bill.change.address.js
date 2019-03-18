@@ -18,6 +18,7 @@ Tw.MyTFareBillChangeAddress = function (rootEl) {
   this._validation = Tw.ValidationHelper;
 
   this._historyService = new Tw.HistoryService(rootEl);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-change'));
 
   this._bindEvent();
 };
