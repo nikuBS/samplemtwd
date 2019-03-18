@@ -289,9 +289,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
   _toggleButton: function($button, isEnable) {
     if (isEnable) {
-      $button.removeAttr('disabled').prop('disabled', false);
+      $button.removeAttr('disabled').removeClass('disabled').prop('disabled', false);
     } else {
-      $button.attr('disabled', 'disabled').prop('disabled', true);
+      $button.attr('disabled', 'disabled').addClass('disabled').prop('disabled', true);
     }
   },
 
