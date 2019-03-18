@@ -56,7 +56,7 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   },
 
   // 닫기 확인
-  _closeResendByEmail: function () {
+  _closeResendByEmail: function (e) {
     if(!Tw.FormatHelper.isEmpty(this.$emailInput.val())) {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -64,7 +64,8 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
         $.proxy(this._closePopAndBack, this),
         null,
         Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES
+        Tw.BUTTON_LABEL.YES,
+        $(e.currentTarget)
       );
     } else {
       this._goBack();
@@ -90,24 +91,27 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
     // this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
   },
   
-  _sendRerequestByEmail: function () {    
+  _sendRerequestByEmail: function (e) {    
     this._apiService.request(Tw.API_CMD.BFF_07_0018, {
       eMail:this.$emailInput.val(), 
       selType:'M', 
       selSearch:this.data.taxBillYearMonth
-    }).done($.proxy(this._resSendCallback, this)).fail();
+    }).done($.proxy(this._resSendCallback, this, $(e.currentTarget)))
+    .fail($.proxy(this._apiError, this, $(e.currentTarget)));
   },
 
-  _resSendCallback: function(res) {
+  _resSendCallback: function($target, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(res.code, res.msg).pop();
+      return this._apiError($target, res); // Tw.Error(res.code, res.msg).pop();
     }
 
     this._popupService.openAlert(
       this.$emailInput.val()+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
-      $.proxy(this._goBack, this)
+      $.proxy(this._goBack, this),
+      null,
+      $target
     );
   },
 
@@ -118,5 +122,9 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
 
   _goBack: function() {
     this._historyService.goBack();
+  },
+
+  _apiError: function ($target, err) {
+    return Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };
