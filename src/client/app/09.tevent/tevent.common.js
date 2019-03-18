@@ -35,7 +35,7 @@ Tw.TeventCommon.prototype = {
     this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
   },
-  _openEventPop: function () {
+  _openEventPop: function (e) {
     this._popupService.open({
         url: '/hbs/',
         hbs: 'actionsheet01',
@@ -45,7 +45,8 @@ Tw.TeventCommon.prototype = {
       },
       $.proxy(this._onOpenPopup, this),
       $.proxy(this._goLoad, this),
-      'select');
+      'select',
+      $(e.currentTarget));
   },
   _onOpenPopup: function ($layer) {
     $layer.find('input#' + this._uri).attr('checked', 'checked');

@@ -65,7 +65,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -81,9 +81,9 @@ Tw.MyTFareBillPrepayPay.prototype = {
 
     this._popupService.close();
   },
-  _checkPay: function () {
+  _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
-      this._goCheck();
+      this._goCheck(e);
     }
   },
   _onClose: function () {
@@ -92,13 +92,14 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _closePop: function () {
     this._popupService.closeAll();
   },
-  _goCheck: function () {
+  _goCheck: function (e) {
     this._popupService.open({
       'hbs': 'MF_06_03_01'
     },
       $.proxy(this._setData, this),
       $.proxy(this._afterPaySuccess, this),
-      'check-pay'
+      'check-pay',
+      $(e.currentTarget)
     );
   },
   _setData: function ($layer) {
@@ -116,9 +117,9 @@ Tw.MyTFareBillPrepayPay.prototype = {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=' + this.$title);
     }
   },
-  _close: function () {
+  _close: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
-      $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
+      $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON, $(e.currentTarget));
   },
   _pay: function ($layer) {
     var apiName = this._getApiName();

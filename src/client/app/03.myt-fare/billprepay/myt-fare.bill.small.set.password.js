@@ -32,26 +32,26 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
           this.$type = 'new';
           this._popupService.open({
             'hbs': 'MF_06_06'
-          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd');
+          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd', this.$target);
           break;
         }
         case 'AC': {
           this.$type = 'change';
           this._popupService.open({
             'hbs': 'MF_06_06'
-          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd');
+          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd', this.$target);
           break;
         }
         case 'LC': {
           this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
-            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goAdditionalService, this));
+            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goAdditionalService, this), this.$target);
           break;
         }
         case 'IC': {
           this.$type = 'change';
           this._popupService.open({
             'hbs': 'MF_06_06'
-          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd');
+          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd', this.$target);
           break;
         }
         default:
@@ -106,7 +106,6 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('blur', '.fe-confirm-password', $.proxy(this._checkConfirmPassword, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
-    // this.$layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkIsAbled: function () {
     var isValid = false;
@@ -237,23 +236,5 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _goProductService: function () {
     this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin'));
-  },
-  _onClose: function () {
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._popupService.close();
-    // }
-  },
-  _isChanged: function () {
-    var isChanged = !Tw.FormatHelper.isEmpty(this.$newPassword.val()) || !Tw.FormatHelper.isEmpty(this.$confirmPassword.val());
-    if (this.$type === 'change' && !isChanged) {
-      isChanged = !Tw.FormatHelper.isEmpty(this.$currentPassword.val());
-    }
-    return isChanged;
-  },
-  _closePop: function () {
-    this._popupService.closeAll();
   }
 };

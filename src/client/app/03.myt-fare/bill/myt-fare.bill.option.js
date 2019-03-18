@@ -62,7 +62,7 @@ Tw.MyTFareBillOption.prototype = {
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectDatePopupCallback, this, $target));
+    }, $.proxy(this._selectDatePopupCallback, this, $target), null, null, $target);
   },
   _selectDatePopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');

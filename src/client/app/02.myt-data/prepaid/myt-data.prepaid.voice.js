@@ -400,24 +400,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
-  _stepBack: function (e) {
+  _stepBack: function () {
     this._backAlert.onClose();
-    // var confirmed = false;
-    // this._popupService.openConfirmButton(
-    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-    //   $.proxy(function () {
-    //     confirmed = true;
-    //     this._popupService.close();
-    //   }, this),
-    //   $.proxy(function () {
-    //     if ( confirmed ) {
-    //       this._historyService.replaceURL('/myt-data/submain');
-    //     }
-    //   }, this),
-    //   Tw.BUTTON_LABEL.NO,
-    //   Tw.BUTTON_LABEL.YES,
-    //   $(e.currentTarget)
-    // );
   }
 };
