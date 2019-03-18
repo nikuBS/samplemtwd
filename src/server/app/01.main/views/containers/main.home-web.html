@@ -486,14 +486,12 @@
                     <div class="widget-box slider2">
                         <div class="slider-box">
                             <ul class="slider">
-                                <% redisData.mainNotice.map((notice) => { %>
                                 <li>
-                                    <button data-url="/customer/svc-info/notice?ntcId=<%= notice.ntcId %>" class="fe-home-internal">
-                                        <span class="notice-list-ti"><%= notice.ntcTitNm %></span>
+                                    <button data-url="/customer/svc-info/notice?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-115" data-xt_csid="NO" data-xt_action="BC">
+                                        <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
                                         <span class="ico"></span>
                                     </button>
                                 </li>
-                                <% }) %>
                             </ul>
                         </div>
                     </div>
