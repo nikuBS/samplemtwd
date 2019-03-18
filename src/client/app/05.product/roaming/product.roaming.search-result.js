@@ -171,12 +171,12 @@ Tw.ProductRoamingSearchResult.prototype = {
             }
         }
 
-        this.reqParams.manageType = this.manageType[0].type;
-        this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
-
-        Tw.Logger.info('this.reqParams : ', this.reqParams);
-
-        this._getCountryRoamingRate(this.reqParams, this);
+        if(this.manageType.length > 0) {
+            this.reqParams.manageType = this.manageType[0].type;
+            this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
+            Tw.Logger.info('this.reqParams : ', this.reqParams);
+            this._getCountryRoamingRate(this.reqParams, this);
+        }
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
         this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
         this._roamingDecriptonInit();
