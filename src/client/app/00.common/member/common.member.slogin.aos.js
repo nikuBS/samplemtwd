@@ -7,7 +7,6 @@
 Tw.CommonMemberSloginAos = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
   this.$inputBirth = null;

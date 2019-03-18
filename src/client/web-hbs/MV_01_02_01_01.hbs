@@ -35,7 +35,7 @@
                                         <div class="forminbox-wrap">
                                             <p id="aria-citation-sms" class="form-ti title">휴대폰번호</p>
                                         </div>
-                                        <span class="inputbox bt-add inp-btn readonly"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                        <span id="fe-inputbox-mdn" class="inputbox bt-add inp-btn readonly"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                         <span class="input">
                                             <input id="fe-input-mdn" type="text" placeholder="" value="{{ list.0.txt }}" title="휴대폰 번호" aria-labelledby="aria-citation-sms" aria-describedby="" readonly=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
                                         </span>
@@ -54,17 +54,17 @@
                                         <div class="forminbox-wrap">
                                             <p id="aria-citation-sms" class="form-ti">휴대폰번호</p>
                                             <div class="rdo-list-type">
-                                                <div class="inputbox">
+                                                <div id="fe-inputbox-mdn" class="inputbox">
                                                     <ul class="survey-researchbox">
                                                         {{#each list}}
                                                             <li class="category-type fe-radio-list" data-index="{{@index}}">
-                                                                <div class="chkform-wrap">
-                                                            <span class="custom-form">
-                                                                <input id="ok1_{{@index}}" type="radio" name="r1" data-index="{{@index}}">
-                                                                <span class="r-type1"></span>
-                                                            </span>
-                                                                    <label for="ok1_{{@index}}">{{txt}}</label>
-                                                                </div>
+                                                            <div class="chkform-wrap">
+                                                                <span class="custom-form">
+                                                                    <input id="fe-input-mdn_{{@index}}" class="fe-input-mdn" type="radio" name="r1" data-index="{{@index}}">
+                                                                    <span class="r-type1"></span>
+                                                                </span>
+                                                                <label for="fe-input-mdn_{{@index}}">{{txt}}</label>
+                                                            </div>
                                                             </li>
                                                         {{/each}}
                                                     </ul>
@@ -86,8 +86,8 @@
                                 <div class="form-cell linebox">
 
                                     <p id="aria-citation-sms" class="form-ti title">인증번호</p>
-                                    <p class="txt">전송 받으신 인증번호를 입력해주세요. <span id="fe-sms-time" class="sms-time"></span></p>
-                                    <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                    <p class="txt">전송 받으신 인증번호를 입력해주세요. <input id="fe-sms-time" class="sms-time" type="text" readonly="readonly" value=""></p>
+                                    <span id="fe-inputbox-cert" class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
                                         <span class="input">
                                             <input id="fe-input-cert" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="인증번호 6자리 입력" title="인증번호" aria-labelledby="aria-citation-sms" aria-describedby=""><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
                                         </span>

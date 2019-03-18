@@ -122,6 +122,9 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$errorBirthLen = this.$container.find('#aria-birth-tx2');
     this.$errorGender = this.$container.find('#aria-gender-tx');
 
+    this.$inputboxMdn = this.$container.find('#fe-inputbox-mdn');
+    this.$inputboxCert = this.$container.find('#fe-inputbox-cert');
+
     this.$validSendCert = this.$container.find('#aria-cert-num2');
     this.$validAddCert = this.$container.find('#aria-cert-num1');
     this.$errorCertTime = this.$container.find('#aria-cert-num3');
@@ -179,10 +182,10 @@ Tw.CommonMemberSloginIos.prototype = {
   _onClickGender: function ($event) {
     var $currentTarget = $($event.currentTarget);
     this.$inputGender.prop('checked', false);
-    this.$inputGender.removeClass('checked');
+    this.$inputGender.parent().removeClass('checked');
     this.$inputGender.attr('aria-checked', false);
     $currentTarget.prop('checked', true);
-    $currentTarget.addClass('checked');
+    $currentTarget.parent().addClass('checked');
     $currentTarget.attr('aria-checked', true);
   },
   _onClickCert: function () {
@@ -212,7 +215,7 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
-      this.$validSendCert.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$validSendCert);
       if ( !reCert ) {
         this.$btCert.addClass('none');
         this.$btReCert.removeClass('none');
@@ -228,7 +231,7 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
-    this.$showTime.text(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
@@ -238,16 +241,13 @@ Tw.CommonMemberSloginIos.prototype = {
   //   this.$btCertAdd.addClass('none');
   // },
   _checkCertError: function (errorCode, errorMsg) {
-    this._clearCertError();
+    // this._clearCertError();
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
-      this.$errorCertTime.removeClass('none');
-      this.$errorCertTime.attr('aria-hidden', false);
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
-      this.$errorCertCount.removeClass('none');
-      this.$errorCertCount.attr('aria-hidden', false);
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCount);
     } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162 ) {
-      this.$errorCertBlock.removeClass('none');
-      this.$errorCertBlock.attr('aria-hidden', false);
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else if ( errorCode === this.SMS_ERROR.ATH1004 || errorCode === this.SMS_ERROR.ATH1005 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
@@ -260,23 +260,22 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.$validAddCert.removeClass('none');
-      this.$validAddCert.attr('aria-hidden', false);
+      this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
       if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
         clearInterval(this._addTimer);
       }
       this._addTime = new Date();
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
-      this.$errorCertAddTime.removeClass('none');
-      this.$errorCertAddTime.attr('aria-hidden', false);
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _onClickLogin: function () {
+  _onClickLogin: function ($event) {
+    var $target = $($event.currentTarget);
     var inputCert = this.$inputCert.val();
-    if ( this._checkLoginValidation(inputCert) ) {
+    if ( this._checkLoginValidation(inputCert, $target) ) {
       var params = {
         svcNum: this.$inputMdn.val(),
         mbrNm: this.$inputName.val(),
@@ -284,34 +283,31 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()],
         authNum: inputCert
       };
-      this._requestLogin(params);
+      this._requestLogin(params, $target);
     }
   },
-  _requestLogin: function (params) {
+  _requestLogin: function (params, $target) {
     this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_IOS, params)
-      .done($.proxy(this._successRequestLogin, this));
+      .done($.proxy(this._successRequestLogin, this, $target));
   },
-  _successRequestLogin: function (resp) {
+  _successRequestLogin: function (resp, $target) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.goBack();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
-      this.$errorLoginCert.removeClass('none');
-      this.$errorLoginCert.attr('aria-hidden', false);
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorLoginCert);
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
-      this.$errorLoginTime.removeClass('none');
-      this.$errorLoginCert.attr('aria-hidden', false);
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
-      this.$errorLoginCnt.removeClass('none');
-      this.$errorLoginCert.attr('aria-hidden', false);
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
     } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, null, null, null, null, $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -323,24 +319,24 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearAllError();
     if ( Tw.FormatHelper.isEmpty(inputName) ) {
       result = false;
-      this._showError(this.$inputboxName, this.$inputName, this.$errorName, 'aria-phone-tx1');
+      this._showError(this.$inputboxName, this.$inputName, this.$errorName);
     }
     if ( Tw.FormatHelper.isEmpty(inputBirth) ) {
       result = false;
-      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth, 'aria-birth-tx1');
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth);
     } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
       result = false;
-      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen, 'aria-birth-tx2');
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen);
     }
     if ( this.$inputGender.filter(':checked').length === 0 ) {
       result = false;
-      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender, 'aria-gender-tx1');
+      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender);
     }
     return result;
   },
-  _showError: function (inputBox, input, error, ariaName) {
+  _showError: function (inputBox, input, error) {
     inputBox.addClass('error');
-    input.attr('aria-describedby', ariaName);
+    input.attr('aria-describedby', error.attr('id'));
     error.removeClass('none');
     error.attr('aria-hidden', false);
   },
@@ -370,30 +366,21 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearError(this.$inputboxGender, this.$inputGender, this.$errorGender);
   },
   _clearCertError: function () {
-    this.$validSendCert.addClass('none');
-    this.$validSendCert.attr('aria-hidden', true);
-    this.$errorCertTime.addClass('none');
-    this.$errorCertTime.attr('aria-hidden', true);
-    this.$errorCertCount.addClass('none');
-    this.$errorCertCount.attr('aria-hidden', true);
-    this.$errorCertBlock.addClass('none');
-    this.$errorCertBlock.attr('aria-hidden', true);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$validSendCert);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCount);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
   },
   _clearLoginError: function () {
-    this.$validAddCert.addClass('none');
-    this.$validAddCert.attr('aria-hidden', true);
-    this.$errorCertAddTime.addClass('none');
-    this.$errorCertAddTime.attr('aria-hidden', true);
-    this.$errorLoginCert.addClass('none');
-    this.$errorLoginCert.attr('aria-hidden', true);
-    this.$errorLoginTime.addClass('none');
-    this.$errorLoginTime.attr('aria-hidden', true);
-    this.$errorLoginCnt.addClass('none');
-    this.$errorLoginCnt.attr('aria-hidden', true);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
   },
-  _checkLoginValidation: function (inputCert) {
+  _checkLoginValidation: function (inputCert, $target) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT, null, null, null, null, $target);
       return false;
     }
     return true;

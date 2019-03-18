@@ -80,19 +80,21 @@ Tw.CommonMemberLineRegister.prototype = {
     this._enableBtns();
   },
   _onClickRegister: function ($event) {
+    var $target = $($event.currentTarget);
+    $event.preventDefault();
     $event.stopPropagation();
 
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successAllSvc, this));
+      .done($.proxy(this._successAllSvc, this, $target));
   },
-  _successAllSvc: function (resp) {
+  _successAllSvc: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var $selected = this.$childChecks.filter(':checked').parent();
       var svcNumList = this._getExposedSvcNumList(resp.result);
       _.map($selected, $.proxy(function (checkbox) {
         svcNumList.push($(checkbox).data('svcmgmtnum'));
       }, this));
-      this._registerLineList(svcNumList.join('~'), svcNumList.length);
+      this._registerLineList(svcNumList.join('~'), svcNumList.length, $target);
     } else {
       Tw.Error(resp.code, resp.msg);
     }
@@ -159,18 +161,18 @@ Tw.CommonMemberLineRegister.prototype = {
       this.$btnRegister.attr('disabled', false);
     }
   },
-  _registerLineList: function (lineList, length) {
+  _registerLineList: function (lineList, length, $target) {
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successRegisterLineList, this, length))
+    }).done($.proxy(this._successRegisterLineList, this, length, $target))
       .fail($.proxy(this._failRegisterLineList, this));
   },
-  _successRegisterLineList: function (registerLength, resp) {
+  _successRegisterLineList: function (registerLength, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       if ( this._registerLength > 0 ) {
-        this._openCompletePopup();
+        this._openCompletePopup($target);
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -179,14 +181,14 @@ Tw.CommonMemberLineRegister.prototype = {
   _failRegisterLineList: function (error) {
     Tw.Error(error.code, error.msg).pop();
   },
-  _openCompletePopup: function () {
+  _openCompletePopup: function ($target) {
     this._popupService.open({
       hbs: 'CO_01_02_04_03',
       layer: true,
       data: {
         registerLength: this._registerLength
       }
-    }, $.proxy(this._onOpenCompletePopup, this), $.proxy(this._onCloseCompletePopup, this), 'line-complete');
+    }, $.proxy(this._onOpenCompletePopup, this), $.proxy(this._onCloseCompletePopup, this), 'line-complete', $target);
   },
   _onOpenCompletePopup: function ($layer) {
     $layer.on('click', '#fe-bt-home', $.proxy(this._goHome, this));
