@@ -1,6 +1,6 @@
 /**
  * FileName: product.roaming.do.search-before.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
@@ -52,6 +52,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             'showDailyPrice': 'N'
         };
 
+        // 휴대폰 정보 있는 경우 사용자 휴대폰 정보 노출
         this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
         this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
         if(this._svcInfo !== null){
@@ -79,6 +80,7 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         Tw.Logger.info('roaming service info : ', JSON.stringify(this._rateInfo));
 
+        // 국가별 이용가능 서비스 리스트 생성
         if(this._rateInfo.iPoPhone){
             if(this._rateInfo.iPoPhone === '0') {
                 if(this._rateInfo.eqpMthdCd === 'W'){   // wcdma+gsm
@@ -179,6 +181,9 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
         this._roamingDecriptonInit();
     },
+    /**
+     * 로밍 이용가능 서비스 요금 조회
+     */
     _getCountryRoamingRate: function (params, event) {
         Tw.Logger.info('get countryRoamingRate params :::: ', params);
         this._apiService.request(Tw.API_CMD.BFF_10_0058, params)
@@ -333,9 +338,10 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan?prod_id=TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
+        // 팔라우, 세이셸, 마다가스카르의 국가의 경우 공지팝업 호출
         if(_result.dablYn === 'Y') {
             var popupDesc = _result.dablCtt;
-            setTimeout($.proxy(this._openNoticePopup, this, popupDesc, event), 450);
+            setTimeout($.proxy(this._openNoticePopup, this, popupDesc, event), 500);
         }
 
     },
