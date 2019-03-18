@@ -372,11 +372,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    if ($input.length > 8) {
-      $input.val(Tw.FormatHelper.conTelFormatWithDash($input.val()));
-    } else {
-      $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
-    }
+    $input.val(Tw.FormatHelper.conTelFormatWithDash($input.val()));
   },
 
   _focusInputNumber: function(e) {
