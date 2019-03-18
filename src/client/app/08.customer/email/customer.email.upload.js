@@ -76,21 +76,21 @@ Tw.CustomerEmailUpload.prototype = {
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
       return this._popupService.openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE, 
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, null, null, 
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, null, null, null,
         $target
       );
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
       return this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_FILE, 
         Tw.POPUP_TITLE.NOTIFY,
-        null, null,
+        null, null, null, 
         $target
       );
     } else {
       return this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_FILE, 
         Tw.POPUP_TITLE.NOTIFY,
-        null, null, 
+        null, null, null,
         $target
       );
     }
@@ -172,12 +172,12 @@ Tw.CustomerEmailUpload.prototype = {
       // 파일 첨부된 갯수가 있으면 마지막 줄에 포커스
       this.$container.find('input[type=file]').eq(0).focus();
     } else {
-      // 파일 첨부된 갯수가 없으면 팝업에 포커스
-      $('.fe-wrap-file-upload').attr('tabindex',-1).focus();
+      // 파일 첨부된 갯수가 없으면 팝업 제목에 포커스
+      $('.fe-wrap-file-upload').find('h1').attr('tabindex',-1).focus();
     }
   },
 
-  _onClickServiceUpload: function () {
+  _onClickServiceUpload: function (e) {
     if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
@@ -191,7 +191,7 @@ Tw.CustomerEmailUpload.prototype = {
           style_class: 'bt-red1 pos-right tw-popup-closeBtn',
           txt: Tw.BUTTON_LABEL.CONFIRM
         }]
-      }, $.proxy(this._bindAlertPopupClose, this), null);
+      }, $.proxy(this._bindAlertPopupClose, this), null, null, $(e.currentTarget));
       return false;
     }
 
@@ -199,7 +199,7 @@ Tw.CustomerEmailUpload.prototype = {
     this._showUploadPopup();
   },
 
-  _onClickQualityUpload: function () {
+  _onClickQualityUpload: function (e) {
     if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
@@ -213,7 +213,7 @@ Tw.CustomerEmailUpload.prototype = {
           style_class: 'bt-red1 pos-right tw-popup-closeBtn',
           txt: Tw.BUTTON_LABEL.CONFIRM
         }]
-      }, $.proxy(this._bindAlertPopupClose, this), null);
+      }, $.proxy(this._bindAlertPopupClose, this), null, null, $(e.currentTarget));
       return false;
     }
 
@@ -236,13 +236,12 @@ Tw.CustomerEmailUpload.prototype = {
 
   _hideUploadPopup: function () {
     $('.fe-wrap-file-upload').remove();
-    // 웹접근성 닫히고 포커스
+    // 웹 접근성 닫고 포커스
     $('.fe-page-wrap, .skip_navi').attr('aria-hidden', false);
-    $('.fe-upload-file-service').focus();
+    $('.fe-upload-file-service').attr('tabindex',0).focus();
   },
 
   _successUploadFile: function (res) {
-    this._hideUploadPopup();
 
     if ( res.code === Tw.API_CODE.CODE_00 || this._isLowerVersionAndroid() ) {
       if ( this._getCurrentType() === 'service' ) {
@@ -276,6 +275,8 @@ Tw.CustomerEmailUpload.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+
+    this._hideUploadPopup();
   },
 
   _checkUploadButton: function () {
