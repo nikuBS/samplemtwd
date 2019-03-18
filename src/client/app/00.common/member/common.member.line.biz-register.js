@@ -120,7 +120,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this.$inputNickname.val(nickname);
   },
   _handleError: function (code, message, $target) {
-    if ( code === this.ERROR_CODE.ATH0021 ) {
+    if ( code === this.ERROR_CODE.ATH0020 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_ATH0020, null, null, null, null, $target);
+    } else if ( code === this.ERROR_CODE.ATH0021 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else if ( code === this.ERROR_CODE.ATH0022 && code === this.ERROR_CODE.ATH0023 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7, null, null, null, null, $target);
