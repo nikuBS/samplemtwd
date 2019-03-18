@@ -97,6 +97,8 @@ Tw.CertificationSkFull.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
   _onCloseSmsFull: function () {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
