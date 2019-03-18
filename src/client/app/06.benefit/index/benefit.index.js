@@ -424,8 +424,8 @@ Tw.BenefitIndex.prototype = {
    */
   _switchTab: function (categoryId) {
     // 모두 체크해제 , 현재 탭 활성화
-    this.$categoryTab.find('[data-category]').removeClass('on');
-    this.$categoryTab.find('[data-category="{0}"]'.replace('{0}', categoryId)).addClass('on');
+    this.$categoryTab.find('[data-category]').removeClass('on').attr('aria-selected', false);
+    this.$categoryTab.find('[data-category="{0}"]'.replace('{0}', categoryId)).addClass('on').attr('aria-selected', true);
 
     this._reqProductList(categoryId);
     this.$combinationPreview.addClass('none');
