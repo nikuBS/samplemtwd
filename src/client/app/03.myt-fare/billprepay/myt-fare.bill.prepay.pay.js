@@ -14,6 +14,7 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
@@ -103,6 +104,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
     );
   },
   _setData: function ($layer) {
+    this._focus = new Tw.InputFocusService($layer, $layer.find('.fe-pay'));
+
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-payment-option-number').text(this.$cardNumber.val());
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma($.trim(this.$prepayAmount.val().toString())));

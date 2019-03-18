@@ -10,6 +10,7 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-setting-alarm'));
 
   this._cachedElement();
   this._bindEvent();

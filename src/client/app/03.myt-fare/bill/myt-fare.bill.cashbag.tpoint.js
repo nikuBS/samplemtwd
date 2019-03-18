@@ -15,6 +15,7 @@ Tw.MyTFareBillCashbagTpoint = function (rootEl, pointType) {
   this._validationService = new Tw.ValidationService(rootEl);
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay:visible'));
 
   this._init();
 };

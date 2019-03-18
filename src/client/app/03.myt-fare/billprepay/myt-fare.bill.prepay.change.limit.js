@@ -15,6 +15,7 @@ Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
   this._commonHelper = Tw.CommonHelper;
 
   this._historyService = new Tw.HistoryService(rootEl);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-change'));
   this._init();
 };
 

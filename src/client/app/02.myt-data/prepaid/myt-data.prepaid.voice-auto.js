@@ -11,6 +11,7 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService();
   this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-request-recharge'));
 
   this._firstChange = true;
   this._firstBlur = true;

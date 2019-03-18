@@ -10,6 +10,7 @@ Tw.MyTDataPrepaidDataAuto = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-recharge'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-recharge'));
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
