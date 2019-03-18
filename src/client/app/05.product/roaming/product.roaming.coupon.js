@@ -51,6 +51,21 @@ Tw.ProductRoamingCoupon.prototype = {
       return this._tidLanding.goLogin(location.origin + '/product/roaming/coupon');
     }
 
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+      msg = msg && msg.length > 0 ? msg.pop().match(/(\d+)/) : '';
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+          serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
