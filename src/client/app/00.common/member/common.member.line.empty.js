@@ -16,10 +16,11 @@ Tw.CommonMemberLineEmpty.prototype = {
     this.$container.on('click', '#fe-bt-cop-password', $.proxy(this._openCopPassword, this));
     this.$container.on('click', '.fe-bt-go-url', $.proxy(this._goUrl, this));
   },
-  _openCopPassword: function () {
+  _openCopPassword: function ($event) {
+    var $target = $($event.currentTarget);
     this._popupService.open({
       hbs: 'CO_01_05_02_02'
-    }, null, null, 'cop-password');
+    }, null, null, 'cop-password', $target);
   },
   _goUrl: function ($event) {
     var url = $($event.currentTarget).data('url');

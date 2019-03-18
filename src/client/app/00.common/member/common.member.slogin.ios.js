@@ -272,9 +272,10 @@ Tw.CommonMemberSloginIos.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _onClickLogin: function () {
+  _onClickLogin: function ($event) {
+    var $target = $($event.currentTarget);
     var inputCert = this.$inputCert.val();
-    if ( this._checkLoginValidation(inputCert) ) {
+    if ( this._checkLoginValidation(inputCert, $target) ) {
       var params = {
         svcNum: this.$inputMdn.val(),
         mbrNm: this.$inputName.val(),
@@ -282,14 +283,14 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()],
         authNum: inputCert
       };
-      this._requestLogin(params);
+      this._requestLogin(params, $target);
     }
   },
-  _requestLogin: function (params) {
+  _requestLogin: function (params, $target) {
     this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_IOS, params)
-      .done($.proxy(this._successRequestLogin, this));
+      .done($.proxy(this._successRequestLogin, this, $target));
   },
-  _successRequestLogin: function (resp) {
+  _successRequestLogin: function (resp, $target) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.goBack();
@@ -300,13 +301,13 @@ Tw.CommonMemberSloginIos.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
     } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013, null, null, null, null, $target);
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014, null, null, null, null, $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -377,9 +378,9 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
   },
-  _checkLoginValidation: function (inputCert) {
+  _checkLoginValidation: function (inputCert, $target) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT, null, null, null, null, $target);
       return false;
     }
     return true;
