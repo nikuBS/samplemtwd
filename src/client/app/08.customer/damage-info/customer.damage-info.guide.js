@@ -36,7 +36,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
   },
 
   // 카테고리 설정 팝업
-  _openCategorySelectPopup: function() {
+  _openCategorySelectPopup: function(e) {
     this._popupService.open({
       hbs:'actionsheet01',
       layer:true,
@@ -53,7 +53,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'guide_category');
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'guide_category', $(e.currentTarget));
   },
 
   // 카테고리 설정 팝업 닫을 때

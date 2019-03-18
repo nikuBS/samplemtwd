@@ -11,9 +11,14 @@ Tw.CustomerDamageInfoWarningView = function(rootEl) {
 
   // 이벤트 바인딩
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerDamageInfoWarningView.prototype = {
+
+  _init: function() {
+    Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
+  },
 
   // 이벤트 바인딩
   _bindEvent: function() {
