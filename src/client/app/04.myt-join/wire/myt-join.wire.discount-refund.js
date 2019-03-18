@@ -33,7 +33,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('shortDateNoDot', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('shortDateNoDot', Tw.DateHelper.getShortDate);
     Handlebars.registerHelper('curreny', Tw.FormatHelper.addComma);
   },
 

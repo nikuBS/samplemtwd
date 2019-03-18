@@ -86,7 +86,7 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('shortDate', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('shortDate', Tw.DateHelper.getShortDate);
   },
 
   /**
