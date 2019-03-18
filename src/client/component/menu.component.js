@@ -201,11 +201,11 @@ Tw.MenuComponent.prototype = {
 
     this.$container.find('#fe-close').focus();  // 웹 접근성, 포커스 메뉴 div로 이동
   },
-  _onTNoti: function () {
+  _onTNoti: function (e) {
     if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
-    this._tNotifyComp.openWithHash(this._tid, 'menu');
+    this._tNotifyComp.openWithHash(this._tid, e, 'menu');
     this.$container.find('.fe-t-noti').removeClass('on');
     this.$container.find('#fe-empty-t-noti').attr('aria-hidden', 'false');
     this.$container.find('#fe-new-t-noti').attr('aria-hidden', 'true');
