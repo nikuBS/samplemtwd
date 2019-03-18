@@ -49,34 +49,34 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     //var $selectedClaim = $(btnEvt.currentTarget);
     //$selectedClaim.parents('.opinion-selectbox').addClass('selected');
     if($(btnEvt.currentTarget).data('type')===52){
-      this._showRequestKeyword();
+      this._showRequestKeyword(btnEvt);
     }else{
-      this._showSelectClaim();
+      this._showSelectClaim(btnEvt);
     }
   },
-  _openAlert : function (alertObj,doRequest){
+  _openAlert : function (alertObj,doRequest,event){
     this._popupService.openModalTypeATwoButton(alertObj.TITLE, null, null, alertObj.BUTTON,
       null,
-      $.proxy(doRequest,this),
-      null);
+      $.proxy(doRequest,this,event),
+      null,null,$(event.currentTarget));
   },
-  _showRequestKeyword : function () {
+  _showRequestKeyword : function (evt) {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_01',
       layer: true,
       data: null
     }, $.proxy(this._bindEventForRequestKeyword, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
-      $.proxy(this._removeInputDisabled,this), 'requestKeyword');
+      $.proxy(this._removeInputDisabled,this), 'requestKeyword',$(evt.currentTarget));
   },
-  _showSelectClaim : function () {
+  _showSelectClaim : function (evt) {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_02',
       layer: true,
       data: this._surveyList.invstQstnAnswItm
     }, $.proxy(this._bindEventForSelectClaim, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
-      $.proxy(this._removeInputDisabled,this), 'selectClaim');
+      $.proxy(this._removeInputDisabled,this), 'selectClaim',$(evt.currentTarget));
   },
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
@@ -127,27 +127,27 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   _activateSelectClaimBtn : function(){
     this.$selectClaimPopup.find('.request_claim').removeAttr('disabled');
   },
-  _requestKeyword : function () {
+  _requestKeyword : function (evt) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
     done($.proxy(function (res) {
       this._claimCallback(res,52);
     }, this))
       .fail($.proxy(function (err) {
-        this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
+        this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
       }, this));
   },
-  _selectClaim : function () {
+  _selectClaim : function (evt) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0072, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
     done($.proxy(function (res) {
-      this._claimCallback(res,51);
+      this._claimCallback(res,51, evt);
     }, this))
     .fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,nul,$(evt.currentTarget));
     }, this));
   },
-  _claimCallback : function (res,srchId) {
+  _claimCallback : function (res,srchId, evt) {
     if(res.code===Tw.API_CODE.CODE_00){
       var $selectedEl = this.$container.find('.opinion-selectbox');
       $selectedEl.each(function (idx) {
@@ -159,7 +159,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       });
       this._popupService.close();
     }else{
-      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
     }
   },
   _inputKeyupEvt : function (evt) {
@@ -175,7 +175,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       }
     }
   },
-  _doSearch : function () {
+  _doSearch : function (evt) {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)){
       var closeCallback;
@@ -187,7 +187,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
         },this);
       }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(evt.currentTarget));
       return;
     }
     this._addRecentlyKeyword(searchKeyword);

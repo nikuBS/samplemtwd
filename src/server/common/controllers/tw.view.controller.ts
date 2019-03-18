@@ -149,7 +149,7 @@ abstract class TwViewController {
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         const loginType = urlMeta.auth.accessTypes;
 
-        if ( this.checkServiceBlock(urlMeta, res) ) {
+        if ( this.checkServiceBlock(urlMeta, svcInfo, res) ) {
           return;
         }
 
@@ -259,7 +259,7 @@ abstract class TwViewController {
     res.send(message);
   }
 
-  private checkServiceBlock(urlMeta: any, res) {
+  private checkServiceBlock(urlMeta: any, svcInfo: any, res) {
     if ( !FormatHelper.isEmpty(urlMeta.block) && urlMeta.block.length > 0 ) {
       const blockList = urlMeta.block;
       const today = new Date().getTime();
@@ -269,9 +269,23 @@ abstract class TwViewController {
         return today > startTime && today < endTime;
       });
       if ( !FormatHelper.isEmpty(findBlock) ) {
-        const blockUrl = findBlock.url || '/common/util/service-block';
-        res.redirect(blockUrl + '?fromDtm=' + findBlock.fromDtm + '&toDtm=' + findBlock.toDtm);
-        return true;
+        if ( !FormatHelper.isEmpty(svcInfo) ) {
+          const userId = svcInfo.userId;
+          this.redisService.getString(REDIS_KEY.EX_USER + userId)
+            .subscribe((resp) => {
+              if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+                return false;
+              } else {
+                const blockUrl = findBlock.url || '/common/util/service-block';
+                res.redirect(blockUrl + '?fromDtm=' + findBlock.fromDtm + '&toDtm=' + findBlock.toDtm);
+                return true;
+              }
+            });
+        } else {
+          const blockUrl = findBlock.url || '/common/util/service-block';
+          res.redirect(blockUrl + '?fromDtm=' + findBlock.fromDtm + '&toDtm=' + findBlock.toDtm);
+          return true;
+        }
       }
     }
   }

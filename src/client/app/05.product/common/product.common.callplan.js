@@ -58,6 +58,8 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contents.find('.idpt-pc').length > 0) {
       this.$contents.find('.idpt-pc').remove();
     }
+
+    Tw.CommonHelper.replaceExternalLinkTarget(this.$contents);
   },
 
   _initBpcp: function() {
@@ -134,8 +136,8 @@ Tw.ProductCommonCallplan.prototype = {
     });
   },
 
-  _openComparePlans: function() {
-    this._comparePlans.openCompare(this._prodId);
+  _openComparePlans: function(e) {
+    this._comparePlans.openCompare(this._prodId, true, e);
   },
 
   _onBannerLink: function(e) {
@@ -343,7 +345,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     if (resp.code === 'BFF0504') {
       var msg = resp.msg.match(/\(.*\)/);
-        msg = msg.pop().match(/(\d+)/);
+        msg = msg && msg.length > 0 ? msg.pop().match(/(\d+)/) : '';
 
       var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
         toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
@@ -482,6 +484,8 @@ Tw.ProductCommonCallplan.prototype = {
         $popupContainer.scrollTop(0);
       }
     }, 100);
+
+    Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 
   _openCombineNeedWireError: function() {

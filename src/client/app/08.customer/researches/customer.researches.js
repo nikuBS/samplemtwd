@@ -18,6 +18,9 @@ Tw.CustomerResearches.prototype = {
         examples: _.map(research.examples, function(exam, idx) {
           return $.extend(exam, { idx: idx });
         }),
+        hasHtml: _.some(research.examples, function(exam) {
+          return exam.motHtml;
+        }),
         isMultiple: research.bnnrRsrchRpsTypCd === 'C',
         isDoubleAlign: research.bnnrRsrchSortMthdCd === 'D',
         hasImage: research.examples[0] && research.examples[0].image,
@@ -33,7 +36,18 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('change', 'ul.survey-researchbox > li input', $.proxy(this._handleChangeSelect, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
     this.$container.on('click', '.bt-more', $.proxy(this._handleLoadMore, this));
-    this.$container.on('click', '.fe-nResearch li', $.proxy(this._toggleSelect, this));
+    this.$container.on('click', '.fe-nResearch li.category-type', $.proxy(this._setSelect, this));
+    this.$container.on('click', '.fe-nResearch .fe-submit', $.proxy(this._handleSubmit, this));
+    this.$container.on('click', '.fe-nResearch .acco-tit', $.proxy(this._toggleShowDetail, this));
+    this.$container.on('click', 'a', $.proxy(this._clearForm, this));
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+  },
+
+  _openExternalUrl: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
   },
 
   _cachedElement: function() {
@@ -83,21 +97,28 @@ Tw.CustomerResearches.prototype = {
     $list.find('input').prop('checked', false);
     $target.prop('disabled', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this));
+    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this, $target));
   },
 
-  _handleSuccessSubmit: function(resp) {
+  _clearForm: function() {
+    var $list = this.$container.find('ul.survey-researchbox > li');
+    $list.prop('aria-checked', false);
+    $list.find('input').prop('checked', false);
+    this.$container.find('.fe-submit').prop('disabled', true);
+  },
+
+  _handleSuccessSubmit: function($target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     switch (resp.result) {
       case 'DUPLICATE':
-        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01);
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, undefined, undefined, $target);
         break;
       case 'SUCCESSY':
       case 'SUCCESSN':
-        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02);
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, undefined, undefined, $target);
         break;
     }
   },
@@ -141,17 +162,31 @@ Tw.CustomerResearches.prototype = {
     this.$list.append(this._tmpl({ researches: list }));
   },
 
-  _toggleSelect: function(e) {
+  _setSelect: function(e) {
     var $target = $(e.currentTarget),
-      $input = $target.find('input'),
-      isChecked = $target.attr('aria-checked') === 'true';
-    $target.toggleClass('checked');
-    if (isChecked) {
-      $target.attr('aria-checked', 'false');
-      $input.removeAttr('checked');
+      $parent = $target.closest('.survey-researchbox'),
+      $checkedLi = $parent.find('li.checked').not($target);
+
+    $checkedLi
+      .removeClass('checked')
+      .prop('aria-checked', false)
+      .find('input')
+      .prop('checked', false);
+    $target
+      .addClass('checked')
+      .prop('aria-checked', true)
+      .find('input')
+      .prop('checked', true);
+
+    this._setEnableSubmit(e);
+  },
+
+  _toggleShowDetail: function(e) {
+    var $target = $(e.currentTarget).closest('li');
+    if ($target.hasClass('on')) {
+      $target.removeClass('on');
     } else {
-      $target.attr('aria-checked', 'true');
-      $input.attr('checked', true);
+      $target.addClass('on');
     }
   }
 };

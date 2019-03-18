@@ -174,15 +174,15 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         Tw.Logger.info('this.reqParams : ', this.reqParams);
 
-        this._getCountryRoamingRate(this.reqParams);
+        this._getCountryRoamingRate(this.reqParams, this);
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
         this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
         this._roamingDecriptonInit();
     },
-    _getCountryRoamingRate: function (params) {
+    _getCountryRoamingRate: function (params, event) {
         Tw.Logger.info('get countryRoamingRate params :::: ', params);
         this._apiService.request(Tw.API_CMD.BFF_10_0058, params)
-            .done($.proxy(this._handleSuccessRateResult, this))
+            .done($.proxy(this._handleSuccessRateResult, this, event))
             .fail($.proxy(this._handleFailSearch, this));
     },
     _bindEvents: function () {
@@ -214,9 +214,10 @@ Tw.ProductRoamingSearchResult.prototype = {
     _goEuropePassPlan: function () {
         this._history.goLoad('/product/callplan?prod_id=NA00006046');
     },
-    _onClickSelectBtn: function () {
+    _onClickSelectBtn: function (e) {
         if(this.modelValue === undefined || this.modelValue === ''){
-            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG,
+                Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE, null, null, null, $(e.currentTarget));
         } else {
             this._phoneInfo.eqpMdlNm = this.modelValue;
             this._phoneInfo.eqpMdlCd = this.modelCode;
@@ -258,7 +259,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.fe-roaming-model').text(this.modelValue);
         this._popupService.close();
     },
-    _handleSuccessRateResult: function (resp) {
+    _handleSuccessRateResult: function (event, resp) {
         if (resp.code !== Tw.API_CODE.CODE_00) {
             Tw.Error(resp.code, resp.msg).pop();
             return;
@@ -306,8 +307,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         _result.dMoChargeMin = Number(_result.dMoChargeMin);
-        _result.mTxtCharge =  Number(_result.mTxtCharge);;
-        _result.mMtmCharge =  Number(_result.mMtmCharge);;
+        _result.mTxtCharge =  Number(_result.mTxtCharge);
+        _result.mMtmCharge =  Number(_result.mMtmCharge);
         noticeParam.attentionShown = (_result.svcAttention) ? true : false;
 
         Tw.Logger.info('result noticeParam = ', JSON.stringify(noticeParam));
@@ -327,22 +328,26 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._popupService.open({
                     hbs: 'RM_10',
                     layer: true
-                }, $.proxy(this._closeRusNotiPopup, this), null);
+                }, $.proxy(this._closeRusNotiPopup, this), null, null, $(event.currentTarget));
         }
         this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan?prod_id=TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
         if(_result.dablYn === 'Y') {
-            this._popupService.open({
-                'pop_name': 'type_tx_scroll',
-                'title': Tw.ROAMING_ERROR.TITLE,
-                'title_type': 'sub',
-                'cont_align': 'tl',
-                'contents': _result.dablCtt,
-                'bt_b': Tw.ROAMING_ERROR.BUTTON
-            }, null, $.proxy(this._onCloseRoamingNotice, this));
+            var popupDesc = _result.dablCtt;
+            setTimeout($.proxy(this._openNoticePopup, this, popupDesc, event), 450);
         }
 
+    },
+    _openNoticePopup: function (desc, event) {
+        this._popupService.open({
+            'pop_name': 'type_tx_scroll',
+            'title': Tw.ROAMING_ERROR.TITLE,
+            'title_type': 'sub',
+            'cont_align': 'tl',
+            'contents': desc,
+            'bt_b': Tw.ROAMING_ERROR.BUTTON
+        }, null, $.proxy(this._onCloseRoamingNotice, this), null, $(event.currentTarget));
     },
     _onCloseRoamingNotice: function() {
         this._popupService.close();
@@ -436,6 +441,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._srchInfo.eqpMdlCd = '';
         this.modelValue = '';
         this.modelCode = '';
+        this.cdValue = '';
+        this.cdName = '';
         this.cdName = '';
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
@@ -485,7 +492,7 @@ Tw.ProductRoamingSearchResult.prototype = {
                 this.reqParams.showDailyPrice = 'N';
             }
             this._popupService.close();
-            this._getCountryRoamingRate(this.reqParams);
+            this._getCountryRoamingRate(this.reqParams, e);
         }
     },
     _selectPopupCallback:function ($layer) {
@@ -521,7 +528,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     _goRoamingCard: function () {
         this._history.goLoad('/product/roaming/coupon');
     },
-    _onBtnClicked : function () {
+    _onBtnClicked : function (e) {
         this.keyword = this.$container.find('.fe-search-input').val().trim();
         this.searchKeyword = encodeURI(this.$container.find('.fe-search-input').val().trim());
         var ALERT = Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A23;
@@ -529,7 +536,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         Tw.Logger.info(this.searchKeyword);
 
         if(this.searchKeyword === ''){
-            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         }else {
             this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
                 .done($.proxy(this._handleSuccessSearchResult, this))

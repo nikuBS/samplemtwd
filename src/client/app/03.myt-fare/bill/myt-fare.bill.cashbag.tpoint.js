@@ -64,8 +64,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
-  _openGetPoint: function () {
-    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
+  _openGetPoint: function (e) {
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e);
   },
   _setPointInfo: function (result) {
     var $point = 0;
@@ -85,7 +85,11 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$pointInfo.show();
   },
   _changeTab: function (event) {
-    var $targetId = $(event.currentTarget).attr('id');
+    var $target = $(event.currentTarget);
+    $target.find('button').attr('aria-selected', 'true');
+    $target.siblings().find('button').attr('aria-selected', 'false');
+
+    var $targetId = $target.attr('id');
     this._initVariables($targetId);
     this._checkIsAbled();
   },
@@ -151,9 +155,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$isOneValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
-  _cancel: function () {
+  _cancel: function (e) {
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON);
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
   _onCancel: function () {
     this._isCancel = true;
@@ -182,7 +186,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       layer: true,
       data: this._getData(),
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _getData: function () {
     if (this.$pointType === 'CPT') {
@@ -227,7 +231,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     },
       $.proxy(this._setClickEvent, this),
       $.proxy(this._setCheck, this),
-      'agree');
+      'agree',
+      $(event.currentTarget));
   },
   _setClickEvent: function ($layer) {
     $layer.on('click', '.fe-agree-btn', $.proxy(this._agree, this));
@@ -323,13 +328,6 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _onClose: function () {
     this._backAlert.onClose();
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _isChanged: function () {
     var isChanged = false;

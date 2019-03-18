@@ -23,9 +23,11 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
 
 Tw.MyTFareBillPrepayAuto.prototype = {
   _init: function () {
-    this._validationService.bindEvent();
     this._initVariables();
     this._bindEvent();
+
+    this._validationService.bindEvent();
+    setTimeout($.proxy(this._changeLimit, this), 100);
   },
   _initVariables: function () {
     this._standardAmountList = [];
@@ -53,6 +55,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('click', '.fe-amount-info', $.proxy(this._openAmountInfo, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._autoPrepay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+  },
+  _changeLimit: function () {
+    if (this.$standardAmount.attr('id') < 1) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, $.proxy(this._goBack, this));
+    }
+  },
+  _goBack: function () {
+    this._historyService.goBack();
   },
   _changeType: function (event) {
     var $target = $(event.target);
@@ -109,7 +119,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       layer: true,
       data: this._getAmountList($list, $amount),
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -157,8 +167,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     return $amountList;
   },
-  _openAmountInfo: function () {
-    this._popupService.openAlert(Tw.AMOUNT_INFO[this.$title.toUpperCase() + '_CONTENTS'], Tw.AMOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
+  _openAmountInfo: function (e) {
+    this._popupService.openAlert(Tw.AMOUNT_INFO[this.$title.toUpperCase() + '_CONTENTS'], Tw.AMOUNT_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM, null, null, $(e.currentTarget));
   },
   _autoPrepay: function () {
     if (this._isAmountValid() && this._validationService.isAllValid()) {

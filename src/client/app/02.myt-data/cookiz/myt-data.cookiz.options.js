@@ -55,12 +55,12 @@ Tw.MyTDataCookizOptions.prototype = {
     $('.fe-wrap-history-list li').slice(20).hide();
   },
 
-  _getRequestGift: function () {
+  _getRequestGift: function (e) {
     // request Gift by SMS
-    this._onDataPesterDetail();
+    this._onDataPesterDetail($(e.currentTarget));
   },
 
-  _onDataPesterDetail: function () {
+  _onDataPesterDetail: function ($target) {
     if ( Tw.BrowserHelper.isApp() ) {
       this._popupService.openModalTypeA(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.TITLE,
@@ -68,7 +68,10 @@ Tw.MyTDataCookizOptions.prototype = {
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.BUTTON,
         null,
         $.proxy(this._pesterDetailConfirm, this),
-        null);
+        null,
+        null,
+        null,
+        $target);
     }
     else {
       Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.TWORLD_TING);

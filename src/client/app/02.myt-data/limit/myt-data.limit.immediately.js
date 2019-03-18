@@ -32,22 +32,23 @@ Tw.MyTDataLimitImmediately.prototype = {
   },
 
   _onToggleBlockImmediately: function (e) {
-    var isChecked = $(e.currentTarget).attr('checked');
+    var $target = $(e.currentTarget);
+    var isChecked = $target.attr('checked');
 
     if ( !this._isToggle ) {
       if ( isChecked ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
-          .done($.proxy(this._onSuccessBlockImmediately, this, 'unblock'));
+          .done($.proxy(this._onSuccessBlockImmediately, this, $target, 'unblock'));
       } else {
         this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
-          .done($.proxy(this._onSuccessBlockImmediately, this, 'block'));
+          .done($.proxy(this._onSuccessBlockImmediately, this, $target, 'block'));
       }
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
-  _onSuccessBlockImmediately: function (sCheckType, res) {
+  _onSuccessBlockImmediately: function ($target, sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {
         Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
@@ -64,7 +65,9 @@ Tw.MyTDataLimitImmediately.prototype = {
         null,
         $.proxy(function () {
           this._isToggle = false;
-        }, this));
+        }, this),
+        null,
+        $target);
     }
   },
 
@@ -76,20 +79,21 @@ Tw.MyTDataLimitImmediately.prototype = {
     }
   },
 
-  _requestLimitRechargeImmediately: function () {
+  _requestLimitRechargeImmediately: function (e) {
+    var $target = $(e.currentTarget);
     var htParams = {
       amt: this.$wrap_immediately_select_list.find('.checked input').val()
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0036, htParams).done($.proxy(this._onSuccessLimitRechargeImmediately, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0036, htParams).done($.proxy(this._onSuccessLimitRechargeImmediately, this, $target));
   },
 
-  _onSuccessLimitRechargeImmediately: function (res) {
+  _onSuccessLimitRechargeImmediately: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/limit/complete');
     } else {
       this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE,
-        null, $.proxy(this._goSubmain, this));
+        null, $.proxy(this._goSubmain, this), null, $target);
     }
   },
 

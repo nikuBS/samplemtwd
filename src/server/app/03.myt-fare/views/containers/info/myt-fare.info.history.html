@@ -112,7 +112,10 @@
             {{#if noLink}}
             <div class="inner">
             {{else}}
-            <div class="inner" data-list-id="{{listId}}" role='button' id="aria-rest-cont{{ariaIdx}}">
+            <div class="inner" data-list-id="{{listId}}" 
+                {{#unless reserveCancelable}}role="button"{{/unless}}
+                id="aria-rest-cont{{ariaIdx}}"
+            >
             {{/if}}
                 <div class="txt-area">
                     <span class="tit">{{#if dataSubInfo2}}[{{dataSubInfo2}}]{{/if}} {{listTitle}}</span>

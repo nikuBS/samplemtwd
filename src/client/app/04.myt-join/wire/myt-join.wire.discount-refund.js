@@ -33,7 +33,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('shortDateNoDot', Tw.DateHelper.getShortDateNoDot);
+    Handlebars.registerHelper('shortDateNoDot', Tw.DateHelper.getShortDate);
     Handlebars.registerHelper('curreny', Tw.FormatHelper.addComma);
   },
 
@@ -44,9 +44,9 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
   _requestData: function() {
 
     $('#btn-search').attr('disabled', true);
-    $('#divEmpty').hide();
-    $('.info-list-type1').hide();
-    $('#divLoading').show();
+    $('#divEmpty').hide().attr('aria-hidden', true);
+    $('.info-list-type1').hide().attr('aria-hidden', true);
+    $('#divLoading').show().attr('aria-hidden', false);
     Tw.CommonHelper.startLoading('#divLoading', 'grey');
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
@@ -54,18 +54,18 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
 
         $('#btn-search').attr('disabled', false);
         Tw.CommonHelper.endLoading('#divLoading');
-        $('#divLoading').hide();
+        $('#divLoading').hide().attr('aria-hidden', true);
 
         if( !resp || (resp.code !== Tw.API_CODE.CODE_00 && resp.code !== 'ZINVE8888')){
-          // $('.info-list-type1').hide();
+          // $('.info-list-type1').hide().attr('aria-hidden', true);
           // $('#divEmpty').show();
           Tw.Error(resp.code, resp.msg).pop();
           return;
         }
 
         if( resp.code === 'ZINVE8888'){
-          $('.info-list-type1').hide();
-          $('#divEmpty').show();
+          $('.info-list-type1').hide().attr('aria-hidden', true);
+          $('#divEmpty').show().attr('aria-hidden', false);
           return;
         }
 
@@ -77,12 +77,12 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
           for ( var i = 0; i < list.length ; i++ ) {
             html += this._listTmpl( list[i] );
           }
-          $('#divEmpty').hide();
+          $('#divEmpty').hide().attr('aria-hidden', true);
           $('#refund-list').html(html);
-          $('.info-list-type1').show();
+          $('.info-list-type1').show().attr('aria-hidden', false);
         }else{
-          $('.info-list-type1').hide();
-          $('#divEmpty').show();
+          $('.info-list-type1').hide().attr('aria-hidden', true);
+          $('#divEmpty').show().attr('aria-hidden', false);
           return;
         }
         if( data.chargeInfo ) {
@@ -93,7 +93,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
 
         $('#btn-search').attr('disabled', false);
         Tw.CommonHelper.endLoading('#divLoading');
-        $('#divLoading').hide();
+        $('#divLoading').hide().attr('aria-hidden', true);
         Tw.Error(err.status, err.statusText);
       });
 

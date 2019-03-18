@@ -12,14 +12,14 @@ Tw.MembershipClauseLayerPopup = function (params) {
 };
 
 Tw.MembershipClauseLayerPopup.prototype = {
-  open: function (hbs) {
+  open: function (hbs, e) {
     // BE_04_02_L01 ~ BE_04_02_L07
     this._hbs = hbs;
     this._popupService.open({
         hbs: 'BE_04_02_L01',// hbs의 파일명
         layer: true,
         data: this._getData()
-      }, $.proxy(this._openCallback, this), null, this._hbs);
+      }, $.proxy(this._openCallback, this), null, this._hbs, $(e.currentTarget));
   },
 
   _getData: function () {

@@ -82,7 +82,7 @@ Tw.MyTFareBillCard.prototype = {
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -104,7 +104,7 @@ Tw.MyTFareBillCard.prototype = {
   _checkIsAbled: function () {
     this._validationService.checkIsAbled();
   },
-  _checkPay: function () {
+  _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
@@ -113,7 +113,8 @@ Tw.MyTFareBillCard.prototype = {
         },
         $.proxy(this._openCheckPay, this),
         $.proxy(this._afterPaySuccess, this),
-        'check-pay'
+        'check-pay',
+        $(e.currentTarget)
       );
     }
   },
@@ -160,9 +161,9 @@ Tw.MyTFareBillCard.prototype = {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
   },
-  _checkClose: function () {
+  _checkClose: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
   },
   _closePop: function () {
     this._isClose = true;

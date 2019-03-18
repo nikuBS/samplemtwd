@@ -141,13 +141,14 @@ Tw.MainHome.prototype = {
       });
     }
   },
-  _onClickBarcode: function () {
+  _onClickBarcode: function ($event) {
+    var $target = $($event.currentTarget);
     if ( this.$elBarcode.length > 0 ) {
       var cardNum = this.$elBarcode.data('cardnum');
       var mbrGr = this.$barcodeGr.data('mbrgr');
       var showCardNum = this.$elBarcode.data('showcard');
       this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum));
+        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum, $target));
     }
 
   },
@@ -156,15 +157,15 @@ Tw.MainHome.prototype = {
     Tw.CommonHelper.openUrlExternal('http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp');
   },
 
-  _successMembership: function (mbrGr, cardNum, showCardNum, resp) {
+  _successMembership: function (mbrGr, cardNum, showCardNum, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var usedAmt = resp.result.mbrUsedAmt;
-      this._openBarcodePopup(mbrGr, cardNum, showCardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
+      this._openBarcodePopup(mbrGr, cardNum, showCardNum, Tw.FormatHelper.addComma((+usedAmt).toString()), $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _openBarcodePopup: function (mbrGr, cardNum, showCardNum, usedAmount) {
+  _openBarcodePopup: function (mbrGr, cardNum, showCardNum, usedAmount, $target) {
     this._popupService.open({
       hbs: 'HO_01_01_02',
       layer: true,
@@ -175,7 +176,7 @@ Tw.MainHome.prototype = {
         showCardNum: showCardNum,
         usedAmount: usedAmount
       }
-    }, $.proxy(this._onOpenBarcode, this, cardNum));
+    }, $.proxy(this._onOpenBarcode, this, cardNum), null, 'membership', $target);
 
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
@@ -200,25 +201,25 @@ Tw.MainHome.prototype = {
     this._historyService.goLoad('/myt-fare/billguide/guide');
   },
   _onClickDataLink: function ($event) {
-    var dataLink = $($event.currentTarget);
-    var isTplanProd = dataLink.data('tplanprod');
+    var $target = $($event.currentTarget);
+    var isTplanProd = $target.data('tplanprod');
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-      .done($.proxy(this._successGiftSender, this, isTplanProd));
+      .done($.proxy(this._successGiftSender, this, isTplanProd, $target));
   },
-  _successGiftSender: function (isTplanProd, resp) {
+  _successGiftSender: function (isTplanProd, $target, resp) {
     this._popupService.open({
       hbs: 'actionsheet_data',
       layer: true,
       enableGift: resp.code === Tw.API_CODE.CODE_00,
       tplanProd: isTplanProd
-    }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
+    }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this, $target), 'data-link', $target);
   },
   _onOpenDataLink: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-recharge-link', $.proxy(this._onClickRechargeLink, this));
     $popupContainer.on('click', '#fe-bt-gift-link', $.proxy(this._onClickGiftLink, this));
     $popupContainer.on('click', '#fe-bt-family-link', $.proxy(this._onClickFamilyLink, this));
   },
-  _onCloseDataLink: function () {
+  _onCloseDataLink: function ($target) {
     switch ( this._targetDataLink ) {
       case this.DATA_LINK.RECHARGE:
         new Tw.ImmediatelyRechargeLayer(this.$container);
@@ -232,7 +233,7 @@ Tw.MainHome.prototype = {
       case this.DATA_LINK.TPLAN_PROD:
         this._popupService.openConfirmButton(Tw.ALERT_MSG_HOME.A08.MSG, Tw.ALERT_MSG_HOME.A08.TITLE,
           $.proxy(this._onConfirmTplanProd, this), $.proxy(this._onCloseTplanProd, this),
-          Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_HOME.A08.BUTTON);
+          Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_HOME.A08.BUTTON, $target);
         break;
       default:
         break;
@@ -589,12 +590,14 @@ Tw.MainHome.prototype = {
       $btGoGift.parent().addClass('none');
       $textError.text(resp.msg);
       $textError.removeClass('none');
+      $textError.attr('aria-hidden', false);
 
       $loading.parent().addClass('none');
       $textErrorBalance.removeClass('none');
     }
   },
-  _onClickBtGift: function (sender) {
+  _onClickBtGift: function (sender, $event) {
+    var $target = $($event.currentTarget);
     if ( sender.code === Tw.API_CODE.CODE_00 ) {
       if ( sender.result.dataGiftCnt > 0 ) {
         this._historyService.goLoad('/myt-data/giftdata');
@@ -602,9 +605,9 @@ Tw.MainHome.prototype = {
         this._historyService.goLoad('/myt-data/giftdata#auto');
       }
     } else if ( sender.code === this.GIFT_ERROR_CODE.GFT0002 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A05);
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A05, null, null, null, null, $target);
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06, null, null, null, null, $target);
     }
   },
   _onClickGiftBalance: function (element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, $event) {

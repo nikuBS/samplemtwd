@@ -131,7 +131,7 @@ const environment = {
       port: 26379
     },
     TID_SERVER: 'https://auth.skt-id.co.kr',
-    SEARCH_SERVER: 'http://211.188.181.142:8080',
+    SEARCH_SERVER: 'http://211.188.181.124',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
     DOMAIN_G: 'gapp.tworld.co.kr',

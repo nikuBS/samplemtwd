@@ -78,7 +78,7 @@ Tw.MembershipMyUpdate.prototype = {
         //OK캐시백 기능 추가하기는 알럿 띄운후 체크해제
         var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63;
         this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
-          $.proxy(this._okCashbagUncheck, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+          $.proxy(this._okCashbagUncheck, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES, $(e.currentTarget));
       }else{
         $(selected).removeAttr('checked');
       }
@@ -129,13 +129,13 @@ Tw.MembershipMyUpdate.prototype = {
     }
   },
 
-  _requestUpdate: function() {
+  _requestUpdate: function(e) {
 
     //OK 캐쉬백 조건 체크, 필수항목 미 동의시 알럿 띄우기
     if((this._okCashbagShown && this.$checkFirst.attr('checked') !== 'checked') ||
       (this._okCashbagShown && this.$checkSecond.attr('checked') !== 'checked')){
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A62;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
       return;
     }
 
@@ -154,7 +154,7 @@ Tw.MembershipMyUpdate.prototype = {
 
 
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.TITLE,
-      $.proxy(this._handleUpdateAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.BUTTON);
+      $.proxy(this._handleUpdateAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.BUTTON, $(e.currentTarget));
   },
 
   _handleUpdateAlert: function() {
@@ -175,11 +175,11 @@ Tw.MembershipMyUpdate.prototype = {
     this._historyService.goBack();
   },
 
-  _onClickAgreeView: function(){ //마케팅 약관 팝업
+  _onClickAgreeView: function(e){ //마케팅 약관 팝업
     new Tw.MembershipClauseLayerPopup({
       $element: this.$container,
       callback: $.proxy(this._agreeViewCallback, this)
-    }).open('BE_04_02_L07');
+    }).open('BE_04_02_L07', e);
   },
 
   //마케팅 활용 동의 약관보기 팝업에서 확인 선택시

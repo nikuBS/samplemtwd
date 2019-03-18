@@ -9,6 +9,7 @@ Tw.OUTLINK = {
   ONE_STORE_PREFIX: 'onestore://common/product/',
   DIRECT_MOBILE: 'https://m.shop.tworld.co.kr/wireless/product/detail',
   DIRECT_ACCESSORY: 'https://m.shop.tworld.co.kr/accessory/view',
+  DIRECT_IOT:'https://m.shop.tworld.co.kr/iot/nugu/view',
   BECOME_ANYTHING: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
   T_HONORS_CLUB: 'http://www.thonorsclub.com/',
   TWORLD_DATA_PRESENT: 'https://skt.sh/HhNCw',

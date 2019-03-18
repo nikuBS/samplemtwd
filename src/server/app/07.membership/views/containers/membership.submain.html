@@ -47,6 +47,7 @@
 
             <!-- .cont-box -->
             <% if(isLogin && svcInfo.loginType === 'T' && svcInfo.svcGr !== '') { %>
+            <% if(membershipData.mbrCode !== '01') { %>
             <% if(membershipData && membershipData.mbrGrade) { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
@@ -68,8 +69,8 @@
                             <p class="num"><%= membershipData.showCardNumDash %></p>
                         </div>
                         <% if (membershipData.mbrStCd === 'AC') { %>
-                        <button type="button" class="barcode-area">
-                            <img id="fe-barcode-img" data-cardNum="<%= membershipData.mbrCardNum %>" src="<%= CDN %>/img/benefit/bar-code.png" alt="Bar Code">
+                        <button type="button" class="barcode-area" id="fe-barcode-btn">
+                            <img id="fe-barcode-img" data-cardNum="<%= membershipData.mbrCardNum %>" src="<%= CDN %>/img/benefit/bar-code.png" alt="멤버심 바코드">
                         </button>
                         <% } else if (membershipData.mbrStCd === 'SP') { %>
                         <div class="barcode-area nolink">
@@ -89,6 +90,17 @@
                     </div>
                 </div>
             </div>
+            <% } %>
+            <% } else { %>
+            <!-- 2019.03.13 서비스 점검중 추가 -->
+            <div class="cont-box">
+                <div class="notice-point">
+                    <p class="t-np1">서비스 점검 중 입니다.</p>
+                    <p class="t-np4">잠시 후 다시 이용해 주세요. </p>
+                    <p class="t-np5">2019.11.11. 00:00 ~ 2019.11.11. 12:00</p>
+                </div>
+            </div>
+            <!-- //2019.03.13 서비스 점검중 추가 -->
             <% } %>
             <% } else if(isLogin && svcInfo.loginType === 'S') { %>
             <div class="cont-box nogaps-hoz"><!--2019.02.19 수정-->
@@ -132,6 +144,7 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- cont-box -->
+            <% if(popBrandData) { %>
             <div class="cont-box nogaps">
                 <div class="benefit-popularity-wrap">
                     <button class="solid-link fe-benefit-title">일상 속 할인, 제휴 브랜드<i class="ico"></i></button>
@@ -159,6 +172,7 @@
                     <!-- .widget -->
                 </div>
             </div>
+            <% } %>
             <!-- // cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>

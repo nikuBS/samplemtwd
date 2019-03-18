@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my fe-replace-history"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store on fe-replace-history"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my fe-replace-history" aria-selected="false"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store on fe-replace-history" aria-selected="true"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -376,7 +376,7 @@
                             <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
                             <!-- .widget -->
                             <div class="widget">
-                                <div class="widget-box slider2">
+                                <div class="widget-box">
                                     <div class="slider-box">
                                         <ul class="slider">
                                             <% redisData.mainNotice.map((notice) => { %>

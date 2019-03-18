@@ -16,7 +16,7 @@ Tw.CustomerResearch.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('change', 'li input', $.proxy(this._handleSelectAnswer, this));
+    this.$container.on('change click', 'li input', $.proxy(this._handleSelectAnswer, this));
     this.$container.on('click', '.fe-go-next', $.proxy(this._goNext, this));
     this.$container.on('click', '.fe-go-prev', $.proxy(this._goPrev, this));
     this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
@@ -37,7 +37,7 @@ Tw.CustomerResearch.prototype = {
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
       $btn = $root.find('.bt-blue1 button'),
       $etc = $root.find('.fe-etc-area'),
-      enable = false;
+      enable = !$root.data('is-essential');
 
     if ($root.find('li.checked').length > 0) {
       this._nextIdx = this._currentIdx + 1;
@@ -63,13 +63,13 @@ Tw.CustomerResearch.prototype = {
       }
 
       enable = true;
-      if ($etc.length > 0) {
-        if (isEtc === 'true') {
-          $etc.removeAttr('disabled');
-          enable = $etc.text().length > 0;
-        } else {
-          $etc.attr('disabled', true).val('');
-        }
+    }
+    if ($etc.length > 0) {
+      if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {
+        $etc.removeAttr('disabled');
+        enable = $etc.text().length > 0;
+      } else {
+        $etc.attr('disabled', true).val('');
       }
     }
 
@@ -108,6 +108,7 @@ Tw.CustomerResearch.prototype = {
     this._setProgress(next);
     this._currentIdx = next;
     delete this._nextIdx;
+    delete this.$maxLength;
   },
 
   _goPrev: function(e) {
@@ -127,6 +128,7 @@ Tw.CustomerResearch.prototype = {
 
     this._currentIdx = prev;
     this._setProgress(this._nextIdx);
+    delete this.$maxLength;
   },
 
   _setProgress: function(idx) {
@@ -136,17 +138,31 @@ Tw.CustomerResearch.prototype = {
   },
 
   _handleTypeEssay: function(e) {
-    var target = e.currentTarget;
-    var $root = this.$questions[this._currentIdx];
+    var target = e.currentTarget,
+      $root = this.$questions[this._currentIdx];
+    var byteCount = Tw.InputHelper.getByteCount(target.value);
+
+    if (!this.$maxLength) {
+      this.$maxLength = $root.find('.max-byte em');
+    }
+
+    while (byteCount > 100) {
+      target.value = target.value.slice(0, -1);
+      byteCount = Tw.InputHelper.getByteCount(target.value);
+    }
+
+    this.$maxLength.text(Tw.FormatHelper.addComma(String(byteCount)));
 
     var $btn = $root.find('.bt-blue1 button');
 
-    if (!this._nextIdx || this._nextIdx === this._currentIdx) {
+    if (target.value.length === 0) {
+      if (this._nextIdx !== this._currentIdx) {
+        this._setProgress(this._currentIdx);
+        this._nextIdx = this._currentIdx;
+      }
+    } else if (!this._nextIdx || this._nextIdx === this._currentIdx) {
       this._setProgress(this._currentIdx + 1);
       this._nextIdx = this._currentIdx + 1;
-    } else if (target.value.length === 0) {
-      this._setProgress(this._currentIdx);
-      this._nextIdx = this._currentIdx;
     }
 
     if ($root.data('is-essential') && !target.value.length) {

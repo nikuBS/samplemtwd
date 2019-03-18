@@ -44,11 +44,12 @@ Tw.CommonMemberLineEdit.prototype = {
     this.$btMoreExposable.on('click', $.proxy(this._onClickMoreExposable, this));
     this.$btMoreExposed.on('click', $.proxy(this._onClickMoreExposed, this));
   },
-  _openGuidePopup: function () {
+  _openGuidePopup: function ($event) {
+    var $target = $($event.currentTarget);
     this._popupService.open({
       hbs: 'CO_01_05_02_04_01',
       layer: true
-    }, $.proxy(this._onOpenEditGuide, this), $.proxy(this._onCloseEditGuide, this), 'guide');
+    }, $.proxy(this._onOpenEditGuide, this), $.proxy(this._onCloseEditGuide, this), 'guide', $target);
   },
   _onOpenEditGuide: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-biz-register', $.proxy(this._onClickBizRegister, this));
@@ -66,11 +67,12 @@ Tw.CommonMemberLineEdit.prototype = {
     this._goBizRegister = true;
     this._popupService.close();
   },
-  _onClickBizSignup: function () {
+  _onClickBizSignup: function ($event) {
+    var $target = $($event.currentTarget);
     this._popupService.open({
       hbs: 'CO_01_05_02_02',
       layer: true
-    }, $.proxy(this._onOpenBizSignup, this));
+    }, $.proxy(this._onOpenBizSignup, this), null, 'biz-password', $target);
   },
   _onOpenBizSignup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._goUrl, this));
@@ -79,13 +81,14 @@ Tw.CommonMemberLineEdit.prototype = {
     var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openUrlExternal(url);
   },
-  _completeEdit: function () {
+  _completeEdit: function ($event) {
+    var $target = $($event.currentTarget);
     var list = this.$container.find('.fe-item-active');
     var svcNumList = [];
     _.map(list, $.proxy(function (line) {
       svcNumList.push($(line).data('svcmgmtnum'));
     }, this));
-    this._openRegisterPopup(svcNumList);
+    this._openRegisterPopup(svcNumList, $event);
   },
   _onClickAdd: function ($event) {
     var $target = $($event.currentTarget);
@@ -106,37 +109,38 @@ Tw.CommonMemberLineEdit.prototype = {
 
     var svcGr = $target.parents('.fe-item').data('svcgr');
     if ( svcGr === 'R' || svcGr === 'D' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03, null, null, null, null, $target);
     }
   },
   _resetCount: function () {
     this.$usedTxt.text(this.$container.find('.fe-item-active').length);
     this.$unusedTxt.text(this.$container.find('.fe-item-inactive').length);
   },
-  _openRegisterPopup: function (svcNumList) {
-    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L04, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._onConfirmRegisterPopup, this, svcNumList));
+  _openRegisterPopup: function (svcNumList, $target) {
+    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L04, Tw.POPUP_TITLE.NOTIFY,
+      $.proxy(this._onConfirmRegisterPopup, this, svcNumList, $target), null, $target);
   },
-  _onConfirmRegisterPopup: function (svcNumList) {
+  _onConfirmRegisterPopup: function (svcNumList, $target) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: this._category, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successRegisterLineList, this, svcNumList));
+    }).done($.proxy(this._successRegisterLineList, this, svcNumList, $target));
   },
-  _successRegisterLineList: function (svcNumList, resp) {
+  _successRegisterLineList: function (svcNumList, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
-      this._checkRepSvc(resp.result, svcNumList);
+      this._checkRepSvc(resp.result, svcNumList, $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _checkRepSvc: function (result, svcNumList) {
+  _checkRepSvc: function (result, svcNumList, $target) {
     if ( svcNumList.length === 0 && this._otherCnt === 0 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02_1, null, null, $.proxy(this._onCloseChangeRepSvc, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02_1, null, null, $.proxy(this._onCloseChangeRepSvc, this), null, $target);
     } else if ( result.repSvcChgYn === 'Y' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._onCloseChangeRepSvc, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._onCloseChangeRepSvc, this), null, $target);
     } else {
       this._checkMarketingOffer();
     }

@@ -22,13 +22,13 @@
                         <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                        <a class="fe-replace-history" href="/myt-data/giftdata">바로 선물</a>
+                                    <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                        <a role="tab" aria-selected="true" class="fe-replace-history fe-gift-tab" href="/myt-data/giftdata">바로 선물</a>
                                     </li>
                                     <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <% if ( autoList ) { %>
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a class="fe-replace-history" href="/myt-data/giftdata?auto=true#auto">자동 선물 (<span><%-autoList.length%></span>)</a>
+                                    <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                        <a role="tab" aria-selected="false" class="fe-replace-history fe-gift-tab" href="/myt-data/giftdata?auto=true#auto">자동 선물 (<span><%-autoList.length%></span>)</a>
                                     </li>
                                     <% } %>
                                 </ul>

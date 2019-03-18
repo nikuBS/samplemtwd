@@ -101,6 +101,6 @@ Tw.MyTFareBillBankList.prototype = {
       layer: true,
       data: this.$bankList,
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._onOpenList, this));
+    }, $.proxy(this._onOpenList, this), null, null, this.$currentTarget);
   }
 };

@@ -68,7 +68,7 @@ Tw.MembershipBenefitBrand.prototype = {
   _bindEvnets: function () {
     this.$btnShowCategories.on('click', $.proxy(this._toggleCategoryLayer, this, true));
     this.$btnCloseCategories.on('click', $.proxy(this._toggleCategoryLayer, this, false));
-    this.$contLayer.on('click', '.fe-category-list-in-layer li', $.proxy(this._onClickBtnCategoryInLayer, this));
+    this.$contLayer.on('click', '.fe-category-list-in-layer button', $.proxy(this._onClickBtnCategoryInLayer, this));
     this.$container.on('click', '.fe-btn-category', $.proxy(this._onClickBtnCategory, this));
     this.$container.on('click', '.fe-btn-more', $.proxy(this._onClickBtnMore, this));
     this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
@@ -225,12 +225,15 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   _setCategoryInLayer: function () {
-    var $lis = this.$categoryListInLayer.find('li');
-    $lis.removeClass('checked');
-    $lis.attr('aria-selected', false);
-    var $selectedli = $lis.filter('li[cate-cd="' + this._reqOptions.cateCd + '"]');
-    $selectedli.addClass('checked');
-    $selectedli.attr('aria-selected', true);
+    var $btns = this.$categoryListInLayer.find('button');
+    $btns.removeClass('checked');
+    $btns.attr('aria-selected', false);
+    $btns.css({color: '#3c3c3c', fontWeight: 'normal'});
+    var $selectedBtn = $btns.filter('[cate-cd="' + this._reqOptions.cateCd + '"]');
+    $selectedBtn.addClass('checked');
+    $selectedBtn.attr('aria-selected', true);
+    $selectedBtn.css({color: '#178BCE', fontWeight: '700'});
+
   },
 
   _setKeywords: function () {

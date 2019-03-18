@@ -172,7 +172,7 @@ Tw.MenuComponent.prototype = {
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._isLogin = res.result.isLogin;
             if ( this._isLogin ) {
-              this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
+              this._isMultiLine = parseInt(res.result.userInfo.expsSvcCnt, 10)  > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttrCd;
               this._tid = res.result.userInfo.userId;
@@ -198,6 +198,8 @@ Tw.MenuComponent.prototype = {
         }, this));
         */
     }
+
+    this.$container.find('#fe-close').focus();  // 웹 접근성, 포커스 메뉴 div로 이동
   },
   _onTNoti: function () {
     if ( !this._tNotifyComp ) {
@@ -373,7 +375,7 @@ Tw.MenuComponent.prototype = {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
           case 'svcCnt':
-            if (Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum) || Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
               $(elem).remove();
             } else {
               $(elem).text(userInfo.prodNm);
@@ -381,6 +383,10 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'bill':
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
             var cmd = Tw.API_CMD.BFF_04_0008;
             if (userInfo.actRepYn === 'Y') {
               cmd = Tw.API_CMD.BFF_04_0009;
@@ -406,7 +412,11 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'data':
-            this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
+            this._apiService.request(Tw.SESSION_CMD.BFF_05_0001, {})
               .then($.proxy(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var text = this._parseUsage(res.result);
@@ -424,6 +434,10 @@ Tw.MenuComponent.prototype = {
               });
             break;
           case 'membership':
+            if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
+              $(elem).remove();
+              break;
+            }
             this._apiService.request(Tw.SESSION_CMD.BFF_04_0001, {})
               .then(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {

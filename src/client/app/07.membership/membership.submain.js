@@ -31,7 +31,7 @@ Tw.MembershipSubmain.prototype = {
     A: 'all'
   },
   _cachedElement: function() {
-    this.$barCode = this.$container.find('#fe-barcode-img');
+    this.$barCode = this.$container.find('#fe-barcode-btn');
     this.$nearBrand = this.$container.find('#fe-memebership-near');
     this._nearBrandTmpl = Handlebars.compile($('#tmplList').html());
     this._noBrandTmpl = Handlebars.compile($('#tmplList-no-data').html());
@@ -106,24 +106,24 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
-  _selectTday: function() {
+  _selectTday: function(e) {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
           $.proxy(this._goTday, this),
           $.proxy(function () {
             this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
+          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
     } else {
       this._goTday();
     }
   },
-  _selectChocolate: function () {
+  _selectChocolate: function (e) {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
           $.proxy(this._goChocolate, this),
           $.proxy(function () {
             this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
+          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
     } else {
       this._goChocolate();
     }
@@ -328,6 +328,9 @@ Tw.MembershipSubmain.prototype = {
   },
   _failGeolocation: function (resp) {
     Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
+    setTimeout($.proxy(this._openFailNoticePopup, this), 500);
+  },
+  _openFailNoticePopup: function () {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
         $.proxy(function () {
@@ -421,8 +424,8 @@ Tw.MembershipSubmain.prototype = {
   _handleFailCallBack: function () {
 
   },
-  _showBarCodePopup : function () {
-    var cardNum = this.$barCode.data('cardnum');
+  _showBarCodePopup : function (event) {
+    var cardNum = this.$container.find('#fe-barcode-img').data('cardnum');
     this._mbrGrStr = this._membershipData.mbrGrStr;
     this._mbrGrCd = this._membershipData.mbrGrCd;
     this._usedAmt = this._membershipData.showUsedAmount;
@@ -438,7 +441,7 @@ Tw.MembershipSubmain.prototype = {
         showCardNum: this._showCardNum,
         usedAmount: this._usedAmt
       }
-    }, $.proxy(this._onOpenBarcode, this, cardNum));
+    }, $.proxy(this._onOpenBarcode, this, cardNum), null, null,  $(event.currentTarget));
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');

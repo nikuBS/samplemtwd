@@ -128,7 +128,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     // this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
 
     if ( this.detailListObj[0].curLen <= 0 ) {
-      this.$addBtnArea.hide();
+      this.$addBtnArea.hide().attr('aria-hidden', true);
     }
 
   },
@@ -145,7 +145,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     // Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj[0].curLen);
     if ( this.detailListObj[0].curLen <= 0 ) {
-      this.$addBtnArea.hide();
+      this.$addBtnArea.hide().attr('aria-hidden', true);
     }
   },
   //--------------------------------------------------------------------------[EVENT]
@@ -324,11 +324,11 @@ Tw.MyTFareBillGuidePps.prototype = {
   _getHistoriesInfoInit: function (res) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this.$fingerprint.hide();
+      this.$fingerprint.hide().attr('aria-hidden', true);
       if(!res.result || res.result.length === 0){
-        $('#div-usage-empty').show();
+        $('#div-usage-empty').show().attr('aria-hidden', false);
       }else {
-        $('#div-usage-empty').hide();
+        $('#div-usage-empty').hide().attr('aria-hidden', true);
       }
 
       // Tw.Logger.info('[res] ', res);
@@ -336,7 +336,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       /*
       * 상세 내역 리스트
       */
-      this.$addBtnArea.show();
+      this.$addBtnArea.show().attr('aria-hidden', false);
       this.$detailList.empty();
       this._listDataInit(dataArr); // 데이터 초기화
       this._proData(); // 데이터 가공

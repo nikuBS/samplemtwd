@@ -70,7 +70,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
     if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.EXT){
       $('#div-alarmtype').show().attr('aria-hidden', false);
     }else{
-      $('#div-alarmtype').hide();
+      $('#div-alarmtype').hide().attr('aria-hidden', true);
     }
 
     var btnDisabled = false;

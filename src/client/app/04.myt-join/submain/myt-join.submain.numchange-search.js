@@ -91,7 +91,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
         this._lastSeq = 0;
         this._list = resp.result.numSearchInfoList;
         if( this._list && this._list.length > 0 ){
-          $('#divNumList').show();
+          $('#divNumList').show().attr('aria-hidden', false);
         }
 
         this._showMorePhoneNum();
@@ -165,9 +165,9 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
    */
   _showOrHideMoreBtn: function(){
     if( !this._list || this._list.length === 0 || !this._lastSeq || this._lastSeq >= this._list.length){
-      $('.bt-more').hide();
+      $('.bt-more').hide().attr('aria-hidden', true);
     } else {
-      $('.bt-more').show();
+      $('.bt-more').show().attr('aria-hidden', false);
     }
   },
 

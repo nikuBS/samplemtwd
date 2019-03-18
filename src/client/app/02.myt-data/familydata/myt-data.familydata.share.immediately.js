@@ -63,7 +63,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   _setRetrieveStatus: function() {
     this.$container.find('#fe-ing').addClass('none');
     this.$retrieveBtn.removeClass('none');
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A216, Tw.POPUP_TITLE.NOTIFY);
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A216, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, this.$retrieveBtn);
   },
 
   _successGetShareData: function(share) {
@@ -93,14 +93,18 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
     }
   },
 
-  _confirmSubmit: function() {
+  _confirmSubmit: function(e) {
     var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE;
     this._popupService.openModalTypeA(
       POPUP.TITLE,
       POPUP.CONTENTS.replace('{data}', this.$amountInput.val()),
       POPUP.BTN_NAME,
       null,
-      $.proxy(this._handleSubmit, this)
+      $.proxy(this._handleSubmit, this),
+      undefined,
+      undefined,
+      undefined,
+      $(e.currentTarget)
     );
   },
 

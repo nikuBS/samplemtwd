@@ -4,7 +4,8 @@ Tw.COMMON_STRING = {
   DISAGREE: '비동의',
   UNLIMIT: '무제한',
   TERM: '이용약관',
-  STANDARD: '기본제공'
+  STANDARD: '기본제공',
+  OPEN_NEW_TAB: '새창열림'
 };
 
 Tw.DATA_UNIT = {
@@ -58,6 +59,7 @@ Tw.BUTTON_LABEL = {
   HOME: '홈으로',
   YES: '예',
   NO: '아니요',
+  SELECTED: '선택됨',
   COMPLETE: '완료'
 };
 
@@ -1639,8 +1641,8 @@ Tw.ROAMING_CENTER = [
 ];
 
 Tw.ROAMING_DESC = {
-  MFACTCD_DESC: '제조사를 선택하세요.',
-  MODEL_DESC: '모델명을 선택하세요.',
+  MFACTCD_DESC: '제조사를 선택하세요',
+  MODEL_DESC: '모델명을 선택하세요',
   HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 해당 국가에서 이용할 수 있는 로밍 서비스 방식과 요금을 확인하실 수 있습니다.',
   HEADER_LOGIN_MSG: '가입된 무선 회선 정보가 확인되지 않습니다.<br>' +
     '휴대폰을 선택하신 후 상단에서 <strong>국가명</strong>으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +

@@ -99,7 +99,9 @@ Tw.MyTDataPrepaidData.prototype = {
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._selectPopupCallback, this, $target),
-      $.proxy(this._checkIsAbled, this));
+      $.proxy(this._checkIsAbled, this),
+      null,
+      $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -132,15 +134,16 @@ Tw.MyTDataPrepaidData.prototype = {
   _onClose: function () {
     this._backAlert.onClose();
   },
-  _checkPay: function () {
+  _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
         'hbs': 'DC_09_03_01',
         'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
       },
-      $.proxy(this._openCheckPay, this),
-      $.proxy(this._afterRechargeSuccess, this),
-      'check-pay'
+        $.proxy(this._openCheckPay, this),
+        $.proxy(this._afterRechargeSuccess, this),
+        'check-pay',
+        $(e.currentTarget)
       );
     }
   },

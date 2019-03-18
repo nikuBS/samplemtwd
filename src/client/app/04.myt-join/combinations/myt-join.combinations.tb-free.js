@@ -32,7 +32,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       },
       $.proxy(this._handleOpenChangeBenefitPopup, this),
       null,
-      'benefit' + this._bIdx
+      'benefit' + this._bIdx,
+      this.$changeBtn
     );
   },
 
@@ -160,8 +161,13 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
   },
 
   _handleTypeInput: function($input, $error, $submitBtn) { 
-    var value = $input.val(),
-      validLenth = value.indexOf('010') === 0 ? 11 : 10;
+    var value = $input
+      .val()
+      .replace(/[^0-9]/g, '');
+
+    $input.val(value);
+
+    var validLenth = value.indexOf('010') === 0 ? 11 : 10;
 
     if (this._isCheckedLen && (!value || !value.length)) {  // 인풋에 핸드폰 번호 자릿수가 입력되기 전까지 유효성 검사하지 않도록 함
       this._isCheckedLen = false;

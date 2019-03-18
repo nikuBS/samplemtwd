@@ -42,6 +42,12 @@ Tw.BannerService.prototype = {
         // if (slick.$slider.find('*:focus').length > 0) {
         slick.$slider.find('.slick-current').focus();
         // }
+      },
+      setPosition: function(e, slickSlider) {
+        var currentSlide = slickSlider.currentSlide;
+        $(slickSlider.$dots).find('span').each(function (i, target) {
+          target.setAttribute('aria-selected', currentSlide === i);
+        });
       }
     });
 
@@ -78,7 +84,7 @@ Tw.BannerService.prototype = {
         }
         // }
       }
-    };
+    }
 
     // var $mainSlider = $('.home-slider .home-slider-belt');
     // if ($mainSlider.length > 0) {

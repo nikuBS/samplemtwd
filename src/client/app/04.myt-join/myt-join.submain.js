@@ -329,7 +329,10 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   // 회선 변경 후 처리
-  _onChangeSessionSuccess: function () {
+  _onChangeSessionSuccess: function (resp) {
+    if (resp.code !== Tw.CALLBACK_CODE.SUCCESS) {
+      return;
+    }
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }

@@ -237,8 +237,10 @@ Tw.MyTFareHotBill.prototype = {
     var moreItems = this._lines.length - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
+      this.$btMore.attr('aria-hidden', false);
     } else {
       this.$btMore.hide();
+      this.$btMore.attr('aria-hidden', true);
     }
   },
   /**
@@ -325,7 +327,7 @@ Tw.MyTFareHotBill.prototype = {
     if ( targetSvc.child ) {
       this._onClickChild(targetSvc);
     } else {
-      this._confirmSwitchLine(targetSvc);
+      this._confirmSwitchLine(targetSvc, $(e.currentTarget));
     }
   },
   /**
@@ -349,9 +351,9 @@ Tw.MyTFareHotBill.prototype = {
    * @param target the selected line
    * @private
    */
-  _confirmSwitchLine: function (target) {
+  _confirmSwitchLine: function (target, event) {
     this._popupService.openSwitchLine(this._svcInfo, target,Tw.REMNANT_OTHER_LINE.BTNAME, null,
-      $.proxy(this._requestSwitchLine, this, target), null, null )
+      $.proxy(this._requestSwitchLine, this, target), null, null, null, $(event.currentTarget) )
   },
   /**
    * Request to switch the current line.
@@ -462,6 +464,5 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       itemL.total = Tw.StringHelper.commaSeparatedString(itemL.total);
     });
   });
-  console.log(group);
   return group;
 };

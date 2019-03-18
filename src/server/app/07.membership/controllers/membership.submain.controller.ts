@@ -24,15 +24,6 @@ export default class MembershipSubmain extends TwViewController {
             this.getPopBrandData()
         ).subscribe(([popBrandData]) => {
 
-          const error = {
-            code: popBrandData.code,
-            msg: popBrandData.msg
-          };
-
-          if ( error.code ) {
-            return this.error.render(res, { ...error, svcInfo, pageInfo });
-          }
-
           const membershipData = null;
 
           res.render('membership.submain.html',
@@ -44,14 +35,6 @@ export default class MembershipSubmain extends TwViewController {
             this.getMembershipData(),
             this.getPopBrandData()
         ).subscribe(([membershipData, popBrandData]) => {
-          const error = {
-            code: membershipData.code || popBrandData.code,
-            msg: membershipData.msg || popBrandData.msg
-          };
-
-          if ( error.code ) {
-            return this.error.render(res, { ...error, pageInfo, svcInfo });
-          }
 
           this.logger.info(this, 'new membershipData : ', membershipData);
 
@@ -63,15 +46,6 @@ export default class MembershipSubmain extends TwViewController {
       Observable.combineLatest(
           this.getPopBrandData()
       ).subscribe(([popBrandData]) => {
-
-        const error = {
-          code: popBrandData.code,
-          msg: popBrandData.msg
-        };
-
-        if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo, pageInfo });
-        }
 
         const membershipData = null;
         const membershipCheckData = null;
@@ -103,7 +77,8 @@ export default class MembershipSubmain extends TwViewController {
           showUsedAmount: '',
           mbrGrStr: '',
           mbrGrade: '',
-          mbrTypStr: ''
+          mbrTypStr: '',
+          mbrCode: 'mbr'
         };
         return membershipNoData;
       } else if ( resp.code === API_CODE.CODE_00 ) {
@@ -111,8 +86,7 @@ export default class MembershipSubmain extends TwViewController {
         return membershipData;
       } else {
         return {
-          code: resp.code,
-          msg: resp.msg
+          mbrCode : '01'
         };
       }
     });
@@ -125,19 +99,17 @@ export default class MembershipSubmain extends TwViewController {
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toUpperCase();
     membershipData.mbrGrade = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toLowerCase();
     membershipData.mbrTypStr = MEMBERSHIP_TYPE[membershipData.mbrTypCd];
+    membershipData.mbrCode = '00';
     return membershipData;
   }
 
   private getPopBrandData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0017, {'ordCol' : 'L', 'cateCd' : '00', 'pageNo' : '1', 'pageSize' : '10'}).map((resp) => {
-      if ( resp.code !== API_CODE.CODE_00 ) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
+      } else {
+        return null;
       }
-
-      return resp.result;
     });
   }
 

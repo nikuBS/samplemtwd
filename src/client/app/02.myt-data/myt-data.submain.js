@@ -580,7 +580,10 @@ Tw.MyTDataSubMain.prototype = {
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A17.BUTTON,
         null,
         $.proxy(this._pesterDetailConfirm, this),
-        null
+        null,
+        null,
+        null,
+        this.$dataPesterBtn.find('button')
       );
     }
     else {
@@ -623,7 +626,7 @@ Tw.MyTDataSubMain.prototype = {
 
         var target = _.find(this.data.otherLines, { svcMgmtNum: mgmtNum });
         this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
-          $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
+          $.proxy(this._onChangeLineConfirmed, this), null, 'change_line', null, $target.find('button'));
       }
     }
   },

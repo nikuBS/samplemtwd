@@ -50,8 +50,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
   _onClickNickname: function () {
     this._nicknamePopup.openNickname('', null, $.proxy(this._onCloseNickname, this));
   },
-  _onClickRegister: function () {
-    this._sendBizSession();
+  _onClickRegister: function ($event) {
+    var $target = $($event.currentTarget);
+    this._sendBizSession($target);
   },
   _onInputMdn: function () {
     this._isEnableConfirm();
@@ -70,24 +71,24 @@ Tw.CommonMemberLineBizRegister.prototype = {
       this.$btConfirm.attr('disabled', true);
     }
   },
-  _sendBizSession: function () {
+  _sendBizSession: function ($target) {
     var params = {
       svcNum: this.$inputMdn.val(),
       ctzCorpNm: this.$inputCop.val(),
       ctzCorpNum: this.$inputCopNum.val()
     };
     this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
-      .done($.proxy(this._successBizSession, this));
+      .done($.proxy(this._successBizSession, this, $target));
   },
-  _successBizSession: function (resp) {
+  _successBizSession: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var svcMgmtNum = resp.result.svcMgmtNum;
-      this._sendRegisterBiz(svcMgmtNum);
+      this._sendRegisterBiz(svcMgmtNum, $target);
     } else {
-      this._handleError(resp.code, resp.msg);
+      this._handleError(resp.code, resp.msg, $target);
     }
   },
-  _sendRegisterBiz: function (svcMgmtNum) {
+  _sendRegisterBiz: function (svcMgmtNum, $target) {
     var params = {
       svcMgmtNum: svcMgmtNum
     };
@@ -95,17 +96,17 @@ Tw.CommonMemberLineBizRegister.prototype = {
       params.nickNm = this._nickName;
     }
     this._apiService.request(Tw.API_CMD.BFF_03_0013, params)
-      .done($.proxy(this._successRegisterBiz, this))
+      .done($.proxy(this._successRegisterBiz, this, $target))
       .fail($.proxy(this._failRegisterBiz, this));
   },
-  _successRegisterBiz: function (resp) {
+  _successRegisterBiz: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
         .done($.proxy(this._successUpdateSvc, this));
     } else if ( resp.code === this.ERROR_CODE.ICAS4027 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _successUpdateSvc: function (resp) {
@@ -118,11 +119,11 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._nickName = nickname;
     this.$inputNickname.val(nickname);
   },
-  _handleError: function (code, message) {
+  _handleError: function (code, message, $target) {
     if ( code === this.ERROR_CODE.ATH0021 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else if ( code === this.ERROR_CODE.ATH0022 && code === this.ERROR_CODE.ATH0023 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7);
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7, null, null, null, null, $target);
     } else {
       Tw.Error(code, message).pop();
     }

@@ -67,6 +67,7 @@ Tw.MainMenuSettings.prototype = {
       var latestVersion = versionInfo[0].newVer;
       if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
+        this.$versionText.removeClass('point');
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
       }

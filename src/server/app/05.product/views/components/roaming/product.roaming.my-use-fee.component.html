@@ -34,7 +34,7 @@
                 <div class="btn-area">
                     <% var btnList = prodList[keyProd].btnList %>
                     <% for (var keyBtn in btnList) { %>
-                    <a class="bt-link-tx underline" href="<%= btnList[keyBtn].btnLinkUrl %>?prod_id=<%= prodList[keyProd].prodId %>"><%= btnList[keyBtn].btnNm %></a>
+                    <button class="bt-link-tx underline fe-myuse-link-btn" data-url="<%= btnList[keyBtn].btnLinkUrl %>" data-prod_id="<%= prodList[keyProd].prodId %>"><%= btnList[keyBtn].btnNm %></button>
                     <% } %>
                 </div>
             </li>

@@ -96,7 +96,7 @@
                                                                     <% for (let i = 0; i < options.length; i++) { %>
                                                                     <li class="radiobox type01 <%= i === 0 ? 'checked' : ''  %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                                         <input type="radio" name="radio" aria-labelledby="aria-comp-radio<%= i + 1 %> " value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>" <%= i === 0 ? 'checked=checked' : '' %>><!-- 체크상태일 경우 checked="checked" -->
-                                                                        <div class="comp-list-layout" id="aria-comp-radio<%= i + 1 %>" aria-hidden="true">
+                                                                        <div class="comp-list-layout" id="aria-comp-radio<%= i + 1 %>">
                                                                             <p class="layout-text">
                                                                                 <span class="mtext"><%= options[i].copnDtlClNm %>리필</span>
                                                                                 <% if (options[i].qttText !== '0') { %>
@@ -122,7 +122,7 @@
                                                         <div class="inputbox bt-add">
                                                             <span class="input new">
                                                                 <input type="tel" maxlength="13" placeholder="숫자만 입력" title="받는 분 번호" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
+                                                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn">
                                                                 <button type="button" id="fe-btn-contacts" class="btn-round2 btn-style3">주소록</button>

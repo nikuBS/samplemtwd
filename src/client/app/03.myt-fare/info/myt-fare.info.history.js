@@ -143,15 +143,24 @@ Tw.MyTFareInfoHistory.prototype = {
     else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A87';
     else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0) alertCode='ALERT_2_A92';
 
-    if(alertCode) alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
+    if(alertCode){
+      alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
+    } 
 
-    if(alertType) this._popupService.openConfirm(alertType.MSG,alertType.TITLE,
-      $.proxy(this._execReserveCancel,this),$.proxy(this._popupService.close,this));
+    if(alertType){
+      this._popupService.openConfirm(
+        alertType.MSG,
+        alertType.TITLE,
+        $.proxy(this._execReserveCancel,this, $(e.currentTarget)),
+        $.proxy(this._popupService.close,this),
+        $(e.currentTarget)
+      );
+    } 
     
   },
 
   // 포인트 1회 납부예약 취소 실행
-  _execReserveCancel: function(){
+  _execReserveCancel: function($target){
     this._popupService.close();
 
     var apiCode, apiBody={};
@@ -175,12 +184,12 @@ Tw.MyTFareInfoHistory.prototype = {
 
     if(apiCode){
       this._apiService.request(Tw.API_CMD[apiCode], apiBody)
-        .done($.proxy(this._successReserveCancel, this)).fail($.proxy(this._apiError, this));
+        .done($.proxy(this._successReserveCancel, this, $target)).fail($.proxy(this._apiError, this, $target));
     }
   },
 
   // 포인트 1회 납부예약 취소 res
-  _successReserveCancel: function(res){
+  _successReserveCancel: function($target, res){
     var alertCode, alertType;
     if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0) alertCode='ALERT_2_A86';
     else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0) alertCode='ALERT_2_A88';
@@ -189,11 +198,24 @@ Tw.MyTFareInfoHistory.prototype = {
     alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
     if(res.code === '00') {
-      this._popupService.openAlert(alertType.MSG, alertType.TITLE, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._reLoading, this));
+      this._popupService.openAlert(
+        alertType.MSG, 
+        alertType.TITLE, 
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(this._reLoading, this)
+        // 예약취소 확인 후 리로딩 되므로 되돌아갈 타켓 지정 필요없음
+      );
     } else {
-      this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-        this._popupService.close();
-      }, this));
+      this._popupService.openAlert(
+        res.msg, 
+        Tw.POPUP_TITLE.NOTIFY, 
+        Tw.BUTTON_LABEL.CONFIRM, 
+        $.proxy(function() {
+          this._popupService.close();
+        }, this),
+        null,
+        $target
+      );
     }
   },
 
@@ -251,40 +273,10 @@ Tw.MyTFareInfoHistory.prototype = {
   // 자동납부 통합인출 해지
   _openAutoPaymentLayer: function () {
     this._historyService.goLoad('/myt-fare/info/cancel-draw');
-    /* this._popupService.open(
-        {
-          hbs: 'MF_08_03',
-          bankName: this.data.autoWithdrawalBankName,
-          bankAccount: this.data.autoWithdrawalBankNumber
-        },
-        $.proxy(this._autoWithdrawalOpenCallback, this), null, Tw.MYT_PAYMENT_HISTORY_HASH.AUTO_WITHDRAWAL
-    );*/
   },
-
-  /*_autoWithdrawalOpenCallback: function ($container) {
-    $container.on('click', '.bt-red1 button', $.proxy(this._processAutoWithdrawalCancel, this));
-  },
-
-  _processAutoWithdrawalCancel: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0069, {
-      bankCd: this.data.autoWithdrawalBankCode,
-      bankSerNum: this.data.autoWithdrawalBankSerNum
-    }).done($.proxy(this._successCancelAccount, this)).fail($.proxy(this._apiError, this));
-  },
-
-  _successCancelAccount: function (res) {
-    this._popupService.close();
-    if (res.code === '00') {
-      Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL);
-      this.$openAutoPaymentLayerTrigger.hide();
-    } else {
-      $.proxy(this._apiError, this);
-    }
-  },*/
-  // 자동납부 통합인출 해지 end
-
+  
   // 분류선택 
-  _typeActionSheetOpen: function () {
+  _typeActionSheetOpen: function (evt) {
     this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
@@ -297,7 +289,8 @@ Tw.MyTFareInfoHistory.prototype = {
       }
     }, 
     $.proxy(this._openTypeSelectHandler, this), 
-    $.proxy(this._closeTypeSelect, this)
+    $.proxy(this._closeTypeSelect, this),
+    null, $(evt.currentTarget)
     );
   },
 
@@ -349,9 +342,9 @@ Tw.MyTFareInfoHistory.prototype = {
     this._historyService.goLoad(this.data.refundAccountURL);
   },
 
-  _apiError: function (err) {
+  _apiError: function ($target, err) {
     // Tw.Logger.error(err.code, err.msg);
-    Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop();
+    Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop(null, $target);
     // this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
   }

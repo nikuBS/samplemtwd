@@ -41,7 +41,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
-    this._remainAmount = this.$container.find('.fe-remain').text();
     this._name = this.$container.find('.fe-name').text();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
@@ -75,7 +74,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _prepayHistoryMonth: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
   },
-  _microHistory: function () {
+  _microHistory: function (e) {
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -84,7 +83,9 @@ Tw.MyTFareBillPrepayMain.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._selectPopupCallback, this),
-      $.proxy(this._goLoad, this)
+      $.proxy(this._goLoad, this),
+      null,
+      $(e.currentTarget)
     );
   },
   _selectPopupCallback: function ($layer) {
@@ -111,7 +112,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
     return true;
   },
-  _prepay: function () {
+  _prepay: function (e) {
     var hbsName = 'MF_06_03';
     if (this.$title === 'contents') {
       hbsName = 'MF_07_03';
@@ -121,38 +122,29 @@ Tw.MyTFareBillPrepayMain.prototype = {
       if (Tw.BrowserHelper.isApp()) {
         this._popupService.open({
           'hbs': hbsName
-        }, $.proxy(this._goPrepay, this), null, 'pay');
+        }, $.proxy(this._goPrepay, this), null, 'pay', $(e.currentTarget));
       } else {
-        this._goAppInfo();
+        this._goAppInfo(e);
       }
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE, null, null, null, $(e.currentTarget));
     }
   },
   _goPrepay: function ($layer) {
     new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name);
   },
-  _autoPrepay: function () {
-    var isAvailable = this._checkLimit();
-
-    if (isAvailable) {
-      if (Tw.BrowserHelper.isApp()) {
-        this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
-      } else {
-        this._goAppInfo();
-      }
+  _autoPrepay: function (e) {
+    if (Tw.BrowserHelper.isApp()) {
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY);
+      this._goAppInfo(e);
     }
-  },
-  _checkLimit: function () {
-    return this._remainAmount > 10000;
   },
   _autoPrepayInfo: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
   },
-  _openAutoPayInfo: function () {
-    this._popupService.openAlert(Tw.AUTO_PAY_INFO['CONTENTS_' + this.$title.toUpperCase()], Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM);
+  _openAutoPayInfo: function (e) {
+    this._popupService.openAlert(Tw.AUTO_PAY_INFO['CONTENTS_' + this.$title.toUpperCase()], Tw.AUTO_PAY_INFO.TITLE, Tw.BUTTON_LABEL.CONFIRM, null, null, $(e.currentTarget));
   },
   _changeUseStatus: function (event) {
     new Tw.MyTFareBillSmallSetUse(this.$container, $(event.target));
@@ -160,13 +152,13 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _setPassword: function () {
     new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
   },
-  _goAppInfo: function () {
+  _goAppInfo: function (e) {
     var isAndroid = Tw.BrowserHelper.isAndroid();
     this._popupService.open({
       'hbs': 'open_app_info',
       'isAndroid': isAndroid,
       'cdn': Tw.Environment.cdn
-    }, $.proxy(this._onOpenTworld, this));
+    }, $.proxy(this._onOpenTworld, this), null, null, $(e.currentTarget));
   },
   _onOpenTworld: function ($layer) {
     new Tw.CommonShareAppInstallInfo($layer);

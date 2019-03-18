@@ -20,7 +20,14 @@ Tw.BenefitMyBenefitRainbowPoint.prototype = {
   _onClickAnchor: function (cond, alertMsgKey) {
     if ( cond ) {
       event.preventDefault();
-      this._popupService.openAlert(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT[alertMsgKey]);
+      this._popupService.openAlert(
+        Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT[alertMsgKey],
+        null,
+        null,
+        null,
+        null,
+        $(event.target)
+      );
     }
   }
 

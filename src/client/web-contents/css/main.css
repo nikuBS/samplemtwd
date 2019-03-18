@@ -841,8 +841,6 @@
           box-sizing: border-box;
   padding: 1.75rem 1.5rem 0.5rem 1.5rem;
   border-radius: 0.3125rem; }
-  .main-fee-box .fee-cont button, .main-fee-box .fee-cont a {
-    width: 100%; }
   .main-fee-box .fee-cont > .tit {
     display: inline-block;
     width: auto;
@@ -2751,6 +2749,8 @@ body.apphome {
 .device_ios .h-belt .h-default .h-logo {
   -webkit-transform: translate3d(-50%, 0, 0);
           transform: translate3d(-50%, 0, 0); }
+  .device_ios .h-belt .h-default .h-logo .icon-gnb-home {
+    vertical-align: top; }
 
 .device_android .h-belt {
   -webkit-backface-visibility: hidden;
@@ -3549,6 +3549,10 @@ body.apphome {
     font-weight: 500; }
   .charge-product.type-list .bt-cont-box .tx {
     -webkit-line-clamp: 3; }
+
+.slick-dots .blind {
+  background: none !important;
+  border: none !important; }
 
 .accessories-box {
   position: relative;
