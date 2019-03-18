@@ -92,11 +92,7 @@ Tw.ProductWireplanSettingBasicInfo.prototype = {
 
   _blurInputNumber: function(e) {
     var $elem = $(e.currentTarget);
-    if ($elem.val().length > 8) {
-      $elem.val(Tw.FormatHelper.conTelFormatWithDash($elem.val()));
-    } else {
-      $elem.val(Tw.FormatHelper.getDashedCellPhoneNumber($elem.val()));
-    }
+    $elem.val(Tw.FormatHelper.conTelFormatWithDash($elem.val()));
   },
 
   _focusInputNumber: function(e) {
