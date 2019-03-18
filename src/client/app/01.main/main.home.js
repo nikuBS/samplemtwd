@@ -929,12 +929,19 @@ Tw.MainHome.prototype = {
     if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
-      $quickMenuEl.html(tplQuick({ list: list, enableEdit: quickMenu.enableEdit === 'Y' }));
+      $quickMenuEl.html(tplQuick({
+        list: list,
+        enableEdit: quickMenu.enableEdit === 'Y',
+        quick_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-22' : 'MWMA_A2_B6-160',
+        edit_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-23' : 'MWMA_A2_B6-161'
+      }));
     } else {
       if ( isLogin ) {
         var $quickEmptyTemp = $('#fe-home-quick-empty');
         var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
-        $quickMenuEl.html(tplQuickEmpty());
+        $quickMenuEl.html(tplQuickEmpty({
+          edit_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-23' : 'MWMA_A2_B6-161'
+        }));
       }
     }
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this, list));

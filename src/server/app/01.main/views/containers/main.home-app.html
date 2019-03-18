@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
-    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
+    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home" data-xt_eid="CMMA_A2_B6-35" data-xt_csid="NO" data-xt_action="BC"><span class="blind">홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my on fe-replace-history" aria-selected="true"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store fe-replace-history" aria-selected="false"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
-                                        <a href="/myt-data/submain" class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
+                                        <a href="/myt-data/submain" class="donut-chart data-type" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
                                                 <% if(homeData.usageData.shareTotal !== 0) { %>
                                                 <!-- loop 공유데이터 -->
@@ -161,7 +161,7 @@
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
-                                        <button class="donut-chart"><!-- 데이터 경우 data-type 추가 -->
+                                        <a href="/myt-data/submain" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
                                                 <!-- loop -->
                                                 <div class="c100 p0" data-percent="<%= homeData.usageData.voice.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
@@ -182,7 +182,7 @@
                                                 <strong class="ti">남은 음성통화</strong>
                                                 <em class="tx2"><%= homeData.usageData.voice.showRemained %></em>
                                             </span>
-                                        </button>
+                                        </a>
                                         <!-- // .donut-chart -->
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
-                                        <button class="donut-chart"><!-- 데이터 경우 data-type 추가 -->
+                                        <a href="/myt-data/submain" class="donut-chart" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
                                                 <!-- loop -->
                                                 <div class="c100 p0" data-percent="<%= homeData.usageData.sms.remainedRatio %>"><!-- data-percent :0 ~ 100 -->
@@ -219,7 +219,7 @@
                                                 <strong class="ti">남은 문자</strong>
                                                 <em class="data"><%= homeData.usageData.sms.showRemained %></em>
                                             </span>
-                                        </button>
+                                        </a>
                                         <!-- // .donut-chart -->
                                     </div>
                                 </div>
@@ -458,10 +458,10 @@
                                 <strong class="ti">반갑습니다. 고객님</strong>
                                 <p class="tx">로그인 후<br>고객님의 정보를 확인하세요.</p>
                                 <div class="btn-area">
-                                    <button type="button" class="btn-round1 btn-style4 fe-bt-home-slogin">간편 로그인하기</button>
-                                    <button type="button" class="btn-round1 btn-style1 fe-bt-home-login">로그인하기</button>
+                                    <button type="button" class="btn-round1 btn-style4 fe-bt-home-slogin" data-xt_eid="CMMA_A2_B6-39" data-xt_csid="NO" data-xt_action="BC">간편 로그인하기</button>
+                                    <button type="button" class="btn-round1 btn-style1 fe-bt-home-login" data-xt_eid="CMMA_A2_B6-40" data-xt_csid="NO" data-xt_action="BC">로그인하기</button>
                                 </div>
-                                <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt fe-bt-signup">회원가입</button> 후 이용해 주세요</p>
+                                <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt fe-bt-signup" data-xt_eid="CMMA_A2_B6-41" data-xt_csid="NO" data-xt_action="BC">회원가입</button> 후 이용해 주세요</p>
                             </div>
                             <!-- // 비로그인 -->
                             <% } %>
@@ -478,17 +478,17 @@
                                     <span class="msg">T멤버십은 간편로그인 상태에서 조회할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
                                 </div>
                                 <div class="btn-area">
-                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
-                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
+                                    <!--<a href="/membership/submain" class="bt" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>
                         <% } else if (homeData.membershipData.code === '00') { %>
                         <div class="section-box nogaps">
                             <div class="main-membershop-box">
-                                <div id="fe-membership-extend" class="membership-cont" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BC">
+                                <div id="fe-membership-extend" class="membership-cont" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC">
                                     <strong class="ti">Tmembership</strong>
                                     <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
                                     <!-- <span class="rating gold">gold</span>
@@ -503,10 +503,10 @@
                                     <% } %>
                                 </div>
                                 <div class="btn-area">
-                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
-                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
+                                    <!--<a href="/membership/submain" class="bt" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>
@@ -521,10 +521,10 @@
                                     </p>
                                 </div>
                                 <div class="btn-area">
-                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
-                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
-                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
+                                    <!--<a href="/membership/submain" class="bt" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>
