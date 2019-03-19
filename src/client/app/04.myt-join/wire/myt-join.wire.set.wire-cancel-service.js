@@ -94,7 +94,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.infoLi.on('click', $.proxy(this.$infoLiEvt, this));
     this.productLi.on('click', 'input[type=checkbox]', $.proxy(this.$productLiEvt, this));
     this.hpAndTelType.on('click', 'input:radio[name=radio1]', $.proxy(this.hpAndTelTypeEvt, this));
-    this.$container.on('input', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
+
+    if ( Tw.BrowserHelper.isIos() ) {
+      this.$container.on('blur', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
+    } else {
+      this.$container.on('input', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
+    }
+
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('blur', '[data-target="input_hp"]', $.proxy(this._showInputPhoneValid, this));
     this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));

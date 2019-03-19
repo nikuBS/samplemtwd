@@ -268,10 +268,17 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   _getCurrentLocation: function(){
     //app인 경우
     if ( Tw.BrowserHelper.isApp() ) {
+      // 기기 gps에 문제가 있는 경우 native에서 리턴없으므로 자체적으로 처리 (DV001-13593)
+      this._getCurrentLocationTimeout = setTimeout($.proxy(function(){
+        if(this._getCurrentLocationTimeout){
+          this._getCurrentLocationTimeout = null;
+          this._notAbleGps();
+        }
+      }, this), 2000);
       this._nativeService.send(
         Tw.NTV_CMD.GET_LOCATION, {},
         $.proxy(function(result){
-
+          this._getCurrentLocationTimeout = null;
           if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
             this._getAreaByMapXY(result.params.latitude, result.params.longitude);
           } else {
@@ -311,7 +318,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
       Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.TITLE,
       Tw.BUTTON_LABEL.CONFIRM,
       $.proxy(this._reqeustNearShopList, this))}.bind(this)
-    , 200);
+    , 300);
   },
 
   /**
