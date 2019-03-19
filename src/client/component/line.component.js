@@ -73,7 +73,7 @@ Tw.LineComponent.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _openListPopup: function (lineData) {
+  _openListPopup: function (lineData, $target) {
     this._popupService.open({
       hbs: 'actionsheet_line',
       layer: true,
