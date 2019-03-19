@@ -15,6 +15,12 @@ Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
 
 Tw.CommonSearchMain.prototype = {
   _init : function () {
+    this._autoCompleteRegExObj = {
+      fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
+      fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
+      fontClose : new RegExp('</font>','g'),
+      spanOpen : new RegExp('<span class="highlight-text">','g')
+    };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._historyService = new Tw.HistoryService();
@@ -56,10 +62,10 @@ Tw.CommonSearchMain.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC6633\'>','<span class="highlight-text">');
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:12px\'>','');
-    returnObj.showStr = returnObj.showStr.replace('</font>','</span>');
-    returnObj.linkStr = returnObj.showStr.replace('<span class="highlight-text">','').replace('</span>','');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
+    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
     return returnObj;
   },
   _inputFocusEvt : function () {
