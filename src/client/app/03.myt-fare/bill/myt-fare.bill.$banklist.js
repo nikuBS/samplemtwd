@@ -74,7 +74,7 @@ Tw.MyTFareBillBankList.prototype = {
     }
   },
   _getBankListFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    Tw.Error(err.code, err.msg).pop(null, this.$currentTarget);
   },
   _setBankList: function (bankList, isData) {
     var formatList = [];

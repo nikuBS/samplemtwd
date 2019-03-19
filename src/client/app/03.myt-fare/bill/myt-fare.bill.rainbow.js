@@ -80,25 +80,26 @@ Tw.MyTFareBillRainbow.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _cancel: function (e) {
+    var $target = $(e.currentTarget);
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this, $target), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
   _onCancel: function () {
     this._isCancel = true;
     this._popupService.close();
   },
-  _autoCancel: function () {
+  _autoCancel: function ($target) {
     if (this._isCancel) {
       this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'T1' })
-        .done($.proxy(this._cancelSuccess, this))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._cancelSuccess, this, $target))
+        .fail($.proxy(this._fail, this, $target));
     }
   },
-  _cancelSuccess: function (res) {
+  _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=cancel');
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
   _selectFare: function (event) {
@@ -166,12 +167,13 @@ Tw.MyTFareBillRainbow.prototype = {
 
     this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
-  _onePay: function () {
+  _onePay: function (e) {
+    var $target = $(e.currentTarget);
     if (this.$isPointValid && this.$isOneSelectValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
-        .done($.proxy(this._paySuccess, this, ''))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._paySuccess, this, $target, ''))
+        .fail($.proxy(this._fail, this, $target));
     } else {
       if (!this.$isPointValid) {
         this.$point.focus();
@@ -180,22 +182,23 @@ Tw.MyTFareBillRainbow.prototype = {
       }
     }
   },
-  _autoPay: function () {
+  _autoPay: function (e) {
+    var $target = $(e.currentTarget);
     if (this.$isAutoSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
-        .done($.proxy(this._paySuccess, this, 'auto'))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._paySuccess, this, $target, 'auto'))
+        .fail($.proxy(this._fail, this, $target));
     } else {
       this.$fareSelector.focus();
     }
   },
-  _paySuccess: function (type, res) {
+  _paySuccess: function ($target, type, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=' + type +
         '&point=' + this._getPointValue(type) + '&add=' + this.$fareSelector.attr('id'));
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
   _getPointValue: function (type) {
@@ -205,8 +208,8 @@ Tw.MyTFareBillRainbow.prototype = {
     }
     return point;
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _makeRequestDataForOne: function () {
     var reqData = {

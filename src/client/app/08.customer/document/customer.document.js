@@ -111,7 +111,7 @@ Tw.CustomerDocument.prototype = {
       $target.removeClass('disabled');
     }
   },
-  _setData: function ($parentTarget, $nextTarget, isEmpty) {
+  _setData: function ($parentTarget, $nextTarget, $currentTarget, isEmpty) {
     this._closeList($parentTarget);
 
     var idx = $parentTarget.data('index');
@@ -125,8 +125,8 @@ Tw.CustomerDocument.prototype = {
     if (!isNaN(idx)) {
       this._makeRequestData(idx, id);
       this._apiService.request(Tw.API_CMD.BFF_08_0054, this._reqData)
-        .done($.proxy(this._getSuccess, this, $nextTarget))
-        .fail($.proxy(this._getFail, this));
+        .done($.proxy(this._getSuccess, this, $nextTarget, $currentTarget))
+        .fail($.proxy(this._getFail, this, $currentTarget));
     }
   },
   _makeRequestData: function (idx, id) {
@@ -134,15 +134,15 @@ Tw.CustomerDocument.prototype = {
       this._reqData[this._paramList[idx]] = id;
     }
   },
-  _getSuccess: function ($target, res) {
+  _getSuccess: function ($target, $currentTarget, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setNextList($target, res.result);
     } else {
-      this._getFail(res);
+      this._getFail($currentTarget, res);
     }
   },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _getFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setNextList: function ($target, result) {
     for(var key in result) {
@@ -161,7 +161,7 @@ Tw.CustomerDocument.prototype = {
   _setCallOption: function ($target) {
     this._setTargetDisabled($target);
     this.nextIndex = 1;
-    this._setData($target, $target.next(), true);
+    this._setData($target, $target.next(), $target, true);
   },
   _setTargetDisabled: function ($target) {
     $target.addClass('off');
@@ -206,7 +206,7 @@ Tw.CustomerDocument.prototype = {
 
     this._setTitle($parentTarget, $target);
     this._resetChildren($parentTarget, idx);
-    this._setData($parentTarget, $nextTarget);
+    this._setData($parentTarget, $nextTarget, $currentTarget);
   },
   _closeList: function ($target) {
     $target.removeClass('on');

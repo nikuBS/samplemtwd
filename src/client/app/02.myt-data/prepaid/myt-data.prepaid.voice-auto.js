@@ -319,7 +319,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _requestRechargeAuto: function () {
+  _requestRechargeAuto: function (e) {
     if ( this.chargeCd || this.amt ) {
       var htParams = {
         amt: $('.fe-select-amount').attr('data-amount'),
@@ -338,11 +338,11 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       }
 
       this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
-        .done($.proxy(this._onCompleteRechargeAuto, this));
+        .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)));
     }
   },
 
-  _onCompleteRechargeAuto: function (res) {
+  _onCompleteRechargeAuto: function ($target, res) {
     var htParams = {
       amt: $('.fe-select-amount').attr('data-amount'),
       chargeCd: this.chargeCd,
@@ -361,7 +361,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       // Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=' + type + '&' + $.param(htParams));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 
@@ -371,7 +371,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       Tw.MYT_DATA_PREPAID.A70_CONTENT,
       Tw.MYT_DATA_PREPAID.A70_BTN_CONFIRM,
       null,
-      $.proxy(this._unsubscribeAutoRecharge, this),
+      $.proxy(this._unsubscribeAutoRecharge, this, $(e.currentTarget)),
       $.proxy(this._closeUnsubscribeAutoRecharge, this),
       null,
       null,
@@ -383,17 +383,17 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this._popupService.close();
   },
 
-  _unsubscribeAutoRecharge: function () {
+  _unsubscribeAutoRecharge: function ($target) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0057, {})
-      .done($.proxy(this._onSuccessUnsubscribe, this));
+      .done($.proxy(this._onSuccessUnsubscribe, this, $target));
   },
 
-  _onSuccessUnsubscribe: function (res) {
+  _onSuccessUnsubscribe: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=cancel');
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 

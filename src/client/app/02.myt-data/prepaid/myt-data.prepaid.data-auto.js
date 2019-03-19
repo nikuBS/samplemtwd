@@ -187,7 +187,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     }
   },
   _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    Tw.Error(err.code, err.msg).pop(null, this.$rechargeBtn);
   },
   _getAfterData: function () {
     var remainData = parseInt(this.$data.attr('data-value'), 10);
