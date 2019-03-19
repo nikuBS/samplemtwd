@@ -58,7 +58,10 @@ Tw.CustomerEmail.prototype = {
 
   _TabClick: function (e) {
     e.stopPropagation();
-    $(e.currentTarget).children().trigger('click');
+    // 재문의 케이스일 경우 children button 예외처리
+    if($(e.currentTarget).children().is('a')){
+      $(e.currentTarget).children().trigger('click');
+    }
   },
 
   _TabLinker: function (e) {
