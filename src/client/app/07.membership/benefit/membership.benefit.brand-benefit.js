@@ -318,7 +318,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
       Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.TITLE,
       Tw.BUTTON_LABEL.CONFIRM,
       $.proxy(this._reqeustNearShopList, this))}.bind(this)
-    , 200);
+    , 300);
   },
 
   /**
