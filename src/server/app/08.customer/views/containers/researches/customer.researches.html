@@ -59,6 +59,11 @@
                                                         if (research.qstnHtmlCtt) { %>
                                                             <%- research.qstnHtmlCtt %>
                                                         <% } %>
+                                                        <ul class="bt-slice mt0">
+                                                            <li class="bt-blue1">
+                                                                <a href="/customer/svc-info/researches?id=<%= research.hintExUrl %>">설문 시작하기</a>
+                                                            </li>
+                                                        </ul>
                                                     <% } else { %>
                                                         <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="<%= research.hintExUrl %>">힌트 보기</button></div><% }
                                                         const examCount = research.examples.length;
@@ -68,25 +73,17 @@
                                                                 <li class="category-type" aria-checked="false">
                                                                     <% if (exam.image) { %><div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div><% } %>
                                                                     <div class="chkform-wrap">
-                                                                        <span class="custom-form"><input type="radio" id="radio<%= research.bnnrRsrchId %>_<%= idx %>" name="radio<%= research.bnnrRsrchId %>"><span class="r-type1"></span></span>
+                                                                        <span class="custom-form"><input type="radio" id="radio<%= research.bnnrRsrchId %>_<%= idx %>" name="radio<%= research.bnnrRsrchId %>" <%= research.isProceeding ? '' : 'disabled' %> ><span class="r-type1"></span></span>
                                                                         <label for="radio<%= research.bnnrRsrchId %>_<%= idx %>"><%= exam.content %></label>
                                                                     </div>
                                                                     <%- exam.motHtml %>
                                                                 </li>
                                                                 <% }); %>
                                                             </ul>
-                                                            <% if (research.examples[examCount - 1].isEtc) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                                            <% if (research.examples[examCount - 1].isEtc) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= examCount %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요." <%= research.isProceeding ? '' : 'disabled' %>></textarea><% } %>
                                                             <% if (research.motMsgHtmlCtt) { %><div class="mb20"><%- research.motMsgHtmlCtt %></div><% } %>
                                                         <% } %>
-                                                    <% } %>
-                                                    <% if (research.isProceeding) { %>
-                                                        <% if (research.bnnrRsrchTypCd === "R") { %>
-                                                            <ul class="bt-slice mt0">
-                                                                <li class="bt-blue1">
-                                                                    <a href="/customer/svc-info/researches?id=<%= research.hintExUrl %>">설문 시작하기</a>
-                                                                </li>
-                                                            </ul>
-                                                        <% } else { %>
+                                                        <% if (research.isProceeding) { %>
                                                             <ul class="bt-slice item-two">
                                                                 <li class="bt-white2">
                                                                     <a href="/customer/svc-info/researches/result?id=<%= research.bnnrRsrchId %>">결과보기</a>
@@ -95,13 +92,13 @@
                                                                     <button class="fe-submit" disabled>참여하기</button>
                                                                 </li>
                                                             </ul>
+                                                        <% } else { %>
+                                                            <ul class="bt-slice mt0">
+                                                                <li class="bt-blue1">
+                                                                    <a href="/customer/svc-info/researches/result?id=<%= research.bnnrRsrchId %>">결과보기</a>
+                                                                </li>
+                                                            </ul>
                                                         <% } %>
-                                                    <% } else { %>
-                                                        <ul class="bt-slice">
-                                                            <li class="bt-blue1">
-                                                                <a href="/customer/svc-info/researches/result?id=<%= research.bnnrRsrchId %>">결과보기</a>
-                                                            </li>
-                                                        </ul>
                                                     <% } %>
                                                 </div>
                                             </div>

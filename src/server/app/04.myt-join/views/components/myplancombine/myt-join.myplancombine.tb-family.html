@@ -8,167 +8,167 @@
 <!-- .cont-box -->
 <% const groupInfo = combination.combinationGroup; 
 const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
-<div class="cont-box">
-        <div class="bundle-tit-wrap">
-            <h3 class="tit">TB끼리 온가족무료</h3>
-        </div>
-        <div class="basic-list bg-type mt10">
-            <ul>
-                <li>
-                    <span class="title">신청일</span>
-                    <span class="tx-cont"><%= groupInfo.combStaDt %></span>
-                </li>
-                <li>
-                    <span class="title">결합회선</span>
-                    <span class="tx-cont"><%= memberCount %>회선</span>
-                </li>
-                <li>
-                    <span class="title">가입상태</span>
-                    <span class="tx-cont">결합완료</span>
-                </li>
-            </ul>
-        </div>
-        <div class="expect-benefit">
-            <h4 class="tit">예상 혜택</h4>
-            <% if (groupInfo.mblSvcCnt === 2) { %>
-            <!-- 2회선일 경우 -->
-            <p class="txt"><span class="str">집전화 무료</span> 또는<br /><span class="str">초고속 인터넷 할인</span></p>
-            <!--// 2회선일 경우 -->
-            <% } else if (groupInfo.mblSvcCnt === 3) { %>
-            <!-- 3회선일 경우 -->
-            <p class="txt"><span class="str">초고속 인터넷 할인</span></p>
-            <!--// 3회선일 경우 -->
-            <% } else if (groupInfo.mblSvcCnt > 3) { %>
-            <!-- 4회선일 경우 -->
-            <p class="txt"><span class="str">집전화 + <br />초고속 인터넷 할인</span></p>
-            <!--// 4회선일 경우 -->
-            <% } %>
-            <p class="ext-txt">결합회선 중 정지된 회선이 있을 경우(30일 이상)<br />제외되어 혜택이 다를 수 있습니다. </p>
-            <i class="ico-expect"></i>
-        </div>
+<div class="cont-box flp-other-pd-st">
+    <div class="bundle-tit-wrap">
+        <h3 class="tit">TB끼리 온가족무료</h3>
     </div>
-    <!--// .cont-box -->
-    
-    <hr class="cont-sp type1" aria-hidden="true"/>
-    
-    <!-- .cont-box -->
-    <div class="cont-box nogaps-hoz">
-         <!-- .widget -->
-       <div class="widget">
-            <div class="widget-box accordion2">
-                <div class="acco-style data-famliy-group-list type2">
-                    <ul class="acco-box">
-                        <%  combination.combinationWirelessMemberList.map(member => { 
-                            const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
-                            const isRep = member.relClCd === '00'; %>
-                            <li class="acco-list"><!-- on , off -->
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="false">
-                                        <div class="list-wrap">
-                                            <div class="list-info">
-                                                <div>
-                                                    <% if (isMine) { %>
-                                                        <strong class="me"><%= member.custNm %></strong>
-                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
-                                                        <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
-                                                    <% } else { %>
-                                                        <em class="me"><%= member.custNm %></em>
-                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
-                                                    <% } %>
-                                                </div>
-                                                <div class="num"><%= member.svcNum %></div>
-                                            </div>
-                                            <div class="list-arrow">
-                                                <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="data-info-list toggle-inner-list">
-                                        <ul>
-                                            <li>
-                                                <dl>
-                                                    <dt>가족대표와의 관계</dt>
-                                                    <dd>
-                                                        <% if (isRep && isMine) { %>
-                                                            본인(내번호)<br />
-                                                        <% } else { %>
-                                                            <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
-                                                        <% } %>    
-                                                    </dd>
-                                                </dl>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        <% });                 
-                        combination.combinationWireMemberList.map(member => { 
-                            const isMine = svcInfo.svcMgmtNum === member.mblSvcMgmtNum; %>
-                            <li class="acco-list"><!-- on , off -->
-                                <div class="acco-title">
-                                    <button role="button" aria-pressed="false">
-                                        <div class="list-wrap">
-                                            <div class="list-info">
-                                                <div>
-                                                    <% if (isMine) { %>
-                                                        <strong class="me"><%= member.custNm %></strong>
-                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
-                                                        <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
-                                                    <% } else { %>
-                                                        <em class="me"><%= member.custNm %></em>
-                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
-                                                    <% } %>
-                                                </div>
-                                                <div class="num"><%= member.svcCdNm %></div>
-                                            </div>
-                                            <div class="list-arrow">
-                                                <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
-                                            </div>
-                                        </div>
-                                    </button>
-                                </div>
-                                <div class="acco-content">
-                                    <div class="data-info-list toggle-inner-list">
-                                        <ul>
-                                            <li>
-                                                <dl>
-                                                    <dt>가족대표와의 관계</dt>
-                                                    <dd>
-                                                        <%= member.relClNm || '-' %><br />
-                                                    </dd>
-                                                </dl>
-                                            </li>
-                                            <li>
-                                                <dl>
-                                                    <dt>결합유선상품</dt>
-                                                    <dd><%= member.svcCdNm %></dd>
-                                                </dl>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        <% }); %>             
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- //.widget -->
-    </div>
-    <!--// .cont-box -->
-    
-    <hr class="cont-sp type1" aria-hidden="true"/>
-    
-    <!-- .cont-box --><!-- 2018-11-02 수정 -->
-    <div class="cont-box nogaps-btm">
-        <h3 class="tx-bold">꼭 확인해 주세요</h3>
-        <ul class="noti-list02">
-            <li><button id="MS_07_01_05_tip_01" type="button" class="tip-view-btn" title="TB끼리 온가족무료 해지 할 경우 TIP보기" aria-haspopup="true">TB끼리 온가족무료 해지 할 경우<span class="tip-view">TIP</span></button></li>
-            <li><button id="MS_07_01_05_tip_02" type="button" class="tip-view-btn" title="결합상품 자동 해지되는 경우 TIP보기" aria-haspopup="true">결합상품 자동 해지되는 경우<span class="tip-view">TIP</span></button></li>
-            <li><button id="MS_07_01_05_tip_03" type="button" class="tip-view-btn" title="결합혜택 제공되는 경우 TIP보기" aria-haspopup="true">결합혜택 제공되는 경우<span class="tip-view">TIP</span></button></li>
-            <li><button id="MS_07_01_05_tip_04" type="button" class="tip-view-btn" title="할인 적용되는 경우 TIP보기" aria-haspopup="true">할인 적용되는 경우<span class="tip-view">TIP</span></button></li>
+    <div class="basic-list bg-type mt10">
+        <ul>
+            <li>
+                <span class="title">신청일</span>
+                <span class="tx-cont"><%= groupInfo.combStaDt %></span>
+            </li>
+            <li>
+                <span class="title">결합회선</span>
+                <span class="tx-cont"><%= memberCount %>회선</span>
+            </li>
+            <li>
+                <span class="title">가입상태</span>
+                <span class="tx-cont">결합완료</span>
+            </li>
         </ul>
     </div>
-    <!--// .cont-box -->
+    <div class="expect-benefit">
+        <h4 class="tit">예상 혜택</h4>
+        <% if (groupInfo.mblSvcCnt === 2) { %>
+        <!-- 2회선일 경우 -->
+        <p class="txt"><span class="str">집전화 무료</span> 또는<br /><span class="str">초고속 인터넷 할인</span></p>
+        <!--// 2회선일 경우 -->
+        <% } else if (groupInfo.mblSvcCnt === 3) { %>
+        <!-- 3회선일 경우 -->
+        <p class="txt"><span class="str">초고속 인터넷 할인</span></p>
+        <!--// 3회선일 경우 -->
+        <% } else if (groupInfo.mblSvcCnt > 3) { %>
+        <!-- 4회선일 경우 -->
+        <p class="txt"><span class="str">집전화 + <br />초고속 인터넷 할인</span></p>
+        <!--// 4회선일 경우 -->
+        <% } %>
+        <p class="ext-txt">결합회선 중 정지된 회선이 있을 경우(30일 이상)<br />제외되어 혜택이 다를 수 있습니다. </p>
+        <i class="ico-expect"></i>
+    </div>
+</div>
+<!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- .cont-box -->
+<div class="cont-box nogaps-hoz">
+        <!-- .widget -->
+    <div class="widget">
+        <div class="widget-box accordion2">
+            <div class="acco-style data-famliy-group-list type2">
+                <ul class="acco-box">
+                    <%  combination.combinationWirelessMemberList.map(member => { 
+                        const isMine = svcInfo.svcMgmtNum === member.svcMgmtNum; 
+                        const isRep = member.relClCd === '00'; %>
+                        <li class="acco-list"><!-- on , off -->
+                            <div class="acco-title">
+                                <button role="button" aria-pressed="false">
+                                    <div class="list-wrap">
+                                        <div class="list-info">
+                                            <div>
+                                                <% if (isMine) { %>
+                                                    <strong class="me"><%= member.custNm %></strong>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                <% } else { %>
+                                                    <em class="me"><%= member.custNm %></em>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                <% } %>
+                                            </div>
+                                            <div class="num"><%= member.svcNum %></div>
+                                        </div>
+                                        <div class="list-arrow">
+                                            <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="acco-content">
+                                <div class="data-info-list toggle-inner-list">
+                                    <ul>
+                                        <li>
+                                            <dl>
+                                                <dt>가족대표와의 관계</dt>
+                                                <dd>
+                                                    <% if (isRep && isMine) { %>
+                                                        본인(내번호)<br />
+                                                    <% } else { %>
+                                                        <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                    <% } %>    
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    <% });                 
+                    combination.combinationWireMemberList.map(member => { 
+                        const isMine = svcInfo.svcMgmtNum === member.mblSvcMgmtNum; %>
+                        <li class="acco-list"><!-- on , off -->
+                            <div class="acco-title">
+                                <button role="button" aria-pressed="false">
+                                    <div class="list-wrap">
+                                        <div class="list-info">
+                                            <div>
+                                                <% if (isMine) { %>
+                                                    <strong class="me"><%= member.custNm %></strong>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                <% } else { %>
+                                                    <em class="me"><%= member.custNm %></em>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                <% } %>
+                                            </div>
+                                            <div class="num"><%= member.svcCdNm %></div>
+                                        </div>
+                                        <div class="list-arrow">
+                                            <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="acco-content">
+                                <div class="data-info-list toggle-inner-list">
+                                    <ul>
+                                        <li>
+                                            <dl>
+                                                <dt>가족대표와의 관계</dt>
+                                                <dd>
+                                                    <%= member.relClNm || '-' %><br />
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>결합유선상품</dt>
+                                                <dd><%= member.svcCdNm %></dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    <% }); %>             
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- //.widget -->
+</div>
+<!--// .cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true"/>
+
+<!-- .cont-box --><!-- 2018-11-02 수정 -->
+<div class="cont-box nogaps-btm">
+    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+    <ul class="noti-list02">
+        <li><button id="MS_07_01_05_tip_01" type="button" class="tip-view-btn" title="TB끼리 온가족무료 해지 할 경우 TIP보기" aria-haspopup="true">TB끼리 온가족무료 해지 할 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_05_tip_02" type="button" class="tip-view-btn" title="결합상품 자동 해지되는 경우 TIP보기" aria-haspopup="true">결합상품 자동 해지되는 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_05_tip_03" type="button" class="tip-view-btn" title="결합혜택 제공되는 경우 TIP보기" aria-haspopup="true">결합혜택 제공되는 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_05_tip_04" type="button" class="tip-view-btn" title="할인 적용되는 경우 TIP보기" aria-haspopup="true">할인 적용되는 경우<span class="tip-view">TIP</span></button></li>
+    </ul>
+</div>
+<!--// .cont-box -->

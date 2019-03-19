@@ -37,8 +37,8 @@ Tw.ProductList.prototype = {
 
   bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
-    this.$orderBtn.on('click', $.proxy(this._openOrderPopup, this));
-    this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
+    this.$orderBtn.click(_.debounce($.proxy(this._openOrderPopup, this), 200));
+    this.$container.find('.fe-select-filter').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 200));
   },
 
   cachedElement: function() {
@@ -231,10 +231,10 @@ Tw.ProductList.prototype = {
   },
 
   _handleOpenSelectFilterPopup: function($layer) {
-    $layer.on('click', '.select-list li.checkbox', $.proxy(this._handleClickFilter, this, $layer));
+    $layer.find('.select-list li.checkbox').click(_.debounce($.proxy(this._handleClickFilter, this, $layer), 200));
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
-    $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this, $layer));
+    $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 200));
   },
 
   _handleCloseSelectFilterPopup: function() {
