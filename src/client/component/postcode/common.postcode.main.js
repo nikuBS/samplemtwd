@@ -4,8 +4,9 @@
  * Date: 2018.11.12
  */
 
-Tw.CommonPostcodeMain = function (rootEl, callback) {
+Tw.CommonPostcodeMain = function (rootEl, $target, callback) {
   this.$container = rootEl;
+  this.$target = $target;
   this.$callback = callback;
 
   this._apiService = Tw.Api;
@@ -22,7 +23,8 @@ Tw.CommonPostcodeMain.prototype = {
     },
       $.proxy(this._onMainSearch, this),
       $.proxy(this._goDetail, this),
-      'post0001'
+      'post0001',
+      this.$target
     );
   },
   _onMainSearch: function ($layer) {
@@ -33,7 +35,7 @@ Tw.CommonPostcodeMain.prototype = {
   },
   _goDetail: function () {
     if (this.$isNext) {
-      new Tw.CommonPostcodeDetail(this.$container, this.$addressObject, this.$callback);
+      new Tw.CommonPostcodeDetail(this.$container, this.$target, this.$addressObject, this.$callback);
     }
   },
   _initVariables: function ($targetId) {
@@ -63,22 +65,23 @@ Tw.CommonPostcodeMain.prototype = {
       this._search();
     }
   },
-  _search: function() {
+  _search: function(e) {
     this.$resultBox.find('.fe-clone').remove();
     this.$resultBox.hide();
     this.$emptyBox.hide();
     this._page = 0;
 
-    this._getList();
+    this._getList(e);
   },
-  _getList: function () {
+  _getList: function (e) {
+    var $target = $(e.currentTarget);
     if (this._isValid()) {
       var $apiName = this._getApiName();
       var $reqData = this._makeRequestData($.trim(this.$searchField.val()));
 
       this._apiService.request($apiName, $reqData)
-        .done($.proxy(this._success, this))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._success, this, $target))
+        .fail($.proxy(this._fail, this, $target));
     }
   },
   _getMoreList: function () {
@@ -102,15 +105,15 @@ Tw.CommonPostcodeMain.prototype = {
       size: Tw.DEFAULT_LIST_COUNT
     };
   },
-  _success: function (res) {
+  _success: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setContents(res.result);
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setContents: function ($result) {
     var $content = $result.content;
