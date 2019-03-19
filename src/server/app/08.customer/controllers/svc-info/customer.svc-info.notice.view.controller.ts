@@ -1,5 +1,5 @@
 /**
- * 공지사항 > 상세 (T월드 Only)
+ * 공지사항 > 상세 (T world Only)
  * FileName: customer.svc-info.notice.view.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2019.01.17
@@ -34,7 +34,7 @@ class CustomerSvcInfoNoticeView extends TwViewController {
   }
 
   /**
-   * T월드 채널 값 처리
+   * T world 채널 값 처리
    * @param isAndroid
    * @param isIos
    * @private
@@ -67,7 +67,7 @@ class CustomerSvcInfoNoticeView extends TwViewController {
 
     // 공지사항 게시물 내용 조회 API 요청
     this.apiService.request(API_CMD.BFF_08_0029, {
-      expsChnlCd: this._getChannel(BrowserHelper.isAndroid(req), BrowserHelper.isIos(req)), // T월드 채널 설정
+      expsChnlCd: this._getChannel(BrowserHelper.isAndroid(req), BrowserHelper.isIos(req)), // T world 채널 설정
       ntcId: ntcId  // 게시물 키
     }).subscribe((data) => {
       if (data.code !== API_CODE.CODE_00) { // 오류 응답시 처리

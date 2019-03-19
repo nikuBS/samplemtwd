@@ -21,7 +21,7 @@ export const UNLIMIT_NAME = {
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
 export const MYT_FARE_BILL_TYPE = {
-  P: 'T월드 확인',
+  P: 'T world 확인',
   H: 'Bill Letter', // 무선 case
   J: 'Bill Letter', // 유선 case
   B: '문자',
@@ -500,11 +500,11 @@ export const MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP = {
 };
 
 export const MYT_JOIN_WIRE_HIST_DTL_TIT_MAP = {
-  '167' : '신규가입 상세내역',
-  '162' : '설치장소 변경 상세내역',
-  '168' : '가입상품 변경 상세내역',
-  '143' : '약정기간 변경 상세내역',
-  '153' : '요금상품 변경 상세내역'
+  '167': '신규가입 상세내역',
+  '162': '설치장소 변경 상세내역',
+  '168': '가입상품 변경 상세내역',
+  '143': '약정기간 변경 상세내역',
+  '153': '요금상품 변경 상세내역'
 };
 
 export const MYT_JOIN_WIRE_MODIFY_PERIOD = {
@@ -520,8 +520,8 @@ export const MYT_JOIN_WIRE_SET_PAUSE = {
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
-  TWORLD = 'T월드',
-  DIRECTSHOP = 'T월드 다이렉트',
+  TWORLD = 'T world',
+  DIRECTSHOP = 'T world 다이렉트',
   MEMBERSHIP = 'T멤버십',
   ROAMING = 'T로밍',
   VIEW = '공지사항'
@@ -699,7 +699,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page006: '스팸 문자 대응 방법',
   page007: '로그인 제한 제도',
   page008: '휴면 고객 제도',
-  page009: 'T월드 비밀번호 관리',
+  page009: 'T world 비밀번호 관리',
   page010: '개인정보 유효기간',
   page011: '가려진 정보보기(마스킹)',
   page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
@@ -740,7 +740,7 @@ export const MEMBERSHIP_DELIVERY_CODE = {
   '9': '반송'
 };
 
-// 고객센터 > 사이트 이용안내 온리안 T 월드 제목과 컨텐츠 아이디 번호
+// 고객센터 > 사이트 이용안내 온리안 T world 제목과 컨텐츠 아이디 번호
 export const CUSTOMER_STIE_OPTION_TYPE = [
   {
     cat: '기타',
@@ -780,7 +780,7 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   },
   {
     cat: '기타',
-    title: 'T월드의 모든 메뉴 꼼꼼히 살펴보기',
+    title: 'T world의 모든 메뉴 꼼꼼히 살펴보기',
     code: 'D00009',
     className: 'ico-etc'
   }
@@ -921,8 +921,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T월드 다이렉트 이용안내',
-    text: 'T월드 다이렉트에서 구매를 원한다면',
+    title: 'T world 다이렉트 이용안내',
+    text: 'T world 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
@@ -941,7 +941,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             code: 'C00007'
           },
           {
-            dep_title: 'T월드 다이렉트 혜택',
+            dep_title: 'T world 다이렉트 혜택',
             type: 'A2',
             code: 'C00009'
           }

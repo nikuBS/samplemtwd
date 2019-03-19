@@ -714,7 +714,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   // { TODO: 공효원M 요청사항 (2019.02.15) 해당 메뉴 비노출 요청
-  //   title: 'T월드 다이렉트',
+  //   title: 'T world 다이렉트',
   //   category: 'DIRECT',
   //   list: [
   //     { title: '휴대폰 구매', ofrCtgSeq: '07' },
