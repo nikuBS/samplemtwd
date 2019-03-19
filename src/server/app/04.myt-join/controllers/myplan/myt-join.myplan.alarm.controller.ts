@@ -1,4 +1,5 @@
 /**
+ * MyT > 나의 가입정보 > 나의 요금제 > 요금제 변경 가능일 알림 서비스
  * FileName: myt-join.myplan.alarm.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.09.19
@@ -14,31 +15,31 @@ class MyTJoinMyplanAlarm extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    const renderCommonInfo = {
+      title: '요금제 변경 가능일 알람',
+      pageInfo: pageInfo,
+      svcInfo: svcInfo
+    };
+
+    // 휴대폰, 선불폰 아닐때 오류 처리
     if (['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1) {
-      return this.error.render(res, {
-        title: '요금제 변경 가능일 알람',
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      });
+      return this.error.render(res, renderCommonInfo);
     }
 
     this.apiService.request(API_CMD.BFF_05_0125, {}, {})
       .subscribe((alarmInfo) => {
+        // API 오류
         if (alarmInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, {
-            pageInfo: pageInfo,
-            svcInfo: svcInfo,
+          return this.error.render(res, Object.assign(renderCommonInfo, {
             code: alarmInfo.code,
-            msg: alarmInfo.msg,
-            title: '요금제 변경 가능일 알람'
-          });
+            msg: alarmInfo.msg
+          }));
         }
 
-        res.render('myplan/myt-join.myplan.alarm.html', {
-          svcInfo: svcInfo,
-          pageInfo: pageInfo,
+        // 렌더링
+        res.render('myplan/myt-join.myplan.alarm.html', Object.assign(renderCommonInfo, {
           alarmInfo: alarmInfo.result
-        });
+        }));
       });
   }
 }
