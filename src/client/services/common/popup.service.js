@@ -185,6 +185,14 @@ Tw.PopupService.prototype = {
     this._openCallback = null;
   },
   _open: function (option, evt) {
+    // CDN Url 셋팅 안된 채로 open 시도시 200ms 지연 후 재시도
+    if (Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
+      setTimeout($.proxy(function() {
+        this._open(option, evt);
+      }, this), 200);
+      return;
+    }
+
     $.extend(option, {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn

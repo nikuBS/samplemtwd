@@ -172,7 +172,7 @@ Tw.FormatHelper = (function () {
       }
     }
 
-    var regExr = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/;
+    var regExr = /(^02.{0}|^013[0-2]{1}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/;
 
     str = str.replace(/\*/gi, '0');
     str = str.replace(regExr, '$1-$2-$3');

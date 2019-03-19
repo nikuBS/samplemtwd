@@ -52,7 +52,7 @@ class LoggerService {
   }
 
   private getConsoleTransport() {
-    const level = String(process.env.NODE_ENV) === 'production' ? 'error' : 'debug';
+    const level = String(process.env.NODE_ENV) === 'prd' ? 'error' : 'debug';
     const option = {
       level: level,
       showLevel: true,

@@ -1,15 +1,23 @@
 /**
+ * MyT > 나의 가입정보 > 나의 요금제 > 요금제 변경 가능일 알림 서비스 해지
  * FileName: myt-join.myplan.alarmterminate.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.10
  */
 
 Tw.MyTJoinMyplanAlarmterminate = function(rootEl) {
+  // 컨테이너 레이어 설정
   this.$container = rootEl;
+
+  // 공통 모듈 설정
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+
+  // Element 캐싱
   this._cachedElement();
+
+  // 이벤트 바인딩
   this._bindEvent();
 };
 
