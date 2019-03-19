@@ -86,7 +86,8 @@ export default class MembershipSubmain extends TwViewController {
         return membershipData;
       } else {
         return {
-          mbrCode : '01'
+          mbrCode : '01',
+          msg : resp.msg
         };
       }
     });
