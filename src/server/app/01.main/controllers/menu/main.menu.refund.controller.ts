@@ -60,7 +60,7 @@ class MainMenuRefund extends TwViewController {
           return;
         }
 
-        if (data.totalCount === 0) {
+        if (data.totalCount === 0 || data.totalAmount === '0') {
           res.render('menu/main.menu.refund-empty.html', { pageInfo });
           return;
         }
