@@ -177,8 +177,8 @@ Tw.CustomerEmailUpload.prototype = {
     }
   },
 
-  _onClickServiceUpload: function (e) {
-    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
+  _onClickServiceUpload: function () {
+    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       this._popupService.open({
@@ -199,8 +199,8 @@ Tw.CustomerEmailUpload.prototype = {
     this._showUploadPopup();
   },
 
-  _onClickQualityUpload: function (e) {
-    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
+  _onClickQualityUpload: function () {
+    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       this._popupService.open({
