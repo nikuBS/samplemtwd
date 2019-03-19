@@ -71,7 +71,7 @@
                                             <a href="/membership/benefit/brand-benefit?cateCd={{ cateCd }}&brandCd={{ brandCd }}" class="brand-inner" style="margin-right: 0;">
                                                 <span class="inner">
                                                     <span class="logo">
-                                                        <img src="{{ appIcoImgUrl }}" alt="{{ coPtnrNm }}">
+                                                        <img src="{{ appIcoImgUrl }}" alt="">
                                                     </span>
                                                     <span class="intro">
                                                         <span class="category">{{ cateName }}</span>
@@ -120,7 +120,7 @@
                                             <a href="/membership/benefit/brand-benefit?cateCd=<%= brandList[i].cateCd %>&brandCd=<%= brandList[i].brandCd %>" class="brand-inner" style="margin-right: 0;">
                                                 <span class="inner">
                                                     <span class="logo">
-                                                        <img src="<%= brandList[i].appIcoImgUrl %>" alt="<%= brandList[i].coPtnrNm %>">
+                                                        <img src="<%= brandList[i].appIcoImgUrl %>" alt="">
                                                     </span>
                                                     <span class="intro">
                                                         <span class="category"><%= brandList[i].cateName %></span>
@@ -226,6 +226,7 @@
   $(document).ready(function () {
     new Tw.MembershipBenefitBrand($('#fe-membership-benefit-brand'), {
       cateCd: '<%= selectedCateCd %>',
+      subTabCd: '<%= selectedSubTabCd %>',
       isLogin: '<%= isLogin %>',
       noMembership: '<%= noMembership %>'
     });

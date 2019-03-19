@@ -44,7 +44,7 @@ Tw.MembershipBenefitBrand.prototype = {
   _gradeCd: [
     {
       list: [
-        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.A, attr: 'sub-tab-cd="A"', subTabCd: 'A', option: 'checked' },
+        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.A, attr: 'class="focus-elem" sub-tab-cd="A"', subTabCd: 'A', option: 'checked' },
         { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.V, attr: 'sub-tab-cd="V"', subTabCd: 'V' }
       ]
     }
@@ -282,8 +282,10 @@ Tw.MembershipBenefitBrand.prototype = {
   _setScrollLeft: function (cateCd) {
     var $buttons = this.$categoryList.find('button');
     var $target = $buttons.filter('[cate-cd="' + cateCd + '"]').parent();
-    var x = parseInt($target.position().left, 10);
-    this.$categoryList.scrollLeft(x);
+    if ( $target && $target.length > 0) {
+      var x = parseInt($target.position().left, 10);
+      this.$categoryList.scrollLeft(x);
+    }
   },
 
   _searchWithKeyword: function () {
@@ -353,7 +355,7 @@ Tw.MembershipBenefitBrand.prototype = {
       hbs: this._ACTION_SHEET_HBS,
       layer: true,
       data: this._gradeCd
-    }, $.proxy(this._onOpenGradeActionSheet, this), null, 'select-grade');
+    }, $.proxy(this._onOpenGradeActionSheet, this), null, 'select-grade', this.$grade.find('button'));
   },
 
   _onClickBtnSearch: function () {
