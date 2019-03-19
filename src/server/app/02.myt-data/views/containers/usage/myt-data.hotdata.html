@@ -127,7 +127,15 @@
             <!-- .cont-box -->
             <div id="fe-troaming-share" class="cont-box pb0">
                 <div id="fe-head-troaming-share" class="ti-caption-type01 pb20">
-                    <h2 class="tit">T로밍 함께쓰기 잔여량</h2>
+                    <% if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
+                    <div class="calling-plan1">
+                        <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
+                            <span class="stit">T로밍 데이터 잔여량</span>
+                        </a>
+                    </div>
+                    <% } else { %>
+                    <h2 class="tit">T로밍 데이터 잔여량</h2>
+                    <% } %>
                     <p class="num">총 잔여량
                         <em>0</em>GB
                     </p>
@@ -189,8 +197,16 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
+            <% } else { %>
+                <% if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
+                <div class="cont-box calling-plan">
+                    <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
+                        <span class="stit">T로밍 데이터 잔여량</span>
+                    </a>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <% } %>
             <% } %>
-
 
             <% if (usageData && usageData.dataTopUp === 'Y') { %>
             <!-- .cont-box -->
