@@ -96,6 +96,7 @@ Tw.CertificationSkFull.prototype = {
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
+    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     new Tw.InputFocusService($popupContainer, this.$btConfirm);
@@ -109,7 +110,8 @@ Tw.CertificationSkFull.prototype = {
       this._callback(this._result);
     }
   },
-  _onKeyupMdn: function () {
+  _onKeyupMdn: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
@@ -118,13 +120,15 @@ Tw.CertificationSkFull.prototype = {
     }
     this._checkEnableConfirmButton();
   },
-  _onInputBirth: function () {
+  _onInputBirth: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirth.val();
     if ( inputBirth.length >= Tw.BIRTH_LEN ) {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
     }
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -191,6 +195,7 @@ Tw.CertificationSkFull.prototype = {
   },
   _successRequestCert: function (reCert, resp) {
     this._clearCertError();
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;

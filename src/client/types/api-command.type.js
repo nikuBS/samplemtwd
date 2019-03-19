@@ -564,7 +564,7 @@ Tw.NODE_CMD = {
 };
 
 Tw.SESSION_CMD = {
-  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
+  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_04_0001' },
   BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' }
 };
 

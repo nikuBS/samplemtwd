@@ -182,7 +182,7 @@ Tw.MenuComponent.prototype = {
 
     this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
     if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid) ) {
-      return;
+
     }
 
 
@@ -287,13 +287,14 @@ Tw.MenuComponent.prototype = {
 
     $('.h-menu').removeClass('on');
   },
-  _onUserInfo: function () {
+  _onUserInfo: function ($event) {
+    var $target = $($event.currentTarget);
     if ( this._isMultiLine ) {
       if ( !this._lineComponent ) {
         this._lineComponent = new Tw.LineComponent();
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
-      this._lineComponent.onClickLine(this._svcMgmtNum);
+      this._lineComponent.onClickLine(this._svcMgmtNum, $target);
     }
   },
   _onRegisterLine: function () {

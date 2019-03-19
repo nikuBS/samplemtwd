@@ -28,7 +28,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
     ATH0021: 'ATH0021',     // SWING 법인실사용자 등록 회선 (수동등록 불가)
     ATH0022: 'ATH0022',	    // 입력 정보 불일치 - 명의자 법인명 불일치
     ATH0023: 'ATH0023',     // 입력 정보 불일치 - 명의자 법인명 불일치
-    ICAS4027: 'ICAS4027'
+    ICAS4027: 'ICAS4027',
+    ICAS3356: 'ICAS3356'
   },
 
   _cachedElement: function () {
@@ -103,10 +104,10 @@ Tw.CommonMemberLineBizRegister.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
         .done($.proxy(this._successUpdateSvc, this));
-    } else if ( resp.code === this.ERROR_CODE.ICAS4027 ) {
+    } else if ( resp.code === this.ERROR_CODE.ICAS4027 || resp.code === this.ERROR_CODE.ICAS3356 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _successUpdateSvc: function (resp) {
@@ -120,12 +121,14 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this.$inputNickname.val(nickname);
   },
   _handleError: function (code, message, $target) {
-    if ( code === this.ERROR_CODE.ATH0021 ) {
+    if ( code === this.ERROR_CODE.ATH0020 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7, null, null, null, null, $target);
+    } else if ( code === this.ERROR_CODE.ATH0021 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else if ( code === this.ERROR_CODE.ATH0022 && code === this.ERROR_CODE.ATH0023 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A7, null, null, null, null, $target);
     } else {
-      Tw.Error(code, message).pop();
+      Tw.Error(code, message).pop(null, $target);
     }
   }
 };

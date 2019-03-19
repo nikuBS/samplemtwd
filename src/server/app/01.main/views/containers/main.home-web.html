@@ -64,13 +64,13 @@
                 <% if (homeData.usageData) { %>
                 <% if (homeData.usageData.code === '00') { %>
                 <div class="member-info-box">
-                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button>
+                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-155" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <a href="/myt-join/myplan" class="name"><%= svcInfo.prodNm %><i class="icon-arrowmore-32"><span class="blind">more</span></i></a>
 
                     <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/submain" class="chart-box">
+                        <a href="/myt-data/submain" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -110,20 +110,20 @@
                                 <em class="num"><%= homeData.usageData.data.showAddRemained %></em>
                             </div>
                         </a>
-                        <button id="fe-bt-data-link" class="data-add" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">충전/선물</button>
+                        <button id="fe-bt-data-link" class="data-add" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-157" data-xt_csid="NO" data-xt_action="BC">충전/선물</button>
                     </div>
 
                     <div class="call-message">
                         <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                        <a href="/myt-data/submain" class="call"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
+                        <a href="/myt-data/submain" class="call" data-xt_eid="CMMA_A2_B6-158" data-xt_csid="NO" data-xt_action="BC"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                         <% } %>
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-159" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/submain" class="chart-box">
+                        <a href="/myt-data/submain" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -148,7 +148,7 @@
                     </div>
                     <div class="call-message">
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
@@ -285,9 +285,9 @@
                     <span class="tx">로그인 후 고객님의 정보를 확인하세요.</span>
                     <div class="btn-area">
                         <!-- <button type="button" class="btn-round1 btn-style4">간편 로그인하기</button> -->
-                        <button type="button" class="btn-round1 btn-style1 fe-bt-home-login">로그인하기</button>
+                        <button type="button" class="btn-round1 btn-style1 fe-bt-home-login" data-xt_eid="CMMA_A2_B6-145" data-xt_csid="NO" data-xt_action="BC">로그인하기</button>
                     </div>
-                    <p class="desc">아직 T월드 회원이 아니시라면 <button class="bt fe-bt-signup">회원가입</button> 후 이용해 주세요</p>
+                    <p class="desc">아직 T월드 회원이 아니시라면 <button class="bt fe-bt-signup" data-xt_eid="CMMA_A2_B6-146" data-xt_csid="NO" data-xt_action="BC">회원가입</button> 후 이용해 주세요</p>
                 </div>
                 <% } %>
             </div>
@@ -302,18 +302,18 @@
                                 <ul class="slider">
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><a href="/product/mobileplan" class="bt"><i class="icon-price-plan-80"></i>요금제</a></li>
-                                            <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"></i>부가서비스</a></li>
-                                            <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
-                                            <li><a href="/product/roaming" class="bt"><i class="icon-roaming-80"></i>T로밍</a></li>
+                                            <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
+                                            <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
+                                            <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
+                                            <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-150" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002"><i class="icon-tablet-80-1"></i>태블릿</button></li>
-                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003"><i class="icon-watch-80"></i>스마트워치</button></li>
-                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001" data-xt_eid="CMMA_A2_B6-151" data-xt_csid="NO" data-xt_action="BC"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002" data-xt_eid="CMMA_A2_B6-152" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tablet-80-1"></i>태블릿</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003" data-xt_eid="CMMA_A2_B6-153" data-xt_csid="NO" data-xt_action="BC"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain" data-xt_eid="CMMA_A2_B6-154" data-xt_csid="NO" data-xt_action="BC"><i class="icon-accessory-80"></i>액세서리</button></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -334,7 +334,7 @@
             <!-- T끼리 온가족 할인 -->
             <div class="section-box nogaps">
                 <div class="main-charge-box bg-white tfamily ti-line2">
-                    <a href="/product/callplan?prod_id=TW20000010">
+                    <a href="/product/callplan?prod_id=TW20000010" data-xt_eid="CMMA_A2_B6-162" data-xt_csid="NO" data-xt_action="BC">
                         <div class="stit">T끼리 온가족 할인</div>
                         <div class="main-box-cont main-box-cont-link">
                             <div class="link-full">
@@ -353,7 +353,7 @@
             <!-- 2019.02.27 수정 - 타이틀 2줄 케이스 main-charge-box클래스에 ti-line2 추가 -->
             <div class="section-box nogaps">
                 <div class="main-charge-box membership ti-line2">
-                    <a href="/membership/submain">
+                    <a href="/membership/submain" data-xt_eid="CMMA_A2_B6-163" data-xt_csid="NO" data-xt_action="BC">
                         <div class="stit">T멤버십</div>
                         <div class="main-box-cont main-box-cont-link">
                             <div class="link-full">
@@ -371,7 +371,7 @@
             <!-- 2019.02.22 수정 - 클릭영역 변경 -->
             <div class="section-box nogaps">
                 <div class="main-charge-box bg-blue">
-                    <a href="/product/callplan?prod_id=NA00005959">
+                    <a href="/product/callplan?prod_id=NA00005959" data-xt_eid="CMMA_A2_B6-164" data-xt_csid="NO" data-xt_action="BC">
                         <div class="stit">모바일 요금제</div>
                         <div class="main-box-cont main-box-cont-link">
                             <div class="link-full">
@@ -390,25 +390,25 @@
             <!-- 2019.02.20 수정 - 타이틀 클릭영역 -->
             <div class="section-box pdtb-main-box">
                 <div class="main-direct-box">
-                    <button class="fe-home-external" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010">
+                    <button class="fe-home-external" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-165" data-xt_csid="NO" data-xt_action="BC">
                         <strong class="ti"><span>다이렉트샵</span></strong>
                         <span class="tx">다이렉트샵에서 엄선한 프리미엄 스마트폰</span>
                     </button>
                     <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=m_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=m_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-166" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
                                 <strong class="ti">iPhone XS</strong>
                             </button>
                         </li>
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132&utm_source=tworld&utm_medium=m_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132&utm_source=tworld&utm_medium=m_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-167" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
                                 <strong class="ti">갤럭시 노트9</strong>
                             </button>
                         </li>
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472&utm_source=tworld&utm_medium=m_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472&utm_source=tworld&utm_medium=m_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-168" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
                                 <strong class="ti">엘지 Q9</strong>
                             </button>
@@ -425,7 +425,7 @@
                 </div> -->
                 <!-- 2019.02.22 수정 - 타이틀 변경 -->
                 <div class="main-charge-box combination">
-                    <a href="/product/callplan?prod_id=TW20000013">
+                    <a href="/product/callplan?prod_id=TW20000013" data-xt_eid="CMMA_A2_B6-169" data-xt_csid="NO" data-xt_action="BC">
                         <div class="stit">인터넷/집전화/IPTV</div>
                         <div class="main-box-cont main-box-cont-link">
                             <div class="link-full">
@@ -443,7 +443,7 @@
             <!-- 이럴 땐 이렇게 하세요 -->
             <div class="section-box nogaps">
                 <div class="main-tip-box box-type section-swiper-box">
-                    <a href="/customer/faq" type="button" class="stit tit">이럴 땐<br>이렇게 하세요</a>
+                    <a href="/customer/faq" type="button" class="stit tit" data-xt_eid="CMMA_A2_B6-170" data-xt_csid="NO" data-xt_action="BC">이럴 땐<br>이렇게 하세요</a>
                     <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box slider1">
@@ -454,7 +454,7 @@
                                         <ul class="help-list">
                                             <% help.map((target) => { %>
                                             <li>
-                                                <button data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal">
+                                                <button data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-174" data-xt_csid="NO" data-xt_action="BC">
                                                     <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
                                                     <%- target.mainExpsTitNm %>
                                                 </button>
@@ -469,8 +469,8 @@
                     </div>
                     <!--// .widget -->
                     <div class="btn-area">
-                        <button data-url="/customer/agentsearch" class="bt fe-home-internal">매장 찾기</button>
-                        <button data-url="/customer/agentsearch/repair" class="bt fe-home-internal">A/S센터 찾기</button>
+                        <button data-url="/customer/agentsearch" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-171" data-xt_csid="NO" data-xt_action="BC">매장 찾기</button>
+                        <button data-url="/customer/agentsearch/repair" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-172" data-xt_csid="NO" data-xt_action="BC">A/S센터 찾기</button>
                     </div>
                 </div>
             </div>
@@ -487,7 +487,7 @@
                         <div class="slider-box">
                             <ul class="slider">
                                 <li>
-                                    <button data-url="/customer/svc-info/notice?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-115" data-xt_csid="NO" data-xt_action="BC">
+                                    <button data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-173" data-xt_csid="NO" data-xt_action="BC">
                                         <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
                                         <span class="ico"></span>
                                     </button>
