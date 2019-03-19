@@ -24,7 +24,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _init: function () {
     this.templateIndex = 0;
     this.amt = $('.fe-select-amount').attr('data-amount');
-    this.chargeCd = $('.fe-charge').attr('data-amount');
+    this.chargeCd = $('.fe-select-date').attr('data-amount');
 
     this._getPpsInfo();
   },
@@ -201,16 +201,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     chargeWrap.siblings().removeClass('none').attr({ 'aria-hidden': 'false', 'required': '' });
     chargeWrap.addClass('none').attr('aria-hidden', 'true').removeClass('required');
 
-
-    // if ( this.templateIndex !== currentTemplateIndex ) {
-    //   if ( currentTemplateIndex === 0 ) {
-    //     this.wrap_template.html(this.tpl_recharge_once());
-    //   } else {
-    //     this.wrap_template.html(this.tpl_recharge_amount());
-    //   }
-    // }
-
     this.templateIndex = currentTemplateIndex;
+    this.chargeCd = chargeWrap.siblings().find('.fe-charge').attr('data-amount');
+
     this._checkIsAbled();
   },
 
@@ -283,11 +276,11 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _validSelectedValue: function ($elButton) {
-    var $error = $($elButton[0]).closest('li').find('.error-txt');
+    var $error = $($elButton[0]).siblings('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty($($elButton[0]).attr('data-amount')) ) {
-      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+      $error.removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
