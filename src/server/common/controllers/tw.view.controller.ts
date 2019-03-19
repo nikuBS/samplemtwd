@@ -149,60 +149,62 @@ abstract class TwViewController {
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         const loginType = urlMeta.auth.accessTypes;
 
-        if ( this.checkServiceBlock(urlMeta, svcInfo, res) ) {
-          return;
-        }
+        this.checkServiceBlock(urlMeta, svcInfo, res).subscribe((serviceBlock) => {
+          if ( serviceBlock ) {
+            return;
+          }
 
-        if ( loginType === '' ) {
-          // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          return;
-        }
-        if ( isLogin ) {
-          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
-          if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-            const urlAuth = urlMeta.auth.grades;
-            const svcGr = svcInfo.svcGr;
-            // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
-            if ( urlAuth === '' ) {
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-              return;
-            }
-            if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-              if ( urlAuth.indexOf('N') !== -1 ) {
-                // 준회원 접근 가능한 화면
+          if ( loginType === '' ) {
+            // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            return;
+          }
+          if ( isLogin ) {
+            urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
+            if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+              const urlAuth = urlMeta.auth.grades;
+              const svcGr = svcInfo.svcGr;
+              // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
+              if ( urlAuth === '' ) {
+                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                return;
+              }
+              if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                if ( urlAuth.indexOf('N') !== -1 ) {
+                  // 준회원 접근 가능한 화면
+                  this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                } else {
+                  // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                  this.errorNoRegister(req, res, next);
+                }
+              } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
                 this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               } else {
-                // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                this.errorNoRegister(req, res, next);
+                // 접근권한 없음
+                this.errorAuth(req, res, next);
+                // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               }
-            } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // 접근권한 없음
-              this.errorAuth(req, res, next);
-              // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              // 현재 로그인 방법으론 이용할 수 없음
+              if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                // res.redirect('/common/member/slogin/fail');
+                res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+              } else {
+                // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                this.errorAuth(req, res, next);
+              }
             }
-          } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           } else {
-            // 현재 로그인 방법으론 이용할 수 없음
-            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              // res.redirect('/common/member/slogin/fail');
-              res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-              this.errorAuth(req, res, next);
+              // login page
+              res.render('error.login-block.html', { target: req.baseUrl + req.url });
             }
           }
-        } else {
-          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          } else {
-            // login page
-            res.render('error.login-block.html', { target: req.baseUrl + req.url });
-          }
-        }
+        });
       } else {
         // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -259,7 +261,7 @@ abstract class TwViewController {
     res.send(message);
   }
 
-  private checkServiceBlock(urlMeta: any, svcInfo: any, res) {
+  private checkServiceBlock(urlMeta: any, svcInfo: any, res): Observable<boolean> {
     if ( !FormatHelper.isEmpty(urlMeta.block) && urlMeta.block.length > 0 ) {
       const blockList = urlMeta.block;
       const today = new Date().getTime();
@@ -271,8 +273,8 @@ abstract class TwViewController {
       if ( !FormatHelper.isEmpty(findBlock) ) {
         if ( !FormatHelper.isEmpty(svcInfo) ) {
           const userId = svcInfo.userId;
-          this.redisService.getString(REDIS_KEY.EX_USER + userId)
-            .subscribe((resp) => {
+          return this.redisService.getString(REDIS_KEY.EX_USER + userId)
+            .map((resp) => {
               if ( resp.code === API_CODE.REDIS_SUCCESS ) {
                 return false;
               } else {
@@ -284,9 +286,13 @@ abstract class TwViewController {
         } else {
           const blockUrl = findBlock.url || '/common/util/service-block';
           res.redirect(blockUrl + '?fromDtm=' + findBlock.fromDtm + '&toDtm=' + findBlock.toDtm);
-          return true;
+          return Observable.of(true);
         }
+      } else {
+        return Observable.of(false);
       }
+    } else {
+      return Observable.of(false);
     }
   }
 }
