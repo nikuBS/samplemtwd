@@ -6,19 +6,23 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="bg-white">
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup nobg fixed-bottom h60">
+    <div class="popup-page tw-popup nobg fixed-btn"><!-- 2018-10-30 클래스변경 -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '팅요금제 충전 선물', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
-        <!-- #contents -->
+        <!-- .container-wrap -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+
                 <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <ul class="link-long-list">
                         <li>
-                            <div class="link-long">
+                            <!-- 2019.01.31 텍스트 정렬 수정  t-center 클래스 추가 -->
+                            <div class="link-long t-center">
                                 <a href="/myt-data/recharge/ting/block" class="fe-ting-block">팅 선물 차단 설정
                                     <span class="tx-sub">
                                     <span class="normal"><i class="tx-bold fe-txt-block-status">허용 중</i></span>
@@ -29,12 +33,15 @@
                         </li>
                     </ul>
                 </div>
+                <!--// .cont-box -->
+
                 <hr class="cont-sp type1" aria-hidden="true">
+
                 <!-- .cont-box -->
-                <div class="cont-box noborder">
+                <div class="cont-box">
                     <h4 class="tabcon-title0">받는 분 번호</h4>
                     <div class="recently-tel-box">
-                        <div class="inputbox bt-add canceling mb26">
+                        <div class="inputbox bt-add inp-btn canceling">
                         <span class="input">
                             <input type="tel" class="fe-input_ting_receiver" placeholder="숫자만 입력" title="input" value=""
                                    aria-labelledby="aria-exp-label1"
@@ -46,18 +53,23 @@
                             <button type="button" class="fe-btn_native_contact">주소록</button>
                         </span>
                             <% } %>
-                            <div class="val-txt-type01 fe-error-text blind"><span class="error-txt">휴대폰 번호 자릿수를 확인해 주세요. (10~11자리)</span></div>
-                            <div class="val-txt-type01 fe-error-text blind"><span class="error-txt">휴대폰 번호가 올바르지 않습니다.</span></div>
                         </div>
+                        <!--접근성 수정-->
+                        <div id="aria-exp-desc1">
+                            <div class="val-txt-type01"><span class="error-txt fe-error-text blind">휴대폰 번호 자릿수를 확인해 주세요. (10~11자리)</span></div>
+                            <div class="val-txt-type01"><span class="error-txt fe-error-text blind">휴대폰 번호가 올바르지 않습니다.</span></div>
+                        </div>
+                        <!-- //접근성 수정-->
                     </div>
-                    <div class="ti-caption-type01 pb20">
-                        <h2 class="tit">충전 금액<button class="btn-tip" id="DC_04_03_tip_01" page-id="DC_04_03" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
-                        <!-- 2019.02.12 title,aria-haspopup 접근성 추가 -->
-                    </div>
+                    <!--접근성 수정-->
+                    <p class="tabcon-title0 mt26">충전 금액<button  aria-haspopup="true" class="tip-view" id="DC_04_03_tip_01" page-id="DC_04_03">TIP</button></p>
+                    <!-- 2018-10-30 tip 추가 -->
+                    <!-- //접근성 수정-->
                     <div class="widget">
                         <div class="widget-box radio">
                             <div class="radio-slide">
                                 <ul class="select-list fe-ting_amount_select_list" role="radiogroup" style="width: 100%;">
+                                    <!--접근성 수정-->
                                     <li class="radiobox" role="radio" aria-checked="false">
                                         <input type="radio" name="radio4" value="20000" title="값1" aria-labelledby="aria-comp-radio1">
                                         <!-- 체크상태일 경우 checked="checked" -->
@@ -199,6 +211,9 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
+
+                <!-- 2018-10-30 추가 -->
+                <!-- .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <div class="cont-box noborder bgnone">
@@ -212,6 +227,10 @@
                         <!-- //접근성 수정-->
                     </ul>
                 </div>
+                <!--// .cont-box -->
+                <!--// 2018-10-30 추가 -->
+
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
@@ -219,6 +238,7 @@
                         </li>
                     </ul>
                 </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>
         </div>
         <!--// #contents -->
@@ -264,7 +284,7 @@
                             <ul class="fe-wrap-block-list">
                             </ul>
 
-                            <div class="btn-more fe-history-more" style="display:none">
+                            <div class="btn-more gap-style fe-history-more" style="display:none">
                                 <button>더 보기</button>
                             </div>
                         </div>
