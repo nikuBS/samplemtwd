@@ -36,7 +36,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
   },
 
   _cachedElement: function() {
-    this.$btnWidget = this.$container.find('.widget input');
+    this.$btnWidget = this.$container.find('.fe-widget');
     this.$btnDropdown = this.$container.find('.cont-box > #flab04');
   },
 
@@ -50,7 +50,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
     var selectCenter;
 
     for(var i=0; i<centerArr.length; i++){
-      if( e.currentTarget.title === centerArr[i]){
+      if( $(e.currentTarget).find('input').attr('title') === centerArr[i]){
         selectCenter = i+1;
       }
     }
