@@ -336,8 +336,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   _toggleBtn: function($btn, isEnable) {
     if (isEnable) {
       $btn.removeAttr('disabled').prop('disabled', false);
+      $btn.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       $btn.attr('disabled', 'disabled').prop('disabled', true);
+      $btn.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 
