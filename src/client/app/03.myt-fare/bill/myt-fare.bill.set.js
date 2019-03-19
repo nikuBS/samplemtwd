@@ -72,7 +72,8 @@ Tw.MyTFareBillSet.prototype = {
    * Bill Letter app 다운로드
    * @private
    */
-  _onDownload: function () {
+  _onDownload: function (e) {
+    e.preventDefault();
     var url = Tw.BrowserHelper.isAndroid() ? Tw.URL_PATH.BILL_LETTER_DOWNLOAD_PLAY_STORE : Tw.URL_PATH.BILL_LETTER_DOWNLOAD_APP_STORE;
     Tw.CommonHelper.openUrlExternal(url, '');
   },

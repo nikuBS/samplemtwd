@@ -100,7 +100,7 @@ export const API_CMD = {
   BFF_03_0001: { path: '/:version/logout', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0003: { path: '/:version/user/accounts', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0004: { path: '/core-auth/:version/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0004: { path: '/core-auth/:version/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_03_0005: { path: '/:version/user/services', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_03_0006: { path: '/:version/user/nick-names/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0007: { path: '/:version/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
@@ -188,13 +188,14 @@ export const API_CMD = {
   BFF_05_0058: { path: '/core-bill/:version/accounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0059: { path: '/core-bill/:version/recent-usage-fee-pattern', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0060: { path: '/core-modification/:version/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0061: { path: '/core-modification/:version/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0061: { path: '/core-modification/:version/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false, store: true},
   BFF_05_0062: { path: '/core-modification/:version/wire-network-notification', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0063: { path: '/:version/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0064: { path: '/core-bill/:version/use-contents/hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0066: { path: '/core-bill/:version/use-contents/limit-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0067: { path: '/core-bill/:version/use-contents/limit-up', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0068: { path: '/:version/my-t/my-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0068: { path: '/:version/my-t/my-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false, store: true },
+
   BFF_05_0074: { path: '/core-modification/:version/use-data-patterns', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0076: { path: '/core-modification/:version/myinfo/discount-infos-month', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0078: { path: '/core-balance/:version/band-data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -909,7 +910,10 @@ export const API_CMD = {
 
 export const SESSION_CMD = {
   BFF_05_0001: 'BFF_05_0001',
-  BFF_04_0001: 'BFF_04_0001'
+  BFF_04_0001: 'BFF_04_0001',
+  BFF_05_0068: 'BFF_05_0068',
+  BFF_03_0004: 'BFF_03_0004',
+  BFF_05_0061: 'BFF_05_0061'
 };
 
 export const API_CODE = {
