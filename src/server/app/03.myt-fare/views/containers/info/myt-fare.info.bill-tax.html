@@ -29,7 +29,7 @@
             <ul class="noti-list02">
                 <% data.noticeInfo.forEach(function(info){ %>
                     <li data-list-id="<%=info.link%>">
-                        <button aria-haspopup="true" class="tip-view-btn" id="<%=info.link%>" title="정보보기"><%=info.title%><span class="tip-view"><%=info.title%> tip</span></button>
+                        <button aria-haspopup="true" class="tip-view-btn" id="<%=info.link%>"><%=info.title%><span class="tip-view">tip</span></button>
                     </li>
                 <% }); %>
             </ul>
@@ -61,7 +61,7 @@
           </div>
           {{#if listViewMoreHide}}
           <div class="bt-more round gap-style2 btm-line round">
-              <button>더보기</button>
+              <button>더 보기</button>
           </div>
           {{/if}}
       </div>

@@ -74,10 +74,12 @@
                                 <div class="tab-area new"><!-- 타입별 탭형태 변환 -->
                                     <div class="tab-linker">
                                         <ul role="tablist">
-                                            <li aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="presentation" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1">
+                                                <a role="tab" href="#refill" class="fe-replace-history fe-tab" id="fe-tab-refill" aria-selected="<%= tab === 'refill' ? true : false %>">나에게 리필하기</a>
+                                            </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                             <% if (!isGift) { %>
-                                            <li aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
-                                                <a href="#gift" class="fe-replace-history">가족에게 선물하기</a>
+                                            <li role="presentation" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
+                                                <a role="tab" href="#gift" class="fe-replace-history fe-tab" id="fe-tab-gift" aria-selected="<%= tab === 'gift' ? true : false %>">가족에게 선물하기</a>
                                                 <button class="btn-tip" id="DC_05_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                             </li>
                                             <% } %>
@@ -86,33 +88,32 @@
                                     <div class="tab-contents">
                                         <ul>
                                             <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                                <!-- .cont-box -->
-                                                <div class="cont-box nogaps-hoz bb0">
-
-                                                    <div class="list-input-type1">
-                                                        <ul class="input-middle01">
-                                                            <% for (let i = 0; i < options.length; i++) { %>
-                                                            <li class="<%= options[i].isTplan ? 'type01' : ''; %>" >
-                                                                <span class="form">
-                                                                    <input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small <%= options[i].dataVoiceClCd === 'V' ? 'type2' : '' %>" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
-                                                                    <label for="sradio<%= i + 1 %>"><%= options[i].copnDtlClNm %>리필</label>
-                                                                </span>
-                                                                <div class="cont">
-                                                                    <span class="stit"><%= options[i].copnDtlClNm %>리필</span>
-                                                                    <% if (options[i].qttText !== '0') { %>
-                                                                    <p class="stxt1"><%= options[i].qttText %></p>
+                                                <div class="cont-box nogaps">
+                                                    <div class="list-comp-input">
+                                                        <div class="widget">
+                                                            <div class="widget-box radio">
+                                                                <ul class="select-list" role="group">
+                                                                    <% for (let i = 0; i < options.length; i++) { %>
+                                                                    <li class="radiobox type01 <%= i === 0 ? 'checked' : ''  %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                        <input type="radio" name="radio" aria-labelledby="aria-comp-radio<%= i + 1 %> " value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>" <%= i === 0 ? 'checked=checked' : '' %>><!-- 체크상태일 경우 checked="checked" -->
+                                                                        <div class="comp-list-layout" id="aria-comp-radio<%= i + 1 %>">
+                                                                            <p class="layout-text">
+                                                                                <span class="mtext"><%= options[i].copnDtlClNm %>리필</span>
+                                                                                <% if (options[i].qttText !== '0') { %>
+                                                                                <span class="stext01">37.6GB</span>
+                                                                                <% } %>
+                                                                                <% if (options[i].isTplan) { %>
+                                                                                <span class="stext02">라지는 최대15GB, 패밀리/0플랜 라지는 최대 20GB까지 리필되며, Data 인피니티는 데이터 무제한으로 데이터 리필 할 수 없습니다.</span>
+                                                                                <% } %>
+                                                                            </p>
+                                                                        </div>
+                                                                    </li>
                                                                     <% } %>
-                                                                    <% if (options[i].isTplan) { %>
-                                                                    <span class="stext02">라지는 최대15GB, 패밀리/0플랜 라지는 최대 20GB까지 리필되며, Data 인피니티는 데이터 무제한으로 데이터 리필 할 수 없습니다.</span>
-                                                                    <% } %>
-                                                                </div>
-                                                            </li>
-                                                            <% } %>
-                                                        </ul>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
-
                                                 </div>
-                                                <!--// .cont-box -->
                                             </li>
                                             <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                                 <div class="cont-box">
@@ -121,7 +122,7 @@
                                                         <div class="inputbox bt-add">
                                                             <span class="input new">
                                                                 <input type="tel" maxlength="13" placeholder="숫자만 입력" title="받는 분 번호" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                <button class="cancel" style="display: none;" aria-hidden="true"><span class="blind">삭제</span></button>
+                                                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn">
                                                                 <button type="button" id="fe-btn-contacts" class="btn-round2 btn-style3">주소록</button>
@@ -157,7 +158,7 @@
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button class="fe-btn-use" disabled>사용하기</button>
+                                <button class="fe-btn-use">사용하기</button>
                             </li>
                         </ul>
                     </div>

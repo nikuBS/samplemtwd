@@ -37,25 +37,27 @@ Tw.MyTFareInfoCancelDraw.prototype = {
   },
 
   // 해지신청
-  _processAutoWithdrawalCancel: function () {
+  _processAutoWithdrawalCancel: function (e) {
     this._apiService.request(Tw.API_CMD.BFF_07_0069, {
       bankCd: this.data.bankCd,
       bankSerNum: this.data.bankAccount
-    }).done($.proxy(this._successCancelAccount, this)).fail($.proxy(this._apiError, this));
+    }).done($.proxy(this._successCancelAccount, this, $(e.currentTarget)))
+      .fail($.proxy(this._apiError, this, $(e.currentTarget)));
   },
 
-  _successCancelAccount: function (res) {
+  _successCancelAccount: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.openAlert(
         Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL,
         Tw.POPUP_TITLE.NOTIFY, 
         Tw.BUTTON_LABEL.CONFIRM, 
         $.proxy(this._closePopAndBack, this),
-        $.proxy(this._closePopAndBack, this)
+        $.proxy(this._closePopAndBack, this),
+        $target
       );
       // Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL);      
     } else {
-      this._apiError(res);
+      this._apiError($target, res);
     }
   },
 
@@ -64,9 +66,10 @@ Tw.MyTFareInfoCancelDraw.prototype = {
     this._historyService.goBack();
   },
 
-  _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+  _apiError: function ($target, err) {
+    // Tw.Logger.error(err.code, err.msg);
+    Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop(null, $target);
+    // this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
   }
 };

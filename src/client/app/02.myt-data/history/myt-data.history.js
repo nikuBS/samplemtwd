@@ -69,7 +69,7 @@ Tw.MyTDataHistory.prototype = {
     }
   },
 
-  _handleChangeType: function() {
+  _handleChangeType: function(e) {
     var type = this._type;
 
     this._popupService.open(
@@ -88,7 +88,10 @@ Tw.MyTDataHistory.prototype = {
           }
         ]
       },
-      $.proxy(this._handleOpenType, this)
+      $.proxy(this._handleOpenType, this),
+      undefined,
+      undefined,
+      $(e.currentTarget)
     );
   },
 
@@ -140,7 +143,7 @@ Tw.MyTDataHistory.prototype = {
     }
   },
 
-  _openCancelableChargeAlert: function() {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCEL);
+  _openCancelableChargeAlert: function(e) {
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCEL, undefined, undefined, undefined, undefined, $(e.currentTarget));
   }
 };

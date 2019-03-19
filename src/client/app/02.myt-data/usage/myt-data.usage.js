@@ -491,7 +491,7 @@ Tw.MyTDataUsage.prototype = {
     var svcMgmtNum = targetSelector.data('svcmgmtnum');
     this._apiService.request(Tw.API_CMD.BFF_05_0009, { cSvcMgmtNum: svcMgmtNum })
       .done($.proxy(this._reqDataShareDetailDone, this, targetSelector))
-      .fail($.proxy(this._reqDataShareDetailFail, this));
+      .fail($.proxy(this._reqDataShareDetailFail, this, targetSelector));
   },
 
   /**
@@ -507,7 +507,7 @@ Tw.MyTDataUsage.prototype = {
       targetSelector.hide();
       $feUsedDataResult.show();
     } else {
-      this._popupService.openAlert(resp.msg, resp.code);
+      this._popupService.openAlert(resp.msg, resp.code, null, null, null, targetSelector);
     }
   },
 
@@ -516,8 +516,8 @@ Tw.MyTDataUsage.prototype = {
    * 데이터 함께쓰기 사용량 상세 조회 실패
    * @private
    */
-  _reqDataShareDetailFail: function (resp) {
-    this._popupService.openAlert(resp.msg, resp.code);
+  _reqDataShareDetailFail: function (targetSelector, resp) {
+    this._popupService.openAlert(resp.msg, resp.code, null, null, null, targetSelector);
   },
 
 

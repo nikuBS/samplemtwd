@@ -66,7 +66,7 @@ Tw.MembershipBenefitBrandList.prototype = {
   },
 
   _registHbsHelper: function(){
-    Handlebars.registerHelper('tel', Tw.StringHelper.phoneStringToDash);
+    Handlebars.registerHelper('tel', Tw.FormatHelper.getDashedPhoneNumber);
   },
 
   /**
@@ -143,6 +143,7 @@ Tw.MembershipBenefitBrandList.prototype = {
    * @private
    */
   _getActionSheet01List: function(radioName, list){
+    list.splice(0, 0, {area : Tw.COMMON_STRING.ALL});
     var arr = [];
     for(var i = 0; i < list.length; i++){
       arr.push({
@@ -187,6 +188,10 @@ Tw.MembershipBenefitBrandList.prototype = {
         $('#fe-btn-gu').text(this.DEFAULT_SIGUNGU_TXT);
         $('#fe-btn-gu').attr('disabled', false);
         this.$btnSearch.attr('disabled', false);
+
+        if(this._selectedArea1 === Tw.COMMON_STRING.ALL){
+          $('#fe-btn-gu').attr('disabled', true);
+        }
       }
       this._popupService.close();
     }, this, $target));
@@ -255,6 +260,13 @@ Tw.MembershipBenefitBrandList.prototype = {
       }
     }
     var ord = $('#fe-odr-btn-box .on').attr('id') === 'fe-btn-odr-n' ? 'N' : 'R';
+
+    if( this._selectedArea1 === Tw.COMMON_STRING.ALL ){
+      this._selectedArea1 = '';
+    }
+    if( this._selectedArea2 === Tw.COMMON_STRING.ALL ){
+      this._selectedArea2 = '';
+    }
 
     var param = {
       ordCol: ord,

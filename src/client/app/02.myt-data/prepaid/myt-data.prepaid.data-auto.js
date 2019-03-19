@@ -10,6 +10,7 @@ Tw.MyTDataPrepaidDataAuto = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-recharge'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-recharge'));
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
@@ -69,9 +70,9 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
     this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
-  _cancel: function () {
+  _cancel: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.MSG, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.BUTTON);
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.BUTTON, $(e.currentTarget));
   },
   _onCancel: function () {
     this._isCancel = true;
@@ -107,7 +108,9 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
         btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectPopupCallback, this, $target),
-      $.proxy(this._checkIsAbled, this));
+      $.proxy(this._checkIsAbled, this),
+      null,
+      $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');

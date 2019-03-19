@@ -53,6 +53,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
 
     $('#tab2').on('click', $.proxy(this._setNumTab, this));
+
   },
 
   /**
@@ -62,9 +63,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _onHashChange: function(){
     if(!this._historyService.getHash() || this._historyService.getHash() === '#tabpanel1'){
-      $('#tab1 a').trigger('click');
+      $('#tab1 a').trigger('click').attr('aria-selected', true);
+      $('#tab2 a').attr('aria-selected', false);
     }else if(this._historyService.getHash() === '#tabpanel2'){
-      $('#tab2 a').trigger('click');
+      $('#tab2 a').trigger('click').attr('aria-selected', true);
+      $('#tab1 a').attr('aria-selected', false);
     }
   },
 

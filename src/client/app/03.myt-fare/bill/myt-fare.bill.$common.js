@@ -39,13 +39,14 @@ Tw.MyTFareBillCommon.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
   },
-  _selectLine: function () {
+  _selectLine: function (e) {
     this._popupService.open({
         'hbs': 'MF_01_01_02'
       },
       $.proxy(this._openSelectLine, this),
       $.proxy(this._afterClose, this),
-      'select-line'
+      'select-line',
+      $(e.currentTarget)
     );
   },
   _openSelectLine: function ($layer) {
@@ -83,9 +84,9 @@ Tw.MyTFareBillCommon.prototype = {
     $target.on('change', $.proxy(this._onCheck, this));
     $target.appendTo(this.$layer.find('.fe-line-list'));
   },
-  _onClickDoneBtn: function () {
+  _onClickDoneBtn: function (e) {
     if (this._amount === 0) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.SELECT_LINE);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.SELECT_LINE, null, null, null, null, $(e.currentTarget));
     } else {
       this._isClicked = true;
       this._popupService.close();

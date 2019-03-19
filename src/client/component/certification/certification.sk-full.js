@@ -12,10 +12,12 @@ Tw.CertificationSkFull = function () {
   this.mdn = '';
   this.certSeq = '';
   this._jobCode = null;
+  this._result = null;
 
   this._addTimer = null;
   this._addTime = null;
-  window.onRefresh = $.proxy(this._onRefreshCallback, this);
+
+  // window.onRefresh = $.proxy(this._onRefreshCallback, this);
 };
 
 Tw.CertificationSkFull.prototype = {
@@ -36,7 +38,8 @@ Tw.CertificationSkFull.prototype = {
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
     ATH8007: 'ATH8007',
-    ICAS3101: 'ICAS3101'
+    ICAS3101: 'ICAS3101',
+    ICAS3162: 'ICAS3162'
   },
   open: function (authUrl, authKind, callback) {
     this._authUrl = authUrl;
@@ -46,7 +49,7 @@ Tw.CertificationSkFull.prototype = {
     this._popupService.open({
       hbs: 'CO_CE_02_05_01_01_01',
       layer: true
-    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this));
+    }, $.proxy(this._onOpenSmsFull, this), $.proxy(this._onCloseSmsFull, this), 'sms-full');
 
   },
   _onOpenSmsFull: function ($popupContainer) {
@@ -59,6 +62,7 @@ Tw.CertificationSkFull.prototype = {
     this.$btReCert = $popupContainer.find('#fe-bt-recert');
     this.$btCertAdd = $popupContainer.find('#fe-bt-cert-add');
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
+    this.$showTime = $popupContainer.find('#fe-sms-time');
 
     this.$inputboxName = $popupContainer.find('#fe-inputbox-name');
     this.$inputboxBirth = $popupContainer.find('#fe-inputbox-birth');
@@ -79,9 +83,9 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertAddTime = $popupContainer.find('#aria-cert-num5');
     this.$errorCertStop = $popupContainer.find('#aria-cert-num6');
     this.$errorCertBlock = $popupContainer.find('#aria-cert-num7');
-    this.$errorLoginCert = $popupContainer.find('#aria-phone-err1');
-    this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
-    this.$errorLoginCnt = $popupContainer.find('#aria-phone-err3');
+    this.$errorConfirmCert = $popupContainer.find('#aria-phone-err1');
+    this.$errorConfirmTime = $popupContainer.find('#aria-phone-err2');
+    this.$errorConfirmCnt = $popupContainer.find('#aria-phone-err3');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
@@ -93,9 +97,17 @@ Tw.CertificationSkFull.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
   _onCloseSmsFull: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearInterval(this._addTimer);
+    }
 
+    if ( !Tw.FormatHelper.isEmpty(this._result) ) {
+      this._callback(this._result);
+    }
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -104,6 +116,7 @@ Tw.CertificationSkFull.prototype = {
     } else {
       this.$btCert.attr('disabled', true);
     }
+    this._checkEnableConfirmButton();
   },
   _onInputBirth: function () {
     var inputBirth = this.$inputBirth.val();
@@ -115,6 +128,14 @@ Tw.CertificationSkFull.prototype = {
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
+    }
+    this._checkEnableConfirmButton();
+  },
+  _checkEnableConfirmButton: function () {
+    var inputCert = this.$inputCert.val();
+    var inputMdn = this.$inputMdn.val();
+    var mdnLength = inputMdn ? inputMdn.length : 0;
+    if ( inputCert.length >= Tw.DEFAULT_CERT_LEN && (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN) ) {
       this.$btConfirm.attr('disabled', false);
     } else {
       this.$btConfirm.attr('disabled', true);
@@ -123,10 +144,10 @@ Tw.CertificationSkFull.prototype = {
   _onClickGender: function ($event) {
     var $currentTarget = $($event.currentTarget);
     this.$inputGender.prop('checked', false);
-    this.$inputGender.removeClass('checked');
+    this.$inputGender.parent().removeClass('checked');
     this.$inputGender.attr('aria-checked', false);
     $currentTarget.prop('checked', true);
-    $currentTarget.addClass('checked');
+    $currentTarget.parent().addClass('checked');
     $currentTarget.attr('aria-checked', true);
   },
   _onClickCert: function () {
@@ -169,60 +190,69 @@ Tw.CertificationSkFull.prototype = {
       .done($.proxy(this._successRequestCertAdd, this));
   },
   _successRequestCert: function (reCert, resp) {
+    this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._clearCertError();
+      this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
-      this.$validCert.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
       if ( !reCert ) {
-        this.$btReCert.addClass('none');
         this.$btCert.addClass('none');
-        this.$btCertAdd.removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
-        this._addTime = new Date().getTime();
+        this.$btReCert.removeClass('none');
       }
+      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+        clearInterval(this._addTimer);
+      }
+      this._addTime = new Date();
+      this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else {
       this._checkCertError(resp.code);
     }
   },
-  _expireAddTime: function () {
-    this.$btReCert.removeClass('none');
-    this.$btCertAdd.addClass('none');
-  },
-  _successRequestCertAdd: function (resp) {
-    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
-      clearTimeout(this._addTimer);
-    }
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._clearCertError();
-      this.$btCertAdd.addClass('none');
-      this.$btReCert.removeClass('none');
-      this.$validAddCert.removeClass('none');
-    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
-      this._clearCertError();
-      this.$btCertAdd.addClass('none');
-      this.$btReCert.removeClass('none');
-      this.$errorCertAddTime.removeClass('none');
-    } else {
-      this._checkCertError(resp.code, resp.msg);
-    }
-  },
   _checkCertError: function (errorCode, errorMsg) {
-    this._clearCertError();
+    // this._clearCertError();
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
-      this.$errorCertTime.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
-      this.$errorCertCount.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCount);
     } else if ( errorCode === this.SMS_ERROR.ATH8006 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else if ( errorCode === this.SMS_ERROR.ATH8007 ) {
-      this.$errorCertStop.removeClass('none');
-    } else if ( errorCode === this.SMS_ERROR.ICAS3101 ) {
-      this.$errorCertBlock.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162) {
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(errorCode, errorMsg).pop();
     }
   },
-
+  _showTimer: function (startTime) {
+    var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
+    this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    if ( remainedSec <= 0 ) {
+      clearInterval(this._addTimer);
+    }
+  },
+  // _expireAddTime: function () {
+  //   this.$btReCert.removeClass('none');
+  //   this.$btCertAdd.addClass('none');
+  // },
+  _successRequestCertAdd: function (resp) {
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearTimeout(this._addTimer);
+    }
+    this._clearConfirmError();
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
+      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+        clearInterval(this._addTimer);
+      }
+      this._addTime = new Date();
+      this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
+    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
   _onClickConfirm: function () {
     var inputCert = this.$inputCert.val();
     var params = {
@@ -243,13 +273,14 @@ Tw.CertificationSkFull.prototype = {
   _successRequestConfirm: function (resp) {
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._callback(resp);
+      this._result = resp;
+      this._popupService.close();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
-      this.$errorLoginCert.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCert);
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
-      this.$errorLoginTime.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
-      this.$errorLoginCnt.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
     } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
     } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
@@ -270,43 +301,45 @@ Tw.CertificationSkFull.prototype = {
     this._clearAllError();
     if ( Tw.FormatHelper.isEmpty(inputName) ) {
       result = false;
-      this._showError(this.$inputboxName, this.$inputName, this.$errorName, 'aria-phone-tx1');
+      this._showError(this.$inputboxName, this.$inputName, this.$errorName);
     }
     if ( Tw.FormatHelper.isEmpty(inputBirth) ) {
       result = false;
-      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth, 'aria-birth-tx1');
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirth);
     } else if ( inputBirth.length !== Tw.BIRTH_LEN ) {
       result = false;
-      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen, 'aria-birth-tx2');
+      this._showError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen);
     }
     if ( this.$inputGender.filter(':checked').length === 0 ) {
       result = false;
-      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender, 'aria-gender-tx5');
+      this._showError(this.$inputboxGender, this.$inputGender, this.$errorGender);
     }
     return result;
   },
-  _showError: function (inputBox, input, error, ariaName) {
+  _showError: function (inputBox, input, error) {
     inputBox.addClass('error');
-    input.attr('aria-describedby', ariaName);
+    input.attr('aria-describedby', error.attr('id'));
     error.removeClass('none');
+    error.attr('aria-hidden', false);
   },
   _clearError: function (inputBox, input, error) {
     inputBox.removeClass('error');
     input.attr('aria-describedby', '');
     error.addClass('none');
+    error.attr('aria-hidden', true);
   },
-  _onRefreshCallback: function () {
-    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
-      var interval = new Date().getTime() - this._addTime;
-
-      clearTimeout(this._addTimer);
-      if ( interval > Tw.SMS_CERT_TIME ) {
-        this._expireAddTime();
-      } else {
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME - interval);
-      }
-    }
-  },
+  // _onRefreshCallback: function () {
+  //   if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+  //     var interval = new Date().getTime() - this._addTime;
+  //
+  //     clearTimeout(this._addTimer);
+  //     if ( interval > Tw.SMS_CERT_TIME ) {
+  //       this._expireAddTime();
+  //     } else {
+  //       this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME - interval);
+  //     }
+  //   }
+  // },
   _clearAllError: function () {
     this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
     this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
@@ -315,18 +348,18 @@ Tw.CertificationSkFull.prototype = {
     this._clearError(this.$inputboxGender, this.$inputGender, this.$errorGender);
   },
   _clearCertError: function () {
-    this.$validCert.addClass('none');
-    this.$validAddCert.addClass('none');
-    this.$errorCertTime.addClass('none');
-    this.$errorCertCount.addClass('none');
-    this.$errorCertAddTime.addClass('none');
-    this.$errorCertStop.addClass('none');
-    this.$errorCertBlock.addClass('none');
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCount);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
   },
   _clearConfirmError: function () {
-    this.$errorLoginCert.addClass('none');
-    this.$errorLoginTime.addClass('none');
-    this.$errorLoginCnt.addClass('none');
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
   }
 };
 

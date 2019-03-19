@@ -92,11 +92,7 @@ Tw.ProductWireplanSettingBasicInfo.prototype = {
 
   _blurInputNumber: function(e) {
     var $elem = $(e.currentTarget);
-    if ($elem.val().length > 8) {
-      $elem.val(Tw.FormatHelper.conTelFormatWithDash($elem.val()));
-    } else {
-      $elem.val(Tw.FormatHelper.getDashedCellPhoneNumber($elem.val()));
-    }
+    $elem.val(Tw.FormatHelper.conTelFormatWithDash($elem.val()));
   },
 
   _focusInputNumber: function(e) {
@@ -163,6 +159,7 @@ Tw.ProductWireplanSettingBasicInfo.prototype = {
   _bindSettingResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {

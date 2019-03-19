@@ -54,13 +54,17 @@ Tw.MyTDataCookizMonthly.prototype = {
     }
   },
 
-  _cancelMonthlyRecharge: function () {
+  _cancelMonthlyRecharge: function (e) {
     this._popupService.openModalTypeA(
       Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
       Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
       Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
       null,
-      $.proxy(this._cancelMonthly, this)
+      $.proxy(this._cancelMonthly, this),
+      null,
+      null,
+      null,
+      $(e.currentTarget)
     );
   },
 

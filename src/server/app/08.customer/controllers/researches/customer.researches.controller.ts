@@ -52,20 +52,22 @@ export default class CustomerResearches extends TwViewController {
         };
       }
 
-      const quizIdx = quizId ? 
-        resp.result.findIndex(research => {
-          return research.bnnrRsrchId === quizId;
-        }) : 
-        undefined;
+      const quizIdx = quizId
+        ? resp.result.findIndex(research => {
+            return research.bnnrRsrchId === quizId;
+          })
+        : undefined;
 
       return {
         researches: resp.result.map(research => {
           const examples: Array<{}> = [];
           let i = 1,
-            exam = research['exCtt' + i];
+            exam = research['exCtt' + i],
+            hasHtml = false;
 
           while (exam) {
             const isEtc = exam === 'QSTNETC';
+            hasHtml = hasHtml || research['motExCtt' + i];
 
             examples.push({
               content: isEtc ? ETC_CENTER : exam || '',
@@ -80,6 +82,7 @@ export default class CustomerResearches extends TwViewController {
           return {
             ...research,
             examples,
+            hasHtml,
             staDtm: DateHelper.getShortDate(research.staDtm),
             endDtm: DateHelper.getShortDate(research.endDtm),
             isProceeding: DateHelper.getDifference(research.endDtm) > 0
@@ -121,8 +124,13 @@ export default class CustomerResearches extends TwViewController {
         }
       }
 
+      const info = resp.result.surveyQstnMaster[0];
       return {
-        info: resp.result.surveyQstnMaster[0] || {},
+        info: {
+          ...info,
+          staDtm: DateHelper.getShortDate(info.staDtm),
+          endDtm: DateHelper.getShortDate(info.endDtm)
+        },
         questions
       };
     });

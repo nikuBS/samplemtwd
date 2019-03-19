@@ -106,11 +106,17 @@ Tw.ProductAppsDetail.prototype = {
     this.$info.html(this._appTmpl(app));
   },
 
-  _handleOpenImgDetail: function() {
-    this._popupService.open({
-      hbs: 'TA_02_01',
-      images: this._images
-    });
+  _handleOpenImgDetail: function(e) {
+    this._popupService.open(
+      {
+        hbs: 'TA_02_01',
+        images: this._images
+      },
+      undefined,
+      undefined,
+      undefined,
+      $(e.currentTarget)
+    );
   },
 
   // _handleCheckAndOpenApp: function() {

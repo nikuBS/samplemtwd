@@ -386,14 +386,14 @@
                                 </div>
                             </li>
                         </ul>
+                        <!-- 2019.02.13 이미지 추가 -->
+                        <div class="menu-guide-img"><!-- 19.03.15 section-menu-box 안으로 이동 -->
+                            <img src="/img/dummy/menu-guide1.png" alt="이렇게 이용하세요 원하는 메뉴를 체크 후 저장하면, 바로가기 버튼이 추가됩니다. 체크 해제 시에는 버튼이 삭제됩니다."/>
+                            <img src="/img/dummy/menu-guide2.png" alt="원하는 메뉴가 안보이나요? 화면 하단의 아이콘을 선택하면, 바로가기 버튼이 추가됩니다."/>
+                        </div>
                     </div> 
-                    <!-- 2019.02.13 이미지 추가 -->
-                    <div class="menu-guide-img">
-                        <img src="/img/dummy/menu-guide1.png" alt="이렇게 이용하세요 원하는 메뉴를 체크 후 저장하면, 바로가기 버튼이 추가됩니다. 체크 해제 시에는 버튼이 삭제됩니다."/>
-                        <img src="/img/dummy/menu-guide2.png" alt="원하는 메뉴가 안보이나요? 화면 하단의 아이콘을 선택하면, 바로가기 버튼이 추가됩니다."/>
-                    </div>
-
-                    <div class="bt-fixed-area">
+                    
+                    <div class="bt-fixed-area"><!-- fixed-bt클래스 추가 -->
                         <ul class="bt-slice full">
                             <li class="bt-red1">
                                 <button>저장하기</button>
@@ -409,5 +409,10 @@
 		</div>
 		<!--// .popup hbs -->
     </div>
+    <script>
+		$(function () {
+            //skt_landing.action.bottom_fixed();//190314 추가 - IOS스크롤
+		});
+    </script>
 </body>
 </html>

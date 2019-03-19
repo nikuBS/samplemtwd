@@ -30,7 +30,7 @@
                     <div class="calling-plan">
                         <button class="wrap-link" data-url="/benefit/my">
                             <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
-                            <i class="icon-badge-plan-use mr8"><span class="blind">my</span></i>
+                            <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
                             <span class="stit">포인트 <span id="fe-point">P</span></span>
                             <span class="view-tx" id="fe-benefit">혜택 / 할인</span>
                         </button>
@@ -49,12 +49,12 @@
                 <div>
                     <div class="widget-box horizontal">
                         <div id="fe-category" class="horizontal-slide slide-nopd">
-                            <ul class="horizontal-list benefit-link">
-                                <li><button type="button" class="unit on" data-category="" data-url="/benefit/submain">전체</button></li>
-                                <li><button type="button" class="unit" data-category="F01421" data-url="/benefit/submain/discount">요금할인</button></li>
-                                <li><button type="button" class="unit" data-category="F01422" data-url="/benefit/submain/combinations">결합할인</button></li>
-                                <li><button type="button" class="unit" data-category="F01423" data-url="/benefit/submain/long-term">장기가입혜택</button></li>
-                                <li><button type="button" class="unit" data-category="F01424" data-url="/benefit/submain/participation">참여혜택</button></li>
+                            <ul class="horizontal-list benefit-link space-nowrap" role="tablist">
+                                <li role="presentation"><button type="button" role="tab" aria-selected="true" class="unit on" data-category="" data-url="/benefit/submain">전체</button></li>
+                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01421" data-url="/benefit/submain/discount">요금할인</button></li>
+                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01422" data-url="/benefit/submain/combinations">결합할인</button></li>
+                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01423" data-url="/benefit/submain/long-term">장기가입혜택</button></li>
+                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01424" data-url="/benefit/submain/participation">참여혜택</button></li>
                             </ul>
                         </div>
                     </div>
@@ -223,7 +223,12 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.BenefitIndex($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo)%>')  );
+    new Tw.BenefitIndex(
+      $('.wrap'),
+      JSON.parse('<%- JSON.stringify(svcInfo)%>'),
+      '<%=bpcpServiceId%>',
+      '<%=eParam%>'
+    );
   });
 </script>
 <% include ../../components/end.component.html %>

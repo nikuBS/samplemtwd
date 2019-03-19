@@ -9,6 +9,7 @@ Tw.MyTDataPrepaidData = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-recharge'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-recharge'));
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
@@ -67,7 +68,7 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
-    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$container.on('click', '.fe-close-popup', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
   },
   _setData: function (result) {
@@ -99,7 +100,9 @@ Tw.MyTDataPrepaidData.prototype = {
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._selectPopupCallback, this, $target),
-      $.proxy(this._checkIsAbled, this));
+      $.proxy(this._checkIsAbled, this),
+      null,
+      $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -132,15 +135,16 @@ Tw.MyTDataPrepaidData.prototype = {
   _onClose: function () {
     this._backAlert.onClose();
   },
-  _checkPay: function () {
+  _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
         'hbs': 'DC_09_03_01',
         'title': Tw.MYT_DATA_PREPAID.DATA_TITLE
       },
-      $.proxy(this._openCheckPay, this),
-      $.proxy(this._afterRechargeSuccess, this),
-      'check-pay'
+        $.proxy(this._openCheckPay, this),
+        $.proxy(this._afterRechargeSuccess, this),
+        'check-pay',
+        $(e.currentTarget)
       );
     }
   },

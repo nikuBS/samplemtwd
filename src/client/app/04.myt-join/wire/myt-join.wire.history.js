@@ -106,7 +106,7 @@ Tw.MyTJoinWireHistory.prototype = {
       }
       if ( this._list[i].atype === '162') {
         this._list[i].onOffName = Tw.MYT_JOIN_WIRE_LOC_CHG_CONN_TYPE[this._list[i].onOff];
-        this._list[i].setPrefrDt = Tw.DateHelper.getShortDateNoDot(this._list[i].setPrefrDt);
+        this._list[i].setPrefrDt = Tw.DateHelper.getShortDate(this._list[i].setPrefrDt);
       }
     }
     this._totPageNum = page;
@@ -188,7 +188,7 @@ Tw.MyTJoinWireHistory.prototype = {
     var nowYear = new Date().getFullYear();
     $('.data-select-wrap').each(function(){
       if($(this).text().trim() === String(nowYear)){
-        $(this).hide();
+        $(this).hide().attr('aria-hidden', true);
       }
     });
 
@@ -251,6 +251,13 @@ Tw.MyTJoinWireHistory.prototype = {
       }
     }
 
-    this._historyService.goLoad('/myt-join/submain/wire/historydetail?data='+encodeURI(JSON.stringify(item)));
+    var param = {
+      key : item.detailkey,
+      atype : item.atype,
+      dt : item.dt
+    };
+    this._historyService.goLoad('/myt-join/submain/wire/historydetail?'+$.param(param));
+
+    // this._historyService.goLoad('/myt-join/submain/wire/historydetail?data='+encodeURI(JSON.stringify(item)));
   }
 };

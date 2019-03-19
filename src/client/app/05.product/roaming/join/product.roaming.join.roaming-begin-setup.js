@@ -116,7 +116,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     return returnValue;
   },
 
-  _openSelectDatePop: function (data,title,targetEvn) {
+  _openSelectDatePop: function (data,title,targetEvt) {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',// hbs의 파일명
         layer: true,
@@ -128,9 +128,9 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         //$(targetEvn.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
-      'select_date');
+      'select_date',$(targetEvt.currentTarget));
   },
-  _doJoin : function(data,apiService,historyService,$containerData){
+  _doJoin : function(data,apiService,historyService,$containerData,targetEvt){
 
     var completePopupData = {
       prodNm : data.prodNm,
@@ -152,10 +152,10 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
@@ -170,17 +170,17 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     this._popupService.closeAll();
     setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
-  _showCancelAlart : function (){
+  _showCancelAlart : function (evt){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
     this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
-      null);
+      null,null,$(evt.currentTarget));
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
-  _confirmInformationSetting : function () {
+  _confirmInformationSetting : function (evt) {
 
 
     var userJoinInfo = {
@@ -206,7 +206,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       joinType : 'begin'
     };
 
-    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
+    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this,null,evt);
 
   },
   _tooltipInit : function (prodId) {

@@ -55,7 +55,6 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     this.$btnAddLine = this.$container.find('.fe-btn_add_line');
     this.$btnRetry = this.$container.find('.fe-btn_retry');
-    this.$btnCancel = this.$container.find('.fe-btn_cancel');
 
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnCheckJoin = this.$container.find('.fe-btn_check_join');
@@ -75,7 +74,6 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.on('click', $.proxy(this._clearCheckInput, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnCheckJoin.on('click', $.proxy(this._procCheckJoinReq, this));
-    this.$btnCancel.on('click', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
 
     this.$container.on('click', '.fe-btn_delete', $.proxy(this._onDeleteLineItem, this));
@@ -94,14 +92,6 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
-  },
-
-  _clear: function(e) {
-    var $elem = $(e.currentTarget),
-      $elemParent = $elem.parents('li');
-
-    $elemParent.find('.error-txt').hide().attr('aria-hidden', 'true');
-    this.$btnCheckJoin.attr('disabled', 'disabled').prop('disabled', true);
   },
 
   _detectInput: function(maxLength, e) {
@@ -175,11 +165,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _blurInputNumber: function() {
-    if (this.$inputNumber.length > 8) {
-      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
-    } else {
-      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
-    }
+    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
@@ -193,6 +179,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     $elem.hide().attr('aria-hidden', 'true');
 
     this._toggleJoinCheckBtn();
+
+    setTimeout(function() {
+      $elem.parents('li').find('.error-txt').hide().attr('aria-hidden', 'true');
+    }.bind(this), 100);
   },
 
   _toggleClearBtn: function($elem) {

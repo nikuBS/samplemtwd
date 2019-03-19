@@ -4,7 +4,8 @@ Tw.COMMON_STRING = {
   DISAGREE: '비동의',
   UNLIMIT: '무제한',
   TERM: '이용약관',
-  STANDARD: '기본제공'
+  STANDARD: '기본제공',
+  OPEN_NEW_TAB: '새창열림'
 };
 
 Tw.DATA_UNIT = {
@@ -58,6 +59,7 @@ Tw.BUTTON_LABEL = {
   HOME: '홈으로',
   YES: '예',
   NO: '아니요',
+  SELECTED: '선택됨',
   COMPLETE: '완료'
 };
 
@@ -194,7 +196,7 @@ Tw.REFILL_COUPON_CONFIRM = {
 };
 
 Tw.REFILL_COUPON_ALERT = {
-  A211: '선물 가능 횟수가 초과되었습니다.<br />선물하기는 월 1회 가능합니다.',
+  A211: '선물 가능 횟수가 초과되었습니다.<br />리필쿠폰은 쿠폰 유효기간 내 연간 최대 2회까지만 가족 구성원에게 선물하기 및 받기가 가능합니다.<br />(단, 월 1회만 선물하기 가능)',
   A212: '팅요금제 이용고객은 리필쿠폰 선물하기가 불가능합니다.',
   A213: '휴대폰 번호가 올바르지 않습니다.<br />휴대폰 번호를 확인해 주세요.'
 };
@@ -822,7 +824,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   },
   JOIN: {
     TITLE: '멤버십에 가입하시겠습니까?',
-    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 〉 정보 수정에서 수정 가능합니다',
+    CONTENT: '선택 동의 사항은 <br/>나의 멤버십 &#62; 정보 수정에서 수정 가능합니다',
     OK_BTN: '가입하기',
     CANCEL_BTN: '취소'
   },
@@ -868,6 +870,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   },
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인' },
   ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' },
+  ALERT_1_A70: { TITLE: 'T멤버십 앱으로 이동하시겠습니까?', MSG: '해당 기능은 T멤버십 앱에서 가능합니다.' },
   ALERT_1_A71: { TITLE: '알림', MSG: '멤버십에 가입한 당일에는 해지할 수 없습니다.' },
   ALERT_1_A72: { TITLE: '알림', MSG: '간편 로그인 상태에서 조회할 수 없습니다. T아이디(아이디/비밀번호) 로그인 후 이용해 주세요.' }
 };
@@ -1006,7 +1009,6 @@ Tw.URL_PATH = {
   MYT_PAY_CONTENTS_LIMIT_DETAIL: '/myt/bill/history/contents/limit',
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
-  CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
   SMART_CHOICE: 'http://www.smartchoice.or.kr',
   MEMBERSHIP_MOVIE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_168',
   MEMBERSHIP_MOVIE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_169',
@@ -1639,8 +1641,8 @@ Tw.ROAMING_CENTER = [
 ];
 
 Tw.ROAMING_DESC = {
-  MFACTCD_DESC: '제조사를 선택하세요.',
-  MODEL_DESC: '모델명을 선택하세요.',
+  MFACTCD_DESC: '제조사를 선택하세요',
+  MODEL_DESC: '모델명을 선택하세요',
   HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 해당 국가에서 이용할 수 있는 로밍 서비스 방식과 요금을 확인하실 수 있습니다.',
   HEADER_LOGIN_MSG: '가입된 무선 회선 정보가 확인되지 않습니다.<br>' +
     '휴대폰을 선택하신 후 상단에서 <strong>국가명</strong>으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +
@@ -1781,7 +1783,7 @@ Tw.TOOLTIP_TITLE = {
 Tw.MEMBERSHIP = {
   MOVIE_CULTURE_CINFIRM: {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
-    MESSAGE: '컬처 예매는 T멤버십 앱을 통해서만 가능합니다.'
+    MESSAGE: '예매/조회는 T멤버십 앱에서 가능합니다.'
   },
   BENEFIT: {
     BRAND: {

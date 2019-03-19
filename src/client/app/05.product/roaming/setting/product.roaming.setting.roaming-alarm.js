@@ -91,10 +91,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },
   _changeList : function(){
@@ -159,7 +159,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this.$addBtn.removeAttr('style');
         //$(evt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
-      }, this)
+      }, this),null,$(evt.currentTarget)
     );
     if(!this.$addBtn.attr('disabled')){
       this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
@@ -192,7 +192,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
       Tw.BUTTON_LABEL.CLOSE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON,$(btnEvt.currentTarget));
   },
   _removeOnList : function (evt) {
     var $target = $(evt.currentTarget);
@@ -207,10 +207,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._addedList.splice(selectedIndex,1);
         $target.parents('li').remove();
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,evt);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,evt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },
   _bindRemoveEvt : function () {
@@ -258,7 +258,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         }
       },this),
       Tw.BUTTON_LABEL.CANCEL,
-      Tw.BUTTON_LABEL.CONFIRM);
+      Tw.BUTTON_LABEL.CONFIRM,$(evt.currentTarget));
   },
   _showAuth : function () {
     this._showAuthState = true;

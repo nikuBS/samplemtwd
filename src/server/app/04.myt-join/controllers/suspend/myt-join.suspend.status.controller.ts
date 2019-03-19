@@ -63,6 +63,9 @@ class MyTJoinSuspendStatus extends TwViewController {
               status['resuspendable'] = false;
             }
           }
+          if ( suspendStatus.result.cntcNum ) {
+            suspendStatus.result.cntcNum = StringHelper.phoneStringToDash(suspendStatus.result.cntcNum);
+          }
         } else { // 일시정지(case 1)
           status['type'] = 'temporary';
         }
@@ -71,11 +74,11 @@ class MyTJoinSuspendStatus extends TwViewController {
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
         const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.');
         status['period'] = { from, to };
-        status['reason'] = MYT_SUSPEND_REASON['5000341'] ;
+        status['reason'] = MYT_SUSPEND_REASON['5000341'];
         status['type'] = 'long-term';
         status['resetable'] = false;
         status['militaryAC'] = true;
-        if ( suspendStatus.result.reFromDt && suspendStatus.result.reFromDt !== '') {
+        if ( suspendStatus.result.reFromDt && suspendStatus.result.reFromDt !== '' ) {
           status['resuspend'] = true;
           status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.M.D.');
         } else {
@@ -105,6 +108,9 @@ class MyTJoinSuspendStatus extends TwViewController {
           if ( options['status'] ) {
             options['status']['isProgressing'] = true;
           }
+        }
+        if ( _progress.cntcNum ) {
+          _progress.cntcNum = StringHelper.phoneStringToDash(_progress.cntcNum);
         }
       } else if ( progress.debugMessage && progress.debugMessage.trim() === '500' ) {
         options['progress'] = null;
@@ -137,8 +143,8 @@ class MyTJoinSuspendStatus extends TwViewController {
   _militaryAC(suspendStatus: any): boolean {
     if ( suspendStatus.svcStCd === 'AC' && suspendStatus.armyDt && suspendStatus.armyDt !== '' ) {
       const days = DateHelper.getDiffByUnit(suspendStatus.toDt, DateHelper.getCurrentDate(), 'days');
-      if ( days > 0) {
-       return true;
+      if ( days > 0 ) {
+        return true;
       }
     }
     return false;

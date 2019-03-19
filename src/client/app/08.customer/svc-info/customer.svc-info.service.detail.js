@@ -25,6 +25,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   _init: function () {
     this.rootPathName = this._historyService.pathname;
     this.queryParams = Tw.UrlHelper.getQueryParams();
+    this._addExternalTitle();  // 새창열림 타이틀 넣기
   },
   _bindEvent: function () {
     this.$selectBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
@@ -45,6 +46,14 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     
     // from idpt
     this._bindUIEvent(this.$container);
+  },
+
+  _addExternalTitle: function () {
+    this.$container.find('.fe-link-external:not([href^="#"])').each(function(_ind, target){
+      if(!$(target).attr('title')) {
+        $(target).attr('title', Tw.COMMON_STRING.OPEN_NEW_TAB);
+      }
+    });
   },
 
   _openExternalUrl: function (e) {
@@ -287,9 +296,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _apiError: function (err) {
-    Tw.Logger.error(err.code, err.msg);
-    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
-    return false;
+    // Tw.Logger.error(err.code, err.msg);
+    return Tw.Error(err.code, Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.msg).pop();
+    // this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+    // return false;
   },
 
   _openTooltipPop: function (e) {

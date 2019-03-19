@@ -25,7 +25,6 @@ Tw.CommonMemberLine.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-bt-nickname', $.proxy(this._openNickname, this));
     this.$container.on('click', '.fe-bt-detail', $.proxy(this._openDetail, this));
-    // this.$container.on('click', '#cop-password', $.proxy(this._openCopPassword, this));
     this.$container.on('click', '.fe-bt-more', $.proxy(this._onClickMore, this));
     this.$container.on('click', '.fe-change-first', $.proxy(this._onChangeFirst, this));
   },
@@ -94,36 +93,36 @@ Tw.CommonMemberLine.prototype = {
     return list;
   },
   _onChangeFirst: function ($event) {
-    var $currentTarget = $($event.currentTarget);
+    var $target = $($event.currentTarget);
     this._popupService.openConfirmButton(Tw.ALERT_MSG_AUTH.ALERT_4_A5, null, $.proxy(this._confirmNotifyPopup, this),
-      $.proxy(this._closeNotifyPopup, this, $currentTarget), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+      $.proxy(this._closeNotifyPopup, this, $target), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES, $target);
   },
   _confirmNotifyPopup: function () {
     this._popupService.close();
     this._changeList = true;
   },
-  _closeNotifyPopup: function ($currentTarget) {
+  _closeNotifyPopup: function ($target) {
     if ( this._changeList ) {
-      var currentSvcMgmtNum = $currentTarget.parents('.fe-line').data('svcmgmtnum');
-      var $remainList = $currentTarget.parents('.fe-line-list').find('.fe-line')
+      var currentSvcMgmtNum = $target.parents('.fe-line').data('svcmgmtnum');
+      var $remainList = $target.parents('.fe-line-list').find('.fe-line')
         .not('.none-event').filter('[data-svcmgmtnum!=' + currentSvcMgmtNum + ']');
       var changeList = [currentSvcMgmtNum];
       _.map($remainList, $.proxy(function (remainLine) {
         changeList.push($(remainLine).data('svcmgmtnum'));
       }, this));
-      this._requestChangeList(changeList);
+      this._requestChangeList(changeList, $target);
     }
   },
-  _requestChangeList: function (svcNumList) {
+  _requestChangeList: function (svcNumList, $target) {
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successRegisterLineList, this))
+    }).done($.proxy(this._successRegisterLineList, this, $target))
       .fail($.proxy(this._failRegisterLineList, this));
   },
-  _successRegisterLineList: function (resp) {
+  _successRegisterLineList: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A6, null, null, $.proxy(this._closeRegisterLine, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A6, null, null, $.proxy(this._closeRegisterLine, this), null, $target);
     }
   },
   _closeRegisterLine: function () {
@@ -131,10 +130,5 @@ Tw.CommonMemberLine.prototype = {
   },
   _failRegisterLineList: function (error) {
     Tw.Logger.error(error);
-  },
-  _openCopPassword: function () {
-    this._popupService.open({
-      hbs: 'CO_01_05_02_02'
-    }, null, null, 'cop-password');
   }
 };

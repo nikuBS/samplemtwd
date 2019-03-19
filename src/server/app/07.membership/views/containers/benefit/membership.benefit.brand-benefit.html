@@ -83,6 +83,22 @@
                 </button>
             </div>
 
+            <script id="fe-franchisee-list-item" type="text/x-handlebars-template">
+                <li>
+                    <button class="tit-addr">
+                        <strong class="tit">{{ coPtnrNm }}</strong>
+                        <span class="addr">{{ mrchtNm }}</span>
+                    </button>
+                    <em class="address">{{ addr }}</em>
+                    <a href="tel:{{ telNo }}" class="bt-link-tx underline" title="전화걸기">{{ tel telNo }}</a>
+                    <button class="bt-map"
+                            data-mapx="{{ googleMapCoordX }}"
+                            data-mapy="{{ googleMapCoordY }}"
+                            data-brandcd="{{ brandCd }}"
+                            data-cocd="{{ coCd }}"
+                            data-joincd="{{ joinCd }}">지도보기</button>
+                </li>
+            </script>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="cont-box" style="display: none;" aria-hidden="true" id="fe-contents-empty">
@@ -91,22 +107,6 @@
 
                 <ul class="franchisee-list">
 
-                    <script id="fe-franchisee-list-item" type="text/x-handlebars-template">
-                        <li>
-                            <button class="tit-addr">
-                                <strong class="tit">{{ coPtnrNm }}</strong>
-                                <span class="addr">{{ mrchtNm }}</span>
-                            </button>
-                            <em class="address">{{ addr }}</em>
-                            <a href="tel:{{ telNo }}" class="bt-link-tx underline" title="전화걸기">{{ tel telNo }}</a>
-                            <button class="bt-map"
-                                    data-mapx="{{ googleMapCoordX }}"
-                                    data-mapy="{{ googleMapCoordY }}"
-                                    data-brandcd="{{ brandCd }}"
-                                    data-cocd="{{ coCd }}"
-                                    data-joincd="{{ joinCd }}">지도보기</button>
-                        </li>
-                    </script>
                     <!--<li>
                         <button class="tit-addr">
                             <strong class="tit">파리바게트</strong>

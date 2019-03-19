@@ -12,16 +12,11 @@ Tw.ImmediatelyRechargeLayer = function ($element, prodId) {
   this._prodId = prodId;
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
-  this._bindEvent();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._initialize();
 };
 
 Tw.ImmediatelyRechargeLayer.prototype = {
-
-  _bindEvent: function () {
-    // BPCP 페이지에서 이벤트 받기 위한 처리
-    $(window).on('message', $.proxy(this._getWindowMessage, this));
-  },
 
   _initialize: function () {
     this._readOnlyProductIdList = ['NA00000138', 'NA00000719', 'NA00000720', 'NA00001901', 'NA00002244', 'NA00002373',
@@ -180,7 +175,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         layer: true,
         data: data
       }, $.proxy(this._onImmediatelyPopupOpened, this),
-      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04');
+      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04', this.$container.find('[data-id=immCharge] button'));
   },
 
   // DC_O4 팝업 호출 후
@@ -213,6 +208,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this.$popupContainer.find('.fe-common-back').on('click', function () {
       window.history.back();
     });
+    window.setTimeout($.proxy(function() {
+      var $focusTarget = this.$popupContainer.find('.ac-tit:eq(0)');
+      if ($focusTarget && $focusTarget.length > 0) {
+        $focusTarget.attr('tabindex', -1).focus();
+      }
+    }, this), 500);
   },
 
   // DC_04 팝업 close 이후 처리 부분
@@ -277,27 +278,49 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   },
 
   _responseBPCP: function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+    if (resp.code === 'BFF0003') {
+      return this._tidLanding.goLogin(location.origin + '/myt-data/submain');
+    }
+
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+      msg = msg.pop().match(/(\d+)/);
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+          serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     var url = resp.result.svcUrl;
-    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+    if (Tw.FormatHelper.isEmpty(url)) {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
+    }
+
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
-    Tw.CommonHelper.openUrlInApp(url);
+    url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    this._popupService.open({
+      hbs: 'product_bpcp',
+      iframeUrl: url
+    }, null, $.proxy(function() {
+      this._historyService.replaceURL('/myt-data/submain');
+    }, this));
   },
 
   _responseFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-
-  // BPCP 페이지에서 X 버튼 누른 경우에 대한 이벤트 처리
-  _getWindowMessage: function (e) {
-    var data = e.data || e.originalEvent.data;
-    if ( data === 'popup_close' ) {
-      this._popupService.close();
-    }
   }
 };

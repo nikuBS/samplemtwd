@@ -91,21 +91,23 @@ Tw.TooltipService.prototype = {
       $target.append($children);
     }
 
-    $target.on('click', $.proxy(this._openTip, this, $result));
+    $target.on('click', $.proxy(this._openTip, this, $result, $target));
   },
-  _openTip: function ($result) {
+  _openTip: function ($result, $target) {
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
       'title': $result.ttipTitNm,
+      'btn-close': 'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
-      'cont_align': 'tl',
-      'tagStyle-div': 'div',
+      'cont_align': 'tl font-only-black',
       'contents': $result.ttipCtt,
-      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
+      'tooltip': 'tooltip-pd'
     },
       $.proxy(this._onOpen, this),
-      $.proxy(this._onClose, this));
+      $.proxy(this._onClose, this),
+      null, $target
+    );
   },
   _onOpen: function ($layer) {
     $layer.on('click', 'a', $.proxy(this._onClick, this));

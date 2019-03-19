@@ -233,7 +233,10 @@ Tw.CustomerPwdComponent.prototype = {
     }
   },
   _goFailPage: function () {
-    this._historyService.replaceURL('/common/member/login/cust-pwdfail');
+    $(':focus').blur();
+    setTimeout($.proxy(function () {
+      this._historyService.replaceURL('/common/member/login/cust-pwdfail');
+    }, this), 300);
     // this._historyService.replaceURL('/common/tid/logout?target=/common/member/login/cust-pwdfail');
   },
   openLayer: function (mdn, serviceNumber, callback) {

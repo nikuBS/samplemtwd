@@ -36,17 +36,17 @@ Tw.ProductRoamingCoupon.prototype = {
     var url = Tw.OUTLINK.ROAMING_COUPON[state];
     this._title = state === 'REGISTER' ? 'REGISTER' : 'BUY';
 
-    this._getBPCP(url);
+    this._getBPCP(url, event);
   },
 
-  _getBPCP: function(url) {
+  _getBPCP: function(url, event) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this))
+      .done($.proxy(this._responseBPCP, this, event))
       .fail($.proxy(this._onFail, this));
   },
 
-  _responseBPCP: function(resp) {
+  _responseBPCP: function(event, resp) {
     if (resp.code === 'BFF0003') {
       return this._tidLanding.goLogin(location.origin + '/product/roaming/coupon');
     }
@@ -71,7 +71,7 @@ Tw.ProductRoamingCoupon.prototype = {
       iframeUrl: url
     }, null, $.proxy(function() {
       this._historyService.replaceURL('/product/roaming/coupon');
-    }, this));
+    }, this), null, $(event.currentTarget));
   },
 
   _getWindowMessage: function(e) {
@@ -79,7 +79,7 @@ Tw.ProductRoamingCoupon.prototype = {
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
-      this._popupService.close();
+      this._popupService.closeAll();
     }
 
     // BPCP 팝업 닫고 링크 이동

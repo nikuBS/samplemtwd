@@ -4,9 +4,8 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
-  //this._cdn = cdn;
-  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
+  this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -15,6 +14,9 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
+  this._nowUrl = nowUrl;
+  this._tidLanding = new Tw.TidLandingComponent();
+  $(window).on('message', $.proxy(this._getWindowMessage, this));
 };
 
 Tw.CommonSearch.prototype = {
@@ -106,17 +108,14 @@ Tw.CommonSearch.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          //data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
-        // if(key==='MENU_URL'){
-        //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
-        // }
-        // if(category==='prevent'&&key==='DOCID'){
-        //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
-        // }
         if(category==='direct'&&key==='TYPE'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
+            if(data[i].PRODUCT_TYPE!==''){
+              data[i].linkUrl = Tw.OUTLINK.DIRECT_IOT+'?categoryId='+data[i].CATEGORY_ID+'&productId='+data[i].ACCESSORY_ID+'&productType='+data[i].PRODUCT_TYPE;
+            }else{
+              data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
+            }
           }else{
             data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId='+data[i].CATEGORY_ID+'&productGrpId='+data[i].PRODUCT_GRP_ID;
           }
@@ -131,12 +130,16 @@ Tw.CommonSearch.prototype = {
             data[i].IMG_ALT = tempArr[1];
           }
         }
+        if(key==='MENU_URL'&&data[i][key].includes('http')){
+          data[i].tagTitle = Tw.COMMON_STRING.OPEN_NEW_TAB;
+        }
       }
     }
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
+    $barcodElement.JsBarcode(barcodNum,{background : '#edeef0',height : 60, displayValue : false});
+    this.$container.find('.bar-code-num').text(barcodNum);
   },
   _showShortcutList : function (data,dataKey,cdn) {
     this.$contents.append(Handlebars.compile(this.$container.find('#'+dataKey+'_base').html()));
@@ -166,7 +169,7 @@ Tw.CommonSearch.prototype = {
   },
   _inputChangeEvent : function (args) {
     if(Tw.InputHelper.isEnter(args)){
-      this._doSearch();
+      this._doSearch(args);
     }else{
       if(this._historyService.getHash()==='#input_P'){
         if(this.$inputElement.val().trim().length>0){
@@ -177,7 +180,7 @@ Tw.CommonSearch.prototype = {
       }
     }
   },
-  _doSearch : function () {
+  _doSearch : function (event) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
       var closeCallback;
@@ -189,12 +192,12 @@ Tw.CommonSearch.prototype = {
         },this);
       }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(event.currentTarget));
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?keyword='+this._searchInfo.query+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?keyword='+(encodeURIComponent(this._searchInfo.query))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
@@ -225,14 +228,20 @@ Tw.CommonSearch.prototype = {
 
   },
   _addRecentlyKeyword : function (keyword) {
-    this._recentKeyworList[this._nowUser].push({
+    for(var i=0;i<this._recentKeyworList[this._nowUser].length;i++){
+      if(this._recentKeyworList[this._nowUser][i].keyword === keyword){
+        this._recentKeyworList[this._nowUser].splice(i,1);
+        break;
+      }
+    }
+    this._recentKeyworList[this._nowUser].unshift({
       keyword : keyword,
       searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
     while (this._recentKeyworList[this._nowUser].length>10){
-      this._recentKeyworList[this._nowUser].shift();
+      this._recentKeyworList[this._nowUser].pop();
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
   },
@@ -264,10 +273,10 @@ Tw.CommonSearch.prototype = {
       );
     }
     if(linkUrl.indexOf('BPCP')>-1){
-      this._getBPCP(linkUrl);
+      this._getBpcp(linkUrl,$linkData);
     }else if(linkUrl.indexOf('Native:')>-1){
       if(linkUrl.indexOf('freeSMS')>-1){
-        this._callFreeSMS();
+        this._callFreeSMS($linkData);
       }
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
@@ -287,23 +296,6 @@ Tw.CommonSearch.prototype = {
     setTimeout($.proxy(function () {
       this._historyService.go(Number(this._step)*-1);
     },this));
-  },
-  _getBPCP: function (url) {
-    var replaceUrl = url.replace('BPCP:', '');
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this));
-  },
-  _responseBPCP: function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    var url = resp.result.svcUrl;
-    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
-      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
-    }
-
-    Tw.CommonHelper.openUrlInApp(url);
   },
   _removeDuplicatedSpace : function ($selectedArr,className) {
     $selectedArr.each(function(){
@@ -397,7 +389,7 @@ Tw.CommonSearch.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentKeyworList[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx , encodeParam : encodeURIComponent(data.keyword)}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -433,7 +425,7 @@ Tw.CommonSearch.prototype = {
       if(idx>=10){
         return;
       }
-      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
   _getRecentKeywordListBySearch : function (keyword) {
@@ -514,7 +506,7 @@ Tw.CommonSearch.prototype = {
       }
     }
   },
-  _callFreeSMS : function () {
+  _callFreeSMS : function ($linkData) {
     var memberType = this._svcInfo.totalSvcCnt > 0 ? (this._svcInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
     if (memberType === 1) {
       this._popupService.openAlert(
@@ -522,7 +514,7 @@ Tw.CommonSearch.prototype = {
         '',
         Tw.BUTTON_LABEL.CONFIRM,
         null,
-        'menu_free_sms'
+        'menu_free_sms',$linkData
       );
       return ;
     }
@@ -533,12 +525,84 @@ Tw.CommonSearch.prototype = {
         '',
         Tw.BUTTON_LABEL.CONFIRM,
         null,
-        'menu_free_sms_pps'
+        'menu_free_sms_pps',$linkData
       );
       return;
     }
     Tw.CommonHelper.openFreeSms();
+  },
+  _getBpcp: function(url,$target) {
+    var reqParams = {
+      svcMgmtNum: this._svcMgmtNum,
+      bpcpServiceId: url.replace('BPCP:', '')
+    };
+
+    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
+      reqParams.eParam = this._eParam;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
+        .done($.proxy(this._resBpcp, this, $target));
+  },
+
+  _resBpcp: function(resp,$target) {
+    if (resp.code === 'BFF0003') {
+      return this._tidLanding.goLogin(location.origin + this._nowUrl);
+    }
+
+    if (resp.code === 'BFF0504') {
+      var msg = resp.msg.match(/\(.*\)/);
+      msg = msg.pop().match(/(\d+)/);
+
+      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
+          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
+          serviceBlock = { hbs: 'service-block' };
+
+      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
+        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
+      }
+
+      return this._popupService.open(serviceBlock);
+    }
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if (Tw.FormatHelper.isEmpty(url)) {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
+    }
+
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    this._popupService.open({
+      hbs: 'product_bpcp',
+      iframeUrl: url
+    }, null, $.proxy(function() {
+      this._historyService.replaceURL(this._nowUrl);
+    }, this),null,$target);
+  },
+  _getWindowMessage: function(e) {
+    var data = e.data || e.originalEvent.data;
+
+    // BPCP 팝업 닫기
+    if (data === 'popup_close') {
+      this._popupService.closeAll();
+    }
+
+    // BPCP 팝업 닫고 링크 이동
+    if (data.indexOf('goLink:') !== -1) {
+      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
+    }
+
+    // BPCP 팝업 닫고 로그인 호출
+    if (data.indexOf('goLogin:') !== -1) {
+      this._tidLanding.goLogin(this._nowUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
   }
-
-
 };

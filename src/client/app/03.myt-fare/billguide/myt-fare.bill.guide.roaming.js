@@ -92,15 +92,15 @@ Tw.MyTFareBillGuideRoaming.prototype = {
         totalNum: this._comComma(strTotalNum)
       };
 
-      this.$dateSelect.hide();
+      this.$dateSelect.hide().attr('aria-hidden', true);
       this.$dataResult.empty();
 
       if ( dataArr.length === 0 ) {
-        this.$dataResult.hide();
-        this.$noData.show();
+        this.$dataResult.hide().attr('aria-hidden', true);
+        this.$noData.show().attr('aria-hidden', false);
       } else {
-        this.$dataResult.show();
-        this.$noData.hide();
+        this.$dataResult.show().attr('aria-hidden', false);
+        this.$noData.hide().attr('aria-hidden', true);
       }
 
       this._svcHbDetailList(resData, this.$dataResult, this.$entryTpl);
@@ -111,15 +111,15 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     // if ( res.code === Tw.API_CODE.CODE_00 ) {
     //   var resObj = this._svcToTimeObj( res.result.roamingList );
     //
-    //   this.$dateSelect.hide();
+    //   this.$dateSelect.hide().attr('aria-hidden', true);
     //
     //   if ( resObj.totalSec === 0 ) {
     //     // // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
-    //     this.$dataResult.hide();
-    //     this.$noData.show();
+    //     this.$dataResult.hide().attr('aria-hidden', true);
+    //     this.$noData.show().attr('aria-hidden', false);
     //   } else {
-    //     this.$dataResult.show();
-    //     this.$noData.hide();
+    //     this.$dataResult.show().attr('aria-hidden', false);
+    //     this.$noData.hide().attr('aria-hidden', true);
     //   }
     //
     //   var resData = {

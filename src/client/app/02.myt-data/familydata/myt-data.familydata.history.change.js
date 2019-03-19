@@ -1,3 +1,9 @@
+/**
+ * FileName: myt-data.familydata.history.change.js
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2019.03.18
+ */
+
 Tw.MyTDataFamilyHistoryChange = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -104,42 +110,29 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
   },
 
-  _clickSubmit: function() {
+  _clickSubmit: function(e) {
+    var $target = $(e.currentTarget);
     var ALERT = Tw.ALERT_MSG_MYT_DATA.CONFIRM_SHARE_DATA_CHANGE;
     this._popupService.openConfirmButton(
       ALERT.CONTENTS,
       ALERT.TITLE,
-      $.proxy(this._submitChange, this),
+      $.proxy(this._submitChange, this, $target),
       $.proxy(this._handleClosePopup, this),
       Tw.BUTTON_LABEL.CANCEL,
-      ALERT.BUTTON
+      ALERT.BUTTON,
+      $target
     );
   },
 
-  _submitChange: function() {
+  _submitChange: function($target) {
     var type = 'R',
       gb = this.$input.val(),
-      mb = 0,
-      data = this._changable.data - Number(gb),
-      remain =
-        data >= 1
-          ? {
-              data: Number(data.toFixed(2)),
-              unit: Tw.DATA_UNIT.GB
-            }
-          : {
-              data: 0,
-              unit: Tw.DATA_UNIT.MB
-            };
+      mb = 0;
 
     if (this._all) {
       type = 'A';
       gb = this._changable.gb;
       mb = this._changable.mb;
-      remain = {
-        data: 0,
-        unit: Tw.DATA_UNIT.MB
-      };
     }
 
     this._popupService.close();
@@ -151,10 +144,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
         reqCnlGbGty: gb,
         reqCnlMbGty: mb
       })
-      .done($.proxy(this._handleDoneSubmit, this, remain));
+      .done($.proxy(this._handleDoneSubmit, this, $target));
   },
 
-  _handleDoneSubmit: function(remain, resp) {
+  _handleDoneSubmit: function($target, resp) {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
@@ -198,7 +191,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     }
 
     if (ALERT_MSG) {
-      this._popupService.openAlert(ALERT_MSG, null, null, $.proxy(this._handleRerieveChangable, this));
+      this._popupService.openAlert(ALERT_MSG, null, null, $.proxy(this._handleRerieveChangable, this), undefined, $target);
     }
   },
 
@@ -209,7 +202,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       this.$retrieveBtn.addClass('none').attr('aria-hidden', true);
     }
 
-    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4').attr('aria-hidden', false);
+    this.$strong
+      .text(Tw.MYT_DATA_FAMILY_RETRIEVING)
+      .switchClass('txt-c2 none', 'txt-c4')
+      .attr('aria-hidden', false);
     // setTimeout($.proxy(this._handleDoneRetrieve, this, { code: '00', result: { remGbGty: '1', remMbGty: '0' } }), 1000);
     this._requestRetrieve('0');
   },
@@ -238,7 +234,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _setRetrieveStatus: function() {
     this.$retrieveBtn.removeClass('none').attr('aria-hidden', false);
     this.$strong.addClass('none').attr('aria-hidden', true);
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, this.$retrieveBtn);
   },
 
   _setDisableChange: function(disabled) {

@@ -36,6 +36,8 @@ Tw.CustomerDocument.prototype = {
   },
   _onTabChange: function (event) {
     var $target = $(event.currentTarget);
+    $target.find('a').attr('aria-selected', 'true');
+    $target.siblings().find('a').attr('aria-selected', 'false');
 
     this._initVariables($target.attr('id'));
     this._initList();

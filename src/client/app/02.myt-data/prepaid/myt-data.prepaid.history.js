@@ -1,3 +1,10 @@
+/**
+ * FileName: myt-data.prepaid.history.js
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2019.03.15
+ */
+
+
 Tw.MyTDataPrepaidHistory = function(rootEl, histories) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -43,7 +50,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$empty = this.$container.find('.contents-empty');
   },
 
-  _openChangeHistories: function() {
+  _openChangeHistories: function(e) {
     var type = this._currentType;
 
     this._popupService.open(
@@ -62,7 +69,10 @@ Tw.MyTDataPrepaidHistory.prototype = {
           }
         ]
       },
-      $.proxy(this._handleOpenChangeHistories, this)
+      $.proxy(this._handleOpenChangeHistories, this),
+      undefined,
+      undefined,
+      $(e.currentTarget)
     );
   },
 
@@ -223,12 +233,12 @@ Tw.MyTDataPrepaidHistory.prototype = {
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
-    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail });
+    this._popupService.open({ hbs: 'DC_09_06_01', detail: detail }, undefined, undefined, undefined, $(e.currentTarget));
   },
 
   _openCancel: function(e) {
-    
-    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $(e.currentTarget)));
+    var $target = $(e.currentTarget);
+    this._popupService.openConfirm(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A74, Tw.POPUP_TITLE.NOTIFY, $.proxy(this._handleCancel, this, $target), undefined, $target);
   },
   
   _handleCancel: function($target) {
@@ -240,26 +250,23 @@ Tw.MyTDataPrepaidHistory.prototype = {
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     } else {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code })
-        .done($.proxy(this._handleSuccessCancel, this, $target))
+        .done($.proxy(this._handleSuccessCancel, this))
         .fail($.proxy(this._fail, this));
     }
     this._popupService.close();
   },
 
-  _handleSuccessCancel: function($target, resp) {
+  _handleSuccessCancel: function(resp) {
     skt_landing.action.loading.off({ ta: this.$container });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      var $parents = $target.closest('li');
-      $parents.find('.black-tx').text(Tw.MYT_DATA_PREPAID.CANCEL_ON_SAME_DAY);
-      $parents.find('button.data-tx').switchClass('blue-tx', 'gray-tx');
-      $target.remove();
+      window.location.replace('/myt-data/recharge/prepaid/history');
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
   },

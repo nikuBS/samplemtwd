@@ -2,6 +2,7 @@
  * FileName: myt-data.prepaid.voice.controller.ts
  * Author: 박지만 (jiman.park@sk.com)
  * Date: 2018.11.14
+ * Description: 선불폰 음성 1회 충전
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -14,18 +15,16 @@ class MyTDataPrepaidVoice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( BrowserHelper.isApp(req) ) {
+    if ( BrowserHelper.isApp(req) ) { // 앱인 경우에만 진입 가능
       res.render('prepaid/myt-data.prepaid.voice.html', {
         svcInfo: svcInfo,
         pageInfo: pageInfo
       });
-    } else {
+    } else { // 모바일 웹인 경우 앱 설치 유도 페이지로 이동
       res.render('share/common.share.app-install.info.html', {
         svcInfo: svcInfo, pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
-
-    // this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
   }
 }
 

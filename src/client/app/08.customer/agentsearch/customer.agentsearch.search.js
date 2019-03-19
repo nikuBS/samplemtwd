@@ -125,6 +125,10 @@ Tw.CustomerAgentsearch.prototype = {
       this._isSearched = false;
     }
     location.replace(e.currentTarget.href);
+
+    // 웹접근성, 선택된 tab 에 aria-selected 값 true
+    this.$container.find('.fe-tab a').attr('aria-selected', 'false');
+    $(e.currentTarget).attr('aria-selected', 'true');
   },
   _onInput: function (e) {
     var text = e.currentTarget.value;
@@ -157,7 +161,7 @@ Tw.CustomerAgentsearch.prototype = {
         break;
     }
   },
-  _onOptionsClicked: function () {
+  _onOptionsClicked: function (e) {
     this._popupService.open({
         hbs: 'CS_02_01_01'
       },
@@ -166,7 +170,7 @@ Tw.CustomerAgentsearch.prototype = {
           $root, this._options, $.proxy(this._onOptionsChanged, this));
       }, this),
       null,
-      'options'
+      'options', e
     );
   },
   _onOptionsChanged: function (options) {

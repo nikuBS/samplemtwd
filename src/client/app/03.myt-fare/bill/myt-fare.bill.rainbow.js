@@ -13,6 +13,7 @@ Tw.MyTFareBillRainbow = function (rootEl) {
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay:visible'));
 
   this._init();
 };
@@ -51,7 +52,11 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
-    var $targetId = $(event.currentTarget).attr('id');
+    var $target = $(event.currentTarget);
+    $target.find('button').attr('aria-selected', 'true');
+    $target.siblings().find('button').attr('aria-selected', 'false');
+
+    var $targetId = $target.attr('id');
     this._initVariables($targetId);
     this._checkIsAbled();
   },
@@ -74,9 +79,9 @@ Tw.MyTFareBillRainbow.prototype = {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
-  _cancel: function () {
+  _cancel: function (e) {
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
-      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON);
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
   _onCancel: function () {
     this._isCancel = true;
@@ -105,7 +110,7 @@ Tw.MyTFareBillRainbow.prototype = {
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW,
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');

@@ -21,6 +21,9 @@ Tw.CertificationRepresentative = function () {
   this._receiverNum = '';
   this._callbackParam = null;
 
+  this._addTimer = null;
+  this._addTime = null;
+
   this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_MINORPR_AUTH' : 'NFM_MWB_MINORPR_AUTH';
 };
 
@@ -36,7 +39,8 @@ Tw.CertificationRepresentative.prototype = {
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
     ATH2014: 'ATH2014',
-    ICAS3101: 'ICAS3101'
+    ICAS3101: 'ICAS3101',
+    ICAS3162: 'ICAS3162'
   },
   open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
@@ -45,12 +49,43 @@ Tw.CertificationRepresentative.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
+    this._getMethodBlock();
+  },
+  _getMethodBlock: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
+      .done($.proxy(this._successGetAuthMethodBlock, this));
+  },
+  _successGetAuthMethodBlock: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._authBlock = this._parseAuthBlock(resp.result);
+    }
 
+    if ( this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] === 'Y' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE);
+    } else {
+      this._openPopup();
+    }
+  },
+  _parseAuthBlock: function (list) {
+    var block = {};
+    var today = new Date().getTime();
+    _.map(list, $.proxy(function (target) {
+      var startTime = Tw.DateHelper.convDateFormat(target.fromDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(target.toDtm).getTime();
+      if ( today > startTime && today < endTime ) {
+        block[target.authMethodCd] = 'Y';
+      } else {
+        block[target.authMethodCd] = 'N';
+      }
+    }, this));
+    return block;
+  },
+  _openPopup: function () {
     this._popupService.open({
       hbs: 'MV_01_02_01_01',
       layer: true,
-      list: this._makeShowData(certInfo.smsNumbers),
-      one: certInfo.smsNumbers.length === 1
+      list: this._makeShowData(this._certInfo.smsNumbers),
+      one: this._certInfo.smsNumbers.length === 1
     }, $.proxy(this._onOpenCert, this), $.proxy(this._onCloseCert, this));
   },
   _makeShowData: function (smsNumbers) {
@@ -66,26 +101,43 @@ Tw.CertificationRepresentative.prototype = {
   _onOpenCert: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-radio-list');
     this.$btCert = $popupContainer.find('#fe-bt-cert');
+    this.$btReCert = $popupContainer.find('#fe-bt-recert');
+    this.$btCertAdd = $popupContainer.find('#fe-bt-cert-add');
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
+    this.$inputMdn = $popupContainer.find('#fe-input-mdn, .fe-input-mdn');
     this.$inputCert = $popupContainer.find('#fe-input-cert');
     this.$validCert = $popupContainer.find('#fe-txt-cert');
+    this.$validAddCert = $popupContainer.find('#fe-txt-cert-add');
     this.$errorCertTime = $popupContainer.find('#fe-error-cert-time');
     this.$errorCertCnt = $popupContainer.find('#fe-error-cert-cnt');
+    this.$errorCertAddTime = $popupContainer.find('#fe-error-add-time');
     this.$errorCertBlock = $popupContainer.find('#fe-error-cert-block');
     this.$errorConfirm = $popupContainer.find('#fe-error-confirm');
     this.$errorConfirmTime = $popupContainer.find('#fe-error-confirm-time');
     this.$errorConfirmCnt = $popupContainer.find('#fe-error-confirm-cnt');
 
+    this.$inputboxMdn = $popupContainer.find('#fe-inputbox-mdn');
+    this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
+
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
+    this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
+    this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
     this.$list.on('click', $.proxy(this._onClickList, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
+    this.$showTime = $popupContainer.find('#fe-sms-time');
     // if ( this.$list.find(':checked').length > 0 ) {
     //   this.$btCert.attr('disabled', false);
     // }
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
   _onCloseCert: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearInterval(this._addTimer);
+    }
+
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
       this._callback(this._callbackParam, this._deferred, this._command);
     }
@@ -94,17 +146,29 @@ Tw.CertificationRepresentative.prototype = {
     this.$btCert.attr('disabled', false);
   },
   _onClickCert: function () {
-    if ( this._smsNumbers.length > 1 ) {
-      var $selected = this.$list.find(':checked');
-      this._receiverNum = this._smsNumbers[$selected.data('index')].number;
+    this._sendCert();
+  },
+  _onClickReCert: function () {
+    this._sendCert(true);
+  },
+  _onClickCertAdd: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
+      .done($.proxy(this._successCertAdd, this));
+  },
+  _successCertAdd: function (resp) {
+    this._clearConfirmError();
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._showError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
+      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+        clearInterval(this._addTimer);
+      }
+      this._addTime = new Date();
+      this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
+    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
     } else {
-      this._receiverNum = this._smsNumbers[0].number;
+      Tw.Error(resp.code, resp.msg).pop();
     }
-
-    this._apiService.request(Tw.API_CMD.BFF_01_0058, {
-      receiverNum: this._receiverNum,
-      jobCode: this._jobCode
-    }).done($.proxy(this._successCert, this));
   },
   _onClickConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
@@ -116,20 +180,49 @@ Tw.CertificationRepresentative.prototype = {
       prodAuthKey: this._certInfo.prodAuthKey
     }).done($.proxy(this._completeCert, this));
   },
-  _successCert: function (resp) {
+  _sendCert: function (reCert) {
+    if ( this._smsNumbers.length > 1 ) {
+      var $selected = this.$list.find(':checked');
+      this._receiverNum = this._smsNumbers[$selected.data('index')].number;
+    } else {
+      this._receiverNum = this._smsNumbers[0].number;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0058, {
+      receiverNum: this._receiverNum,
+      jobCode: this._jobCode
+    }).done($.proxy(this._successCert, this, reCert));
+  },
+  _successCert: function (reCert, resp) {
+    this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._clearCertError();
-      this.$validCert.removeClass('none');
+      this.$btCertAdd.attr('disabled', false);
+      this._seqNo = resp.result.seqNo;
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
+      if ( !reCert ) {
+        this.$btCert.addClass('none');
+        this.$btReCert.removeClass('none');
+      }
+      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+        clearInterval(this._addTimer);
+      }
+      this._addTime = new Date();
+      this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
-      this._clearCertError();
-      this.$errorCertTime.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
     } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
-      this._clearCertError();
-      this.$errorCertCnt.removeClass('none');
-    } else if ( resp.code === this.SMS_ERROR.ICAS3101 ) {
-      this.$errorCertBlock.removeClass('none');
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCnt);
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162 ) {
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _showTimer: function (startTime) {
+    var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
+    this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    if ( remainedSec <= 0 ) {
+      clearInterval(this._addTimer);
     }
   },
   _onInputCert: function () {
@@ -142,17 +235,16 @@ Tw.CertificationRepresentative.prototype = {
     }
   },
   _completeCert: function (resp) {
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callbackParam = resp;
       this._popupService.close();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
-      this._clearConfirmError();
-      this.$errorConfirm.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirm);
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
-      this._clearConfirmError();
-      this.$errorConfirmTime.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
-      this.$errorConfirmCnt.removeClass('none');
+      this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
     } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
     } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
@@ -165,15 +257,29 @@ Tw.CertificationRepresentative.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _showError: function (inputBox, input, error) {
+    inputBox.addClass('error');
+    input.attr('aria-describedby', error.attr('id'));
+    error.removeClass('none');
+    error.attr('aria-hidden', false);
+  },
+  _clearError: function (inputBox, input, error) {
+    inputBox.removeClass('error');
+    input.attr('aria-describedby', '');
+    error.addClass('none');
+    error.attr('aria-hidden', true);
+  },
   _clearCertError: function () {
-    this.$validCert.addClass('none');
-    this.$errorCertTime.addClass('none');
-    this.$errorCertCnt.addClass('none');
-    this.$errorCertBlock.addClass('none');
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCnt);
+    this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
   },
   _clearConfirmError: function () {
-    this.$errorConfirm.addClass('none');
-    this.$errorConfirmTime.addClass('none');
-    this.$errorConfirmCnt.addClass('none');
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirm);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmTime);
+    this._clearError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCnt);
   }
 };

@@ -66,10 +66,10 @@
                         <div class="component-box tabs">
                             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
-                                    <ul role="tablist" style="width: 100%;">
-                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>선불 이동전화 카드</a></li>
+                                    <ul class="fe-tab-wrap" role="tablist" style="width: 100%;">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a aria-selected="true">선불 이동전화 카드</a></li>
                                         <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>신용카드</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a aria-selected="false">신용카드</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-contents">
@@ -114,15 +114,6 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                                            <div class="bt-fixed-area">
-                                                <ul class="bt-slice full">
-                                                    <li class="bt-red1">
-                                                        <button class="fe-request-prepaid-card" disabled="disabled">충전하기</button>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                                         </li>
                                         <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
                                             <div class="cont-box">
@@ -192,7 +183,7 @@
                                             <div class="bt-fixed-area">
                                                 <ul class="bt-slice full">
                                                     <li class="bt-red1">
-                                                        <button class="fe-request-credit-card" disabled="disabled">충전하기</button>
+                                                        <button class="fe-request-credit-card fe-request" disabled="disabled">충전하기</button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -240,6 +231,16 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
+
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-request-prepaid-card fe-request" disabled="disabled">충전하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>
         </div>
         <!--// #contents -->

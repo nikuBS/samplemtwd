@@ -12,11 +12,11 @@
             <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
-    <!--// #skip_navigation -->
+    <!--// #skip_navigation // data-menuId는 tooltip 오픈 시 사용됨 -->
     <div id="myt-fare-bill-account" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!--// #contents -->
         <div class="popup-page tw-popup nobg fixed-bottom">
-            <!-- #header -->
+            <!-- #header (공통 component 사용) -->
             <%- include('../components/header.component.html', { title: '계좌이체 납부', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- #contents -->
@@ -26,6 +26,7 @@
 
                     <!-- .cont-box -->
                     <div class="cont-box">
+                        <!-- 미납 회선정보 공통 컴포넌트 -->
                         <% include ../../components/bill/myt-fare.bill.common.component.html %>
                     </div>
                     <!--// .cont-box -->

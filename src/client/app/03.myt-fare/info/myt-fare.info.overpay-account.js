@@ -55,18 +55,34 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
     this._refundAccountInfoUpdateCheck();
   },
 
-  _refundRequestSend: function () {
+  _refundRequestSend: function (e) {
     this._apiService.request(Tw.API_CMD.BFF_07_0088, this.refundAPI_option)
-        .done($.proxy(this._successRegisterAccount, this)).fail($.proxy(this._apiError, this));
+        .done($.proxy(this._successRegisterAccount, this, $(e.currentTarget)))
+        .fail($.proxy(this._apiError, this, $(e.currentTarget)));
   },
 
-  _successRegisterAccount: function(res) {
+  _successRegisterAccount: function($target, res) {
     if(res.code === '00') {
-      this._popupService.openAlert(Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS,
-        Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._refreshOverPay, this));
+      this._popupService.openAlert(
+        Tw.POPUP_CONTENTS.REFUND_ACCOUNT_SUCCESS,
+        Tw.POPUP_TITLE.NOTIFY, 
+        Tw.BUTTON_LABEL.CONFIRM, 
+        $.proxy(this._refreshOverPay, this),
+        null,
+        $target
+      );
     } else {
-      if(res.code === 'ZNGME0000') res.msg = Tw.ALERT_MSG_MYT_FARE.ALERT_2_A32;
-      this._popupService.openAlert(res.msg, Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, null);
+      if(res.code === 'ZNGME0000') {
+        res.msg = Tw.ALERT_MSG_MYT_FARE.ALERT_2_A32;
+      }
+      this._popupService.openAlert(
+        res.msg, 
+        Tw.POPUP_TITLE.NOTIFY, 
+        Tw.BUTTON_LABEL.CONFIRM, 
+        null,
+        null,
+        $target
+      );
     }
   },
 
@@ -85,7 +101,7 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
   },
 
   // 닫기 확인
-  _closeConfirm: function() {
+  _closeConfirm: function(e) {
     if(!Tw.FormatHelper.isEmpty(this.$bankAccountInput.val()) ||
       !Tw.FormatHelper.isEmpty(this.refundAPI_option.rfndBankCd) 
     ) { 
@@ -95,7 +111,8 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
         $.proxy(this._closePopAndBack, this),
         null,
         Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES
+        Tw.BUTTON_LABEL.YES,
+        $(e.currentTarget)
       );
     } else {
       this._goBack();
@@ -115,5 +132,9 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
 
   _goBack: function() {
     this._historyService.goBack();
+  },
+
+  _apiError: function ($target, err) {
+    return Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };

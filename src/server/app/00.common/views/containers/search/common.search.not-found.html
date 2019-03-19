@@ -13,6 +13,8 @@ function recognizeLastChar(keyword){
     var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
     return endCharIdx>0 ? '으' : '';
 }
+    keyword = encodeURIComponent(keyword);
+    inKeyword = encodeURIComponent(inKeyword);
 %>
 <!-- body -->
 <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
@@ -27,7 +29,7 @@ function recognizeLastChar(keyword){
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                    <input type="text" class="fe-nofocus-move" id="search_keyword" name="keyword" placeholder="" title="검색" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
                     <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
                 </span>
             </span>
@@ -40,7 +42,7 @@ function recognizeLastChar(keyword){
     <% if(suggestQuery.length>0){ %>
     <div class="cont-box noborder gaps-style03">
         <p class="re-searchword">
-            혹시 이것을 찾으시나요?<a href="/common/search?keyword=<%= suggestQuery %>&step=<%= Number(step)+1%>" data-keyword="<%= suggestQuery %>" class="re-searchword-text search-element"><%= suggestQuery %><%= recognizeLastChar(suggestQuery) %>로 검색하기</a>
+            혹시 이것을 찾으시나요?<a href="/common/search?keyword=<%= encodeURIComponent(suggestQuery) %>&step=<%= Number(step)+1%>" data-keyword="<%= suggestQuery %>" class="re-searchword-text search-element"><%= suggestQuery %><%= recognizeLastChar(suggestQuery) %>로 검색하기</a>
         </p>
     </div>
     <% } %>
@@ -50,7 +52,7 @@ function recognizeLastChar(keyword){
             <dt class="tit">연관</dt>
             <% for(var i=0;i<relatedKeyword.result.Word.length&&i<5;i++){ %>
             <dd>
-                <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= relatedKeyword.result.Word[i] %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-keyword="<%= relatedKeyword.result.Word[i] %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-keyword="<%= relatedKeyword.result.Word[i] %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
                     <%= relatedKeyword.result.Word[i] %>
                 </a>
             </dd>
@@ -63,7 +65,7 @@ function recognizeLastChar(keyword){
     <% } %>
 
     <div class="search-didnot-generatehits">
-        <p class="title">‘<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>’에 대한<br>검색 결과가 없습니다.</p>
+        <p class="title">‘<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>’에 대한<br>검색 결과가 없습니다.</p>
         <p class="text">검색어의 맞춤법이 정확한지 확인해 주세요.<br>검색어의 길이를 줄이거나 비슷한 다른<br>검색어를 입력해 보세요.</p>
     </div>
 
@@ -92,7 +94,7 @@ function recognizeLastChar(keyword){
                 <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
                 <% if(i>4) break;%>
                 <li>
-                    <a href="/common/search?keyword=<%= popularKeyword.Query[i].content %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
+                    <a href="/common/search?keyword=<%= encodeURIComponent(popularKeyword.Query[i].content) %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type search-element">
                         <strong class="number"><%= i+1 %></strong>
                         <span class="text"><%= popularKeyword.Query[i].content %></span>
                     </a>

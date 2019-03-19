@@ -47,6 +47,7 @@
 <!--// #header -->
 <!-- #common-menu -->
 <div id="common-menu" class="user-type" aria-hidden="true">
+    <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
     <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
     <div class="section-userinfo fe-menu-section">
         <!-- 로그인 전 -->
@@ -173,8 +174,6 @@
             </ul>
         </div>
     </div>
-
-    <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
 </div>
 <!-- // #common-menu -->
 
@@ -194,7 +193,7 @@
                     <button class="bt">
                     {{/if}}
                         {{#if isIcon}}
-                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="{{menuNm}} 아이콘"></span>
+                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}"></span>
                         {{/if}}
                         <span class="ti-info">{{menuNm}}
                             {{#if isRealtime}}
@@ -268,7 +267,7 @@
                                 <button class="bt">
                                     {{/if}}
                                     {{#if isIcon}}
-                                    <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="{{menuNm}} 아이콘"></span>
+                                    <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}"></span>
                                     {{/if}}
                                     <span class="ti-info">
                                         {{menuNm}}

@@ -62,7 +62,7 @@ Tw.MyTFareBillOptionSms.prototype = {
       layer: true,
       data: this.$bankList,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');

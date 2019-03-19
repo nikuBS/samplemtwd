@@ -29,17 +29,19 @@
                             <div class="charge-guide-wrap">
                                 <div class="charge-cont">
                                     <span class="sub-disc01">OK캐쉬백<button type="button" id="MF_01_05_tip_03" class="tip-view" aria-haspopup="true" type="button">TIP</button></span>
+                                    <!-- 서버에서 포인트카드 정보가 리턴된 경우에는 카드번호 자동 셋팅 -->
                                     <% if (cashbag.svcYN === 'Y') { %>
                                     <span class="tit tx-blue">
                                         <span id="<%= cashbag.availPt %>" class="charge-txt fe-standard-point"><%= cashbag.point %></span>점
                                     </span>
+                                    <!-- 서버에서 포인트카드 번호가 리턴되지 않으면 포인트 조회 버튼 노출 -->
                                     <% } else { %>
                                     <span class="tit tx-blue fe-point-wrap none">
-                                        <span class="charge-txt fe-standard-point"></span>점
+                                        <span class="charge-txt fe-standard-point"></span>점 <!-- 포인트 조회 후 점수 표시됨 -->
                                     </span>
                                     <ul class="bt-slice mt30 mb30 fe-get-point-wrapper">
                                         <li class="bt-blue1">
-                                            <button class="fe-get-point">포인트 조회하기</button>
+                                            <button class="fe-get-point">포인트 조회하기</button> <!-- 포인트 조회 후 버튼 사라짐 -->
                                         </li>
                                     </ul>
                                     <% } %>
@@ -69,8 +71,8 @@
                                 <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                     <div class="tab-linker">
                                         <ul role="tablist" class="fe-tab-selector">
-                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button>1회 납부 예약</button></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button>자동납부 신청</button></li>
+                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><button aria-selected="true">1회 납부 예약</button></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><button aria-selected="false">자동납부 신청</button></li>
                                         </ul>
                                     </div>
                                     <div class="tab-contents">
@@ -96,6 +98,7 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
+                                                                    <!-- 카드번호가 존재하면 자동 셋팅되고, 아닐 경우 포인트 조회 결과 카드번호가 셋팅됨 -->
                                                                     <% if (cashbag.svcYN === 'Y') { %>
                                                                     <input id="formInput02" class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />
                                                                     <% } else { %>
@@ -147,9 +150,10 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
+                                                                    <!-- 카드번호가 존재하면 자동 셋팅되고, 아닐 경우 포인트 조회 결과 카드번호가 셋팅됨 -->
                                                                     <% if (autoInfo.isAuto) { %>
                                                                     <input id="<%= cashbag.ocbCcno %>" class="fe-point-card"
-                                                                           value="<%= cashbag.cardNumber %>" type="text" readOnly />
+                                                                           value="<%= cashbag.ocbCcno %>" type="text" readOnly />
                                                                     <% } else { %>
                                                                         <% if (cashbag.svcYN === 'Y') { %>
                                                                         <input class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />

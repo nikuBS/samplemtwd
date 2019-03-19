@@ -5,7 +5,7 @@
  * Annotation: 포인트 즉시납부 및 OK cashbag 포인트 예약납부 시 카드번호 조회
  */
 
-Tw.MyTFareBillGetPoint = function (rootEl, callbackFunc) {
+Tw.MyTFareBillGetPoint = function (rootEl, callbackFunc, e) {
   this.$container = rootEl;
   this.$callback = callbackFunc;
 
@@ -13,14 +13,14 @@ Tw.MyTFareBillGetPoint = function (rootEl, callbackFunc) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
-  this._openGetPoint();
+  this._openGetPoint(e);
 };
 
 Tw.MyTFareBillGetPoint.prototype = {
-  _openGetPoint: function () {
+  _openGetPoint: function (e) {
     this._popupService.open({
       'hbs':'MF_01_03_01'
-    }, $.proxy(this._setPoint, this), null, 'get-point');
+    }, $.proxy(this._setPoint, this), null, 'get-point', $(e.currentTarget));
   },
   _setPoint: function ($layer) {
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));

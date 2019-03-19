@@ -2,6 +2,7 @@
  * FileName: myt-data.prepaid.voice-complete.controller.ts
  * Author: Jiman Park (jiman.park@sk.com)
  * Date: 2018.11.28
+ * Description: 선불폰 음성 충전 완료 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -32,18 +33,18 @@ class MyTDataPrepaidVoiceComplete extends TwViewController {
   }
 
   private makeResponseParams = (queryObject) => {
-    let mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE;
+    let mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE; // 음성 1회 충전
 
     if ( queryObject.type === 'auto' ) {
-      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_AUTO;
+      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_AUTO; // 음성 자동 충전 신청
     }
 
     if ( queryObject.type === 'change' ) {
-      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_CHANGE;
+      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_CHANGE; // 음성 자동 충전 변경
     }
 
     if ( queryObject.type === 'cancel' ) {
-      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_CANCEL;
+      mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE_CANCEL; // 음성 자동 충전 해지
     }
 
     return {

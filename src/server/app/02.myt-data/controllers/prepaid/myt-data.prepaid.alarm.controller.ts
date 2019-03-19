@@ -2,6 +2,7 @@
  * FileName: myt-data.prepaid.alarm.controller.ts
  * Author: 박지만 (jiman.park@sk.com)
  * Date: 2018.11.14
+ * Description: 선불폰 충전 알람 설정 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -19,22 +20,23 @@ class MyTDataPrepaidAlarm extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const responseData = {
-      svcInfo: svcInfo,
-      pageInfo: pageInfo,
-      isApp: BrowserHelper.isApp(req)
+      svcInfo: svcInfo, // 회선 정보 (필수)
+      pageInfo: pageInfo, // 페이지 정보 (필수)
+      isApp: BrowserHelper.isApp(req) // 앱 여부
     };
 
     this.getAlarmInfo().subscribe((alarmInfo) => {
       res.render(
         'prepaid/myt-data.prepaid.alarm.html', Object.assign(responseData, {
-          convertDate: this.convertDate,
-          convertAmount: this.convertAmount,
+          convertDate: this.convertDate, // 날짜 포맷에 맞게 변경
+          convertAmount: this.convertAmount, // 금액 포맷에 맞게 변경
           alarmInfo: alarmInfo
         })
       );
     });
   }
 
+  // 설정된 알람 정보 조회
   public getAlarmInfo = () => this.apiService.request(API_CMD.BFF_06_0075, {})
     .map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
@@ -46,18 +48,18 @@ class MyTDataPrepaidAlarm extends TwViewController {
 
   public parseInfo = (result) => {
     if (result.term) {
-      result.termText = PREPAID_ALARM_TYPE[result.term];
+      result.termText = PREPAID_ALARM_TYPE[result.term]; // 기간 문구
     }
 
     if (result.amt) {
-      result.amtText = PREPAID_ALARM_AMT[result.amt];
+      result.amtText = PREPAID_ALARM_AMT[result.amt]; // 금액 문구
     }
 
     return result;
   }
 
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
-  public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
+  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate); // 날짜 YYYY.M.D.
+  public convertAmount = (sAmount) => FormatHelper.addComma(sAmount); // 금액에 콤마(,) 추가
 }
 
 export default MyTDataPrepaidAlarm;

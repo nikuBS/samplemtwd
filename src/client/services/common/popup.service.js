@@ -23,7 +23,7 @@ Tw.PopupService.prototype = {
     var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
     if (lastHash) {
       var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
-      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null; 
+      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
     }
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
@@ -48,7 +48,7 @@ Tw.PopupService.prototype = {
       }
     }
   },
-  _onOpenPopup: function () {
+  _onOpenPopup: function (evt) {
     var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
     Tw.Logger.info('[Popup Open]', this._prevHashList);
@@ -60,12 +60,42 @@ Tw.PopupService.prototype = {
 
     // 포커스 영역 저장 후 포커스 이동
     var thisHash = this._prevHashList[this._prevHashList.length -1];
-    var $focusEl = $(':focus');
+    var $focusEl = evt ? (evt.length ? evt : $(evt.currentTarget) ) : $(':focus');
+    $focusEl = this._getEnableFocusEl($focusEl); // 닫힐때 포커스 타겟 저장
+
     if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
       && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
-      $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $(':focus'));
-      $currentPopup.children(':not(.popup-blind)').attr('tabindex', 0).focus(); // 팝업열릴 때 해당 팝업 포커스 
+        $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
+        // this._popupFocus($currentPopup); // 팝업포커스
+        var timeT = 0;
+        var timeLimit = 3;
+        var timeD = setInterval(function(){
+          timeT ++;
+          if (timeT>timeLimit){
+            clearTimeout(timeD);
+          }
+          $currentPopup.attr('tabindex', 0).focus();
+          if ($currentPopup.find('.popup-page, .popup-info').length) {
+            $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
+            if(Tw.BrowserHelper.isIos()) {
+              $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){return !$(this).attr('tabindex'); }).attr('tabindex', 0).focus();
+            }
+          }
+          if($currentPopup.find('h1').length) {
+            $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
+          }
+          if($currentPopup.find('.popup-header').length) {
+            $currentPopup.find('.popup-header').attr('tabindex',0).eq(0).focus();
+          }
+          if($currentPopup.find('.focus-elem').length) {
+            $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
+          }
+        }, 300);
+        // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
+        //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
     }
+    // 포커스 영역 저장 후 포커스 이동 end
+    
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -88,7 +118,7 @@ Tw.PopupService.prototype = {
       this._setOpenCallback(retryParams.openCallback);
       this._setConfirmCallback(retryParams.confirmCallback);
       this._addHash(retryParams.closeCallback, retryParams.curHash);
-      this._open(retryParams.option);
+      this._open(retryParams.option, retryParams.evt);
     }, this), 200);
   },
   _popupClose: function (closeCallback) {
@@ -154,24 +184,25 @@ Tw.PopupService.prototype = {
     this._openCallback($container);
     this._openCallback = null;
   },
-  _open: function (option) {
+  _open: function (option, evt) {
     $.extend(option, {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
 
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, {
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this, evt), $.proxy(this._onFailPopup, this, {
       option: option,
       openCallback: this._openCallback,
-      confirmCallback: this._confirmCallback
+      confirmCallback: this._confirmCallback,
+      evt: evt
     }));
   },
-  open: function (option, openCallback, closeCallback, hashName) {
+  open: function (option, openCallback, closeCallback, hashName, evt) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
-    this._open(option);
+    this._open(option, evt);
   },
-  openAlert: function (contents, title, btName, closeCallback, hash) {
+  openAlert: function (contents, title, btName, closeCallback, hash, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -183,9 +214,9 @@ Tw.PopupService.prototype = {
       }]
     };
     this._addHash(closeCallback, hash);
-    this._open(option);
+    this._open(option, evt);
   },
-  openConfirm: function (contents, title, confirmCallback, closeCallback) {
+  openConfirm: function (contents, title, confirmCallback, closeCallback, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -201,9 +232,9 @@ Tw.PopupService.prototype = {
     };
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openConfirmButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton) {
+  openConfirmButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -219,9 +250,9 @@ Tw.PopupService.prototype = {
     };
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openChoice: function (title, list, type, openCallback, closeCallback) {
+  openChoice: function (title, list, type, openCallback, closeCallback, evt) {
     var option = {
       hbs: 'choice',
       title: title,
@@ -231,12 +262,12 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
   openSelect: function () {
 
   },
-  openTypeA: function (title, contents, icoType, openCallback, closeCallback) {
+  openTypeA: function (title, contents, icoType, openCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type2',
       title: title,
@@ -248,9 +279,9 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback) {
+  openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type3',
       title: title,
@@ -263,9 +294,9 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback) {
+  openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type3',
       title: title,
@@ -282,9 +313,9 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openTypeC: function (title, noticeList, icoType, openCallback, closeCallback) {
+  openTypeC: function (title, noticeList, icoType, openCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type4',
       title: title,
@@ -298,9 +329,9 @@ Tw.PopupService.prototype = {
     };
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback) {
+  openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback, evt) {
     var option = {
       url: Tw.Environment.cdn + '/hbs/',
       ico: icoType || 'type2',
@@ -314,9 +345,9 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
-  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
+  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -333,20 +364,20 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback, hashName);
-    this._open(option);
+    this._open(option, evt);
   },
-  openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
+  openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
 
     // 회선 정보
     _.each([from, target], function(item){
       if ( item.svcAttrCd.indexOf('S') > -1 ) {
         if ( target.svcAttrCd === 'S3' ) {
-          item.descSvcNum = Tw.FormatHelper.getDashedPhoneNumber(item.svcNum.replace(/-/g, ''));
+          item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
         } else {
           item.descSvcNum = item.addr;
         }
       } else {
-        item.descSvcNum = Tw.FormatHelper.getDashedCellPhoneNumber(item.svcNum.replace(/-/g, ''));
+        item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
       }
     });
 
@@ -390,9 +421,9 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback, hashName);
-    this._open(option);
+    this._open(option, evt);
   },
-  openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
+  openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -409,9 +440,9 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback, hashName);
-    this._open(option);
+    this._open(option, evt);
   },
-  openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
+  openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback, evt) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -428,7 +459,7 @@ Tw.PopupService.prototype = {
     this._setOpenCallback(openCallback);
     this._setConfirmCallback(confirmCallback);
     this._addHash(closeCallback);
-    this._open(option);
+    this._open(option, evt);
   },
   toast: function (message) {
     skt_landing.action.popup.toast({
@@ -438,15 +469,9 @@ Tw.PopupService.prototype = {
     });
   },
   close: function () {
-    Tw.Logger.log('[Popup] Call Close', location.hash, window.history.length, document.referrer, window.history.state, window.history);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      Tw.Logger.log('[Popup] history back');
-      history.back();
-      this._historyBack = true;
-
-      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
-        setTimeout($.proxy(function () {
-          Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
+      setTimeout($.proxy(function () {
+        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
           if ( this._historyBack && this._prevHashList.length > 0) {
             this._historyBack = false;
             var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -455,8 +480,11 @@ Tw.PopupService.prototype = {
             this._prevHashList.pop();
             this._popupClose(closeCallback);
           }
-        }, this), 500);
-      }
+        }
+      }, this), 500);
+
+      this._historyBack = true;
+      history.back();
     }
   },
   closeAll: function () {
@@ -524,5 +552,22 @@ Tw.PopupService.prototype = {
   },
   _emptyHash: function () {
     history.pushState('', document.title, window.location.pathname);
+  },
+
+  // Ios환경에서 포커스 가능한 객체 구하기
+  _getEnableFocusEl: function ($focusEl) {
+    var $resultEl = $focusEl;
+    // ios 에서는 selectable element만 가능
+    if (Tw.BrowserHelper.isIos()) {
+      if(!$resultEl.is('button') && !$resultEl.is('[type=radio]')) {
+        if ($resultEl.find('button').length) {
+          $resultEl = $resultEl.find('button').eq(0);
+        } else if ($resultEl.find('[type=radio]').length) {
+          $resultEl.find('[type=radio]').eq(0);
+        }
+      }
+      return $resultEl;
+    }
+    return $resultEl;
   }
 };

@@ -1,0 +1,35 @@
+Tw.InputFocusService = function ($container, $confirm) {
+  this.$container = $container;
+  this.$confirm = $confirm;
+
+  this._init();
+};
+Tw.InputFocusService.prototype = {
+  KEY_CODE: {
+    ENTER: 13
+  },
+  _init: function () {
+    this.$inputList = this.$container.find('input');
+    this.$inputList = _.filter(this.$inputList, $.proxy(function (input) {
+      return $(input).attr('readonly') === undefined;
+    }, this));
+    _.map(this.$inputList, $.proxy(function (input) {
+      $(input).on('keyup', $.proxy(this._onKeyupInput, this));
+    }, this));
+  },
+  _onKeyupInput: function ($event) {
+    if ( $event.keyCode === this.KEY_CODE.ENTER ) {
+      var index = _.findIndex(this.$inputList, $.proxy(function (input) {
+        return input === $event.currentTarget;
+      }, this));
+      if ( index >= 0 ) {
+        var $next = this.$inputList[index + 1];
+        if ( !Tw.FormatHelper.isEmpty($next) ) {
+          $next.focus();
+        } else {
+          this.$confirm.focus();
+        }
+      }
+    }
+  }
+};

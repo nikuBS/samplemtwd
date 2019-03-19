@@ -40,12 +40,25 @@ class ProductMobileplanSettingLocation extends TwViewController {
     // - TTL지역할인요금제(NA00000008, NA00002563)
     if (['NA00002585'].indexOf(prodId) !== -1) {
       showNumberSetting = true;
+    } else {
+      /*
+      // DV001-16828
+      // 할인지역 번경만인 경우 location-only(마스킹인증 없는 화면)로 url이 지정되지 않은 경우 redirect 시켜줌
+      // -> admin에 등록되서 강제 처리하는것은 주석처리 함
+      if ( req.url.indexOf('/mobileplan/setting/location-only') === -1) {
+        res.redirect('/product/mobileplan/setting/location-only?prod_id=' + prodId);
+        return;
+      }
+      */
     }
 
-    Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0043, {}),
-      this.apiService.request(API_CMD.BFF_10_0073, {}))
-      .subscribe(([resp, resp2]) => {
+    const apiArr = [this.apiService.request(API_CMD.BFF_10_0043, {})];
+    if ( showNumberSetting ) {
+      apiArr.push(this.apiService.request(API_CMD.BFF_10_0073, {}));
+    }
+
+    Observable.combineLatest( apiArr )
+      .subscribe((respArr) => {
         // const resp = {
         //   'code': '00',
         //   'msg': 'success',
@@ -83,18 +96,21 @@ class ProductMobileplanSettingLocation extends TwViewController {
         // };
 
 
-        if ( resp.code === API_CODE.CODE_00 ) {
-          resp['result']['snumSetInfoList'] = resp2['result']['snumSetInfoList'];
-          resp['result']['svcNum'] = StringHelper.phoneStringToDash(svcInfo.svcNum);
+        if ( respArr[0].code === API_CODE.CODE_00 ) {
+          if ( respArr.length === 2 ) {
+            respArr[0]['result']['snumSetInfoList'] = respArr[1]['result']['snumSetInfoList'];
+          }
 
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: resp.result, showNumberSetting: showNumberSetting };
+          respArr[0]['result']['svcNum'] = StringHelper.phoneStringToDash(svcInfo.svcNum);
+
+          const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: respArr[0].result, showNumberSetting: showNumberSetting };
           res.render('mobileplan/setting/product.mobileplan.setting.location.html', option);
 
         } else {
           return this.error.render(res, {
             title: PRODUCT_TYPE_NM.SETTING,
-            code: resp.code,
-            msg: resp.msg,
+            code: respArr[0].code,
+            msg: respArr[0].msg,
             pageInfo: pageInfo,
             svcInfo: svcInfo
           });

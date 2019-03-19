@@ -48,14 +48,18 @@ Tw.MyTDataTingBlock.prototype = {
       $('.fe-wrap-block-list li').slice(20).hide();
     }
   },
-  _onShowBlockPopup: function () {
+  _onShowBlockPopup: function (e) {
+    var $target = $(e.currentTarget);
     this._popupService.openModalTypeA(
       Tw.MYT_DATA_TING.A81_TITLE,
       Tw.MYT_DATA_TING.A81_CONTENT,
       Tw.MYT_DATA_TING.A81_BTN_CONFIRM,
       null,
       $.proxy(this._unsubscribeAutoRecharge, this),
-      $.proxy(this._closeUnsubscribeAutoRecharge, this)
+      $.proxy(this._closeUnsubscribeAutoRecharge, this),
+      null,
+      null,
+      $target
     );
   },
 

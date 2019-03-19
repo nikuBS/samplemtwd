@@ -45,21 +45,25 @@
             <h2 class="blind">내용</h2>
             <div class="container">
 
+                <% if ( showNumberSetting ) { %>
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs">
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tabpanel1" aria-selected="true" aria-controls="tab-loc" id="tab1"><a href="#tabpanel1">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <% if ( showNumberSetting ) { %>
-                                    <li role="tabpanel2" aria-selected="false" aria-controls="tab-num" id="tab2"><a href="#tabpanel2">지정번호</a></li>
-                                    <% } %>
+                                    <li role="tabpanel1" aria-selected="true" aria-controls="tab-loc" id="tab1"><a href="#tabpanel1" aria-selected="true" role="tab">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tabpanel2" aria-selected="false" aria-controls="tab-num" id="tab2"><a href="#tabpanel2" aria-selected="false" role="tab">지정번호</a></li>
+
                                 </ul>
                             </div>
+
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel1" id="tab-loc" aria-labelledby="tab1" aria-selected="true">
+                <% } %>
+
                                         <div class="ti-caption-gray">
                                             <h3 class="tit">할인지역 설정</h3>
                                             <div class="num"><%= data.svcNum %></div>
@@ -91,9 +95,10 @@
                                                 </script>
                                             </ul>
                                         </div>
+
+                <% if ( showNumberSetting ) { %>
                                     </li>
 
-                                    <% if ( showNumberSetting ) { %>
                                     <li role="tabpanel2" id="tab-num" aria-labelledby="tab2">
                                         <div class="ti-caption-gray">
                                             <h3 class="tit">지정번호 설정</h3>
@@ -141,14 +146,13 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <% } %>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--// .component -->
-
+                <% } %>
             </div>
         </div>
         <!-- // .container-wrap -->

@@ -16,6 +16,7 @@ Tw.MyTFareBillAccount = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
 
   this._init();
 };
@@ -102,7 +103,7 @@ Tw.MyTFareBillAccount.prototype = {
   _onClose: function () {
     this._backAlert.onClose();
   },
-  _checkPay: function () {
+  _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
@@ -111,7 +112,8 @@ Tw.MyTFareBillAccount.prototype = {
         },
         $.proxy(this._openCheckPay, this),
         $.proxy(this._afterPaySuccess, this),
-        'check-pay'
+        'check-pay',
+        $(e.currentTarget)
       );
     }
   },
@@ -167,9 +169,9 @@ Tw.MyTFareBillAccount.prototype = {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
   },
-  _checkClose: function () {
+  _checkClose: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._closeCallback, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+      $.proxy(this._closePop, this), $.proxy(this._closeCallback, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
   },
   _closePop: function () {
     this._isClose = true;

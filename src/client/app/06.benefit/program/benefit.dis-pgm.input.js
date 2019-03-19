@@ -13,7 +13,7 @@ Tw.BenefitDisPgmInput = function (rootEl, prodId, confirmOptions, selType) {
 
   this._prodId = prodId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
-  this._selType = selType;
+  this._selType = selType; // 선택약정
 
   this._init();
 };
@@ -110,6 +110,7 @@ Tw.BenefitDisPgmInput.prototype = {
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
+    // DV001-16396 timer 삭제
     this._openSuccessPop();
   },
 
@@ -153,7 +154,8 @@ Tw.BenefitDisPgmInput.prototype = {
       this._historyService.go(-2);
     }
     else {
-      this._historyService.goBack();
+      // DV001-17167 goBack 사용 시 input 화면에서 빈화면으로 머무르는 이슈 발생.
+      this._historyService.reload( this._historyService.goBack());
     }
   }
 

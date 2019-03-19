@@ -4,14 +4,13 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,nowUrl) {
   this.$container = rootEl;
   //this._category = category;
   this._historyService = new Tw.HistoryService();
   //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
   this._apiService = Tw.Api;
-  //this._cdn = cdn;
-  this._cdn = 'https://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = cdn;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessQuery = accessQuery;
   this._popupService = Tw.Popup;
@@ -19,6 +18,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
   this._svcInfo = svcInfo;
   this._accessKeyword = this._searchInfo.query;
   this._category = accessQuery.category;
+  this._nowUrl = nowUrl;
   this._init(this._searchInfo,accessQuery.category);
 };
 Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
@@ -75,7 +75,7 @@ $.extend(Tw.CommonSearchMore.prototype,
     //this._historyService.goLoad(eventObj.currentTarget.value);
     this._moveUrl(eventObj.currentTarget.value);
   },
-  _doSearch : function () {
+  _doSearch : function (evt) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
       var closeCallback;
@@ -87,18 +87,18 @@ $.extend(Tw.CommonSearchMore.prototype,
         },this);
       }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(evt.currentTarget));
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+
-      this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=keyword;
+    var requestUrl = inResult?'/common/search/in-result?category='+(encodeURIComponent(this._category))+'&keyword='+
+        (encodeURIComponent(this._accessKeyword))+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=encodeURIComponent(keyword);
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
   },
-  _showSelectFilter : function () {
+  _showSelectFilter : function (evt) {
     var listData = [
       {value : Tw.SEARCH_FILTER_STR.ACCURACY , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
       {value : Tw.SEARCH_FILTER_STR.NEW , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
@@ -111,7 +111,7 @@ $.extend(Tw.CommonSearchMore.prototype,
         data : [{list : listData}]
       },$.proxy(this._bindPopupElementEvt,this),
       null,
-      'select_filter');
+      'select_filter',$(evt.currentTarget));
   },
   _bindPopupElementEvt : function(popupElement){
     $(popupElement).on('click','.chk-link-list button',$.proxy(this._filterSelectEvent,this));

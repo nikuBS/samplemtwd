@@ -68,7 +68,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
             }
           }
           else {
-            var value = Tw.DateHelper.getShortDateNoDot(item.drwDt) +
+            var value = Tw.DateHelper.getShortDate(item.drwDt) +
               '(' + Tw.DateHelper.getDayOfWeek(item.drwDt) + ')';
             data.list.push({
               index: item.seq,

@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
+import DateHelper from '../../../../utils/date.helper';
 
 export default class MembershipMyUpdate extends TwViewController {
 
@@ -40,6 +41,9 @@ export default class MembershipMyUpdate extends TwViewController {
     myInfoData.smsAgreeChecked = myInfoData.smsAgreeYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktNewsChecked = myInfoData.sktNewsYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktTmChecked = myInfoData.sktTmYn === 'Y' ? 'checked' : '' ;
+    myInfoData.mktgAgreeChecked = myInfoData.mktgAgreeYn === 'Y' ? 'checked' : '' ;
+    myInfoData.ocbAccumAgreeChecked = myInfoData.ocbAccumAgreeYn === 'Y' ? 'checked' : '' ;
+    myInfoData.showMbrAgreeDate = DateHelper.getFullKoreanDate(myInfoData.mbr_rcv_agree_ymd);
 
     return myInfoData;
   }

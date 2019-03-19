@@ -158,9 +158,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
             this._tidLanding.goLogin();
           }, this), 300);
         }, this),
-        $.proxy(function () {
-          this._popupService.close();
-        }, this),
+        null,
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
       );

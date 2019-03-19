@@ -9,18 +9,18 @@ Tw.ProductMobilePlanComparePlans = function () {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._isOpen = false;
+  this.openerEvent = null;
 };
 
 Tw.ProductMobilePlanComparePlans.prototype = {
 
   // 요금제 비교하기 팝업생성
-  openCompare: function (prodId, isShowBtn) {
+  openCompare: function (prodId, isShowBtn, e) {
     // 이미 팝업을 호출 했다면 안 띄운다. window.location.hash 대신 변수를 사용한 이유는 빠르게 여러번 호출 될 경우 hash 값이 공백으로 와서 변수로 대체함.
     if (this._isOpen) {
       return;
     }
-
-
+    this.openerEvent = e;
     this._isShowBtn = isShowBtn === undefined ? true : isShowBtn;
     this._isOpen = true;
     this._prodId = prodId;
@@ -105,7 +105,8 @@ Tw.ProductMobilePlanComparePlans.prototype = {
         },
         $.proxy(this._afterComparePop, this, param),
         $.proxy(this._closeComparePop, this),
-        'compare'
+        'compare',
+        $(this.openerEvent.currentTarget)
       );
     };
 
@@ -140,6 +141,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     $layer.find('#fe-btn-change').toggleClass('none', !this._isShowBtn);
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
     this._initChart($layer, _data);
+    // 화면이 아래로 떨어져서 위로 붙여준다.
+    setTimeout(function () {
+      $layer.scrollTop(0);
+    }, 50);
   },
 
   _closeComparePop: function () {

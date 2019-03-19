@@ -100,12 +100,12 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         if(res.code==='PRD0027'){
           this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE,targetEvt);
         }else{
-          this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
+          this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,targetEvt);
         }
         return false;
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,targetEvt);
       return false;
     }, this));
   },
@@ -162,7 +162,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
   },
   _removeOnList : function (targetEvt) {
-    var selectedIdx = $(targetEvt.currentTarget).parents('li').index();
+    var $target = $(targetEvt.currentTarget)
+    var selectedIdx = $target.parents('li').index();
     selectedIdx = parseInt(selectedIdx,10);
     var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;
     if(this._addedList.length<=1){
@@ -176,7 +177,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
           this.$container.find('.fe-main-content').attr('aria-hidden',false);
         },this),
         Tw.BUTTON_LABEL.CLOSE,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON,$target);
     }
   },
   _sortingSettingData : function (inputData) {
@@ -197,7 +198,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         this.$addBtn.removeAttr('style');
         //$(evt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
-      }, this)
+      }, this),null,$(evt.currentTarget)
     );
     if(!this.$addBtn.attr('disabled')){
       this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
@@ -220,7 +221,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         }
       },this),
       Tw.BUTTON_LABEL.CANCEL,
-      Tw.BUTTON_LABEL.CONFIRM);
+      Tw.BUTTON_LABEL.CONFIRM,$(evt.currentTarget));
   },
   _showAuth : function () {
     this._showAuthState = true;

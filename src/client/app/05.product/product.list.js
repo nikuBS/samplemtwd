@@ -137,7 +137,8 @@ Tw.ProductList.prototype = {
       },
       $.proxy(this._handleOpenOrderPopup, this),
       undefined,
-      'order'
+      'order',
+      this.$orderBtn
     );
   },
 
@@ -164,25 +165,26 @@ Tw.ProductList.prototype = {
     this._popupService.close();
   },
 
-  _handleClickChangeFilters: function() {
+  _handleClickChangeFilters: function(e) {
+    var $target = $(e.currentTarget);
     if (!this._filters) {
-      this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this, $target));
     } else {
-      this._openSelectFiltersPopup();
+      this._openSelectFiltersPopup($target);
     }
   },
 
-  _handleLoadFilters: function(resp) {
+  _handleLoadFilters: function($target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       return;
     }
 
     this._filters = resp.result;
-    this._openSelectFiltersPopup();
+    this._openSelectFiltersPopup($target);
   },
 
-  _openSelectFiltersPopup: function() {
+  _openSelectFiltersPopup: function($target) {
     var currentFilters = this._params.searchFltIds,
       currentTag = this._params.searchTagId;
     this._hasSelectedTag = !!currentTag;
@@ -223,7 +225,8 @@ Tw.ProductList.prototype = {
       },
       $.proxy(this._handleOpenSelectFilterPopup, this),
       $.proxy(this._handleCloseSelectFilterPopup, this),
-      'search'
+      'search',
+      $target
     );
   },
 
@@ -257,7 +260,9 @@ Tw.ProductList.prototype = {
         ALERT.TITLE,
         $.proxy(this._handleResetSelectedTag, this, $selectedTag, $target),
         null,
-        Tw.BUTTON_LABEL.CLOSE
+        Tw.BUTTON_LABEL.CLOSE,
+        undefined,
+        $target
       );
     }
   },
@@ -288,7 +293,9 @@ Tw.ProductList.prototype = {
         ALERT.TITLE,
         $.proxy(this._handleConfirmSelectTag, this, e.currentTarget),
         null,
-        Tw.BUTTON_LABEL.CLOSE
+        Tw.BUTTON_LABEL.CLOSE,
+        undefined,
+        $(e.currentTarget)
       );
     } else {
       this._handleSelectTag(e.currentTarget);
@@ -309,10 +316,12 @@ Tw.ProductList.prototype = {
     this._params = { idxCtgCd: this.CODE };
     this._params.searchFltIds = searchFltIds;
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams));
+    this._apiService
+      .request(Tw.API_CMD.BFF_10_0031, this._params)
+      .done($.proxy(this._handleLoadDataWithNewFilters, this, originParams, $layer.find('.bt-red1')));
   },
 
-  _handleLoadDataWithNewFilters: function(originParams, resp) {
+  _handleLoadDataWithNewFilters: function(originParams, $target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       return;
@@ -320,7 +329,7 @@ Tw.ProductList.prototype = {
 
     if (resp.result.products.length === 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, undefined, undefined, undefined, $target);
       this._params = originParams;
     } else {
       this._popupService.close();
@@ -344,7 +353,7 @@ Tw.ProductList.prototype = {
 
     this._params = { idxCtgCd: this.CODE };
     this._params.searchTagId = selectedTag;
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams, $(target)));
   },
 
   _isEmptyAmount: function(value) {

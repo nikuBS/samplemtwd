@@ -402,7 +402,7 @@
 @media all and (max-width: 360px) {
   .main-error-box .btn-area .btn-round1 {
     display: inline-block;
-    max-width: 8.75rem; }
+    max-width: 8.5rem; }
   .member-info-box .call-message .message {
     padding-left: 0.625rem; } }
 
@@ -841,8 +841,6 @@
           box-sizing: border-box;
   padding: 1.75rem 1.5rem 0.5rem 1.5rem;
   border-radius: 0.3125rem; }
-  .main-fee-box .fee-cont button, .main-fee-box .fee-cont a {
-    width: 100%; }
   .main-fee-box .fee-cont > .tit {
     display: inline-block;
     width: auto;
@@ -1127,21 +1125,21 @@
           margin-top: 0; }
       .popup .popup-info .popup-contents.tooltip-pd {
         padding-bottom: 1.0625rem; }
+      .popup .popup-info .popup-contents .font-only-black {
+        color: #333 !important; }
+        .popup .popup-info .popup-contents .font-only-black .tl, .popup .popup-info .popup-contents .font-only-black div, .popup .popup-info .popup-contents .font-only-black p {
+          color: #333 !important; }
+      .popup .popup-info .popup-contents .font-only-gray {
+        color: #858585 !important; }
+        .popup .popup-info .popup-contents .font-only-gray .tl, .popup .popup-info .popup-contents .font-only-gray div, .popup .popup-info .popup-contents .font-only-gray p {
+          color: #858585 !important; }
       .popup .popup-info .popup-contents .inner-contents {
         color: #333; }
-        .popup .popup-info .popup-contents .inner-contents.font-only-black .tl,
-        .popup .popup-info .popup-contents .inner-contents.font-only-black div,
-        .popup .popup-info .popup-contents .inner-contents.font-only-black p {
-          color: #000 !important; }
         .popup .popup-info .popup-contents .inner-contents p {
           font-size: 0.875rem;
           word-break: keep-all;
           text-align: center;
           color: #858585; }
-        .popup .popup-info .popup-contents .inner-contents .font-only-black {
-          color: #333 !important; }
-        .popup .popup-info .popup-contents .inner-contents .font-only-gray {
-          color: #858585 !important; }
         .popup .popup-info .popup-contents .inner-contents .tl p {
           text-align: left !important; }
         .popup .popup-info .popup-contents .inner-contents .tl div {
@@ -2749,8 +2747,10 @@ body.apphome {
   line-height: 3.4375rem; }
 
 .device_ios .h-belt .h-default .h-logo {
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0); }
+  -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0); }
+  .device_ios .h-belt .h-default .h-logo .icon-gnb-home {
+    vertical-align: top; }
 
 .device_android .h-belt {
   -webkit-backface-visibility: hidden;
@@ -3550,6 +3550,10 @@ body.apphome {
   .charge-product.type-list .bt-cont-box .tx {
     -webkit-line-clamp: 3; }
 
+.slick-dots .blind {
+  background: none !important;
+  border: none !important; }
+
 .accessories-box {
   position: relative;
   border-radius: 0.9375rem;
@@ -4173,3 +4177,28 @@ body.apphome {
   .main-membershop-box .membership-cont .bar-code {
     width: 7rem !important;
     height: 2.375rem !important; } }
+
+.cellphone-info {
+  overflow: hidden;
+  margin-bottom: 1.75rem; }
+  .cellphone-info .ico {
+    float: left;
+    width: 2rem;
+    height: 2rem;
+    margin-top: 0.0625rem;
+    content: '';
+    background: url(/img/ico/ico-prpass.png) no-repeat 23% 50%;
+    background-size: 2rem; }
+  .cellphone-info .txt {
+    float: left;
+    margin-left: 0.875rem; }
+    .cellphone-info .txt .name {
+      display: block;
+      font-size: 0.8125rem;
+      color: #666;
+      line-height: 1; }
+    .cellphone-info .txt .value {
+      display: block;
+      margin-top: 0.1875rem;
+      font-size: 1.125rem;
+      line-height: 1; }

@@ -232,19 +232,19 @@ Tw.ProductRoamingFiInquire.prototype = {
         rsvrcvdtm : rsvrcvdtm,
         rentalgubun : rentalgubun
       })
-      .done($.proxy(this._openEditPop, this, changeCountry))
+      .done($.proxy(this._openEditPop, this, changeCountry, e))
       .fail($.proxy(this._onFail, this));
   },
 
-  _clickCancelBtn : function(selected){
+  _clickCancelBtn : function(e){
     var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A26;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
-      $.proxy(this._handleConfirmAlert, this, selected), null, Tw.BUTTON_LABEL.CLOSE, ALERT.BUTTON);
+      $.proxy(this._handleConfirmAlert, this, e), null, Tw.BUTTON_LABEL.CLOSE, ALERT.BUTTON, $(e.currentTarget));
   },
 
-  _handleConfirmAlert : function(selected){
+  _handleConfirmAlert : function(e){
 
-    var data =  JSON.parse($(selected.target).attr('data-response'));
+    var data =  JSON.parse($(e.target).attr('data-response'));
 
     var rentalmgmtnum = data.rental_mgmt_num;
     var rentFrom = this._dateHelper.getShortDateWithFormat(data.rental_schd_sta_dtm, 'YYYYMMDD', 'YYYY.M.DD');
@@ -295,7 +295,7 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
   },
 
-  _openEditPop : function(changeCountry ,res){
+  _openEditPop : function(changeCountry, e ,res ){
     if(res.code === Tw.API_CODE.CODE_00){
       res.result.rominfo.rental_schd_sta_dtm =
         this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
@@ -315,7 +315,7 @@ Tw.ProductRoamingFiInquire.prototype = {
           layer: true,
           data: data
         },
-        $.proxy(this._onEditPopOpened, this), null, 'edit'
+        $.proxy(this._onEditPopOpened, this), null, 'edit', $(e.currentTarget)
       );
     }else{
       this._onFail(res);
@@ -364,7 +364,7 @@ Tw.ProductRoamingFiInquire.prototype = {
         data: data,
         btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, selected, currentCenter)
+      $.proxy(this._onActionSheetOpened, this, selected, currentCenter), null, null, $(e.currentTarget)
     );
 
   },
@@ -443,24 +443,24 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inputPhone.val(phoneNum);
   },
 
-  _handleEditReservation: function() {
+  _handleEditReservation: function(e) {
     var inputNumber = this.$inputPhone.val();
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE, null, null, null, $(e.currentTarget));
     }
 
     //시작일을 종료일 이후로 설정
     if (Tw.DateHelper.getDifference(this.$inputEditEdate.val(), this.$inputEditSdate.val()) < 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE, null, null, null, $(e.currentTarget));
     }
 
     //시작일이 minDate(이틀 뒤)보다 작게 설정
     var getMinDate = this.$inputEditSdate.attr('min');
     if (Tw.DateHelper.getDifference(getMinDate, this.$inputEditSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
     }
 
     var expbranchnm = this.$inputReturn.text();
@@ -493,14 +493,14 @@ Tw.ProductRoamingFiInquire.prototype = {
     };
 
     this._apiService.request(Tw.API_CMD.BFF_10_0066, params)
-      .done($.proxy(this._handleSuccessEditReservation, this))
+      .done($.proxy(this._handleSuccessEditReservation, this, $(e.currentTarget)))
       .fail($.proxy(this._onFail, this));
   },
 
-  _handleSuccessEditReservation: function(res) {
+  _handleSuccessEditReservation: function(e, res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
-        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this), null, $(e.currentTarget));
     }else{
       this._onFail(res);
     }

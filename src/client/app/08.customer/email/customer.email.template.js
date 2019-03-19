@@ -44,7 +44,7 @@ Tw.CustomerEmailTemplate.prototype = {
   _bindEvent: function () {
     this.$container.on('changeServiceTemplate', $.proxy(this._changeServiceTemplate, this));
     this.$container.on('changeQualityTemplate', $.proxy(this._changeQualityTemplate, this));
-    this.$container.on('click', '.fe-quality-inqSvcClCd', $.proxy(this._onChangeQualityLineType, this));
+    this.$container.on('click', '.fe-quality-inqSvcClCd li', $.proxy(this._onChangeQualityLineType, this));
   },
 
   _changeServiceTemplate: function (e, serviceCategory) {
@@ -146,6 +146,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this._afterChangeTemp(this.$wrap_tpl_quality, qualityCategory.depth1);
 
     skt_landing.widgets.widget_init();
+    // skt_landing.widgets.widget_radio(this.$wrap_tpl_quality);
     Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.bt-link-tx'));
   },
 
@@ -199,7 +200,7 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _onChangeQualityLineType: function (e) {
-    var nTabIndex = $(e.currentTarget).find('.focus').index() || 0;
+    var nTabIndex = $(e.currentTarget).index() || 0;
     var category = this.$container.triggerHandler('getCategory');
 
     if ( category.quality.depth1 === 'cell' ) {

@@ -12,6 +12,7 @@ Tw.MyTFareBillPoint = function (rootEl) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -49,8 +50,8 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
-  _openGetPoint: function () {
-    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
+  _openGetPoint: function (e) {
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e);
   },
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));

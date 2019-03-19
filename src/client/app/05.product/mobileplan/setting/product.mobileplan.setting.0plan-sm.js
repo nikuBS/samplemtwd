@@ -69,7 +69,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._bindTimePopup, this), null, 'select_time_select');
+    }, $.proxy(this._bindTimePopup, this), null, 'select_time_select', this.$btnTimeSelect);
   },
 
   _getTimeList: function() {
@@ -179,6 +179,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
   _bindSuccessPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {

@@ -9,7 +9,7 @@ Tw.MytJoinSuspendUpload = function () {
 };
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp"' };
 Tw.MytJoinSuspendUpload.prototype = {
-  show: function (callback, fileCount, oldFiles, fileInfo, tooltip) {
+  show: function (callback, fileCount, oldFiles, fileInfo, tooltip, $focusEl) {
     this._callback = callback;
     this._fileCount = fileCount || 1;
     this._fileInfo = fileInfo || new Array(this._fileCount);
@@ -19,13 +19,13 @@ Tw.MytJoinSuspendUpload.prototype = {
       return _.defaults(info, Tw.MytJoinSuspendUpload.DEFAULT_FILE, { oldFile: oldFiles[idx] });
     });
     if ( tooltip ) {
-      this._showUploadTip(tooltip);
+      this._showUploadTip(tooltip, $focusEl);
     } else {
       this._showUploadPopup();
     }
   },
 
-  _showUploadTip: function (tooltip) {
+  _showUploadTip: function (tooltip, $focusEl) {
     // this._popupService.openConfirm(tooltip.title, tooltip.content, $.proxy(this._showUploadPopup, this), null);
     this._popupService.open({
       title: tooltip.title,
@@ -36,7 +36,7 @@ Tw.MytJoinSuspendUpload.prototype = {
         style_class: 'bt-blue1 pos-right tw-popup-confirm',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, null, $.proxy(this._showUploadPopup, this), tooltip.hash);
+    }, null, $.proxy(this._showUploadPopup, this), tooltip.hash, $focusEl);
   },
 
   _showUploadPopup: function () {

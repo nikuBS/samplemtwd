@@ -13,6 +13,8 @@
         var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
         return endCharIdx>0 ? '으' : '';
     }
+    keyword = encodeURIComponent(keyword);
+    inKeyword = encodeURIComponent(inKeyword);
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
@@ -31,7 +33,7 @@
             <div class="sch-form">
                     <span class="inputbox">
                         <span class="input">
-                            <input id="keyword" class="fe-nofocus-move" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                            <input id="keyword" class="fe-nofocus-move" type="text" value="<%= decodeURIComponent(keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim()) %>">
                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                         </span>
                     </span>
@@ -59,7 +61,7 @@
             <% if(searchInfo.suggestQuery.length>0){ %>
             <div class="cont-box noborder gaps-style03">
                 <p class="re-searchword">
-                    혹시 이것을 찾으시나요? <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= searchInfo.suggestQuery %>" data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
+                    혹시 이것을 찾으시나요? <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(searchInfo.suggestQuery) %>" data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
                 </p>
             </div>
             <% } %>
@@ -71,7 +73,7 @@
                     <dt class="tit">연관</dt>
                     <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
                     <dd>
-                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= relatedKeyword.result.Word[i] %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= encodeURIComponent(relatedKeyword.result.Word[i]) %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
                             <%= relatedKeyword.result.Word[i] %>
                         </a>
                     </dd>
@@ -432,7 +434,7 @@
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>');
+        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>','<%- nowUrl %>');
     });
 </script>
 <% include ../../components/end.component.html %>

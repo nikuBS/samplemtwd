@@ -92,9 +92,11 @@ Tw.BenefitMyBenefitMilitary.prototype = {
     var moreItems = this._items.length - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
+      this.$btMore.attr('aria-hidden', false);
      // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
+      this.$btMore.attr('aria-hidden', true);
     }
   },
   /**

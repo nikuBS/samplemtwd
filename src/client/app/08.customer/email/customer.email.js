@@ -48,8 +48,22 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
-    this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
-    this.$container.on('click', '.fe-quality-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.fe-service-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.fe-quality-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.tab-linker a', $.proxy(this._TabLinker, this));
+    this.$container.on('click', '.tab-linker li', $.proxy(this._TabClick, this));
+  },
+
+  _TabClick: function (e) {
+    e.stopPropagation();
+    $(e.currentTarget).children().trigger('click');
+  },
+
+  _TabLinker: function (e) {
+    e.preventDefault(); // 링크이동되는 것을 막음
+    e.stopPropagation();
+    // 기본 적용 기능 li 에 aria-selected 를 주고 닫음 , 읽히게 하려면 a 에 주어야 함
+    $(e.currentTarget).attr('aria-selected', true).parent().siblings('li').find('a').attr('aria-selected', false); 
   },
 
   _preventDown: function(e) {
@@ -57,7 +71,7 @@ Tw.CustomerEmail.prototype = {
   },
 
   _onChangeReceiveContact: function (e) {
-    var radioIndex = $(e.currentTarget).find('.radiobox.focus').index();
+    var radioIndex = $(e.currentTarget).index();
     var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
     var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
     if ( radioIndex === 0 ) {
@@ -189,7 +203,9 @@ Tw.CustomerEmail.prototype = {
         null,
         //Tw.POPUP_TITLE.NOTIFY,
         Tw.BUTTON_LABEL.CONFIRM,
-        null
+        null,
+        null,
+        $(e.currentTarget)
       );
     }
   },

@@ -57,7 +57,7 @@ Tw.MembershipMy.prototype = {
     this.$inputEdate.text(initEDate);
   },
 
-  _getUseHistory: function() {
+  _getUseHistory: function(e) {
     var currentYear = this._dateHelper.getCurrentYear();
     var startDate = this._dateHelper.getShortDateWithFormat(this.$inputSdate.text(), 'YYYYMM' , 'YYYY.M');
     var endDate = this._dateHelper.getShortDateWithFormat(this.$inputEdate.text(), 'YYYYMM' , 'YYYY.M');
@@ -68,7 +68,7 @@ Tw.MembershipMy.prototype = {
     //시작조회일이 더 클 경우 Alert 호출
     if(Number(startDate) - Number(endDate) > 0){
       return this._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.MSG,
-        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.TITLE);
+        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.TITLE, null, null, null, $(e.currentTarget));
     }
 
     var params = {
@@ -119,8 +119,10 @@ Tw.MembershipMy.prototype = {
   _parseList: function(res) {
     for(var idx in res){
       res[idx].hpnMm = this._dateHelper.getShortDateWithFormat(res[idx].hpnMm, 'M' , 'MM');
+      res[idx].hpnDd = this._dateHelper.getShortDateWithFormat(res[idx].hpnDd, 'D' , 'DD');
       res[idx].happenDate = res[idx].hpnYy + '.' + res[idx].hpnMm + '.' + res[idx].hpnDd + '.';
       res[idx].showUserDcAmt = Tw.FormatHelper.addComma(res[idx].userDcAmt.toString());
+      res[idx].storeName = res[idx].coName + ' ('+ res[idx].joinName + ')';
     }
 
     return res;
@@ -174,7 +176,7 @@ Tw.MembershipMy.prototype = {
         data: data,
         btnfloating : {'attr':'type="button" id="fe-back"','txt':Tw.BUTTON_LABEL.CLOSE}
       },
-      $.proxy(this._onActionSheetOpened, this, currentSheet)
+      $.proxy(this._onActionSheetOpened, this, currentSheet), null, null, $(e.currentTarget)
     );
   },
 
@@ -199,7 +201,7 @@ Tw.MembershipMy.prototype = {
       this._popupService.close();
   },
 
-  _requestReissueInfo: function() {
+  _requestReissueInfo: function(e) {
     //카드 발급 후 2주이내 알럿
     if(this._cardReqDt !== ''){
       var reissueLimitDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._cardReqDt, 15, 'day', 'YYYYMMDD', 'YYYYMMDD');
@@ -207,7 +209,7 @@ Tw.MembershipMy.prototype = {
       
       if(getDiffDate > 0 ){
         var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
-        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         return;
       }
     }
@@ -215,10 +217,10 @@ Tw.MembershipMy.prototype = {
     this._historyService.goLoad('my/reissue');
   },
 
-  _cardChangeAlert: function() {
+  _cardChangeAlert: function(e) {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
-      $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON);
+      $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON, $(e.currentTarget));
   },
 
   _handleChangeAlert: function() {
@@ -246,7 +248,7 @@ Tw.MembershipMy.prototype = {
   _goUpdate: function(e) {
     if($(e.currentTarget).attr('data-type') === 'SP'){
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A59;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
       return;
     }
     this._historyService.goLoad('/membership/my/update');

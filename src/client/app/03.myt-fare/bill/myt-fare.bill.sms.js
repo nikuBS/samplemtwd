@@ -38,7 +38,7 @@ Tw.MyTFareBillSms.prototype = {
       layer: true,
       data: this._getAccountList(),
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectPopupCallback, this, $target));
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -74,13 +74,6 @@ Tw.MyTFareBillSms.prototype = {
   },
   _onClose: function () {
     this._backAlert.onClose();
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _isChanged: function () {
     var $amount = this.$container.find('.fe-amount');

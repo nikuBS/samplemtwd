@@ -49,6 +49,7 @@ Tw.MembershipBenefitBrandMap.prototype = {
 
   _init: function () {
     this._showDataChargePopupIfNeeded(this.$map, this.location);
+    $('.fe-franchisee-infor-telnum').text(Tw.FormatHelper.getDashedPhoneNumber($('.fe-franchisee-infor-telnum').text()));
   },
 
   _showDataChargePopupIfNeeded: function (mapEl, coord) {

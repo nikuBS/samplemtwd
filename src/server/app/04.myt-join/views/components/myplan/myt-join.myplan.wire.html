@@ -48,7 +48,7 @@
             <ul class="pg-chk-list02">
                 <% for ( var i in tipList) { %>
                 <li>
-                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>">
+                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
                         <%= tipList[i].title %><i class="icon-badge-tip"><span class="blind">tip</span></i>
                     </button>
                 </li>

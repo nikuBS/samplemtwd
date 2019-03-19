@@ -76,7 +76,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     if (resp && resp.code) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, $before);
     }
   },
 
@@ -126,6 +126,8 @@ Tw.MyTDataFamilyHistory.prototype = {
       return history;
     });
 
+    var $target = $parent.find('.fe-edit');
+
     this._popupService.open(
       {
         hbs: 'DC_02_04_01',
@@ -136,12 +138,13 @@ Tw.MyTDataFamilyHistory.prototype = {
         lessThanOne: changable.data < 1
       },
       $.proxy(this._handleOpenChangePopup, this, $parent, changable),
-      $.proxy(this._handleCloseChangePopup, this),
-      'change'
+      $.proxy(this._handleCloseChangePopup, this, $target),
+      'change',
+      $target
     );
   },
 
-  _handleCloseChangePopup: function() {
+  _handleCloseChangePopup: function($target) {
     if (this._historyChange.isSuccess) {
       this._historyChange.isSuccess = false;
       this._popupService.open(
@@ -150,7 +153,10 @@ Tw.MyTDataFamilyHistory.prototype = {
           text: Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA,
           layer: true
         },
-        $.proxy(this._handleOpenComplete, this)
+        $.proxy(this._handleOpenComplete, this),
+        undefined,
+        undefined,
+        $target
       );
     }
   },

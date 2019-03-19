@@ -27,10 +27,14 @@ Tw.ProductRoaming.prototype = {
   },
   _init : function() {
     this._historyService.goHash('');
-
     this.nMax = this._options.banners.centerBanners.length - 1;
-
     this.$container.find('.fe-slide-banner').show();
+    this._renderTopBanner();
+  },
+  _renderTopBanner: function() {
+    setTimeout($.proxy(function () {
+      new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, this._options.banners.topBanners, 'T');
+    }, this), 0);
   },
   _onOpenFormInfo: function ($layer) {
     this.$prevBtn = $layer.find('#_dev_prev');
@@ -51,18 +55,19 @@ Tw.ProductRoaming.prototype = {
     event.stopPropagation();
   },
   _onClickFormInfo: function(e) {
-    this.idxSelect = $(e.currentTarget).data('index');
+    var $target = $(e.currentTarget);
+    this.idxSelect = $target.data('index');
     if (this.idxSelect < 0 || this.idxSelect > this.nMax) {
       return;
     }
 
-    var hbsName = 'RM_01_XX';
     this._popupService.open({
-      hbs: hbsName,
-      data: {
-        banners: this._options.banners
-      }
-    }, $.proxy(this._onOpenFormInfo, this), null, 'info');
+        hbs: 'RM_01_XX',
+        data: {
+          banners: this._options.banners
+        }
+      },
+      $.proxy(this._onOpenFormInfo, this), null, 'info', $target);
   },
 
   _onClickPrevBtn: function() {

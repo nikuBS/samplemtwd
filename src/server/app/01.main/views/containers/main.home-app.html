@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my on fe-replace-history"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store fe-replace-history"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my on fe-replace-history" aria-selected="true"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store fe-replace-history" aria-selected="false"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -229,10 +229,12 @@
                             <!-- //모바일 회선_잔여 데이터 -->
                             <% } else if (homeData.usageData.code === 'BLN0001') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
@@ -241,10 +243,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0002') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -253,10 +257,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
@@ -265,10 +271,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0004') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -277,10 +285,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0005') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -289,10 +299,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0006') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -301,10 +313,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0007') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -313,10 +327,12 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">시스템 점검중입니다.</strong>
@@ -326,10 +342,12 @@
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
@@ -346,15 +364,19 @@
                             <% if(homeData.billData.isBroadband) { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
@@ -366,15 +388,19 @@
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
@@ -402,18 +428,21 @@
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } else { %>
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
-                                <% if (svcInfo.expsSvcCnt > 1) { %>
-                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                <% } %>
+                                <em class="line">
+                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <% } %>
                                 <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
                                 <div class="main-breakdown-box">
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
                                 </div>
@@ -460,7 +489,7 @@
                         <div class="section-box nogaps">
                             <div class="main-membershop-box">
                                 <div id="fe-membership-extend" class="membership-cont" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BC">
-                                    <strong class="ti">membershop</strong>
+                                    <strong class="ti">Tmembership</strong>
                                     <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
                                     <!-- <span class="rating gold">gold</span>
                                     <span class="rating vip">vip</span> -->

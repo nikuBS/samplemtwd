@@ -1,25 +1,35 @@
 /**
+ * 이용안내 > 이용자피해예방센터 > 콘텐츠 페이지
  * FileName: customer.damage-info.contents.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.12.06
  */
 
 Tw.CustomerDamageInfoContents = function(rootEl) {
+  // 컨테이너 레이어 설정
   this.$container = rootEl;
+
+  // 공통 모듈 설정
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+
+  // 이벤트 바인딩
   this._bindEvent();
+  this._init();
 };
 
 Tw.CustomerDamageInfoContents.prototype = {
 
-  _bindEvent: function() {
-    this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));
-    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
-    this.$container.on('click', '.fe-back', $.proxy(this._goBack, this));
+  _init: function() {
+    Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
+  },
 
-    this._bindUIEvent(this.$container);
+  _bindEvent: function() {
+    this.$container.on('click', '.fe-idpt_pop', $.proxy(this._openPop, this));  // 레이어 팝업 공통 처리
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));  // 외부 링크 처리
+    this.$container.on('click', '.fe-back', $.proxy(this._goBack, this)); // 뒤로가기 처리
+
+    this._bindUIEvent(this.$container); // Pub 에서 전달한 이벤트 스크립트 소스.
   },
 
   _bindUIEvent: function($container) {
@@ -72,14 +82,17 @@ Tw.CustomerDamageInfoContents.prototype = {
     });
   },
 
+  // 뒤로 가기 처리
   _goBack: function() {
     this._historyService.goBack();
   },
 
+  // 외부 링크 연결 처리
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
 
+    // 모웹이면 과금팝업 띄워줄 필요 없으니 바로 연결
     if (!Tw.BrowserHelper.isApp()) {
       return this._openExternalUrl($(e.currentTarget).attr('href'));
     }
@@ -87,23 +100,19 @@ Tw.CustomerDamageInfoContents.prototype = {
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
+  // 외부 링크 연결
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   },
 
-  _openInternalUrl: function(e) {
-    Tw.CommonHelper.openUrlInApp($(e.currentTarget).attr('href'));
-
-    e.preventDefault();
-    e.stopPropagation();
-  },
-
+  // 레이어 팝업 공통 처리
   _openPop: function(e) {
     this._popupService.open({
       hbs: 'idpt_' + $(e.currentTarget).data('pop')
-    }, $.proxy(this._bindPop, this), null, 'idpt_pop');
+    }, $.proxy(this._bindPop, this), null, 'idpt_pop', $(e.currentTarget));
   },
 
+  // 레이어 팝업 띄운 후 이벤트 바인딩
   _bindPop: function($popupContainer) {
     this._bindUIEvent($popupContainer);
   }

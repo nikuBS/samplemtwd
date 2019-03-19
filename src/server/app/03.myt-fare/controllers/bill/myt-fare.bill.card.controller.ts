@@ -2,7 +2,7 @@
  * FileName: myt-fare.bill.card.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.18
- * Annotation: 체크/신용카드 요금납부
+ * Description: 체크/신용카드 요금납부
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -23,8 +23,8 @@ class MyTFareBillCard extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const data = {
       title: MYT_FARE_PAYMENT_TITLE.CARD,
-      svcInfo: svcInfo,
-      pageInfo: pageInfo
+      svcInfo: svcInfo, // 회선정보 (필수 데이터)
+      pageInfo: pageInfo // 페이지정보 (필수 데이터)
     };
 
     if (BrowserHelper.isApp(req)) { // 앱 환경 여부 체크
@@ -51,29 +51,34 @@ class MyTFareBillCard extends TwViewController {
     }
   }
 
+  /* 미납요금 대상자 조회 */
   private getUnpaidList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0021, {});
   }
 
+  /* 자동납부 정보 조회 */
   private getAutoInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
+  /* 데이터 정보 가공 */
   private parseData(result: any, svcInfo: any, allSvc: any): any {
-    const list = result.settleUnPaidList;
+    const list = result.settleUnPaidList; // 미납리스트
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
       list.invDt = '';
       list.defaultIndex = 0;
 
+      /* list 갯수만큼 loop */
       list.map((data, index) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.');
-        data.intMoney = this.removeZero(data.invAmt);
-        data.invMoney = FormatHelper.addComma(data.intMoney);
-        data.svcName = SVC_CD[data.svcCd];
+        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.'); // 서버에서 내려오는 날짜를 YYYY.M. 포맷에 맞게 변경 */
+        data.intMoney = this.removeZero(data.invAmt); // 금액 앞에 불필요하게 붙는 0 제거
+        data.invMoney = FormatHelper.addComma(data.intMoney); // 금액에 콤마(,) 추가
+        data.svcName = SVC_CD[data.svcCd]; // 서비스명 (모바일/인터넷...)
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
-          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 M(모바일)일 경우 '-' 추가
+          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 I나 T(인터넷/집전화 등)일 경우 주소 보여주고, M(모바일)일 경우 '-' 추가
 
+        // 대표회선이고 청구날짜가 최근인 경우 가장 앞에 노출
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
           list.defaultIndex = index;
@@ -83,6 +88,7 @@ class MyTFareBillCard extends TwViewController {
     return list;
   }
 
+  /* 금액정보에서 앞자리 0 제거하는 method */
   private removeZero(input: string): string {
     let isNotZero = false;
     for (let i = 0; i < input.length; i++) {
@@ -100,11 +106,11 @@ class MyTFareBillCard extends TwViewController {
     if (autoInfo.code === API_CODE.CODE_00) {
       const result = autoInfo.result;
 
-      result.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK;
+      result.isAuto = result.autoPayEnable === 'Y' && result.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK; // 자동납부 정보(계좌)가 있는 경우 (for 환불계좌정보)
       if (result.isAuto) {
-        result.bankName = result.autoPayBank.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, '');
-        result.bankNum = result.autoPayBank.bankCardNum;
-        result.bankCode = result.autoPayBank.bankCardCoCd;
+        result.bankName = result.autoPayBank.bankCardCoNm.replace(MYT_FARE_PAYMENT_NAME.BANK, ''); // 은행명에서 '은행' 이름 제거
+        result.bankNum = result.autoPayBank.bankCardNum; // 계좌번호
+        result.bankCode = result.autoPayBank.bankCardCoCd; // 은행식별코드
       }
       return result;
     }
@@ -112,12 +118,12 @@ class MyTFareBillCard extends TwViewController {
   }
 
   private getAddr(svcMgmtNum: any, allSvc: any): any {
-    const serviceArray = allSvc.s;
+    const serviceArray = allSvc.s; // 인터넷 회선
     let addr = '';
 
     serviceArray.map((data) => {
       if (data.svcMgmtNum === svcMgmtNum) {
-        addr = data.addr;
+        addr = data.addr; // 인터넷 회선 보유 시 주소 노출
       }
     });
 
