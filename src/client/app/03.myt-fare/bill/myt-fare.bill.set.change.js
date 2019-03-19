@@ -317,7 +317,7 @@ Tw.MyTFareBillSetChange.prototype = {
       }
     };
 
-    // T월드 확인
+    // T world 확인
     if('P' === billType) {
       // 무선이면서 SMS수신가능 단말기일때 보임
       _selectOptions.call(this, 'nreqGuidSmsSndYn', isDisplay && 'M' === lineType && 'Y' === this._data.isusimchk);

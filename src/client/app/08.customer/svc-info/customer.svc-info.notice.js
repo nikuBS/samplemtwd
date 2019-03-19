@@ -94,7 +94,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   // 제목을 클릭시
   _setContentsReq: function(e) {
-    if (this._category !== 'tworld') {  // T월드 카테고리 일때만 내용 값을 가져오는 동작이 필요하므로 다른 카테고리 일때는 진입 안되도록 함
+    if (this._category !== 'tworld') {  // T world 카테고리 일때만 내용 값을 가져오는 동작이 필요하므로 다른 카테고리 일때는 진입 안되도록 함
       return;
     }
 
@@ -109,12 +109,12 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return;
     }
 
-    // API 요청하여 T 월드 공지사항 내용을 요청
+    // API 요청하여 T world 공지사항 내용을 요청
     this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: this._tworldChannel, ntcId: ntcId })
       .done($.proxy(this._setContentsRes, this));
   },
 
-  // T월드 공지사항 내용 응답
+  // T world 공지사항 내용 응답
   _setContentsRes: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {  // API 요청 실패시 오류 팝업 노출
       return Tw.Error(resp.code, resp.msg).pop();
