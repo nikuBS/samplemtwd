@@ -64,7 +64,7 @@ Tw.PopupService.prototype = {
     $focusEl = this._getEnableFocusEl($focusEl); // 닫힐때 포커스 타겟 저장
 
     // 돌아갈 focus 타겟 저장여부
-    if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')) {
+    if ($focusEl && $focusEl.length && thisHash && !$focusEl.is('.tw-popup')) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
     }
 
