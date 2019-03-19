@@ -231,9 +231,9 @@ Tw.CertificationSk.prototype = {
       this._callback(this._callbackParam);
     }
   },
-  _onInputMdn: function () {
+  _onInputMdn: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
-    console.log('inputMdn', this.$inputMdn.val());
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
     } else {
@@ -241,7 +241,8 @@ Tw.CertificationSk.prototype = {
     }
     this._checkEnableConfirmButton();
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));

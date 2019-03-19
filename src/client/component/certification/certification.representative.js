@@ -228,7 +228,8 @@ Tw.CertificationRepresentative.prototype = {
       clearInterval(this._addTimer);
     }
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));

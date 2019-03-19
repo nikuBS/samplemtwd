@@ -149,7 +149,8 @@ Tw.CommonMemberSloginIos.prototype = {
 
     new Tw.InputFocusService(this.$container, this.$btLogin);
   },
-  _onKeyupMdn: function () {
+  _onKeyupMdn: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
@@ -158,13 +159,15 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     this._checkEnableConfirmButton();
   },
-  _onInputBirth: function () {
+  _onInputBirth: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirth.val();
     if ( inputBirth.length >= Tw.BIRTH_LEN ) {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
     }
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
