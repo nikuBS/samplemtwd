@@ -300,7 +300,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_IOS, params)
       .done($.proxy(this._successRequestLogin, this, $target));
   },
-  _successRequestLogin: function (resp, $target) {
+  _successRequestLogin: function ($target, resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.goBack();
