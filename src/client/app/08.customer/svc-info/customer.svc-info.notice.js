@@ -69,8 +69,6 @@ Tw.CustomerSvcInfoNotice.prototype = {
           });
       }, 100);
     }
-
-    Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
   },
 
   // 외부 링크 클릭시
@@ -124,10 +122,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
     this._setContentsList.push(parseInt(resp.result.ntcId, 10));
 
     // API 에서 내려받은 응답 값을 replace
-    var $targetElem = this.$list.find('[data-ntc_id="' + resp.result.ntcId + '"] .notice-txt');
-    $targetElem.html(this._fixHtml(resp.result.ntcCtt));
-
-    Tw.CommonHelper.replaceExternalLinkTarget($targetElem);
+    this.$list.find('[data-ntc_id="' + resp.result.ntcId + '"] .notice-txt').html(this._fixHtml(resp.result.ntcCtt));
   },
 
   // 카테고리 설정 팝업 오픈

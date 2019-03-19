@@ -206,13 +206,6 @@ Tw.CommonHelper = (function () {
     return androidVersion && androidVersion.indexOf('4') !== -1;
   };
 
-  var replaceExternalLinkTarget = function($container) {
-    _.each($container.find('.fe-link-external,[target=_blank]'), function(elem) {
-      $(elem).attr('target', 'blank')
-        .addClass('fe-link-external');
-    });
-  };
-
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -234,7 +227,6 @@ Tw.CommonHelper = (function () {
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
-    isLowerVersionAndroid: isLowerVersionAndroid,
-    replaceExternalLinkTarget: replaceExternalLinkTarget
+    isLowerVersionAndroid: isLowerVersionAndroid
   };
 })();

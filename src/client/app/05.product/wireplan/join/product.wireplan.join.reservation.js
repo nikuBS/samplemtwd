@@ -313,11 +313,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
   },
 
-  _openAgreePop: function(e) {
+  _openAgreePop: function() {
     this._popupService.open({
       hbs: 'FT_01_03_L01_case',
       layer: true
-    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop', $(e.currentTarget));
+    }, $.proxy(this._bindAgreePop, this), null, 'agree_pop');
   },
 
   _bindAgreePop: function($popupContainer) {
@@ -407,8 +407,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _procApplyCheck: function() {
     if (!Tw.ValidationHelper.isCellPhone(this.$reservNumber.val()) && !Tw.ValidationHelper.isTelephone(this.$reservNumber.val())) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE,
-        null, null, 'alert_iscellphone', this.$btnApply);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
     // 결합상품(개인형) 기 가입 상품 유무 체크
@@ -420,14 +419,14 @@ Tw.ProductWireplanJoinReservation.prototype = {
     if (this._typeCd === 'combine' && this.$combineSelected.is(':checked') && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE, $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES, this.$btnApply);
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
+        $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
 
     if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' &&
       this.$combineExplain.find('input[type=checkbox]').is(':checked') && !this._logged) {
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
-        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE, null, this.$btnApply);
+        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }
 
     // 결합상품, 상품 선택 및 추가정보 체크하여 입력 팝업 호출
@@ -467,8 +466,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _procConfirmAdditional: function() {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A40.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A40.TITLE,
-      $.proxy(this._setConfirmAdditional, this), $.proxy(this._onCloseConfirmAdditional, this),
-      Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, this.$btnApply);
+      $.proxy(this._setConfirmAdditional, this), $.proxy(this._onCloseConfirmAdditional, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM);
   },
 
   _setConfirmAdditional: function() {
@@ -486,8 +484,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _procExistsCheckPersonalCombine: function() {
     if (this._currentCombineProductList.indexOf('NH00000103') !== -1 || this._currentCombineProductList.indexOf('TW00000009') !== -1) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.TITLE, null, null, 'exists_check', this.$btnApply);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A37.TITLE);
     }
 
     this._procApply();

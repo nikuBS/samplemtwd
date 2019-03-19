@@ -16,16 +16,9 @@ Tw.CustomerSvcInfoNoticeView = function(rootEl) {
 
   // 이벤트 바인딩
   this._bindEvent();
-
-  // 최초 동작
 };
 
 Tw.CustomerSvcInfoNoticeView.prototype = {
-
-  // 최초 동작
-  _init: function() {
-    Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
-  },
 
   // 이벤트 바인딩
   _bindEvent: function() {

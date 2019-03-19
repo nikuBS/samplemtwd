@@ -103,7 +103,7 @@ Tw.ProductCommonConfirm.prototype = {
       'cont_align':'tl',
       'btn-close':'btn-tooltip-close tw-popup-closeBtn',
       'contents': $btn.parent().find('.fe-tip_view_html').html()
-    }, $.proxy(this._bindTipView, this), null, 'tip_view', $btn);
+    }, $.proxy(this._bindTipView, this));
 
     e.preventDefault();
     e.stopPropagation();
@@ -267,16 +267,14 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openAgreePop: function(e) {
-    var $btn = $(e.currentTarget),
-      $parent = $btn.parent();
-
+    var $parent = $(e.currentTarget).parent();
     this._popupService.open({
       hbs: 'FT_01_03_L01',
       data: {
         title: $parent.find('.mtext').text(),
         html: $parent.find('.fe-agree_full_html').html()
       }
-    }, $.proxy(this._bindAgreePop, this, $parent), null, 'agree_pop', $btn);
+    }, $.proxy(this._bindAgreePop, this, $parent), null, 'agree_pop');
   },
 
   _bindAgreePop: function($wrap, $popupContainer) {
@@ -307,11 +305,10 @@ Tw.ProductCommonConfirm.prototype = {
     }
   },
 
-  _openConfirmAlert: function(e) {
+  _openConfirmAlert: function() {
     this._isApplyConfirm = false;
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
-      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this),
-      $.proxy(this._onCloseConfirmAlert, this), 'join_confirm_alert', $(e.currentTarget));
+      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), $.proxy(this._onCloseConfirmAlert, this), 'join_confirm_alert');
   },
 
   _setConfirmAlertApply: function() {

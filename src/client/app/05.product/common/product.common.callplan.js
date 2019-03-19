@@ -58,8 +58,6 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contents.find('.idpt-pc').length > 0) {
       this.$contents.find('.idpt-pc').remove();
     }
-
-    Tw.CommonHelper.replaceExternalLinkTarget(this.$contents);
   },
 
   _initBpcp: function() {
@@ -484,8 +482,6 @@ Tw.ProductCommonCallplan.prototype = {
         $popupContainer.scrollTop(0);
       }
     }, 100);
-
-    Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 
   _openCombineNeedWireError: function() {
