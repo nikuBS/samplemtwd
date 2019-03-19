@@ -9,34 +9,33 @@
     </div>
     <div class="acco-cont">
         <div class="cont-box">
-            {{#if hasQuestions}}
-                {{#if qstnHtmlCtt}}{{{qstnHtmlCtt}}}{{/if}}
-                <ul class="bt-slice mt0">
-                    <li class="bt-blue1">
-                        <a href="/customer/svc-info/researches?id={{hintExUrl}}">설문 시작하기</a>
+            {{#if hasHint}}
+                <div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="{{hintExUrl}}">힌트 보기</button></div>
+            {{/if}}
+            {{#if examples.length}}
+                <ul class="survey-researchbox{{#if isDoubleAlign}} type2{{/if}}{{#if hasHtml}} btn-dtl{{/if}}">
+                    {{#each examples}}
+                    <li class="category-type" aria-checked="false">
+                        {{#if image}}<div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>{{/if}}
+                        <div class="chkform-wrap">
+                            <span class="custom-form"><input type="radio" id="radio{{../bnnrRsrchId}}_{{@index}}" name="radio{{../bnnrRsrchId}}"><span class="r-type1"></span></span>
+                            <label for="radio{{../–bnnrRsrchId}}_{{@index}}">{{content}}</label>
+                        </div>
+                        {{{motHtml}}}
                     </li>
+                    {{/each}}
                 </ul>
-            {{else}}
-                {{#if hasHint}}
-                    <div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="{{hintExUrl}}">힌트 보기</button></div>
-                {{/if}}
-                {{#if isProceeding}}
-                    {{#if examples.length}}
-                        <ul class="survey-researchbox{{#if isDoubleAlign}} type2{{/if}}{{#if hasHtml}} btn-dtl{{/if}}">
-                            {{#each examples}}
-                            <li class="category-type" aria-checked="false">
-                                {{#if image}}<div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>{{/if}}
-                                <div class="chkform-wrap">
-                                    <span class="custom-form"><input type="radio" id="radio{{../bnnrRsrchId}}_{{@index}}" name="radio{{../bnnrRsrchId}}"><span class="r-type1"></span></span>
-                                    <label for="radio{{../–bnnrRsrchId}}_{{@index}}">{{content}}</label>
-                                </div>
-                                {{{motHtml}}}
-                            </li>
-                            {{/each}}
-                        </ul>
-                        {{#if hasEtc}}<textarea class="poll-area mt10 mb10" data-etc-idx="{{examples.length}}" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea>{{/if}}
-                        {{#if motMsgHtmlCtt}}<div class="mb20">{{{motMsgHtmlCtt}}}</div>{{/if}}
-                    {{/if}}
+                {{#if hasEtc}}<textarea class="poll-area mt10 mb10" data-etc-idx="{{examples.length}}" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea>{{/if}}
+                {{#if motMsgHtmlCtt}}<div class="mb20">{{{motMsgHtmlCtt}}}</div>{{/if}}
+            {{/if}}
+            {{#if isProceeding}}
+                {{#if hasQuestions}}
+                    <ul class="bt-slice mt0">
+                        <li class="bt-blue1">
+                            <a href="/customer/svc-info/researches?id={{hintExUrl}}">설문 시작하기</a>
+                        </li>
+                    </ul>
+                {{else}}
                     <ul class="bt-slice item-two">
                         <li class="bt-white2">
                             <a href="/customer/svc-info/researches/result?id={{bnnrRsrchId}}">결과보기</a>
@@ -45,13 +44,13 @@
                             <button class="fe-submit" disabled>참여하기</button>
                         </li>
                     </ul>
-                {{else}}
-                    <ul class="bt-slice mt0">
-                        <li class="bt-blue1">
-                            <a href="/customer/svc-info/researches/result?id={{bnnrRsrchId}}">결과보기</a>
-                        </li>
-                    </ul>
                 {{/if}}
+            {{else}}
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <a href="/customer/svc-info/researches/result?id={{bnnrRsrchId}}">결과보기</a>
+                    </li>
+                </ul>
             {{/if}}
         </div>
     </div>
