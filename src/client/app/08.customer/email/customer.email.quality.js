@@ -103,7 +103,7 @@ Tw.CustomerEmailQuality.prototype = {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var $elInputline = this.$wrap_tpl_quality.find('.fe-quality-line');
     var elInputlineVal = $elInputline.is('button') ? $elInputline.text() : $elInputline.val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString().replace(/-/gi, '') : '0'; // 현재 와이브로 옵션 없으므로 - 대시만 없애는 방향으로 가능
     var selSvcNum = !!elInputlineVal ? elInputlineVal : '';
 
     var htParams = $.extend(this._makeParams(), {
@@ -137,7 +137,8 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestInternet: function ($target) {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
-    var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
+    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line'); 
+    var elInputline = $qualityLine.is('.fe-numeric') ? $qualityLine.val().replace(/-/gi, '') : $qualityLine.val();
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
