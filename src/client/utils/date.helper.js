@@ -378,7 +378,7 @@ Tw.DateHelper = (function () {
     min = min < 10 ? '0' + min : min;
     sec = sec < 10 ? '0' + sec : sec;
 
-    return min + ':' + sec;
+    return min + '분 ' + sec + '초';
   };
 
 
