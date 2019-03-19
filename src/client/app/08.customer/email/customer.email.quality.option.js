@@ -40,8 +40,8 @@ Tw.CustomerEmailQualityOption.prototype = {
     this.$container.on('click', '.fe-search-post', $.proxy(this._onClickSearchPost, this));
   },
 
-  _onClickSearchPost: function () {
-    new Tw.CommonPostcodeMain(this.$container);
+  _onClickSearchPost: function (e) {
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget));
   },
 
   // 품질상담 > 인터넷/집전화/IPTV > 회선변경

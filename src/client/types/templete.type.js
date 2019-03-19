@@ -737,7 +737,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
-  { title: '휴대폰/와이브로', category: 'cell' },
+  { title: '휴대폰', category: 'cell' },
   { title: '인터넷/집전화/IPTV', category: 'internet' }
 ];
 
