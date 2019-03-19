@@ -23,7 +23,7 @@ $(document).on('ready', function () {
   skt_landing.action.focus_mousedown_style(document);
   skt_landing._originalSize = $(window).width() + $(window).height();
 });
-$(window).on('resize', function () {
+$(window).on('resize', function () {  
   var current_size = $(window).width() + $(window).height();
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
@@ -42,7 +42,10 @@ $(window).on('resize', function () {
     } else {
       skt_landing.action.checkScroll.unLockScroll();
     }
-  } else {
+
+    var $popupContainer = $('.popup-page.fixed-bottom .container');
+    if($popupContainer.find('.bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
+  } else {    
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
@@ -51,6 +54,9 @@ $(window).on('resize', function () {
     } else {
       skt_landing.action.checkScroll.unLockScroll();      
     }
+
+    var $popupContainer = $('.popup-page.fixed-bottom .container');
+    if($popupContainer.find('.bt-fixed-area').length > 0) $popupContainer.removeClass('pb0');      //190318 하단 고정 버튼 위치 
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
@@ -77,6 +83,42 @@ $(window).on('resize', function () {
 
 });
 skt_landing.util = {
+  log: function (){
+    var conHtml = '<div id="log_tag" style="position: fixed; width: 100%; height: 15%; border: 1px solid red; background: #fff; overflow: scroll; z-index: 999999999; top: 0; left: 0;"></div>';
+    var html = '';
+    for(var key in arguments){
+        html = html.concat(arguments[key]+"<br/>");
+    }
+    var $html = $('#log_tag');
+    if($html.length == 0)            $(document.body).append(conHtml);            
+    $html = $('#log_tag').prepend(html);
+
+    if($._data($html[0], 'events')) return;
+    var pos = {
+        x: 0,
+        y: 0
+    }
+    $html.on({
+        'touchstart': function (e) {
+            e.preventDefault();
+            pos.x = e.originalEvent.touches[0].pageX;
+            pos.y = e.originalEvent.touches[0].pageY;
+        },
+        'touchmove': function (e) {
+            e.preventDefault();
+            var x = e.originalEvent.touches[0].pageX-pos.x;
+            var y = e.originalEvent.touches[0].pageY-pos.y;
+            $html.offset({
+                left: x,
+                top: y
+            });
+        },
+        'touchend': function (e) {
+            pos.x = $html.offset().left;
+            pos.y = $html.offset().top;
+        }
+    });
+  },
   win_info: {
     get_winW: function () {
       return $(window).width();
@@ -557,6 +599,16 @@ skt_landing.action = {
             });
           }
         }
+
+
+        //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
+        var $popup = $('.popup.tw-popup');
+        var $popWrap = $popup.not($popup.last()).find('.container-wrap');
+        $popWrap.css({
+            'overflow-y': 'hidden'
+        });
+        $(document).trigger('modal:open', {obj: this});
+        //@@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
                      
       }).fail(function() {
         if(callback_fail){
@@ -605,6 +657,16 @@ skt_landing.action = {
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
       }
+
+      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
+      var $popup = $('.popup.tw-popup');
+      var $popWrap = $popup.find('.container-wrap');
+      $popWrap.css({
+          'overflow-y': 'auto'
+      });
+      $(document).trigger('modal:close', {obj: this, target: target});
+      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
+
     },
     allClose : function (){
       var popups = $('.wrap > .popup,.wrap > .popup-page');
