@@ -4,13 +4,15 @@
  * Date: 2018.11.13
  */
 
-Tw.ProductRoamingFiReservation = function(rootEl) {
+Tw.ProductRoamingFiReservation = function(rootEl, minDate) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._cachedElement();
   this._bindEvent();
+  this._init(minDate);
+
 };
 
 Tw.ProductRoamingFiReservation.prototype = {
@@ -45,6 +47,22 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
+  },
+
+  _init: function(minDate) {
+    //다른 화면에서 돌아올 경우 값 상태 초기화
+    this.$inputPhone.val('');
+    this.$inputSdate.val(minDate);
+    this.$inputEdate.val(minDate);
+    var self = this;
+    setTimeout(function(){
+      self.$agreeCheckOne.attr('aria-checked', false);
+      self.$agreeCheckTwo.attr('aria-checked', false);
+      self.$agreeCheckOne.removeClass('checked');
+      self.$agreeCheckTwo.removeClass('checked');
+      self.$agreeCheckOne.find('input').prop('checked', false);
+      self.$agreeCheckTwo.find('input').prop('checked', false);
+    },50);
   },
 
   _searchCountryCode: function(e){
