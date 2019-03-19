@@ -20,26 +20,30 @@ class MyTFareBillOption extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getPaymentOption(), // 납부방법 조회
-      this.getAddrInfo() // 주소 조회
-    ).subscribe(([paymentOption, addrInfo]) => {
-      if (paymentOption.code === API_CODE.CODE_00 && addrInfo.code === API_CODE.CODE_00) {
-        res.render('bill/myt-fare.bill.option.html', {
-          svcInfo: svcInfo, // 회선 정보 (필수)
-          pageInfo: pageInfo, // 페이지 정보 (필수)
-          paymentOption: this.parseData(paymentOption.result, svcInfo),
-          addrInfo: this.parseInfo(addrInfo.result)
-        });
-      } else {
-        this.error.render(res, {
-          code: paymentOption.code === API_CODE.CODE_00 ? addrInfo.code : paymentOption.code,
-          msg: paymentOption.code === API_CODE.CODE_00 ? addrInfo.msg : paymentOption.msg,
-          pageInfo: pageInfo,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    if (svcInfo.actRepYn === 'Y') {
+      Observable.combineLatest(
+        this.getPaymentOption(), // 납부방법 조회
+        this.getAddrInfo() // 주소 조회
+      ).subscribe(([paymentOption, addrInfo]) => {
+        if (paymentOption.code === API_CODE.CODE_00 && addrInfo.code === API_CODE.CODE_00) {
+          res.render('bill/myt-fare.bill.option.html', {
+            svcInfo: svcInfo, // 회선 정보 (필수)
+            pageInfo: pageInfo, // 페이지 정보 (필수)
+            paymentOption: this.parseData(paymentOption.result, svcInfo),
+            addrInfo: this.parseInfo(addrInfo.result)
+          });
+        } else {
+          this.error.render(res, {
+            code: paymentOption.code === API_CODE.CODE_00 ? addrInfo.code : paymentOption.code,
+            msg: paymentOption.code === API_CODE.CODE_00 ? addrInfo.msg : paymentOption.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('error.no-use.html', { svcInfo: svcInfo, pageInfo: pageInfo });
+    }
   }
 
   /* 납부방법 조회 */
