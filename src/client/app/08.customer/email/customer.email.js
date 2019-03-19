@@ -52,6 +52,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-quality-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
     this.$container.on('click', '.tab-linker a', $.proxy(this._TabLinker, this));
     this.$container.on('click', '.tab-linker li', $.proxy(this._TabClick, this));
+
+    new Tw.InputFocusService(this.$container, $('.bt-fixed-area button', this.$container)); // 이동 버튼으로 다음 입력으로 움직이도록 
   },
 
   _TabClick: function (e) {
@@ -191,8 +193,8 @@ Tw.CustomerEmail.prototype = {
         btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: {isCell: isCell}
       },
-      null,
-      null
+      null, null, null,
+      $(e.currentTarget)
     );
   },
 
@@ -210,7 +212,7 @@ Tw.CustomerEmail.prototype = {
     }
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
     // this._backAlert.onClose();
     var confirmed = false;
     this._popupService.openConfirmButton(
@@ -226,7 +228,8 @@ Tw.CustomerEmail.prototype = {
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
+      Tw.BUTTON_LABEL.YES,
+      $(e.currentTarget)
     );
   },
 

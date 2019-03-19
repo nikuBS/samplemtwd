@@ -32,7 +32,7 @@ Tw.CustomerEmailService.prototype = {
     this.$wrap_tpl_service.on('click', '.fe-service_register', $.proxy(this._request, this));
   },
 
-  _request: function () {
+  _request: function (e) {
     var serviceCategory = this.$service_depth1.data('service-depth1');
 
     if ( !this._isValidServicePhone() ) {
@@ -45,7 +45,9 @@ Tw.CustomerEmailService.prototype = {
             $('.fe-service_phone').click();
             $('.fe-service_phone').focus();
           }, 500);
-        }, this)
+        }, this),
+        null,
+        $(e.currentTarget)
       );
 
       return false;
@@ -61,7 +63,9 @@ Tw.CustomerEmailService.prototype = {
             $('.fe-service_email').click();
             $('.fe-service_email').focus();
           }, 500);
-        }, this)
+        }, this),
+        null,
+        $(e.currentTarget)
       );
 
       return false;
@@ -69,16 +73,16 @@ Tw.CustomerEmailService.prototype = {
 
     switch ( serviceCategory ) {
       case 'CELL':
-        this._requestCell();
+        this._requestCell($(e.currentTarget));
         break;
       case 'INTERNET':
-        this._requestInternet();
+        this._requestInternet($(e.currentTarget));
         break;
       case 'DIRECT':
-        this._requestDirect();
+        this._requestDirect($(e.currentTarget));
         break;
       case 'CHOCO':
-        this._requestChocolate();
+        this._requestChocolate($(e.currentTarget));
         break;
       default:
     }
@@ -100,7 +104,7 @@ Tw.CustomerEmailService.prototype = {
     return params;
   },
 
-  _requestCell: function () {
+  _requestCell: function ($target) {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var $elInputLine = this.$wrap_tpl_service.find('.fe-service-line');
     var elInputlineVal = $elInputLine.is('button') ? $elInputLine.text() : $elInputLine.val();
@@ -122,10 +126,10 @@ Tw.CustomerEmailService.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
-  _requestInternet: function () {
+  _requestInternet: function ($target) {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
@@ -147,10 +151,10 @@ Tw.CustomerEmailService.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
-  _requestDirect: function () {
+  _requestDirect: function ($target) {
     var depth2Category = this.$service_depth2.data('serviceDepth2');
     var htParams;
 
@@ -167,23 +171,23 @@ Tw.CustomerEmailService.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0020, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
-  _requestChocolate: function () {
+  _requestChocolate: function ($target) {
     var htParams = $.extend(this._makeParams(), {
       category: this.$service_depth2.data('serviceDepth2')
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
-  _onSuccessRequest: function (res) {
+  _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-service_email').val());
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 
@@ -228,5 +232,9 @@ Tw.CustomerEmailService.prototype = {
     var sEmail = $('.fe-service_email').val();
 
     return Tw.ValidationHelper.isEmail(sEmail);
+  },
+
+  _apiError: function ($target, res) {
+    Tw.Error(res.code, res.msg).pop(null, $target);
   }
 };

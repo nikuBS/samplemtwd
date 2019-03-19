@@ -78,7 +78,9 @@ Tw.CustomerEmailServiceOption.prototype = {
         data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
       },
       $.proxy(this._handleSelectLineChange, this),
-      null
+      null,
+      null,
+      $(e.currentTarget)
     );
   },
 
@@ -118,9 +120,9 @@ Tw.CustomerEmailServiceOption.prototype = {
     this._closeDirectOrder();
   },
 
-  _getOrderInfo: function () {
+  _getOrderInfo: function (e) {
     this._apiService.request(Tw.API_CMD.BFF_08_0016, { svcDvcClCd: 'M' })
-      .done($.proxy(this._onSuccessOrderInfo, this));
+      .done($.proxy(this._onSuccessOrderInfo, this, $(e.currentTarget)));
   },
 
   _getDirectBrand: function (e) {
@@ -143,14 +145,14 @@ Tw.CustomerEmailServiceOption.prototype = {
     }
   },
 
-  _onSuccessOrderInfo: function (res) {
+  _onSuccessOrderInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var htOrderInfo = this._convertOrderInfo(res.result);
       this.$container.append(this.tpl_service_direct_order(htOrderInfo));
       this._hideListItem();
       skt_landing.widgets.widget_init('.fe-wrap_direct_order');
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 
@@ -203,11 +205,13 @@ Tw.CustomerEmailServiceOption.prototype = {
           data: [{ list: res.result.map($.proxy(fnSelectBrand, this)) }]
         },
         $.proxy(this._selectPopupCallback, this, $elButton),
-        null
+        null,
+        null,
+        $elButton
       );
 
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $elButton);
     }
   },
 
@@ -228,10 +232,11 @@ Tw.CustomerEmailServiceOption.prototype = {
           data: [{ list: res.result.map($.proxy(fnSelectDevice, this)) }]
         },
         $.proxy(this._selectDevicePopupCallback, this, $elButton),
-        null
+        null, null, 
+        $elButton
       );
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $elButton);
     }
   },
 
