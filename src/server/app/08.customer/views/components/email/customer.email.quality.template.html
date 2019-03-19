@@ -211,7 +211,8 @@
             </div>
         </div>
         <div class="inquiryform-wrap">
-            <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
+            <!--회선 입력 필요없음 -->
+            <!--<p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
             <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
             %>
@@ -237,7 +238,7 @@
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <% } %>
+            <% } %>-->
 
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
