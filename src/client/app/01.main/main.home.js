@@ -90,9 +90,9 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
   },
   _bindEvent: function () {
-    this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
+    this.$container.find('#fe-membership-extend').click(_.debounce($.proxy(this._onClickBarcode, this), 500));
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
-    this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+    // this.$container.find('.fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this),500));
     this.$container.find('.fe-bt-line').click(_.debounce($.proxy(this._onClickLine, this), 500));
     this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 500));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
@@ -411,7 +411,7 @@ Tw.MainHome.prototype = {
       element.html(tplBillCard(result));
       element.removeClass('empty');
       element.addClass('nogaps');
-      element.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
+      element.find('#fe-bt-payment').click(_.debounce($.proxy(this._onClickPayment, this), 500));
     } else {
       element.hide();
     }
@@ -641,7 +641,7 @@ Tw.MainHome.prototype = {
       element.html(tplRechargeCard(this._parseRechargeData(resp)));
       element.removeClass('empty');
       element.addClass('nogaps');
-      element.on('click', '#fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+      element.find('#fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this), 500));
     }
     this._resetHeight();
   },
