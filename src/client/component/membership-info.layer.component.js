@@ -66,23 +66,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
       this._onFail(resp);
       return false;
     }
-    this._isJoinOk = 'Y';
-
-    /*
-      가입 가능여부 확인 ( 아래 case 인경우는 가입불가 )
-      1. 미성년자인 경우
-      2. 기 발급 카드 보유 상태인 경우
-     */
-    if (resp.result) {
-      if (resp.result.adultYn === 'N') {
-        this._isJoinOk = 'N';
-      } else if (resp.result.hasNotCardYn === 'N') {
-        this._isJoinOk = 'N';
-      }
-    } else {
-      this._isJoinOk = 'N';
-    }
-
+    this._isJoinOk = (resp.result && Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
     this.onClickJoinBtn();
   },
 
