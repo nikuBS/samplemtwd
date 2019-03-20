@@ -305,6 +305,10 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       case 'NA00004326':
       case 'NA00005047':
       case 'NA00005502':
+      case 'NA00004883':
+      case 'NA00005048':
+      case 'NA00006487':
+      case 'NA00006488':
         this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_01');
         break;
       case 'NA00004941':
