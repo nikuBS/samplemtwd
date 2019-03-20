@@ -31,7 +31,7 @@ Tw.BannerService.prototype = {
 
     this.$banners.on({
       init: function(e, slick) {
-        slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
+        slick.$dots && slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
       },
       beforeChange: function(e, slick, before, after) {
         var dots = slick.$dots.find('li');
