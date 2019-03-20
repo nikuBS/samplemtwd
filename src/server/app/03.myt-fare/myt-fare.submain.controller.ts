@@ -10,7 +10,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
+import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -118,13 +118,13 @@ class MyTFareSubmainController extends TwViewController {
       this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
-      // this._getTaxInvoice(),
+      this._getTaxInvoice(),
       // this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   /*taxInvoice, contribution,*/ microPay, contentPay/*, banner*/]) => {
+                   taxInvoice, /* contribution,*/ microPay, contentPay/*, banner*/]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -387,7 +387,7 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   _getTaxInvoice() {
-    return this.apiService.request(API_CMD.BFF_07_0017, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_07_0017, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else if ( resp.code === API_TAX_REPRINT_ERROR.BIL0018 ) {
