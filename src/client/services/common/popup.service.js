@@ -63,34 +63,30 @@ Tw.PopupService.prototype = {
     var $focusEl = evt ? (evt.length ? evt : $(evt.currentTarget) ) : $(':focus');
     $focusEl = this._getEnableFocusEl($focusEl); // 닫힐때 포커스 타겟 저장
 
-    if ($focusEl.length && thisHash && !$focusEl.is('.tw-popup')
-      && !$focusEl.is('.fe-nofocus-move') && !$focusEl.find('.fe-nofocus-move').length) {
-        $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
+    // 돌아갈 focus 타겟 저장여부
+    if ($focusEl && $focusEl.length && thisHash && !$focusEl.is('.tw-popup')) {
+      $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
+    }
+
+    // 팝업 focus 여부
+    if (!($focusEl && ($focusEl.is('.fe-nofocus-move') || $focusEl.find('.fe-nofocus-move').length))) {
         // this._popupFocus($currentPopup); // 팝업포커스
-        var timeT = 0;
-        var timeLimit = 3;
-        var timeD = setInterval(function(){
-          timeT ++;
-          if (timeT>timeLimit){
-            clearTimeout(timeD);
+        $currentPopup.attr({'tabindex': 0, 'aria-modal': true, 'aria-hidden': false}).focus();
+        if ($currentPopup.find('.popup-page, .popup-info').length) {
+          $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
+          if(Tw.BrowserHelper.isIos()) {
+            $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){
+              return !$(this).attr('tabindex'); 
+            }).attr('tabindex', 0);
+            $currentPopup.find('li').eq(0).focus();
           }
-          $currentPopup.attr('tabindex', 0).focus();
-          if ($currentPopup.find('.popup-page, .popup-info').length) {
-            $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
-            if(Tw.BrowserHelper.isIos()) {
-              $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){return !$(this).attr('tabindex'); }).attr('tabindex', 0).focus();
-            }
-          }
-          if($currentPopup.find('h1').length) {
-            $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
-          }
-          if($currentPopup.find('.popup-header').length) {
-            $currentPopup.find('.popup-header').attr('tabindex',0).eq(0).focus();
-          }
-          if($currentPopup.find('.focus-elem').length) {
-            $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
-          }
-        }, 300);
+        }
+        if($currentPopup.find('h1').length) {
+          $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
+        }
+        if($currentPopup.find('.focus-elem').length) {
+          $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
+        }
         // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
         //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
     }
@@ -185,6 +181,14 @@ Tw.PopupService.prototype = {
     this._openCallback = null;
   },
   _open: function (option, evt) {
+    // CDN Url 셋팅 안된 채로 open 시도시 200ms 지연 후 재시도
+    if (Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
+      setTimeout($.proxy(function() {
+        this._open(option, evt);
+      }, this), 200);
+      return;
+    }
+
     $.extend(option, {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn

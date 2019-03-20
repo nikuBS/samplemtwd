@@ -4,6 +4,8 @@
 * Date: 2018.12.11
 %>
 <%
+    keyword = encodeURIComponent(keyword);
+    inKeyword = encodeURIComponent(inKeyword);
     var moreViewUrl = '/common/search/more?keyword='+keyword+'&category='+accessQuery.category;
     var inResultViewUrl = '/common/search/in-result?keyword='+keyword+'&category='+accessQuery.category;
     function recognizeLastChar(keyword){
@@ -13,8 +15,6 @@
         var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
         return endCharIdx>0 ? '으' : '';
     }
-    keyword = encodeURIComponent(keyword);
-    inKeyword = encodeURIComponent(inKeyword);
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
@@ -193,7 +193,7 @@
 
             <div class="cont-box pb0 direct">
                 <div class="searchnumbox-wrap">
-                    <h2 class="tit">T월드 다이렉트</h2>
+                    <h2 class="tit">T world 다이렉트</h2>
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.totalcount %></span>건
                     </div>
@@ -388,25 +388,10 @@
                     <% } %>
                 </div>
                 <div  class="numberbox">
-                        <div class="number">
-                            <% var totalPageNum = parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0) %>
-                            <strong class="str"><%= pageNum %></strong> / <%= totalPageNum %>
-                        </div>
-                    <select class="sispopup" style="color : transparent" title="페이지 더보기">
-                        <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
-                            <% if(i==pageNum){ %>
-                                <option style="color: #3c3c3c" selected
-                                    value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
-                                    <%= i %>
-                                </option>
-                            <% }else{ %>
-                                <option style="color: #3c3c3c"
-                                    value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
-                                    <%= i %>
-                                </option>
-                            <% } %>
-                        <% } %>
-                    </select>
+                    <div class="number" id="page_selector">
+                        <% var totalPageNum = parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0) %>
+                        <strong class="str"><%= pageNum %></strong> / <%= totalPageNum %>
+                    </div>
                 </div>
                 <div class="next">
                     <% if(pageNum==totalPageNum){ %>
@@ -434,7 +419,8 @@
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>','<%- nowUrl %>');
+        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>
+            ,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>',<%- JSON.stringify(paramObj) %>,'<%- pageNum %>','<%- nowUrl %>');
     });
 </script>
 <% include ../../components/end.component.html %>

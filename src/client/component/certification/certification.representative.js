@@ -119,6 +119,8 @@ Tw.CertificationRepresentative.prototype = {
     this.$inputboxMdn = $popupContainer.find('#fe-inputbox-mdn');
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
+    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
@@ -195,6 +197,7 @@ Tw.CertificationRepresentative.prototype = {
   },
   _successCert: function (reCert, resp) {
     this._clearCertError();
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
       this._seqNo = resp.result.seqNo;
@@ -225,7 +228,8 @@ Tw.CertificationRepresentative.prototype = {
       clearInterval(this._addTimer);
     }
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));

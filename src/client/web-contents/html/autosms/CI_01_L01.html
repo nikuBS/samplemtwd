@@ -2,219 +2,171 @@
 <html lang="ko">
 
 <head>
-    <!-- 2018.07.16 ¼öÁ¤-->
-    <meta charset="euc-kr">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi">
-    <meta name="format-detection" content="telephone=no, address=no, email=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="keywords" content="SK ÅÚ·¹ÄŞ, SKT °¡ÀÔÁ¤º¸"><!--2018. 07.18 ¼öÁ¤-->
-    <meta name="description" content="SK ÅÚ·¹ÄŞ °í°´ °¡ÀÔÁ¤º¸ È®ÀÎ ÆäÀÌÁö"><!--2018. 07.18 ¼öÁ¤-->
-    <!-- 170117 Ãß°¡_01 -->
-    <meta name="naver-site-verification" content="312a5ea6c83e837c3a184051f827704955721b2f">
-    <meta name="google-site-verification" content="NpHbK0Su01BksHo-oP5xDTvBGtT-sh365tkME06JBQA">
-    <!-- //170117 Ãß°¡_01 -->
-    <title>ÀÎÁõÇÏ±â | SKT °¡ÀÔÁ¤º¸ ¾È³»</title><!--2018. 07.18 ¼öÁ¤-->
-    <link rel="icon" type="image/x-icon"  href="/mpoc/img/autosms/common/tworld.ico">
-    <link rel="apple-touch-icon-precomposed" href="/mpoc/img/autosms/common/tworld_ico.png">
-    <!-- <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/common.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/layout.css" media="all" />
-    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/widgets.css" media="all" /> -->
-    <link rel="stylesheet" type="text/css" href="/mpoc/inc/autosms/css/style.min.css" media="all" /><!-- [C] ½ºÅ¸ÀÏ -->
-    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
-    <script type="text/javascript" src="/mpoc/inc/autosms/js/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/mpoc/inc/autosms/js/$vars.js"></script><!--[C] Àü¿ª º¯¼ö -->
-    <!-- <script type="text/javascript" src="/mpoc/inc/autosms/js/common.js"></script> 2018. 07.18 »èÁ¦-->
-    <script type="text/javascript" src="/mpoc/inc/autosms/js/widgets.js"></script><!--[C] ±â´Éº° À§Á¬ -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=medium-dpi" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="shortcut icon" href="/img/autosms/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/autosms/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/autosms/common/favicon.png" />
+    <meta name="description" content="í˜ì´ì§€ì„¤ëª…" />
+    <meta name="keywords" content="ì„œë¹„ìŠ¤í‚¤ì›Œë“œ" />
+    <meta property="og:title" content="SKT í™ˆí˜ì´ì§€" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/img/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] ê³µí†µ ìŠ¤íƒ€ì¼ -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] ë°•ìŠ¤ ëª¨ë¸ -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] ê¸°ëŠ¥ë³„ ìœ„ì ¯ -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] ë‹¨ë½ë³„ ì»´í¼ë„ŒíŠ¸ -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] ì „ì—­ ë³€ìˆ˜ -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] ê³µí†µ ê¸°ëŠ¥ -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] ê¸°ëŠ¥ë³„ ìœ„ì ¯ -->
 </head>
 
 <body>
-    <!-- 2018.07.16 ÆäÀÌÁö ÀüÃ¼ ¼öÁ¤-->
-    <div class="wrap fixed-wrap"><!-- .fixed-wrap : ÆäÀÌÁö 100% °íÁ¤ -->
-        <!-- #contents »ı³â¿ùÀÏ ±Ô°İ¿¡ ¸ÂÁö¾Ê´Â Á¤º¸ ÀÔ·Â ÈÄ ÀÎÁõ ½ÇÇà ½Ã-->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">»ı³â¿ùÀÏ ÀÔ·ÂÇü½ÄÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.<br/>´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+    <div class="rg-br-body rg-br-fixed-wrap"><!-- .fixed-wrap : í˜ì´ì§€ 100% ê³ ì • -->
+        <!-- #contents ìƒë…„ì›”ì¼ ê·œê²©ì— ë§ì§€ì•ŠëŠ” ì •ë³´ ì…ë ¥ í›„ ì¸ì¦ ì‹¤í–‰ ì‹œ-->
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ìƒë…„ì›”ì¼ ì…ë ¥í˜•ì‹ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.<br/>ë‹¤ì‹œ í™•ì¸í•´ì£¼ì„¸ìš”.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
         <!--// #contents -->
 
-        <!-- #contents SMS ÀÎÁõ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÑ °æ¿ì-->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">ÀÔ·ÂÇÏ½Å ÀÎÁõ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.<br/>´Ù½Ã ÀÔ·Â ÇØÁÖ¼¼¿ä.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+        <!-- #contents SMS ì¸ì¦ë²ˆí˜¸ë¥¼ ì˜ëª» ì…ë ¥í•œ ê²½ìš°
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ì…ë ¥í•˜ì‹  ì¸ì¦ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.<br/>ë‹¤ì‹œ ì…ë ¥ í•´ì£¼ì„¸ìš”.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
-        <!-- // #contents SMS ÀÎÁõ¹øÈ£¸¦ Àß¸ø ÀÔ·ÂÇÑ °æ¿ì-->
+        // #contents -->
 
-        <!-- #contents 5ºĞ ³» ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏÁö ¸øÇÑ °æ¿ì(¼¼¼ÇÁ¾·á ½Ã) -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÒ ¼ö ÀÖ´Â ½Ã°£ÀÌ ÃÊ°úÇÏ¿´½À´Ï´Ù.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+        <!-- #contents 5ë¶„ ë‚´ ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì§€ ëª»í•œ ê²½ìš°(ì„¸ì…˜ì¢…ë£Œ ì‹œ)
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•  ìˆ˜ ìˆëŠ” ì‹œê°„ì´ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
-        <!-- // #contents 5ºĞ ³» ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏÁö ¸øÇÑ °æ¿ì(¼¼¼ÇÁ¾·á ½Ã) -->
+        // #contents -->
 
-        <!-- #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert1-->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">ÀÔ·ÂÇÏ½Å Á¤º¸°¡ È®ÀÎµÇÁö ¾Ê½À´Ï´Ù.<br/>ÁÖÀÇÇÏ¿© ´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇØÁÖ¼¼¿ä.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+        <!-- #contents ê¸°íƒ€ case ì¸ì¦ì‹¤íŒ¨ alert1
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ì…ë ¥í•˜ì‹  ì •ë³´ê°€ í™•ì¸ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.<br/>ì£¼ì˜í•˜ì—¬ ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•´ì£¼ì„¸ìš”.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
-        <!-- // #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert1-->
+        // #contents -->
 
-        <!-- #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert2-->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">¹ıÀÎµî·Ï¹øÈ£ ÀÔ·ÂÇü½ÄÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.<br/>´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+        <!-- #contents ê¸°íƒ€ case ì¸ì¦ì‹¤íŒ¨ alert2
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ë²•ì¸ë“±ë¡ë²ˆí˜¸ ì…ë ¥í˜•ì‹ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.<br/>ë‹¤ì‹œ í™•ì¸í•´ì£¼ì„¸ìš”.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
-        <!-- // #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert2-->
+       // #contents -->
 
-        <!-- #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert3 -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">³»¿ë</h2>
-            <div class="container">
-                <div class="popup">
-                    <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-                        <div class="popup-header">
-                            <h5 class="popup-title" id="alertHeading">¾Ë¸²</h5>
-                        </div>
-                        <div class="popup-contents" id="alertText">
-                            <dl>
-                                <dt></dt>
-                                <dd></dd>
-                            </dl>
-                                <div class="inner-contents">Á¤º¸°¡ ¸ğµÎ ÀÔ·ÂµÇÁö ¾Ê¾Ò½À´Ï´Ù.<br/>´Ù½Ã È®ÀÎÇØÁÖ¼¼¿ä.</div>
-                        </div>
-                        <div class="btn-box">
-                            <ul class="bt-slice item-two">
-                            <li class="bt-red1">
-                                <button>È®ÀÎ</button>
-                            </li>
-                            </ul>
-                        </div>
-                            <button class="popup-closeBtn">ÆË¾÷´İ±â<span class="ico"></span></button>
-                    </div>
-                    <div class="popup-blind"></div>
-                </div>
+        <!-- #contents ê¸°íƒ€ case ì¸ì¦ì‹¤íŒ¨ alert3
+        <div id="contents" class="rg-br-container-wrap">
+            <h2 class="rg-br-blind">ë‚´ìš©</h2>
+            <div class="rg-br-container">
+                <script type="text/javascript">
+                    $(document).on('ready',function() {
+                        skt_landing.action.popup.open({
+                            'title': 'ì•Œë¦¼',
+                            'close_bt': true,
+                            'contents': 'ì •ë³´ê°€ ëª¨ë‘ ì…ë ¥ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.<br/>ë‹¤ì‹œ í™•ì¸í•´ì£¼ì„¸ìš”.',
+                            'bt_num': 'one',
+                            'type': [{
+                                style_class: 'bt-red1',
+                                href: 'type',
+                                txt: 'í™•ì¸'
+                            }]
+                        });
+                    });
+                </script>
             </div>
         </div>
-       <!-- //  #contents ±âÅ¸ case ÀÎÁõ½ÇÆĞ alert3 -->
+       // #contents -->
     </div>
 </body>
 

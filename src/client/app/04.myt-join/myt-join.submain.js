@@ -324,6 +324,7 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
+    this._popupService.close();
     var lineService = new Tw.LineComponent();
     lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },

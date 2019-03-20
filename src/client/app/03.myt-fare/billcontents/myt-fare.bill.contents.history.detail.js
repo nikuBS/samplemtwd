@@ -41,7 +41,14 @@ Tw.MyTFareBillContentsHitstoryDetail.prototype = {
   },
 
   _bindEvent: function() {
+    this.$container.on('click', '.fe-link-external', $.proxy(this._openExternalUrl, this));
+  },
 
-  }
+  _openExternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
+  },
  
 };

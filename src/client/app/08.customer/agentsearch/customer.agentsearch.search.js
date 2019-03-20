@@ -180,7 +180,7 @@ Tw.CustomerAgentsearch.prototype = {
       this._options = options;
 
       if (!!this._isSearched) {
-        var $activeTab = this.$container.find('li[role="tab"][aria-selected="true"]');
+        var $activeTab = this.$container.find('li[role="presentation"][aria-selected="true"]');
         var tabId = $activeTab.attr('id');
         var id = 'fe-btn-search-name';
         switch (tabId) {

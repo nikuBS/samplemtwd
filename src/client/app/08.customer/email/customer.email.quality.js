@@ -31,7 +31,7 @@ Tw.CustomerEmailQuality.prototype = {
     this.$wrap_tpl_quality.on('click', '.fe-quality_register', $.proxy(this._request, this));
   },
 
-  _request: function () {
+  _request: function (e) {
     var qualityCategory = this.$quality_depth1.data('quality-depth1');
 
     if ( !this._isValidQualityPhone() ) {
@@ -45,7 +45,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_phone').focus();
           }, 500);
         }, this),
-        null
+        null,
+        $(e.currentTarget)
       );
 
       return false;
@@ -62,7 +63,8 @@ Tw.CustomerEmailQuality.prototype = {
             $('.fe-quality_email').focus();
           }, 500);
         }, this),
-        null
+        null,
+        $(e.currentTarget)
       );
 
       return false;
@@ -71,10 +73,10 @@ Tw.CustomerEmailQuality.prototype = {
 
     switch ( qualityCategory ) {
       case 'cell':
-        this._requestCell();
+        this._requestCell($(e.currentTarget));
         break;
       case 'internet':
-        this._requestInternet();
+        this._requestInternet($(e.currentTarget));
         break;
       default:
     }
@@ -97,11 +99,11 @@ Tw.CustomerEmailQuality.prototype = {
     return params;
   },
 
-  _requestCell: function () {
+  _requestCell: function ($target) {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var $elInputline = this.$wrap_tpl_quality.find('.fe-quality-line');
     var elInputlineVal = $elInputline.is('button') ? $elInputline.text() : $elInputline.val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString().replace(/-/gi, '') : '0'; // 현재 와이브로 옵션 없으므로 - 대시만 없애는 방향으로 가능
     var selSvcNum = !!elInputlineVal ? elInputlineVal : '';
 
     var htParams = $.extend(this._makeParams(), {
@@ -130,12 +132,15 @@ Tw.CustomerEmailQuality.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target));
   },
 
-  _requestInternet: function () {
+  _requestInternet: function ($target) {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
-    var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
+    var $qualityLine = this.$wrap_tpl_quality.find('.fe-quality-line'); 
+    var elInputline = $qualityLine.length ? ( 
+                        $qualityLine.is('.fe-numeric') ? $qualityLine.val().replace(/-/gi, '') : $qualityLine.val()
+                      ) : '';
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
@@ -152,14 +157,14 @@ Tw.CustomerEmailQuality.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
-      .done($.proxy(this._onSuccessRequest, this));
+      .done($.proxy(this._onSuccessRequest, this, $target));
   },
 
-  _onSuccessRequest: function (res) {
+  _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-quality_email').val());
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 

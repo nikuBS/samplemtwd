@@ -47,15 +47,16 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
   },
   _cancelAutoPrepay: function (e) {
+    var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
-      $.proxy(this._cancel, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $(e.currentTarget));
+      $.proxy(this._cancel, this, $target), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $target);
   },
-  _cancel: function () {
+  _cancel: function ($target) {
     var $api = this._getCancelApiName();
 
     this._apiService.request($api, {})
-      .done($.proxy(this._cancelSuccess, this))
-      .fail($.proxy(this._cancelFail, this));
+      .done($.proxy(this._cancelSuccess, this, $target))
+      .fail($.proxy(this._cancelFail, this, $target));
 
     this._popupService.close();
   },
@@ -68,15 +69,15 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     return $apiName;
   },
-  _cancelSuccess: function (res) {
+  _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel');
     } else {
-      this._cancelFail(res);
+      this._cancelFail($target, res);
     }
   },
-  _cancelFail: function (err) {
-    this._popupService.openAlert(err.msg, err.code);
+  _cancelFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setEventEachData: function (idx, target) {
     var $target = $(target);
@@ -84,18 +85,19 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       $target.addClass('none');
     }
   },
-  _setMoreData: function () {
+  _setMoreData: function (e) {
     if (this._page < this._totalPage) {
       this._page++;
-      this._setAutoMoreData();
+      this._setAutoMoreData(e);
     }
   },
-  _setAutoMoreData: function () {
+  _setAutoMoreData: function (e) {
+    var $target = $(e.currentTarget);
     var $api = this._getHistoryApiName();
 
     this._apiService.request($api, { pageNo: this._page, listSize: this._defaultCnt })
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
+      .done($.proxy(this._getSuccess, this, $target))
+      .fail($.proxy(this._getFail, this, $target));
   },
   _getHistoryApiName: function () {
     var $apiName = '';
@@ -106,7 +108,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     return $apiName;
   },
-  _getSuccess: function (res) {
+  _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $result = res.result;
       var $record = [];
@@ -120,7 +122,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
         this._setData($record);
       }
     } else {
-      this._getFail(res);
+      this._getFail($target, res);
     }
   },
   _setData: function ($record) {
@@ -152,8 +154,8 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     this._setHiddenMoreBtn();
   },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _getFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {

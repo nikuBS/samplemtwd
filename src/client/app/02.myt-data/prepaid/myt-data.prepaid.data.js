@@ -186,9 +186,10 @@ Tw.MyTDataPrepaidData.prototype = {
       reqData.emailYn = 'Y';
     }
 
+    var $targetBtn = $layer.find('.fe-recharge');
     this._apiService.request(Tw.API_CMD.BFF_06_0058, reqData)
-      .done($.proxy(this._rechargeSuccess, this))
-      .fail($.proxy(this._rechargeFail, this));
+      .done($.proxy(this._rechargeSuccess, this, $targetBtn))
+      .fail($.proxy(this._rechargeFail, this, $targetBtn));
   },
   _makeRequestData: function () {
     return {
@@ -200,16 +201,16 @@ Tw.MyTDataPrepaidData.prototype = {
       pwd: $.trim(this.$cardPw.val())
     };
   },
-  _rechargeSuccess: function (res) {
+  _rechargeSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isRechargeSuccess = true;
       this._popupService.close();
     } else {
-      this._rechargeFail(res);
+      this._rechargeFail($target, res);
     }
   },
-  _rechargeFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _rechargeFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _close: function () {
     this._popupService.close();

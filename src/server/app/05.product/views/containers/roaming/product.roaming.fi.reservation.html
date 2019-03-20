@@ -441,7 +441,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFiReservation($('.wrap'));
+    new Tw.ProductRoamingFiReservation($('.wrap'), '<%= formatDate.minDate %>');
   });
 </script>
 

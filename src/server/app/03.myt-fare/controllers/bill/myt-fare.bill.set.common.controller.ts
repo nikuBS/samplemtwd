@@ -166,7 +166,7 @@ abstract class MyTFareBillSetCommon extends TwViewController {
       this.pushBillInfo(billArr, 'H');
     }
 
-    // T월드 확인, 이메일, 우편은 함께 받는 안내서가 없다.
+    // T world 확인, 이메일, 우편은 함께 받는 안내서가 없다.
     if (billArr.length === 1 && ['P', '2', '1'].indexOf(curBillType) === -1) {
       this.pushBillInfo(billArr, 'X');
     }

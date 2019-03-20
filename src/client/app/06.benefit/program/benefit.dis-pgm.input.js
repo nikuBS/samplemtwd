@@ -128,15 +128,17 @@ Tw.BenefitDisPgmInput.prototype = {
         basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
           this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, $.proxy(this._bindJoinResPopup, this), null , 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
   _bindJoinResPopup: function ($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click','.btn-floating.tw-popup-closeBtn', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+
   },
+
 
   _closeAndGo: function (e) {
     e.preventDefault();
@@ -146,18 +148,8 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _closePop: function () {
-    this._popupService.close();
-  },
-
-  _onClosePop: function () {
-    if ( this._selType ) {
-      this._historyService.go(-2);
-    }
-    else {
-      // DV001-17167 goBack 사용 시 input 화면에서 빈화면으로 머무르는 이슈 발생.
-      this._historyService.reload( this._historyService.goBack());
-    }
+    this._historyService.replaceURL('/product/callplan?prod_id='+this._prodId);
+    this._popupService.closeAllAndGo('/product/callplan?prod_id='+this._prodId);
   }
-
 };
 

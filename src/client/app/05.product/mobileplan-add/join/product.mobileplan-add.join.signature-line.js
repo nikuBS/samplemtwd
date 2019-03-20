@@ -117,8 +117,10 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   _toggleNumAddBtn: function() {
     if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
+      this.$btnAddNum.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
+      this.$btnAddNum.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 

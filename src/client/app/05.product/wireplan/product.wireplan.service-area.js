@@ -23,8 +23,8 @@ Tw.ProductWireServiceArea.prototype = {
     this.$submitBtn = this.$container.find('#fe-submit');
   },
 
-  _openPostcode: function() {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+  _openPostcode: function(e) {
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._handleChangeAddress, this));
   },
 
   _handleChangeAddress: function(result) {

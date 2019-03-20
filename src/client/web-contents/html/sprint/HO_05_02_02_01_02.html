@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page tw-popup fixed-bottom"><!-- 2019.03.18 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -79,11 +79,15 @@
                     </div>
                     <!--// .cont-box -->
 
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button>신청하기</button>
-                        </li>
-                    </ul>
+                    <!--2019.03.18 수정-->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button disabled="disabled">신청하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--//2019.03.18 수정-->
                 </div>
             </div>
             <!--// .container-wrap -->

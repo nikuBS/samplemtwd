@@ -25,10 +25,12 @@ class MembershipBenefitBrand extends TwViewController {
   private PAGE_SIZE: number = 20;
   private cateCd;
   private ordCol;
+  private subTabCd;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.cateCd = req.query.cateCd || '00'; // 전체순
     this.ordCol = req.query.ordCol || 'L';  // 좋아요순
+    this.subTabCd = req.query.subTabCd || '';  // 전체 등급
 
     Observable.combineLatest(
       this.reqCateList(),
@@ -58,6 +60,7 @@ class MembershipBenefitBrand extends TwViewController {
         hasMore,
         isLogin: !FormatHelper.isEmpty(svcInfo),
         selectedCateCd: this.cateCd,
+        selectedSubTabCd: this.subTabCd,
         noMembership: false
       };
 
@@ -80,12 +83,16 @@ class MembershipBenefitBrand extends TwViewController {
   }
 
   private reqBrandList(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_11_0017, {
+    const params = {
       pageNo: this.PAGE_NO,
       pageSize: this.PAGE_SIZE,
       cateCd: this.cateCd,
       ordCol: this.ordCol
-    });
+    };
+    if (this.cateCd === '00') {
+      params['subTabCd'] = this.subTabCd;
+    }
+    return this.apiService.request(API_CMD.BFF_11_0017, params);
   }
 
   private reqMembershipInfo(): Observable<any> {

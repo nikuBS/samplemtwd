@@ -42,6 +42,17 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
     this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
     this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._inputFileChooser, this));
+    this.wrap_service.on('click', '.fe-remove-file', $.proxy(this._removeFileList, this, 'service'))
+    this.wrap_quality.on('click', '.fe-remove-file', $.proxy(this._removeFileList, this, 'quality'))
+  },
+  _removeFileList: function (type, e) {    
+    var fileIdx = $(e.currentTarget).parentsUntil('li').last().parent().index();
+    if (type === 'service') {
+      this.serviceUploadFiles.splice(fileIdx, 1);
+    } else {
+      this.qualityUploadFiles.splice(fileIdx, 1);
+    }
+    this.$container.find('.filename-list li').eq(fileIdx).remove();
   },
 
   _openCustomFileChooser: function (e) {
@@ -76,21 +87,21 @@ Tw.CustomerEmailUpload.prototype = {
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
       return this._popupService.openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE, 
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, null, null, 
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, null, null, null,
         $target
       );
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
       return this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_FILE, 
         Tw.POPUP_TITLE.NOTIFY,
-        null, null,
+        null, null, null, 
         $target
       );
     } else {
       return this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.INVALID_FILE, 
         Tw.POPUP_TITLE.NOTIFY,
-        null, null, 
+        null, null, null,
         $target
       );
     }
@@ -172,13 +183,13 @@ Tw.CustomerEmailUpload.prototype = {
       // 파일 첨부된 갯수가 있으면 마지막 줄에 포커스
       this.$container.find('input[type=file]').eq(0).focus();
     } else {
-      // 파일 첨부된 갯수가 없으면 팝업에 포커스
-      $('.fe-wrap-file-upload').attr('tabindex',-1).focus();
+      // 파일 첨부된 갯수가 없으면 팝업 제목에 포커스
+      $('.fe-wrap-file-upload').find('h1').attr('tabindex',-1).focus();
     }
   },
 
   _onClickServiceUpload: function () {
-    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
+    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       this._popupService.open({
@@ -191,7 +202,7 @@ Tw.CustomerEmailUpload.prototype = {
           style_class: 'bt-red1 pos-right tw-popup-closeBtn',
           txt: Tw.BUTTON_LABEL.CONFIRM
         }]
-      }, $.proxy(this._bindAlertPopupClose, this), null);
+      }, $.proxy(this._bindAlertPopupClose, this), null, null, $(e.currentTarget));
       return false;
     }
 
@@ -200,7 +211,7 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickQualityUpload: function () {
-    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
+    if (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) {
       // Not Supported File Upload
       // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       this._popupService.open({
@@ -213,7 +224,7 @@ Tw.CustomerEmailUpload.prototype = {
           style_class: 'bt-red1 pos-right tw-popup-closeBtn',
           txt: Tw.BUTTON_LABEL.CONFIRM
         }]
-      }, $.proxy(this._bindAlertPopupClose, this), null);
+      }, $.proxy(this._bindAlertPopupClose, this), null, null, $(e.currentTarget));
       return false;
     }
 
@@ -236,15 +247,14 @@ Tw.CustomerEmailUpload.prototype = {
 
   _hideUploadPopup: function () {
     $('.fe-wrap-file-upload').remove();
-    // 웹접근성 닫히고 포커스
+    // 웹 접근성 닫고 포커스
     $('.fe-page-wrap, .skip_navi').attr('aria-hidden', false);
-    $('.fe-upload-file-service').focus();
+    $('.fe-upload-file-service').attr('tabindex',0).focus();
   },
 
   _successUploadFile: function (res) {
-    this._hideUploadPopup();
 
-    if ( res.code === Tw.API_CODE.CODE_00 || this._isLowerVersionAndroid() ) {
+    if ( this._isLowerVersionAndroid() || (res && res.code === Tw.API_CODE.CODE_00) ) {
       if ( this._getCurrentType() === 'service' ) {
         this.serviceUploadFiles = this.uploadFiles.slice(0);
         if ( this._isLowerVersionAndroid() ) {
@@ -276,6 +286,8 @@ Tw.CustomerEmailUpload.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+
+    this._hideUploadPopup();
   },
 
   _checkUploadButton: function () {

@@ -58,7 +58,6 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-
             </div>
         </div>
         <!--// #contents -->
@@ -81,6 +80,11 @@
                         ]
                     }
                 ]
+            }, function () {        //@190318 수정: h1 태그가 없을때 li 처음항목에 focus
+                var $dialog = $('.wrap > .popup,.wrap > .popup-page');                
+                if($dialog.find('h1').length == 0){
+                    $dialog.find('li').eq(0).attr('z-index', '-1').focus();
+                }
             });
         });
     </script>

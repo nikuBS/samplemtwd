@@ -127,6 +127,7 @@ Tw.API_CMD = {
   BFF_05_0036: { path: '/core-bill/:version/bill-pay/bills', method: Tw.API_METHOD.GET },
   BFF_05_0038: { path: '/core-bill/:version/bill-pay/donation', method: Tw.API_METHOD.GET },
   BFF_05_0039_N: { path: '/core-bill/:version/bill-types-return', method: Tw.API_METHOD.GET },
+  BFF_05_0040: { path: '/core-product/:version/services/wireless/addition/:args0', method: Tw.API_METHOD.GET },
   BFF_05_0044: { path: '/core-bill/:version/bill-pay/roaming', method: Tw.API_METHOD.GET },
   BFF_05_0045: { path: '/core-bill/:version/bill-pay/call-gift', method: Tw.API_METHOD.GET },
   BFF_05_0047: { path: '/core-bill/:version/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
@@ -394,6 +395,9 @@ Tw.API_CMD = {
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
 
+  BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
+  BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
+
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
   BFF_09_0002: { path: '/core-membership/:version/event/detail/:args0', method: Tw.API_METHOD.GET },
@@ -444,6 +448,7 @@ Tw.API_CMD = {
   BFF_10_0093: { path: '/core-product/:version/submain/tapps', method: Tw.API_METHOD.GET },
   BFF_10_0099: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0100: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
+  BFF_10_0109: { path: '/core-product/:version/services/wire/addition/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/:version/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
   BFF_10_0137: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0138: { path: '/core-product/:version/wire/additions/:args0/joins/reservations', method: Tw.API_METHOD.DELETE },
@@ -564,7 +569,7 @@ Tw.NODE_CMD = {
 };
 
 Tw.SESSION_CMD = {
-  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
+  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_04_0001' },
   BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' }
 };
 

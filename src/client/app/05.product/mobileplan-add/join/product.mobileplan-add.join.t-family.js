@@ -151,8 +151,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   _toggleJoinCheckBtn: function() {
     if (this.$inputNumber.val().length > 9 && this.$inputBirth.val().length === 8) {
       this.$btnCheckJoin.removeAttr('disabled').prop('disabled', false);
+      this.$btnCheckJoin.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       this.$btnCheckJoin.attr('disabled', 'disabled').prop('disabled', true);
+      this.$btnCheckJoin.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 

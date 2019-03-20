@@ -77,23 +77,23 @@ Tw.MyTFareBillOption.prototype = {
     var date = $selectedValue.parents('label').text().replace(Tw.PERIOD_UNIT.DAYS, '');
 
     this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyClCd: code })
-      .done($.proxy(this._changeSuccess, this, date))
-      .fail($.proxy(this._changeFail, this));
+      .done($.proxy(this._changeSuccess, this, date, $selectedValue))
+      .fail($.proxy(this._changeFail, this, $selectedValue));
 
     this._popupService.close();
   },
-  _changeSuccess: function (date, res) {
+  _changeSuccess: function (date, $target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this.$container.find('.fe-pay-date').text(date);
       this.$container.find('.fe-change-date').hide();
 
       this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_DATE);
     } else {
-      this._changeFail(res);
+      this._changeFail($target, res);
     }
   },
-  _changeFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _changeFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _changeAddress: function () {
     this._historyService.goLoad('/myt-fare/bill/option/change-address');

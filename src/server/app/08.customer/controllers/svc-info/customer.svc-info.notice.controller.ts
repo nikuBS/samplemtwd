@@ -24,7 +24,7 @@ class CustomerSvcInfoNotice extends TwViewController {
   private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming']; // 허용되는 카테고리 변수 값
   private _baseUrl = '/customer/svc-info/notice'; // 페이지 URL
   private _categoryApis = { // 각 카테고리 별 사용 API BFF No.
-    tworld: API_CMD.BFF_08_0029,  // T월드
+    tworld: API_CMD.BFF_08_0029,  // T world
     directshop: API_CMD.BFF_08_0039,  // T다이렉트
     membership: API_CMD.BFF_08_0031,  // T멤버쉽
     roaming: API_CMD.BFF_08_0040  // T로밍
@@ -48,7 +48,7 @@ class CustomerSvcInfoNotice extends TwViewController {
    */
   private _convertListItem(content) {
     return content.map(item => {
-      if (this._category === 'tworld') {  // T월드 일때는 응답 변수값이 달라서 분기 처리
+      if (this._category === 'tworld') {  // T world 일때는 응답 변수값이 달라서 분기 처리
         return Object.assign(item, {
           title: item.ntcTitNm, // 제목
           date: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.D.'),  // 날짜 포맷 처리
@@ -76,7 +76,7 @@ class CustomerSvcInfoNotice extends TwViewController {
       size: 10
     };
 
-    // T월드 요청시에만 추가 파라미터가 필요하다.
+    // T world 요청시에만 추가 파라미터가 필요하다.
     if (this._category === 'tworld') {
       params = Object.assign({
         expsChnlCd: tworldChannel
@@ -87,7 +87,7 @@ class CustomerSvcInfoNotice extends TwViewController {
   }
 
   /**
-   * T월드 공지사항 목록 API 요청시 채널값 분기 처리
+   * T world 공지사항 목록 API 요청시 채널값 분기 처리
    * @param isAndroid
    * @param isIos
    * @private
@@ -122,7 +122,7 @@ class CustomerSvcInfoNotice extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    // T월드 카테고리 일때만 채널 값 계산
+    // T world 카테고리 일때만 채널 값 계산
     const tworldChannel: any = this._category === 'tworld' ? this._getTworldChannel(BrowserHelper.isAndroid(req), BrowserHelper.isIos(req)) : null;
 
     // 공지사항 API 요청
@@ -138,7 +138,7 @@ class CustomerSvcInfoNotice extends TwViewController {
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],  // 카테고리 값에 대한 텍스트
           data: this._convertData(data.result), // 목록 데이터
           paging: CommonHelper.getPaging(this._baseUrl, 10, 3, page, data.result.totalElements),  // 목록 페이징
-          tworldChannel: tworldChannel  // T월드 채널 정보 client에 전달
+          tworldChannel: tworldChannel  // T world 채널 정보 client에 전달
         }));
       });
   }

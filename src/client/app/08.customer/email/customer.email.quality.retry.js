@@ -89,7 +89,7 @@ Tw.CustomerEmailQualityRetry.prototype = {
     }
   },
 
-  _stepBack: function () {
+  _stepBack: function (e) {
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -104,7 +104,8 @@ Tw.CustomerEmailQualityRetry.prototype = {
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
+      Tw.BUTTON_LABEL.YES,
+      $(e.currentTarget)
     );
   }
 };

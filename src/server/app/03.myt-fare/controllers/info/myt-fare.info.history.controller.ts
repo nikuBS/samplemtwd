@@ -287,6 +287,8 @@ class MyTFareInfoHistory extends TwViewController {
           o.dataDt = DateHelper.getShortDate(o.opDt);
           o.listTitle = o.payMthdCdNm; 
           o.dataAmt = FormatHelper.addComma(o.payAmt);
+          // 포인트 케이스 15 or BB 로 시작될 경우로 확인
+          o.isPoint = (o.payMthdCd === '15' || o.payMthdCd.indexOf('BB') >= 0);
           o.noLink = true;
         });
       }

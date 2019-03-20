@@ -6,12 +6,12 @@
 <script id="fe-home-quick" type="text/x-handlebars-template">
     <ul class="quick-menu-list">
         {{#each list}}
-        <li><button data-url="{{menuUrl}}" class="bt fe-home-internal"><i><img src="<%= cdn %>{{iconImgFilePathNm}}" alt="" data-xt_eid="CMMA_A2_B6-22" data-xt_csid="NO" data-xt_action="BC"></i><span class="tit">{{menuNm}}</span></button></li>
+        <li><button data-url="{{menuUrl}}" class="bt fe-home-internal" data-xt_eid="{{../quick_xt_eid}}" data-xt_csid="NO" data-xt_action="BC"><i><img src="<%= cdn %>{{iconImgFilePathNm}}" alt=""></i><span class="tit">{{menuNm}}</span></button></li>
         {{/each}}
     </ul>
     {{#if enableEdit}}
     <div class="btn-area">
-        <button class="bt-link-tx underline fe-bt-quick-edit" data-xt_eid="CMMA_A2_B6-66" data-xt_csid="NO" data-xt_action="BC">바로가기 편집</button>
+        <button class="bt-link-tx underline fe-bt-quick-edit" data-xt_eid="{{edit_xt_eid}}" data-xt_csid="NO" data-xt_action="BC">바로가기 편집</button>
     </div>
     {{/if}}
 </script>
@@ -20,7 +20,7 @@
     <ul class="quick-menu-list">
         <li class="add-type">
             <button class="add-bt fe-bt-quick-edit">
-                <i class="icon-add-56"><span class="blind">추가</span></i>
+                <i class="icon-add-56" data-xt_eid="{{edit_xt_eid}}" data-xt_csid="NO" data-xt_action="BC"><span class="blind">추가</span></i>
                 자주 찾는 메뉴를 MY 바로가기에 추가해 보세요.
             </button>
         </li>

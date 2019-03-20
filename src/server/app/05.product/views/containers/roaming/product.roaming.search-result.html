@@ -84,7 +84,7 @@
                         <!--<% } %>-->
                     <!--</ul>-->
                     <!-- //2019.03.14 내용삭제-->
-                    <h4 class="txt pt40">로밍 서비스 방식별 종량요금 안내</h4>
+                    <h4 class="txt">로밍 서비스 방식별 종량요금 안내</h4>
                     <div class="cont-noti">
                         <span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/>
                             <strong class="fe-rm-type"></strong>입니다.</span>
@@ -133,7 +133,7 @@
                     <div class="widget">
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
-                                <ul class="horizontal-list useful-goods">
+                                <ul class="horizontal-list useful-goods pr20">
                                     <li class="fe-rm-asiapass">
                                         <div class="box-wrap">
                                             <div class="bg1"> <!-- 보라색 -->
@@ -175,7 +175,7 @@
                     <div class="widget">
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
-                                <ul class="horizontal-list useful-goods">
+                                <ul class="horizontal-list useful-goods pr20">
                                     <li>
                                         <div>
                                             <button class="bg3 fe-rmplan-btn"> <!-- 보라색 -->
@@ -202,19 +202,30 @@
                                             </button>
                                         </div>
                                     </li>
-                                    <!--<li>-->
-                                        <!--<div>-->
-                                            <!--<button class="bg3 fe-rm-card"> &lt;!&ndash; 보라색 &ndash;&gt;-->
-                                                <!--<span class="located top">-->
-														<!--<span class="txt-tit">로밍 카드/쿠폰</span>-->
-													<!--</span>-->
-                                                <!--<span class="located bottom">-->
-														<!--<span class="txt-detail">T로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>-->
-													<!--</span>-->
-                                                <!--&lt;!&ndash;<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>&ndash;&gt;-->
-                                            <!--</button>-->
-                                        <!--</div>-->
-                                    <!--</li>-->
+                                    <% if (!isPrd) { %>
+                                    <!-- 20190213 정윤정M 요청으로 로밍 카드/쿠폰 숨김
+                                    정윤정M comment
+                                        Grand open 시 적용은 맞는데...
+                                        BPCP 쪽 연동개발이 아직 완료되지 않아 아직 메뉴 오픈은 하지 않도록 요청드리고 있습니다.
+                                        연동 테스트까지 완료되면 전체적으로 관련 메뉴 오픈을 요청드리겠습니다.
+                                        그때 T로밍 카드/쿠폰 메뉴, 로밍 서브메인과 '국가별 로밍 요금 조회' 화면 검색 결과 하단에
+                                        '현명하게 즐기는 로밍 서비스' 영역에도 쿠폰/카드 배너가 노출 적용해 주시면 좋겠습니다.
+                                    -->
+                                    <!-- 20190318 정지훈M 요청으로 상용에서만 비노출 -->
+                                    <li>
+                                        <div>
+                                            <button class="bg3 fe-rm-card"> <!-- 보라색 -->
+                                                <span class="located top">
+														<span class="txt-tit">로밍 카드/쿠폰</span>
+													</span>
+                                                <span class="located bottom">
+														<span class="txt-detail">T로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
+													</span>
+                                                <!--<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>-->
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <% } %>
                                 </ul>
                             </div>
                         </div>

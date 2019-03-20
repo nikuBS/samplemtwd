@@ -33,7 +33,7 @@ Tw.MyTFareBillSmallSetUse.prototype = {
     }
   },
   _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    Tw.Error(err.code, err.msg).pop(null, this.$target);
   },
   _getUseStatus: function (tx) {
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})

@@ -243,16 +243,16 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     } else {
       if ( this._isCancel ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
-          .done($.proxy(this._onCompleteAlarm, this));
+          .done($.proxy(this._onCompleteAlarm, this, $target));
       }
     }
   },
 
-  _onCompleteAlarm: function (res) {
+  _onCompleteAlarm: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/prepaid/alarm-complete');
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 
@@ -260,7 +260,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A210, null, null, $.proxy(this._gotoSubmain, this), null, $target);
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      Tw.Error(res.code, res.msg).pop(null, $target);
     }
   },
 

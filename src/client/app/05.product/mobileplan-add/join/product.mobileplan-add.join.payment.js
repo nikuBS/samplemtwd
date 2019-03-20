@@ -20,6 +20,10 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._isFirstSend = false;
   this._nextEnableSendTime = null;
   this._validatedNumber = null;
+  this._receiveNum = null;
+  this._addTimer = null;
+  this._addTime = null;
+  this._seqNo = null;
 
   if (this._historyService.isBack()) {
     this._historyService.goBack();
@@ -33,10 +37,12 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
 };
 
 Tw.ProductMobileplanAddJoinPayment.prototype = {
+
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
       .done($.proxy(this._successGetAuthMethodBlock, this));
   },
+
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._authBlock = this._parseAuthBlock(resp.result);
@@ -46,6 +52,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
         null, $.proxy(this._onCloseBlockPopup, this));
     }
   },
+
   _parseAuthBlock: function (list) {
     var block = {};
     var today = new Date().getTime();
@@ -60,9 +67,11 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }, this));
     return block;
   },
+
   _onCloseBlockPopup: function () {
     this._historyService.goBack();
   },
+
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-input_num');
     this.$inputAuthCode = this.$container.find('.fe-input_auth_code');
@@ -70,8 +79,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnGetAuthCode = this.$container.find('.fe-btn_get_auth_code');
     this.$btnValidate = this.$container.find('.fe-btn_validate');
+    this.$btnExtend = this.$container.find('.fe-btn_extend');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
 
+    this.$smsTime = this.$container.find('.fe-sms_time');
     this.$sendMsgResult = this.$container.find('.fe-send_msg_result');
     this.$validateResult = this.$container.find('.fe-validate_result');
   },
@@ -82,6 +93,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
     this.$inputAuthCode.on('keyup input', $.proxy(this._detectInputAuthCode, this));
 
+    this.$btnExtend.on('click', $.proxy(this._extendTime, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnGetAuthCode.on('click', $.proxy(this._getAuthCode, this));
     this.$btnValidate.on('click', $.proxy(this._reqValidateAuthCode, this));
@@ -108,6 +120,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    this.$inputNumber.attr('aria-describedby', '');
+
     if (this._isFirstSend && (new Date().getTime() > this._expireSendTime) && this._sendCount > 4) {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
     }
@@ -117,20 +131,44 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this.$sendMsgResult.hide().attr('aria-hidden', 'true');
+    this._receiveNum = number;
+
+    this._getAuthCodeReq(false);
+  },
+
+  _getAuthCodeReq: function(isExtend) {
     this._apiService.request(Tw.API_CMD.BFF_01_0059, {
       jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPR2_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
-      receiverNum: number
-    }).done($.proxy(this._resAuthCode, this));
+      receiverNum: this._receiveNum
+    }).done($.proxy(this._resAuthCode, this, isExtend));
   },
 
   _setSendResultText: function(isError, text) {
     this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$sendMsgResult.show().attr('aria-hidden', 'false');
+    this.$sendMsgResult.show().attr('aria-hidden', 'false').focus();
+    this.$inputNumber.attr('aria-describedby', 'aria-sms-exp-desc1');
   },
 
-  _resAuthCode: function(resp) {
+  _extendTime: function() {
+    this._apiService.request(Tw.API_CMD.BFF_03_0027, {
+      seqNo: this._seqNo
+    }).done($.proxy(this._resAuthCode, this, true));
+  },
+
+  _showTimer: function (startTime) {
+    var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
+
+    this.$smsTime.text(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$smsTime.show().attr('aria-hidden', 'false');
+
+    if ( remainedSec <= 0 ) {
+      clearInterval(this._addTimer);
+    }
+  },
+
+  _resAuthCode: function(isExtend, resp) {
     if (resp.code === 'ATH2003') {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.WAIT_NEXT_TIME);
     }
@@ -139,11 +177,32 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return this._setSendResultText(true, Tw.SMS_VALIDATION.EXPIRE_NEXT_TIME);
     }
 
+    if (resp.code === 'ATH1221') {
+      return this._setValidateResultText(true, Tw.SMS_VALIDATION.ATH1221);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._setSendResultText(true, resp.msg);
     }
 
-    this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+    if ( !isExtend ) {
+      this._isSend = true;
+      this._seqNo = resp.result.seqNo;
+      this.$inputAuthCode.val('');
+      this.$btnGetAuthCode.text(Tw.BUTTON_LABEL.SMS_RESEND);
+      this._toggleButton(this.$btnExtend, true);
+      this._toggleButton(this.$btnValidate, false);
+      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+    } else {
+      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
+    }
+
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearInterval(this._addTimer);
+    }
+
+    this._addTime = new Date();
+    this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
 
     this._sendCount++;
     this._nextEnableSendTime = new Date().getTime() + 60000;
@@ -178,12 +237,18 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _resValidateAuthCode: function(resp) {
+    this.$inputAuthCode.attr('aria-describedby', '');
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._setValidateResultText(true, this._replaceErrMsg(resp.code, resp.msg));
     }
 
     this._isSend = false;
     this._validatedNumber = this.$inputNumber.val().replace(/-/gi, '');
+
+    clearInterval(this._addTimer);
+    this.$smsTime.hide().attr('aria-hidden', 'true');
+    this._toggleButton(this.$btnExtend, false);
 
     this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS);
     this._toggleButton(this.$btnValidate, false);
@@ -218,14 +283,15 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$validateResult.show().attr('aria-hidden', 'false');
+    this.$validateResult.show().attr('aria-hidden', 'false').focus();
+    this.$inputAuthCode.attr('aria-describedby', 'aria-sms-exp-desc2');
   },
 
   _toggleButton: function($button, isEnable) {
     if (isEnable) {
-      $button.removeAttr('disabled').prop('disabled', false);
+      $button.removeAttr('disabled').removeClass('disabled').prop('disabled', false);
     } else {
-      $button.attr('disabled', 'disabled').prop('disabled', true);
+      $button.attr('disabled', 'disabled').addClass('disabled').prop('disabled', true);
     }
   },
 
@@ -250,6 +316,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     $input.val('');
+    $input.parents('.form-cell').find('.fe-msg').hide();
     $btnClear.hide().attr('aria-hidden', 'true');
   },
 

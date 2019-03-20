@@ -59,35 +59,39 @@ export default class CustomerResearches extends TwViewController {
         : undefined;
 
       return {
-        researches: resp.result.map(research => {
-          const examples: Array<{}> = [];
-          let i = 1,
-            exam = research['exCtt' + i],
-            hasHtml = false;
+        researches: resp.result
+          .map(research => {
+            const examples: Array<{}> = [];
+            let i = 1,
+              exam = research['exCtt' + i],
+              hasHtml = false;
 
-          while (exam) {
-            const isEtc = exam === 'QSTNETC';
-            hasHtml = hasHtml || research['motExCtt' + i];
+            while (exam) {
+              const isEtc = exam === 'QSTNETC';
+              hasHtml = hasHtml || research['motExCtt' + i];
 
-            examples.push({
-              content: isEtc ? ETC_CENTER : exam || '',
-              image: research['exImgFilePathNm' + i],
-              motHtml: research['motExCtt' + i],
-              isEtc
-            });
-            i++;
-            exam = research['exCtt' + i];
-          }
+              examples.push({
+                content: isEtc ? ETC_CENTER : exam || '',
+                image: research['exImgFilePathNm' + i],
+                motHtml: research['motExCtt' + i],
+                isEtc
+              });
+              i++;
+              exam = research['exCtt' + i];
+            }
 
-          return {
-            ...research,
-            examples,
-            hasHtml,
-            staDtm: DateHelper.getShortDate(research.staDtm),
-            endDtm: DateHelper.getShortDate(research.endDtm),
-            isProceeding: DateHelper.getDifference(research.endDtm) > 0
-          };
-        }),
+            return {
+              ...research,
+              examples,
+              hasHtml,
+              staDtm: DateHelper.getShortDate(research.staDtm),
+              endDtm: DateHelper.getShortDate(research.endDtm),
+              isProceeding: DateHelper.getDifference(research.endDtm) > 0
+            };
+          })
+          .filter(research => {
+            return research.bnnrRsrchTypCd !== 'R' || research.isProceeding;
+          }),
         showCount: quizIdx && quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
       };
     });

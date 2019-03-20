@@ -7,8 +7,8 @@
     {{#if showData}}
     <div class="main-fee-box">
         <div class="fee-cont">
-            <a href="/myt-fare/submain" class="tit">나의 요금을 확인해 보세요</a>
-            <a href="/myt-fare/billguide/guide" class="fee-info">
+            <a href="/myt-fare/submain" class="tit" data-xt_eid="CMMA_A2_B6-12" data-xt_csid="NO" data-xt_action="BC">나의 요금을 확인해 보세요</a>
+            <a href="/myt-fare/billguide/guide" class="fee-info" data-xt_eid="CMMA_A2_B6-29" data-xt_csid="NO" data-xt_action="BC">
                 <p class="target">
                     {{#if isActRep}}
                     <span class="tit">{{billMonth}}월 청구요금</span>
@@ -22,17 +22,17 @@
         </div>
         <div class="btn-area">
             {{#if isActRep}}
-            <button id="fe-bt-payment" class="bt" data-svcattrcd="<%= svcInfo.svcAttrCd %>">납부하기</button>
-            <a href="/myt-fare/bill/hotbill" class="bt">실시간 이용요금</a>
+            <button id="fe-bt-payment" class="bt" data-svcattrcd="<%= svcInfo.svcAttrCd %>" data-xt_eid="CMMA_A2_B6-30" data-xt_csid="NO" data-xt_action="BC">납부하기</button>
+            <a href="/myt-fare/bill/hotbill" class="bt" data-xt_eid="CMMA_A2_B6-31" data-xt_csid="NO" data-xt_action="BC">실시간 이용요금</a>
             {{else}}
-            <a href="/myt-fare/bill/hotbill" class="bt full">실시간 이용요금</a>
+            <a href="/myt-fare/bill/hotbill" class="bt full" data-xt_eid="CMMA_A2_B6-31" data-xt_csid="NO" data-xt_action="BC">실시간 이용요금</a>
             {{/if}}
         </div>
     </div>
     {{else}}
     <div class="main-fee-box">
         <div class="fee-cont">
-            <a href="/myt-fare/submain" class="tit">나의 요금을 확인해 보세요</a>
+            <a href="/myt-fare/submain" class="tit" data-xt_eid="CMMA_A2_B6-12" data-xt_csid="NO" data-xt_action="BC">나의 요금을 확인해 보세요</a>
             <div class="fee-info">
                 <p class="target">
                     지난 달 이용요금이 없습니다<br>요금안내서가 발행되면 알려드릴게요.
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="btn-area">
-            <a href="/myt-fare/bill/hotbill" class="bt full">실시간 이용요금</a>
+            <a href="/myt-fare/bill/hotbill" class="bt full" data-xt_eid="CMMA_A2_B6-31" data-xt_csid="NO" data-xt_action="BC">실시간 이용요금</a>
         </div>
     </div>
     {{/if}}
