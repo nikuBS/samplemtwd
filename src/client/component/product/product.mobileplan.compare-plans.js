@@ -206,7 +206,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       joinTermCd: '01'
     }, null, [this._prodId])
       .done($.proxy(this._goJoinDone, this, joinUrl))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _goJoinDone: function (href, resp) {

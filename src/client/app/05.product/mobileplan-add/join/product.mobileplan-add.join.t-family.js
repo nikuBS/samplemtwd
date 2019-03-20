@@ -205,7 +205,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
     }).done($.proxy(this._procCheckJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procCheckJoinRes: function(resp) {
@@ -354,7 +354,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0173, {
       memberSvcNumList: this._getSvcNumList()
     }, {}, []).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

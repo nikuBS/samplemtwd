@@ -83,7 +83,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       opClCd: '1',
       asgnNum: number
     }, {}).done($.proxy(this._addDelNumRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _addDelNumRes: function(resp) {
@@ -121,7 +121,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _detectInputNumber: function(e) {
@@ -179,7 +179,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       asgnNum: number.replace(/-/gi, ''),
       frBestAsgnNum: this._frBestAsgnNum
     }).done($.proxy(this._toggleFriendRes, this, number))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _toggleFriendRes: function(number, resp) {

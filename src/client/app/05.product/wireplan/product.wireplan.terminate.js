@@ -102,7 +102,7 @@ Tw.ProductWireplanTerminate.prototype = {
         [this._prodId]
       )
       .done($.proxy(this._procTerminateRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procTerminateRes: function(resp) {

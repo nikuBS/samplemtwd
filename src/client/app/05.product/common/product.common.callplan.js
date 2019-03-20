@@ -310,7 +310,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _detectBpcp: function(e) {
@@ -442,7 +442,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
       .done($.proxy(this._procAdvanceCheck, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _setGoMemberLine: function() {

@@ -109,7 +109,7 @@ Tw.ProductWireplanJoinShowSender.prototype = {
       svcProdGrpCd: this._btnData.svcProdGrpCd,
       opCtt1: this.$container.find('input[type=radio]:checked').val()
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {
