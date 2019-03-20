@@ -27,7 +27,11 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    this._getUseBillsInfo();
+    if(this.resData.billpayInfo && this.resData.billpayInfo.paidAmtDetailList){
+      this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
+    }
+
+    // this._getUseBillsInfo();
 
     // this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
@@ -203,7 +207,7 @@ Tw.MyTFareBillGuideChild.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var useAmtDetailInfo = $.extend(true, {}, res.result.useAmtDetailInfo);
+      var useAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);

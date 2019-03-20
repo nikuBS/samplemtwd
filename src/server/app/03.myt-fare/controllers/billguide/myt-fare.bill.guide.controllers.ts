@@ -21,7 +21,7 @@ class MyTFareBillGuide extends TwViewController {
   public reqQuery: any;  // 쿼리스트링
   public pageInfo: any;
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
-  // private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
+  private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
   private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
   private _unpaidBillsInfo: any = {}; // 미납내역 조회 | BFF_05_0030
   private _childLineInfo: any = {}; // 자녀회선 조회 | BFF_05_0024
@@ -101,6 +101,15 @@ class MyTFareBillGuide extends TwViewController {
     this.logger.info(this, '[ childInfo ] : ', childInfo);
     allSvc = allSvc || { 's': [], 'o': [], 'm': [] };
 
+    if ( svcInfo.actCoClCd === 'B' ) {
+      thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', svcInfo.actCoClCd);
+      thisMain._typeChk = 'A3';
+      // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
+      // thisMain.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
+      thisMain.skbroadbandCircuit(res, svcInfo);
+      return;
+    }
+
     // ---------------------------------------------------------------------------------[화면 구분]
     /*
     * A1. 선불폰 | svcInfo.svcAttrCd : M2
@@ -130,126 +139,135 @@ class MyTFareBillGuide extends TwViewController {
 
     }
 
-    const reqArr: Array<any> = [
-      this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, { invDt: this.reqQuery.date }), 'p1'),
-      this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2')
-    ];
+    const reqArr: Array<any> = [];
 
-    // line이 있는 경우 : 통합청구화면(대표)에서 특정회선을 조회한 경우
-    // actRepYn 'N' 인 경우 : 현재 세션이 통합청구으로 묶인 회선 (대표X)
-    if ( this.reqQuery.line || svcInfo.actRepYn === 'N' ) {
-      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
+    if ( svcInfo.actRepYn === 'Y' ) {
+      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {
         invDt: this.reqQuery.date,
-        sSvcMgmtNum: this.reqQuery.line
-      }), 'p3'));
+        selSvcMgmtNum : this.reqQuery.line
+      }), 'p1'));
+      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));
+
+    } else {
+      reqArr.push((this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
+        invDt: this.reqQuery.date,
+        selSvcMgmtNum: this.reqQuery.line
+      }), 'p11')));
     }
+
+
+    this._childLineInfo = childInfo;
 
     this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
 
     Promise.all(reqArr).then(function(resArr) {
       thisMain.logger.info(thisMain, `[ Promise.all > success ] : `, resArr);
+      try {
 
-      thisMain._billpayInfo = resArr[0].result;
-      thisMain._intBillLineInfo = resArr[1].result;
-
-      if ( thisMain._billpayInfo.coClCd === 'B' ) {
-        thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
-        thisMain._typeChk = 'A3';
-        // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
-        // thisMain.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
-        thisMain.skbroadbandCircuit(res, svcInfo);
-      }
-
-      if ( resArr.length === 3 ) {
-        thisMain._billpayInfo = resArr[2].result;
-      }
-
-      let viewName ;
-
-      // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
-      // if (thisMain._billpayInfo.coClCd === 'B') {
-      //   thisMain._billpayInfo = Object.assign({
-      //     coClCd: thisMain._billpayInfo.coClCd
-      //   }, resArr[0].result);
-      // }
-
-      thisMain._childLineInfo = childInfo;
-
-      thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.discount =
-        (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
-      thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
-
-      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
-      thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
-
-      const data = {
-        reqQuery: thisMain.reqQuery,
-        svcInfo: svcInfo,
-        pageInfo: thisMain.pageInfo,
-        billpayInfo: thisMain._billpayInfo,
-        commDataInfo: thisMain._commDataInfo,
-        intBillLineInfo: thisMain._intBillLineInfo,
-        childLineInfo: thisMain._childLineInfo,
-        allSvc: allSvc
-      };
-
-
-
-      if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
-
-        thisMain.logger.info(thisMain, '[ 개별청구회선 ]', thisMain._billpayInfo.paidAmtMonthSvcCnt);
-        thisMain._typeChk = 'A4';
-
-        thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-        // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-        // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
-
-        viewName = thisMain._urlTplInfo.individualPage;
-        data['showConditionInfo'] = thisMain._showConditionInfo;
-
-
-      } else {
-
-        // 조회시 대표청구회선이거나 || 세션이 대표청구회선이면서 조회회선을 조회했을 경우
-        if ( thisMain._billpayInfo.repSvcYn === 'Y' || (svcInfo.actRepYn === 'Y' && thisMain.reqQuery.line) ) {
-          thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 ]', thisMain._billpayInfo.repSvcYn);
-          thisMain._typeChk = 'A5';
-
-          thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
-          thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-          // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-          // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
-
-          // 사용요금/청구요금이 존재하는지
-          if ( thisMain.reqQuery.line ) {
-            thisMain._billpayInfo.existBill = (thisMain._billpayInfo.useAmtDetailInfo && thisMain._billpayInfo.useAmtDetailInfo.length > 0);
-          } else {
-            thisMain._billpayInfo.existBill = (thisMain._billpayInfo.paidAmtDetailInfo && thisMain._billpayInfo.paidAmtDetailInfo.length > 0);
+        if ( svcInfo.actRepYn === 'Y' ) {
+          thisMain._billpayInfo = resArr[0].result;
+          thisMain._intBillLineInfo = resArr[1].result;
+          thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
+          if ( thisMain._billpayInfo.invSvcList ) {
+            thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
           }
 
-          viewName = thisMain._urlTplInfo.combineRepresentPage;
-          data['showConditionInfo'] = thisMain._showConditionInfo;
-
         } else {
+          thisMain._useFeeInfo = resArr[0].result.invAmtList;
+          // 현재는 param이 없지만 추후 추가를 위해 넣어둠
+          thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
+                                  || resArr[0].result.invAmtList[0];
+          thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
+          thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(resArr[0].result.repSvcNm);  // 통합청구대표 이름
+        }
+
+        let viewName ;
+
+        thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
+        thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
+        thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
+        thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
+
+        thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt.replace(/,/g, ''));
+        thisMain._commDataInfo.discount =
+            FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt.replace(/,/g, '')))));
+
+        thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+
+        const data = {
+          reqQuery: thisMain.reqQuery,
+          svcInfo: svcInfo,
+          pageInfo: thisMain.pageInfo,
+          billpayInfo: thisMain._billpayInfo,
+          useFeeInfo: thisMain._useFeeInfo,
+          commDataInfo: thisMain._commDataInfo,
+          intBillLineInfo: thisMain._intBillLineInfo,
+          childLineInfo: thisMain._childLineInfo,
+          allSvc: allSvc
+        };
+
+        if ( svcInfo.actRepYn === 'N' ) {
+
           thisMain.logger.info(thisMain, '[ 통합청구회선 > 대표 아님!!!! ]', thisMain._billpayInfo.repSvcYn);
           thisMain._typeChk = 'A6';
 
           // 사용요금/청구요금이 존재하는지
-          thisMain._billpayInfo.existBill = (thisMain._billpayInfo.useAmtDetailInfo && thisMain._billpayInfo.useAmtDetailInfo.length > 0);
+          thisMain._billpayInfo.existBill = (thisMain._billpayInfo.usedAmountDetailList && thisMain._billpayInfo.usedAmountDetailList.length > 0);
 
           viewName = thisMain._urlTplInfo.combineCommonPage;
+
+        } else if ( svcInfo.actRepYn === 'Y' ) {
+
+          // 조회일자에 맞는 서비스리스트
+          const daySvcList = thisMain._billpayInfo.invSvcList.find(item => item.invDt === thisMain._billpayInfo.invDt) || {};
+
+          if ( daySvcList.svcList && daySvcList.svcList.length === 1 ) {
+
+            thisMain.logger.info(thisMain, '[ 개별청구회선 ]', daySvcList.svcList.length);
+            thisMain._typeChk = 'A4';
+
+            // 요금납부버튼 무조건 노출로 삭제
+            // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+
+            // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+            // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
+            // data['showConditionInfo'] = thisMain._showConditionInfo;
+
+            viewName = thisMain._urlTplInfo.individualPage;
+
+
+          } else {
+
+            // 조회시 대표청구회선이거나 || 세션이 대표청구회선이면서 조회회선을 조회했을 경우
+            if ( svcInfo.actRepYn === 'Y' || (svcInfo.actRepYn === 'Y' && thisMain.reqQuery.line) ) {
+              thisMain.logger.info(thisMain, '[ 통합청구회선 > LINE:' + thisMain.reqQuery.line + ']', svcInfo.actRepYn);
+              thisMain._typeChk = 'A5';
+
+              thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
+
+              // 요금납부버튼 무조건 노출로 삭제
+              // thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
+
+              // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+              // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
+              // data['showConditionInfo'] = thisMain._showConditionInfo;
+
+              // 사용요금/청구요금이 존재하는지
+              thisMain._billpayInfo.existBill = (thisMain._billpayInfo.paidAmtDetailList && thisMain._billpayInfo.paidAmtDetailList.length > 0);
+
+              viewName = thisMain._urlTplInfo.combineRepresentPage;
+            }
+          }
         }
+
+        thisMain.reqButtonView(res, viewName, data);
+
+        thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
+        thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
+
+      } catch ( e )  {
+        thisMain.logger.info(e);
       }
-
-      thisMain.reqButtonView(res, viewName, data);
-
-      thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
-      thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
 
@@ -301,15 +319,15 @@ class MyTFareBillGuide extends TwViewController {
 
       // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsObEndDt = DateHelper.getShortDate(thisMain._ppsInfo.obEndDt);
-        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsInbEndDt = DateHelper.getShortDate(thisMain._ppsInfo.inbEndDt);
-        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsNumEndDt = DateHelper.getShortDate(thisMain._ppsInfo.numEndDt);
-        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
       thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.M.D. hh:mm');
