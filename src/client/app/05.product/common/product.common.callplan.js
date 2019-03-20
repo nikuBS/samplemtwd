@@ -475,16 +475,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
-    $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
 
-    setTimeout(function() {
-      $target.focus();
+    if (contentsIndex === 0) {
+      $popupContainer.scrollTop(0);
+    } else {
+      $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+    }
 
-      if (contentsIndex === 0) {
-        $popupContainer.scrollTop(0);
-      }
-    }, 100);
-
+    $target.focus();
     Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 
