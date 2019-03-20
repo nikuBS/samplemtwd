@@ -15,17 +15,17 @@
             <div class="container">
                 <!-- .cont-box -->
                 {{#if data.isWelcome}}
-                    {{#if data.sLogin}}
-                        <div class="cont-box bgtype gaps-style08">
-                            <ul class="certification-list">
-                                <li class="category-type">간편 로그인으로 서비스 이용중인 고객님은 인증을 하셔야 이용이 가능합니다.</li>
-                            </ul>
-                        </div>
-                    {{else if data.masking}}
+                    {{#if data.masking}}
                         <div class="cont-box bgtype gaps-style08">
                             <ul class="certification-list">
                                 <li class="category-type">고객님의 정보 보호를 위해 인증을 하셔야 가려진 정보를 조회하실 수 있습니다.</li>
                                 <li class="category-type">회선 별 고객정보 기준으로 로그아웃 전까지 유지됩니다.</li>
+                            </ul>
+                        </div>
+                    {{else if data.sLogin}}
+                        <div class="cont-box bgtype gaps-style08">
+                            <ul class="certification-list">
+                                <li class="category-type">간편 로그인으로 서비스 이용중인 고객님은 인증을 하셔야 이용이 가능합니다.</li>
                             </ul>
                         </div>
                     {{/if}}
