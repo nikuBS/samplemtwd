@@ -333,8 +333,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         }
       }
 
+      Tw.CommonHelper.startLoading('.popup-page', 'grey');
       this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
-        .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)));
+        .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
+        .fail($.proxy(this._fail, this, $(e.currentTarget)));
     }
   },
 
@@ -354,11 +356,16 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
+      Tw.CommonHelper.endLoading('.popup-page');
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=' + type + '&' + $.param(htParams));
     } else {
-      Tw.Error(res.code, res.msg).pop(null, $target);
+      this._fail($target, res);
     }
+  },
+
+  _fail: function ($target, err) {
+    Tw.CommonHelper.endLoading('.popup-page');
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
 
   _onClickUnsubscribeAutoRecharge: function (e) {

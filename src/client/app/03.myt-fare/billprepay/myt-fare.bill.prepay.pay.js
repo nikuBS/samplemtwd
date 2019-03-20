@@ -118,20 +118,22 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=' + this.$title);
+    } else if (this._isPayFail) {
+      Tw.Error(this._err.code, this._err.msg).pop();
     }
   },
   _close: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
       $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON, $(e.currentTarget));
   },
-  _pay: function ($layer, e) {
+  _pay: function ($layer) {
     var apiName = this._getApiName();
     var reqData = this._makeRequestData($layer);
-    var $target = $(e.currentTarget);
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(apiName, reqData)
-      .done($.proxy(this._paySuccess, this, $target))
-      .fail($.proxy(this._payFail, this, $target));
+      .done($.proxy(this._paySuccess, this))
+      .fail($.proxy(this._payFail, this));
   },
   _getApiName: function () {
     var apiName = '';
@@ -156,19 +158,23 @@ Tw.MyTFareBillPrepayPay.prototype = {
     };
     return reqData;
   },
-  _paySuccess: function ($target, res) {
+  _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
       this._isPaySuccess = true;
       this._popupService.closeAll();
     } else {
-      this._payFail($target, res);
+      this._payFail(res);
     }
   },
-  _payFail: function ($target, err) {
-    if (err.code === 'BIL0006') {
-      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
-    } else {
-      Tw.Error(err.code, err.msg).pop(null, $target);
-    }
+  _payFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+
+    this._isPayFail = true;
+    this._err = {
+      code: err.code,
+      msg: err.msg
+    };
+    this._popupService.close();
   }
 };
