@@ -66,7 +66,10 @@ Tw.MembershipSubmain.prototype = {
                 } else {
                   this._showAgreementPopup();
                 }
-              } else {
+              } else if (res.code === Tw.API_CODE.BFF_0006 || res.code === Tw.API_CODE.BFF_0007) {
+                this.$container.find('.fe-near-brand').hide();
+              }
+              else {
                 Tw.Error(res.code, res.msg).pop();
               }
             }, this))
@@ -444,7 +447,10 @@ Tw.MembershipSubmain.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_11_0025, this.currentLocation)
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
-    } else {
+    } else if (resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007) {
+      this.$container.find('.fe-near-brand').hide();
+    }
+    else {
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
           $.proxy(function () {
@@ -489,7 +495,10 @@ Tw.MembershipSubmain.prototype = {
         this.$nearBrand.append(this._noBrandTmpl());
       }
 
-    } else {
+    } else if (resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007) {
+      this.$container.find('.fe-near-brand').hide();
+    }
+    else {
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
           $.proxy(function () {
