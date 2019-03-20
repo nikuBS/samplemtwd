@@ -101,6 +101,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _detectInputNumber: function(e) {
+    var onlyNumber = this.$inputNumber.val();
+
+    this.$inputNumber.val('');
+    this.$inputNumber.val(onlyNumber);
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
     if (this.$inputNumber.val().length > 11) {
