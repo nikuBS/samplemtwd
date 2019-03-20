@@ -210,7 +210,7 @@ Tw.CertificationSkFull.prototype = {
       this._addTime = new Date();
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else {
-      this._checkCertError(resp.code);
+      this._checkCertError(resp.code, resp.msg);
     }
   },
   _checkCertError: function (errorCode, errorMsg) {

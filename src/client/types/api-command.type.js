@@ -395,6 +395,9 @@ Tw.API_CMD = {
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
 
+  BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
+  BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
+
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
   BFF_09_0002: { path: '/core-membership/:version/event/detail/:args0', method: Tw.API_METHOD.GET },

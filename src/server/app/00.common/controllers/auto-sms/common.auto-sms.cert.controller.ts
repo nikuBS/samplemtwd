@@ -6,6 +6,8 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
+import { NODE_API_ERROR } from '../../../../types/string.type';
 
 class CommonAutoSmsCert extends TwViewController {
   constructor() {
@@ -13,7 +15,17 @@ class CommonAutoSmsCert extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    res.render('auto-sms/common.auto-sms.cert.html', { pageInfo });
+    const encParam = req.query.p;
+    if ( FormatHelper.isEmpty(encParam) ) {
+      this.error.render(res, {
+        code: '',
+        msg: NODE_API_ERROR['01'],
+        pageInfo: pageInfo,
+        svcInfo: svcInfo
+      });
+    } else {
+      res.render('auto-sms/common.auto-sms.cert.html', { pageInfo, encParam });
+    }
   }
 }
 
