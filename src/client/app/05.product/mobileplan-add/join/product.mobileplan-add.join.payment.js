@@ -194,7 +194,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this._toggleButton(this.$btnValidate, false);
       this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
     } else {
-      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
+      this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
     }
 
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
