@@ -42,6 +42,17 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
     this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
     this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._inputFileChooser, this));
+    this.wrap_service.on('click', '.fe-remove-file', $.proxy(this._removeFileList, this, 'service'))
+    this.wrap_quality.on('click', '.fe-remove-file', $.proxy(this._removeFileList, this, 'quality'))
+  },
+  _removeFileList: function (type, e) {    
+    var fileIdx = $(e.currentTarget).parentsUntil('li').last().parent().index();
+    if (type === 'service') {
+      this.serviceUploadFiles.splice(fileIdx, 1);
+    } else {
+      this.qualityUploadFiles.splice(fileIdx, 1);
+    }
+    this.$container.find('.filename-list li').eq(fileIdx).remove();
   },
 
   _openCustomFileChooser: function (e) {
