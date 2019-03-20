@@ -51,11 +51,14 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     }
   },
   _onApply: function () {
-    if (_.isEqual(this._currentOptions, this._newOptions)) {
-      this._applyCallback(false);
-    } else {
-      this._applyCallback(this._newOptions);
-    }
+    this._popupService.close();
+    setTimeout($.proxy(function () {
+      if (_.isEqual(this._currentOptions, this._newOptions)) {
+        this._applyCallback(false);
+      } else {
+        this._applyCallback(this._newOptions);
+      }
+    }, this), 100);
   },
   _onClose: function () {
     /*  취소확인 팝업 삭제
