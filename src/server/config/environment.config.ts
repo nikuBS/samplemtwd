@@ -21,7 +21,7 @@ const environment = {
     SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
-    DOMAIN_G: 'm-dev.tworld.co.kr:3000',
+    DOMAIN_GAPP: 'm-dev.tworld.co.kr:3000',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -59,7 +59,7 @@ const environment = {
     SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-dev.tworld.co.kr',
-    DOMAIN_G: 'devgm.tworld.co.kr',
+    DOMAIN_GAPP: 'devgm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -97,7 +97,7 @@ const environment = {
     SEARCH_SERVER: 'http://211.188.181.123:8080' ,
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-stg.tworld.co.kr',
-    DOMAIN_G: 'icp-stggm.tworld.co.kr',
+    DOMAIN_GAPP: 'icp-stggm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: '61.250.20.204',
@@ -134,7 +134,8 @@ const environment = {
     SEARCH_SERVER: 'http://211.188.181.124',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
-    DOMAIN_G: 'gapp.tworld.co.kr',
+    DOMAIN_GAPP: 'gapp.tworld.co.kr',
+    DOMAIN_GWEB: 'gm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',

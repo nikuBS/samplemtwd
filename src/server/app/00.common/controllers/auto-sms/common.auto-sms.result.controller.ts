@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
 class CommonAutoSmsResult extends TwViewController {
   constructor() {
@@ -13,7 +14,19 @@ class CommonAutoSmsResult extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    res.render('auto-sms/common.auto-sms.result.html', { pageInfo });
+    this.apiService.request(API_CMD.BFF_05_0200, {})
+      .subscribe((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          res.render('auto-sms/common.auto-sms.result.html', { pageInfo });
+        } else {
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+        }
+      });
   }
 }
 

@@ -7,6 +7,7 @@
 Tw.CommonAutoSmsCert = function (rootEl, encParam) {
   this.$container = rootEl;
   this._encParamStr = encParam;
+  this._historyService = new Tw.HistoryService();
 
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -150,7 +151,7 @@ Tw.CommonAutoSmsCert.prototype = {
   },
   _sendCert: function (reCert) {
     var type = this.$inputType.filter(':checked').val();
-
+    // type = '1';
     if ( this._checkCertValidation(type) ) {
       this.mdn = this.$inputMdn.val();
 
@@ -259,6 +260,7 @@ Tw.CommonAutoSmsCert.prototype = {
   },
   _onClickConfirm: function () {
     var type = this.$inputType.filter(':checked').val();
+    // type = '1';
     var inputCert = this.$inputCert.val();
 
     var params = {
@@ -277,6 +279,7 @@ Tw.CommonAutoSmsCert.prototype = {
   _successRequestConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // TODO: go /common/auto-sms/result
+      this._historyService.goLoad('/common/auto-sms/result')
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.NOT_MATCH_CODE, null, null, $.proxy(this._onCloseCertError, this));
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {

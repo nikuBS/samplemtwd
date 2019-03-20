@@ -320,6 +320,7 @@ export const API_CMD = {
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0198: { path: '/core-modification/:version/wire/cancel-request-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0200: { path: '/:version/autosms/custInfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
