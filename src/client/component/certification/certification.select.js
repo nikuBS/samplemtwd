@@ -430,7 +430,7 @@ Tw.CertificationSelect.prototype = {
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
-      this._openSelectPopup(false);
+      this._openSelectPopup(true);
     } else {
       // TODO: 인증 실패
       this._callback(resp, this._deferred, this._command);
