@@ -88,19 +88,22 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _validateCard: function (e) {
     var $cardNumber = $(e.currentTarget);
-    var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
-      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
-    } else {
-      this._getCardInfo();
-    }
+    if ($cardNumber.val().indexOf('*') === -1) {
+      var $error = $(e.currentTarget).closest('li').find('.error-txt');
+      $error.addClass('blind').attr('aria-hidden', 'true');
 
-    if ( $cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
-      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
+      if (!this._validation.checkMoreLength($cardNumber, 15)) {
+        $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+        $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
+      } else {
+        this._getCardInfo();
+      }
+
+      if ($cardNumber.val() === '') {
+        $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
+        $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
+      }
     }
   },
 
