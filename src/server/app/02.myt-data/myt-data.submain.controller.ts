@@ -184,6 +184,10 @@ class MytDataSubmainController extends TwViewController {
         reqBkdArr.push(this._getTingPresentBreakdown());
       }
 
+      if (reqBkdArr.length <= 0) {
+        return this._render(res, data);
+      }
+
       Observable.combineLatest(reqBkdArr).subscribe(histories => {
         // 최근 충전 및 선물 내역
         // 충전/선불내역 페이지와 동일한 순서(myt-data.history.controller.ts)
