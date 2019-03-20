@@ -60,7 +60,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.isNotFirstDate ) {
       this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
     }
-    if ( this.data.nonpayment ) {
+    if ( this.data.unPaidTotSum ) {
       // 미납요금버튼
       this.$nonPayment = this.$container.find('button[data-id=non-payment]');
     }
@@ -135,7 +135,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.isNotFirstDate ) {
       this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
     }
-    if ( this.data.nonpayment ) {
+    if ( this.data.unPaidTotSum ) {
       // 미납요금버튼
       this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
     }
@@ -244,10 +244,14 @@ Tw.MyTFareSubMain.prototype = {
      * 2. 실시간 요금조회
      **/
     if ( this.data.type === 'UF' ) {
-      this._usageFeeRequest();
+      // 성능개선사항으로 api가 합처짐
+      // this._usageFeeRequest();
+      this._responseUsageFee({result: this.data.usage, code: Tw.API_CODE.CODE_00});
     }
     else {
-      this._claimPaymentRequest();
+      // 성능개선사항으로 api가 합처짐
+      // this._claimPaymentRequest();
+      this._responseClaimPayment({result: this.data.claim, code: Tw.API_CODE.CODE_00});
     }
   },
 
@@ -298,14 +302,14 @@ Tw.MyTFareSubMain.prototype = {
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
-        var items = resp.result.recentUsageList;
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.usedAmtList.length > 0 ) {
+        var items = resp.result.usedAmtList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
         for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amtStr = item.invAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(/,/g, '');
           // var absDeduckStr = item.deduckInvAmt.replace(',', '');
           // --------------------
           var amt = parseInt(amtStr, 10);
@@ -343,15 +347,15 @@ Tw.MyTFareSubMain.prototype = {
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
-        var items = resp.result.recentUsageList;
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.billInvAmtList.length > 0 ) {
+        var items = resp.result.billInvAmtList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
         for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amtStr = item.invAmt.replace(',', '');
-          var absDeduckStr = item.deduckInvAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(/,/g, '');
+          var absDeduckStr = item.dcAmt.replace(/,/g, '');
           // --------------------
           var amt = parseInt(amtStr, 10);
           var absDeduck = Math.abs(parseInt(absDeduckStr, 10));

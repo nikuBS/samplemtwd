@@ -47,61 +47,74 @@ class MyTFareSubmainController extends TwViewController {
       data.type = 'UF';
       this._requestPPS(req, res, data);
     } else {
-      this.apiService.request(API_CMD.BFF_05_0036, {}).subscribe((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const claim = resp.result;
-          if ( claim.repSvcYn === 'N' ) {
-            // 청구요금화면에서 대표청구번호 아닌 경우 사용요금으로 조회
-            if ( data.type !== 'UF' ) {
-              res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
+
+      // [DV001-15583] Broadband 인 경우에 대한 예외처리 수정
+      if ( svcInfo.actCoClCd === 'B' ) {
+        data.type = 'UF';
+        data.isBroadBand = true;
+      }
+
+      // 대표청구 여부
+      if ( svcInfo.actRepYn === 'Y' ){
+
+        if ( data.type === 'UF' ) {
+          // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
+          res.redirect('/myt-fare/submain');
+        }
+
+
+        this.apiService.request(API_CMD.BFF_05_0203, {}).subscribe((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            const claim = resp.result;
+
+            // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+            if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+              data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
             }
-          } else {
-            if ( data.type === 'UF' ) {
-              // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
-              res.redirect('/myt-fare/submain');
-            }
-          }
-          // [DV001-15583] Broadband 인 경우에 대한 예외처리 수정
-          if ( claim.coClCd === 'B' ) {
-            data.type = 'UF';
-            data.isBroadBand = true;
-          }
-          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
-          if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
-            data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
-          }
-          if ( data.type === 'UF' ) {
-            this._requestUsageFee(req, res, data);
-          } else {
+
             // 청구요금
             if ( claim && claim.invDt.length > 0 ) {
               data.claim = claim;
               data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
               data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
               // 사용요금
-              const usedAmt = parseInt(claim.useAmtTot, 10);
-              data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
+              // const usedAmt = parseInt(claim.useAmtTot, 10);
+              // data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
+              data.claimUseAmt = FormatHelper.addComma((this._parseInt(claim.totInvAmt) + Math.abs(this._parseInt(claim.dcAmt))).toString() );
               // 할인요금
-              const disAmt = Math.abs(claim.deduckTotInvAmt);
-              data.claimDisAmt = FormatHelper.addComma((disAmt.toString() || '0'));
+              // const disAmt = Math.abs(claim.deduckTotInvAmt);
+              // data.claimDisAmt = FormatHelper.addComma((disAmt.toString() || '0'));
+              data.claimDisAmt = claim.dcAmt || '0';
+
+              // 미납요금
+              data.claimColBamt = claim.colBamt || '0';
+
               // Total
-              data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
+              data.claimPay = claim.totInvAmt || '0';
             } else {
               data.isRealTime = false;
             }
             this._requestClaim(req, res, data);
-          }
 
-        } else {
-          this.error.render(res, {
-            title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-            code: resp.code,
-            msg: resp.msg,
-            pageInfo: data.pageInfo,
-            svcInfo: data.svcInfo
-          });
+          } else {
+            this.error.render(res, {
+              title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+              code: resp.code,
+              msg: resp.msg,
+              pageInfo: data.pageInfo,
+              svcInfo: data.svcInfo
+            });
+          }
+        });
+
+      } else {
+        if ( data.type !== 'UF' ) {
+          // res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
+          res.redirect('/myt-fare/submain/usagefee?count=0');
         }
-      });
+        this._requestUsageFee(req, res, data);
+      }
+
     }
   }
 
@@ -115,7 +128,7 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestClaim(req, res, data) {
     Observable.combineLatest(
-      this._getNonPayment(),
+      // this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
       this._getTaxInvoice(),
@@ -123,7 +136,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getMicroPrepay(),
       this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
-    ).subscribe(([nonpayment, paymentInfo, totalPayment,
+    ).subscribe(([/* nonpayment, */ paymentInfo, totalPayment,
                    taxInvoice, /* contribution,*/ microPay, contentPay/*, banner*/]) => {
       // 소액결제
       if ( microPay ) {
@@ -141,11 +154,12 @@ class MyTFareSubmainController extends TwViewController {
           data.isContentPrepay = true;
         }
       }
-      // 미납내역
-      if ( nonpayment ) {
+      // 미납내역 (성능개선항목으로 삭제)
+      /*if ( nonpayment ) {
         data.nonpayment = nonpayment;
         data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-      }
+      }*/
+      data.unPaidTotSum = data.claim.colBamt && data.claim.colBamt !== '0' ? data.claim.colBamt : null;
       // 납부/청구 정보
       if ( paymentInfo ) {
         data.paymentInfo = paymentInfo;
@@ -209,8 +223,9 @@ class MyTFareSubmainController extends TwViewController {
           data.usageFirstDay = DateHelper.getMonthFirstDay(usage.invDt);
           data.usageLastDay = DateHelper.getMonthLastDay(usage.invDt);
           // 사용요금
-          const usedAmt = parseInt(usage.useAmtTot, 10);
-          data.useAmtTot = FormatHelper.addComma(usedAmt.toString() || '0');
+          // const usedAmt = parseInt(usage.useAmtTot, 10);
+          // data.useAmtTot = FormatHelper.addComma(usedAmt.toString() || '0');
+          data.useAmtTot = usage.invAmt || '0';
         } else {
           data.isRealTime = false;
         }
@@ -334,7 +349,7 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   _getUsageFee() {
-    return this.apiService.request(API_CMD.BFF_05_0047, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.invDt.length === 0 ) {
           // no data
@@ -434,6 +449,14 @@ class MyTFareSubmainController extends TwViewController {
         return null;
       }
     });
+  }
+
+  _parseInt(str: String) {
+    if ( !str ) {
+      return 0;
+    }
+
+    return parseInt(str.replace(/,/g, ''), 10);
   }
 }
 
