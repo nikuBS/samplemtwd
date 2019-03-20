@@ -39,8 +39,6 @@ Tw.MaskingComponent.prototype = {
       this._apiService.request(Tw.NODE_CMD.SET_MASKING_COMPLETE, {
         svcMgmtNum: resp.svcMgmtNum
       }).done($.proxy(this._successMaskingComplete, this));
-    } else {
-      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _successMaskingComplete: function (resp) {

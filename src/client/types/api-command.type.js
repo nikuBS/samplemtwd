@@ -619,6 +619,7 @@ Tw.API_CODE = {
   CERT_SELECT: 'CERT0001', // 인증수단 선택화면으로 이동
   CERT_SMS_BLOCK: 'CERT0002', // SMS 인증 불가
   CERT_SMS_ENABLE: 'CERT0003',
+  CERT_CANCEL: 'CERT0004',
 
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',

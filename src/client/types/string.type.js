@@ -467,7 +467,8 @@ Tw.ALERT_MSG_COMMON = {
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?',
   BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
-  BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.'
+  BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.',
+  CERT_FAIL: '인증에 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_HOME = {
