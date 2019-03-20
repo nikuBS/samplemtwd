@@ -409,7 +409,7 @@ export const API_CMD = {
   BFF_07_0005: { path: '/core-bill/:version/point-autopays-history/cashback', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0006: { path: '/core-bill/:version/point-autopays-history/tpoint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0007: { path: '/core-bill/:version/point-autopays-history/tpoint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_07_0018: { path: '/core-bill/:version/bill-pay/tax-reprint-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0019: { path: '/core-bill/:version/bill-pay/tax-reprint-fax', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0021: { path: '/core-bill/:version/bill-pay/settle-unpaids', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -914,7 +914,8 @@ export const SESSION_CMD = {
   BFF_04_0001: 'BFF_04_0001',
   BFF_05_0068: 'BFF_05_0068',
   BFF_03_0004: 'BFF_03_0004',
-  BFF_05_0061: 'BFF_05_0061'
+  BFF_05_0061: 'BFF_05_0061',
+  BFF_07_0017: 'BFF_07_0017'
 };
 
 export const API_CODE = {

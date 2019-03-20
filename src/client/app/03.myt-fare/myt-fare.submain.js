@@ -482,15 +482,78 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+
   _requestTaxContribute: function () {
     this._isRequestTax = true;
-    this._apiService.requestArray([
+
+    // 두 api 조회를 확인하기 위한 변수
+    this._isResponsedTax = false;
+    this._isResponsedCont = false;
+
+    // 세금계산서 재발행 조회
+    this._apiService.request(Tw.SESSION_CMD.BFF_07_0017, {})
+      .done($.proxy(this._responseTax, this))
+      .fail($.proxy(this._errorRequest, this));
+    // 기부금 내역 조회
+    this._apiService.request(Tw.API_CMD.BFF_05_0038, {})
+      .done($.proxy(this._responseContribute, this))
+      .fail($.proxy(this._errorRequest, this));
+
+
+    // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
+    /*this._apiService.requestArray([
       { command: Tw.API_CMD.BFF_07_0017 },
       { command: Tw.API_CMD.BFF_05_0038 }
     ]).done($.proxy(this._responseTaxContribute, this))
-      .fail($.proxy(this._errorRequest, this));
+      .fail($.proxy(this._errorRequest, this));*/
   },
 
+
+  _responseTax: function (tax) {
+    if ( tax.code === Tw.API_CODE.CODE_00 ) {
+      this.data.taxInvoice = tax.result;
+    }
+    //if ( tax.code === 'BIL0018' ) {}
+    // 사업자 번호를 조회할 수 없는 상황
+    this._isResponsedTax = true;
+    this._responseTaxContribute();
+  },
+
+  _responseContribute: function (cont) {
+    if ( cont.code === Tw.API_CODE.CODE_00 ) {
+      if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
+        this.data.contribution = cont.result;
+      }
+    }
+    this._isResponsedCont = true;
+    this._responseTaxContribute();
+  },
+
+  _responseTaxContribute: function () {
+    if(!this._isResponsedTax || !this._isResponsedCont){
+      return;
+    }
+    var twoPiece = this.data.taxInvoice && this.data.contribution;
+    if ( !twoPiece ) {
+      if ( !this.data.taxInvoice && !this.data.contribution ) {
+        this.$container.find('[data-id="tc-container-empty"]').show();
+        this.$container.find('[data-id="tc-container"]').hide();
+      }
+      else if ( this.data.taxInvoice ) {
+        this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$taxInv.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.TAX_TEMP);
+        this.$contribution.hide();
+      }
+      else if ( this.data.contribution ) {
+        this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$contribution.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.CONTB_TEMP);
+        this.$taxInv.hide();
+      }
+    }
+  },
+
+
+  /* // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
   _responseTaxContribute: function (tax, cont) {
     if ( cont.code === Tw.API_CODE.CODE_00 ) {
       if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
@@ -521,7 +584,7 @@ Tw.MyTFareSubMain.prototype = {
         this.$taxInv.hide();
       }
     }
-  },
+  },*/
 
   // 최근사용요금 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {
