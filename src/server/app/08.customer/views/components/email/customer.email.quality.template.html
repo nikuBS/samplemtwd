@@ -211,11 +211,10 @@
             </div>
         </div>
         <div class="inquiryform-wrap">
-            <!--회선 입력 필요없음 -->
-            <!--<p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
             <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
             %>
+            <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
             <div class="info-form-box">
                 <button class="bt-dropdown big tx-bold fe-quality-line fe-select-phone-line" title="문의하실 회선정보 선택" aria-haspopup="true"
                         data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"><%-filteredLine[0].addr%><span class="ico"></span>
@@ -224,6 +223,7 @@
             <% } else if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 1 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
             %>
+            <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
             <div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"
@@ -232,14 +232,12 @@
             </div>
 
             <% } else { %>
-            <div class="inputbox">
+            <!--<div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
-            </div>
-            <% } %>-->
-
+            </div>-->
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
@@ -250,15 +248,6 @@
                     <button type="button" class="fe-search-post">우편번호 조회</button>
                 </span>
             </div>
-            <!--<div class="inputbox bt-add">-->
-                <!--<span class="input">-->
-                    <!--<input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" disabled aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">-->
-                    <!--<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>-->
-                <!--</span>-->
-                <!--<span class="bt-box type01">-->
-                    <!--<button type="button" class="fe-search-post">우편번호 조회</button>-->
-                <!--</span>-->
-            <!--</div>-->
             <div class="inputbox">
                 <div class="input">
                     <input type="text" value="" class="fe-main-address"  title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="" disabled>
@@ -272,6 +261,17 @@
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
+            <% } %>
+            <!--<div class="inputbox bt-add">-->
+                <!--<span class="input">-->
+                    <!--<input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" disabled aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">-->
+                    <!--<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>-->
+                <!--</span>-->
+                <!--<span class="bt-box type01">-->
+                    <!--<button type="button" class="fe-search-post">우편번호 조회</button>-->
+                <!--</span>-->
+            <!--</div>-->
+            
             <div class="inputbox">
                 <div class="input">
                     <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
