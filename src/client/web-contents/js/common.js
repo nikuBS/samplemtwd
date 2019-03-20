@@ -43,8 +43,8 @@ $(window).on('resize', function () {
       skt_landing.action.checkScroll.unLockScroll();
     }
 
-    var $popupContainer = $('.popup-page.fixed-bottom .container');
-    if($popupContainer.find('.bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
+    var $popupContainer = $('.popup-page.fixed-bottom .container'); // 19.03.20 수정
+    if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
   } else {    
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
@@ -55,8 +55,8 @@ $(window).on('resize', function () {
       skt_landing.action.checkScroll.unLockScroll();      
     }
 
-    var $popupContainer = $('.popup-page.fixed-bottom .container');
-    if($popupContainer.find('.bt-fixed-area').length > 0) $popupContainer.removeClass('pb0');      //190318 하단 고정 버튼 위치 
+    var $popupContainer = $('.popup-page.fixed-bottom .container'); // 19.03.20 수정
+    if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.removeClass('pb0');      //190318 하단 고정 버튼 위치 
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {

@@ -7343,8 +7343,8 @@ a.ui-button:active,
   -webkit-box-shadow: 0 20px 0 red;
           box-shadow: 0 20px 0 red;
   position: relative;
-  -webkit-animation: loader2-uc656070d 0.5s ease-in-out alternate infinite;
-          animation: loader2-uc656070d 0.5s ease-in-out alternate infinite;
+  -webkit-animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
+          animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
   top: 50%;
@@ -7357,8 +7357,8 @@ a.ui-button:active,
     border-radius: 50%;
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red;
-    -webkit-animation: loader2-uc656070d 0.5s ease-in-out alternate infinite;
-            animation: loader2-uc656070d 0.5s ease-in-out alternate infinite; }
+    -webkit-animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
+            animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite; }
   .spinner_loading2::before {
     left: -20px;
     -webkit-animation-delay: 0.3s;
@@ -7368,7 +7368,7 @@ a.ui-button:active,
     -webkit-animation-delay: 0.1s;
             animation-delay: 0.1s; }
 
-@-webkit-keyframes loader2-uc656070d {
+@-webkit-keyframes loader2-u55cdf7a5 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7376,7 +7376,7 @@ a.ui-button:active,
     -webkit-box-shadow: 0 10px 0 red;
             box-shadow: 0 10px 0 red; } }
 
-@keyframes loader2-uc656070d {
+@keyframes loader2-u55cdf7a5 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7602,6 +7602,17 @@ html, .rg-br-body {
   font-weight: 400;
   color: #808698; }
 
+.cancel {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  margin: -0.8125rem 0 0 0;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -32.8125rem;
+  background-size: 3.125rem; }
+
 .rg-br-body input[type=text]::-ms-clear {
   display: none; }
 
@@ -7626,7 +7637,7 @@ html, .rg-br-body {
 .rg-br-body input, .rg-br-body button, .rg-br-body select, .rg-br-body a + button, .rg-br-body .selectBox, .rg-br-body .calendar {
   *margin-right: 4px; }
 
-.rg-br-body input[type='radio'], .rg-br-body input[type='text'], .rg-br-body input[type='password'], .rg-br-body input[type='checkbox'], .rg-br-body textarea, .rg-br-body button, .rg-br-body select {
+.rg-br-body input[type='radio'], .rg-br-body input[type='text'], .rg-br-body input[type='password'], .rg-br-body input[type='checkbox'], .rg-br-body input[type='tel'], .rg-br-body textarea, .rg-br-body button, .rg-br-body select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -7648,18 +7659,22 @@ html, .rg-br-body {
 .rg-br-body input + .hyphen {
   *margin-left: -4px; }
 
+.rg-br-body input[type=tel] + .btnS,
 .rg-br-body input[type=text] + .btnS,
 .rg-br-body input[type=password] + .btnS,
 .rg-br-body input[type=text] + input[type=text],
+.rg-br-body input[type=tel] + input[type=tel],
 .rg-br-body input[type=password] + input[type=text],
-.rg-br-body input[type=text] + input[type=password] {
+.rg-br-body input[type=password] + input[type=tel],
+.rg-br-body input[type=text] + input[type=password],
+.rg-br-body input[type=tel] + input[type=password] {
   margin-left: 10px; }
 
 /*input[type=text][disabled]{background-color:#f7f7f7}*/
 .rg-br-body label + .typeRadio {
   margin-left: 30px; }
 
-.rg-br-body input[type=text] + .checkbox {
+.rg-br-body input[type=text] + .checkbox .rg-br-body input[type=tel] + .checkbox {
   margin-left: 16px; }
 
 .rg-br-body input[type=file] {

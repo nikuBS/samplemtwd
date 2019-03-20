@@ -4259,3 +4259,75 @@ body.apphome {
       font-size: 0.75rem; }
   .discountbenefit-list .category-type .link .tag-field {
     bottom: 1.25rem; } }
+
+.box-citation {
+  padding: 0.625rem 0 0; }
+  .box-citation .citation-ti {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .box-citation .citation-tx {
+    font-size: 0.75rem;
+    font-weight: 400; }
+  .box-citation .citation-form {
+    margin-top: 0.625rem; }
+    .box-citation .citation-form .form-cell {
+      position: relative;
+      margin-bottom: 1rem; }
+      .box-citation .citation-form .form-cell.linebox {
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid #E5E5E5; }
+        .box-citation .citation-form .form-cell.linebox .txt {
+          margin: -0.3125rem 0 0.625rem;
+          color: #000;
+          font-size: 0.8125rem; }
+          .box-citation .citation-form .form-cell.linebox .txt .time {
+            display: inline-block;
+            margin-left: 0.625rem;
+            color: #358ED8;
+            font-size: 0.75rem; }
+      .box-citation .citation-form .form-cell .txt .sms-time {
+        margin-left: 0.625rem;
+        width: 4.0625rem;
+        color: #178bce;
+        border: 0; }
+      .box-citation .citation-form .form-cell .form-ti {
+        display: block;
+        margin-bottom: 0.625rem;
+        font-size: 0.9375rem; }
+      .box-citation .citation-form .form-cell .form-check {
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .box-citation .citation-form .form-cell:last-of-type {
+        margin-bottom: 0; }
+      .box-citation .citation-form .form-cell .widget-box.radio {
+        margin-top: 0.625rem; }
+        .box-citation .citation-form .form-cell .widget-box.radio .radiobox {
+          margin-right: 1.5625rem;
+          font-size: 1.125rem;
+          font-weight: 400; }
+          .box-citation .citation-form .form-cell .widget-box.radio .radiobox:last-of-type {
+            margin-right: 0; }
+  .box-citation .another-way {
+    font-size: 0.8125rem;
+    padding-bottom: 1.25rem; }
+  .box-citation.n-type {
+    padding: 0; }
+    .box-citation.n-type .citation-form {
+      margin-top: 0; }
+      .box-citation.n-type .citation-form .form-cell .form-ti {
+        margin-bottom: 0.75rem; }
+    .box-citation.n-type .inputbox .guide-txt {
+      position: relative;
+      padding: 0 0 0 0.5rem;
+      margin: 1rem 0 0 0; }
+      .box-citation.n-type .inputbox .guide-txt:before {
+        content: "*";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #666;
+        font-size: 0.75rem; }

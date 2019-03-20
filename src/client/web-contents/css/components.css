@@ -19494,20 +19494,6 @@ a.bt-link-tx.underline.small {
     color: inherit;
     font-size: 0.8125rem;
     line-height: 1.1875rem; }
-    .card-intro .intro-bt:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 0;
-      width: 1.5625rem;
-      height: 1.5625rem;
-      margin-top: -0.75rem;
-      background-image: url(/img/ico/ico-group.png);
-      background-repeat: no-repeat;
-      background-size: 3.125rem auto;
-      background-position: 0 -17.1875rem;
-      overflow: hidden;
-      color: transparent; }
   .card-intro .intro-list li {
     position: relative;
     margin-top: 0.1875rem;
@@ -22363,6 +22349,8 @@ a.bt-link-tx.underline.small {
   padding: 0; }
   .comp-box.country-roaming .list-box {
     padding-bottom: 2.5rem; }
+    .comp-box.country-roaming .list-box + .txt-label {
+      margin-top: 0; }
     .comp-box.country-roaming .list-box .tit {
       font-size: 1.125rem !important; }
       .comp-box.country-roaming .list-box .tit .tip-view {
@@ -22370,7 +22358,7 @@ a.bt-link-tx.underline.small {
         vertical-align: inherit; }
   .comp-box.country-roaming .bt-add {
     border-bottom: 1px solid #e1e1e1;
-    padding-bottom: 1.25rem; }
+    padding: 0 0 1.25rem; }
   .comp-box.country-roaming .type1 {
     padding-top: 0.625rem; }
     .comp-box.country-roaming .type1 + .type1 {
@@ -22391,6 +22379,48 @@ a.bt-link-tx.underline.small {
       background: url(/img/product/ico-roaming-phone.png) no-repeat;
       background-size: 100%;
       vertical-align: middle; }
+  .comp-box.country-roaming .txt-label {
+    display: block;
+    margin: 1.25rem 0 0.375rem;
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .comp-box.country-roaming.type1 {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e1e1e1; }
+    .comp-box.country-roaming.type1 .bt-add {
+      border-bottom: 0;
+      padding: 0; }
+
+.commd-rm {
+  padding-top: 1.25rem;
+  border-top: 1px solid #e1e1e1; }
+  .commd-rm .title {
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .commd-rm .rm-list li + li {
+    border-top: 1px solid #e1e1e1; }
+  .commd-rm .rm-list .rm-product {
+    position: relative;
+    display: block;
+    padding: 1.25rem 0;
+    width: 100%;
+    text-align: left; }
+    .commd-rm .rm-list .rm-product .txt {
+      margin-right: 5.5rem;
+      font-size: 1rem;
+      font-weight: 500; }
+    .commd-rm .rm-list .rm-product .charge {
+      position: absolute;
+      top: 1.25rem;
+      right: 0;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #ef4b49; }
+    .commd-rm .rm-list .rm-product .expl {
+      margin-top: 10px;
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: #959595; }
 
 .device_ios .comp-box.country-roaming .list-box .tit .tip-view {
   top: -4px; }
@@ -22398,8 +22428,11 @@ a.bt-link-tx.underline.small {
 .device_android .comp-box.country-roaming .list-box .tit .tip-view {
   top: -2px; }
 
+.roaming-info-wrap.r-guidebox {
+  padding: 1.5625rem 1rem 0; }
+
 .roaming-info-wrap .info-txt {
-  padding-bottom: 2.5rem;
+  padding-bottom: 1.5625rem;
   font-size: 1.125rem; }
 
 .roaming-info-wrap .link-long-list {
@@ -22443,6 +22476,9 @@ a.bt-link-tx.underline.small {
 
 .roaming-info-wrap h4.txt {
   font-size: 0.9375rem; }
+
+.roaming-info-wrap .btn-more {
+  border-top: 1px solid #e1e1e1; }
 
 .confirm-noti.charge-info .icon {
   display: inline-block;
@@ -24558,6 +24594,13 @@ input[type="radio"].formradio-small.type2 + label {
   font-size: 1rem;
   /*font-weight:$fw-normal;*/ }
 
+.msg-type2 {
+  font-size: 1rem;
+  font-weight: bold;
+  /*font-weight:$fw-normal;*/ }
+  .msg-type2 .txt-point {
+    color: #ef4b49 !important; }
+
 .result-none.type2 {
   padding: 7.5rem 0 2.5rem;
   background-position: center 2.5rem;
@@ -26236,6 +26279,12 @@ input[type="radio"].formradio-small.type2 + label {
 .device_android .my-line-info li button,
 .device_android .my-line-info li a {
   padding: 0.9375rem 0.875rem 1rem 3.5rem; }
+  .device_android .my-line-info li button .cont-txt,
+  .device_android .my-line-info li a .cont-txt {
+    position: relative;
+    left: 100px;
+    text-align: center;
+    font-size: 15px; }
 
 .device_android .my-line-info .icon-children {
   margin-top: 0.125rem;

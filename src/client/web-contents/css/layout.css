@@ -1079,6 +1079,7 @@ body.hidden {
   /*rem(59px 0 54px)*/
   background: #fff;
   z-index: 200;
+  overflow-y: auto;
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
   -webkit-overflow-scrolling: touch; }
@@ -1367,6 +1368,7 @@ body.hidden {
       top: auto;
       bottom: 1.25rem; }
   .popup-page.fixed-bottom {
+    position: static;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     overflow: visible;
@@ -1408,6 +1410,11 @@ body.hidden {
       height: 100%;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
+    .popup-page.fixed-btn .container-wrap > .bt-slice {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      z-index: 25; }
     .popup-page.fixed-btn .container {
       padding-bottom: 3.75rem;
       height: 100%;
@@ -1416,11 +1423,6 @@ body.hidden {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       overflow-x: hidden; }
-    .popup-page.fixed-btn .bt-slice {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      z-index: 25; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }
