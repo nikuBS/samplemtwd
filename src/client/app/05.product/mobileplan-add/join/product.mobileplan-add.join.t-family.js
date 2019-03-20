@@ -290,7 +290,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       svcMgmtNum = $elemParent.data('svc_mgmt_num');
 
     if (this._svcMgmtNumList.indexOf(svcMgmtNum.toString()) !== -1) {
-      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum));
+      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum.toString()), 1);
     }
 
     $elemParent.remove();
