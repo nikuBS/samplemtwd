@@ -18,15 +18,29 @@ Tw.DateHelper = (function () {
     return date;
   };
 
+  /**
+   * Convert Date Format (formatted date to Date)
+   * @param {string} date
+   * @param {string} format
+   * @returns {Date}
+   */
   var convDateCustomFormat = function (date, format) {
     return moment(date, format).toDate();
   };
 
+  /**
+   * Get Date
+   * @returns {Date}
+   */
   var getDate = function () {
     var date = new Date();
     return date;
   };
 
+  /**
+   * Get first day of next month
+   * @returns {Date}
+   */
   var getNextMonth = function () {
     var next = new Date();
     next.setDate(1);
@@ -34,6 +48,10 @@ Tw.DateHelper = (function () {
     return next;
   };
 
+  /**
+   * Get remain days to last day of this month
+   * @returns {Date}
+   */
   var getRemainDate = function () {
     var current = getDate();
     var next = getNextMonth();
@@ -42,6 +60,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
+   * Get remain days to the given date
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {number} : 30
    */
@@ -293,17 +312,24 @@ Tw.DateHelper = (function () {
     return moment(this.convDateFormat(date)).locale('ko').format('MMM Do dddd');
   };
 
+  /** 
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param {string} : 오후 2시 11분
+   */
   var getKoreanTime = function (date) {
     return moment(this.convDateFormat(date)).locale('ko').format('a h시 m분');
   };
 
+  /** 
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @param {string} : 월
+   */  
   var getDayOfWeek = function (date) {
     return moment(convDateFormat(date)).format('dd');
   };
 
   var getDiffByUnit = function (sdate, edate, unit) {
     return moment(sdate).diff(edate, unit);
-    // return 'hello';
   };
 
   var isValid = function (date) {
