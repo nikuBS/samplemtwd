@@ -138,10 +138,10 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   _toggleNumAddBtn: function() {
     if (this.$inputNumber.val().length > 8) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
-      this.$btnAddNum.removeClass('bt-gray1').addClass('bt-blue1');
+      this.$btnAddNum.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
-      this.$btnAddNum.removeClass('bt-blue1').addClass('bt-gray1');
+      this.$btnAddNum.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 
