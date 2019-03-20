@@ -6,7 +6,7 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
+<body class="<%= researches.length > 0 ? '' : 'bg-white' %>">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -118,7 +118,7 @@
                 </div>
             </div>
             <% } else { %>
-                <div class="cont-box nogaps-hoz">
+                <div class="cont-box nogaps-hoz noborder">
                     <div class="contents-empty">
                         <span class="ico type1"></span>
                         <p class="desc">진행 중인 설문이 없습니다.</p>

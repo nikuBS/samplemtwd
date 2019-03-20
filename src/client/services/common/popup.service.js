@@ -474,8 +474,8 @@ Tw.PopupService.prototype = {
   },
   close: function () {
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      setTimeout($.proxy(function () {
-        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+        setTimeout($.proxy(function () {
           if ( this._historyBack && this._prevHashList.length > 0) {
             this._historyBack = false;
             var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -484,8 +484,8 @@ Tw.PopupService.prototype = {
             this._prevHashList.pop();
             this._popupClose(closeCallback);
           }
-        }
-      }, this), 500);
+        }, this), 500);
+      }
 
       this._historyBack = true;
       history.back();
