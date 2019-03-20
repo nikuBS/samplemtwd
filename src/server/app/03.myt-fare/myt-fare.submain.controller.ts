@@ -55,7 +55,7 @@ class MyTFareSubmainController extends TwViewController {
       }
 
       // 대표청구 여부
-      if ( svcInfo.actRepYn === 'Y' ){
+      if ( svcInfo.actRepYn === 'Y' ) {
 
         if ( data.type === 'UF' ) {
           // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
@@ -133,27 +133,27 @@ class MyTFareSubmainController extends TwViewController {
       this._getTotalPayment(),
       this._getTaxInvoice(),
       // this._getContribution(),
-      this._getMicroPrepay(),
-      this._getContentPrepay()
+      // this._getMicroPrepay(),
+      // this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
     ).subscribe(([/* nonpayment, */ paymentInfo, totalPayment,
-                   taxInvoice, /* contribution,*/ microPay, contentPay/*, banner*/]) => {
+                   taxInvoice, /* contribution,*/ /* microPay, contentPay/*, banner*/]) => {
       // 소액결제
-      if ( microPay ) {
+      /*if ( microPay ) {
         data.microPay = microPay;
         // 휴대폰이면서 미성년자가 아닌경우
         if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
           data.isMicroPrepay = true;
         }
-      }
-      // 콘텐츠
-      if ( contentPay ) {
+      }*/
+      // 콘텐츠 (성능개선항목으로 삭제)
+      /*if ( contentPay ) {
         data.contentPay = contentPay;
         // 휴대폰이면서 미성년자가 아닌경우
         if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
           data.isContentPrepay = true;
         }
-      }
+      }*/
       // 미납내역 (성능개선항목으로 삭제)
       /*if ( nonpayment ) {
         data.nonpayment = nonpayment;
@@ -204,10 +204,10 @@ class MyTFareSubmainController extends TwViewController {
     Observable.combineLatest(
       this._getUsageFee(),
       this._getPaymentInfo(),
-      this._getMicroPrepay(),
-      this._getContentPrepay()
+      // this._getMicroPrepay(),
+      // this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl),
-    ).subscribe(([usage, paymentInfo, microPay, contentPay/*, banner*/]) => {
+    ).subscribe(([usage, paymentInfo, /* microPay, contentPay, banner*/]) => {
       if ( usage && usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -238,22 +238,22 @@ class MyTFareSubmainController extends TwViewController {
           //   data.isNotAutoPayment = false;
           // }
         }
-        // 소액결제
-        if ( microPay ) {
+        // 소액결제 (성능개선항목으로 제거)
+        /*if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
           if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
             data.isMicroPrepay = true;
           }
-        }
-        // 콘텐츠
-        if ( contentPay ) {
+        }*/
+        // 콘텐츠 (성능개선항목으로 제거)
+        /*if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
           if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
             data.isContentPrepay = true;
           }
-        }
+        }*/
         // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
         // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
         //   if ( !FormatHelper.isEmpty(banner.result) ) {
