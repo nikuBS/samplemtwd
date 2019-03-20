@@ -37,7 +37,7 @@ Tw.SMS_UNIT = '건';
 Tw.CURRENCY_UNIT = {
   WON: '원',
   TEN_THOUSAND: '만원',
-  POINT: '점'
+  POINT: 'P'
 };
 
 Tw.TIMEOUT_ERROR_MSG = '요청을 처리하는데 시간이 오래 걸리고 있습니다. 잠시 후 다시 시도해주세요.';
@@ -406,7 +406,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   POINT: '포인트',
   OK_CASHBAG: 'OK캐쉬백',
   T_POINT: 'T포인트',
-  POINT_UNIT: '점',
+  POINT_UNIT: 'P',
   RAINBOW_POINT: '레인보우 포인트',
   INQUIRE: '조회하기',
   PAYMENT: '납부',
@@ -422,7 +422,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   CANCEL: '해지',
   AUTO_CANCEL: '자동납부 해지',
   GO_CHANGE_HISTORY: '변경내역 보기',
-  RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감',
+  RAINBOW_MESSAGE: '1,000포인트 이상 보유시 매월 자동 차감',
   SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.',
   USING: '사용 중'
 };
@@ -589,8 +589,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   SELECT_LINE: '회선을 선택해 주세요.',
   TEN_POINT: '10포인트 단위로 입력해 주세요.',
   TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
-  UP_TO_ONE: '1점 이상 입력해주세요.',
-  UP_TO_TEN: '1,000점 이상 보유 시 자동납부 신청이 가능합니다.',
+  UP_TO_ONE: '1포인트 이상 입력해주세요.',
+  UP_TO_TEN: '1,000포인트 이상 보유 시 자동납부 신청이 가능합니다.',
   COMPLETE_NEW: '신청이 완료되었습니다.',
   COMPLETE_CHANGE: '변경이 완료되었습니다.',
   COMPLETE_CANCEL: '해지가 완료되었습니다.',
@@ -645,7 +645,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V5: '유효기간을 입력해 주세요.',
   ALERT_2_V6: '유효기간이 올바르지 않습니다.',
   ALERT_2_V7: '비밀번호가 올바르지 않습니다.',
-  ALERT_2_V8: '1,000점 이상 입력해 주세요.',
+  ALERT_2_V8: '1,000포인트 이상 입력해 주세요.',
   ALERT_2_V9: '휴대폰 번호가 올바르지 않습니다.',
   ALERT_2_V10: '선결제 가능 최대금액을 초과하였습니다.',
   ALERT_2_V11: '생년월일이 올바르지 않습니다.',
@@ -675,9 +675,9 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A28: '팩스 전송이 완료되었습니다.',
   ALERT_2_A29: '이메일로 전송 완료되었습니다.',
   ALERT_2_A32: '계좌 정보를 확인해 주세요.',
-  ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
-  ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
-  ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
+  ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500포인트부터 가능합니다.',
+  ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000포인트부터 가능합니다.',
+  ALERT_2_A76: '적립된 레인보우 포인트가 0포인트입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
   ALERT_2_A77: { TITLE: '자동납부를 해지하시겠습니까?', BUTTON: '해지하기' },
   ALERT_2_A85: { TITLE: 'T포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
@@ -1535,7 +1535,7 @@ Tw.BENEFIT = {
       T: 'T포인트',
       RAINBOW: '레인보우포인트'
     },
-    UNIT: '점'
+    UNIT: 'P'
   },
   TYPE: {
     E: '적립',

@@ -66,8 +66,6 @@ Tw.MyTFareBill.prototype = {
       .fail($.proxy(this._pointFail, this));
   },
   _getRainbowPoint: function () {
-    // this._apiService.request(Tw.API_CMD.BFF_07_0042, {})
-    // [DV001-15034] 이슈 수정과 함께 BFF 매핑처리 문의를 했지만 다른 BFF라고 하셔서 수정
     this._apiService.request(Tw.API_CMD.BFF_05_0132, {})
       .done($.proxy(this._rainbowSuccess, this))
       .fail($.proxy(this._rainbowFail, this));
@@ -211,7 +209,6 @@ Tw.MyTFareBill.prototype = {
   _rainbowSuccess: function (res) {
     this._rainbowComplete = true;
     if (res.code === Tw.API_CODE.CODE_00) {
-      // this._rainbowPoint = res.result.usableRbpPt;
       this._rainbowPoint = res.result.usblPoint;
     } else {
       this._rainbowFail(res);
