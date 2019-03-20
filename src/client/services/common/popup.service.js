@@ -374,12 +374,8 @@ Tw.PopupService.prototype = {
 
     // 회선 정보
     _.each([from, target], function(item){
-      if ( item.svcAttrCd.indexOf('S') > -1 ) {
-        if ( target.svcAttrCd === 'S3' ) {
-          item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
-        } else {
-          item.descSvcNum = item.addr;
-        }
+      if (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) {
+        item.descSvcNum = item.addr;
       } else {
         item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
       }
