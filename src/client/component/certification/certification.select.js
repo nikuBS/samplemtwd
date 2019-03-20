@@ -348,7 +348,6 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
     $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
     $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickSkPublic, this));
-    $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
   },
   _opOpenRefundSelectPopup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk-refund', $.proxy(this._onClickSkSmsRefund, this));
@@ -361,6 +360,8 @@ Tw.CertificationSelect.prototype = {
     if ( this._openCert ) {
       this._openCert = false;
       this._openCertPopup();
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
   _onClickSkSms: function () {
@@ -372,25 +373,29 @@ Tw.CertificationSelect.prototype = {
   _onClickKtSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.KT;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickLgSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.LG;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickSaveSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.SAVE;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickIpin: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.IPIN;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickBio: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.BIO;
@@ -430,9 +435,8 @@ Tw.CertificationSelect.prototype = {
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
-      this._openSelectPopup(false);
+      this._openSelectPopup(true);
     } else {
-      // TODO: 인증 실패
       this._callback(resp, this._deferred, this._command);
     }
   },

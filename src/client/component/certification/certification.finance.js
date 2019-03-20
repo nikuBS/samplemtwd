@@ -103,6 +103,8 @@ Tw.CertificationFinance.prototype = {
   _onCloseFinancePopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._result) ) {
       this._callback(this._result);
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
   _onClickSkSms: function () {

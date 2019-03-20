@@ -16,7 +16,8 @@ export enum SKIP_NAME {
 export const UNLIMIT_NAME = {
   '1': '무제한',
   B: '기본제공',
-  M: '무제한'
+  M: '무제한',
+  REMAIN: '남음'
 };
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)

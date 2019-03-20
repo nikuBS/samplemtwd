@@ -142,6 +142,8 @@ Tw.CertificationRepresentative.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
       this._callback(this._callbackParam, this._deferred, this._command);
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
   _onClickList: function () {
