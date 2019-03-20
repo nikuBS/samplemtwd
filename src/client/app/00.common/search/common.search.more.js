@@ -80,7 +80,7 @@ $.extend(Tw.CommonSearchMore.prototype,
   },
   _doSearch : function (evt) {
     var keyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(keyword)){
+    if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
       var closeCallback;
       if(this._historyService.getHash()==='#input_P'){
         closeCallback = $.proxy(function () {
