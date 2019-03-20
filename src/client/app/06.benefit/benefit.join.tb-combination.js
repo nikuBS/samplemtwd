@@ -208,7 +208,7 @@ Tw.BenefitJoinTbCombination.prototype = {
       choiceSvcMgmtNum: this._svcMgmtNum,
       wireSvcMgmtNum: this._wireSvcMgmtNum
     }, {}, [this._prodId]).done($.proxy(this._openConfirm, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _convertData: function(confirmInfo) {

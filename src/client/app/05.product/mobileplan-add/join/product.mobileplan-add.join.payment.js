@@ -101,6 +101,10 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _detectInputNumber: function(e) {
+    var onlyNumber = this.$inputNumber.val();
+
+    this.$inputNumber.val('');
+    this.$inputNumber.val(onlyNumber);
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
     if (this.$inputNumber.val().length > 11) {
@@ -194,7 +198,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this._toggleButton(this.$btnValidate, false);
       this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
     } else {
-      this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
+      this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
     }
 
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
@@ -368,7 +372,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       svcNumList: [this._getServiceNumberFormat(this._validatedNumber)]
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _getServiceNumberFormat: function(number) {

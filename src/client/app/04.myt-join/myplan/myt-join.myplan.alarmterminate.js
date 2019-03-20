@@ -23,34 +23,41 @@ Tw.MyTJoinMyplanAlarmterminate = function(rootEl) {
 
 Tw.MyTJoinMyplanAlarmterminate.prototype = {
 
+  // Element 캐싱
   _cachedElement: function() {
-    this.$btnTerminate = this.$container.find('.fe-btn_terminate');
-    this.$btnBack = this.$container.find('.fe-btn_back');
+    this.$btnTerminate = this.$container.find('.fe-btn_terminate'); // 해지 버튼
+    this.$btnBack = this.$container.find('.fe-btn_back'); // 뒤로가기 버튼
   },
 
+  // 이벤트 바인딩
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._alarmTerminate, this));
-    this.$btnBack.on('click', $.proxy(this._replaceAlarm, this));
+    this.$btnTerminate.on('click', $.proxy(this._alarmTerminate, this));  // 해지 버튼 클릭시
+    this.$btnBack.on('click', $.proxy(this._replaceAlarm, this)); // 뒤로가기 버튼 클릭시
   },
 
+  // 해지 버튼 클릭시
   _alarmTerminate: function() {
     this._apiService.request(Tw.API_CMD.BFF_05_0127, {}, {})
       .done($.proxy(this._alarmTerminateResult, this));
   },
 
+  // 해지 API 요청 응답
   _alarmTerminateResult: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {  // API 오류 응답시
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    // 완료 팝업 처리
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.MSG,
       Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.TITLE, null, $.proxy(this._replaceMyplan, this));
   },
 
+  // 가입 완료 팝업서 확인시
   _replaceAlarm: function() {
     this._historyService.replaceURL('/myt-join/myplan/alarm');
   },
 
+  // 해지 완료시 나의 요금제 화면으로 이동
   _replaceMyplan: function() {
     this._historyService.replaceURL('/myt-join/myplan');
   }

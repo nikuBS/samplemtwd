@@ -194,7 +194,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     this._isSetOverPayReq = true;
     this._apiService.request(Tw.API_CMD.BFF_10_0010)
       .done($.proxy(this._resOverpay, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _resOverpay: function(resp) {
@@ -251,7 +251,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0008, {
       option: this.$container.find('.widget-box.radio input[type="radio"]:checked').val()
     }, {}, [this._prodId]).done($.proxy(this._procConfirmRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procConfirmRes: function(resp) {
@@ -282,7 +282,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, reqParams,
       {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

@@ -95,13 +95,13 @@ Tw.BenefitDisPgmInput.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_10_0063, {
         svcAgrmtPrdCd: this._selType
       }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
     else {
       this._apiService.request(Tw.API_CMD.BFF_10_0035, {
         addCd: '2'
       }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
   },
 

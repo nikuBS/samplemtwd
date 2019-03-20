@@ -310,7 +310,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _detectBpcp: function(e) {
@@ -442,7 +442,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
       .done($.proxy(this._procAdvanceCheck, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _setGoMemberLine: function() {
@@ -475,16 +475,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
-    $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
 
-    setTimeout(function() {
-      $target.focus();
+    if (contentsIndex === 0) {
+      $popupContainer.scrollTop(0);
+    } else {
+      $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+    }
 
-      if (contentsIndex === 0) {
-        $popupContainer.scrollTop(0);
-      }
-    }, 100);
-
+    $target.focus();
     Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 
