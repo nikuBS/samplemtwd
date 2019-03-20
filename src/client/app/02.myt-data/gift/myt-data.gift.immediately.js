@@ -176,6 +176,7 @@ Tw.MyTDataGiftImmediately.prototype = {
       Tw.ALERT_MSG_MYT_DATA.GIFT_DATA_QUESTION,
       Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
       $.proxy(this._onSuccessSendingData, this, $target),
+      null,
       $target
     );
   },
