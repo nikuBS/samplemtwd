@@ -139,17 +139,17 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
-    this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
+    this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
-    this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
-    this.$container.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
+    this.$container.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    this.$container.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
 
     new Tw.InputFocusService(this.$container, this.$btLogin);
   },
-  _onKeyupMdn: function ($event) {
+  _onInputMdn: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {

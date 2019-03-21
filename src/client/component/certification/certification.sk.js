@@ -199,8 +199,8 @@ Tw.CertificationSk.prototype = {
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
-    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
-    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    $popupContainer.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
+    $popupContainer.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     this.$checkKeyin.on('change', $.proxy(this._onChangeKeyin, this));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));

@@ -91,13 +91,13 @@ Tw.CertificationSkFull.prototype = {
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
-    this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
+    this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
-    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
-    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    $popupContainer.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
+    $popupContainer.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
@@ -110,7 +110,7 @@ Tw.CertificationSkFull.prototype = {
       this._callback(this._result);
     }
   },
-  _onKeyupMdn: function ($event) {
+  _onInputMdn: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {

@@ -56,7 +56,7 @@ Tw.CommonAutoSmsCert.prototype = {
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
     this.$inputType.on('click', $.proxy(this._onClickType, this));
-    this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
+    this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputBirthY.on('input', $.proxy(this._onInputBirthY, this));
     this.$inputBirthM.on('input', $.proxy(this._onInputBirthM, this));
     this.$inputBirthD.on('input', $.proxy(this._onInputBirthD, this));
@@ -68,9 +68,12 @@ Tw.CommonAutoSmsCert.prototype = {
     this.$contCustomer = this.$container.find('#fe-cont-customer');
     this.$contBiz = this.$container.find('#fe-cont-biz');
 
+    this.$container.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
+    this.$container.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+
     new Tw.InputFocusService(this.$container, this.$btConfirm);
   },
-  _onKeyupMdn: function ($event) {
+  _onInputMdn: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
