@@ -223,7 +223,12 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return;
     }
 
+    var onlyNumber = this.$inputAuthCode.val();
+
+    this.$inputAuthCode.val('');
+    this.$inputAuthCode.val(onlyNumber);
     this.$inputAuthCode.val(this.$inputAuthCode.val().replace(/[^0-9]/g, ''));
+
     if (this.$inputAuthCode.val().length > 6) {
       this.$inputAuthCode.val(this.$inputAuthCode.val().substr(0, 6));
     }
