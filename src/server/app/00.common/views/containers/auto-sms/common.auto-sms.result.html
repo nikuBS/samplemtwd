@@ -35,9 +35,9 @@
             <div class="rg-br-cont-box rg-br-nogaps-top">
                 <!--text case 1-->
                 <p class="rg-br-welcome-box">
-                    <span><em><%=data.welcomeTxt%></em></span>
+                    <span><em><%-data.welcomeTxt%></em></span>
                     <% if(data.welcomeSubTxt) { %>
-                    <span><%=data.welcomeSubTxt%></span>
+                    <span><%-data.welcomeSubTxt%></span>
                     <% } %>
                 </p>
             </div>
@@ -84,212 +84,76 @@
                         <div class="acco-cover toggle">
                             <div class="acco-style">
                                 <ul class="acco-list">
-                                    <!--내 휴대폰-->
-                                    <%if(data.phoneList && data.phoneList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">내 휴대폰</button></div>
-                                        <div class="acco-cont">
-                                            <% data.phoneList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <ul class="list-none">
-                                                <% if(o.list.length) {
-                                                    o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                <%});
-                                                 } %>
-                                                </ul>
-                                            </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
-
-                                    <!--약정할인혜택-->
-                                    <%if(data.agreeList && data.agreeList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">약정할인혜택</button></div>
-                                        <div class="acco-cont">
-                                            <% data.agreeList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <% if(o.list.length) { %>
-                                                <ul class="list-none">
-                                                    <% o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                    <%}); %>
-                                                </ul>
-                                                <% } %>
-                                            </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
-
-                                    <!--요금제부가서비스 표 있음-->
-                                    <%if(data.planList && data.planList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">요금제부가서비스</button></div>
-                                        <div class="acco-cont">
-                                            <% data.planList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <% if(o.list.length) { %>
-                                                <ul class="list-none">
-                                                    <% o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                    <%}); %>
-                                                </ul>
-                                                <% } %>
-                                                 <!--표 케이스-->
-                                                 <% if(o.table.length) { %>
-                                                 <div class="paid-service-list">
+                                <%  if(data.infoList &&  data.infoList.length) {
+                                    data.infoList.forEach(function(List){
+                                        if(List.content && List.content.length) { %>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true"><%=List.listT%></button></div>
+                                            <div class="acco-cont">
+                                                <% List.content.forEach(function(o){ %>
+                                                <div class="info-box">
+                                                    <%if (o.title) { %>
+                                                    <h4 class="info-title"><%=o.title%></h4>
+                                                    <%} %>
+                                                    <!--리스트 케이스-->
+                                                    <% if(o.list.length) { %>
                                                     <ul class="list-none">
-                                                        <li class="service-table">
-                                                            <div class="service-cell left ti-service">
-                                                                <span class="">상품명</span>
-                                                            </div>
-                                                            <div class="service-cell center ti-service">
-                                                                <span class="">신청일</span>
-                                                            </div>
-                                                            <div class="service-cell right ti-service">
-                                                                <span>이용요금</span>
-                                                            </div>
+                                                        <% o.list.forEach(function(list){ %>
+                                                        <li class="list">
+                                                            <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
+                                                            <%if(list.span2){ %>
+                                                            <span><%-list.span2%></span>
+                                                            <%}%>
                                                         </li>
-                                                    <% o.table.forEach(function(tr){ %>
-                                                        <li class="service-table">
-                                                            <div class="service-cell left pd-align">
-                                                                <span class=""><%-tr[0]%></span>
-                                                            </div>
-                                                            <div class="service-cell center gray-color pd-align">
-                                                                <span class=""><%-tr[1]%></span>
-                                                            </div>
-                                                            <div class="service-cell right pd-align">
-                                                                <span class=""><%-tr[2]%></span>
-                                                            </div>
-                                                        </li>
-                                                    <%});%>
+                                                        <%}); %>
                                                     </ul>
-                                                    <% if(o.table_sub) { %>
-                                                    <div class="contents-note">
-                                                        <span class="txt-smaller">
-                                                            <%-o.table_sub%>                                                   
-                                                        </span>
-                                                    </div>
                                                     <% } %>
-                                                    
+                                                    <!--표 케이스-->
+                                                    <% if(o.table.length) { %>
+                                                    <div class="paid-service-list">
+                                                        <ul class="list-none">
+                                                            <li class="service-table">
+                                                                <div class="service-cell left ti-service">
+                                                                    <span class="">상품명</span>
+                                                                </div>
+                                                                <div class="service-cell center ti-service">
+                                                                    <span class="">신청일</span>
+                                                                </div>
+                                                                <div class="service-cell right ti-service">
+                                                                    <span>이용요금</span>
+                                                                </div>
+                                                            </li>
+                                                        <% o.table.forEach(function(tr){ %>
+                                                            <li class="service-table">
+                                                                <div class="service-cell left pd-align">
+                                                                    <span class=""><%-tr[0]%></span>
+                                                                </div>
+                                                                <div class="service-cell center gray-color pd-align">
+                                                                    <span class=""><%-tr[1]%></span>
+                                                                </div>
+                                                                <div class="service-cell right pd-align">
+                                                                    <span class=""><%-tr[2]%></span>
+                                                                </div>
+                                                            </li>
+                                                        <%});%>
+                                                        </ul>
+                                                        <% if(o.table_sub) { %>
+                                                        <div class="contents-note">
+                                                            <span class="txt-smaller">
+                                                                <%-o.table_sub%>                                                   
+                                                            </span>
+                                                        </div>
+                                                        <% } %>
+                                                        
+                                                    </div>
+                                                    <%} %>
                                                 </div>
-                                                <%} %>
+                                                <% }); %>
                                             </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
-
-                                    <!--납부청구-->
-                                    <%if(data.payList && data.payList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">납부청구정보</button></div>
-                                        <div class="acco-cont">
-                                            <% data.payList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <% if(o.list.length) { %>
-                                                <ul class="list-none">
-                                                    <% o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                    <%}); %>
-                                                </ul>
-                                                <% } %>
-                                            </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
-
-                                    <!--가족결합멤버십-->
-                                    <%if(data.familyList && data.familyList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">가족결합멤버십</button></div>
-                                        <div class="acco-cont">
-                                            <% data.familyList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <% if(o.list.length) { %>
-                                                <ul class="list-none">
-                                                    <% o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                    <%}); %>
-                                                </ul>
-                                                <% } %>
-                                            </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
-
-                                    <!--필수 안내 사항-->
-                                    <%if(data.GuidList && data.GuidList.length) { %>
-                                    <li class="acco-box">
-                                        <div class="acco-tit"><button class="bt-title" role="button" aria-pressed="true">필수 안내 사항</button></div>
-                                        <div class="acco-cont">
-                                            <% data.GuidList.forEach(function(o){ %>
-                                            <div class="info-box">
-                                                <%if (o.title) { %>
-                                                <h4 class="info-title"><%=o.title%></h4>
-                                                <%} %>
-                                                <% if(o.list.length) { %>
-                                                <ul class="list-none">
-                                                    <% o.list.forEach(function(list){ %>
-                                                    <li class="list">
-                                                        <span class="<%if(list.classOption){%> txt-smaller <%} %>"><%-list.span1%><%if(list.span2){%>:<%}%></span>
-                                                        <%if(list.span2){ %>
-                                                        <span><%-list.span2%></span>
-                                                        <%}%>
-                                                    </li>
-                                                    <%}); %>
-                                                </ul>
-                                                <% } %>
-                                            </div>
-                                            <% }); %>
-                                        </div>
-                                    </li>
-                                    <%} %>
+                                        </li>
+                                        <%}
+                                        })
+                                    } // %>
                                 </ul>
                             </div>
                         </div>
