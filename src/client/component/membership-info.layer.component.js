@@ -62,11 +62,16 @@ Tw.MembershipInfoLayerPopup.prototype = {
   },
 
   _onSuccess : function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+    if ( resp.code !== Tw.API_CODE.CODE_00  || !resp.result) {
       this._onFail(resp);
       return false;
     }
-    this._isJoinOk = (resp.result && Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
+
+    // DV001-17710 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E')는 가능
+    if(resp.result.ownNameYn && this._svcInfo.svcGr === 'E'){
+      resp.result.ownNameYn = 'Y';
+    }
+    this._isJoinOk = (Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
     this.onClickJoinBtn();
   },
 
