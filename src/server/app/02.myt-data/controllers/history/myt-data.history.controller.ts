@@ -38,8 +38,8 @@ export default class MyTDataHistory extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_06_0077, { fromDt: this.fromDt, toDt: this.toDt }).subscribe(resp => {
-      if (resp.result !== API_CODE.CODE_00) {
-        this.error.render(res, {
+      if (resp.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
           ...resp,
           pageInfo,
           svcInfo
