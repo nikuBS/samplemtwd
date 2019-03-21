@@ -137,6 +137,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$sendMsgResult.hide().attr('aria-hidden', 'true');
     this._receiveNum = number;
 
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this));
+    } else {
+      this._getAuthCodeReq(false);
+    }
+  },
+
+  _onReadSms: function () {
     this._getAuthCodeReq(false);
   },
 
@@ -197,6 +205,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this._toggleButton(this.$btnExtend, true);
       this._toggleButton(this.$btnValidate, false);
       this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+      this._getCertNum();
     } else {
       this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
     }
@@ -218,7 +227,20 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
   },
 
-  _detectInputAuthCode: function(e) {
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
+    }
+  },
+
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputAuthCode.val(resp.params.cert);
+      this._detectInputAuthCode();
+    }
+  },
+
+  _detectInputAuthCode: function() {
     if (!this._isSend) {
       return;
     }
@@ -233,7 +255,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this.$inputAuthCode.val(this.$inputAuthCode.val().substr(0, 6));
     }
 
-    this._toggleClearBtn($(e.currentTarget));
+    this._toggleClearBtn(this.$inputAuthCode);
     this._toggleButton(this.$btnValidate, this.$inputAuthCode.val() > 0);
   },
 
