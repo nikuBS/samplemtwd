@@ -503,7 +503,7 @@ Tw.CommonSearch.prototype = {
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
       _.each(returnData,function (data,idx) {
-        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
+        $smartBase.append(smartTemplate({data : data }));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');
