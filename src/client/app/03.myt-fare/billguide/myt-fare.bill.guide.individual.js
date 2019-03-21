@@ -230,14 +230,14 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0036;
+    var targetApi = Tw.API_CMD.BFF_05_0047;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
@@ -269,7 +269,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       var item = childListData[i];
       item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
-        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.totInvAmt);
+        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.unPaidTotSum);
       }
     }
 

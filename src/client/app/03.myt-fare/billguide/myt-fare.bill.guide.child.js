@@ -27,7 +27,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if(this.resData.billpayInfo && this.resData.billpayInfo.paidAmtDetailList){
+    if(this.resData.billpayInfo && this.resData.billpayInfo.usedAmountDetailList){
       this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
     }
 
@@ -207,16 +207,16 @@ Tw.MyTFareBillGuideChild.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var useAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailList);
+      var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
-        item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
+        item.invAmt = Tw.FormatHelper.addComma(item.billItmMclAmt);
         return item;
       });
       // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
-      var priceKey = 'invAmt';
+      var priceKey = 'billItmMclAmt';
       var rootNodes = {};
       rootNodes.useSvcType = this._useSvcTypeFun();
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);

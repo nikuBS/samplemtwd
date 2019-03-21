@@ -110,15 +110,18 @@ class MyTFareBillGuideChild extends TwViewController {
     /*
     * 실 데이터
     */
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
       invDt: this.reqQuery.date,
-      selSvcMgmtNum: this.reqQuery.line
+      childSvcMgmtNum: this.reqQuery.line
     }), 'p1');
 
     // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
 
     Promise.all([p1]).then(function(resArr) {
-      thisMain._billpayInfo = resArr[0].result;
+
+      thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
+        || resArr[0].result.invAmtList[0];
+      thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
       thisMain._unpaidBillsInfo = resArr[0].result.unPayAmtList;
 
       thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
@@ -131,7 +134,7 @@ class MyTFareBillGuideChild extends TwViewController {
       thisMain._commDataInfo.intBillLineList =
         (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(childInfo, thisMain.reqQuery.line) : null;
 
-      thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
+      // thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
