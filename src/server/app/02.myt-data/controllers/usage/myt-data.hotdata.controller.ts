@@ -27,6 +27,10 @@ const VIEW = {
   ERROR: 'usage/myt-data.usage.error.html'
 };
 
+// 기본 데이터제공량이 무제한인 요금상품 리스트
+const infinityDataProdList: any = ['NA00002500', 'NA00002501', 'NA00002502', 'NA00002708', 'NA00002997',
+  'NA00002998', 'NA00003125', 'NA00003126', 'NA00003127', 'NA00003128'];
+
 class MyTDataHotdata extends TwViewController {
   constructor() {
     super();
@@ -45,7 +49,7 @@ class MyTDataHotdata extends TwViewController {
             extraDataReq = this.reqPpsCard(); // PPS 정보
             break;
         }
-        if (extraDataReq) {
+        if ( extraDataReq ) {
           Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
             this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
           }, (resp) => {
@@ -107,7 +111,7 @@ class MyTDataHotdata extends TwViewController {
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
-    if (gnrlData) {
+    if ( gnrlData ) {
       // 총데이터 잔여량 표시
       this.setTotalRemained(usageData);
 
@@ -122,7 +126,7 @@ class MyTDataHotdata extends TwViewController {
       }));
 
       // 기본제공데이터가 있는 경우 최상위 노출
-      if (!FormatHelper.isEmpty(defaultData.skipId)) {
+      if ( !FormatHelper.isEmpty(defaultData.skipId) ) {
         dataArr.unshift(defaultData);
         usageData.hasDefaultData = true;
       } else {
@@ -130,7 +134,7 @@ class MyTDataHotdata extends TwViewController {
       }
     }
 
-    if (spclData) {
+    if ( spclData ) {
       // 통합공유데이터
       tOPlanSharedData = this.getDataInTarget(T0_PLAN_SKIP_ID, spclData) || {};
 
@@ -140,12 +144,17 @@ class MyTDataHotdata extends TwViewController {
       }));
 
       // 기본제공 데이터 존재
-      if (usageData.hasDefaultData) {
+      if ( usageData.hasDefaultData ) {
         // T/O플랜인 경우 기본제공 데이터의 tOPlanSharedData에 할당
-        if (!FormatHelper.isEmpty(tOPlanSharedData.skipId)) {
+        if ( !FormatHelper.isEmpty(tOPlanSharedData.skipId) ) {
           defaultData.tOPlanSharedData = tOPlanSharedData;
         } else {
-          defaultData.sharedData = true;
+          // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
+          if (infinityDataProdList.indexOf(defaultData.prodId) !== -1) {
+            defaultData.sharedData = false;
+          } else {
+            defaultData.sharedData = true;
+          }
         }
       }
     }
@@ -157,7 +166,7 @@ class MyTDataHotdata extends TwViewController {
       return DAY_BTN_STANDARD_SKIP_ID.indexOf(_data.skipId) !== -1;
     });
 
-    if (pas.length > 0) {
+    if ( pas.length > 0 ) {
       pas.map((pa) => {
         dataArr = dataArr.filter((_data) => {
           return !(_data.skipId === SKIP_NAME.DAILY && _data.prodId === pa.prodId);
@@ -238,7 +247,7 @@ class MyTDataHotdata extends TwViewController {
   private _renderError(res: any, svcInfo: any, pageInfo: any, resp: any) {
     const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
     error.code = resp.code;
-    if (error.code !== 'BLN0001') {
+    if ( error.code !== 'BLN0001' ) {
       error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
     }
     res.render(VIEW.ERROR, {
@@ -257,16 +266,16 @@ class MyTDataHotdata extends TwViewController {
     const gnrlData = usageData.gnrlData || [];
     let totalRemainUnLimited = false;
     gnrlData.map((_data) => {
-      if (UNLIMIT_CODE.indexOf(_data.unlimit) !== -1) {
+      if ( UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
         totalRemainUnLimited = true;
       }
     });
-    if (totalRemainUnLimited) {
+    if ( totalRemainUnLimited ) {
       usageData.totalRemainUnLimited = true;
       usageData.totalRemained = SKIP_NAME.UNLIMIT;
     } else {
       const totalRemained = gnrlData.reduce((_memo, _data) => {
-        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo +  0;
+        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo + 0;
       }, 0);
       usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
     }
@@ -309,7 +318,7 @@ class MyTDataHotdata extends TwViewController {
   private getDataInTarget(target: any, dataArray: any): any {
     let data;
     dataArray.map((_data) => {
-      if (target.indexOf(_data.skipId) !== -1) {
+      if ( target.indexOf(_data.skipId) !== -1 ) {
         data = _data;
       }
     });
