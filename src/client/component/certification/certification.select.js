@@ -33,6 +33,7 @@ Tw.CertificationSelect = function () {
 
   this._smsBlock = false;
   this._optionCert = false;
+  this._onSelectPopup = false;
 
   this._certSk = new Tw.CertificationSk();
 };
@@ -341,6 +342,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _onOpenSelectPopup: function ($popupContainer) {
+    this._onSelectPopup = true;
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
     $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
@@ -357,9 +359,12 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-ipin-refund', $.proxy(this._onClickIpin, this));
   },
   _onCloseSelectPopup: function () {
+    this._onSelectPopup = false;
     if ( this._openCert ) {
       this._openCert = false;
       this._openCertPopup();
+    } else if ( this._result ) {
+      this._callback(this._result, this._deferred, this._command);
     } else {
       this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
@@ -413,6 +418,7 @@ Tw.CertificationSelect.prototype = {
     this._popupService.close();
   },
   _completeCert: function (resp) {
+    console.log('completecert', this._onSelectPopup);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;
@@ -425,7 +431,12 @@ Tw.CertificationSelect.prototype = {
         } else {
           resp.svcMgmtNum = '';
         }
-        this._callback(resp, this._deferred, this._command);
+        if ( !this._onSelectPopup ) {
+          this._callback(resp, this._deferred, this._command);
+        } else {
+          this._result = resp;
+          this._popupService.close();
+        }
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
       if ( !Tw.FormatHelper.isEmpty(resp.target) && resp.target === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
@@ -437,7 +448,12 @@ Tw.CertificationSelect.prototype = {
       this._smsBlock = true;
       this._openSelectPopup(true);
     } else {
-      this._callback(resp, this._deferred, this._command);
+      if ( !this._onSelectPopup ) {
+        this._callback(resp, this._deferred, this._command);
+      } else {
+        this._result = resp;
+        this._popupService.close();
+      }
     }
   },
   _checkSmsEnable: function (target) {
