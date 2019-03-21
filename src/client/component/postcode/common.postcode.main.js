@@ -62,7 +62,7 @@ Tw.CommonPostcodeMain.prototype = {
   },
   _checkIsEnter: function (event) {
     if (Tw.InputHelper.isEnter(event)) {
-      this._search();
+      this._search(event);
     }
   },
   _search: function(e) {

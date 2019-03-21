@@ -101,6 +101,14 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $target = $(event.currentTarget);
     $target.find('a').attr('aria-selected', 'true');
     $target.siblings().find('a').attr('aria-selected', 'false');
+
+    if ($target.attr('id') === 'tab1') {
+      this.$container.find('.fe-tab1-btn').show();
+      this.$container.find('.fe-tab2-btn').hide();
+    } else {
+      this.$container.find('.fe-tab1-btn').hide();
+      this.$container.find('.fe-tab2-btn').show();
+    }
   },
 
   _setData: function (result) {
