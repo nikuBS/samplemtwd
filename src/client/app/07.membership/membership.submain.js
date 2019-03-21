@@ -340,14 +340,10 @@ Tw.MembershipSubmain.prototype = {
         this._getCurrentLocationTimeout = setTimeout($.proxy(function(){
           if(this._getCurrentLocationTimeout){
             this._getCurrentLocationTimeout = null;
-            var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-                $.proxy(function () {
-                  this._getAreaByGeo({
-                    latitude: '37.5600420',
-                    longitude: '126.9858500'
-                  });
-                }, this));
+            this._getAreaByGeo({
+              latitude: '37.5600420',
+              longitude: '126.9858500'
+            });
           }
         }, this), 2000);
         this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function(result){
@@ -355,14 +351,10 @@ Tw.MembershipSubmain.prototype = {
               if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
                 this._getAreaByGeo(result.params);
               } else {
-                var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-                this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-                    $.proxy(function () {
-                      this._getAreaByGeo({
-                        latitude: '37.5600420',
-                        longitude: '126.9858500'
-                      });
-                    }, this));
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
               }
             }, this));
       } else {
@@ -371,14 +363,10 @@ Tw.MembershipSubmain.prototype = {
           var geoOptions = {timeout: 1000};
           navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this), geoOptions);
         } else {
-          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-              $.proxy(function () {
-                this._getAreaByGeo({
-                  latitude: '37.5600420',
-                  longitude: '126.9858500'
-                });
-              }, this));
+          this._getAreaByGeo({
+            latitude: '37.5600420',
+            longitude: '126.9858500'
+          });
         }
       }
     } else {
@@ -397,14 +385,10 @@ Tw.MembershipSubmain.prototype = {
     setTimeout($.proxy(this._openFailNoticePopup, this), 500);
   },
   _openFailNoticePopup: function () {
-    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-        $.proxy(function () {
-          this._getAreaByGeo({
-            latitude: '37.5600420',
-            longitude: '126.9858500'
-          });
-        }, this));
+    this._getAreaByGeo({
+      latitude: '37.5600420',
+      longitude: '126.9858500'
+    });
   },
   /**
    * 현재 사용자 위치 정보 요청 성공한 경우,
@@ -451,14 +435,10 @@ Tw.MembershipSubmain.prototype = {
       this.$container.find('.fe-near-brand').hide();
     }
     else {
-      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-          $.proxy(function () {
-            this._getAreaByGeo({
-              latitude: '37.5600420',
-              longitude: '126.9858500'
-            });
-          }, this));
+      this._getAreaByGeo({
+        latitude: '37.5600420',
+        longitude: '126.9858500'
+      });
     }
   },
   /**
@@ -499,14 +479,10 @@ Tw.MembershipSubmain.prototype = {
       this.$container.find('.fe-near-brand').hide();
     }
     else {
-      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-          $.proxy(function () {
-            this._getAreaByGeo({
-              latitude: '37.5600420',
-              longitude: '126.9858500'
-            });
-          }, this));
+      this._getAreaByGeo({
+        latitude: '37.5600420',
+        longitude: '126.9858500'
+      });
     }
   },
   _handleFailCallBack: function () {

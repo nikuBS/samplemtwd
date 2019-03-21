@@ -36,7 +36,8 @@ export default class ProductRoaming extends TwViewController {
         pageInfo,
         isLogin: this.isLogin(svcInfo),
         banners,
-        sprateProds
+        sprateProds,
+        isPrd: this.isPrd()
       });
     });
   }

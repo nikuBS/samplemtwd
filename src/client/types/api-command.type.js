@@ -209,6 +209,8 @@ Tw.API_CMD = {
   BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: Tw.API_METHOD.POST },
   BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: Tw.API_METHOD.PUT },
+  BFF_05_0201: { path: '/core-balance/:version/troaming-data', method: Tw.API_METHOD.GET },
+  BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
@@ -434,6 +436,7 @@ Tw.API_CMD = {
   BFF_10_0046: { path: '/:version/products/fee-plans/:args0/option-sets', method: Tw.API_METHOD.POST },
   BFF_10_0048: { path: '/core-modification/:version/wireJoin/listUseAddressService', method: Tw.API_METHOD.POST },
   BFF_10_0054: { path: '/core-product/:version/submain/benefit-discount-products', method: Tw.API_METHOD.GET },
+  BFF_10_0056: { path: '/core-product/:version/services/roaming/fee-plans', method: Tw.API_METHOD.GET },
   BFF_10_0065: { path: '/core-product/:version/roaming/tpie-reservation', method: Tw.API_METHOD.POST },
   BFF_10_0066: { path: '/core-product/:version/roaming/tpie-reservation', method: Tw.API_METHOD.PUT },
   BFF_10_0067: { path: '/core-product/:version/roaming/tpie', method: Tw.API_METHOD.GET },
@@ -467,6 +470,7 @@ Tw.API_CMD = {
   BFF_10_0172: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck', method: Tw.API_METHOD.GET },
   BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
   BFF_10_0174: { path: '/core-product/:version/roaming/auto-dial', method: Tw.API_METHOD.GET },
+  BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -619,6 +623,7 @@ Tw.API_CODE = {
   CERT_SELECT: 'CERT0001', // 인증수단 선택화면으로 이동
   CERT_SMS_BLOCK: 'CERT0002', // SMS 인증 불가
   CERT_SMS_ENABLE: 'CERT0003',
+  CERT_CANCEL: 'CERT0004',
 
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',

@@ -11,6 +11,7 @@ Tw.MembershipMyUpdate = function(rootEl, myInfoData) {
   this._apiService = Tw.Api;
   this._myInfoData = JSON.parse(myInfoData);
   this._okCashbagShown = false;
+  this._okCashbagYn = this._myInfoData.ctzNumAgreeYn; //OK캐시백 약관 동의여부 저장
   this._cachedElement();
   this._bindEvent();
   this._deleteKeys();
@@ -143,12 +144,11 @@ Tw.MembershipMyUpdate.prototype = {
     this._myInfoData.sktNewsYn = this.$tmAgree.attr('checked') === 'checked' ? 'Y' : 'N';
     this._myInfoData.sktTmYn = this.$newsAgree.attr('checked') === 'checked' ? 'Y' : 'N';
 
-    if(this._myInfoData.ctzNumAgreeYn === 'N'){
+    if(this._okCashbagYn === 'N'){
       this._myInfoData.ctzNumAgreeYn = this.$checkSecond.attr('checked') === 'checked' ? 'Y' : 'N';
       this._myInfoData.mktgAgreeYn = this.$checkThird.attr('checked') === 'checked' ? 'Y' : 'N';
       this._myInfoData.ocbAccumAgreeYn = this.$checkFourth.attr('checked') === 'checked' ? 'Y' : 'N';
     }else{
-      this._myInfoData.mktgAgreeYn = this.$checkSelectFirst.attr('checked') === 'checked' ? 'Y' : 'N';
       this._myInfoData.ocbAccumAgreeYn = this.$checkSelectSecond.attr('checked') === 'checked' ? 'Y' : 'N';
     }
 

@@ -33,6 +33,7 @@ Tw.CertificationSelect = function () {
 
   this._smsBlock = false;
   this._optionCert = false;
+  this._onSelectPopup = false;
 
   this._certSk = new Tw.CertificationSk();
 };
@@ -341,6 +342,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _onOpenSelectPopup: function ($popupContainer) {
+    this._onSelectPopup = true;
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
     $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
@@ -348,7 +350,6 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
     $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
     $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickSkPublic, this));
-    $popupContainer.on('click', '#fe-bt-smspw', $.proxy(this._onClickSmsPw, this));
   },
   _opOpenRefundSelectPopup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk-refund', $.proxy(this._onClickSkSmsRefund, this));
@@ -358,9 +359,14 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-ipin-refund', $.proxy(this._onClickIpin, this));
   },
   _onCloseSelectPopup: function () {
+    this._onSelectPopup = false;
     if ( this._openCert ) {
       this._openCert = false;
       this._openCertPopup();
+    } else if ( this._result ) {
+      this._callback(this._result, this._deferred, this._command);
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
   _onClickSkSms: function () {
@@ -372,25 +378,29 @@ Tw.CertificationSelect.prototype = {
   _onClickKtSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.KT;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickLgSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.LG;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickSaveSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.SAVE;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickIpin: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.IPIN;
-    this._openCert = true;
-    this._popupService.close();
+    // this._openCert = true;
+    // this._popupService.close();
+    this._openCertPopup();
   },
   _onClickBio: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.BIO;
@@ -408,6 +418,7 @@ Tw.CertificationSelect.prototype = {
     this._popupService.close();
   },
   _completeCert: function (resp) {
+    console.log('completecert', this._onSelectPopup);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;
@@ -420,7 +431,12 @@ Tw.CertificationSelect.prototype = {
         } else {
           resp.svcMgmtNum = '';
         }
-        this._callback(resp, this._deferred, this._command);
+        if ( !this._onSelectPopup ) {
+          this._callback(resp, this._deferred, this._command);
+        } else {
+          this._result = resp;
+          this._popupService.close();
+        }
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
       if ( !Tw.FormatHelper.isEmpty(resp.target) && resp.target === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
@@ -430,10 +446,14 @@ Tw.CertificationSelect.prototype = {
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
-      this._openSelectPopup(false);
+      this._openSelectPopup(true);
     } else {
-      // TODO: 인증 실패
-      this._callback(resp, this._deferred, this._command);
+      if ( !this._onSelectPopup ) {
+        this._callback(resp, this._deferred, this._command);
+      } else {
+        this._result = resp;
+        this._popupService.close();
+      }
     }
   },
   _checkSmsEnable: function (target) {

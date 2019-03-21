@@ -229,6 +229,8 @@ Tw.CertificationSk.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
       this._callback(this._callbackParam);
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
   _onInputMdn: function ($event) {
@@ -398,7 +400,7 @@ Tw.CertificationSk.prototype = {
 
     } else if ( resp.code === this.SMS_ERROR.ATH8007 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
-    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162) {
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(resp.code, resp.msg).pop();

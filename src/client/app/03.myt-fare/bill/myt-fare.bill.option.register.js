@@ -115,6 +115,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
 
+      Tw.CommonHelper.startLoading('.container', 'grey', true);
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
@@ -122,12 +123,14 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
       this._historyService.replaceURL('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
     } else {
       this._fail(res);
     }
   },
   _fail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).replacePage();
   },
   _aftetSuccessGetOption: function (res) {

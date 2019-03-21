@@ -24,7 +24,7 @@ Tw.ProductRoamingFiReservationComplete.prototype = {
   },
 
   _goRoamingFiInquire: function() {
-    this._historyService.goLoad('/product/roaming/fi/inquire');
+    this._historyService.replaceURL('/product/roaming/fi/inquire');
   }
 
 };

@@ -213,7 +213,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       svcNumList: this._getSvcNumList()
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

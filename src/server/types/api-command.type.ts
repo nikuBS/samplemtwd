@@ -321,6 +321,8 @@ export const API_CMD = {
   BFF_05_0198: { path: '/core-modification/:version/wire/cancel-request-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_05_0200: { path: '/:version/autosms/custInfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0201: { path: '/core-balance/:version/troaming-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -852,6 +854,10 @@ export const API_CMD = {
   },
   BFF_10_0174: {
     path: '/core-product/:version/roaming/auto-dial',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0175: {
+    path: '/core-product/:version/roaming/fee-plans/:args0/prechecks',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
 

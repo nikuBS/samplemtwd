@@ -89,11 +89,11 @@ Tw.BenefitDisPgmCancel.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     if(this._isTPlus) {
       this._apiService.request(Tw.API_CMD.BFF_10_0083, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
     else {
       this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
   },
 

@@ -41,6 +41,7 @@
         line-height: 1.0625rem;
         height: 2.125rem; }
       .quick-menu-list li .bt i {
+        position: relative;
         display: block;
         width: 2.5rem;
         height: 2.5rem;
@@ -48,6 +49,15 @@
       .quick-menu-list li .bt img {
         display: block;
         width: 100%; }
+      .quick-menu-list li .bt.new i:after {
+        position: absolute;
+        top: 0.125rem;
+        right: -0.4375rem;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        background: url(/img/main/graphic_home_store_badge_new.png) no-repeat 0 0;
+        background-size: 5px auto;
+        content: ""; }
     .quick-menu-list li.add-type {
       width: 100%; }
     .quick-menu-list li .add-bt {
@@ -73,6 +83,8 @@
         background: #959595; }
   .quick-menu-list.type-pd {
     margin: 1.25rem 0; }
+  .quick-menu-list.type3 li {
+    width: 33.33%; }
 
 .section-swiper-box {
   position: relative;
@@ -2266,6 +2278,27 @@ body.apphome {
     background: url(/img/svg/graphic_home_tab_store_off.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
+.ico-my-5gx {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_5gx.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.ico-my-twd {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_twd.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.ico-my-zero {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_zero.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-gnb-menu {
   display: inline-block;
   width: 3.1875rem;
@@ -2441,6 +2474,13 @@ body.apphome {
   width: 2.5rem;
   height: 2.5rem;
   background: url(/img/svg/icon_80px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-5gx {
+  display: inline-block;
+  width: 3.5625rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_store_logo_5gx.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-cellphone2-80 {
@@ -4259,3 +4299,75 @@ body.apphome {
       font-size: 0.75rem; }
   .discountbenefit-list .category-type .link .tag-field {
     bottom: 1.25rem; } }
+
+.box-citation {
+  padding: 0.625rem 0 0; }
+  .box-citation .citation-ti {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .box-citation .citation-tx {
+    font-size: 0.75rem;
+    font-weight: 400; }
+  .box-citation .citation-form {
+    margin-top: 0.625rem; }
+    .box-citation .citation-form .form-cell {
+      position: relative;
+      margin-bottom: 1rem; }
+      .box-citation .citation-form .form-cell.linebox {
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid #E5E5E5; }
+        .box-citation .citation-form .form-cell.linebox .txt {
+          margin: -0.3125rem 0 0.625rem;
+          color: #000;
+          font-size: 0.8125rem; }
+          .box-citation .citation-form .form-cell.linebox .txt .time {
+            display: inline-block;
+            margin-left: 0.625rem;
+            color: #358ED8;
+            font-size: 0.75rem; }
+      .box-citation .citation-form .form-cell .txt .sms-time {
+        margin-left: 0.625rem;
+        width: 4.0625rem;
+        color: #178bce;
+        border: 0; }
+      .box-citation .citation-form .form-cell .form-ti {
+        display: block;
+        margin-bottom: 0.625rem;
+        font-size: 0.9375rem; }
+      .box-citation .citation-form .form-cell .form-check {
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .box-citation .citation-form .form-cell:last-of-type {
+        margin-bottom: 0; }
+      .box-citation .citation-form .form-cell .widget-box.radio {
+        margin-top: 0.625rem; }
+        .box-citation .citation-form .form-cell .widget-box.radio .radiobox {
+          margin-right: 1.5625rem;
+          font-size: 1.125rem;
+          font-weight: 400; }
+          .box-citation .citation-form .form-cell .widget-box.radio .radiobox:last-of-type {
+            margin-right: 0; }
+  .box-citation .another-way {
+    font-size: 0.8125rem;
+    padding-bottom: 1.25rem; }
+  .box-citation.n-type {
+    padding: 0; }
+    .box-citation.n-type .citation-form {
+      margin-top: 0; }
+      .box-citation.n-type .citation-form .form-cell .form-ti {
+        margin-bottom: 0.75rem; }
+    .box-citation.n-type .inputbox .guide-txt {
+      position: relative;
+      padding: 0 0 0 0.5rem;
+      margin: 1rem 0 0 0; }
+      .box-citation.n-type .inputbox .guide-txt:before {
+        content: "*";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #666;
+        font-size: 0.75rem; }

@@ -5,12 +5,8 @@
  */
 
 Tw.ProductRoamingMyUse = function(rootEl, options) {
-  this.FE_TAB = '.fe-myuse-tab';
-  this.FE_TABLIST = '.fe-myuse-tablist';
-  this.FE_LINK_BTN = '.fe-myuse-link-btn';
-
   this.$container = rootEl;
-  this._hash = Tw.Hash;
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
@@ -23,21 +19,49 @@ Tw.ProductRoamingMyUse = function(rootEl, options) {
 
 
 Tw.ProductRoamingMyUse.prototype = {
+  FE: {
+    TAB: '.fe-myuse-tab',
+    TABLIST: '.fe-myuse-tablist',
+    LINK_BTN: '.fe-myuse-link-btn'
+  },
   _cachedElement: function () {
-    this.$tabLinker = this.$container.find(this.FE_TABLIST);
+    this.$tabLinker = this.$container.find(this.FE.TABLIST);
   },
   _bindEvent: function () {
-    this.$tabLinker.on('click', this.FE_TAB, $.proxy(this._onTabChanged, this));
-    this.$container.on('click', this.FE_LINK_BTN, $.proxy(this._onLinkBtn, this));
+    this.$tabLinker.on('click', this.FE.TAB, $.proxy(this._onTabChanged, this));
+    this.$container.on('click', this.FE.LINK_BTN, $.proxy(this._onLinkBtn, this));
   },
   _init : function() {
     this._initTab();
-    this._checkLogin();
+    // this._checkLogin();
+
+    this._checkDataApi();
+    // setTimeout($.proxy(this._checkDataApi, this), 1000);
+  },
+  _checkDataApi: function() {
+    // this._apiService.request(Tw.API_CMD.BFF_05_0201, {})
+    //   .done($.proxy(this._successDataApi, this));
+
+    this._apiService.requestArray([
+      { command: Tw.API_CMD.BFF_10_0056, params: {} },
+      { command: Tw.API_CMD.BFF_05_0201, params: {} },
+      { command: Tw.API_CMD.BFF_05_0202, params: {} }
+    ]).done($.proxy(this._successDataApi, this))
+      .fail($.proxy(this._failDataApi, this));
+  },
+  _successDataApi: function(roamingFeePlan, troamingData, troamingLikeHome) {
+  // _successDataApi: function(troamingData) {
+    Tw.Logger.info('[BFF_10_0056]', JSON.stringify(roamingFeePlan));
+    Tw.Logger.info('[BFF_05_0201]', JSON.stringify(troamingData));
+    Tw.Logger.info('[BFF_05_0202]', JSON.stringify(troamingLikeHome));
+  },
+  _failDataApi: function() {
+
   },
   _initTab: function() {
     var hash = window.location.hash;
     if (Tw.FormatHelper.isEmpty(hash)) {
-      hash = this.$tabLinker.find(this.FE_TAB).eq(0).attr('href');
+      hash = this.$tabLinker.find(this.FE.TAB).eq(0).attr('href');
     }
 
     setTimeout($.proxy(function () {
@@ -49,7 +73,7 @@ Tw.ProductRoamingMyUse.prototype = {
     location.replace(e.currentTarget.href);
 
     // a 태그에 aria-selected 설정 (FE 에서 제어)
-    this.$tabLinker.find(this.FE_TAB).attr('aria-selected', false);
+    this.$tabLinker.find(this.FE.TAB).attr('aria-selected', false);
     $(e.currentTarget).attr('aria-selected', true);
   },
   _onLinkBtn: function (e) {
@@ -67,25 +91,5 @@ Tw.ProductRoamingMyUse.prototype = {
   },
   _openExternalUrl: function(url) {
     Tw.CommonHelper.openUrlExternal(url);
-  },
-  _checkLogin: function() {
-    if (!this._options.isLogin) {
-      if( !Tw.Environment.init ) {
-        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openLoginConfirm, this));
-      } else {
-        this._openLoginConfirm();
-      }
-    }
-  },
-  _openLoginConfirm: function() {
-    return this._popupService.openConfirm(
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.TITLE,
-      $.proxy(
-        function () {
-          this._popupService.close();
-          this._tidLanding.goLogin();
-        }, this
-      ));
   }
 };

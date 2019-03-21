@@ -146,9 +146,9 @@ Tw.CustomerEmailQuality.prototype = {
 
     var htParams = $.extend(this._makeParams(), {
       subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
-      inptZip: $('.fe-zip').val(),
-      inptBasAddr: $('.fe-main-address').val(),
-      inptDtlAddr: $('.fe-detail-address').val(),
+      inptZip: $('.fe-zip').length ? ($('.fe-zip').val() || '') : '',
+      inptBasAddr: $('.fe-main-address').length ? ($('.fe-main-address').val() || '') : '',
+      inptDtlAddr: $('.fe-detail-address').val() ? ($('.fe-detail-address').val() || '') : '',
       selSvcMgmtNum: selSvcMgmtNum
     });
 

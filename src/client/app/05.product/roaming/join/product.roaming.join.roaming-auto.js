@@ -279,6 +279,26 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
+      case 'NA00006493':
+      case 'NA00006494':
+      case 'NA00006495':
+      case 'NA00006496':
+      case 'NA00006497':
+      case 'NA00006498':
+      case 'NA00006499':
+      case 'NA00006500':
+        $tooltipHead.find('button').attr('id','TC000037');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
+      case 'NA00006489':
+      case 'NA00006490':
+      case 'NA00006491':
+      case 'NA00006492':
+        $tooltipHead.find('button').attr('id','TC000038');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
       case 'NA00005300':
       case 'NA00005505':
       case 'NA00005252':

@@ -21,6 +21,7 @@ import {
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { REFILL_USAGE_DATA_CODES } from '../../../../types/bff.type';
+import { of } from 'rxjs/observable/of';
 
 enum RechargeTypes {
   DATA_GIFT,
@@ -36,65 +37,81 @@ export default class MyTDataHistory extends TwViewController {
   private toDt: string = DateHelper.getCurrentShortDate();
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(
-      this.getDataGifts(),
-      this.getLimitCharges(),
-      this.getTingCharges(),
-      this.getTingGifts(),
-      this.getRefillUsages(),
-      this.getRefillGifts()
-    ).subscribe(histories => {
-      const errorIdx = histories.findIndex(history => {
-        return history && history.code;
-      });
-
-      if (errorIdx >= 0) {
-        const error: { code: string; msg: string } = histories[errorIdx];
-        return this.error.render(res, {
-          ...error,
+    this.apiService.request(API_CMD.BFF_06_0077, { fromDt: this.fromDt, toDt: this.toDt }).subscribe(resp => {
+      if (resp.result !== API_CODE.CODE_00) {
+        this.error.render(res, {
+          ...resp,
           pageInfo,
           svcInfo
         });
       }
 
-      const chargeData: { all: any[]; display?: any[] } = {
-        all: this.mergeCharges(histories)
-      };
+      const historyCounts = resp.result || {};
 
-      let filterIdx = -1;
+      Observable.combineLatest(
+        this.getDataGifts(Number(historyCounts.tdataSndCnt || 0) + Number(historyCounts.tdataRcvCnt || 0)),
+        this.getLimitCharges(Number(historyCounts.lmtChrgCnt || 0)),
+        this.getTingCharges(Number(historyCounts.tingIneeCnt || 0)),
+        this.getTingGifts(Number(historyCounts.tingGiftRcvCnt || 0) + Number(historyCounts.tingGiftSndCnt || 0)),
+        this.getRefillUsages(Number(historyCounts.rifilUseCnt || 0)),
+        this.getRefillGifts(Number(historyCounts.rifilSndCnt || 0) + Number(historyCounts.rifilRcvCnt || 0))
+      ).subscribe(histories => {
+        const errorIdx = histories.findIndex(history => {
+          return history && history.code;
+        });
 
-      switch (req.query.filter) {
-        case 'data-gifts':
-          filterIdx = RechargeTypes.DATA_GIFT;
-          break;
-        case 'limit-charges':
-          filterIdx = RechargeTypes.LIMIT_CHARGE;
-          break;
-        case 'ting-charges':
-          filterIdx = RechargeTypes.TING_CHARGE;
-          break;
-        case 'ting-gifts':
-          filterIdx = RechargeTypes.TING_GIFT;
-          break;
-        case 'refill':
-          filterIdx = RechargeTypes.REFILL;
-          break;
-        default:
-          filterIdx = RechargeTypes.ALL;
-          break;
-      }
+        if (errorIdx >= 0) {
+          const error: { code: string; msg: string } = histories[errorIdx];
+          return this.error.render(res, {
+            ...error,
+            pageInfo,
+            svcInfo
+          });
+        }
 
-      if (filterIdx < 4) {
-        chargeData.display = histories[filterIdx];
-      } else if (filterIdx === 4) {
-        chargeData.display = histories[filterIdx].concat(histories[filterIdx + 1]);
-      }
+        const chargeData: { all: any[]; display?: any[] } = {
+          all: this.mergeCharges(histories)
+        };
 
-      res.render('history/myt-data.history.html', { svcInfo, pageInfo, filterIdx, chargeData });
+        let filterIdx = -1;
+
+        switch (req.query.filter) {
+          case 'data-gifts':
+            filterIdx = RechargeTypes.DATA_GIFT;
+            break;
+          case 'limit-charges':
+            filterIdx = RechargeTypes.LIMIT_CHARGE;
+            break;
+          case 'ting-charges':
+            filterIdx = RechargeTypes.TING_CHARGE;
+            break;
+          case 'ting-gifts':
+            filterIdx = RechargeTypes.TING_GIFT;
+            break;
+          case 'refill':
+            filterIdx = RechargeTypes.REFILL;
+            break;
+          default:
+            filterIdx = RechargeTypes.ALL;
+            break;
+        }
+
+        if (filterIdx < 4) {
+          chargeData.display = histories[filterIdx];
+        } else if (filterIdx === 4) {
+          chargeData.display = histories[filterIdx].concat(histories[filterIdx + 1]);
+        }
+
+        res.render('history/myt-data.history.html', { svcInfo, pageInfo, filterIdx, chargeData });
+      });
     });
   }
 
-  private getDataGifts = () => {
+  private getDataGifts = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0018, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -113,15 +130,19 @@ export default class MyTDataHistory extends TwViewController {
           badgeName: item.type === '1' ? MYT_DATA_HISTORY_BADGE_NAMES.SEND : MYT_DATA_HISTORY_BADGE_NAMES.RECEIVE,
           right: amount.data + amount.unit,
           bottom:
-            item.giftType === 'GC' ? 
-              [ChargeTypeNames.FIXED, FormatHelper.conTelFormatWithDash(item.svcNum)] : 
+            item.giftType === 'GC' ?
+              [ChargeTypeNames.FIXED, FormatHelper.conTelFormatWithDash(item.svcNum)] :
               [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
   }
 
-  private getLimitCharges = () => {
+  private getLimitCharges = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0042, { fromDt: this.fromDt, toDt: this.toDt, type: 1 }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -150,7 +171,11 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
-  private getTingCharges = () => {
+  private getTingCharges = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0032, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -187,7 +212,11 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
-  private getTingGifts = () => {
+  private getTingGifts = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0026, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -209,7 +238,11 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
-  private getRefillUsages = () => {
+  private getRefillUsages = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -235,7 +268,11 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
-  private getRefillGifts = () => {
+  private getRefillGifts = (count: number) => {
+    if (count <= 0) {
+      return of([]);
+    }
+
     return this.apiService.request(API_CMD.BFF_06_0003, { type: 0 }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;

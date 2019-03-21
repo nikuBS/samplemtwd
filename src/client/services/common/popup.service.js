@@ -374,12 +374,8 @@ Tw.PopupService.prototype = {
 
     // 회선 정보
     _.each([from, target], function(item){
-      if ( item.svcAttrCd.indexOf('S') > -1 ) {
-        if ( target.svcAttrCd === 'S3' ) {
-          item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
-        } else {
-          item.descSvcNum = item.addr;
-        }
+      if (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) {
+        item.descSvcNum = item.addr;
       } else {
         item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
       }
@@ -474,8 +470,8 @@ Tw.PopupService.prototype = {
   },
   close: function () {
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      setTimeout($.proxy(function () {
-        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+        setTimeout($.proxy(function () {
           if ( this._historyBack && this._prevHashList.length > 0) {
             this._historyBack = false;
             var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -484,8 +480,8 @@ Tw.PopupService.prototype = {
             this._prevHashList.pop();
             this._popupClose(closeCallback);
           }
-        }
-      }, this), 500);
+        }, this), 500);
+      }
 
       this._historyBack = true;
       history.back();

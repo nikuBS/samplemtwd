@@ -188,7 +188,7 @@ Tw.CommonSearch.prototype = {
   },
   _doSearch : function (event) {
     var keyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(keyword)){
+    if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
       var closeCallback;
       if(this._historyService.getHash()==='#input_P'){
         closeCallback = $.proxy(function () {
@@ -480,7 +480,7 @@ Tw.CommonSearch.prototype = {
     }
     setTimeout($.proxy(function () {
       this._historyService.goLoad(linkUrl);
-    },this));
+    },this),100);
   },
   _showSmart : function (data) {
     if(Tw.FormatHelper.isEmpty(data)){
@@ -502,8 +502,8 @@ Tw.CommonSearch.prototype = {
       this.$container.find('#smart_btn_base').removeClass('none');
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
-      _.each(returnData,function (data) {
-        $smartBase.append(smartTemplate({data : data}));
+      _.each(returnData,function (data,idx) {
+        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');

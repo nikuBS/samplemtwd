@@ -45,7 +45,7 @@
 .idpt-popup-header p.popup-title { font-size: 0.8125rem; color:#000; font-weight: 500; line-height: 2.75rem; text-align:center; }
 .idpt-popup-header p.popup-title.long-title { line-height:1.4em; padding-top:0.125rem; }
 .idpt-popup-header .idpt-popup-close { position: absolute; display: block; top:1rem; right:1rem; width:0.8125rem; height:0.8125rem; text-indent: -9999px; background:url('../img/customer/common/button-popup-close_m.png') center center no-repeat; background-size:100%; }
-.idpt-popup-cont-wrap { height:calc(100% - 3.75rem); overflow-y: auto; }
+.idpt-popup-cont-wrap { height:calc(100% - 3.75rem); overflow-y: auto; -webkit-overflow-scrolling: touch;}
 .idpt-popup-cont-wrap.with-bottom-button { height:calc(100% - 4.75rem) !important; overflow-y: auto; }
 .idpt-popup-cont { padding:1.375rem 1rem; }
 .idpt-popup-cont p.popup-txt { font-size: 0.875rem; color:#000; }

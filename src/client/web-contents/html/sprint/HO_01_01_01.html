@@ -43,13 +43,13 @@
         </div>
         <!--// #header -->
         <!-- #contents -->
-        <div id="contents" class="container-wrap">
+        <div id="contents" class="container-wrap" style="width: 100%; position: fixed; transform: translate(0px, 0px); z-index: -1; overflow-y: visible;">
             <div class="container">
             </div>
         </div>
         <!--// #contents -->
 		<!-- .popup hbs -->
-		<div class="popup-page tw-popup fixed-bottom nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+		<div class="popup-page tw-popup fixed-bottom nobg pt0"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... --><!-- 19.03.20 pt0 클래스 추가 -->
 			<!-- #header -->
 			<div class="header-wrap">
 				<div class="page-header">
@@ -62,7 +62,6 @@
 			<!-- .container-wrap -->
 			<div class="container-wrap">
 				<div class="container">
-
                     <div class="section-menu-box">
                         <div class="reset-top-box">
                             <button class="reset"><i class="icon-reload-32"><span class="blind">reload</span></i> 초기화</button>
@@ -391,16 +390,15 @@
                             <img src="/img/dummy/menu-guide1.png" alt="이렇게 이용하세요 원하는 메뉴를 체크 후 저장하면, 바로가기 버튼이 추가됩니다. 체크 해제 시에는 버튼이 삭제됩니다."/>
                             <img src="/img/dummy/menu-guide2.png" alt="원하는 메뉴가 안보이나요? 화면 하단의 아이콘을 선택하면, 바로가기 버튼이 추가됩니다."/>
                         </div>
-                    </div> 
-                    
-                    <div class="bt-fixed-area"><!-- fixed-bt클래스 추가 -->
-                        <ul class="bt-slice full">
-                            <li class="bt-red1">
-                                <button>저장하기</button>
-                            </li>
-                        </ul>
                     </div>
 				</div>
+                <div class="bt-fixed-area"><!-- 19.03.20 container 밖으로 이동 -->
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>저장하기</button>
+                        </li>
+                    </ul>
+                </div>
 			</div>
             <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
