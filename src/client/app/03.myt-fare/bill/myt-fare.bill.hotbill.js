@@ -289,8 +289,12 @@ Tw.MyTFareHotBill.prototype = {
    */
   _onReceiveBillOtherLine: function (line, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var bill = resp.result.hotBillInfo[0].totOpenBal2;
+      if ( !resp.result || !resp.result.hotBillInfo ) {
+        this. _onErrorOtherLine(line, resp);
+        return;
+      }
 
+      var bill = resp.result.hotBillInfo[0].totOpenBal2;
       this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(bill + Tw.CURRENCY_UNIT.WON);
       // 임시 로딩 제거 - 조회중 텍스트로 표시
       // Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
@@ -311,7 +315,7 @@ Tw.MyTFareHotBill.prototype = {
     } else {
       // 임시 로딩 제거 - 조회중 텍스트로 표시
       // Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
-      this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(Tw.MYT_DATA_ERROR_CODE.BLN0004);
+      this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(Tw.MYT_HOTBILL_FAIL);
     }
   },
   /**

@@ -1933,3 +1933,5 @@ Tw.PRODUCT_AUTH_ALERT_STR = {
   TITLE: '신청된 회선을 해지하시겠습니까?',
   MSG: '해지를 위해 가려진 정보를 확인해 주세요'
 };
+
+Tw.MYT_HOTBILL_FAIL = '조회 불가';
