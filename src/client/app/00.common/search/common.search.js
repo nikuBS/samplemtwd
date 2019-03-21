@@ -379,9 +379,11 @@ Tw.CommonSearch.prototype = {
     },this));
   },
   _closeKeywordListBase  : function () {
-    this._popupService.close();
-    this.$container.find('.keyword-list-base').remove();
-    this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
+    setTimeout($.proxy(function () {
+      this._popupService.close();
+      this.$container.find('.keyword-list-base').remove();
+      this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
+    },this),100);
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
