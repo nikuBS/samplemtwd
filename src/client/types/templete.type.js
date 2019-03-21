@@ -748,8 +748,8 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
       { text: '음성통화 불량(HD Voice 포함)' },
       { text: '영상통화 불량' },
       { text: '부가서비스 불량' },
-      { text: '데이터 불량' },
-      { text: '와이브로 품질장애/고장' }
+      { text: '데이터 불량' }
+      // { text: '와이브로 품질장애/고장' }
     ]
   },
   Q_TYPE02: {
