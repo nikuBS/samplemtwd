@@ -188,7 +188,7 @@ Tw.CommonSearch.prototype = {
   },
   _doSearch : function (event) {
     var keyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(keyword)){
+    if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
       var closeCallback;
       if(this._historyService.getHash()==='#input_P'){
         closeCallback = $.proxy(function () {
@@ -480,7 +480,7 @@ Tw.CommonSearch.prototype = {
     }
     setTimeout($.proxy(function () {
       this._historyService.goLoad(linkUrl);
-    },this));
+    },this),100);
   },
   _showSmart : function (data) {
     if(Tw.FormatHelper.isEmpty(data)){

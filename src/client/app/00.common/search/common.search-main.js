@@ -126,7 +126,7 @@ Tw.CommonSearchMain.prototype = {
   },
   _searchByInputValue : function () {
     var searchKeyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.length<=0){
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       searchKeyword = this.$container.find('#selected_keyword').val();
     }
     this._doSearch(searchKeyword);
