@@ -17,6 +17,7 @@ Tw.CustomerEmailQualityRetry = function (rootEl) {
 
 Tw.CustomerEmailQualityRetry.prototype = {
   _init: function () {
+    $('.fe-inqid').hide();
   },
 
   _cachedElement: function () {
