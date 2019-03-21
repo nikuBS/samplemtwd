@@ -161,7 +161,7 @@ export const API_CMD = {
   BFF_05_0032: { path: '/core-bill/:version/bill-pay/payment-possible-day-input', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0034: { path: '/core-bill/:version/bill-pay/suspension-cancel', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0036: { path: '/core-bill/:version/bill-pay/bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0036: { path: '/core-bill/v2/bill-pay/bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0037: { path: '/core-bill/:version/bill-pay/suspension', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0038: { path: '/core-bill/:version/bill-pay/donation', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0039: { path: '/core-bill/:version/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -174,7 +174,7 @@ export const API_CMD = {
   },
   BFF_05_0044: { path: '/core-bill/:version/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0045: { path: '/core-bill/:version/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0047: { path: '/core-bill/:version/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0047: { path: '/core-bill/v2/bill-pay/used-amounts', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0048: { path: '/core-bill/:version/bill-reissue', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0022: { path: '/core-bill/:version/hotbills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0024: { path: '/core-auth/:version/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -323,6 +323,8 @@ export const API_CMD = {
   BFF_05_0200: { path: '/:version/autosms/custInfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0201: { path: '/core-balance/:version/troaming-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0203: { path: '/core-bill/:version/bill-pay/bills-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0204: { path: '/core-bill/:version/bill-pay/used-amounts-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -412,7 +414,7 @@ export const API_CMD = {
   BFF_07_0005: { path: '/core-bill/:version/point-autopays-history/cashback', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0006: { path: '/core-bill/:version/point-autopays-history/tpoint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0007: { path: '/core-bill/:version/point-autopays-history/tpoint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_07_0018: { path: '/core-bill/:version/bill-pay/tax-reprint-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0019: { path: '/core-bill/:version/bill-pay/tax-reprint-fax', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0021: { path: '/core-bill/:version/bill-pay/settle-unpaids', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -923,7 +925,8 @@ export const SESSION_CMD = {
   BFF_04_0001: 'BFF_04_0001',
   BFF_05_0068: 'BFF_05_0068',
   BFF_03_0004: 'BFF_03_0004',
-  BFF_05_0061: 'BFF_05_0061'
+  BFF_05_0061: 'BFF_05_0061',
+  BFF_07_0017: 'BFF_07_0017'
 };
 
 export const API_CODE = {
