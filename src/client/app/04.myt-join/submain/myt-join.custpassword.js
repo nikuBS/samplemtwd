@@ -36,7 +36,7 @@ Tw.MytJoinCustpassword = function ($element, isNew) {
 Tw.MytJoinCustpassword.prototype = {
   //element event bind
   _bindEvent: function () {
-    $('input:password')
+    $('input[type="number"]')
       .on('keyup', $.proxy(this._onKeyUp, this))
       .on('keydown', $.proxy(this._onKeyDown, this))
       .on('input', $.proxy(this._onPwdInput, this));
