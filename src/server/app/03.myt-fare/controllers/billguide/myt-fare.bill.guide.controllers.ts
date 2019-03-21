@@ -146,7 +146,7 @@ class MyTFareBillGuide extends TwViewController {
         invDt: this.reqQuery.date,
         selSvcMgmtNum : this.reqQuery.line
       }), 'p1'));
-      reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));
+      // reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));
 
     } else {
       reqArr.push((this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
@@ -166,7 +166,7 @@ class MyTFareBillGuide extends TwViewController {
 
         if ( svcInfo.actRepYn === 'Y' ) {
           thisMain._billpayInfo = resArr[0].result;
-          thisMain._intBillLineInfo = resArr[1].result;
+          thisMain._intBillLineInfo = resArr[0].result.invSvcList[0].svcList;
           thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
           if ( thisMain._billpayInfo.invSvcList ) {
             thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
@@ -515,6 +515,10 @@ class MyTFareBillGuide extends TwViewController {
 
     for ( let i = 0; i < svcTotList.length; i++ ) {
       const item = svcTotList[i];
+      // item.label = StringHelper.phoneStringToDash(item.name);
+      item.label = item.name;
+
+      /*
       const svcItem = this.getAllSvcItem(allSvc, item.svcMgmtNum);
       item.addr = svcItem ? svcItem.addr : item.dtlAddr;
 
@@ -530,7 +534,7 @@ class MyTFareBillGuide extends TwViewController {
 
         item.label = item.addr;
 
-      }
+      }*/
     }
     svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
     return svcTotList;
