@@ -94,6 +94,13 @@ Tw.CommonPostcodeLast.prototype = {
     } else {
       this.$saveBtn.removeAttr('disabled');
     }
+
+    this._checkIsEnter(event);
+  },
+  _checkIsEnter: function (event) {
+    if (Tw.InputHelper.isEnter(event)) {
+      this.$layer.find('.fe-save').focus();
+    }
   },
   _preventDefault: function (event) {
     event.preventDefault();
