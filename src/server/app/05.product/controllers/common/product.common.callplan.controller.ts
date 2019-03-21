@@ -355,12 +355,13 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm) || item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
+      if (FormatHelper.isEmpty(item.titleNm) || FormatHelper.isEmpty(item.ledItmDesc) ||
+        item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
         return true;
       }
 
       if (!item || item.vslYn === 'N') {
-        item.ledItmDesc = item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        item.ledItmDesc = FormatHelper.isEmpty(item.ledItmDesc) ? '' : item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
       }
 
       contentsResult.LIST.push(Object.assign(item, {

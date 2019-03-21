@@ -739,6 +739,11 @@ Tw.ProductCommonCallplan.prototype = {
       this._appendSettingWrap(linkBtnList.setting);
     }
 
+    // 가입 되어 있으며, 설정 불가능하거나 설정 버튼이 없을 경우
+    if (isJoinCheck && (!isProdSet || linkBtnList.setting.length < 1)) {
+      this._appendSettingWrap(null);
+    }
+
     // 가입 되어 있으며, 예약 영역이 노출되어 있을 경우 삭제
     if (isJoinCheck && this.$reservationWrap.length > 0) {
       this.$reservationWrap.remove();
@@ -759,17 +764,19 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _appendSettingWrap: function(btnData) {
-    this._settingBtnList = btnData.map(function(item) {
-      return {
-        'url': item.linkUrl,
-        'button-attr': 'data-url="' + item.linkUrl + '"',
-        'txt': item.linkNm
-      };
-    });
+    if (!Tw.FormatHelper.isEmpty(btnData)) {
+      this._settingBtnList = btnData.map(function (item) {
+        return {
+          'url': item.linkUrl,
+          'button-attr': 'data-url="' + item.linkUrl + '"',
+          'txt': item.linkNm
+        };
+      });
+    }
 
     this.$settingWrap.html(this._templateSetting({
-      settingBtn: btnData[0].linkNm,
-      isSettingBtnList: btnData.length > 1
+      settingBtn: Tw.FormatHelper.isEmpty(btnData) ? '' : btnData[0].linkNm,
+      isSettingBtnList: btnData && btnData.length > 1
     }));
   },
 
