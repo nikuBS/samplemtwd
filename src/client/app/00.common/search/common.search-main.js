@@ -204,10 +204,12 @@ Tw.CommonSearchMain.prototype = {
     },this));
   },
   _closeKeywordListBase  : function () {
-    this._popupService.close();
-    this.$container.find('.keyword-list-base').remove();
-    this.$container.find('.search-content').attr('aria-hidden',false);
-    this.$inputElement.blur();
+    setTimeout($.proxy(function () {
+      this._popupService.close();
+      this.$container.find('.keyword-list-base').remove();
+      this.$container.find('.search-content').attr('aria-hidden',false);
+      this.$inputElement.blur();
+    },this),100);
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
