@@ -551,17 +551,15 @@ class MyTFareBillGuide extends TwViewController {
 
       }
 
+      item.label = item.name.substring(item.name.indexOf('(') + 1, item.name.indexOf(')') );
+
       if (item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M1 ||
           item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M2 ||
           item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M3 ||
           item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M4 ||
           item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
 
-        item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.svcNum);
-
-      } else {
-
-        item.label = item.name.substring(item.name.indexOf('(') + 1, item.name.indexOf(')') - 1);
+        item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.label);
 
       }
     }
