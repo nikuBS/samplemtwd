@@ -9,6 +9,7 @@ Tw.CommonMemberLineBizRegister = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._nicknamePopup = new Tw.NicknameComponent();
   this._historyService = new Tw.HistoryService();
 
@@ -107,11 +108,15 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._isEnableConfirm();
   },
   _onInputCopNum: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     this._isEnableConfirm();
   },
   _onInputMdn: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
@@ -121,7 +126,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._isEnableConfirm();
   },
   _onInputCert: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -153,6 +160,16 @@ Tw.CommonMemberLineBizRegister.prototype = {
       .done($.proxy(this._successRequestCertAdd, this, $target));
   },
   _sendCert: function (reCert, $target) {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this, reCert, $target));
+    } else {
+      this._sendCertApi(reCert, $target);
+    }
+  },
+  _onReadSms: function (reCert, $target, resp) {
+    this._sendCertApi(reCert, $target);
+  },
+  _sendCertApi: function (reCert, $target) {
     this.mdn = this.$inputMdn.val();
     var params = {
       jobCode: this._jobCode,
@@ -165,8 +182,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._clearCertError();
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
+      this.$btCertAdd.attr('disabled', false);
+      this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validSendCert);
       if ( !reCert ) {
         this.$btCert.addClass('none');
@@ -179,6 +197,17 @@ Tw.CommonMemberLineBizRegister.prototype = {
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else {
       this._checkCertError(resp.code, resp.msg, $target);
+    }
+  },
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
+    }
+  },
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this._onInputCert();
     }
   },
   _showTimer: function (startTime) {

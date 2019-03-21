@@ -234,7 +234,9 @@ Tw.CertificationSk.prototype = {
     }
   },
   _onInputMdn: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
@@ -244,7 +246,9 @@ Tw.CertificationSk.prototype = {
     this._checkEnableConfirmButton();
   },
   _onInputCert: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -353,6 +357,16 @@ Tw.CertificationSk.prototype = {
     this._sendCert();
   },
   _sendCert: function (reCert) {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this, reCert));
+    } else {
+      this._sendCertApi(reCert);
+    }
+  },
+  _onReadSms: function (reCert, resp) {
+    this._sendCertApi(reCert);
+  },
+  _sendCertApi: function (reCert) {
     if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0014, {
         jobCode: this._jobCode,
@@ -373,6 +387,7 @@ Tw.CertificationSk.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
+      this._getCertNum();
       if ( resp.result.corpPwdAuthYn === 'Y' ) {
         new Tw.CertificationBiz().open();
       } else {
@@ -406,6 +421,17 @@ Tw.CertificationSk.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
     Tw.CommonHelper.resetPopupHeight();
+  },
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
+    }
+  },
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this._onInputCert();
+    }
   },
   _onCloseMdnCertFail: function () {
     // this._callbackParam = { code: Tw.API_CODE.CERT_SMS_BLOCK };
