@@ -126,7 +126,7 @@ Tw.CommonSearchMain.prototype = {
   },
   _searchByInputValue : function () {
     var searchKeyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.length<=0){
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       searchKeyword = this.$container.find('#selected_keyword').val();
     }
     this._doSearch(searchKeyword);
@@ -147,13 +147,13 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _doSearch : function (searchKeyword) {
-    if(this._historyService.getHash()){
-      this._historyService.goBack();
+    if(this._historyService.getHash()==='#input_P'){
+      this._closeKeywordListBase();
     }
     setTimeout($.proxy(function () {
       this._addRecentlyKeywordList(searchKeyword);
       this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
-    },this));
+    },this),100);
   },
   _closeSearch : function () {
     if(this._historyService.getHash()==='#input_P'){

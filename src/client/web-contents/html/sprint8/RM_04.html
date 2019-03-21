@@ -39,14 +39,15 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- #header -->
+		<!-- #header -->
+		<!-- 2019.03.20 컨텐츠 전체 수정-->
         <div id="header" class="header-wrap">
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
                         <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
                     </div>
-					<div class="h-tit">국가별 로밍 이용요금 조회</div>
+					<div class="h-tit">로밍 맞춤 조회</div>
 					<div class="h-serarch">
 						<button class="icon-gnb-search"><span class="blind">검색</span></button>
 					</div>
@@ -61,20 +62,29 @@
                 <!-- .cont-box -->
 				<div class="cont-box pt0 bb0">
 					<div class="list-comp-thumnail refill-coupon-top">
-						<div class="comp-box country-roaming">
+						<div class="comp-box country-roaming type1">
 							<div class="list-box cont-noti">
-								<h3 class="tit">출국 국가 검색<button class="tip-view" title="출국 국가 검색 TIP보기" aria-haspopup="true">TIP</button></h3>
-								<span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 클릭해주세요.</span>
+								<h3 class="tit">추천 로밍 요금제 검색</h3>
+								<span class="type1">아래에서 <strong>국가명</strong>과 <strong>기간</strong>을 입력하신 후 <strong>조회</strong> 버튼을<br> 클릭해주세요.</span>
 							</div>
 							<!-- 2019-01-17 inp-btn 추가 -->
+							<span class="txt-label">국가명</span>
 							<div class="inputbox bt-add inp-btn">
 								<span class="input">
 									<input type="text" placeholder="국가명을 입력하세요." title="출국 국가명 입력" />
+									<button class="cancel"><span class="blind">삭제</span></button>
 								</span>
 								<span class="bt-box bt80">
 									<button type="button">검색</button>
 								</span>
 							</div>
+							<span class="txt-label">이용기간</span>
+							<button class="bt-dropdown big" title="이용기간" aria-haspopup="true">이용기간을 선택하세요.<span class="ico"></span></button></p>
+							<ul class="bt-slice pt20">
+								<li class="bt-blue1">
+									<button>조회</button>
+								</li>
+							</ul>
 						</div>
 					</div>
 				</div>
@@ -86,7 +96,9 @@
 						<div class="comp-box country-roaming">
 							<div class="list-box cont-noti pt0">
 								<h3 class="tit">휴대폰 선택<button class="tip-view" title="휴대폰 선택 TIP보기" aria-haspopup="true">TIP</button></h3>
-								<span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면 해당 국가에서 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.</span>
+								<span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면<br>
+										해당 국가에서 이용 가능한 로밍 서비스 방식과 <br>
+										요금을 확인하실 수 있습니다.</span>
 							</div>
 							<div class="phone-name">
 								<strong>갤럭시 그랜드(그랜드2)</strong>
@@ -104,8 +116,8 @@
 				<hr class="cont-sp type1" aria-hidden="true" />
 
 				<!-- .cont-box -->
-				<div class="cont-box">
-					<div class="roaming-info-wrap">
+				<div class="cont-box nogaps">
+					<div class="roaming-info-wrap r-guidebox">
 						<p class="info-txt"><strong>보스니아 헤르체고비나</strong>의<br/>로딩 맞춤 정보를 안내해 드립니다.</p>
 						<!-- 2019.03.14 내용삭제-->
 						<!--h4 class="txt">이용 가능 로밍 서비스</h4>
@@ -123,16 +135,34 @@
 						</ul-->
 						<!-- //2019.03.14 내용삭제-->
 
-						<h4 class="txt">로밍 서비스 방식별 종량요금 안내</h4> <!--2019.03.14 class="pt40 제거 -->
+						<div class="commd-rm">
+							<span class="title">추천 로밍 요금제</span>
+							<ul class="rm-list">
+								<li>
+									<button class="rm-product">
+										<p class="txt">baro 원패스 기간형</p>
+										<span class="charge">82,500원</span>
+										<p class="expl">PLM 상품 요약 설명</p>
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true"/>
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<div class="roaming-info-wrap">
+						<h4 class="txt">로밍 서비스 방식별 종량요금 안내</h4>
 						<div class="cont-noti">
-							<span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/><strong class="">LTE 자동로밍, 3G 자동로밍, 2G 자동로밍, GSM 자동로밍, 임대로밍</strong>입니다.</span>
+							<span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/>
+								<strong>LTE 자동로밍, 3G 자동로밍, 2G 자동로밍, <br> GSM 자동로밍, 임대로밍</strong>입니다.</span>
 						</div>
 						<p class="mt20"><button class="bt-dropdown big" title="사용 가능 서비스" aria-haspopup="true">LTE 자동로밍<span class="ico"></span></button></p>
 						<p class="comm-indent-txt pt20">* 안내 요금은 부가세가 포함된 금액입니다.</p>
 					</div>
 				</div>
-				<!--// .cont-box -->
-				<!-- .cont-box -->
 				<div class="cont-box">
 					<div class="roaming-info-wrap">
 						<h4 class="txt">데이터(정보이용료 별도)<button class="tip-view">TIP</button></h4>
@@ -299,17 +329,17 @@
 
 				<!--2019-02-25 수정-->
 				<!-- .cont-box -->
+				<!-- 2019.03.20 제거
 				<div class="cont-box nogaps-ver-01">
 					<h3 class="wrap-gaps-top">추천 요금제</h3>
 					<div class="recommend-charge">
-						<!-- .widget -->
 						<div class="widget"> 
 							<div class="widget-box horizontal">
 								<div class="horizontal-slide">
 									<ul class="horizontal-list useful-goods">
 										<li>
 											<div class="box-wrap">
-												<div class="bg1"> <!-- 보라색 -->
+												<div class="bg1">
 													<button class="txt-tit">T로밍 아시아패스</button>
 													<span class="ico type1"></span>
 													<span class="txt-type1">아시아 주요 27개국에서 5일간<br />LTE/3G 데이터 안심하고 사용!</span>
@@ -320,7 +350,7 @@
 										</li>
 										<li>
 											<div class="box-wrap">
-												<div class="bg2"> <!-- 녹색 -->
+												<div class="bg2">
 													<button class="txt-tit">T로밍 유럽패스 3GB</button>
 													<span class="ico type2"></span>
 													<span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 사용!</span>
@@ -333,12 +363,10 @@
 								</div>
 							</div>
 						</div>
-						<!-- .widget -->
 					</div>
 				</div>
+				-->
 				<!--// .cont-box -->
-
-				<hr class="cont-sp type1" aria-hidden="true" />
 
 				<!-- .cont-box -->
 				<div class="cont-box nogaps-ver-01">

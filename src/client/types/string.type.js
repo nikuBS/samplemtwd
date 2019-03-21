@@ -118,7 +118,8 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
+  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -467,7 +468,8 @@ Tw.ALERT_MSG_COMMON = {
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?',
   BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
-  BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.'
+  BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.',
+  CERT_FAIL: '인증에 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_HOME = {
@@ -601,7 +603,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CANCEL_AUTO_PREPAY: '자동 선결제가 해지되었습니다.',
   NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
   NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
-  NOT_ALLOWED_AUTO_PREPAY: '자동 선결제는 한도가 2만원 이상인 경우 신청 가능합니다. 소액결제 한도상향 후 변경해 주세요.',
+  NOT_ALLOWED_AUTO_PREPAY: '자동 선결제는 기준금액이 1만원 이상인 경우 신청 가능합니다.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
@@ -794,6 +796,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
   ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
   ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
+  ALERT_3_A90: { TITLE: '선물받는 번호를 확인해 주세요.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -1930,3 +1933,5 @@ Tw.PRODUCT_AUTH_ALERT_STR = {
   TITLE: '신청된 회선을 해지하시겠습니까?',
   MSG: '해지를 위해 가려진 정보를 확인해 주세요'
 };
+
+Tw.MYT_HOTBILL_FAIL = '조회 불가';

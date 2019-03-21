@@ -159,20 +159,18 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
 
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
-      var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
-      if(targetId==='start_date'){
-        endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,
-          expireDate,'days',this._dateFormat,this._dateFormat));
-        endDateElement.text(endDate);
-      }else{
-        endTimeElement.text(startTime);
-        endTimeElement.attr('data-number',startTime);
-      }
     }else{
       this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
-      endDateElement.text(Tw.POPUP_TITLE.SELECT);
-      endTimeElement.text(Tw.POPUP_TITLE.SELECT);
+    }
+    var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
+    var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
+    if(targetId==='start_date'){
+      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,
+          expireDate,'days',this._dateFormat,this._dateFormat));
+      endDateElement.text(endDate);
+    }else{
+      endTimeElement.text(startTime);
+      endTimeElement.attr('data-number',startTime);
     }
 
   },
@@ -276,6 +274,26 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   },
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
+      case 'NA00006493':
+      case 'NA00006494':
+      case 'NA00006495':
+      case 'NA00006496':
+      case 'NA00006497':
+      case 'NA00006498':
+      case 'NA00006499':
+      case 'NA00006500':
+        $tooltipHead.find('button').attr('id','TC000037');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
+      case 'NA00006489':
+      case 'NA00006490':
+      case 'NA00006491':
+      case 'NA00006492':
+        $tooltipHead.find('button').attr('id','TC000038');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
       case 'NA00005300':
       case 'NA00005505':
       case 'NA00005252':

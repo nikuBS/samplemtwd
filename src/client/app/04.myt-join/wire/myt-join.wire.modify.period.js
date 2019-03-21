@@ -297,7 +297,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     var isValidCellPhone = Tw.ValidationHelper.isCellPhone(this._getCellphoneNumber());
     var propDisabled = (!!this._selectedTerm && isValidCellPhone) ? false : true;
     this._$btnRequest.prop('disabled', propDisabled);
-    this._setErrTxtStatus(isValidCellPhone);
+    // this._setErrTxtStatus(isValidCellPhone);
   },
 
   _setErrTxtStatus: function(isValidCellPhone) {

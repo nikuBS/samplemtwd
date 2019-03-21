@@ -18,12 +18,13 @@ class ProductWireplanReservationCancel extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = req.query.prod_id || null,
+    const prodId = req.query.prod_id || null, // 상품코드
       renderCommonInfo = {
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
+        pageInfo: pageInfo, // 페이지 정보
+        svcInfo: svcInfo  // 사용자 정보
       };
 
+    // 상품코드가 빈값일때 오류 처리
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, renderCommonInfo);
     }
@@ -32,6 +33,7 @@ class ProductWireplanReservationCancel extends TwViewController {
       this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '04' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0166, { joinTermCd: '04' }, {}, [prodId])
     ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
+      // API 응답
       const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {

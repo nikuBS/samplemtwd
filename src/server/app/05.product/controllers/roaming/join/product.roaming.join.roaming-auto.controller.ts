@@ -10,7 +10,6 @@ import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import {ROAMING_AUTO_EXPIRE_CASE} from '../../../../../types/bff.type';
 
 
 class ProductRoamingJoinRoamingAuto extends TwViewController {
@@ -46,11 +45,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
         });
       }
 
-      if (prodServiceTimeInfo.result.startEndTerm) {
-        expireDate = prodServiceTimeInfo.result.startEndTerm;
-      } else {
-        expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
-      }
+      expireDate = prodServiceTimeInfo.result.startEndTerm;
 
 
       res.render('roaming/join/product.roaming.join.roaming-auto.html', {

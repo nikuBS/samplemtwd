@@ -99,7 +99,7 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateCnt = '0';
     }
 
-    purified.talkMapArr = purified.talkMap.split(/<br.*?\/>/gi);
+    purified.talkMapArr = purified.talkMap.split(/#\^|<br.*?>/gi);
 
     return purified;
   }

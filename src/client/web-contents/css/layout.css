@@ -1079,6 +1079,7 @@ body.hidden {
   /*rem(59px 0 54px)*/
   background: #fff;
   z-index: 200;
+  overflow-y: auto;
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
   -webkit-overflow-scrolling: touch; }
@@ -1214,7 +1215,12 @@ body.hidden {
     .popup-page .container-wrap .container {
       padding: 0; }
   .popup-page.no-btn {
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    -webkit-overflow-scrolling: auto; }
+    .popup-page.no-btn .container {
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch; }
   .popup-page .header-wrap .page-header {
     position: fixed;
     top: 0;
@@ -1369,7 +1375,6 @@ body.hidden {
   .popup-page.fixed-bottom {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    overflow: visible;
     -webkit-overflow-scrolling: auto; }
     .popup-page.fixed-bottom .container-wrap, .popup-page.fixed-bottom .container {
       height: 100%;
@@ -1378,7 +1383,8 @@ body.hidden {
     .popup-page.fixed-bottom .container {
       padding-bottom: 3.75rem;
       height: 100%;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
@@ -1408,19 +1414,19 @@ body.hidden {
       height: 100%;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
-    .popup-page.fixed-btn .container {
-      padding-bottom: 3.75rem;
-      height: 100%;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-      overflow-x: hidden; }
-    .popup-page.fixed-btn .bt-slice {
+    .popup-page.fixed-btn .container-wrap > .bt-slice {
       position: fixed;
       left: 0;
       bottom: 0;
       z-index: 25; }
+    .popup-page.fixed-btn .container {
+      padding-bottom: 3.75rem;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }
@@ -2128,6 +2134,9 @@ body.hidden {
   .sms-confirm-box .bt-box3 .btn-round2 {
     min-width: 8.125rem;
     line-height: 2rem !important; }
+
+.mw-130 {
+  min-width: 8.125rem; }
 
 @media all and (max-width: 359px) {
   .sms-confirm-box .bt-box3 .btn-round2 {

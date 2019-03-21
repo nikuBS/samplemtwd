@@ -79,7 +79,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
       opClCd: '1',
       asgnNum: number
     }, {}).done($.proxy(this._addDelNumRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _addDelNumRes: function(resp) {
@@ -112,7 +112,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
       asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _detectInputNumber: function(e) {

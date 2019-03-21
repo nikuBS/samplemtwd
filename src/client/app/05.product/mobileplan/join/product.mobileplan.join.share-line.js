@@ -152,7 +152,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this._isSetOverPayReq = true;
     this._apiService.request(Tw.API_CMD.BFF_10_0010)
       .done($.proxy(this._resOverpay, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _resOverpay: function(resp) {
@@ -231,7 +231,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9]/g, '')],
       svcProdGrpId: Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.svcProdGrpId) ? '' : this._confirmOptions.preinfo.svcProdGrpId
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

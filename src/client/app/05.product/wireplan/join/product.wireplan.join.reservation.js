@@ -536,7 +536,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [reqProdId])
       .done($.proxy(this._procExpalinFilePopRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procExpalinFilePopRes: function(resp) {
@@ -616,7 +616,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0076, reqParams)
       .done($.proxy(this._procApplyResult, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _sendUscanAndApply: function(reqParams, fileList) {

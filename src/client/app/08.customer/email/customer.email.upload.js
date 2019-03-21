@@ -49,8 +49,10 @@ Tw.CustomerEmailUpload.prototype = {
     var fileIdx = $(e.currentTarget).parentsUntil('li').last().parent().index();
     if (type === 'service') {
       this.serviceUploadFiles.splice(fileIdx, 1);
+      $('.fe-upload-file-service').prop('disabled', false);
     } else {
       this.qualityUploadFiles.splice(fileIdx, 1);
+      $('.fe-upload-file-quality').prop('disabled', false);
     }
     this.$container.find('.filename-list li').eq(fileIdx).remove();
   },

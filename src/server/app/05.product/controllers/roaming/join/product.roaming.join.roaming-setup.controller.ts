@@ -20,7 +20,8 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
     const prodId = req.query.prod_id || null;
-
+    const promotionProdIdArr = ['NA00005632', 'NA00005634', 'NA00005635'];
+    const isPromotion = promotionProdIdArr.indexOf(prodId) > -1;
 
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
@@ -50,7 +51,8 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
         prodTypeInfo : prodTypeInfo.result,
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,
-        pageInfo : pageInfo
+        pageInfo : pageInfo,
+        isPromotion : isPromotion
       });
     });
 

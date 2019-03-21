@@ -161,7 +161,8 @@
             <% if(searchInfo.search[1].smart.data.length>0){ %>
             <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
             <div class="search-banner">
-                <a class="list-data"
+                <a class="list-data xtractor"
+                   data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC"
                    href="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"
                    data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
                     <img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
@@ -186,6 +187,7 @@
     <script type="text/x-handlebars-template" id="smart_template">
         <li class="last-line">
             <a class="list-data" href="{{data.link}}"
+               data-xt_eid="CMMA_A11_B4-{{xidx}}" data-xt_csid="NO" data-xt_action="BC"
                data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
                 {{data.title}}
             </a>
@@ -431,7 +433,7 @@
     <!-- 혜택 · 할인 -->
     <script type="text/x-handlebars-template" id="sale_base">
         <hr class="cont-sp type1 sale" aria-hidden="true">
-        <div class="cont-box list nogaps-btm noborder sale">
+        <div class="cont-box bgnone noborder gaps-style09 list sale">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">혜택·할인</h2>
                 <div class="numberbox">
@@ -445,11 +447,9 @@
                     <% } %>
                 </div>
             </div>
-            <div class="benefit-productfilter-type line-none ml0 mr0 mb0">
-                <ul id="sale_list">
+            <ul class="discountbenefit-list" id="sale_list">
 
-                </ul>
-            </div>
+            </ul>
         </div>
         <!-- //혜택 · 할인 -->
 
