@@ -309,6 +309,7 @@ Tw.CustomerPraise.prototype = {
     delete this._selectedArea;
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);
     this.$area.find('button').text(Tw.CUSTOMER_PRAISE_DEFAULT.AREA);
+    this._resetCount();
     this._setAvailableSubmit(true);
   }
 };
