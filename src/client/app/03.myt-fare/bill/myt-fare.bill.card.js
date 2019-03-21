@@ -170,11 +170,11 @@ Tw.MyTFareBillCard.prototype = {
   },
   _closePop: function () {
     this._isClose = true;
-    this._popupService.closeAll();
+    this._popupService.close();
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._historyService.goBack();
+      this._historyService.resetHistory(-2);
     }
   },
   _pay: function (e) {
