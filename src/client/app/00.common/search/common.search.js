@@ -502,8 +502,8 @@ Tw.CommonSearch.prototype = {
       this.$container.find('#smart_btn_base').removeClass('none');
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
-      _.each(returnData,function (data) {
-        $smartBase.append(smartTemplate({data : data}));
+      _.each(returnData,function (data,idx) {
+        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');
