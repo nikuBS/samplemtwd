@@ -1373,7 +1373,6 @@ body.hidden {
       top: auto;
       bottom: 1.25rem; }
   .popup-page.fixed-bottom {
-    position: static;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     -webkit-overflow-scrolling: auto; }

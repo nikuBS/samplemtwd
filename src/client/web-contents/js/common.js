@@ -24,7 +24,7 @@ $(document).on('ready', function () {
   skt_landing._originalSize = $(window).width() + $(window).height();
 
   // 19.03.20 fixed-bottom 상단 여백 이슈
-  if ( $(".pt0.fixed-bottom").length > 0 ){
+  /*if ( $(".pt0.fixed-bottom").length > 0 ){
     var empty_container = $(".wrap > .container-wrap > .container").html().replace(/\s|　/gi, '');
     var empty_header = $(".wrap > .header-wrap").html().replace(/\s|　/gi, '');
     if ( $(".pt0.fixed-bottom").outerHeight() < $(window).height() ){
@@ -38,10 +38,35 @@ $(document).on('ready', function () {
       $(".wrap > .header-wrap").remove();
       $(".wrap").css("paddingBottom", 0);
     }  
-  }
+  }*/
   // 19.03.20 fixed-bottom 상단 여백 이슈
+
+  //@190320: ios search touch event
+  var isIOS = skt_landing.util.win_info.get_device().toUpperCase() === 'IOS';
+  if(isIOS == true){
+    $('.searchbox-header input[type="text"]').on({
+      'focus blur': function (e) {
+        var osType = skt_landing.util.win_info.get_device().toUpperCase();
+        $(window).trigger('resize', {dataset: {evt: e, tag: 'searchbox', osType: osType}});
+      }
+    });
+  }
 });
-$(window).on('resize', function () {  
+$(window).on('resize', function (e, datas) {  
+  //@190320: ios search touch event
+  var ios = {
+    evt: null,
+    type: null,
+    tag: null,
+    osType: null
+  };
+  if(datas){
+    ios.evt = datas.dataset.evt;
+    ios.type = datas.dataset.evt.type;
+    ios.tag = datas.dataset.tag;
+    ios.osType = datas.dataset.osType;
+  }
+
   var current_size = $(window).width() + $(window).height();
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
@@ -51,7 +76,8 @@ $(window).on('resize', function () {
   }else{
     $("#gnb.on .g-wrap").css("position","fixed");
   }
-  if ( Math.abs( current_size - skt_landing._originalSize ) > 200 ){
+  
+  if ( ios.type == 'focus' || Math.abs( current_size - skt_landing._originalSize ) > 200 ){   //@190320: ios search touch event    //190320: ios search touch( ios.type )        
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
