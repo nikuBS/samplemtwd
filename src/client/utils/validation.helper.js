@@ -111,9 +111,8 @@ Tw.ValidationHelper = (function () {
   }
 
   /* input 값의 길이가 맞지 않는 경우 */
-  function checkLength(value, length, message) {
+  function checkLength(value, length) {
     if ($.trim(value).length !== length) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
