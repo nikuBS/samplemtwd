@@ -49,8 +49,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
-      this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
+    this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     // if ( this.data.pattern ) {
     this.$patternChart = this.$container.find('[data-id=pattern_chart]');
     // }
@@ -88,8 +88,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
-      this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
+    this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
 
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
