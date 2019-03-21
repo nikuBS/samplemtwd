@@ -769,10 +769,11 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     if (this._benefitRedirectProdList.indexOf(prodId) !== -1) {
-      return res.render('common/callplan/product.common.callplan.redirect.html', {
+      return res.render('common/callplan/product.common.callplan.redirect.html', Object.assign(renderCommonInfo, {
         redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId],
+        svcMgmtNum: svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '',
         prodId: prodId
-      });
+      }));
     }
 
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
