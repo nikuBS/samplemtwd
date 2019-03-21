@@ -46,6 +46,7 @@
             <% } %>
         </p>
         <% } else { %>
+        <!-- DV001-17926 sb변경으로 삭제
         <div class="detail-bill">
             <ul>
                 <li>
@@ -60,6 +61,10 @@
                 </li>
             </ul>
         </div>
+        -->
+
+        <p class="msg-type2 mt42">총 <span class="txt-point"><%= data.claimDisAmtAbs %>원</span>을 할인 받으셨습니다.</p><!--2019.03.20 추가-->
+
         <% } %>
     </div>
     <ul class="bt-slice <%= data.svcInfo.svcAttrCd !== 'M2' &&

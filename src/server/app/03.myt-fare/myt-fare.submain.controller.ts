@@ -85,6 +85,7 @@ class MyTFareSubmainController extends TwViewController {
               // const disAmt = Math.abs(claim.deduckTotInvAmt);
               // data.claimDisAmt = FormatHelper.addComma((disAmt.toString() || '0'));
               data.claimDisAmt = claim.dcAmt || '0';
+              data.claimDisAmtAbs = FormatHelper.addComma((Math.abs(this._parseInt(data.claimDisAmt))).toString() );
 
               // 미납요금
               data.claimColBamt = claim.colBamt || '0';
