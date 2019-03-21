@@ -9,8 +9,12 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
+import { DATA_UNIT } from '../../../../types/string.type';
 import BFF_10_0056_mock from '../../../../mock/server/product.BFF_10_0056.mock';
+import BFF_05_0201_mock from '../../../../mock/server/product.BFF_05_0201.mock';
+import BFF_05_0202_mock from '../../../../mock/server/product.BFF_05_0202.mock';
 
 export default class ProductRoamingMyUse extends TwViewController {
   constructor() {
@@ -18,35 +22,57 @@ export default class ProductRoamingMyUse extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (this.isLogin(svcInfo)) {
-      Observable.combineLatest(
-        this.getRoamingFeePlan(),
-        this.getRoamingAdd(),
-        this.getWirelessAdd()
-      ).subscribe(([roamingFeePlan, roamingAdd, wirelessAdd]) => {
 
-        const error = {
-          code: roamingFeePlan.code || roamingAdd.code || wirelessAdd.code,
-          msg: roamingFeePlan.msg || roamingAdd.msg || wirelessAdd.msg
-        };
+    Observable.combineLatest(
+      this.getRoamingFeePlan(),
+      this.getRoamingAdd(),
+      this.getWirelessAdd(),
+      this.getTroamingData(),
+      this.getTroamingLikeHome()
+    ).subscribe(([roamingFeePlan, roamingAdd, wirelessAdd, troamingData, troamingLikeHome]) => {
 
-        if (error.code) {
-          return this.error.render(res, { ...error, svcInfo, pageInfo });
+      const error = {
+        code: roamingFeePlan.code || roamingAdd.code || wirelessAdd.code ||
+          (troamingData && troamingData.code) || (troamingLikeHome && troamingLikeHome.code),
+        msg: roamingFeePlan.msg || roamingAdd.msg || wirelessAdd.msg ||
+          (troamingData && troamingData.msg) || (troamingLikeHome && troamingLikeHome.msg)
+      };
+
+      if (error.code) {
+        return this.error.render(res, { ...error, svcInfo, pageInfo });
+      }
+
+      roamingFeePlan.remainedDays = null;
+      troamingLikeHome.remainedDays = null;
+      roamingFeePlan.roamingProdList.forEach(prod => {
+        prod.remainedDays = null;
+        if (troamingData && (prod.prodId === troamingData.prodId)) {
+          if (!FormatHelper.isEmpty(troamingData.rgstDtm)) {
+            prod.remainedDays = String(DateHelper.getDiffByUnit(
+              moment(troamingData.exprDtm, 'YYYYMMDDHH').format(),
+              DateHelper.getCurrentDate(), 'days') + 1);
+
+            roamingFeePlan.remainedDays = prod.remainedDays;
+            troamingLikeHome.remainedDays = prod.remainedDays;
+          }
         }
-
-        res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo,
-          roamingFeePlan, roamingAdd , wirelessAdd, isLogin: this.isLogin(svcInfo)});
       });
-    } else {
-      res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo)});
-    }
-  }
 
-  private isLogin(svcInfo: any): boolean {
-    if (FormatHelper.isEmpty(svcInfo)) {
-      return false;
-    }
-    return true;
+      if (troamingLikeHome.length > 0) {
+        troamingLikeHome.forEach(data => {
+          if (!FormatHelper.isEmpty(data.rgstDtm)) {
+            troamingLikeHome.remainedDays = String(DateHelper.getDiffByUnit(
+              moment(data.exprDtm, 'YYYYMMDDHH').format(),
+              DateHelper.getCurrentDate(), 'days') + 1);
+
+            roamingFeePlan.roamingProdList[0].remainedDays = troamingLikeHome.remainedDays;
+          }
+        });
+      }
+
+      res.render('roaming/product.roaming.my-use.html',
+        { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome});
+    });
   }
 
   private getRoamingFeePlan(): Observable<any> {
@@ -121,6 +147,77 @@ export default class ProductRoamingMyUse extends TwViewController {
 
       return resp.result;
     });
+  }
+
+  /**
+   * 실시간 잔여량 - 로밍 데이터
+   */
+  private getTroamingData(): Observable<any> {
+    // return Observable.of(BFF_05_0201_mock)
+    return this.apiService.request(API_CMD.BFF_05_0201, {})
+      .map(r => {
+        const resp = FormatHelper.objectClone(r);
+        if ( resp.code !== API_CODE.CODE_00 ) {
+          switch ( resp.code ) {
+            case 'BLN0012': // 가입상품 아님
+            case 'BLN0007': // 조회내역 없음
+              return null;
+          }
+
+          return {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
+
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return null;
+        }
+
+        return {
+          ...resp.result,
+          convTotal: FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.MB),
+          convUsed: FormatHelper.convDataFormat(resp.result.used, DATA_UNIT.MB),
+          convRemained: FormatHelper.convDataFormat(resp.result.remained, DATA_UNIT.MB)
+        };
+    });
+  }
+
+  /**
+   * 실시간 잔여량 - RLH
+   */
+  private getTroamingLikeHome(): Observable<any> {
+    // return Observable.of(BFF_05_0202_mock)
+    return this.apiService.request(API_CMD.BFF_05_0202, {})
+      .map(resp => {
+        if ( resp.code !== API_CODE.CODE_00 ) {
+          switch ( resp.code ) {
+            case 'BLN0012': // 조회대상 아님(미가입상품 또는 기간 아님)
+            case 'BLN0007': // 조회내역 없음
+              return [];
+          }
+
+          return {
+            code: resp.code,
+            msg: resp.msg
+          };
+        }
+
+        if ( FormatHelper.isEmpty(resp.result) ) {
+          return [];
+        }
+
+        resp.result.forEach(prod => {
+          const conv = {
+            convTotal: FormatHelper.convDataFormat(prod.total, DATA_UNIT.MB),
+            convUsed: FormatHelper.convDataFormat(prod.used, DATA_UNIT.MB),
+            convRemained: FormatHelper.convDataFormat(prod.remained, DATA_UNIT.MB)
+          };
+          Object.assign(prod, conv);
+        });
+
+        return resp.result;
+      });
   }
 
 }
