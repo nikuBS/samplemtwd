@@ -171,18 +171,16 @@ class MyTJoinSubmainController extends TwViewController {
             // 유선
             data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
             break;
-          case 1:
           case 3:
-            // T-login, T-pocketFi, PPS
+            // T-login, T-pocketFi
             data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
             break;
           default:
+            // 0: 모바일, 1: PPS
             if ( data.myAddProduct.productCntInfo ) {
               data.myAddProduct = data.myAddProduct.productCntInfo;
             }
-            data.myAddProduct.addTotCnt =
-              parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
-              parseInt(data.myAddProduct.comProdCnt, 10);
+            data.myAddProduct.addTotCnt = parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10);
             break;
         }
       }
