@@ -60,7 +60,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.isNotFirstDate ) {
       this.$realTimePay = this.$container.find('button[data-id=realtime-pay]');
     }
-    if ( this.data.nonpayment ) {
+    if ( this.data.unPaidTotSum ) {
       // 미납요금버튼
       this.$nonPayment = this.$container.find('button[data-id=non-payment]');
     }
@@ -135,7 +135,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( this.data.isNotFirstDate ) {
       this.$realTimePay.on('click', $.proxy(this._onClickedRealTimePay, this));
     }
-    if ( this.data.nonpayment ) {
+    if ( this.data.unPaidTotSum ) {
       // 미납요금버튼
       this.$nonPayment.on('click', $.proxy(this._onClickedNonPayment, this));
     }
@@ -244,10 +244,14 @@ Tw.MyTFareSubMain.prototype = {
      * 2. 실시간 요금조회
      **/
     if ( this.data.type === 'UF' ) {
-      this._usageFeeRequest();
+      // 성능개선사항으로 api가 합처짐
+      // this._usageFeeRequest();
+      this._responseUsageFee({result: this.data.usage, code: Tw.API_CODE.CODE_00});
     }
     else {
-      this._claimPaymentRequest();
+      // 성능개선사항으로 api가 합처짐
+      // this._claimPaymentRequest();
+      this._responseClaimPayment({result: this.data.claim, code: Tw.API_CODE.CODE_00});
     }
   },
 
@@ -298,14 +302,14 @@ Tw.MyTFareSubMain.prototype = {
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
-        var items = resp.result.recentUsageList;
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.usedAmtList.length > 0 ) {
+        var items = resp.result.usedAmtList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
         for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amtStr = item.invAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(/,/g, '');
           // var absDeduckStr = item.deduckInvAmt.replace(',', '');
           // --------------------
           var amt = parseInt(amtStr, 10);
@@ -343,15 +347,15 @@ Tw.MyTFareSubMain.prototype = {
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
-        var items = resp.result.recentUsageList;
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.billInvAmtList.length > 0 ) {
+        var items = resp.result.billInvAmtList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
         for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
-          var amtStr = item.invAmt.replace(',', '');
-          var absDeduckStr = item.deduckInvAmt.replace(',', '');
+          var amtStr = item.invAmt.replace(/,/g, '');
+          var absDeduckStr = item.dcAmt.replace(/,/g, '');
           // --------------------
           var amt = parseInt(amtStr, 10);
           var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
@@ -482,15 +486,78 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+
   _requestTaxContribute: function () {
     this._isRequestTax = true;
-    this._apiService.requestArray([
+
+    // 두 api 조회를 확인하기 위한 변수
+    this._isResponsedTax = false;
+    this._isResponsedCont = false;
+
+    // 세금계산서 재발행 조회
+    this._apiService.request(Tw.SESSION_CMD.BFF_07_0017, {})
+      .done($.proxy(this._responseTax, this))
+      .fail($.proxy(this._errorRequest, this));
+    // 기부금 내역 조회
+    this._apiService.request(Tw.API_CMD.BFF_05_0038, {})
+      .done($.proxy(this._responseContribute, this))
+      .fail($.proxy(this._errorRequest, this));
+
+
+    // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
+    /*this._apiService.requestArray([
       { command: Tw.API_CMD.BFF_07_0017 },
       { command: Tw.API_CMD.BFF_05_0038 }
     ]).done($.proxy(this._responseTaxContribute, this))
-      .fail($.proxy(this._errorRequest, this));
+      .fail($.proxy(this._errorRequest, this));*/
   },
 
+
+  _responseTax: function (tax) {
+    if ( tax.code === Tw.API_CODE.CODE_00 ) {
+      this.data.taxInvoice = tax.result;
+    }
+    //if ( tax.code === 'BIL0018' ) {}
+    // 사업자 번호를 조회할 수 없는 상황
+    this._isResponsedTax = true;
+    this._responseTaxContribute();
+  },
+
+  _responseContribute: function (cont) {
+    if ( cont.code === Tw.API_CODE.CODE_00 ) {
+      if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
+        this.data.contribution = cont.result;
+      }
+    }
+    this._isResponsedCont = true;
+    this._responseTaxContribute();
+  },
+
+  _responseTaxContribute: function () {
+    if(!this._isResponsedTax || !this._isResponsedCont){
+      return;
+    }
+    var twoPiece = this.data.taxInvoice && this.data.contribution;
+    if ( !twoPiece ) {
+      if ( !this.data.taxInvoice && !this.data.contribution ) {
+        this.$container.find('[data-id="tc-container-empty"]').show();
+        this.$container.find('[data-id="tc-container"]').hide();
+      }
+      else if ( this.data.taxInvoice ) {
+        this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$taxInv.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.TAX_TEMP);
+        this.$contribution.hide();
+      }
+      else if ( this.data.contribution ) {
+        this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$contribution.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.CONTB_TEMP);
+        this.$taxInv.hide();
+      }
+    }
+  },
+
+
+  /* // 세금계산서 재발행을 위한 내역조회 캐싱처리를 위해 request 분기(성능개선 대상)
   _responseTaxContribute: function (tax, cont) {
     if ( cont.code === Tw.API_CODE.CODE_00 ) {
       if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
@@ -521,7 +588,7 @@ Tw.MyTFareSubMain.prototype = {
         this.$taxInv.hide();
       }
     }
-  },
+  },*/
 
   // 최근사용요금 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {

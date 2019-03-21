@@ -26,7 +26,7 @@
                 <p class="price"><%= data.useAmtTot %>원</p>
                 <p class="term"><%= data.usageFirstDay %> ~ <%= data.usageLastDay %></p>
                 <% } else { %>
-                <p class="price"><%= data.claimUseAmt %>원</p>
+                <p class="price"><%= data.claimPay %>원</p>
                 <p class="term"><%= data.claimFirstDay %> ~ <%= data.claimLastDay %></p>
                 <% } %>
             <% } %>
@@ -50,7 +50,7 @@
             <ul>
                 <li>
                     <span class="tit">이용요금</span>
-                    <span class="value type2"><%= data.claimPay %>원</span>
+                    <span class="value type2"><%= data.claimUseAmt %>원</span>
                 </li>
                 <li>
                     <span class="tit">할인요금</span>

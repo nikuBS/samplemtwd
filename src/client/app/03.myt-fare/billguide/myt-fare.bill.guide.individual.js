@@ -33,7 +33,11 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       $('#divChildListHaeder').hide().attr('aria-hidden', true);
     }
 
-    this._getUseBillsInfo();
+    // this._getUseBillsInfo();
+
+    if(this.resData.billpayInfo && this.resData.billpayInfo.paidAmtDetailList){
+      this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
+    }
 
     // this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
@@ -226,14 +230,14 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0047;
+    var targetApi = Tw.API_CMD.BFF_05_0036;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
@@ -242,12 +246,16 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-        // Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
-        _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
+        Tw.Logger.info('자녀 청구요금 조회 결과', arguments);
+        /*_.each(arguments, function (element, index) {
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {
             childLineInfo[index].detailInfo = element.result;
           }
-        });
+        });*/
+
+        for ( var i = 0; i < childLineInfo.length; i++ ) {
+          childLineInfo[i].detailInfo = arguments[i].result;
+        }
 
         thisMain._getChildBillInfoInit();
 
@@ -261,7 +269,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       var item = childListData[i];
       item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
-        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
+        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.totInvAmt);
       }
     }
 
@@ -282,7 +290,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var useAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailInfo);
+      var useAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
