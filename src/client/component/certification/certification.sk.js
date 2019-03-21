@@ -388,19 +388,18 @@ Tw.CertificationSk.prototype = {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
       this._getCertNum();
+      this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
+      if ( !reCert ) {
+        this.$btCert.addClass('none');
+        this.$btReCert.removeClass('none');
+      }
+      if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+        clearInterval(this._addTimer);
+      }
+      this._addTime = new Date();
+      this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
       if ( resp.result.corpPwdAuthYn === 'Y' ) {
         new Tw.CertificationBiz().open();
-      } else {
-        this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
-        if ( !reCert ) {
-          this.$btCert.addClass('none');
-          this.$btReCert.removeClass('none');
-        }
-        if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
-          clearInterval(this._addTimer);
-        }
-        this._addTime = new Date();
-        this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
       }
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
