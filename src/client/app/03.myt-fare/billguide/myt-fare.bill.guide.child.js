@@ -207,16 +207,17 @@ Tw.MyTFareBillGuideChild.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      console.log(res.result);
       var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
-        item.invAmt = Tw.FormatHelper.addComma(item.billItmMclAmt);
+        item.invAmt = Tw.FormatHelper.addComma(item.billInvAmt);
         return item;
       });
       // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
-      var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
-      var priceKey = 'billItmMclAmt';
+      var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
+      var priceKey = 'billInvAmt';
       var rootNodes = {};
       rootNodes.useSvcType = this._useSvcTypeFun();
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);

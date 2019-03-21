@@ -276,13 +276,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
-        item.invAmt = Tw.FormatHelper.addComma(item.billItmMclAmt);
+        item.invAmt = Tw.FormatHelper.addComma(item.billInvAmt);
         return item;
       });
       // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
-      var priceKey = 'billItmMclAmt';
+      var priceKey = 'billInvAmt';
       var rootNodes = {};
       rootNodes.useSvcType = this._useSvcTypeFun();
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
