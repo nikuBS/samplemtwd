@@ -515,26 +515,55 @@ class MyTFareBillGuide extends TwViewController {
 
     for ( let i = 0; i < svcTotList.length; i++ ) {
       const item = svcTotList[i];
-      // item.label = StringHelper.phoneStringToDash(item.name);
-      item.label = item.name;
-
-      /*
       const svcItem = this.getAllSvcItem(allSvc, item.svcMgmtNum);
-      item.addr = svcItem ? svcItem.addr : item.dtlAddr;
 
-      if ( item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
-        item.label = thisMain.phoneStrToDash(item.svcNum);
-      } else if (
-        item.svcType.toLowerCase() === MYT_JOIN_WIRE_SVCATTRCD.M3.toLowerCase() ||
-        item.svcType.toLowerCase() === MYT_JOIN_WIRE_SVCATTRCD.M4.toLowerCase() ||
-        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
+      const nm = item.name.replace(/ /g, '').toLowerCase();
+
+      // svcType
+      if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M1) !== -1
+            || nm.indexOf(MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) !== -1 ) {   // 이동전화
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M1;   // 휴대폰
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M2) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M2;      // 선불폰
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M3.replace(/ /g, '').toLowerCase()) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M3;      // T pocket Fi
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M4.replace(/ /g, '').toLowerCase()) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M4;      // T Login
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M5.replace(/ /g, '').toLowerCase()) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M5;      // T Wibro
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S1) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S1;      // 인터넷
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S2.toLowerCase()) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S2;      // IPTV
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S3) !== -1
+        || nm.indexOf(MYT_FARE_BILL_GUIDE.TEL_TYPE_1) !== -1 ) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S3;      // 집전화
+
+      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.O1) !== -1) {
+        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.O1;      // 포인트캠
+
+      }
+
+      if (item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M1 ||
+          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M2 ||
+          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M3 ||
+          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M4 ||
+          item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
 
         item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.svcNum);
+
       } else {
 
-        item.label = item.addr;
+        item.label = item.name.substring(item.name.indexOf('(') + 1, item.name.indexOf(')') - 1);
 
-      }*/
+      }
     }
     svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
     return svcTotList;
