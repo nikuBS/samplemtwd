@@ -136,7 +136,7 @@ Tw.CommonSearch.prototype = {
             data[i].IMG_ALT = tempArr[1];
           }
         }
-        if(key==='MENU_URL'&&data[i][key].includes('http')){
+        if(key==='MENU_URL'&&data[i][key].indexOf('http') !== -1){
           data[i].tagTitle = Tw.COMMON_STRING.OPEN_NEW_TAB;
         }
       }

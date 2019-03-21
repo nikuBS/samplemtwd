@@ -55,10 +55,10 @@ Tw.ImmediatelyRechargeLayer.prototype = {
             return (memo + item.dataVoiceClCd);
           }, '');
 
-          if ( availableFunc.includes('D') && availableFunc.includes('V') ) {
+          if ( availableFunc.indexOf('D') !== -1 && availableFunc.indexOf('V') !== -1 ) {
             this.immChargeData.available = 'ALL';
           }
-          if ( availableFunc.includes('D') ) {
+          if ( availableFunc.indexOf('D') !== -1 ) {
             this.immChargeData.available = 'DATA';
           }
           if ( _.isEmpty(available.result.option) ) {
