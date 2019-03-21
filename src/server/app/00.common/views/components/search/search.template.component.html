@@ -221,18 +221,20 @@
 </script>
 
 <script type="text/x-handlebars-template" id="sale_template">
-    <li>
-        <button class="list in-img sale-element list-data" type="button" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
-            <em>{{{listData.PROD_NM}}}</em>
-            <p>{{{listData.PROD_SMRY_DESC}}}</p>
-            <div>
+    <li class="category-type">
+        <button class="list in-img sale-element list-data link" type="button" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
+            <div class="text-field">
+                <h3 class="title">{{removeTag listData.PROD_NM}}</h3>
+                <p class="text">{{removeTag listData.PROD_SMRY_DESC}}</p>
+            </div>
+            <div class="tag-field">
                 {{#each listData.METATAG}}
                 {{#ifCond this '!==' ''}}
-                <span>#{{removeTag this}}</span>
+                <span class="tag">#{{removeTag this}}</span>
                 {{/ifCond}}
                 {{/each}}
             </div>
-            <span class="img none"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></span>
+            <div class="img-field"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></div>
         </button>
     </li>
 </script>
