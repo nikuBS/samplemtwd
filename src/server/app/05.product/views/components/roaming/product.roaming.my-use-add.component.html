@@ -4,7 +4,7 @@
 * Date: 2018.11.20
 %>
 
-<% if (isLogin && roamingAdd.roamingProdList.length !== 0) { %>
+<% if (roamingAdd.roamingProdList.length !== 0) { %>
 <!-- #부가서비스 있을 때 -->
 <div class="cont-box nogaps-top">
     <div class="status-list-box">
@@ -13,9 +13,9 @@
             <% for (var keyProd in prodList) { %>
             <li>
                 <% if (prodList[keyProd].prodLinkYn === 'Y' && prodList[keyProd].linkProdId) { %>
-                <a class="btn-type" href="/product/callplan?prod_id=<%= prodList[keyProd].linkProdId %>">
+                <a class="btn-type no-blet" href="/product/callplan?prod_id=<%= prodList[keyProd].linkProdId %>">
                 <% } else { %>
-                <a class="btn-type not-link" href="#" onclick="return false;">
+                <a class="btn-type no-blet not-link" href="#" onclick="return false;">
                 <% } %>
                         <span class="lineinfo-user">
                             <span class="info-title"><%= prodList[keyProd].prodNm %></span>
