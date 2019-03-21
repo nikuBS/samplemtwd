@@ -36,6 +36,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         this._promotionValidState = false;
       },this));
       this.$container.on('click','#fe_request_gift',$.proxy(this._requestGiftData,this));
+      this.$container.on('keyup','.fe-selected-number.fe-input-number',$.proxy(this._checkGiftNum,this));
       this.$giftNumberInput = this.$container.find('.fe-selected-number');
       this._numberHeadArr = [
         {option : '' , value : '010' , attr : 'data-number=010'},
@@ -405,5 +406,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       this._validatedGiftPhoneNum = this._getGiftNum();
       this._popupService.close();
     }, this));
+  },
+  _checkGiftNum : function (evt) {
+    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
   }
 };
