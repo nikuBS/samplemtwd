@@ -33,13 +33,14 @@ Tw.MyTFareBillSetChange.prototype = {
     this._billType = Tw.UrlHelper.getQueryParams().billType; // 메인 안내서 유형
     this._subBillType = Tw.UrlHelper.getQueryParams().subBillType || 'X';  // 함께 받는 안내서 유형
     this._isChangeInfo = Tw.UrlHelper.getQueryParams().isChangeInfo === 'Y' ? true : false; // 정보변경 유무
-
-    this._options = this.$container.find('.fe-option-list > li'); // 옵션 설정 엘리먼트들
+    this._optionsArea = this.$container.find('#fe-option-list'); // 옵션 설정 영역
+    this._options = this._optionsArea.find(' > ul > li'); // 옵션 설정 엘리먼트들
     this._inputHpNum = this.$container.find('.fe-hp-num'); // 핸드폰번호 input
     this._submit = this.$container.find('#fe-submit'); // 변경하기 버튼
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
     this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
+    this._section3 = this.$container.find('#fe-section3'); // 이메일주소 및 기타우편주소 영역
     // this._isInputChanged = false;     // 모든 input 필드(radio, checkobx 포함) 변경여부
   },
 
@@ -89,8 +90,8 @@ Tw.MyTFareBillSetChange.prototype = {
    * 우편번호 조회 서비스 호출
    * @private
    */
-  _searchZip: function () {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._callBackSearchZip, this));
+  _searchZip: function (e) {
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._callBackSearchZip, this));
   },
 
   /**
@@ -305,6 +306,7 @@ Tw.MyTFareBillSetChange.prototype = {
     var mergeType = billType + subBillType;
     var lineType = this._data.lineType;
 
+    this._optionsArea.addClass('none');
     this._options.addClass('none').removeClass('bb0').find('input').data('state', false);
     this.$container.find('#fe-ccurNotiSvcNum').addClass('none').find('input').data('state', false);
     var _data = this._data;
@@ -364,7 +366,17 @@ Tw.MyTFareBillSetChange.prototype = {
 
     // 옵션 보이기 일때. li 태그 마지막에 border-bottom 을 제거해준다.
     if (isDisplay) {
-      this._options.filter(':not(.none)').last().addClass('bb0');
+      // 옵션설정이 1개도 없다면 해당 영역 비노출 DV001-17910
+      if (this._options.filter(':not(.none)').length > 0) {
+        this._optionsArea.removeClass('none');
+        this._options.filter(':not(.none)').last().addClass('bb0');
+      }
+
+      if (this._section3.children(':not(.none)').length === 0) {
+        this._section3.prev('.cont-sp').addClass('none');
+      } else {
+        this._section3.prev('.cont-sp').removeClass('none');
+      }
     }
   },
 
