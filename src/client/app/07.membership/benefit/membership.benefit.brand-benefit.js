@@ -312,13 +312,14 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
    * @private
    */
   _notAbleGps: function(){
-    setTimeout(function(){
+    this._reqeustNearShopList();
+    /*setTimeout(function(){
     this._popupService.openAlert(
       Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.MSG,
       Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69.TITLE,
       Tw.BUTTON_LABEL.CONFIRM,
       $.proxy(this._reqeustNearShopList, this))}.bind(this)
-    , 300);
+    , 300);*/
   },
 
   /**
