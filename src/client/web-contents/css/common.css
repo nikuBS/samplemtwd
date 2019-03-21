@@ -4986,7 +4986,8 @@ a.ui-button:active,
   font-weight: 300; }
 
 .loading {
-  position: absolute;
+  position: fixed;
+  height: 100%;
   left: 0;
   top: 0;
   right: 0;
@@ -7343,8 +7344,8 @@ a.ui-button:active,
   -webkit-box-shadow: 0 20px 0 red;
           box-shadow: 0 20px 0 red;
   position: relative;
-  -webkit-animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
-          animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
+  -webkit-animation: loader2-u3656a8d6 0.5s ease-in-out alternate infinite;
+          animation: loader2-u3656a8d6 0.5s ease-in-out alternate infinite;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
   top: 50%;
@@ -7357,8 +7358,8 @@ a.ui-button:active,
     border-radius: 50%;
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red;
-    -webkit-animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite;
-            animation: loader2-u55cdf7a5 0.5s ease-in-out alternate infinite; }
+    -webkit-animation: loader2-u3656a8d6 0.5s ease-in-out alternate infinite;
+            animation: loader2-u3656a8d6 0.5s ease-in-out alternate infinite; }
   .spinner_loading2::before {
     left: -20px;
     -webkit-animation-delay: 0.3s;
@@ -7368,7 +7369,7 @@ a.ui-button:active,
     -webkit-animation-delay: 0.1s;
             animation-delay: 0.1s; }
 
-@-webkit-keyframes loader2-u55cdf7a5 {
+@-webkit-keyframes loader2-u3656a8d6 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7376,7 +7377,7 @@ a.ui-button:active,
     -webkit-box-shadow: 0 10px 0 red;
             box-shadow: 0 10px 0 red; } }
 
-@keyframes loader2-u55cdf7a5 {
+@keyframes loader2-u3656a8d6 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
