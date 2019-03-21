@@ -40,12 +40,18 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       //특정 회선 선택
       this.$wrapHbPaidAmtSvcCdListArea.hide();
       $('#fe-bill-sum-list').hide().attr('aria-hidden', true);
-      this._getUseBillsInfo();
+      // this._getUseBillsInfo();
+      if(this.resData.billpayInfo && this.resData.billpayInfo.paidAmtDetailList){
+        this._getBillsDetailInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
+      }
       this._searchNmSvcTypeFun();
     }
     else {
       // 서비스 전체
-      this._getBillsDetailInfo();
+      //this._getBillsDetailInfo();
+      if(this.resData.billpayInfo && this.resData.billpayInfo.paidAmtDetailList){
+        this._getBillsDetailInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
+      }
 
       this._svcHbDetailList(
         this._sortBySvcTypeMain(this.resData.commDataInfo.joinSvcList),
@@ -274,14 +280,14 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0047;
+    var targetApi = Tw.API_CMD.BFF_05_0036;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
+          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
@@ -290,12 +296,16 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-        // Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
-        _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
+        Tw.Logger.info('자녀 청구요금 조회 결과', arguments);
+        /*_.each(arguments, function (element, index) {
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {
             childLineInfo[index].detailInfo = element.result;
           }
-        });
+        });*/
+
+        for ( var i = 0; i < childLineInfo.length; i++ ) {
+          childLineInfo[i].detailInfo = arguments[i].result;
+        }
 
         thisMain._getChildBillInfoInit();
 
@@ -309,7 +319,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       var item = childListData[i];
       item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
-        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.useAmtTot);
+        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.totInvAmt);
       }
     }
 
@@ -344,7 +354,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // // Tw.Logger.info('[BFF_05_0036 상세내역]', res.result.paidAmtDetailInfo);
 
-      var paidAmtDetailInfo = res.result.paidAmtDetailInfo;
+      var paidAmtDetailInfo = res.result.paidAmtDetailList;
 
       // 자녀회선 삭제
       // if(thisMain.resData.childLineInfo) {

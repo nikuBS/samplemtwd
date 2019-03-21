@@ -178,13 +178,7 @@
                         <p class="stit"><%=commDataInfo.selClaimDt %></p>
                         <p class="msg">
                             <span class="str">
-                                <% for (var i=0; i < intBillLineInfo.length; i++) {
-                                     if ( intBillLineInfo[i].acntRepYN === 'Y' ) {
-                                %>
-                                <%= intBillLineInfo[i].label %>
-                                <%   }
-                                   }
-                                %>
+                                <%- commDataInfo.repSvcNm %>
                             </span>에<br />통합청구되었습니다.</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button></div>
