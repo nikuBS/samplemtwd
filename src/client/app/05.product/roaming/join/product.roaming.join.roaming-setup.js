@@ -357,6 +357,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   },
   _requestGiftData : function (targetEvt) {
     var requestNum = this._getGiftNum();
+    if(requestNum.length<=3){
+      requestNum = '';
+    }
     this._apiService.request(Tw.API_CMD.BFF_10_0175, { bnftSvcNum : requestNum }, {},[this._prodId])
       .done($.proxy(function (res) {
         if(res.code===Tw.API_CODE.CODE_00){
