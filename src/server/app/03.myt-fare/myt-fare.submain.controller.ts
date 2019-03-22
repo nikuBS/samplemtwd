@@ -36,12 +36,13 @@ class MyTFareSubmainController extends TwViewController {
       isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1)
     };
 
-    if ( req.params && req.params[0] === '/usagefee' ) {
+    // 페이지url 통합으로 삭제 DV001-16372
+    /*if ( req.params && req.params[0] === '/usagefee' ) {
       data.type = 'UF';
       if ( req.query && req.query.count ) {
         data.svcCount = parseInt(req.query.count, 10);
       }
-    }
+    }*/
     // this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
     if ( data.svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
@@ -57,10 +58,11 @@ class MyTFareSubmainController extends TwViewController {
       // 대표청구 여부
       if ( svcInfo.actRepYn === 'Y' ) {
 
-        if ( data.type === 'UF' ) {
+        // 페이지url 통합으로 삭제 DV001-16372
+        /*if ( data.type === 'UF' ) {
           // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
           res.redirect('/myt-fare/submain');
-        }
+        }*/
 
 
         this.apiService.request(API_CMD.BFF_05_0203, {}).subscribe((resp) => {
@@ -109,10 +111,11 @@ class MyTFareSubmainController extends TwViewController {
         });
 
       } else {
-        if ( data.type !== 'UF' ) {
+        // 페이지url 통합으로 삭제 DV001-16372
+        /*if ( data.type !== 'UF' ) {
           // res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
           res.redirect('/myt-fare/submain/usagefee?count=0');
-        }
+        }*/
         this._requestUsageFee(req, res, data);
       }
 
@@ -202,6 +205,8 @@ class MyTFareSubmainController extends TwViewController {
    * @private
    */
   _requestUsageFee(req, res, data) {
+    data.type = 'UF';
+
     Observable.combineLatest(
       this._getUsageFee(),
       this._getPaymentInfo(),
