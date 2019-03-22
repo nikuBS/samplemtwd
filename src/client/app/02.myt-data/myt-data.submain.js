@@ -26,8 +26,9 @@ Tw.MyTDataSubMain = function (params) {
 Tw.MyTDataSubMain.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트
   _rendered: function () {
-    if ( this._historyService.isBack() ) {
-      this._historyService.reload();
+    if ( !Tw.BrowserHelper.isApp() && this._historyService.isBack() ) {
+      // this._historyService.reload();
+      this._historyService.goLoad('/myt-data/submain');
     }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
