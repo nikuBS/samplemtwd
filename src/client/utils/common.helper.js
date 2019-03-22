@@ -197,6 +197,25 @@ Tw.CommonHelper = (function () {
     });
   };
 
+  var openTermLayer2 = function (code) {  // T World 이용약관
+    Tw.Api.request(Tw.API_CMD.BFF_03_0032, {
+      stplTypCd: code
+    }).done(function (res) {
+      if ( res.code === Tw.API_CODE.CODE_00 ) {
+        var content = res.result.content.replace(/container/g, 'containerterm'); // css 충동 해결
+        Tw.Popup.open({
+          hbs: 'HO_04_05_01_02_01',
+          title: res.result.title,
+          content: content
+        });
+      } else {
+        Tw.Error(res.code, res.msg).pop();
+      }
+    }).fail(function (err) {
+      Tw.Error(err.code, err.msg).pop();
+    });
+  };
+
   var replaceCdnUrl = function (context) {
     return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
   };
@@ -232,6 +251,7 @@ Tw.CommonHelper = (function () {
     resetHeight: resetHeight,
     resetPopupHeight: resetPopupHeight,
     openTermLayer: openTermLayer,
+    openTermLayer2: openTermLayer2,
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
     isLowerVersionAndroid: isLowerVersionAndroid,
