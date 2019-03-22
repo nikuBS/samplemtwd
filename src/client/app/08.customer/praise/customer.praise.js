@@ -49,6 +49,7 @@ Tw.CustomerPraise.prototype = {
     this.$subject = this.$container.find('.fe-subject');
     this.$pRole = this.$container.find('p.fe-role');
     this.$divRole = this.$container.find('div.fe-role');
+    this.$statement = this.$container.find('#fe-statement');
   },
 
   _handleKeydownInput: function(e) {
@@ -63,8 +64,8 @@ Tw.CustomerPraise.prototype = {
               return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
             }
             return item;
-          })
-        : Tw.CUSTOMER_PRAISE_SUBJECT_TYPES;
+          }) : 
+          Tw.CUSTOMER_PRAISE_SUBJECT_TYPES;
 
     this._popupService.open(
       {
@@ -85,6 +86,10 @@ Tw.CustomerPraise.prototype = {
   },
 
   _handleSelectType: function(e) {
+    if (this.$statement.hasClass('none')) {
+      this.$statement.removeClass('none').prop('aria-hidden', false);
+    }
+
     var $target = $(e.currentTarget),
       $li = $target.parents('li'),
       selectedValue = $li.find('.txt').text(),
