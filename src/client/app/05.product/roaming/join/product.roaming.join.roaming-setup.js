@@ -29,6 +29,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
     if(this._isPromotion){
+      this._numReg = /[^0-9]/g;
       this._validatedGiftPhoneNum = '010';
       this._promotionValidState = true;
       this.$container.on('click','.fe-selected-number.head',$.proxy(this._showPhoneHeadSelector,this));
@@ -411,6 +412,14 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     }, this));
   },
   _checkGiftNum : function (evt) {
-    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
+    var $target = $(evt.currentTarget);
+    if(this._numReg.test($target.val())){
+      var changedVal = $target.val().replace(this._numReg, '');
+      $target.blur();
+      $target.val(changedVal);
+      setTimeout(function () {
+        $target.focus();
+      });
+    }
   }
 };
