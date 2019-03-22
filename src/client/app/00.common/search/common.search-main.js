@@ -147,6 +147,10 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _doSearch : function (searchKeyword) {
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,null,$(event.currentTarget));
+      return;
+    }
     if(this._historyService.getHash()==='#input_P'){
       this._closeKeywordListBase();
     }
