@@ -61,6 +61,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
+
+    new Tw.InputFocusService(this.$container, $('[data-target="submitApply"]'));
   },
 
   //--------------------------------------------------------------------------[EVENT]
