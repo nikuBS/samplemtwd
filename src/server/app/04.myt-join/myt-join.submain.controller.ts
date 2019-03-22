@@ -192,7 +192,7 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
         const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
         data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
-        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
+        data.myPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myPausedState.state = true;
         if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
           data.myLongPausedState = {
@@ -207,7 +207,7 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myLongPausedState ) {
         const fromDt = data.myLongPausedState.fromDt, toDt = data.myLongPausedState.toDt;
         data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
-        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
+        data.myLongPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);

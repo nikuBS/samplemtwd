@@ -43,7 +43,8 @@ class MyTJoinSuspendStatus extends TwViewController {
       const status = {};
       if ( suspendStatus.result.svcStCd === 'SP' ) {
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
-        const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.');
+        // 해외체류 toDt 없음
+        const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
         status['period'] = { from, to };
         status['reason'] = suspendStatus.result.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
         status['resuspend'] = null; // 재신청중인 사용자 -> 재신청취소 버튼 노출
@@ -72,7 +73,8 @@ class MyTJoinSuspendStatus extends TwViewController {
         options['status'] = status;
       } else if ( this._militaryAC(suspendStatus.result) ) { // 군입대 장기일시정지자의 중도 해제 중
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
-        const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.');
+        // 해외체류 toDt 없음
+        const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
         status['period'] = { from, to };
         status['reason'] = MYT_SUSPEND_REASON['5000341'];
         status['type'] = 'long-term';
