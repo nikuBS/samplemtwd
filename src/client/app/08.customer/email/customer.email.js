@@ -111,7 +111,7 @@ Tw.CustomerEmail.prototype = {
     var isCellVali = !$elPhone.is('._phone'); // 초반에 템플릿 불려오면 _cell _phone 클래스 둘다 없음 
     var isVali = isCellVali ? this._isValidCell($elPhone.val() || '') : this._isValidTel($elPhone.val() || ''); 
 
-    if ( isVali && !Tw.FormatHelper.isEmpty($elPhone.val())) {
+    if ( isVali || Tw.FormatHelper.isEmpty($elPhone.val())) {
       $elErrorPhone.addClass('blind').attr('aria-hidden', true);
     } else {
       $elErrorPhone.removeClass('blind').attr('aria-hidden', false);
