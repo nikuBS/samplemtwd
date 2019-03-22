@@ -27,7 +27,12 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    this._getUseBillsInfo();
+    if(this.resData.billpayInfo && this.resData.billpayInfo.usedAmountDetailList){
+      this.resData.billpayInfo.unPayAmtList = this.resData.unpaidBillsInfo;
+      this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
+    }
+
+    // this._getUseBillsInfo();
 
     // this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
@@ -203,16 +208,17 @@ Tw.MyTFareBillGuideChild.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var useAmtDetailInfo = $.extend(true, {}, res.result.useAmtDetailInfo);
+
+      var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
-        item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
+        item.invAmt = Tw.FormatHelper.addComma(item.billInvAmt);
         return item;
       });
       // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
-      var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
-      var priceKey = 'invAmt';
+      var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
+      var priceKey = 'billInvAmt';
       var rootNodes = {};
       rootNodes.useSvcType = this._useSvcTypeFun();
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
@@ -233,7 +239,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         var unpayList = res.result.unPayAmtList;
         var unpayTot = 0;
         for(var i = 0; i < unpayList.length; i++){
-          unpayTot += parseInt(this._comUnComma(unpayList[i].comBat), 10);
+          unpayTot += parseInt(this._comUnComma(unpayList[i].colBat), 10);
         }
         if(unpayTot > 0){
           $('#spanUnpaidTot').text(Tw.FormatHelper.convNumFormat(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);
