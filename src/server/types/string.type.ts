@@ -640,7 +640,7 @@ export const MYT_SUSPEND_STATE = {
   F: '처리불가',
   C: '처리완료'
 };
-
+export const MYT_SUSPEND_STATE_EXCLUDE = '(사유)';
 export const FEE_PLAN_TIP_TXT = {
   MS_05_tip_01: '요금제 안내',
   MS_05_tip_02: '선불 휴대폰 요금제 변경',
