@@ -533,6 +533,7 @@ class ApiRouter {
 
     loginService.setCurrentReq(req, res);
     loginService.setMaskingCert(svcMgmtNum)
+      .switchMap((resp) => loginService.clearSessionStore(svcMgmtNum))
       .switchMap((resp) => apiService.updateSvcInfo({}))
       .subscribe((resp) => {
         res.json({
