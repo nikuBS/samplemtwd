@@ -62,18 +62,18 @@
                     </ul>
                 </div>
 
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <%
-                                let isNew = (data.cntcNum || '') === '' ? true:false;
-                                let text = isNew ? '신청하기':'변경하기';
-                                let alert = isNew ? 'ALERT_2_A66' : 'ALERT_2_A67';
-                            %>
-                            <button id="fe-btn-submit" data-alert="<%=alert%>" disabled><%=text%></button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <%
+                            let isNew = (data.cntcNum || '') === '' ? true:false;
+                            let text = isNew ? '신청하기':'변경하기';
+                            let alert = isNew ? 'ALERT_2_A66' : 'ALERT_2_A67';
+                        %>
+                        <button id="fe-btn-submit" data-alert="<%=alert%>" disabled><%=text%></button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- // .container-wrap -->
