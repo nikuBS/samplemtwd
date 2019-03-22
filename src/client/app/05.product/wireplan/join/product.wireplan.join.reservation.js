@@ -1,48 +1,63 @@
 /**
+ * 인터넷/전화/TV > 가입 상담/예약
  * FileName: product.wireplan.join.reservation.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.30
  */
 
 Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
+  // 컨테이너 레이어 설정
   this.$container = rootEl;
 
+  // 공통 모듈 설정
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000083'];
-  this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
-  this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
-  this._logged = false;
-  this._isLoadCombineList = false;
-  this._currentCombineProductList = [];
+  // Global 변수 선언
+  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000083'];  // 가족형 결합상품 상품코드
+  this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']); // 결합상품 코드
+  this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);  // 상품 카테고리별 회선 보유 여부
+  this._logged = false; // 로그인 여부
+  this._isLoadCombineList = false;  // 결합상품 가입 여부 조회를 추가로 하지 않기 위해
+  this._currentCombineProductList = []; // 가입한 결합상품 코드 저장용 배열
 
+  // 결합상품 코드 변환 (PLM상품코드 <-> Tw상품코드)
   this._convertProdIds = {
     NH00000103: 'TW00000009',
     NA00002040: 'TW20000010',
     NH00000083: 'TW20000008'
   };
 
+  // Element 캐싱
   this._cachedElement();
+
+  // 이벤트 바인딩
   this._bindEvent();
+
+  // Initialize
   this._init();
 };
 
 Tw.ProductWireplanJoinReservation.prototype = {
 
+  // Initialize
   _init: function() {
+    // 상품 카테고리 값 저장
     this._typeCd = this.$container.data('type_cd');
 
+    // 결합상품이 아닐때 툴팁 노출
     if (this._typeCd !== 'combine') {
       this.$nonCombineTip.show().attr('aria-hidden', 'false');
     }
 
+    // 로그인 상태 조회
     this._reqSvcMgmtNum();
   },
 
+  // 결합상품 일 경우 최초 실행
   _initCombineProduct: function() {
     this.$combineWrap.show().attr('aria-hidden', 'false');
 
@@ -51,79 +66,83 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
   },
 
+  // 로그인 완료 후 페이지 재진입시 기 입력한 데이터 복원
   _restoreLocalStorage: function() {
-    if (!Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION)) {
+    if (!Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION)) { // 저장된 데이터 없으면 차단
       return;
     }
 
     if (!this._logged) {
-      return Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
+      return Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);  // 로그인 안한 상태서 진입시에도 차단, 데이터 있으면 날림
     }
 
-    var data = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
+    var data = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION); // 키는 생성됬으나 값이 없을 경우 예외처리, 차단
     if (Tw.FormatHelper.isEmpty(data)) {
       return;
     }
 
     data = JSON.parse(data);
-    if (data.expireTime < new Date().getTime()) {
+    if (data.expireTime < new Date().getTime()) { // 만료시간이 지난 데이터 일 경우 사용하지 않고 차단
       return;
     }
 
-    this.$reservName.val(data.name);
-    this.$reservNumber.val(data.number).trigger('change');
-    this._typeCd = data.typeCd;
-    this._prodId = data.prodId;
+    // 데이터 복원
+    this.$reservName.val(data.name);  // 신청자 이름
+    this.$reservNumber.val(data.number).trigger('change');  // 상담가능 번호
+    this._typeCd = data.typeCd; // 상품 카테고리 코드
+    this._prodId = data.prodId; // 상품 코드 (결합상품 only)
 
-    this._typeCdPopupClose();
-    this._setCombineResult();
+    this._typeCdPopupClose(); // 상품 카테고리 값에 따른 UI 처리를 위한 호출
+    this._setCombineResult(); // 결합상품 데이터 처리
 
-    this.$agreeWrap.find('input[type=checkbox]').trigger('click');
-    this.$combineSelected.trigger('click');
+    this.$agreeWrap.find('input[type=checkbox]').trigger('click');  // 약관 동의 체크
+    this.$combineSelected.trigger('click'); // 상세 결합상품 정보 제공 체크
 
-    if (Tw.FormatHelper.isEmpty(this._prodId) && this._prodId !== 'NH00000103') {
+    if (Tw.FormatHelper.isEmpty(this._prodId) && this._prodId !== 'NH00000103') { // 개인형 결합상품이 아닐때 추가정보 체크영역 노출
       this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
       this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
     }
 
-    if (data.isExplain) {
+    if (data.isExplain) { // 기 데이터에 추가정보 체크영역 체크 되어 있었을 경우 복원
       this.$combineExplain.find('input[type=checkbox]').trigger('click');
     }
 
-    this._procApplyCheck();
-    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION);
+    this._procApplyCheck(); // 설정완료 버튼 클릭 처리
+    Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.PRODUCT_JOIN_RESERVATION); // 기 데이터 삭제
   },
 
+  // Element 캐싱
   _cachedElement: function() {
-    this.$reservName = this.$container.find('#formInput01');
-    this.$reservNumber = this.$container.find('#formInput02');
-    this.$agreeWrap = this.$container.find('.fe-agree_wrap');
-    this.$combineSelected = this.$container.find('.fe-combine_selected');
-    this.$combineExplain = this.$container.find('.fe-combine_explain');
-    this.$combineWrap = this.$container.find('.fe-combine_wrap');
-    this.$formData = this.$container.find('.fe-form_data');
-    this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
-    this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
-    this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
-    this.$inputName = this.$container.find('.fe-input_name');
+    this.$reservName = this.$container.find('#formInput01');  // 신청자 이름
+    this.$reservNumber = this.$container.find('#formInput02');  // 상담가능 번호
+    this.$agreeWrap = this.$container.find('.fe-agree_wrap'); // 약관동의 영역
+    this.$combineSelected = this.$container.find('.fe-combine_selected'); // 상세 결합상품 정보제공 영역 내 체크박스
+    this.$combineExplain = this.$container.find('.fe-combine_explain'); // 추가정보 제공 여부 영역
+    this.$combineWrap = this.$container.find('.fe-combine_wrap'); // 상세 결합상품 정보제공 영역
+    this.$formData = this.$container.find('.fe-form_data'); // 신청자 정보 영역 (이름 & 번호)
+    this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');  // 툴팁 selector (not 결합상품)
+    this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');  // 추가 정보와 서류 제출 체크박스
+    this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap'); // 상세 결합상품 정보 제공 내 셀렉트 영역
+    this.$inputName = this.$container.find('.fe-input_name'); // 신청자 이름
 
-    this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
-    this.$btnApply = this.$container.find('.fe-btn_apply');
-    this.$btnSelectTypeCd = this.$container.find('.fe-btn_select_type_cd');
-    this.$btnSelectCombine = this.$container.find('.fe-btn_select_combine');
+    this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');  // 개인정보 제공 동의 자세히 보기 팝업
+    this.$btnApply = this.$container.find('.fe-btn_apply'); // 신청하기 or 다음 버튼
+    this.$btnSelectTypeCd = this.$container.find('.fe-btn_select_type_cd'); // 상품 카테고리 선택 버튼
+    this.$btnSelectCombine = this.$container.find('.fe-btn_select_combine');  // 상세 결합상품 선택 버튼
   },
 
+  // 이벤트 바인딩
   _bindEvent: function() {
-    this.$container.on('keyup input', '.fe-input_name', $.proxy(this._toggleInputCancelBtn, this));
-    this.$container.on('keyup input', '.fe-input_phone_number', $.proxy(this._detectInputNumber, this));
-    this.$container.on('blur', '.fe-input_phone_number', $.proxy(this._blurInputNumber, this));
-    this.$container.on('focus', '.fe-input_phone_number', $.proxy(this._focusInputNumber, this));
-    this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this));
-    this.$container.on('keyup', 'input', $.proxy(this._onEnter, this));
+    this.$container.on('keyup input', '.fe-input_name', $.proxy(this._toggleInputCancelBtn, this)); // 이름 입력시
+    this.$container.on('keyup input', '.fe-input_phone_number', $.proxy(this._detectInputNumber, this));  // 번호 입력시
+    this.$container.on('blur', '.fe-input_phone_number', $.proxy(this._blurInputNumber, this)); // 번호 입력창 blur 시
+    this.$container.on('focus', '.fe-input_phone_number', $.proxy(this._focusInputNumber, this)); // 번호 입력창 focus 시
+    this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this)); // input 옆 X버튼 클릭시
+    this.$container.on('keyup', 'input', $.proxy(this._onEnter, this)); // input 에서 이동 버튼 등 클릭시
 
-    this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
-    this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));
-    this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));
+    this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));  // 약관동의 팝업 자세히 보기 클릭 시
+    this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));  // 신청하기 or 다음 버튼 클릭 시
+    this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));  // 상품 카테고리 선택 버튼 클릭 시
     this.$btnSelectCombine.on('click', $.proxy(this._openCombinePop, this));
 
     this.$combineSelected.on('change', $.proxy(this._changeCombineSelected, this));
@@ -644,7 +663,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'skt404@sk.com',
+          recvFaxNum: 'sk401@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList0
         }
@@ -652,7 +671,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'skt219@sk.com',
+          recvFaxNum: 'sk287@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList1
         }
