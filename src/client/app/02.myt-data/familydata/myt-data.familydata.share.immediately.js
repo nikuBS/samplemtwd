@@ -4,13 +4,13 @@
  * Date: 2018.10.04
  */
 
-Tw.MyTDataFamilyShareImmediately = function(rootEl) {
-  this.$container = rootEl;
+Tw.MyTDataFamilyShareImmediately = function($wrap, tabId) {
+  this.$wrap = $wrap;
+  this.$container = $wrap.find('#' + tabId);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  new Tw.MyTDataFamilyShare(rootEl);
-
+  
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -20,9 +20,11 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   _init: function() {
     this.MAIN_URL = '/myt-data/familydata';
     this._getShareData(0);
+    new Tw.MyTDataFamilyShare(this.$container, this.$submit);
   },
 
   _cachedElement: function() {
+    this.$submit = this.$wrap.find('#fe-submit-immediatly button');
     this.$amountInput = this.$container.find('.fe-amount');
     this.$amount = this.$container.find('.pt10 > .txt-c1');
     this.$retrieveBtn = this.$container.find('#fe-retrieve');
@@ -30,7 +32,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
 
   _bindEvent: function() {
     // $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
-    this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
+    this.$submit.on('click', $.proxy(this._confirmSubmit, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleClickRetrive, this));
   },
 
