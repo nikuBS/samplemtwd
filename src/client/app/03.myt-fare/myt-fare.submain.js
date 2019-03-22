@@ -73,14 +73,16 @@ Tw.MyTFareSubMain.prototype = {
       // 납부방법버튼
       this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
     }
-    if ( this.data.isMicroPrepay ) {
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isMicroPrepay ) {
       // 소액결제
       this.$microBill = this.$container.find('button[data-id=micro-bill]');
-    }
-    if ( this.data.isContentPrepay ) {
+    // }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isContentPrepay ) {
       // 콘텐츠 이용료
       this.$contentBill = this.$container.find('button[data-id=content-bill]');
-    }
+    // }
     if ( this.data.totalPayment && this.data.totalPayment.length > 0 ) {
       // 최근납부내역상세
       this.$paymentDetail = this.$container.find('button[data-id=payment-detail]');
@@ -148,14 +150,16 @@ Tw.MyTFareSubMain.prototype = {
       // 납부방법버튼
       this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
     }
-    if ( this.data.isMicroPrepay ) {
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isMicroPrepay ) {
       // 소액결제
       this.$microBill.on('click', $.proxy(this._onClickedMicroBill, this));
-    }
-    if ( this.data.isContentPrepay ) {
+    // }
+    // 성능개선 대상으로 무조건 노출로 변경
+    // if ( this.data.isContentPrepay ) {
       // 콘텐츠 이용료
       this.$contentBill.on('click', $.proxy(this._onClickedContentBill, this));
-    }
+    // }
     if ( this.data.totalPayment && this.data.totalPayment.length > 0 ) {
       // 최근납부내역상세
       this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
@@ -782,11 +786,11 @@ Tw.MyTFareSubMain.prototype = {
   _openAdditionalService: function (type) {
     var code, url;
     if ( type === 'M' ) {
-      code = this.data.microPay.code;
+      // code = this.data.microPay.code;
       url = '/myt-fare/bill/small';
     }
     else {
-      code = this.data.contentPay.code;
+      // code = this.data.contentPay.code;
       url = '/myt-fare/bill/contents';
     }
     var title = '', content = '', more = '';
