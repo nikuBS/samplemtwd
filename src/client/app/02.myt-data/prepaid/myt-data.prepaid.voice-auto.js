@@ -350,7 +350,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
           }
         }
 
-        this._getCardInfo(htParams, e);
+        if ($('.fe-card-number').val().indexOf('*') === '-1') {
+          this._getCardInfo(htParams, e);
+        }
       }
     }
   },
