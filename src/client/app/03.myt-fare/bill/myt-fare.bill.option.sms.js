@@ -19,15 +19,16 @@ Tw.MyTFareBillOptionSms = function (rootEl) {
 
 Tw.MyTFareBillOptionSms.prototype = {
   _getBankList: function () {
+    var $target = this.$container.find('.fe-common-back');
     this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .done($.proxy(this._getSuccess, this, $target))
+      .fail($.proxy(this._fail, this, $target));
   },
-  _getSuccess: function (res) {
+  _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setBankList(res.result.virtualBankList);
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
   _setBankList: function (bankList) {
@@ -79,22 +80,23 @@ Tw.MyTFareBillOptionSms.prototype = {
     this.$container.find('.fe-request').removeAttr('disabled');
     this._popupService.close();
   },
-  _request: function () {
+  _request: function (e) {
+    var $target = $(e.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_07_0064, {
       acntNum: Tw.UrlHelper.getQueryParams().num,
       billSmsYn: 'Y',
       bankCd1: this.$container.find('.fe-select-bank').attr('id')
-    }).done($.proxy(this._smsSuccess, this))
-      .fail($.proxy(this._fail, this));
+    }).done($.proxy(this._smsSuccess, this, $target))
+      .fail($.proxy(this._fail, this, $target));
   },
-  _smsSuccess: function (res) {
+  _smsSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/option?type=sms');
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };

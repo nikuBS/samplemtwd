@@ -177,7 +177,7 @@
                                     <span class="space"></span>
                                     {{#if uploadFiles.[0]}}
                                     <span class="bt-box fe-file-delete">
-                                        <button type="button">삭제하기</button>
+                                        <button type="button" class="del">삭제하기</button>
                                     </span>
                                     {{else}}
                                     <span class="bt-box fe-file-find">
@@ -211,7 +211,7 @@
                                     <span class="space"></span>
                                     {{#if uploadFiles.[1]}}
                                     <span class="bt-box fe-file-delete">
-                                        <button type="button">삭제하기</button>
+                                        <button type="button" class="del">삭제하기</button>
                                     </span>
                                     {{else}}
                                     <span class="bt-box fe-file-find">
@@ -245,7 +245,7 @@
                                     <span class="space"></span>
                                     {{#if uploadFiles.[2]}}
                                     <span class="bt-box fe-file-delete">
-                                        <button type="button">삭제하기</button>
+                                        <button type="button" class="del">삭제하기</button>
                                     </span>
                                     {{else}}
                                     <span class="bt-box fe-file-find">
@@ -279,7 +279,7 @@
                                     <span class="space"></span>
                                     {{#if uploadFiles.[3]}}
                                     <span class="bt-box fe-file-delete">
-                                        <button type="button">삭제하기</button>
+                                        <button type="button" class="del">삭제하기</button>
                                     </span>
                                     {{else}}
                                     <span class="bt-box fe-file-find">
@@ -313,7 +313,7 @@
                                     <span class="space"></span>
                                     {{#if uploadFiles.[4]}}
                                     <span class="bt-box fe-file-delete">
-                                        <button type="button">삭제하기</button>
+                                        <button type="button" class="del">삭제하기</button>
                                     </span>
                                     {{else}}
                                     <span class="bt-box fe-file-find">
@@ -334,12 +334,13 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-upload_email_files" disabled>적용하기</button>
-                    </li>
-                </ul>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-upload_email_files" disabled>적용하기</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!--// .container-wrap -->
@@ -353,9 +354,9 @@
     {{#each files}}
     <li data-hashFile="/{{path}}{{name}}">
         <p class="text">{{originalName}}</p>
-        <!--<div class="bt-alone">-->
-        <!--<button class="bt-line-gray1 fe-remove-file">삭제</button>-->
-        <!--</div>-->
+        <div class="bt-alone">
+            <button class="bt-line-gray1 fe-remove-file">삭제하기</button>
+        </div>
     </li>
     {{/each}}
 </script>

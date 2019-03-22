@@ -17,6 +17,23 @@ Tw.CustomerAgentsearch = function (rootEl, params) {
     storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
   };
 
+  // URLSearchParams polyfill
+  (function (w) {
+    w.URLSearchParams = w.URLSearchParams || function (searchString) {
+        var self = this;
+        self.searchString = searchString;
+        self.get = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURI(results[1]) || 0;
+            }
+        };
+    }
+  })(window);
+
   this._init(params);
   this._cacheElements();
   this._bindEvents();
@@ -174,13 +191,11 @@ Tw.CustomerAgentsearch.prototype = {
     );
   },
   _onOptionsChanged: function (options) {
-    this._popupService.close();
-
     if (!!options) {
       this._options = options;
 
       if (!!this._isSearched) {
-        var $activeTab = this.$container.find('li[role="tab"][aria-selected="true"]');
+        var $activeTab = this.$container.find('li[role="presentation"][aria-selected="true"]');
         var tabId = $activeTab.attr('id');
         var id = 'fe-btn-search-name';
         switch (tabId) {

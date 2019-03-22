@@ -199,6 +199,7 @@ Tw.CertificationSk.prototype = {
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
+    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     this.$checkKeyin.on('change', $.proxy(this._onChangeKeyin, this));
@@ -228,9 +229,12 @@ Tw.CertificationSk.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
       this._callback(this._callbackParam);
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
-  _onInputMdn: function () {
+  _onInputMdn: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
@@ -239,7 +243,8 @@ Tw.CertificationSk.prototype = {
     }
     this._checkEnableConfirmButton();
   },
-  _onInputCert: function () {
+  _onInputCert: function ($event) {
+    Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -364,6 +369,7 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessCert: function (reCert, resp) {
     this._clearCertError();
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._seqNo = resp.result.seqNo;
       this.$btCertAdd.attr('disabled', false);
@@ -394,7 +400,7 @@ Tw.CertificationSk.prototype = {
 
     } else if ( resp.code === this.SMS_ERROR.ATH8007 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
-    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162) {
+    } else if ( resp.code === this.SMS_ERROR.ICAS3101 || resp.code === this.SMS_ERROR.ICAS3162 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(resp.code, resp.msg).pop();

@@ -151,8 +151,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   _toggleJoinCheckBtn: function() {
     if (this.$inputNumber.val().length > 9 && this.$inputBirth.val().length === 8) {
       this.$btnCheckJoin.removeAttr('disabled').prop('disabled', false);
+      this.$btnCheckJoin.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       this.$btnCheckJoin.attr('disabled', 'disabled').prop('disabled', true);
+      this.$btnCheckJoin.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 
@@ -203,7 +205,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
     }).done($.proxy(this._procCheckJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procCheckJoinRes: function(resp) {
@@ -288,7 +290,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       svcMgmtNum = $elemParent.data('svc_mgmt_num');
 
     if (this._svcMgmtNumList.indexOf(svcMgmtNum.toString()) !== -1) {
-      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum));
+      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum.toString()), 1);
     }
 
     $elemParent.remove();
@@ -352,7 +354,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0173, {
       memberSvcNumList: this._getSvcNumList()
     }, {}, []).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

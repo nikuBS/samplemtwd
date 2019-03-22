@@ -156,6 +156,8 @@ Tw.MyTDataPrepaidData.prototype = {
     if (this._isRechargeSuccess) {
       var data = Tw.FormatHelper.customDataFormat(this._afterData.toString().replace(',',''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?data=' + data.data);
+    } else if (this._isRechargeFail) {
+      Tw.Error(this._err.code, this._err.msg).pop();
     }
   },
   _setLayerData: function ($layer) {
@@ -186,6 +188,7 @@ Tw.MyTDataPrepaidData.prototype = {
       reqData.emailYn = 'Y';
     }
 
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_06_0058, reqData)
       .done($.proxy(this._rechargeSuccess, this))
       .fail($.proxy(this._rechargeFail, this));
@@ -202,14 +205,21 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _rechargeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._isRechargeSuccess = true;
-      this._popupService.close();
+      this._close();
     } else {
       this._rechargeFail(res);
     }
   },
   _rechargeFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    Tw.CommonHelper.endLoading('.popup-page');
+    this._isRechargeFail = true;
+    this._err = {
+      code: err.code,
+      msg: err.msg
+    };
+    this._close();
   },
   _close: function () {
     this._popupService.close();

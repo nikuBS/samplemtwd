@@ -77,7 +77,8 @@ Tw.CustomerEmailCategory.prototype = {
         data: [{ list: this.service_category.map($.proxy(fnSelectLine, this)) }]
       },
       $.proxy(this._handleServiceChange1Depth, this),
-      null
+      null, null,
+      $(e.currentTarget)
     );
   },
 
@@ -108,7 +109,7 @@ Tw.CustomerEmailCategory.prototype = {
           }]
         },
         $.proxy(this._handleServiceChange2Depth, this),
-        null
+        null, null, $(e.currentTarget)
       );
     }
   },
@@ -133,7 +134,7 @@ Tw.CustomerEmailCategory.prototype = {
         data: [{ list: this.quality_category.map($.proxy(fnSelectLine, this)) }]
       },
       $.proxy(this._handleQualityChange1Depth, this),
-      null
+      null, null, $(e.currentTarget)
     );
   },
 

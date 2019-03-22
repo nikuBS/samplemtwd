@@ -58,7 +58,7 @@ Tw.ProductMobileplanSettingTing.prototype = {
       beforeLmtGrCd: this._currentTingSettings.beforeLmtGrCd,
       afterLmtGrCd: $checked.val()
     }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procSetupOkRes: function(resp) {

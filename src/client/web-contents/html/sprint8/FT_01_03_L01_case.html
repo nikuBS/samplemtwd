@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page tw-popup fixed-bottom"><!-- 2019.03.18 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -112,11 +112,15 @@
                         <div>고객 개인정보를 수집, 이용과 처리 위탁에 관한 내용을 읽고 이해하였으며, 개인정보의 수집, 이용, 처리 위탁에 동의합니다.</div>
                     </div>
                     <!-- // .pop-tc -->
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button>확인</button>
-                        </li>
-                    </ul>
+                    <!--2019.03.18 수정-->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button disabled="disabled">확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--//2019.03.18 수정-->                    
                 </div>
             </div>
             <!--// .container-wrap -->

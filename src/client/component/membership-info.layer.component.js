@@ -62,27 +62,16 @@ Tw.MembershipInfoLayerPopup.prototype = {
   },
 
   _onSuccess : function (resp) {
-    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+    if ( resp.code !== Tw.API_CODE.CODE_00  || !resp.result) {
       this._onFail(resp);
       return false;
     }
-    this._isJoinOk = 'Y';
 
-    /*
-      가입 가능여부 확인 ( 아래 case 인경우는 가입불가 )
-      1. 미성년자인 경우
-      2. 기 발급 카드 보유 상태인 경우
-     */
-    if (resp.result) {
-      if (resp.result.adultYn === 'N') {
-        this._isJoinOk = 'N';
-      } else if (resp.result.hasNotCardYn === 'N') {
-        this._isJoinOk = 'N';
-      }
-    } else {
-      this._isJoinOk = 'N';
+    // DV001-17710 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E')는 가능
+    if(resp.result.ownNameYn && this._svcInfo.svcGr === 'E'){
+      resp.result.ownNameYn = 'Y';
     }
-
+    this._isJoinOk = (Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
     this.onClickJoinBtn();
   },
 

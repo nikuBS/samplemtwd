@@ -21,6 +21,12 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
 
 Tw.CommonSearch.prototype = {
   _init : function () {
+    this._autoCompleteRegExObj = {
+      fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
+      fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
+      fontClose : new RegExp('</font>','g'),
+      spanOpen : new RegExp('<span class="highlight-text">','g')
+    };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
@@ -182,7 +188,7 @@ Tw.CommonSearch.prototype = {
   },
   _doSearch : function (event) {
     var keyword = this.$inputElement.val();
-    if(Tw.FormatHelper.isEmpty(keyword)){
+    if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
       var closeCallback;
       if(this._historyService.getHash()==='#input_P'){
         closeCallback = $.proxy(function () {
@@ -373,9 +379,11 @@ Tw.CommonSearch.prototype = {
     },this));
   },
   _closeKeywordListBase  : function () {
-    this._popupService.close();
-    this.$container.find('.keyword-list-base').remove();
-    this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
+    setTimeout($.proxy(function () {
+      this._popupService.close();
+      this.$container.find('.keyword-list-base').remove();
+      this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
+    },this),100);
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
@@ -451,10 +459,10 @@ Tw.CommonSearch.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC6633\'>','<span class="highlight-text">');
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:12px\'>','');
-    returnObj.showStr = returnObj.showStr.replace('</font>','</span>');
-    returnObj.linkStr = returnObj.showStr.replace('<span class="highlight-text">','').replace('</span>','');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
+    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
     return returnObj;
   },
   _removeRecentlyKeywordList : function (args) {
@@ -474,7 +482,7 @@ Tw.CommonSearch.prototype = {
     }
     setTimeout($.proxy(function () {
       this._historyService.goLoad(linkUrl);
-    },this));
+    },this),100);
   },
   _showSmart : function (data) {
     if(Tw.FormatHelper.isEmpty(data)){
@@ -496,8 +504,8 @@ Tw.CommonSearch.prototype = {
       this.$container.find('#smart_btn_base').removeClass('none');
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
-      _.each(returnData,function (data) {
-        $smartBase.append(smartTemplate({data : data}));
+      _.each(returnData,function (data,idx) {
+        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');

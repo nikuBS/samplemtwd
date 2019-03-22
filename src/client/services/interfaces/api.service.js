@@ -76,14 +76,14 @@ Tw.ApiService.prototype = {
       }
       var cert = new Tw.CertificationSelect();
       setTimeout($.proxy(function () {
-        Tw.CommonHelper.allOffLoading();
+        // Tw.CommonHelper.allOffLoading();
         cert.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
     } else if ( resp.code === Tw.API_CODE.BFF_0020 ) {
       var certRepresentative = new Tw.CertificationRepresentative();
       setTimeout($.proxy(function () {
-        Tw.CommonHelper.allOffLoading();
+        // Tw.CommonHelper.allOffLoading();
         certRepresentative.open(resp.result, authUrl, requestInfo, deferred, $.proxy(this._completeCert, this));
       }, this), 0);
       return deferred.promise();
@@ -100,8 +100,12 @@ Tw.ApiService.prototype = {
         this.request(requestInfo.command, requestInfo.params, requestInfo.headers, requestInfo.pathParams, requestInfo.version)
           .done($.proxy(this._successRequestAfterCert, this, deferred));
       }
+    } else if ( resp.code === Tw.API_CODE.CERT_CANCEL ) {
+      Tw.CommonHelper.allOffLoading();
+      // deferred.resolve(resp);
     } else {
-      deferred.resolve({ code: Tw.API_CODE.CERT_FAIL });
+      Tw.CommonHelper.allOffLoading();
+      deferred.resolve(resp);
     }
   },
   _successRequestAfterCert: function (deferred, resp) {

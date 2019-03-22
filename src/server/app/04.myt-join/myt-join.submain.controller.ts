@@ -8,7 +8,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, API_NEW_NUMBER_ERROR } from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
@@ -427,7 +427,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 가입회선조회
   _getMyLine() {
-    return this.apiService.request(API_CMD.BFF_03_0004, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_03_0004, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
@@ -440,7 +440,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 가입정보
   _getMyInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0068, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0068, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
@@ -454,7 +454,7 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 개통/변경이력
   _getMyHistory() {
-    return this.apiService.request(API_CMD.BFF_05_0061, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0061, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {

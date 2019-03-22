@@ -133,7 +133,7 @@ Tw.CommonMemberLineEdit.prototype = {
       // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._checkRepSvc(resp.result, svcNumList, $target);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _checkRepSvc: function (result, svcNumList, $target) {
@@ -185,12 +185,13 @@ Tw.CommonMemberLineEdit.prototype = {
   _onCloseMarketingOfferPopup: function () {
     this._closeMarketingOfferPopup();
   },
-  _onClickMoreExposable: function () {
+  _onClickMoreExposable: function ($event) {
+    var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0029, {
       pageNo: this._pageNoExposable,
       pageSize: Tw.DEFAULT_LIST_COUNT,
       svcCtg: this._category
-    }).done($.proxy(this._successMoreExposable, this));
+    }).done($.proxy(this._successMoreExposable, this, $target));
   },
   _onClickMoreExposed: function () {
     var $hideList = this.$exposedList.filter('.none');
@@ -203,7 +204,7 @@ Tw.CommonMemberLineEdit.prototype = {
       this.$btMoreExposed.hide();
     }
   },
-  _successMoreExposable: function (resp) {
+  _successMoreExposable: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._pageNoExposed * Tw.DEFAULT_LIST_COUNT >= resp.result[this._category + 'Cnt'] ) {
         this.$btMoreExposable.hide();
@@ -211,7 +212,7 @@ Tw.CommonMemberLineEdit.prototype = {
       this._pageNoExposable = this._pageNoExposable + 1;
       this._addExposableList(resp.result[this._category]);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _addExposableList: function (list) {

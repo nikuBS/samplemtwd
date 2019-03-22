@@ -134,8 +134,10 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   _toggleNumAddBtn: function() {
     if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
+      this.$btnAddNum.parent().removeClass('bt-gray1').addClass('bt-blue1');
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
+      this.$btnAddNum.parent().removeClass('bt-blue1').addClass('bt-gray1');
     }
   },
 
@@ -228,7 +230,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       svcNumList: this._getSvcNumList()
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

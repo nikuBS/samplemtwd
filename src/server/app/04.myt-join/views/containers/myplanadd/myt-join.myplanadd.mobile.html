@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <% if (roaming && roaming.roamingAddProdJoinYn === "Y") { %>
+                <% if (roaming && (roaming.recentlyJoinsProdNm || roaming.addRoamingProdCnt > 0)) { %>
                 <hr class="cont-sp type1" aria-hidden="true" />
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -96,7 +96,10 @@
                                     <div class="lineinfo-data">
                                         <span class="info-title">
                                         <% if (roaming.recentlyJoinsProdNm) { %>
-                                            <%= roaming.recentlyJoinsProdNm %><span class="etc-num">외 <%= roaming.addRoamingProdCnt %>건</span>
+                                            <%= roaming.recentlyJoinsProdNm %>
+                                            <% if (roaming.addRoamingProdCnt > 0) { %> 
+                                                <span class="etc-num">외 <%= roaming.addRoamingProdCnt %>건</span>
+                                            <% } %>
                                         <% } else { %>
                                             <%= roaming.addRoamingProdCnt %>건
                                         <% } %>

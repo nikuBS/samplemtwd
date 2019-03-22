@@ -303,8 +303,8 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
   // 우편번호 찾기
-  _addr_search_clickEvt: function(){
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._addr_search_success_callback, this));
+  _addr_search_clickEvt: function(event){
+    new Tw.CommonPostcodeMain(this.$container, $(event.target), $.proxy(this._addr_search_success_callback, this));
   },
   // 주소 - 우편번호 찾기 완료 시
   _addr_search_success_callback: function(resp){

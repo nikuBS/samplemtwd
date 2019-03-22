@@ -170,6 +170,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
           reqData.maskedYn = 'Y';
         }
       }
+      Tw.CommonHelper.startLoading('.popup-page', 'grey');
       this._apiService.request(Tw.API_CMD.BFF_06_0059, reqData)
         .done($.proxy(this._rechargeSuccess, this))
         .fail($.proxy(this._fail, this));
@@ -181,13 +182,17 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
 
     if (res.code === Tw.API_CODE.CODE_00) {
       var code = this.$dataSelector.attr('id');
+      Tw.CommonHelper.endLoading('.popup-page', 'grey');
       this._historyService.replaceURL('/myt-data/recharge/prepaid/data-complete?data=' + code + '&type=' + type);
     } else {
-      this._fail(res);
+      this._fail(res, 'recharge');
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function (err, type) {
+    if (type === 'recharge') {
+      Tw.CommonHelper.endLoading('.popup-page');
+    }
+    Tw.Error(err.code, err.msg).pop(null, this.$rechargeBtn);
   },
   _getAfterData: function () {
     var remainData = parseInt(this.$data.attr('data-value'), 10);

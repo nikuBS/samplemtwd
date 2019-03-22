@@ -153,7 +153,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _procJoinRes: function(resp) {

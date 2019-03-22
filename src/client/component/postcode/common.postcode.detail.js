@@ -4,8 +4,9 @@
  * Date: 2018.11.12
  */
 
-Tw.CommonPostcodeDetail = function ($container, $addressObject, $callback) {
+Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callback) {
   this.$container = $container;
+  this.$target = $target;
   this.$callback = $callback;
 
   this._apiService = Tw.Api;
@@ -23,7 +24,8 @@ Tw.CommonPostcodeDetail.prototype = {
     },
       $.proxy(this._onDetailSearchEvent, this, $addressObject),
       $.proxy(this._goLast, this),
-      'post0002'
+      'post0002',
+      this.$target
     );
   },
   _onDetailSearchEvent: function ($addressObject, $layer) {
@@ -36,7 +38,7 @@ Tw.CommonPostcodeDetail.prototype = {
   },
   _goLast: function () {
     if (this.$isNext) {
-      new Tw.CommonPostcodeLast(this.$container, this.$selectedAddressObject, this.$callback);
+      new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback);
     }
   },
   _setInitTab: function ($addressObject) {
@@ -159,7 +161,7 @@ Tw.CommonPostcodeDetail.prototype = {
     }
   },
   _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    Tw.Error(err.code, err.msg).pop(null, this.$searchTarget);
   },
   _setContents: function ($result) {
     var $content = $result.bldgAddress.content;

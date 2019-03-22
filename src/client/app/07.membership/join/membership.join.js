@@ -86,10 +86,14 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( isVaild ) {
       if ( !this.$emailAddr.hasClass('blind-height0') ) {
         this.$emailError.addClass('blind-height0');
+        this.$emailError.hide();
+        this.$emailError.attr('aria-hidden', 'true');
       }
     }
     else {
       this.$emailError.removeClass('blind-height0');
+      this.$emailError.show();
+      this.$emailError.attr('aria-hidden', 'false');
     }
     this.isEmailVaild = !isVaild;
   },
@@ -304,10 +308,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
       addr_cd: this.addrCd,
-      cust_email_addr: this.emailAddr // email 주소
+      cust_email_addr: this.emailAddr, // email 주소,
+      ctz_num_agree_yn : 'N'
     };
 
-    var cashbagCnt = 0;
     for ( var i = 0; i < $defaultOpt.length; i++ ) {
       var $item = $defaultOpt.eq(i);
       var checked = $item.prop('checked');
@@ -335,6 +339,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
         case 'osi':
           if ( checked ) {
             params.ocb_accum_agree_yn = 'Y';
+          }
+          break;
+        case 'odi':
+          if ( this._checkOkCashbag && checked ){
+            params.ctz_num_agree_yn = 'Y';
           }
           break;
       }

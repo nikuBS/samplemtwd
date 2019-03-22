@@ -10,7 +10,6 @@ import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import {ROAMING_AUTO_EXPIRE_CASE} from '../../../../../types/bff.type';
 
 
 class ProductRoamingSettingRoamingAuto extends TwViewController {
@@ -43,11 +42,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
         });
       }
 
-      if (prodBffInfo.result.startEndTerm) {
-        expireDate = prodBffInfo.result.startEndTerm;
-      } else {
-        expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
-      }
+      expireDate = prodBffInfo.result.startEndTerm;
 
 
       res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {

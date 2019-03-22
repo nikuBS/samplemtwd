@@ -63,6 +63,81 @@ Tw.MenuComponent.prototype = {
     M000570: 'membership'
   },
 
+  XTRACTOR_CODE: { // 유동적 메뉴에 대한 통계코드 matching
+    M000194: 'CMMA_A11_B3-8',
+    M000197: 'CMMA_A11_B3-9',
+    M000203: 'CMMA_A11_B3-10',
+    M000216: 'CMMA_A11_B3-11',
+    M000220: 'CMMA_A11_B3-12',
+    M000233: 'CMMA_A11_B3-13',
+    M000245: 'CMMA_A11_B3-14',
+    M000254: 'CMMA_A11_B3-15',
+    M000257: 'CMMA_A11_B3-16',
+    M000261: 'CMMA_A11_B3-17',
+    M000268: 'CMMA_A11_B3-18',
+    M000280: 'CMMA_A11_B3-19',
+    M000290: 'CMMA_A11_B3-20',
+    M000301: 'CMMA_A11_B3-21',
+    M000316: 'CMMA_A11_B3-22',
+    M000319: 'CMMA_A11_B3-23',
+    M000320: 'CMMA_A11_B3-24',
+    M000341: 'CMMA_A11_B3-25',
+    M000308: 'CMMA_A11_B3-26',
+    M000344: 'CMMA_A11_B3-27',
+    M000353: 'CMMA_A11_B3-28',
+    M000570: 'CMMA_A11_B3-29',
+    M000571: 'CMMA_A11_B3-30',
+    M001772: 'CMMA_A11_B3-31',
+    M001773: 'CMMA_A11_B3-32',
+    M000542: 'CMMA_A11_B3-33',
+    M000563: 'CMMA_A11_B3-34',
+    M000543: 'CMMA_A11_B3-35',
+    M000544: 'CMMA_A11_B3-36',
+    M000545: 'CMMA_A11_B3-37',
+    M000546: 'CMMA_A11_B3-38',
+    M000764: 'CMMA_A11_B3-39',
+    M000367: 'CMMA_A11_B3-40',
+    M000399: 'CMMA_A11_B3-41',
+    M000422: 'CMMA_A11_B3-42',
+    M000439: 'CMMA_A11_B3-43',
+    M000447: 'CMMA_A11_B3-44',
+    M000455: 'CMMA_A11_B3-45',
+    M000473: 'CMMA_A11_B3-46',
+    M000491: 'CMMA_A11_B3-47',
+    M000498: 'CMMA_A11_B3-48',
+    M000510: 'CMMA_A11_B3-49',
+    M000529: 'CMMA_A11_B3-50',
+    M000494: 'CMMA_A11_B3-51',
+    M001778: 'CMMA_A11_B3-52',
+    M000605: 'CMMA_A11_B3-53',
+    M000610: 'CMMA_A11_B3-54',
+    M001763: 'CMMA_A11_B3-55',
+    M000615: 'CMMA_A11_B3-56',
+    M000624: 'CMMA_A11_B3-57',
+    M000629: 'CMMA_A11_B3-58',
+    M000673: 'CMMA_A11_B3-59',
+    M000663: 'CMMA_A11_B3-60',
+    M000724: 'CMMA_A11_B3-61',
+    M000727: 'CMMA_A11_B3-62',
+    M000729: 'CMMA_A11_B3-63',
+    M000731: 'CMMA_A11_B3-64',
+    M000735: 'CMMA_A11_B3-65',
+    M000762: 'CMMA_A11_B3-66',
+    M000812: 'CMMA_A11_B3-67',
+    M000813: 'CMMA_A11_B3-68',
+    M000814: 'CMMA_A11_B3-69',
+    M000815: 'CMMA_A11_B3-70',
+    M000816: 'CMMA_A11_B3-71',
+    M000817: 'CMMA_A11_B3-72',
+    M000818: 'CMMA_A11_B3-73',
+    M000819: 'CMMA_A11_B3-74',
+    M000820: 'CMMA_A11_B3-75',
+    M000821: 'CMMA_A11_B3-76',
+    M000537: 'CMMA_A11_B3-77',
+    M000118: 'CMMA_A11_B3-78',
+    M000119: 'CMMA_A11_B3-79'
+  },
+
   _init: function () {
     $(window).on('hashchange', $.proxy(this._checkAndClose, this));
     this._nativeService.setGNB(this);
@@ -107,7 +182,7 @@ Tw.MenuComponent.prototype = {
 
     this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
     if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid) ) {
-      return;
+
     }
 
 
@@ -212,13 +287,14 @@ Tw.MenuComponent.prototype = {
 
     $('.h-menu').removeClass('on');
   },
-  _onUserInfo: function () {
+  _onUserInfo: function ($event) {
+    var $target = $($event.currentTarget);
     if ( this._isMultiLine ) {
       if ( !this._lineComponent ) {
         this._lineComponent = new Tw.LineComponent();
       }
       this._historyService.goBack();  // #menu hash 제거하기 위해
-      this._lineComponent.onClickLine(this._svcMgmtNum);
+      this._lineComponent.onClickLine(this._svcMgmtNum, $target);
     }
   },
   _onRegisterLine: function () {
@@ -559,6 +635,9 @@ Tw.MenuComponent.prototype = {
         item.isDesc = item.menuDescUseYn === 'Y' ? true : false;
         item.isLink = !!item.menuUrl && item.menuUrl !== '/';
         item.isExternalLink = !!item.menuUrl && item.menuUrl.indexOf('http') !== -1;
+        if (item.isLink || !!this.XTRACTOR_CODE[item.menuId]) { // 통계코드 추가
+          item.xtrCode = this.XTRACTOR_CODE[item.menuId];
+        }
 
         // Edit: Kim inhwan
         var menu_url = item.menuUrl;
@@ -684,6 +763,7 @@ Tw.MenuComponent.prototype = {
 
   // 검색창 포커스 인/아웃 처리
   _searchFocus: function () {
+    this.$container.find(':focus').blur();
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
     var $menu = $('#common-menu');

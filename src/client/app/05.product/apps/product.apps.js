@@ -120,11 +120,8 @@ Tw.ProductApps.prototype = {
       return app;
     });
 
-    if (Tw.FormatHelper.isEmpty(list)) {
-      this.$container
-        .find('div.app-list-top')
-        .addClass('none')
-        .attr('aria-hidden', true);
+    if (!Tw.FormatHelper.isEmpty(list)) {
+      this.$container.find('.app-list-top').removeClass('none').attr('aria-hidden', false);
     }
 
     this._appendApps();

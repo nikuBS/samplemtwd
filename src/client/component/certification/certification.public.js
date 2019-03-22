@@ -21,6 +21,9 @@ Tw.CertificationPublic = function () {
 
 
 Tw.CertificationPublic.prototype = {
+  ERROR_CODE: {
+    CANCEL: 9
+  },
   open: function (authUrl, authKind, prodAuthKey, command, callback) {
     this._authUrl = authUrl;
     this._authKind = authKind;
@@ -81,9 +84,12 @@ Tw.CertificationPublic.prototype = {
   _onPublicCert: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._setComplete();
+    } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
+      this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     } else {
       this._callback({
-        code: Tw.API_CODE.CERT_FAIL
+        code: Tw.API_CODE.CERT_FAIL,
+        msg: Tw.ALERT_MSG_COMMON.CERT_FAIL
       });
     }
   },

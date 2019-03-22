@@ -52,22 +52,23 @@ Tw.MyTFareBillGetPoint.prototype = {
     this._pointCardNumber = $.trim($pointCardNumber.val());
     this.$isValid = this._validation.showAndHideErrorMsg($pointCardNumber, this._validation.checkMoreLength($pointCardNumber, 16));
   },
-  _getPoint: function () {
+  _getPoint: function (e) {
+    var $target = $(e.currentTarget);
     if (this.$isValid) {
       this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
+        .done($.proxy(this._getSuccess, this, $target))
+        .fail($.proxy(this._getFail, this, $target));
     }
   },
-  _getSuccess: function (res) {
+  _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.close();
       this.$callback(res.result);
     } else {
-      this._getFail(res);
+      this._getFail($target, res);
     }
   },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _getFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };

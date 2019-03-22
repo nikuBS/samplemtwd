@@ -41,6 +41,7 @@
         line-height: 1.0625rem;
         height: 2.125rem; }
       .quick-menu-list li .bt i {
+        position: relative;
         display: block;
         width: 2.5rem;
         height: 2.5rem;
@@ -48,6 +49,15 @@
       .quick-menu-list li .bt img {
         display: block;
         width: 100%; }
+      .quick-menu-list li .bt.new i:after {
+        position: absolute;
+        top: 0.125rem;
+        right: -0.4375rem;
+        width: 0.3125rem;
+        height: 0.3125rem;
+        background: url(/img/main/graphic_home_store_badge_new.png) no-repeat 0 0;
+        background-size: 5px auto;
+        content: ""; }
     .quick-menu-list li.add-type {
       width: 100%; }
     .quick-menu-list li .add-bt {
@@ -73,6 +83,8 @@
         background: #959595; }
   .quick-menu-list.type-pd {
     margin: 1.25rem 0; }
+  .quick-menu-list.type3 li {
+    width: 33.33%; }
 
 .section-swiper-box {
   position: relative;
@@ -480,7 +492,7 @@
     .main-chart-box > .ti .bt {
       color: inherit;
       font-size: 1.625rem;
-      font-weight: 700;
+      font-weight: 500;
       line-height: normal;
       padding: 0 0.6875rem;
       background: url(/img/ico/chart_tit_arrow.png) no-repeat right 50%;
@@ -645,7 +657,7 @@
     text-align: left;
     margin-top: 0.625rem;
     margin-bottom: 1.5625rem;
-    font-weight: 600; }
+    font-weight: 500; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -841,6 +853,8 @@
           box-sizing: border-box;
   padding: 1.75rem 1.5rem 0.5rem 1.5rem;
   border-radius: 0.3125rem; }
+  .main-fee-box .fee-cont .w100 {
+    width: 100%; }
   .main-fee-box .fee-cont > .tit {
     display: inline-block;
     width: auto;
@@ -849,7 +863,7 @@
     line-height: 120%;
     text-align: left;
     padding-bottom: 1.5625rem;
-    font-weight: 600; }
+    font-weight: 500; }
     .main-fee-box .fee-cont > .tit + .fee-info {
       padding: 1.5625rem 0 1.25rem; }
   .main-fee-box .fee-cont > a.tit:after, .main-fee-box .fee-cont button.tit:after {
@@ -2264,6 +2278,27 @@ body.apphome {
     background: url(/img/svg/graphic_home_tab_store_off.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
+.ico-my-5gx {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_5gx.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.ico-my-twd {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_twd.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.ico-my-zero {
+  display: inline-block;
+  width: 5.125rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_my_logo_zero.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-gnb-menu {
   display: inline-block;
   width: 3.1875rem;
@@ -2439,6 +2474,13 @@ body.apphome {
   width: 2.5rem;
   height: 2.5rem;
   background: url(/img/svg/icon_80px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-5gx {
+  display: inline-block;
+  width: 3.5625rem !important;
+  height: 2.5rem !important;
+  background: url(/img/main/graphic_home_store_logo_5gx.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-cellphone2-80 {
@@ -2890,7 +2932,7 @@ body.apphome {
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
       font-size: 1.4375rem;
-      font-weight: 600; }
+      font-weight: 500; }
     .main-charge-box .main-box-cont .tx {
       font-weight: 300;
       max-height: 2.375rem;
@@ -3269,7 +3311,7 @@ body.apphome {
   .main-direct-box .tit span {
     position: relative;
     display: inline-block;
-    font-weight: 600; }
+    font-weight: 500; }
     .main-direct-box .tit span:after {
       display: inline-block;
       content: "";
@@ -4202,3 +4244,130 @@ body.apphome {
       margin-top: 0.1875rem;
       font-size: 1.125rem;
       line-height: 1; }
+
+/* HO_05_02_01_09 */
+.discountbenefit-list .category-type {
+  margin-top: 1rem; }
+  .discountbenefit-list .category-type:first-child {
+    margin-top: 0.625rem; }
+  .discountbenefit-list .category-type .link {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.3125rem;
+    overflow: hidden; }
+    .discountbenefit-list .category-type .link .img-field img {
+      width: 100%;
+      height: 100%;
+      vertical-align: top; }
+    .discountbenefit-list .category-type .link .text-field {
+      position: absolute;
+      top: 1.875rem;
+      left: 1.25rem;
+      text-align: left; }
+      .discountbenefit-list .category-type .link .text-field .title {
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.5625rem; }
+      .discountbenefit-list .category-type .link .text-field .text {
+        margin-top: 0.5rem;
+        padding-right: 6rem;
+        color: #ffffff;
+        font-size: 0.8125rem;
+        font-weight: 400;
+        line-height: 1.125rem; }
+    .discountbenefit-list .category-type .link .tag-field {
+      position: absolute;
+      bottom: 1.9375rem;
+      left: 1.25rem;
+      color: #ffffff;
+      font-size: 0.75rem; }
+      .discountbenefit-list .category-type .link .tag-field .tag {
+        display: inline-block;
+        margin-left: 0.4375rem;
+        font-weight: 300; }
+        .discountbenefit-list .category-type .link .tag-field .tag:first-child {
+          margin-left: 0; }
+
+@media all and (max-width: 320px) {
+  .discountbenefit-list .category-type .link .text-field {
+    top: 1.25rem; }
+    .discountbenefit-list .category-type .link .text-field .text {
+      padding-right: 4.375rem;
+      font-size: 0.75rem; }
+  .discountbenefit-list .category-type .link .tag-field {
+    bottom: 1.25rem; } }
+
+.box-citation {
+  padding: 0.625rem 0 0; }
+  .box-citation .citation-ti {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 400; }
+  .box-citation .citation-tx {
+    font-size: 0.75rem;
+    font-weight: 400; }
+  .box-citation .citation-form {
+    margin-top: 0.625rem; }
+    .box-citation .citation-form .form-cell {
+      position: relative;
+      margin-bottom: 1rem; }
+      .box-citation .citation-form .form-cell.linebox {
+        margin-top: 1rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid #E5E5E5; }
+        .box-citation .citation-form .form-cell.linebox .txt {
+          margin: -0.3125rem 0 0.625rem;
+          color: #000;
+          font-size: 0.8125rem; }
+          .box-citation .citation-form .form-cell.linebox .txt .time {
+            display: inline-block;
+            margin-left: 0.625rem;
+            color: #358ED8;
+            font-size: 0.75rem; }
+      .box-citation .citation-form .form-cell .txt .sms-time {
+        margin-left: 0.625rem;
+        width: 4.0625rem;
+        color: #178bce;
+        border: 0; }
+      .box-citation .citation-form .form-cell .form-ti {
+        display: block;
+        margin-bottom: 0.625rem;
+        font-size: 0.9375rem; }
+      .box-citation .citation-form .form-cell .form-check {
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .box-citation .citation-form .form-cell:last-of-type {
+        margin-bottom: 0; }
+      .box-citation .citation-form .form-cell .widget-box.radio {
+        margin-top: 0.625rem; }
+        .box-citation .citation-form .form-cell .widget-box.radio .radiobox {
+          margin-right: 1.5625rem;
+          font-size: 1.125rem;
+          font-weight: 400; }
+          .box-citation .citation-form .form-cell .widget-box.radio .radiobox:last-of-type {
+            margin-right: 0; }
+  .box-citation .another-way {
+    font-size: 0.8125rem;
+    padding-bottom: 1.25rem; }
+  .box-citation.n-type {
+    padding: 0; }
+    .box-citation.n-type .citation-form {
+      margin-top: 0; }
+      .box-citation.n-type .citation-form .form-cell .form-ti {
+        margin-bottom: 0.75rem; }
+    .box-citation.n-type .inputbox .guide-txt {
+      position: relative;
+      padding: 0 0 0 0.5rem;
+      margin: 1rem 0 0 0; }
+      .box-citation.n-type .inputbox .guide-txt:before {
+        content: "*";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #666;
+        font-size: 0.75rem; }

@@ -51,24 +51,24 @@ Tw.CommonMemberLine.prototype = {
     }
   },
   _onClickMore: function ($event) {
-    var $btMore = $($event.currentTarget);
-    var category = $btMore.data('category');
+    var $target = $($event.currentTarget);
+    var category = $target.data('category');
 
     this._apiService.request(Tw.API_CMD.BFF_03_0004, {
       pageNo: this._pageNo,
       pageSize: this._defaultCnt,
       svcCtg: category
-    }).done($.proxy(this._successMoreData, this, category, $btMore));
+    }).done($.proxy(this._successMoreData, this, category, $target));
   },
-  _successMoreData: function (category, $btMore, resp) {
+  _successMoreData: function (category, $target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._pageNo * this._defaultCnt >= resp.result.totalCnt ) {
-        $btMore.hide();
+        $target.hide();
       }
       this._pageNo = this._pageNo + 1;
       this._addList(category, resp.result[category]);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
   _addList: function (category, list) {

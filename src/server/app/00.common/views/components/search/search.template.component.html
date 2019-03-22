@@ -85,7 +85,8 @@
 
 <script type="text/x-handlebars-template" id="banner_template">
     <div class="search-banner">
-        <a href="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
+        <a data-xt_eid="{{listData.OFER_STC_CD}}" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC"
+           href="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
             <img src="{{CDN}}{{listData.BNNR_FILE_PATH_NM}}" alt="{{listData.TITLE_NM}}">
         </a>
     </div>
@@ -208,7 +209,7 @@
 <script id="event_template" type="text/x-handlebars-template">
     <li>
         <a href="/tevent/detail?id={{listData.DOCID}}" class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
-            <img src="{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
+            <img src="{{CDN}}{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
         </a>
         <div class="event-info">
             <span class="info-date">{{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</span>
@@ -221,18 +222,20 @@
 </script>
 
 <script type="text/x-handlebars-template" id="sale_template">
-    <li>
-        <button class="list in-img sale-element list-data" type="button" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
-            <em>{{{listData.PROD_NM}}}</em>
-            <p>{{{listData.PROD_SMRY_DESC}}}</p>
-            <div>
+    <li class="category-type">
+        <button class="list in-img sale-element list-data link" type="button" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
+            <div class="text-field">
+                <h3 class="title">{{removeTag listData.PROD_NM}}</h3>
+                <p class="text">{{removeTag listData.PROD_SMRY_DESC}}</p>
+            </div>
+            <div class="tag-field">
                 {{#each listData.METATAG}}
                 {{#ifCond this '!==' ''}}
-                <span>#{{removeTag this}}</span>
+                <span class="tag">#{{removeTag this}}</span>
                 {{/ifCond}}
                 {{/each}}
             </div>
-            <span class="img none"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></span>
+            <div class="img-field"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></div>
         </button>
     </li>
 </script>

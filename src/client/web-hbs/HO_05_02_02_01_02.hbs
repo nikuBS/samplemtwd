@@ -20,20 +20,21 @@
                     <ul class="tworld-searchword">
                         {{#each data.invstAnsw}}
                             <li>
-                                <span class="custom-form"><input type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
-                                <label for="ok1">{{this.inqCtt}}</label>
+                                <span class="custom-form"><input id="ok{{@index}}" type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
+                                <label for="ok{{@index}}">{{this.inqCtt}}</label>
                             </li>
                         {{/each}}
                     </ul>
                 </form>
             </div>
             <!--// .cont-box -->
-
-            <ul class="bt-slice full">
-                <li class="bt-red1">
-                    <button disabled="" class="request_claim">신청하기</button>
-                </li>
-            </ul>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled="" class="request_claim">신청하기</button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--// .container-wrap -->

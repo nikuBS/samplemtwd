@@ -24,7 +24,7 @@
         <div class="container">
             <div class="ti-caption-gray datail-veiw">
                 <span class="tit" id="aria-comp-bt1"><%=svcInfo.prodNm%></span>
-                <a class="detail-view" href="/product/callplan?prod_id=<%=svcInfo.prodId%>" aria-labelledby="aria-comp-bt1"><span class="blind">자세히 보기</span></a>
+                <a class="detail-view" href="/product/callplan?prod_id=<%=svcInfo.prodId%>" aria-labelledby="aria-comp-bt1" role="button"></a>
             </div>
             <!-- .cont-box -->
             <div class="cont-box now-fee-box">
@@ -191,7 +191,7 @@
             <!-- .cont-box -->
             <div class="cont-box pb0">
                 <p class="con-tit0 pb6">다른 요금안내서로 받기</p>
-                <p class="con-txt0 pb12">T월드 계정 또는 Bill Letter로 받아보시면<br/>종이 안내서보다 빠르고 안전하게 보관하실 수 있습니다.</p>
+                <p class="con-txt0 pb12">T world 계정 또는 Bill Letter로 받아보시면<br/>종이 안내서보다 빠르고 안전하게 보관하실 수 있습니다.</p>
                 <ul class="link-long-list nopd">
                     <%
                         let icoName = {
@@ -225,15 +225,17 @@
                     let billLetterInfo = {
                         title : '이번달 Bill Letter가 도착했습니다~',
                         msg : '월별 청구 금액과 상세 내역 등을 언제든지 편리하게 확인하세요.',
-                        img : 'ic-img'
+                        img : 'ic-img',
+                        info : 'Bill Letter 앱 실행'
                     };
                     if ( 'H' !== data.billInfo[0].cd ) {
                         billLetterInfo.title = 'Bill Letter를 알고 계세요? ';
                         billLetterInfo.msg = '쌓여가는 요금안내서,<br/> Bill Letter 앱으로 한 번에 관리하세요.';
                         billLetterInfo.img = 'ic-img2';
+                        billLetterInfo.info = 'Bill Letter 앱 다운로드';
                     }
                 %>
-                <a id="fe-app-down">
+                <a id="fe-app-down" href="#" title="<%=billLetterInfo.info%>">
                     <span class="tit"><%= billLetterInfo.title%></span>
                     <span class="tx0"><%- billLetterInfo.msg%></span>
                     <span class="<%=billLetterInfo.img%>"></span>

@@ -32,6 +32,7 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
+    this.$container.on('focusout', '[data-target="inputPhone"]', $.proxy(this._onFocusoutFormatHpNum, this));
     this.$container.on('click', '[data-target="lookupBtn"]', $.proxy(this._lookupBtnEvt, this));
 
     this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
@@ -181,10 +182,10 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
       _$this.val(returnVal);
     }
 
+  },
+
+  _onFocusoutFormatHpNum: function() {
+    this._vdPhoneNm( this.$inputPhone.val() );
   }
-
-
-
-
 
 };

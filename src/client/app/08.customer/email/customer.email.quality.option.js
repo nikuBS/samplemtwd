@@ -40,8 +40,8 @@ Tw.CustomerEmailQualityOption.prototype = {
     this.$container.on('click', '.fe-search-post', $.proxy(this._onClickSearchPost, this));
   },
 
-  _onClickSearchPost: function () {
-    new Tw.CommonPostcodeMain(this.$container);
+  _onClickSearchPost: function (e) {
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget));
   },
 
   // 품질상담 > 인터넷/집전화/IPTV > 회선변경
@@ -90,7 +90,7 @@ Tw.CustomerEmailQualityOption.prototype = {
         data: [{ list: list }]
       },
       $.proxy(this._handleQualityPhoneLine, this, $target),
-      null
+      null, null, $(e.currentTarget)
     );
   },
 
@@ -123,7 +123,10 @@ Tw.CustomerEmailQualityOption.prototype = {
         btnfloating: { 'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }]
       },
-      $.proxy(this._handleOpenSelectType, this, $target));
+      $.proxy(this._handleOpenSelectType, this, $target),
+      null, null,
+      $(e.currentTarget)
+    );
   },
 
   // 품질상담 > 회선변경 선택시
@@ -189,7 +192,9 @@ Tw.CustomerEmailQualityOption.prototype = {
         data: [{ list: this.quality_options[sType].list.map($.proxy(fnSelectLine, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
-      null
+      null,
+      null,
+      $(e.currentTarget)
     );
   },
 

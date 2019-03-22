@@ -784,7 +784,7 @@ class ProductCommonCallplan extends TwViewController {
         }
 
         // 상품 퇴출 상태 (G1000)
-        if (basicInfo.result.prodStCd === 'G1000') {
+        if (basicInfo.result.prodStCd === 'G1000' || FormatHelper.isEmpty(basicInfo.result.prodTypCd)) {
           return this.error.render(res, renderCommonInfo);
         }
 

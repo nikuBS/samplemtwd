@@ -536,7 +536,9 @@ Tw.MyTDataSubMain.prototype = {
         this._historyService.goLoad('/myt-data/hotdata');
         break;
       default:
-        this.immediatelyRechargeLayer = new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
+        this.immediatelyRechargeLayer = new Tw.ImmediatelyRechargeLayer(this.$container, {
+          isPrepayment: this.data.isPrepayment
+        });
         break;
     }
   },

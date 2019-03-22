@@ -30,7 +30,7 @@ class ShortcutRouter {
             this.redisService.getData(REDIS_KEY.MENU_URL + menuUrl).subscribe((menuResp) => {
               if ( menuResp.code === API_CODE.CODE_00 ) {
                 if ( !FormatHelper.isEmpty(menuResp.result.menuUrl) ) {
-                  res.redirect('/common/share/bridge?target=' + menuResp.result.menuUrl + '&loginType=N' );
+                  res.redirect('/common/share/bridge?target=' + menuResp.result.menuUrl + '&loginType=N');
                 } else {
                   next();
                 }
@@ -43,6 +43,9 @@ class ShortcutRouter {
 
       } else if ( req.path === '/' ) {
         res.redirect('/main/home');
+      } else if ( req.path === '/s.jsp' ) {
+        const encParam = req.query.p || '';
+        res.redirect('/common/auto-sms/cert?p=' + encParam);
       } else {
         next();
       }

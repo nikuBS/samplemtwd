@@ -177,7 +177,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   },
   _doSearch : function (evt) {
     var searchKeyword = this.$container.find('#search_keyword').val();
-    if(Tw.FormatHelper.isEmpty(searchKeyword)){
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       var closeCallback;
       if(this._historyService.getHash()==='#input_P'){
         closeCallback = $.proxy(function () {

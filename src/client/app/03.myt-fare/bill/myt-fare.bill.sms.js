@@ -93,12 +93,13 @@ Tw.MyTFareBillSms.prototype = {
       this._historyService.goBack();
     }
   },
-  _pay: function () {
+  _pay: function (e) {
+    var $target = $(e.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: $.trim(this.$accountSelector.text()) })
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      .done($.proxy(this._paySuccess, this, $target))
+      .fail($.proxy(this._payFail, this, $target));
   },
-  _paySuccess: function (res) {
+  _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var svcNum = '';
       if (!Tw.FormatHelper.isEmpty(res.result.svcNum)) {
@@ -106,10 +107,10 @@ Tw.MyTFareBillSms.prototype = {
       }
       this._historyService.replaceURL('/myt-fare/bill/pay-complete?type=sms&svcNum=' + svcNum);
     } else {
-      this._payFail(res);
+      this._payFail($target, res);
     }
   },
-  _payFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _payFail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   }
 };

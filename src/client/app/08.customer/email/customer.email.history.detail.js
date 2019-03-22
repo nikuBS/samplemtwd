@@ -51,7 +51,8 @@ Tw.CustomerEmailHistoryDetail.prototype = {
       $.proxy(this._requestRemoveInquiry, this, inqId, inqClCd),
       null,
       Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
+      Tw.BUTTON_LABEL.YES,
+      $(e.currentTarget)
     );
   },
 

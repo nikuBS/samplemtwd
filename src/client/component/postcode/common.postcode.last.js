@@ -4,8 +4,9 @@
  * Date: 2018.11.13
  */
 
-Tw.CommonPostcodeLast = function ($container, $addressObject, $callback) {
+Tw.CommonPostcodeLast = function ($container, $target, $addressObject, $callback) {
   this.$container = $container;
+  this.$target = $target;
   this.$callback = $callback;
 
   this._apiService = Tw.Api;
@@ -22,7 +23,8 @@ Tw.CommonPostcodeLast.prototype = {
       },
       $.proxy(this._onLastEvent, this, $addressObject),
       $.proxy(this._saveAddress, this),
-      'post0003'
+      'post0003',
+      this.$target
     );
   },
   _onLastEvent: function ($addressObject, $layer) {
@@ -35,6 +37,8 @@ Tw.CommonPostcodeLast.prototype = {
   },
   _saveAddress: function () {
     if (this.$isNext) {
+      this.$target.focus();
+
       if (this.$callback) {
         this.$callback(this.$saveAddress);
       } else {
@@ -90,17 +94,25 @@ Tw.CommonPostcodeLast.prototype = {
     } else {
       this.$saveBtn.removeAttr('disabled');
     }
+
+    this._checkIsEnter(event);
+  },
+  _checkIsEnter: function (event) {
+    if (Tw.InputHelper.isEnter(event)) {
+      this.$layer.find('.fe-save').focus();
+    }
   },
   _preventDefault: function (event) {
     event.preventDefault();
   },
-  _getStandardAddress: function () {
+  _getStandardAddress: function (e) {
     var $apiName = this._getStandardApiName();
     var $reqData = this._getStandardReqData();
+    var $target = $(e.currentTarget);
 
     this._apiService.request($apiName, $reqData)
-      .done($.proxy(this._success, this))
-      .fail($.proxy(this._fail, this));
+      .done($.proxy(this._success, this, $target))
+      .fail($.proxy(this._fail, this, $target));
   },
   _getStandardApiName: function () {
     var apiName = Tw.API_CMD.BFF_01_0012;
@@ -118,15 +130,15 @@ Tw.CommonPostcodeLast.prototype = {
       ldongCd: this.$mainAddress.attr('data-ldong-cd')
     };
   },
-  _success: function (res) {
+  _success: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._save(res.result);
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _save: function ($result) {
     var code = this._getStandardCode($result);

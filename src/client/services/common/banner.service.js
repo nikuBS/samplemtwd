@@ -31,12 +31,16 @@ Tw.BannerService.prototype = {
 
     this.$banners.on({
       init: function(e, slick) {
-        slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
+        slick.$dots && slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
       },
       beforeChange: function(e, slick, before, after) {
         var dots = slick.$dots.find('li');
-        $(dots[before]).find('> span').text(before + 1);
-        $(dots[after]).find('> span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+        $(dots[before])
+          .find('> span')
+          .text(before + 1);
+        $(dots[after])
+          .find('> span')
+          .html(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
       },
       afterChange: function(e, slick) {
         // if (slick.$slider.find('*:focus').length > 0) {
@@ -65,6 +69,10 @@ Tw.BannerService.prototype = {
             infinite: true,
             speed: 500,
             lazyLoad: 'progressive',
+            focusOnSelect: true,
+            pauseOnFocus: true,
+            pauseOnHover: true,
+            pauseOnDotsHover: true,
             accessibility: true,
             customPaging: function(slider, i) {
               return $('<span role="button" />').text(i + 1);
@@ -76,44 +84,43 @@ Tw.BannerService.prototype = {
             infinite: false,
             speed: 300,
             lazyLoad: 'progressive',
+            touchMove: false,
             accessibility: true,
             customPaging: function(slider, i) {
               return $('<span role="button" />').text(i + 1);
             }
           });
         }
+        // var $mainSlider = $('.home-slider .home-slider-belt');
+        // if ($mainSlider.length > 0) {
+        //   this.$banners.on({
+        //     mousedown: function() {
+        //       $mainSlider[0].slick.setOption({
+        //         swipe: false
+        //       });
+        //     },
+        //     touchstart: function() {
+        //       $mainSlider[0].slick.setOption({
+        //         swipe: false
+        //       });
+        //     },
+        //     beforeChange: function() {
+        //       $mainSlider[0].slick.setOption({
+        //         swipe: false
+        //       });
+        //     },
+        //     afterChange: function() {
+        //       $mainSlider[0].slick.setOption({
+        //         swipe: true
+        //       });
+        //     }
+        //   });
         // }
+
+        if (callback) {
+          this.$banners.find('img').on('load', callback);
+        }
       }
-    }
-
-    // var $mainSlider = $('.home-slider .home-slider-belt');
-    // if ($mainSlider.length > 0) {
-    //   this.$banners.on({
-    //     mousedown: function() {
-    //       $mainSlider[0].slick.setOption({
-    //         swipe: false
-    //       });
-    //     },
-    //     touchstart: function() {
-    //       $mainSlider[0].slick.setOption({
-    //         swipe: false
-    //       });
-    //     },
-    //     beforeChange: function() {
-    //       $mainSlider[0].slick.setOption({
-    //         swipe: false
-    //       });
-    //     },
-    //     afterChange: function() {
-    //       $mainSlider[0].slick.setOption({
-    //         swipe: true
-    //       });
-    //     }
-    //   });
-    // }
-
-    if (callback) {
-      this.$banners.find('img').on('load', callback);
     }
   },
   _bindEvent: function() {

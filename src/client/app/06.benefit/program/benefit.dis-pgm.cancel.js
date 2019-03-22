@@ -89,11 +89,11 @@ Tw.BenefitDisPgmCancel.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     if(this._isTPlus) {
       this._apiService.request(Tw.API_CMD.BFF_10_0083, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
     else {
       this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this))
-        .fail(Tw.CommonHelper.endLoading('.container'));
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
   },
 
@@ -137,13 +137,13 @@ Tw.BenefitDisPgmCancel.prototype = {
         }
       },
       $.proxy(this._openResPopupEvent, this),
-      $.proxy(this._onClosePop, this),
+       null,
       'terminate_success'
     );
   },
 
   _openResPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', '.btn-floating.tw-popup-closeBtn', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
     $popupContainer.focus();
   },
@@ -194,10 +194,7 @@ Tw.BenefitDisPgmCancel.prototype = {
   },
 
   _closePop: function() {
-    this._popupService.close();
-  },
-
-  _onClosePop: function() {
-    this._historyService.reload( this._historyService.goBack());
+    this._historyService.replaceURL('/product/callplan?prod_id='+this._prodId);
+    this._popupService.closeAllAndGo('/product/callplan?prod_id='+this._prodId);
   }
 };

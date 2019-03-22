@@ -57,7 +57,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
-      .fail(Tw.CommonHelper.endLoading('.container'));
+      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   _joinCancel: function() {

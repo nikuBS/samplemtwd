@@ -21,10 +21,11 @@ Tw.ProductWireServiceArea.prototype = {
 
   _cachedElement: function() {
     this.$submitBtn = this.$container.find('#fe-submit');
+    this.$zipBtn = this.$container.find('#fe-post');
   },
 
   _openPostcode: function() {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+    new Tw.CommonPostcodeMain(this.$container, this.$zipBtn, $.proxy(this._handleChangeAddress, this));
   },
 
   _handleChangeAddress: function(result) {

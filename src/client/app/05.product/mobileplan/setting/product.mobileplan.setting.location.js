@@ -133,11 +133,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     // $(event.target).val(num);
     var $inputNumber = $(event.target);
 
-    if ( Tw.ValidationHelper.isTelephone($inputNumber.val()) ) {
-      $inputNumber.val(Tw.FormatHelper.getDashedPhoneNumber($inputNumber.val()));
-    } else {
-      $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
-    }
+    $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
 
     /*if ($inputNumber.length > 8) {
       $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
@@ -499,7 +495,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       return;
     }
     var num = $('#num-input').val();
-    if (!this._isCellPhone2(num) && !Tw.ValidationHelper.isTelephone(num)) {
+    if (!Tw.ValidationHelper.isCellPhone(num) && !Tw.ValidationHelper.isTelephone(num)) {
       //if (!Tw.ValidationHelper.isCellPhone(num) ) {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
@@ -508,11 +504,6 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._settingTargetNumber('1', {svcnum:num}, $.proxy(this._reloadNumList, this));
   },
 
-  _isCellPhone2: function(str) {
-    // return Tw.ValidationHelper.isCellPhone(str);
-    var phone = str.split('-').join('');
-    return Tw.ValidationHelper.regExpTest(/(^01[1|3|6|7|8|9]-?[0-9]{3,4}|^010-?[0-9]{4})-?([0-9]{4})$/, phone);
-  },
 
   /**
    * 지정번호 해지하기 버튼 클릭시

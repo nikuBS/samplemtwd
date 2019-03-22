@@ -38,7 +38,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._bindPopupElementEvt(this.$rootContainer);
     this.$tooltipList = this.$rootContainer.find('#tooltip_list');
     this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
-    this._tooltipInit(this._prodId);
+    this._tooltipInit(this._prodId,this._prodTypeInfo.prodTypCd);
   },
   _popupInit : function (hash) {
     if(isNaN(this._popupData.prodFee)){
@@ -50,7 +50,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._openConfirmRoamingInfoPopup(this._popupData,hash);
   },
   _openConfirmRoamingInfoPopup : function (data,hash) {
-    data.toolTipData = this._tooltipInit(data.prodId);
+    data.toolTipData = this._tooltipInit(data.prodId,data.prodType===(Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS)?'H_P':'');
     this._popupService.open({
       hbs: 'RM_11_01_01_02',
       layer: true,
@@ -280,142 +280,161 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._popupService.closeAll();
     setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
-  _tooltipInit : function (prodId) {
+  _tooltipInit : function (prodId,type) {
+    this._totalTipObj = {
+      RM_11_01_01_02_tip_03_01 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00004299','NA00004326']
+      },
+      RM_11_01_01_02_tip_03_02 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00004941','NA00004942']
+      },
+      RM_11_01_01_02_tip_03_03 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005137','NA00005138']
+      },
+      RM_11_01_01_02_tip_03_04 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005632','NA00005634','NA00005635']
+      },
+      RM_11_01_01_02_tip_03_05 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005821']
+      },
+      RM_11_01_01_02_tip_03_06 : {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005821']
+      },
+      RM_11_01_01_02_tip_03_07: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00003015']
+      },
+      RM_11_01_01_02_tip_03_08: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00003015']
+      },
+      RM_11_01_01_02_tip_03_09: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00004229','NA00004230','NA00004231','NA00005167']
+      },
+      RM_11_01_01_02_tip_03_10: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005252','NA00005300','NA00005505']
+      },
+      RM_11_01_01_02_tip_03_11: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00003178','NA00003177','NA00004226']
+      },
+      RM_11_01_01_02_tip_03_12: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00003178','NA00003177','NA00004226']
+      },
+      RM_11_01_01_02_tip_03_13: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00006046','NA00006048','NA00006038','NA00006040','NA00005900']
+      },
+      RM_11_01_01_02_tip_03_14: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006046','NA00006048','NA00006038','NA00006040','NA00005900']
+      },
+      RM_11_01_01_02_tip_03_15: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00006050','NA00006052','NA00006042','NA00006044','NA00005902']
+      },
+      RM_11_01_01_02_tip_03_16: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006050','NA00006052','NA00006042','NA00006044','NA00005902']
+      },
+      RM_11_01_01_02_tip_03_17: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005699']
+      },
+      RM_11_01_01_02_tip_03_18: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005699']
+      },
+      RM_11_01_01_02_tip_03_19: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005898']
+      },
+      RM_11_01_01_02_tip_03_20: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005898']
+      },
+      RM_11_01_01_02_tip_03_21: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005691','NA00005694','NA00005690','NA00005693','NA00005692','NA00005695']
+      },
+      RM_11_01_01_02_tip_03_22: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005691','NA00005694','NA00005690','NA00005693','NA00005692','NA00005695']
+      },
+      RM_11_01_01_02_tip_03_23: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005821']
+      },
+      RM_11_01_01_02_tip_03_24: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00005821']
+      },
+      RM_11_01_01_02_tip_03_26: {
+        tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
+        target : ['NA00005049','NA00005501']
+      },
+      RM_11_01_01_02_tip_03_27: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005049']
+      },
+      RM_11_01_01_02_tip_03_28: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00003196','NA00004088','NA00004833','NA00005049','NA00005047','NA00005048','NA00005501','NA00005502']
+      },
+      RM_11_01_01_02_tip_03_30: {
+        tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
+        target : ['NA00005633']
+      },
+      RM_11_01_01_02_tip_03_33: {
+        tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
+        target : ['NA00003196']
+      },
+      RM_11_01_01_02_tip_03_34: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00003196']
+      },
+      TC000032: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00005501']
+      },
+      TC000033: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00006486','NA00006487','NA00006488']
+      },
+      TC000034: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006486','NA00006487','NA00006488','NA00005633']
+      },
+      TC000035: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00006489','NA00006490','NA00006491','NA00006492','NA00006493','NA00006494','NA00006495','NA00006496','NA00006497','NA00006498','NA00006499','NA00006500']
+      },
+      TC000036: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006489','NA00006490','NA00006491','NA00006492','NA00006493','NA00006494','NA00006495','NA00006496','NA00006497','NA00006498','NA00006499','NA00006500']
+      }
+    };
+
     var tooltipArr = [];
-    switch (prodId) {
-      case 'NA00004088':
-      case 'NA00004299':
-      case 'NA00004326':
-      case 'NA00005047':
-      case 'NA00005502':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00004941':
-      case 'NA00004942':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_02', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005137':
-      case 'NA00005138':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_03', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005632':
-      case 'NA00005634':
-      case 'NA00005635':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_04', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005821':
-        //'RM_11_01_01_02_tip_03_23'	Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE
-        //'RM_11_01_01_02_tip_03_24'	Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_05', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_06', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        break;
-      case 'NA00003015':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_07', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_08', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00004229':
-      case 'NA00004230':
-      case 'NA00004231':
-      case 'NA00005167':
-      case 'NA00005301':
-      case 'NA00005337':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_09', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005252':
-      case 'NA00005300':
-      case 'NA00005505':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_10', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00003178':
-      case 'NA00003177':
-      case 'NA00004226':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_11', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_12', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00006046':
-      case 'NA00006048':
-      case 'NA00006038':
-      case 'NA00006040':
-      case 'NA00005900':
-      case 'NA00005901':
-      case 'NA00006039':
-      case 'NA00006041':
-      case 'NA00006045':
-      case 'NA00006047':
-      case 'NA00006049':
-      case 'NA00006053':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_13', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00006050':
-      case 'NA00006052':
-      case 'NA00006042':
-      case 'NA00006044':
-      case 'NA00005902':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_15', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005903':
-      case 'NA00006043':
-      case 'NA00006051':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_15', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_16', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        break;
-      case 'NA00005699':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_17', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_18', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005898':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_19', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005899':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : ' TC000013', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        break;
-      case 'NA00005691':
-      case 'NA00005694':
-      case 'NA00005690':
-      case 'NA00005693':
-      case 'NA00005692':
-      case 'NA00005695':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_21', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_22', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005049':
-      case 'NA00005501':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_26', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
-        tooltipArr.push({ tipId : 'TC000032', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_28', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005633':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_30', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_28', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00003196':
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_33', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_34', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        break;
-      case 'NA00005747':
-        tooltipArr.push({ tipId : 'TC000006', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        break;
+
+    for(var _key in this._totalTipObj){
+      if(this._totalTipObj[_key].target.indexOf(prodId)>-1){
+        tooltipArr.push({ tipId : _key, tipTitle : this._totalTipObj[_key].tipTitle });
+      }
     }
+    if(type==='H_P'){
+      tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+    }
+
     if(this._page){
       if(tooltipArr.length<=0&&this._popupData.preinfo.joinNoticeList.length<=0){
         this.$rootContainer.find('.tip_container').hide();
@@ -431,7 +450,6 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   _showBffToolTip : function (evt) {
     var $target = $(evt.currentTarget);
     var tooltipData = $target.data();
-    console.log(tooltipData.txt);
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',

@@ -41,8 +41,17 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
-    this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
+
+    if ( Tw.BrowserHelper.isIos() ) {
+      this.$container.on('blur', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
+      this.$container.on('blur', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
+    } else {
+      this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
+      this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
+    }
+
+    // this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
+    // this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
     // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },

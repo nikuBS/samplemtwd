@@ -4,12 +4,12 @@ Tw.ValidationHelper = (function () {
   }
 
   /**
-   * @param {String} : 010-0000-0000 or 0100000000
+   * @param {String} : 010-0000-0000 or 0100000000 or 013000000000
    * @returns {Boolean}
    */
   function isCellPhone(str) {
     var phone = str.split('-').join('');
-    return Tw.ValidationHelper.regExpTest(/(^01[1|6|7|8|9]-?[0-9]{3,4}|^010-?[0-9]{4})-?([0-9]{4})$/, phone);
+    return Tw.ValidationHelper.regExpTest(/(^01[1|6|7|8|9]-?[0-9]{3,4}|^010-?[0-9]{4}|^013[0-2]{1}-?[0-9]{3,4})-?([0-9]{4})$/, phone);
   }
 
   /**

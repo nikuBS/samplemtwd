@@ -18,31 +18,40 @@
 </div>
 <% } else { %>
 <div id="header" class="header-wrap <% if(locals.home) { %> home <% } %>">
+    <% if (locals.home && locals.home === 'web') { %>
     <div class="h-belt">
-
         <div class="h-default">
             <div class="h-menu">
-                <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
+                <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-136" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
             </div>
-            <% if (locals.home && locals.home === 'web') { %>
             <div class="h-home-logo">
-                <button data-url="/main/home" type="button" class="icon-gnb-bi"><span class="blind"><h1>홈으로</h1></span></button>
+                <button data-url="/main/home" type="button" class="icon-gnb-bi" data-xt_eid="CMMA_A2_B6-137" data-xt_csid="NO" data-xt_action="BC"><span class="blind"><h1>홈으로</h1></span></button>
             </div>
             <h1 class="h-home-tit">
-                <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
-                <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop">Shop</button>
+                <button type="button" class="twrold on" data-xt_eid="CMMA_A2_B6-138" data-xt_csid="NO" data-xt_action="BC">T world</button> <!-- 활성화시 .on // -->
+                <button data-url="https://m.shop.tworld.co.kr/shop/main" type="button" class="directshop" data-xt_eid="CMMA_A2_B6-139" data-xt_csid="NO" data-xt_action="BC">Shop</button>
             <!-- 활성화시 .on // -->
             </h1>
-            <% } else { %>
+            <div class="h-serarch">
+                <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-140" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="h-belt">
+        <div class="h-default">
+            <div class="h-menu">
+                <a href="#menu" role="button" id="fe-bt-gnb" class="icon-gnb-menu" data-xt_eid="CMMA_A2_B6-34" data-xt_csid="NO" data-xt_action="BC"><span class="blind">메뉴열기</span></a>
+            </div>
             <h1 class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </h1>
-            <% } %>
-            <!-- <div class="h-serarch"> -->
-                <!-- <button data-url="/common/search-main" class="icon-gnb-search"><span class="blind">검색</span></button> -->
-            <!-- </div> -->
+            <div class="h-serarch">
+                <button data-url="/common/search-main" class="icon-gnb-search" data-xt_eid="CMMA_A2_B6-36" data-xt_csid="NO" data-xt_action="BC"><span class="blind">검색</span></button>
+            </div>
         </div>
     </div>
+    <% } %>
 </div>
 <!--// #header -->
 <!-- #common-menu -->
@@ -90,7 +99,7 @@
         </button>
     </div>
     <div class="section-cont fe-menu-section" id="fe-menu-area">
-        <div class="section-search none">
+        <div class="section-search">
             <span class="inputbox">
                 <span class="input">
                     <input id="fe-search-input" type="text" placeholder="업무 검색 (예: 무료문자)" title="업무 검색 페이지로 이동" value=""
@@ -164,7 +173,7 @@
 
     <div class="fe-search-section none">
         <div class="cont-box nogaps-hoz">
-            <h3 class="searchlist-title">T월드에서 가장 많이 찾는 업무</h3>
+            <h3 class="searchlist-title">T world에서 가장 많이 찾는 업무</h3>
             <ul class="popularsearchword-list">
                 <!-- <li> -->
                 <!-- <a href="" class="category-type"> -->
@@ -188,7 +197,7 @@
                     {{#if loginNeed}}
                     <button class="bt fe-bt-login">
                     {{else if isLink}}
-                    <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>
+                    <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">
                     {{else}}
                     <button class="bt">
                     {{/if}}
@@ -219,7 +228,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -228,7 +237,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
                         {{/if}}
                     </ul>
                     {{/if}}
@@ -241,7 +250,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -262,7 +271,7 @@
                         {{#if loginNeed}}
                         <button class="bt fe-bt-login">
                             {{else if isLink}}
-                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">
                                 {{else}}
                                 <button class="bt">
                                     {{/if}}
@@ -290,7 +299,7 @@
                             {{#if loginNeed}}
                             <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                             {{else}}
-                            <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}}>{{menuNm}}</button></li>
+                            <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
                             {{/if}}
                             {{/each}}
                         <ul>

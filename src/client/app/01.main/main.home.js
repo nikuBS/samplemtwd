@@ -90,9 +90,9 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
   },
   _bindEvent: function () {
-    this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
+    this.$container.find('#fe-membership-extend').click(_.debounce($.proxy(this._onClickBarcode, this), 500));
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
-    this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+    // this.$container.find('.fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this),500));
     this.$container.find('.fe-bt-line').click(_.debounce($.proxy(this._onClickLine, this), 500));
     this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 500));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
@@ -129,8 +129,9 @@ Tw.MainHome.prototype = {
     $event.stopPropagation();
   },
   _onClickLine: function ($event) {
+    var $target = $($event.currentTarget);
     // var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
-    this._lineComponent.onClickLine(this._svcMgmtNum);
+    this._lineComponent.onClickLine(this._svcMgmtNum, $target);
   },
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
@@ -410,7 +411,7 @@ Tw.MainHome.prototype = {
       element.html(tplBillCard(result));
       element.removeClass('empty');
       element.addClass('nogaps');
-      element.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
+      element.find('#fe-bt-payment').click(_.debounce($.proxy(this._onClickPayment, this), 500));
     } else {
       element.hide();
     }
@@ -640,7 +641,7 @@ Tw.MainHome.prototype = {
       element.html(tplRechargeCard(this._parseRechargeData(resp)));
       element.removeClass('empty');
       element.addClass('nogaps');
-      element.on('click', '#fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+      element.find('#fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this), 500));
     }
     this._resetHeight();
   },
@@ -928,12 +929,19 @@ Tw.MainHome.prototype = {
     if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
-      $quickMenuEl.html(tplQuick({ list: list, enableEdit: quickMenu.enableEdit === 'Y' }));
+      $quickMenuEl.html(tplQuick({
+        list: list,
+        enableEdit: quickMenu.enableEdit === 'Y',
+        quick_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-22' : 'MWMA_A2_B6-160',
+        edit_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-23' : 'MWMA_A2_B6-161'
+      }));
     } else {
       if ( isLogin ) {
         var $quickEmptyTemp = $('#fe-home-quick-empty');
         var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
-        $quickMenuEl.html(tplQuickEmpty());
+        $quickMenuEl.html(tplQuickEmpty({
+          edit_xt_eid: Tw.BrowserHelper.isApp() ? 'CMMA_A2_B6-23' : 'MWMA_A2_B6-161'
+        }));
       }
     }
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this, list));

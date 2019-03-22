@@ -714,7 +714,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   // { TODO: 공효원M 요청사항 (2019.02.15) 해당 메뉴 비노출 요청
-  //   title: 'T월드 다이렉트',
+  //   title: 'T world 다이렉트',
   //   category: 'DIRECT',
   //   list: [
   //     { title: '휴대폰 구매', ofrCtgSeq: '07' },
@@ -737,7 +737,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
-  { title: '휴대폰/와이브로', category: 'cell' },
+  { title: '휴대폰', category: 'cell' },
   { title: '인터넷/집전화/IPTV', category: 'internet' }
 ];
 
@@ -748,8 +748,8 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
       { text: '음성통화 불량(HD Voice 포함)' },
       { text: '영상통화 불량' },
       { text: '부가서비스 불량' },
-      { text: '데이터 불량' },
-      { text: '와이브로 품질장애/고장' }
+      { text: '데이터 불량' }
+      // { text: '와이브로 품질장애/고장' }
     ]
   },
   Q_TYPE02: {

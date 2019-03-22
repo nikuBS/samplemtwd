@@ -59,6 +59,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
     this._desciptionInit();
   },
+  /**
+   * 휴대폰 선택 case별 상/하단 안내 메시지
+   */
   _desciptionInit: function () {
       if(this._svcInfo !== null){
           if(this._svcInfo.totalSvcCnt > 1 ){
@@ -104,6 +107,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
     this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));
   },
+  /**
+   * 휴대폰 선택
+   */
   _onSelectModel: function () {
       if(this.cdValue === undefined || this.cdValue === ''){
           return;
@@ -149,6 +155,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
           .fail($.proxy(this._handleFailSearch, this));
     }
   },
+  /**
+   * 휴대폰 변경 버튼 선택 시 휴대폰 정보 초기화
+   */
   _onChangeModel: function () {
     this._phoneInfo.eqpMdlNm = '';
     this._phoneInfo.eqpMdlCd = '';
@@ -161,8 +170,10 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
     this._desciptionInit();
   },
+  /**
+   * 국가 검색
+   */
   _handleSuccessSearchResult : function (resp) {
-
       var _result = resp.result;
       if ( resp.code === Tw.API_CODE.CODE_00 ) {
           var alertMsg = this.keyword + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.MSG;
@@ -311,6 +322,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
   _closeActionPopup : function () {
   },
+  /**
+   * 국가별 로밍 요금조회 결과 화면으로 이동
+   */
   _goLoadSearchResult: function ($layer, e) {
       var target = $(e.currentTarget);
       var optValue = target.attr('data-value');

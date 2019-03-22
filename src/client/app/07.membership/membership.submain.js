@@ -50,6 +50,10 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-membership-location', $.proxy(this._selectLocationAgreement, this));
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
   },
+  /**
+   * 내주변 제휴 브랜드 위치 선택 시
+   * 위치동의 여부 확인
+   */
   _selectLocationAgreement:function () {
     if(this._svcInfo) {
       if(this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY){
@@ -62,7 +66,10 @@ Tw.MembershipSubmain.prototype = {
                 } else {
                   this._showAgreementPopup();
                 }
-              } else {
+              } else if (res.code === Tw.API_CODE.BFF_0006 || res.code === Tw.API_CODE.BFF_0007) {
+                this.$container.find('.fe-near-brand').hide();
+              }
+              else {
                 Tw.Error(res.code, res.msg).pop();
               }
             }, this))
@@ -77,6 +84,10 @@ Tw.MembershipSubmain.prototype = {
       this._goLogin();
     }
   },
+  /**
+   * 위치 동의 여부 확인 후
+   * 현재 위치 요청
+   */
   _checkLocationAgreement:function () {
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
@@ -106,6 +117,9 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
+  /**
+   * 혜택바로가기 > T Day
+   */
   _selectTday: function(e) {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
@@ -117,6 +131,9 @@ Tw.MembershipSubmain.prototype = {
       this._goTday();
     }
   },
+  /**
+   * 혜택바로가기 > 초콜릿
+   */
   _selectChocolate: function (e) {
     if (Tw.BrowserHelper.isApp()) {
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
@@ -128,13 +145,23 @@ Tw.MembershipSubmain.prototype = {
       this._goChocolate();
     }
   },
+  /**
+   * T Day 링크 이동
+   */
   _goTday: function () {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
+  /**
+   * 로그인페이지 이동
+   */
   _goLogin: function () {
     this._tidLanding.goLogin();
   },
+  /**
+   * 위치 정보 이용 동의 여부 'N'일 경우
+   * 위치 정보 이용 동의 팝업 호출
+   */
   _showAgreementPopup: function () {
     this._popupService.open({
           ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
@@ -169,6 +196,10 @@ Tw.MembershipSubmain.prototype = {
         }, this)
     );
   },
+  /**
+   * 멤버십 서브메인 및 멤버십 바코드 팝업
+   * Tos 배너 정보요청.
+   */
   _getMembershipBanner: function (){
     this._apiService.requestArray([
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
@@ -220,6 +251,10 @@ Tw.MembershipSubmain.prototype = {
       }, this));
     }
   },
+  /**
+   * Tos 배너 정보 없는 경우
+   * Redis 배너 정보 요청
+   */
   _getAdminBanner: function (adminList) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
         .done($.proxy(this._successAdminBanner, this, adminList));
@@ -238,6 +273,9 @@ Tw.MembershipSubmain.prototype = {
     }
     return false;
   },
+  /**
+   * 나의 멤버십 화면으로 이동
+   */
   _goMyMembership: function() {
     this._historyService.goLoad('/membership/my');
   },
@@ -265,6 +303,9 @@ Tw.MembershipSubmain.prototype = {
     };
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
+  /**
+   * 초콜릿 링크 이동
+   */
   _goChocolate: function () {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.CHOCOLATE,'');
@@ -275,6 +316,9 @@ Tw.MembershipSubmain.prototype = {
   _goMembershipGrade: function () {
     this._historyService.goLoad('/membership/membership_info/mbrs_0001');
   },
+  /**
+   * 제휴 브랜드 화면으로 이동
+   */
   _goBenefitBrand: function () {
     this._historyService.goLoad('/membership/benefit/brand');
   },
@@ -285,38 +329,44 @@ Tw.MembershipSubmain.prototype = {
       this._askCurrentLocation();
     }
   },
+  /**
+   * 현재 사용자 위치 정보 요청
+   */
   _askCurrentLocation: function() {
     Tw.Logger.info('[_askCurrentLocation]');
     if(this._svcInfo){
       if (Tw.BrowserHelper.isApp()){
-        this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-          if (res.resultCode === Tw.NTV_CODE.CODE_00 ) {
-            this._getAreaByGeo(res.params);
-          } else {
-            var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-                $.proxy(function () {
-                  this._getAreaByGeo({
-                    latitude: '37.5600420',
-                    longitude: '126.9858500'
-                  });
-                }, this));
+        // 기기 gps에 문제가 있는 경우 native에서 리턴없으므로 자체적으로 처리 (DV001-13593)
+        this._getCurrentLocationTimeout = setTimeout($.proxy(function(){
+          if(this._getCurrentLocationTimeout){
+            this._getCurrentLocationTimeout = null;
+            this._getAreaByGeo({
+              latitude: '37.5600420',
+              longitude: '126.9858500'
+            });
           }
-        }, this));
+        }, this), 2000);
+        this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function(result){
+              this._getCurrentLocationTimeout = null;
+              if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
+                this._getAreaByGeo(result.params);
+              } else {
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
+              }
+            }, this));
       } else {
         if ('geolocation' in navigator) {
           // Only works in secure mode(Https) - for test, use localhost for url
           var geoOptions = {timeout: 1000};
           navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this), geoOptions);
         } else {
-          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-              $.proxy(function () {
-                this._getAreaByGeo({
-                  latitude: '37.5600420',
-                  longitude: '126.9858500'
-                });
-              }, this));
+          this._getAreaByGeo({
+            latitude: '37.5600420',
+            longitude: '126.9858500'
+          });
         }
       }
     } else {
@@ -326,20 +376,25 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
+  /**
+   * 현재 사용자 위치 정보 요청 실패한 경우,
+   * 서울 중구를 기본값으로 지역정보 요청.
+   */
   _failGeolocation: function (resp) {
     Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
     setTimeout($.proxy(this._openFailNoticePopup, this), 500);
   },
   _openFailNoticePopup: function () {
-    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-        $.proxy(function () {
-          this._getAreaByGeo({
-            latitude: '37.5600420',
-            longitude: '126.9858500'
-          });
-        }, this));
+    this._getAreaByGeo({
+      latitude: '37.5600420',
+      longitude: '126.9858500'
+    });
   },
+  /**
+   * 현재 사용자 위치 정보 요청 성공한 경우,
+   * 현재 위치의 지역정보 요청.
+   * @param location
+   */
   _successGeolocation: function (location) {
     Tw.Logger.info('_success geolocation getCurrentPosition');
     this._getAreaByGeo({
@@ -347,6 +402,10 @@ Tw.MembershipSubmain.prototype = {
       latitude: location.coords.latitude
     });
   },
+  /**
+   * 사용자 위치의 지역정보 요청
+   * @param location
+   */
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
     this.currentLocation = {
@@ -372,17 +431,20 @@ Tw.MembershipSubmain.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_11_0025, this.currentLocation)
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
-    } else {
-      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-          $.proxy(function () {
-            this._getAreaByGeo({
-              latitude: '37.5600420',
-              longitude: '126.9858500'
-            });
-          }, this));
+    } else if (resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007) {
+      this.$container.find('.fe-near-brand').hide();
+    }
+    else {
+      this._getAreaByGeo({
+        latitude: '37.5600420',
+        longitude: '126.9858500'
+      });
     }
   },
+  /**
+   * 내 주변 제휴브랜드 등급별 혜택 아이콘 정렬
+   * @param ico
+   */
   _changeIcoGrade: function(ico) {
     var iconGrade = ico.split('');
     var iconArr = [];
@@ -391,6 +453,9 @@ Tw.MembershipSubmain.prototype = {
     }
     return iconArr;
   },
+  /**
+   * 내 주변 제휴브랜드 노출
+   */
   _handleSuccessNeaBrand: function (resp) {
     Tw.Logger.info('near brand resp :', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -410,20 +475,22 @@ Tw.MembershipSubmain.prototype = {
         this.$nearBrand.append(this._noBrandTmpl());
       }
 
-    } else {
-      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-          $.proxy(function () {
-            this._getAreaByGeo({
-              latitude: '37.5600420',
-              longitude: '126.9858500'
-            });
-          }, this));
+    } else if (resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007) {
+      this.$container.find('.fe-near-brand').hide();
+    }
+    else {
+      this._getAreaByGeo({
+        latitude: '37.5600420',
+        longitude: '126.9858500'
+      });
     }
   },
   _handleFailCallBack: function () {
 
   },
+  /**
+   * 멤버십 바코드 팝업 호출
+   */
   _showBarCodePopup : function (event) {
     var cardNum = this.$container.find('#fe-barcode-img').data('cardnum');
     this._mbrGrStr = this._membershipData.mbrGrStr;
@@ -443,6 +510,11 @@ Tw.MembershipSubmain.prototype = {
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum), null, null,  $(event.currentTarget));
   },
+  /**
+   * 멤버십 바코드 생성 및 배너 그리기
+   * @param cardNum
+   * @param $popupContainer
+   */
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {

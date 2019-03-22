@@ -388,7 +388,8 @@ class LoginService {
 
   public isGreen(): string {
     const dns = this.getDns();
-    if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {
+
+    if ( dns === EnvHelper.getEnvironment('DOMAIN_GAPP') || dns === EnvHelper.getEnvironment('DOMAIN_GWEB') ) {
       return BUILD_TYPE.GREEN;
     }
     return '';

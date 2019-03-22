@@ -165,14 +165,15 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _checkPasswordLength: function ($target) {
     return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH);
   },
-  _setPassword: function () {
+  _setPassword: function (e) {
+    var $target = $(e.currentTarget);
     if (this.$isValid) {
       var apiName = this._getApiName();
       var reqData = this._makeRequestData();
 
       this._apiService.request(apiName, reqData)
-        .done($.proxy(this._success, this))
-        .fail($.proxy(this._fail, this));
+        .done($.proxy(this._success, this, $target))
+        .fail($.proxy(this._fail, this, $target));
     }
   },
   _getApiName: function () {
@@ -196,19 +197,19 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     
     return reqData;
   },
-  _success: function (res) {
+  _success: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.customerInfo.resultCd === 'VS000') {
         this._setNewPasswordData();
       } else {
-        this._popupService.openAlert(res.result.returnMessage);
+        Tw.Error('', res.result.returnMessage).pop(null, $target);
       }
     } else {
-      this._fail(res);
+      this._fail($target, res);
     }
   },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+  _fail: function ($target, err) {
+    Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _setNewPasswordData: function () {
     var message = '';
