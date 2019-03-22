@@ -170,7 +170,7 @@ export const API_CMD = {
     path: '/core-product/:version/services/wireless/addition/:args0',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_05_0044: { path: '/core-bill/:version/bill-pay/roaming', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0045: { path: '/core-bill/:version/bill-pay/call-gift', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

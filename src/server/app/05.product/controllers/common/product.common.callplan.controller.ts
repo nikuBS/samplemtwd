@@ -355,12 +355,13 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm) || item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
+      if (FormatHelper.isEmpty(item.titleNm) || FormatHelper.isEmpty(item.ledItmDesc) ||
+        item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
         return true;
       }
 
       if (!item || item.vslYn === 'N') {
-        item.ledItmDesc = item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        item.ledItmDesc = FormatHelper.isEmpty(item.ledItmDesc) ? '' : item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
       }
 
       contentsResult.LIST.push(Object.assign(item, {
@@ -768,10 +769,11 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     if (this._benefitRedirectProdList.indexOf(prodId) !== -1) {
-      return res.render('common/callplan/product.common.callplan.redirect.html', {
+      return res.render('common/callplan/product.common.callplan.redirect.html', Object.assign(renderCommonInfo, {
         redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId],
+        svcMgmtNum: svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '',
         prodId: prodId
-      });
+      }));
     }
 
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
