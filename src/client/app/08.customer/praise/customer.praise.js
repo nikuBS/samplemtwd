@@ -38,6 +38,8 @@ Tw.CustomerPraise.prototype = {
     this.$reasons.on('keyup input', $.proxy(this._handleTypeReasons, this));
     this.$area.on('click', $.proxy(this._openSelectAreaPopup, this));
     this.$submitBtn.on('click', $.proxy(this._handleSubmit, this));
+
+    new Tw.InputFocusService(this.$container, this.$submitBtn);
   },
 
   _cachedElement: function() {
