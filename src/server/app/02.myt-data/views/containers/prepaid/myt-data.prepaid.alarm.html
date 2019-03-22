@@ -145,28 +145,28 @@
                 </div>
                 <!--// .cont-box -->
 
-                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <% if ( alarmInfo ) { %>
-                            <% if ( alarmInfo.typeCd === '0' ) { %>
-                            <li class="bt-red1">
-                                <button class="fe-setting-alarm" disabled="disabled">설정하기</button>
-                            </li>
-                            <% } else { %>
-                            <li class="bt-red1">
-                                <button class="fe-setting-alarm" disabled="disabled">변경하기</button>
-                            </li>
-                            <% } %>
-                        <% } else { %>
+            </div>
+            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <% if ( alarmInfo ) { %>
+                        <% if ( alarmInfo.typeCd === '0' ) { %>
                         <li class="bt-red1">
                             <button class="fe-setting-alarm" disabled="disabled">설정하기</button>
                         </li>
+                        <% } else { %>
+                        <li class="bt-red1">
+                            <button class="fe-setting-alarm" disabled="disabled">변경하기</button>
+                        </li>
                         <% } %>
-                    </ul>
-                </div>
-                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <% } else { %>
+                    <li class="bt-red1">
+                        <button class="fe-setting-alarm" disabled="disabled">설정하기</button>
+                    </li>
+                    <% } %>
+                </ul>
             </div>
+            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
         </div>
         <!-- // .container-wrap -->
         <!-- .popup-closeBtn -->

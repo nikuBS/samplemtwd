@@ -1,31 +1,34 @@
-<div class="popup-page tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-  <!-- #header -->
-  <div class="header-wrap">
-    <div class="page-header">
-      <div class="header-ti">
-        <h1>{{data.title}}</h1>
-      </div>
+<div class="popup-page tw-popup fixed-bottom">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{data.title}}</h1>
+            </div>
+        </div>
     </div>
-  </div>
-  <!--// #header -->
-  <!-- .container-wrap -->
-  <div class="container-wrap">
-    <h2 class="blind">내용</h2>
-    <div class="container">
-      <!-- .pop-tc -->
-      <div class="pop-tc plm">
-        {{{data.html}}}
-      </div>
-      <!-- // .pop-tc -->
-      <ul class="bt-slice full">
-        <li class="bt-red1">
-          <button class="fe-btn_ok">확인</button>
-        </li>
-      </ul>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .pop-tc -->
+            <div class="pop-tc plm">
+                {{{data.html}}}
+            </div>
+            <!-- // .pop-tc -->
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="fe-btn_ok">확인</button>
+                </li>
+            </ul>
+        </div>
     </div>
-  </div>
-  <!--// .container-wrap -->
-  <!-- .popup-closeBtn -->
-  <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
-  <!--// .popup-closeBtn -->
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
 </div>

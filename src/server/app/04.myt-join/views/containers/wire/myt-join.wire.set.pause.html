@@ -102,17 +102,17 @@
                     </ul>
                 </div>
 
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
-                            <button class="fe-btn-submit" disabled>일시정지 신청</button>
-                            <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
-                            <button class="fe-btn-submit">일시정지 해제</button>
-                            <% } %>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
+                        <button class="fe-btn-submit" disabled>일시정지 신청</button>
+                        <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
+                        <button class="fe-btn-submit">일시정지 해제</button>
+                        <% } %>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- // .container-wrap -->
