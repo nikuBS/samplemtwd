@@ -31,7 +31,7 @@
                             <span class="card-name">&#40;Leaders Club&#41; 카드</span>
                             <button class="ico-noti-bgw" aria-haspopup="true" data-popup-id="BE_04_01_L02">이용안내</button>
                             <span class="card-name2">생활 실속형 카드</span>
-                            <% if(!data.isLogin || (data.isLogin && svcInfo.loginType === 'T' && svcInfo.svcGr !== '' && data.mbrGrCd === '' )) { %>
+                            <%if(data.isJoinAble){%>
                                 <button id="fe-req-join" class="application">가입하기</button>
                             <%}%>
                         </div>

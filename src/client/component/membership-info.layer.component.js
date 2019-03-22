@@ -19,34 +19,10 @@ Tw.MembershipInfoLayerPopup = function ($element, svcInfo) {
 Tw.MembershipInfoLayerPopup.prototype = {
   open: function (hbs) {
     // BE_04_01_L01, BE_04_01_L02, BE_04_01_L03
-    this._hbs = hbs;
-    var option = {
-      hbs: this._hbs,// hbs의 파일명
+    this._popupService.open({
+      hbs: hbs,// hbs의 파일명
       layer: true
-    };
-    if ( this._hbs === 'BE_04_01_L01' ) {
-      option.data = {
-        tpleUrl: Tw.OUTLINK.TPLECARD_BENEFIT,
-        coupleUrl: Tw.OUTLINK.COUPLECARD_BENEFIT
-      };
-    }
-    this._popupService.open(option, $.proxy(this._openCallback, this), $.proxy(this._closeCallback, this), this._hbs);
-  },
-
-  _openCallback: function ($element) {
-    if ( this._hbs === 'BE_04_01_L02' ) {
-      $element.find('button[data-id=join]').off().on('click', $.proxy(this.onClickJoinBtn, this));
-    }
-    else if ( this._hbs === 'BE_04_01_L01' ) {
-      $element.find('.fe-outlink').off().on('click', $.proxy(this._openExternalUrl,this));
-    }
-  },
-
-  _openExternalUrl : function (e) {
-    e.preventDefault();
-    var _url = $(e.currentTarget).attr('href');
-    this._popupService.close();
-    Tw.CommonHelper.openUrlExternal(_url);
+    }, null, $.proxy(this._closeCallback, this), hbs);
   },
 
   // 가입 가능여부 조회 요청

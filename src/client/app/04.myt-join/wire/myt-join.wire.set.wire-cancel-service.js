@@ -113,7 +113,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
-    this._history.goLoad('/myt-join/submain_w');
+    this._history.goLoad('/myt-join/submain');
 
     //if($('input[name=checkbox-conf-info]:checked').length > 0 ||
     //  this.productLi.find('input[type=checkbox]:checked').length > 0 ||
@@ -124,7 +124,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
     //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
     //    $.proxy(function(){
-    //      this._history.goLoad('/myt-join/submain_w');
+    //      this._history.goLoad('/myt-join/submain');
     //    }, this),
     //    null,
     //    Tw.BUTTON_LABEL.NO,
@@ -665,19 +665,19 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       this.cancelFeeInfo = res.result;
 
-      // this._popupService.afterRequestSuccess('/myt-join/submain_w', '/myt-join/submain_w', null,
+      // this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null,
       //   Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
 
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
       //   $.proxy(function(){
-      //     this._goLoad('/myt-join/submain_w');
+      //     this._goLoad('/myt-join/submain');
       //   }, this));
 
 
       this._goCompletePage({
         compPage: '/myt-join/submain/wire/cancelsvc/complete',
         mainTxt: Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE,
-        confirmMovPage: '/myt-join/submain_w'
+        confirmMovPage: '/myt-join/submain'
       });
 
     } else {

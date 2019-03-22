@@ -63,7 +63,7 @@ Tw.MyTJoinWireSetWireCancelServiceInfo.prototype = {
         }
 
         // 완료처리 서브메인으로 이동
-        this._historyService.goLoad('/myt-join/submain_w');
+        this._historyService.goLoad('/myt-join/submain');
 
       }, this))
       .fail(function(err){
