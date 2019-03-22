@@ -70,15 +70,15 @@ function recognizeLastChar(keyword){
     </div>
 
     <hr class="cont-sp type1" aria-hidden="true">
-
+    <% if(surveyList.code==='00'){ %>
     <div class="cont-box nogaps-btm">
         <p class="opinion-text">찾는 답이 없다면 T world에 의견을 주세요.<br>고객님의 말씀을 귀담아 듣고 있습니다.</p>
         <ul class="searchapplication-list">
-            <% for(var i=0;i<surveyList.invstQstnInqItm.length;i++){ %>
-            <li class="opinion-selectbox" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">
-                <p class="text"><%= surveyList.invstQstnInqItm[i].title %></p>
+            <% for(var i=0;i<surveyList.result.invstQstnInqItm.length;i++){ %>
+            <li class="opinion-selectbox" data-type="<%= surveyList.result.invstQstnInqItm[i].srchId %>">
+                <p class="text"><%= surveyList.result.invstQstnInqItm[i].title %></p>
                 <div class="btn">
-                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>"><%= i==0? '입력하기' : '신청하기'%></button>
+                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.result.invstQstnInqItm[i].srchId %>"><%= i==0? '입력하기' : '신청하기'%></button>
                 </div>
             </li>
             <% } %>
@@ -86,6 +86,7 @@ function recognizeLastChar(keyword){
     </div>
 
     <hr class="cont-sp type1" aria-hidden="true">
+    <% } %>
 
     <div class="cont-box nogaps-hoz">
         <div class="rec-list">

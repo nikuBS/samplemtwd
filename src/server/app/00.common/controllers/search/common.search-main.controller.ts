@@ -24,22 +24,21 @@ class CommonSearchMain extends TwViewController {
       this.apiService.request(API_CMD.BFF_08_0068, { mblOsTypCd : nowOsType }, {}),
       this.apiService.request(API_CMD.BFF_08_0069, { mblOsTypCd : nowOsType }, {})
     ).subscribe(([ popularKeyword, recommendKeyword , smartKeyword]) => {
-      if (popularKeyword.code !== 0 || recommendKeyword.code !== API_CODE.CODE_00 || smartKeyword.code !== API_CODE.CODE_00 ) {
+      if ( popularKeyword.code !== 0 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
-          code: popularKeyword.code !== 0 ? popularKeyword.code :
-            recommendKeyword.code !== API_CODE.CODE_00 ? recommendKeyword.code : smartKeyword.code,
-          msg: popularKeyword.code !== 0 ? popularKeyword.msg :
-            recommendKeyword.code !== API_CODE.CODE_00 ? recommendKeyword.msg : smartKeyword.msg
+          code: popularKeyword.code,
+          msg: popularKeyword.msg
         });
       }
+
       res.render('search/common.search-main.html', {
         svcInfo : svcInfo,
         pageInfo: pageInfo,
         popularKeyword : popularKeyword,
-        recommendKeyword : recommendKeyword.result,
-        smartKeyword : smartKeyword.result,
+        recommendKeyword : recommendKeyword,
+        smartKeyword : smartKeyword,
         step : step
       });
     });

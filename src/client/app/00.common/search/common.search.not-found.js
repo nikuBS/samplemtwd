@@ -73,7 +73,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._popupService.open({
       hbs: 'HO_05_02_02_01_02',
       layer: true,
-      data: this._surveyList.invstQstnAnswItm
+      data: this._surveyList.result.invstQstnAnswItm
     }, $.proxy(this._bindEventForSelectClaim, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
       $.proxy(this._removeInputDisabled,this), 'selectClaim',$(evt.currentTarget));
