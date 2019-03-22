@@ -107,7 +107,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _getCardInfo: function () {
+  _getCardInfo: function (param, e) {
     var cardNumber = $('.fe-card-number');
 
     var isValid = this._validation.checkMoreLength(cardNumber, 15);
@@ -118,13 +118,19 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       };
 
       this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
-        .done($.proxy(this._getCardCode, this));
+        .done($.proxy(this._getCardCode, this, param, e));
     }
   },
 
-  _getCardCode: function (res) {
+  _getCardCode: function (htParams, e, res) {
     var cardNumber = $('.fe-card-number');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      if (!Tw.FormatHelper.isEmpty(htParams)) {
+        Tw.CommonHelper.startLoading('.popup-page', 'grey');
+        this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
+          .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
+          .fail($.proxy(this._fail, this, $(e.currentTarget)));
+      }
     } else {
       var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
       $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
@@ -316,27 +322,32 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _requestRechargeAuto: function (e) {
-    if ( this.chargeCd || this.amt ) {
-      var htParams = {
-        amt: $('.fe-select-amount').attr('data-amount'),
-        chargeCd: this.chargeCd,
-        endDt: $('.fe-select-expire').val().replace(/-/g, ''),
-        cardNum: $('.fe-card-number').val(),
-        expireYY: $('.fe-card-y').val().substr(2,2),
-        expireMM: $('.fe-card-m').val(),
-        maskedYn: ''
-      };
+    var isValid = this._validation.checkMoreLength($('.fe-card-number'), 15) &&
+      this._validation.checkLength($('.fe-card-y').val(), 4) &&
+      this._validation.checkLength($('.fe-card-m').val(), 2) &&
+      this._validation.checkYear($('.fe-card-y')) &&
+      this._validation.checkMonth($('.fe-card-m'), $('.fe-card-y'));
 
-      if ($('.fe-hidden').val() !== '') {
-        if ($.trim($('.fe-card-number').val()) === $('.fe-hidden').val()) {
-          htParams.maskedYn = 'Y';
+    if (isValid) {
+      if (this.chargeCd || this.amt) {
+        var htParams = {
+          amt: $('.fe-select-amount').attr('data-amount'),
+          chargeCd: this.chargeCd,
+          endDt: $('.fe-select-expire').val().replace(/-/g, ''),
+          cardNum: $('.fe-card-number').val(),
+          expireYY: $('.fe-card-y').val().substr(2, 2),
+          expireMM: $('.fe-card-m').val(),
+          maskedYn: ''
+        };
+
+        if ($('.fe-hidden').val() !== '') {
+          if ($.trim($('.fe-card-number').val()) === $('.fe-hidden').val()) {
+            htParams.maskedYn = 'Y';
+          }
         }
-      }
 
-      Tw.CommonHelper.startLoading('.popup-page', 'grey');
-      this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
-        .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
-        .fail($.proxy(this._fail, this, $(e.currentTarget)));
+        this._getCardInfo(htParams, e);
+      }
     }
   },
 
