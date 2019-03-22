@@ -24,7 +24,7 @@ Tw.CustomerEmailQualityRetry.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-quality_register', $.proxy(this._retry_inquiry, this));
+    this.$container.on('click', '.fe-quality-register', $.proxy(this._retry_inquiry, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
@@ -84,9 +84,9 @@ Tw.CustomerEmailQualityRetry.prototype = {
     });
 
     if ( arrValid.indexOf(false) === -1 ) {
-      $('.fe-quality_register').prop('disabled', false);
+      $('.fe-quality-register').prop('disabled', false);
     } else {
-      $('.fe-quality_register').prop('disabled', true);
+      $('.fe-quality-register').prop('disabled', true);
     }
   },
 
