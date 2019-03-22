@@ -40,10 +40,7 @@ Tw.CommonSearch.prototype = {
     for(var i=0;i<this._searchInfo.search.length;i++){
       keyName =  Object.keys(this._searchInfo.search[i])[0];
       contentsCnt = Number(this._searchInfo.search[i][keyName].count);
-      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
-        if(contentsCnt<=0){
-          this.$container.find('.'+keyName).addClass('none');
-        }
+      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'){
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
@@ -155,6 +152,7 @@ Tw.CommonSearch.prototype = {
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
       $list.addClass('none');
+      this.$container.find('.'+dataKey).addClass('none');
     }
     _.each(data,$.proxy(function (listData,index) {
       if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
@@ -273,8 +271,8 @@ Tw.CommonSearch.prototype = {
         {
           'docId' : $linkData.data('id'),
           'section' : $linkData.data('category'),
-          'title' : encodeURI($linkData.data('tit')),
-          'keyword' : encodeURI(this._searchInfo.researchQuery)
+          'title' : encodeURIComponent($linkData.data('tit')),
+          'keyword' : encodeURIComponent(this._searchInfo.researchQuery)
         }
       );
     }
@@ -411,7 +409,7 @@ Tw.CommonSearch.prototype = {
     if(!this.$keywordListBase.find('#recently_keyword_layer').hasClass('none')){
       this.$keywordListBase.find('#recently_keyword_layer').addClass('none');
     }
-    var requestParam = { query : encodeURI(keyword) };
+    var requestParam = { query : encodeURIComponent(keyword) };
     this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         if(res.code===0){
@@ -449,7 +447,7 @@ Tw.CommonSearch.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="keyword-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(this._escapeChar(keyword),'g'),'<span class="keyword-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }
@@ -623,5 +621,8 @@ Tw.CommonSearch.prototype = {
 
       Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
     }
+  },
+  _escapeChar : function (string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 };
