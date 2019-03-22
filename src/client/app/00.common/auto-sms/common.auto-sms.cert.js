@@ -70,6 +70,7 @@ Tw.CommonAutoSmsCert.prototype = {
 
     this.$container.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
     this.$container.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    this.$container.on('click', '.fe-bt-biz-delete', $.proxy(this._onInputBiz, this));
 
     new Tw.InputFocusService(this.$container, this.$btConfirm);
   },
@@ -78,8 +79,12 @@ Tw.CommonAutoSmsCert.prototype = {
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
+      this.$btReCert.attr('disabled', false);
+      this.$btCert.parent().removeClass('disabled');
     } else {
       this.$btCert.attr('disabled', true);
+      this.$btReCert.attr('disabled', true);
+      this.$btCert.parent().addClass('disabled');
     }
     this._checkEnableConfirmButton();
   },
@@ -210,6 +215,7 @@ Tw.CommonAutoSmsCert.prototype = {
     this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$btCertAdd.attr('disabled', false);
+      this.$btCertAdd.parent().removeClass('disabled');
       this.certSeq = resp.result.seqNo;
       if ( !reCert ) {
         this.$btCert.addClass('none');

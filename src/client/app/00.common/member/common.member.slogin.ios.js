@@ -154,8 +154,10 @@ Tw.CommonMemberSloginIos.prototype = {
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
+      this.$btReCert.attr('disabled', false);
     } else {
       this.$btCert.attr('disabled', true);
+      this.$btReCert.attr('disabled', true);
     }
     this._checkEnableConfirmButton();
   },

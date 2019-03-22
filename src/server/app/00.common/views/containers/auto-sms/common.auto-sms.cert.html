@@ -35,11 +35,13 @@
                 <p class="rg-br-privacy-desc">개인정보 보호를 위해<br /><strong>본인확인</strong>이 필요합니다.</p>
                 <!-- .widget -->
                 <div class="rg-br-widget rg-br-id-check">
-                    <div class="widget-box tube">
-                        <ul class="rg-br-tube-list two" role="radiogroup">
-                            <li class="checked" role="radio" aria-checked="true"><input class="fe-radio-type" type="radio" name="category" value="1" checked="" title="일반">일반</li>
-                            <li role="radio" aria-checked="false"><input class="fe-radio-type" type="radio" name="category" value="2" title="법인">법인</li>
-                        </ul>
+                    <div class="widget-box tube widget"><!-- widget 클래스 추가 -->
+                        <div class="widget-box radio"><!-- widget-box radio 클래스 생성 -->
+                            <ul class="rg-br-tube-list two" role="radiogroup">
+                                <li class="radiobox checked" role="radio" aria-checked="true"><input class="fe-radio-type" type="radio" name="category" value="1" checked="" title="일반">일반</li><!-- li.radiobox 클래스 생성 -->
+                                <li class="radiobox" role="radio" aria-checked="false"><input class="fe-radio-type" type="radio" name="category" value="2" title="법인">법인</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <!-- //.widget -->
@@ -47,40 +49,50 @@
                     <h3 id="fe-txt-customer" class="rg-br-blind">생년월일 입력</h3>
                     <h3 id="fe-txt-biz" class="rg-br-blind none">법인번등록호 입력</h3>
                     <div class="rg-br-contents-formbox">
-                        <div id="fe-cont-customer" class="rg-br-inputbox rg-br-personal-info">
+                        <div id="fe-cont-customer" class="rg-br-inputbox rg-br-personal-info inputbox">
                             <span class="rg-br-input" aria-labelledby="birthday" aria-describedby="birthday">
-                                <span class="rg-br-input-cell birth-info-1"><input id="fe-input-birth-y" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" class="width-1" placeholder="생일년도(4자리)" title="생년월일 년도(4자리)"></span>
-                                <span class="rg-br-input-cell birth-info-2"><input id="fe-input-birth-m" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" class="width-2" placeholder="월" title="생년월일 월"></span>
-                                <span class="rg-br-input-cell birth-info-2"><input id="fe-input-birth-d" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" class="width-3" placeholder="일" title="생년월일 일"></span>
+                                <span class="rg-br-input-cell birth-info-1 input">
+                                    <input id="fe-input-birth-y" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" class="width-1" placeholder="생일년도(4자리)" title="생년월일 년도(4자리)">
+                                    <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="rg-br-input-cell birth-info-2 input">
+                                    <input id="fe-input-birth-m" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" class="width-2" placeholder="월" title="생년월일 월">
+                                    <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="rg-br-input-cell birth-info-2 input">
+                                    <input id="fe-input-birth-d" type="tel" inputmode="numeric" min="0" pattern="ce0-9]*" class="width-3" placeholder="일" title="생년월일 일">
+                                    <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                </span>
                             </span>
                             <span class="rg-br-my-notice" id="birthday">
                                 <span id="fe-birth-error" class="noti-type1 none">생년월일을 입력해주세요.</span>
                             </span>
                         </div>
-                        <div id="fe-cont-biz" class="rg-br-inputbox rg-br-personal-info none">
-                            <span class="rg-br-input">
+                        <div id="fe-cont-biz" class="rg-br-inputbox rg-br-personal-info inputbox none">
+                            <span class="rg-br-input input">
                                 <input id="fe-input-biz" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="법인등록번호" title="법인등록번호" value="" aria-labelledby="exp-label1" aria-describedby="company">
+                                <button href="javascript:void(0)" class="cancel fe-bt-biz-delete"><span class="blind">삭제</span></button>
                             </span>
                             <span class="rg-br-my-notice" id="company">
                                 <span id="fe-biz-error" class="noti-type1 none">법인등록번호를 입력해주세요.</span>
                             </span>
                         </div>
-                        <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info">
-                            <span class="rg-br-input">
+                        <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info inputbox">
+                            <span class="rg-br-input input">
                                 <input id="fe-input-mdn" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="휴대폰 번호" title="휴대폰 번호 입력" aria-describedby="cellphone">
                                 <button href="javascript:void(0)" class="cancel fe-bt-mdn-delete"><span class="blind">삭제</span></button>
                             </span>
-                            <span class="rg-br-bt-box" id="celphone">
+                            <span class="rg-br-bt-box disabled" id="celphone">
                                 <button id="fe-bt-cert" type="button" disabled>인증번호 전송</button>
                                 <button id="fe-bt-recert" type="button" class="none">인증번호 재전송</button>
                             </span>
                         </div>
-                        <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info">
-                            <span class="rg-br-input">
+                        <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info inputbox">
+                            <span class="rg-br-input input">
                                 <input id="fe-input-cert" type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="인증번호 입력" title="인증번호 입력" aria-describedby="verify-number">
                                 <button href="javascript:void(0)" class="cancel fe-bt-cert-delete"><span class="blind">삭제</span></button>
                             </span>
-                            <span class="rg-br-bt-box" id="verify-number">
+                            <span class="rg-br-bt-box disabled" id="verify-number">
                                 <button id="fe-bt-cert-add" type="button" disabled>시간 연장</button>
                             </span>
                         </div>
