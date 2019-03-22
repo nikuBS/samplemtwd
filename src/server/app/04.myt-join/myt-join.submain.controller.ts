@@ -8,7 +8,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, SESSION_CMD} from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
@@ -501,7 +501,8 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입정보_약정할부 정보
   _getInstallmentInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
+    // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
+    return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
