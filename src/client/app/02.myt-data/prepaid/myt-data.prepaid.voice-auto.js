@@ -352,6 +352,11 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
         if ($('.fe-card-number').val().indexOf('*') === '-1') {
           this._getCardInfo(htParams, e);
+        } else {
+          Tw.CommonHelper.startLoading('.popup-page', 'grey');
+          this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
+            .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
+            .fail($.proxy(this._fail, this, $(e.currentTarget)));
         }
       }
     }
