@@ -244,7 +244,8 @@ Tw.CommonAutoSmsCert.prototype = {
   },
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
-    this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
+    var remainedText = Tw.SMS_VALIDATION.REMAINED_TIME.replace('${value}', Tw.DateHelper.convertMinSecFormat(remainedSec));
+    this.$showTime.val(remainedText);
     if ( remainedSec <= 0 ) {
       clearInterval(this._addTimer);
     }
