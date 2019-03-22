@@ -4,7 +4,7 @@ Tw.HashService = function () {
 };
 
 Tw.HashService.prototype = {
-  initHashNav: function (callback) {
+  initHashNav: function (callback) {  // bind onchangehash event
     if ( !callback || typeof callback !== 'function' ) {
       return false;
     }
@@ -20,7 +20,7 @@ Tw.HashService.prototype = {
     this._checkHash(callback);
     return this._currentHashNav;
   },
-  _checkHash: function () {
+  _checkHash: function () { // check whether change hash or not
     var hash = window.location.hash.replace(/^#/i, '');
     if ( hash !== this._currentHashNav ) {
       var newHash = hash;
@@ -57,7 +57,7 @@ Tw.HashService.prototype = {
     return hash;
 
   },
-  _parametersFromString: function (paramString) {
+  _parametersFromString: function (paramString) { // get query parameters from url
     if ( !paramString.length ) return null;
     var paramPairs = paramString.split('&');
     if ( !paramPairs.length ) return null;
@@ -76,7 +76,7 @@ Tw.HashService.prototype = {
     return null;
   },
 
-  detectIsReload: function () {
+  detectIsReload: function () { // when click reload button on browser
     if ( window.performance ) {
       if ( performance.navigation.type === 1 ) {
         location.hash = '';

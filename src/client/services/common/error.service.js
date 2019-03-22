@@ -25,7 +25,7 @@ Tw.ErrorService.prototype = {
     return msg.replace(/\\n/g, '<br>');
   },
 
-  pop: function(closeCallback, $target) {
+  pop: function(closeCallback, $target) { // open alert for error
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'title': Tw.POPUP_TITLE.NOTIFY,
@@ -44,18 +44,18 @@ Tw.ErrorService.prototype = {
     );
   },
 
-  _request: function ($layer) {
+  _request: function ($layer) { // when open alert
     $layer.on('click', '.fe-request', $.proxy(this._goLoad, this));
   },
 
-  _goLoad: function () {
+  _goLoad: function () {  // when click question button
     this._isRequest = true;
     this._popupService.close();
   },
 
   _close: function (closeCallback) {
-    if (this._isRequest) {
-      location.href = '/customer/email';
+    if (this._isRequest) {  // go to question by email after click question button 
+      location.href = '/customer/email'; 
     }
 
     if (closeCallback) {
@@ -63,11 +63,11 @@ Tw.ErrorService.prototype = {
     }
   },
 
-  page: function(replace) {
+  page: function(replace) { // go to error page
     this._historyService.goLoad('/common/error?' + $.param(this._data));
   },
 
-  replacePage: function(replace) {
+  replacePage: function(replace) {// go to error page with replace
     this._historyService.replaceURL('/common/error?' + $.param(this._data));
   }
 
