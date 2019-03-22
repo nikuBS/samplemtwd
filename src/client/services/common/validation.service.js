@@ -136,7 +136,7 @@ Tw.ValidationService.prototype = {
       isWrong = $target.val().length < $target.attr('minLength');
 
       if (!isWrong) {
-        if ($target.hasClass('fe-card-number')) {
+        if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') === -1) {
           this._getCardCode($target);
         } else if ($target.hasClass('fe-birth')) {
           isWrong = !this._validation.isBirthday($target.val());
