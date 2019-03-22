@@ -5,7 +5,7 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
+<body <%= total === 0 ? 'class=bg-white' : '' %>>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -35,7 +35,7 @@
                 <!--// .cont-box -->
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps">
+                <div class="cont-box nogaps <%= total === 0 ? 'noborder' : '' %> ">
                     <div class="ti-caption-gray">
                         <span class="num">
                             총 <strong><%= total %></strong>건
