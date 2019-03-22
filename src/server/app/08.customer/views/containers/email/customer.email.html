@@ -95,9 +95,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <%- include('../../components/email/customer.email.common.template.html', { type: 'quality'
-                                                });
-                                                %>
+                                                <%- include('../../components/email/customer.email.common.template.html', { type: 'quality'});%>
                                             </div>
                                             <%- include ../../components/email/customer.email.quality.template.html %>
                                         </li>
@@ -108,6 +106,14 @@
                     </div>
                     <!--// .component -->
                 </div>
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-service-register" disabled>등록하기</button>
+                        <button class="fe-quality-register none" disabled aria-hidden="true">등록하기</button>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- // .container-wrap -->
@@ -126,9 +132,9 @@
     new Tw.CustomerEmailServiceOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQuality($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
-    new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
+    var uploadObj = new Tw.CustomerEmailUpload($('.wrap'), {userAgent: '<%-JSON.stringify(userAgent)%>'});
+    new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>'), uploadObj: uploadObj });
     new Tw.CustomerEmailCategory($('.wrap'));
-    new Tw.CustomerEmailUpload($('.wrap'), {userAgent: '<%-JSON.stringify(userAgent)%>'});
   });
 </script>
 </body>
