@@ -493,21 +493,30 @@ Tw.PopupService.prototype = {
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
       Tw.Logger.log('[Popup] history back');
 
-      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
-        setTimeout($.proxy(function () {
-          if ( this._historyBack && this._prevHashList.length > 0 ) {
-            this._historyBack = false;
-            var lastHash = this._prevHashList[this._prevHashList.length - 1];
-            var closeCallback = lastHash.closeCallback;
-            location.hash = lastHash.curHash;
-            this._prevHashList.pop();
-            this._popupClose(closeCallback);
-          }
-        }, this), 500);
-      }
+      if ( Tw.BrowserHelper.isIosChrome() && /mainAuto/.test(location.hash) ) {
+        var lastHash = this._prevHashList[this._prevHashList.length - 1];
+        var closeCallback = lastHash.closeCallback;
+        location.hash = lastHash.curHash;
+        this._prevHashList.pop();
+        this._popupClose(closeCallback);
+        history.replaceState(this._popupObj, '', '');
+      } else {
+        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+          setTimeout($.proxy(function () {
+            if ( this._historyBack && this._prevHashList.length > 0 ) {
+              this._historyBack = false;
+              var lastHash = this._prevHashList[this._prevHashList.length - 1];
+              var closeCallback = lastHash.closeCallback;
+              location.hash = lastHash.curHash;
+              this._prevHashList.pop();
+              this._popupClose(closeCallback);
+            }
+          }, this), 500);
+        }
 
-      this._historyBack = true;
-      history.back();
+        this._historyBack = true;
+        history.back();
+      }
     }
   },
   closeAll: function () {

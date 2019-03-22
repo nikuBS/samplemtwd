@@ -99,7 +99,7 @@
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <button id="fe-bt-close" class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
@@ -109,7 +109,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLineRegister($('#commonMemberLineRegister'));
+    new Tw.CommonMemberLineRegister($('#commonMemberLineRegister'), '<%= landing %>');
   });
 </script>
 <% include ../../components/end.component.html %>
