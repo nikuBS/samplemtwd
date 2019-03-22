@@ -583,7 +583,7 @@ Tw.PopupService.prototype = {
     history.back();
   },
   _emptyHash: function () {
-    history.pushState('', document.title, window.location.pathname);
+    history.pushState('', document.title, window.location.pathname + window.location.search);
   },
 
   // Ios환경에서 포커스 가능한 객체 구하기
