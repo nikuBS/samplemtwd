@@ -28,6 +28,8 @@ Tw.CustomerEmailServiceRetry.prototype = {
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-service_register', $.proxy(this._retry_inquiry, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+
+    new Tw.InputFocusService(this.$container, $('.bt-fixed-area button', this.$container)); // 이동 버튼으로 다음 입력으로 움직이도록 (컨테이터, 마지막 이동버튼)
   },
 
   _makeParams: function () {
