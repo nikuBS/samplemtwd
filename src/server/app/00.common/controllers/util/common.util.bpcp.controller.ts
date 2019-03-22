@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class CommonUtilBpcp extends TwViewController {
   constructor() {
@@ -51,14 +52,17 @@ class CommonUtilBpcp extends TwViewController {
           return this.error.render(res, renderCommonInfo);
         }
 
-        let protocol: any = 'http://';
+        const protocol: any = String(process.env.NODE_ENV) !== 'local' ? 'https://' : 'http://';
+        let url: any = bpcpInfo.result.svcUrl.replace(/\s/g, '');
 
-        if (String(process.env.NODE_ENV) !== 'local') {
-          protocol = 'https://';
+        if (FormatHelper.isEmpty(bpcpInfo.result.tParam)) {
+          url += (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + bpcpInfo.result.tParam;
         }
 
-        res.redirect(bpcpInfo.result.svcUrl + (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ?
-          '&tParam=' : '?tParam=') + bpcpInfo.result.tParam + '&ref_origin=' + protocol + req.headers.host);
+        url += '&ref_poc=' + (BrowserHelper.isApp(req) ? 'app' : 'mweb');
+        url += '&ref_origin=' + protocol + req.headers.host;
+
+        res.redirect(url);
       });
   }
 }
