@@ -111,10 +111,6 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
-    var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
-    if ( otherLinesLength > 0 ) {
-      setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
-    }
   },
 
   _initBanners: function () {
@@ -164,6 +160,14 @@ Tw.MyTDataSubMain.prototype = {
   _checkScroll: function () {
     if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
       this._requestPattern();
+    }
+
+    if ( this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines) ) {
+      var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
+      if ( otherLinesLength > 0 ) {
+        // setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
+        this._initOtherLinesInfo(0, otherLinesLength);
+      }
     }
   },
 
@@ -421,6 +425,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initOtherLinesInfo: function (from, end) {
+    this._isRequestOtherLinesInfo = true;
     var requestCommand = [];
     for ( var idx = from; idx < end; idx++ ) {
       this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
