@@ -813,8 +813,13 @@ Tw.MyTDataSubMain.prototype = {
   _getWindowMessage: function (e) {
     var data = e.data || e.originalEvent.data;
     var popupService = this._popupService;
+
     if (this.immediatelyRechargeLayer && this.immediatelyRechargeLayer._popupService) {
       popupService = this.immediatelyRechargeLayer._popupService;
+    }
+
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
     }
 
     // BPCP 팝업 닫기
