@@ -19,7 +19,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
     fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
     fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
     fontClose : new RegExp('</font>','g'),
-    spanOpen : new RegExp('<span class="highlight-text">','g')
+    spanOpen : new RegExp('<span class="keyword-text">','g')
   };
   this._tidLanding = new Tw.TidLandingComponent();
   $(window).on('message', $.proxy(this._getWindowMessage, this));
