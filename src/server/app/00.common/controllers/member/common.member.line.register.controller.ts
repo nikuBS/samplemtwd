@@ -22,6 +22,7 @@ class CommonMemberLineRegister extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const type = req.query.type || '01';
+    const landing = req.query.landing || 'none';
 
     this.getLineInfo().subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -31,7 +32,7 @@ class CommonMemberLineRegister extends TwViewController {
           type: type,
           totalCnt: resp.result.totalCnt
         };
-        res.render('member/common.member.line.register.html', { lineData, svcInfo, pageInfo });
+        res.render('member/common.member.line.register.html', { lineData, svcInfo, pageInfo, landing });
       } else {
         this.error.render(res, {
           code: resp.code,

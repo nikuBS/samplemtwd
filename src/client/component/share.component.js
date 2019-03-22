@@ -21,7 +21,7 @@ Tw.ShareComponent.prototype = {
   },
   _onClickShare: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0065, {
-      trgtUrl: this._url,
+      trgtUrl: location.pathname + location.search,
       menuId: this._menuId
     }).done($.proxy(this._successScutUrl, this));
 

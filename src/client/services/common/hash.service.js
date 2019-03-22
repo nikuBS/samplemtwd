@@ -12,7 +12,7 @@ Tw.HashService.prototype = {
     this._callbackList.push(callback);
 
     if ( 'onhashchange' in window ) {
-      window.onhashchange = $.proxy(this._checkHash, this);
+      window.addEventListener('hashchange', $.proxy(this._checkHash, this));
     } else {
       setInterval($.proxy(this._checkHash, this), 100);
     }
@@ -66,7 +66,8 @@ Tw.HashService.prototype = {
     for ( var i = 0, len = paramPairs.length; i < len; i++ ) {
       if ( !paramPairs[i].length ) continue;
       var kv = paramPairs[i].split('=');
-      if ( !kv[0].length ) continue;results[decodeURIComponent(kv[0])] = kv.length > 1 ? decodeURIComponent(kv[1]) : null;
+      if ( !kv[0].length ) continue;
+      results[decodeURIComponent(kv[0])] = kv.length > 1 ? decodeURIComponent(kv[1]) : null;
 
     }
     for ( var name in results ) {
@@ -76,8 +77,8 @@ Tw.HashService.prototype = {
   },
 
   detectIsReload: function () {
-    if (window.performance) {
-      if (performance.navigation.type === 1) {
+    if ( window.performance ) {
+      if ( performance.navigation.type === 1 ) {
         location.hash = '';
       }
     }

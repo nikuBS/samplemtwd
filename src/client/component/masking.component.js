@@ -9,7 +9,6 @@ Tw.MaskingComponent = function () {
 
   this.$btMasking = null;
   this._url = '';
-  this._cert = new Tw.CertificationSelect();
 
   this._bindEvent();
 };
@@ -31,7 +30,8 @@ Tw.MaskingComponent.prototype = {
         prodProcType: ''
       });
 
-      this._cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
+      var cert = new Tw.CertificationSelect();
+      cert.open(params, this._url, null, null, $.proxy(this._completeCert, this));
     }
   },
   _completeCert: function (resp) {
