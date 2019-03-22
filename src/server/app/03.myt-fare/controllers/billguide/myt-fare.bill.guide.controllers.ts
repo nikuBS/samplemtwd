@@ -166,18 +166,20 @@ class MyTFareBillGuide extends TwViewController {
 
         if ( svcInfo.actRepYn === 'Y' ) {
           thisMain._billpayInfo = resArr[0].result;
-          thisMain._intBillLineInfo = resArr[0].result.invSvcList[0].svcList;
-          thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
-          if ( thisMain._billpayInfo.invSvcList ) {
+          if ( thisMain._billpayInfo.invSvcList && thisMain._billpayInfo.invSvcList.length > 0) {
+            thisMain._intBillLineInfo = Object.assign([], resArr[0].result.invSvcList[0].svcList);
             thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
           }
+          thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
 
         } else {
           thisMain._useFeeInfo = resArr[0].result.invAmtList;
           // 현재는 param이 없지만 추후 추가를 위해 넣어둠
-          thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
-                                  || resArr[0].result.invAmtList[0];
-          thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
+          if ( resArr[0].result.invAmtList && resArr[0].result.invAmtList.length > 0) {
+            thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
+              || resArr[0].result.invAmtList[0];
+            thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
+          }
           thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(resArr[0].result.repSvcNm);  // 통합청구대표 이름
         }
 

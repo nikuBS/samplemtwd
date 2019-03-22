@@ -28,6 +28,7 @@ Tw.MyTFareBillGuideChild.prototype = {
     this._hbRegisterHelper();
 
     if(this.resData.billpayInfo && this.resData.billpayInfo.usedAmountDetailList){
+      this.resData.billpayInfo.unPayAmtList = this.resData.unpaidBillsInfo;
       this._getUseBillsInfoInit({code:Tw.API_CODE.CODE_00, result:this.resData.billpayInfo});
     }
 
@@ -207,7 +208,7 @@ Tw.MyTFareBillGuideChild.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      console.log(res.result);
+
       var useAmtDetailInfo = $.extend(true, {}, res.result.usedAmountDetailList);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
@@ -238,7 +239,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         var unpayList = res.result.unPayAmtList;
         var unpayTot = 0;
         for(var i = 0; i < unpayList.length; i++){
-          unpayTot += parseInt(this._comUnComma(unpayList[i].comBat), 10);
+          unpayTot += parseInt(this._comUnComma(unpayList[i].colBat), 10);
         }
         if(unpayTot > 0){
           $('#spanUnpaidTot').text(Tw.FormatHelper.convNumFormat(unpayTot) + ' ' + Tw.CURRENCY_UNIT.WON);

@@ -294,7 +294,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
-      .done(function () {
+      .done($.proxy(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
         Tw.Logger.info('자녀 청구요금 조회 결과', arguments);
         /*_.each(arguments, function (element, index) {
@@ -303,13 +303,31 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
           }
         });*/
 
+        if(!arguments || arguments.length !== childLineInfo.length){
+          $('#divChildListHaeder').hide().attr('aria-hidden', true);
+          return;
+        }
+
         for ( var i = 0; i < childLineInfo.length; i++ ) {
-          childLineInfo[i].detailInfo = arguments[i].result;
+          var d = null;
+          if(arguments[i].result && arguments[i].result.invAmtList && arguments[i].result.invAmtList.length > 0){
+            var date = this.resData.reqQuery ? this.resData.reqQuery.date : null;
+            if(!date){
+              date = this.resData.billpayInfo.invDtArr[0];
+            }
+            d = _.find(arguments[i].result.invAmtList, function(item){
+              return item.invDt === date;
+            });
+            if(!d){
+              d = {totInvAmt: '0'};
+            }
+          }
+          childLineInfo[i].detailInfo = d;
         }
 
         thisMain._getChildBillInfoInit();
 
-      });
+      }, this));
   },
   _getChildBillInfoInit: function () {
     var thisMain = this;
@@ -319,7 +337,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       var item = childListData[i];
       item.svcNum = thisMain._phoneStrToDash(item.svcNum);
       if ( item.detailInfo ) {
-        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.unPaidTotSum);
+        item.detailInfo.useAmtTot = Tw.FormatHelper.addComma(item.detailInfo.totInvAmt);
       }
     }
 
