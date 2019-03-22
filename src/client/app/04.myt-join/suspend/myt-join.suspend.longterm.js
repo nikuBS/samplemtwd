@@ -28,6 +28,8 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
 
   this._defaultMilitaryToDate = this.$container.find('.fe-military [data-role="fe-to-dt"]').val();
   this._defaulAbroadFromeDate = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
+
+  new Tw.InputFocusService(tabEl, this.$btSuspend);
 };
 
 Tw.MyTJoinSuspendLongTerm.prototype = {

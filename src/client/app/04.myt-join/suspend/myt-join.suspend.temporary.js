@@ -14,6 +14,8 @@ Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this._bindEvent();
   this._params = params;
   this._defaultDate = this.$dateTo.val();
+
+  new Tw.InputFocusService(tabEl, this.$btSuspend);
 };
 
 Tw.MyTJoinSuspendTemporary.prototype = {
