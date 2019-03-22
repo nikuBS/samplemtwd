@@ -26,8 +26,9 @@ Tw.MyTDataSubMain = function (params) {
 Tw.MyTDataSubMain.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트
   _rendered: function () {
-    if ( this._historyService.isBack() ) {
-      this._historyService.reload();
+    if ( !Tw.BrowserHelper.isApp() && this._historyService.isBack() ) {
+      // this._historyService.reload();
+      this._historyService.goLoad('/myt-data/submain');
     }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
@@ -49,8 +50,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
-      this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
+    this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     // if ( this.data.pattern ) {
     this.$patternChart = this.$container.find('[data-id=pattern_chart]');
     // }
@@ -88,8 +89,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
-      this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
+    this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
 
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
@@ -110,10 +111,6 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
-    var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
-    if ( otherLinesLength > 0 ) {
-      setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
-    }
   },
 
   _initBanners: function () {
@@ -163,6 +160,14 @@ Tw.MyTDataSubMain.prototype = {
   _checkScroll: function () {
     if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
       this._requestPattern();
+    }
+
+    if ( this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines) ) {
+      var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
+      if ( otherLinesLength > 0 ) {
+        // setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
+        this._initOtherLinesInfo(0, otherLinesLength);
+      }
     }
   },
 
@@ -420,6 +425,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initOtherLinesInfo: function (from, end) {
+    this._isRequestOtherLinesInfo = true;
     var requestCommand = [];
     for ( var idx = from; idx < end; idx++ ) {
       this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
