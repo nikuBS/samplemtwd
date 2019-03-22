@@ -7,6 +7,7 @@
 Tw.CertificationRepresentative = function () {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._nativeService = Tw.Native;
 
   this._authUrl = '';
   this._command = null;
@@ -119,7 +120,7 @@ Tw.CertificationRepresentative.prototype = {
     this.$inputboxMdn = $popupContainer.find('#fe-inputbox-mdn');
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
-    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    $popupContainer.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
@@ -185,6 +186,16 @@ Tw.CertificationRepresentative.prototype = {
     }).done($.proxy(this._completeCert, this));
   },
   _sendCert: function (reCert) {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this, reCert));
+    } else {
+      this._sendCertApi(reCert);
+    }
+  },
+  _onReadSms: function (reCert, resp) {
+    this._sendCertApi(reCert);
+  },
+  _sendCertApi: function (reCert) {
     if ( this._smsNumbers.length > 1 ) {
       var $selected = this.$list.find(':checked');
       this._receiverNum = this._smsNumbers[$selected.data('index')].number;
@@ -195,14 +206,15 @@ Tw.CertificationRepresentative.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0058, {
       receiverNum: this._receiverNum,
       jobCode: this._jobCode
-    }).done($.proxy(this._successCert, this, reCert));
+    }).done($.proxy(this._onSuccessCert, this, reCert));
   },
-  _successCert: function (reCert, resp) {
+  _onSuccessCert: function (reCert, resp) {
     this._clearCertError();
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.$btCertAdd.attr('disabled', false);
       this._seqNo = resp.result.seqNo;
+      this.$btCertAdd.attr('disabled', false);
+      this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
       if ( !reCert ) {
         this.$btCert.addClass('none');
@@ -223,6 +235,17 @@ Tw.CertificationRepresentative.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
+    }
+  },
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this._onInputCert();
+    }
+  },
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
@@ -231,7 +254,9 @@ Tw.CertificationRepresentative.prototype = {
     }
   },
   _onInputCert: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));

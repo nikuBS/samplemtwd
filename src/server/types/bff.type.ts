@@ -464,7 +464,7 @@ export const PRODUCT_CALLPLAN = {
 export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
   TW20000014: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
   TW20000018: 'http://www.thonorsclub.com/',
-  TW20000019: 'http://skt.datacoupon.co.kr'
+  TW20000019: 'BPCP:0000105150'
 };
 
 export const PRODUCT_REPLACED_RULE = {

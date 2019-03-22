@@ -305,6 +305,7 @@ Tw.MembershipBenefitBrand.prototype = {
       options.coPtnrNm = encodeURIComponent(this.$inputCoPtnrNm.val());
     }
     this._reqBrandList(options);
+    this.$inputCoPtnrNm.blur();
   },
 
   _showEmptyResult: function() {

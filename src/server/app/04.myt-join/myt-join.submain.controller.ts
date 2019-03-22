@@ -8,7 +8,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, SESSION_CMD} from '../../types/api-command.type';
+import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
@@ -43,15 +43,6 @@ class MyTJoinSubmainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     this.__setType(svcInfo);
-    if ( this.type === 2 ) {
-      if ( req.path.indexOf('w') === -1 ) {
-        res.redirect('/myt-join/submain_w');
-      }
-    } else {
-      if ( req.path.indexOf('w') > -1 ) {
-        res.redirect('/myt-join/submain');
-      }
-    }
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -171,18 +162,16 @@ class MyTJoinSubmainController extends TwViewController {
             // 유선
             data.myAddProduct.addTotCnt = data.myAddProduct.additionCount;
             break;
-          case 1:
           case 3:
-            // T-login, T-pocketFi, PPS
+            // T-login, T-pocketFi
             data.myAddProduct.addTotCnt = data.myAddProduct.addProdCnt;
             break;
           default:
+            // 0: 모바일, 1: PPS
             if ( data.myAddProduct.productCntInfo ) {
               data.myAddProduct = data.myAddProduct.productCntInfo;
             }
-            data.myAddProduct.addTotCnt =
-              parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10) +
-              parseInt(data.myAddProduct.comProdCnt, 10);
+            data.myAddProduct.addTotCnt = parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10);
             break;
         }
       }
@@ -512,7 +501,8 @@ class MyTJoinSubmainController extends TwViewController {
 
   // 나의 가입정보_약정할부 정보
   _getInstallmentInfo() {
-    return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
+    // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
+    return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {

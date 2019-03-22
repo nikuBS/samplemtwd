@@ -99,8 +99,8 @@ Tw.CustomerSvcInfoSite.prototype = {
   },
   _tabClickHandler: function(e) {
     
-    this.$tabContentsWrapper.hide().addClass('blind').attr('aria-hidden', true);
-    this.$tabContentsWrapper.eq(this.$tabLinker.index(e.target)).show().removeClass('blind').attr('aria-hidden', false);
+    this.$tabContentsWrapper.hide().addClass('blind none').attr('aria-hidden', true);
+    this.$tabContentsWrapper.eq(this.$tabLinker.index(e.target)).show().removeClass('blind none').attr('aria-hidden', false);
   },
 
   _parse_query_string: function () {

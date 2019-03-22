@@ -138,8 +138,12 @@ Tw.TidLandingComponent.prototype = {
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._successLogin(target, resp.params);
-    } else if (resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114) {
+    } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
       Tw.Logger.info('Login Cancel');
+      var type = +resp.params.type;
+      if ( type === Tw.NTV_LOGINTYPE.ACTION_SHEET ) {
+        this._historyService.replaceURL('/main/home');
+      }
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode + '&target=' + encodeURIComponent(target));
     }
@@ -167,7 +171,7 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.replaceURL('/common/member/login/exceed-fail?');
-    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236) {
+    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236 ) {
       this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));

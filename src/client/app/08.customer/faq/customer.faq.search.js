@@ -81,7 +81,10 @@ Tw.CustomerFaqSearch.prototype = {
   },
   _onSearchRequested: function () {
     var keyword = this.$inputSearch.val().trim();
-    this._historyService.replaceURL('/customer/faq/search?keyword=' + keyword);
+    $(':focus').blur();
+    setTimeout($.proxy(function () {
+      this._historyService.replaceURL('/customer/faq/search?keyword=' + keyword);
+    }, this), 200);
   },
   _onExternalLink: function (e) {
     var url = $(e.currentTarget).attr('href');

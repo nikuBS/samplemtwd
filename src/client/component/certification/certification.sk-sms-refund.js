@@ -7,6 +7,7 @@
 Tw.CertificationSkSmsRefund = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this._gender = undefined; // 2: female, 1: male
   this._isCertRequestSuccess = false;
@@ -94,6 +95,7 @@ Tw.CertificationSkSmsRefund.prototype = {
             this._isCertRequestSuccess = true;
             this._seqNo = res.result.seqNo;
             this._showCertSuccess();
+            this._getCertNumFromNative();
           } else {
             this._isCertRequestSuccess = false;
             if (!!this.SMS_CERT_ERROR[res.code]) {
@@ -111,10 +113,20 @@ Tw.CertificationSkSmsRefund.prototype = {
         }, this));
     };
 
-    if (this._certBtnStatus === 0) {
-      this._requestCaptchaConfirm($.proxy(onCaptchaSuccess, this));
-    } else {  // 인증버호 재전송 케이스
-      onCaptchaSuccess.call(this);
+    var onReadyCert = function () {
+      if (this._certBtnStatus === 0) {
+        this._requestCaptchaConfirm($.proxy(onCaptchaSuccess, this));
+      } else {  // 인증버호 재전송 케이스
+        onCaptchaSuccess.call(this);
+      }
+    };
+
+    if (Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(function () {
+        onReadyCert.call(this);
+      }, this));
+    } else {
+      onReadyCert.call(this);
     }
   },
   _onTimeExpandRequested: function () {
@@ -160,7 +172,11 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     return ret;
   },
-  _enableCertBtnIfPossible: function () {
+  _enableCertBtnIfPossible: function (e) {
+    if (!Tw.FormatHelper.isEmpty(e)) {
+      Tw.InputHelper.inputNumberOnly(e.target);
+    }
+
     var number = this.$inputNumber.val().trim();
     if (number.length === 10 || number.length === 11) {
       this.$btCert.removeAttr('disabled');
@@ -168,7 +184,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     }
     this.$btCert.attr('disabled', 'disabled');
   },
-  _enableConfirmIfPossible: function () {
+  _enableConfirmIfPossible: function (e) {
+    if (!Tw.FormatHelper.isEmpty(e)) {
+      Tw.InputHelper.inputNumberOnly(e.target);
+    }
+
     if (Tw.FormatHelper.isEmpty(this.$inputName.val()) ||
       Tw.FormatHelper.isEmpty(this.$inputBirth.val())) {
       this.$btConfirm.attr('disabled', 'disabled');
@@ -279,5 +299,14 @@ Tw.CertificationSkSmsRefund.prototype = {
   _showCertNumberError: function (code) {
     this.$container.find('.fe-exp-txt').addClass('none');
     this.$container.find('.fe-exp-txt.' + code).removeClass('none');
+  },
+  _getCertNumFromNative: function () {
+    if (Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(function (res) {
+        var number = res.params.cert;
+        this.$inputCert.val(number);
+        this._enableConfirmIfPossible();
+      }, this));
+    }
   }
 }

@@ -362,7 +362,7 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var url = resp.result.svcUrl;
+    var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
     }
@@ -371,6 +371,7 @@ Tw.ProductCommonCallplan.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
     this._popupService.open({
@@ -397,6 +398,16 @@ Tw.ProductCommonCallplan.prototype = {
     // BPCP 팝업 닫고 로그인 호출
     if (data.indexOf('goLogin:') !== -1) {
       this._tidLanding.goLogin('/product/callplan?prod_id=' + this._prodId + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
+
+    // BPCP 에서 외부 팝업창 호출하고자 할떄
+    if (data.indexOf('outlink:') !== -1) {
+      var url = data.replace('outlink:', '');
+      if (!Tw.BrowserHelper.isApp()) {
+        return this._openExternalUrl(url);
+      }
+
+      Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url));
     }
   },
 
@@ -739,6 +750,11 @@ Tw.ProductCommonCallplan.prototype = {
       this._appendSettingWrap(linkBtnList.setting);
     }
 
+    // 가입 되어 있으며, 설정 불가능하거나 설정 버튼이 없을 경우
+    if (isJoinCheck && (!isProdSet || linkBtnList.setting.length < 1)) {
+      this._appendSettingWrap(null);
+    }
+
     // 가입 되어 있으며, 예약 영역이 노출되어 있을 경우 삭제
     if (isJoinCheck && this.$reservationWrap.length > 0) {
       this.$reservationWrap.remove();
@@ -759,17 +775,19 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _appendSettingWrap: function(btnData) {
-    this._settingBtnList = btnData.map(function(item) {
-      return {
-        'url': item.linkUrl,
-        'button-attr': 'data-url="' + item.linkUrl + '"',
-        'txt': item.linkNm
-      };
-    });
+    if (!Tw.FormatHelper.isEmpty(btnData)) {
+      this._settingBtnList = btnData.map(function (item) {
+        return {
+          'url': item.linkUrl,
+          'button-attr': 'data-url="' + item.linkUrl + '"',
+          'txt': item.linkNm
+        };
+      });
+    }
 
     this.$settingWrap.html(this._templateSetting({
-      settingBtn: btnData[0].linkNm,
-      isSettingBtnList: btnData.length > 1
+      settingBtn: Tw.FormatHelper.isEmpty(btnData) ? '' : btnData[0].linkNm,
+      isSettingBtnList: btnData && btnData.length > 1
     }));
   },
 

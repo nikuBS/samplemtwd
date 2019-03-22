@@ -62,6 +62,7 @@ import CommonMemberLoginLost from './controllers/member/common.member.login.lost
 import CommonUtilBpcp from './controllers/util/common.util.bpcp.controller';
 import CommonAutoSmsCert from './controllers/auto-sms/common.auto-sms.cert.controller';
 import CommonAutoSmsResult from './controllers/auto-sms/common.auto-sms.result.controller';
+import CommonShareOldLanding from './controllers/share/common.share.old-landing.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -131,6 +132,7 @@ export default class CommonRouter extends TwRouter {
 
     // share
     this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
+    this.controllers.push({ url: '/share/old-landing', controller: CommonShareOldLanding });
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
     this.controllers.push({ url: '/share/app-install/info', controller: CommonShareAppInstallInfo });
 

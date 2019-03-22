@@ -5,7 +5,7 @@
 %>
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
+<body class="bg-white">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -25,7 +25,7 @@
                     <button class="btn-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">당첨자 발표</button>
                 </div>
                 <% if (isExist) { %>
-                <div class="cont-box nogaps-hoz">
+                <div class="cont-box nogaps-hoz noborder">
                     <div class="event-article-list">
                         <% if (content) { %>
                         <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
@@ -53,7 +53,7 @@
                     <% } %>
                 </div>
                 <% } else { %>
-                <div class="cont-box">
+                <div class="cont-box noborder">
                     <div class="result-none type2">
                         <div class="title-box">
                             당첨자 발표 내역이 없습니다.

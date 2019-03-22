@@ -42,39 +42,42 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
-                <!-- .widget -->
-                <div>
-                    <div class="widget-box horizontal">
-                        <div id="fe-category" class="horizontal-slide slide-nopd">
-                            <ul class="horizontal-list benefit-link space-nowrap" role="tablist">
-                                <li role="presentation"><button type="button" role="tab" aria-selected="true" class="unit on" data-category="" data-url="/benefit/submain">전체</button></li>
-                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01421" data-url="/benefit/submain/discount">요금할인</button></li>
-                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01422" data-url="/benefit/submain/combinations">결합할인</button></li>
-                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01423" data-url="/benefit/submain/long-term">장기가입혜택</button></li>
-                                <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01424" data-url="/benefit/submain/participation">참여혜택</button></li>
-                            </ul>
+            <!--혜택 리스트 영역-->
+            <div id="fe-benefit-list-area" class="none">
+                <!-- cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
+                    <!-- .widget -->
+                    <div>
+                        <div class="widget-box horizontal">
+                            <div id="fe-category" class="horizontal-slide slide-nopd">
+                                <ul class="horizontal-list benefit-link space-nowrap" role="tablist">
+                                    <li role="presentation"><button type="button" role="tab" aria-selected="true" class="unit on" data-category="" data-url="/benefit/submain">전체</button></li>
+                                    <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01421" data-url="/benefit/submain/discount">요금할인</button></li>
+                                    <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01422" data-url="/benefit/submain/combinations">결합할인</button></li>
+                                    <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01423" data-url="/benefit/submain/long-term">장기가입혜택</button></li>
+                                    <li role="presentation"><button type="button" role="tab" aria-selected="false" class="unit" data-category="F01424" data-url="/benefit/submain/participation">참여혜택</button></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <!-- .widget -->
                 </div>
-                <!-- .widget -->
-            </div>
-            <!--// cont-box -->
+                <!--// cont-box -->
 
-            <!-- .cont-box -->
-            <div id="fe-prod-list-area" class="cont-box nogaps-top bgnone"><!--2019-02-24 수정 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps -->
+                <!-- .cont-box -->
+                <div id="fe-prod-list-area" class="cont-box nogaps-top bgnone"><!--2019-02-24 수정 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps -->
 
-                <ul id="fe-list" class="discountbenefit-list">
-                    <!-- 상품 리스트 area-->
-                </ul>
+                    <ul id="fe-list" class="discountbenefit-list">
+                        <!-- 상품 리스트 area-->
+                    </ul>
 
-                <div class="btn-more no-border none">
-                    <button>더보기</button>
+                    <div class="btn-more no-border none">
+                        <button>더보기</button>
+                    </div>
                 </div>
+                <!--// .cont-box -->
             </div>
-            <!--// .cont-box -->
 
             <!--결합할인 금액 미리보기 입력부분-->
             <div id="fe-combination-preview" class="none">

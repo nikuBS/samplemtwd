@@ -13,7 +13,7 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'), null, true);
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true);

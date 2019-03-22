@@ -108,9 +108,9 @@ class MyTFarePaymentOver extends TwViewController {
     items.filter((item) => {
       result.push({
         unPaidInvDt: item.invDt,
-        unPaidAmt: item.comBat
+        unPaidAmt: item.colBat
       });
-      paidTotSum += parseInt(item.comBat.replace(',', ''), 10);
+      paidTotSum += parseInt(item.colBat.replace(/,/g, ''), 10);
     });
     return {
       list: result,

@@ -118,19 +118,23 @@ class MyTFareBillGuideChild extends TwViewController {
     // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
 
     Promise.all([p1]).then(function(resArr) {
-      thisMain._billpayInfo = resArr[0].result;
+
+      thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
+        || resArr[0].result.invAmtList[0];
+      thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
       thisMain._unpaidBillsInfo = resArr[0].result.unPayAmtList;
 
-      thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
-      thisMain._commDataInfo.discount =
-        (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
+      thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
+      thisMain._commDataInfo.selClaimDtM = thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt));
+      thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt));
+      thisMain._commDataInfo.selEndDt = thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt));
+      thisMain._commDataInfo.discount = FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt))));
       thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
-      thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
+      thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt);
       thisMain._commDataInfo.intBillLineList =
         (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(childInfo, thisMain.reqQuery.line) : null;
+
+      // thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
@@ -142,7 +146,7 @@ class MyTFareBillGuideChild extends TwViewController {
         intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
         showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo,
+        unpaidBillsInfo: thisMain._unpaidBillsInfo || null,
         allSvc: allSvc
       });
     }, function(err) {

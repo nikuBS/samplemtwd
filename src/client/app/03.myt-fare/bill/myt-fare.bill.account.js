@@ -173,15 +173,15 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _checkClose: function (e) {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._closeCallback, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON, $(e.currentTarget));
   },
   _closePop: function () {
     this._isClose = true;
-    this._popupService.closeAll();
+    this._popupService.close();
   },
-  _closeCallback: function () {
+  _afterClose: function () {
     if (this._isClose) {
-      this._historyService.goBack();
+      this._historyService.resetHistory(-2);
     }
   },
   _pay: function (e) {

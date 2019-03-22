@@ -31,7 +31,7 @@
                         <label class="tit" for="flab01">국내 휴대폰 번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <div class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="text" value="{{data.rominfo.tmp_cntc_num}}" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
+                                        <input id="flab01" type="tel" value="{{data.rominfo.tmp_cntc_num}}" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                         </div>
@@ -79,11 +79,13 @@
             </div>
             <!--// .cont-box -->
         </div>
-        <ul class="bt-slice full">
-            <li class="bt-red1">
-                <button id="fe-register" data-mgmt="{{data.rominfo.rental_mgmt_num}}" data-opclcd="{{data.rominfo.rsv_chnl_cd}}">예약 수정</button>
-            </li>
-        </ul>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button id="fe-register" data-mgmt="{{data.rominfo.rental_mgmt_num}}" data-opclcd="{{data.rominfo.rsv_chnl_cd}}">예약 수정</button>
+                </li>
+            </ul>
+        </div>
     </div>
     <!--// .container-wrap -->
     <!-- .popup-closeBtn -->

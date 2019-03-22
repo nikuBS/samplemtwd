@@ -3,6 +3,7 @@ import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import {LOGIN_TYPE} from '../../../../types/bff.type';
 /**
  * FileName: membership.info.grade.controller.ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
@@ -18,16 +19,17 @@ class MembershipInfoGrade extends TwViewController {
 
     const data = {
       isLogin: !FormatHelper.isEmpty(svcInfo),
-      mbrGrCd: ''
+      mbrGrCd: '',
+      isJoinAble: true
     };
 
-    if (data.isLogin) {
+    if (data.isLogin && LOGIN_TYPE.TID === svcInfo.loginType && ['P', 'I', 'T', 'U', ''].indexOf(svcInfo.svcGr) === -1) {
       Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_11_0001, {})
       ).subscribe(([membershipData]) => {
 
         if (membershipData.code === API_CODE.CODE_00 ) {
-          data.mbrGrCd = membershipData.result.mbrGrCd;
+          data.isJoinAble = FormatHelper.isEmpty(membershipData.result.mbrGrCd);
         }
 
         res.render('info/membership.info.grade.html', {

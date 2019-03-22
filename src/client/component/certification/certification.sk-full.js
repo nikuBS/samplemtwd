@@ -91,13 +91,13 @@ Tw.CertificationSkFull.prototype = {
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
-    this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
+    this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
-    $popupContainer.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
-    $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    $popupContainer.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
+    $popupContainer.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
     new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
@@ -110,25 +110,33 @@ Tw.CertificationSkFull.prototype = {
       this._callback(this._result);
     }
   },
-  _onKeyupMdn: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+  _onInputMdn: function ($event) {
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
+      this.$btReCert.attr('disabled', false);
     } else {
       this.$btCert.attr('disabled', true);
+      this.$btReCert.attr('disabled', true);
     }
     this._checkEnableConfirmButton();
   },
   _onInputBirth: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var inputBirth = this.$inputBirth.val();
     if ( inputBirth.length >= Tw.BIRTH_LEN ) {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
     }
   },
   _onInputCert: function ($event) {
-    Tw.InputHelper.inputNumberOnly($event.target);
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
@@ -176,6 +184,16 @@ Tw.CertificationSkFull.prototype = {
     this._sendCert();
   },
   _sendCert: function (reCert) {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this, reCert));
+    } else {
+      this._sendCertApi(reCert);
+    }
+  },
+  _onReadSms: function (reCert, resp) {
+    this._sendCertApi(reCert);
+  },
+  _sendCertApi: function(reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -197,8 +215,9 @@ Tw.CertificationSkFull.prototype = {
     this._clearCertError();
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.$btCertAdd.attr('disabled', false);
       this.certSeq = resp.result.seqNo;
+      this.$btCertAdd.attr('disabled', false);
+      this._getCertNum();
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$validCert);
       if ( !reCert ) {
         this.$btCert.addClass('none');
@@ -211,6 +230,17 @@ Tw.CertificationSkFull.prototype = {
       this._addTimer = setInterval($.proxy(this._showTimer, this, this._addTime), 1000);
     } else {
       this._checkCertError(resp.code, resp.msg);
+    }
+  },
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
+    }
+  },
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputCert.val(resp.params.cert);
+      this._onInputCert();
     }
   },
   _checkCertError: function (errorCode, errorMsg) {
