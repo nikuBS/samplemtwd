@@ -140,7 +140,7 @@ Tw.CommonSearchMain.prototype = {
       }
       setTimeout($.proxy(function () {
         this._historyService.goLoad($target.attr('href'));
-      },this));
+      },this),100);
 
     }else{
       this._doSearch($target.data('param'));
@@ -209,7 +209,7 @@ Tw.CommonSearchMain.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.search-content').attr('aria-hidden',false);
       this.$inputElement.blur();
-    },this),100);
+    },this));
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();

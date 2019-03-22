@@ -75,6 +75,10 @@ Tw.ValidationService.prototype = {
       isValid = true;
     }
 
+    if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') !== -1) {
+      isValid = true;
+    }
+
     if ($target.hasClass('fe-point')) {
       message = this._getPointMessage($target);
       if (Tw.FormatHelper.isEmpty(message)) {
