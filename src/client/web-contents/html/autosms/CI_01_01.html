@@ -42,9 +42,11 @@
             <div class="rg-br-header">
                 <div class="rg-br-header-ti">
                     <h1 class="rg-br-tworld-center">
-                        <span class="rg-br-ico-logo" role="img" aria-label="Tworld">
-                            <span class="rg-br-logo-name">Tworld</span>
-                        </span>
+                        <a href=""><!-- 19.03.22 a태그 삽입 -->
+                            <span class="rg-br-ico-logo" role="img" aria-label="Tworld">
+                                <span class="rg-br-logo-name">Tworld</span>
+                            </span>
+                        </a>
                     </h1>
                 </div>
             </div>
@@ -59,28 +61,34 @@
                     <p class="rg-br-privacy-desc">개인정보 보호를 위해<br /><strong>본인확인</strong>이 필요합니다.</p>
                     <!-- .widget -->
                     <div class="rg-br-widget rg-br-id-check">
-                        <div class="widget-box tube">
-                            <ul class="rg-br-tube-list two" role="radiogroup">
-                                <li role="radio" aria-checked="false"><input type="radio" name="category" checked="" title="일반">일반</li>
-                                <li class="checked" role="radio" aria-checked="true"><input type="radio" name="category" title="법인">법인</li>
-                            </ul>
+                        <!-- 190320_수정 -->
+                        <div class="widget-box tube widget"><!-- widget 클래스 추가 -->
+                            <div class="widget-box radio"><!-- widget-box radio 클래스 생성 -->
+                                <ul class="rg-br-tube-list two" role="radiogroup">
+                                    <li class="radiobox" role="radio" aria-checked="false"><input type="radio" name="category" title="일반">일반</li><!-- li.radiobox 클래스 생성 -->
+                                    <li class="radiobox checked" role="radio" aria-checked="true"><input type="radio" name="category" checked="" title="법인">법인</li>
+                                </ul>
+                            </div>
                         </div>
+                        <!-- //190320_수정 -->
                     </div>
                     <!-- //.widget -->
                     <div class="rg-br-inner">
                         <h3 class="rg-br-blind">법인등록번호 입력</h3>
                         <div class="rg-br-contents-formbox">
-                            <div class="rg-br-inputbox rg-br-personal-info">
-                                <span class="rg-br-input">
+                            <div class="rg-br-inputbox rg-br-personal-info inputbox"><!-- 2019.03.19 추가-->
+                                <span class="rg-br-input input"><!-- 2019.03.19 추가-->
                                     <input type="text" placeholder="법인등록번호" title="법인등록번호" value="" aria-labelledby="exp-label1" aria-describedby="company">
+                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button><!-- 2019.03.19 추가-->
                                 </span>
                                 <span class="rg-br-my-notice" id="company">
                                     <span class="noti-type1">법인등록번호를 입력해주세요.</span>
                                 </span>
                             </div>
-                            <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info">
-                                <span class="rg-br-input">
+                            <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info inputbox"><!-- 2019.03.19 추가-->
+                                <span class="rg-br-input input"><!-- 2019.03.19 추가-->
                                    <input type="text" placeholder="휴대폰 번호" title="휴대폰 번호 입력">
+                                   <button class="cancel" style="display: none;"><span class="blind">삭제</span></button><!-- 2019.03.19 추가-->
                                 </span>
                                 <span class="rg-br-bt-box">
                                     <button type="button">인증번호전송</button>
@@ -96,9 +104,10 @@
                                 </span>
                                 -->
                             </div>
-                            <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info">
-                                <span class="rg-br-input">
+                            <div class="rg-br-inputbox rg-br-bt-add rg-br-personal-info inputbox"><!-- 2019.03.19 추가-->
+                                <span class="rg-br-input input"><!-- 2019.03.19 추가-->
                                     <input type="tel" placeholder="인증번호 입력" title="인증번호 입력" aria-describedby="verify-number" disabled="">
+                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button><!-- 2019.03.19 추가-->
                                 </span>
                                 <span class="rg-br-bt-box" id="verify-number">
                                     <button type="button">시간연장</button>

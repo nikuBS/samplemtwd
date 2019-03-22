@@ -41,7 +41,7 @@ $(document).on('ready', function () {
   }*/
   // 19.03.20 fixed-bottom 상단 여백 이슈
 
-  //@190320: ios search touch event
+  //@190321: DV001-17881
   var isIOS = skt_landing.util.win_info.get_device().toUpperCase() === 'IOS';
   if(isIOS == true){
     $('.searchbox-header input[type="text"]').on({
@@ -51,9 +51,30 @@ $(document).on('ready', function () {
       }
     });
   }
+
+  //@190321: ios search touch event( 검색 영역 )
+  /*$('.wrap').on({       
+    'touchstart': function (e) {
+      var $this = $(this);
+      $this.data('posY', e.originalEvent.touches[0].pageY);
+    },
+    'touchmove': function (e) {
+      var $this = $(this);
+      var posY = e.originalEvent.touches[0].pageY;
+      var dataPosY = parseFloat($this.data('posY'));
+      var isMoveUp = (posY-[dataPosY]<0);
+      var isMoveDown = (posY-[dataPosY]>0);
+      var scrollLimit = $this.height()+$this.scrollTop();     //스크롤 컨테이너 높이값
+      var isScrollEnd = (scrollLimit == $this.children().outerHeight(true));    //컨텐츠 내용물의 높이
+      var isLessContents = $this.height() >= $this.children().height();
+      
+      if((isMoveUp && isScrollEnd) || isLessContents) e.preventDefault();
+    }
+  }, '.searchbox-layer02, .searchbox-layer02+.cont-layer-blind02, .searchbox-layer01.searchbox-lock');*/
+
 });
 $(window).on('resize', function (e, datas) {  
-  //@190320: ios search touch event
+  //@190321: DV001-17881
   var ios = {
     evt: null,
     type: null,
@@ -66,7 +87,6 @@ $(window).on('resize', function (e, datas) {
     ios.tag = datas.dataset.tag;
     ios.osType = datas.dataset.osType;
   }
-
   var current_size = $(window).width() + $(window).height();
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
@@ -77,7 +97,7 @@ $(window).on('resize', function (e, datas) {
     $("#gnb.on .g-wrap").css("position","fixed");
   }
   
-  if ( ios.type == 'focus' || Math.abs( current_size - skt_landing._originalSize ) > 200 ){   //@190320: ios search touch event    //190320: ios search touch( ios.type )        
+  if ( ios.type == 'focus' || Math.abs( current_size - skt_landing._originalSize ) > 200 ){   //@190320: ios search touch event    //190321: DV001-17881
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
