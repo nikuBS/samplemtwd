@@ -16,14 +16,16 @@
     <!-- #header -->
     <div id="header" class="rg-br-header-wrap">
         <div class="rg-br-header">
-            <div class="rg-br-header-ti">
-                <h1 class="rg-br-tworld">
-                        <span class="rg-br-ico-logo" role="img" aria-label="Tworld">
-                            <span class="rg-br-logo-name">Tworld</span>
-                        </span>
-                    <p class="rg-br-more-txt">T world에서 더 많은 정보와 서비스를 이용하실 수 있습니다.</p>
-                </h1>
-            </div>
+            <div class="rg-br-header-ti logo-left">
+                    <h1 class="rg-br-tworld-center"><!-- 19.03.22 클래스 변경 -->
+                        <a href="https://m.tworld.co.kr" title="새창 열림" target="_blank"><!-- 19.03.22 a태그 삽입 -->
+                            <span class="rg-br-ico-logo" role="img" aria-label="Tworld">
+                                <span class="rg-br-logo-name">Tworld</span>
+                            </span>
+                        </a>
+                        <p class="rg-br-more-txt">T world에서 더 많은 정보와 서비스를 이용하실 수 있습니다.</p>
+                    </h1>
+                </div>
         </div>
     </div>
     <!--// #header -->
@@ -78,10 +80,10 @@
             <hr class="rg-br-cont-sp type1" aria-hidden="true">
             <div class="rg-br-cont-box rg-br-nogaps-type">
                 <!-- .widget -->
-                <div class="rg-br-widget rg-br-p-data-detail widget">
+                <div class="rg-br-widget widget rg-br-p-data-detail">
                     <div class="widget-box accordion">
                         <h3 class="rg-br-tit-a rg-br-blind">고객 가입정보</h3>
-                        <div class="acco-cover toggle">
+                        <div class="acco-cover on"><!-- 19.03.22 toggle 제거( toggle 추가시 다른거 열면 다 닫힘 ) -->
                             <div class="acco-style">
                                 <ul class="acco-list">
                                 <%  if(data.infoList &&  data.infoList.length) {
