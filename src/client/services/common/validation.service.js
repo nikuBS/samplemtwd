@@ -1,8 +1,9 @@
-Tw.ValidationService = function (rootEl, submitBtn, change) {
+Tw.ValidationService = function (rootEl, submitBtn, change, isPrepay) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
   this.$expirationTarget = null;
+  this.$isPrepay = isPrepay;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -75,6 +76,10 @@ Tw.ValidationService.prototype = {
       isValid = true;
     }
 
+    if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') !== -1) {
+      isValid = true;
+    }
+
     if ($target.hasClass('fe-point')) {
       message = this._getPointMessage($target);
       if (Tw.FormatHelper.isEmpty(message)) {
@@ -132,7 +137,7 @@ Tw.ValidationService.prototype = {
       isWrong = $target.val().length < $target.attr('minLength');
 
       if (!isWrong) {
-        if ($target.hasClass('fe-card-number')) {
+        if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') === -1) {
           this._getCardCode($target);
         } else if ($target.hasClass('fe-birth')) {
           isWrong = !this._validation.isBirthday($target.val());
@@ -207,6 +212,11 @@ Tw.ValidationService.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       var cardCode = res.result.bankCardCoCd;
       var cardName = res.result.cardNm;
+
+      if (this.$isPrepay) {
+        cardCode = res.result.prchsCardCd;
+        cardName = res.result.prcchsCardNm;
+      }
 
       $target.attr({ 'data-code': cardCode, 'data-name': cardName });
       $target.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');

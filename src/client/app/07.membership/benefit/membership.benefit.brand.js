@@ -291,6 +291,7 @@ Tw.MembershipBenefitBrand.prototype = {
   _searchWithKeyword: function () {
     var inputVal = this.$inputCoPtnrNm.val();
     var regExp = /^[가-힣a-zA-Z1-9\s]+$/; //한글완성형, 영문, 공백
+    this.$inputCoPtnrNm.blur();
     if (!Tw.FormatHelper.isEmpty(inputVal) && !regExp.test(inputVal)) {
       this._showEmptyResult();
       return;
@@ -304,6 +305,7 @@ Tw.MembershipBenefitBrand.prototype = {
       options.coPtnrNm = encodeURIComponent(this.$inputCoPtnrNm.val());
     }
     this._reqBrandList(options);
+    this.$inputCoPtnrNm.blur();
   },
 
   _showEmptyResult: function() {

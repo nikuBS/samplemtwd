@@ -45,7 +45,8 @@ Tw.NTV_CMD = {
   OPEN_NETWORK_ERROR_POP: 'openNetworkErrorPop',
   OPEN_FILE_CHOOSER: 'openFileChooser',
   CAN_GO_HISTORY: 'canGoHistory',
-  SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled'
+  SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled',
+  READY_SMS: 'readySMS'
 };
 
 Tw.NTV_CODE = {

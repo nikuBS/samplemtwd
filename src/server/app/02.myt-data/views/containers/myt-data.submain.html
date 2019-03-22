@@ -165,10 +165,14 @@
             <div class="cont-box nogaps">
                 <ul class="btn-link-list line-type01">
                     <!-- btn-link-list 인경우 버튼 하나만 있는 경우 full 클래스명 추가 -->
-                    <li class="last-line full" data-id="pester"><button>데이터 조르기</button></li>
+                    <!--<li class="last-line full" data-id="pester"><button>데이터 조르기</button></li>-->
                     <!--TODO: GrandOpen 때 enable 처리 -->
-                    <!--<li class="last-line" data-id="pester"><button>데이터 조르기</button></li>-->
-                    <!--<li class="last-line" data-id="benefit"><button>데이터 혜택</button></li>-->
+                    <% if (data.isPrepayment) { %>
+                    <li class="last-line" data-id="pester"><button>데이터 조르기</button></li>
+                    <li class="last-line" data-id="benefit"><button>데이터 혜택</button></li>
+                    <% } else { %>
+                    <li class="last-line full" data-id="pester"><button>데이터 조르기</button></li>
+                    <% } %>
                 </ul>
             </div>
             <% } %>

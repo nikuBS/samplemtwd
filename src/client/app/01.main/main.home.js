@@ -289,6 +289,11 @@ Tw.MainHome.prototype = {
     }
   },
   _openEmrNotice: function (notice) {
+    // this.$hiddenNotice.trigger('click', {
+    //   ntcTicNm: 'title',
+    //   ntcCtt: 'content',
+    //   ntcReqRsnCtt: '0'
+    // });
     if ( !Tw.FormatHelper.isEmpty(notice) ) {
       var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
       var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
@@ -317,7 +322,7 @@ Tw.MainHome.prototype = {
       'cont_align': 'tl',
       'contents': notice.ntcCtt,
       'bt_b': this._makeBtnList(notice)
-    }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+    }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this), 'mainAuto');
   },
   _makeBtnList: function (notice) {
     var NOTI_POPUP_STYLE = {

@@ -293,6 +293,27 @@ class LoginService {
     });
   }
 
+  public clearSessionStore(svcMgmtNum: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) ) {
+        if ( !FormatHelper.isEmpty(this.request.session.store) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) ) {
+          this.request.session.store[svcMgmtNum] = {};
+          this.request.session.save(() => {
+            this.logger.debug(this, '[clearSessionStore]', this.request.session.store);
+            observer.next(this.request.session.store[svcMgmtNum]);
+            observer.complete();
+          });
+        } else {
+          observer.next({});
+          observer.complete();
+        }
+      } else {
+        observer.next({});
+        observer.complete();
+      }
+    });
+  }
+
   public getSessionStore(command: string, svcMgmtNum: string): any {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.store) &&
       !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {

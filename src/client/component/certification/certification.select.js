@@ -418,7 +418,6 @@ Tw.CertificationSelect.prototype = {
     this._popupService.close();
   },
   _completeCert: function (resp) {
-    console.log('completecert', this._onSelectPopup);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;

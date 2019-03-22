@@ -14,6 +14,7 @@ import MembershipMyUpdate from './controllers/my/membership.my.update.controller
 import MembershipMyHistory from './controllers/my/membership.my.history.controller';
 import MembershipMyCancel from './controllers/my/membership.my.cancel.controller';
 import MembershipMyReissue from './controllers/my/membership.my.reissue.controller';
+import MembershipJoinComplete from './controllers/join/membership.join.complete';
 
 class MembershipRouter extends TwRouter {
   constructor() {
@@ -33,6 +34,7 @@ class MembershipRouter extends TwRouter {
     this.controllers.push({ url: '/my/history', controller: MembershipMyHistory });
     this.controllers.push({ url: '/my/cancel', controller: MembershipMyCancel });
     this.controllers.push({ url: '/my/reissue', controller: MembershipMyReissue });
+    this.controllers.push({ url: '/join/complete', controller: MembershipJoinComplete });
   }
 }
 

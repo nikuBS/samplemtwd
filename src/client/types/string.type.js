@@ -118,8 +118,7 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
-  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.'
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -796,7 +795,6 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
   ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
   ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
-  ALERT_3_A90: { TITLE: '선물받는 번호를 확인해 주세요.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -1732,14 +1730,14 @@ Tw.ROAMING_RETURN_CODE = {
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
-  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(E-F 카운터)', img: 'place-img-01' },
-  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(G-H 카운터)', img: 'place-img-01' },
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h' },
   1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03' },
   1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
   1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05' },
   1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10' },
   1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06' },
-  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02' }
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de' }
 };
 
 Tw.SERVICE_AREA_TYPE = {

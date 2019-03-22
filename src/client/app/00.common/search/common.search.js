@@ -25,7 +25,7 @@ Tw.CommonSearch.prototype = {
       fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
       fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="highlight-text">','g')
+      spanOpen : new RegExp('<span class="keyword-text">','g')
     };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -108,7 +108,7 @@ Tw.CommonSearch.prototype = {
         }
         if(typeof (data[i][key])==='string'){
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
-          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
+          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="keyword-text">');
         }
         if(key==='DEPTH_PATH'){
           if(data[i][key].charAt(0)==='|'){
@@ -136,7 +136,7 @@ Tw.CommonSearch.prototype = {
             data[i].IMG_ALT = tempArr[1];
           }
         }
-        if(key==='MENU_URL'&&data[i][key].includes('http')){
+        if(key==='MENU_URL'&&data[i][key].indexOf('http') !== -1){
           data[i].tagTitle = Tw.COMMON_STRING.OPEN_NEW_TAB;
         }
       }
@@ -383,7 +383,7 @@ Tw.CommonSearch.prototype = {
       this._popupService.close();
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
-    },this),100);
+    },this));
   },
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
@@ -449,7 +449,7 @@ Tw.CommonSearch.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="keyword-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }
@@ -459,7 +459,7 @@ Tw.CommonSearch.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
     returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
@@ -505,7 +505,7 @@ Tw.CommonSearch.prototype = {
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
       _.each(returnData,function (data,idx) {
-        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
+        $smartBase.append(smartTemplate({data : data }));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');
@@ -577,7 +577,7 @@ Tw.CommonSearch.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var url = resp.result.svcUrl;
+    var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
     }
@@ -586,6 +586,7 @@ Tw.CommonSearch.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
     this._popupService.open({
@@ -611,6 +612,16 @@ Tw.CommonSearch.prototype = {
     // BPCP 팝업 닫고 로그인 호출
     if (data.indexOf('goLogin:') !== -1) {
       this._tidLanding.goLogin(this._nowUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
+
+    // BPCP 에서 외부 팝업창 호출하고자 할떄
+    if (data.indexOf('outlink:') !== -1) {
+      var url = data.replace('outlink:', '');
+      if (!Tw.BrowserHelper.isApp()) {
+        return Tw.CommonHelper.openUrlExternal(url);
+      }
+
+      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
     }
   }
 };

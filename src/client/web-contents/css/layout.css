@@ -2,6 +2,12 @@
 /** gnb **/
 body.bg-white {
   background-color: #fff; }
+  body.bg-white .container-wrap {
+    overflow-y: auto;
+    overflow-x: hidden; }
+    body.bg-white .container-wrap .container {
+      overflow-y: auto;
+      overflow-x: hidden; }
 
 body.bg-gray {
   background-color: #f5f5f5; }
@@ -102,7 +108,8 @@ body.hidden {
               box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.27); }
       #gnb .q-wrap li:last-of-type {
         margin-bottom: 0; }
-    #gnb .q-wrap button, #gnb .q-wrap a {
+    #gnb .q-wrap button,
+    #gnb .q-wrap a {
       vertical-align: top; }
     #gnb .q-wrap img {
       width: 2.5rem;
@@ -162,7 +169,7 @@ body.hidden {
             transform: translateX(0); }
   #common-menu [class^="c-"] {
     position: absolute;
-    top: 0.75rem;
+    top: 0.9375rem;
     width: 1.5rem;
     height: 1.5rem;
     color: transparent;
@@ -197,7 +204,7 @@ body.hidden {
     left: 0;
     width: 100%;
     height: 3.5rem;
-    padding: 0.8125rem 8.4375rem 0 1rem;
+    padding: 1rem 8.4375rem 0 1rem;
     background: #e6f2fb;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -517,7 +524,11 @@ body.hidden {
     background: url(/img/svg/icon_48px_exit.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
-.device_ios #common-menu .section-userinfo .login, .device_android #common-menu .section-userinfo .login {
+.device_ios #common-menu .section-userinfo .login {
+  background: url(/img/common/ico-login.png) no-repeat right 0.25rem;
+  background-size: 0.4375rem 0.6875rem; }
+
+.device_android #common-menu .section-userinfo .login {
   background: url(/img/common/ico-login.png) no-repeat right 0.25rem;
   background-size: 0.4375rem 0.6875rem; }
 
@@ -716,7 +727,8 @@ body.hidden {
       .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
         padding: 1.1875rem 0;
         font-size: 0.875rem; }
-        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a {
+        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit button,
+        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit a {
           top: 0.75rem;
           right: -0.625rem;
           padding: 1rem; }
@@ -729,27 +741,35 @@ body.hidden {
       .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont {
         background: #fff;
         border-top: 1px solid #efefef; }
-        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a {
+        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button,
+        .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a {
           display: block;
           padding: 0.9375rem 0;
           width: 100%;
           font-size: 0.875rem;
           text-align: left; }
-          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:link, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:visited, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:hover, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:active, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:link, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:visited, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:hover, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:active {
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:link, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:visited, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:hover, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li button:active,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:link,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:visited,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:hover,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub li a:active {
             color: #000; }
         .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 {
           padding: 1.25rem 0; }
-          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li button, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li a {
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li button,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li a {
             display: block;
             padding: 0.9375rem 0 0 0;
             width: 100%;
             color: #666;
             font-size: 0.875rem;
             text-align: left; }
-          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit button, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit a {
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit button,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit a {
             padding: 1.5625rem 0 0 0;
             color: #000; }
-          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit:first-of-type button, .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit:first-of-type a {
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit:first-of-type button,
+          .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box .acco-cont .all-menu-sub1 li.tit:first-of-type a {
             padding: 0; }
       .all-menu .accordion .acco-style.btn-hold .acco-list .acco-box:after {
         border-color: #f1f1f1; }
@@ -769,7 +789,8 @@ body.hidden {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       border: 1px solid #f5f5f5; }
-      .all-menu .accordion .acco-style.btn-hold .all-menu-product li button, .all-menu .accordion .acco-style.btn-hold .all-menu-product li a {
+      .all-menu .accordion .acco-style.btn-hold .all-menu-product li button,
+      .all-menu .accordion .acco-style.btn-hold .all-menu-product li a {
         color: #000;
         font-size: 0.8125rem;
         position: relative;
@@ -785,7 +806,8 @@ body.hidden {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       border-bottom: 1px solid #f5f5f5; }
-      .all-menu .accordion .acco-style.btn-hold .all-menu-family li button, .all-menu .accordion .acco-style.btn-hold .all-menu-family li a {
+      .all-menu .accordion .acco-style.btn-hold .all-menu-family li button,
+      .all-menu .accordion .acco-style.btn-hold .all-menu-family li a {
         color: #000;
         font-size: 0.8125rem;
         position: relative;
@@ -796,9 +818,11 @@ body.hidden {
         text-align: left; }
       .all-menu .accordion .acco-style.btn-hold .all-menu-family li .ico {
         right: -0.3125rem; }
-  .all-menu .all-menu-banner button, .all-menu .all-menu-banner a {
+  .all-menu .all-menu-banner button,
+  .all-menu .all-menu-banner a {
     display: block; }
-    .all-menu .all-menu-banner button img, .all-menu .all-menu-banner a img {
+    .all-menu .all-menu-banner button img,
+    .all-menu .all-menu-banner a img {
       display: block;
       width: 100%; }
 
@@ -808,9 +832,11 @@ body.hidden {
     float: left;
     width: 25%;
     text-align: center; }
-    .app-down li button, .app-down li a {
+    .app-down li button,
+    .app-down li a {
       font-size: 0.75rem; }
-      .app-down li button .img, .app-down li a .img {
+      .app-down li button .img,
+      .app-down li a .img {
         display: block;
         margin: 0 auto 0.625rem;
         width: 3.375rem;
@@ -986,7 +1012,9 @@ body.hidden {
         padding-left: 0; }
         .cont-box.flp-other-pd-st .horizon-fullbox .widget-box .horizontal-slide .horizontal-list {
           padding-right: 1rem; }
-    .cont-box.flp-other-pd-st .bundle-tit-wrap, .cont-box.flp-other-pd-st .expect-benefit-slide .tit, .cont-box.flp-other-pd-st .expect-benefit-slide .ext-txt {
+    .cont-box.flp-other-pd-st .bundle-tit-wrap,
+    .cont-box.flp-other-pd-st .expect-benefit-slide .tit,
+    .cont-box.flp-other-pd-st .expect-benefit-slide .ext-txt {
       padding: 0 1rem; }
     .cont-box.flp-other-pd-st .basic-list.bg-type {
       margin-left: 1rem;
@@ -1074,15 +1102,13 @@ body.hidden {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 3.25rem 0 0;
   /*rem(59px 0 54px)*/
   background: #fff;
   z-index: 200;
-  overflow-y: auto;
   overflow-x: hidden;
-  /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
-  -webkit-overflow-scrolling: touch; }
+  /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
   .popup-page .page-header {
     border-bottom: 1px solid #e5e5e5; }
     .popup-page .page-header.noborder {
@@ -1160,16 +1186,20 @@ body.hidden {
           border-bottom: 1px solid #e1e1e1; }
         .popup-page.layer .container-wrap .container .link-long {
           border-bottom: 0; }
-          .popup-page.layer .container-wrap .container .link-long a, .popup-page.layer .container-wrap .container .link-long button {
+          .popup-page.layer .container-wrap .container .link-long a,
+          .popup-page.layer .container-wrap .container .link-long button {
             padding-top: 0.75rem;
             padding-bottom: 0.75rem;
             font-weight: 700; }
-            .popup-page.layer .container-wrap .container .link-long a .tx-sub, .popup-page.layer .container-wrap .container .link-long button .tx-sub {
+            .popup-page.layer .container-wrap .container .link-long a .tx-sub,
+            .popup-page.layer .container-wrap .container .link-long button .tx-sub {
               top: 0.5625rem;
               font-size: 0.875rem; }
-              .popup-page.layer .container-wrap .container .link-long a .tx-sub .ico, .popup-page.layer .container-wrap .container .link-long button .tx-sub .ico {
+              .popup-page.layer .container-wrap .container .link-long a .tx-sub .ico,
+              .popup-page.layer .container-wrap .container .link-long button .tx-sub .ico {
                 top: -0.125rem; }
-            .popup-page.layer .container-wrap .container .link-long a .ico, .popup-page.layer .container-wrap .container .link-long button .ico {
+            .popup-page.layer .container-wrap .container .link-long a .ico,
+            .popup-page.layer .container-wrap .container .link-long button .ico {
               top: 0.4375rem; }
     .popup-page.layer .list-comp-input-agree .select-list {
       padding: 0.5rem 0; }
@@ -1215,8 +1245,7 @@ body.hidden {
     .popup-page .container-wrap .container {
       padding: 0; }
   .popup-page.no-btn {
-    padding-bottom: 0;
-    -webkit-overflow-scrolling: auto; }
+    padding-bottom: 0; }
     .popup-page.no-btn .container {
       overflow-y: auto;
       overflow-x: hidden;
@@ -1375,19 +1404,16 @@ body.hidden {
   .popup-page.fixed-bottom {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    -webkit-overflow-scrolling: auto; }
-    .popup-page.fixed-bottom .container-wrap, .popup-page.fixed-bottom .container {
-      height: 100%;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+    padding-bottom: 3.75rem;
+    overflow-y: visible; }
+    .popup-page.fixed-bottom .container-wrap {
+      position: static;
+      height: 100%; }
     .popup-page.fixed-bottom .container {
-      padding-bottom: 3.75rem;
       height: 100%;
-      overflow-y: auto;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch; }
       .popup-page.fixed-bottom .container .section-menu-box {
         padding-bottom: 1.625rem; }
         .popup-page.fixed-bottom .container .section-menu-box .menu-guide-img {
@@ -1408,9 +1434,9 @@ body.hidden {
       padding-bottom: 15rem; }
   .popup-page.fixed-btn {
     -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    -webkit-overflow-scrolling: auto; }
-    .popup-page.fixed-btn .container-wrap, .popup-page.fixed-btn .container {
+            box-sizing: border-box; }
+    .popup-page.fixed-btn .container-wrap,
+    .popup-page.fixed-btn .container {
       height: 100%;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
@@ -1419,14 +1445,6 @@ body.hidden {
       left: 0;
       bottom: 0;
       z-index: 25; }
-    .popup-page.fixed-btn .container {
-      padding-bottom: 3.75rem;
-      height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
   .popup-page.focusin {
     /* common.js */
     padding-bottom: 0 !important; }
@@ -1453,10 +1471,18 @@ body.hidden {
 }*/
 /* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
 .device_ios #common-menu .section-userinfo .userinfo .ti-tx + .bt {
-  top: 0; }
+  top: -0.125rem; }
 
 .device_ios #common-menu .section-userinfo .userinfo .tx + .bt {
   top: -5px; }
+
+.device_ios #common-menu.scroll .section-userinfo .userinfo .ti-tx + .bt {
+  top: -1.6875rem;
+  color: transparent; }
+
+.device_ios #common-menu.scroll .section-userinfo .userinfo .tx + .bt {
+  top: -1.6875rem;
+  color: transparent; }
 
 .device_android .popup-page .page-header {
   -webkit-backface-visibility: hidden;
@@ -1464,10 +1490,12 @@ body.hidden {
   -webkit-transform: translateZ(0);
           transform: translateZ(0); }
 
-.device_android .paging a, .device_android .paging button {
+.device_android .paging a,
+.device_android .paging button {
   top: -6px; }
 
-.device_android .paging .first, .device_android .paging .last {
+.device_android .paging .first,
+.device_android .paging .last {
   top: 0; }
 
 /* 페이지 사이즈 100% */
@@ -1536,7 +1564,8 @@ body.hidden {
   margin: 1.25rem 0 1.875rem;
   text-align: center;
   font-size: 0; }
-  .paging a, .paging button {
+  .paging a,
+  .paging button {
     position: relative;
     display: inline-block;
     top: 0;
@@ -1548,7 +1577,8 @@ body.hidden {
     color: #000;
     line-height: 1.5rem;
     height: 1.5rem; }
-    .paging a.active, .paging button.active {
+    .paging a.active,
+    .paging button.active {
       font-weight: 700; }
   .paging .first,
   .paging .prev,
@@ -1711,7 +1741,8 @@ body.hidden {
     font-size: 0.875rem;
     font-weight: 400;
     color: #757575; }
-    .box-suggest .suggest-info .suggest-btn-info button, .box-suggest .suggest-info .suggest-btn-info a {
+    .box-suggest .suggest-info .suggest-btn-info button,
+    .box-suggest .suggest-info .suggest-btn-info a {
       display: inline-block;
       margin-left: 0.375rem;
       width: 0.9375rem;
@@ -1971,7 +2002,8 @@ body.hidden {
     padding-top: 1.25rem; }
   .contents-notice.type3 {
     padding-top: 0; }
-  .contents-notice.type4 .noti-type1, .contents-notice.type4 .noti-type2 {
+  .contents-notice.type4 .noti-type1,
+  .contents-notice.type4 .noti-type2 {
     font-size: 0.8125rem;
     margin-top: 0.3125rem; }
   .contents-notice.line-top {
@@ -2087,7 +2119,8 @@ body.hidden {
       padding-top: 1.25rem; }
     .sms-confirm-box .box-citation .citation-form .form-cell .widget-box.radio {
       margin-top: 1.25rem; }
-  .sms-confirm-box .email-confirm-out a, .sms-confirm-box .email-confirm-out button {
+  .sms-confirm-box .email-confirm-out a,
+  .sms-confirm-box .email-confirm-out button {
     display: block;
     overflow: hidden;
     width: 100%;
@@ -2105,7 +2138,8 @@ body.hidden {
     color: #000; }
   .sms-confirm-box .email-confirm-out a:focus {
     color: #000; }
-  .sms-confirm-box .email-confirm-out span, .sms-confirm-box .email-confirm-out em {
+  .sms-confirm-box .email-confirm-out span,
+  .sms-confirm-box .email-confirm-out em {
     display: inline-block;
     vertical-align: top; }
   .sms-confirm-box .email-confirm-out .ti {
@@ -2270,7 +2304,8 @@ body.hidden {
 .certifi-repre {
   padding: 1.5625rem 0;
   font-size: 0; }
-  .certifi-repre dt, .certifi-repre dd {
+  .certifi-repre dt,
+  .certifi-repre dd {
     display: inline-block;
     width: 50%; }
   .certifi-repre dt {
@@ -2292,7 +2327,8 @@ body.hidden {
   font-size: 0.75rem;
   font-weight: 400;
   color: #666; }
-  .box-certifi-card .certifi-card-ti em, .box-certifi-card .certifi-card-ti span {
+  .box-certifi-card .certifi-card-ti em,
+  .box-certifi-card .certifi-card-ti span {
     vertical-align: baseline; }
 
 .box-certifi-card .certifi-card-list {
@@ -2369,7 +2405,8 @@ body.hidden {
     border-bottom: 1px solid #d1d1d1; }
     .box-certifi-list .certifi-sel-list li:last-of-type {
       border-bottom: 0; }
-    .box-certifi-list .certifi-sel-list li > button, .box-certifi-list .certifi-sel-list li > a {
+    .box-certifi-list .certifi-sel-list li > button,
+    .box-certifi-list .certifi-sel-list li > a {
       position: relative;
       display: block;
       width: 100%;
@@ -2466,7 +2503,8 @@ body.hidden {
   border-bottom: 1px solid #e1e1e1; }
   .box-service-guide .service-guide-link:last-of-type {
     border-bottom: 0; }
-  .box-service-guide .service-guide-link button, .box-service-guide .service-guide-link a {
+  .box-service-guide .service-guide-link button,
+  .box-service-guide .service-guide-link a {
     display: block;
     width: 100%;
     padding: 1.375rem 0;
@@ -2549,7 +2587,8 @@ body.hidden {
   padding-top: 0; }
   .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box {
     border-top: 0; }
-    .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit button, .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit a {
+    .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit button,
+    .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit a {
       font-size: 1rem;
       font-weight: 700; }
     .box-service-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-cont {
@@ -2567,7 +2606,8 @@ body.hidden {
         margin-top: 0.5rem;
         font-size: 1rem; }
 
-.box-guide-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit button, .box-guide-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit a {
+.box-guide-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit button,
+.box-guide-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-tit a {
   font-size: 1rem; }
 
 .box-guide-acco .accordion .acco-cover .acco-style .acco-list .acco-box .acco-cont .inner-group.type5 .inner-list2 .inner-cont ul li {
@@ -2607,13 +2647,16 @@ body.hidden {
   border-bottom: 1px solid #f5f5f5; }
   .box-service-qa .service-qa-block:last-of-type {
     border-bottom: 0; }
-  .box-service-qa .service-qa-block.none-point dl dt, .box-service-qa .service-qa-block.none-point dl dd {
+  .box-service-qa .service-qa-block.none-point dl dt,
+  .box-service-qa .service-qa-block.none-point dl dd {
     padding-left: 0; }
-  .box-service-qa .service-qa-block dl dt, .box-service-qa .service-qa-block dl dd {
+  .box-service-qa .service-qa-block dl dt,
+  .box-service-qa .service-qa-block dl dd {
     position: relative;
     padding-left: 1.625rem;
     vertical-align: baseline; }
-    .box-service-qa .service-qa-block dl dt .point, .box-service-qa .service-qa-block dl dd .point {
+    .box-service-qa .service-qa-block dl dt .point,
+    .box-service-qa .service-qa-block dl dd .point {
       position: absolute;
       top: 0;
       left: 0;
@@ -2673,7 +2716,8 @@ body.hidden {
     border-bottom: 1px solid #e1e1e1; }
     .box-store-time .store-time .store-time-list > div dl {
       font-size: 0; }
-      .box-store-time .store-time .store-time-list > div dl dt, .box-store-time .store-time .store-time-list > div dl dd {
+      .box-store-time .store-time .store-time-list > div dl dt,
+      .box-store-time .store-time .store-time-list > div dl dd {
         display: inline-block;
         width: 50%;
         padding: 1.25rem 0; }
@@ -2813,7 +2857,8 @@ body.hidden {
           margin-top: 0.75rem;
           font-size: 0.8125rem;
           color: #757575; }
-      .box-store-result .store-result-list > div .bt-tel, .box-store-result .store-result-list > div .bt-spot {
+      .box-store-result .store-result-list > div .bt-tel,
+      .box-store-result .store-result-list > div .bt-spot {
         display: inline-block;
         position: absolute;
         top: 50%;
@@ -3007,7 +3052,8 @@ body.hidden {
 .store-repre {
   padding: 1.5625rem 0 0.625rem;
   font-size: 0; }
-  .store-repre dt, .store-repre dd {
+  .store-repre dt,
+  .store-repre dd {
     display: inline-block;
     width: 50%; }
   .store-repre dt {
@@ -3218,13 +3264,35 @@ body.hidden {
 .rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti {
   text-align: center; }
 
+.rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti.logo-left {
+  text-align: left; }
+
 .rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti h1 {
-  display: inline;
+  display: inline-block;
   font-size: 0.9375rem;
   font-weight: 900;
   text-align: center;
   line-height: 1.25rem;
   vertical-align: middle; }
+
+.rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti .rg-br-tworld-center {
+  padding-bottom: 0; }
+
+.rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti.logo-left .rg-br-tworld-center {
+  text-align: left;
+  padding: 0 1.625rem; }
+
+.rg-br-body .rg-br-tworld-center .rg-br-more-txt {
+  margin-top: 0.5rem;
+  color: #757575;
+  font-size: 0.75rem; }
+
+.rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti h1 a {
+  background: transparent;
+  width: auto;
+  height: auto;
+  line-height: 1;
+  position: relative; }
 
 .rg-br-body .rg-br-header-wrap .rg-br-header .rg-br-header-ti a {
   display: inline-block;
@@ -3287,10 +3355,9 @@ body.hidden {
 .rg-br-body .rg-br-cont-box.rg-br-nogaps-type {
   padding: 0 0 0.625rem; }
 
-/*
-  .cont-ti {
-    margin-bottom: 1.5rem; }
-  */
+/*cont-ti {
+    margin-bottom: 1.5rem; 
+}*/
 .rg-br-body .rg-br-cont-sp.type1 {
   height: 0.5rem; }
 
@@ -3307,6 +3374,7 @@ body.hidden {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
   width: 100%;
   height: 100%;
   padding: 3.6875rem 0 3.375rem;

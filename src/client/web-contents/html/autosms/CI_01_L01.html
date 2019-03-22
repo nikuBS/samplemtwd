@@ -29,7 +29,7 @@
 </head>
 
 <body>
-    <div class="rg-br-body rg-br-fixed-wrap"><!-- .fixed-wrap : 페이지 100% 고정 -->
+    <div class="wrap rg-br-body rg-br-fixed-wrap"><!-- .fixed-wrap : 페이지 100% 고정 --><!-- @190320: wrap 클래스 추가 -->
         <!-- #contents 생년월일 규격에 맞지않는 정보 입력 후 인증 실행 시-->
         <div id="contents" class="rg-br-container-wrap">
             <h2 class="rg-br-blind">내용</h2>
@@ -37,6 +37,7 @@
                 <script type="text/javascript">
                     $(document).on('ready',function() {
                         skt_landing.action.popup.open({
+                            'url':'/hbs/',      //@190320: url param 추가
                             'title': '알림',
                             'close_bt': true,
                             'contents': '생년월일 입력형식이 잘못되었습니다.<br/>다시 확인해주세요.',

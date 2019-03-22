@@ -338,12 +338,7 @@ Tw.MyTJoinSubMain.prototype = {
       Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
-      if ( this.changeLineType === 'pc' ) {
-        this._historyService.replaceURL('/myt-join/submain_w');
-      }
-      else {
-        this._historyService.replaceURL('/myt-join/submain');
-      }
+      this._historyService.replaceURL('/myt-join/submain');
     }, this), 500);
   },
 

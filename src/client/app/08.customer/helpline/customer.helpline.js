@@ -33,7 +33,7 @@ Tw.CustomerHelpline.prototype = {
     this.$areaPhone.on('keyup', 'input', $.proxy(this._validatePhoneNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._validatePhoneNumber, this));
     this.$container.on('change', '.radiobox input', $.proxy(this._validatePhoneNumber, this));
-    this.$btnSubmit.on('click', $.proxy(this._handleSubmit, this));
+    this.$btnSubmit.click(_.debounce($.proxy(this._handleSubmit, this), 300));
     this.$phoneInput.on('focusout', $.proxy(this.handleFocusoutInput, this));
     this.$phoneInput.on('focusin', $.proxy(this.handleFocusinInput, this));
     this.$btnType.on('click', $.proxy(this._openSelectTypePopup, this));

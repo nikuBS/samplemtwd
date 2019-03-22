@@ -30,7 +30,7 @@ class ShortcutRouter {
             this.redisService.getData(REDIS_KEY.MENU_URL + menuUrl).subscribe((menuResp) => {
               if ( menuResp.code === API_CODE.CODE_00 ) {
                 if ( !FormatHelper.isEmpty(menuResp.result.menuUrl) ) {
-                  res.redirect('/common/share/bridge?target=' + menuResp.result.menuUrl + '&loginType=N');
+                  res.redirect('/common/share/bridge?' + encodeURIComponent('target=' + menuResp.result.menuUrl + '&loginType=N'));
                 } else {
                   next();
                 }
@@ -59,7 +59,7 @@ class ShortcutRouter {
     const loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
 
     if ( endDate > curDate ) {
-      res.redirect('/common/share/bridge?target=' + menuUrl + '&loginType=' + loginType);
+      res.redirect('/common/share/bridge?' + encodeURIComponent('target=' + menuUrl + '&loginType=' + loginType));
     } else {
       next();
     }

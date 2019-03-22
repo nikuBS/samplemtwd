@@ -9,6 +9,7 @@ Tw.PopupService = function () {
   this._historyService = new Tw.HistoryService();
 
   this._popupObj = {};
+  this._firePop = false;
 
   this._init();
 };
@@ -16,36 +17,55 @@ Tw.PopupService = function () {
 Tw.PopupService.prototype = {
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
+    window.onpopstate = $.proxy(this._onPopState, this);
   },
   _onHashChange: function (hash) {
+    Tw.Logger.log('[Popup] Hash Change', hash, '', this._firePop);
+    if ( !this._firePop ) {
+      if ( Tw.FormatHelper.isEmpty(this._prevHashList) &&
+        hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
+        this._blockEmptyHash();
+      }
+    }
+    this._firePop = false;
+  },
+  _onPopState: function ($event) {
+    this._firePop = true;
     this._historyBack = false;
+    var hash = location.hash || '#';
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    var $popupLastFocus; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
-    if (lastHash) {
+    var $popupLastFocus = null; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
+
+    Tw.Logger.log('[Popup] Pop State', this._popupObj, hash, lastHash);
+
+    if ( lastHash ) {
       var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
       $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
     }
-    Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
+
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
-      if ( ('#' + hash.base) === lastHash.curHash ) {
+      if ( hash === lastHash.curHash ) {
         var closeCallback = lastHash.closeCallback;
         this._prevHashList.pop();
         Tw.Logger.info('[Popup Close]');
         this._popupClose(closeCallback);
-        if ($popupLastFocus) {
+        if ( $popupLastFocus ) {
           $popupLastFocus.focus();
         }
       }
-    } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
-      if ( Tw.BrowserHelper.isSamsung() ) {
-        if ( window.performance && performance.navigation.type === 1 ) {
-          this._emptyHash();
-        } else {
-          this._goBack();
-        }
+    } else if ( hash.indexOf('_P') >= 0 || hash.indexOf('popup') >= 0 ) {
+      this._blockEmptyHash();
+    }
+  },
+  _blockEmptyHash: function () {
+    if ( Tw.BrowserHelper.isSamsung() ) {
+      if ( window.performance && performance.navigation.type === 1 ) {
+        this._emptyHash();
       } else {
         this._goBack();
       }
+    } else {
+      this._goBack();
     }
   },
   _onOpenPopup: function (evt) {
@@ -59,39 +79,39 @@ Tw.PopupService.prototype = {
     Tw.Tooltip.popInit($popups.last());
 
     // 포커스 영역 저장 후 포커스 이동
-    var thisHash = this._prevHashList[this._prevHashList.length -1];
-    var $focusEl = evt ? (evt.length ? evt : $(evt.currentTarget) ) : $(':focus');
+    var thisHash = this._prevHashList[this._prevHashList.length - 1];
+    var $focusEl = evt ? (evt.length ? evt : $(evt.currentTarget)) : $(':focus');
     $focusEl = this._getEnableFocusEl($focusEl); // 닫힐때 포커스 타겟 저장
 
     // 돌아갈 focus 타겟 저장여부
-    if ($focusEl && $focusEl.length && thisHash && !$focusEl.is('.tw-popup')) {
+    if ( $focusEl && $focusEl.length && thisHash && !$focusEl.is('.tw-popup') && !$focusEl.is('.fe-nofocus-move') ) {
       $currentPopup.attr('hashName', thisHash.curHash).data('lastFocus', $focusEl);
     }
 
     // 팝업 focus 여부
-    if (!($focusEl && ($focusEl.is('.fe-nofocus-move') || $focusEl.find('.fe-nofocus-move').length))) {
-        // this._popupFocus($currentPopup); // 팝업포커스
-        $currentPopup.attr({'tabindex': 0, 'aria-modal': true, 'aria-hidden': false}).focus();
-        if ($currentPopup.find('.popup-page, .popup-info').length) {
-          $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
-          if(Tw.BrowserHelper.isIos()) {
-            $currentPopup.find('.popup-page.actionsheet').find('*').filter(function(){
-              return !$(this).attr('tabindex'); 
-            }).attr('tabindex', 0);
-            $currentPopup.find('li').eq(0).focus();
-          }
+    if ( !($focusEl && ($focusEl.is('.fe-nofocus-move') || $focusEl.find('.fe-nofocus-move').length)) ) {
+      // this._popupFocus($currentPopup); // 팝업포커스
+      $currentPopup.attr({ 'tabindex': 0, 'aria-modal': true, 'aria-hidden': false }).focus();
+      if ( $currentPopup.find('.popup-page, .popup-info').length ) {
+        $currentPopup.find('.popup-page, .popup-info').attr('tabindex', 0).eq(0).focus();
+        if ( Tw.BrowserHelper.isIos() ) {
+          $currentPopup.find('.popup-page.actionsheet').find('*').filter(function () {
+            return !$(this).attr('tabindex');
+          }).attr('tabindex', 0);
+          $currentPopup.find('li').eq(0).focus();
         }
-        if($currentPopup.find('h1').length) {
-          $currentPopup.find('h1').attr('tabindex',0).eq(0).focus();
-        }
-        if($currentPopup.find('.focus-elem').length) {
-          $currentPopup.find('.focus-elem').attr('tabindex',0).eq(0).focus();
-        }
-        // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스 
-        //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
+      }
+      if ( $currentPopup.find('h1').length ) {
+        $currentPopup.find('h1').attr('tabindex', 0).eq(0).focus();
+      }
+      if ( $currentPopup.find('.focus-elem').length ) {
+        $currentPopup.find('.focus-elem').attr('tabindex', 0).eq(0).focus();
+      }
+      // $currentPopup.children(':not(.popup-blind)').eq(0).attr('tabindex', -1).focus(); // 팝업열릴 때 해당 팝업 포커스
+      //$currentPopup.attr({'tabindex': 0, 'aria-hidden': 'false'}).find('button').focus();
     }
     // 포커스 영역 저장 후 포커스 이동 end
-    
+
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -141,8 +161,8 @@ Tw.PopupService.prototype = {
       hashName = '#' + hashName + '_P';
     }
 
-    location.hash = hashName;
-    // history.pushState(this._popupObj, 'popup', hashName);
+    // location.hash = hashName;
+    history.pushState(this._popupObj, hashName, hashName);
   },
   _bindEvent: function ($container) {
     // $('.popup-blind').on('click', $.proxy(this.close, this));
@@ -182,8 +202,8 @@ Tw.PopupService.prototype = {
   },
   _open: function (option, evt) {
     // CDN Url 셋팅 안된 채로 open 시도시 200ms 지연 후 재시도
-    if (Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
-      setTimeout($.proxy(function() {
+    if ( Tw.FormatHelper.isEmpty(Tw.Environment.cdn) ) {
+      setTimeout($.proxy(function () {
         this._open(option, evt);
       }, this), 200);
       return;
@@ -373,8 +393,8 @@ Tw.PopupService.prototype = {
   openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
 
     // 회선 정보
-    _.each([from, target], function(item){
-      if (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) {
+    _.each([from, target], function (item) {
+      if ( ['S1', 'S2'].indexOf(item.svcAttrCd) > -1 ) {
         item.descSvcNum = item.addr;
       } else {
         item.descSvcNum = Tw.FormatHelper.conTelFormatWithDash(item.svcNum.replace(/-/g, ''));
@@ -469,22 +489,34 @@ Tw.PopupService.prototype = {
     });
   },
   close: function () {
+    Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
-        setTimeout($.proxy(function () {
-          if ( this._historyBack && this._prevHashList.length > 0) {
-            this._historyBack = false;
-            var lastHash = this._prevHashList[this._prevHashList.length - 1];
-            var closeCallback = lastHash.closeCallback;
-            location.hash = lastHash.curHash;
-            this._prevHashList.pop();
-            this._popupClose(closeCallback);
-          }
-        }, this), 500);
-      }
+      Tw.Logger.log('[Popup] history back');
 
-      this._historyBack = true;
-      history.back();
+      if ( Tw.BrowserHelper.isIosChrome() && /mainAuto/.test(location.hash) ) {
+        var lastHash = this._prevHashList[this._prevHashList.length - 1];
+        var closeCallback = lastHash.closeCallback;
+        location.hash = lastHash.curHash;
+        this._prevHashList.pop();
+        this._popupClose(closeCallback);
+        history.replaceState(this._popupObj, '', '');
+      } else {
+        if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
+          setTimeout($.proxy(function () {
+            if ( this._historyBack && this._prevHashList.length > 0 ) {
+              this._historyBack = false;
+              var lastHash = this._prevHashList[this._prevHashList.length - 1];
+              var closeCallback = lastHash.closeCallback;
+              location.hash = lastHash.curHash;
+              this._prevHashList.pop();
+              this._popupClose(closeCallback);
+            }
+          }, this), 500);
+        }
+
+        this._historyBack = true;
+        history.back();
+      }
     }
   },
   closeAll: function () {
@@ -551,18 +583,18 @@ Tw.PopupService.prototype = {
     history.back();
   },
   _emptyHash: function () {
-    history.pushState('', document.title, window.location.pathname);
+    history.pushState('', document.title, window.location.pathname + window.location.search);
   },
 
   // Ios환경에서 포커스 가능한 객체 구하기
   _getEnableFocusEl: function ($focusEl) {
     var $resultEl = $focusEl;
     // ios 에서는 selectable element만 가능
-    if (Tw.BrowserHelper.isIos()) {
-      if(!$resultEl.is('button') && !$resultEl.is('[type=radio]')) {
-        if ($resultEl.find('button').length) {
+    if ( Tw.BrowserHelper.isIos() ) {
+      if ( !$resultEl.is('button') && !$resultEl.is('[type=radio]') ) {
+        if ( $resultEl.find('button').length ) {
           $resultEl = $resultEl.find('button').eq(0);
-        } else if ($resultEl.find('[type=radio]').length) {
+        } else if ( $resultEl.find('[type=radio]').length ) {
           $resultEl.find('[type=radio]').eq(0);
         }
       }

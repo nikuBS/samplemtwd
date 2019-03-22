@@ -26,8 +26,9 @@ Tw.MyTDataSubMain = function (params) {
 Tw.MyTDataSubMain.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트
   _rendered: function () {
-    if ( this._historyService.isBack() ) {
-      this._historyService.reload();
+    if ( !Tw.BrowserHelper.isApp() && this._historyService.isBack() ) {
+      // this._historyService.reload();
+      this._historyService.goLoad('/myt-data/submain');
     }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
@@ -49,8 +50,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn = this.$container.find('[data-id=benefit]');
-      this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     }
+    this.$dataPesterBtn = this.$container.find('[data-id=pester]');
     // if ( this.data.pattern ) {
     this.$patternChart = this.$container.find('[data-id=pattern_chart]');
     // }
@@ -88,8 +89,8 @@ Tw.MyTDataSubMain.prototype = {
     }
     if ( this.data.isBenefit ) {
       this.$dataBenefitBtn.on('click', $.proxy(this._onDataBenefitDetail, this));
-      this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
     }
+    this.$dataPesterBtn.on('click', $.proxy(this._onDataPesterDetail, this));
 
     // if ( this.data.breakdownList ) {
     //   this.$breakdownDetail.on('click', $.proxy(this._onBreakdownListDetail, this));
@@ -110,10 +111,6 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
-    var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
-    if ( otherLinesLength > 0 ) {
-      setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
-    }
   },
 
   _initBanners: function () {
@@ -163,6 +160,14 @@ Tw.MyTDataSubMain.prototype = {
   _checkScroll: function () {
     if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
       this._requestPattern();
+    }
+
+    if ( this.data.otherLines.length > 0 && !this._isRequestOtherLinesInfo && this._elementScrolled(this.$otherLines) ) {
+      var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
+      if ( otherLinesLength > 0 ) {
+        // setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
+        this._initOtherLinesInfo(0, otherLinesLength);
+      }
     }
   },
 
@@ -420,6 +425,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initOtherLinesInfo: function (from, end) {
+    this._isRequestOtherLinesInfo = true;
     var requestCommand = [];
     for ( var idx = from; idx < end; idx++ ) {
       this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
@@ -744,7 +750,7 @@ Tw.MyTDataSubMain.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var url = resp.result.svcUrl;
+    var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
     }
@@ -753,6 +759,7 @@ Tw.MyTDataSubMain.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
     this._popupService.open({
@@ -823,6 +830,16 @@ Tw.MyTDataSubMain.prototype = {
     // BPCP 팝업 닫고 로그인 호출
     if (data.indexOf('goLogin:') !== -1) {
       this._tidLanding.goLogin('/myt-data/submain?' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
+
+    // BPCP 에서 외부 팝업창 호출하고자 할떄
+    if (data.indexOf('outlink:') !== -1) {
+      var url = data.replace('outlink:', '');
+      if (!Tw.BrowserHelper.isApp()) {
+        return Tw.CommonHelper.openUrlExternal(url);
+      }
+
+      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
     }
   }
 };

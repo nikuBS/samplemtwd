@@ -90,6 +90,7 @@ Tw.API_CMD = {
   BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: Tw.API_METHOD.GET },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: Tw.API_METHOD.GET },
+  BFF_03_0032: { path: '/core-auth/:version/tworld-terms', method: Tw.API_METHOD.GET },
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET },
@@ -124,13 +125,13 @@ Tw.API_CMD = {
   BFF_05_0033: { path: '/core-bill/:version/bill-pay/autopay-schedule', method: Tw.API_METHOD.GET },
   BFF_05_0034: { path: '/core-bill/:version/bill-pay/suspension-cancel', method: Tw.API_METHOD.DELETE },
   // BFF_05_0035: { path: '/core-bill/:version/hotbill/fee/hotbill-request', method: Tw.API_METHOD.GET },
-  BFF_05_0036: { path: '/core-bill/:version/bill-pay/bills', method: Tw.API_METHOD.GET },
+  BFF_05_0036: { path: '/core-bill/v2/bill-pay/bills', method: Tw.API_METHOD.GET },
   BFF_05_0038: { path: '/core-bill/:version/bill-pay/donation', method: Tw.API_METHOD.GET },
   BFF_05_0039_N: { path: '/core-bill/:version/bill-types-return', method: Tw.API_METHOD.GET },
   BFF_05_0040: { path: '/core-product/:version/services/wireless/addition/:args0', method: Tw.API_METHOD.GET },
   BFF_05_0044: { path: '/core-bill/:version/bill-pay/roaming', method: Tw.API_METHOD.GET },
   BFF_05_0045: { path: '/core-bill/:version/bill-pay/call-gift', method: Tw.API_METHOD.GET },
-  BFF_05_0047: { path: '/core-bill/:version/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
+  BFF_05_0047: { path: '/core-bill/v2/bill-pay/used-amounts', method: Tw.API_METHOD.GET },
   BFF_05_0048: { path: '/core-bill/:version/bill-reissue', method: Tw.API_METHOD.POST },
   BFF_05_0050: { path: '/core-bill/:version/wire-bill-types', method: Tw.API_METHOD.PUT },
   BFF_05_0052: { path: '/core-bill/:version/wire-bill-reissue', method: Tw.API_METHOD.POST },
@@ -470,7 +471,6 @@ Tw.API_CMD = {
   BFF_10_0172: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck', method: Tw.API_METHOD.GET },
   BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
   BFF_10_0174: { path: '/core-product/:version/roaming/auto-dial', method: Tw.API_METHOD.GET },
-  BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -574,7 +574,8 @@ Tw.NODE_CMD = {
 
 Tw.SESSION_CMD = {
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_04_0001' },
-  BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' }
+  BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
+  BFF_07_0017: { path: '/core-bill/:version/bill-pay/tax-reprint', method: Tw.API_METHOD.GET, command: 'BFF_07_0017' }
 };
 
 Tw.TMAP = {
