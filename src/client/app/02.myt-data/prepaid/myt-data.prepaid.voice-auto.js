@@ -24,7 +24,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _init: function () {
     this.templateIndex = 0;
     this.amt = $('.fe-select-amount').attr('data-amount');
-    this.chargeCd = $('.fe-select-date').attr('data-amount');
+    this.chargeCd = $('.fe-charge-wrap:visible .fe-charge').attr('data-amount');
 
     this._getPpsInfo();
   },
@@ -280,6 +280,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton[0]).siblings('.error-txt');
+    if (!$error.hasClass('error-txt')) {
+      $error = $($elButton[0]).parent().siblings('.error-txt');
+    }
     $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty($($elButton[0]).attr('data-amount')) ) {
@@ -307,8 +310,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ( !!$('.fe-select-amount').attr('data-amount') && !!this.chargeCd && !!$('.fe-select-expire').val() &&
-      !!$('.fe-card-number').val() && !!$('.fe-card-y').val() && !!$('.fe-card-m').val() ) {
+    if ( !Tw.FormatHelper.isEmpty($('.fe-select-amount').attr('data-amount')) && !Tw.FormatHelper.isEmpty(this.chargeCd) &&
+      !Tw.FormatHelper.isEmpty($('.fe-select-expire').val()) && !Tw.FormatHelper.isEmpty($('.fe-card-number').val()) &&
+      !Tw.FormatHelper.isEmpty($('.fe-card-y').val()) && !Tw.FormatHelper.isEmpty($('.fe-card-m').val()) ) {
       this.$request_recharge_auto.prop('disabled', false);
     } else {
       this.$request_recharge_auto.prop('disabled', true);
