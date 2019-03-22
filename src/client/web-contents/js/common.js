@@ -107,7 +107,7 @@ $(window).on('resize', function (e, datas) {
       skt_landing.action.checkScroll.unLockScroll();
     }
 
-    var $popupContainer = $('.popup-page.fixed-bottom .container'); // 19.03.20 수정
+    var $popupContainer = $('.popup-page.fixed-bottom, .popup-page.fixed-btn'); // 19.03.22 수정
     if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
   } else {    
     $(".bt-fixed-area").css("position","fixed");
@@ -119,7 +119,7 @@ $(window).on('resize', function (e, datas) {
       skt_landing.action.checkScroll.unLockScroll();      
     }
 
-    var $popupContainer = $('.popup-page.fixed-bottom .container'); // 19.03.20 수정
+    var $popupContainer = $('.popup-page.fixed-bottom, .popup-page.fixed-btn'); // 19.03.22 수정
     if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.removeClass('pb0');      //190318 하단 고정 버튼 위치 
   }
 }).on('scroll', function () {
@@ -832,7 +832,17 @@ skt_landing.action = {
         });
         $(document).trigger('modal:open', {obj: this});
         //@@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-                     
+
+        // 19.03.22 딤드처리된 popup 스크롤락
+        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){
+          var popCk = $('.popup-page.tw-popup'),
+              popCk_wrap = popCk.not($(".actionsheet"));
+          popCk_wrap.each(function(){
+            $(this).css('overflow-y', 'hidden');
+          });
+          skt_landing.action.checkScroll.lockScroll();
+        }
+        // 19.03.22 딤드처리된 popup 스크롤락
       }).fail(function() {
         if(callback_fail){
           callback_fail();
@@ -868,6 +878,19 @@ skt_landing.action = {
       },500);
     },
     close: function (target) {
+      // 19.03.22 딤드처리된 popup 스크롤락
+      var popups = $('.wrap > .popup,.wrap > .popup-page'),
+          createdTarget = popups.last();
+      if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){
+        var popCk = $('.popup-page.tw-popup'),
+            popCk_wrap = popCk.not($(".actionsheet"));
+        popCk_wrap.each(function(){
+          $(this).css('overflow-y', 'auto');
+        });
+        skt_landing.action.checkScroll.unLockScroll();
+      }
+      // 19.03.22 딤드처리된 popup 스크롤락
+
       if(target){
         $(target).closest('.popup,.popup-page').empty().remove();
       }else{

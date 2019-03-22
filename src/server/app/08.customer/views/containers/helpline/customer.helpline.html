@@ -31,7 +31,7 @@
                         <div class="contents-info-list">
                             <p class="ti-desc">고객님이 예약하신 시간에 <br/><em class="tx-bold">상담원이 전화</em> 드립니다.</p>
                         </div>
-                        <div class="box-citation pt0">
+                        <div class="box-citation">
                             <div class="citation-form mt0">
                                 <div class="cont-box">
                                     <div class="form-cell">
@@ -81,7 +81,7 @@
                                         </div>
                                         <span class="inputbox bt-add inp-btn mt20"><!-- error일 경우 error 클래스 추가 -->
                                             <span class="input">
-                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실분 번호" title="휴대폰 번호" aria-describedby="aria-phone-tx1"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실 분 번호" title="휴대폰 번호" aria-describedby="aria-phone-tx1"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
                                                 <a href="javascript:void(0)" class="cancel" id="fe-cancel"><span class="blind">삭제</span></a>
                                             </span>
                                             <% if (isApp) { %>
@@ -120,16 +120,16 @@
 
 
 
-                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                    <div class="bt-fixed-area">
-                        <ul class="bt-slice full">
-                            <li class="bt-red1">
-                                <button disabled>예약하기</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 </div>
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button disabled>예약하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->

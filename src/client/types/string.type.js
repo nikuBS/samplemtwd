@@ -84,7 +84,8 @@ Tw.SMS_VALIDATION = {
   ATH2000: '로그인한 계정의 회선 번호와 사용중인 휴대폰 번호가 일치하지 않습니다. 두 번호가 일치할 경우에만 휴대폰 인증이 가능합니다.',
   ATH1221: '시간이 만료되었습니다.',
   ZNGME0098: '입력하신 정보가 확인되지 않습니다. 주의하여 다시 한번 입력해 주세요.',
-  ZORDE6044: '법인 등록번호를 다시 확인해 주세요.'
+  ZORDE6044: '법인 등록번호를 다시 확인해 주세요.',
+  REMAINED_TIME: '(남은시간 ${value})'
 };
 
 Tw.POPUP_TITLE = {
@@ -118,7 +119,8 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
+  ROAMING_PROMOTION_SUCCESS: '선물 받는 번호로 등록이 가능한 회선입니다.'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -795,6 +797,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
   ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
   ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
+  ALERT_3_A90: { TITLE: '선물받는 번호를 확인해 주세요.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',

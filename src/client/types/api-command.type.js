@@ -471,6 +471,7 @@ Tw.API_CMD = {
   BFF_10_0172: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck', method: Tw.API_METHOD.GET },
   BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
   BFF_10_0174: { path: '/core-product/:version/roaming/auto-dial', method: Tw.API_METHOD.GET },
+  BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },

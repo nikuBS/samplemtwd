@@ -92,6 +92,9 @@ Tw.ProductRoamingCoupon.prototype = {
 
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
+    }
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {

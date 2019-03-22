@@ -679,11 +679,11 @@ Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { txt: '서울·인천·경기', 'radio-attr': 'data-code="A10"', 'label-attr': ' ' },
-  { txt: '강원·충청·대전', 'radio-attr': 'data-code="A20"', 'label-attr': ' ' },
-  { txt: '전북·전남·광주·제주', 'radio-attr': 'data-code="A30"', 'label-attr': ' ' },
-  { txt: '부산·경남', 'radio-attr': 'data-code="A40"', 'label-attr': ' ' },
-  { txt: '대구·경북', 'radio-attr': 'data-code="A50"', 'label-attr': ' ' }
+  { txt: '서울/인천/경기', 'radio-attr': 'data-code="A10"', 'label-attr': ' ' },
+  { txt: '강원/충청/대전', 'radio-attr': 'data-code="A20"', 'label-attr': ' ' },
+  { txt: '전북/전남/광주/제주', 'radio-attr': 'data-code="A30"', 'label-attr': ' ' },
+  { txt: '부산/경남', 'radio-attr': 'data-code="A40"', 'label-attr': ' ' },
+  { txt: '대구/경북', 'radio-attr': 'data-code="A50"', 'label-attr': ' ' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [

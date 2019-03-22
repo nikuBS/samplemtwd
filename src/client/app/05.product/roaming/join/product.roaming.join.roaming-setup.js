@@ -4,8 +4,9 @@
  * Date: 2018.11.28
  */
 
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId) {
+Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId,isPromotion) {
   this.$container = rootEl;
+  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodTypeInfo = JSON.parse(prodTypeInfo);
@@ -15,6 +16,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
   this.$serviceTipElement = this.$container.find('.tip-view-btn.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
+  this._isPromotion = isPromotion;
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
@@ -26,6 +28,25 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
+    if(this._isPromotion){
+      this._validatedGiftPhoneNum = '010';
+      this._promotionValidState = true;
+      this.$container.on('click','.fe-selected-number.head',$.proxy(this._showPhoneHeadSelector,this));
+      this.$container.on('keyup','.fe-selected-number',$.proxy(function () {
+        this._promotionValidState = false;
+      },this));
+      this.$container.on('click','#fe_request_gift',$.proxy(this._requestGiftData,this));
+      this.$container.on('keyup','.fe-selected-number.fe-input-number',$.proxy(this._checkGiftNum,this));
+      this.$giftNumberInput = this.$container.find('.fe-selected-number');
+      this._numberHeadArr = [
+        {option : '' , value : '010' , attr : 'data-number=010'},
+        {option : '' , value : '011' , attr : 'data-number=011'},
+        {option : '' , value : '017' , attr : 'data-number=017'},
+        {option : '' , value : '016' , attr : 'data-number=016'},
+        {option : '' , value : '018' , attr : 'data-number=018'},
+        {option : '' , value : '019' , attr : 'data-number=019'}
+      ];
+    }
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = this._showDateFormat;
@@ -206,7 +227,6 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       },
       $.proxy(this._bindActionSheetElementEvt, this),
       $.proxy(function () {
-        //$(targetEvt.currentTarget).focus();
         this.$container.find('.fe-main-content').attr('aria-hidden',false);
       },this),
       'select_date',$(targetEvt.currentTarget));
@@ -271,6 +291,20 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       'startEndTerm' : String(endDtIdx - startDtIdx + 1)
     };
 
+    if(this._isPromotion===true){
+      var giftNum = this._getGiftNum();
+      if(giftNum.length===3){
+        this._promotionValidState = true;
+        delete userJoinInfo.tPieBnftSvcNum;
+      }else{
+        userJoinInfo.tPieBnftSvcNum = giftNum;
+      }
+
+      if(this._validatedGiftPhoneNum!==giftNum||this._promotionValidState===false){
+        this._popupService.openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_3_A90.TITLE,null,null,null,$(evt.currentTarget));
+        return;
+      }
+    }
     var data = {
       popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
       userJoinInfo : userJoinInfo,
@@ -321,7 +355,62 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_05');
         break;
     }
+  },
+  _requestGiftData : function (targetEvt) {
+    var requestNum = this._getGiftNum();
+    if(requestNum.length<=3){
+      requestNum = '';
+    }
+    this._apiService.request(Tw.API_CMD.BFF_10_0175, { bnftSvcNum : requestNum }, {},[this._prodId])
+      .done($.proxy(function (res) {
+        if(res.code===Tw.API_CODE.CODE_00){
+          this._popupService.openAlert(null,Tw.POPUP_TITLE.ROAMING_PROMOTION_SUCCESS,null,null,null,$(targetEvt.currentTarget));
+          this._promotionValidState = true;
+          this._validatedGiftPhoneNum = requestNum;
+        }else{
+          this._popupService.openAlert(null,res.msg,null,null,null,$(targetEvt.currentTarget));
+          this._promotionValidState = false;
+        }
+      },this))
+      .fail($.proxy(function (err) {
+        this._popupService.openAlert(null,err.msg,null,null,null,$(targetEvt.currentTarget));
+      },this));
+  },
+  _getGiftNum : function () {
+    var phoneHead = $(this.$giftNumberInput[0]).text();
+    var phoneMiddle = $(this.$giftNumberInput[1]).val();
+    var phoneTail = $(this.$giftNumberInput[2]).val();
+    return phoneHead+''+phoneMiddle+''+phoneTail;
+  },
+  _showPhoneHeadSelector : function (targetEvt) {
+    var $target = $(targetEvt.currentTarget);
+    var nowValue = $target.text();
+    for(var idx in this._numberHeadArr){
+      if(this._numberHeadArr[idx].value===nowValue){
+        this._numberHeadArr[idx].option = 'checked';
+      }else{
+        this._numberHeadArr[idx].option = '';
+      }
+    }
+    this._popupService.open({
+          hbs: 'actionsheet_select_a_type',// hbs의 파일명
+          layer: true,
+          data: [{list : this._numberHeadArr}]
+        },
+        $.proxy(this._bindNumberSelectorEvt,this),
+        $.proxy(function () {
+          this.$container.find('.fe-main-content').attr('aria-hidden',false);
+        },this),
+        null,$target);
+  },
+  _bindNumberSelectorEvt : function (targetEvt) {
+    $(targetEvt).on('click', '.chk-link-list button', $.proxy(function (evt) {
+      this.$container.find('.fe-selected-number.head').text($(evt.currentTarget).data('number'));
+      this._validatedGiftPhoneNum = this._getGiftNum();
+      this._popupService.close();
+    }, this));
+  },
+  _checkGiftNum : function (evt) {
+    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
   }
-
-
 };

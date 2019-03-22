@@ -15,18 +15,18 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
   this._nowUrl = nowUrl;
+  this._autoCompleteRegExObj = {
+    fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
+    fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
+    fontClose : new RegExp('</font>','g'),
+    spanOpen : new RegExp('<span class="highlight-text">','g')
+  };
   this._tidLanding = new Tw.TidLandingComponent();
   $(window).on('message', $.proxy(this._getWindowMessage, this));
 };
 
 Tw.CommonSearch.prototype = {
   _init : function () {
-    this._autoCompleteRegExObj = {
-      fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
-      fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-      fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="keyword-text">','g')
-    };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
@@ -40,10 +40,7 @@ Tw.CommonSearch.prototype = {
     for(var i=0;i<this._searchInfo.search.length;i++){
       keyName =  Object.keys(this._searchInfo.search[i])[0];
       contentsCnt = Number(this._searchInfo.search[i][keyName].count);
-      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
-        if(contentsCnt<=0){
-          this.$container.find('.'+keyName).addClass('none');
-        }
+      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'){
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
@@ -155,6 +152,7 @@ Tw.CommonSearch.prototype = {
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
       $list.addClass('none');
+      this.$container.find('.'+dataKey).addClass('none');
     }
     _.each(data,$.proxy(function (listData,index) {
       if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
@@ -273,8 +271,8 @@ Tw.CommonSearch.prototype = {
         {
           'docId' : $linkData.data('id'),
           'section' : $linkData.data('category'),
-          'title' : encodeURI($linkData.data('tit')),
-          'keyword' : encodeURI(this._searchInfo.researchQuery)
+          'title' : encodeURIComponent($linkData.data('tit')),
+          'keyword' : encodeURIComponent(this._searchInfo.researchQuery)
         }
       );
     }
@@ -411,7 +409,7 @@ Tw.CommonSearch.prototype = {
     if(!this.$keywordListBase.find('#recently_keyword_layer').hasClass('none')){
       this.$keywordListBase.find('#recently_keyword_layer').addClass('none');
     }
-    var requestParam = { query : encodeURI(keyword) };
+    var requestParam = { query : encodeURIComponent(keyword) };
     this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         if(res.code===0){
@@ -449,7 +447,7 @@ Tw.CommonSearch.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="keyword-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(this._escapeChar(keyword),'g'),'<span class="keyword-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }
@@ -599,6 +597,10 @@ Tw.CommonSearch.prototype = {
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
 
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
+    }
+
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
       this._popupService.closeAll();
@@ -623,5 +625,8 @@ Tw.CommonSearch.prototype = {
 
       Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
     }
+  },
+  _escapeChar : function (string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 };
