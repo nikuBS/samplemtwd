@@ -1730,14 +1730,14 @@ Tw.ROAMING_RETURN_CODE = {
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
-  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(E-F 카운터)', img: 'place-img-01' },
-  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(G-H 카운터)', img: 'place-img-01' },
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h' },
   1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03' },
   1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
   1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05' },
   1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10' },
   1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06' },
-  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02' }
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de' }
 };
 
 Tw.SERVICE_AREA_TYPE = {
