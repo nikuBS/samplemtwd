@@ -15,18 +15,18 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
   this._nowUrl = nowUrl;
+  this._autoCompleteRegExObj = {
+    fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
+    fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
+    fontClose : new RegExp('</font>','g'),
+    spanOpen : new RegExp('<span class="highlight-text">','g')
+  };
   this._tidLanding = new Tw.TidLandingComponent();
   $(window).on('message', $.proxy(this._getWindowMessage, this));
 };
 
 Tw.CommonSearch.prototype = {
   _init : function () {
-    this._autoCompleteRegExObj = {
-      fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
-      fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-      fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="keyword-text">','g')
-    };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
