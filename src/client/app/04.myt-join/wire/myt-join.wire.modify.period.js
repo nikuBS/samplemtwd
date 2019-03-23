@@ -11,6 +11,7 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
   this._options = options;
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn-request'));
 
   this._cachedElement();
   this._bindEvent();
