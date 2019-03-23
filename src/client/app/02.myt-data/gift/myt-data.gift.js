@@ -20,6 +20,11 @@ Tw.MyTDataGift.prototype = {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
       this._goAutoGiftTab();
+      $('.fe-request_sending_data').hide();
+      $('.fe-request_sending_auto').show();
+    }else{
+      $('.fe-request_sending_auto').hide();
+      $('.fe-request_sending_data').show();
     }
 
     this.reqCnt = 0;
