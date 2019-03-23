@@ -29,6 +29,8 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
     this.$container.on('click', '.prev-step', $.proxy(this._close, this));
     //$('#inputNum1').on('change', $.proxy(this._onchangeInputCondition, this));
     //$('#inputNum2').on('change', $.proxy(this._onchangeInputCondition, this));
+
+    new Tw.InputFocusService(this.$container, $('#btnNumSearch button'));
   },
 
   /**

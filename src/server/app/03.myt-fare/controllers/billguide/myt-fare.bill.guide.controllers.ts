@@ -181,6 +181,7 @@ class MyTFareBillGuide extends TwViewController {
             thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
           }
           thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(resArr[0].result.repSvcNm);  // 통합청구대표 이름
+          thisMain._commDataInfo.svcType = thisMain.getSvcType(thisMain._billpayInfo.usedAmountDetailList[0].svcNm);
         }
 
         let viewName ;
@@ -519,40 +520,7 @@ class MyTFareBillGuide extends TwViewController {
       const item = svcTotList[i];
       const svcItem = this.getAllSvcItem(allSvc, item.svcMgmtNum);
 
-      const nm = item.name.replace(/ /g, '').toLowerCase();
-
-      // svcType
-      if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M1) !== -1
-            || nm.indexOf(MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) !== -1 ) {   // 이동전화
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M1;   // 휴대폰
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M2) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M2;      // 선불폰
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M3.replace(/ /g, '').toLowerCase()) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M3;      // T pocket Fi
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M4.replace(/ /g, '').toLowerCase()) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M4;      // T Login
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M5.replace(/ /g, '').toLowerCase()) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.M5;      // T Wibro
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S1) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S1;      // 인터넷
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S2.toLowerCase()) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S2;      // IPTV
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S3) !== -1
-        || nm.indexOf(MYT_FARE_BILL_GUIDE.TEL_TYPE_1) !== -1 ) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.S3;      // 집전화
-
-      } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.O1) !== -1) {
-        item.svcType = MYT_JOIN_WIRE_SVCATTRCD.O1;      // 포인트캠
-
-      }
-
+      item.svcType = this.getSvcType(item.name);
       item.label = item.name.substring(item.name.indexOf('(') + 1, item.name.indexOf(')') );
 
       if (item.svcType === MYT_JOIN_WIRE_SVCATTRCD.M1 ||
@@ -567,6 +535,46 @@ class MyTFareBillGuide extends TwViewController {
     }
     svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
     return svcTotList;
+  }
+
+  /**
+   * 이름으로 svcType을 리턴
+   * @param nm
+   */
+  private getSvcType(nm: String) {
+    nm = nm.replace(/ /g, '').toLowerCase();
+
+    // svcType
+    if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M1) !== -1
+      || nm.indexOf(MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) !== -1 ) {   // 이동전화
+      return MYT_JOIN_WIRE_SVCATTRCD.M1;   // 휴대폰
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M2) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.M2;      // 선불폰
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M3.replace(/ /g, '').toLowerCase()) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.M3;      // T pocket Fi
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M4.replace(/ /g, '').toLowerCase()) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.M4;      // T Login
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.M5.replace(/ /g, '').toLowerCase()) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.M5;      // T Wibro
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S1) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.S1;      // 인터넷
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S2.toLowerCase()) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.S2;      // IPTV
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.S3) !== -1
+      || nm.indexOf(MYT_FARE_BILL_GUIDE.TEL_TYPE_1) !== -1 ) {
+      return MYT_JOIN_WIRE_SVCATTRCD.S3;      // 집전화
+
+    } else if ( nm.indexOf(MYT_JOIN_WIRE_SVCATTRCD.O1) !== -1) {
+      return MYT_JOIN_WIRE_SVCATTRCD.O1;      // 포인트캠
+
+    }
   }
 
   public getAllSvcItem(allSvc: any, svcMgmtNum: string) {

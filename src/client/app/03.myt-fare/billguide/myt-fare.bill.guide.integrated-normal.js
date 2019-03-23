@@ -302,7 +302,8 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       var groupKeyArr = ['billItmLclNm', 'billItmMclNm'];
       var priceKey = 'billInvAmt';
       var rootNodes = {};
-      rootNodes.useSvcType = this._useSvcTypeFun();
+      // rootNodes.useSvcType = this._useSvcTypeFun();
+      rootNodes.useSvcType = this.resData.commDataInfo;
       rootNodes.useBill = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
 
       _.map(rootNodes.useBill, function (val) {
