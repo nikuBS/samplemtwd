@@ -29,7 +29,7 @@ Tw.CustomerEmailService.prototype = {
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
-    this.$wrap_tpl_service.on('click', '.fe-service_register', $.proxy(this._request, this));
+    this.$container.on('click', '.fe-service-register', $.proxy(this._request, this));
   },
 
   _request: function (e) {
@@ -216,9 +216,9 @@ Tw.CustomerEmailService.prototype = {
     });
 
     if ( arrValid.indexOf(false) === -1 && !!this.$service_depth2.data('serviceDepth2') ) {
-      $('.fe-service_register').prop('disabled', false);
+      $('.fe-service-register').prop('disabled', false);
     } else {
-      $('.fe-service_register').prop('disabled', true);
+      $('.fe-service-register').prop('disabled', true);
     }
   },
 

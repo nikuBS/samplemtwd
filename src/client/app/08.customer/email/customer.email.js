@@ -69,6 +69,18 @@ Tw.CustomerEmail.prototype = {
     e.stopPropagation();
     // 기본 적용 기능 li 에 aria-selected 를 주고 닫음 , 읽히게 하려면 a 에 주어야 함
     $(e.currentTarget).attr('aria-selected', true).parent().siblings('li').find('a').attr('aria-selected', false); 
+
+    // 버튼 수정
+    if ( $(e.currentTarget).parent().index() === 0 ) {
+      // 서비스
+      $('.fe-service-register', this.$container).removeClass('none').attr('aria-hidden', false);
+      $('.fe-quality-register', this.$container).addClass('none').attr('aria-hidden', true);
+    } else {
+      // 통화품질
+      $('.fe-service-register', this.$container).addClass('none').attr('aria-hidden', true);
+      $('.fe-quality-register', this.$container).removeClass('none').attr('aria-hidden', false);
+    }
+    
   },
 
   _preventDown: function(e) {
