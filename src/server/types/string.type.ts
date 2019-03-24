@@ -756,26 +756,26 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
     className: 'ico-myt'
   },
   {
-    cat: '회원',
-    title: '개인명의 휴대폰 태블릿 다회선 등록하기',
+    cat: '회선',
+    title: '다회선 설정하기',
     code: 'D00001',
     className: 'ico-member'
   },
   {
-    cat: '회원',
-    title: '법인명의 휴대폰번호 삭제방법',
+    cat: '회선',
+    title: 'T world에 등록된 법인명의 휴대폰번호 삭제 방법',
     code: 'D00006',
     className: 'ico-member'
   },
   {
-    cat: '회원',
-    title: '법인명의 태블릿 다회선 등록하기',
+    cat: '회선',
+    title: '[법인명의 태블릿] 다회선 등록하기',
     code: 'D00005',
     className: 'ico-member'
   },
   {
     cat: '기타',
-    title: '모두에게 평등한 웹 접근성 안내',
+    title: '모두에게 평등한 T world의 웹접근성 안내',
     code: 'D00008',
     className: 'ico-etc'
   },
