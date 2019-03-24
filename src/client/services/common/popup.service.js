@@ -36,14 +36,12 @@ Tw.PopupService.prototype = {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
     var $popupLastFocus = null; // 팝업 닫힌 후 포커스되어야 할 엘리먼트
 
-    Tw.Logger.log('[Popup] Pop State', this._popupObj, hash, lastHash);
-
-    if ( lastHash ) {
-      var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
-      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
-    }
+    Tw.Logger.log('[Popup] Pop State', this._popupObj, 'hash=', hash, 'prev=', lastHash);
 
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
+      var $prevPop = $('[hashName="' + lastHash.curHash + '"]');
+      $popupLastFocus = $prevPop.length ? $prevPop.data('lastFocus') : null;
+
       if ( hash === lastHash.curHash ) {
         var closeCallback = lastHash.closeCallback;
         this._prevHashList.pop();
@@ -583,7 +581,7 @@ Tw.PopupService.prototype = {
     history.back();
   },
   _emptyHash: function () {
-    history.pushState('', document.title, window.location.pathname + window.location.search);
+    history.replaceState(this._popupObj, '#', '#');
   },
 
   // Ios환경에서 포커스 가능한 객체 구하기
