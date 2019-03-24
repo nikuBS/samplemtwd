@@ -412,14 +412,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     }, this));
   },
   _checkGiftNum : function (evt) {
-    var $target = $(evt.currentTarget);
-    if(this._numReg.test($target.val())){
-      var changedVal = $target.val().replace(this._numReg, '');
-      $target.blur();
-      $target.val(changedVal);
-      setTimeout(function () {
-        $target.focus();
-      });
+    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
+    if (evt.currentTarget.value.length === 0) {
+      $(evt.currentTarget).siblings('button.cancel').css('display', 'none');
     }
   }
 };
