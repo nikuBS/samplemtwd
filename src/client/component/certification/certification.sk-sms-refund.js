@@ -64,6 +64,8 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$btnExpTime.on('click', $.proxy(this._onTimeExpandRequested, this));
 
     this._requestCaptchaImg();
+
+    new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
   _requestCaptchaImg: function () {
     this.$captchaImage.attr('src',
@@ -185,7 +187,7 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$btCert.attr('disabled', 'disabled');
   },
   _enableConfirmIfPossible: function (e) {
-    if (!Tw.FormatHelper.isEmpty(e)) {
+    if (e.currentTarget.id !== 'fe-input-name' && !Tw.FormatHelper.isEmpty(e)) {
       Tw.InputHelper.inputNumberOnly(e.target);
     }
 
