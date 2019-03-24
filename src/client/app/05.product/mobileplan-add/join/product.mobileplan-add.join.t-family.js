@@ -8,6 +8,7 @@ Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmt
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_check_join'));
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
@@ -107,14 +108,6 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     if ($elem.val().length > maxLength) {
       $elem.val($elem.val().substr(0, maxLength));
-    }
-
-    if ($elem.hasClass('fe-num_input') && Tw.InputHelper.isEnter(e)) {
-      return this.$inputBirth.focus();
-    }
-
-    if ($elem.hasClass('fe-input_birth') && Tw.InputHelper.isEnter(e)) {
-      return this.$btnCheckJoin.trigger('click');
     }
 
     this._checkError($elem);
