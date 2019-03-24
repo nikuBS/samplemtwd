@@ -334,12 +334,13 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _toggleBtn: function($btn, isEnable) {
+    var toggleClass = $btn.hasClass('fe-btn_explain_apply') ? 'bt-red1' : 'bt-blue1';
     if (isEnable) {
       $btn.removeAttr('disabled').prop('disabled', false);
-      $btn.parent().removeClass('bt-gray1').addClass('bt-blue1');
+      $btn.parent().removeClass('bt-gray1').addClass(toggleClass);
     } else {
       $btn.attr('disabled', 'disabled').prop('disabled', true);
-      $btn.parent().removeClass('bt-blue1').addClass('bt-gray1');
+      $btn.parent().removeClass(toggleClass).addClass('bt-gray1');
     }
   },
 
