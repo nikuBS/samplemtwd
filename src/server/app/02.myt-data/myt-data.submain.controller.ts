@@ -20,7 +20,16 @@ import {
   MYT_DATA_REFILL_TYPES
 } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, SVC_ATTR_NAME, UNIT, UNIT_E } from '../../types/bff.type';
+import {
+  LOGIN_TYPE,
+  PREPAID_PAYMENT_PAY_CD,
+  PREPAID_PAYMENT_TYPE,
+  REFILL_USAGE_DATA_CODES,
+  SVC_ATTR_NAME,
+  UNIT,
+  UNIT_E,
+  UNLIMIT_CODE
+} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 // 실시간잔여량 공제항목
@@ -88,6 +97,16 @@ class MytDataSubmainController extends TwViewController {
         }
         if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
           data.isVoiceShow = true;
+          data.voiceItemToShow = data.remnantData.voice[0];
+          // 음성 잔여량 공제항목이 여러개인 경우 잔여량이 0인 항목은 후순위 노출
+          if (data.remnantData.voice.length > 1) {
+            data.voiceItemToShow = data.remnantData.voice.find((_data) => {
+              return parseInt(_data.remained, 10) > 0 || (UNLIMIT_CODE.indexOf(_data.unlimit) !== -1);
+            });
+            if (!data.voiceItemToShow) {
+              data.voiceItemToShow = data.remnantData.voice[0];
+            }
+          }
         }
         if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
           data.isSmsShow = true;
