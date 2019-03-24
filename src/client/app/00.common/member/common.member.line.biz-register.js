@@ -108,9 +108,6 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._isEnableConfirm();
   },
   _onInputCopNum: function ($event) {
-    if ( !Tw.FormatHelper.isEmpty($event) ) {
-      Tw.InputHelper.inputNumberOnly($event.target);
-    }
     this._isEnableConfirm();
   },
   _onInputMdn: function ($event) {
