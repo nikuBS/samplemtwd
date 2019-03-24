@@ -51,28 +51,8 @@ $(document).on('ready', function () {
       }
     });
   }
-
-  //@190321: ios search touch event( 검색 영역 )
-  /*$('.wrap').on({       
-    'touchstart': function (e) {
-      var $this = $(this);
-      $this.data('posY', e.originalEvent.touches[0].pageY);
-    },
-    'touchmove': function (e) {
-      var $this = $(this);
-      var posY = e.originalEvent.touches[0].pageY;
-      var dataPosY = parseFloat($this.data('posY'));
-      var isMoveUp = (posY-[dataPosY]<0);
-      var isMoveDown = (posY-[dataPosY]>0);
-      var scrollLimit = $this.height()+$this.scrollTop();     //스크롤 컨테이너 높이값
-      var isScrollEnd = (scrollLimit == $this.children().outerHeight(true));    //컨텐츠 내용물의 높이
-      var isLessContents = $this.height() >= $this.children().height();
-      
-      if((isMoveUp && isScrollEnd) || isLessContents) e.preventDefault();
-    }
-  }, '.searchbox-layer02, .searchbox-layer02+.cont-layer-blind02, .searchbox-layer01.searchbox-lock');*/
-
 });
+
 $(window).on('resize', function (e, datas) {  
   //@190321: DV001-17881
   var ios = {
@@ -163,7 +143,7 @@ skt_landing.util = {
         y: 0
     }
     $html.on({
-        'touchstart': function (e) {
+        /*'touchstart': function (e) {
             e.preventDefault();
             pos.x = e.originalEvent.touches[0].pageX;
             pos.y = e.originalEvent.touches[0].pageY;
@@ -180,7 +160,7 @@ skt_landing.util = {
         'touchend': function (e) {
             pos.x = $html.offset().left;
             pos.y = $html.offset().top;
-        }
+        }*/
     });
   },
   win_info: {
@@ -270,7 +250,11 @@ skt_landing.util = {
     }
   }
 };
-skt_landing.action = {
+skt_landing.action = {  
+  /**
+   * input영역에 focus가 될때 스크롤 오류 fix용
+  */
+
   /** IOS일경우 스크롤 끝에 도달했을시 버튼이 따라 올라가지 않게 
    * ex) skt_landing.action.bottom_fixed()
   */
@@ -538,6 +522,80 @@ skt_landing.action = {
     this.scroll_gap.pop();
   },
   checkScroll: {
+  //19.03.22 레이어 팝업내 input 영역
+  //input에 input-scroll-fix 클래스 추가
+  //input의 스크롤 영역에 scroll-fix-container 클래스 추가
+  _refuseScroll: function (opts) {
+    return {
+      touchstart: function (e) {
+        var $this = $(this);
+        $this.data('posY', e.originalEvent.touches[0].pageY);
+      },
+      touchmove: function (e) {
+        var $this = $(this);
+        var posY = e.originalEvent.touches[0].pageY;
+        var dataPosY = parseFloat($this.data('posY'));
+        var isMoveUp = (posY-[dataPosY]<0);
+        var isMoveDown = (posY-[dataPosY]>0);
+        var scrollLimit = $this.height()+$this.scrollTop();     //스크롤 컨테이너 높이값
+        var isScrollFirst = $this.scrollTop() == 0;
+        var isScrollEnd = (scrollLimit == $this[0].scrollHeight);    //컨텐츠 내용물의 높이
+        var isLessContents = $this.height() >= $this[0].scrollHeight;   //컨텐츠의 내용이 scrollbox 보다 내용물이 적을 경우
+
+        if(isMoveUp && isScrollEnd || isMoveDown && isScrollFirst){
+            e.preventDefault();
+        }
+      }
+    }
+  },
+  input_scroll_fix: function (opts) {      
+    opts = $.extend({selector: '.input-scroll-fix', container: '.scroll-fix-container'}, opts);
+    $(document.body).on({
+      'focus.input-scroll-fix': function (e) {
+          $(opts.container).off('touchstart.scroll-fix touchmove.scroll-fix').on({
+              'touchstart.scroll-fix': skt_landing.action.checkScroll._refuseScroll.call(this).touchstart,
+              'touchmove.scroll-fix': skt_landing.action.checkScroll._refuseScroll.call(this).touchmove
+          });    
+      },
+      'blur.input-scroll-fix': function () {
+        $(opts.container).off('touchstart.scroll-fix touchmove.scroll-fix');
+      }
+    }, opts.selector);
+
+    /*var events = {
+      touchstart: function (e) {
+        var $this = $(this);
+        $this.data('posY', e.originalEvent.touches[0].pageY);
+      },
+      touchmove: function (e) {
+        var $this = $(this);
+        var posY = e.originalEvent.touches[0].pageY;
+        var dataPosY = parseFloat($this.data('posY'));
+        var isMoveUp = (posY-[dataPosY]<0);
+        var isMoveDown = (posY-[dataPosY]>0);
+
+        var scrollLimit = $this.height()+$this.scrollTop();     //스크롤 컨테이너 높이값
+        var isScrollFirst = $this.scrollTop() == 0;
+        var isScrollEnd = (scrollLimit == $this[0].scrollHeight);    //컨텐츠 내용물의 높이
+        var isLessContents = $this.height() >= $this[0].scrollHeight;
+
+        if(isMoveUp && isScrollEnd || isMoveDown && isScrollFirst){
+            e.preventDefault();
+        }
+      }
+    }
+    $(document.body).on({
+        'focus.input-scroll-fix': function (e) {
+            $(opts.container).off('touchstart.scroll-fix touchmove.scroll-fix').on({
+                'touchstart.scroll-fix': events.touchstart,
+                'touchmove.scroll-fix': events.touchmove
+            });    
+        },
+        'blur.input-scroll-fix': function () {
+          $(opts.container).off('touchstart.scroll-fix touchmove.scroll-fix');
+        }
+    }, opts.selector);*/
+  },
     scrollTopPosition: '',
     lockScroll: function () {
       if(!$("html, body").hasClass('noscroll')){ // prevent lockScroll function
@@ -832,7 +890,18 @@ skt_landing.action = {
         });
         $(document).trigger('modal:open', {obj: this});
         //@@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-
+        
+        /**
+          //팝업 유형
+          var _$win = $(window),
+              _$layerPop = $('[role="dialog"]').filter(':visible').last().children().not('.popup-blind'),
+              _$r = (_$win.height()-_$layerPop.height())/2;
+          if(_$r >= _$layerPop.offset().top){
+            console.log('type center');
+          }else{
+            console.log('type bottom');
+          }
+        */
         // 19.03.22 딤드처리된 popup 스크롤락
         if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){
           var popCk = $('.popup-page.tw-popup'),
@@ -841,6 +910,7 @@ skt_landing.action = {
             $(this).css('overflow-y', 'hidden');
           });
           skt_landing.action.checkScroll.lockScroll();
+          skt_landing.action.checkScroll.input_scroll_fix();
         }
         // 19.03.22 딤드처리된 popup 스크롤락
       }).fail(function() {

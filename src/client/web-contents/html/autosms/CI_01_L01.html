@@ -39,12 +39,11 @@
                         skt_landing.action.popup.open({
                             'url':'/hbs/',      //@190320: url param 추가
                             'title': '알림',
-                            'close_bt': true,
+                            'cont_align':'tl',
                             'contents': '생년월일 입력형식이 잘못되었습니다.<br/>다시 확인해주세요.',
                             'bt_num': 'one',
-                            'type': [{
-                                style_class: 'bt-red1',
-                                href: 'type',
+                            'bt_b': [{
+                                style_class:'bt-red1 pos-right tw-popup closeBtn',
                                 txt: '확인'
                             }]
                         });
