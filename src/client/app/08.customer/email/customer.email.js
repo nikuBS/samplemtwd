@@ -36,8 +36,9 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on(inputKeyUps, '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
     this.$container.on('blur', '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
-    this.$container.on(inputKeyUps, '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
-    this.$container.on(inputKeyUps, '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on(inputKeyUps, '.fe-phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    // this.$container.on(inputKeyUps, '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    // this.$container.on(inputKeyUps, '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on(inputKeyUps, '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on(inputKeyUps, '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('click', '.fe-text-cancel', $.proxy(this._onTextInputClear, this));
@@ -120,7 +121,7 @@ Tw.CustomerEmail.prototype = {
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
     var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
 
-    var isCellVali = !$elPhone.is('._phone'); // 초반에 템플릿 불려오면 _cell _phone 클래스 둘다 없음 
+    var isCellVali = !$elPhone.is('._phone'); // 초반에 템플릿 불려오면 _cell _phone 클래스 둘다 없음 // 기본값 핸드폰 검사
     var isVali = isCellVali ? this._isValidCell($elPhone.val() || '') : this._isValidTel($elPhone.val() || ''); 
 
     if ( isVali || Tw.FormatHelper.isEmpty($elPhone.val())) {

@@ -109,7 +109,7 @@ Tw.CustomerEmailService.prototype = {
     var $elInputLine = this.$wrap_tpl_service.find('.fe-service-line');
     var elInputlineVal = $elInputLine.is('button') ? $elInputLine.text() : $elInputLine.val();
     var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
-    var selSvcNum = !!elInputlineVal ? elInputlineVal : '';
+    var selSvcNum = !!elInputlineVal ? elInputlineVal.replace(/-/gi, '') : '';
 
     var htParams = $.extend(this._makeParams(), {
       selSvcMgmtNum: selSvcMgmtNum,
