@@ -41,53 +41,52 @@
                     <button class="bt-link-tx underline fe-myuse-link-btn" data-url="<%= btnList[keyBtn].btnLinkUrl %>" data-prod_id="<%= prodList[keyProd].prodId %>"><%= btnList[keyBtn].btnNm %></button>
                     <% } %>
                 </div>
+                <% if (troamingData && troamingData.rgstDtm && prodList[keyProd].remainedDays) { %>
+                <div class="use-info-box">
+                    <span class="info-title">사용량 정보</span>
+                    <ul class="info-list">
+                        <li>
+                            <dl>
+                                <dt>기본 제공량</dt>
+                                <dd><strong>
+                                    <% if (/^[0-9,.]+$/.test(troamingData.convTotal.data)) { %>
+                                    <%= troamingData.convTotal.data %><%= troamingData.convTotal.unit %>
+                                    <% } else { %>
+                                    <%= troamingData.convTotal.data %>
+                                    <% } %>
+                                </strong> 제공</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>사용량</dt>
+                                <dd><strong>
+                                    <% if (/^[0-9,.]+$/.test(troamingData.convUsed.data)) { %>
+                                    <%= troamingData.convUsed.data %><%= troamingData.convUsed.unit %>
+                                    <% } else { %>
+                                    <%= troamingData.convUsed.data %>
+                                    <% } %>
+                                </strong> 사용</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>잔여량</dt>
+                                <dd><strong>
+                                    <% if (/^[0-9,.]+$/.test(troamingData.convRemained.data)) { %>
+                                    <%= troamingData.convRemained.data %><%= troamingData.convRemained.unit %>
+                                    <% } else { %>
+                                    <%= troamingData.convRemained.data %>
+                                    <% } %>
+                                </strong> 남음</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <% } %> <!-- if -->
             </li>
             <% } %> <!-- for -->
         </ul>
-
-        <% if (troamingData && troamingData.rgstDtm && roamingFeePlan.remainedDays) { %>
-        <div class="use-info-box">
-            <span class="info-title">사용량 정보</span>
-            <ul class="info-list">
-                <li>
-                    <dl>
-                        <dt>기본 제공량</dt>
-                        <dd><strong>
-                        <% if (/^[0-9,.]+$/.test(troamingData.convTotal.data)) { %>
-                        <%= troamingData.convTotal.data %><%= troamingData.convTotal.unit %>
-                        <% } else { %>
-                        <%= troamingData.convTotal.data %>
-                        <% } %>
-                        </strong> 제공</dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>사용량</dt>
-                        <dd><strong>
-                        <% if (/^[0-9,.]+$/.test(troamingData.convUsed.data)) { %>
-                        <%= troamingData.convUsed.data %><%= troamingData.convUsed.unit %>
-                        <% } else { %>
-                        <%= troamingData.convUsed.data %>
-                        <% } %>
-                        </strong> 사용</dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>잔여량</dt>
-                        <dd><strong>
-                        <% if (/^[0-9,.]+$/.test(troamingData.convRemained.data)) { %>
-                        <%= troamingData.convRemained.data %><%= troamingData.convRemained.unit %>
-                        <% } else { %>
-                        <%= troamingData.convRemained.data %>
-                        <% } %>
-                        </strong> 남음</dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-        <% } %> <!-- if -->
 
         <% if (troamingLikeHome.length > 0 && troamingLikeHome.remainedDays) { %>
         <div class="use-info-box">
