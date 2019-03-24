@@ -8,6 +8,7 @@ Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confi
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_setup_ok'));
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
@@ -87,14 +88,6 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     $(e.currentTarget).val('');
     $(e.currentTarget).val(onlyNumber);
-
-    if ($elem.hasClass('fe-input-password') && Tw.InputHelper.isEnter(e)) {
-      return this.$confirmPassword.focus();
-    }
-
-    if ($elem.hasClass('fe-confirm-password') && Tw.InputHelper.isEnter(e)) {
-      return this.$btnSetupOk.trigger('click');
-    }
 
     var isPasswordInput = $elem.hasClass('fe-input-password'),
       isPasswordConfirmInput = $elem.hasClass('fe-confirm-password'),
