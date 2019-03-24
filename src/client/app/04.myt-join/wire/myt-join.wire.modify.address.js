@@ -87,6 +87,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
+    new Tw.InputFocusService(this.$container, $('[data-target="submitApply"]'));
   },
 
   //--------------------------------------------------------------------------[EVENT]

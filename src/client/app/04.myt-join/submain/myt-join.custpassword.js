@@ -50,6 +50,8 @@ Tw.MytJoinCustpassword.prototype = {
     // $('.prev-step').on('click', $.proxy(this._onclickBtnCancel, this));
     $('.prev-step').on('click', $.proxy(this._confirmBack, this));
 
+    new Tw.InputFocusService($('#change'), $('#btn-change'));
+    new Tw.InputFocusService($('#check'), $('#btn-check'));
   },
 
   /**

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
-import { NEW_NUMBER_MSG } from '../../types/string.type';
+import { NEW_NUMBER_MSG, MYT_SUSPEND_STATE_EXCLUDE } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -192,12 +192,12 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
         const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
         data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
-        data.myPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
+        data.myPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myPausedState.state = true;
         if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
           data.myLongPausedState = {
             state: true,
-            opState: data.myPausedState.svcChgRsnNm
+            opState: data.myPausedState.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '')
           };
         }
       } else if ( data.myPausedState && data.myPausedState.armyDt ) {
@@ -207,17 +207,22 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myLongPausedState ) {
         const fromDt = data.myLongPausedState.fromDt, toDt = data.myLongPausedState.toDt;
         data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
-        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt);
+        data.myLongPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
         if ( data.myPausedState.svcStCd === 'AC' && data.myPausedState.armyDt && data.myPausedState.armyDt !== '' ) {
           const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
-          if ( days < 0) {
+          if ( days < 0 ) {
             data.myPausedState.state = false;
             data.myLongPausedState.state = false;
             delete data.myPausedState.armyDt;
           }
+        }
+
+        // DV001-18322 스윙 문구 고객언어 반영
+        if ( data.myLongPausedState.opState ) {
+          data.myLongPausedState = data.myLongPausedState.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
         }
       }
 

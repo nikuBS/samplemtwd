@@ -28,7 +28,7 @@ Tw.CustomerEmailQuality.prototype = {
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
-    this.$wrap_tpl_quality.on('click', '.fe-quality_register', $.proxy(this._request, this));
+    this.$container.on('click', '.fe-quality-register', $.proxy(this._request, this));
   },
 
   _request: function (e) {
@@ -193,9 +193,9 @@ Tw.CustomerEmailQuality.prototype = {
     });
 
     if ( arrValid.indexOf(false) === -1 && !!this.$quality_depth1.data('qualityDepth1') ) {
-      $('.fe-quality_register').prop('disabled', false);
+      $('.fe-quality-register').prop('disabled', false);
     } else {
-      $('.fe-quality_register').prop('disabled', true);
+      $('.fe-quality-register').prop('disabled', true);
     }
   },
 

@@ -61,6 +61,24 @@
                     </div>
                     <!--// .cont-box -->
                 </div>
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area" aria-hidden="false" id="fe-submit-immediatly">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-submit" disabled>바로 공유하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area none" id="fe-submit-monthly" aria-hidden="true">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-submit" disabled><%= monthly.regularShrYn === "Y" ? '설정하기' : '매달 자동으로 공유하기' %></button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
@@ -73,8 +91,9 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.MyTDataFamilyShareImmediately($('#tab1-tab'));
-        new Tw.MyTDataFamilyShareMonthly($('#tab2-tab'), <%= monthly.regularShrYn === "Y" %>);
+        var $container = $('.wrap');
+        new Tw.MyTDataFamilyShareImmediately($container, 'tab1-tab');
+        new Tw.MyTDataFamilyShareMonthly($container, 'tab2-tab', <%= monthly.regularShrYn === "Y" %>);
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import StringHelper from '../../../../utils/string.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
+import { MYT_SUSPEND_STATE_EXCLUDE } from '../../../../types/string.type';
 
 class MyTJoinSuspend extends TwViewController {
   constructor() {
@@ -52,7 +53,7 @@ class MyTJoinSuspend extends TwViewController {
           const from = DateHelper.getShortDateWithFormat(result.fromDt, 'YYYY-MM-DD');
           const to = DateHelper.getShortDateWithFormat(result.toDt, 'YYYY-MM-DD');
           options['suspend'].period = { from, to };
-          options['suspend'].reason = result.svcChgRsnNm;
+          options['suspend'].reason = result.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
           options['suspend'].status = true;
         } else {
           options['suspend'].status = false;

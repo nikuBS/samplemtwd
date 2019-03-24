@@ -20,6 +20,18 @@ Tw.MyTDataCookiz.prototype = {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
       this._goAutoTab();
+      $('.fe-recharge_cookiz_immediately').hide();
+      $('.fe-recharge_cookiz_monthly').show();
+      
+      //하단 버튼이 없을 경우 fixed-bottom 클래스 삭제
+      if($('.fe-recharge_cookiz_monthly').length === 0 ){
+        $('#fe-cookiz-wrap').removeClass('fixed-bottom');
+      }else{
+        $('#fe-cookiz-wrap').addClass('fixed-bottom');
+      }
+    }else{
+      $('.fe-recharge_cookiz_monthly').hide();
+      $('.fe-recharge_cookiz_immediately').show();
     }
 
     this._getReceiveUserInfo();

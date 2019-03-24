@@ -4,8 +4,9 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailTemplate = function (rootEl, allSvc) {
-  this.allSvc = allSvc.allSvc;
+Tw.CustomerEmailTemplate = function (rootEl, data) {
+  this.allSvc = data.allSvc;
+  this.uploadObj = data.uploadObj;
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -98,6 +99,10 @@ Tw.CustomerEmailTemplate.prototype = {
 
     skt_landing.widgets.widget_init();
     Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.bt-link-tx'));
+
+    $('.fe-service-register', this.$container).removeClass('none').attr('aria-hidden', false).prop('disabled', true);
+    $('.fe-quality-register', this.$container).addClass('none').attr('aria-hidden', true);
+    this.uploadObj.initFiles();
   },
 
   _changeQualityTemplate: function (e, opt) {
@@ -148,6 +153,11 @@ Tw.CustomerEmailTemplate.prototype = {
     skt_landing.widgets.widget_init();
     // skt_landing.widgets.widget_radio(this.$wrap_tpl_quality);
     Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.bt-link-tx'));
+
+    $('.fe-service-register', this.$container).addClass('none').attr('aria-hidden', true);
+    $('.fe-quality-register', this.$container).removeClass('none').attr('aria-hidden', false).prop('disabled', true);
+    this.uploadObj.initFiles();
+    
   },
 
 

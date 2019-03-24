@@ -7,8 +7,7 @@
 Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
   this.$container = rootEl;
   this._svcInfo = svcInfo;
-  //this._cdn = cdn;
-  this._cdn = 'http://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = cdn;
   this._step = parseInt(step,10);
   this._init();
 };
@@ -147,6 +146,10 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _doSearch : function (searchKeyword) {
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,null,$(event.currentTarget));
+      return;
+    }
     if(this._historyService.getHash()==='#input_P'){
       this._closeKeywordListBase();
     }

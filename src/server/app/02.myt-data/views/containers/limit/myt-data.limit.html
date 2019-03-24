@@ -7,7 +7,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="bg-white">
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup nobg fixed-bottom h60">
+    <div class="popup-page tw-popup nobg fixed-bottom h60" id="fe-limit-wrap">
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '데이터 한도 요금제', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -43,6 +43,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <% if ( limitUserInfo.blockYn === 'Y' || limitUserInfo.dataLimitedTmthYn === 'Y' ){ %>
+                    <button class="fe-immediately_recharge" disabled>충전하기</button>
+                    <% } %>
+                    <% if ( limitUserInfo.regularTopUpYn !== 'Y' && limitUserInfo.dataLimitedYn === 'Y' ) { %>
+                    <button class="fe-monthly_recharge" disabled style="display:none;">충전하기</button>
+                    <% } %>
+                </li>
+            </ul>
         </div>
     </div>
     <!--// #contents -->

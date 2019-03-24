@@ -20,8 +20,8 @@
     <!-- .container-wrap -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">이메일 상담 상세내역</h2>
+    <% if ( inquiryInfo ) { %>
         <div class="container">
-            <% if ( inquiryInfo ) { %>
             <div class="email-details-box">
                 <hr class="cont-sp type1" aria-hidden="true">
                 <!-- .cont-box -->
@@ -73,49 +73,50 @@
                 <% } %>
 
                 <!--// .cont-box -->
-                <% if( inquiryInfo.supInqId === '' ) { %>
-                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                <div class="bt-fixed-area">
-                    <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
-                        <% if (inquiryInfo.answYn == 'Y') { %>
-                            <ul class="bt-slice item-two full">
-                                <li class="bt-gray1">
-                                    <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                            data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
-                                    </button>
-                                </li>
-                                <li class="bt-red1">
-                                    <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                            data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
-                                    </button>
-                                </li>
-                            </ul>
-                        <% } else { %>
-                            <ul class="bt-slice full">
-                                <li class="bt-gray1">
-                                    <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                            data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
-                                    </button>
-                                </li>
-                            </ul>
-                        <% } %>
-                    <% } else { %>
-                        <% if ( inquiryInfo.answYn == 'Y' && inquiryInfo.inqClCd === 'D' ) { %>
-                            <ul class="bt-slice full">
-                                <li class="bt-red1">
-                                    <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                            data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
-                                    </button>
-                                </li>
-                            </ul>
-                        <% } %>
-                    <% } %>
-                </div>
-                <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                <% } %>
+                
             </div>
+        </div>
+        <% if( inquiryInfo.supInqId === '' ) { %>
+        <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+        <div class="bt-fixed-area">
+            <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
+                <% if (inquiryInfo.answYn == 'Y') { %>
+                    <ul class="bt-slice item-two full">
+                        <li class="bt-gray1">
+                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                            </button>
+                        </li>
+                        <li class="bt-red1">
+                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                            </button>
+                        </li>
+                    </ul>
+                <% } else { %>
+                    <ul class="bt-slice full">
+                        <li class="bt-gray1">
+                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                            </button>
+                        </li>
+                    </ul>
+                <% } %>
+            <% } else { %>
+                <% if ( inquiryInfo.answYn == 'Y' && inquiryInfo.inqClCd === 'D' ) { %>
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                            </button>
+                        </li>
+                    </ul>
+                <% } %>
             <% } %>
         </div>
+        <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+        <% } %>
+    <% } %>
     </div>
     <!-- // .container-wrap -->
 </div>

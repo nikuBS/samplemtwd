@@ -41,7 +41,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
     if(from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
-      this._addRecentlyKeyword(keywrod);
+      this._addRecentlyKeyword(decodeURIComponent(keywrod));
     }
     new Tw.XtractorService(this.$container);
   },
@@ -73,7 +73,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._popupService.open({
       hbs: 'HO_05_02_02_01_02',
       layer: true,
-      data: this._surveyList.invstQstnAnswItm
+      data: this._surveyList.result.invstQstnAnswItm
     }, $.proxy(this._bindEventForSelectClaim, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
       $.proxy(this._removeInputDisabled,this), 'selectClaim',$(evt.currentTarget));

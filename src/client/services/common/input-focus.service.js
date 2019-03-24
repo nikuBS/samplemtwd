@@ -9,7 +9,7 @@ Tw.InputFocusService.prototype = {
     ENTER: 13
   },
   _init: function () {
-    this.$inputList = this.$container.find('input');
+    this.$inputList = this.$container.find('input, textarea');
     this.$inputList = _.filter(this.$inputList, $.proxy(function (input) {
       return $(input).attr('readonly') === undefined;
     }, this));

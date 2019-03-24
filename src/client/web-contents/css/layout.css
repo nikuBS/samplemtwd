@@ -217,7 +217,8 @@ body.hidden {
       background-size: 0.4375rem 0.6875rem;
       color: inherit;
       font-size: 1.0625rem;
-      font-weight: 500; }
+      font-weight: 500;
+      line-height: 1.4375rem; }
     #common-menu .section-userinfo .userinfo {
       position: relative;
       display: block;
@@ -1087,11 +1088,10 @@ body.hidden {
   .cont-sp.type5 {
     height: 0.9375rem; }
 
-/*@media all and(max-width:320px){
-    .cont-box{
-        padding:rem(20px 20px);
-    }
-}*/
+@media all and (max-width: 320px) {
+  #common-menu .section-userinfo .login {
+    line-height: 19px; } }
+
 /* 공통 팝업페이지 구조 */
 .popup-page {
   position: fixed;
@@ -1132,6 +1132,7 @@ body.hidden {
     top: auto;
     bottom: -100%;
     min-height: 0;
+    height: auto;
     max-height: 90%;
     -webkit-transition: all 0.2s;
     transition: all 0.2s; }
@@ -1404,16 +1405,15 @@ body.hidden {
   .popup-page.fixed-bottom {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    padding-bottom: 3.75rem;
-    overflow-y: visible; }
+    padding-bottom: 3.75rem; }
     .popup-page.fixed-bottom .container-wrap {
       position: static;
       height: 100%; }
     .popup-page.fixed-bottom .container {
       height: 100%;
       overflow-x: hidden;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch; }
+      overflow-y: auto;
+      -webkit-overflow-scrolling: auto; }
       .popup-page.fixed-bottom .container .section-menu-box {
         padding-bottom: 1.625rem; }
         .popup-page.fixed-bottom .container .section-menu-box .menu-guide-img {

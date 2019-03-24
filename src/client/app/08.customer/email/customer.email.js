@@ -69,6 +69,18 @@ Tw.CustomerEmail.prototype = {
     e.stopPropagation();
     // 기본 적용 기능 li 에 aria-selected 를 주고 닫음 , 읽히게 하려면 a 에 주어야 함
     $(e.currentTarget).attr('aria-selected', true).parent().siblings('li').find('a').attr('aria-selected', false); 
+
+    // 버튼 수정
+    if ( $(e.currentTarget).parent().index() === 0 ) {
+      // 서비스
+      $('.fe-service-register', this.$container).removeClass('none').attr('aria-hidden', false);
+      $('.fe-quality-register', this.$container).addClass('none').attr('aria-hidden', true);
+    } else {
+      // 통화품질
+      $('.fe-service-register', this.$container).addClass('none').attr('aria-hidden', true);
+      $('.fe-quality-register', this.$container).removeClass('none').attr('aria-hidden', false);
+    }
+    
   },
 
   _preventDown: function(e) {
@@ -78,11 +90,16 @@ Tw.CustomerEmail.prototype = {
   _onChangeReceiveContact: function (e) {
     var radioIndex = $(e.currentTarget).index();
     var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
+    var $phoneInput = $(e.currentTarget).parentsUntil('.inquiryform-wrap').parent().find('.fe-service_phone, .fe-quality_phone');
     var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
     if ( radioIndex === 0 ) {
-      $wrap_sms.show().attr('aria-hidden', false);
+      // 휴대폰 케이스
+      $wrap_sms.show().attr('aria-hidden', false); // sms 받기 
+      $phoneInput.addClass('_cell').removeClass('_phone').trigger('keyup');
     } else {
+      // 일반전화 케이스
       $wrap_sms.hide().attr('aria-hidden', true);
+      $phoneInput.removeClass('_cell').addClass('_phone').trigger('keyup');
     }
   },
 
@@ -103,7 +120,10 @@ Tw.CustomerEmail.prototype = {
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
     var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
 
-    if ( this._isValidPhone($elPhone.val()) || Tw.FormatHelper.isEmpty($elPhone.val()) ) {
+    var isCellVali = !$elPhone.is('._phone'); // 초반에 템플릿 불려오면 _cell _phone 클래스 둘다 없음 
+    var isVali = isCellVali ? this._isValidCell($elPhone.val() || '') : this._isValidTel($elPhone.val() || ''); 
+
+    if ( isVali || Tw.FormatHelper.isEmpty($elPhone.val())) {
       $elErrorPhone.addClass('blind').attr('aria-hidden', true);
     } else {
       $elErrorPhone.removeClass('blind').attr('aria-hidden', false);
@@ -140,6 +160,14 @@ Tw.CustomerEmail.prototype = {
 
   _isValidPhone: function (sPhoneNumber) {
     return Tw.ValidationHelper.isTelephone(sPhoneNumber) || Tw.ValidationHelper.isCellPhone(sPhoneNumber);
+  },
+
+  _isValidCell: function (sPhoneNumber) {
+    return Tw.ValidationHelper.isCellPhone(sPhoneNumber);
+  },
+
+  _isValidTel: function (sPhoneNumber) {
+    return Tw.ValidationHelper.isTelephone(sPhoneNumber);
   },
 
   _isValidEmail: function (sEmail) {

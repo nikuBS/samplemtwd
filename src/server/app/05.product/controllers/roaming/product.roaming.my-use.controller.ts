@@ -48,10 +48,10 @@ export default class ProductRoamingMyUse extends TwViewController {
         prod.remainedDays = null;
         if (troamingData && (prod.prodId === troamingData.prodId)) {
           if (!FormatHelper.isEmpty(troamingData.rgstDtm)) {
-            prod.remainedDays = String(DateHelper.getDiffByUnit(
-              moment(troamingData.exprDtm, 'YYYYMMDDHH').format(),
-              DateHelper.getCurrentDate(), 'days') + 1);
-
+            prod.remainedDays = DateHelper.getDiffByUnit(
+              DateHelper.getCurrentShortDate(troamingData.exprDtm),
+              DateHelper.getCurrentShortDate(),
+              'days').toString();
             roamingFeePlan.remainedDays = prod.remainedDays;
             troamingLikeHome.remainedDays = prod.remainedDays;
           }
@@ -61,10 +61,10 @@ export default class ProductRoamingMyUse extends TwViewController {
       if (troamingLikeHome.length > 0) {
         troamingLikeHome.forEach(data => {
           if (!FormatHelper.isEmpty(data.rgstDtm)) {
-            troamingLikeHome.remainedDays = String(DateHelper.getDiffByUnit(
-              moment(data.exprDtm, 'YYYYMMDDHH').format(),
-              DateHelper.getCurrentDate(), 'days') + 1);
-
+            troamingLikeHome.remainedDays = DateHelper.getDiffByUnit(
+              DateHelper.getCurrentShortDate(data.exprDtm),
+              DateHelper.getCurrentShortDate(),
+              'days').toString();
             roamingFeePlan.roamingProdList[0].remainedDays = troamingLikeHome.remainedDays;
           }
         });

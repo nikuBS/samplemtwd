@@ -90,7 +90,7 @@ class CommonSearchMore extends TwViewController {
             keyword : searchResult.result.query,
             relatedKeyword : relatedKeyword,
             inKeyword : searchResult.result.researchQuery,
-            surveyList : surveyList.result,
+            surveyList : surveyList,
             suggestQuery : searchResult.result.suggestQuery,
             step : step,
             from : null
