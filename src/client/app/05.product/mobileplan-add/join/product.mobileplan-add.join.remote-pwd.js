@@ -5,6 +5,8 @@
  */
 
 Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confirmOptions) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
@@ -20,7 +22,6 @@ Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confi
     this._historyService.goBack();
   }
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();

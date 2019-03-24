@@ -28965,22 +28965,37 @@ body.apphome {
           background: #e6f2fb url(/img/ico/icon-prepayment01.png) no-repeat right bottom;
           background-size: 3.6875rem 3.0625rem;
           position: relative; }
+          .prepayment-coupon .horizontal-slide .horizontal-list li div.bg01 .touch-h-100 {
+            width: 100%;
+            padding-bottom: 100%; }
         .prepayment-coupon .horizontal-slide .horizontal-list li div.bg02 {
           background: #e6f2fb url(/img/ico/icon-prepayment02.png) no-repeat right bottom;
           background-size: 5.3125rem 3.0625rem;
           position: relative; }
+          .prepayment-coupon .horizontal-slide .horizontal-list li div.bg02 .touch-h-100 {
+            width: 100%;
+            padding-bottom: 100%; }
         .prepayment-coupon .horizontal-slide .horizontal-list li div.bg03 {
           background: #e6f2fb url(/img/ico/icon-prepayment03.png) no-repeat right bottom;
           background-size: 5.625rem 3.0625rem;
           position: relative; }
+          .prepayment-coupon .horizontal-slide .horizontal-list li div.bg03 .touch-h-100 {
+            width: 100%;
+            padding-bottom: 100%; }
         .prepayment-coupon .horizontal-slide .horizontal-list li div.bg04 {
           background: #e6f2fb url(/img/ico/icon-prepayment04.png) no-repeat right bottom;
           background-size: 5.375rem 3.0625rem;
           position: relative; }
+          .prepayment-coupon .horizontal-slide .horizontal-list li div.bg04 .touch-h-100 {
+            width: 100%;
+            padding-bottom: 100%; }
         .prepayment-coupon .horizontal-slide .horizontal-list li div.bg05 {
           background: #e6f2fb url(/img/ico/icon-prepayment05.png) no-repeat right bottom;
           background-size: 4.3125rem 3.0625rem;
           position: relative; }
+          .prepayment-coupon .horizontal-slide .horizontal-list li div.bg05 .touch-h-100 {
+            width: 100%;
+            padding-bottom: 100%; }
 
 .my-line-info-wrap .badge-type1 {
   display: inline-block;
