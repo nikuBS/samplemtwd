@@ -13,6 +13,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_apply'));
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
@@ -138,7 +139,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$container.on('blur', '.fe-input_phone_number', $.proxy(this._blurInputNumber, this)); // 번호 입력창 blur 시
     this.$container.on('focus', '.fe-input_phone_number', $.proxy(this._focusInputNumber, this)); // 번호 입력창 focus 시
     this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this)); // input 옆 X버튼 클릭시
-    this.$container.on('keyup', 'input', $.proxy(this._onEnter, this)); // input 에서 이동 버튼 등 클릭시
 
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));  // 약관동의 팝업 자세히 보기 클릭 시
     this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));  // 신청하기 or 다음 버튼 클릭 시
@@ -760,18 +760,5 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._historyService.goBack();
-  },
-
-  _onEnter: function(e) {
-    if (!Tw.InputHelper.isEnter(e)) {
-      return;
-    }
-
-    var $elem = $(e.currentTarget),
-      $nextElem = $elem.parents('li').next();
-
-    if ($nextElem.length > 0 && $nextElem.find('input').length > 0) {
-      $nextElem.find('input').focus();
-    }
   }
 };

@@ -8,6 +8,7 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_setup_ok'));
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
