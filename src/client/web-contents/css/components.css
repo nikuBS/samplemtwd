@@ -18996,7 +18996,6 @@ a.bt-link-tx.underline.small {
       font-weight: 400; }
     .site-more .more-inner span {
       display: block;
-      margin-top: 7px;
       color: #666;
       line-height: 1.1875rem; }
 
@@ -26574,6 +26573,12 @@ input[type="radio"].formradio-small.type2 + label {
         margin-left: 0.4375rem; }
         .discountbenefit-list .category-type .link .tag-field .tag:first-child {
           margin-left: 0; }
+
+@media all and (max-width: 340px) {
+  .discountbenefit-list .category-type .link .text-field {
+    top: 1.25rem; }
+  .discountbenefit-list .category-type .link .tag-field {
+    bottom: 1.25rem; } }
 
 .section-box {
   position: relative;

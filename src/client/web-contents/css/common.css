@@ -1068,7 +1068,8 @@ a.bt-link-tx {
     font-size: inherit;
     color: #178BCE;
     text-decoration: underline;
-    padding: 0.625rem 0 !important; }
+    padding: 0.625rem 0 !important;
+    margin-top: -10px; }
   button.bt-link-tx.disabled,
   a.bt-link-tx.disabled {
     border-color: #d1d1d1;
@@ -7517,8 +7518,8 @@ a.ui-button:active,
   -webkit-box-shadow: 0 20px 0 red;
           box-shadow: 0 20px 0 red;
   position: relative;
-  -webkit-animation: loader2-u0a09f52e 0.5s ease-in-out alternate infinite;
-          animation: loader2-u0a09f52e 0.5s ease-in-out alternate infinite;
+  -webkit-animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
+          animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
   top: 50%;
@@ -7531,8 +7532,8 @@ a.ui-button:active,
     border-radius: 50%;
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red;
-    -webkit-animation: loader2-u0a09f52e 0.5s ease-in-out alternate infinite;
-            animation: loader2-u0a09f52e 0.5s ease-in-out alternate infinite; }
+    -webkit-animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
+            animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite; }
   .spinner_loading2::before {
     left: -20px;
     -webkit-animation-delay: 0.3s;
@@ -7542,7 +7543,7 @@ a.ui-button:active,
     -webkit-animation-delay: 0.1s;
             animation-delay: 0.1s; }
 
-@-webkit-keyframes loader2-u0a09f52e {
+@-webkit-keyframes loader2-u1d739d87 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7550,7 +7551,7 @@ a.ui-button:active,
     -webkit-box-shadow: 0 10px 0 red;
             box-shadow: 0 10px 0 red; } }
 
-@keyframes loader2-u0a09f52e {
+@keyframes loader2-u1d739d87 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -8239,7 +8240,16 @@ button:focus span {
     z-index: 10;
 }*/
 .rg-br-body .popup .popup-info {
-  position: fixed; }
+  position: fixed;
+  /*left: 2.5rem;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    border-radius: 0.5625rem;
+    background: #fff;
+    overflow: hidden;
+    z-index: 11;*/ }
 
 /*.rg-br-body .popup .popup-info .popup-header {
     position: relative;
@@ -8254,7 +8264,7 @@ button:focus span {
 
 .rg-br-body .popup .popup-info .popup-contents {
     max-height: 18.1875rem;
-    //padding: 1.875rem 1.25rem;
+    padding: 1.875rem 1.25rem;
 }
 
 .rg-br-body .popup .popup-info .popup-contents .inner-contents {
