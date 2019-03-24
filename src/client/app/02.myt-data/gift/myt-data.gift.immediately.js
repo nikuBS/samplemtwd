@@ -146,7 +146,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.data('opdtm', opdtm);
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
-    this._validateInputNumber();
+    this._removeErrorComment();
   },
 
   _getReceiveUserInfo: function (e) {
