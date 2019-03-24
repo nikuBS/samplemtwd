@@ -20,6 +20,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
     // this.reqCnt = 0;
     // this._getRemainDataInfo();
+    this.runBlur = false;
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this._successGiftData, this));
   },
@@ -42,8 +43,18 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
-    // this.$inputImmediatelyGift.on('blur', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$inputImmediatelyGift.on('blur', $.proxy(this._onBlurImmediatelyGiftNumber, this));
     this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
+    this.$container.on('mouseenter', '.fe-opdtm', $.proxy(this._mouseEnter, this));
+    this.$container.on('mouseleave', '.fe-opdtm', $.proxy(this._mouseLeave, this));
+  },
+
+  _mouseEnter: function() {
+    this.runBlur = false;
+  },
+
+  _mouseLeave: function() {
+    this.runBlur = true;
   },
 
   _showUnableGift: function (e, errorCode) {
@@ -120,7 +131,14 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputImmediatelyGift.val(), true));
   },
 
+  _onBlurImmediatelyGiftNumber: function () {
+    if(this.runBlur) {
+      this._onKeyUpImmediatelyGiftNumber();
+    }
+  },
+
   _onSelectRecentContact: function (e) {
+    this.runBlur = false;
     var opdtm = $(e.currentTarget).data('opdtm');
     var sNumber = $(e.currentTarget).find('.tel-select').text();
 
