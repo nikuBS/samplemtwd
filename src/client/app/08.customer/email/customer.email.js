@@ -176,7 +176,13 @@ Tw.CustomerEmail.prototype = {
 
   // 이메일인풋, 전화번호 삭제버튼 클릭 후 추가 밸리데이션 정보 가리기
   _onTextInputClear: function (e) {
-    $(e.currentTarget).closest('.inputbox').siblings('.error-txt').addClass('blind').attr('aria-hidden', true);
+    var valiClass = ''
+    if ($(e.currentTarget).siblings('input').attr('class').indexOf('email') >= 0 ) {
+      valiClass = 'fe-error-email';
+    } else {
+      valiClass = 'fe-error-phone';
+    }
+    $(e.currentTarget).closest('.inputbox').siblings('.' + valiClass).addClass('blind').attr('aria-hidden', true);
   },
 
   _onChangeTitle: function (e) {
