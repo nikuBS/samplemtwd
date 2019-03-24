@@ -5,6 +5,8 @@
  */
 
 Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirmOptions) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -30,7 +32,6 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
     this._historyService.goBack();
   }
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
@@ -242,10 +243,6 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _detectInputAuthCode: function() {
-    if (!this._isSend) {
-      return;
-    }
-
     var onlyNumber = this.$inputAuthCode.val();
 
     this.$inputAuthCode.val('');
