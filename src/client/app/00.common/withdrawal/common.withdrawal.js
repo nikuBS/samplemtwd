@@ -58,6 +58,8 @@
        'withdrawal-cert');
    },
    _onOpenKYC: function ($layer) {
+     this._focusService = new Tw.InputFocusService($layer, $layer.find('.btn-certify'));
+
      $layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this, $layer));
      $layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this, $layer));
      $layer.on('click', '.btn-certify', $.proxy(this._onConfirmKYC, this, $layer));
