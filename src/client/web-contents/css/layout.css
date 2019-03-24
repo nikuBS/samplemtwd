@@ -1132,6 +1132,7 @@ body.hidden {
     top: auto;
     bottom: -100%;
     min-height: 0;
+    height: auto;
     max-height: 90%;
     -webkit-transition: all 0.2s;
     transition: all 0.2s; }
