@@ -5,6 +5,8 @@
  */
 
 Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmtNum, confirmOptions) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
@@ -24,7 +26,6 @@ Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmt
     this._historyService.goBack();
   }
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
