@@ -32,3 +32,8 @@ export const UPLOAD_TYPE = {
   RESERVATION: 'reservation',
   SUSPEND: 'suspend'
 };
+
+export const TID_LOGOUT = {
+  DEFAULT: 0,
+  LOGIN_FAIL: 1
+};

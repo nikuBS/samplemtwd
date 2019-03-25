@@ -23,7 +23,7 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <div class="container">
+            <div class="container noscroll">
                 <% const TYPE_NAMES = ['T끼리 데이터 선물', '데이터 한도 요금', '팅 쿠키즈 안심요금', '팅 요금 선물', '데이터 음성 리필', '전체']; 
                 const list = filterIdx === 5 ? chargeData.all : chargeData.display, DEFALUT_LIST_COUNT = 20; %>
                 <div class="cont-box nogaps">
@@ -32,7 +32,7 @@
                         <button class="bt-select" id="fe-type" title="최근 충전/선물 내역 보기유형 선택" aria-haspopup="true" <%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
-                    <div class="cont-box pb0">
+                    <div class="cont-box pt0 pb0">
                         <div class="list-comp-history type01">
                             <ul class="comp-box" data-filter-index="<%= filterIdx %>">
                                 <% const length = Math.min(list.length, DEFALUT_LIST_COUNT);

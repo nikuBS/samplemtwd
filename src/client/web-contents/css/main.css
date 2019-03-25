@@ -1024,8 +1024,7 @@
   bottom: 0;
   background: #000;
   z-index: 25;
-  opacity: 0.7;
-  -webkit-overflow-scrolling: touch; }
+  opacity: 0.7; }
 
 .popup {
   position: fixed;
@@ -1034,7 +1033,7 @@
   right: 0;
   bottom: 0;
   z-index: 200;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
   /* popup share */ }
   .popup.dropdown {
     top: 3.75rem;
@@ -2235,6 +2234,13 @@ body.apphome {
   width: 3.0625rem;
   height: 2.5rem;
   background: url(/img/svg/graphic_80px_bi_skt_beta.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-home-T {
+  display: inline-block;
+  width: 3.0625rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-gnb-bi {
@@ -3632,22 +3638,22 @@ body.apphome {
       .accessories-box .slider-box .slick-dots li span {
         display: block;
         margin: 0.0625rem auto;
-        width: 0.4375rem;
-        height: 0.4375rem;
+        width: 0.5rem;
+        height: 0.5rem;
         border-radius: 50%;
         overflow: hidden;
         text-indent: -625rem;
         background: none;
         border-color: #000; }
       .accessories-box .slider-box .slick-dots li.slick-active {
-        width: 0.4375rem;
-        height: 0.4375rem;
+        width: 0.5rem;
+        height: 0.5rem;
         background: #000;
-        margin: 0.3625rem 0.3125rem 0 0.3125rem;
+        margin: 0.35rem 0.3125rem 0 0.3125rem;
         padding: 0; }
         .accessories-box .slider-box .slick-dots li.slick-active span {
-          width: 0.4375rem;
-          height: 0.4375rem;
+          width: 0.5rem;
+          height: 0.5rem;
           border: none;
           background-color: transparent; }
 
@@ -4270,14 +4276,25 @@ body.apphome {
         color: #ffffff;
         font-size: 1.25rem;
         font-weight: 500;
-        line-height: 1.5625rem; }
+        line-height: 1.5625rem;
+        padding-right: 7.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden; }
       .discountbenefit-list .category-type .link .text-field .text {
         margin-top: 0.5rem;
-        padding-right: 6rem;
+        padding-right: 7.5rem;
         color: #ffffff;
         font-size: 0.8125rem;
         font-weight: 400;
-        line-height: 1.125rem; }
+        line-height: 1.125rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden; }
     .discountbenefit-list .category-type .link .tag-field {
       position: absolute;
       bottom: 1.9375rem;
@@ -4291,14 +4308,19 @@ body.apphome {
         .discountbenefit-list .category-type .link .tag-field .tag:first-child {
           margin-left: 0; }
 
-@media all and (max-width: 320px) {
+@media all and (max-width: 340px) {
   .discountbenefit-list .category-type .link .text-field {
-    top: 1.25rem; }
+    top: 1.125rem; }
+    .discountbenefit-list .category-type .link .text-field .title {
+      font-size: 1.125rem;
+      padding-right: 6.875rem;
+      line-height: 1.375rem; }
     .discountbenefit-list .category-type .link .text-field .text {
-      padding-right: 4.375rem;
-      font-size: 0.75rem; }
+      padding-right: 6.875rem;
+      font-size: 0.75rem;
+      line-height: 1.0625rem; }
   .discountbenefit-list .category-type .link .tag-field {
-    bottom: 1.25rem; } }
+    bottom: 1.125rem; } }
 
 .box-citation {
   padding: 0.625rem 0 0; }
@@ -4449,3 +4471,63 @@ body.apphome {
     padding: 0 0.625rem; }
   .popup-page .header-wrap .page-header {
     padding: 0 2.1875rem; } }
+
+/* 메인 인증하기 팝업 레이아웃깨짐으로 추가 */
+.inputbox.inp-btn {
+  display: table;
+  width: 100% !important;
+  table-layout: inherit; }
+  .inputbox.inp-btn .input {
+    display: table-cell;
+    width: 100% !important; }
+  .inputbox.inp-btn .bt-box {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+    .inputbox.inp-btn .bt-box.none {
+      display: none !important; }
+    .inputbox.inp-btn .bt-box.bt80 button, .inputbox.inp-btn .bt-box a {
+      width: 5rem; }
+  .inputbox.inp-btn .bt-box2 {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+    .inputbox.inp-btn .bt-box2 button {
+      min-height: 2.375rem; }
+  .inputbox.inp-btn .bt-box3 {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+  .inputbox.inp-btn .r-btn {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0;
+    margin: 0; }
+  .inputbox.inp-btn .txt-area {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+
+.inputbox + .tx-box {
+  display: block; }
+
+.inputbox + .guide-txt {
+  position: relative;
+  display: block;
+  margin: 1rem 0 0 0;
+  padding: 0 0 0 0.5rem;
+  font-size: 0.75rem;
+  color: #666666; }
+  .inputbox + .guide-txt:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "*"; }
+
+.inputbox .input input[type=number] {
+  padding-right: 0; }

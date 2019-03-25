@@ -64,6 +64,8 @@ Tw.MyTDataGiftMonthly.prototype = {
       var params = response.params;
 
       this.$input_auto_gift.val(this._convertDashNumber(params.phoneNumber));
+      this._validateInputNumber();
+      this._checkValidateSendingButton();
     }
   },
 

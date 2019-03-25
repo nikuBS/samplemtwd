@@ -14,6 +14,6 @@
         </div>
     </div>
     <span class="val vt">
-        <%= payAmt.replace(/\B(?=(\d{3})+(?!\d))/g, ',') %>원
+        <%= payAmt.replace(/\B(?=(\d{3})+(?!\d))/g, ',') %><%= isPoint ? 'P' : '원'%>
     </span>
 </li>

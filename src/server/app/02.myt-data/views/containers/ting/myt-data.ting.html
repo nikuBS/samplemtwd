@@ -6,7 +6,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="bg-white">
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup nobg fixed-btn"><!-- 2018-10-30 클래스변경 -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 2019.03.24 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '팅요금제 충전 선물', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->

@@ -4,9 +4,10 @@
  * Date: 2018.07.26
  */
 
-Tw.CommonMemberSloginAos = function (rootEl) {
+Tw.CommonMemberSloginAos = function (rootEl, existMdn) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
 
   this.$inputBirth = null;
@@ -15,6 +16,9 @@ Tw.CommonMemberSloginAos = function (rootEl) {
   this.$errorTxt = null;
   this.$inputBox = null;
   this._bindEvent();
+  if ( existMdn === 'false' ) {
+    this._getMdn();
+  }
 };
 
 Tw.CommonMemberSloginAos.prototype = {
@@ -25,25 +29,26 @@ Tw.CommonMemberSloginAos.prototype = {
   _bindEvent: function () {
     this.$btnLogin = this.$container.find('#fe-easy-login');
     this.$inputBirth = this.$container.find('#fe-input-birth');
-    this.$mdn = this.$container.find('#fe-mdn');
+    this.$mdn = this.$container.find('.fe-mdn');
     this.$errorTxt = this.$container.find('.fe-error');
     this.$inputBox = this.$container.find('#fe-inputbox');
 
     this.$btnLogin.on('click', $.proxy(this._onClickEasyLogin, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$container.on('click', '#fe-bt-delete', $.proxy(this._onInputBirth, this));
+
+    this._svcNum = this.$mdn.data('mdn');
   },
   _onClickEasyLogin: function () {
     var params = {
-      svcNum: this.$mdn.data('mdn'),
+      svcNum: this._svcNum,
       birthDt: this.$inputBirth.val()
     };
     this._requestLogin(params);
   },
   _onInputBirth: function () {
-
     var inputBirth = this.$inputBirth.val();
-    if ( inputBirth.length >= Tw.BIRTH_LEN ) {
+    if ( inputBirth.length >= Tw.BIRTH_LEN && !Tw.FormatHelper.isEmpty(this._svcNum) ) {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
       this.$btnLogin.attr('disabled', false);
     } else {
@@ -63,6 +68,15 @@ Tw.CommonMemberSloginAos.prototype = {
       this.$inputBirth.attr('aria-describedby', 'aria-id-num');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _getMdn: function () {
+    this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));
+  },
+  _onMdn: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._svcNum = resp.params.mdn;
+      this.$mdn.text(Tw.FormatHelper.conTelFormatWithDash(this._svcNum));
     }
   }
 };

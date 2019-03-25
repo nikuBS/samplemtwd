@@ -40,7 +40,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
     this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
-    this._section3 = this.$container.find('#fe-section3'); // 이메일주소 및 기타우편주소 영역
+    this._section3 = this.$container.find('#fe-section3'); // 이메일주소 및 기타우편주소, 옵션설정 영역
     // this._isInputChanged = false;     // 모든 input 필드(radio, checkobx 포함) 변경여부
   },
 
@@ -372,10 +372,10 @@ Tw.MyTFareBillSetChange.prototype = {
         this._options.filter(':not(.none)').last().addClass('bb0');
       }
 
-      if (this._section3.children(':not(.none)').length === 0) {
-        this._section3.prev('.cont-sp').addClass('none');
+      if (this._section3.children('.cont-box:not(.none)').length === 0) {
+        this._section3.addClass('none').prev('.cont-sp').addClass('none');
       } else {
-        this._section3.prev('.cont-sp').removeClass('none');
+        this._section3.removeClass('none').prev('.cont-sp').removeClass('none');
       }
     }
   },

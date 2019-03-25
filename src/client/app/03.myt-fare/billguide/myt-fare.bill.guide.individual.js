@@ -139,7 +139,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
    * @private
    */
   _goProdPage: function (event) {
-    var url = $(event.target).data('prod-page-url');
+    var url = $(event.currentTarget).data('prod-page-url');
     this._history.goLoad(url);
   },
   _feePayBtnEvt: function () {
@@ -239,7 +239,9 @@ Tw.MyTFareBillGuideIndividual.prototype = {
         params: {
           childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
-        }});
+        },
+        version: Tw.API_VERSION.V2
+      });
     }
 
     // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');

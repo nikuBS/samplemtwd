@@ -10,7 +10,7 @@
 <!-- Phone -->
     <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
-    <div class="cont-box" data-id="remnant-container">
+    <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="notice-point">
@@ -309,8 +309,8 @@
         <hr class="cont-sp type1" aria-hidden="true"/>
         <div class="cont-box nogaps-hoz">
             <ul class="date-graph-list">
-                <% if (data.isVoiceShow) { %>
-                <% var rvoice = data.remnantData.voice[0]; %>
+                <% if (data.isVoiceShow && data.voiceItemToShow) { %>
+                <% var rvoice = data.voiceItemToShow; %>
                 <li>
                     <!-- 2019.02.10 링크 영역 확대 -->
                     <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
@@ -404,7 +404,7 @@
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
     <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- PPS -->
-    <div class="cont-box" data-id="remnant-container">
+    <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="notice-point">
@@ -764,7 +764,7 @@
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
     <hr class="cont-sp type1" aria-hidden="true"/>
     <!-- T-PocketFi & T-Login -->
-    <div class="cont-box" data-id="remnant-container">
+    <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="notice-point">

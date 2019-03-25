@@ -222,7 +222,7 @@ class MyTJoinSubmainController extends TwViewController {
 
         // DV001-18322 스윙 문구 고객언어 반영
         if ( data.myLongPausedState.opState ) {
-          data.myLongPausedState = data.myLongPausedState.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
+          data.myLongPausedState.opState = data.myLongPausedState.opState.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
         }
       }
 

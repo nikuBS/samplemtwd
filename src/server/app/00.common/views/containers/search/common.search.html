@@ -117,7 +117,7 @@
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>실시간 이용요금은<span class="str">
-                <a class="list-data" href="/myt-fare/submain"
+                <a class="list-data" href="/myt-fare/bill/hotbill"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
                 </a>입니다.</span>
@@ -161,7 +161,7 @@
             <% if(searchInfo.search[1].smart.data.length>0){ %>
             <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
             <div class="search-banner">
-                <a class="list-data"
+                <a class="list-data smart-element" data-require-pay="<%= searchInfo.search[1].smart.data[0].BNNR_NBILL_YN %>"
                    href="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"
                    data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
                     <img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
@@ -185,7 +185,7 @@
     </div>
     <script type="text/x-handlebars-template" id="smart_template">
         <li class="last-line">
-            <a class="list-data" href="{{data.link}}"
+            <a class="list-data smart-element" href="{{data.link}}" data-require-pay="{{data.payInfo}}"
                data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
                 {{data.title}}
             </a>
