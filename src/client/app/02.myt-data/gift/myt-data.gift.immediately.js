@@ -20,7 +20,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
     // this.reqCnt = 0;
     // this._getRemainDataInfo();
-    this.runBlur = false;
+    this.runBlur = true;
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this._successGiftData, this));
   },
