@@ -309,8 +309,8 @@
         <hr class="cont-sp type1" aria-hidden="true"/>
         <div class="cont-box nogaps-hoz">
             <ul class="date-graph-list">
-                <% if (data.isVoiceShow) { %>
-                <% var rvoice = data.remnantData.voice[0]; %>
+                <% if (data.isVoiceShow && data.voiceItemToShow) { %>
+                <% var rvoice = data.voiceItemToShow; %>
                 <li>
                     <!-- 2019.02.10 링크 영역 확대 -->
                     <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
