@@ -295,7 +295,7 @@ Tw.CommonSearch.prototype = {
   },
   _closeSearch : function () {
     if(this._historyService.getHash()==='#input_P'){
-      this._closeKeywordListBase();
+      ++this._step;
     }
     setTimeout($.proxy(function () {
       this._historyService.go(Number(this._step)*-1);
