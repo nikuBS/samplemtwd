@@ -182,7 +182,11 @@ class MyTFareSubmainController extends TwViewController {
       }
       // 최근납부내역
       if ( totalPayment ) {
-        data.totalPayment = totalPayment.paymentRecord.slice(0, 3);
+        data.totalPayment = totalPayment.paymentRecord.slice(0, 3).map(o => {
+          return Object.assign(o, {
+              isPoint : (o.payMthdCd === '15' || o.payMthdCd.indexOf('BB') >= 0)
+          });
+        });
       }
       // 세금계산서
       // if ( taxInvoice ) {
