@@ -23,7 +23,7 @@ Tw.ApiService.prototype = {
 
   requestArray: function (requests) {
     return $.when.apply($, _.map(requests, $.proxy(function (request) {
-      return this.request(request.command, request.params, request.headers);
+      return this.request(request.command, request.params, request.headers, request.pathParams, request.version);
     }, this)));
   },
 

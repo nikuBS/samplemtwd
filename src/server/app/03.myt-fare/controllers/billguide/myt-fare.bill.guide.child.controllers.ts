@@ -7,7 +7,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, API_VERSION } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -113,7 +113,7 @@ class MyTFareBillGuideChild extends TwViewController {
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
       invDt: this.reqQuery.date,
       childSvcMgmtNum: this.reqQuery.line
-    }), 'p1');
+    }, null, [], API_VERSION.V2), 'p1');
 
     // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
 
