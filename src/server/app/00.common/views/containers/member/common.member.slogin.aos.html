@@ -37,7 +37,11 @@
                         <div class="easy-login-form mt48">
                             <dl class="mb24">
                                 <dt>휴대폰 번호</dt>
-                                <dd id="fe-mdn" data-mdn="<%= mdn.original %>"><%= mdn.show %></dd>
+                                <% if(mdn) { %>
+                                <dd class="fe-mdn" data-mdn="<%= mdn.original %>"><%= mdn.show %></dd>
+                                <% } else { %>
+                                <dd class="fe-mdn"></dd>
+                                <% } %>
                             </dl>
                             <span id="fe-inputbox" class="inputbox"> <!-- 입력 필드 오류 시 .error 추가 -->
                                 <span class="input">
@@ -75,7 +79,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberSloginAos($('#commonLoginEasyAos'));
+    new Tw.CommonMemberSloginAos($('#commonLoginEasyAos'), '<%= mdn !== null %>');
   });
 </script>
 <% include ../../components/end.component.html %>

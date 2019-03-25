@@ -41,6 +41,7 @@ class TeventDetail extends TwViewController {
       result.startDate = DateHelper.getShortDate(result.prStaDt);
       result.endDate = DateHelper.getShortDate(result.prEndDt);
       result.height = result.prUrlHSize + 'px';
+      result.url = result.prUrl.indexOf('https') === -1 ? result.prUrl.replace('http', 'https') : result.prUrl;
     }
     return result;
   }

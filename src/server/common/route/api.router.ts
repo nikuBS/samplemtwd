@@ -676,6 +676,15 @@ class ApiRouter {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
     loginService.setCurrentReq(req, res);
+
+    const svcInfo = loginService.getSvcInfo(req);
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1003,
+        msg: NODE_API_ERROR[API_CODE.NODE_1003]
+      });
+    }
+
     apiService.request(API_CMD.BFF_03_0001, {})
       .switchMap((resp) => {
         return loginService.logoutSession();

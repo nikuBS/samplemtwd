@@ -35,7 +35,11 @@
                         <% } %>
                         <% if (locals.data.centerUrl) { %>
                         <ul class="bt-slice item-one">
-                            <li><a href="<%= data.centerUrl %>" type="button" class="btn-round2 btn-style3"><%= data.centerName %></a></li>
+                            <li>
+                                <button class="fe-link btn-round2 btn-style3" data-link="<%= data.centerUrl %>">
+                                    <%= data.centerName %>
+                                </button>
+                            </li>
                         </ul>
                         <% } %>
                     </div>
@@ -46,7 +50,7 @@
 
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
-                <li><a href="<%= data.confirmUrl %>" type="button" class="btn-floating btn-style2">확인</a></li>
+                <li><button data-link="<%= data.confirmUrl %>" type="button" class="fe-link btn-floating btn-style2">확인</button></li>
             </ul>
         </div>
         <!--// .container-wrap -->
@@ -58,4 +62,15 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('button.fe-link').on('click', function (e) {
+      var $targetElement = $(e.currentTarget);
+      var link =  $targetElement.data( 'link' );
+      if(link){
+        window.location.replace( link );
+      }
+    })
+  });
+</script>
 <% include ../../components/end.component.html %>

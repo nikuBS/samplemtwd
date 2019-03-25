@@ -40,8 +40,10 @@ interface PaymentData {
 interface PaymentList {
   [key: string]: any;
 }
-interface Info {
-  [key: string]: string;
+interface TipInfo {
+  link: string;
+  view: string;
+  title: string;
 }
 interface ErrorInfo {
   code: string;
@@ -64,9 +66,11 @@ class MyTFareInfoHistory extends TwViewController {
       sortType: req.query.sortType
     };
 
+    // 각 납부 타입을 sortType param으로 받음 
     if (query.sortType === 'payment' || query.sortType === undefined) {
       // 2019.02.21 전체납부내역 -> 최근납부내역 BFF_07_0030 의 데이터로 수정 노출 결정 
       // this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo); // deprecated
+      // 전체납부내역 case 
       Observable.combineLatest(
           this.checkHasPersonalBizNumber(),
           this.getAutoWithdrawalAccountInfo(),
@@ -163,6 +167,7 @@ class MyTFareInfoHistory extends TwViewController {
   private renderView(req: Request, res: Response, next: NextFunction, data: any) {
     const {pageInfo, svcInfo} = data;
 
+    // Error 를 반환했던 API code 가 있었던 경우 
     if (this.returnErrorInfo.code) {
       return this.error.render(res, {
         code: this.returnErrorInfo.code,
@@ -172,45 +177,46 @@ class MyTFareInfoHistory extends TwViewController {
       });
     }
 
+    // 정상 render
     return res.render('info/myt-fare.info.history.html', {
       svcInfo,
       pageInfo,
-      currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.lastAll,
+      currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.lastAll, // 카테고리 텍스트
       data: {
-        isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
-        autoWithdrawalBankName: this.paymentData.withdrawalBankName,
-        autoWithdrawalBankNumber: this.paymentData.withdrawalBankAccount,
-        autoWithdrawalBankCode: this.paymentData.withdrawalBankCode,
-        autoWithdrawalBankSerNum: this.paymentData.withdrawalBankSerNum,
+        isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse, // 자동납부 통합인출 사용 여부
+        autoWithdrawalBankName: this.paymentData.withdrawalBankName, // 자동납부 통합인출 은행이름 || undefined
+        autoWithdrawalBankNumber: this.paymentData.withdrawalBankAccount, // 자동납부 통합인출 계좌 || undefined
+        autoWithdrawalBankCode: this.paymentData.withdrawalBankCode, // 자동납부 통합인출 은행코드 || undefined
+        autoWithdrawalBankSerNum: this.paymentData.withdrawalBankSerNum, // 자동납부 통합인출 계좌일련번호  || undefined
         refundPaymentCount: this.paymentData.refundPaymentCount,
         overPaymentCount: this.paymentData.overPaymentCount,
         refundTotalAmount: this.paymentData.refundTotalAmount,
         refundPaymentCnt: this.paymentData.refundPaymentCnt,
-        isPersonalBiz: this.paymentData.isPersonalBiz,
+        isPersonalBiz: this.paymentData.isPersonalBiz, // 사업자 인지
         // personalBizNum: this.paymentData.personalBizNum,
-        listData: this.mergeData(data.listData),
+        listData: this.mergeData(data.listData), // 리스트 
         refundURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-refund`,
         refundAccountURL: `${req.originalUrl.split('/').slice(0, -1).join('/')}/overpay-account`,
         current: (data.query.sortType === 'payment' || data.query.sortType === undefined) ? 'all' : data.query.sortType,
-        noticeInfo: this.getNoticeInfo()
+        noticeInfo: this.getTipInfo() // 꼭 확인해 주세요 팁 버튼 정보
       }
     });
   }
 
+  // 사업자 여부
   private checkHasPersonalBizNumber = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).map((resp: { code: string; result: any; }) => {
       if (resp.code !== API_CODE.CODE_00) {
         this.paymentData.isPersonalBiz = false;
       } else {
         this.paymentData.isPersonalBiz = true;
-        /*this.paymentData.personalBizNum = resp.result.taxReprintList ?
-            resp.result.taxReprintList[0] ? resp.result.taxReprintList[0].ctzBizNum : '' : '';*/
       }
 
       return null;
     });
   }
 
+  // 자동납부통합인출 해지 버튼 노출을 위한 조회 (대상자 아니라면 비노출)
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0070, {}).map((resp: { code: string; result: any }) => {
       if (resp.code === 'BIL0021' || resp.code === 'BIL0022' || !resp.result) {
@@ -228,7 +234,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
-  // 2019.02.21 deprecated
+  // 2019.02.21 deprecated 전체납부내역 조회 케이스 -> 최근납부내역으로 수정 서브메인 최근납부내역과 싱크가 맞지 않는 이슈
   /* private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
         this.checkHasPersonalBizNumber(),
@@ -246,38 +252,35 @@ class MyTFareInfoHistory extends TwViewController {
     });
   } */
 
+  // 과납내역 조회, 최근납부내역 조회 
   private getOverAndRefundPaymentData = (opt: {getPayList?: boolean} = {}): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
         // 전체납부내역조회 옵션으로 조회에서 에러 반환 시 에러 페이지 처리
+        // 과납내역 조회도 있으므로 해당 API에서 에러코드가 반환된다고 에러 페이지를 노출하면 안됨
         if (opt.getPayList) {
           this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         }
         return null;
       }
 
-      this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt, 10); // 과납건수
-      this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt, 10); // 환불받을 총 금액
-      this.paymentData.refundTotalAmount = FormatHelper.addComma(resp.result.rfndTotAmt.toString());
-      this.paymentData.refundPaymentCnt = resp.result.refundPaymentRecord.length;
+      // 하단 코드 오류방지
+      if (typeof resp.result !== 'object') {
+        resp.result = {};
+      }
 
-      /*// 환불신청내역
-      resp.result.refundPaymentRecord.map((o) => {
-        o.sortDt = o.rfndReqDt;
-        o.dataDt = DateHelper.getShortDate(o.rfndReqDt);
-        o.dataOverpay = FormatHelper.addComma(o.ovrPay);
-        o.dataRefundObjAmt = FormatHelper.addComma(o.rfndObjAmt);
-        o.dataSumAmt = FormatHelper.addComma(o.sumAmt);
-        o.dataRefundState = MYT_PAYMENT_HISTORY_REFUND_TYPE[o.rfndStat];
-        o.rfndStat = o.rfndStat;
-      });*/
+      // 
+      this.paymentData.overPaymentCount = parseInt(resp.result.ovrPayCnt || 0, 10); // 과납건수
+      this.paymentData.refundPaymentCount = parseInt(resp.result.rfndTotAmt || 0, 10); // 환불받을 총 금액 number
+      this.paymentData.refundTotalAmount = FormatHelper.addComma((resp.result.rfndTotAmt || '').toString()); // 환불받을 총 금액 쉼표 붙여서 string
+      this.paymentData.refundPaymentCnt = (resp.result.refundPaymentRecord || []).length; // 환불신청내역 건수
 
       // 과납내역
-      resp.result.overPaymentRecord.map((o) => {
+      /* resp.result.overPaymentRecord.map((o) => {
         o.sortDt = o.opDt;
         o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataAmt = FormatHelper.addComma(o.svcBamt);
-      });
+      }); */
 
       // 최근납부내역 2019.02.21
       if (opt.getPayList) {
@@ -298,6 +301,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 즉시납부내역 조회
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -321,6 +325,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 자동납부내역 조회
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -344,6 +349,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 자동납부 통합인출 내역 조회
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -366,6 +372,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 소액결제 내역 조회
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -389,6 +396,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 콘텐츠 결제 내역 조회
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -465,6 +473,7 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
+  // 조회된 데이터 통합
   private mergeData(data: PaymentList): any {
     data = data.slice(2);
 
@@ -498,17 +507,18 @@ class MyTFareInfoHistory extends TwViewController {
         /*if (cur.refundPaymentRecord && !prev.refundRecordList) {
           prev.refundRecordList = cur.refundPaymentRecord;
         }*/
-        if (cur.overPaymentRecord && !prev.overPaymentList) {
+        /*if (cur.overPaymentRecord && !prev.overPaymentList) {
           prev.overPaymentList = cur.overPaymentRecord;
-        }
+        }*/
       }
 
       return prev;
     }, {});
 
+    // 날짜별 정렬
     FormatHelper.sortObjArrDesc(data.mergedListData, 'sortDt');
 
-    data.mergedListData = data.mergedListData.reduce((prev, cur, index) => {
+    data.mergedListData = data.mergedListData.reduce((prev: any[], cur: any, index: number): any[] => {
       cur.listId = index;
       cur.ariaIdx = index < 9 ? '0' + (index + 1) : index + 1; // 웹접근성 수정 중 aria-labelledby 속성위해 추가 19.2.13
       cur.listDt = cur.dataDt.slice(5);
@@ -531,17 +541,17 @@ class MyTFareInfoHistory extends TwViewController {
     return (MYT_FARE_POINT_PAYMENT_STATUS.OPEN === o || MYT_FARE_POINT_PAYMENT_STATUS.OPEN2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CHANGE === o ||
        MYT_FARE_POINT_PAYMENT_STATUS.CHANGE2 === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE === o || MYT_FARE_POINT_PAYMENT_STATUS.CLOSE2 === o);
   }
-  private isBank(o: string) {
+  private isBank(o: string): boolean {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK2) > 0)
         || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK3) > 0 || (o === MYT_FARE_PAYMENT_CODE.BANK) || (o === MYT_FARE_PAYMENT_CODE.BANK2));
   }
 
-  private isCard(o: string) {
+  private isCard(o: string): boolean {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD2) > 0
         || (o === MYT_FARE_PAYMENT_CODE.CARD));
   }
 
-  private isBankOrCard(o: string) {
+  private isBankOrCard(o: string): boolean {
     return this.isBank(o) || this.isCard(o);
   }
   
@@ -551,17 +561,12 @@ class MyTFareInfoHistory extends TwViewController {
  
 
   private getKorStringWithQuery(current: string): any {
-    return MYT_FARE_PAYMENT_HISTORY_TYPE[this.getKeyWithQuery(current)];
+    return MYT_FARE_PAYMENT_HISTORY_TYPE[this.getCamelString(current)];
   }
 
-  private getKeyWithQuery(queryString: string): any {
-    return queryString.split('').filter((elem, idx, arr) => {
-      if (elem === '-') {
-        arr[idx + 1] = arr[idx + 1].toUpperCase();
-        return '';
-      }
-      return elem;
-    }).join('');
+  private getCamelString(queryString: string): string {
+    // string-string => stringString 
+    return (queryString.match(/-\w/gi) || []).reduce((prev, cur) => prev.replace(cur, cur.toUpperCase().replace('-', '')), queryString);
   }
 
   private setErrorInfo(resp: {code: string, msg: string, result: any}): void {
@@ -574,7 +579,7 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   // 꼭 확인해 주세요 팁 메뉴 정리
-  private getNoticeInfo(): Info[] {
+  private getTipInfo(): TipInfo[] {
     return [
       {link: 'MF_08_tip_01', view: 'M000290', title: '다회선 통합납부 고객'},
       {link: 'MF_08_tip_02', view: 'M000290', title: '납부내역 조회기간 안내'},

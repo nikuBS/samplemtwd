@@ -9,7 +9,7 @@
 <body>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page nobg tw-popup fixed-bottom txt-screed h60"><!-- 2019.03.24 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: 'T파이 예약', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -20,7 +20,7 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box">
-                        <div class="charge-guide-wrap top-line">
+                        <div class="charge-guide-wrap">
                         <div class="charge-cont">
                             <span class="sub-disc01">휴대폰 <span class="ico ico-pin"></span></span>
                             <span class="tit-tgothic"><%= svcInfo.showSvcNum %></span>

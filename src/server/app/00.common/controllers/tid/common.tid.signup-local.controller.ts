@@ -44,7 +44,7 @@ class CommonTidSignUpLocal extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.redirect('/common/member/login/fail?errorCode=' + resp.code + '&target=' + target);
+        res.redirect('/common/member/login/fail?errorCode=' + resp.code);
       }
     });
   }

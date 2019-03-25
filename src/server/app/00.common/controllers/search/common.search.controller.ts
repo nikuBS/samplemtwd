@@ -127,11 +127,20 @@ class CommonSearch extends TwViewController {
               if (resultData.code !== API_CODE.CODE_00) {
                 searchResult = removeImmediateData(searchResult);
               } else {
+                if (resultData.result.gnrlData[0].prodId !== svcInfo.prodId) {
+                  for (let i = 0; i < resultData.result.gnrlData.length; i++) {
+                    if (resultData.result.gnrlData[i].prodId === svcInfo.prodId) {
+                      const tempData = resultData.result.gnrlData.splice(i, 1);
+                      resultData.result.gnrlData.unshift(tempData[0]);
+                      break;
+                    }
+                  }
+                }
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
                 if ( searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained ) {
                   searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
                 } else {
-                  searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].tOPlanSharedData.showRemained;
+                  searchResult.result.search[0].immediate.data[0].subData = {'data': remainData.gnrlData[0].remained, 'unit': ''};
                 }
               }
               showSearchResult(searchResult, relatedKeyword , this);

@@ -138,7 +138,11 @@ Tw.CommonSearchMain.prototype = {
         this._closeKeywordListBase();
       }
       setTimeout($.proxy(function () {
-        this._historyService.goLoad($target.attr('href'));
+        if($target.data('require-pay')==='Y'){
+          this._showRequirePayPopup(linkEvt);
+        }else{
+          this._historyService.goLoad($target.attr('href'));
+        }
       },this),100);
 
     }else{
@@ -279,7 +283,15 @@ Tw.CommonSearchMain.prototype = {
     },this));
     this.$container.find('.search-content').attr('aria-hidden',true);
     $('.keyword-list-base').insertAfter('.searchbox-header');
+  },
+  _showRequirePayPopup : function (evt) {
+    var $target = $(evt.currentTarget);
+    this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+      $.proxy(function () {
+        this._popupService.close();
+        Tw.CommonHelper.openUrlExternal($target.attr('href'));
+      },this),
+      $.proxy(this._popupService.close,this._popupService),$target
+    );
   }
-
-
 };

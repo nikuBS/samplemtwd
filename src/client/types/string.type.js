@@ -808,7 +808,8 @@ Tw.ALERT_MSG_PRODUCT = {
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
-  ALERT_3_A22: { TITLE: '알림', MSG: ' 은(는) 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
+  ALERT_3_A21: { TITLE: '알림', MSG: ' 은(는) 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
+  ALERT_3_A22: { TITLE: '알림', MSG: ' 은(는) 존재하지 않는 국가이거나 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
   ALERT_3_A23: { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
   ALERT_3_A24: { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' },
   ALERT_3_A71: { TITLE: '알림', MSG: '일시적인 오류가 발생하였습니다. 다시 제조사를 선택해주세요.', BUTTON: '확인' }
@@ -1453,7 +1454,7 @@ Tw.UPLOAD_FILE = {
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf)파일을 첨부하실 수 있습니다.',
   BUTTON_ADD: '파일 찾기',
-  BUTTON_DELETE: '삭제 하기',
+  BUTTON_DELETE: '삭제하기',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해 주세요.',
   EMAILINFO_01: '첨부파일 용량은 1개 파일당 2MB 첨부가능합니다.',
@@ -1695,7 +1696,7 @@ Tw.NOTI_POPUP_BTN = {
 };
 
 Tw.MENU_STRING = {
-  FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 지금 \'회선등록\' 버튼을 클릭하여 T world에서 이용하실 회선을 등록해 주세요.',
+  FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 단말기에 Usim을 넣어주시거나 SK텔레콤 가입 회선이 있으시다면, T월에서 이용하실 회선을 등록해 주세요.',
   FREE_SMS_PPS: '선불요금제 이용 고객님은 무료문자 서비스를 사용하실 수 없습니다.',
   TOTAL: '총 ',
   DESC: '개의 회선',

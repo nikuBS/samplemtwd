@@ -92,12 +92,15 @@ Tw.CustomerDamageInfoContents.prototype = {
     e.preventDefault();
     e.stopPropagation();
 
+    var $elem = $(e.currentTarget),
+      elemHref = $elem.attr('href');
+
     // 모웹이면 과금팝업 띄워줄 필요 없으니 바로 연결
-    if (!Tw.BrowserHelper.isApp()) {
-      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    if (!Tw.BrowserHelper.isApp() || $elem.hasClass('fe-no_msg')) {
+      return this._openExternalUrl(elemHref);
     }
 
-    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, elemHref));
   },
 
   // 외부 링크 연결

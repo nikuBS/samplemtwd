@@ -15,8 +15,13 @@ class CommonMemberLogoutRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
-    if ( query.target.indexOf('error') !== -1 || !FormatHelper.isEmpty(query.error) ) {
-      res.send(query.error_description);
+    if ( !FormatHelper.isEmpty(query.error) ) {
+      return this.error.render(res, {
+        svcInfo: svcInfo,
+        pageInfo: pageInfo,
+        code: query.error,
+        msg: query.error_description,
+      });
     } else {
       res.redirect(query.target);
     }

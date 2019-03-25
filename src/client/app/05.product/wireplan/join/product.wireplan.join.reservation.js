@@ -603,7 +603,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
-        inputSvcNum: this.$reservNumber.val().replace(/[^0-9]/g, '')
+        inputSvcNum: this.$reservNumber.val().replace(/[^0-9]/g, ''),
+        fileUploadYn: combinationInfo.fileList && combinationInfo.fileList.length > 0 ? 'Y' : 'N'
       };
 
     this._isCombineInfo = false;
@@ -663,7 +664,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'sk401@sk.com',
+          recvFaxNum: 'skt401@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList0
         }
@@ -671,7 +672,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'sk287@sk.com',
+          recvFaxNum: 'skt287@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList1
         }

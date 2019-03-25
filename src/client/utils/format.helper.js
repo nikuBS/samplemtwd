@@ -212,11 +212,9 @@ Tw.FormatHelper = (function () {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
-  var getDashedCellPhoneNumber = function (phoneNumber, includeAsterisk) {
+  var getDashedCellPhoneNumber = function (phoneNumber) {
     var str = '';
-    if (includeAsterisk) {
-      phoneNumber = phoneNumber.replace(/[^0-9*]/g, '');
-    }
+    phoneNumber = phoneNumber.replace(/\-/gi, '');
 
     if ( phoneNumber.length < 4 ) {
       return phoneNumber;
@@ -238,9 +236,6 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substr(3, 4);
       str += '-';
       str += phoneNumber.substr(7);
-      if (includeAsterisk) {
-        return str;
-      }
       return str.substr(0, 13);
     }
     return phoneNumber;
