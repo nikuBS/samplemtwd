@@ -603,7 +603,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
-        inputSvcNum: this.$reservNumber.val().replace(/[^0-9]/g, '')
+        inputSvcNum: this.$reservNumber.val().replace(/[^0-9]/g, ''),
+        fileUploadYn: combinationInfo.fileList && combinationInfo.fileList.length > 0 ? 'Y' : 'N'
       };
 
     this._isCombineInfo = false;
