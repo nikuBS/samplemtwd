@@ -56,7 +56,8 @@
     <hr class="cont-sp type1" aria-hidden="true">
     <% if(smartKeyword.result.smartSrchUrl){ %>
     <div class="banner-area">
-        <a data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.smartSrchUrl %>" data-param="<%= smartKeyword.result.smartSrchUrl %>" class="link search-element xtractor">
+        <a data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.smartSrchUrl %>"
+           data-param="<%= smartKeyword.result.smartSrchUrl %>" class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrNbillYn %>">
             <img src="<%= CDN %><%= smartKeyword.result.bnnrIos320Url %>" alt="<%= smartKeyword.result.smartSrchDesc%>">
         </a>
     </div>
@@ -65,21 +66,24 @@
         <ul class="plantype-list <%= smartKeyword.result.bnnrBotBtnNm3?'cell3': smartKeyword.result.bnnrBotBtnNm2?'':'cell1'%>">
             <%if(smartKeyword.result.bnnrBotBtnNm1){ %>
             <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-37" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl1 %>" type="button" class="link search-element xtractor">
+                <a data-xt_eid="CMMA_A11_B4-37" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl1 %>" type="button"
+                   class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn1 %>">
                     <%= smartKeyword.result.bnnrBotBtnNm1 %>
                 </a>
             </li>
             <% } %>
             <% if(smartKeyword.result.bnnrBotBtnNm2){ %>
             <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-38" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl2 %>" type="button" class="link search-element xtractor">
+                <a data-xt_eid="CMMA_A11_B4-38" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl2 %>" type="button"
+                   class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn2 %>">
                     <%= smartKeyword.result.bnnrBotBtnNm2 %>
                 </a>
             </li>
             <% } %>
             <% if(smartKeyword.result.bnnrBotBtnNm3){ %>
             <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-39" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl3 %>" type="button" class="link search-element xtractor">
+                <a data-xt_eid="CMMA_A11_B4-39" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl3 %>" type="button"
+                   class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn3 %>">
                     <%= smartKeyword.result.bnnrBotBtnNm3 %>
                 </a>
             </li>

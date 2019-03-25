@@ -286,7 +286,17 @@ Tw.CommonSearch.prototype = {
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
       if(linkUrl.indexOf('http')>-1){
-        Tw.CommonHelper.openUrlExternal(linkUrl);
+        if($linkData.data('require-pay')==='Y'){
+          this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+              $.proxy(function () {
+                this._popupService.close();
+                Tw.CommonHelper.openUrlExternal(linkUrl);
+              },this),
+              $.proxy(this._popupService.close,this._popupService),$linkData
+          );
+        }else{
+          Tw.CommonHelper.openUrlExternal(linkUrl);
+        }
       }else{
         this._moveUrl(linkUrl);
       }
@@ -492,7 +502,8 @@ Tw.CommonSearch.prototype = {
         returnData.push({
           title : data['BNNR_BOT_BTN_NM'+i],
           link : data['BNNR_BOT_BTN_URL'+i],
-          docId : data['DOCID']
+          docId : data['DOCID'],
+          payInfo : data['BNNR_BOT_BTN_BILL_YN'+i]
         });
       }
     }
