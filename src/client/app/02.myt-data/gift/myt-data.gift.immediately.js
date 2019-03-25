@@ -122,6 +122,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var phoneNumber = response.params.phoneNumber;
       this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(phoneNumber));
+      this._validateInputNumber();
+      this._checkValidateSendingButton();
     }
   },
 
