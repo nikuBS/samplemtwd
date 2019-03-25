@@ -201,5 +201,19 @@
         </div>
         <!--// .popup hbs -->
     </div>
+    <!-- 19.03.25: input box 수정 -->    
+    <script>
+    $(function () {
+        var $radio = $('[name="radio"]').change(function () {
+            var $radio2 = $('label[for="radio2"]');  
+            var selectedIndex = $radio.index($radio.filter(':checked'));
+            var flag = (selectedIndex == 0? true : false);
+
+            $radio2.find('button').attr('disabled', flag);
+            $radio2.find('[type="number"]').attr('disabled', flag);
+        });
+    })
+    </script>
+    <!-- //19.03.25: input box 수정 -->    
 </body>
 </html>
