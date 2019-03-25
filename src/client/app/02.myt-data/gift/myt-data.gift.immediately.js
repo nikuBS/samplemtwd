@@ -42,8 +42,9 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
-    this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$inputImmediatelyGift.on('input', $.proxy(this._onInputImmediatelyGiftNumber, this));
     this.$inputImmediatelyGift.on('blur', $.proxy(this._onBlurImmediatelyGiftNumber, this));
+    this.$inputImmediatelyGift.on('focus', $.proxy(this._onFocusImmediatelyGiftNumber, this));
     this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
     this.$container.on('mouseenter', '.fe-opdtm', $.proxy(this._mouseEnter, this));
     this.$container.on('mouseleave', '.fe-opdtm', $.proxy(this._mouseLeave, this));
@@ -124,16 +125,16 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
-  _onKeyUpImmediatelyGiftNumber: function () {
+  _onInputImmediatelyGiftNumber: function () {
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
     this._validateInputNumber();
-    this.$inputImmediatelyGift.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputImmediatelyGift.val(), true));
+    this.$inputImmediatelyGift.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputImmediatelyGift.val()));
   },
 
   _onBlurImmediatelyGiftNumber: function () {
     if(this.runBlur) {
-      this._onKeyUpImmediatelyGiftNumber();
+      this._onInputImmediatelyGiftNumber();
     }
   },
 
@@ -276,5 +277,14 @@ Tw.MyTDataGiftImmediately.prototype = {
 
   _hideRecentNumberLayer: function () {
     $('.recently-tel').hide();
+  },
+
+  _onFocusImmediatelyGiftNumber: function () {
+    //최근 사용한 번호 선택 후 입력 창 포커스시 번호 지움
+    var isCellPhone = Tw.FormatHelper.isCellPhone(this.$inputImmediatelyGift.val());
+    console.log(isCellPhone, ' isCellphone');
+    if( !isCellPhone ){
+      this.$inputImmediatelyGift.val('');
+    }
   }
 };
