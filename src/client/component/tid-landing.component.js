@@ -145,7 +145,7 @@ Tw.TidLandingComponent.prototype = {
         this._historyService.replaceURL('/main/home');
       }
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode + '&target=' + encodeURIComponent(target));
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode);
     }
 
     // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -174,7 +174,7 @@ Tw.TidLandingComponent.prototype = {
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236 ) {
       this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
   _successLogout: function (resp) {
