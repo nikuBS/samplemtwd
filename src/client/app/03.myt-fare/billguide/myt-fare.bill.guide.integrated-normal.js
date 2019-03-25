@@ -222,7 +222,9 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         params: {
           childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
-        }});
+        },
+        version: Tw.API_VERSION.V2
+      });
     }
 
     // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
