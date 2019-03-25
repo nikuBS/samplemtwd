@@ -134,13 +134,16 @@ Tw.NativeService.prototype = {
   },
   _completeLogout: function (isAutoLogin, resp) {
     Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
-    if ( isAutoLogin === 'Y' ) {
-      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
-      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
-      this._tidLanding.goActionSheetLogin(location.pathname + location.search);
-    } else {
-      this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
+    if ( resp.code !== Tw.API_CODE.NODE_1003 ) {
+      if ( isAutoLogin === 'Y' ) {
+        Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
+        Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
+        this._tidLanding.goActionSheetLogin(location.pathname + location.search);
+      } else {
+        this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
+      }
     }
+
   },
   _exitApp: function () {
     this.send(Tw.NTV_CMD.EXIT, {});
