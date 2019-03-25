@@ -385,7 +385,7 @@
                                     <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
                                 </div>
                             </div>
-                            <% } else { %>
+                            <% } else if (homeData.billData.charge && homeData.billData.used){ %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
                                 <em class="line">
@@ -424,7 +424,6 @@
                                     <% } %>
                                 </div>
                             </div>
-                            <% } %>
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
@@ -447,6 +446,7 @@
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
                                 </div>
                             </div>
+                            <% } %>
                             <% } %>
                             <!-- // 인터넷/전화/IPTV 요금안내서 -->
                             <% } %>
