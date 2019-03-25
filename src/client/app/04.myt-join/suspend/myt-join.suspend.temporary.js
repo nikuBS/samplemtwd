@@ -102,11 +102,11 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       this.$btSuspend.removeAttr('disabled');
     }
     // 이메일 또는 문자로 안내 선택, 둘 다 선택하지 않은 경우
-    else if ( _.isEmpty(this.$checkEmailNoti.attr('checked')) && _.isEmpty(this.$checkSMSnoti.attr('checked')) ) {
+    else if ( !this.$checkEmailNoti.prop('checked') && !this.$checkSMSnoti.prop('checked') ) {
       this.$btSuspend.attr('disabled', '');
-    } else if ( !_.isEmpty(this.$checkEmailNoti.attr('checked')) && _.isEmpty(this.$inputEmail.val()) ) {
+    } else if ( this.$checkEmailNoti.prop('checked') && _.isEmpty(this.$inputEmail.val()) ) {
       this.$btSuspend.attr('disabled', '');
-    } else if ( !_.isEmpty(this.$checkSMSnoti.attr('checked')) && _.isEmpty(this.$inputTel.val()) ) {
+    } else if ( this.$checkSMSnoti.prop('checked') && _.isEmpty(this.$inputTel.val()) ) {
       this.$btSuspend.attr('disabled', '');
     } else {
       this.$btSuspend.removeAttr('disabled');
@@ -133,11 +133,11 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$dateFrom = this.$container.find('[data-role="fe-date-from"]');
     this.$dateTo = this.$container.find('[data-role="fe-date-to"]');
 
-    if ( this.$dateTo.val() < this.$dateFrom.val()) {// 종료일자가 시작일 이전일 경우
+    if ( this.$dateTo.val() < this.$dateFrom.val() ) {// 종료일자가 시작일 이전일 경우
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
         null, null, null, null, $(event.currentTarget));
       return;
-    } else if (this.$dateTo.val() > this._defaultDate) {// 3개월 초과 설정
+    } else if ( this.$dateTo.val() > this._defaultDate ) {// 3개월 초과 설정
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02,
         null, null, null, null, $(event.currentTarget));
       return;
