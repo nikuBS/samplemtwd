@@ -8,7 +8,7 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
 
 
 
-  $('.benefit-list').eq(0).html(this._convToHtml(options.coBenefitDtl || options.appCoBenefitDtl )).show();
+  $('.benefit-list').eq(0).html(this._convToHtml(options.appCoBenefitDtl )).show();
 
   /*
   // 데이터 내에 태그를 escape한 것이 있다면 컨텐츠를 다시 뿌림
@@ -411,13 +411,13 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
       return '';
     }
 
-    contents = contents.replace('&amp;', '&');
-    contents = contents.replace('&quot;', '\'');
-    contents = contents.replace('&acute;', '"');
-    contents = contents.replace('&#35;', '#');
-    contents = contents.replace('&#39;', '\'');
-    contents = contents.replace('&#40;', '(');
-    contents = contents.replace('&#41;', ')');
+    contents = contents.replace(new RegExp('&amp;', 'gi'), '&');
+    contents = contents.replace(new RegExp('&quot;', 'gi'), '\'');
+    contents = contents.replace(new RegExp('&acute;', 'gi'), '"');
+    contents = contents.replace(new RegExp('&#35;', 'gi'), '#');
+    contents = contents.replace(new RegExp('&#39;', 'gi'), '\'');
+    contents = contents.replace(new RegExp('&#40;', 'gi'), '(');
+    contents = contents.replace(new RegExp('&#41;', 'gi'), ')');
 
     // 허용 가능 tag 목록
     var ableTagArr = [
