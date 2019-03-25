@@ -12,6 +12,8 @@ import EnvHelper from '../../../../utils/env.helper';
 import { TID, TID_SVC_TYPE } from '../../../../types/tid.type';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
+import { TID_LOGOUT } from '../../../../types/common.type';
+import { TID_MSG } from '../../../../types/string.type';
 
 class CommonTidLogout extends TwViewController {
   constructor() {
@@ -19,7 +21,10 @@ class CommonTidLogout extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const target = req.query.target || '/common/member/logout/complete';
+    const type = +req.query.type || TID_LOGOUT.DEFAULT;
+    const errorCode = req.query.errorCode || '';
+    const routeUrl = type === TID_LOGOUT.DEFAULT ? '/common/member/logout/complete' :
+      '/common/member/login/fail?errorCode=' + errorCode;
     let clientId = '';
 
     Observable.combineLatest(
@@ -36,10 +41,22 @@ class CommonTidLogout extends TwViewController {
       const params = {
         client_id: clientId,
         redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
-          '/common/member/logout/route?target=' + target,
+          '/common/member/logout/route?target=' + encodeURIComponent(routeUrl),
+        sso_logout_redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+          '/main/home',
         client_type: TID.CLIENT_TYPE,
       };
+
+      if ( type === TID_LOGOUT.LOGIN_FAIL ) {
+        Object.assign(params, {
+          page_title: TID_MSG.LOGIN_FAIL,
+          page_comment: errorCode,
+        });
+      }
+
       const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
+
+
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);
     }, (err) => {

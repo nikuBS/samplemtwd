@@ -949,8 +949,9 @@ export const API_CODE = {
   REDIS_EMPTY: '01',
   REDIS_ERROR: '02',
 
-  NODE_1001: '1001', // login 필요
-  NODE_1002: '1002', // 인증 오류
+  NODE_1001: '1001',  // login 필요
+  NODE_1002: '1002',  // 인증 오류
+  NODE_1003: '1003',  // 처리 완료
 
   CODE_200: '200',
   CODE_400: '400',
