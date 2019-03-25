@@ -100,6 +100,13 @@ class MyTFareSubmainController extends TwViewController {
             this._requestClaim(req, res, data);
 
           } else {
+
+            if ( resp.code === 'BIL0011' ) {
+              data.isBroadBand = true;
+              this._requestUsageFee(req, res, data);
+              return;
+            }
+
             this.error.render(res, {
               title: MYT_FARE_SUBMAIN_TITLE.MAIN,
               code: resp.code,
