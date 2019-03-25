@@ -5,6 +5,7 @@ ee http://help.github.com/ignore-files/ for more about ignoring files.
 /dist
 /src/server/public
 /src/server/manifest.json
+/src/server/manifest.*.json
 /tmp
 /out-tsc
 /logs

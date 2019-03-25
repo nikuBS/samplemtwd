@@ -3,6 +3,7 @@ const environment = {
     BFF_SERVER: 'http://61.250.19.37:31020',
     BFF_SERVER_G: 'http://211.188.180.73:31010',
     CDN: 'http://localhost:3001',
+    CDN_ORIGIN: 'http://localhost:3001',
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
       host: '61.250.19.37',
@@ -33,6 +34,7 @@ const environment = {
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm-dev.tworld.co.kr',
+    CDN_ORIGIN: 'http://61.250.20.69',
     SHORTCUT: 'skt.sh',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
@@ -71,6 +73,7 @@ const environment = {
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm-stg.tworld.co.kr',
+    CDN_ORIGIN: 'http://203.236.19.151',
     SHORTCUT: 'skt.sh',
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
@@ -108,6 +111,7 @@ const environment = {
     BFF_SERVER: 'http://bff-spring-mobile',
     BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm.tworld.co.kr',
+    CDN_ORIGIN: 'http://203.236.19.60',
     SHORTCUT: 'skt.sh',
     REDIS: {
       host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
