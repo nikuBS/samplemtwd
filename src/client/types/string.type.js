@@ -808,7 +808,8 @@ Tw.ALERT_MSG_PRODUCT = {
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
-  ALERT_3_A22: { TITLE: '알림', MSG: ' 은(는) 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
+  ALERT_3_A21: { TITLE: '알림', MSG: ' 은(는) 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
+  ALERT_3_A22: { TITLE: '알림', MSG: ' 은(는) 존재하지 않는 국가이거나 로밍 서비스 국가가 아닙니다.', BUTTON: '확인' },
   ALERT_3_A23: { TITLE: '알림', MSG: '국가를 입력(선택)해주세요.', BUTTON: '확인' },
   ALERT_3_A24: { TITLE: '알림', MSG: '휴대폰 모델을 선택해주세요.', BUTTON: '확인' },
   ALERT_3_A71: { TITLE: '알림', MSG: '일시적인 오류가 발생하였습니다. 다시 제조사를 선택해주세요.', BUTTON: '확인' }
