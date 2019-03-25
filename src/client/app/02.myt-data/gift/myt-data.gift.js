@@ -20,6 +20,11 @@ Tw.MyTDataGift.prototype = {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
       this._goAutoGiftTab();
+      $('.fe-request_sending_data').hide();
+      $('.fe-request_sending_auto').show();
+    }else{
+      $('.fe-request_sending_auto').hide();
+      $('.fe-request_sending_data').show();
     }
 
     this.reqCnt = 0;
@@ -148,7 +153,7 @@ Tw.MyTDataGift.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_06_0018, {
       fromDt: Tw.DateHelper.getPastYearShortDate(),
       toDt: Tw.DateHelper.getCurrentShortDate(),
-      giftType: 'G1'
+      type: '1'
     }).done($.proxy(this._onSuccessRecently, this));
   },
 
@@ -159,7 +164,7 @@ Tw.MyTDataGift.prototype = {
       var contactList = res.result;
 
       var list = _.filter(contactList, function (contact) {
-        if ( tempContactList.indexOf(contact.svcNum) === -1 ) {
+        if ( contact.giftType === 'G1' && tempContactList.indexOf(contact.svcNum) === -1 ) {
           tempContactList.push(contact.svcNum);
           return true;
         }

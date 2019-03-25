@@ -8,7 +8,7 @@
 
 <body class="bg-white">
 <div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup nobg fixed-bottom">
+    <div class="popup-page tw-popup nobg fixed-bottom" id="fe-cookiz-wrap">
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '팅·쿠키즈·안심음성요금', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -72,6 +72,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="fe-recharge_cookiz_immediately" disabled>충전하기</button>
+                    <% if ( subscriptions.regularTopUpYn !== 'Y' ) { %>
+                    <button class="fe-recharge_cookiz_monthly" disabled style="display:none;">충전하기</button>
+                    <% } %>
+                </li>
+            </ul>
         </div>
     </div>
     <!--// #contents -->

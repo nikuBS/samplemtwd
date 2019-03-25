@@ -61,14 +61,14 @@
                                         <p id="aria-citation-sms-code" class="form-ti title">인증번호</p>
                                         <p class="txt">전송 받으신 인증번호를 입력해주세요. <span class="sms-time fe-sms_time" style="display: none;" aria-hidden="true">04분 59초</span></p>
                                         <span class="inputbox bt-add inp-btn"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
-                                                <span class="input">
-                                                    <input type="number" placeholder="인증번호 6자리 입력" title="인증번호" class="fe-input_auth_code" aria-labelledby="aria-citation-sms-code" aria-describedby="" maxlength="6"><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
-                                                    <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
-                                                </span>
-                                                <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
-                                                   <button type="button" class="btn-round2 btn-style3 fe-btn_extend disabled" disabled>시간 연장</button>
-                                                </span>
+                                            <span class="input">
+                                                <input type="number" placeholder="인증번호 6자리 입력" title="인증번호" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-input_auth_code" aria-labelledby="aria-citation-sms-code" aria-describedby="" maxlength="6"><!-- 정상 발송일 경우 aria-sms-exp-desc2, 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
                                             </span>
+                                            <span class="bt-box3"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                               <button type="button" class="btn-round2 btn-style3 fe-btn_extend disabled" disabled>시간 연장</button>
+                                            </span>
+                                        </span>
                                         <span class="tx-box">
                                             <span id="aria-sms-exp-desc2" class="fe-validate_result fe-msg" aria-hidden="true" style="display: none"></span><!-- 통과일 경우 class none 삭제 -->
                                         </span>
@@ -89,13 +89,13 @@
                 </div>
                 <!--// .cont-box -->
 
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button disabled="disabled" class="fe-btn_setup_ok">설정 완료</button>
-                        </li>
-                    </ul>
-                </div>
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled="disabled" class="fe-btn_setup_ok">설정 완료</button>
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- // .container-wrap -->

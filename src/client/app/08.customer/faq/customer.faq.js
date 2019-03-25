@@ -51,6 +51,9 @@ Tw.CustomerFaq.prototype = {
   },
   _onSearchRequested: function () {
     var keyword = this.$inputSearch.val().trim();
-    this._historyService.goLoad('/customer/faq/search?keyword=' + keyword);
+    $(':focus').blur();
+    setTimeout($.proxy(function () {
+      this._historyService.goLoad('/customer/faq/search?keyword=' + keyword);
+    }, this), 200);
   }
 };

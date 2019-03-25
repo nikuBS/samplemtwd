@@ -28,8 +28,7 @@ Tw.BenefitIndex.prototype = {
     this._initVariables();
     this._bindEvent();
     this._registerHelper();
-    this._reqMyBenefitDiscountInfo();
-    this._loadTab();
+    this._allRequest();
     if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
     }
@@ -50,6 +49,7 @@ Tw.BenefitIndex.prototype = {
    */
   _initVariables: function () {
     this.$benefitArea = this.$container.find('#fe-my-benefit-area');
+    this.$benefitListArea = this.$container.find('#fe-benefit-list-area');
     this.$membership = this.$container.find('#fe-membership');
     this.$categoryTab = this.$container.find('#fe-category'); // 카테고리 탭
     this.$point = this.$container.find('#fe-point');
@@ -88,6 +88,19 @@ Tw.BenefitIndex.prototype = {
       this._setScrollLeft(this._convertPathToCategory());
     }, this));
     $(window).on('message', $.proxy(this._getWindowMessage, this));
+  },
+
+  /**
+   * API 요청모음
+   * @private
+   */
+  _allRequest: function () {
+    // 미 로그인, 준회원, 유선인 경우 [혜택/할인] 리스트만 조회한다.
+    if (!this._isAbleDiscountInfoReq()) {
+      this._switchTab(this._convertPathToCategory());
+    } else {
+      this._reqMyBenefitDiscountInfo();
+    }
   },
 
   /**
@@ -197,7 +210,7 @@ Tw.BenefitIndex.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var url = resp.result.svcUrl;
+    var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
     }
@@ -206,6 +219,7 @@ Tw.BenefitIndex.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
     this._popupService.open({
@@ -332,14 +346,20 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
+   * 나의 혜택/할인 요청 가능여부
+   * @returns {boolean}
+   * @private
+   */
+  _isAbleDiscountInfoReq: function () {
+    return !(!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1);
+  },
+
+  /**
    * 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
    * @private
    */
   _reqMyBenefitDiscountInfo: function () {
-    // 미 로그인, 준회원, 유선인 경우 건너뜀
-    if (!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
-      return;
-    }
+    this.$benefitArea.removeClass('none');
     this._apiService.requestArray([
       {command: Tw.API_CMD.BFF_11_0001},
       {command: Tw.API_CMD.BFF_07_0041},
@@ -414,7 +434,9 @@ Tw.BenefitIndex.prototype = {
     this.$membership.text(data.membership);
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));
     this.$benefit.text(this.$benefit.text() + ' ' + data.benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
-    this.$benefitArea.removeClass('none');
+
+    // DV001-18387 : 상단 나의혜택 할인영역이 먼저 노출 후 하단 혜택 리스트 노출한다.
+    this._switchTab(this._convertPathToCategory());
   },
 
   /**
@@ -451,14 +473,6 @@ Tw.BenefitIndex.prototype = {
       'submain'       : ''
     };
     return categoryId[Tw.UrlHelper.getLastPath()];
-  },
-
-  /**
-   * 호출 URL에 따른 카테고리 아이디의 탭 부분 호출
-   * @private
-   */
-  _loadTab: function() {
-    this._switchTab(this._convertPathToCategory());
   },
 
   /**
@@ -500,7 +514,12 @@ Tw.BenefitIndex.prototype = {
     }
 
     this.$list.empty();
-    // 리스트 수신 후 하단 [다른 페이지를 찾고 계신가요?] 보이기
+    /**
+     * 리스트 수신 후 처리순서
+     * 1. 혜택/할인 리스트 노출
+     * 2. [다른 페이지를 찾고 계신가요?] 노출
+     */
+    this.$benefitListArea.removeClass('none');
     this.$anotherPage.removeClass('none');
 
     // 더보기 설정
@@ -601,6 +620,9 @@ Tw.BenefitIndex.prototype = {
    */
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
+    }
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
@@ -615,6 +637,16 @@ Tw.BenefitIndex.prototype = {
     // BPCP 팝업 닫고 로그인 호출
     if (data.indexOf('goLogin:') !== -1) {
       this._tidLanding.goLogin('/benefit/submain/participation?' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+    }
+
+    // BPCP 에서 외부 팝업창 호출하고자 할떄
+    if (data.indexOf('outlink:') !== -1) {
+      var url = data.replace('outlink:', '');
+      if (!Tw.BrowserHelper.isApp()) {
+        return Tw.CommonHelper.openUrlExternal(url);
+      }
+
+      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
     }
   },
 

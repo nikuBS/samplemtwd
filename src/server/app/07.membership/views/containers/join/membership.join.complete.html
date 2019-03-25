@@ -1,0 +1,60 @@
+<%#
+* FileName: membership.join.complete.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2019. 3. 22.
+%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit"><span class="tx-highlight pt10">T멤버십 가입 완료</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <p class="basic-txt">발급 카드 정보 : </br> T멤버십(Leaders Club) 모바일 카드</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button id="fe-btn-go-tpay" type="button" class="btn-floating btn-style2">확인</button></li>
+            </ul>
+        </div>
+    </div>
+    <!--// .popup hbs -->
+</div>
+
+<% include ../../components/end.component.html %>
+
+<script>
+  $(document).ready(function () {
+    new Tw.TPayJoinLayerPopup($('.wrap'));
+  });
+</script>

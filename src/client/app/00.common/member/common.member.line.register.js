@@ -4,8 +4,9 @@
  * Date: 2018.10.01
  */
 
-Tw.CommonMemberLineRegister = function ($container) {
+Tw.CommonMemberLineRegister = function ($container, landing) {
   this.$container = $container;
+  this._landing = landing;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
@@ -38,6 +39,8 @@ Tw.CommonMemberLineRegister.prototype = {
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
     this.$allCheck.on('change', $.proxy(this._onClickAllCheck, this));
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
+
+    this.$container.on('click', '#fe-bt-close', $.proxy(this._onClosePage, this));
   },
   _parseLineInfo: function (lineList) {
     var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
@@ -241,6 +244,13 @@ Tw.CommonMemberLineRegister.prototype = {
     } else if ( this._goAuthFlag ) {
       this._historyService.replaceURL('/common/member/line');
     } else if ( this._registerLength > 0 ) {
+      this._historyService.goBack();
+    }
+  },
+  _onClosePage: function () {
+    if ( Tw.BrowserHelper.isIosChrome() && this._landing !== 'none' ) {
+      this._historyService.replaceURL(this._landing);
+    } else {
       this._historyService.goBack();
     }
   }

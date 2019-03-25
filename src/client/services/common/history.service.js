@@ -99,7 +99,7 @@ Tw.HistoryService.prototype = {
   },
   addHashList: function (hash) {
     var hashList = this._hashList;
-    if ( !hashList.includes(hash) ) {
+    if ( !hashList.indexOf(hash) !== -1 ) {
       hashList.push(hash);
     }
   },

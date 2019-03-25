@@ -20,6 +20,14 @@ Tw.MyTDataLimit.prototype = {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
       this._goAutoTab();
+      $('.fe-immediately_recharge').hide();
+      $('.fe-monthly_recharge').show();
+      this._fixedBottomAdd('.fe-monthly_recharge');
+
+    }else{
+      $('.fe-monthly_recharge').hide();
+      $('.fe-immediately_recharge').show();
+      this._fixedBottomAdd('.fe-immediately_recharge');
     }
 
     this._getRemainDataInfo();
@@ -81,5 +89,14 @@ Tw.MyTDataLimit.prototype = {
   _goAutoTab: function () {
     this.$container.find('#tab1').attr('aria-selected', false).find('a').attr('aria-selected', false);
     this.$container.find('#tab2').attr('aria-selected', true).find('a').attr('aria-selected', true);
+  },
+
+  _fixedBottomAdd: function (tap) {
+    //하단 버튼 자체가 없을 때는 fixed-bottom 클래스 제거
+    if($(tap).length === 0 ){
+      $('#fe-limit-wrap').removeClass('fixed-bottom');
+    }else{
+      $('#fe-limit-wrap').addClass('fixed-bottom');
+    }
   }
 };

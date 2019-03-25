@@ -15,18 +15,18 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
   this._nowUrl = nowUrl;
+  this._autoCompleteRegExObj = {
+    fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
+    fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
+    fontClose : new RegExp('</font>','g'),
+    spanOpen : new RegExp('<span class="keyword-text">','g')
+  };
   this._tidLanding = new Tw.TidLandingComponent();
   $(window).on('message', $.proxy(this._getWindowMessage, this));
 };
 
 Tw.CommonSearch.prototype = {
   _init : function () {
-    this._autoCompleteRegExObj = {
-      fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
-      fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-      fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="highlight-text">','g')
-    };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
@@ -40,10 +40,7 @@ Tw.CommonSearch.prototype = {
     for(var i=0;i<this._searchInfo.search.length;i++){
       keyName =  Object.keys(this._searchInfo.search[i])[0];
       contentsCnt = Number(this._searchInfo.search[i][keyName].count);
-      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
-        if(contentsCnt<=0){
-          this.$container.find('.'+keyName).addClass('none');
-        }
+      if(keyName==='smart'||keyName==='immediate'||keyName==='banner'){
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
@@ -108,7 +105,7 @@ Tw.CommonSearch.prototype = {
         }
         if(typeof (data[i][key])==='string'){
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
-          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
+          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="keyword-text">');
         }
         if(key==='DEPTH_PATH'){
           if(data[i][key].charAt(0)==='|'){
@@ -136,7 +133,7 @@ Tw.CommonSearch.prototype = {
             data[i].IMG_ALT = tempArr[1];
           }
         }
-        if(key==='MENU_URL'&&data[i][key].includes('http')){
+        if(key==='MENU_URL'&&data[i][key].indexOf('http') !== -1){
           data[i].tagTitle = Tw.COMMON_STRING.OPEN_NEW_TAB;
         }
       }
@@ -155,6 +152,7 @@ Tw.CommonSearch.prototype = {
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
       $list.addClass('none');
+      this.$container.find('.'+dataKey).addClass('none');
     }
     _.each(data,$.proxy(function (listData,index) {
       if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
@@ -273,8 +271,8 @@ Tw.CommonSearch.prototype = {
         {
           'docId' : $linkData.data('id'),
           'section' : $linkData.data('category'),
-          'title' : encodeURI($linkData.data('tit')),
-          'keyword' : encodeURI(this._searchInfo.researchQuery)
+          'title' : encodeURIComponent($linkData.data('tit')),
+          'keyword' : encodeURIComponent(this._searchInfo.researchQuery)
         }
       );
     }
@@ -411,7 +409,7 @@ Tw.CommonSearch.prototype = {
     if(!this.$keywordListBase.find('#recently_keyword_layer').hasClass('none')){
       this.$keywordListBase.find('#recently_keyword_layer').addClass('none');
     }
-    var requestParam = { query : encodeURI(keyword) };
+    var requestParam = { query : encodeURIComponent(keyword) };
     this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         if(res.code===0){
@@ -449,7 +447,7 @@ Tw.CommonSearch.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(this._escapeChar(keyword),'g'),'<span class="keyword-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }
@@ -459,7 +457,7 @@ Tw.CommonSearch.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
     returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
@@ -505,7 +503,7 @@ Tw.CommonSearch.prototype = {
       var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
       var $smartBase = this.$container.find('.btn-link-list');
       _.each(returnData,function (data,idx) {
-        $smartBase.append(smartTemplate({data : data , xidx : 37+idx}));
+        $smartBase.append(smartTemplate({data : data }));
       });
       if(returnData.length===3){
         $smartBase.addClass('col3');
@@ -577,7 +575,7 @@ Tw.CommonSearch.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    var url = resp.result.svcUrl;
+    var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
     }
@@ -586,6 +584,7 @@ Tw.CommonSearch.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
+    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
     this._popupService.open({
@@ -597,6 +596,10 @@ Tw.CommonSearch.prototype = {
   },
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
+
+    if (Tw.FormatHelper.isEmpty(data)) {
+      return;
+    }
 
     // BPCP 팝업 닫기
     if (data === 'popup_close') {
@@ -612,5 +615,18 @@ Tw.CommonSearch.prototype = {
     if (data.indexOf('goLogin:') !== -1) {
       this._tidLanding.goLogin(this._nowUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
     }
+
+    // BPCP 에서 외부 팝업창 호출하고자 할떄
+    if (data.indexOf('outlink:') !== -1) {
+      var url = data.replace('outlink:', '');
+      if (!Tw.BrowserHelper.isApp()) {
+        return Tw.CommonHelper.openUrlExternal(url);
+      }
+
+      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
+    }
+  },
+  _escapeChar : function (string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 };

@@ -4,13 +4,12 @@
  * Date: 2018.10.04
  */
 
-Tw.MyTDataFamilyShareMonthly = function(rootEl, hasShare) {
-  this.$container = rootEl;
+Tw.MyTDataFamilyShareMonthly = function($wrap, tabId, hasShare) {
+  this.$wrap = $wrap;
+  this.$container = $wrap.find('#' + tabId);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._hasShare = hasShare;
-
-  new Tw.MyTDataFamilyShare(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -20,16 +19,34 @@ Tw.MyTDataFamilyShareMonthly = function(rootEl, hasShare) {
 Tw.MyTDataFamilyShareMonthly.prototype = {
   _init: function() {
     this.MAIN_URL = '/myt-data/familydata';
+    new Tw.MyTDataFamilyShare(this.$container, this.$mSubmit.find('button'));
   },
 
   _cachedElement: function() {
+    this.$iSubmit = this.$wrap.find('#fe-submit-immediatly');
+    this.$mSubmit = this.$wrap.find('#fe-submit-monthly');
     this.$amountInput = this.$container.find('.fe-amount');
     this.$switch = this.$container.find('');
   },
 
   _bindEvent: function() {
     this.$container.on('touchstart click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
-    this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
+    this.$mSubmit.on('click', $.proxy(this._confirmSubmit, this));
+    this.$wrap.on('click', '.tab-linker li', $.proxy(this._changeTab, this));
+  },
+
+  _changeTab: function(e) {
+    if (e.currentTarget.id === 'tab2') {
+      if (this.$mSubmit.hasClass('none')) {
+        this.$mSubmit.removeClass('none').prop('aria-hidden', false);
+        this.$iSubmit.addClass('none').prop('aria-hidden', true);
+      }
+    } else {
+      if (this.$iSubmit.hasClass('none')) {
+        this.$iSubmit.removeClass('none').prop('aria-hidden', false);
+        this.$mSubmit.addClass('none').prop('aria-hidden', true);
+      }
+    }
   },
 
   _confirmSubmit: function() {

@@ -87,6 +87,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
+    new Tw.InputFocusService(this.$container, $('[data-target="submitApply"]'));
   },
 
   //--------------------------------------------------------------------------[EVENT]
@@ -105,7 +106,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
     //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
     //     $.proxy(function(){
-    //       this._history.goLoad('/myt-join/submain_w');
+    //       this._history.goLoad('/myt-join/submain');
     //     }, this),
     //     null,
     //     Tw.BUTTON_LABEL.NO,

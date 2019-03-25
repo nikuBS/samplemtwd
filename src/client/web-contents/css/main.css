@@ -4371,3 +4371,81 @@ body.apphome {
         top: 0;
         color: #666;
         font-size: 0.75rem; }
+
+.sms-confirm-box {
+  min-height: 12.5rem;
+  text-align: initial; }
+  .sms-confirm-box + .sms-confirm-box {
+    padding-top: 1.625rem;
+    border-top: 1px solid #e1e1e1; }
+  .sms-confirm-box .sms-confirm-des {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #666; }
+    .sms-confirm-box .sms-confirm-des span {
+      font-weight: 700;
+      vertical-align: baseline; }
+  .sms-confirm-box .box-citation .citation-form .form-cell {
+    margin-bottom: 0.75rem; }
+    .sms-confirm-box .box-citation .citation-form .form-cell.division-line {
+      border-top: 1px solid #e1e1e1;
+      padding-top: 1.25rem; }
+    .sms-confirm-box .box-citation .citation-form .form-cell .widget-box.radio {
+      margin-top: 1.25rem; }
+  .sms-confirm-box .email-confirm-out a, .sms-confirm-box .email-confirm-out button {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    border-bottom: 1px solid #e1e1e1;
+    padding: 1.125rem 0 0.9375rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-size: 0.9375rem;
+    line-height: 1.0625rem;
+    color: #000;
+    text-align: left; }
+  .sms-confirm-box .email-confirm-out a:active {
+    color: #000; }
+  .sms-confirm-box .email-confirm-out a:hover {
+    color: #000; }
+  .sms-confirm-box .email-confirm-out a:focus {
+    color: #000; }
+  .sms-confirm-box .email-confirm-out span, .sms-confirm-box .email-confirm-out em {
+    display: inline-block;
+    vertical-align: top; }
+  .sms-confirm-box .email-confirm-out .ti {
+    position: relative;
+    float: right;
+    font-size: 0.75rem;
+    line-height: 1.0625rem;
+    font-weight: 700; }
+    .sms-confirm-box .email-confirm-out .ti .ico {
+      display: inline-block;
+      width: 1.5625rem;
+      height: 1.5625rem;
+      margin-top: -0.25rem;
+      background-image: url(/img/ico/ico-group.png);
+      background-repeat: no-repeat;
+      background-position: 0 -17.1875rem;
+      background-size: 3.125rem; }
+  .sms-confirm-box button.disabled {
+    border-top: 1px solid #e5e5e5;
+    background: #fff;
+    color: #dcdcdc; }
+  .sms-confirm-box .inputbox + button {
+    margin-top: 0.875rem; }
+  .sms-confirm-box .tx-box + button {
+    margin-top: 1.5rem; }
+  .sms-confirm-box .bt-box3 .btn-round2 {
+    min-width: 8.125rem;
+    line-height: 2rem !important; }
+
+.mw-130 {
+  min-width: 8.125rem; }
+
+@media all and (max-width: 359px) {
+  .sms-confirm-box .bt-box3 .btn-round2 {
+    min-width: 7.0625rem;
+    padding: 0 0.625rem; }
+  .popup-page .header-wrap .page-header {
+    padding: 0 2.1875rem; } }

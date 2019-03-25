@@ -469,15 +469,15 @@ Tw.POPUP_TPL = {
       'list': [
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="06" data-center="A100110000" data-booth="1000004045"' +
-            ' data-img="place-img-01" value="인천공항 1터미널 3층 로밍센터(E-F 카운터)"',
-          txt: '인천공항 1터미널 3층 로밍센터(E-F 카운터)' },
+            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"',
+          txt: '인천공항 1터미널 3층 로밍센터(F 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
-            ' data-img="place-img-01" value="인천공항 1터미널 3층 로밍센터(G-H 카운터)"',
-          txt: '인천공항 1터미널 3층 로밍센터(G-H 카운터)' },
+            ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"',
+          txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="08" data-center="1430456896" data-booth="1430456957"' +
-            ' data-img="place-img-02" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"',
+            ' data-img="place-img-02-de" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"',
           txt: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="09" data-center="A100140000" data-booth="1000004055"' +
@@ -679,11 +679,11 @@ Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { txt: '서울·인천·경기', 'radio-attr': 'data-code="A10"', 'label-attr': ' ' },
-  { txt: '강원·충청·대전', 'radio-attr': 'data-code="A20"', 'label-attr': ' ' },
-  { txt: '전북·전남·광주·제주', 'radio-attr': 'data-code="A30"', 'label-attr': ' ' },
-  { txt: '부산·경남', 'radio-attr': 'data-code="A40"', 'label-attr': ' ' },
-  { txt: '대구·경북', 'radio-attr': 'data-code="A50"', 'label-attr': ' ' }
+  { txt: '서울/인천/경기', 'radio-attr': 'data-code="A10"', 'label-attr': ' ' },
+  { txt: '강원/충청/대전', 'radio-attr': 'data-code="A20"', 'label-attr': ' ' },
+  { txt: '전북/전남/광주/제주', 'radio-attr': 'data-code="A30"', 'label-attr': ' ' },
+  { txt: '부산/경남', 'radio-attr': 'data-code="A40"', 'label-attr': ' ' },
+  { txt: '대구/경북', 'radio-attr': 'data-code="A50"', 'label-attr': ' ' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [

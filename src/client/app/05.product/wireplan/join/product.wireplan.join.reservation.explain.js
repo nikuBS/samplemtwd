@@ -35,6 +35,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._familyType = null;
+    this._focusService = new Tw.InputFocusService($popupContainer, $popupContainer.find('.fe-btn_family_add'));
 
     if (this._familyList.length > 0) {
       this.$familyWrap.show().attr('aria-hidden', 'false');
@@ -64,7 +65,6 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
 
     this.$familyAddWrap.on('keyup input', 'input[type=text],input[type=tel]', $.proxy(this._procEnableAddFamilyBtn, this));
-    this.$familyAddWrap.on('keyup', 'input[type=tel]', $.proxy(this._onEnter, this));
     this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
@@ -334,12 +334,13 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _toggleBtn: function($btn, isEnable) {
+    var toggleClass = $btn.hasClass('fe-btn_explain_apply') ? 'bt-red1' : 'bt-blue1';
     if (isEnable) {
       $btn.removeAttr('disabled').prop('disabled', false);
-      $btn.parent().removeClass('bt-gray1').addClass('bt-blue1');
+      $btn.parent().removeClass('bt-gray1').addClass(toggleClass);
     } else {
       $btn.attr('disabled', 'disabled').prop('disabled', true);
-      $btn.parent().removeClass('bt-blue1').addClass('bt-gray1');
+      $btn.parent().removeClass(toggleClass).addClass('bt-gray1');
     }
   },
 
@@ -349,14 +350,6 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       familyList: this._setFamilyTypeText(this._familyList),
       fileList: this._fileList
     });
-  },
-
-  _onEnter: function(e) {
-    if (!Tw.InputHelper.isEnter(e)) {
-      return;
-    }
-
-    this.$btnFamilyAdd.trigger('click');
   }
 
 };

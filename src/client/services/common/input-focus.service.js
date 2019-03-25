@@ -9,10 +9,14 @@ Tw.InputFocusService.prototype = {
     ENTER: 13
   },
   _init: function () {
-    this.$inputList = this.$container.find('input');
+    this.$inputList = this.$container.find('input, textarea');
     this.$inputList = _.filter(this.$inputList, $.proxy(function (input) {
-      return $(input).attr('readonly') === undefined;
+      var curInput = $(input);
+      return (curInput.attr('readonly') === undefined || curInput.attr('readonly') === false) &&
+        (curInput.attr('disabled') === undefined || curInput.attr('disabled') === false) &&
+        curInput.attr('type') !== 'radio' &&  curInput.attr('type') !== 'checkbox' && curInput.attr('type') !== 'date';
     }, this));
+
     _.map(this.$inputList, $.proxy(function (input) {
       $(input).on('keyup', $.proxy(this._onKeyupInput, this));
     }, this));

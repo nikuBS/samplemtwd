@@ -7,8 +7,7 @@
 Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
   this.$container = rootEl;
   this._svcInfo = svcInfo;
-  //this._cdn = cdn;
-  this._cdn = 'http://cdnm.tworld.co.kr'; //검색엔진 테스트를 위한 cdn 주소 선언 TODO : 완료후 제거 , DV001-16584 REJECT
+  this._cdn = cdn;
   this._step = parseInt(step,10);
   this._init();
 };
@@ -19,7 +18,7 @@ Tw.CommonSearchMain.prototype = {
       fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
       fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="highlight-text">','g')
+      spanOpen : new RegExp('<span class="keyword-text">','g')
     };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -62,7 +61,7 @@ Tw.CommonSearchMain.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
     returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
@@ -147,6 +146,10 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _doSearch : function (searchKeyword) {
+    if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,null,$(event.currentTarget));
+      return;
+    }
     if(this._historyService.getHash()==='#input_P'){
       this._closeKeywordListBase();
     }
@@ -176,7 +179,7 @@ Tw.CommonSearchMain.prototype = {
         }
         returnData.push({
           showStr : this._recentlyKeywordListData[this._nowUser][i].keyword
-            .replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+            .replace(new RegExp(keyword,'g'),'<span class="keyword-text">'+keyword+'</span>'),
           linkStr : this._recentlyKeywordListData[this._nowUser][i].keyword
         });
       }

@@ -61,11 +61,13 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
+
+    new Tw.InputFocusService(this.$container, $('[data-target="submitApply"]'));
   },
 
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
-    this._history.goLoad('/myt-join/submain_w');
+    this._history.goLoad('/myt-join/submain');
 
     //if(this.productFormData.prodMediaNm ||
     //  this.productFormData.prodNm ||
@@ -76,7 +78,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
     //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
     //    $.proxy(function(){
-    //      this._history.goLoad('/myt-join/submain_w');
+    //      this._history.goLoad('/myt-join/submain');
     //    }, this),
     //    null,
     //    Tw.BUTTON_LABEL.NO,

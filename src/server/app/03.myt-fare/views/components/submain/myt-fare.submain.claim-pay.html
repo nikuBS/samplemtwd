@@ -26,7 +26,7 @@
                 <p class="price"><%= data.useAmtTot %>원</p>
                 <p class="term"><%= data.usageFirstDay %> ~ <%= data.usageLastDay %></p>
                 <% } else { %>
-                <p class="price"><%= data.claimUseAmt %>원</p>
+                <p class="price"><%= data.claimPay %>원</p>
                 <p class="term"><%= data.claimFirstDay %> ~ <%= data.claimLastDay %></p>
                 <% } %>
             <% } %>
@@ -39,18 +39,19 @@
             전화 106 또는 SK브로드밴드 웹사이트를 이용해 주세요.
             <% } else { %>
                 <% if (!data.isPPS) { %>
-                    <% if (data.svcCount !== 1) { %>
+
                     고객님은 현재 통합청구 이용 중이며<br />
-                    <% } %>할인금액을 제외한 이용요금으로 조회됩니다.
+                    할인금액을 제외한 이용요금으로 조회됩니다.
                 <% } %>
             <% } %>
         </p>
         <% } else { %>
+        <!-- DV001-17926 sb변경으로 삭제
         <div class="detail-bill">
             <ul>
                 <li>
                     <span class="tit">이용요금</span>
-                    <span class="value type2"><%= data.claimPay %>원</span>
+                    <span class="value type2"><%= data.claimUseAmt %>원</span>
                 </li>
                 <li>
                     <span class="tit">할인요금</span>
@@ -60,6 +61,10 @@
                 </li>
             </ul>
         </div>
+        -->
+
+        <p class="msg-type2 mt42">총 <span class="txt-point"><%= data.claimDisAmtAbs %>원</span>을 할인 받으셨습니다.</p><!--2019.03.20 추가-->
+
         <% } %>
     </div>
     <ul class="bt-slice <%= data.svcInfo.svcAttrCd !== 'M2' &&

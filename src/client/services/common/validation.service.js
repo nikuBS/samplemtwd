@@ -1,8 +1,9 @@
-Tw.ValidationService = function (rootEl, submitBtn, change) {
+Tw.ValidationService = function (rootEl, submitBtn, change, isPrepay) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
   this.$expirationTarget = null;
+  this.$isPrepay = isPrepay;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -75,8 +76,8 @@ Tw.ValidationService.prototype = {
       isValid = true;
     }
 
-    if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') !== -1) {
-      isValid = true;
+    if ($target.hasClass('fe-card-number') && $target.val().indexOf('*') === -1 && $target.val() !== this.$cardNumber) {
+      $target.attr('data-code', '');
     }
 
     if ($target.hasClass('fe-point')) {
@@ -212,11 +213,18 @@ Tw.ValidationService.prototype = {
       var cardCode = res.result.bankCardCoCd;
       var cardName = res.result.cardNm;
 
-      $target.attr({ 'data-code': cardCode, 'data-name': cardName });
-      $target.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      if (this.$isPrepay) {
+        cardCode = res.result.prchsCardCd;
+        cardName = res.result.prcchsCardNm;
+      }
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail($target);
+      } else {
+        $target.attr({'data-code': cardCode, 'data-name': cardName});
+        $target.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');
+
+        this.$cardNumber = $target.val();
       }
     } else {
       this._getFail($target);
@@ -224,6 +232,7 @@ Tw.ValidationService.prototype = {
   },
   _getFail: function ($target) {
     $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show().attr('aria-hidden', 'false');
+    this.$cardNumber = '';
   },
   _getPointMessage: function ($target) {
     var $isSelectedPoint = this.$container.find('.fe-select-point').attr('id');
@@ -262,7 +271,8 @@ Tw.ValidationService.prototype = {
     }
 
     if (this.$container.find('.fe-card-number').is(':visible')) {
-      if (!Tw.FormatHelper.isEmpty(this.$container.find('.fe-card-number').attr('data-code'))) {
+      if (!Tw.FormatHelper.isEmpty(this.$container.find('.fe-card-number').attr('data-code')) ||
+        this.$container.find('.fe-card-number').val().indexOf('*') !== -1) {
         return true;
       } else {
         return false;

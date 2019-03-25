@@ -30,12 +30,12 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#online" class="fe-replace-history" aria-hidden='true'>온라인 T world</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#mobile" class="fe-replace-history" aria-hidden='true'>T world</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#online" class="fe-replace-history" aria-hidden='true'>T world 이용법</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#mobile" class="fe-replace-history" aria-hidden='true'>모바일 T world</a></li>
                                 </ul>
                             </div>
                             <div class="tab-contents">
-                                <div role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                <div role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-hidden='false'>
 
                                     <div class="cont-box">
                                         <p class="site-informationuse-text">T world 웹사이트를 이용하면서 어려운 점을 아래 이용안내에서 확인해 보세요.</p>
@@ -51,7 +51,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div role="tabpanel" id="tab2-tab" aria-labelledby="tab2" class="blind">
+                                <div role="tabpanel" id="tab2-tab" aria-labelledby="tab2" class="blind none" aria-hidden='true'>
                                     
                                     <%- TContent %>
                                    

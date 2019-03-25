@@ -9,7 +9,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import { MYT_SUSPEND_ERROR_MSG, MYT_SUSPEND_REASON, MYT_SUSPEND_STATE } from '../../../../types/string.type';
+import { MYT_SUSPEND_ERROR_MSG, MYT_SUSPEND_REASON, MYT_SUSPEND_STATE_EXCLUDE } from '../../../../types/string.type';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
 
@@ -43,9 +43,10 @@ class MyTJoinSuspendStatus extends TwViewController {
       const status = {};
       if ( suspendStatus.result.svcStCd === 'SP' ) {
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
-        const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.');
+        // 해외체류 toDt 없음
+        const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
         status['period'] = { from, to };
-        status['reason'] = suspendStatus.result.svcChgRsnNm;
+        status['reason'] = suspendStatus.result.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
         status['resuspend'] = null; // 재신청중인 사용자 -> 재신청취소 버튼 노출
         status['resuspendDt'] = null; // 재신청일자
         status['resetable'] = true;
@@ -72,7 +73,8 @@ class MyTJoinSuspendStatus extends TwViewController {
         options['status'] = status;
       } else if ( this._militaryAC(suspendStatus.result) ) { // 군입대 장기일시정지자의 중도 해제 중
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
-        const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.');
+        // 해외체류 toDt 없음
+        const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
         status['period'] = { from, to };
         status['reason'] = MYT_SUSPEND_REASON['5000341'];
         status['type'] = 'long-term';
@@ -98,7 +100,8 @@ class MyTJoinSuspendStatus extends TwViewController {
         } else {
           _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.M.D.');
           _progress.opDtm = _progress.opDtm ? DateHelper.getShortDateWithFormat(_progress.opDtm, 'YYYY.M.D.') : '';
-          _progress.state = MYT_SUSPEND_STATE[_progress.opStateCd];
+          // DV001-18322 스윙 문구 고객언어 반영
+          _progress.state = _progress.opState.replace( MYT_SUSPEND_STATE_EXCLUDE, ''); // MYT_SUSPEND_STATE[_progress.opStateCd];
           _progress.fromDt = DateHelper.getShortDateWithFormat(_progress.fromDt, 'YYYY.M.D.');
           _progress.progressReason = MYT_SUSPEND_REASON[_progress.receiveCd];
           if ( _progress.toDt ) {

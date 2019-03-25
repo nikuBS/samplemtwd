@@ -638,18 +638,6 @@ Tw.MenuComponent.prototype = {
         if (item.isLink || !!this.XTRACTOR_CODE[item.menuId]) { // 통계코드 추가
           item.xtrCode = this.XTRACTOR_CODE[item.menuId];
         }
-
-        // Edit: Kim inhwan
-        var menu_url = item.menuUrl;
-        var checkUrl = '/myt-join/submain';
-        if ( menu_url ) {
-          if ( menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0 ) {
-            if ( !!userInfo && userInfo.svcAttrCd.indexOf('S') > -1 ) {
-              item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
-            }
-          }
-        }
-
         // if ( !!item.urlAuthClCd ) {
         //   if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
         //     // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;

@@ -4,7 +4,7 @@ Tw.HashService = function () {
 };
 
 Tw.HashService.prototype = {
-  initHashNav: function (callback) {
+  initHashNav: function (callback) {  // bind onchangehash event
     if ( !callback || typeof callback !== 'function' ) {
       return false;
     }
@@ -12,7 +12,7 @@ Tw.HashService.prototype = {
     this._callbackList.push(callback);
 
     if ( 'onhashchange' in window ) {
-      window.onhashchange = $.proxy(this._checkHash, this);
+      window.addEventListener('hashchange', $.proxy(this._checkHash, this));
     } else {
       setInterval($.proxy(this._checkHash, this), 100);
     }
@@ -20,7 +20,7 @@ Tw.HashService.prototype = {
     this._checkHash(callback);
     return this._currentHashNav;
   },
-  _checkHash: function () {
+  _checkHash: function () { // check whether change hash or not
     var hash = window.location.hash.replace(/^#/i, '');
     if ( hash !== this._currentHashNav ) {
       var newHash = hash;
@@ -57,7 +57,7 @@ Tw.HashService.prototype = {
     return hash;
 
   },
-  _parametersFromString: function (paramString) {
+  _parametersFromString: function (paramString) { // get query parameters from url
     if ( !paramString.length ) return null;
     var paramPairs = paramString.split('&');
     if ( !paramPairs.length ) return null;
@@ -66,7 +66,8 @@ Tw.HashService.prototype = {
     for ( var i = 0, len = paramPairs.length; i < len; i++ ) {
       if ( !paramPairs[i].length ) continue;
       var kv = paramPairs[i].split('=');
-      if ( !kv[0].length ) continue;results[decodeURIComponent(kv[0])] = kv.length > 1 ? decodeURIComponent(kv[1]) : null;
+      if ( !kv[0].length ) continue;
+      results[decodeURIComponent(kv[0])] = kv.length > 1 ? decodeURIComponent(kv[1]) : null;
 
     }
     for ( var name in results ) {
@@ -75,9 +76,9 @@ Tw.HashService.prototype = {
     return null;
   },
 
-  detectIsReload: function () {
-    if (window.performance) {
-      if (performance.navigation.type === 1) {
+  detectIsReload: function () { // when click reload button on browser
+    if ( window.performance ) {
+      if ( performance.navigation.type === 1 ) {
         location.hash = '';
       }
     }

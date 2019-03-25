@@ -640,7 +640,7 @@ export const MYT_SUSPEND_STATE = {
   F: '처리불가',
   C: '처리완료'
 };
-
+export const MYT_SUSPEND_STATE_EXCLUDE = '(사유)';
 export const FEE_PLAN_TIP_TXT = {
   MS_05_tip_01: '요금제 안내',
   MS_05_tip_02: '선불 휴대폰 요금제 변경',
@@ -713,8 +713,8 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
 };
 
 export const ROAMING_RECEIVE_CENTER = {
-  '0': '인천공항 1터미널 3층 로밍 센터(E-F 카운터)',
-  '1': '인천공항 1터미널 3층 로밍 센터(G-H 카운터)',
+  '0': '인천공항 1터미널 3층 로밍 센터(F 카운터)',
+  '1': '인천공항 1터미널 3층 로밍 센터(H 카운터)',
   '2': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
   '3': '김포공항 1층 로밍 센터',
   '4': '제주공항 국제선 1층 로밍 센터',
@@ -756,26 +756,26 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
     className: 'ico-myt'
   },
   {
-    cat: '회원',
-    title: '개인명의 휴대폰 태블릿 다회선 등록하기',
+    cat: '회선',
+    title: '다회선 설정하기',
     code: 'D00001',
     className: 'ico-member'
   },
   {
-    cat: '회원',
-    title: '법인명의 휴대폰번호 삭제방법',
+    cat: '회선',
+    title: 'T world에 등록된 법인명의 휴대폰번호 삭제 방법',
     code: 'D00006',
     className: 'ico-member'
   },
   {
-    cat: '회원',
-    title: '법인명의 태블릿 다회선 등록하기',
+    cat: '회선',
+    title: '[법인명의 태블릿] 다회선 등록하기',
     code: 'D00005',
     className: 'ico-member'
   },
   {
     cat: '기타',
-    title: '모두에게 평등한 웹 접근성 안내',
+    title: '모두에게 평등한 T world의 웹접근성 안내',
     code: 'D00008',
     className: 'ico-etc'
   },

@@ -198,7 +198,7 @@ class ApiService {
               loginType: type
             }),
             this.loginService.setNoticeType(resp.result.noticeTypCd)
-            // this.loginService.setNoticeType('01')
+            // this.loginService.setNoticeType('05')
           ]);
         } else {
           throw resp;

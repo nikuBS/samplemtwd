@@ -266,7 +266,7 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-
+            <!-- DV001-17926 SB 변경으로 삭제
             <div class="user-greeting">
                 <i class="icon-dialog-emoji-56"><span class="blind"></span></i>
                 <% if(commDataInfo.discount != 0 ){ %>
@@ -275,7 +275,10 @@
                 <p class="msg"><%= svcInfo.mbrNm %>님,<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
                 <% } %>
             </div>
+            -->
 
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
@@ -431,8 +434,7 @@
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,
       intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
-      childLineInfo : <%-JSON.stringify(childLineInfo) %>,
-      showConditionInfo : <%-JSON.stringify(showConditionInfo) %>
+      childLineInfo : <%-JSON.stringify(childLineInfo) %>
   } );
   });
 </script>

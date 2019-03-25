@@ -83,6 +83,35 @@
                         </div>
                     </div>
                 </div>
+                <% if(isPromotion){ %>
+                <div class="cont-box">
+                    <h5 class="tit f-m16"><%= prodApiInfo.preinfo.reqProdInfo.prodNm %> 선물</h5>
+                    <p class="tip-gift">고객님의 휴대폰번호를 입력하시면 T파이 이용기간 동안 사용 가능한 로밍 데이터 300MB(3G/LTE)가 제공됩니다. (선택사항)  </p>
+                    <div class="tel-area">
+                        <span class="subtit">휴대폰번호</span>
+                        <div class="tel-box">
+                            <button class="bt-dropdown big placeholder fe-selected-number head" title="휴대폰 번호 처번째 자리 (1~3번째) 입력" aria-haspopup="true">010<span class="ico"></span></button>
+                            <span class="inputbox">
+                                    <span class="input">
+                                        <input class="fe-selected-number fe-input-number fe-gift-num-mid" type="tel" maxlength="4" title="휴대폰 번호 가운데 자리 (4~7번째) 입력" value="" aria-labelledby="aria-citation-phone" aria-describedby="">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="input">
+                                        <input class="fe-selected-number fe-input-number fe-gift-num-tail" type="tel" maxlength="4" title="휴대폰 번호 마지막 자리 (8~11번째) 입력" value="" aria-labelledby="aria-citation-phone" aria-describedby="">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                        </div>
+                        <button type="button" id="fe_request_gift" class="btn-round1 btn-style3">선물받는번호 확인</button>
+                        <ul class="announcement-box">
+                            <li class="announcement-bullet type01">추가로 제공되는 로밍데이터를 원치 않으시거나 이미 가입하신 로밍 데이터 요금제가 있으신 경우, 휴대폰 번호를 빈칸으로 두고 가입하시기 바랍니다.
+                                <br>
+                                로밍데이터 300MB를 다 사용하시면 상품이 해지되며 ‘데이터로밍무조건차단’에 자동 가입됩니다.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <% } %>
                 <!--// .cont-box -->
 
                 <!-- .cont-box -->
@@ -113,14 +142,14 @@
                 </div>
                 <!--// .cont-box -->
 
-                <div class="bt-fixed-area">
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button disabled="disabled" id="do_confirm">설정 완료</button><!-- 활성화시 disabled 속성 삭제 -->
-                        </li>
-                    </ul>
-                </div>
-
+                
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled="disabled" id="do_confirm">설정 완료</button><!-- 활성화시 disabled 속성 삭제 -->
+                    </li>
+                </ul>
             </div>
         </div>
         <!-- // .container-wrap -->
@@ -136,7 +165,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>')
+    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>',<%- isPromotion %>)
   });
 </script>
 <% include ../../../components/end.component.html %>

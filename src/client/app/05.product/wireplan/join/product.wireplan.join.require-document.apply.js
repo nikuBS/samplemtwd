@@ -5,12 +5,14 @@
  */
 
 Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl, historyList) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_apply'));
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
 

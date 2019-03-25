@@ -91,15 +91,17 @@
                 </div>
                 <!--// .cont-box -->
             </div>
-            <ul class="bt-slice full">
-                <li class="bt-red1">
-                    <button id="fe-bt-complete" disabled>선택 회선 등록</button>
-                </li>
-            </ul>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button id="fe-bt-complete" disabled>선택 회선 등록</button>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <button id="fe-bt-close" class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
@@ -109,7 +111,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLineRegister($('#commonMemberLineRegister'));
+    new Tw.CommonMemberLineRegister($('#commonMemberLineRegister'), '<%= landing %>');
   });
 </script>
 <% include ../../components/end.component.html %>

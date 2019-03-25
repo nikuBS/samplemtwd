@@ -5,9 +5,12 @@
  */
 
 Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirmOptions) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_setup_ok'));
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
@@ -29,7 +32,6 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
     this._historyService.goBack();
   }
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
@@ -137,6 +139,14 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$sendMsgResult.hide().attr('aria-hidden', 'true');
     this._receiveNum = number;
 
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this));
+    } else {
+      this._getAuthCodeReq(false);
+    }
+  },
+
+  _onReadSms: function () {
     this._getAuthCodeReq(false);
   },
 
@@ -197,6 +207,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       this._toggleButton(this.$btnExtend, true);
       this._toggleButton(this.$btnValidate, false);
       this._setSendResultText(false, Tw.SMS_VALIDATION.SUCCESS_SEND);
+      this._getCertNum();
     } else {
       this._setValidateResultText(false, Tw.SMS_VALIDATION.SUCCESS_EXPIRE);
     }
@@ -218,17 +229,31 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
   },
 
-  _detectInputAuthCode: function(e) {
-    if (!this._isSend) {
-      return;
+  _getCertNum: function () {
+    if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
     }
+  },
 
+  _onCertNum: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this.$inputAuthCode.val(resp.params.cert);
+      this._detectInputAuthCode();
+    }
+  },
+
+  _detectInputAuthCode: function() {
+    var onlyNumber = this.$inputAuthCode.val();
+
+    this.$inputAuthCode.val('');
+    this.$inputAuthCode.val(onlyNumber);
     this.$inputAuthCode.val(this.$inputAuthCode.val().replace(/[^0-9]/g, ''));
+
     if (this.$inputAuthCode.val().length > 6) {
       this.$inputAuthCode.val(this.$inputAuthCode.val().substr(0, 6));
     }
 
-    this._toggleClearBtn($(e.currentTarget));
+    this._toggleClearBtn(this.$inputAuthCode);
     this._toggleButton(this.$btnValidate, this.$inputAuthCode.val() > 0);
   },
 
@@ -399,10 +424,25 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this._popupService.close();
-    setTimeout($.proxy(this._openSuccessPop, this), 100);
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {
+      scrbTermCd: 'S'
+    }, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
+  },
+
+  _isVasTerm: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      this._isResultPop = true;
+      return this._openSuccessPop();
+    }
+
+    this._openVasTermPopup(resp.result);
   },
 
   _openSuccessPop: function() {
+    if (!this._isResultPop) {
+      return;
+    }
+
     this._popupService.open({
       hbs: 'complete_product',
       data: {
@@ -428,6 +468,44 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     e.stopPropagation();
 
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+  },
+
+  _openVasTermPopup: function(respResult) {
+    var popupOptions = {
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'unique fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
+    };
+
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
+      });
+    }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
+      });
+    }
+
+    this._isResultPop = true;
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
+  },
+
+  _bindVasTermPopupEvent: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndOpenResultPopup: function() {
+    this._isResultPop = true;
+    this._popupService.close();
   },
 
   _onClosePop: function() {

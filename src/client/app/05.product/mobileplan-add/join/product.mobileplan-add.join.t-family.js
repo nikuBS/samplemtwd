@@ -5,9 +5,12 @@
  */
 
 Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmtNum, confirmOptions) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn_check_join'));
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
@@ -23,7 +26,6 @@ Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmt
     this._historyService.goBack();
   }
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
@@ -107,14 +109,6 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     if ($elem.val().length > maxLength) {
       $elem.val($elem.val().substr(0, maxLength));
-    }
-
-    if ($elem.hasClass('fe-num_input') && Tw.InputHelper.isEnter(e)) {
-      return this.$inputBirth.focus();
-    }
-
-    if ($elem.hasClass('fe-input_birth') && Tw.InputHelper.isEnter(e)) {
-      return this.$btnCheckJoin.trigger('click');
     }
 
     this._checkError($elem);
@@ -365,10 +359,25 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     }
 
     this._popupService.close();
-    setTimeout($.proxy(this._openSuccessPop, this), 100);
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {
+      scrbTermCd: 'S'
+    }, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
+  },
+
+  _isVasTerm: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      this._isResultPop = true;
+      return this._openSuccessPop();
+    }
+
+    this._openVasTermPopup(resp.result);
   },
 
   _openSuccessPop: function() {
+    if (!this._isResultPop) {
+      return;
+    }
+
     this._popupService.open({
       hbs: 'complete_product',
       data: {
@@ -397,6 +406,44 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     e.stopPropagation();
 
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+  },
+
+  _openVasTermPopup: function(respResult) {
+    var popupOptions = {
+      hbs: 'MV_01_02_02_01',
+      bt: [
+        {
+          style_class: 'unique fe-btn_back',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }
+      ]
+    };
+
+    if (respResult.prodTmsgTypCd === 'H') {
+      popupOptions = $.extend(popupOptions, {
+        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
+      });
+    }
+
+    if (respResult.prodTmsgTypCd === 'I') {
+      popupOptions = $.extend(popupOptions, {
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
+      });
+    }
+
+    this._isResultPop = true;
+    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
+  },
+
+  _bindVasTermPopupEvent: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndOpenResultPopup: function() {
+    this._isResultPop = true;
+    this._popupService.close();
   },
 
   _onClosePop: function() {

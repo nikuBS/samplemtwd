@@ -28,7 +28,7 @@ Tw.ProductRoamingGuide.prototype = {
         this.$container.find('.fe-rm-lost').attr('aria-pressed', 'true');
         var _top = $('.widget-box.accordion').eq(1).offset().top;
         $('html, body').stop().animate({
-            scrollTop:_top - 70},
+            scrollTop:_top + 200},
             1, function(){});
     },
 

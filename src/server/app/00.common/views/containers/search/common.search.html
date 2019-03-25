@@ -161,8 +161,7 @@
             <% if(searchInfo.search[1].smart.data.length>0){ %>
             <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
             <div class="search-banner">
-                <a class="list-data xtractor"
-                   data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC"
+                <a class="list-data"
                    href="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"
                    data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
                     <img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>">
@@ -187,7 +186,6 @@
     <script type="text/x-handlebars-template" id="smart_template">
         <li class="last-line">
             <a class="list-data" href="{{data.link}}"
-               data-xt_eid="CMMA_A11_B4-{{xidx}}" data-xt_csid="NO" data-xt_action="BC"
                data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
                 {{data.title}}
             </a>
@@ -366,7 +364,7 @@
 
                 </ul>
                 <div class="btn-more">
-                    <a href="http://shop.tworld.co.kr" title="새창열림" class="list-data direct-element home">다이렉트샵 가기</a>
+                    <a href="https://m.shop.tworld.co.kr" title="새창열림" class="list-data direct-element home">다이렉트샵 가기</a>
                 </div>
             </div>
         </div>
@@ -435,7 +433,7 @@
         <hr class="cont-sp type1 sale" aria-hidden="true">
         <div class="cont-box bgnone noborder gaps-style09 list sale">
             <div class="searchnumbox-wrap">
-                <h2 class="tit">혜택·할인</h2>
+                <h2 class="tit">혜택/할인</h2>
                 <div class="numberbox">
                     <span class="num"><%= searchInfo.search[11].sale.count %></span>건
                     <% if(searchInfo.search[11].sale.count>10){ %>
@@ -466,7 +464,7 @@
         <hr class="cont-sp type1 as_outlet" aria-hidden="true">
         <div class="cont-box list nogaps-btm as_outlet">
             <div class="searchnumbox-wrap">
-                <h2 class="tit">지점 · 대리점, A/S센터</h2>
+                <h2 class="tit">지점/대리점, A/S센터</h2>
                 <div class="numberbox">
                     <span class="num"><%= searchInfo.search[12].as_outlet.count %></span>건
                     <% if(searchInfo.search[12].as_outlet.count>10){ %>

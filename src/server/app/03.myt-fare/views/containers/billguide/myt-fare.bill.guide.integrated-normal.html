@@ -147,7 +147,7 @@
     <div id="contents" class="container-wrap">
 
         <div class="container">
-
+            <!-- DV001-17926 SB 변경으로 삭제
             <div class="user-greeting">
                 <i class="icon-dialog-emoji-56"><span class="blind"></span></i>
                 <% if(commDataInfo.discount != 0 ){ %>
@@ -156,6 +156,9 @@
                 <p class="msg"><%= svcInfo.mbrNm %>님,<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>
                 <% } %>
             </div>
+            -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -178,13 +181,7 @@
                         <p class="stit"><%=commDataInfo.selClaimDt %></p>
                         <p class="msg">
                             <span class="str">
-                                <% for (var i=0; i < intBillLineInfo.length; i++) {
-                                     if ( intBillLineInfo[i].acntRepYN === 'Y' ) {
-                                %>
-                                <%= intBillLineInfo[i].label %>
-                                <%   }
-                                   }
-                                %>
+                                <%- commDataInfo.repSvcNm %>
                             </span>에<br />통합청구되었습니다.</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button></div>

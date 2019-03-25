@@ -1,3 +1,12 @@
+
+  /**
+   * @param {jquery element} rootEl the container haven banners
+   * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {Array<object>} banners banner list
+   * @param {string} target location code
+   * @param {function} callback when loaded banners
+   */
+
 Tw.BannerService = function(rootEl, type, banners, target, callback) {
   this.$container = rootEl;
   if (!banners || banners.length <= 0) {
@@ -17,7 +26,7 @@ Tw.BannerService.prototype = {
     this._renderBanners(target, callback);
   },
 
-  _renderBanners: function(target, callback) {
+  _renderBanners: function(target, callback) {  // get banner.hbs
     var CDN = Tw.Environment.cdn;
 
     $.ajax(CDN + '/hbs/banner.hbs', {})
@@ -25,15 +34,15 @@ Tw.BannerService.prototype = {
       .fail($.proxy(this._renderBanners, this));
   },
 
-  _handleSuccessBanners: function(target, callback, hbs) {
+  _handleSuccessBanners: function(target, callback, hbs) {  // after get hbs
     var CDN = Tw.Environment.cdn;
     this._bannerTmpl = Handlebars.compile(hbs);
 
     this.$banners.on({
-      init: function(e, slick) {
+      init: function(e, slick) {  // for accessibiltiy (set selected indicator)
         slick.$dots && slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
       },
-      beforeChange: function(e, slick, before, after) {
+      beforeChange: function(e, slick, before, after) { // for accessibiltiy (set selected indicator)
         var dots = slick.$dots.find('li');
         $(dots[before])
           .find('> span')
@@ -42,12 +51,12 @@ Tw.BannerService.prototype = {
           .find('> span')
           .html(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
       },
-      afterChange: function(e, slick) {
+      afterChange: function(e, slick) { // for accessibility (focus to current banner)
         // if (slick.$slider.find('*:focus').length > 0) {
         slick.$slider.find('.slick-current').focus();
         // }
       },
-      setPosition: function(e, slickSlider) {
+      setPosition: function(e, slickSlider) { // for accessibility (set focus to current banner)
         var currentSlide = slickSlider.currentSlide;
         $(slickSlider.$dots).find('span').each(function (i, target) {
           target.setAttribute('aria-selected', currentSlide === i);
@@ -55,13 +64,14 @@ Tw.BannerService.prototype = {
       }
     });
 
-    if (this.$banners) {
-      if (!this._banners || this._banners.length === 0) {
+    if (this.$banners) {  // if banner exist
+      if (!this._banners || this._banners.length === 0) { // if banner list is empty
         this.$banners.parents('div.nogaps').addClass('none');
       } else {
-        this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN }));
+        this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN })); // render banners
 
-        if (this.$banners.hasClass('fe-banner-auto')) {
+        // set slick
+        if (this.$banners.hasClass('fe-banner-auto')) { // auto scrolling
           this.$banners.slick({
             autoplay: true,
             autoplaySpeed: 4000,
@@ -91,6 +101,7 @@ Tw.BannerService.prototype = {
             }
           });
         }
+
         // var $mainSlider = $('.home-slider .home-slider-belt');
         // if ($mainSlider.length > 0) {
         //   this.$banners.on({
@@ -117,14 +128,15 @@ Tw.BannerService.prototype = {
         //   });
         // }
 
-        if (callback) {
+        if (callback) { // set callback
           this.$banners.find('img').on('load', callback);
         }
       }
     }
   },
+
   _bindEvent: function() {
-    this.$banners.on('click', '.slick-current', $.proxy(this._openBannerLink, this));
+    this.$banners.on('click', '.slick-current', $.proxy(this._openBannerLink, this)); // when click banner
   },
 
   _openBannerLink: function(e) {
@@ -139,13 +151,13 @@ Tw.BannerService.prototype = {
     var link = banner.imgLinkUrl;
 
     if (link) {
-      switch (banner.imgLinkTrgtClCd) {
-        case Tw.BANNER_LINK_TYPE.CHANNEL_APP: {
+      switch (banner.imgLinkTrgtClCd) { 
+        case Tw.BANNER_LINK_TYPE.CHANNEL_APP: { // internal link
           window.location.href = link;
           break;
         }
         // case Tw.BANNER_LINK_TYPE.OTHER_WEB:
-        default: {
+        default: {  // external link
           if (Tw.BrowserHelper.isApp() && banner.isBill) {
             Tw.CommonHelper.showDataCharge(function() {
               Tw.CommonHelper.openUrlExternal(link);
@@ -173,7 +185,7 @@ Tw.BannerService.prototype = {
 
     if (type === Tw.REDIS_BANNER_TYPE.TOS) {
       return _.chain(banners)
-        .sort(function(a, b) {
+        .sort(function(a, b) {  
           return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
         })
         .map(function(banner, idx) {
@@ -190,11 +202,11 @@ Tw.BannerService.prototype = {
         .value();
     } else {
       return _.chain(banners)
-        .filter(function(banner) {
+        .filter(function(banner) { 
           return (
-            (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
-            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) &&
-            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)
+            (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
+            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
+            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
           );
         })
         .sort(function(a, b) {

@@ -11,6 +11,7 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
   this._options = options;
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-btn-request'));
 
   this._cachedElement();
   this._bindEvent();
@@ -107,6 +108,8 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$fePhone2.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$fePhone3.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$feTel1.on('click', $.proxy(this._onClickTel1, this));
+    this._$feTel2.on('input', $.proxy(this._onKeyupInputPhone, this));
+    this._$feTel3.on('input', $.proxy(this._onKeyupInputPhone, this));
     // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
@@ -218,6 +221,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       this._$feTel1.text(text);
       this._$feTel1.data('tel', $target.data('tel'));
       this._popupService.close();
+      this._setRequestBtnStatus();
       // this._isDirty = true;
     }, this));
   },
@@ -297,7 +301,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     var isValidCellPhone = Tw.ValidationHelper.isCellPhone(this._getCellphoneNumber());
     var propDisabled = (!!this._selectedTerm && isValidCellPhone) ? false : true;
     this._$btnRequest.prop('disabled', propDisabled);
-    // this._setErrTxtStatus(isValidCellPhone);
+    this._setErrTxtStatus(isValidCellPhone);
   },
 
   _setErrTxtStatus: function(isValidCellPhone) {

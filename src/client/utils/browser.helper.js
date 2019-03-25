@@ -24,6 +24,10 @@ Tw.BrowserHelper = (function () {
     return /SamsungBrowser/i.test(userAgent);
   };
 
+  var isIosChrome = function () {
+    return /CriOS/i.test(userAgent);
+  };
+
   var getUserAgent = function () {
     return userAgent;
   };
@@ -41,6 +45,7 @@ Tw.BrowserHelper = (function () {
     isApp: isApp,
     isOnline: isOnline,
     isSamsung: isSamsung,
+    isIosChrome: isIosChrome,
     getUserAgent: getUserAgent,
     getAndroidVersion: getAndroidVersion
   };

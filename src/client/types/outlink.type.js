@@ -1,6 +1,4 @@
 Tw.OUTLINK = {
-  TPLECARD_BENEFIT: 'http://tmembership.tworld.co.kr/web/html/lte/tple/tple_info.jsp',
-  COUPLECARD_BENEFIT: 'http://tmembership.tworld.co.kr/web/html/lte/couple/couple_info.jsp',
   MOBILE_TWORLD: 'http://m2.tworld.co.kr/jsp/op.jsp?p=w70&f=a0001',
   GOOGLE_STORE: 'https://play.google.com/store/apps/details?id=Com.sktelecom.minit',
   ONE_STORE: 'https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000032819',

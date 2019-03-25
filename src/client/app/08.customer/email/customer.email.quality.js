@@ -28,7 +28,7 @@ Tw.CustomerEmailQuality.prototype = {
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
-    this.$wrap_tpl_quality.on('click', '.fe-quality_register', $.proxy(this._request, this));
+    this.$container.on('click', '.fe-quality-register', $.proxy(this._request, this));
   },
 
   _request: function (e) {
@@ -103,8 +103,8 @@ Tw.CustomerEmailQuality.prototype = {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var $elInputline = this.$wrap_tpl_quality.find('.fe-quality-line');
     var elInputlineVal = $elInputline.is('button') ? $elInputline.text() : $elInputline.val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString().replace(/-/gi, '') : '0'; // 현재 와이브로 옵션 없으므로 - 대시만 없애는 방향으로 가능
-    var selSvcNum = !!elInputlineVal ? elInputlineVal : '';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0'; // 현재 와이브로 옵션 없으므로 - 대시만 없애는 방향으로 가능
+    var selSvcNum = !!elInputlineVal ? elInputlineVal.replace(/-/gi, '') : '';
 
     var htParams = $.extend(this._makeParams(), {
       inptZip: $('.fe-zip').val(),
@@ -193,9 +193,9 @@ Tw.CustomerEmailQuality.prototype = {
     });
 
     if ( arrValid.indexOf(false) === -1 && !!this.$quality_depth1.data('qualityDepth1') ) {
-      $('.fe-quality_register').prop('disabled', false);
+      $('.fe-quality-register').prop('disabled', false);
     } else {
-      $('.fe-quality_register').prop('disabled', true);
+      $('.fe-quality-register').prop('disabled', true);
     }
   },
 

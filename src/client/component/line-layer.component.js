@@ -50,7 +50,7 @@ Tw.LineLayerComponent.prototype = {
       var cnt = resp.result.totalSvcCnt - resp.result.expsSvcCnt;
       if ( cnt > 0 ) {
         setTimeout($.proxy(function () {
-          this._historyService.goLoad('/common/member/line/register?type=' + layerType);
+          this._historyService.goLoad('/common/member/line/register?type=' + layerType + '&landing=' + encodeURIComponent(location.pathname + location.search));
         }, this), 1000);
       }
     }
@@ -62,7 +62,7 @@ Tw.LineLayerComponent.prototype = {
   },
   _openNewLine: function () {
     setTimeout($.proxy(function () {
-      this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this), 'mainAuto');
     }, this), 2000);
   },
   _openCustomerPasswordGuide: function () {
@@ -80,7 +80,7 @@ Tw.LineLayerComponent.prototype = {
         style_class: 'bt-red1 pos-right fe-go',
         txt: Tw.LOGIN_CUS_PW_GUIDE.BUTTON
       }]
-    }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
+    }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this), 'mainAuto');
   },
   _confirmCustPwGuide: function ($popupContainer) {
     $popupContainer.on('click', '.fe-go', $.proxy(this._onClickGoPwGuide, this));
