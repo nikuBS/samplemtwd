@@ -9,16 +9,9 @@ Tw.BpcpService = function(rootEl, pathUrl, isOnCloseBack) {
   this._isOnCloseBack = isOnCloseBack;
   this._pathUrl = pathUrl;
   this._bindEvent();
-  this._init();
 };
 
 Tw.BpcpService.prototype = {
-
-  _init: function() {
-    if (!Tw.FormatHelper.isEmpty(this.$container)) {
-      this.$container.css('-webkit-transform', 'translate3d(0,0,0)');
-    }
-  },
 
   _bindEvent: function() {
     $(window).on('message', $.proxy(this._getWindowMessage, this));
