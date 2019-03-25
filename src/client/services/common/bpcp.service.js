@@ -15,9 +15,8 @@ Tw.BpcpService = function(rootEl, pathUrl, isOnCloseBack) {
 Tw.BpcpService.prototype = {
 
   _init: function() {
-    var $wrap = $('.wrap');
-    if ($wrap.length > 0) {
-      $wrap.css('-webkit-transform', 'translate3d(0,0,0)');
+    if (this.$container.length > 0) {
+      this.$container.css('-webkit-transform', 'translate3d(0,0,0)');
     }
   },
 
