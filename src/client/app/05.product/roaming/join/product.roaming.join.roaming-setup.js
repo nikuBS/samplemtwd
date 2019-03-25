@@ -296,6 +296,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       var giftNum = this._getGiftNum();
       if(giftNum.length===3){
         this._promotionValidState = true;
+        this._validatedGiftPhoneNum = giftNum;
         delete userJoinInfo.tPieBnftSvcNum;
       }else{
         userJoinInfo.tPieBnftSvcNum = giftNum;
