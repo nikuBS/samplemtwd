@@ -105,7 +105,7 @@ Tw.CommonSearch.prototype = {
         }
         if(typeof (data[i][key])==='string'){
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
-          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="keyword-text">');
+          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
         }
         if(key==='DEPTH_PATH'){
           if(data[i][key].charAt(0)==='|'){
