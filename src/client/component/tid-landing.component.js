@@ -83,7 +83,7 @@ Tw.TidLandingComponent.prototype = {
   goSLogin: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
-        this._getMdn();
+        this._historyService.goLoad('/common/member/slogin/aos');
       } else {
         this._historyService.goLoad('/common/member/slogin/ios');
       }
@@ -194,14 +194,6 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.reload();
     } else {
       this._historyService.replaceURL(target);
-    }
-  },
-  _getMdn: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));
-  },
-  _onMdn: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._historyService.goLoad('/common/member/slogin/aos?mdn=' + resp.params.mdn);
     }
   }
 };
