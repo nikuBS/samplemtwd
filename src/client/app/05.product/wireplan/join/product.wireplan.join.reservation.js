@@ -664,7 +664,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'sk401@sk.com',
+          recvFaxNum: 'skt401@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList0
         }
@@ -672,7 +672,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       {
         command: Tw.API_CMD.BFF_01_0046,
         params: {
-          recvFaxNum: 'sk287@sk.com',
+          recvFaxNum: 'skt287@sk.com',
           proMemo: Tw.PRODUCT_RESERVATION.combine,
           scanFiles: convFileList1
         }
