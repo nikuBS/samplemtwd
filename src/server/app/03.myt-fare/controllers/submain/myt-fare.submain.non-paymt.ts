@@ -7,7 +7,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, API_VERSION } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -123,7 +123,7 @@ class MyTFarePaymentOver extends TwViewController {
   _getChildNonPayment() {
     return this.apiService.request(API_CMD.BFF_05_0047, {
       childSvcMgmtNum: this.childMgmtNum
-    }).map((resp) => {
+    }, null, [], API_VERSION.V2).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.unPayAmtList && resp.result.unPayAmtList.length === 0 ) {
           // no data
