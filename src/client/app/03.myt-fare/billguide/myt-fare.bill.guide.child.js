@@ -129,7 +129,7 @@ Tw.MyTFareBillGuideChild.prototype = {
    * @private
    */
   _goProdPage: function (event) {
-    var url = $(event.target).data('prod-page-url');
+    var url = $(event.currentTarget).data('prod-page-url');
     this._history.goLoad(url);
   },
 
