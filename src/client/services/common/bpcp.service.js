@@ -15,7 +15,7 @@ Tw.BpcpService = function(rootEl, pathUrl, isOnCloseBack) {
 Tw.BpcpService.prototype = {
 
   _init: function() {
-    if (this.$container.length > 0) {
+    if (!Tw.FormatHelper.isEmpty(this.$container)) {
       this.$container.css('-webkit-transform', 'translate3d(0,0,0)');
     }
   },
