@@ -132,7 +132,7 @@ class MyTFareSubmainController extends TwViewController {
    */
   _requestClaim(req, res, data) {
     Observable.combineLatest(
-      this._getNonPayment(),
+      // this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
       this._getTaxInvoice(),
@@ -140,7 +140,7 @@ class MyTFareSubmainController extends TwViewController {
       // this._getMicroPrepay(),
       // this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
-    ).subscribe(([/*  */ nonpayment, paymentInfo, totalPayment,
+    ).subscribe(([/* nonpayment, */ paymentInfo, totalPayment,
                    taxInvoice, /* contribution,*/ /* microPay, contentPay/*, banner*/]) => {
       // 소액결제
       /*if ( microPay ) {
@@ -158,12 +158,12 @@ class MyTFareSubmainController extends TwViewController {
           data.isContentPrepay = true;
         }
       }*/
-      // 미납내역 (성능개선항목으로 삭제 -> 오류나서 일단 오픈함)
-      if ( nonpayment ) {
+      // 미납내역 (성능개선항목으로 삭제)
+      /*if ( nonpayment ) {
         data.nonpayment = nonpayment;
         data.unPaidTotSum = FormatHelper.addComma(nonpayment.unPaidTotSum);
-      }
-      // data.unPaidTotSum = data.claim.colBamt && data.claim.colBamt !== '0' ? data.claim.colBamt : null;
+      }*/
+      data.unPaidTotSum = data.claim.colBamt && data.claim.colBamt !== '0' ? data.claim.colBamt : null;
       // 납부/청구 정보
       if ( paymentInfo ) {
         data.paymentInfo = paymentInfo;
