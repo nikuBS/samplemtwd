@@ -1408,6 +1408,8 @@ body.hidden {
   .popup-page.txt-screed .container {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch !important; }
+  .popup-page.cont-overflow-hide {
+    overflow-y: hidden; }
   .popup-page.fixed-bottom {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
