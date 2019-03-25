@@ -253,13 +253,13 @@ Tw.ProductList.prototype = {
     var $target = $(e.currentTarget),
       $selectedTag = $layer.find('.suggest-tag-list .link.active');
     if ($selectedTag.length > 0) {
-      $target.removeClass('checked').attr('aria-checked', false);
+      $target.removeClass('checked').attr('aria-checked', false).find('input').removeAttr('checked');
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
       this._popupService.openConfirmButton(
         ALERT.MSG,
         ALERT.TITLE,
         $.proxy(this._handleResetSelectedTag, this, $selectedTag, $target),
-        null,
+        $.proxy(this._handleCloseFilterAlert, this),
         Tw.BUTTON_LABEL.CLOSE,
         undefined,
         $target
@@ -267,10 +267,16 @@ Tw.ProductList.prototype = {
     }
   },
 
+  _handleCloseFilterAlert: function() {
+    if (this._hasSelectedTag) {
+      this.$container.find('.select-list li.checkbox.checked').removeClass('checked').prop('aria-checked', false).find('input').removeAttr('checked');
+    }
+  },
+
   _handleResetSelectedTag: function($selectedTag, $target) {
     this._hasSelectedTag = false;
     $selectedTag.removeClass('active');
-    $target.addClass('checked').attr('aria-checked', true);
+    $target.addClass('checked').attr('aria-checked', true).find('input').attr('checked', true);
     this._popupService.close();
   },
 
