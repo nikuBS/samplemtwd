@@ -222,8 +222,6 @@ class MainHome extends TwViewController {
 
   private getBillData(svcInfo): Observable<any> {
     let billData = {
-      code: '',
-      msg: '',
       showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
 
@@ -257,7 +255,7 @@ class MainHome extends TwViewController {
   }
 
   private parseBillData(billData): any {
-    if ( !FormatHelper.isEmpty(billData.charge) || !FormatHelper.isEmpty(billData.used) ) {
+    if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) ) {
       if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
         return {
           isBroadband: true
