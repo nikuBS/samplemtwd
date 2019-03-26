@@ -16,7 +16,7 @@ Tw.BpcpService.prototype = {
 
   _getWindowMessage: function(e) {
     var data = e.data || e.originalEvent.data;
-    if (Tw.FormatHelper.isEmpty(data)) {
+    if (Tw.FormatHelper.isEmpty(data) || typeof(data) !== 'string') {
       return;
     }
 
