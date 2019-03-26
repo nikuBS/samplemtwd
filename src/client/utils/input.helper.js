@@ -92,6 +92,7 @@ Tw.InputHelper = (function () {
     var $input = $(input);
     var tel = $input.val().replace(/[^0-9]/g, '');
     $input.val(Tw.StringHelper.phoneStringToDash(tel));
+    $input.trigger('change');
   }
 
   function isEnter(event) {
