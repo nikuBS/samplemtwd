@@ -409,12 +409,14 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
-    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
+    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]'),
+      $scrollContainer = $popupContainer.find('.container');
 
+    console.log(contentsIndex);
     if (contentsIndex === 0) {
-      $popupContainer.scrollTop(0);
+      $scrollContainer.scrollTop(0);
     } else {
-      $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+      $scrollContainer.scrollTop($target.offset().top - $('.page-header').height());
     }
 
     $target.focus();
