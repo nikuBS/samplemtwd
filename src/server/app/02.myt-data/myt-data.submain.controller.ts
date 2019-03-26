@@ -175,32 +175,37 @@ class MytDataSubmainController extends TwViewController {
 
       const reqBkdArr = new Array();
 
-      // 리필쿠폰 수혜, 제공 건수
-      if ((refillGiftHistory.rifilRcvCnt && parseInt(refillGiftHistory.rifilRcvCnt, 10) > 0) ||
-        (refillGiftHistory.rifilSndCnt && parseInt(refillGiftHistory.rifilSndCnt, 10) > 0)) {
-        reqBkdArr.push(this._getRefillPresentBreakdown());
-      }
-      // 리필쿠폰 사용 건수
-      if (refillGiftHistory.rifilUseCnt && parseInt(refillGiftHistory.rifilUseCnt, 10) > 0) {
-        reqBkdArr.push(this._getRefillUsedBreakdown());
-      }
-      // T끼리데이터 선물, 수혜 건수
-      if ((refillGiftHistory.tdataSndCnt && parseInt(refillGiftHistory.tdataSndCnt, 10) > 0) ||
-        (refillGiftHistory.tdataRcvCnt && parseInt(refillGiftHistory.tdataRcvCnt, 10) > 0)) {
-        reqBkdArr.push(this._getDataPresentBreakdown());
-      }
-      // 팅/쿠키즈/안심음성 충전내역 건수
-      if (refillGiftHistory.tingIneeCnt && parseInt(refillGiftHistory.tingIneeCnt, 10) > 0) {
-        reqBkdArr.push(this._getEtcChargeBreakdown());
-      }
-      // 데이터한도요금제 충전내역 건수
-      if (refillGiftHistory.lmtChrgCnt && parseInt(refillGiftHistory.lmtChrgCnt, 10) > 0) {
+      if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());
-      }
-      // 팅요금 보낸선물내역, 받은선물내역 건수
-      if ((refillGiftHistory.tingGiftRcvCnt && parseInt(refillGiftHistory.tingGiftRcvCnt, 10) > 0) ||
-        (refillGiftHistory.tingGiftSndCnt && parseInt(refillGiftHistory.tingGiftSndCnt, 10) > 0) ) {
-        reqBkdArr.push(this._getTingPresentBreakdown());
+        reqBkdArr.push(this._getEtcChargeBreakdown());
+      } else {
+        // 리필쿠폰 수혜, 제공 건수
+        if ((refillGiftHistory.rifilRcvCnt && parseInt(refillGiftHistory.rifilRcvCnt, 10) > 0) ||
+          (refillGiftHistory.rifilSndCnt && parseInt(refillGiftHistory.rifilSndCnt, 10) > 0)) {
+          reqBkdArr.push(this._getRefillPresentBreakdown());
+        }
+        // 리필쿠폰 사용 건수
+        if (refillGiftHistory.rifilUseCnt && parseInt(refillGiftHistory.rifilUseCnt, 10) > 0) {
+          reqBkdArr.push(this._getRefillUsedBreakdown());
+        }
+        // T끼리데이터 선물, 수혜 건수
+        if ((refillGiftHistory.tdataSndCnt && parseInt(refillGiftHistory.tdataSndCnt, 10) > 0) ||
+          (refillGiftHistory.tdataRcvCnt && parseInt(refillGiftHistory.tdataRcvCnt, 10) > 0)) {
+          reqBkdArr.push(this._getDataPresentBreakdown());
+        }
+        // 팅/쿠키즈/안심음성 충전내역 건수
+        if (refillGiftHistory.tingIneeCnt && parseInt(refillGiftHistory.tingIneeCnt, 10) > 0) {
+          reqBkdArr.push(this._getEtcChargeBreakdown());
+        }
+        // 데이터한도요금제 충전내역 건수
+        if (refillGiftHistory.lmtChrgCnt && parseInt(refillGiftHistory.lmtChrgCnt, 10) > 0) {
+          reqBkdArr.push(this._getDataChargeBreakdown());
+        }
+        // 팅요금 보낸선물내역, 받은선물내역 건수
+        if ((refillGiftHistory.tingGiftRcvCnt && parseInt(refillGiftHistory.tingGiftRcvCnt, 10) > 0) ||
+          (refillGiftHistory.tingGiftSndCnt && parseInt(refillGiftHistory.tingGiftSndCnt, 10) > 0) ) {
+          reqBkdArr.push(this._getTingPresentBreakdown());
+        }
       }
 
       if (reqBkdArr.length <= 0) {
