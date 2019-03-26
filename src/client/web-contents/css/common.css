@@ -101,8 +101,7 @@ html, body {
 
 html {
   height: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b {
   margin: 0;
@@ -6172,6 +6171,14 @@ a.ui-button:active,
   width: 100%;
   display: block; }
 
+.search-tw-popup {
+  widows: 100%;
+  height: 100%;
+  position: fixed;
+  top: 4.125rem;
+  left: 0;
+  overflow: hidden; }
+
 .searchbox-layer01 {
   position: fixed;
   top: 4.125rem;
@@ -7521,8 +7528,8 @@ a.ui-button:active,
   -webkit-box-shadow: 0 20px 0 red;
           box-shadow: 0 20px 0 red;
   position: relative;
-  -webkit-animation: loader2-ub7714cc0 0.5s ease-in-out alternate infinite;
-          animation: loader2-ub7714cc0 0.5s ease-in-out alternate infinite;
+  -webkit-animation: loader2-uf28b80f3 0.5s ease-in-out alternate infinite;
+          animation: loader2-uf28b80f3 0.5s ease-in-out alternate infinite;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
   top: 50%;
@@ -7535,8 +7542,8 @@ a.ui-button:active,
     border-radius: 50%;
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red;
-    -webkit-animation: loader2-ub7714cc0 0.5s ease-in-out alternate infinite;
-            animation: loader2-ub7714cc0 0.5s ease-in-out alternate infinite; }
+    -webkit-animation: loader2-uf28b80f3 0.5s ease-in-out alternate infinite;
+            animation: loader2-uf28b80f3 0.5s ease-in-out alternate infinite; }
   .spinner_loading2::before {
     left: -20px;
     -webkit-animation-delay: 0.3s;
@@ -7546,7 +7553,7 @@ a.ui-button:active,
     -webkit-animation-delay: 0.1s;
             animation-delay: 0.1s; }
 
-@-webkit-keyframes loader2-ub7714cc0 {
+@-webkit-keyframes loader2-uf28b80f3 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7554,7 +7561,7 @@ a.ui-button:active,
     -webkit-box-shadow: 0 10px 0 red;
             box-shadow: 0 10px 0 red; } }
 
-@keyframes loader2-ub7714cc0 {
+@keyframes loader2-uf28b80f3 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }

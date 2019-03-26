@@ -44,11 +44,18 @@ $(document).on('ready', function () {
 
   //@190321: DV001-17881
   var isIOS = skt_landing.util.win_info.get_device().toUpperCase() === 'IOS';
-  if(isIOS == true){
-    $('.searchbox-header input[type="text"], .resize-ios').on({      //19.03.25_수정 @DV001-17881
+  if(isIOS == true){  //19.03.26_수정 @
+    $('.resize-ios').on({      //19.03.25_수정 @DV001-17881, 
       'focus blur': function (e) {
         var osType = skt_landing.util.win_info.get_device().toUpperCase();
         $(window).trigger('resize', {dataset: {evt: e, tag: 'searchbox', osType: osType}});
+      }
+    });    
+    $('.searchbox-header input[type="text"]').on({
+      'focus blur': function (e) {
+        if($("[class*='searchbox-layer']").siblings('[class*="cont-layer-blind"]').length > 0){
+          skt_landing.action.checkScroll.lockScroll();
+        }
       }
     });
   }
@@ -72,13 +79,9 @@ $(window).on('resize', function (e, datas) {
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
   }
-  if(current_size != skt_landing._originalSize){
-    $("#gnb.on .g-wrap").css("position","relative");
-  }else{
-    $("#gnb.on .g-wrap").css("position","fixed");
-  }
-  
+
   if ( ios.type == 'focus' || Math.abs( current_size - skt_landing._originalSize ) > 200 ){   //@190320: ios search touch event    //190321: DV001-17881
+    $("#gnb.on .g-wrap").hide(); // 19.03.26 툴바 이슈 수정
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
@@ -91,6 +94,7 @@ $(window).on('resize', function (e, datas) {
     var $popupContainer = $('.popup-page.fixed-bottom, .popup-page.fixed-btn'); // 19.03.22 수정
     if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
   } else {    
+    $("#gnb.on .g-wrap").show(); // 19.03.26 툴바 이슈 수정
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
