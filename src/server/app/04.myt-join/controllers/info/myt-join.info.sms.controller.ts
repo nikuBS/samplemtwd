@@ -3,10 +3,11 @@ import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import {MyTJoinSmsData} from '../../../../mock/server/myt.join.sms.mock';
 
 /**
  * FileName: myt-join.info.sms.controller.ts
+ * 화면 ID : MS_02_02
+ * 설명 : 나의가입정보 > 망 작업 SMS 알림 신청
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.15
  */
@@ -19,7 +20,6 @@ class MyTJoinInfoSms extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      // this.mockReqSms()
       this.reqSms()
     ).subscribe(([resp]) => {
       if ( resp.code === API_CODE.CODE_00) {
@@ -31,6 +31,12 @@ class MyTJoinInfoSms extends TwViewController {
     });
   }
 
+  /**
+   * 화면 수신 데이터 생성
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.parseData(data);
 
@@ -42,6 +48,10 @@ class MyTJoinInfoSms extends TwViewController {
     };
   }
 
+  /**
+   * 데이터 파싱
+   * @param data
+   */
   private parseData(data: any): void {
     if (  !FormatHelper.isEmpty(data.cntcNum) ) {
       if ( data.cntcNum.length > 11 ) {
@@ -51,18 +61,20 @@ class MyTJoinInfoSms extends TwViewController {
     }
   }
 
+  /**
+   * 망 작업 SMS 알림 API 조회
+   */
   protected reqSms(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0092, {});
   }
 
-  private mockReqSms(): Observable<any> {
-    return Observable.create((observer) => {
-      observer.next(  FormatHelper.objectClone(MyTJoinSmsData) );
-      observer.complete();
-    });
-  }
-
-  // API Response fail
+  /**
+   * API Response fail
+   * @param res
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   private fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
     if (data.code === 'MOD0040') { // SK브로드밴드 가입자
       return res.render('info/myt-join.info.sms.html', {
