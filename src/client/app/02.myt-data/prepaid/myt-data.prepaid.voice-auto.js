@@ -97,7 +97,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
         $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
       } else {
-        this._getCardInfo();
+        this._getCardInfo(e);
       }
 
       if ($cardNumber.val() === '') {
@@ -107,7 +107,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _getCardInfo: function (param, e) {
+  _getCardInfo: function (e, param) {
     var cardNumber = $('.fe-card-number');
 
     var isValid = this._validation.checkMoreLength(cardNumber, 15);
@@ -118,23 +118,28 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       };
 
       this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
-        .done($.proxy(this._getCardCode, this, param, e));
+        .done($.proxy(this._getCardCode, this, e, param));
     }
   },
 
-  _getCardCode: function (htParams, e, res) {
+  _getCardCode: function (e, htParams, res) {
     var cardNumber = $('.fe-card-number');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if (!Tw.FormatHelper.isEmpty(htParams)) {
-        Tw.CommonHelper.startLoading('.popup-page', 'grey');
-        this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
-          .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
-          .fail($.proxy(this._fail, this, $(e.currentTarget)));
+        this._recharge(htParams, e);
+      } else {
+        if (Tw.InputHelper.isEnter(e)) {
+          this.$container.find('.fe-card-y').focus();
+        }
       }
     } else {
       var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
       $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
       this.$request_recharge_auto.prop('disabled', true);
+
+      if (Tw.InputHelper.isEnter(e)) {
+        this.$container.find('.fe-card-y').focus();
+      }
     }
   },
 
@@ -351,15 +356,19 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         }
 
         if ($('.fe-card-number').val().indexOf('*') === '-1') {
-          this._getCardInfo(htParams, e);
+          this._getCardInfo(htParams, e, 'recharge');
         } else {
-          Tw.CommonHelper.startLoading('.popup-page', 'grey');
-          this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
-            .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
-            .fail($.proxy(this._fail, this, $(e.currentTarget)));
+          this._recharge(htParams, e);
         }
       }
     }
+  },
+
+  _recharge: function (htParams, e) {
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
+    this._apiService.request(Tw.API_CMD.BFF_06_0054, htParams)
+      .done($.proxy(this._onCompleteRechargeAuto, this, $(e.currentTarget)))
+      .fail($.proxy(this._fail, this, $(e.currentTarget)));
   },
 
   _onCompleteRechargeAuto: function ($target, res) {
