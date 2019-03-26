@@ -109,7 +109,9 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
   },
-  _checkIsAbled: function () {
+  _checkIsAbled: function (event) {
+    this._checkNumber(event);
+
     var isValid = false;
     if (this.$type === 'new') {
       isValid = this.$newPassword.val() !== '' && this.$confirmPassword.val() !== '';
@@ -122,6 +124,10 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     } else {
       this.$setBtn.attr('disabled', 'disabled');
     }
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
