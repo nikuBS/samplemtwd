@@ -70,9 +70,6 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
-    this.$container.on('scroll',$.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     this.$container.find('#contents').removeClass('none');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
@@ -374,6 +371,13 @@ Tw.CommonSearch.prototype = {
     this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
     this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
     $(window).scrollTop(0);
+    setTimeout($.proxy(function(){
+      $(window).on('scroll',$.proxy(function () {
+        if(this._historyService.getHash()==='#input_P'){
+          this.$inputElement.blur();
+        }
+      },this));
+    },this),300);
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -401,6 +405,7 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
       skt_landing.action.checkScroll.unLockScroll();
+      $(window).off('scroll');
     },this));
   },
   _keywordListBaseClassCallback : function () {
