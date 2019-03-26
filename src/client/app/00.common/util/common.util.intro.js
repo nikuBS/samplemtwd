@@ -64,7 +64,7 @@ Tw.CommonUtilIntro = function (rootEl) {
   // event binding
   if (!Tw.BrowserHelper.isApp()) {
     this.$container.on('click', '.bt-down', function () {
-      var offsetAppDownload = $('.newtworld-app').offset().top;
+      var offsetAppDownload = $(document).height();
       return function () {
         window.scrollTo(0, offsetAppDownload);
       };
