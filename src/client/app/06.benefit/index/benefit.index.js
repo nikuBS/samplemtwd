@@ -85,9 +85,6 @@ Tw.BenefitIndex.prototype = {
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
     this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(function(){
-      this._setScrollLeft(this._convertPathToCategory());
-    }, this));
   },
 
   /**
@@ -449,9 +446,11 @@ Tw.BenefitIndex.prototype = {
      * 리스트 수신 후 처리순서
      * 1. 혜택/할인 리스트 노출
      * 2. [다른 페이지를 찾고 계신가요?] 노출
+     * 3. 현재 탭으로 스크롤 이동
      */
     this.$benefitListArea.removeClass('none');
     this.$anotherPage.removeClass('none');
+    this._setScrollLeft(this._convertPathToCategory());
 
     // 더보기 설정
     this._moreViewSvc.init({
