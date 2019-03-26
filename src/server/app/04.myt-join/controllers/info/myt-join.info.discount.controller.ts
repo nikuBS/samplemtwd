@@ -49,7 +49,7 @@ class MytJoinInfoDiscount extends TwViewController {
 
     // this._typeInit();
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V1), 'p1');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2), 'p1');
     // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
     Promise.all([p1]).then(function(resArr) {
