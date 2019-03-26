@@ -2,12 +2,12 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import FormatHelper from '../../../../utils/format.helper';
-import {MyTJoinContractData} from '../../../../mock/server/myt.join.contract.mock';
 import DateHelper from '../../../../utils/date.helper';
 
 /**
  * FileName: myt-join.info.contract.controller.ts
+ * MS_02_01
+ * 설명 : 나의가입정보(인터넷/집전화/IPTV) > 이용계약정보
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.15
  */
@@ -20,7 +20,6 @@ class MyTJoinInfoContract extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      // this.mockReqContract()
       this.reqContract()
     ).subscribe(([resp]) => {
       if ( resp.code === API_CODE.CODE_00) {
@@ -32,6 +31,12 @@ class MyTJoinInfoContract extends TwViewController {
     });
   }
 
+  /**
+   * 화면에 넘길 데이터 생성
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.parseData(data);
 
@@ -42,6 +47,10 @@ class MyTJoinInfoContract extends TwViewController {
     };
   }
 
+  /**
+   * 데이터 파싱
+   * @param data
+   */
   private parseData(data: any): void {
     data.svsetPrefrDtm = DateHelper.getShortDate(data.svsetPrefrDtm);
     // 가입유형은 "신규가입/번호이동가입" 으로 2개의 값을 주기 때문에 슬러시 뒤에 값으로 보여주도록 한다.
@@ -50,18 +59,20 @@ class MyTJoinInfoContract extends TwViewController {
     }
   }
 
+  /**
+   * 이용계약 정보 API 호출
+   */
   protected reqContract(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0139, {});
   }
 
-  private mockReqContract(): Observable<any> {
-    return Observable.create((observer) => {
-      observer.next(  FormatHelper.objectClone(MyTJoinContractData) );
-      observer.complete();
-    });
-  }
-
-  // API Response fail
+  /**
+   * API Response fail
+   * @param res
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   private fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
     this.error.render(res, {
       code: data.code,
