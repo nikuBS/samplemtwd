@@ -60,12 +60,8 @@ class ProductRoamingSearchResult extends TwViewController {
           }
 
           res.render('roaming/product.roaming.search-result.html',
-              {svcInfo, pageInfo, searchInfo, roamingTypeData, isLogin: this.isLogin(svcInfo), isPrd: this.isPrd()});
+              {svcInfo, pageInfo, searchInfo, roamingTypeData, isLogin: this.isLogin(svcInfo)});
       });
-    }
-
-    private isPrd(): boolean {
-        return String(process.env.NODE_ENV) === 'prd';
     }
 
     private isLogin(svcInfo: any): boolean {

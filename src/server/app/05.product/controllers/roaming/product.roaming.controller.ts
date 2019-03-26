@@ -36,8 +36,7 @@ export default class ProductRoaming extends TwViewController {
         pageInfo,
         isLogin: this.isLogin(svcInfo),
         banners,
-        sprateProds,
-        isPrd: this.isPrd()
+        sprateProds
       });
     });
   }
@@ -55,14 +54,9 @@ export default class ProductRoaming extends TwViewController {
         isLogin: this.isLogin(svcInfo),
         roamingCount,
         banners,
-        sprateProds,
-        isPrd: this.isPrd()
+        sprateProds
       });
     });
-  }
-
-  private isPrd(): boolean {
-    return String(process.env.NODE_ENV) === 'prd';
   }
 
   private isLogin(svcInfo: any): boolean {
