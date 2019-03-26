@@ -249,6 +249,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
         this.$agree.trigger('click');
       }
     }
+    this.$isAgree = false;
   },
   _onePay: function (e) {
     var $target = $(e.currentTarget);
