@@ -255,6 +255,7 @@ class ApiRouter {
           if ( resp.result.isLogin ) {
             resp.result.userInfo = svcInfo;
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
+            resp.result.userInfo.canSendFreeSMS = svcInfo.loginType === 'T';
             resp.result.userInfo.pps = false;
             resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
               if ( elem.svcAttrCd.includes('M2') ) {

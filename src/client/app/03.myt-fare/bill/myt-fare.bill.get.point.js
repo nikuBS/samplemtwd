@@ -23,12 +23,17 @@ Tw.MyTFareBillGetPoint.prototype = {
     }, $.proxy(this._setPoint, this), null, 'get-point', $(e.currentTarget));
   },
   _setPoint: function ($layer) {
+    $layer.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('input', '.fe-point-card-number', $.proxy(this._setMaxValue, this));
     $layer.on('blur', '.fe-point-card-number', $.proxy(this._checkCardNumber, this, $layer));
     $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.fe-get', $.proxy(this._getPoint, this));
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
   },
   _checkIsLayerAbled: function ($layer) {
     if ($layer.find('.fe-point-card-number').val() !== '' &&

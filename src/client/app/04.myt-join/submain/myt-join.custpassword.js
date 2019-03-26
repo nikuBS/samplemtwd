@@ -1,14 +1,16 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 고객보호 비밀번호 설정/변경(MS_01_01_01)
  * FileName: myt-join.custpassword.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.09.28
+ * Summary: 고객 비밀번호 설정/변경
  */
 Tw.MytJoinCustpassword = function ($element, isNew) {
   this._HASH_STEP_CHECK = '#check';
   this._HASH_STEP_CHANGE = '#change';
   this.type = {
-    SET: '20',
-    CHANGE: '30'
+    SET: '20',    // 설정
+    CHANGE: '30'  // 변경
   };
 
   this.$container = $element;

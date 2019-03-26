@@ -21,6 +21,7 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
   this._twoMonthFlag = false;
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._init();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
 };
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {

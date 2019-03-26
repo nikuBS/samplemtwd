@@ -1,7 +1,11 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > SK브로드밴드
  * FileName: myt-fare.bill.guide.skbd.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.12.06
+ * Summary: 대표청구가 SK브로드밴드 회선인 경우
+ * Description: 대표청구는 요금을 내는 기준 회선을 말함,
+ *    회선이 skb이지만 대표청구가 skt인 경우는 이 화면으로 오지 않고, 통합(일반)청구 화면으로 조회
  */
 Tw.MyTFareBillGuideSKBD = function (rootEl) {
   this.$container = rootEl;
@@ -39,7 +43,7 @@ Tw.MyTFareBillGuideSKBD.prototype = {
       $.proxy(function () {
 
         // this._historyService.goBack();
-        // 동일 화면에서 회선변경 등으로 들어오는 경우 back하면 동일화면으로 이동되기 때문에 서브메인가도록 수정
+        // 주의! - 동일 화면에서 회선변경 등으로 들어오는 경우 back하면 동일화면으로 이동되기 때문에 서브메인가도록 수정
         this._historyService.goLoad('/myt-fare/submain');
       }, this)
     );

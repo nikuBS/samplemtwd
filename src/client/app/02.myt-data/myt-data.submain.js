@@ -542,8 +542,8 @@ Tw.MyTDataSubMain.prototype = {
         this._historyService.goLoad('/myt-data/hotdata');
         break;
       default:
-        this.immediatelyRechargeLayer = new Tw.ImmediatelyRechargeLayer(this.$container, {
-          isPrepayment: this.data.isPrepayment
+        new Tw.ImmediatelyRechargeLayer(this.$container, {
+          pathUrl: '/myt-data/submain'
         });
         break;
     }

@@ -259,7 +259,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _onClickSuspend: function (event) {
     var option = {};
     var from, to, diff, $period;
-    if ( this.$optionType.filter('[checked]').val() === 'military' ) {
+    if ( this.$optionType.filter('[checked]').val() === 'military' ) { // 군입대
       //validation check
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
@@ -277,7 +277,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       option.svcChgRsnCd = '21';
       option.fromDt = from;
       option.toDt = to;
-    } else {
+    } else { // 해외체류
       //validation check
       from = Tw.DateHelper.getCurrentShortDate();
       $period = this.$container.find('.fe-abroad.fe-date');
@@ -308,6 +308,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
     this._suspendOptions = option;
 
+    // 모바일웹 4.4 버젼은 파일 업로드 미지원
     if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
       var convFileList = _.compact(this._files).map(function (item) {
         return {
@@ -340,12 +341,21 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       Tw.Error(res.code, res.msg).pop();
     }
   },
-
+  /**
+   * '주소록'버튼 클릭
+   * @param e
+   * @private
+   */
   _onClickBtnAddr: function (e) {
     e.stopPropagation();
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
+  /**
+   * Success call back for Tw.NTV_CMD.GET_CONTACT
+   * @param response
+   * @private
+   */
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;

@@ -80,9 +80,6 @@ Tw.ProductApps.prototype = {
     } else {
       this._apps = _.map(apps, function(app) {
         app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
-        if (app.iconImg && app.iconImg.indexOf('http') < 0) {
-          app.iconImg = Tw.Environment.cdn + app.iconImg;
-        }
         app.idxExpsSeq = Number(app.idxExpsSeq);
 
         return app;
@@ -114,7 +111,6 @@ Tw.ProductApps.prototype = {
     this._apps = _.map(apps, function(app) {
       app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
       app.isInstalled = list[app.prodNm] || false;
-      app.iconImg = Tw.Environment.cdn + app.iconImg;
       app.idxExpsSeq = Number(app.idxExpsSeq);
 
       return app;

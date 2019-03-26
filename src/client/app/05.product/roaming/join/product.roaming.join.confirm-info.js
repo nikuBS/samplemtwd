@@ -13,6 +13,7 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._historyService = new Tw.HistoryService(this.$rootContainer);
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_join'));
   if(this._page){
     this._$popupContainer = this.$rootContainer;
     this._prodTypeInfo = rootData;

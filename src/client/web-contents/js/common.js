@@ -21,14 +21,14 @@ $(document).on('ready', function () {
   }
 
   /* 아이폰 키패드 영역 주먹구구식.... */
-  /*var inputType = "input[type=text],input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel], textarea";
+  var inputType = "input[type=text],input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel], textarea";
   $(".device_ios "+inputType).focusin(function(){
     $("#gnb .g-wrap").hide(); // 19.03.26 툴바 이슈 수정
   });
 
   $(".device_ios "+inputType).focusout(function(){
     $("#gnb .g-wrap").show(); // 19.03.26 툴바 이슈 수정
-  });*/
+  });
 
   skt_landing.action.header_shadow(); // header shadow effect (page)
   skt_landing.action.header_shadow_popup(); // header shadow effect (popup)
@@ -893,14 +893,14 @@ skt_landing.action = {
           }
         */
         // 19.03.22 딤드처리된 popup 스크롤락
-        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 )
+        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 ) // || $('.popup .input-scroll-fix').length > 0 19.03.26 액션시트 문제때문에 주석
           var popCk = $('.popup-page.tw-popup'),
               popCk_wrap = popCk.not($(".actionsheet"));
           popCk_wrap.each(function(){
             $(this).css('overflow-y', 'hidden');
           });
           skt_landing.action.checkScroll.lockScroll();
-          skt_landing.action.checkScroll.input_scroll_fix();
+          //skt_landing.action.checkScroll.input_scroll_fix(); // 19.03.26 액션시트 문제때문에 주석
         }
         // 19.03.22 딤드처리된 popup 스크롤락
       }).fail(function() {

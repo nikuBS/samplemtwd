@@ -134,7 +134,7 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                   <ul class="on-off-list new"><!-- 2019-01-15 수정 -->
+                    <ul class="on-off-list new"><!-- 2019-01-15 수정 -->
                        <!-- CASE 1 : 소액결제 사용중인 경우 -->
                         <li class="line"><!-- 2019-01-15 수정 -->
                             <dl>
@@ -160,7 +160,7 @@
                         </li>
                         <!--// CASE 1 : 소액결제 사용중인 경우 -->
                         <!-- CASE 2 : 소액결제 차단중인 경우 --><!-- 2018-09-21 수정 -->
-                        <li class="line"><!-- 2019-01-15 수정 -->
+                        <li><!-- 19.03.25 line 클래스 제거 -->
                             <dl>
                                 <dt>소액결제 사용설정</dt>
                                 <dd>
@@ -183,11 +183,11 @@
                             </dl>                            
                         </li>
                         <!--// CASE 2 : 소액결제 차단중인 경우 -->
-                        </ul>
-                        <hr class="" aria-hidden="true"/>
-                        <ul class="link-list">
+                    </ul>
+                    <hr class="" aria-hidden="true"/>
+                    <ul class="link-list">
                         <!-- CASE 1 : 미사용 인 경우 -->
-                        <li>
+                        <li class="last-line-top"><!-- 19.03.25 last-line-top 클래스 추가 -->
                             <dl>
                                 <!--접근성 수정-->
                                 <dt>결제 비밀번호<button class="tip-view" title="결제 비밀번호" aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
@@ -216,7 +216,7 @@
                             </dl>
                         </li>
                         <!--// CASE 2 : 사용중 인 경우 -->
-                   </ul>
+                    </ul>
                 </div>
                 <!--// .cont-box -->
 

@@ -122,6 +122,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var phoneNumber = response.params.phoneNumber;
       this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(phoneNumber));
+      this.$inputImmediatelyGift.trigger('change');
       this._validateInputNumber();
       this._checkValidateSendingButton();
     }
@@ -145,7 +146,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     var opdtm = $(e.currentTarget).data('opdtm');
     var sNumber = $(e.currentTarget).find('.tel-select').text();
 
-    this.$inputImmediatelyGift.val(sNumber);
+    this.$inputImmediatelyGift.val(sNumber).trigger('change');
     this.$inputImmediatelyGift.data('opdtm', opdtm);
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
@@ -282,11 +283,11 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _onFocusImmediatelyGiftNumber: function () {
-    //최근 사용한 번호 선택 후 입력 창 포커스시 번호 지움
-    var isCellPhone = Tw.FormatHelper.isCellPhone(this.$inputImmediatelyGift.val());
-    console.log(isCellPhone, ' isCellphone');
-    if( !isCellPhone ){
+    //최근 사용한 번호(특수문자 포함) 선택 후 입력 창 포커스시 번호 지움
+    var isNumber = Tw.FormatHelper.isNumber(this.$inputImmediatelyGift.val().replace(/\-/gi, ''));
+    if( !isNumber ){
       this.$inputImmediatelyGift.val('');
+      this.$inputImmediatelyGift.trigger('change');
     }
   }
 };

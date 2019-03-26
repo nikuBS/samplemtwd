@@ -299,9 +299,8 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     var url = $(e.currentTarget).data('url');
-    if (this._bpcpService.isBpcp(url)) {
-      return this._bpcpService.open(url, null, null, e);
-    } else if (url.indexOf('BEU:') !== -1) {
+
+    if (url.indexOf('BEU:') !== -1) {
       return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url.replace('BEU:', '')));
     } else if (url.indexOf('NEU:') !== -1) {
       return this._openExternalUrl(url.replace('NEU:', ''));
@@ -327,8 +326,15 @@ Tw.ProductCommonCallplan.prototype = {
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
     Tw.CommonHelper.endLoading('.container');
+
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
+      var targetUrl = location.origin + url + '?prod_id=' + this._prodId;
+
+      if (this._bpcpService.isBpcp(url)) {
+        targetUrl = location.origin + '/product/callplan?prod_id=' + this._prodId + '&bpcpServiceId=' + url.replace('BPCP:', '');
+      }
+
+      return this._tidLanding.goLogin(targetUrl);
     }
 
     // 미등록 회선일 경우
@@ -336,6 +342,10 @@ Tw.ProductCommonCallplan.prototype = {
       this._isGoMemberLine = false;
       return this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.NEED_LINE,
         $.proxy(this._setGoMemberLine, this), $.proxy(this._onCloseMemberLine, this));
+    }
+
+    if (this._bpcpService.isBpcp(url)) {
+      return this._bpcpService.open(url, resp.result.svcMgmtNum);
     }
 
     // 인터넷/집전화/TV 이용고객이 아닌 회선이 결합상품 가입 시도시
@@ -399,12 +409,14 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
-    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
+    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]'),
+      $scrollContainer = $popupContainer.find('.container');
 
+    console.log(contentsIndex);
     if (contentsIndex === 0) {
-      $popupContainer.scrollTop(0);
+      $scrollContainer.scrollTop(0);
     } else {
-      $popupContainer.scrollTop($target.offset().top - $('.page-header').height());
+      $scrollContainer.scrollTop($target.offset().top - $('.page-header').height());
     }
 
     $target.focus();

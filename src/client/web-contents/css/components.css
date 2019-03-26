@@ -13644,6 +13644,17 @@ a.bt-link-tx.underline.small {
   color: #666;
   font-size: 0.875rem; }
 
+.inquiryform-wrap .inputbox .input input[type=text] {
+  font-weight: 700; }
+  .inquiryform-wrap .inputbox .input input[type=text]::-webkit-input-placeholder {
+    font-weight: 300; }
+  .inquiryform-wrap .inputbox .input input[type=text]:-ms-input-placeholder {
+    font-weight: 300; }
+  .inquiryform-wrap .inputbox .input input[type=text]::-ms-input-placeholder {
+    font-weight: 300; }
+  .inquiryform-wrap .inputbox .input input[type=text]::placeholder {
+    font-weight: 300; }
+
 .inquiryform-wrap .title + .inputbox {
   margin-top: 0.9375rem; }
 
@@ -19956,44 +19967,44 @@ a.bt-link-tx.underline.small {
     color: #666;
     font-size: 0.8125rem; }
 
-.coalition-brand-box li:first-child {
-  padding-left: 1rem; }
-
-.coalition-brand-box li:last-child {
-  padding-right: 0.375rem; }
-
-.coalition-brand-box li .brand-inner {
-  display: block;
-  width: 4.375rem;
-  margin-right: 0.625rem;
-  padding-bottom: 1.25rem;
-  color: inherit;
-  text-align: left; }
-  .coalition-brand-box li .brand-inner span {
-    overflow: hidden;
+.coalition-brand-box li {
+  min-width: 4.375rem; }
+  .coalition-brand-box li:first-child {
+    padding-left: 0; }
+  .coalition-brand-box li:last-child {
+    padding-right: 0.375rem; }
+  .coalition-brand-box li .brand-inner {
     display: block;
     width: 4.375rem;
-    height: 4.375rem;
-    border: 1px solid #e1e1e1;
-    border-radius: 0.3125rem;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
-    .coalition-brand-box li .brand-inner span img {
-      width: 100%;
-      height: 100%;
-      vertical-align: top; }
-  .coalition-brand-box li .brand-inner strong {
-    display: block;
-    margin-top: 0.5rem;
-    font-size: 0.875rem; }
-  .coalition-brand-box li .brand-inner em {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
-    margin-top: 0.125rem;
-    color: #666;
-    font-size: 0.8125rem; }
+    margin-right: 0.625rem;
+    padding-bottom: 1.25rem;
+    color: inherit;
+    text-align: left; }
+    .coalition-brand-box li .brand-inner span {
+      overflow: hidden;
+      display: block;
+      width: 4.375rem;
+      height: 4.375rem;
+      border: 1px solid #e1e1e1;
+      border-radius: 0.3125rem;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .coalition-brand-box li .brand-inner span img {
+        width: 100%;
+        height: 100%;
+        vertical-align: top; }
+    .coalition-brand-box li .brand-inner strong {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem; }
+    .coalition-brand-box li .brand-inner em {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+      margin-top: 0.125rem;
+      color: #666;
+      font-size: 0.8125rem; }
 
 .coalition-brand-list {
   padding: 0 1rem; }
@@ -21443,6 +21454,9 @@ a.bt-link-tx.underline.small {
       right: 0; }
       .link-list.set-info li dd button:after {
         top: 0.625rem; }
+
+.link-list .last-line-top {
+  border-top: 1px solid #e1e1e1 !important; }
 
 .txt-red {
   color: #e22f26; }
@@ -24015,7 +24029,7 @@ input[type="radio"].formradio-small.type2 + label {
       padding: 0 1rem;
       font-size: 0.9375rem;
       background: #f2f2f2;
-      font-weight: 400; }
+      font-weight: 300; }
       .form-wrap .inputbox .input input[type=text]:disabled,
       .form-wrap .inputbox .input input[type=file]:disabled,
       .form-wrap .inputbox .input input[type=password]:disabled,
@@ -29749,7 +29763,7 @@ body.apphome {
     background-size: 3px 3px; }
   .sub-depth-txt a {
     display: inline-block;
-    margin-left: -0.3125rem !important; }
+    margin-left: 0.3125rem !important; }
 
 /* 인풋 옆에 버튼이 붙는 경우 (주소록, 우편번호 검색 등...) */
 .inputbox.inp-btn {
@@ -29989,7 +30003,7 @@ body.apphome {
       padding-left: 1.875rem;
       word-break: break-all;
       font-size: 1rem;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important; }
     .survey-researchbox .category-type .adminbox-wrap {
       margin-top: 0.625rem; }
   .survey-researchbox.type2 > li {

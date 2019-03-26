@@ -23,6 +23,9 @@ body.hidden {
   overflow: hidden;
   height: 100%; }
 
+.no-highlight {
+  -webkit-tap-highlight-color: transparent !important; }
+
 .wrap {
   padding-bottom: 1.875rem; }
   .wrap > .container-wrap {
