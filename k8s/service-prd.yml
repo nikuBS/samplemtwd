@@ -9,5 +9,5 @@ spec:
     targetPort: 3000
   selector:
     app: bff-nodejs-mobile
-    version: '0.22'
+    version: '0.24'
   type: ClusterIP
