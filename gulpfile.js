@@ -14,7 +14,8 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     remoteSrc  = require('gulp-remote-src'),
     jeditor    = require('gulp-json-editor'),
-    plumber    = require('gulp-plumber');
+    plumber    = require('gulp-plumber'),
+    logger     = require('gulp-logger');
 
 
 var oldAppNames = ['test'];
@@ -84,8 +85,13 @@ gulp.task('js-component', function () {
   return gulp.src([
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
-    .pipe(plumber())
+    // .pipe(plumber())
     .pipe(sort())
+    .pipe(logger({
+      before: 'Starting sort js-component',
+      after: 'Complete sort js-component',
+      showChange: true
+    }))
     .pipe(concat('component.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -94,6 +100,11 @@ gulp.task('js-component', function () {
     })
     .pipe(rename('component.min.js'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting hash js-component',
+      after: 'Complete hash js-component',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/component-manifest.json'))
     .pipe(gulp.dest('.'));
@@ -105,8 +116,13 @@ gulp.task('js-util', function () {
     'src/client/types/**/*.js',
     'src/client/utils/**/*.js',
     'src/client/services/**/*.js' ])
-    .pipe(plumber())
+    // .pipe(plumber())
     .pipe(sort())
+    .pipe(logger({
+      before: 'Starting sort js-util',
+      after: 'Complete sort js-util',
+      showChange: true
+    }))
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -115,6 +131,11 @@ gulp.task('js-util', function () {
     })
     .pipe(rename('util.min.js'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting hash js-util',
+      after: 'Complete hash js-util',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/util-manifest.json'))
     .pipe(gulp.dest('.'));
@@ -124,7 +145,7 @@ gulp.task('js-component-client', function () {
   return gulp.src([
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
-    .pipe(plumber())
+    // .pipe(plumber())
     .pipe(sort())
     .pipe(concat('component.js'))
     .pipe(gulp.dest(dist + 'js'))
@@ -146,7 +167,7 @@ gulp.task('js-util-client', function () {
     'src/client/types/**/*.js',
     'src/client/utils/**/*.js',
     'src/client/services/**/*.js' ])
-    .pipe(plumber())
+    // .pipe(plumber())
     .pipe(sort())
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
@@ -164,7 +185,7 @@ gulp.task('js-util-client', function () {
 oldAppNames.map(function (app, index) {
   gulp.task('js-old' + app, function () {
     return gulp.src('src/client/app/90' + index + '.' + app + '/**/*.js')
-      .pipe(plumber())
+      // .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + 'old.js'))
       .pipe(gulp.dest(dist + 'js'))
@@ -185,8 +206,13 @@ oldAppNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app, function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
-      .pipe(plumber())
+      // .pipe(plumber())
       .pipe(sort())
+      .pipe(logger({
+        before: 'Starting sort ' + app,
+        after: 'Complete sort ' + app,
+        showChange: true
+      }))
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(uglify())
@@ -195,6 +221,11 @@ appNames.map(function (app, index) {
       })
       .pipe(rename(app + '.min.js'))
       .pipe(rev())
+      .pipe(logger({
+        before: 'Starting hash ' + app,
+        after: 'Complete hash ' + app,
+        showChange: true
+      }))
       .pipe(gulp.dest(dist + 'js'))
       .pipe(rev.manifest(dist + 'tmp/' + app + '-manifest.json', {
         merge: true
@@ -206,7 +237,7 @@ appNames.map(function (app, index) {
 appNames.map(function (app, index) {
   gulp.task('js-' + app + '-client', function () {
     return gulp.src('src/client/app/0' + index + '.' + app + '/**/*.js')
-      .pipe(plumber())
+      // .pipe(plumber())
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
@@ -230,8 +261,13 @@ gulp.task('js-rb', function () {
   return gulp.src([
     'src/client/web-contents/js/**/*.js', '!src/client/web-contents/js/**/*.min.js'
   ])
-    .pipe(plumber())
+    // .pipe(plumber())
     .pipe(sort())
+    .pipe(logger({
+      before: 'Starting sort js-rb',
+      after: 'Complete sort js-rb',
+      showChange: true
+    }))
     .pipe(concat('script.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -240,6 +276,11 @@ gulp.task('js-rb', function () {
     })
     .pipe(rename('script.min.js'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting  hash js-rb',
+      after: 'Complete hash js-rb',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(rev.manifest(dist + 'tmp/js-manifest.json', {
       merge: true
@@ -269,6 +310,11 @@ gulp.task('css-rb', function () {
     })
     .pipe(rename('style.min.css'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting hash css-rb',
+      after: 'Complete hash css-rb',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'css'))
     .pipe(rev.manifest(dist + 'tmp/css-manifest.json', {
       merge: true
@@ -298,6 +344,11 @@ gulp.task('css-main', function () {
     })
     .pipe(rename('mainstyle.min.css'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting hash css-main',
+      after: 'Complete hash css-main',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'css'))
     .pipe(rev.manifest(dist + 'tmp/css-main-manifest.json', {
       merge: true
@@ -317,6 +368,11 @@ gulp.task('css-idpt', function() {
     })
     .pipe(rename('style-idpt.min.css'))
     .pipe(rev())
+    .pipe(logger({
+      before: 'Starting hash css-idpt',
+      after: 'Complete hash css-idpt',
+      showChange: true
+    }))
     .pipe(gulp.dest(dist + 'css'))
     .pipe(rev.manifest(dist + 'tmp/css-idpt-manifest.json', {
       merge: true
