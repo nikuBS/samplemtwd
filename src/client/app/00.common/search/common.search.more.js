@@ -53,6 +53,9 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
     this.$container.on('click','#page_selector',$.proxy(this._openPageSelector,this));
+    this.$container.on('scroll',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());

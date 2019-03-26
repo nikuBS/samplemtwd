@@ -37,6 +37,9 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
     this.$inputElement = this.$container.find('#search_keyword');
+    this.$container.on('scroll',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());

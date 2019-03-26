@@ -54,7 +54,7 @@ Tw.CommonSearchMain.prototype = {
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
-    $('.latelylist-wrap').scroll($.proxy(function () {
+    this.$container.on('scroll',$.proxy(function () {
       this.$inputElement.blur();
     },this));
   },
@@ -279,7 +279,7 @@ Tw.CommonSearchMain.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.latelylist-wrap').scroll($.proxy(function () {
+    $('.searchbox-lock').scroll($.proxy(function () {
       this.$inputElement.blur();
     },this));
     this.$container.find('.search-content').attr('aria-hidden',true);
