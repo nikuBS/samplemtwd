@@ -1,8 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > 다른회선요금조회(자녀)(MF_09_01)
  * FileName: myt-fare.bill.guide.child.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.12.13
- * Description: 나의 요금 > 요금안내서 > 자녀이용요금 화면
+ * Summary: 나의 요금 > 요금안내서 > 자녀이용요금 화면
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -108,7 +109,7 @@ class MyTFareBillGuideChild extends TwViewController {
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
 
     /*
-    * 실 데이터
+    * 실 데이터 - 사용요금조회
     */
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
       invDt: this.reqQuery.date,
@@ -121,7 +122,9 @@ class MyTFareBillGuideChild extends TwViewController {
 
       thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
         || resArr[0].result.invAmtList[0];
+      // 청구월 목록
       thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
+      // 미납요금
       thisMain._unpaidBillsInfo = resArr[0].result.unPayAmtList;
 
       thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
@@ -135,6 +138,7 @@ class MyTFareBillGuideChild extends TwViewController {
         (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(childInfo, thisMain.reqQuery.line) : null;
 
       // thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
+      // 청구월 목록 (화면)
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
@@ -186,6 +190,11 @@ class MyTFareBillGuideChild extends TwViewController {
       DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
+  /**
+   * 회선정보 목록 리턴
+   * @param allSvc
+   * @return {svcType: '전체'} + 회선정보 목록
+   */
   public intBillLineFun(childInfo: any, svcMgmtNum: string) {
     const thisMain = this;
     const svcTotList = childInfo ? childInfo.slice() : [];
@@ -201,6 +210,10 @@ class MyTFareBillGuideChild extends TwViewController {
     return [];
   }
 
+  /**
+   * 조회조건 날짜 목록을 리턴
+   * 날짜는 모두 말일 -> +1일해서 다음 월로 리턴
+   */
   public conditionChangeDtListFun() {
 
     const thisMain = this;

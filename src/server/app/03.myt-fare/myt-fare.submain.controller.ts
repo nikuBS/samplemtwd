@@ -1,5 +1,6 @@
-/*
- * FileName:
+/**
+ * MenuName: 나의 요금 > 서브메인(MF2)
+ * FileName: myt-fare.submain.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.09.27
  *
@@ -101,6 +102,7 @@ class MyTFareSubmainController extends TwViewController {
 
           } else {
 
+            // SKB(청구대표회선)인 경우 오류code 처리
             if ( resp.code === 'BIL0011' ) {
               data.isBroadBand = true;
               this._requestUsageFee(req, res, data);
@@ -288,6 +290,13 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  /**
+   * 선불폰 조회 및 화면이동
+   * @param req
+   * @param res
+   * @param data
+   * @private
+   */
   _requestPPS(req, res, data) {
     // Observable.combineLatest(
     //   this.redisService.getData(this.bannerUrl),
@@ -332,6 +341,11 @@ class MyTFareSubmainController extends TwViewController {
     return comparison;
   }
 
+  /**
+   * 다른 회선 항목 정리
+   * @param target
+   * @param items
+   */
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
     const SPC = (items && items['s']) || [];
@@ -365,6 +379,7 @@ class MyTFareSubmainController extends TwViewController {
     return list;
   }
 
+  // 사용요금 조회
   _getUsageFee() {
     return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -381,6 +396,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 미납요금조회(성능개선항목으로 미조회)
   _getNonPayment() {
     return this.apiService.request(API_CMD.BFF_05_0030, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -395,6 +411,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 납부/청구 정보 조회
   _getPaymentInfo() {
     return this.apiService.request(API_CMD.BFF_05_0058, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -405,6 +422,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 납부내역 조회(최근 납부내역)
   _getTotalPayment() {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -418,6 +436,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 세금계산서 조회(캐싱처리)
   _getTaxInvoice() {
     return this.apiService.requestStore(SESSION_CMD.BFF_07_0017, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -432,6 +451,7 @@ class MyTFareSubmainController extends TwViewController {
 
   }
 
+  // 기부금 내역 조회(성능개선항목으로 미조회)
   _getContribution() {
     return this.apiService.request(API_CMD.BFF_05_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -446,6 +466,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 소액결제 조회(성능개선항목으로 미조회)
   _getMicroPrepay() {
     // 소액결제 확인
     return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
@@ -457,6 +478,7 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  // 콘텐츠이용내역 조회(성능개선항목으로 미조회)
   _getContentPrepay() {
     // 콘텐츠이용 확인
     return this.apiService.request(API_CMD.BFF_07_0080, {}).map((resp) => {

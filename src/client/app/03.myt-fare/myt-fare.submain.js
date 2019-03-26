@@ -1,8 +1,14 @@
 /**
+ * MenuName: 나의 요금 > 서브메인(MF2)
  * FileName: myt-fare-submain.js
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.09.28
- *
+ * Summary: 최근 청구/사용/미납요금 조회, 및 각 상세화면으로 이동 등
+ * Description:
+ *   청구,사용요금 조회 - data.type이 UF인 경우 사용요금 조회 아닌 경우 청구요금 조회
+ *   소액결제, 컨텐츠이용내역(성능개선 사항으로 미조회->버튼 무조건 노출)
+ *   세금계산서,기부금내역 조회
+ *   실시간 요금 조회 (매월 1일 미조회)
  */
 
 Tw.MyTFareSubMain = function (params) {
@@ -182,6 +188,7 @@ Tw.MyTFareSubMain.prototype = {
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
   },
 
+  // lazyloading 처리
   _initScroll: function () {
     this._checkScroll();
     $(window).scroll($.proxy(function () {
@@ -259,12 +266,14 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+  // 배너 조회
   _initBanners: function () {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
       .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
       .fail($.proxy(this._errorRequest, this));
   },
 
+  // 배너 조회 결과
   _successBanner: function (type, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
@@ -285,10 +294,12 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+  // 배너 check
   _checkBanner: function (result) {
     return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
+  // 배너 ui 처리
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     if ( Tw.BrowserHelper.isApp() ) {
@@ -421,7 +432,7 @@ Tw.MyTFareSubMain.prototype = {
         // var item = arguments[idx].result;
         // var amt = parseInt(item.useAmtTot || 0, 10);
         var item = this.data.otherLines[idx];
-        // TODO: 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없다. 다른 정보확인 필요
+        // 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없음 -> 통합청구 icon 미노출로 결정
         // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
         var isCombine = false;
         var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
@@ -490,7 +501,10 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
-
+  /**
+   * 세금계산서, 기부금내역 조회
+   * @private
+   */
   _requestTaxContribute: function () {
     this._isRequestTax = true;
 
@@ -516,7 +530,11 @@ Tw.MyTFareSubMain.prototype = {
       .fail($.proxy(this._errorRequest, this));*/
   },
 
-
+  /**
+   * 세금계산서 조회결과 처리
+   * @param tax - 조회결과
+   * @private
+   */
   _responseTax: function (tax) {
     if ( tax.code === Tw.API_CODE.CODE_00 ) {
       this.data.taxInvoice = tax.result;
@@ -527,6 +545,11 @@ Tw.MyTFareSubMain.prototype = {
     this._responseTaxContribute();
   },
 
+  /**
+   * 기부금 조회결과 처리
+   * @param cont - 조회결과
+   * @private
+   */
   _responseContribute: function (cont) {
     if ( cont.code === Tw.API_CODE.CODE_00 ) {
       if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
@@ -537,7 +560,12 @@ Tw.MyTFareSubMain.prototype = {
     this._responseTaxContribute();
   },
 
+  /**
+   * 세금계산서, 기부금내역 조회 결과 후 ur 처리
+   * @private
+   */
   _responseTaxContribute: function () {
+    // 동시에 조회하기 때문에 두 result 모두 받은 후 하단 로직으로..
     if(!this._isResponsedTax || !this._isResponsedCont){
       return;
     }
@@ -679,7 +707,7 @@ Tw.MyTFareSubMain.prototype = {
     var length = totalCount > 20 ? 20 : totalCount;
     for ( var i = 0; i < length; i++ ) {
       var item = this.data.otherLines[index + i];
-      // TODO: 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없다. 다른 정보확인 필요
+      // 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없음 -> 통합청구여부 icon 출력안하기로 결정됨
       // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
       var isCombine = false;
       var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
@@ -783,6 +811,13 @@ Tw.MyTFareSubMain.prototype = {
     return select;
   },
 
+  /**
+   * 소액결제, 컨텐츠 이용료 화면으로 이동
+   * 원래는 node에서 내혁 조회후 error type에 해당하는 메세지를 팝업했지만 성능개선항목으로
+   * 소액결제, 컨텐츠 이용료 버튼을 무조건 노출로 변경 -> type이용안하고 무조건 해당 화면으로 이동
+   * @param type
+   * @private
+   */
   _openAdditionalService: function (type) {
     var code, url;
     if ( type === 'M' ) {

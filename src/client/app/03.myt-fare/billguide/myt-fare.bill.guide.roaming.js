@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > 로밍 사용요금 조회(MF_02_01_03)
  * FileName: myt-fare.bill.guide.roaming.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
+ * Summary: 로밍 사용요금 조회
  */
 Tw.MyTFareBillGuideRoaming = function (rootEl, resData) {
   this.resData = resData;
@@ -35,6 +37,11 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     // this.$container.on('click', '[data-target="popupCloseBt"]', $.proxy(this._popupCloseBtEvt, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * 로밍 기간선택 -> 조회
+   * @param e
+   * @private
+   */
   _dateBtnEvt: function (e) {
     var $target = $(e.currentTarget);
 
@@ -53,6 +60,11 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   //   this._goLoad('/myt-fare/billguide/guide');
   // },
   //--------------------------------------------------------------------------[API]
+  /**
+   * 로밍 사용내역 조회
+   * @param param
+   * @private
+   */
   _getRoamingInfo: function (param) {
 
     Tw.CommonHelper.startLoading('.container', 'grey');
@@ -63,6 +75,12 @@ Tw.MyTFareBillGuideRoaming.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+  /**
+   * 로밍 사용내역 조회 결과 처리
+   * @param param
+   * @param res
+   * @private
+   */
   _getRoamingInfoInit: function (param, res) {
     // // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
     Tw.CommonHelper.endLoading('.container');
@@ -136,6 +154,13 @@ Tw.MyTFareBillGuideRoaming.prototype = {
   },
 
   //--------------------------------------------------------------------------[SVC]
+  /**
+   * 조회 기간 선택시 시작일, 종료일을 구해서 리턴
+   * @param $selectVal
+   * @param formatStr
+   * @returns {{startDt: *, endDt: *}}
+   * @private
+   */
   _getPeriod: function ($selectVal, formatStr) {
 
     var selectVal = $selectVal;
@@ -195,6 +220,13 @@ Tw.MyTFareBillGuideRoaming.prototype = {
 
   },
 
+  /**
+   * data 화면 출력 hbs script 템플릿 출력
+   * @param resData - 데이터
+   * @param $jqTg - 출력될 html area
+   * @param $hbTg - hbs 템플릿
+   * @private
+   */
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;

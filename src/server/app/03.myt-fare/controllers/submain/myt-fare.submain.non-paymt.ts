@@ -1,8 +1,9 @@
 /*
+ * MenuName: 나의 요금 > 서브메인 > 미납요금내역(MF_02)
  * FileName: myt-fare.submain.non-payment.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.01
- *
+ * Summay: 미납요금내역, 자녀미납요금내역 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -36,6 +37,7 @@ class MyTFarePaymentOver extends TwViewController {
       this.childMgmtNum = req.query.child;
     }
 
+    // 자녀 회선 정보가 없는 경우 세션회선의 미납내역 조회
     if ( FormatHelper.isEmpty(this.childMgmtNum) ) {
       Observable.combineLatest(
         this._getNonPayment(),
@@ -75,6 +77,7 @@ class MyTFarePaymentOver extends TwViewController {
       });
 
     } else {
+      // 자녀 미납내역 조회
       Observable.combineLatest(
         this._getChildNonPayment()
       ).subscribe(([childPayment]) => {
@@ -101,6 +104,7 @@ class MyTFarePaymentOver extends TwViewController {
     }
   }
 
+  // 자녀 미납내역을 일반 미납내역 형식으로 변경
   _convChildInfo(child) {
     const items = child.unPayAmtList;
     const result: any = [];
