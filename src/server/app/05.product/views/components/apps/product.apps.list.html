@@ -11,7 +11,7 @@
             <li class="item">
                 <a href="/product/apps/app?appId={{prodId}}" class="bt">
                     <span class="app-ico">
-                        {{#if iconImg}}<img src="{{iconImg}}" alt="{{imgAlt}}" class="ico" />{{/if}}
+                        {{#if iconImg}}<img src="<%= CDN %>{{iconImg}}" alt="{{imgAlt}}" class="ico" />{{/if}}
                         {{#if isInstalled}}<span class="i-atv"><span class="blind">설치된 앱</span></span>{{/if}}
                         {{#if isNew}}<span class="i-new {{#if isInstalled}}none{{/if}}" {{#if isInstalled}}aria-hidden="true"{{/if}}><span class="blind">새로운 앱</span></span>{{/if}}                        
                     </span>
