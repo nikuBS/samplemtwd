@@ -18,7 +18,7 @@ Tw.InputFocusService.prototype = {
     }, this));
 
     _.map(this.$inputList, $.proxy(function (input) {
-      $(input).on('keyup', $.proxy(this._onKeyupInput, this));
+      $(input).off('keyup', $.proxy(this._onKeyupInput, this)).on('keyup', $.proxy(this._onKeyupInput, this));
     }, this));
   },
   _onKeyupInput: function ($event) {
