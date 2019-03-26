@@ -507,8 +507,8 @@ class MyTJoinSubmainController extends TwViewController {
   // 나의 가입정보_약정할부 정보
   _getInstallmentInfo() {
     // [DV001-14401] 성능개선으로 API 주소 변경함 (버전 변경됨 v1 -> v2)
-    // return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
-    return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0155, {}, null, [], API_VERSION.V2).map((resp) => {
+    // return this.apiService.request(API_CMD.BFF_05_0155, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {

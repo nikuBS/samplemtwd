@@ -31,12 +31,15 @@ import ApiRouter from './common/route/api.router';
 import NativeRouter from './common/route/native.router';
 import StoreRouter from './common/route/store.router';
 import TestRouter from './app/99.test/test.router';
+import ShortcutRouter from './common/route/shortcut.router';
 
 // Application Modules
 import RedisService from './services/redis.service';
 import LoggerService from './services/logger.service';
 import VERSION from './config/version.config';
-import ShortcutRouter from './common/route/shortcut.router';
+import Axios from 'axios';
+import { timer } from '../../node_modules/rxjs/observable/timer';
+
 const manifest = require('./manifest.json');
 
 class App {
@@ -106,18 +109,42 @@ class App {
   }
 
   private setClientMap() {
-    const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
+    const env = String(process.env.NODE_ENV);
+    // const manifestFile = String(process.env.NODE_ENV) === 'local' ? 'manifest.json' : 'manifest.' + VERSION + '.json';
+    const manifestFile = String(process.env.NODE_ENV) === 'prd' ? 'manifest.' + VERSION + '.json' : 'manifest.json';
 
-    Object.keys(manifest).map((key) => {
-      if ( key.indexOf('.') !== -1 ) {
-        let appName = key.split('.')[0];
-        if ( appName.indexOf('-') !== -1 ) {
-          appName = appName.replace('-', '');
-        }
-        this.app.locals[appName] = manifest[key];
-        this.logger.error(this, appName, manifest[key]);
-      }
-    });
+    Axios.get(environment[env].CDN_ORIGIN + '/' + manifestFile)
+      .then((res: any) => {
+        this.logger.error(this, res.data);
+        Object.keys(res.data).map((key) => {
+          if ( key.indexOf('.') !== -1 ) {
+            let appName = key.split('.')[0];
+            if ( appName.indexOf('-') !== -1 ) {
+              appName = appName.replace('-', '');
+            }
+            this.app.locals[appName] = res.data[key];
+            this.logger.error(this, appName, res.data[key]);
+          }
+        });
+      })
+      .catch((err) => { // If it fails, re-try for every 5 seconds
+        // this.logger.error(this, err.response.status, err.response.data);
+        timer(3000).subscribe(() => {
+          this.logger.error(this, 'Retry');
+          this.setClientMap();
+        });
+      });
+
+    // Object.keys(manifest).map((key) => {
+    //   if ( key.indexOf('.') !== -1 ) {
+    //     let appName = key.split('.')[0];
+    //     if ( appName.indexOf('-') !== -1 ) {
+    //       appName = appName.replace('-', '');
+    //     }
+    //     this.app.locals[appName] = manifest[key];
+    //     this.logger.error(this, appName, manifest[key]);
+    //   }
+    // });
   }
 
   private setErrorHandler() {

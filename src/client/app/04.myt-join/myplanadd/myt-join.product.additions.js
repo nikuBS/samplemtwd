@@ -7,7 +7,8 @@
 Tw.MyTJoinMyPlanAdd = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/myt-join/additions');
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/myt-join/additions');
 
   this.cachedElement();
   this.bindEvent();

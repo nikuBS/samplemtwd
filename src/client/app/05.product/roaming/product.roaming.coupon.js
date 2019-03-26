@@ -9,7 +9,8 @@ Tw.ProductRoamingCoupon = function(rootEl) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/product/roaming/coupon');
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/product/roaming/coupon');
   this._tidLanding = new Tw.TidLandingComponent();
   this._bindEvent();
   this._init();

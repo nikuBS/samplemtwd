@@ -55,6 +55,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       var params = response.params;
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       this.$inputTel.val(formatted);
+      this.$inputTel.trigger('change');
       this._checkSuspendable(true);
     }
   },

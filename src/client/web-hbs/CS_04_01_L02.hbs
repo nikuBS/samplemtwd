@@ -26,11 +26,11 @@
                                 <span class="space"></span>
                                 <span class="bt-box">
                                     {{#if oldFile.name}}
-                                        <button type="button" class="fe-file-button" >삭제하기</button>
+                                        <button type="button" class="fe-file-button del" >삭제하기</button>
                                         <input class="file" type="file" value="파일찾기" disabled
                                                style="pointer-events: none;" {{{attr}}} />
                                     {{else}}
-                                        <button type="button" class="fe-file-button">파일 찾기</button>
+                                        <button type="button" class="fe-file-button del">파일 찾기</button>
                                         <input class="file" type="file" value="파일찾기" title="파일 찾기" {{{attr}}} />
                                     {{/if}}
 

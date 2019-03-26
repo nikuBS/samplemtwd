@@ -1,13 +1,10 @@
-Tw.BpcpService = function(rootEl, pathUrl, isOnCloseBack) {
-  this.$container = rootEl;
-
+Tw.BpcpService = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
-
-  this._isOnCloseBack = isOnCloseBack;
-  this._pathUrl = pathUrl;
+  this._bpcpServiceId = null;
+  this._currentHistoryLength = 0;
   this._bindEvent();
 };
 
@@ -51,7 +48,7 @@ Tw.BpcpService.prototype = {
 
   _responseBPCP: function(event, resp) {
     if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + '/product/roaming/coupon');
+      return this._tidLanding.goLogin(location.origin + this._pathUrl);
     }
 
     if (resp.code === 'BFF0504') {
@@ -93,6 +90,10 @@ Tw.BpcpService.prototype = {
     url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
+    if (Tw.BrowserHelper.isIos()) {
+      return this._historyService.goLoad(url);
+    }
+
     this._popupService.open({
         hbs: 'product_bpcp',
         iframeUrl: url
@@ -118,10 +119,20 @@ Tw.BpcpService.prototype = {
     return url && url.indexOf('BPCP:') !== -1;
   },
 
+  setData: function(rootEl, pathUrl, isOnCloseBack) {
+    this.$container = rootEl;
+    this._isOnCloseBack = isOnCloseBack || false;
+    this._pathUrl = pathUrl;
+    this._currentHistoryLength = history.length - 1;
+  },
+
   open: function(url, svcMgmtNum, eParam, event) {
-    var reqParams = {
-      bpcpServiceId: url.replace('BPCP:', '')
+    var bpcpServiceId = url.replace('BPCP:', ''),
+      reqParams = {
+      bpcpServiceId: bpcpServiceId
     };
+
+    this._bpcpServiceId = bpcpServiceId;
 
     if (!Tw.FormatHelper.isEmpty(svcMgmtNum)) {
       reqParams.svcMgmtNum = svcMgmtNum;
