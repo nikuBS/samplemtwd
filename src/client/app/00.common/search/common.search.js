@@ -45,8 +45,12 @@ Tw.CommonSearch.prototype = {
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
-        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&Number(this._searchInfo.search[i][keyName].data[0].DOCID)===5){
-          this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
+        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]){
+          if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===5){
+            this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===2){
+            this._calculdateRemainData(this._searchInfo.search[i][keyName].data[0].subData);
+          }
         }
         if(keyName==='smart'){
           this._showSmart(this._searchInfo.search[i][keyName].data[0]);
@@ -551,5 +555,26 @@ Tw.CommonSearch.prototype = {
   },
   _escapeChar : function (string) {
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  },
+  _calculdateRemainData : function (usageData) {
+    var gnrlData = usageData.gnrlData || [];
+    var totalRemainUnLimited = false;
+    var returnStr = '';
+    gnrlData.map(function(_data){
+      if ( Tw.UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
+        totalRemainUnLimited = true;
+      }
+    });
+    if ( totalRemainUnLimited ) {
+      returnStr = Tw.COMMON_STRING.UNLIMIT;
+    } else {
+      var testReducer = function(_memo, _data){
+        return _data.remained ? parseInt(_memo.remained,10) + parseInt(_data.remained, 10) : _memo.remained;
+      };
+      var totalRemained = gnrlData.reduce(testReducer);
+      usageData.totalRemained = Tw.FormatHelper.convDataFormat(totalRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
+      returnStr = usageData.totalRemained.data+usageData.totalRemained.unit;
+    }
+    this.$container.find('.fe-data-remaind').text(returnStr);
   }
 };

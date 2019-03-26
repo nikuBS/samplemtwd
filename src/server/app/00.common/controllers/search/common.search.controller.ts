@@ -127,21 +127,8 @@ class CommonSearch extends TwViewController {
               if (resultData.code !== API_CODE.CODE_00) {
                 searchResult = removeImmediateData(searchResult);
               } else {
-                if (resultData.result.gnrlData[0].prodId !== svcInfo.prodId) {
-                  for (let i = 0; i < resultData.result.gnrlData.length; i++) {
-                    if (resultData.result.gnrlData[i].prodId === svcInfo.prodId) {
-                      const tempData = resultData.result.gnrlData.splice(i, 1);
-                      resultData.result.gnrlData.unshift(tempData[0]);
-                      break;
-                    }
-                  }
-                }
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                if ( searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained ) {
-                  searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
-                } else {
-                  searchResult.result.search[0].immediate.data[0].subData = {'data': remainData.gnrlData[0].remained, 'unit': ''};
-                }
+                searchResult.result.search[0].immediate.data[0].subData = remainData;
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });
@@ -164,13 +151,17 @@ class CommonSearch extends TwViewController {
               });
             break;
           case 4:
-            this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
+            this._getMicroRemain().
             subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
+              if (FormatHelper.isEmpty(resultData) || resultData.code !== API_CODE.CODE_00) {
                 searchResult = removeImmediateData(searchResult);
               } else {
-                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.tmthUseAmt);
               }
+            }, () => {
+              searchResult = removeImmediateData(searchResult);
+              showSearchResult(searchResult, relatedKeyword , this);
+            }, () => {
               showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
@@ -234,6 +225,42 @@ class CommonSearch extends TwViewController {
         }
         return { resp };
       });
+  }
+
+  private _getMicroRemain(): Observable<any> {
+    return this._getRemainLimit('Request', '0') // 최초 시도 시 Request, 0으로 호출
+        .switchMap((resp) => {
+          if (resp.code === API_CODE.CODE_00) {
+            return this._getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
+          } else {
+            throw resp;
+          }
+        })
+        .switchMap((next) => {
+          if (next.code === API_CODE.CODE_00) {
+            return Observable.of(next);
+          } else {
+            return Observable.timer(3000)
+                .switchMap(() => {
+                  return this._getRemainLimit('Done', '2'); // 위에서 응답이 없을 경우 3초 뒤 Done, 2로 호출
+                });
+          }
+        })
+        .switchMap((next) => {
+          if (next.code === API_CODE.CODE_00) {
+            return Observable.of(next);
+          } else {
+            return Observable.timer(3000)
+                .switchMap(() => {
+                  return this._getRemainLimit('Done', '3'); // 응답이 없을 경우 3초 뒤 Done, 3으로 호출
+                });
+          }
+        });
+  }
+
+  /* 잔여한도 조회 */
+  private _getRemainLimit(gubun: string, requestCnt: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_07_0073, { gubun: gubun, requestCnt: requestCnt });
   }
 }
 
