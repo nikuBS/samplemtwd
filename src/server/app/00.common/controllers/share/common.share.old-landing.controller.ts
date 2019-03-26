@@ -53,26 +53,19 @@ class CommonShareOldLanding extends TwViewController {
   private landingAppUrl(req, res, appUrl: string) {
     switch ( appUrl ) {
       case 'A001':
-        break;
+        return res.redirect('/customer');
       case 'A002':
-        break;
       case 'A003':
-        break;
-      case 'A007':
-        break;
-      case 'A008':
-        break;
-      case 'A009':
-        break;
-      case 'A010':
-        break;
       case 'A011':
-        break;
+        return res.redirect('/membership/submain');
+      case 'A009':
+        return res.redirect('/myt-data/submain');
+      case 'A010':
+        return res.redirect('/myt-fare/bill/hotbill');
       case 'A012':
-        break;
-      case 'A015':
-        break;
+        return res.redirect('/main/menu/settings');
       case 'A016':
+      case 'A020':
         return res.render('error.login-block.html', { target: '/main/home' });
       case 'A017':
         if ( BrowserHelper.isApp(req) ) {
@@ -84,8 +77,6 @@ class CommonShareOldLanding extends TwViewController {
         } else {
           return res.redirect('/main/home');
         }
-      case 'A020':
-        return res.render('error.login-block.html', { target: '/main/home' });
       default:
         return res.redirect('/main/home');
     }
