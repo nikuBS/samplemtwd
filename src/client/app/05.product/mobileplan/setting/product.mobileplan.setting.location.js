@@ -1,9 +1,10 @@
 /**
+ * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
  * FileName: product.mobileplan.setting.location.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.11.13
  * Page ID: MP_02_02_03_08
- * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역,지정번호입력변경
+ * Summary: 할인지역,지정번호 입력/변경
  */
 Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSetting) {
   this.$container = rootEl;
@@ -202,6 +203,10 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   //   }
   // },
 
+  /**
+   * 지정번호 번호입력 우측 x(삭제)버튼 클릭시
+   * @private
+   */
   _onclickInputDel: function(/*event*/){
     $('#btnNumAdd').prop('disabled', true);
     //$('#inputReqPhone').val('');
@@ -217,11 +222,13 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnNumAdd').prop('disabled', disabled);
   },
 
+  // 미사용
   _isPhoneNum: function(val){
     var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
     return phoneReg.test(val);
   },
 
+  // 미사용
   _resetPhoneNum: function($input){
     // var value = $input.val();
     // if(value.length === 3 && value.indexOf('-') === -1){
@@ -276,6 +283,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
 
+  /**
+   * 할인지역 장소 검색 팝업 오픈전 메세지 출력
+   * @param event
+   * @private
+   */
   _onclickLocSchPopup: function(event){
     if($(event.target).attr('id') === 'loc-search-input'){
       if(event.preventDefault){
@@ -631,7 +643,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
 
   /**
-   * 주소록 호출
+   * native 주소록 호출
    * @param e
    * @private
    */
@@ -640,7 +652,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 주소록 호출 결과
+   * native 주소록 호출 결과
    * @param e
    * @param resp
    * @private
