@@ -48,7 +48,7 @@ Tw.BpcpService.prototype = {
 
   _responseBPCP: function(event, resp) {
     if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + '/product/roaming/coupon');
+      return this._tidLanding.goLogin(location.origin + this._pathUrl);
     }
 
     if (resp.code === 'BFF0504') {
@@ -89,6 +89,10 @@ Tw.BpcpService.prototype = {
 
     url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    if (Tw.BrowserHelper.isIos()) {
+      return this._historyService.goLoad(url);
+    }
 
     this._popupService.open({
         hbs: 'product_bpcp',
