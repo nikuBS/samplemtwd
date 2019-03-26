@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > 선불폰(PPS)(MF_02_04)
  * FileName: myt-fare.bill.guide.pps.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
+ * Summary: 선불폰 이용내역 조회 및 화면 처리
  */
 Tw.MyTFareBillGuidePps = function (rootEl, resData) {
   this.resData = resData;
@@ -47,7 +49,12 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._dateInit();
 
   },
+  /**
+   * hbs 헬퍼 등록
+   * @private
+   */
   _registerHelper: function () {
+    // v1,v2가 동일한지 검사
     Handlebars.registerHelper('if_eq', function (v1, v2, options) {
       if ( v1 === v2 ) {
         return options.fn(this);
@@ -55,6 +62,10 @@ Tw.MyTFareBillGuidePps.prototype = {
       return options.inverse(this);
     });
   },
+  /**
+   * element cache
+   * @private
+   */
   _cachedElement: function () {
     this.$entryTplList = $('#fe-entryTplList');
 
@@ -72,6 +83,10 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.$fingerprint = $('[data-target="fingerprint"]'); // 원하시는 기간을 선택후 조회해주세요.
 
   },
+  /**
+   * even bind
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('click', '[data-target="startDtBtn"]', $.proxy(this._startDtBtnEvt, this));
     this.$container.on('click', '[data-target="endDtBtn"]', $.proxy(this._endDtBtnEvt, this));
@@ -104,6 +119,11 @@ Tw.MyTFareBillGuidePps.prototype = {
     });
     // Tw.Logger.info('[ _proData end ]', this.detailListObj[0]);
   },
+
+  /**
+   * 화면에 데이터 세팅
+   * @private
+   */
   _ctrlInit: function () {
     var thisMain = this;
     this._cachedElement();
@@ -149,11 +169,22 @@ Tw.MyTFareBillGuidePps.prototype = {
     }
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * 조회 시작일자 선택 actionsheet 팝업
+   * @param event
+   * @private
+   */
   _startDtBtnEvt: function (event) {
     var listData = this.selDateObj.selectList;
     this._selectDatePopEvt(event, 'start', listData);
 
   },
+  /**
+   * 조회 종료일자 선택 actionsheet팝업
+   * 종료일자 선택 조건 = 선택 시작월부터 +2개월까지
+   * @param event
+   * @private
+   */
   _endDtBtnEvt: function (event) {
 
     var startDt = this.selDateObj.startDt;
@@ -208,6 +239,14 @@ Tw.MyTFareBillGuidePps.prototype = {
     var listData = this.selDateObj.selectEndList;
     this._selectDatePopEvt(event, 'end', listData);
   },
+
+  /**
+   * 날짜 선택 actionsheet 팝업 호출
+   * @param event
+   * @param state
+   * @param listData - 선택 날짜 list
+   * @private
+   */
   _selectDatePopEvt: function (event, state, listData) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet01';
@@ -231,6 +270,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       hashName);
 
   },
+  // 날짜선택 팝업 init
   _selectDatePopEvtInit: function ($target, state, $layer) {
     // Tw.Logger.info('[_selectDatePopEvtInit > $layer]', $layer);
 
@@ -243,6 +283,13 @@ Tw.MyTFareBillGuidePps.prototype = {
     // 이벤트 설정
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this, $target, state));
   },
+  /**
+   * [날짜선택 팝업] 날짜 선택시
+   * @param $target
+   * @param state
+   * @param event
+   * @private
+   */
   _setSelectedValue: function ($target, state, event) {
 
     var $tg = $(event.currentTarget);
@@ -267,11 +314,13 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     this._popupService.close();
   },
+  // 날짜선택 팝업 닫기시
   _selectDatePopEvtClose: function () {
     // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     //this._popupService.close();
   },
 
+  // 조회 버튼 클릭시
   _searchBtnEvt: function () {
 
 
@@ -313,6 +362,11 @@ Tw.MyTFareBillGuidePps.prototype = {
 
 
   //--------------------------------------------------------------------------[API]
+  /**
+   * 사용내역 조회
+   * @returns {*}
+   * @private
+   */
   _getHistoriesInfo: function () {
     return this._apiService.request(Tw.API_CMD.BFF_05_0014, {
       startMM: this.selDateObj.startDt,
@@ -321,6 +375,11 @@ Tw.MyTFareBillGuidePps.prototype = {
 
 
   },
+  /**
+   * 사용내역 조회결과
+   * @param res
+   * @private
+   */
   _getHistoriesInfoInit: function (res) {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -346,6 +405,12 @@ Tw.MyTFareBillGuidePps.prototype = {
     }
   },
   //--------------------------------------------------------------------------[SVC]
+
+  /**
+   * 사용내역 데이터 초기화
+   * @param res
+   * @private
+   */
   _listDataInit: function (dataArr) {
     /*
     * 데이터 초기화
@@ -357,6 +422,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.detailListObj[0].searchType = '';
 
   },
+  // 목록 나누기
   _dataSplice: function (listData, count) {
     var tempListData = listData;
     var tempCount = count;
@@ -365,7 +431,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
     // Tw.Logger.info('[ _dataSplice end ]', this.detailListObj[0]);
   },
-
+  // 최초 날짜 등 데이터 초기화
   _dateInit: function () {
     this.selDateObj.curDt = moment().format('YYYYMM'); // 현재
     this.selDateObj.defaultDt = moment().subtract('1', 'months').format('YYYYMM'); // 기준
@@ -407,7 +473,13 @@ Tw.MyTFareBillGuidePps.prototype = {
     // Tw.Logger.info('[minVal] ', minVal);
   },
 
-
+  /**
+   * 데이터 화면에 출력
+   * @param resData - 데이터
+   * @param $jqTg - 출력될 html area
+   * @param $hbTg - hbs 템플릿
+   * @private
+   */
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;

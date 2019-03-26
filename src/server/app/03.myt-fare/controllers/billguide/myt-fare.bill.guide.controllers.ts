@@ -1,7 +1,13 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 통합(대표,일반)청구회선(MF_02_01)
+ *           나의 요금 > 요금안내서 통합(일반)청구회선(MF_02_02)
+ *           나의 요금 > 요금안내서 개별청구회선(MF_02_03)
+ *           나의 요금 > 요금안내서 선불폰(PPS)(MF_02_04)
+ *           나의 요금 > 요금안내서 > SK브로드밴드
  * FileName: myt-fare.bill.guide.controller.ts
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
+ * Summary: 요금안내서 화면으로 진입 후 조건에 맞게 화면 분기 및 청구요금/사용요금 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -134,28 +140,30 @@ class MyTFareBillGuide extends TwViewController {
       this._typeChk = 'A2';
       thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
       thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-      this.companyCircuit(res, svcInfo, allSvc, childInfo);
+      this.companyCircuit(res, svcInfo, allSvc, childInfo);   // 화면없음
       return;
 
     }
 
     const reqArr: Array<any> = [];
 
+    // 청구요금 조회 : 대표청구 여부(svcInfo.actRepYn) Y인 경우
     if ( svcInfo.actRepYn === 'Y' ) {
       reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0036, {
         invDt: this.reqQuery.date,
         selSvcMgmtNum : this.reqQuery.line
       }, null, [], API_VERSION.V2), 'p1'));
-      // reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));
+      // reqArr.push(this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'));  // 성능개선으로 미호출
 
     } else {
+    // 사용요금 조회 : 대표청구 여부(svcInfo.actRepYn) N인 경우
       reqArr.push((this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
         invDt: this.reqQuery.date,
         selSvcMgmtNum: this.reqQuery.line
       }, null, [], API_VERSION.V2), 'p11')));
     }
 
-
+    // 자녀 회선 정보
     this._childLineInfo = childInfo;
 
     this.logger.info(this, '[ PPS, 기업솔루션이 아닌경우 ]');
@@ -165,8 +173,10 @@ class MyTFareBillGuide extends TwViewController {
       try {
 
         if ( svcInfo.actRepYn === 'Y' ) {
+          // 청구 요금 데이터
           thisMain._billpayInfo = resArr[0].result;
           if ( thisMain._billpayInfo.invSvcList && thisMain._billpayInfo.invSvcList.length > 0) {
+            // 청구 회선, 날짜 목록
             thisMain._intBillLineInfo = Object.assign([], resArr[0].result.invSvcList[0].svcList);
             thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
           }
@@ -176,25 +186,30 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._useFeeInfo = resArr[0].result.invAmtList;
           // 현재는 param이 없지만 추후 추가를 위해 넣어둠
           if ( resArr[0].result.invAmtList && resArr[0].result.invAmtList.length > 0) {
+            // 사용 요금 데이터(조회한 날짜로 찾음)
             thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
               || resArr[0].result.invAmtList[0];
+            // 사용 날짜 목록
             thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
           }
           thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(resArr[0].result.repSvcNm);  // 통합청구대표 이름
-          thisMain._commDataInfo.svcType = thisMain.getSvcType(thisMain._billpayInfo.usedAmountDetailList[0].svcNm);
+          thisMain._commDataInfo.svcType = thisMain.getSvcType(thisMain._billpayInfo.usedAmountDetailList[0].svcNm);  // 서비스 타입(한글)
         }
 
         let viewName ;
 
+        // 청구 시작, 종료일
         thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
         thisMain._commDataInfo.selClaimDtM = (thisMain._billpayInfo) ? thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt)) : null;
         thisMain._commDataInfo.selStaDt = (thisMain._billpayInfo) ? thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt)) : null;
         thisMain._commDataInfo.selEndDt = (thisMain._billpayInfo) ? thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt)) : null;
 
+        // 총 요금, 할인요금
         thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt.replace(/,/g, ''));
         thisMain._commDataInfo.discount =
             FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt.replace(/,/g, '')))));
 
+        // 청구 날짜 화면 출력 목록 (말일 날짜지만 청구는 다음달이기 때문에 화면에는 다음 월로 나와야함)
         thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
         const data = {
@@ -224,6 +239,8 @@ class MyTFareBillGuide extends TwViewController {
           // 조회일자에 맞는 서비스리스트
           const daySvcList = thisMain._billpayInfo.invSvcList.find(item => item.invDt === thisMain._billpayInfo.invDt) || {};
 
+
+          // 개별청구 회선
           if ( daySvcList.svcList && daySvcList.svcList.length === 1 ) {
 
             thisMain.logger.info(thisMain, '[ 개별청구회선 ]', daySvcList.svcList.length);
@@ -239,6 +256,8 @@ class MyTFareBillGuide extends TwViewController {
             viewName = thisMain._urlTplInfo.individualPage;
 
 
+
+          // 통합청구 회선
           } else {
 
             // 조회시 대표청구회선이거나 || 세션이 대표청구회선이면서 조회회선을 조회했을 경우
@@ -297,7 +316,9 @@ class MyTFareBillGuide extends TwViewController {
   }
 
 
-  // PPS 선불폰
+  /**
+   * PPS 선불폰
+   */
   private prepaidCircuit(res, svcInfo, allSvc, childInfo, pageInfo) {
     const thisMain = this;
 
@@ -365,7 +386,10 @@ class MyTFareBillGuide extends TwViewController {
   private companyCircuit(res, svcInfo, allSvc, childInfo) {
     const thisMain = this;
   }
-  // SK브로드밴드가입
+
+  /**
+   * 대표청구회선이 SK브로드밴드인 경우
+   */
   private skbroadbandCircuit(res, svcInfo) {
     const thisMain = this;
     thisMain.renderView(res, thisMain._urlTplInfo.skbroadbandPage, {
@@ -374,7 +398,13 @@ class MyTFareBillGuide extends TwViewController {
     });
   }
 
-  // 로밍, 기부금, 콜기프트 버튼 보여질지 조회
+  /**
+   * 로밍, 기부금, 콜기프트 버튼 보여질지 조회 후 화면 이동
+   * 로밍(성능개선 항목으로 조회X)
+   * @param res
+   * @param view - 이동할 html
+   * @param data - 청구/사용요금 조회데이터 등
+   */
   public reqButtonView(res: Response, view: string, data: any): any {
     const thisMain = this;
     const params = {
@@ -431,6 +461,7 @@ class MyTFareBillGuide extends TwViewController {
   }
 
   // -------------------------------------------------------------[SVC]
+  // 사용안함 - 미납내역 확인
   public getSelectNonPayment(): any {
     const thisMain = this;
     const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
@@ -478,39 +509,44 @@ class MyTFareBillGuide extends TwViewController {
   // public getCurDate(): any {
   //   return moment().format('YYYY.MM.DD hh:mm');
   // }
-
+  // 당월 시작일
   public getStartDateFormat(formatStr): any {
     // return moment().subtract('1', 'months').startOf('month').format(formatStr);
     return DateHelper.getStartOfMonSubtractDate(undefined, '2', formatStr);
   }
-
+  // 당월 종료일
   public getEndDateFormat(formatStr): any {
     // return moment().subtract('1', 'months').endOf('month').format(formatStr);
     return DateHelper.getEndOfMonSubtractDate(undefined, '1', formatStr);
   }
-
-  public getSelStaDt(date: string): any { // 월 시작일 구하기
+  // 월 시작일 구하기
+  public getSelStaDt(date: string): any {
     // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
     return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.M.D.');
   }
-
-  public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
+  // 월 끝나는 일 구하기
+  public getSelEndDt(date: string): any {
     // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
     return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.D.');
   }
-
-  public getSelClaimDt(date: string): any { // 청구 년월 구하기
+  // 청구 년월 구하기
+  public getSelClaimDt(date: string): any {
     // return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
     return this._commDataInfo.selClaimDt =
       DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
   }
-
-  public getSelClaimDtM(date: string): any { // 청구 년월 구하기
+  // 청구 년월 구하기
+  public getSelClaimDtM(date: string): any {
     // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
     return this._commDataInfo.selClaimDtM =
       DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
+  /**
+   * 회선정보 목록 리턴
+   * @param allSvc
+   * @return {svcType: '전체'} + 회선정보 목록
+   */
   public intBillLineFun(allSvc: any) {
     const thisMain = this;
 
@@ -539,6 +575,7 @@ class MyTFareBillGuide extends TwViewController {
 
   /**
    * 이름으로 svcType을 리턴
+   * svcType = 휴대폰, 선불폰, T pocket Fi, T Login, T Wibro, 인터넷, IPTV, 집전화, 포인트캠
    * @param nm
    */
   private getSvcType(nm: String) {
@@ -592,6 +629,10 @@ class MyTFareBillGuide extends TwViewController {
     return item;
   }
 
+  /**
+   * 조회조건 날짜 목록을 리턴
+   * 날짜는 모두 말일 -> +1일해서 다음 월로 리턴
+   */
   public conditionChangeDtListFun() {
 
     const thisMain = this;
@@ -602,6 +643,9 @@ class MyTFareBillGuide extends TwViewController {
     return dtList;
   }
 
+  /**
+   * 통합(대표)청구화면에서 (총 청구요금 하단) 회선,금액 목록 데이터를 금액:포맷팅, 서비스명:통일 해서 리턴
+   */
   public paidAmtSvcCdListFun() {
     const thisMain = this;
     const paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList || [];
@@ -629,6 +673,7 @@ class MyTFareBillGuide extends TwViewController {
     return StringHelper.phoneStringToDash(strCellphoneNum.replace(/-/g, ''));
   }
 
+  // 안씀
   public getCircuitChildInfoMask(obj: any): any { // 휴대폰 마스킹 처리
 
     if ( obj.length !== 0 ) {

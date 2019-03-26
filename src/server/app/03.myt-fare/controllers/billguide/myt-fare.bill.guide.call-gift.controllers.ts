@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > 콜기프트 사용요금 조회(MF_02_01_02)
  * FileName: myt-fare.bill.guide.call-gift.controllers.ts
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.21
+ * Summary: 콜기프트 이용요금 조회화면
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

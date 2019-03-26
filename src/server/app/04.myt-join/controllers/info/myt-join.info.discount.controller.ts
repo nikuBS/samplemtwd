@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 약정할인/기기상환 정보(MS_09)
  * FileName: myt-join.info.discount.controller.ts
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.04
+ * Summary: 약정정보, 기기상환 정보 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -49,6 +51,7 @@ class MytJoinInfoDiscount extends TwViewController {
 
     // this._typeInit();
 
+    // 주의: API 버전 다운시 url 변경있음 -> 명세서 확인 필요
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2), 'p1');
     // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
@@ -84,6 +87,7 @@ class MytJoinInfoDiscount extends TwViewController {
     // });
   }
 
+  // 안씀
   private _typeInit() {
     /*
     * 타입별로 render html 정함.
@@ -124,6 +128,10 @@ class MytJoinInfoDiscount extends TwViewController {
     }
   }
 
+  /**
+   * 데이터 조회 후 화면 출력을 위해 세팅
+   * @private
+   */
   private _dataInit() {
     this.logger.info(this, '[ _dataInit() start ]');
 
