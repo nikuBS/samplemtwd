@@ -153,10 +153,10 @@ class MytDataSubmainController extends TwViewController {
         data.isBenefit = true;
         // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
 
-        if (String(process.env.NODE_ENV) !== 'prd') {
+        // if (String(process.env.NODE_ENV) !== 'prd') {
           // TODO: GrandOpen 때 enable 처리
           data.isPrepayment = true;
-        }
+        // }
       }
 
       if ( data.svcInfo.svcAttrCd === 'M2' || present ) {

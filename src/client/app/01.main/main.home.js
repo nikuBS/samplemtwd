@@ -222,7 +222,9 @@ Tw.MainHome.prototype = {
   _onCloseDataLink: function ($target) {
     switch ( this._targetDataLink ) {
       case this.DATA_LINK.RECHARGE:
-        new Tw.ImmediatelyRechargeLayer(this.$container);
+        new Tw.ImmediatelyRechargeLayer(this.$container, {
+          pathUrl: '/main/home'
+        });
         break;
       case this.DATA_LINK.GIFT:
         this._historyService.goLoad('/myt-data/giftdata');
@@ -667,7 +669,9 @@ Tw.MainHome.prototype = {
   },
   _onClickBtRecharge: function ($event) {
     $event.stopPropagation();
-    new Tw.ImmediatelyRechargeLayer(this.$container);
+    new Tw.ImmediatelyRechargeLayer(this.$container, {
+      pathUrl: '/main/home'
+    });
   },
 
   _elementScrolled: function (element) {
