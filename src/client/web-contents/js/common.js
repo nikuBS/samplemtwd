@@ -883,7 +883,7 @@ skt_landing.action = {
           }
         */
         // 19.03.22 딤드처리된 popup 스크롤락
-        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){
+        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 || $('.popup .input-scroll-fix').length > 0){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 )
           var popCk = $('.popup-page.tw-popup'),
               popCk_wrap = popCk.not($(".actionsheet"));
           popCk_wrap.each(function(){
