@@ -191,7 +191,7 @@ export const API_CMD = {
   BFF_05_0060: { path: '/core-modification/:version/no-contract-plan-points', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0061: { path: '/core-modification/:version/my-svc-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false, store: true},
   BFF_05_0062: { path: '/core-modification/:version/wire-network-notification', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0063: { path: '/:version/my-t/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0063: { path: '/core-modification/:version/myinfo/discount-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0064: { path: '/core-bill/:version/use-contents/hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0066: { path: '/core-bill/:version/use-contents/limit-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0067: { path: '/core-bill/:version/use-contents/limit-up', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -949,8 +949,9 @@ export const API_CODE = {
   REDIS_EMPTY: '01',
   REDIS_ERROR: '02',
 
-  NODE_1001: '1001', // login 필요
-  NODE_1002: '1002', // 인증 오류
+  NODE_1001: '1001',  // login 필요
+  NODE_1002: '1002',  // 인증 오류
+  NODE_1003: '1003',  // 처리 완료
 
   CODE_200: '200',
   CODE_400: '400',

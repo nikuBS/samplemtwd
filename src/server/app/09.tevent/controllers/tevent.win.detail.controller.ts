@@ -42,6 +42,7 @@ class TeventWinDetail extends TwViewController {
       result.endDate = DateHelper.getShortDate(result.prEndDt);
       result.winDate = DateHelper.getShortDate(result.winDt);
       result.height = result.winUrlHSize + 'px';
+      result.url = result.winUrl.indexOf('https') === -1 ? result.winUrl.replace('http', 'https') : result.winUrl;
     }
     return result;
   }

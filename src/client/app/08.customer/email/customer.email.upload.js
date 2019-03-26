@@ -211,7 +211,7 @@ Tw.CustomerEmailUpload.prototype = {
         $(box).find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_DELETE);
       } else {
         $(box).find('.fileview').val('');
-        $(box).find('input[type=file]').css('pointer-events', 'inherit').prop('disabled', false);
+        $(box).find('input[type=file]').val('').css('pointer-events', 'inherit').prop('disabled', false);
         $(box).find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_ADD);
       }
     }, this));
@@ -349,11 +349,11 @@ Tw.CustomerEmailUpload.prototype = {
   },
   
   _activeUploadButton: function () {
-    $('.fe-upload-ok').prop('disabled', false);
+    $('#fe-upload-ok').prop('disabled', false);
   },
 
   _disableUploadButton: function () {
-    $('.fe-upload-ok').prop('disabled', true);
+    $('#fe-upload-ok').prop('disabled', true);
   },
 
   _getCurrentType: function () {

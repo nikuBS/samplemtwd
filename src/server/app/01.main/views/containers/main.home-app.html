@@ -360,70 +360,71 @@
                             <% } %>
                             <% if (svcType.login && svcType.svcCategory === 's' ) { %>
                             <!-- 인터넷/전화/IPTV 요금안내서 -->
-                            <% if(homeData.billData) { %>
-                            <% if(homeData.billData.isBroadband) { %>
-                            <div class="main-chart-box">
-                                <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <% } else { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <% } %>
-                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
-                                <div class="main-breakdown-box">
-                                    <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
-                                    <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
-                                </div>
-                            </div>
-                            <% } else if (homeData.billData.charge && homeData.billData.used){ %>
-                            <div class="main-chart-box">
-                                <% if(svcInfo.svcAttrCd === 'S3') { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <% } else { %>
-                                <em class="line">
-                                    <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
-                                    <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
-                                    <% } %>
-                                </em>
-                                <% } %>
-                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
-
-                                <div id="fe-bt-link-billguide" class="main-breakdown-box">
-                                    <% if (homeData.billData.type2) { %>
-                                    <div class="stit"><%= homeData.billData.billMonth %>월 청구요금</div>
-                                    <% } else if (homeData.billData.type1) { %>
-                                    <div class="stit"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                            <% if(homeData.billData && homeData.billData.showBill) { %>
+                                <% if(homeData.billData.isBroadband) { %>
+                                <div class="main-chart-box">
+                                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                    <em class="line">
+                                        <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
                                     <% } else { %>
-                                    <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
+                                    <em class="line">
+                                        <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
                                     <% } %>
-                                    <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
-                                    <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
-                                    <% if (homeData.billData.type1 || homeData.billData.type2) { %>
-                                    <ul class="list">
-                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
-                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
-                                    </ul>
-                                    <% } else { %>
-                                    <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
-                                    <% } %>
+                                    <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
+
+                                    <div class="main-breakdown-box">
+                                        <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
+                                        <p class="tx">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
+                                    </div>
                                 </div>
-                            </div>
+                                <% } else { %>
+                                <div class="main-chart-box">
+                                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                    <em class="line">
+                                        <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <% } else { %>
+                                    <em class="line">
+                                        <button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button>
+                                        <% if (svcInfo.expsSvcCnt > 1) { %>
+                                        <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <% } %>
+                                    </em>
+                                    <% } %>
+                                    <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
+
+                                    <div id="fe-bt-link-billguide" class="main-breakdown-box">
+                                        <% if (homeData.billData.type2) { %>
+                                        <div class="stit"><%= homeData.billData.billMonth %>월 청구요금</div>
+                                        <% } else if (homeData.billData.type1) { %>
+                                        <div class="stit"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                        <% } else { %>
+                                        <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
+                                        <% } %>
+                                        <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
+                                        <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
+                                        <% if (homeData.billData.type1 || homeData.billData.type2) { %>
+                                        <ul class="list">
+                                            <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
+                                            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
+                                        </ul>
+                                        <% } else { %>
+                                        <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            <% } %>
                             <% } else { %>
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
@@ -446,7 +447,6 @@
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
                                 </div>
                             </div>
-                            <% } %>
                             <% } %>
                             <!-- // 인터넷/전화/IPTV 요금안내서 -->
                             <% } %>

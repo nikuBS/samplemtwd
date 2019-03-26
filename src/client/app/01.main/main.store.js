@@ -13,6 +13,7 @@ Tw.MainStore = function (rootEl, menuId) {
   this._bindEventStore();
   this._setBanner();
 
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.MainStore.prototype = {

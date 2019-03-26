@@ -115,20 +115,20 @@ Tw.ProductRoamingSearchResult.prototype = {
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
                 }
 
-                if(this._rateInfo.iPoPhone === '1') {    // WCDMA Only
+                if(this._rateInfo.iPoPhone === '1' && this._rateInfo.wcdma > 0) {    // WCDMA Only
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
-                } else if(this._rateInfo.iPoPhone === '2'){ // WCDMA+GSM
+                } else if(this._rateInfo.iPoPhone === '2' && this._rateInfo.wcdma > 0 && this._rateInfo.gsm > 0){ // WCDMA+GSM
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
-                } else if(this._rateInfo.iPoPhone === '4'){ // WCDMA+CDMA
+                } else if(this._rateInfo.iPoPhone === '4' && this._rateInfo.wcdma > 0 && this._rateInfo.cdma > 0){ // WCDMA+CDMA
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
-                } else {
+                } else if(this._rateInfo.iPoPhone === '3' && this._rateInfo.gsm > 0 && this._rateInfo.cdma > 0){ // GSM+CDMA(SIM자동 로밍)
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
@@ -160,15 +160,15 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
         }else {
             this.reqParams.showDailyPrice = 'N';
-            if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
-                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
-                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-            } else {
-                if(this._srchInfo.eqpMdlNm === ''){
-                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
-                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-                }
-            }
+            // if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
+            //     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+            //     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            // } else {
+            //     if(this._srchInfo.eqpMdlNm === ''){
+            //         this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+            //         this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            //     }
+            // }
         }
 
         if(this.manageType.length > 0) {
@@ -176,10 +176,21 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
             Tw.Logger.info('this.reqParams : ', this.reqParams);
             this._getCountryRoamingRate(this.reqParams, this);
+        } else {
+            Tw.Logger.info('no roaming service');
+            setTimeout($.proxy(this._openAlertPopup, this, null), 500);
         }
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
         this._rmNoticeTmpl = Handlebars.compile($('#fe-roaming-notice').html());
         this._roamingDecriptonInit();
+    },
+    _openAlertPopup: function () {
+        var alertMsg = this._srchInfo.countryNm + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A21.MSG;
+        this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A21.TITLE, null,
+            $.proxy(this._goBackSearchBefore, this), null);
+    },
+    _goBackSearchBefore: function () {
+      this._history.goLoad('/product/roaming/do/search-before');
     },
     /**
      * 로밍 이용가능 서비스 요금 조회

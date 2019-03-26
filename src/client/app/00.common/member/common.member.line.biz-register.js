@@ -85,6 +85,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this.$inputCop.on('input', $.proxy(this._onInputCop, this));
     this.$inputCopNum.on('input', $.proxy(this._onInputCopNum, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+    this.$inputNickname.on('click', $.proxy, $.proxy(this._onClickNickname, this));
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
@@ -108,6 +109,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this._isEnableConfirm();
   },
   _onInputCopNum: function ($event) {
+    if ( !Tw.FormatHelper.isEmpty($event) ) {
+      Tw.InputHelper.inputNumberOnly($event.target);
+    }
     this._isEnableConfirm();
   },
   _onInputMdn: function ($event) {
@@ -147,12 +151,30 @@ Tw.CommonMemberLineBizRegister.prototype = {
   },
   _onClickCert: function ($event) {
     var $target = $($event.currentTarget);
-    this._sendCert(false, $target);
+    this._sendBizSession(false, $target);
   },
   _onClickReCert: function ($event) {
     var $target = $($event.currentTarget);
-    this._sendCert(true, $target);
+    this._sendBizSession(true, $target);
   },
+  _sendBizSession: function (reCert, $target) {
+    var params = {
+      svcNum: this.$inputMdn.val(),
+      ctzCorpNm: this.$inputCop.val(),
+      ctzCorpNum: this.$inputCopNum.val()
+    };
+    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
+      .done($.proxy(this._successBizSession, this, reCert, $target));
+  },
+  _successBizSession: function (reCert, $target, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._svcMgmtNum = resp.result.svcMgmtNum;
+      this._sendCert(reCert, $target);
+    } else {
+      this._handleError(resp.code, resp.msg, $target);
+    }
+  },
+
   _onClickCertAdd: function ($event) {
     var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
@@ -266,7 +288,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
   _successConfirmCert: function ($target, resp) {
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._sendBizSession($target);
+      this._sendRegisterBiz($target);
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorConfirmCert);
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
@@ -285,26 +307,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
-  _sendBizSession: function ($target) {
+  _sendRegisterBiz: function ($target) {
     var params = {
-      svcNum: this.$inputMdn.val(),
-      ctzCorpNm: this.$inputCop.val(),
-      ctzCorpNum: this.$inputCopNum.val()
-    };
-    this._apiService.request(Tw.API_CMD.BFF_03_0012, params)
-      .done($.proxy(this._successBizSession, this, $target));
-  },
-  _successBizSession: function ($target, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var svcMgmtNum = resp.result.svcMgmtNum;
-      this._sendRegisterBiz(svcMgmtNum, $target);
-    } else {
-      this._handleError(resp.code, resp.msg, $target);
-    }
-  },
-  _sendRegisterBiz: function (svcMgmtNum, $target) {
-    var params = {
-      svcMgmtNum: svcMgmtNum
+      svcMgmtNum: this._svcMgmtNum
     };
     if ( !Tw.FormatHelper.isEmpty(this._nickName) ) {
       params.nickNm = this._nickName;

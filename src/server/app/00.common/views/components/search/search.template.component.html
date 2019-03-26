@@ -86,7 +86,7 @@
 <script type="text/x-handlebars-template" id="banner_template">
     <hr class="cont-sp type1 banner" aria-hidden="true">
     <div class="search-banner">
-        <a data-xt_eid="{{listData.OFER_STC_CD}}" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC"
+        <a data-xt_eid="{{listData.OFER_STC_CD}}" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC" data-require-pay="{{listData.BILL_YN}}"
            href="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
             <img src="{{CDN}}{{listData.BNNR_FILE_PATH_NM}}" alt="{{listData.TITLE_NM}}">
         </a>

@@ -185,7 +185,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     var apiName = this._getApiName();
     var $target = $(e.currentTarget);
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));

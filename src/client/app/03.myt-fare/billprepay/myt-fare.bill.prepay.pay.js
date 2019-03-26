@@ -130,7 +130,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     var apiName = this._getApiName();
     var reqData = this._makeRequestData($layer);
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));

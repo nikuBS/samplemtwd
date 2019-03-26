@@ -55,7 +55,7 @@ class CommonUtilBpcp extends TwViewController {
         const protocol: any = String(process.env.NODE_ENV) !== 'local' ? 'https://' : 'http://';
         let url: any = bpcpInfo.result.svcUrl.replace(/\s/g, '');
 
-        if (FormatHelper.isEmpty(bpcpInfo.result.tParam)) {
+        if (!FormatHelper.isEmpty(bpcpInfo.result.tParam)) {
           url += (bpcpInfo.result.svcUrl.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + bpcpInfo.result.tParam;
         }
 

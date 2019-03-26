@@ -351,6 +351,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var params = response.params;
       var formatted = Tw.StringHelper.phoneStringToDash(params.phoneNumber);
       this.$inputTel.val(formatted);
+      this.$inputTel.trigger('change');
     }
   },
 

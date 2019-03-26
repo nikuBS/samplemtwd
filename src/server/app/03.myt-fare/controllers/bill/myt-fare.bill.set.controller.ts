@@ -1,12 +1,13 @@
 /**
  * FileName: myt-fare.bill.set.controller.ts
+ * 화면 ID : MF_04
+ * 설명 : 나의요금 > 요금안내서 설정
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.09.12
  */
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
 import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import {MYT_JOIN_WIRE_SVCATTRCD} from '../../../../types/string.type';
@@ -31,6 +32,13 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     });
   }
 
+  /**
+   * page 에 전달할 object 만들기
+   * @param data
+   * @param integrate
+   * @param svcInfo
+   * @param pageInfo
+   */
   private getData(data: any, integrate: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeAnotherBillList(data);
@@ -46,7 +54,11 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     };
   }
 
-  // 통합청구 회선
+  /**
+   * 통합청구 회선 데이터 파싱
+   * @param data
+   * @param integrate
+   */
   private parseIntegration(data: any, integrate: any): void {
     if (FormatHelper.isEmpty(integrate.result)) {
       data.integrateList = [];
@@ -73,7 +85,10 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     data.integrateList = FormatHelper.sortObjArrAsc(list, 'idx');
   }
 
-  // 우편, 전자추가발송, 유선 (문자)일 때, 핸드폰 번호 보임
+  /**
+   * 우편, 전자추가발송, 유선 (문자)일 때, 핸드폰 번호 보임
+   * @param data
+   */
   private makeHpNum(data: any): void {
     const lineType = this.getLinetype();
     // 우편, 전자추가발송 일때
@@ -84,7 +99,10 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     }
   }
 
-  // "설정한 옵션" 생성
+  /**
+   * "설정한 옵션" 생성
+   * @param data
+   */
   private makeOptions(data: any): void {
     const billType = data.billInfo[0].cd;
     const mergeType = billType + (data.billInfo.length > 1 ? data.billInfo[1].cd : 'X');
@@ -137,7 +155,10 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     }
   }
 
-  // 하단 > "다른 요금안내서로 받기" 리스트
+  /**
+   * 하단 > "다른 요금안내서로 받기" 리스트
+   * @param data
+   */
   private makeAnotherBillList(data: any): void {
     const billList = new Array();
 

@@ -188,7 +188,7 @@ Tw.MyTFareBillAccount.prototype = {
     var $target = $(e.currentTarget);
     var reqData = this._makeRequestData();
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0023, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));

@@ -112,7 +112,7 @@
             {{#if noLink}}
             <div class="inner">
             {{else}}
-            <div class="inner" data-list-id="{{listId}}" 
+            <div class="inner fe-list-detail" data-list-id="{{listId}}" 
                 {{#unless reserveCancelable}}role="button"{{/unless}}
                 id="aria-rest-cont{{ariaIdx}}"
             >
@@ -128,7 +128,7 @@
                     {{/if}}
                     {{#if reserveCancelable}}
                     <span class="bar"></span>
-                    <button class="bt-link-tx underline" data-list-id="{{listId}}">취소</button>
+                    <button class="bt-link-tx underline fe-cancel-reserve" data-list-id="{{listId}}">취소</button>
                     {{/if}}
                 </div>
                 <div class="rest-cont">
@@ -166,7 +166,7 @@
         </div>
         <!--// .cont-box -->
         {{#if initialMoreData}}
-        <div class="bt-more">
+        <div class="bt-more fe-btn-more">
             <button>더 보기<!--<span>({{restCount}})</span>--></button>
         </div>
         {{/if}}

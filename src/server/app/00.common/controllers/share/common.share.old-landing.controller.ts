@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
 import { API_CODE } from '../../../../types/api-command.type';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 const mapping = require('../../mtwapp_op.json');
 
@@ -17,28 +18,71 @@ class CommonShareOldLanding extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const url = decodeURIComponent(req.query.url);
-    const findMapping = mapping.find((urlInfo) => urlInfo.old === url);
+    let url = req.query.url;
+    const appUrl = req.query.app_url;
 
-    if ( !FormatHelper.isEmpty(findMapping) ) {
-      const menuId = findMapping.menuId;
-      if ( menuId.indexOf('/product/callplan?prod_id=') !== -1 ) {
-        res.redirect(menuId);
+    if ( !FormatHelper.isEmpty(url) ) {
+      url = decodeURIComponent(url);
+      const findMapping = mapping.find((urlInfo) => urlInfo.old === url);
+
+      if ( !FormatHelper.isEmpty(findMapping) ) {
+        const menuId = findMapping.menuId;
+        if ( menuId.indexOf('/product/callplan?prod_id=') !== -1 ) {
+          res.redirect(menuId);
+        } else {
+          this.redisService.getData(REDIS_KEY.MENU_URL + menuId)
+            .subscribe((resp) => {
+              if ( resp.code === API_CODE.CODE_00 ) {
+                res.redirect(resp.result.menuUrl);
+              } else {
+                res.redirect('/main/home');
+              }
+            });
+        }
+
       } else {
-        this.redisService.getData(REDIS_KEY.MENU_URL + menuId)
-          .subscribe((resp) => {
-            if ( resp.code === API_CODE.CODE_00 ) {
-              res.redirect(resp.result.menuUrl);
-            } else {
-              res.redirect('/main/home');
-            }
-          });
+        res.redirect('/main/home');
       }
-
+    } else if ( !FormatHelper.isEmpty(appUrl) ) {
+      this.landingAppUrl(req, res, appUrl);
     } else {
       res.redirect('/main/home');
     }
   }
+
+  private landingAppUrl(req, res, appUrl: string) {
+    switch ( appUrl ) {
+      case 'A001':
+        return res.redirect('/customer');
+      case 'A002':
+      case 'A003':
+      case 'A011':
+        return res.redirect('/membership/submain');
+      case 'A009':
+        return res.redirect('/myt-data/submain');
+      case 'A010':
+        return res.redirect('/myt-fare/bill/hotbill');
+      case 'A012':
+        return res.redirect('/main/menu/settings');
+      case 'A016':
+      case 'A020':
+        return res.render('error.login-block.html', { target: '/main/home' });
+      case 'A017':
+        if ( BrowserHelper.isApp(req) ) {
+          if ( BrowserHelper.isAndroid(req) ) {
+            return res.redirect('/common/member/slogin/aos');
+          } else {
+            return res.redirect('/common/member/slogin/ios');
+          }
+        } else {
+          return res.redirect('/main/home');
+        }
+      default:
+        return res.redirect('/main/home');
+    }
+    return res.redirect('/main/home');
+  }
+
 }
 
 export default CommonShareOldLanding;

@@ -15,6 +15,14 @@ body.bg-gray {
 body.hidden {
   overflow: hidden; }
 
+.hiddenX {
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.noscroll {
+  overflow: hidden;
+  height: 100%; }
+
 .wrap {
   padding-bottom: 1.875rem; }
   .wrap > .container-wrap {
@@ -1221,8 +1229,7 @@ body.hidden {
       padding-top: 0;
       background: #fff; }
     .popup-page.layer.actionsheet_full {
-      max-height: 100%;
-      -webkit-overflow-scrolling: touch; }
+      max-height: 100%; }
       .popup-page.layer.actionsheet_full .header-wrap {
         position: relative; }
         .popup-page.layer.actionsheet_full .header-wrap .page-header {
@@ -1402,6 +1409,16 @@ body.hidden {
     .popup-page.coupon-type .popup-closeBtn {
       top: auto;
       bottom: 1.25rem; }
+  .popup-page.txt-screed {
+    overflow: hidden; }
+    .popup-page.txt-screed .container-wrap {
+      height: 100%; }
+    .popup-page.txt-screed .container {
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch !important; }
+  .popup-page.cont-overflow-hide {
+    overflow-y: hidden; }
   .popup-page.fixed-bottom {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -1943,6 +1960,19 @@ body.hidden {
 
 .certify-wrap .add-time {
   margin: 1.25rem 1.25rem 0 1.25rem; }
+
+.t-blt {
+  position: relative;
+  padding-left: 0.3125rem; }
+  .t-blt:before {
+    position: absolute;
+    top: 0.5rem;
+    left: 0;
+    width: 0.125rem;
+    height: 0.125rem;
+    background: #666666;
+    border-radius: 50%;
+    content: ""; }
 
 .contents-notice {
   padding-top: 0.375rem;

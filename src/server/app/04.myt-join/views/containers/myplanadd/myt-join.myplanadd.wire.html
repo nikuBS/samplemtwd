@@ -58,7 +58,7 @@
                                         <% if (hasButtons) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>
-                                                <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>?prod_id=<%= addition.prodId %>"><%= btn.btnNm %></a>
+                                                <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
                                             <% }); %>
                                         </span>
                                         <% } %>
@@ -110,7 +110,7 @@
                                     <% if (hasButtons) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>
-                                                <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                                <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></a>
                                             <% }); %>
                                         </span>
                                     <% } %>
@@ -155,7 +155,7 @@
                                 <% if (addition.btnList && addition.btnList.length > 0) { %>
                                     <span class="bt-wrap">
                                         <% addition.btnList.map(btn => { %>
-                                            <a class="bt-tx-blue" href="<%= btn.btnLinkUrl %>"><%= btn.btnNm %></a>
+                                            <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
                                         <% }); %>
                                     </span>
                                 <% } %>

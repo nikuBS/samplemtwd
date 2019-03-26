@@ -27,7 +27,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       {
         hbs: 'MS_07_01_04_01_0' + this._bIdx,
         name: this._member.mbrNm,
-        number: this._member.svcNum,
+        number: Tw.FormatHelper.getDashedCellPhoneNumber(this._member.svcNum),
         benefit: this._bIdx === '1' ? this._benefit === '2053-DAT1G' : this._benefit
       },
       $.proxy(this._handleOpenChangeBenefitPopup, this),

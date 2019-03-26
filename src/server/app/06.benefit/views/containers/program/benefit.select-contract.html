@@ -16,16 +16,16 @@
 
 <!--// #skip_navigation -->
 <div class="wrap step" data-menuId="<%= data.pageInfo.menuId || 'M000548' %>">
-    <div class="popup-page tw-popup nobg fixed-bottom h60">
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
         <!--// #header -->
 
         <!-- .container-wrap -->
-        <div class="container-wrap">
+        <div class="container-wrap"  data-id="sel-ct-container">
             <h2 class="blind">내용</h2>
-            <div class="container" data-id="sel-ct-container">
+            <div class="container">
                 <div class="cont-box">
                     <div class="box-suggest">
                         <div class="suggest-info">

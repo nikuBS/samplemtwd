@@ -154,8 +154,7 @@ Tw.MainHome.prototype = {
 
   },
   _onClickBarcodeGo: function () {
-    // this._historyService.goLoad('/membership/submain');
-    Tw.CommonHelper.openUrlExternal('http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp');
+    this._historyService.goLoad('/membership/submain');
   },
 
   _successMembership: function (mbrGr, cardNum, showCardNum, $target, resp) {

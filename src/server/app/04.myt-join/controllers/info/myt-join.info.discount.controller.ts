@@ -6,7 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, API_VERSION } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
 import moment = require('moment');
@@ -49,7 +49,7 @@ class MytJoinInfoDiscount extends TwViewController {
 
     // this._typeInit();
 
-    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}), 'p1');
+    const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2), 'p1');
     // const p1 = this._getPromiseApiMock( contractTerminal_BFF_05_0063, 'p1' );
 
     Promise.all([p1]).then(function(resArr) {

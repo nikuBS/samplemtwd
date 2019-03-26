@@ -108,7 +108,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
     this.$container.on('click', '#btn_hp_del', $.proxy(this.input_hpEvt, this));
 
-    this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
+    // this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]

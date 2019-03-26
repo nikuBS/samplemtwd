@@ -135,6 +135,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
    */
   _requestData: function() {
 
+    $('#fe-process-list0').hide();
+    $('#fe-process-list1').hide().attr('aria-hidden', true);
     $('.process-list').hide().attr('aria-hidden', true);
     //$('.process-list li').removeClass('complete');
     $('.process-list li').removeClass('off').addClass('off');
@@ -185,6 +187,9 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
           compIdx = 2;
         }
         if ( compIdx >= 0 ) {
+
+          $('#fe-process-list0').show();
+          $('#fe-process-list1').show().attr('aria-hidden', false);
           $('.process-list').show().attr('aria-hidden', false);
           $('.process-list li').each(function(idx){
             if( idx <= compIdx ){

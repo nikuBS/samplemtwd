@@ -11,6 +11,8 @@ Tw.ImmediatelyRechargeLayer = function ($element, options) {
   this._popupService = Tw.Popup;
   this._options = options || {};
   // this._prodId = this._options.prodId;
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/myt-data/submain');
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
   this._tidLanding = new Tw.TidLandingComponent();
@@ -228,7 +230,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     else {
       $target = this.$popupContainer.find('[data-external]');
       if ( $target.length > 0 ) {
-        this._getBPCP($target.attr('data-external'));
+        this._bpcpService.open($target.attr('data-external'));
       }
     }
   },
@@ -272,56 +274,6 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         break;
     }
     this._popupService.close();
-  },
-
-  _getBPCP: function (url) {
-    var replaceUrl = url.replace('BPCP:', '');
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this)).fail($.proxy(this._responseFail, this));
-  },
-
-  _responseBPCP: function (resp) {
-    if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + '/myt-data/submain');
-    }
-
-    if (resp.code === 'BFF0504') {
-      var msg = resp.msg.match(/\(.*\)/);
-      msg = msg.pop().match(/(\d+)/);
-
-      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
-          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
-          serviceBlock = { hbs: 'service-block' };
-
-      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
-        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
-      }
-
-      return this._popupService.open(serviceBlock);
-    }
-
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    var url = $.trim(resp.result.svcUrl);
-    if (Tw.FormatHelper.isEmpty(url)) {
-      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
-      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
-    }
-
-    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
-    url += '&ref_origin=' + encodeURIComponent(location.origin);
-
-    this._popupService.open({
-      hbs: 'product_bpcp',
-      iframeUrl: url
-    }, null, $.proxy(function() {
-      this._historyService.replaceURL('/myt-data/submain');
-    }, this));
   },
 
   _responseFail: function (err) {

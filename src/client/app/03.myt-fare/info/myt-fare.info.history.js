@@ -10,7 +10,7 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._bankList = new Tw.MyTFareBillBankList(this.$container);
+  // this._bankList = new Tw.MyTFareBillBankList(this.$container);
 
   this._cachedElement();
   this._bindEvent();
@@ -20,31 +20,36 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
 Tw.MyTFareInfoHistory.prototype = {
   _init: function () {
 
-    this.rootPathName = this._historyService.pathname;
-    this.queryParams = Tw.UrlHelper.getQueryParams();
+    this.rootPathName = this._historyService.pathname; // URL
+    this.queryParams = Tw.UrlHelper.getQueryParams(); // 분류코드 
 
-    if(this.data){
+    if(!Tw.FormatHelper.isEmpty(this.data)){
+      // 현재 선택된 카테고리 
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
         if (this.data.current === cur) {
           prev = index;
         }
         return prev;
       }, this), 0);
+
+      // 리스트 출력
       this._initPaymentList();
     }
   },
 
+  // 리스트 출력
   _initPaymentList: function() {
     var initedListTemplate;
-    var totalDataCounter = this.data.listData.mergedListData.length;
+    var totalDataCounter = this.data.listData.mergedListData.length; // 리스트 갯수
     this.renderListData = {};
 
     // 리스트
     if (!totalDataCounter) {
+      // 리스트 없으면 빈 화면 렌더링
       initedListTemplate = this.$template.$emptyList();
     } 
     else {
-      this.listRenderPerPage = 20;
+      this.listRenderPerPage = 20; // 한번에 보여질 리스트 개수 -> 더보기로 20개씩 추가로 노출
 
       this.listLastIndex = Tw.CommonHelper.getLocalStorage('listLastIndex') || this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
@@ -52,14 +57,19 @@ Tw.MyTFareInfoHistory.prototype = {
       this.renderableListData = this.data.listData.mergedListData.slice(0, this.listRenderPerPage);
 
       this.renderListData.initialMoreData = this.listViewMoreHide;
-      this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
+      this.renderListData.restCount = totalDataCounter - this.listRenderPerPage; // 남은 리스트 갯수
       this.renderListData.records = this.renderableListData.reduce($.proxy(function(prev, cur) {
         prev.push({items: [cur], date:cur.listDt});
-        localStorage.removeItem('listLastIndex'); // 예약취소시 사용되는 로컬스토리지
+        // localStorage.removeItem('listLastIndex'); // 예약취소시 사용되는 로컬스토리지
         return prev;
       }, this), []);
 
       initedListTemplate = this.$template.$listWrapper(this.renderListData);
+      /* renderListData 의 형태 {
+        initialMoreData: boolean 처음 더보기 버튼 보일지 여부 true 면 보임
+        restCount: 노출하고 남은 리스트 갯수 
+        records: {items: [], date: }[]
+      }*/
     }
     this.$domListWrapper.append(initedListTemplate);
     this._afterList();
@@ -100,18 +110,19 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$addRefundAccountTrigger.on('click', $.proxy(this._moveRefundAccount, this));
   },
 
+  // 리스트 렌더링 후 호출 이벤트 바인드
   _afterList: function() {
-    this.$btnListViewMorewrapper = this.$domListWrapper.find('.bt-more');
+    this.$btnListViewMorewrapper = this.$domListWrapper.find('.fe-btn-more'); // 더 보기 버튼
     this.$appendListTarget = this.$domListWrapper.find('.inner');
 
     // 더 보기 버튼
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updatePaymentList, this));
     // 리스트 내 클릭 이벤트 정의
     // - 상세보기
-    this.$domListWrapper.on('click', '.inner', $.proxy(this._listViewDetailHandler, this));
+    this.$domListWrapper.on('click', '.fe-list-detail', $.proxy(this._listViewDetailHandler, this));
     this.$domListWrapper.on('click', '.btn', $.proxy(this._listViewDetailHandler, this));
     // - 예약취소(포인트 예약)
-    this.$domListWrapper.on('click','button.bt-link-tx',$.proxy(this._reserveCancelHandler,this));
+    this.$domListWrapper.on('click','button.fe-cancel-reserve',$.proxy(this._reserveCancelHandler,this));
   },
 
   // 상세보기 이동
@@ -125,7 +136,6 @@ Tw.MyTFareInfoHistory.prototype = {
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
-    // Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
     this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
       (detailData.innerIndex !== undefined ? '&innerIndex=' + detailData.innerIndex: '') +
       (detailData.dataPayMethodCode === 'DI' ? '&opDt=' + detailData.opDt + '&payOpTm=' + detailData.payOpTm: '')
@@ -225,9 +235,6 @@ Tw.MyTFareInfoHistory.prototype = {
     Tw.CommonHelper.setLocalStorage('listLastIndex', this.listLastIndex);
     this._historyService.reload();
   },
-  /*function() {
-        this._popupService.close();
-      }*/
   // 포인트 예약 취소 end
 
   // 더 보기
@@ -241,15 +248,9 @@ Tw.MyTFareInfoHistory.prototype = {
 
     this.renderableListData.map($.proxy(function(o) {
       var renderedHTML;
-      /* if (insertCompareData.listDt === o.listDt) {
-        $domAppendTarget = $('.fe-list-inner li:last-child');
-        renderedHTML = this.$template.$templateItem({items:[o], date: o.listDt});
-      } else {*/
-        // insertCompareData = o;
-        // $domAppendTarget = this.$appendListTarget;
-        renderedHTML = this.$template.$templateItemDay({records:[{items:[o], date:o.listDt, yearHeader:o.yearHeader}]});
-      // }
-
+      
+      renderedHTML = this.$template.$templateItemDay({records:[{items:[o], date:o.listDt, yearHeader:o.yearHeader}]});
+      
       $domAppendTarget.append(renderedHTML);
 
     }, this));

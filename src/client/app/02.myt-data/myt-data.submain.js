@@ -10,6 +10,8 @@ Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/myt-data/submain');
   this._historyService = new Tw.HistoryService(this.$container);
   this.data = params.data;
   this._bpcpServiceId = this.data.bpcpServiceId;
@@ -103,8 +105,6 @@ Tw.MyTDataSubMain.prototype = {
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
-    // BPCP 페이지에서 이벤트 받기 위한 처리
-    $(window).on('message', $.proxy(this._getWindowMessage, this));
   },
 
   _initialize: function () {
@@ -575,7 +575,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
-    this._getBPCP(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
+    this._bpcpService.open(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
   },
 
   // 데이터 조르기
@@ -709,65 +709,7 @@ Tw.MyTDataSubMain.prototype = {
         url = Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA;
         break;
     }
-    this._getBPCP(url);
-  },
-
-  _getBPCP: function (url) {
-    var reqParams = {
-      svcMgmtNum: this._svcMgmtNum,
-      bpcpServiceId: url.replace('BPCP:', '')
-    };
-
-    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
-      reqParams.eParam = this._eParam;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
-      .done($.proxy(this._responseBPCP, this));
-  },
-
-  _responseBPCP: function (resp) {
-    if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + '/myt-data/submain');
-    }
-
-    if (resp.code === 'BFF0504') {
-      var msg = resp.msg.match(/\(.*\)/);
-      msg = msg.pop().match(/(\d+)/);
-
-      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
-          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
-          serviceBlock = { hbs: 'service-block' };
-
-      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
-        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
-      }
-
-      return this._popupService.open(serviceBlock);
-    }
-
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    var url = $.trim(resp.result.svcUrl);
-    if (Tw.FormatHelper.isEmpty(url)) {
-      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
-      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
-    }
-
-    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
-    url += '&ref_origin=' + encodeURIComponent(location.origin);
-
-    this._popupService.open({
-      hbs: 'product_bpcp',
-      iframeUrl: url
-    }, null, $.proxy(function() {
-      this._historyService.replaceURL('/myt-data/submain');
-    }, this));
+    this._bpcpService.open(url);
   },
 
   _successPattern: function (resp) {
@@ -805,46 +747,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initBpcp: function() {
-    this._getBPCP(this._bpcpServiceId);
+    this._bpcpService.open(this._bpcpServiceId);
     history.replaceState(null, document.title, location.origin + '/myt-data/submain');
-  },
-
-  // BPCP 페이지에서 X 버튼 누른 경우에 대한 이벤트 처리
-  _getWindowMessage: function (e) {
-    var data = e.data || e.originalEvent.data;
-    var popupService = this._popupService;
-
-    if (this.immediatelyRechargeLayer && this.immediatelyRechargeLayer._popupService) {
-      popupService = this.immediatelyRechargeLayer._popupService;
-    }
-
-    if (Tw.FormatHelper.isEmpty(data)) {
-      return;
-    }
-
-    // BPCP 팝업 닫기
-    if (data === 'popup_close') {
-      popupService.closeAll();
-    }
-
-    // BPCP 팝업 닫고 링크 이동
-    if (data.indexOf('goLink:') !== -1) {
-      popupService.closeAllAndGo(data.replace('goLink:', ''));
-    }
-
-    // BPCP 팝업 닫고 로그인 호출
-    if (data.indexOf('goLogin:') !== -1) {
-      this._tidLanding.goLogin('/myt-data/submain?' + $.param(JSON.parse(data.replace('goLogin:', ''))));
-    }
-
-    // BPCP 에서 외부 팝업창 호출하고자 할떄
-    if (data.indexOf('outlink:') !== -1) {
-      var url = data.replace('outlink:', '');
-      if (!Tw.BrowserHelper.isApp()) {
-        return Tw.CommonHelper.openUrlExternal(url);
-      }
-
-      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
-    }
   }
 };

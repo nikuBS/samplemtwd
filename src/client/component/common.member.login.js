@@ -33,7 +33,7 @@ Tw.CommonMemberLogin.prototype = {
     } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
       this._historyService.goBack();
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
     }
 
     // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -58,7 +58,7 @@ Tw.CommonMemberLogin.prototype = {
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236) {
       this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
   _successSetSession: function (target) {

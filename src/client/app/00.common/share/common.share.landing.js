@@ -32,7 +32,7 @@ Tw.CommonShareLanding.prototype = {
         this._tidLanding.goSLogin();
       } else {
         this._historyService.replaceURL(this._target);
-      }
+      }t
     }
   }
 };

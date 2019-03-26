@@ -10,6 +10,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._bpcpService = Tw.Bpcp;
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
@@ -22,7 +23,6 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
     spanOpen : new RegExp('<span class="keyword-text">','g')
   };
   this._tidLanding = new Tw.TidLandingComponent();
-  $(window).on('message', $.proxy(this._getWindowMessage, this));
 };
 
 Tw.CommonSearch.prototype = {
@@ -33,6 +33,7 @@ Tw.CommonSearch.prototype = {
     this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
+    this._bpcpService.setData(this.$container, this._nowUrl);
     if(this._searchInfo.totalcount===0){
       return;
     }
@@ -105,7 +106,7 @@ Tw.CommonSearch.prototype = {
         }
         if(typeof (data[i][key])==='string'){
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
-          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="keyword-text">');
+          data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
         }
         if(key==='DEPTH_PATH'){
           if(data[i][key].charAt(0)==='|'){
@@ -276,8 +277,8 @@ Tw.CommonSearch.prototype = {
         }
       );
     }
-    if(linkUrl.indexOf('BPCP')>-1){
-      this._getBpcp(linkUrl,$linkData);
+    if(this._bpcpService.isBpcp(linkUrl)){
+      this._bpcpService.open(linkUrl, null, null, linkEvt);
     }else if(linkUrl.indexOf('Native:')>-1){
       if(linkUrl.indexOf('freeSMS')>-1){
         this._callFreeSMS($linkData);
@@ -286,7 +287,17 @@ Tw.CommonSearch.prototype = {
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
       if(linkUrl.indexOf('http')>-1){
-        Tw.CommonHelper.openUrlExternal(linkUrl);
+        if($linkData.data('require-pay')==='Y'){
+          this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
+              $.proxy(function () {
+                this._popupService.close();
+                Tw.CommonHelper.openUrlExternal(linkUrl);
+              },this),
+              $.proxy(this._popupService.close,this._popupService),$linkData
+          );
+        }else{
+          Tw.CommonHelper.openUrlExternal(linkUrl);
+        }
       }else{
         this._moveUrl(linkUrl);
       }
@@ -295,7 +306,7 @@ Tw.CommonSearch.prototype = {
   },
   _closeSearch : function () {
     if(this._historyService.getHash()==='#input_P'){
-      this._closeKeywordListBase();
+      ++this._step;
     }
     setTimeout($.proxy(function () {
       this._historyService.go(Number(this._step)*-1);
@@ -492,7 +503,8 @@ Tw.CommonSearch.prototype = {
         returnData.push({
           title : data['BNNR_BOT_BTN_NM'+i],
           link : data['BNNR_BOT_BTN_URL'+i],
-          docId : data['DOCID']
+          docId : data['DOCID'],
+          payInfo : data['BNNR_BOT_BTN_BILL_YN'+i]
         });
       }
     }
@@ -536,95 +548,6 @@ Tw.CommonSearch.prototype = {
       return;
     }
     Tw.CommonHelper.openFreeSms();
-  },
-  _getBpcp: function(url,$target) {
-    var reqParams = {
-      svcMgmtNum: this._svcMgmtNum,
-      bpcpServiceId: url.replace('BPCP:', '')
-    };
-
-    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
-      reqParams.eParam = this._eParam;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
-        .done($.proxy(this._resBpcp, this, $target));
-  },
-
-  _resBpcp: function(resp,$target) {
-    if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + this._nowUrl);
-    }
-
-    if (resp.code === 'BFF0504') {
-      var msg = resp.msg.match(/\(.*\)/);
-      msg = msg.pop().match(/(\d+)/);
-
-      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
-          toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
-          serviceBlock = { hbs: 'service-block' };
-
-      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
-        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
-      }
-
-      return this._popupService.open(serviceBlock);
-    }
-
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    var url = $.trim(resp.result.svcUrl);
-    if (Tw.FormatHelper.isEmpty(url)) {
-      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
-      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
-    }
-
-    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
-    url += '&ref_origin=' + encodeURIComponent(location.origin);
-
-    this._popupService.open({
-      hbs: 'product_bpcp',
-      iframeUrl: url
-    }, null, $.proxy(function() {
-      this._historyService.replaceURL(this._nowUrl);
-    }, this),null,$target);
-  },
-  _getWindowMessage: function(e) {
-    var data = e.data || e.originalEvent.data;
-
-    if (Tw.FormatHelper.isEmpty(data)) {
-      return;
-    }
-
-    // BPCP 팝업 닫기
-    if (data === 'popup_close') {
-      this._popupService.closeAll();
-    }
-
-    // BPCP 팝업 닫고 링크 이동
-    if (data.indexOf('goLink:') !== -1) {
-      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
-    }
-
-    // BPCP 팝업 닫고 로그인 호출
-    if (data.indexOf('goLogin:') !== -1) {
-      this._tidLanding.goLogin(this._nowUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
-    }
-
-    // BPCP 에서 외부 팝업창 호출하고자 할떄
-    if (data.indexOf('outlink:') !== -1) {
-      var url = data.replace('outlink:', '');
-      if (!Tw.BrowserHelper.isApp()) {
-        return Tw.CommonHelper.openUrlExternal(url);
-      }
-
-      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
-    }
   },
   _escapeChar : function (string) {
       return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

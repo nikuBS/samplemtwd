@@ -4636,8 +4636,7 @@ a.ui-button:active,
   bottom: 0;
   background: #000;
   z-index: 25;
-  opacity: 0.7;
-  -webkit-overflow-scrolling: touch; }
+  opacity: 0.7; }
 
 .popup {
   position: fixed;
@@ -4646,7 +4645,7 @@ a.ui-button:active,
   right: 0;
   bottom: 0;
   z-index: 200;
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: auto;
   /* popup share */ }
   .popup.dropdown {
     top: 3.75rem;
@@ -7009,7 +7008,10 @@ a.ui-button:active,
   top: 4.125rem;
   left: 0;
   width: 100%;
-  height: calc(100% - 250px);
+  max-height: 80%;
+  background: #fff;
+  overflow-y: scroll;
+  overflow-x: hidden;
   z-index: 99; }
 
 .lately-searchtext {
@@ -7518,8 +7520,8 @@ a.ui-button:active,
   -webkit-box-shadow: 0 20px 0 red;
           box-shadow: 0 20px 0 red;
   position: relative;
-  -webkit-animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
-          animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
+  -webkit-animation: loader2-u94c9f060 0.5s ease-in-out alternate infinite;
+          animation: loader2-u94c9f060 0.5s ease-in-out alternate infinite;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
   top: 50%;
@@ -7532,8 +7534,8 @@ a.ui-button:active,
     border-radius: 50%;
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red;
-    -webkit-animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite;
-            animation: loader2-u1d739d87 0.5s ease-in-out alternate infinite; }
+    -webkit-animation: loader2-u94c9f060 0.5s ease-in-out alternate infinite;
+            animation: loader2-u94c9f060 0.5s ease-in-out alternate infinite; }
   .spinner_loading2::before {
     left: -20px;
     -webkit-animation-delay: 0.3s;
@@ -7543,7 +7545,7 @@ a.ui-button:active,
     -webkit-animation-delay: 0.1s;
             animation-delay: 0.1s; }
 
-@-webkit-keyframes loader2-u1d739d87 {
+@-webkit-keyframes loader2-u94c9f060 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }
@@ -7551,7 +7553,7 @@ a.ui-button:active,
     -webkit-box-shadow: 0 10px 0 red;
             box-shadow: 0 10px 0 red; } }
 
-@keyframes loader2-u1d739d87 {
+@keyframes loader2-u94c9f060 {
   0% {
     -webkit-box-shadow: 0 20px 0 red;
             box-shadow: 0 20px 0 red; }

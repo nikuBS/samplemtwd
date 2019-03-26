@@ -24,6 +24,7 @@ Tw.Init.prototype = {
     Tw.Api = new Tw.ApiService();
     Tw.Error = new Tw.ErrorService();
     Tw.Tooltip = new Tw.TooltipService();
+    Tw.Bpcp = new Tw.BpcpService();
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
@@ -57,7 +58,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.14.4');
+        Tw.Popup.toast('QA_v5.18.0');
       }
     }
   },

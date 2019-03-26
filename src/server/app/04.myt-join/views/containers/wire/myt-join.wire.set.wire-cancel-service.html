@@ -57,8 +57,8 @@
 
 
 <!-- .popup hbs -->
-<div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-bottom" data-menuId="<%= pageInfo.menuId %>"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page nobg tw-popup fixed-bottom">
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -260,7 +260,7 @@
     </div>
     <!-- // .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step" id="page-prev-step">취소</button>
+    <button class="prev-step fe-common-back" id="page-prev-step">취소</button>
     <!--// .popup-closeBtn -->
 </div>
 <!-- // .popup hbs -->

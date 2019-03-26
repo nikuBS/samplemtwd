@@ -15,16 +15,18 @@ class CommonMemberSloginAos extends TwViewController {
 
   render(req: Request, res:
     Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const query = req.query;
-    if ( FormatHelper.isEmpty(query) ) {
-      res.redirect('/common/member/slogin/fail');
-    }
-    const mdn = {
-      original: query.mdn,
-      show: FormatHelper.conTelFormatWithDash(query.mdn)
-    };
+    const mdnQuery = req.query.mdn;
+    if ( FormatHelper.isEmpty(mdnQuery) ) {
+      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null });
+      // res.redirect('/common/member/slogin/fail');
+    } else {
+      const mdn = {
+        original: mdnQuery,
+        show: FormatHelper.conTelFormatWithDash(mdnQuery)
+      };
 
-    res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn });
+      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn });
+    }
   }
 }
 

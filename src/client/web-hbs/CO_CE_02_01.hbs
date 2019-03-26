@@ -18,18 +18,17 @@
                     <div class="box-certifi-card">
                         {{#if data.isWelcome}}
                             {{#if data.masking}}
-                                <p class="certifi-ti-big pt8">
-                                    고객님의 정보 보호를 위해 인증을 하셔야 가려진 정보를 조회하실 수 있습니다.<br />
-                                    회선 별 고객정보 기준으로 로그아웃 전까지 유지됩니다.<br />
-                                    아래 인증방식 중 하나를 선택해 주세요.
-                                </p>
+                                <p class="certifi-ti-big t-blt">고객님의 정보 보호를 위해 인증을 하셔야 가려진 정보를 조회하실 수 있습니다.</p>
+                                <p class="certifi-ti-big t-blt">회선 별 고객정보 기준으로 로그아웃 전까지 유지됩니다.</p>
+                                <p class="certifi-ti-big pt15">아래 인증방식 중 하나를 선택해 주세요.</p>
                             {{else if data.sLogin}}
-                                <p class="certifi-ti-big pt8">간편 로그인으로 서비스 이용중인 고객님은 인증을 하셔야 이용이 가능합니다.<br />아래 인증방식 중 하나를 선택해 주세요.</p>
+                                <p class="certifi-ti-big t-blt">간편 로그인으로 서비스 이용중인 고객님은 인증을 하셔야 이용이 가능합니다.</p>
+                                <p class="certifi-ti-big pt15">아래 인증방식 중 하나를 선택해 주세요.</p>
                             {{else}}
-                                <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
+                                <p class="certifi-ti-big pt15">아래 인증방식 중 한가지를 선택해 주세요.</p>
                             {{/if}}
                         {{else}}
-                            <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
+                            <p class="certifi-ti-big pt15">아래 인증방식 중 한가지를 선택해 주세요.</p>
                         {{/if}}
                         <ul class="certifi-card-list mt28 {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
                             {{#if data.methods.skSms.use}}

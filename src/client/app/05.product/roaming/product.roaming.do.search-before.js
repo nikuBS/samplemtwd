@@ -226,7 +226,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
               var countryNm = encodeURIComponent(_result[0].countryNm);
               var eqpMdlCd = this._phoneInfo.eqpMdlCd;
               var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
-
+              this.$inputContrySearch.val('');
               this._history.goLoad(resultUrl);
           }
       } else {
@@ -346,7 +346,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
 
       var eqpMdlCd = this._phoneInfo.eqpMdlCd;
       var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
-
+      this.$inputContrySearch.val('');
       this._history.goLoad(resultUrl);
   }
 };

@@ -12,6 +12,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._historyService.init();
 
   this._popupService = Tw.Popup;
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/product/callplan?prod_id=' + prodId);
   this._tidLanding = new Tw.TidLandingComponent();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._apiService = Tw.Api;
@@ -63,7 +65,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _initBpcp: function() {
-    this._getBpcp(this._bpcpServiceId);
+    this._bpcpService.open(this._bpcpServiceId);
     history.replaceState(null, document.title, location.origin + '/product/callplan?prod_id=' + this._prodId);
   },
 
@@ -110,8 +112,6 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contentsBtnRoamingAuto.length > 0) {
       this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
     }
-
-    $(window).on('message', $.proxy(this._getWindowMessage, this));
   },
 
   _showReadyOn: function() {
@@ -226,8 +226,8 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
-      if (this._settingBtnList[0].url.indexOf('BPCP:') !== -1) {
-        return this._getBpcp(this._settingBtnList[0].url);
+      if (this._bpcpService.isBpcp(this._settingBtnList[0].url)) {
+        return this._bpcpService.open(this._settingBtnList[0].url);
       } else if (this._settingBtnList[0].url.indexOf('BEU:') !== -1) {
         return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this._settingBtnList[0].url.replace('BEU:', '')));
       } else if (this._settingBtnList[0].url.indexOf('NEU:') !== -1) {
@@ -299,8 +299,8 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     var url = $(e.currentTarget).data('url');
-    if (url.indexOf('BPCP:') !== -1) {
-      return this._getBpcp(url);
+    if (this._bpcpService.isBpcp(url)) {
+      return this._bpcpService.open(url, null, null, e);
     } else if (url.indexOf('BEU:') !== -1) {
       return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url.replace('BEU:', '')));
     } else if (url.indexOf('NEU:') !== -1) {
@@ -315,103 +315,14 @@ Tw.ProductCommonCallplan.prototype = {
 
   _detectBpcp: function(e) {
     var url = $(e.currentTarget).attr('href');
-    if (url.indexOf('BPCP:') === -1) {
+    if (!this._bpcpService.isBpcp(url)) {
       return true;
     }
 
-    this._getBpcp(url);
+    this._bpcpService.open(url, null, null, e);
+
     e.preventDefault();
     e.stopPropagation();
-  },
-
-  _getBpcp: function(url) {
-    var reqParams = {
-      svcMgmtNum: this._svcMgmtNum,
-      bpcpServiceId: url.replace('BPCP:', '')
-    };
-
-    if (!Tw.FormatHelper.isEmpty(this._eParam)) {
-      reqParams.eParam = this._eParam;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
-      .done($.proxy(this._resBpcp, this));
-  },
-
-  _resBpcp: function(resp) {
-    if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
-    }
-
-    if (resp.code === 'BFF0504') {
-      var msg = resp.msg.match(/\(.*\)/);
-        msg = msg && msg.length > 0 ? msg.pop().match(/(\d+)/) : '';
-
-      var fromDtm = Tw.FormatHelper.isEmpty(msg[0]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[0].substr(0, 8), 'YYYY.M.D.'),
-        toDtm = Tw.FormatHelper.isEmpty(msg[1]) ? null : Tw.DateHelper.getShortDateWithFormat(msg[1].substr(0, 8), 'YYYY.M.D.'),
-        serviceBlock = { hbs: 'service-block' };
-
-      if (!Tw.FormatHelper.isEmpty(fromDtm) && !Tw.FormatHelper.isEmpty(toDtm)) {
-        serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
-      }
-
-      return this._popupService.open(serviceBlock);
-    }
-
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    }
-
-    var url = $.trim(resp.result.svcUrl);
-    if (Tw.FormatHelper.isEmpty(url)) {
-      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
-      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
-    }
-
-    url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
-    url += '&ref_origin=' + encodeURIComponent(location.origin);
-
-    this._popupService.open({
-      hbs: 'product_bpcp',
-      iframeUrl: url
-    }, null, $.proxy(function() {
-      this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
-    }, this), 'bpcp_pop');
-  },
-
-  _getWindowMessage: function(e) {
-    var data = e.data || e.originalEvent.data;
-    if (Tw.FormatHelper.isEmpty(data)) {
-      return;
-    }
-
-    // BPCP 팝업 닫기
-    if (data === 'popup_close') {
-      this._popupService.closeAll();
-    }
-
-    // BPCP 팝업 닫고 링크 이동
-    if (data.indexOf('goLink:') !== -1) {
-      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
-    }
-
-    // BPCP 팝업 닫고 로그인 호출
-    if (data.indexOf('goLogin:') !== -1) {
-      this._tidLanding.goLogin('/product/callplan?prod_id=' + this._prodId + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
-    }
-
-    // BPCP 에서 외부 팝업창 호출하고자 할떄
-    if (data.indexOf('outlink:') !== -1) {
-      var url = data.replace('outlink:', '');
-      if (!Tw.BrowserHelper.isApp()) {
-        return this._openExternalUrl(url);
-      }
-
-      Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url));
-    }
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {

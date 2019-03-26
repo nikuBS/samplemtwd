@@ -1,0 +1,324 @@
+<%#
+* FileName: common.util.intro.html
+%>
+
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="<%= CDN %>/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <% include ../components/stylesheet.component.html %>
+    <style>
+        /* 새로워진 Tworld */
+        html, body{font-size:16px;}
+        .bg-newtworld{background:#f7f7f7;letter-spacing:normal;}
+
+        .bg-newtworld .newwrap{padding-bottom:0;}
+        .bg-newtworld .newwrap > .container-wrap{margin-bottom:0;}
+
+        .bg-newtworld img{vertical-align:top;}
+        .bg-newtworld .header-wrap .h-belt{border:0;background:#f7f7f7;}
+        .bg-newtworld .header-wrap .h-close{position:fixed;top:0.8125rem;right:1rem;width:1.5rem;height:1.5rem;}
+        .bg-newtworld .header-wrap .h-belt .h-default .h-tit.t-none{display:none!important;}
+        .bg-newtworld.scroll .header-wrap .h-belt{border:0;background:#fff;}
+        .bg-newtworld.scroll .header-wrap .h-belt .h-default .h-tit.t-none{display:block!important;}
+        .bg-newtworld .cont-box{background:#f7f7f7;border:0;}
+        .bg-newtworld .cont-box.newtworld-intro{position:relative;padding:0 1.875rem;}
+        .bg-newtworld .cont-box.newtworld-intro:before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background:url("<%= CDN %>/img/bg-newtworld-top.png")  right bottom 2rem no-repeat;background-size:17.6875rem auto;}
+        .bg-newtworld .newtworld-intro .top{margin:1.125rem 0 1.9375rem;}
+        .bg-newtworld .newtworld-intro .top h3{width:12.0625rem;height:9rem;background:url("<%= CDN %>/img/svg/title.svg") 0 0 no-repeat;background-size:100% auto;text-indent:-1000em;overflow:hidden;}
+
+        .bg-newtworld .newtworld-intro .bt-down{display:inline-block;width:8.625rem;height:2.625rem;line-height:2.625rem;border:1px solid #f8363a;border-radius:1.375rem;color:#f8363a;font-size:1rem;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:left;}
+        .bg-newtworld .newtworld-intro .bt-down.hidden{visibility:hidden;}
+        .bg-newtworld .newtworld-intro .bt-down span{display:inline-block;margin-left:1.25rem;height:100%;line-height:2.6875rem;padding-left:1.5625rem;font-weight:500;background:url("<%= CDN %>/img/btn-app-install.png") 0 49% no-repeat;background-size:1.0625rem auto;-webkit-box-sizing:border-box;box-sizing:border-box;}
+        .bg-newtworld .newtworld-intro .install-os{margin:7.75rem 0 1.0625rem 0.375rem;border-top:1px solid #e1e2e3;}
+        .bg-newtworld .newtworld-intro .install-os dt{margin:1.125rem 0 0.5rem;line-height:1rem;font-size:0.8rem;font-weight:500;color:#898a8f;}
+        .bg-newtworld .newtworld-intro .install-os dd{margin-bottom:0.125rem;padding-left:1.6875rem;font-size:0.8625rem;color:#8b969a;}
+        .bg-newtworld .newtworld-intro .install-os dd.android{background:url("<%= CDN %>/img/ico-newtworld-android.png") 0.125rem 50% no-repeat;background-size:1.0625rem auto;}
+        .bg-newtworld .newtworld-intro .install-os dd.ios{background:url("<%= CDN %>/img/ico-newtworld-ios.png") 0.25rem 30% no-repeat;background-size:auto 1.125rem;}
+
+        .bg-newtworld .newtworld-detail{padding:3.1875rem 0 0;}
+        .bg-newtworld .newtworld-detail h4{margin-bottom:1.25rem;padding:3.4375rem 1rem 0;line-height:2.125rem;font-size:1.625rem;font-weight:600;letter-spacing:-0.01em;color:#000;}
+        .bg-newtworld .newtworld-detail .detail-box{padding:0 1rem;}
+        .bg-newtworld .newtworld-detail .detail-box.box01 h4{background:url("<%= CDN %>/img/bg-newtworld-number-01.png") 1.25rem 0 no-repeat;background-size:auto 2.25rem;}
+        .bg-newtworld .newtworld-detail .detail-box.box02 h4{background:url("<%= CDN %>/img/bg-newtworld-number-02.png") 1.25rem 0 no-repeat;background-size:auto 2.25rem;}
+        .bg-newtworld .newtworld-detail .detail-box.box03 h4{background:url("<%= CDN %>/img/bg-newtworld-number-03.png") 1.25rem 0 no-repeat;background-size:auto 2.25rem;}
+        .bg-newtworld .newtworld-detail .content-wrap{position:relative;padding:2.5rem 0;}
+        .bg-newtworld .newtworld-detail .content-wrap2{padding-bottom:0;}
+        .bg-newtworld .newtworld-detail .content-wrap:before{content:"";position:absolute;top:0;left:0;margin-left:8.5%;width:83%;height:1px;border-top:1px solid #e1e2e3;}
+        .bg-newtworld .newtworld-detail .content-wrap dt{margin-bottom:0.5rem;padding-left:2rem;padding-right:2rem;font-size:1.25rem;font-weight:500;color:#237cd0;}
+        .bg-newtworld .newtworld-detail .content-wrap dd p{padding:0 2rem 0 2rem;line-height:1.375rem;font-size:0.9375rem;color:#898a8f;}
+        .bg-newtworld .newtworld-detail .content-wrap .video{margin:1.125rem auto 0;width:100%;height:31.875rem;}
+        .bg-newtworld .newtworld-detail .content-wrap .video.medium{height:25rem;}
+        .bg-newtworld .newtworld-detail .content-wrap .video.small{height:20.625rem;}
+        .bg-newtworld .newtworld-detail .content-wrap .video video{width:100%;height:100%;}
+        .bg-newtworld .newtworld-detail .content-wrap .img-wrap{margin:0.625rem auto 2.5rem;width:19.4375rem;}
+        .bg-newtworld .newtworld-detail .content-wrap .img-wrap img{width:100%;}
+
+        .bg-newtworld .newtworld-detail2{background:rgba(255,255,255,0.71);}
+        .bg-newtworld .newtworld-detail2 .content-wrap dd p{padding:0 2rem 0 2rem;line-height:1.375rem;font-size:0.9375rem;color:#898a8f;font-weight:400;}
+
+        .bg-newtworld .newtworld-app{margin-top:-0.9375rem;padding:3.75rem 0 1rem;background:#3a3c45;text-align:center;}
+        .bg-newtworld .newtworld-app .app-box{padding-top:6.125rem;margin-bottom:1.1875rem;background:url("<%= CDN %>/img/ico-newtworld-tworld.png") 50% 0 no-repeat;background-size:5rem auto;}
+        .bg-newtworld .newtworld-app .app-box h4{line-height:2rem;font-size:1.5rem;color:#fff;font-weight:300;}
+        .bg-newtworld .newtworld-app .app-box h4 strong{font-weight:400;}
+        .bg-newtworld .newtworld-app .app-btn .btn{margin:0 auto 0.625rem;display:block;width:12rem;height:3.75rem;background:rgba(35,36,43,0.4);border-radius:0.5rem;vertical-align:top;}
+        .bg-newtworld .newtworld-app .app-btn .btn:last-of-type{margin-bottom:0;}
+        .bg-newtworld .newtworld-app .app-btn .btn:active{background:rgba(35,36,43,0.7);}
+
+        .bg-newtworld .newtworld-app .app-btn .btn span{display:inline-block;width:100%;height:100%;text-indent:-1000em;overflow:hidden;}
+        .bg-newtworld .newtworld-app .app-btn .btn span.appstore{background:url("<%= CDN %>/img/btn-appstore.png") 50% 50% no-repeat;background-size:7.0625rem auto;}
+        .bg-newtworld .newtworld-app .app-btn .btn span.playstore{background:url("<%= CDN %>/img/btn-playstore.png") 50% 50% no-repeat;background-size:7.75rem auto;}
+        .bg-newtworld .newtworld-app .app-btn .btn span.onestore{background:url("<%= CDN %>/img/btn-onestore.png") 50% 50% no-repeat;background-size:7.5625rem auto;}
+        .bg-newtworld .newtworld-app a.btn-top{margin:0.75rem auto 0;padding:0;display:block;width:3.25rem;height:2.5rem;background:url("<%= CDN %>/img/btn-newtworld-top.png") 50% 50% no-repeat;background-size:2.9375rem auto;text-indent:-1000em;overflow:hidden;}
+
+        .bg-newtworld .footer{padding:1.25rem 0 1.6875rem;background:#3a3c45;text-align:center;border-top:1px solid rgba(0,0,0,0.2);}
+        .bg-newtworld .footer img{width:4.4375rem;}
+
+        @media only all and (max-width:320px){
+            html, body{font-size:14px;}
+        }
+
+        @media only screen and (min-width:412px) and (max-width:736px) {
+            html, body{font-size:18px;}
+            .bg-newtworld .newtworld-detail .content-wrap dt{letter-spacing:-0.03em;}
+        }
+    </style>
+</head>
+<body class="bg-newtworld">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="newwrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="h-belt">
+            <div class="h-default">
+                <!-- 2019-01-26 h-tit에 t-none 클래스 추가 -->
+                <div class="h-tit t-none">새로워진 T world</div>
+                <div class="h-close">
+                    <button type="button" class="icon-gnb-close"><span class="blind">닫기</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <!-- 새로워진 T world를 소개합니다. -->
+            <div class="cont-box newtworld-intro">
+                <div class="top">
+                    <h3>새로워진 T world를 소개합니다.</h3>
+                </div>
+                <button class="bt-down<% if (isApp) { %> hidden<% } %>">
+                    <span>앱 다운로드</span>
+                </button>
+                <div class="install-os">
+                    <dl>
+                        <dt>설치 가능 운영체제</dt>
+                        <dd class="android">안드로이드 버전 9.0.0 이상</dd>
+                        <dd class="ios">iOS 버전 9.0.0 이상</dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- //새로워진 T world를 소개합니다. -->
+
+            <!-- 01 -->
+            <div class="cont-box newtworld-detail">
+                <div class="detail-box box01">
+                    <h4>고객님께 꼭 필요한 것만<br>간결하게 담았습니다.</h4>
+                </div>
+                <div class="detail-content">
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>데이터 중심의 홈 화면</dt>
+                            <dd>
+                                <p>
+                                    데이터 중심으로 개편한 T world를 경험해보세요.
+                                    이제, 홈화면에서도 데이터 선물과 충전을 쉽게
+                                    할 수 있습니다.
+                                </p>
+                                <div class="video">
+                                    <video poster="<%= CDN %>/img/video-01.png" loop muted playsinline>
+                                        <source src="<%= CDN %>/mp4/01.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>고객 맞춤형 ‘스마트 카드’</dt>
+                            <dd>
+                                <p>
+                                    T멤버십 바코드, 요금정보, 데이터 선물 가능 횟수 등
+                                    고객님에게 필요한 정보들을 홈화면에서 바로 확인
+                                    하실 수 있습니다.
+                                </p>
+                                <div class="video">
+                                    <video poster="<%= CDN %>/img/video-02.png" loop muted playsinline>
+                                        <source src="<%= CDN %>/mp4/02.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>결합상품 관리도 편리하게</dt>
+                            <dd>
+                                <p>
+                                    홈 화면에서 ‘회선’을 눌러보세요. IPTV, 인터넷,
+                                    집전화도 휴대폰처럼 조회하고 관리할 수 있습니다.
+                                </p>
+                                <div class="video">
+                                    <video poster="<%= CDN %>/img/video-03.png" loop muted playsinline>
+                                        <source src="<%= CDN %>/mp4/03.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!-- //01 -->
+
+            <!-- 02 -->
+            <div class="cont-box newtworld-detail newtworld-detail2">
+                <div class="detail-box box02">
+                    <h4>SK텔레콤의 상품 서비스를<br>한눈에 볼 수 있어요.</h4>
+                </div>
+                <div class="detail-content">
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>요금제부터 최신 스마트폰까지</dt>
+                            <dd>
+                                <p>
+                                    ‘STORE’ 탭을 눌러보세요. SK텔레콤의 인기 요금제,
+                                    부가서비스, 로밍상품은 물론 최신 스마트폰까지
+                                    한번에 만나 볼 수 있습니다.
+                                </p>
+                                <div class="video">
+                                    <video poster="<%= CDN %>/img/video-04.png" loop muted playsinline>
+                                        <source src="<%= CDN %>/mp4/04.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!-- //02 -->
+
+            <!-- 03 -->
+            <div class="cont-box newtworld-detail">
+                <div class="detail-box box03">
+                    <h4>모바일에서 사용하기에<br>더욱 편리해졌어요.</h4>
+                </div>
+                <div class="detail-content">
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>‘바로가기’ 편집 기능</dt>
+                            <dd>
+                                <p>
+                                    홈 화면의 바로가기를 최대 20개까지 추가할 수
+                                    있습니다. 자주 사용하는 기능만 골라 나만의 메뉴를
+                                    구성해 보세요.
+                                </p>
+                                <div class="video small">
+                                    <video poster="<%= CDN %>/img/video-05.png" loop muted playsinline>
+                                        <source src="<%= CDN %>/mp4/05.mp4" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="content-wrap content-wrap2">
+                        <dl>
+                            <dt>매장에 갈 필요 없이 모바일로 간편하게</dt>
+                            <dd>
+                                <p>
+                                    매장이나 고객센터에서만 처리할 수 있었던 일들이
+                                    이제는 모바일에서도 가능합니다.
+                                </p>
+                                <div class="img-wrap">
+                                    <img src="<%= CDN %>/img/newtworld-03-02.png" alt="">
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="content-wrap">
+                        <dl>
+                            <dt>간단하게, 생체 인증</dt>
+                            <dd>
+                                <p>
+                                    생체 인증을 설정해두면, 매번 복잡한 절차를 거치지
+                                    않아도 지문/얼굴 인식만으로 인증할 수 있습니다.
+                                </p>
+                                <div class="img-wrap">
+                                    <img src="<%= CDN %>/img/newtworld-03-03.png" alt="">
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!-- //03 -->
+
+            <!-- 다운로드 -->
+            <div class="cont-box newtworld-app">
+                <% if (isApp) { %>
+                <div class="app-box">
+                    <h4>새로워진 <strong>T world</strong>를<br>많이 이용해주세요</h4>
+                </div>
+                <% } else { %>
+                <div class="app-box">
+                    <h4>새로운 <strong>T world</strong> 다운로드</h4>
+                </div>
+                <div class="app-btn">
+                    <a href="https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8" class="btn"><span class="appstore">App Store</span></a>
+                    <a href="https://play.google.com/store/apps/details?id=Com.sktelecom.minit" class="btn"><span class="playstore">Play Store</span></a>
+                    <a href="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000032819" class="btn"><span class="onestore">One Store</span></a>
+                </div>
+                <% } %>
+                <a href="#" class="btn-top fe-replace-history">TOP</a>
+            </div>
+            <!-- //다운로드 -->
+
+            <!-- footer -->
+            <div class="footer">
+                <img src="<%= CDN %>/img/logo-skt.png" alt="SK텔레콤">
+            </div>
+            <!-- //footer -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CommonUtilIntro($('.newwrap'));
+  });
+</script>
+</body>
+</html>

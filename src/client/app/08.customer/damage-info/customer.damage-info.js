@@ -25,12 +25,15 @@ Tw.CustomerDamageInfo.prototype = {
     e.preventDefault();
     e.stopPropagation();
 
-    // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 바로 연결
-    if (!Tw.BrowserHelper.isApp()) {
-      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    var $elem = $(e.currentTarget),
+      elemHref = $elem.attr('href');
+
+    // 앱이 아닐땐 과금 팝업 띄울 필요 없으므로 바로 연결 & 개인정보취급방침
+    if (!Tw.BrowserHelper.isApp() || $elem.hasClass('fe-no_msg')) {
+      return this._openExternalUrl(elemHref);
     }
 
-    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, elemHref));
   },
 
   // 외부 링크 연결

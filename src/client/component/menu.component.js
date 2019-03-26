@@ -430,12 +430,14 @@ Tw.MenuComponent.prototype = {
     // When logout and app
     if ( isApp && !isLogin ) {
       this.$container.find('.fe-when-logout-and-app').removeClass('none');
-      this.$container.find('.fe-remove-when-app').remove();
     }
 
     // When app or login
     if ( isApp || isLogin ) {
       this.$container.find('.fe-when-app-or-login').removeClass('none');
+    }
+
+    if (isApp) {
       this.$container.find('.fe-remove-when-app').remove();
     }
 

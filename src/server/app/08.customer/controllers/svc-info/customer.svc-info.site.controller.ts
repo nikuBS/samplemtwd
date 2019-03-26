@@ -30,6 +30,14 @@ class CustomerSvcInfoSite extends TwViewController {
     };
 
     this.apiService.request(API_CMD.BFF_08_0064, {}, {}, ['D00003'] ).subscribe(resp => {
+      if ( resp.code !== API_CODE.CODE_00) {
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo,
+          svcInfo
+        });
+      }
       
       const TContent = resp.result || {};
 

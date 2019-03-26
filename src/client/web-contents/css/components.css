@@ -801,7 +801,6 @@
     display: none; }
     .tab-area .tab-contents > ul > li[aria-selected="true"] {
       height: auto;
-      overflow: visible;
       display: block; }
 
 /* Card Tooltip */
@@ -11411,6 +11410,9 @@ a.bt-link-tx.underline.small {
 
 .on-off-list .line {
   border-bottom: 1px solid #e1e1e1 !important; }
+
+.on-off-list .last-line-top {
+  border-top: 1px solid #e1e1e1 !important; }
 
 .tabcon-title0 {
   position: relative;
@@ -24009,7 +24011,7 @@ input[type="radio"].formradio-small.type2 + label {
     .form-wrap .inputbox .input input[type=number],
     .form-wrap .inputbox .input input[type=tel] {
       height: 2.625rem;
-      line-height: 2.625rem;
+      line-height: 0.9375rem;
       padding: 0 1rem;
       font-size: 0.9375rem;
       background: #f2f2f2;
@@ -26554,14 +26556,26 @@ input[type="radio"].formradio-small.type2 + label {
       .discountbenefit-list .category-type .link .text-field .title {
         color: #ffffff;
         font-size: 1.25rem;
-        font-weight: 700;
-        line-height: 1.5625rem; }
+        font-weight: 500;
+        line-height: 1.5625rem;
+        padding-right: 7.5rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden; }
       .discountbenefit-list .category-type .link .text-field .text {
         margin-top: 0.5rem;
-        padding-right: 8.75rem;
+        padding-right: 7.5rem;
         color: #ffffff;
         font-size: 0.8125rem;
-        line-height: 1.125rem; }
+        font-weight: 400;
+        line-height: 1.125rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden; }
     .discountbenefit-list .category-type .link .tag-field {
       position: absolute;
       bottom: 1.9375rem;
@@ -26576,9 +26590,17 @@ input[type="radio"].formradio-small.type2 + label {
 
 @media all and (max-width: 340px) {
   .discountbenefit-list .category-type .link .text-field {
-    top: 1.25rem; }
+    top: 1.125rem; }
+    .discountbenefit-list .category-type .link .text-field .title {
+      font-size: 1.125rem;
+      padding-right: 6.875rem;
+      line-height: 1.375rem; }
+    .discountbenefit-list .category-type .link .text-field .text {
+      padding-right: 6.875rem;
+      font-size: 0.75rem;
+      line-height: 1.0625rem; }
   .discountbenefit-list .category-type .link .tag-field {
-    bottom: 1.25rem; } }
+    bottom: 1.125rem; } }
 
 .section-box {
   position: relative;
@@ -28521,6 +28543,9 @@ body.apphome {
   padding-top: 0.9375rem !important;
   font-size: 1rem; }
 
+.on-off-list.new li:last-child {
+  border: none; }
+
 .on-off-list.new .btn-switch {
   width: 3.25rem; }
   .on-off-list.new .btn-switch:before {
@@ -28960,7 +28985,9 @@ body.apphome {
           font-size: 1.375rem;
           font-weight: 700;
           color: #000000;
-          line-height: 1.5625rem; }
+          line-height: 1.5625rem;
+          white-space: nowrap;
+          letter-spacing: -0.05em; }
         .prepayment-coupon .horizontal-slide .horizontal-list li div .txt {
           padding: 0.3125rem 0 0 0.8125rem;
           display: block;
@@ -29961,7 +29988,8 @@ body.apphome {
       top: 0.0625rem;
       padding-left: 1.875rem;
       word-break: break-all;
-      font-size: 1rem; }
+      font-size: 1rem;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
     .survey-researchbox .category-type .adminbox-wrap {
       margin-top: 0.625rem; }
   .survey-researchbox.type2 > li {
