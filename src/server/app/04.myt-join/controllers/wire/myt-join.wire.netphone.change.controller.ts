@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 인터넷 전화 번호이동 신청 현황(MS_04_01_02)
  * FileName: myt-join.wire.netphone-num.change.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 인터넷 전화 번호이동 신청 현황 화면으로 이동
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

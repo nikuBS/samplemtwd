@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 할인 반환금 조회(MS_04_01_05)
  * FileName: myt-join.wire.discount-refund.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 인터넷/집전화/IPTV 할인 반환금 조회
  */
 
 Tw.MyTJoinWireDiscountRefund = function (rootEl) {
