@@ -1,5 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.reissue.controller.ts
+ * 화면 ID : MF_04_01
+ * 설명 : 나의요금 > 요금안내서 설정 > 재발행
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.01
  */
@@ -32,6 +34,9 @@ class MyTFareBillSetReissue extends TwViewController {
     this._isLocal = val;
   }
 
+  /**
+   * 현재 회선이 유선인지 유무
+   */
   get isLocal() {
     return this._isLocal;
   }
@@ -61,6 +66,12 @@ class MyTFareBillSetReissue extends TwViewController {
     });
   }
 
+  /**
+   * 화면 데이터 설정
+   * @param response
+   * @param svcInfo
+   * @param pageInfo
+   */
   private convertData(response, svcInfo, pageInfo: any): any {
     const data: any = {
       type: '01', // 01:무선, 02:유선, 03:etc
@@ -85,16 +96,20 @@ class MyTFareBillSetReissue extends TwViewController {
     return data;
   }
 
+  /**
+   * 수신된 리스트가 정렬이 안되어 있어 정렬해줌
+   * @param response
+   */
   private sortReasons(response: any): any {
     if (FormatHelper.isEmpty(response.result.reissueReasons)) {
       return [];
     }
     // 사유 정렬순서
     const idx = {
-      '03': 1,
-      '02': 2,
-      '06': 3,
-      '99': 4
+      '03': 1,  // 반송처리
+      '02': 2,  // 요금조정
+      '06': 3,  // 청구서부달
+      '99': 4   // 기타
     };
 
     const reasons = response.result.reissueReasons.map((v) => {
@@ -107,6 +122,11 @@ class MyTFareBillSetReissue extends TwViewController {
     return FormatHelper.sortObjArrAsc(reasons, 'idx');
   }
 
+  /**
+   * 재발행 타입 세팅
+   * @param def
+   * @param data
+   */
   private setBillIsueTyps(def, data) {
     if ( def[data['billIsueTypCd']] ) {
       data['billIsueTyps'] = def[data['billIsueTypCd']];
@@ -114,6 +134,10 @@ class MyTFareBillSetReissue extends TwViewController {
     }
   }
 
+  /**
+   * 재발행 날짜 포맷팅
+   * @param array
+   */
   private setLocalHalfYearData(array): any {
     const result: any = [];
     const length = array.length;
@@ -129,6 +153,13 @@ class MyTFareBillSetReissue extends TwViewController {
     return result;
   }
 
+  /**
+   * API 에러시 에러페이지 이동
+   * @param res
+   * @param err
+   * @param svcInfo
+   * @param pageInfo
+   */
   private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MYT_FARE_BILL_REISSUE.TITLE,

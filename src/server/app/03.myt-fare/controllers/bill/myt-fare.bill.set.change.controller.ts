@@ -1,8 +1,9 @@
 /**
  * FileName: myt-fare.bill.set.change.controller.ts
+ * 화면 ID : MF_04_02
+ * 설명 : 나의요금 > 요금안내서 설정 > 안내서 변경 ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.09.18
- * 나의요금 > 요금 안내서 설정 > 안내서 변경
  */
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
@@ -33,6 +34,12 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     });
   }
 
+  /**
+   * page 에 전달할 object 만들기
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   private getData(data: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeTogetherBill(data);
@@ -55,7 +62,10 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     };
   }
 
-  // '요금 안내서 이용안내' TIP ID 생성
+  /**
+   * '요금 안내서 이용안내' TIP ID 생성
+   * @param data
+   */
   private makeUsageGuideTipId(data: any): void {
     const tipId = {
       'P': 'MF_04_02_tip_01',  // T world
@@ -67,7 +77,10 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     data.tipId = tipId[data.query.billType];
   }
 
-  // 함께 받을 요금 안내서 만들기
+  /**
+   * 함께 받을 요금 안내서 만들기
+   * @param data
+   */
   private makeTogetherBill(data: any): void {
     const billType = data.query.billType;
     // 기타(우편) 함께 받는 요금 안내서 없음
@@ -95,7 +108,10 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     }
   }
 
-  // 핸드폰 번호 입력 파라미터 만들기
+  /**
+   * 핸드폰 번호 입력 파라미터 만들기
+   * @param data
+   */
   private makeHpParam(data: any): void {
     const lineType = this.getLinetype();
     const param = {
