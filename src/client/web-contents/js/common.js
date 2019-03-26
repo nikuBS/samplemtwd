@@ -19,6 +19,17 @@ $(document).on('ready', function () {
   if($('#common-menu').length > 0){
     skt_landing.action.gnb();
   }
+
+  /* 아이폰 키패드 영역 주먹구구식.... */
+  /*var inputType = "input[type=text],input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel], textarea";
+  $(".device_ios "+inputType).focusin(function(){
+    $("#gnb .g-wrap").hide(); // 19.03.26 툴바 이슈 수정
+  });
+
+  $(".device_ios "+inputType).focusout(function(){
+    $("#gnb .g-wrap").show(); // 19.03.26 툴바 이슈 수정
+  });*/
+
   skt_landing.action.header_shadow(); // header shadow effect (page)
   skt_landing.action.header_shadow_popup(); // header shadow effect (popup)
   skt_landing.action.focus_mousedown_style(document);
@@ -93,7 +104,7 @@ $(window).on('resize', function (e, datas) {
 
     var $popupContainer = $('.popup-page.fixed-bottom, .popup-page.fixed-btn'); // 19.03.22 수정
     if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
-  } else {    
+  } else {
     $("#gnb.on .g-wrap").show(); // 19.03.26 툴바 이슈 수정
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
@@ -328,7 +339,6 @@ skt_landing.action = {
     if(all_btn.length < 1) return;
     all_btn.on('click', function(){
       if(!$('.depth-view-box').hasClass('open')){
-        console.log('a');
         $(this).addClass('on');
         $('.depth-view-box').addClass('open');
         $('.header-wrap').addClass('fixed');
@@ -883,7 +893,7 @@ skt_landing.action = {
           }
         */
         // 19.03.22 딤드처리된 popup 스크롤락
-        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 || $('.popup .input-scroll-fix').length > 0){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 )
+        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 )
           var popCk = $('.popup-page.tw-popup'),
               popCk_wrap = popCk.not($(".actionsheet"));
           popCk_wrap.each(function(){
@@ -951,9 +961,11 @@ skt_landing.action = {
       }else{
         var popups = $('.wrap > .popup,.wrap > .popup-page');
         popups.eq(popups.length-1).empty().remove();
+        skt_landing.action.checkScroll.unLockScroll();
       }
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
+        skt_landing.action.checkScroll.unLockScroll();
       }
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
@@ -967,7 +979,6 @@ skt_landing.action = {
       });
       $(document).trigger('modal:close', {obj: this, target: target});
       //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-
     },
     allClose : function (){
       var popups = $('.wrap > .popup,.wrap > .popup-page');
@@ -1254,4 +1265,4 @@ skt_landing.dev = {
      }
    });
   }
-} 
+}
