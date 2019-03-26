@@ -2,6 +2,7 @@
  * FileName: myt-join.suspend.status
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 11. 13.
+ * 일시정지 신청현황(MS_03_05_03_01)
  */
 Tw.MyTJoinSuspendStatus = function (rootEl, params) {
   this.$container = rootEl;

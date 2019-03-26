@@ -25,7 +25,7 @@ class MyTJoinSuspendComplete extends TwViewController {
     const data = { confirmUrl: '/myt-join/submain' };
     let duration = '';
     switch ( params.command ) {
-      case 'longterm':
+      case 'longterm': // 장기 일시정지 신청
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
@@ -44,7 +44,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         }
         break;
 
-      case 'resuspend':
+      case 'resuspend': // 장기 일시정지 재신청
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.RESUSPEND;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
@@ -54,16 +54,16 @@ class MyTJoinSuspendComplete extends TwViewController {
           .replace('{SVC_NUMBER}', FormatHelper.conTelFormatWithDash(params.svcNum));
         break;
 
-      case 'cancel-resuspend':
+      case 'cancel-resuspend': // 장기 일시정지 재신청 취소
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.CANCEL_RESUSPEND;
         duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.');
         break;
 
-      case 'reset':
+      case 'reset':  // 일시정지 해제
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.RESET;
         break;
 
-      case 'temporary':
+      case 'temporary': // 일시정지 신청
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
         duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
           DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');

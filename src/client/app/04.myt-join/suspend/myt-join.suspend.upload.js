@@ -2,6 +2,7 @@
  * FileName: myt-join.suspend.upload.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 11. 15.
+ * 일시정지신청/현황에서 사용하는 File Upload Dialog
  */
 Tw.MytJoinSuspendUpload = function () {
   this._popupService = Tw.Popup;
@@ -24,9 +25,13 @@ Tw.MytJoinSuspendUpload.prototype = {
       this._showUploadPopup();
     }
   },
-
+  /**
+   * 파일 업로드 Dialog 전 툴팁
+   * @param tooltip
+   * @param $focusEl
+   * @private
+   */
   _showUploadTip: function (tooltip, $focusEl) {
-    // this._popupService.openConfirm(tooltip.title, tooltip.content, $.proxy(this._showUploadPopup, this), null);
     this._popupService.open({
       title: tooltip.title,
       title_type: 'sub',
@@ -38,7 +43,10 @@ Tw.MytJoinSuspendUpload.prototype = {
       }]
     }, null, $.proxy(this._showUploadPopup, this), tooltip.hash, $focusEl);
   },
-
+  /**
+   * 파일 업로드 Dialog
+   * @private
+   */
   _showUploadPopup: function () {
     // 모바일웹 4.4 버젼은 파일 업로드 미지원
     if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
