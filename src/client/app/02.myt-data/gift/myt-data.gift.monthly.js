@@ -63,7 +63,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
 
-      this.$input_auto_gift.val(this._convertDashNumber(params.phoneNumber));
+      this.$input_auto_gift.val(this._convertDashNumber(params.phoneNumber)).trigger('change');
       this._validateInputNumber();
       this._checkValidateSendingButton();
     }

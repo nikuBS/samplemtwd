@@ -122,6 +122,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var phoneNumber = response.params.phoneNumber;
       this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(phoneNumber));
+      this.$inputImmediatelyGift.trigger('change');
       this._validateInputNumber();
       this._checkValidateSendingButton();
     }
@@ -145,7 +146,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     var opdtm = $(e.currentTarget).data('opdtm');
     var sNumber = $(e.currentTarget).find('.tel-select').text();
 
-    this.$inputImmediatelyGift.val(sNumber);
+    this.$inputImmediatelyGift.val(sNumber).trigger('change');
     this.$inputImmediatelyGift.data('opdtm', opdtm);
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
