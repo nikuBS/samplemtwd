@@ -2,6 +2,7 @@
  * FileName: benefit.myt-benefit.military.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 11. 1.
+ * 혜택 > 나의 혜택/할인 > 지켜줘서 고마원 현역플랜 포인트(BS_01_01_05)
  */
 Tw.BenefitMyBenefitMilitary = function (rootEl) {
   this.NUM_OF_ITEMS = 20;

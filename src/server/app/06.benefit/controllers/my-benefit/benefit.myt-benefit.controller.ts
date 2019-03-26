@@ -2,6 +2,7 @@
  * FileName: benefit.myt-benefit.controller.ts
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 10. 30.
+ * 혜택 > 나의 혜택/할인
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -2,6 +2,7 @@
  * FileName: benefit.my-benefit.js
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 10. 31.
+ * 혜택 > 나의 할인/혜택 화면(BS_01)
  */
 Tw.BenefitMyBenefit = function (rootEl, okCash, t, rainbow) {
   this._children = null;
@@ -21,6 +22,10 @@ Tw.BenefitMyBenefit = function (rootEl, okCash, t, rainbow) {
 };
 
 Tw.BenefitMyBenefit.prototype = {
+  /**
+   * Cache elements for binding events.
+   * @private
+   */
   _cachedElement: function () {
     this.$payBtn = this.$container.find('#fe-pay');
   },
@@ -31,7 +36,13 @@ Tw.BenefitMyBenefit.prototype = {
     // this.$container.find('[data-id="fe-membership"]').on('click', $.proxy(this._onClickMembership, this));
   },
 
+  /**
+   * Event listener for the button click on #fe-pay(포인트 요금납부)
+   * @param event
+   * @private
+   */
   _onClickPay: function (event) {
+    // 포인트 요금납부 actionsheet open
     this._popupService.open({
       hbs: 'actionsheet01',
       layer: true,
@@ -55,20 +66,30 @@ Tw.BenefitMyBenefit.prototype = {
     }, $.proxy(this._bindPopupEvent, this), $.proxy(this._goLoad, this), null, $(event.currentTarget));
   },
 
+  /**
+   * 포인트 요금납부 actionsheet event 설정
+   * @param $layer
+   * @private
+   */
   _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._setEvent, this));
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._setEvent, this));
   },
+  /**
+   * 포인트 요금납부 클릭 시 다음 주소 저장
+   * @param e
+   * @private
+   */
   _setEvent: function (e) {
     this.$uri = $(e.currentTarget).attr('data-url');
     this._popupService.close();
   },
   _goLoad: function () {
+    // popup close에서 이동. back으로 이동 시 팝업이 열리는 현상 막음.
     if ( !_.isEmpty(this.$uri) && this.$uri !== 'undefined'){
       this._historyService.goLoad(this.$uri);
     }
-  },
-
+  }
   /**
    * BETA 버젼에서 임시로 외부링크로 이동
    * @param e

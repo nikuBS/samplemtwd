@@ -2,6 +2,7 @@
  * FileName: benefit.myt-benefit.military.ts
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 11. 1.
+ * 혜택 > 나의 혜택/할인 > 지켜줘서 고마원 현역플랜 포인트
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
