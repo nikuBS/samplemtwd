@@ -19,6 +19,7 @@ Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodTypeInfo,prodBffInfo
   this._init();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_change'));
 };
 
 Tw.ProductRoamingSettingRoamingSetup.prototype = {

@@ -23,6 +23,7 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodTypeInfo,prodBffInfo,
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._init();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_setting'));
 };
 
 Tw.ProductRoamingSettingRoamingAuto.prototype = {

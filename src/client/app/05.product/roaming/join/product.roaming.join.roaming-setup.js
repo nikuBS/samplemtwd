@@ -20,6 +20,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
 };
 
 Tw.ProductRoamingJoinRoamingSetup.prototype = {

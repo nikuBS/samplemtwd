@@ -18,6 +18,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodTypeInfo,prodApiIn
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._tooltipInit(prodId);
   this._bindBtnEvents();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
 };
 
 Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
