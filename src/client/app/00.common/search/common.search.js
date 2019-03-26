@@ -66,6 +66,9 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
+    this.$container.on('scroll',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
     this.$container.find('#contents').removeClass('none');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
