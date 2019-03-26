@@ -1,5 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.return-history.controller.ts
+ * 화면 ID : MF_04_04
+ * 설명 : 나의요금 > 요금안내서 설정 > 반송내역
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.09.12
  */

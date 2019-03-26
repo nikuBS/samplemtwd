@@ -1,5 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.common.controller.ts
+ * 화면 ID : MF_04, MF_04_02
+ * 설명 : 나의요금 > 요금안내서 설정, 안내서 변경 공통 ts
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.09.20
  */
@@ -9,46 +11,11 @@ import {MYT_FARE_BILL_TYPE} from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD} from '../../../../types/api-command.type';
-import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
 import StringHelper from '../../../../utils/string.helper';
 
 abstract class MyTFareBillSetCommon extends TwViewController {
 
   protected _svcInfo: any;
-
-  // 지역번호 앞자리 컨버팅
-  private _tel1: any = {
-    '0010' : '010',
-    '0011' : '011',
-    '0012' : '012',
-    '0015' : '015',
-    '0016' : '016',
-    '0017' : '017',
-    '0018' : '018',
-    '0019' : '019',
-    '0002' : '02',
-    '0031' : '031',
-    '0032' : '032',
-    '0033' : '033',
-    '0041' : '041',
-    '0042' : '042',
-    '0043' : '043',
-    '0044' : '044',
-    '0051' : '051',
-    '0052' : '052',
-    '0053' : '053',
-    '0054' : '054',
-    '0055' : '055',
-    '0061' : '061',
-    '0062' : '062',
-    '0063' : '063',
-    '0064' : '064',
-    '0070' : '070',
-    '0502' : '0502',
-    '0504' : '0504',
-    '0505' : '0505',
-    '0506' : '0506'
-  };
 
   constructor() {
     super();
@@ -60,7 +27,13 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     this._svcInfo = __svcInfo;
   }
 
-  // API Response fail
+  /**
+   * API Response fail
+   * @param res
+   * @param data
+   * @param svcInfo
+   * @param pageInfo
+   */
   protected fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
     this.error.render(res, {
       code: data.code,
@@ -70,9 +43,10 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     });
   }
 
-  // 현재 회선 타입
+  /**
+   * 현재 회선 타입
+   */
   protected getLinetype(): any {
-    // return 'S';
     switch (this.svcInfo.svcAttrCd) {
       case 'M1':  // 휴대폰
       case 'M3':  // T pocket FI
@@ -95,16 +69,16 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     }
   }
 
-  /*
-    안내서 유형 설정
-    무선회선을 기본으로 하여, 유선일 경우 무선 유형으로 변경해준다.
-    최종적으로 안내서 변경 요청시 다시 유선 코드로 변경해서 보낸다.
-    2019.01.19 구 코드(기타우편) 현 코드로 변경 추가
-  */
+  /**
+   * 안내서 유형 설정
+   * 무선회선을 기본으로 하여, 유선일 경우 무선 유형으로 변경해준다.
+   * 최종적으로 안내서 변경 요청시 다시 유선 코드로 변경해서 보낸다.
+   * 2019.01.19 구 코드(기타우편) 현 코드로 변경 추가
+   * @param data
+   */
   protected convertCd(data: any): void {
     let curBillType = data.curBillType;
 
-    // Bill Letter
     switch (curBillType) {
       case 'J' : curBillType = 'H'; break;  // Bill Letter
       case 'K' : curBillType = 'I'; break;  // Bill Letter + 이메일
@@ -118,6 +92,11 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     data.curBillType = curBillType;
   }
 
+  /**
+   * 안내서 코드 와 이름을 array에 담기
+   * @param billData : 안내서를 담을 array
+   * @param billType : array에 추가할 안내서
+   */
   protected pushBillInfo(billData: any, billType: any): void {
     billData.push({
       cd : billType,
@@ -125,7 +104,10 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     });
   }
 
-  // 안내서 유형 정보 세팅
+  /**
+   * 안내서 유형 정보 세팅
+   * @param data
+   */
   protected makeBillInfo(data: any): void {
     this.convertCd(data);
     const curBillType = data.curBillType;
@@ -174,6 +156,10 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     data.billInfo = billArr;
   }
 
+  /**
+   * 연락처 포맷팅
+   * @param data
+   */
   protected parseData(data: any): void {
     this.parseTel(data);
 
@@ -193,7 +179,10 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     }
   }
 
-  // 기타(우편) 일 때 연락처 포맷팅
+  /**
+   * 기타(우편) 일 때 연락처 포맷팅
+   * @param data
+   */
   protected parseTel(data: any): void {
     if ( FormatHelper.isEmpty(data.cntcNum1) || data.cntcNum1.length < 9 || data.cntcNum1.length > 12 ) {
       return;
@@ -202,17 +191,11 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     data.cntcNum1 = StringHelper.phoneStringToDash(data.cntcNum1);
   }
 
-  // 안내서 유형 조회
+  /**
+   * 안내서 유형 조회
+   */
   protected reqBillType(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0025, {});
-  }
-
-  // 안내서 유형 조회 목업
-  protected mockReqBillType(): Observable<any> {
-    return Observable.create((observer) => {
-      observer.next(  FormatHelper.objectClone(MyTBillSetData) );
-      observer.complete();
-    });
   }
 
 }
