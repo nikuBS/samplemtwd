@@ -14,6 +14,7 @@ var gulp       = require('gulp'),
     clean      = require('gulp-clean'),
     remoteSrc  = require('gulp-remote-src'),
     jeditor    = require('gulp-json-editor'),
+    options    = require('gulp-options'),
     plumber    = require('gulp-plumber'),
     logger     = require('gulp-logger');
 
@@ -23,7 +24,9 @@ var appNames = ['common', 'main', 'myt-data', 'myt-fare', 'myt-join', 'product',
 var dist = 'dist/';
 
 var manifest = {};
-var manifestFile = 'manifest.json';
+var version = options.get('ver');
+// var manifestFile = 'manifest.json';
+var manifestFile = version !== 'undefined' ? 'manifest.' + version + '.json' : 'manifest.json';
 var manifest_dist = 'src/server/';
 
 gulp.task('pre-clean', function () {
@@ -459,20 +462,20 @@ gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);
 
 gulp.task('default', shell.task([
-  'gulp pre-clean',
-  'gulp task',
-  'gulp hbs-front',
-  'gulp manifest',
-  'gulp post-clean',
-  'gulp run'
+  'gulp pre-clean --ver=' + version,
+  'gulp task --ver=' + version,
+  'gulp hbs-front --ver=' + version,
+  'gulp manifest --ver=' + version,
+  'gulp post-clean --ver=' + version,
+  'gulp run --ver=' + version
 ]));
 
 gulp.task('build', shell.task([
-  'gulp pre-clean',
-  'gulp task',
-  'gulp hbs-front',
-  'gulp manifest',
-  'gulp post-clean'
+  'gulp pre-clean --ver=' + version,
+  'gulp task --ver=' + version,
+  'gulp hbs-front --ver=' + version,
+  'gulp manifest --ver=' + version,
+  'gulp post-clean --ver=' + version
 ]));
 
 gulp.task('client-build', ['get-manifest'], function () {
