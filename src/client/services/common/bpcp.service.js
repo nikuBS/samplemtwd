@@ -100,11 +100,7 @@ Tw.BpcpService.prototype = {
       null, (event ? $(event.currentTarget) : null));
   },
 
-  _onOpenBpcpPop: function($popupContainer) {
-    if (Tw.BrowserHelper.isAndroid()) {
-      $popupContainer.find('iframe').css('height', '100%');
-    }
-
+  _onOpenBpcpPop: function() {
     if (!Tw.FormatHelper.isEmpty(this.$container)) {
       this.$container.find('#header, #contents, #gnb').hide();
     }

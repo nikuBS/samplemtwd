@@ -120,9 +120,9 @@ skt_landing.widgets = {
         var $this = $(this);
         if($this.hasClass('stop-bubble') == true){
            e.stopPropagation();    //@2019-03-12 stop-bubble 클래스 추가 ( 체크박스안에 삭제 버튼이 있는 경우 )
-           $this.trigger('change'); //@19.03.25 input change 이벤트 전달
         }
         field.val('').focus();
+        field.trigger('change');  //@19.03.25 input change 이벤트 전달
         bt.hide();
       });
       field.on('change keyup',function(){
