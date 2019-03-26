@@ -63,6 +63,7 @@ import CommonUtilBpcp from './controllers/util/common.util.bpcp.controller';
 import CommonAutoSmsCert from './controllers/auto-sms/common.auto-sms.cert.controller';
 import CommonAutoSmsResult from './controllers/auto-sms/common.auto-sms.result.controller';
 import CommonShareOldLanding from './controllers/share/common.share.old-landing.controller';
+import CommonUtilIntro from './controllers/util/common.util.intro.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -146,5 +147,8 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/util/bpcp', controller: CommonUtilBpcp });
     this.controllers.push({ url: '/auto-sms/cert', controller: CommonAutoSmsCert });
     this.controllers.push({ url: '/auto-sms/result', controller: CommonAutoSmsResult });
+
+    // intro
+    this.controllers.push({ url: '/util/intro', controller: CommonUtilIntro });
   }
 }
