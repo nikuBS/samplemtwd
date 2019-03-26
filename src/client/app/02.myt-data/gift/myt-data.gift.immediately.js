@@ -160,8 +160,19 @@ Tw.MyTDataGiftImmediately.prototype = {
 
     var svcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
+    var isNumber = Tw.FormatHelper.isNumber(this.$inputImmediatelyGift.val().replace(/\-/gi, ''));
 
-    if ( isCellPhone && this._validatePhoneNumber(svcNum) ) {
+    if( isNumber ) {
+      if ( svcNum.length < 10 ) {
+        return Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      }
+
+      if ( !Tw.FormatHelper.isCellPhone(svcNum) ) {
+        return Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+      }
+    }
+
+    if ( isCellPhone ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
@@ -235,20 +246,6 @@ Tw.MyTDataGiftImmediately.prototype = {
     } else {
       this.$btnRequestSendingData.attr('disabled', true);
     }
-  },
-
-  _validatePhoneNumber: function (sPhone) {
-    if ( sPhone.length < 10 ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
-      return false;
-    }
-
-    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
-      return false;
-    }
-
-    return true;
   },
 
   _validateInputNumber: function () {
