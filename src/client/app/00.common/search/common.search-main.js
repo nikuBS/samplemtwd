@@ -216,6 +216,7 @@ Tw.CommonSearchMain.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.search-content').attr('aria-hidden',false);
       this.$inputElement.blur();
+      skt_landing.action.checkScroll.unLockScroll();
     },this));
   },
   _keywordListBaseClassCallback : function () {

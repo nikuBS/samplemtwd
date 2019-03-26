@@ -15,85 +15,84 @@
     </div>
     // #skip_navigation -->
 <div class="wrap">
-<div class="searchbox-header" aria-hidden="false">
-    <div class="sch-form">
-            <span class="inputbox">
-                <span class="input">
-                    <input type="hidden" id="selected_keyword" value="<%= recommendKeyword.code==='00'?recommendKeyword.result.keywordNm:'' %>">
-                    <input type="text" class="fe-nofocus-move" name="keyword" id="search_input"
-                           placeholder="<%= recommendKeyword.code==='00'&&recommendKeyword.result.keywordDs?recommendKeyword.result.keywordDs:'검색어를 입력하세요.' %>"
-                           title="검색" >
-                    <button class="cancel" style="display: none;" ><span class="blind">삭제</span></button>
+    <div class="searchbox-header" aria-hidden="false">
+        <div class="sch-form">
+                <span class="inputbox">
+                    <span class="input">
+                        <input type="hidden" id="selected_keyword" value="<%= recommendKeyword.code==='00'?recommendKeyword.result.keywordNm:'' %>">
+                        <input type="text" class="fe-nofocus-move" name="keyword" id="search_input"
+                               placeholder="<%= recommendKeyword.code==='00'&&recommendKeyword.result.keywordDs?recommendKeyword.result.keywordDs:'검색어를 입력하세요.' %>"
+                               title="검색" >
+                        <button class="cancel" style="display: none;" ><span class="blind">삭제</span></button>
+                    </span>
                 </span>
-            </span>
-        <button class="icon-gnb-search"><span class="blind">검색</span></button>
-        <div class="searchbox-close"><button class="close-area">취소</button></div>
+            <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            <div class="searchbox-close"><button class="close-area">취소</button></div>
+        </div>
     </div>
-</div>
 <!-- 자동완성 폼 -->
 
 <!--  최근검색어 -->
-
-<div class="search-content">
-    <div class="cont-box nogaps-hoz">
-        <div class="rec-list">
-            <h3 class="searchlist-title">인기 검색어</h3>
-            <ul class="popularsearchword-list linklist-type">
-                <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
-                    <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
-                    <li>
-                        <a href="/common/search?step=<%= step+1 %>&keyword=<%= encodeURIComponent(popularKeyword.result.Query[i].content) %>" data-xt_eid="CMMA_A11_B4-<%= i+1 %>" data-xt_csid="NO"  data-xt_action="BC" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element xtractor">
-                            <strong class="number"><%= i+1 %></strong>
-                            <span class="text"><%= popularKeyword.result.Query[i].content %></span>
+    <div id="contents" class="container-wrap">
+        <div class="search-content">
+            <div class="cont-box nogaps-hoz">
+                <div class="rec-list">
+                    <h3 class="searchlist-title">인기 검색어</h3>
+                    <ul class="popularsearchword-list linklist-type">
+                        <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
+                            <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
+                            <li>
+                                <a href="/common/search?step=<%= step+1 %>&keyword=<%= encodeURIComponent(popularKeyword.result.Query[i].content) %>" data-xt_eid="CMMA_A11_B4-<%= i+1 %>" data-xt_csid="NO"  data-xt_action="BC" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element xtractor">
+                                    <strong class="number"><%= i+1 %></strong>
+                                    <span class="text"><%= popularKeyword.result.Query[i].content %></span>
+                                </a>
+                            </li>
+                            <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+            <% if(smartKeyword.code==='00'){ %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <% if(smartKeyword.result.smartSrchUrl){ %>
+            <div class="banner-area">
+                <a data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.smartSrchUrl %>"
+                   data-param="<%= smartKeyword.result.smartSrchUrl %>" class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrNbillYn %>">
+                    <img src="<%= CDN %><%= smartKeyword.result.bnnrIos320Url %>" alt="<%= smartKeyword.result.smartSrchDesc%>">
+                </a>
+            </div>
+            <% } %>
+            <div class="cont-box nogaps">
+                <ul class="plantype-list <%= smartKeyword.result.bnnrBotBtnNm3?'cell3': smartKeyword.result.bnnrBotBtnNm2?'':'cell1'%>">
+                    <%if(smartKeyword.result.bnnrBotBtnNm1){ %>
+                    <li class="category-type">
+                        <a data-xt_eid="CMMA_A11_B4-37" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl1 %>" type="button"
+                           class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn1 %>">
+                            <%= smartKeyword.result.bnnrBotBtnNm1 %>
                         </a>
                     </li>
                     <% } %>
-                <% } %>
-            </ul>
+                    <% if(smartKeyword.result.bnnrBotBtnNm2){ %>
+                    <li class="category-type">
+                        <a data-xt_eid="CMMA_A11_B4-38" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl2 %>" type="button"
+                           class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn2 %>">
+                            <%= smartKeyword.result.bnnrBotBtnNm2 %>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% if(smartKeyword.result.bnnrBotBtnNm3){ %>
+                    <li class="category-type">
+                        <a data-xt_eid="CMMA_A11_B4-39" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl3 %>" type="button"
+                           class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn3 %>">
+                            <%= smartKeyword.result.bnnrBotBtnNm3 %>
+                        </a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <% } %>
         </div>
     </div>
-    <% if(smartKeyword.code==='00'){ %>
-    <hr class="cont-sp type1" aria-hidden="true">
-    <% if(smartKeyword.result.smartSrchUrl){ %>
-    <div class="banner-area">
-        <a data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.smartSrchUrl %>"
-           data-param="<%= smartKeyword.result.smartSrchUrl %>" class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrNbillYn %>">
-            <img src="<%= CDN %><%= smartKeyword.result.bnnrIos320Url %>" alt="<%= smartKeyword.result.smartSrchDesc%>">
-        </a>
-    </div>
-    <% } %>
-    <div class="cont-box nogaps">
-        <ul class="plantype-list <%= smartKeyword.result.bnnrBotBtnNm3?'cell3': smartKeyword.result.bnnrBotBtnNm2?'':'cell1'%>">
-            <%if(smartKeyword.result.bnnrBotBtnNm1){ %>
-            <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-37" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl1 %>" type="button"
-                   class="link search-element xtractor" data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn1 %>">
-                    <%= smartKeyword.result.bnnrBotBtnNm1 %>
-                </a>
-            </li>
-            <% } %>
-            <% if(smartKeyword.result.bnnrBotBtnNm2){ %>
-            <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-38" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl2 %>" type="button"
-                   class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn2 %>">
-                    <%= smartKeyword.result.bnnrBotBtnNm2 %>
-                </a>
-            </li>
-            <% } %>
-            <% if(smartKeyword.result.bnnrBotBtnNm3){ %>
-            <li class="category-type">
-                <a data-xt_eid="CMMA_A11_B4-39" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.result.bnnrBotBtnUrl3 %>" type="button"
-                   class="link search-element xtractor"  data-require-pay="<%= smartKeyword.result.bnnrBotBtnBillYn3 %>">
-                    <%= smartKeyword.result.bnnrBotBtnNm3 %>
-                </a>
-            </li>
-            <% } %>
-        </ul>
-    </div>
-    <% } %>
-</div>
-
-
 </div>
 <script type="text/x-handlebars-template" id="auto_complete_template">
     <li>
