@@ -11411,6 +11411,9 @@ a.bt-link-tx.underline.small {
 .on-off-list .line {
   border-bottom: 1px solid #e1e1e1 !important; }
 
+.on-off-list .last-line-top {
+  border-top: 1px solid #e1e1e1 !important; }
+
 .tabcon-title0 {
   position: relative;
   padding: 0 0 0.6875rem 0;
@@ -28539,6 +28542,9 @@ body.apphome {
 .on-off-list.new li {
   padding-top: 0.9375rem !important;
   font-size: 1rem; }
+
+.on-off-list.new li:last-child {
+  border: none; }
 
 .on-off-list.new .btn-switch {
   width: 3.25rem; }
