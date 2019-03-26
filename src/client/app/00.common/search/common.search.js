@@ -366,6 +366,7 @@ Tw.CommonSearch.prototype = {
     $('.keyword-list-base').insertAfter('.fe-header-wrap');
     this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
     this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
+    $(window).scrollTop(0);
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){

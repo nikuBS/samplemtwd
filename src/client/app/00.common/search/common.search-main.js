@@ -284,6 +284,7 @@ Tw.CommonSearchMain.prototype = {
     },this));
     this.$container.find('.search-content').attr('aria-hidden',true);
     $('.keyword-list-base').insertAfter('.searchbox-header');
+    $(window).scrollTop(0);
   },
   _showRequirePayPopup : function (evt) {
     var $target = $(evt.currentTarget);
