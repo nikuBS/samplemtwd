@@ -412,6 +412,11 @@ gulp.task('hbs-front', function () {
     .pipe(gulp.dest(dist + 'hbs'));
 });
 
+gulp.task('mp4', function () {
+  return gulp.src('src/client/web-contents/mp4/**/*')
+  .pipe(gulp.dest(dist + 'mp4'));
+});
+
 gulp.task('post-clean', function () {
   return gulp.src(dist + 'tmp')
     .pipe(clean());
@@ -448,7 +453,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);
