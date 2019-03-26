@@ -364,7 +364,7 @@ Tw.CommonSearch.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.latelylist-wrap').scroll($.proxy(function () {
+    $('.searchbox-lock').scroll($.proxy(function () {
       this.$inputElement.blur();
     },this));
     $('.keyword-list-base').insertAfter('.fe-header-wrap');
