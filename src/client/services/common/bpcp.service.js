@@ -1,13 +1,10 @@
-Tw.BpcpService = function(rootEl, pathUrl, isOnCloseBack) {
-  this.$container = rootEl;
-
+Tw.BpcpService = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
-
-  this._isOnCloseBack = isOnCloseBack;
-  this._pathUrl = pathUrl;
+  this._bpcpServiceId = null;
+  this._currentHistoryLength = 0;
   this._bindEvent();
 };
 
@@ -118,10 +115,20 @@ Tw.BpcpService.prototype = {
     return url && url.indexOf('BPCP:') !== -1;
   },
 
+  setData: function(rootEl, pathUrl, isOnCloseBack) {
+    this.$container = rootEl;
+    this._isOnCloseBack = isOnCloseBack || false;
+    this._pathUrl = pathUrl;
+    this._currentHistoryLength = history.length - 1;
+  },
+
   open: function(url, svcMgmtNum, eParam, event) {
-    var reqParams = {
-      bpcpServiceId: url.replace('BPCP:', '')
+    var bpcpServiceId = url.replace('BPCP:', ''),
+      reqParams = {
+      bpcpServiceId: bpcpServiceId
     };
+
+    this._bpcpServiceId = bpcpServiceId;
 
     if (!Tw.FormatHelper.isEmpty(svcMgmtNum)) {
       reqParams.svcMgmtNum = svcMgmtNum;

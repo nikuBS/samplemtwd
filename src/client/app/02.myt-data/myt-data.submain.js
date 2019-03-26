@@ -10,7 +10,8 @@ Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/myt-data/submain');
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/myt-data/submain');
   this._historyService = new Tw.HistoryService(this.$container);
   this.data = params.data;
   this._bpcpServiceId = this.data.bpcpServiceId;

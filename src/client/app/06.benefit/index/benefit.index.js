@@ -8,7 +8,8 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/benefit/submain/participation');
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/benefit/submain/participation');
   this._moreViewSvc = new Tw.MoreViewComponent();
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();

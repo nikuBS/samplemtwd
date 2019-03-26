@@ -24,6 +24,7 @@ Tw.Init.prototype = {
     Tw.Api = new Tw.ApiService();
     Tw.Error = new Tw.ErrorService();
     Tw.Tooltip = new Tw.TooltipService();
+    Tw.Bpcp = new Tw.BpcpService();
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;

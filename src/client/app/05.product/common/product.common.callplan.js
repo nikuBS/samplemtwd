@@ -12,7 +12,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._historyService.init();
 
   this._popupService = Tw.Popup;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/product/callplan?prod_id=' + prodId);
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/product/callplan?prod_id=' + prodId);
   this._tidLanding = new Tw.TidLandingComponent();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._apiService = Tw.Api;
