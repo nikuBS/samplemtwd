@@ -364,8 +364,10 @@ Tw.MenuComponent.prototype = {
     if ( !this._isLogin ) { // If it's not logged in
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
-      }, '', null, null, $.proxy(function () {
-        this._goOrReplace(e.currentTarget.value);
+      }, '', null, null, $.proxy(function (res) {
+        if (res.code !== Tw.API_CODE.CERT_CANCEL) {
+          this._goOrReplace(e.currentTarget.value);
+        }
       }, this));
     } else {
       this._goOrReplace(e.currentTarget.value);
