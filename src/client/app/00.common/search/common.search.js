@@ -391,6 +391,7 @@ Tw.CommonSearch.prototype = {
       this._popupService.close();
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
+      skt_landing.action.checkScroll.unLockScroll();
     },this));
   },
   _keywordListBaseClassCallback : function () {
