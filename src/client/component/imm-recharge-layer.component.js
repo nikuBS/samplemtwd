@@ -11,7 +11,8 @@ Tw.ImmediatelyRechargeLayer = function ($element, options) {
   this._popupService = Tw.Popup;
   this._options = options || {};
   // this._prodId = this._options.prodId;
-  this._bpcpService = new Tw.BpcpService(this.$container, '/myt-data/submain');
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(this.$container, '/myt-data/submain');
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
   this._tidLanding = new Tw.TidLandingComponent();

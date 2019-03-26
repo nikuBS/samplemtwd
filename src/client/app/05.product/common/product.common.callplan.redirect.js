@@ -9,7 +9,8 @@ Tw.ProductCommonCallplanRedirect = function(prodId, svcMgmtNum, redirectUrl) {
 
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
-  this._bpcpService = new Tw.BpcpService(null, '/product/callplan?prod_id=' + prodId, true);
+  this._bpcpService = Tw.Bpcp;
+  this._bpcpService.setData(null, '/product/callplan?prod_id=' + prodId, true);
   this._popupService = Tw.Popup;
 
   this._prodId = prodId;

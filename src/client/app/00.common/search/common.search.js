@@ -7,10 +7,10 @@
 Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._cdn = cdn;
   this.$container = rootEl;
-  this._bpcpService = new Tw.BpcpService(this.$container, nowUrl);
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._bpcpService = Tw.Bpcp;
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
@@ -33,6 +33,7 @@ Tw.CommonSearch.prototype = {
     this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
+    this._bpcpService.setData(this.$container, this._nowUrl);
     if(this._searchInfo.totalcount===0){
       return;
     }
