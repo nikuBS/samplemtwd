@@ -19,6 +19,10 @@ body.hidden {
   overflow-y: auto;
   overflow-x: hidden; }
 
+.noscroll {
+  overflow: hidden;
+  height: 100%; }
+
 .wrap {
   padding-bottom: 1.875rem; }
   .wrap > .container-wrap {
@@ -1097,14 +1101,6 @@ body.hidden {
     line-height: 19px; } }
 
 /* 공통 팝업페이지 구조 */
-.keyword-list-base {
-  widows: 100%;
-  height: 100%;
-  position: fixed;
-  top: 4.125rem;
-  left: 0;
-  overflow: hidden; }
-
 .popup-page {
   position: fixed;
   top: 0;
