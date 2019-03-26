@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 약정할인/기기상환 정보(MS_09)
  * FileName: myt-join.info.discount.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.04
+ * Summary: 약정정보, 기기상환 정보 출력 화면
  */
 Tw.MyTJoinInfoDiscount = function (rootEl, resData) {
   this.resData = resData;
@@ -57,6 +59,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
 
   },
   //--------------------------------------------------------------------------[EVENT]
+  // 상품 정보로 이동
   _productMove: function (e) {
     var $target = $(e.currentTarget);
     var prodId = $target.attr('data-id');
