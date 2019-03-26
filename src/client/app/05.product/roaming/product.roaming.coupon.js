@@ -4,7 +4,7 @@
  * Date: 2018.11.09
  */
 
-Tw.ProductRoamingCoupon = function(rootEl) {
+Tw.ProductRoamingCoupon = function(rootEl, bpcpServiceId) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -12,6 +12,7 @@ Tw.ProductRoamingCoupon = function(rootEl) {
   this._bpcpService = Tw.Bpcp;
   this._bpcpService.setData(this.$container, '/product/roaming/coupon');
   this._tidLanding = new Tw.TidLandingComponent();
+  this._bpcpServiceId = bpcpServiceId;
   this._bindEvent();
   this._init();
 };
@@ -26,7 +27,9 @@ Tw.ProductRoamingCoupon.prototype = {
   },
 
   _init: function(){
-    history.replaceState(null, document.title, location.origin + '/product/roaming/coupon');
+    if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
+      this._initBpcp();
+    }
   },
 
   _onViewclicked: function (state, event) {
@@ -38,6 +41,12 @@ Tw.ProductRoamingCoupon.prototype = {
 
     this._title = state === 'REGISTER' ? 'REGISTER' : 'BUY';
     this._bpcpService.open(url, null, null, event);
+    history.replaceState(null, document.title, location.origin + '/product/roaming/coupon?bpcpServiceId=' + url);
+  },
+
+  _initBpcp: function() {
+    this._bpcpService.open(this._bpcpServiceId);
+    history.replaceState(null, document.title, location.origin + '/product/roaming/coupon');
   }
 
 };
