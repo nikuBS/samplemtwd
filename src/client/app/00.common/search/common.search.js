@@ -282,7 +282,7 @@ Tw.CommonSearch.prototype = {
       );
     }
     if(this._bpcpService.isBpcp(linkUrl)){
-      this._bpcpService.open(linkUrl, null, null, linkEvt);
+      this._bpcpService.open(linkUrl, null, null);
     }else if(linkUrl.indexOf('Native:')>-1){
       if(linkUrl.indexOf('freeSMS')>-1){
         this._callFreeSMS($linkData);

@@ -40,7 +40,7 @@ Tw.ProductRoamingCoupon.prototype = {
     var url = Tw.OUTLINK.ROAMING_COUPON[state];
 
     this._title = state === 'REGISTER' ? 'REGISTER' : 'BUY';
-    this._bpcpService.open(url, null, null, event);
+    this._bpcpService.open(url, null, null);
     history.replaceState(null, document.title, location.origin + '/product/roaming/coupon?bpcpServiceId=' + url);
   },
 

@@ -320,7 +320,7 @@ Tw.ProductCommonCallplan.prototype = {
       return true;
     }
 
-    this._bpcpService.open(url, null, null, e);
+    this._bpcpService.open(url, null, null);
 
     e.preventDefault();
     e.stopPropagation();
