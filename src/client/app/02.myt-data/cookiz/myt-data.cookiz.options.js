@@ -57,10 +57,7 @@ Tw.MyTDataCookizOptions.prototype = {
 
   _getRequestGift: function (e) {
     // request Gift by SMS
-    this._onDataPesterDetail($(e.currentTarget));
-  },
-
-  _onDataPesterDetail: function ($target) {
+    var $target = $(e.currentTarget);
     if ( Tw.BrowserHelper.isApp() ) {
       this._popupService.openModalTypeA(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.TITLE,
@@ -72,10 +69,22 @@ Tw.MyTDataCookizOptions.prototype = {
         null,
         null,
         $target);
+    } else {
+      this._goAppInfo($target);
     }
-    else {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.TWORLD_TING);
-    }
+  },
+
+  _goAppInfo: function ($target) {
+    var isAndroid = Tw.BrowserHelper.isAndroid();
+    this._popupService.open({
+      'hbs': 'open_app_info',
+      'isAndroid': isAndroid,
+      'cdn': Tw.Environment.cdn
+    }, $.proxy(this._onOpenTworld, this), null, null, $target);
+  },
+
+  _onOpenTworld: function ($layer) {
+    new Tw.CommonShareAppInstallInfo($layer);
   },
 
   _pesterDetailConfirm: function () {

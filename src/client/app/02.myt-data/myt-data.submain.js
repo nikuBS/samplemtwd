@@ -579,7 +579,7 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   // 데이터 조르기
-  _onDataPesterDetail: function () {
+  _onDataPesterDetail: function (e) {
     if ( Tw.BrowserHelper.isApp() ) {
       //  2_A17 Alert 호출
       this._popupService.openModalTypeA(
@@ -595,8 +595,21 @@ Tw.MyTDataSubMain.prototype = {
       );
     }
     else {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.TWORLD_DATA_PRESENT);
+      this._goAppInfo(e);
     }
+  },
+
+  _goAppInfo: function (e) {
+    var isAndroid = Tw.BrowserHelper.isAndroid();
+    this._popupService.open({
+      'hbs': 'open_app_info',
+      'isAndroid': isAndroid,
+      'cdn': Tw.Environment.cdn
+    }, $.proxy(this._onOpenTworld, this), null, null, $(e.currentTarget));
+  },
+
+  _onOpenTworld: function ($layer) {
+    new Tw.CommonShareAppInstallInfo($layer);
   },
 
   _pesterDetailConfirm: function () {
