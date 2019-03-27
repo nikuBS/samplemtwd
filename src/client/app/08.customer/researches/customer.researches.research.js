@@ -37,18 +37,18 @@ Tw.CustomerResearch.prototype = {
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
       $btn = $root.find('.bt-blue1 button'),
       $etc = $root.find('.fe-etc-area'),
-      enable = !$root.data('is-essential');
+      enable = !$root.data('is-essential'),
+      $selected = $root.find('li.checked');
 
-    if ($root.find('li.checked').length > 0) {
-      this._nextIdx = this._currentIdx + 1;
+    this._nextIdx = this._getNextQuestion($selected); 
+    if ($selected.length > 0) {
       if (e.currentTarget.getAttribute('type') === 'radio') {
         switch (Number(next)) {
-          case 99: {
+          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.END: {
             $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.SUBMIT).switchClass('fe-go-next', 'fe-submit-research');
-            this._nextIdx = this._questionCount;
             break;
           }
-          case 0: {
+          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.NEXT: {
             if (this._nextIdx !== this._questionCount) {
               $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
             }
@@ -56,7 +56,6 @@ Tw.CustomerResearch.prototype = {
           }
           default: {
             $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
-            this._nextIdx = Number(next) - 1;
             break;
           }
         }
@@ -64,6 +63,7 @@ Tw.CustomerResearch.prototype = {
 
       enable = true;
     }
+
     if ($etc.length > 0) {
       if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {
         $etc.removeAttr('disabled');
@@ -74,6 +74,25 @@ Tw.CustomerResearch.prototype = {
     }
 
     this._setButtonStatus($btn, enable);
+  },
+
+  _getNextQuestion: function($selected) {
+    if ($selected.hasClass('radiobox')) {
+      var next_type = $selected.data('next-question') || 0;
+      switch (next_type) {
+        case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.END: {
+          return this._questionCount;
+        }
+        case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.NEXT: {
+          return this._currentIdx + 1;
+        }
+        default: {
+          return next_type - 1;
+        }
+      }
+    }
+
+    return this._currentIdx + 1;
   },
 
   _setButtonStatus: function($btn, enable) {
@@ -105,8 +124,9 @@ Tw.CustomerResearch.prototype = {
     }
 
     this._setAnswer();
-    this._setProgress(next);
+    var $selected = $next.find('li.checked');
     this._currentIdx = next;
+    this._setProgress($selected.length > 0 ? this._getNextQuestion($selected) : next);
     delete this._nextIdx;
     delete this.$maxLength;
   },
