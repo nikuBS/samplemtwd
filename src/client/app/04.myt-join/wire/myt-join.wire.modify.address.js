@@ -22,7 +22,7 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this.addressFormData = {
     bldTypNm: '',               // 건물유형명
 
-    zip: '',                    // 설치장소 변경후 우편번호
+    // zip: '',                    // 설치장소 변경후 우편번호
     basAddr: '',                // 설치장소 변경후 기본 주소
     dtlAddr: '',                // 설치장소 변경후 상세주소
 
@@ -314,7 +314,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     $('.fe-zip', this.$container).val(resp.zip);
     $('.fe-main-address', this.$container).val(resp.main);
     $('.fe-detail-address', this.$container).val(resp.detail);
-    this.addressFormData.zip     = resp.zip;
+    // this.addressFormData.zip     = resp.zip;    // 주의!! API에 없는 필드를 넣으면 오류남!!
     this.addressFormData.basAddr = resp.main;
     this.addressFormData.dtlAddr = resp.detail;
   },
