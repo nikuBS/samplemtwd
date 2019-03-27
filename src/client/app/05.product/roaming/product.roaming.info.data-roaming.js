@@ -1,6 +1,7 @@
 /**
+ * MenuName: T로밍 > 로밍안내 > SMS, 데이터 로밍 (RM_16_04)
  * FileName: product.roaming.info.data-roaming.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
@@ -12,10 +13,6 @@ Tw.ProductRoamingDataRoaming = function (rootEl) {
 
 Tw.ProductRoamingDataRoaming.prototype = {
   _bindInfoBtnEvents : function () {
-    this.$container.on('click', '#fe-rm-onepass', $.proxy(this._goRoamingOnePass, this));
-  },
-  _goRoamingOnePass : function () {
-
-
+    // this.$container.on('click', '#fe-rm-onepass', $.proxy(this._goRoamingOnePass, this));
   }
 };
