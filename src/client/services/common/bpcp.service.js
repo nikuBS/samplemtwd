@@ -90,6 +90,10 @@ Tw.BpcpService.prototype = {
     url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
+    if (Tw.BrowserHelper.isIos() && this._isReplace) {
+      return this._historyService.replaceURL(url);
+    }
+
     if (Tw.BrowserHelper.isIos()) {
       return this._historyService.goLoad(url);
     }
@@ -119,9 +123,10 @@ Tw.BpcpService.prototype = {
     return url && url.indexOf('BPCP:') !== -1;
   },
 
-  setData: function(rootEl, pathUrl, isOnCloseBack) {
+  setData: function(rootEl, pathUrl, isOnCloseBack, isReplace) {
     this.$container = rootEl;
     this._isOnCloseBack = isOnCloseBack || false;
+    this._isReplace = isReplace || false;
     this._pathUrl = pathUrl;
     this._currentHistoryLength = history.length - 1;
   },
