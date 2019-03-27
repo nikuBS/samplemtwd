@@ -94,8 +94,7 @@ Tw.TidLandingComponent.prototype = {
   },
   goLogout: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
-        .done($.proxy(this._successLogout, this));
+      this._nativeService.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(this._onNativeLogout, this));
     } else {
       this._historyService.goLoad('/common/tid/logout');
     }
@@ -177,17 +176,19 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
-  _successLogout: function (resp) {
-    Tw.Logger.info('[Logout Resp]', resp);
-    // if ( resp.code === NTV_CODE.CODE_00 ) {
-    // }
-    this._nativeService.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(this._onNativeLogout, this));
-  },
   _onNativeLogout: function (resp) {
     Tw.Logger.info('[Logout TID Resp]', resp, Tw.CommonHelper.getCookie('TWM'));
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
+        .done($.proxy(this._successLogout, this));
+    }
+  },
+  _successLogout: function (resp) {
+    Tw.Logger.info('[Logout Resp]', resp);
+    this._historyService.goLoad('/common/member/logout/complete');
     // if ( resp.code === NTV_CODE.CODE_00 ) {
     // }
-    this._historyService.goLoad('/common/member/logout/complete');
+
   },
   _successSetSession: function (target) {
     if ( target === location.pathname + location.search ) {
