@@ -1,7 +1,9 @@
 /**
+ * MenuName: 상품 > 결합상품 개별페이지 > 요금절약 예시보기
  * FileName: benefit.submain.combination-preview.info.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.11.23
+ * Summary: 요금절약 예시보기
  */
 
 Tw.BenefitSubmainCombinationPreviewInfo = function (rootEl) {
@@ -32,12 +34,22 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
     }
   },
 
+  /**
+   * 탭 버튼 클릭 시 호출
+   * @param e
+   * @private
+   */
   _onClickTabHeader: function(e) {
     e.preventDefault();
     var href = $(e.currentTarget).attr('href');
     this._historyService.replaceURL(href);
   },
 
+  /**
+   * hash 변경 시 호출
+   * @param hash
+   * @private
+   */
   _onHashChange: function (hash) {
     var tabId = 'tab1';
     if ( hash.raw && hash.raw === '2' ) {
@@ -46,6 +58,10 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
     this._showTab(tabId);
   },
 
+  /**
+   * 진입시 hash에 해당하는 탭 노출
+   * @private
+   */
   _initTab: function() {
     var hash = this._historyService.getHash();
     var tabId = 'tab1';
@@ -55,6 +71,11 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
     this._showTab(tabId);
   },
 
+  /**
+   * tabId에 따른 탭 노출
+   * @param tabId
+   * @private
+   */
   _showTab: function(tabId) {
     this._$tabHeaders.attr('aria-selected', 'false');
     this._$tabHeaders.filter('#'+tabId).attr('aria-selected', 'true');
