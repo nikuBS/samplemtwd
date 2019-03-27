@@ -62,7 +62,7 @@ Tw.CommonMemberLogin.prototype = {
     }
   },
   _successSetSession: function (target) {
-    if ( target.indexOf(location.pathname) !== -1 ) {
+    if ( target === location.pathname + location.search ) {
       this._historyService.reload();
     } else {
       this._historyService.replaceURL(target);

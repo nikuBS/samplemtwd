@@ -32,7 +32,7 @@ Tw.BpcpService.prototype = {
 
     // BPCP 팝업 닫고 로그인 호출
     if (data.indexOf('goLogin:') !== -1) {
-      this._tidLanding.goLogin(location.origin + this._pathUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
+      this._tidLanding.goLogin(this._pathUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
     }
 
     // BPCP 에서 외부 팝업창 호출하고자 할떄
@@ -48,7 +48,7 @@ Tw.BpcpService.prototype = {
 
   _responseBPCP: function(event, resp) {
     if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(location.origin + this._pathUrl);
+      return this._tidLanding.goLogin(this._pathUrl + (this._pathUrl.indexOf('?') === -1 ? '?' : '&') + 'bpcpServiceId=' + this._bpcpServiceId);
     }
 
     if (resp.code === 'BFF0504') {

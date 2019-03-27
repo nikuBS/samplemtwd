@@ -331,7 +331,7 @@ Tw.ProductCommonCallplan.prototype = {
       var targetUrl = location.origin + url + '?prod_id=' + this._prodId;
 
       if (this._bpcpService.isBpcp(url)) {
-        targetUrl = location.origin + '/product/callplan?prod_id=' + this._prodId + '&bpcpServiceId=' + url.replace('BPCP:', '');
+        targetUrl = '/product/callplan?prod_id=' + this._prodId + '&bpcpServiceId=' + url.replace('BPCP:', '');
       }
 
       return this._tidLanding.goLogin(targetUrl);
@@ -563,7 +563,7 @@ Tw.ProductCommonCallplan.prototype = {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(function(resp) {
         if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-          return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
+          return this._tidLanding.goLogin('/product/callplan?prod_id=' + this._prodId);
         }
 
         if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {

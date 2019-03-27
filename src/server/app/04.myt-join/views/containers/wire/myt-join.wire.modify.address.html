@@ -50,19 +50,24 @@
                         <h3 class="form-title">변경 설치장소</h3>
                         <div class="form-box">
                             <div class="inputbox bt-add">
-                                    <span class="input">
-                                        <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="">
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
+                                <span class="input">
+                                    <input type="text" class="fe-zip" title="우편번호" disabled/>
+                                </span>
                                 <span class="bt-box">
-                                        <button type="button" id="btnPostSearch">우편번호 검색</button>
-                                    </span>
+                                    <button type="button" id="btnPostSearch">우편번호 검색</button>
+                                </span>
+
                             </div>
                             <div class="inputbox mt10">
-                                    <span class="input">
-                                        <input class="fe-detail-address" type="text" title="" value="" placeholder="상세주소 입력">
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
+                                <span class="input">
+                                    <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="" disabled>
+                                </span>
+                            </div>
+                            <div class="inputbox mt10">
+                                <span class="input">
+                                    <input class="fe-detail-address" type="text" title="" value="" placeholder="상세주소 입력">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
                             </div>
                             <span class="error-txt" style="display: none;" id="fe-err-no-location" aria-hidden="true">변경 설치 장소를 입력해 주세요.</span>
                         </div>
@@ -133,13 +138,13 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
-                        <li><button id="MS_04_04_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">서비스 제한 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_03" type="button" class="tip-view-btn" aria-haspopup="true">설치장소 변경 접수 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_04" type="button" class="tip-view-btn" aria-haspopup="true">서비스 불가지역 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_05" type="button" class="tip-view-btn" aria-haspopup="true">추가비용 <span class="tip-view">TIP</span></button></li>
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button id="MS_04_04_tip_01" type="button" class="btn-tip" aria-haspopup="true">서비스 제한 <i class="icon-badge-tip"><span class="blind">서비스 제한 tip</span></i></button></li>
+                        <li><button id="MS_04_04_tip_03" type="button" class="btn-tip" aria-haspopup="true">설치장소 변경 접수 <i class="icon-badge-tip"><span class="blind">설치장소 변경 접수 tip</span></i></button></li>
+                        <li><button id="MS_04_04_tip_04" type="button" class="btn-tip" aria-haspopup="true">서비스 불가지역 <i class="icon-badge-tip"><span class="blind">서비스 불가지역 tip</span></i></button></li>
+                        <li><button id="MS_04_04_tip_05" type="button" class="btn-tip" aria-haspopup="true">추가비용 <i class="icon-badge-tip"><span class="blind">추가비용 tip</span></i></button></li>
                         <!--<li>서비스 제한 <button id="MS_04_04_tip_01" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>설치장소 변경 접수 <button id="MS_04_04_tip_03" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>서비스 불가지역 <button id="MS_04_04_tip_04" type="button" class="tip-view">TIP</button></li>-->
