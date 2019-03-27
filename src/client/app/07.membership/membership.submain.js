@@ -120,30 +120,22 @@ Tw.MembershipSubmain.prototype = {
   /**
    * 혜택바로가기 > T Day
    */
-  _selectTday: function(e) {
-    if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
-          $.proxy(this._goTday, this),
-          $.proxy(function () {
-            this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
-    } else {
-      this._goTday();
-    }
+  _selectTday: function (e) {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+      $.proxy(this._goTday, this),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
    * 혜택바로가기 > 초콜릿
    */
   _selectChocolate: function (e) {
-    if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
-          $.proxy(this._goChocolate, this),
-          $.proxy(function () {
-            this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
-    } else {
-      this._goChocolate();
-    }
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+      $.proxy(this._goChocolate, this),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
    * T Day 링크 이동
