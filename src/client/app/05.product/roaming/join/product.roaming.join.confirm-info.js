@@ -397,11 +397,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       RM_11_01_01_02_tip_03_33: {
         tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
-        target : ['NA00003196']
+        target : ['NA00003196','NA00005049','NA00006486']
       },
       RM_11_01_01_02_tip_03_34: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
-        target : ['NA00003196']
+        target : ['NA00003196','NA00004088','NA00004833','NA00005049','NA00005047','NA00005048','NA00005501','NA00005502']
       },
       TC000032: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
