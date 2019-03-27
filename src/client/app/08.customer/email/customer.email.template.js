@@ -103,6 +103,8 @@ Tw.CustomerEmailTemplate.prototype = {
     $('.fe-service-register', this.$container).removeClass('none').attr('aria-hidden', false).prop('disabled', true);
     $('.fe-quality-register', this.$container).addClass('none').attr('aria-hidden', true);
     this.uploadObj.initFiles();
+
+    new Tw.InputFocusService(this.$container, $('.bt-fixed-area button', this.$container)); // 이동 버튼으로 다음 입력으로 움직이도록 
   },
 
   _changeQualityTemplate: function (e, opt) {
@@ -157,6 +159,8 @@ Tw.CustomerEmailTemplate.prototype = {
     $('.fe-service-register', this.$container).addClass('none').attr('aria-hidden', true);
     $('.fe-quality-register', this.$container).removeClass('none').attr('aria-hidden', false).prop('disabled', true);
     this.uploadObj.initFiles();
+
+    new Tw.InputFocusService(this.$container, $('.bt-fixed-area button', this.$container)); // 이동 버튼으로 다음 입력으로 움직이도록 
     
   },
 
