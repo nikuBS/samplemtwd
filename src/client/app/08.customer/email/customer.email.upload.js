@@ -277,7 +277,6 @@ Tw.CustomerEmailUpload.prototype = {
   },
   
   
-
   // 
   _uploadSuccess: function (callback, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
@@ -286,81 +285,6 @@ Tw.CustomerEmailUpload.prototype = {
     if (typeof callback === 'function') {
       return callback(res);
     }
-  },
-
-  // 파일 올리기
-  _uploadFile: function (callback) {
-    if ( this._isLowerVersionAndroid() ) {
-      this._successUploadFile();
-    } else {
-      var uploadQueue = [];
-
-      var fnMakeUploadForm = function (file) {
-        var formData = new FormData();
-        formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
-        formData.append('file', file);
-
-        uploadQueue.push(this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData));
-      };
-
-      this.uploadFiles.map($.proxy(fnMakeUploadForm, this));
-
-      var fnSuccessUpload = function () {
-        var fileList = Array.from(arguments);
-        var res = { code: Tw.API_CODE.CODE_00, result: [] };
-
-        if ( fileList.indexOf('success') !== -1 ) {
-          res.result = res.result.concat(fileList[0].result);
-        } else {
-          for ( var i = 0; i < fileList.length; i++ ) {
-            res.result = res.result.concat(fileList[i][0].result);
-          }
-        }
-
-        if (typeof callback === 'function') {
-          callback(res);
-        }
-        // this._successUploadFile(res);
-      };
-
-      if ( uploadQueue.length === 1 ) {
-        uploadQueue[0].done($.proxy(fnSuccessUpload, this));
-      } else {
-        $.when.apply($, uploadQueue).done($.proxy(fnSuccessUpload, this));
-      }
-    }
-  },
-
-  // 서버 이미지 올리기 완료
-  _successUploadFile: function (res) {
-
-    if ( this._isLowerVersionAndroid() || (res && res.code === Tw.API_CODE.CODE_00) ) {
-      
-      if ( this._getCurrentType() === 'service' ) { 
-        // 파일 변수 저장
-        this.serviceUploadFiles = this.uploadFiles.slice(0);
-        // 템플릿 적용
-        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ 
-          files: this._isLowerVersionAndroid() ? this.serviceUploadFiles : res.result
-        }));
-        // 버튼 비활성화 표기
-        this._setFileBtnExpress($('.fe-upload-file-service'), this.uploadFiles.length);
-      } else {
-        // 파일 변수 저장
-        this.qualityUploadFiles = this.uploadFiles.slice(0);
-        // 템플릿 적용
-        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ 
-          files: this._isLowerVersionAndroid() ? this.qualityUploadFiles : res.result
-        }));
-        // 버튼 비활성화 표기
-        this._setFileBtnExpress($('.fe-upload-file-quality'), this.uploadFiles.length);
-      }
-
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-
-    this._popupService.close();
   },
   
   // 파일첨부하기 버튼 활성화 / 비활성화 
