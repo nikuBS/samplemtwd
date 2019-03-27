@@ -364,20 +364,13 @@ Tw.CommonSearch.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.searchbox-lock').scroll($.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     $('.keyword-list-base').insertAfter('.fe-header-wrap');
     this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
     this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
     $(window).scrollTop(0);
-    setTimeout($.proxy(function(){
-      $(window).on('scroll',$.proxy(function () {
-        if(this._historyService.getHash()==='#input_P'){
-          this.$inputElement.blur();
-        }
-      },this));
-    },this),300);
+    this.$keywordListBase.on('touchstart',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -405,7 +398,7 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
       skt_landing.action.checkScroll.unLockScroll();
-      $(window).off('scroll');
+      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {

@@ -214,7 +214,7 @@ Tw.CommonSearchMain.prototype = {
       this.$container.find('.search-content').attr('aria-hidden',false);
       this.$inputElement.blur();
       skt_landing.action.checkScroll.unLockScroll();
-      $(window).off('scroll');
+      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {
@@ -277,19 +277,12 @@ Tw.CommonSearchMain.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.searchbox-lock').scroll($.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     this.$container.find('.search-content').attr('aria-hidden',true);
     $('.keyword-list-base').insertAfter('.searchbox-header');
     $(window).scrollTop(0);
-    setTimeout($.proxy(function(){
-      $(window).on('scroll',$.proxy(function () {
-        if(this._historyService.getHash()==='#input_P'){
-          this.$inputElement.blur();
-        }
-      },this));
-    },this),300);
+    this.$keywordListBase.on('touchstart',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _showRequirePayPopup : function (evt) {
     var $target = $(evt.currentTarget);
