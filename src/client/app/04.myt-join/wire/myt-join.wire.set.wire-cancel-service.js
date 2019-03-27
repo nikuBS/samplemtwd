@@ -74,7 +74,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
    */
   _cachedElement: function () {
 
-    this.infoLi= $('[data-target="infoLi"]'); // 안내사항 확인
+    this.infoLi= $('[data-target="infoLi"], .fe-btn-show-guide'); // 안내사항 확인
     this.productLi= $('[data-target="productLi"]'); // 해지신청상품
     this.hpAndTelType= $('[data-target="hpAndTelType"]');
     this.select_Termination_input= $('[data-target="select_Termination_input"]');
@@ -198,10 +198,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
    * 안내사항 확인 클릭시 -> check되어 있으면 check해제 미선택시에는 안내사항 팝업
    * 안내사항 팝업창에서 확인클릭시 -> check상태로 변경
    */
-  $infoLiEvt: function() {
+  $infoLiEvt: function(event) {
     var tempBol = this.infoLi.find('input[type=checkbox]').is(':checked'); // 체크 상태 여부
+    var isArrowBtn = $(event.currentTarget).hasClass('fe-btn-show-guide');
 
-    if(!tempBol){
+    if(!tempBol || isArrowBtn){
       this._popupService.open(
         { hbs: 'MS_04_08_L01' },
         $.proxy(function ($root) {
