@@ -396,6 +396,14 @@ Tw.MyTDataPrepaidVoice.prototype = {
       pwd: this.$cardPwd.val()
     };
 
+    if ($('.fe-sms').is(':checked')) {
+      htParams.smsYn = 'Y';
+    }
+
+    if ($('.fe-email').is(':checked')) {
+      htParams.emailYn = 'Y';
+    }
+
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_06_0053, htParams)
       .done($.proxy(this._onCompleteRechargeByCreditCard, this, $(e.currentTarget)))

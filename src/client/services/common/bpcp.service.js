@@ -48,7 +48,7 @@ Tw.BpcpService.prototype = {
 
   _responseBPCP: function(event, resp) {
     if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(this._pathUrl);
+      return this._tidLanding.goLogin(this._pathUrl + (this._pathUrl.indexOf('?') === -1 ? '?' : '&') + 'bpcpServiceId=' + this._bpcpServiceId);
     }
 
     if (resp.code === 'BFF0504') {
