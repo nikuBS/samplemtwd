@@ -253,7 +253,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * 장기일시정지 버튼 클릭시
    *  1. Node server로 파일 전송(Tw.NODE_CMD.UPLOAD_FILE)
    *  2. USCAN 전송(BFF_01_0046)
-   *  3. 장기일시정지 신청(BFF_01_0046)
+   *  3. 장기일시정지 신청(BFF_05_0197)
    * @private
    */
   _onClickSuspend: function (event) {
@@ -299,7 +299,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
 
     // 추가연락처
     if ( !_.isEmpty(this.$inputTel.val()) ) {
-      option.cntcNum = this.$inputTel.val();
+      option.cntcNum = this.$inputTel.val().replace(/-/gi, '' );
       option.cntcNumRelNm = this.$btRelation.val();
     }
 
