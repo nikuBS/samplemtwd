@@ -26,10 +26,10 @@ Tw.MyTFareBillBankList.prototype = {
     }
 
     if (Tw.FormatHelper.isEmpty(this.$bankList)) {
-      this._getBankList();
+      this._getBankList(); // 저장된 은행리스트가 없으면 API 호출 (최초 1회)
     }
     else {
-      this._openBank();
+      this._openBank(); // 은행리스트가 저장되어 있으면 바로 open
     }
   },
   _onOpenList: function ($layer) {
@@ -37,8 +37,8 @@ Tw.MyTFareBillBankList.prototype = {
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input#' + $id).attr('checked', 'checked');
     }
-    $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this));
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
+    $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this)); // 선택 시 이벤트
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this)); // 닫기 이벤트
   },
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
@@ -62,7 +62,7 @@ Tw.MyTFareBillBankList.prototype = {
     this._popupService.close();
   },
   _getBankList: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
+    this._apiService.request(Tw.API_CMD.BFF_07_0022, {}) // 은행리스트 가져오는 API 호출
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },
@@ -76,7 +76,7 @@ Tw.MyTFareBillBankList.prototype = {
   _getBankListFail: function (err) {
     Tw.Error(err.code, err.msg).pop(null, this.$currentTarget);
   },
-  _setBankList: function (bankList, isData) {
+  _setBankList: function (bankList, isData) { // 조회된 은행리스트를 actionsheet format에 맞춰 변수에 저장
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
@@ -95,6 +95,7 @@ Tw.MyTFareBillBankList.prototype = {
     }
   },
   _openBank: function () {
+    // 은행리스트를 actionsheet로 열기
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',

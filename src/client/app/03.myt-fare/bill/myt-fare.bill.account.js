@@ -8,15 +8,15 @@
 Tw.MyTFareBillAccount = function (rootEl) {
   this.$container = rootEl;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
-  this._bankList = new Tw.MyTFareBillBankList(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
+  this._bankList = new Tw.MyTFareBillBankList(rootEl); // 은행리스트 가져오는 공통 컴포넌트
+  this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
-  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay')); // validation check
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
 
   this._init();
 };
@@ -25,7 +25,7 @@ Tw.MyTFareBillAccount.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
-    this._checkIsAuto();
+    this._checkIsAuto(); // 자동납부 사용 여부 확인
   },
   _initVariables: function () {
     this.$selectBank = this.$container.find('.fe-select-bank');
@@ -42,12 +42,12 @@ Tw.MyTFareBillAccount.prototype = {
     this._isPaySuccess = false;
   },
   _bindEvent: function () {
-    this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
-    this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this));
-    this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
-    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
+    this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
+    this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this)); // 하단버튼 활성화 체크
+    this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this)); // 환불계좌 체크박스
+    this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this)); // x버튼 클릭
+    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this)); // 납부확인
   },
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
@@ -58,14 +58,15 @@ Tw.MyTFareBillAccount.prototype = {
     var $target = $(event.currentTarget);
     var $bankTarget = null;
     var $numberTarget = null;
-    var $isAccountInfo = $target.parent().hasClass('fe-account-info');
+    var $isAccountInfo = $target.parent().hasClass('fe-account-info'); // 계좌번호
 
+    // target setting
     if ($isAccountInfo) {
-      $bankTarget = this.$selectBank;
-      $numberTarget = this.$accountNumber;
+      $bankTarget = this.$selectBank; // 납부할 은행
+      $numberTarget = this.$accountNumber; // 납부할 계좌번호
     } else {
-      $bankTarget = this.$refundBank;
-      $numberTarget = this.$refundNumber;
+      $bankTarget = this.$refundBank; // 환불받을 은행
+      $numberTarget = this.$refundNumber; // 환불계좌번호
     }
 
     if ($target.hasClass('fe-manual-input')) {
@@ -91,38 +92,40 @@ Tw.MyTFareBillAccount.prototype = {
     }
   },
   _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this)); // 은행리스트 가져오는 공통 컴포넌트 호출
   },
   _checkIsAbled: function () {
+    // 하단 버튼 활성화 (입력필드 모두 채워졌을 경우)
     if (this.$accountNumber.attr('disabled') === 'disabled' && this.$refundNumber.attr('disabled') === 'disabled') {
       this.$payBtn.removeAttr('disabled');
     } else {
-      this._validationService.checkIsAbled();
+      this._validationService.checkIsAbled(); // 공통 validation service 호출
     }
   },
   _onClose: function () {
-    this._backAlert.onClose();
+    this._backAlert.onClose(); // x버튼 클릭 시 공통 alert 노출
   },
   _checkPay: function (e) {
+    // 모든 유효성 검증 후 납부내역 확인 풀팝업 load
     if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
           'title': Tw.MYT_FARE_PAYMENT_NAME.ACCOUNT,
           'unit': Tw.CURRENCY_UNIT.WON
         },
-        $.proxy(this._openCheckPay, this),
-        $.proxy(this._afterPaySuccess, this),
+        $.proxy(this._openCheckPay, this), // open callback
+        $.proxy(this._afterPaySuccess, this), // close callback
         'check-pay',
         $(e.currentTarget)
       );
     }
   },
   _openCheckPay: function ($layer) {
-    this._setData($layer);
-    this._paymentCommon.getListData($layer);
+    this._setData($layer); // 바닥페이지에서 넘어온 데이터 셋팅
+    this._paymentCommon.getListData($layer); // 납부내역 확인 시 공통 컴포넌트의 리스트 호출
 
-    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this)); // 닫기버튼 클릭 시 alert 노출
+    $layer.on('click', '.fe-pay', $.proxy(this._pay, this)); // 납부하기
   },
   _setData: function ($layer) {
     var data = this._getData();
@@ -166,9 +169,9 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
-      this._historyService.replaceURL('/myt-fare/bill/pay-complete');
+      this._historyService.replaceURL('/myt-fare/bill/pay-complete'); // 완료 페이지로 이동
     } else if (this._isPayFail) {
-      Tw.Error(this._err.code, this._err.msg).pop();
+      Tw.Error(this._err.code, this._err.msg).pop(); // 에러 시 공통팝업 호출
     }
   },
   _checkClose: function (e) {
@@ -194,6 +197,7 @@ Tw.MyTFareBillAccount.prototype = {
       .fail($.proxy(this._payFail, this, $target));
   },
   _makeRequestData: function () {
+    // 요청 파라미터 json data 만들기
     var reqData = {
       payOvrAutoYn: this._refundAutoYn,
       payOvrBankCd: this.$container.find('.fe-payment-refund').attr('id'),

@@ -14,9 +14,9 @@ Tw.MyTFareBillSms = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
   this._init();
 };

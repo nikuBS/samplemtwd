@@ -8,11 +8,11 @@
 Tw.MyTFareBillPoint = function (rootEl) {
   this.$container = rootEl;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl); // 납부할 회선 선택하는 공통 컴포넌트
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl, true);
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
-  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay'));
+  this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay')); // validation check
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -51,11 +51,13 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
   _openGetPoint: function (e) {
-    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e);
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회 공통 컴포넌트 호출
   },
   _setPointInfo: function (result) {
-    this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));
-    this.$container.find('.fe-t-point').attr('id', result.availTPt).text(Tw.FormatHelper.addComma(result.availTPt.toString()));
+    this.$container.find('.fe-cashbag-point').attr('id', result.availPt)
+      .text(Tw.FormatHelper.addComma(result.availPt.toString())); // 조회 후 cashbag point
+    this.$container.find('.fe-t-point').attr('id', result.availTPt)
+      .text(Tw.FormatHelper.addComma(result.availTPt.toString())); // 조회 후 tpoint
     this._pointCardNumber = result.ocbCcno;
 
     this.$getPointBtn.hide();
@@ -106,6 +108,7 @@ Tw.MyTFareBillPoint.prototype = {
     this._backAlert.onClose();
   },
   _checkPay: function () {
+    // 모든 유효성 검증 후 납부내역 확인 풀팝업 load
     if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
@@ -153,16 +156,16 @@ Tw.MyTFareBillPoint.prototype = {
 
     if (!this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$pointBox.find(className).attr('id'), 10))) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27); // 보유 포인트 이상 입력
     } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8); // 1,000 포인트 이상 입력
     } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT); // 10포인트 단위로 입력
     } else {
       isValid = true;
     }
 
-    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid); // 에러메시지
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
@@ -191,6 +194,7 @@ Tw.MyTFareBillPoint.prototype = {
       .fail($.proxy(this._payFail, this, $target));
   },
   _makeRequestData: function () {
+    // 요청 파라미터
     var reqData = {
       ocbCcno: this._pointCardNumber,
       ptClCd: this.$container.find('.fe-payment-option-name').attr('data-code'),
