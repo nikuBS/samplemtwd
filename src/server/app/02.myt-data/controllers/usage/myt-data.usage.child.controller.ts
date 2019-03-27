@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 데이터/통화 > 자녀 실시간 잔여량
  * FileName: myt-data.usage.child.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.09.18
+ * Summary: 자녀 실시간 잔여량 조회
  */
 
 import { NextFunction, Request, Response } from 'express';

@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 데이터/통화 > 실시간 잔여량 > 통합공유데이터
  * FileName: myt-data.usage.total-sharing-data.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 통합공유데이터 조회(T가족공유 데이터, T끼리 데이터 선물하기, 데이터 함께쓰기)
  */
 
 import { NextFunction, Request, Response } from 'express';

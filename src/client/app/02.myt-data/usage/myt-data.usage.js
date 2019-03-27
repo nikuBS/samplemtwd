@@ -1,3 +1,10 @@
+/**
+ * MenuName: 나의 데이터/통화 > 실시간 잔여량
+ * FileName: myt-data.usage.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.11.28
+ * Summary: 실시간 잔여량 및 부가 서비스 조회
+ */
 Tw.MyTDataUsage = function (rootEl, options) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -11,56 +18,6 @@ Tw.MyTDataUsage = function (rootEl, options) {
   this._requestServices();
   this._init();
 
-  // 클라이언트 파일 변경 테스트 코드
-  // this.$container.find('.fe-test').css({backgroundColor: 'red'});
-
-
-  // this._resultHandlerTRoamingShare({
-  //   dispRemainDay : '4000',
-  //   roamProdNm : 'T로밍 함께쓰기 3GB',
-  //   dataSharing : {
-  //     data : {
-  //       total : '3000000',
-  //       remained : '2000000',
-  //       used : '1000000'
-  //     },
-  //     childList : [{
-  //       role : 'Y',
-  //       svcNum : '01012**56**',
-  //       svcMgmtNum : '722xxxxxx',
-  //       used : '300000',
-  //       auditDtm : '20180523'
-  //     }]
-  //   }
-  // });
-
-
-  // this._resultHandler24Data50per({
-  //   'prodId': 'NA00003458',
-  //   'prodNm': '올인원34 한도관리',
-  //   'skipId': 'DP',
-  //   'skipNm': '충전금액 20,000원',
-  //   'unlimit': '',
-  //   'total': '20000',
-  //   'used': '14551',
-  //   'remained': '5449',
-  //   'unit': '110',
-  //   'rgstDtm': '20180728030101',
-  //   'exprDtm': '20180728235959'
-  // });
-
-  // this._resultHandlerBandDataShare({
-  //   data: {
-  //     used: '300000'
-  //   },
-  //   'childList': [{
-  //     'svcMgmtNum': '722xxxxxx',
-  //     'svcNum': '01012345678',
-  //     'feeProdId': 'NA000xxx',
-  //     'feeProdNm': 'LTE함께쓰기',
-  //     'auditDtm': '20141010'
-  //   }]
-  // });
 };
 
 Tw.MyTDataUsage.prototype = {
@@ -70,7 +27,9 @@ Tw.MyTDataUsage.prototype = {
   },
 
   _init: function () {
-    if ( _.size(this._$sharedDataUsed) ) { // T/O플랜아님 && 기본제공데이터 존재
+    // [DV001-6336] 기본제공 데이터 존재 && 가족모아데이터가 가능한 상품(T/O플랜 등)이 아닌 경우
+    // T끼리데이터선물 + 데이터 함께쓰기 사용량을 합쳐서 통합공유 데이터 영역의 사용량에 표시(참고: 잔여량은 기본제공데이터의 잔여량)
+    if ( _.size(this._$sharedDataUsed) ) {
       this._setSharedDataUsed();
     }
   },
@@ -136,6 +95,12 @@ Tw.MyTDataUsage.prototype = {
 
   },
 
+  /**
+   * usageDataResp 데이터중 prodId에 해당하는 데이터 반환
+   * @param usageDataResp
+   * @param prodId
+   * @return object
+   */
   _getDailyUsed: function (usageDataResp, prodId) {
     var datas = [];
     if ( _.size(usageDataResp.gnrlData) ) {
@@ -150,6 +115,11 @@ Tw.MyTDataUsage.prototype = {
     });
   },
 
+
+  /**
+   * 당일사용량 조회 데이터 표시
+   * @param event
+   */
   _setDailyUsed: function (event) {
     this._apiService.request(Tw.SESSION_CMD.BFF_05_0001)
       .done($.proxy(function (resp) {

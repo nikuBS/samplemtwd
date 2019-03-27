@@ -1,7 +1,9 @@
 /**
+ * MenuName: T멤버십 > 제휴브랜드
  * FileName: membership.benefit.brand.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 12. 21.
+ * Summary: 제휴브랜드 조회
  */
 
 Tw.MembershipBenefitBrand = function (rootEl, options) {
@@ -76,7 +78,8 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$container.on('keyup', '.fe-input-co-ptnr-nm', $.proxy(this._onKeyupInputCoPtnrNm, this));
     // this.$container.on('click', '.fe-orders button', $.proxy(this._onClickBtnOrder, this));
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._onInitComplete, this));
-    $(window).bind("pageshow", function(event) {
+    // 사파리 브라우저에서 뒤로가기시 새로고침
+    $(window).bind('pageshow', function(event) {
       if (event.originalEvent.persisted) {
         window.location.reload();
       }
@@ -90,6 +93,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this._isLogin = JSON.parse(this._options.isLogin);
     this._noMembership = JSON.parse(this._options.noMembership);
 
+    // 로그인 && 멤버십있는 경우 "내 등급" 추가
     if ( this._isLogin && !this._noMembership) {
       this._gradeCd[0].list.push({
         value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.M, attr: 'sub-tab-cd="M"', subTabCd: 'M'
@@ -104,6 +108,10 @@ Tw.MembershipBenefitBrand.prototype = {
     this._setScrollLeft(this._reqOptions.cateCd);
   },
 
+  /**
+   * 전체 카테고리 레이어 토글시 특정 엘리먼트 aria-hidden처리 - 접근성 대응
+   * @private
+   */
   _setAreaHiddenAttr: function(type) {
     var attr = {
       hidden: {
@@ -118,6 +126,11 @@ Tw.MembershipBenefitBrand.prototype = {
     $('.skip_navi, .content-wrap, .header-wrap:last, .gnb-wrap').attr(attr[type]);
   },
 
+  /**
+   * 전체 카테고리 레이어 토글
+   * @param open
+   * @private
+   */
   _toggleCategoryLayer: function (open) {
     if ( open ) {
       this.$contLayer.show();
@@ -139,6 +152,10 @@ Tw.MembershipBenefitBrand.prototype = {
     }
   },
 
+  /**
+   * 등급 세팅
+   * @private
+   */
   _setGrade: function () {
     var self = this;
     if ( this._reqOptions.cateCd === this._CATE_CD.ALL ) {
@@ -160,6 +177,11 @@ Tw.MembershipBenefitBrand.prototype = {
     }
   },
 
+  /**
+   * 카테고리 선택시 호출
+   * @param cateCd
+   * @private
+   */
   _selectCategory: function (cateCd) {
     var option = {
       pageNo: 1,
@@ -174,6 +196,11 @@ Tw.MembershipBenefitBrand.prototype = {
     this._reqBrandList(option);
   },
 
+  /**
+   * 제휴브랜드 목록 조회
+   * @param options
+   * @private
+   */
   _reqBrandList: function (options) {
     if ( Tw.FormatHelper.isEmpty(options.coPtnrNm) ) {
       delete this._reqOptions.coPtnrNm;
@@ -183,6 +210,12 @@ Tw.MembershipBenefitBrand.prototype = {
       .fail($.proxy(this._onFailReq, this));
   },
 
+  /**
+   * 제휴브랜드 목록 조회 성공
+   * @param options
+   * @param resp
+   * @private
+   */
   _onDoneReqBrandList: function (options, resp) {
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       this._popupService.openAlert(resp.msg, resp.code);
@@ -204,10 +237,20 @@ Tw.MembershipBenefitBrand.prototype = {
     // this._setOrder();
   },
 
+  /**
+   * 제휴브랜드 목록 조회 실패
+   * @param err
+   * @private
+   */
   _onFailReq: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
 
+  /**
+   * 더보기 버튼 세팅
+   * @param totalCnt
+   * @private
+   */
   _setBtnMore: function (totalCnt) {
     if ( parseInt(totalCnt, 10) > this._reqOptions.pageSize * this._reqOptions.pageNo ) {
       this.$btnMore.show();
@@ -216,6 +259,10 @@ Tw.MembershipBenefitBrand.prototype = {
     }
   },
 
+  /**
+   * 카테고리 세팅
+   * @private
+   */
   _setCategory: function () {
     var $buttons = this.$categoryList.find('button');
     $buttons.removeClass('on');
@@ -224,6 +271,10 @@ Tw.MembershipBenefitBrand.prototype = {
     $buttons.filter('[cate-cd="' + this._reqOptions.cateCd + '"]').attr('aria-selected', 'true');
   },
 
+  /**
+   * 젠체 카테고리 레이어 세팅
+   * @private
+   */
   _setCategoryInLayer: function () {
     var $btns = this.$categoryListInLayer.find('button');
     $btns.removeClass('checked');
@@ -233,15 +284,23 @@ Tw.MembershipBenefitBrand.prototype = {
     $selectedBtn.addClass('checked');
     $selectedBtn.attr('aria-selected', true);
     $selectedBtn.css({color: '#178BCE', fontWeight: '700'});
-
   },
 
+  /**
+   * 검색 키워드 세팅
+   * @private
+   */
   _setKeywords: function () {
     if ( Tw.FormatHelper.isEmpty(this._reqOptions.coPtnrNm) ) {
       this.$inputCoPtnrNm.val('');
     }
   },
 
+  /**
+   * 제휴브랜드 목록 세팅
+   * @param list
+   * @private
+   */
   _setBrandList: function (list) {
     var source = this.$brandItemTmpl.html();
     var template = Handlebars.compile(source);
@@ -260,6 +319,12 @@ Tw.MembershipBenefitBrand.prototype = {
     return resp.result;
   },
 
+  /**
+   * 제휴브랜드 목록 반환
+   * @param resp
+   * return list{Array}
+   * @private
+   */
   _getBrandList: function (resp) {
     var self = this;
     var result = this._getResult(resp);
@@ -279,6 +344,11 @@ Tw.MembershipBenefitBrand.prototype = {
     });
   },
 
+  /**
+   * cateCd에 따른 스크롤 세팅
+   * @param cateCd
+   * @private
+   */
   _setScrollLeft: function (cateCd) {
     var $buttons = this.$categoryList.find('button');
     var $target = $buttons.filter('[cate-cd="' + cateCd + '"]').parent();
@@ -288,6 +358,11 @@ Tw.MembershipBenefitBrand.prototype = {
     }
   },
 
+  /**
+   * 키워드 검색
+   * @param cateCd
+   * @private
+   */
   _searchWithKeyword: function () {
     var inputVal = this.$inputCoPtnrNm.val();
     var regExp = /^[가-힣a-zA-Z1-9\s]+$/; //한글완성형, 영문, 공백
@@ -307,6 +382,11 @@ Tw.MembershipBenefitBrand.prototype = {
     this._reqBrandList(options);
   },
 
+  /**
+   * 검색결과 없는 경우 노출
+   * @param cateCd
+   * @private
+   */
   _showEmptyResult: function() {
     var inputVal = this.$inputCoPtnrNm.val();
     this.$brandList.empty();
@@ -317,6 +397,11 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$grade.hide();
   },
 
+  /**
+   * 등급선택 액션시트 오픈
+   * @param $container
+   * @private
+   */
   _onOpenGradeActionSheet: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
       var subTabCd = $(event.currentTarget).attr('sub-tab-cd');
@@ -332,18 +417,32 @@ Tw.MembershipBenefitBrand.prototype = {
     }, this));
   },
 
+  /**
+   * 카테고리 클릭 시 호출
+   * @param event
+   * @private
+   */
   _onClickBtnCategory: function (event) {
     var dataCd = $(event.currentTarget).attr('cate-cd');
     this._selectCategory(dataCd);
     this._setScrollLeft(dataCd);
   },
 
+  /**
+   * 더보기 버튼 클릭 시 호출
+   * @private
+   */
   _onClickBtnMore: function () {
     this._reqBrandList({
       pageNo: ++this._reqOptions.pageNo
     });
   },
 
+  /**
+   * 전체 카테고리 레이어의 카테고리 클릭 시 호출
+   * @param event
+   * @private
+   */
   _onClickBtnCategoryInLayer: function (event) {
     var cateCd = $(event.currentTarget).attr('cate-cd');
     this._selectCategory(cateCd);
@@ -351,6 +450,10 @@ Tw.MembershipBenefitBrand.prototype = {
     this._setScrollLeft(cateCd);
   },
 
+  /**
+   * 등급버튼 클릭 시 호출
+   * @private
+   */
   _onClickBtnSelectGrade: function () {
     this._popupService.open({
       hbs: this._ACTION_SHEET_HBS,
@@ -359,10 +462,18 @@ Tw.MembershipBenefitBrand.prototype = {
     }, $.proxy(this._onOpenGradeActionSheet, this), null, 'select-grade', this.$grade.find('button'));
   },
 
+  /**
+   * 검색 버튼 클릭 시 호출
+   * @private
+   */
   _onClickBtnSearch: function () {
     this._searchWithKeyword();
   },
 
+  /**
+   * 검색 인풋 keyup이벤트 발생시 호출
+   * @private
+   */
   _onKeyupInputCoPtnrNm: function (event) {
     var isEnter = 13;
     if ( event.keyCode === isEnter ) {

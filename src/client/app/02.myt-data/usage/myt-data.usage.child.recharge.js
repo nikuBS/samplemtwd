@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 데이터/통화 > 자녀 실시간 잔여량 > 충전 허용금액 변경
  * FileName: myt-data.usage.child.recharge.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 11. 27.
+ * Summary: 충전 허용금액 변경
  */
 Tw.MyTDataUsageChildRecharge = function (rootEl, options) {
   this.$container = rootEl;
@@ -48,12 +50,20 @@ Tw.MyTDataUsageChildRecharge.prototype = {
     this._drawAllAmt();
   },
 
+  /**
+   * 변경할 충전허용금액 출력(설정된 충전 허용금액을 최대값으로 4개 표시)
+   * @private
+   */
   _drawSummaryAmt: function() {
     var $ul = $('<ul style="display: flex;margin-bottom: 0;" />');
     $ul.appendTo(this._$summaryAmts);
     this._drawEachLine(this._topUpLimit, $ul);
   },
 
+  /**
+   * 변경할 충전허용금액 출력(전체)
+   * @private
+   */
   _drawAllAmt: function () {
     for (var i = 5; i >= 1; i--) {
       var max = i * this._AMT_CNT_EACH_LINE * this._AMT_GAP;

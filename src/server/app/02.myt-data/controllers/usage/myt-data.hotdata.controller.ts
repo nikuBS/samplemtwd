@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 데이터/통화 > 실시간 잔여량
  * FileName: myt-data.hotdata.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.11.28
+ * Summary: 실시간 잔여량 및 부가 서비스 노출 여부 조회
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -22,8 +24,8 @@ import {
 } from '../../../../types/bff.type';
 
 const VIEW = {
-  CIRCLE: 'usage/myt-data.hotdata.html',
-  BAR: 'usage/myt-data.usage.html',
+  CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
+  BAR: 'usage/myt-data.usage.html',         // PPS, T-Pocket fi, T-login
   ERROR: 'usage/myt-data.usage.error.html'
 };
 
@@ -112,7 +114,7 @@ class MyTDataHotdata extends TwViewController {
     let tOPlanSharedData;                       // 통합공유데이터
 
     if ( gnrlData ) {
-      // 총데이터 잔여량 표시
+      // 총데이터 잔여량 표시 데이터 세팅
       this.setTotalRemained(usageData);
 
       // 기본제공데이터
@@ -179,7 +181,6 @@ class MyTDataHotdata extends TwViewController {
       return !(_data.skipId === SKIP_NAME.DAILY && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
     });
 
-
     usageData.data = dataArr;
 
     kinds.map((kind) => {
@@ -221,6 +222,7 @@ class MyTDataHotdata extends TwViewController {
         break;
       case SVC_ATTR_E.PPS :
         option['usageData'] = this.parseUsageData(usageDataResp.result);
+        // PPS 정보
         if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
           const extraData = extraDataResp['result'];
           extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
@@ -258,18 +260,20 @@ class MyTDataHotdata extends TwViewController {
   }
 
   /**
-   * 총데이터 잔여량 세팅
+   * 총데이터 잔여량 데이터 세팅
    * @param usageData
    * @private
    */
   private setTotalRemained(usageData: any) {
     const gnrlData = usageData.gnrlData || [];
     let totalRemainUnLimited = false;
+    // 범용데이터 중 무제한 데이터가 있는지 확인
     gnrlData.map((_data) => {
       if ( UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
         totalRemainUnLimited = true;
       }
     });
+    // 무제한 데이터가 있으면 무제한 표시, 없으면 합산 잔여량 표시
     if ( totalRemainUnLimited ) {
       usageData.totalRemainUnLimited = true;
       usageData.totalRemained = SKIP_NAME.UNLIMIT;

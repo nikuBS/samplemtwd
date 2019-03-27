@@ -1,7 +1,9 @@
 /**
+ * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 합산
  * FileName: benefit.my-benefit.rainbow-point.adjustment.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.29
+ * Summary: 레인보우 포인트 포인트 합산 내역 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -48,12 +50,15 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
           svcInfo
         });
       }
+      // 포인트 주는 회선
       const lineToGive = lines.find(function (line) {
         return line.svcMgmtNum === svcInfo.svcMgmtNum;
       });
+      // 포인트 받는 회선들
       const lineToReceives = lines.filter(function (line) {
         return line.svcMgmtNum !== svcInfo.svcMgmtNum;
       });
+      // 포인트 받는 첫번째 회선(화면에 노출)
       const lineToReceive = lineToReceives[0];
       const options = {
         svcInfo,
@@ -72,10 +77,20 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 동일명의 회선 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointServices(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0101, {});
   }
 
+  /**
+   * 레인보우포인트 동일명의 합산 내역 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointAdjustments(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0130, {
       size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
@@ -83,6 +98,11 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 동일명의 회선 데이터 가공 후 반환
+   * @private
+   * return lines
+   */
   private getLineWithRainbowPoint(resp: any): any {
     const lines = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
@@ -92,6 +112,11 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     return lines;
   }
 
+  /**
+   * 레인보우포인트 동일명의 합산 내역 데이터 가공 후 반환
+   * @private
+   * return lines
+   */
   private getRainbowPointHistories(resp: any): any {
     const result = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
