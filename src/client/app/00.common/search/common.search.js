@@ -578,10 +578,12 @@ Tw.CommonSearch.prototype = {
     if ( totalRemainUnLimited ) {
       returnStr = Tw.COMMON_STRING.UNLIMIT;
     } else {
-      var testReducer = function(_memo, _data){
-        return _data.remained ? parseInt(_memo.remained,10) + parseInt(_data.remained, 10) : _memo.remained;
-      };
-      var totalRemained = gnrlData.reduce(testReducer);
+      var totalRemained = 0;
+      for(var idx in gnrlData){
+        if(!Tw.FormatHelper.isEmpty(gnrlData[idx].remained)){
+          totalRemained+= parseInt(gnrlData[idx].remained);
+        }
+      }
       usageData.totalRemained = Tw.FormatHelper.convDataFormat(totalRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
       returnStr = usageData.totalRemained.data+usageData.totalRemained.unit;
     }

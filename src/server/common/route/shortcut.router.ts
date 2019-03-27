@@ -47,6 +47,8 @@ class ShortcutRouter {
       } else if ( req.path === '/s.jsp' ) {
         const encParam = req.query.p || '';
         res.redirect('/common/auto-sms/cert?p=' + encParam);
+      } else if ( req.path === '/mpoc/html/main/mMa.html' ) {
+        res.redirect('/main/home');
       } else {
         next();
       }
