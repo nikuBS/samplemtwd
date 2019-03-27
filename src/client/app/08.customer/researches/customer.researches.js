@@ -43,18 +43,18 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
   },
 
-  _openExternalUrl: function(e) {
+  _cachedElement: function() {
+    this.$list = this.$container.find('.acco-list');
+  },
+
+  _openExternalUrl: function(e) { // 외부 링크 열기
     e.preventDefault();
     e.stopPropagation();
 
     Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
   },
 
-  _cachedElement: function() {
-    this.$list = this.$container.find('.acco-list');
-  },
-
-  _handleChangeSelect: function(e) {
+  _handleChangeSelect: function(e) {  // 라디오 orr 체크박스 선택 처리
     var $target = $(e.currentTarget);
 
     $target
@@ -66,7 +66,7 @@ Tw.CustomerResearches.prototype = {
     this._setEnableSubmit(e);
   },
 
-  _handleSubmit: function(e) {
+  _handleSubmit: function(e) {  // 설문조사 제출
     var $target = $(e.currentTarget),
       $root = $target.parents('li.acco-box');
     var $list = $root.find('ul.survey-researchbox > li');
@@ -79,11 +79,11 @@ Tw.CustomerResearches.prototype = {
     };
 
     if (answerNumber) {
-      options.canswNum = $root.data('answer-num');
+      options.canswNum = answerNumber;  // 정답번호 서버에 전달해야 함
     }
 
     if ($etcText.length > 0) {
-      options.etcTextNum = $etcText.data('etc-idx');
+      options.etcTextNum = $etcText.data('etc-idx');  // 기타 문항번호 서버에 전달해야 함
       options.etcText = $etcText.val();
     }
 
@@ -100,7 +100,7 @@ Tw.CustomerResearches.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this, $target));
   },
 
-  _clearForm: function() {
+  _clearForm: function() {  // 기입된 문항 clear
     var $list = this.$container.find('ul.survey-researchbox > li');
     $list.prop('aria-checked', false);
     $list.find('input').prop('checked', false);
@@ -123,7 +123,7 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _setEnableSubmit: function(e) {
+  _setEnableSubmit: function(e) { // 참여하기 버튼 활성화
     var $target = $(e.currentTarget);
     var $root = $target.parents('li.acco-box');
     var $btn = $root.find('.item-two > .bt-blue1 button');
@@ -133,7 +133,7 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _goHint: function(e) {
+  _goHint: function(e) {  // 힌트보기 클릭시
     var link = e.target.getAttribute('data-hint-url');
     if (link.indexOf('http') !== -1) {
       if (Tw.BrowserHelper.isApp()) {
@@ -148,15 +148,15 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _handleLoadMore: function(e) {
+  _handleLoadMore: function(e) {  // 더보기 클릭 시
     this._leftCount = this._leftCount - Tw.DEFAULT_LIST_COUNT;
     var list = this._researches;
 
-    if (this._leftCount > 0) {
+    if (this._leftCount > 0) {  // 남은 데이터가 20개 이상일 경우
       list = this._researches.slice(0, Tw.DEFAULT_LIST_COUNT);
       this._researches = this._researches.slice(Tw.DEFAULT_LIST_COUNT);
     } else {
-      $(e.currentTarget).remove();
+      $(e.currentTarget).remove();  // 더보기 버튼 제거
     }
 
     this.$list.append(this._tmpl({ researches: list }));

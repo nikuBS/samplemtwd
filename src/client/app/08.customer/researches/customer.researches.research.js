@@ -31,7 +31,7 @@ Tw.CustomerResearch.prototype = {
     this.$rateBar = this.$container.find('.data-bar');
   },
 
-  _handleSelectAnswer: function(e) {
+  _handleSelectAnswer: function(e) {  // 답변 선택 시 다음 문항(분기형의 경우 답변마다 다음 문항번호가 다름) 지정 및 하단 버튼 활성화
     var $root = this.$questions[this._currentIdx],
       next = e.currentTarget.getAttribute('data-next-question'),
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
@@ -40,16 +40,16 @@ Tw.CustomerResearch.prototype = {
       enable = !$root.data('is-essential'),
       $selected = $root.find('li.checked');
 
-    this._nextIdx = this._getNextQuestion($selected); 
-    if ($selected.length > 0) {
-      if (e.currentTarget.getAttribute('type') === 'radio') {
+    this._nextIdx = this._getNextQuestion($selected); // 다음 문항 번호 지정
+    if ($selected.length > 0) { // selected 된 답변이 있는 경우
+      if (e.currentTarget.getAttribute('type') === 'radio') { // 라디오 타입인 경우 분기 처리
         switch (Number(next)) {
-          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.END: {
+          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.END: {  // 다음 문항이 설문 종료일 경우
             $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.SUBMIT).switchClass('fe-go-next', 'fe-submit-research');
             break;
           }
-          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.NEXT: {
-            if (this._nextIdx !== this._questionCount) {
+          case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.NEXT: { // 다음 문항으로 이동일 경우
+            if (this._nextIdx !== this._questionCount) {  // 다음 문항이 설문종료가 아닌 경우
               $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
             }
             break;
@@ -64,8 +64,8 @@ Tw.CustomerResearch.prototype = {
       enable = true;
     }
 
-    if ($etc.length > 0) {
-      if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {
+    if ($etc.length > 0) {  // 기타 보기가 선택된 경우
+      if (isEtc === 'true' && e.currentTarget.getAttribute('checked')) {  
         $etc.removeAttr('disabled');
         enable = $etc.text().length > 0;
       } else {
@@ -76,7 +76,7 @@ Tw.CustomerResearch.prototype = {
     this._setButtonStatus($btn, enable);
   },
 
-  _getNextQuestion: function($selected) {
+  _getNextQuestion: function($selected) { // 다음 문항 index 가져오기
     if ($selected.hasClass('radiobox')) {
       var next_type = $selected.data('next-question') || 0;
       switch (next_type) {
@@ -106,7 +106,7 @@ Tw.CustomerResearch.prototype = {
     }
   },
 
-  _goNext: function(e) {
+  _goNext: function(e) {  // '다음으로' 클릭한 경우
     var next = this._currentIdx + 1;
 
     if (this._nextIdx) {
@@ -116,38 +116,38 @@ Tw.CustomerResearch.prototype = {
     var $next = this.$questions[next];
 
     e.currentTarget.setAttribute('data-next-question', next);
-    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true);
+    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true); // 현재 문항 비노출
 
-    if ($next) {
+    if ($next) {  // 다음 문항이 있을 경우 다음 문항 노출
       $next.removeClass('none').attr('aria-hidden', false);
       $next.find('.fe-go-prev').attr('data-prev-question', this._currentIdx);
     }
 
-    this._setAnswer();
+    this._setAnswer();  // 현재 문항에 대한 답변 추가
     var $selected = $next.find('li.checked');
     this._currentIdx = next;
-    this._setProgress($selected.length > 0 ? this._getNextQuestion($selected) : next);
+    this._setProgress($selected.length > 0 ? this._getNextQuestion($selected) : next);  // 진행률 계산
     delete this._nextIdx;
     delete this.$maxLength;
   },
 
-  _goPrev: function(e) {
+  _goPrev: function(e) {  // '이전으로 클릭한 경우
     var prev = Number(e.currentTarget.getAttribute('data-prev-question')),
       $prev = this.$questions[prev];
 
-    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true);
+    this.$questions[this._currentIdx].addClass('none').attr('aria-hidden', true); // 현재 문항 비노출
     if ($prev) {
-      $prev.removeClass('none').attr('aria-hidden', false);
+      $prev.removeClass('none').attr('aria-hidden', false); // 이전 문항 노출
     }
 
     this._nextIdx = this._currentIdx;
 
     for (i = prev + 1; i < this._questionCount; i++) {
-      this._answers[i] && delete this._answers[i];
+      this._answers[i] && delete this._answers[i];  // 답변에서 다음 문항 지움
     }
 
     this._currentIdx = prev;
-    this._setProgress(this._nextIdx);
+    this._setProgress(this._nextIdx); // 진행률 계산
     delete this.$maxLength;
   },
 
@@ -157,7 +157,7 @@ Tw.CustomerResearch.prototype = {
     this.$rateBar.width(rate);
   },
 
-  _handleTypeEssay: function(e) {
+  _handleTypeEssay: function(e) { // 주관식, 기타 항목에 키보드 입력이 들어온 경우 
     var target = e.currentTarget,
       $root = this.$questions[this._currentIdx];
     var byteCount = Tw.InputHelper.getByteCount(target.value);
@@ -166,12 +166,12 @@ Tw.CustomerResearch.prototype = {
       this.$maxLength = $root.find('.max-byte em');
     }
 
-    while (byteCount > 100) {
+    while (byteCount > 100) { // 최대 100Byte 입력 가능, 그 이상 입력된 경우 지움
       target.value = target.value.slice(0, -1);
       byteCount = Tw.InputHelper.getByteCount(target.value);
     }
 
-    this.$maxLength.text(Tw.FormatHelper.addComma(String(byteCount)));
+    this.$maxLength.text(Tw.FormatHelper.addComma(String(byteCount)));  // 입력 바이트 노출
 
     var $btn = $root.find('.bt-blue1 button');
 
@@ -192,7 +192,7 @@ Tw.CustomerResearch.prototype = {
     }
   },
 
-  _setAnswer: function() {
+  _setAnswer: function() {  // 서버에 응답 제출을 위한 응답 object 셋팅
     var $root = this.$questions[this._currentIdx],
       answerType = $root.data('answer-type'),
       answer = {
@@ -205,13 +205,13 @@ Tw.CustomerResearch.prototype = {
       listLen = $list.length || 0,
       i = 0;
 
-    if (answerType === 2) {
+    if (answerType === 2) { // 주관식인 경우
       var text = $root.find('textarea.mt10').val();
       if (text.length === 0) {
         return;
       }
       inqRpsCtt = text;
-    } else {
+    } else {  // 라디오 or 체크박스
       for (; i < listLen; i++) {
         if ($list[i].getAttribute('aria-checked') === 'true') {
           if (inqRpsCtt) {
@@ -221,8 +221,8 @@ Tw.CustomerResearch.prototype = {
         }
       }
 
-      if ($etc.length > 0) {
-        answer.etcTextNum = $etc.data('etc-idx');
+      if ($etc.length > 0) {  // 기타항목이 있는 경우
+        answer.etcTextNum = $etc.data('etc-idx'); // 기타 항목 번호 서버에 전달해줘야 함
         answer.etcText = $etc.val();
       }
     }
@@ -232,10 +232,9 @@ Tw.CustomerResearch.prototype = {
     this._answers[this._currentIdx] = answer;
   },
 
-  _submitResearch: function() {
-    // submit
-    this._setAnswer();
-    var values = $.map(this._answers, function(answer, key) {
+  _submitResearch: function() { // 설문조사 제출
+    this._setAnswer();  // 마지막 문항 추가
+    var values = $.map(this._answers, function(answer) {
       return answer;
     });
 
@@ -251,7 +250,7 @@ Tw.CustomerResearch.prototype = {
   _successSubmit: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result) {
-        case 'DUPLICATE':
+        case 'DUPLICATE': // 기참여인경우
           this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._cloaseResearch);
           break;
         case 'SUCCESS':
