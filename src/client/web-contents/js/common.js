@@ -23,11 +23,11 @@ $(document).on('ready', function () {
   /* 아이폰 키패드 영역 주먹구구식.... */
   var inputType = "input[type=text],input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel], textarea";
   $(".device_ios "+inputType).focusin(function(){
-    $("#gnb .g-wrap").hide(); // 19.03.26 툴바 이슈 수정
+    //$("#gnb .g-wrap").hide(); // 19.03.27 툴바 이슈 수정(하단 고정으로 하기로)
   });
 
   $(".device_ios "+inputType).focusout(function(){
-    $("#gnb .g-wrap").show(); // 19.03.26 툴바 이슈 수정
+    //$("#gnb .g-wrap").show(); // 19.03.27 툴바 이슈 수정(하단 고정으로 하기로)
   });
 
   skt_landing.action.header_shadow(); // header shadow effect (page)
@@ -92,7 +92,7 @@ $(window).on('resize', function (e, datas) {
   }
 
   if ( ios.type == 'focus' || Math.abs( current_size - skt_landing._originalSize ) > 200 ){   //@190320: ios search touch event    //190321: DV001-17881
-    $("#gnb.on .g-wrap").hide(); // 19.03.26 툴바 이슈 수정
+    //$("#gnb.on .g-wrap").hide(); // 19.03.27 툴바 이슈 수정(하단 고정으로 하기로)
     $(".bt-fixed-area").css("position","relative");
     $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", $(window).height() - 66+"px"); // 19.03.11 search 자동완성 resize 높이값
@@ -105,7 +105,7 @@ $(window).on('resize', function (e, datas) {
     var $popupContainer = $('.popup-page.fixed-bottom, .popup-page.fixed-btn'); // 19.03.22 수정
     if($('.popup-page.fixed-bottom .bt-fixed-area').length > 0) $popupContainer.addClass('pb0');      //190318 하단 고정 버튼 위치 
   } else {
-    $("#gnb.on .g-wrap").show(); // 19.03.26 툴바 이슈 수정
+    //$("#gnb.on .g-wrap").show(); // 19.03.27 툴바 이슈 수정(하단 고정으로 하기로)
     $(".bt-fixed-area").css("position","fixed");
     $(".actionsheet_full .container").css("height", "auto"); // 19.02.26 팝업구조 변경시
     $(".searchbox-lock").css("maxHeight", "80%"); // 19.03.11 search 자동완성 resize 높이값
@@ -893,14 +893,14 @@ skt_landing.action = {
           }
         */
         // 19.03.22 딤드처리된 popup 스크롤락
-        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){   //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 ) // || $('.popup .input-scroll-fix').length > 0 19.03.26 액션시트 문제때문에 주석
+        if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 || $('.popup .input-scroll-fix').length > 0 ){ //19.03.26_수정 .popup .input-scroll-fix 추가 ( DV001-17892 )
           var popCk = $('.popup-page.tw-popup'),
               popCk_wrap = popCk.not($(".actionsheet"));
           popCk_wrap.each(function(){
             $(this).css('overflow-y', 'hidden');
           });
           skt_landing.action.checkScroll.lockScroll();
-          //skt_landing.action.checkScroll.input_scroll_fix(); // 19.03.26 액션시트 문제때문에 주석
+          skt_landing.action.checkScroll.input_scroll_fix();
         }
         // 19.03.22 딤드처리된 popup 스크롤락
       }).fail(function() {
@@ -941,7 +941,7 @@ skt_landing.action = {
       // 19.03.22 딤드처리된 popup 스크롤락
       var popups = $('.wrap > .popup,.wrap > .popup-page'),
           createdTarget = popups.last();
-      if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 ){
+      if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 || $('.popup .input-scroll-fix').length > 0 ){
         var popCk = $('.popup-page.tw-popup'),
             popCk_wrap = popCk.not($(".actionsheet"));
         popCk_wrap.each(function(){
@@ -961,11 +961,9 @@ skt_landing.action = {
       }else{
         var popups = $('.wrap > .popup,.wrap > .popup-page');
         popups.eq(popups.length-1).empty().remove();
-        skt_landing.action.checkScroll.unLockScroll();
       }
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
-        skt_landing.action.checkScroll.unLockScroll();
       }
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
@@ -1140,9 +1138,17 @@ skt_landing.action = {
         $(this).data('scroll', true);
         $(this).find('.container-wrap').on('scroll', function(){
           if($(this).scrollTop() > 0){
-            $(this).closest('.popup-page').addClass('scroll')
+            $(this).closest('.popup-page').addClass('scroll');
           }else{
-            $(this).closest('.popup-page').removeClass('scroll')
+            $(this).closest('.popup-page').removeClass('scroll');
+          }
+        });
+
+        $(this).find('.container').on('scroll', function(){ // 19.03.27 팝업 스크롤시 scroll 추가
+          if($(this).scrollTop() > 0){
+            $('.header-wrap').addClass('scrollshadow');
+          }else{
+            $('.header-wrap').removeClass('scrollshadow');
           }
         })
       }
@@ -1154,7 +1160,7 @@ skt_landing.action = {
       }else {
         $('.header-wrap').removeClass('scrollshadow');
       }
-    });    
+    });
   },
   gnb : function(){
     $('.icon-gnb-menu').bind('click', function(){

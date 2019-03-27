@@ -84,9 +84,9 @@ Tw.CommonPostcodeMain.prototype = {
         .fail($.proxy(this._fail, this, $target));
     }
   },
-  _getMoreList: function () {
+  _getMoreList: function (e) {
     this._page++;
-    this._getList();
+    this._getList(e);
   },
   _isValid: function () {
     return this._validation.showAndHideErrorMsg(this.$searchField, this._validation.checkMoreLength(this.$searchField, 2));

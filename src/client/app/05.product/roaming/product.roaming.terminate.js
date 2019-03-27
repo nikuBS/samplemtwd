@@ -18,7 +18,7 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodTyp
   this.$mainContent = this.$rootContainer.find('.fe-main-content');
   this._init();
   this._bindPopupElementEvt();
-  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
+  this._focusService = new Tw.InputFocusService(rootEl, this.$rootContainer.find('#do_confirm'));
 };
 
 Tw.ProductRoamingTerminate.prototype = {
