@@ -13,7 +13,7 @@ Tw.CommonMemberLoginRoute = function (target, type, isLogin) {
 Tw.CommonMemberLoginRoute.prototype = {
   _init: function (target, type, isLogin) {
     if ( type === 'cancel' ) {
-      this._historyService.replaceURL('/common/member/signup-guide');
+      this._historyService.replaceURL(target);
       return;
     }
 

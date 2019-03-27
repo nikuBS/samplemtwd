@@ -65,6 +65,7 @@ import CommonAutoSmsResult from './controllers/auto-sms/common.auto-sms.result.c
 import CommonShareOldLanding from './controllers/share/common.share.old-landing.controller';
 import CommonUtilIntro from './controllers/util/common.util.intro.controller';
 import CommonInappError from './controllers/util/common.util.inapp-error.controller';
+import CommonMemberSignupRoute from './controllers/member/common.member.signup.route.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -83,6 +84,7 @@ export default class CommonRouter extends TwRouter {
     // member - login
     this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
     // this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
+    this.controllers.push({ url: '/member/signup/route', controller: CommonMemberSignupRoute });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
     this.controllers.push({ url: '/member/login/exceed-fail', controller: CommonMemberLoginExceedFail });
