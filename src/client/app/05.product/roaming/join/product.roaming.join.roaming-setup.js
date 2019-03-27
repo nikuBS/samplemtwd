@@ -298,9 +298,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       if(giftNum.length===3){
         this._promotionValidState = true;
         this._validatedGiftPhoneNum = giftNum;
-        delete userJoinInfo.tPieBnftSvcNum;
+        delete userJoinInfo.bnftSvcNum;
       }else{
-        userJoinInfo.tPieBnftSvcNum = giftNum;
+        userJoinInfo.bnftSvcNum = giftNum;
       }
 
       if(this._validatedGiftPhoneNum!==giftNum||this._promotionValidState===false){
