@@ -19,8 +19,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._autoCompleteRegExObj = {
     fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
     fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-    fontClose : new RegExp('</font>','g'),
-    spanOpen : new RegExp('<span class="keyword-text">','g')
+    fontClose : new RegExp('</font>','g')
   };
   this._tidLanding = new Tw.TidLandingComponent();
 };
@@ -485,7 +484,7 @@ Tw.CommonSearch.prototype = {
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
-    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
+    returnObj.linkStr = Tw.FormatHelper.stripTags(returnObj.showStr);
     return returnObj;
   },
   _removeRecentlyKeywordList : function (args) {
