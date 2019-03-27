@@ -16,8 +16,10 @@ class CommonMemberSloginAos extends TwViewController {
   render(req: Request, res:
     Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const mdnQuery = req.query.mdn;
+    const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
+
     if ( FormatHelper.isEmpty(mdnQuery) ) {
-      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null });
+      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn: null, target });
       // res.redirect('/common/member/slogin/fail');
     } else {
       const mdn = {
@@ -25,7 +27,7 @@ class CommonMemberSloginAos extends TwViewController {
         show: FormatHelper.conTelFormatWithDash(mdnQuery)
       };
 
-      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn });
+      res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn, target });
     }
   }
 }

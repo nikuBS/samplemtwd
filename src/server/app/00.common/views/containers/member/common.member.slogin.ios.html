@@ -162,7 +162,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberSloginIos($('#commonLoginEasyIos'));
+    new Tw.CommonMemberSloginIos($('#commonLoginEasyIos'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

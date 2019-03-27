@@ -4,13 +4,14 @@
  * Date: 2018.07.26
  */
 
-Tw.CommonMemberSloginIos = function (rootEl) {
+Tw.CommonMemberSloginIos = function (rootEl, target) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
 
+  this._target = target;
   this.mdn = '';
   this.certSeq = '';
   this._authBlock = '';
@@ -305,7 +306,11 @@ Tw.CommonMemberSloginIos.prototype = {
   _successRequestLogin: function ($target, resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.goBack();
+      if ( Tw.FormatHelper.isEmpty(this._target) ) {
+        this._historyService.goBack();
+      } else {
+        this._historyService.replaceURL(this._target);
+      }
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this._showError(this.$inputboxCert, this.$inputCert, this.$errorLoginCert);
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {

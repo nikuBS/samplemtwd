@@ -29,7 +29,7 @@ Tw.CommonShareLanding.prototype = {
       if ( this._targetLoginType === Tw.AUTH_LOGIN_TYPE.TID ) {
         this._tidLanding.goLogin(this._target);
       } else if ( this._targetLoginType === Tw.AUTH_LOGIN_TYPE.EASY ) {
-        this._tidLanding.goSLogin();
+        this._tidLanding.goSLogin(this._target);
       } else {
         this._historyService.replaceURL(this._target);
       }
