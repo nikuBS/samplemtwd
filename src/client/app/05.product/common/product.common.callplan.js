@@ -414,7 +414,6 @@ Tw.ProductCommonCallplan.prototype = {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]'),
       $scrollContainer = $popupContainer.find('.container');
 
-    console.log(contentsIndex);
     if (contentsIndex === 0) {
       $scrollContainer.scrollTop(0);
     } else {
