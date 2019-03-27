@@ -1,0 +1,148 @@
+<div class="popup-page tw-popup fixed-bottom fe-wrap_direct_order">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>주문번호 조회</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container" style="padding-bottom: 4.5rem">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="basic-text">
+                        <p class="top-tx-m">주문 관련 문의는<br>고객님이 주문하신 상품이 있는 경우에만<br>문의하실 수 있으며, 주문번호를 입력해 주셔야 합니다.</p>
+                    </div>
+                </div>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box nogaps">
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist" style="width: 100%;">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>쇼핑내역</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>외산/중고기기</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                            {{#each listShop}}
+                                            <div class="list-comp-input none">
+                                                <div class="">
+                                                    <div class="widget-box check">
+                                                        <ul class="select-list" role="group">
+                                                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                <input type="checkbox" name="checkbox" value="" title=""
+                                                                       aria-labelledby="aria-comp-checkbox1">
+                                                                <div class="comp-list-layout gaptype01">
+                                                                    <div class="shoppingbox-wrap">
+                                                                        <p class="title tx-bold">{{{ordProdNm}}}</p>
+                                                                        <div class="shoppinginfo-wrap">
+                                                                            <div class="info">
+                                                                                <dl class="detail">
+                                                                                    <dt>주문번호</dt>
+                                                                                    <dd class="fe-order-number">{{ordNo}}</dd>
+                                                                                    <dt>주문일자</dt>
+                                                                                    <dd>{{ordDate}}</dd>
+                                                                                    <dt>주문·배송상태</dt>
+                                                                                    <dd>{{ordStat}}</dd>
+                                                                                </dl>
+                                                                            </div>
+                                                                            <div class="imgbox">
+                                                                                <img src="{{cdn}}/img/dummy/img_products.png">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{else}}
+                                            <div class="contents-empty">
+                                                <span class="ico type1"></span>
+                                                <p class="desc">주문내역이 없습니다.</p>
+                                            </div>
+                                            {{/each}}
+                                            {{#if isMoreListShop}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                            {{#each listUsed}}
+                                            <div class="list-comp-input none">
+                                                <div class="widget">
+                                                    <div class="widget-box check">
+                                                        <ul class="select-list" role="group">
+                                                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                <input type="checkbox" name="checkbox" value=""
+                                                                       title="SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정"
+                                                                       aria-labelledby="aria-comp-checkbox1">
+                                                                <div class="comp-list-layout gaptype01">
+                                                                    <div class="shoppingbox-wrap">
+                                                                        <p class="title tx-bold">{{ordProdNm}}</p>
+                                                                        <div class="shoppinginfo-wrap">
+                                                                            <div class="info">
+                                                                                <dl class="detail">
+                                                                                    <dt>주문번호</dt>
+                                                                                    <dd class="fe-order-number">{{ordNo}}</dd>
+                                                                                    <dt>주문일자</dt>
+                                                                                    <dd>{{ordDate}}</dd>
+                                                                                    <dt>주문·배송상태</dt>
+                                                                                    <dd>{{ordStat}}</dd>
+                                                                                </dl>
+                                                                            </div>
+                                                                            <div class="imgbox">
+                                                                                <img src="{{cdn}}/img/dummy/img_products.png">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{else}}
+                                            <div class="contents-empty">
+                                                <span class="ico type1"></span>
+                                                <p class="desc">주문내역이 없습니다.</p>
+                                            </div>
+                                            {{/each}}
+                                            {{#if isMoreListUsed}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--// .cont-box -->  
+            </div>
+             <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-select-order" disabled >선택하기</button>
+                    </li>
+                </ul>
+             </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
