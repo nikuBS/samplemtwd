@@ -64,6 +64,7 @@ import CommonAutoSmsCert from './controllers/auto-sms/common.auto-sms.cert.contr
 import CommonAutoSmsResult from './controllers/auto-sms/common.auto-sms.result.controller';
 import CommonShareOldLanding from './controllers/share/common.share.old-landing.controller';
 import CommonUtilIntro from './controllers/util/common.util.intro.controller';
+import CommonInappError from './controllers/util/common.util.inapp-error.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -128,6 +129,7 @@ export default class CommonRouter extends TwRouter {
 
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
+    this.controllers.push({ url: '/inapp/error', controller: CommonInappError });
     this.controllers.push({ url: '/util/service-block', controller: CommonUtilServiceBlock });
     this.controllers.push({ url: '/util/service-ready', controller: CommonUtilServiceReady });
 
