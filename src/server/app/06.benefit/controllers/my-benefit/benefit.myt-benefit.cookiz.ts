@@ -2,6 +2,7 @@
  * FileName: benefit.myt-benefit.cookiz.ts
  * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
  * Date: 2018. 11. 5.
+ * 혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

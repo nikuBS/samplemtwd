@@ -1,5 +1,7 @@
 /**
  * FileName: product.mobileplan.compare-plans.js
+ * MP_02_02_01
+ * 설명 : 상품 > 요금제 비교하기
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.11.26
  */
@@ -14,7 +16,12 @@ Tw.ProductMobilePlanComparePlans = function () {
 
 Tw.ProductMobilePlanComparePlans.prototype = {
 
-  // 요금제 비교하기 팝업생성
+  /**
+   * 요금제 비교하기 팝업생성
+   * @param prodId    : 상품ID
+   * @param isShowBtn : 하단 [요금제 가입하기] 버튼 노출유무
+   * @param e
+   */
   openCompare: function (prodId, isShowBtn, e) {
     // 이미 팝업을 호출 했다면 안 띄운다. window.location.hash 대신 변수를 사용한 이유는 빠르게 여러번 호출 될 경우 hash 값이 공백으로 와서 변수로 대체함.
     if (this._isOpen) {
@@ -59,6 +66,11 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * API 에러 유무
+   * @returns {boolean}
+   * @private
+   */
   _apiError: function () {
     var $this = this;
     var rs = false;
@@ -73,6 +85,14 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     return rs;
   },
 
+  /**
+   * openCompare.callAll() 펑션 호출 성공시 콜백함수
+   * @param basicInfo     : 상품기본정보(BFF_10_0001) 리턴값
+   * @param recentUsage   : 최근사용량(BFF_05_0091) 리턴값
+   * @param prodRedisInfo : redis 상품원장(GET_PRODUCT_INFO) 리턴값
+   * @param contents      : resit 컨텐츠 조회(GET_PRODUCT_COMPARISON) 리턴값
+   * @private
+   */
   _successOnInit: function (basicInfo, recentUsage, prodRedisInfo, contents) {
     if (this._apiError(basicInfo, prodRedisInfo, contents)) return;
     // BIL0070 : 최근 사용량 데이터 없음
@@ -84,6 +104,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     var msgs = Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS;
     prodRedisInfo = this._parseProduct(prodRedisInfo.result);
 
+    // hbs(MP_02_02_01)사용할 데이터 생성
     var _data = {
       data: {
         prodNames: [msgs.MY_DATA_TXT, prodRedisInfo.prodNm],
@@ -110,12 +131,14 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       );
     };
 
+    // 아래 조건에 만족하면 기본 데이터로 팝업 띄운다.
     if (!recentUsage.result || !recentUsage.result.data || recentUsage.result.data.length < 1) {
       openPopup.call(this, _data);
       return;
     }
 
     var sum = 0, max = 0;
+    // 최대 사용량 구하기
     recentUsage.result.data.forEach(function(o) {
       var totalUsage = parseFloat(o.totalUsage);
       sum += parseFloat(totalUsage);
@@ -130,15 +153,23 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     $.extend(_data.data, {
       recentAvgTxt: msgs.RECENT_AVG_TXT.replace('{0}', monthText),
       recentMaxTxt: msgs.RECENT_MAX_TXT.replace('{0}', monthText),
-      avg: Tw.FormatHelper.customDataFormat(sum / dataSize, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB).data,
-      max: Tw.FormatHelper.customDataFormat(max, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB).data
+      avg: Tw.FormatHelper.customDataFormat(sum / dataSize, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB).data, // 3개월 평균 값
+      max: Tw.FormatHelper.customDataFormat(max, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB).data // 3개월중 최대 사용값
     });
 
     openPopup.call(this, _data);
   },
 
+  /**
+   * MP_02_02_01 팝업 생성이후 콜백함수
+   * @param _data
+   * @param $layer
+   * @private
+   */
   _afterComparePop: function (_data, $layer) {
+    // [요금제 가입하기] 버튼 노출/비노출
     $layer.find('#fe-btn-change').toggleClass('none', !this._isShowBtn);
+    // [요금제 가입하기] 버튼 클릭 이벤트
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
     this._initChart($layer, _data);
     // 화면이 아래로 떨어져서 위로 붙여준다.
@@ -147,11 +178,20 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     }, 50);
   },
 
+  /**
+   * MP_02_02_01 팝업 생성이후 close 시 콜백함수
+   * @private
+   */
   _closeComparePop: function () {
     this._isOpen = false;
   },
 
-  // 요금제 데이타 파싱
+  /**
+   * 요금제 데이타 파싱
+   * @param productInfo
+   * @returns {*}
+   * @private
+   */
   _parseProduct: function (productInfo) {
     if (Tw.FormatHelper.isEmpty(productInfo) || Tw.FormatHelper.isEmpty(productInfo.summary)) {
       return {
@@ -178,7 +218,12 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     return product;
   },
 
-  // 가입 페이지 URL
+  /**
+   * 가입 페이지 URL 반환
+   * @param basicInfo
+   * @returns {*}
+   * @private
+   */
   _getJoinUrl: function(basicInfo) {
     var res = {
       linkNm: '',
@@ -194,13 +239,16 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     return joinUrlArr[0] || res;
   },
 
-  // 가입하기 페이지 이동
+  /**
+   * 무선상품 가입 사전체크 API 호출
+   * @param e
+   * @private
+   */
   _goJoinUrl: function (e) {
     var joinUrl = $(e.currentTarget).data('joinUrl');
     if (Tw.FormatHelper.isEmpty(joinUrl)) {
       return;
     }
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: '01'
@@ -209,8 +257,15 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * _goJoinUrl 성공 콜백함수
+   * 성공시 가입하기 페이지로 이동
+   * @param href
+   * @param resp
+   * @returns {*|void}
+   * @private
+   */
   _goJoinDone: function (href, resp) {
-    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return this._onFail(resp);
     }
@@ -218,7 +273,12 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     this._historyService.goLoad(href + '?prod_id=' + this._prodId);
   },
 
-  // 차트 생성
+  /**
+   * 현재 요금제와 비교 요금제 차트 생성
+   * @param $layer
+   * @param data
+   * @private
+   */
   _initChart: function ($layer, data) {
     /*
         prdname : 종류
@@ -251,7 +311,11 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     });
   },
 
-  // API Fail
+  /**
+   * API Fail
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }

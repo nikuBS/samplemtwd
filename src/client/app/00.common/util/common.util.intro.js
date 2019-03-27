@@ -6,45 +6,57 @@ Tw.CommonUtilIntro = function (rootEl) {
   this.$container = rootEl;
   this.videoManager = (function () {
     var $videos = rootEl.find('video');
-    var currentVideo = null;
+    var currentVideos = [];
 
     var _calculateOffset = function () {
-      var windowHeight = $(window).height();
       var headerHeight = $('.h-belt').height();
 
       return function (element) {
         var $element = $(element);
-        var gap = windowHeight - $element.height();
-
         return {
-          top: $element.offset().top - (gap > headerHeight ? gap + headerHeight : headerHeight),
-          bottom: $element.offset().top + $element.height() - headerHeight - gap
+          top: $element.offset().top,
+          bottom: $element.offset().top + $element.height() - headerHeight
         };
       };
     }();
 
-    function _getCurrentVideo(y) {
+    function _getCurrentVideos(top) {
+      var bottom = top + $(window).height();
       return $videos.filter(function () {
-        return y >= this.dataset.top && y <= this.dataset.bottom;
-      })[0];
+        return bottom >= this.dataset.top && top <= this.dataset.bottom;
+      });
     }
 
     function _canPlay() {
-      currentVideo = _getCurrentVideo(window.scrollY);
-      return currentVideo && currentVideo.paused;
+      currentVideos = _getCurrentVideos(window.scrollY);
+      return currentVideos.length > 0;
+    }
+
+    function _isCurrentVideo(video) {
+      for (var i = 0, len = currentVideos.length; i < len; i++) {
+        if (currentVideos[i] === video) {
+          return true;
+        }
+      }
+      return false;
     }
 
     function _pause() {
       $videos.filter(function () {
-        return this !== currentVideo && !this.paused;
+        return !_isCurrentVideo(this) && !this.paused;
       }).each(function () {
+        this.currentTime = 0;
         this.pause();
       });
     }
 
     function _play() {
       _pause();
-      currentVideo.play();
+      for (var i = 0, len = currentVideos.length; i < len; i++) {
+        if (currentVideos[i].paused) {
+          currentVideos[i].play();
+        }
+      }
     }
 
     // calculate video offest

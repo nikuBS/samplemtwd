@@ -357,7 +357,7 @@ Tw.MyTFareHotBill.prototype = {
    */
   _confirmSwitchLine: function (target, event) {
     this._popupService.openSwitchLine(this._svcInfo, target,Tw.REMNANT_OTHER_LINE.BTNAME, null,
-      $.proxy(this._requestSwitchLine, this, target), null, null, null, $(event.currentTarget) )
+      $.proxy(this._requestSwitchLine, this, target), null, null, null, $(event.currentTarget) );
   },
   /**
    * Request to switch the current line.

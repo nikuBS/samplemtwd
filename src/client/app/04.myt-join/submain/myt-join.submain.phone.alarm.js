@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 번호변경 안내서비스 신청(MS_03_01_03)
  * FileName: myt-join.submain.phone.alarm.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.22
+ * Summary: 번호변경 안내서비스 신청
  */
 Tw.MyTJoinPhoneNumChgAlarm = function (rootEl, options) {
   this.$container = rootEl;

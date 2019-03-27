@@ -153,11 +153,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }, $.proxy(function (root) {
       root.find('.fe-view-term').find('button').text(Tw.BRANCH.VIEW_LOCATION_TERM);
       root.on('click', '.fe-view-term', $.proxy(function () {
-        Tw.CommonHelper.openUrlInApp(
-          'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
-          null,
-          Tw.COMMON_STRING.TERM
-        );
+        Tw.CommonHelper.openTermLayer2(15);
       }, this));
 
       root.on('click', '.fe-close', $.proxy(function () {
@@ -193,8 +189,7 @@ Tw.CustomerAgentsearchNear.prototype = {
             Tw.Error(err.code, err.msg).pop();
           });
       }
-    }, this)
-    );
+    }, this), 'mainAuto');
   },
   _onCurrentLocation: function (location, isManuallyChanged) { // isManuallyChanged: true - 임의로 현재 위치를 변경한 경우
     var $tmapBox = this.$container.find('#fe-tmap-box');

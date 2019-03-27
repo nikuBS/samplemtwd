@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 > 기부금/후원금 상세조회(MF_02_01_04)
  * FileName: myt-fare.bill.guide.donation.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
+ * Summary: 기부금/후원금 내역 조회화면
  */
 Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
   this.resData = resData;
@@ -53,6 +55,10 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.$container.on('click', '[data-target="addBtn"]', $.proxy(this._addView, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * 상단 기간(조회) 버튼 클릭시
+   * @param e
+   */
   _dateBtnEvt: function (e) {
     var $target = $(e.currentTarget);
 
@@ -71,12 +77,14 @@ Tw.MyTFareBillGuideDonation.prototype = {
   //   this._goLoad('/myt-fare/billguide/guide');
   // },
 
-  _proData: function () { //데이터 가공
+  //데이터 가공
+  _proData: function () {
     var thisMain = this;
     // Tw.Logger.info('[ _proData ]');
     this.detailListObj.listData = $.extend(true, [], this.bffListData); // deep copy array
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
+    // 날짜,금액 포맷팅
     _.map(this.detailListObj.listData, function (item) {
       item.billTcDt = Tw.DateHelper.getShortDate( item.billTcDt );
       item.sponAmt = thisMain._comComma(item.sponAmt);
@@ -84,6 +92,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     });
     // Tw.Logger.info('[ _proData end ]', this.detailListObj);
   },
+  // 화면출력
   _ctrlInit: function () {
     this._cachedElement();
     this._dataSplice(this.detailListObj.listData, this.detailListObj.startCount);
@@ -96,6 +105,10 @@ Tw.MyTFareBillGuideDonation.prototype = {
     }
 
   },
+  /**
+   * 더보기버튼 클릭시(데이터 화면 출력)
+   * @private
+   */
   _addView: function () {
     if ( this.detailListObj.curLen <= 0 ) {
       return;
@@ -113,6 +126,11 @@ Tw.MyTFareBillGuideDonation.prototype = {
     }
   },
   //--------------------------------------------------------------------------[API]
+  /**
+   * 기부금/후원금 내역 조회
+   * @param param
+   * @private
+   */
   _getDonationInfo: function (param) {
 
     this._apiService.request(Tw.API_CMD.BFF_05_0038, param)
@@ -121,6 +139,12 @@ Tw.MyTFareBillGuideDonation.prototype = {
         Tw.CommonHelper.endLoading('.container');
       });
   },
+  /**
+   * 기부금/후원금 내역 조회 결과
+   * @param param
+   * @param res
+   * @private
+   */
   _getDonationInfoInit: function ( param, res ) {
     // // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
 
@@ -181,6 +205,13 @@ Tw.MyTFareBillGuideDonation.prototype = {
     this.detailListObj.curLen = this.detailListObj.listData.length;
     // Tw.Logger.info('[ _dataSplice end ]', this.detailListObj);
   },
+  /**
+   * 기간 선택시 조회 시작~종료날짜를 구해 object 타입으로 리턴
+   * @param $selectVal
+   * @param formatStr
+   * @returns {{startDt: *, endDt: *}}
+   * @private
+   */
   _getPeriod: function ($selectVal, formatStr) {
 
     var selectVal = $selectVal;
@@ -241,6 +272,13 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
   },
 
+  /**
+   * data 화면 출력 hbs script 템플릿 출력
+   * @param resData - 데이터
+   * @param $jqTg - 출력될 html area
+   * @param $hbTg - hbs 템플릿
+   * @private
+   */
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;

@@ -11,8 +11,9 @@ Tw.ImmediatelyRechargeLayer = function ($element, options) {
   this._popupService = Tw.Popup;
   this._options = options || {};
   // this._prodId = this._options.prodId;
+  var pathUrl = this._options.pathUrl || '/myt-data/submain';
   this._bpcpService = Tw.Bpcp;
-  this._bpcpService.setData(this.$container, '/myt-data/submain');
+  this._bpcpService.setData(this.$container, pathUrl);
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
   this._tidLanding = new Tw.TidLandingComponent();
@@ -136,10 +137,10 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           }]
         });
       }
-      if (this._options.isPrepayment) {
+      // if (this._options.isPrepayment) {
         // TODO: GrandOpen 때 enable 처리
         data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
-      }
+      // }
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);

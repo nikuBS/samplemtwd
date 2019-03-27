@@ -41,7 +41,7 @@ class MyTJoinSuspendStatus extends TwViewController {
       };
 
       const status = {};
-      if ( suspendStatus.result.svcStCd === 'SP' ) {
+      if ( suspendStatus.result.svcStCd === 'SP' ) { // 일시정지 상태
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
         // 해외체류 toDt 없음
         const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
@@ -143,8 +143,16 @@ class MyTJoinSuspendStatus extends TwViewController {
     });
   }
 
+  /**
+   * 장기일시정지(군입대)자의 일시정지 해제 체크
+   * @param suspendStatus
+   * @returns {boolean}
+   * @private
+   */
   _militaryAC(suspendStatus: any): boolean {
+    // 사용중(AC)이지만 armyDt 값으로 체크
     if ( suspendStatus.svcStCd === 'AC' && suspendStatus.armyDt && suspendStatus.armyDt !== '' ) {
+      // 최초 장기일시정지 신청 기간 경과 체크
       const days = DateHelper.getDiffByUnit(suspendStatus.toDt, DateHelper.getCurrentDate(), 'days');
       if ( days > 0 ) {
         return true;

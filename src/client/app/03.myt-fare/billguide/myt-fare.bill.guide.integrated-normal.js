@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 요금 > 요금안내서 통합(일반)청구회선(MF_02_02)
  * FileName: myt-fare.bill.guide.integrated-normal.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.09.12
+ * Summay: 요금안내서 통합(일반)청구회선 조회화면 처리, 자녀 이용요금 조회
  */
 Tw.MyTFareBillGuideIntegratedNormal = function (rootEl, resData) {
   this.resData = resData;
@@ -53,6 +55,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     }
 
   },
+
+  /**
+   * hbs 헬퍼 등로
+   * @private
+   */
   _hbRegisterHelper: function () {
     Handlebars.registerHelper('index_of', function (context, ndx) {
       return context[ndx];
@@ -81,12 +88,14 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       return Tw.MYT_FARE_BILL_GUIDE_TPL.TIT_ICON[0].ELEMENT;
     });
 
+    // 콘텐츠 이용료, 소액결제 템플릿 리턴
     Handlebars.registerHelper('if_third_party', function (strVal, searchName) {
       if ( strVal.indexOf(searchName) > -1) {
         return Tw.MYT_FARE_BILL_GUIDE_TPL.THIRD_PARTY_TPL;
       }
     });
 
+    // 할인요금인 경우 빨간글씨 처리 클래스 리턴
     Handlebars.registerHelper('if_dc_red', function (strVal) {
       if ( strVal.indexOf(Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.LABEL) > -1 ) {
         return Tw.MYT_FARE_BILL_GUIDE_TPL.PRICE_DC_POINT.CLASS;
@@ -95,6 +104,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     });
 
   },
+
+  /**
+   * 화면 element cache
+   * @private
+   */
   _cachedElement: function () {
     this.$entryTplUseBill = $('#fe-entryTplUseBill');
     this.$entryTplChild = $('#fe-entryTplChild');
@@ -106,6 +120,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     // this.$searchNmSvcTypeTplAll = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.ALL);
     // this.$searchNmSvcTypeTplOth = Handlebars.compile(Tw.MYT_FARE_BILL_GUIDE_TPL.SVC_TYPE_TPL.OTHER);
   },
+
+  /**
+   * 이벤트 bind
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
 
@@ -133,12 +152,15 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var url = $(event.currentTarget).data('prod-page-url');
     this._history.goLoad(url);
   },
+  // 콜기프트 화면으로 이동
   _callGiftBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/callgift');
   },
+  // 로밍 내역 화면으로 이동
   _roamingBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/roaming');
   },
+  // 기부금/후원금 내역 화면으로 이동
   _donationBtnEvt: function () {
     this._history.goLoad('/myt-fare/billguide/donation');
   },
@@ -147,6 +169,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     var dt = this.resData.reqQuery.date || '';
     this._history.goLoad('/myt-fare/billguide/child?line='+childLine+'&date='+dt);
   },
+  /**
+   * 날짜조건 변경 actionsheet 팝업
+   * @param event
+   * @private
+   */
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
     var hbsName = 'actionsheet01';
@@ -182,6 +209,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
     // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },
+  // [날짜변경 actionsheet] 날짜 선택시
   _setSelectedValue: function (event) {
     var $tg = $(event.currentTarget);
     this.paramDate = $tg.find('input[type=radio]').attr('data-value');
@@ -200,6 +228,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     //this._conditionChangeEvtClose();
   },
+  // 안씀. 조건변경 팝업 닫히면..
   _conditionChangeEvtClose: function () {
     // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     // var param = {
@@ -210,6 +239,10 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]
+  /**
+   * 자녀회선 이용내역 조회
+   * @private
+   */
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
@@ -250,9 +283,11 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
             if(!date){
               date = this.resData.billpayInfo.invDtArr[0];
             }
+            // 날짜로 조회결과를 찾아야함
             d = _.find(arguments[i].result.invAmtList, function(item){
               return item.invDt === date;
             });
+            // 결과가 없는 경우
             if(!d){
               d = {totInvAmt: '0'};
             }
@@ -264,6 +299,10 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
       }, this));
   },
+  /**
+   * 자녀회선 이용요금 조회 조회결과로 ui 세팅
+   * @private
+   */
   _getChildBillInfoInit: function () {
     var thisMain = this;
     var childListData = thisMain.resData.childLineInfo;
@@ -284,12 +323,20 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
 
   // BFF_05_0047 사용요금 조회(본인)
+  // 2019.03.26 현재 안씀. 성틍개선 api변경으로 대상으로 js에서 청구/사용요금 다시 조회하지 않음
   _getUseBillsInfo: function () {
     return this._apiService.request(Tw.API_CMD.BFF_05_0047, {
       sSvcMgmtNum: this.resData.reqQuery.line,
       invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getUseBillsInfoInit, this));
   },
+
+  /**
+   * 사용요금 조회 결과 화면 처리
+   * (node에서 조회해온 data로 처리)
+   * @param res
+   * @private
+   */
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -321,6 +368,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     }
   },
   //--------------------------------------------------------------------------[SVC]
+  // 성능개선api변경 이후 안씀
   _useSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
     var svcMgmtNum = this.resData.svcMgmtNum;
@@ -331,6 +379,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     return selectSvcType;
 
   },
+  /**
+   * hbs script 템플릿 출력
+   * @param resData - 데이터
+   * @param $jqTg - 출력될 html area
+   * @param $hbTg - hbs 템플릿
+   * @private
+   */
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg;
     var hbTg = $hbTg;
@@ -382,6 +437,14 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
     });
   },
   //--------------------------------------------------------------------------[COM]
+  /**
+   * 요금 데이터를 그룹핑하고 합계를 구함
+   * @param $data - 그룹핑할 데이터
+   * @param $groupKey - 그룹핑할 object key
+   * @param $priceKey - 합계 key
+   * @returns {*}
+   * @private
+   */
   _comTraverse: function ($data, $groupKey, $priceKey) {
     var thisMain = this;
     var tempData = _.groupBy($data, $groupKey);
@@ -408,15 +471,18 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
     return tempCom;
   },
+  // 요금에 콤마 추가
   _comComma: function (str) {
     str = String(str);
     return Tw.FormatHelper.addComma(str);
   },
+  // 요금에 콤파 삭제
   _comUnComma: function (str) {
     str = String(str);
     // return str.replace(/[^\d]+/g, '');
     return str.replace(/,/g, '');
   },
+  // 휴대폰 번호 포맷
   _phoneStrToDash: function (str) {
     var strVal = String(str);
     return strVal.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9\*]+)([[0-9\*]{4})/, '$1-$2-$3');

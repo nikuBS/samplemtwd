@@ -34,6 +34,12 @@ Tw.MyTJoinSuspend.prototype = {
     $(document).on('ready', $.proxy(this._setInitialTab, this));
   },
 
+  /**
+   * URL hash로 초기 선택 탭 설정
+   * 일시정: '#temporary',
+   * 장기일시정지: '#long-term'
+   * @private
+   */
   _setInitialTab: function () {
     var type;
     if ( this._params.suspend.status ) {
@@ -46,7 +52,12 @@ Tw.MyTJoinSuspend.prototype = {
     }
     this.$tabLinker.filter('[href="' + type + '"]').click();
   },
-
+  /**
+   * Event listener for the button click on '.tab-linker button'(탭버튼)
+   * @param e
+   * @returns {boolean}
+   * @private
+   */
   _onTabChanged: function (e) {
     var hash = e.target.getAttribute('href');
     if ( this._params.suspend.status && hash === this.TYPE.TEMPORARY ) {
@@ -55,7 +66,13 @@ Tw.MyTJoinSuspend.prototype = {
     }
     this._setActiveTab(hash);
   },
-
+  /**
+   * 일시정지 타입별로 class 분리해서 관리
+   * 일시정지: Tw.MyTJoinSuspendTemporary
+   * 장기일시정지: Tw.MyTJoinSuspendLongTerm
+   * @param type
+   * @private
+   */
   _setActiveTab: function (type) {
     type = type.toLowerCase();
     switch ( type ) {

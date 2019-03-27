@@ -21,6 +21,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,p
   this._paramObj = paramObj;
   this._pageNum = parseInt(pageNum,10);
   this._nowUrl = nowUrl;
+  this._bpcpService = Tw.Bpcp;
   this._init(this._searchInfo,accessQuery.category);
 };
 Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
@@ -28,6 +29,7 @@ Tw.CommonSearchMore.prototype.constructor = Tw.CommonSearchMain;
 $.extend(Tw.CommonSearchMore.prototype,
 {
   _init : function (searchInfo,category) {
+    this._bpcpService.setData(this.$container, this._nowUrl);
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -51,6 +53,9 @@ $.extend(Tw.CommonSearchMore.prototype,
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
     this.$container.on('click','#page_selector',$.proxy(this._openPageSelector,this));
+    this.$container.on('scroll',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());

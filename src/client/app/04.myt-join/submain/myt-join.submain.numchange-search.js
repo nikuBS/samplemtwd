@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 010 전환 번호변경(MS_03_02)
  * FileName: myt-join.submain.numchange-search.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.11.26
+ * Summary: 010 전환 번호변경 화면에서 다른 번호 찾기
  */
 Tw.MyTJoinPhoneNumChangeSearch = function (rootEl, listItemTmpl, selCallback) {
   this.$container = $(rootEl);

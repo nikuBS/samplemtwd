@@ -27,6 +27,7 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-detail', $.proxy(this._openDetail, this));
     this.$container.on('click', '.fe-bt-more', $.proxy(this._onClickMore, this));
     this.$container.on('click', '.fe-change-first', $.proxy(this._onChangeFirst, this));
+    this.$container.on('click', '.fe-input-nickname', $.proxy(this._openNickname, this));
   },
 
   _openNickname: function ($event) {

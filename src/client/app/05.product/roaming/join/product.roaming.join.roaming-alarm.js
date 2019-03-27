@@ -17,6 +17,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
   this._prodId = prodId;
   this.$mainContent = this.$container.find('.fe-main-content');
   this._init();
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('#do_confirm'));
 };
 
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {

@@ -117,6 +117,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _checkError: function($elem) {
+    if ($elem.hasClass('fe-num_input') && Tw.FormatHelper.isEmpty($elem.val())) {
+      return this.$error0.hide().attr('aria-hidden', 'true');
+    }
+
     if ($elem.hasClass('fe-num_input') && $elem.val().length < 9) {
       return this._setErrorText(this.$error0, Tw.PRODUCT_TFAMILY.LESS_LENGTH);
     }
@@ -127,6 +131,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     if ($elem.hasClass('fe-num_input')) {
       this.$error0.hide().attr('aria-hidden', 'true');
+    }
+
+    if ($elem.hasClass('fe-input_birth') && Tw.FormatHelper.isEmpty(this.$inputBirth.val())) {
+      return this.$error1.hide().attr('aria-hidden', 'true');
     }
 
     if ($elem.hasClass('fe-input_birth') && this.$inputBirth.val().length !== 8) {
