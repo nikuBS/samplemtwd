@@ -2797,7 +2797,7 @@ body.apphome {
 .device_ios .h-belt .h-default .h-logo {
   -webkit-transform: translate3d(-50%, 0, 0);
           transform: translate3d(-50%, 0, 0); }
-  .device_ios .h-belt .h-default .h-logo .icon-gnb-home {
+  .device_ios .h-belt .h-default .h-logo .icon-gnb-home, .device_ios .h-belt .h-default .h-logo .icon-gnb-home-T {
     vertical-align: top; }
 
 .device_android .h-belt {
