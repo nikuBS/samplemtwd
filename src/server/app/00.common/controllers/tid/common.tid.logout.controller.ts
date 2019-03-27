@@ -23,8 +23,8 @@ class CommonTidLogout extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const type = +req.query.type || TID_LOGOUT.DEFAULT;
     const errorCode = req.query.errorCode || '';
-    const routeUrl = type === TID_LOGOUT.DEFAULT ? '/common/member/logout/complete' :
-      '/common/member/login/fail?errorCode=' + errorCode;
+    const routeUrl = type === TID_LOGOUT.LOGIN_FAIL ? '/common/member/login/fail?errorCode=' + errorCode :
+      type === TID_LOGOUT.EXCEED_FAIL ? '/common/member/login/exceed-fail' : '/common/member/logout/complete';
     let clientId = '';
 
     Observable.combineLatest(
@@ -52,10 +52,14 @@ class CommonTidLogout extends TwViewController {
           page_title: TID_MSG.LOGIN_FAIL,
           page_comment: errorCode,
         });
+      } else if ( type === TID_LOGOUT.EXCEED_FAIL ) {
+        Object.assign(params, {
+          page_title: TID_MSG.LOGIN_EXCEED,
+          page_comment: TID_MSG.LOGIN_EXCEED_MSG,
+        });
       }
 
       const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
-
 
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);
