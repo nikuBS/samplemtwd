@@ -65,26 +65,29 @@ Tw.ProductRoamingFiReservation.prototype = {
     },50);
   },
 
-  _searchCountryCode: function(e){
+  _searchCountryCode: function(e){ //국가코드 가져오기 및 유효성 검사
     var inputNumber = this.$inputPhone.val();
+
+    //핸드폰 번호 형식이 아닐 경우 Alert 호출
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE, null, null, null, $(e.currentTarget));
     }
 
-    //시작일을 종료일 이후로 설정
+    //시작일을 종료일 이후로 설정할 경우 Alert 호출
     if (Tw.DateHelper.getDifference(this.$inputEdate.val(), this.$inputSdate.val()) < 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE, null, null, null, $(e.currentTarget));
     }
 
-    //시작일이 minDate(이틀 뒤)보다 작게 설정
+    //시작일이 minDate(이틀 뒤)보다 작게 설정할 경우 Alert 호출
     var getMinDate = this.$inputSdate.attr('min');
     if (Tw.DateHelper.getDifference(getMinDate, this.$inputSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
     }
 
+    //국가코드 조회 API 호출
     this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''})
       .done($.proxy(this._handleSuccessSearchCountry, this))
       .fail($.proxy(this._onFail, this));
@@ -102,7 +105,7 @@ Tw.ProductRoamingFiReservation.prototype = {
         }
       });
 
-      this._handleFiReservation(countyArr);
+      this._handleFiReservation(countyArr); //국가코드 가져온 후 예약하기 함수 호출
     }else{
       this._onFail(res);
     }
@@ -163,7 +166,7 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _addVisitCountry: function(e){
-    //추가된 국가가 5개이상이면 리턴처리
+    //추가된 국가가 5개 이상이면 Alert 호출 
     if(this.countryArr.length > 4){
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.TITLE, null, null, null, $(e.currentTarget));
@@ -287,7 +290,6 @@ Tw.ProductRoamingFiReservation.prototype = {
 
     var self = this;
     setTimeout(function(){
-
       var inputPhoneCheck = '';
 
       if(self.$inputPhone.val().length > 0){
@@ -296,6 +298,7 @@ Tw.ProductRoamingFiReservation.prototype = {
         inputPhoneCheck = false;
       }
 
+      // 이용약관 동의 체크, 국가 선택, 핸드폰 번호 입력, 예약 시작/종료일 모두 체크 되어야만 하단 버튼 활성화
       if(self.$agreeCheckOne.hasClass('checked') && self.$agreeCheckTwo.hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
         self.$btnRegister.removeAttr('disabled');
       }else{
@@ -309,12 +312,16 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _insertDashPhone: function() {
-    //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
+    // 9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
     this.$inputPhone.val(hypenPhoneNum);
   },
 
+  /**
+   * Event listener for the button click on '#flab01'(핸드폰 번호 입력)
+   * @private
+   */
   _removeDashPhone: function() {
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     this.$inputPhone.val(phoneNum);

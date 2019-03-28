@@ -70,7 +70,7 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _getTfiResponse: function() {
-    //연속 선택 방지
+    //연속 선택시 인증팝업 여러개 뜬다는 이슈로 인해 500ms의 시간 동안 재입력 불가
     if(this._requestYn){
       return;
     }
@@ -107,8 +107,12 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * 한글로된 국가 배열을 영문 코드 배열로 교체
+   * @param code
+   * @private
+   */
   _changeCountryCode: function(code) {
-    //한글로된 국가 배열 -> 코드 배열로 교체
     var codeArr = code.split(',');
     var allCountryCode = this._countryCode;
     codeArr = codeArr.map(function(x){return x;});
@@ -130,13 +134,14 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._receiveObj = Tw.ROAMING_RECEIVE_CODE;
     this._returnObj = Tw.ROAMING_RETURN_CODE;
 
+    //서버에서 내려오는 데이터를 가공
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
       res[x].show_rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id].name;
       res[x].impbranch = this._receiveObj[res[x].rental_booth_org_id].code;
       res[x].show_rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
-      if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){
+      if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){ //예약 시작 당일에 예약 취소/수정 버튼 비활성화
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
       }
       res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
@@ -217,6 +222,11 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * 예약 수정 버튼 선택
+   * @param e
+   * @private
+   */
   _clickEditBtn: function(e){
     var data =  JSON.parse($(e.target).attr('data-response'));
     var rsvrcvdtm = this._dateHelper.getShortDateWithFormat(data.rsv_rcv_dtm, 'YYYYMMDD', 'YYYY.M.DD');
@@ -236,12 +246,22 @@ Tw.ProductRoamingFiInquire.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * 예약 취소 버튼 선택
+   * @param e
+   * @private
+   */
   _clickCancelBtn : function(e){
     var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A26;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
       $.proxy(this._handleConfirmAlert, this, e), null, Tw.BUTTON_LABEL.CLOSE, ALERT.BUTTON, $(e.currentTarget));
   },
 
+  /**
+   * 예약 취소 Alert에서 확인 선택하여 취소 API 호출
+   * @param e
+   * @private
+   */
   _handleConfirmAlert : function(e){
 
     var data =  JSON.parse($(e.target).attr('data-response'));
@@ -295,8 +315,17 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
   },
 
+  /**
+   * 예약 수정 API Callback 함수
+   * @param changeCountry
+   * @param e
+   * @param res
+   * @private
+   */
   _openEditPop : function(changeCountry, e ,res ){
     if(res.code === Tw.API_CODE.CODE_00){
+
+      //예약 수정 팝업에서 필요한 데이터 가공
       res.result.rominfo.rental_schd_sta_dtm =
         this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
@@ -340,7 +369,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     $popupLayer.on('click', '.cancel', $.proxy(this._changeCheck, this));
     $popupLayer.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
     $popupLayer.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
-    this._insertDashPhone();
+
+    this._insertDashPhone(); // 예약 수정 팝업 띄운 후 핸드폰 번호에 Dash 추가
     this._changeCheck();
   },
 
@@ -383,7 +413,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _onActionSelected: function (selected, e) {
 
-    if(selected.id === 'flab04'){
+    if(selected.id === 'flab04'){ //수령 장소 선택 ActionSheet
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); //부스코드를 data-code값에 넣기
       $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
@@ -394,7 +424,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
       this.$receiveImg.attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
-    }else{
+    }else{ //반납 장소 선택 ActionSheet
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
 
@@ -421,6 +451,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       dateCheck = false;
     }
 
+    // 예약 수정 팝업에서 예약 시작일, 예약 종료일, 핸드폰 번호 입력 되어있을 경우만 하단 버튼 활성화
     var self = this;
     setTimeout(function(){
       if(self.$inputPhone.val().length > 0 && dateCheck){
@@ -432,7 +463,7 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _insertDashPhone : function() {
-    //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
+    // 9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
     this.$inputPhone.val(hypenPhoneNum);
@@ -450,13 +481,13 @@ Tw.ProductRoamingFiInquire.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE, null, null, null, $(e.currentTarget));
     }
 
-    //시작일을 종료일 이후로 설정
+    // 시작일을 종료일 이후로 설정
     if (Tw.DateHelper.getDifference(this.$inputEditEdate.val(), this.$inputEditSdate.val()) < 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE, null, null, null, $(e.currentTarget));
     }
 
-    //시작일이 minDate(이틀 뒤)보다 작게 설정
+    // 시작일이 minDate(이틀 뒤)보다 작게 설정
     var getMinDate = this.$inputEditSdate.attr('min');
     if (Tw.DateHelper.getDifference(getMinDate, this.$inputEditSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
