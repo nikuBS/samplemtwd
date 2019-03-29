@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import EnvHelper from '../../../../utils/env.helper';
 
 class CommonTidGuide extends TwViewController {
   constructor() {
@@ -13,7 +14,12 @@ class CommonTidGuide extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.redirect('https://auth-stg.skt-id.co.kr/auth/type/view/guide.do');
+    const tidServer = EnvHelper.getEnvironment('TID_SERVER');
+    if (process.env.NODE_ENV === 'prd') {
+      res.redirect(tidServer + '/auth/type/view/guide.do');
+    } else {
+      res.redirect(tidServer + '/auth/type/view/guide.do');
+    }
   }
 }
 
