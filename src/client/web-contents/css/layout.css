@@ -28,6 +28,8 @@ body.hidden {
 
 .wrap {
   padding-bottom: 1.875rem; }
+  .wrap.bp-80 {
+    padding-bottom: 5rem; }
   .wrap > .container-wrap {
     margin-bottom: 1.25rem; }
     .wrap > .container-wrap.more-wrap {
@@ -3472,3 +3474,23 @@ body.hidden {
   width: 100%;
   padding: 1.25rem 1.625rem;
   background: #fff; }
+
+.form-wrap.half-type {
+  display: -ms-flexbox;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box; }
+
+.form-wrap.half-type .select {
+  display: block;
+  box-flex: 1.0;
+  -webkit-box-flex: 1.0;
+  -moz-box-flex: 1.0;
+  width: 50%; }
+
+.form-wrap.half-type .inputbox {
+  display: block;
+  box-flex: 1.0;
+  -webkit-box-flex: 1.0;
+  -moz-box-flex: 1.0;
+  width: 50%; }

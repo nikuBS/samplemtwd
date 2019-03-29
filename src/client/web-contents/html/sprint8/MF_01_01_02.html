@@ -43,7 +43,7 @@
     <!--// #skip_navigation -->
      <div class="wrap">
          <!-- .popup hbs -->
-         <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+         <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -58,65 +58,67 @@
                 <h2 class="blind">내용</h2>
                 <div class="container">
                     <!-- .cont-box -->
-                        <div class="cont-box nogaps">
-                            <!-- .list-comp-input -->
-                            <div class="with-payment-line">
-                                <div class="list-comp-input">
-                                    <div class="widget">
-                                        <div class="widget-box check">
-                                            <ul class="select-list" role="group">
-                                                <!--접근성 수정-->
-                                                <li class="checkbox type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox1" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox1">
-                                                        <p class="layout-text">
-                                                            <span class="mtext">IPTV_smart STB 104동 ********</span>
-                                                            <span class="stext"><span>56,470</span> 원</span>
-                                                            <span class="dtext">2018.5.</span>
-                                                        </p>
-                                                        <!--<span class="tx-data">37.6 GB</span>-->
-                                                    </div>
-                                                </li>
-                                                <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
-                                                        <p class="layout-text">
-                                                            <span class="mtext">휴대폰 010-87**-41**</span>
-                                                            <span class="stext"><span>56,470</span> 원</span>
-                                                            <span class="dtext">2018.5.</span>
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox3">
-                                                        <p class="layout-text">
-                                                            <span class="mtext">IPTV_smart STB 104동 ********</span>
-                                                            <span class="stext"><span>56,470</span> 원</span>
-                                                            <span class="dtext">2018.5.</span>
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" -->
-                                                    <div class="comp-list-layout" id="aria-comp-checkbox4">
-                                                        <p class="layout-text">
-                                                            <span class="mtext">휴대폰 010-87**-41**</span>
-                                                            <span class="stext"><span>56,470</span> 원</span>
-                                                            <span class="dtext">2018.5.</span>
-                                                        </p>
-                                                    </div>
-                                                </li>
-                                                <!-- //접근성 수정-->
-                                            </ul>
-                                        </div>
+                    <div class="cont-box nogaps">
+                        <!-- .list-comp-input -->
+                        <div class="with-payment-line">
+                            <div class="list-comp-input">
+                                <div class="widget">
+                                    <div class="widget-box check">
+                                        <ul class="select-list" role="group">
+                                            <!--접근성 수정-->
+                                            <li class="checkbox type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">IPTV_smart STB 104동 ********</span>
+                                                        <span class="stext"><span>56,470</span> 원</span>
+                                                        <span class="dtext">2018.5.</span>
+                                                    </p>
+                                                    <!--<span class="tx-data">37.6 GB</span>-->
+                                                </div>
+                                            </li>
+                                            <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">휴대폰 010-87**-41**</span>
+                                                        <span class="stext"><span>56,470</span> 원</span>
+                                                        <span class="dtext">2018.5.</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">IPTV_smart STB 104동 ********</span>
+                                                        <span class="stext"><span>56,470</span> 원</span>
+                                                        <span class="dtext">2018.5.</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="checkbox type01-big checked" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox4">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">휴대폰 010-87**-41**</span>
+                                                        <span class="stext"><span>56,470</span> 원</span>
+                                                        <span class="dtext">2018.5.</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <!-- //접근성 수정-->
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
-                            <!--// .list-comp-input -->
                         </div>
-                        <!--// .cont-box -->
-
+                        <!--// .list-comp-input -->
+                    </div>
+                    <!--// .cont-box -->
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
                             <button>선택완료</button>
