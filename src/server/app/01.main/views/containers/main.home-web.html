@@ -115,10 +115,10 @@
 
                     <div class="call-message">
                         <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                        <a href="/myt-data/submain" class="call" data-xt_eid="CMMA_A2_B6-158" data-xt_csid="NO" data-xt_action="BC"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
+                        <a href="/myt-data/submain" class="call" data-xt_eid="CMMA_A2_B6-158" data-xt_csid="NO" data-xt_action="BC"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemainedText %></a>
                         <% } %>
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-159" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-159" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="call-message">
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
