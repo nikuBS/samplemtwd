@@ -4,11 +4,15 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailService = function (rootEl) {
+Tw.CustomerEmailService = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+
+  this.uploadObj = data.uploadObj; // 이메일 업로드 객체
+  this._usanService = new Tw.CustomerUscanService(this.uploadObj); // 유스캔 서비스
+
 
   this._cachedElement();
   this._bindEvent();
@@ -32,8 +36,7 @@ Tw.CustomerEmailService.prototype = {
     this.$container.on('click', '.fe-service-register', $.proxy(this._request, this));
   },
 
-  _request: function (e) {
-    var serviceCategory = this.$service_depth1.data('service-depth1');
+  _request: function (e) {    
 
     if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
@@ -71,23 +74,45 @@ Tw.CustomerEmailService.prototype = {
       return false;
     }
 
-    switch ( serviceCategory ) {
-      case 'CELL':
-        this._requestCell($(e.currentTarget));
-        break;
-      case 'INTERNET':
-        this._requestInternet($(e.currentTarget));
-        break;
-      case 'DIRECT':
-        this._requestDirect($(e.currentTarget));
-        break;
-      case 'CHOCO':
-        this._requestChocolate($(e.currentTarget));
-        break;
-      default:
+    // 파일 여부 
+    var files = this.uploadObj.getServiceFilesInfo();
+    
+    if (files.length) {
+      // 파일, 업로드 객체, 콜백, 타입
+      this._usanService.requestUscan({
+        files: files, 
+        Upload: this.uploadObj, 
+        type: this.$service_depth1.data('service-depth1'), 
+        request: $.proxy(this._requestCall, this),
+        $target: $(e.currentTarget)
+      });
+      
+    } else {
+      // 파일없음 바로 호출
+      this._requestCall($(e.currentTarget));
     }
+   
   },
 
+  _requestCall: function ($target) {
+    var serviceCategory = this.$service_depth1.data('service-depth1');
+    switch ( serviceCategory ) {
+      case 'CELL':
+        this._requestCell($target);
+        break;
+      case 'INTERNET':
+        this._requestInternet($target);
+        break;
+      case 'DIRECT':
+        this._requestDirect($target);
+        break;
+      case 'CHOCO':
+        this._requestChocolate($target);
+        break;
+      default:
+        break;
+    }
+  },
   _makeParams: function () {
     var arrPhoneNumber = $('.fe-service_phone').val().split('-');
 
@@ -116,9 +141,7 @@ Tw.CustomerEmailService.prototype = {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
-      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
-        return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
-      })
+      fileAtchYn: this.uploadObj.getServiceFilesInfo().length ? 'Y' : 'N' // 파일첨부여부
     });
 
     if ( selSvcMgmtNum === '0' ) {
@@ -141,9 +164,7 @@ Tw.CustomerEmailService.prototype = {
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
-      atchFileNameArr: _.map(this.$wrap_tpl_service.find('.filename-list li'), function (item) {
-        return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
-      })
+      fileAtchYn: this.uploadObj.getServiceFilesInfo().length ? 'Y' : 'N' // 파일첨부여부
     });
 
     if ( selSvcMgmtNum === '0' ) {

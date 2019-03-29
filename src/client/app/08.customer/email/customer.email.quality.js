@@ -4,11 +4,14 @@
  * Date: 2018.10.29
  */
 
-Tw.CustomerEmailQuality = function (rootEl) {
+Tw.CustomerEmailQuality = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+
+  this.uploadObj = data.uploadObj; // 이메일 업로드 객체
+  this._usanService = new Tw.CustomerUscanService(this.uploadObj); // 유스캔 서비스
 
   this._cachedElement();
   this._bindEvent();
@@ -32,7 +35,6 @@ Tw.CustomerEmailQuality.prototype = {
   },
 
   _request: function (e) {
-    var qualityCategory = this.$quality_depth1.data('quality-depth1');
 
     if ( !this._isValidQualityPhone() ) {
       this._popupService.openAlert(
@@ -70,13 +72,36 @@ Tw.CustomerEmailQuality.prototype = {
       return false;
     }
 
+    // 파일 여부 
+    var files = this.uploadObj.getQualityFilesInfo();
+
+    if (files.length) {
+      // 파일, 업로드 객체, 콜백, 타입
+      this._usanService.requestUscan({
+        files: files, 
+        Upload: this.uploadObj, 
+        type: this.$quality_depth1.data('quality-depth1'), 
+        request: $.proxy(this._requestCall, this),
+        $target: $(e.currentTarget)
+      });
+      
+    } else {
+      // 파일없음 바로 호출
+      this._requestCall($(e.currentTarget));
+    }
+
+    
+  },
+
+  _requestCall: function ($target) {
+    var qualityCategory = this.$quality_depth1.data('quality-depth1');
 
     switch ( qualityCategory ) {
       case 'cell':
-        this._requestCell($(e.currentTarget));
+        this._requestCell($target);
         break;
       case 'internet':
-        this._requestInternet($(e.currentTarget));
+        this._requestInternet($target);
         break;
       default:
     }
@@ -124,7 +149,8 @@ Tw.CustomerEmailQuality.prototype = {
         inptZip: $('.fe-zip').val(),
         inptBasAddr: $('.fe-main-address').val(),
         inptDtlAddr: $('.fe-detail-address').val()
-      })
+      }),
+      fileAtchYn: this.uploadObj.getQualityFilesInfo().length ? 'Y' : 'N' // 파일첨부여부
     });
 
     if ( selSvcMgmtNum === '0' ) {
@@ -149,7 +175,8 @@ Tw.CustomerEmailQuality.prototype = {
       inptZip: $('.fe-zip').length ? ($('.fe-zip').val() || '') : '',
       inptBasAddr: $('.fe-main-address').length ? ($('.fe-main-address').val() || '') : '',
       inptDtlAddr: $('.fe-detail-address').val() ? ($('.fe-detail-address').val() || '') : '',
-      selSvcMgmtNum: selSvcMgmtNum
+      selSvcMgmtNum: selSvcMgmtNum,
+      fileAtchYn: this.uploadObj.getQualityFilesInfo().length ? 'Y' : 'N' // 파일첨부여부
     });
 
     if ( selSvcMgmtNum === '0' ) {
