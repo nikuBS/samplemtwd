@@ -99,7 +99,12 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateCnt = '0';
     }
 
-    purified.talkMapArr = purified.talkMap.split(/#\^|<br.*?>/gi);
+    // API 가 스펙대로 동작안하는데 쓰는 쪽에서 예외처리 하라함....... talkMap field 없으면 예외 처리
+    if (!FormatHelper.isEmpty(purified.talkMap)) {
+      purified.talkMapArr = purified.talkMap.split(/#\^|<br.*?>/gi);
+    } else {
+      purified.talkMapArr = [];
+    }
 
     return purified;
   }
