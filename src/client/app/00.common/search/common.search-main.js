@@ -17,8 +17,7 @@ Tw.CommonSearchMain.prototype = {
     this._autoCompleteRegExObj = {
       fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-      fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="keyword-text">','g')
+      fontClose : new RegExp('</font>','g')
     };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -61,7 +60,7 @@ Tw.CommonSearchMain.prototype = {
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
-    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
+    returnObj.linkStr = Tw.FormatHelper.stripTags(returnObj.showStr);
     return returnObj;
   },
   _inputFocusEvt : function () {
@@ -214,7 +213,7 @@ Tw.CommonSearchMain.prototype = {
       this.$container.find('.search-content').attr('aria-hidden',false);
       this.$inputElement.blur();
       skt_landing.action.checkScroll.unLockScroll();
-      $(window).off('scroll');
+      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {
@@ -277,19 +276,12 @@ Tw.CommonSearchMain.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.searchbox-lock').scroll($.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     this.$container.find('.search-content').attr('aria-hidden',true);
     $('.keyword-list-base').insertAfter('.searchbox-header');
     $(window).scrollTop(0);
-    setTimeout($.proxy(function(){
-      $(window).on('scroll',$.proxy(function () {
-        if(this._historyService.getHash()==='#input_P'){
-          this.$inputElement.blur();
-        }
-      },this));
-    },this),300);
+    this.$keywordListBase.on('touchstart',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _showRequirePayPopup : function (evt) {
     var $target = $(evt.currentTarget);

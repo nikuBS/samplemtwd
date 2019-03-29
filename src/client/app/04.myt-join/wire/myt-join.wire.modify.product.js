@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 상품변경(MS_04_05)
  * FileName: myt-join.wire.modify.product.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.15
+ * Summary: 유선상품 상품변경 신청
  */
 Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
   this.resData = resData;
@@ -43,6 +45,10 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this._productBillSelectFun();
     this._svcCtgNmFun();
   },
+  /**
+   * element cache
+   * @private
+   */
   _cachedElement: function () {
     this.$select_product= $('[data-target="select_product"]'); // 상품선택 버튼
     this.$select_product_bill= $('[data-target="select_product_bill"]'); // 요금상품선택 버튼
@@ -51,6 +57,10 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$input_phone= $('[data-target="input_phone"]'); // 일반전화 (선택항목)
     this.$submitApply= $('[data-target="submitApply"]'); // 신청하기 버튼
   },
+  /**
+   * event bind
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('click', '[data-target="select_product"]', $.proxy(this.$select_productEvt, this));
     this.$container.on('click', '[data-target="select_product_bill"]', $.proxy(this.$select_product_billEvt, this));
@@ -66,9 +76,14 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   },
 
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * close 버튼 클릭시
+   * @private
+   */
   _closeCheck: function(){
     this._history.goLoad('/myt-join/submain');
 
+    // 필드에 입력된 부분이 있는지 체크(안하기로 해서 주석처리)
     //if(this.productFormData.prodMediaNm ||
     //  this.productFormData.prodNm ||
     //  $('[data-target="input_hp"]').val() ||
@@ -87,6 +102,11 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     //  this._history.goBack();
     //}//
   },
+
+  /**
+   * 상품 선택 버튼 클릭시 -> 상품선택 액션시트 팝업
+   * @param event
+   */
   $select_productEvt: function(event) {
     Tw.Logger.info('[상품 선택]', event);
     var $target = $(event.currentTarget);
@@ -116,6 +136,10 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       hashName);
   },
 
+  /**
+   * 요금상품 선택버튼 클릭시 -> 요금상품 선택 액션시트 팝업
+   * @param event
+   */
   $select_product_billEvt: function(event) {
     Tw.Logger.info('[요금상품 선택]', event);
     var $target = $(event.currentTarget);
@@ -148,12 +172,17 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       hashName);
   },
 
+  /**
+   * 신청하기 버튼 클릭시 -> 신청 api호출
+   * @param event
+   */
   $submitApplyEvt: function(event) {
     Tw.Logger.info('[신청하기]', event);
     var param = this.productFormData;
     this._chgProductInfo(param);
   },
 
+  // 휴대폰 번호 입력시 validation
   input_hpEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
 
@@ -168,6 +197,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     Tw.Logger.info('[productFormData]', this.productFormData);
   },
 
+  // 일반전화 입력시
   input_phoneEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
     this.productFormData.cntcPrefrPhonNum = tempNum;
@@ -211,6 +241,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     }, this));
 
   },
+  // 상품선택 액션시트 close
   select_productEvtClose: function() {
     Tw.Logger.info('[팝업 close > select_productEvtOpen]');
     this._formValidateionChk();
@@ -245,13 +276,14 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     }, this));
 
   },
+  // 요금상품 액션시트 close
   select_product_billEvtClose: function() {
     Tw.Logger.info('[팝업 close > select_productEvtOpen]');
     this._formValidateionChk();
     Tw.Logger.info('[productFormData]', this.productFormData);
   },
 
-
+  // 회선에 맞는 데이터로 세팅
   _productBillSelectFun: function() {
 
     this.productBillSelect = _.filter( this.productBillList, $.proxy(function(item){
@@ -261,6 +293,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
     Tw.Logger.info('[productBillSelect]', this.productBillSelect);
   },
+
   _svcCtgNmFun: function() {
 
     var idVar = this.resData.svcAttrCd;
@@ -325,6 +358,12 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   },
 
   //--------------------------------------------------------------------------[API]
+  /**
+   * 상품변경신청 api 호출
+   * @param param
+   * @returns {*}
+   * @private
+   */
   _chgProductInfo: function (param) {
     Tw.CommonHelper.startLoading('.container', 'grey');
     return this._apiService.request(Tw.API_CMD.BFF_05_0165, param)
@@ -334,6 +373,11 @@ Tw.MyTJoinWireModifyProduct.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+  /**
+   * 상품변경신청 api 결과
+   * @param res
+   * @private
+   */
   _chgProductInfoInit: function (res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {

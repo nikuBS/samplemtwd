@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 약정기간 변경
  * FileName: myt-join.wire.modify.period.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 19.
+ * Summary: 유선 약정기간 변경
  */
 
 Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
@@ -114,27 +116,46 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   },
 
   _init: function () {
+    // SK브로드밴드 가입자의 경우 얼럿 && 화면 진입안됨
     if ( this._options.isBroadbandJoined === 'Y' ) {
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
     }
+    // 약정기간정보 세팅
     this._periodPopupTplList = Tw.POPUP_TPL.MYT_JOIN_WIRE_MODIFY_PERIOD[0].list;
+    // 휴대폰번호 세팅
     this._phonePopupTplList = this._PHONE_NUMS[0].list;
 
     // this._setSelectPopup(this._periodPopupTplList, this._options.beforeTerm);
   },
 
+  /**
+   * term에 해당하는 약정정보 반환
+   * @param term
+   * @return {Object}
+   * @private
+   */
   _getPeriodTermCnt: function (term) {
     return _.find(this._periodPopupTplList, {
       value: term
     }).cnt;
   },
 
+  /**
+   * list에서 term에 해당하는 item 선택
+   * @param list
+   * @param term
+   * @private
+   */
   _setSelectPopup: function (list, term) {
     _.each(list, function (item) {
       item.option = item.value === term ? 'checked' : '';
     });
   },
 
+  /**
+   * 미리보기 출력
+   * @private
+   */
   _showPreview: function () {
     var telNumber = this._getTelNumber();
     if ( (this._$feTel1.data('tel') || this._$feTel2.val() || this._$feTel3.val()) &&
@@ -147,11 +168,20 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._go('confirm');
   },
 
+  /**
+   * term에 해당하는 기간선택
+   * @param term
+   * @private
+   */
   _selectPeriod: function (term) {
     this._$btnSelectPeriod.text(term);
     this._selectedTerm = term;
   },
 
+  /**
+   * 위약금 조회 팝업 열기
+   * @private
+   */
   _showLoadingPopup: function () {
     if ( this._loadingPopupOpened ) {
       return;
@@ -165,10 +195,18 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, $.proxy(this._loadingPopupOpenCallback, this), $.proxy(this._loadingPopupCloseCallback, this), 'inquiring');
   },
 
+  /**
+   * 위약금 조회 팝업 열림 세팅
+   * @private
+   */
   _loadingPopupOpenCallback: function () {
     this._loadingPopupOpened = true;
   },
 
+  /**
+   * 위약금 조회 팝업 닫힘 callback
+   * @private
+   */
   _loadingPopupCloseCallback: function () {
     if ( this._agreementsPenaltyError ) {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.CONTENTS,
@@ -181,6 +219,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
+  /**
+   * 위약금 조회 팝업 닫기
+   * @private
+   */
   _hideLoadingPopup: function () {
     if ( this._loadingPopupOpened ) {
       this._popupService.close();
@@ -188,6 +230,11 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
+  /**
+   * 기간선택 액션시트 오픈시 호출
+   * @param $container
+   * @private
+   */
   _periodSelectPopupOpenCallback: function ($container) {
     this._periodSelectPopupOpened = true;
     $container.find('li button').click($.proxy(function (event) {
@@ -200,6 +247,11 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._periodSelectPopupOpened = false;
   },
 
+  /**
+   * 휴대폰 선택 액션시트 오픈시 호출
+   * @param $container
+   * @private
+   */
   _phoneSelectPopupOpenCallback: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
       var $target = $(event.currentTarget);
@@ -213,6 +265,11 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, this));
   },
 
+  /**
+   * 일반전화 선택 액션시트 오픈시 호출
+   * @param $container
+   * @private
+   */
   _telSelectPopupOpenCallback: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
       var $target = $(event.currentTarget);
@@ -226,6 +283,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, this));
   },
 
+  /**
+   * 위약금조회 api호출
+   * @private
+   */
   _reqAgreementsPenalty: function () {
     this._showLoadingPopup();
     this._apiService.request(Tw.API_CMD.BFF_05_0141, {
@@ -234,26 +295,37 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       .fail($.proxy(this._reqAgreementsPenaltyError, this));
   },
 
+  /**
+   * 위약금조회 성공시 호출
+   * @param resp
+   * @private
+   */
   _reqAgreementsPenaltyDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      // 처음 요청
       if ( this._intervalCnt <= 0 ) {
         ++this._intervalCnt;
+        // 5초 대기후 재요청
         window.setTimeout($.proxy(this._reqAgreementsPenalty, this), this._REQUEST_INTERVAL_TIME);
       } else {
         var result = resp.result;
+        // 에러
         if ( !result ) {
           this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._openAlertCloseCallback, this));
           return;
         }
-        // result.useMthCnt = '';
+        // result.useMthCnt 값이 없으면
         if ( Tw.FormatHelper.isEmpty(result.useMthCnt) ) {
+          // 마지막 요청이면 에러 얼럿
           if ( this._intervalCnt === this._MAXSIMUM_INTERVAL_CNT ) {
             window.setTimeout($.proxy(this._reqAgreementsPenaltyError, this), this._REQUEST_INTERVAL_TIME);
           } else {
+            // 두번째 요청 이면 경우 5초 대기후 재요청
             ++this._intervalCnt;
             window.setTimeout($.proxy(this._reqAgreementsPenalty, this), this._REQUEST_INTERVAL_TIME);
           }
         } else {
+          // result.useMthCnt값이 있으면 성공
           window.setTimeout($.proxy(this._reqAgreementsPenaltySuccess, this, resp.result), this._REQUEST_INTERVAL_TIME);
         }
       }
@@ -262,16 +334,29 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
+  /**
+   * 에러얼럿 닫을때 호출
+   * @private
+   */
   _openAlertCloseCallback: function () {
     this._hideLoadingPopup();
   },
 
+  /**
+   * 위약금 조회 요청 실패시 호출
+   * @private
+   */
   _reqAgreementsPenaltyError: function () {
     this._intervalCnt = 0;
     this._agreementsPenaltyError = true;
     this._hideLoadingPopup();
   },
 
+  /**
+   * 위약금 조회 요청 성공시 호출 - 위약금 정보 출력
+   * @param agreementsPenalty
+   * @private
+   */
   _reqAgreementsPenaltySuccess: function (agreementsPenalty) {
     this._setSelectPopup(this._periodPopupTplList, this._clickedTerm);
     this._selectPeriod(this._clickedTerm);
@@ -287,16 +372,31 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     // this._isDirty = true;
   },
 
+  /**
+   * 입력받은 휴대폰번호 반환
+   * @return xxx-xxxx-xxxx (String)
+   * @private
+   */
   _getCellphoneNumber: function () {
     return this._$fePhone1.data('phone') + '-' + this._$fePhone2.val() + '-' + this._$fePhone3.val();
   },
 
+  /**
+   * 입력받은 일반전화 번호 반환
+   * @return xx-xxxx-xxxx (String)
+   * @private
+   */
   _getTelNumber: function () {
     var tel = this._$feTel1.data('tel') + '-' + this._$feTel2.val() + '-' + this._$feTel3.val();
     var isValidTel = Tw.ValidationHelper.isTelephone(tel);
     return isValidTel ? tel : '';
   },
 
+  /**
+   * 신청하기 버튼 선택가능 상태 변경
+   * @return xx-xxxx-xxxx (String)
+   * @private
+   */
   _setRequestBtnStatus: function () {
     var isValidCellPhone = Tw.ValidationHelper.isCellPhone(this._getCellphoneNumber());
     var propDisabled = (!!this._selectedTerm && isValidCellPhone) ? false : true;
@@ -304,6 +404,11 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._setErrTxtStatus(isValidCellPhone);
   },
 
+  /**
+   * 유효성 에러 텍스트 노출
+   * @param isValidCellPhone
+   * @private
+   */
   _setErrTxtStatus: function(isValidCellPhone) {
     if (isValidCellPhone) {
       this._$selectPhoneErr.hide();
@@ -317,7 +422,12 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
+  /**
+   * 기간선택 버튼 클릭 시 호출
+   * @private
+   */
   _onClickBtnSelectPeriod: function () {
+    // 스마트 다이렉트 인 경우 중단
     if ( this._options.smartDirectYn === 'Y' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ALERT['2_A67']);
       return;
@@ -330,7 +440,12 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, $.proxy(this._periodSelectPopupOpenCallback, this), $.proxy(this._periodSelectPopupCloseCallback, this), 'selectperiod');
   },
 
+  /**
+   * 신청하기 버튼 클릭 시 호출 - 미리보기 출력
+   * @private
+   */
   _onClickBtnRequest: function () {
+    // 세트 상품인 경우 중단
     if ( this._options.grpProdYn === 'Y' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ALERT['2_A37']);
       return;
@@ -338,6 +453,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._showPreview(2);
   },
 
+  /**
+   * 신청완료 버튼 클릭 시 호출
+   * @private
+   */
   _onClickBtnSubmit: function () {
     var reqParams = {
       'beforeTerm': this._options.beforeTerm,
@@ -353,11 +472,16 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     if ( !Tw.FormatHelper.isEmpty(telNum) ) {
       reqParams.normalNum = telNum;
     }
+    // 유선 약정기간변경 api호출
     this._apiService.request(Tw.API_CMD.BFF_05_0142, reqParams)
       .done($.proxy(this._reqAgreementsSubmitDone, this))
       .fail($.proxy(this._reqFail, this));
   },
 
+  /**
+   * 첫번재 휴대폰번호 버튼 클릭 시 호출
+   * @private
+   */
   _onClickPhone1: function () {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
@@ -367,6 +491,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, $.proxy(this._phoneSelectPopupOpenCallback, this));
   },
 
+  /**
+   * 첫번재 일반전화번호 버튼 클릭 시 호출
+   * @private
+   */
   _onClickTel1: function () {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
@@ -376,11 +504,21 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }, $.proxy(this._telSelectPopupOpenCallback, this));
   },
 
+  /**
+   * 전화번호 input에 keyup이벤트 발생시 호출
+   * @param event
+   * @private
+   */
   _onKeyupInputPhone: function (event) {
     this._phoneNum = $(event.currentTarget).val();
     this._setRequestBtnStatus();
   },
 
+  /**
+   * 유선 약정기간변경 완료 성공
+   * @param resp
+   * @private
+   */
   _reqAgreementsSubmitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL(this._URL.COMPLETE);
@@ -389,10 +527,20 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     }
   },
 
+  /**
+   * 유선 약정기간변경 완료 실패
+   * @param err
+   * @private
+   */
   _reqFail: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
 
+  /**
+   * hash변경
+   * @param hash
+   * @private
+   */
   _go: function (hash) {
     window.location.hash = hash;
   }

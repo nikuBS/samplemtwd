@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -212,7 +212,7 @@
                                                                                                 <span class="inputbox">
                                                                                                     <span class="input">
                                                                                                         <input type="text" placeholder="이메일 주소 입력" title="일시정지 종료일 안내받을 이메일 주소 입력">
-                                                                                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                                                                                        <button class="cancel stop-bubble"><span class="blind">삭제</span></button><!-- 2019-03-12 stop-bubble 클래스 추가 -->
                                                                                                     </span>
                                                                                                 </span>
                                                                                             </div>
@@ -236,7 +236,7 @@
                                                                                                 <span class="inputbox bt-add inp-btn">
                                                                                                     <span class="input">
                                                                                                         <input type="number" placeholder="숫자만 입력" title="일시정지 종료일 안내받을 휴대폰번호 숫자만 입력">
-                                                                                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                                                                                        <button class="cancel stop-bubble"><span class="blind">삭제</span></button><!-- 2019-03-12 stop-bubble 클래스 추가 -->
                                                                                                     </span>
                                                                                                     <span class="bt-box">
                                                                                                         <button type="button">주소록</button>
@@ -268,14 +268,6 @@
                                                     </ul>
 												</div>
 												<!--// .cont-box -->
-
-                                                <div class="bt-fixed-area">
-                                                    <ul class="bt-slice full">
-                                                        <li class="bt-red1">
-                                                            <button disabled>신청하기</button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </li>
                                             <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                                 <div class="cont-box">
@@ -290,6 +282,14 @@
                         <!--// .component -->
                     </div>
                     <!--// .cont-box -->
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button disabled>신청하기</button><!-- 정보입력 완료된 후 disabled 속성 삭제 -->
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- // .container-wrap -->

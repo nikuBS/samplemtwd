@@ -35,5 +35,6 @@ export const UPLOAD_TYPE = {
 
 export const TID_LOGOUT = {
   DEFAULT: 0,
-  LOGIN_FAIL: 1
+  LOGIN_FAIL: 1,
+  EXCEED_FAIL: 2
 };

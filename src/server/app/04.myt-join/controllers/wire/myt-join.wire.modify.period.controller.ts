@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 약정기간 변경
  * FileName: myt-join.wire.modify.period.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.16
+ * Summary: 유선 약정기간 정보 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -48,6 +50,11 @@ class MyTJoinWireModifyPeriod extends TwViewController {
     });
   }
 
+  /**
+   * 인터넷/집전화/IPTV > 유선 약정정보조회
+   * @private
+   * return Observable
+   */
   private reqWireAgreementsInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0140, {});
     // return Observable.create((observer) => {
@@ -76,6 +83,12 @@ class MyTJoinWireModifyPeriod extends TwViewController {
     // });
   }
 
+  /**
+   * 약정정보조회 데이터 가공 후 반환
+   * @param resp
+   * @private
+   * return wireAgreementsInfo{Object}
+   */
   private getWireAgreementsInfo(resp: any): any {
     const wireAgreementsInfo = resp.result;
     // wireAgreementsInfo.beforeTerm = '2년';

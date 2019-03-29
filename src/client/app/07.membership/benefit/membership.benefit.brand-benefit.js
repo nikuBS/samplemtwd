@@ -1,13 +1,15 @@
 /**
+ * MenuName: T멤버십 > 제휴브랜드 > 혜택보기
  * FileName: membership.benefit.brand-benefit.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2018.11.05
+ * Summary: 제휴브랜드 혜택조회내역 출력, 내주변가맹점 조회, 인기브랜드 조회
  */
 
 Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
 
 
-
+  // 혜택 컨텐츠부분 : html데이터에 태그가 함께오므로 허용된 tag만 파싱해서 html로 출력
   $('.benefit-list').eq(0).html(this._convToHtml(options.appCoBenefitDtl )).show();
 
   /*

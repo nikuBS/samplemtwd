@@ -1,7 +1,9 @@
 /**
+ * MenuName: T멤버십 > 제휴브랜드
  * FileName: membership.benefit.brand.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.12.21
+ * Summary: 제휴브랜드 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -64,6 +66,7 @@ class MembershipBenefitBrand extends TwViewController {
         noMembership: false
       };
 
+      // 멤버십 미소지
       if ( respMembershipInfo.code === 'MBR0001' || respMembershipInfo.code === 'MBR0002' ) {
         options['noMembership'] = true;
       }
@@ -78,10 +81,20 @@ class MembershipBenefitBrand extends TwViewController {
     return resp.result;
   }
 
+  /**
+   * 카테고리 목록 조회
+   * @private
+   * return Observable
+   */
   private reqCateList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0016, {});
   }
 
+  /**
+   * 제휴브랜드 목록 조회
+   * @private
+   * return Observable
+   */
   private reqBrandList(): Observable<any> {
     const params = {
       pageNo: this.PAGE_NO,
@@ -95,6 +108,11 @@ class MembershipBenefitBrand extends TwViewController {
     return this.apiService.request(API_CMD.BFF_11_0017, params);
   }
 
+  /**
+   * 나의 멤버십 정보 조회
+   * @private
+   * return Observable
+   */
   private reqMembershipInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0001, {});
   }
@@ -109,6 +127,11 @@ class MembershipBenefitBrand extends TwViewController {
     });
   }
 
+  /**
+   * 카테고리 목록 데이터 가공후 반환
+   * @private
+   * return categories{Array}
+   */
   private getCateList(resp: any): any {
     const categories = this.getResult(resp);
     categories.map((category, _idx) => {
@@ -118,6 +141,11 @@ class MembershipBenefitBrand extends TwViewController {
     return categories;
   }
 
+  /**
+   * 제휴브랜드 목록 데이터 가공후 반환
+   * @private
+   * return result{Object}
+   */
   private getBrandResult(resp: any): any {
     const self = this;
     const result = this.getResult(resp);

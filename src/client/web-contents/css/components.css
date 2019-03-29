@@ -16197,7 +16197,7 @@ a.bt-link-tx.underline.small {
             position: absolute;
             left: -0.5625rem;
             top: 1.1875rem;
-            border-left: 1px solid #f2f2f2; }
+            border-left: 1px solid #c1c1c1; }
         .header-wrap .h-belt .h-default .h-home-tit .twrold.on, .header-wrap .h-belt .h-default .h-home-tit .directshop.on {
           font-weight: 700;
           color: #000; }
@@ -17953,7 +17953,7 @@ a.bt-link-tx.underline.small {
     display: table-cell;
     text-align: left; }
   .search-point .hours-of-business .as-time-list dd {
-    font-size: 1rem;
+    font-size: 0.875rem;
     display: table-cell;
     text-align: right; }
     .search-point .hours-of-business .as-time-list dd .tx-notice {
@@ -17970,7 +17970,7 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem; }
     .search-point .hours-of-business .as-time-list .subtext-dl .text {
       color: #000;
-      font-size: 0.8125rem; }
+      font-size: 0.875rem; }
     .search-point .hours-of-business .as-time-list .subtext-dl:last-child {
       padding-bottom: 1.25rem;
       border-bottom: 1px solid #e1e1e1; }
@@ -24029,7 +24029,7 @@ input[type="radio"].formradio-small.type2 + label {
       padding: 0 1rem;
       font-size: 0.9375rem;
       background: #f2f2f2;
-      font-weight: 300; }
+      font-weight: 300 !important; }
       .form-wrap .inputbox .input input[type=text]:disabled,
       .form-wrap .inputbox .input input[type=file]:disabled,
       .form-wrap .inputbox .input input[type=password]:disabled,
@@ -27562,24 +27562,14 @@ body.apphome {
       position: relative;
       padding-right: 1.875rem; }
     .join-footer ul li .btn-tip {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      margin-top: -0.4375rem;
-      width: 1.5rem;
-      height: 0.875rem;
-      background-size: auto 100%; }
+      position: relative;
+      left: 0;
+      top: 0;
+      width: auto;
+      font-size: 0.75rem;
+      color: #666; }
       .join-footer ul li .btn-tip i {
-        height: 100%; }
-      .join-footer ul li .btn-tip.fe-tip {
-        position: relative;
-        left: 0;
-        top: 0;
-        width: auto;
-        font-size: 0.75rem;
-        color: #666; }
-        .join-footer ul li .btn-tip.fe-tip i {
-          vertical-align: -0.125rem; }
+        vertical-align: -0.125rem; }
 
 .tx-red {
   color: #ef4b49; }

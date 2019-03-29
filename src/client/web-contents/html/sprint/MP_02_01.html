@@ -43,7 +43,7 @@
     <!--// #skip_navigation -->
      <div class="wrap">
          <!-- .popup hbs -->
-         <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+         <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -283,12 +283,15 @@
                     </div>
                     <!--//추천태그 -->
 
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <!--// .cont-box -->
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button>적용하기</button>
+                            <button disabled>적용하기</button>
                         </li>
                     </ul>
-
                 </div>
             </div>
             <!--// .container-wrap -->

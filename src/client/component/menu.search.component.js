@@ -60,7 +60,7 @@ Tw.MenuSearchComponent.prototype = {
       return;
     }
 
-    var keyword = encodeURIComponent($(e.currentTarget).val());
+    var keyword = $(e.currentTarget).val();
     if (keyword.trim() === '') {  // 검색어가 비어 있을 경우 취소
       this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,
         undefined, undefined, undefined, 'menu_search_alert');
@@ -68,6 +68,7 @@ Tw.MenuSearchComponent.prototype = {
       return;
     }
 
+    var keyword = encodeURIComponent(keyword);
     this._historyService.replaceURL('/common/search?keyword=' + keyword + '&from=menu');
   },
   _onLink: function (e) {

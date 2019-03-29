@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청내역(MS_04_01)
  * FileName: myt-join.wire.controller.ts
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 인터넷/집전화/IPTV 신청내역 최초화면
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -25,12 +27,12 @@ class MyTJoinWire extends TwViewController {
     // }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0167, {}),
-      this.apiService.request(API_CMD.BFF_05_0162, {}),
-      this.apiService.request(API_CMD.BFF_05_0168, {}),
-      this.apiService.request(API_CMD.BFF_05_0143, {}),
-      this.apiService.request(API_CMD.BFF_05_0153, {}),
-      this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' }))
+      this.apiService.request(API_CMD.BFF_05_0167, {}),   // 신규가입상세내역
+      this.apiService.request(API_CMD.BFF_05_0162, {}),   // 설치장소변경상세
+      this.apiService.request(API_CMD.BFF_05_0168, {}),   // 가입상품변경 상세내역
+      this.apiService.request(API_CMD.BFF_05_0143, {}),   // 유선 약정기간 상세내역
+      this.apiService.request(API_CMD.BFF_05_0153, {}),   // 요금상품변경 상세내역
+      this.apiService.request(API_CMD.BFF_05_0156, { page: '1', size: '20' }))    // 장애/AS 신청내역
       .subscribe(([r0167newJoin, r0162chgAddr, r0168prodChg, r0143periChg, r0153prodChg, r0156as]) => {
         /*
         r0167newJoin = {

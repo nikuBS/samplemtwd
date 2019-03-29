@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup nobg fixed-btn"><!-- 2018-10-30 클래스변경 -->
+        <div class="popup-page tw-popup nobg fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 2018-10-30 클래스변경 -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -164,15 +164,14 @@
                     <!--// .cont-box -->
                     <!--// 2018-10-30 추가 -->
 
-                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                    <div class="bt-fixed-area">
-                        <ul class="bt-slice full">
-                            <li class="bt-red1">
-                                <button>선물하기</button>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>선물하기</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- // .container-wrap -->

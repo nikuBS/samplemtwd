@@ -79,7 +79,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberSloginAos($('#commonLoginEasyAos'), '<%= mdn !== null %>');
+    new Tw.CommonMemberSloginAos($('#commonLoginEasyAos'), '<%= mdn !== null %>', '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

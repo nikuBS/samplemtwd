@@ -90,7 +90,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
     // 숨겨져 있는 개수가 리스트 페이지 개수 보다 적게 있을때, 일부만 노출
     if (hiddenLength > listSize) {
       this.$list.find('li:hidden:lt(' + listSize + ')').removeClass('none');
-      $(e.currentTarget).find('span').text('(' + hiddenLength + ')');
+      $(e.currentTarget).find('span').text('(' + (hiddenLength - listSize) + ')');
     }
   },
 

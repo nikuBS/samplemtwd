@@ -27,21 +27,27 @@ Tw.ProductRoamingCoupon.prototype = {
   },
 
   _init: function(){
+    // 로그인 하지 않은 상태에서 BPCP 페이지 호출 후 로그인 할 경우 BPCP 팝업이 뜨도록 설정
     if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
     }
   },
 
+  /**
+   * BPCP 페이지 이동
+   * @param state
+   * @param event
+   * @private
+   */
   _onViewclicked: function (state, event) {
     if(state === 'COUPON'){
       state = event.currentTarget.id;
     }
 
-    var url = Tw.OUTLINK.ROAMING_COUPON[state];
+    var url = Tw.OUTLINK.ROAMING_COUPON[state]; // 정의된 BPCP ID 가져오기
 
     this._title = state === 'REGISTER' ? 'REGISTER' : 'BUY';
-    this._bpcpService.open(url, null, null, event);
-    history.replaceState(null, document.title, location.origin + '/product/roaming/coupon?bpcpServiceId=' + url);
+    this._bpcpService.open(url, null, null);
   },
 
   _initBpcp: function() {

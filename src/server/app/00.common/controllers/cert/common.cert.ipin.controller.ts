@@ -21,7 +21,7 @@ class CommonCertIpin extends TwViewController {
     const prodAuthKey = decodeURIComponent(req.query.prodAuthKey) || ''; // 상품인증이 있는 경우
     const params = {
       authUrl,
-      resultUrl: 'https://' + this.loginService.getDns() + '/common/cert/result?type=ipin&kind=' + authKind,
+      resultUrl: 'http://' + this.loginService.getDns() + '/common/cert/result?type=ipin&kind=' + authKind,
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + authKind,
       authKind,
       prodAuthKey
@@ -30,12 +30,7 @@ class CommonCertIpin extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.ipin.html', { data: resp.result, pageInfo });
       } else {
-        return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          pageInfo,
-          svcInfo
-        });
+        res.redirect('/common/inapp/error?code=' + resp.code + '&msg=' + resp.msg);
       }
     });
   }

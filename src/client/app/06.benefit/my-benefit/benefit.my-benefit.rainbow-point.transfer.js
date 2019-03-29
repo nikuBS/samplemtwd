@@ -1,7 +1,9 @@
 /**
+ * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 양도
  * FileName: benefit.my-benefit.rainbow-point.transfer.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 30.
+ * Summary: 레인보우 포인트 포인트 양도
  */
 
 Tw.BenefitMyBenefitRainbowPointTransfer = function () {
@@ -28,12 +30,23 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
     this._linesToReceive = this.$container.data('lines-to-receive');
   },
 
+
+  /**
+   * 양도취소버튼 클릭 시 호출
+   * @param event
+   * @private
+   */
   _onClickBtnCancel: function (event) {
     var serNum = $(event.currentTarget).data('ser-num');
     // this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A4, $.proxy(this._cancelTransfer, this, serNum));
     this._cancelTransfer(serNum);
   },
 
+  /**
+   * 양도취소
+   * @param serNum
+   * @private
+   */
   _cancelTransfer: function (serNum) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0105, {}, {}, [serNum])
@@ -41,6 +54,11 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
       .fail($.proxy(this._reqFail, this));
   },
 
+  /**
+   * 양도취소 성공
+   * @param resp
+   * @private
+   */
   _cancelTransferDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.TRANSFER_CANCELED);
@@ -52,6 +70,11 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
     }
   },
 
+  /**
+   * 받는 회선 변경
+   * @param svcMgmtNum
+   * @private
+   */
   _changeLineToReceive: function (svcMgmtNum) {
     var selectedLine = _.find(this._linesToReceive, {
       svcMgmtNum: svcMgmtNum
@@ -59,6 +82,12 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
     this._changeLine(selectedLine, this._$btnLineToReceive);
   },
 
+  /**
+   * 미리보기 데이터 가공 후 반환
+   * @param svcMgmtNum
+   * return {Object}
+   * @private
+   */
   _getPreviewData: function () {
     var inputPoint = parseInt(this._$inputPoint.val(), 10) || 0;
     var pointToGive = parseInt(this._lineToGive.point, 10);
@@ -87,6 +116,10 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
     };
   },
 
+  /**
+   * 미리보기 > 양도완료 버튼 클릭 시 호출
+   * @private
+   */
   _submit: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0104, {
       'befrSvcMgmtNum': this._$btnLineToReceive.data('svc-mgmt-num').toString(),
@@ -95,6 +128,11 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
       .fail($.proxy(this._reqFail, this));
   },
 
+  /**
+   * 포인트 받는 회선 정보 반환
+   * return {Object}
+   * @private
+   */
   _getReceiveLine: function () {
     var svcMgmtNumToReceive = this._$btnLineToReceive.data('svc-mgmt-num').toString();
     return this._getLinesAttrToSelect(this._linesToReceive, svcMgmtNumToReceive);

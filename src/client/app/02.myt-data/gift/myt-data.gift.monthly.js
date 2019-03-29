@@ -35,7 +35,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));
-    this.$input_auto_gift.on('keyup blur', $.proxy(this._onKeyUpAutoGiftNumber, this));
+    this.$input_auto_gift.on('input blur', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
     this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
   },
@@ -157,7 +157,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _convertDashNumber: function (sTelNumber) {
-    return Tw.StringHelper.phoneStringToDash(sTelNumber);
+    return Tw.FormatHelper.getDashedCellPhoneNumber(sTelNumber);
   },
 
   _checkValidateSendingButton: function () {

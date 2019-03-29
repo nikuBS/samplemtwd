@@ -41,9 +41,9 @@ Tw.MembershipMyCancel.prototype = {
 
   _cancleComplete: function(e, res) {
     if(res.code === Tw.API_CODE.CODE_00) {
-      //완료 페이지 이동
+      // 완료 페이지 이동
       this._popupService.afterRequestSuccess(null, '/membership/submain', null, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CANCEL);
-    }else if(res.code === 'ZMBRE0003') { //가입 당일 해지불가 에러
+    }else if(res.code === 'ZMBRE0003') { // 가입 당일 해지불가 Alert
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A71;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
     }else{

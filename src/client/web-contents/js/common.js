@@ -899,6 +899,7 @@ skt_landing.action = {
           popCk_wrap.each(function(){
             $(this).css('overflow-y', 'hidden');
           });
+          $("html, .wrap").css("height", "100%"); // 19.03.28 추가
           skt_landing.action.checkScroll.lockScroll();
           skt_landing.action.checkScroll.input_scroll_fix();
         }
@@ -945,8 +946,9 @@ skt_landing.action = {
         var popCk = $('.popup-page.tw-popup'),
             popCk_wrap = popCk.not($(".actionsheet"));
         popCk_wrap.each(function(){
-          $(this).css('overflow-y', 'auto');
+          $(this).css('overflow-y', '');
         });
+        $("html, .wrap").css("height", ""); // 19.03.28 추가
         skt_landing.action.checkScroll.unLockScroll();
       }
       // 19.03.22 딤드처리된 popup 스크롤락

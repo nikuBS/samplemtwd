@@ -282,7 +282,7 @@ Tw.MyTFareInfoHistory.prototype = {
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
       title: Tw.POPUP_TITLE.SELECT_PAYMENT_TYPE,
-      data: Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE,
+      data: this._setSelectPayType(Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE),
       btnfloating: {
         txt: '닫기',
         attr: 'type="button"',
@@ -293,6 +293,17 @@ Tw.MyTFareInfoHistory.prototype = {
     $.proxy(this._closeTypeSelect, this),
     null, $(evt.currentTarget)
     );
+  },
+
+  // 유무선 여부에 따라 셀렉트 타입 결정
+  _setSelectPayType: function (arr) {
+    var types = arr[0].list;
+    return [{list: _.reduce(types, $.proxy(function(prev, type){
+      if (this.data.isMobile || type.onlyType !== 'M') {
+        prev.push(type);
+      } 
+      return prev;
+    }, this), [])}];
   },
 
   _openTypeSelectHandler: function ($container) {

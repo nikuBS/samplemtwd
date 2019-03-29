@@ -72,20 +72,4 @@
   })();
 </script>
 <% } %>
-<% if ( isBpcp ) { %>
-<script type="text/javascript">
-  $(function() {
-    $('a').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      window.top.postMessage('goLink:' + $(e.currentTarget).attr('href'), location.origin);
-    });
-
-    $('.fe-common-back').on('click', function() {
-      window.top.postMessage('popup_close', location.origin);
-    });
-  });
-</script>
-<% } %>
 <% include ../components/end.component.html %>

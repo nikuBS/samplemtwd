@@ -18,7 +18,7 @@ class CommonMemberLoginRoute extends TwViewController {
     const params = this.getParams(req.query.target);
 
     if ( !FormatHelper.isEmpty(query.error) ) {
-      if ( query.error === '3541' ) {
+      if ( query.error === '3541' || query.error === '3602' || query.error === '4503' ) {
         params.type = 'cancel';
         res.render('member/common.member.login.route.html', { params, svcInfo, pageInfo });
       } else {

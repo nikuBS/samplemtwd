@@ -25,12 +25,7 @@ class CommonCertNiceRefund extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.nice.html', { data: resp.result, pageInfo });
       } else {
-        return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          pageInfo,
-          svcInfo
-        });
+        res.redirect('/common/inapp/error?code=' + resp.code + '&msg=' + resp.msg);
       }
     });
   }

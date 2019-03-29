@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup nobg fixed-btn">
+        <div class="popup-page tw-popup nobg fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경-->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header noborder">
@@ -152,17 +152,15 @@
                     </div>  
                     <!--// .cont-box -->
                     <!--// 2018-10-29 추가 -->
-
-					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                    <div class="bt-fixed-area">
-						<ul class="bt-slice full">
-							<li class="bt-red1">
-								<button>결제하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
-							</li>
-						</ul>
-                    </div>
-                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-                </div>
+				</div>
+				<!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+				<div class="bt-fixed-area">
+					<ul class="bt-slice full">
+						<li class="bt-red1">
+							<button>결제하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+						</li>
+					</ul>
+				</div>
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->

@@ -1,7 +1,9 @@
 <%#
+* MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청내역 > 장애/AS 신청현황(MS_04_01_03)
 * FileName: myt-join.wire.as.history.html
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.10.08
+* Summary: 인터넷/집전화/IPTV 장애/AS 신청내역 목록 조회 화면
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
@@ -82,11 +84,11 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list02">
-                    <li><button id="MS_04_01_03_tip_01" type="button" class="tip-view-btn" aria-haspopup="true">장애 A/S 방문 취소 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_01_03_tip_02" type="button" class="tip-view-btn" aria-haspopup="true">106을 통해 장애 A/S 신청한 경우 <span class="tip-view">TIP</span></button></li>
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li><button id="MS_04_01_03_tip_01" type="button" class="btn-tip" aria-haspopup="true">장애 A/S 방문 취소 <i class="icon-badge-tip"><span class="blind">TIP</span></i></button></li>
+                    <li><button id="MS_04_01_03_tip_02" type="button" class="btn-tip" aria-haspopup="true">106을 통해 장애 A/S 신청한 경우 <i class="icon-badge-tip"><span class="blind">TIP</span></i></button></li>
                     <!--<li>장애 A/S 방문 취소 <button id="MS_04_01_03_tip_01" type="button" class="tip-view" title="장애 A/S 방문 취소" aria-haspopup="true">TIP</button></li>-->
                     <!--<li>106을 통해 장애 A/S 신청한 경우 <button id="MS_04_01_03_tip_02" type="button" class="tip-view" title="106을 통해 장애 A/S 신청한 경우" aria-haspopup="true">TIP</button></li>-->
                 </ul>

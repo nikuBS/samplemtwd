@@ -169,16 +169,15 @@ class MytDataSubmainController extends TwViewController {
         data.refill = refill;
       }
 
-      if (!refillGiftHistory) {
-        return this._render(res, data);
-      }
-
       const reqBkdArr = new Array();
 
       if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());
         reqBkdArr.push(this._getEtcChargeBreakdown());
       } else {
+        if (!refillGiftHistory) {
+          return this._render(res, data);
+        }
         // 리필쿠폰 수혜, 제공 건수
         if ((refillGiftHistory.rifilRcvCnt && parseInt(refillGiftHistory.rifilRcvCnt, 10) > 0) ||
           (refillGiftHistory.rifilSndCnt && parseInt(refillGiftHistory.rifilSndCnt, 10) > 0)) {

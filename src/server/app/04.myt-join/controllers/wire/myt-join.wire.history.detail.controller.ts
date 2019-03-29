@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청현황 상세(MS_04_01_01_01)
  * FileName: myt-join.wire.history.detail.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 인터넷/집전화/IPTV 신청현황 상세 조회
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -28,24 +30,25 @@ class MyTJoinWireHistoryDetail extends TwViewController {
     //   });
     // }
 
+    // 원래는 데이터object를 목록 화면에서 받아 뿌려주기만 했지만
     // 인증해제 이슈로 상세화면에서 다시 조회함
 
-    const atype = req.query.atype;
-    const dataKey = req.query.key;
+    const atype = req.query.atype;      // api type(신청내역 목록조회에서 넘겨줌)
+    const dataKey = req.query.key;      // detail key (신청내역 목록조회에서 넘겨줌)
     const dt = req.query.dt;
     const title = MYT_JOIN_WIRE_HIST_DTL_TIT_MAP[atype];
 
     let apiCmd: any = null;
 
-    if ( atype === MyTJoinWireHistory._ATYPE_167 ) {
+    if ( atype === MyTJoinWireHistory._ATYPE_167 ) {   // 신규가입상세내역
       apiCmd = API_CMD.BFF_05_0167;
-    } else if ( atype === MyTJoinWireHistory._ATYPE_162 ) {
+    } else if ( atype === MyTJoinWireHistory._ATYPE_162 ) {   // 설치장소변경상세
       apiCmd = API_CMD.BFF_05_0162;
-    } else if ( atype === MyTJoinWireHistory._ATYPE_168 ) {
+    } else if ( atype === MyTJoinWireHistory._ATYPE_168 ) {   // 가입상품변경 상세내역
       apiCmd = API_CMD.BFF_05_0168;
-    } else if ( atype === MyTJoinWireHistory._ATYPE_143 ) {
+    } else if ( atype === MyTJoinWireHistory._ATYPE_143 ) {   // 유선 약정기간 상세내역
       apiCmd = API_CMD.BFF_05_0143;
-    } else if ( atype === MyTJoinWireHistory._ATYPE_153 ) {
+    } else if ( atype === MyTJoinWireHistory._ATYPE_153 ) {   // 요금상품변경 상세내역
       apiCmd = API_CMD.BFF_05_0153;
     }
 
@@ -61,6 +64,7 @@ class MyTJoinWireHistoryDetail extends TwViewController {
 
             for ( let i = list.length; i >= 0; i-- ) {
               if ( !FormatHelper.isEmpty(list[i]) ) {
+                // 신청내역 목록과 같은 방식으로 생성된 key로 data를 찾음
                 if ( dataKey === MyTJoinWireHistory.getDetailKey(list[i], atype)) {
                   data = list[i];
                 }
@@ -102,6 +106,11 @@ class MyTJoinWireHistoryDetail extends TwViewController {
 
   }
 
+  /**
+   * data 포맷팅(날짜, 날짜시간, 휴대폰번호)
+   * @param data
+   * @private
+   */
   private _formatData(data: any): any {
 
     this._formatDt(data, 'dt');

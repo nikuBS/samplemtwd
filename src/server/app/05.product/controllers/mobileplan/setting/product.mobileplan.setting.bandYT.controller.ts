@@ -1,5 +1,5 @@
 /**
- * 모바일 요금제 > Band YT 요금제
+ * MenuName: 모바일 요금제 > Band YT 요금제
  * FileName: product.mobileplan.setting.bandYT.controller.ts
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.11.20
@@ -30,7 +30,7 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     if ( FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1 ) {
       return this.error.render(res, data);
     }
-
+    // bandYT요금상품 설정조회
     this.apiService.request(API_CMD.BFF_10_0042, {}, {})
       .subscribe((bandytInfo) => {
         if ( bandytInfo.code === API_CODE.CODE_00 ) {

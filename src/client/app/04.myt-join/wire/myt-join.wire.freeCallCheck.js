@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV B끼리 무료 통화 대상자 조회(MS_04_02)
  * FileName: myt-join.wire.feeCallCheck.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.15
+ * Summary: B끼리 무료 통화 대상자 조회
  */
 Tw.MyTJoinWireFreeCallCheck = function (rootEl, resData) {
   this.resData = resData;
@@ -24,12 +26,20 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
 
 
   },
+  /**
+   * element cache
+   * @private
+   */
   _cachedElement: function () {
     // this.$entryTpl = $('#fe-entryTpl');
     this.$inputPhone = $('[data-target="inputPhone"]');
     this.$lookupBtn = $('[data-target="lookupBtn"]');
 
   },
+  /**
+   * event bind
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('keyup', '[data-target="inputPhone"]', $.proxy(this._onFormatHpNum, this));
     this.$container.on('focusout', '[data-target="inputPhone"]', $.proxy(this._onFocusoutFormatHpNum, this));
@@ -38,6 +48,11 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * close 버튼 클릭시
+   * 입력대상 체크(주석처리)
+   * @private
+   */
   _closeCheck: function(){
     this._history.goLoad('/myt-join/submain');
 
@@ -54,6 +69,11 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     //}
   },
 
+  /**
+   * 조회버튼 클릭 -> 조회
+   * @param event
+   * @private
+   */
   _lookupBtnEvt: function(event) {
     Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
     // var $target = $(event.currentTarget);
@@ -71,6 +91,12 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     this._freeCallCheckInfo(param);
   },
   //--------------------------------------------------------------------------[API]
+  /**
+   * 무료통화 대상자 조회
+   * @param param
+   * @returns {*}
+   * @private
+   */
   _freeCallCheckInfo: function (param) {
 
     return this._apiService.request(Tw.API_CMD.BFF_05_0160, param).done($.proxy(this._freeCallCheckInfoInit, this));
@@ -86,6 +112,11 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     //   });
 
   },
+  /**
+   * 무료통화대상자 조회 결과 처리
+   * @param res
+   * @private
+   */
   _freeCallCheckInfoInit: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과] _freeCallCheckInfoInit', res);

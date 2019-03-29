@@ -5,48 +5,11 @@ Tw.BpcpService = function() {
   this._tidLanding = new Tw.TidLandingComponent();
   this._bpcpServiceId = null;
   this._currentHistoryLength = 0;
-  this._bindEvent();
 };
 
 Tw.BpcpService.prototype = {
 
-  _bindEvent: function() {
-    $(window).on('message', $.proxy(this._getWindowMessage, this));
-  },
-
-  _getWindowMessage: function(e) {
-    var data = e.data || e.originalEvent.data;
-    if (Tw.FormatHelper.isEmpty(data) || typeof(data) !== 'string') {
-      return;
-    }
-
-    // BPCP 팝업 닫기
-    if (data === 'popup_close') {
-      this._popupService.closeAll();
-    }
-
-    // BPCP 팝업 닫고 링크 이동
-    if (data.indexOf('goLink:') !== -1) {
-      this._popupService.closeAllAndGo(data.replace('goLink:', ''));
-    }
-
-    // BPCP 팝업 닫고 로그인 호출
-    if (data.indexOf('goLogin:') !== -1) {
-      this._tidLanding.goLogin(this._pathUrl + '&' + $.param(JSON.parse(data.replace('goLogin:', ''))));
-    }
-
-    // BPCP 에서 외부 팝업창 호출하고자 할떄
-    if (data.indexOf('outlink:') !== -1) {
-      var url = data.replace('outlink:', '');
-      if (!Tw.BrowserHelper.isApp()) {
-        return Tw.CommonHelper.openUrlExternal(url);
-      }
-
-      Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal(url), this));
-    }
-  },
-
-  _responseBPCP: function(event, resp) {
+  _responseBPCP: function(resp) {
     if (resp.code === 'BFF0003') {
       return this._tidLanding.goLogin(this._pathUrl + (this._pathUrl.indexOf('?') === -1 ? '?' : '&') + 'bpcpServiceId=' + this._bpcpServiceId);
     }
@@ -59,7 +22,7 @@ Tw.BpcpService.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._onSuccessBpcpPop(resp, event);
+    this._onSuccessBpcpPop(resp);
   },
 
   _onBlockBpcp: function(resp) {
@@ -74,10 +37,10 @@ Tw.BpcpService.prototype = {
       serviceBlock = $.extend(serviceBlock, { fromDtm: fromDtm, toDtm: toDtm });
     }
 
-    this._popupService.open(serviceBlock);
+    this._popupService.open(serviceBlock, null, $.proxy(this._onCloseBpcpPop, this));
   },
 
-  _onSuccessBpcpPop: function(resp, event) {
+  _onSuccessBpcpPop: function(resp) {
     var url = $.trim(resp.result.svcUrl);
     if (Tw.FormatHelper.isEmpty(url)) {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
@@ -90,21 +53,11 @@ Tw.BpcpService.prototype = {
     url += '&ref_poc=' + (Tw.BrowserHelper.isApp() ? 'app' : 'mweb');
     url += '&ref_origin=' + encodeURIComponent(location.origin);
 
-    if (Tw.BrowserHelper.isIos()) {
-      return this._historyService.goLoad(url);
+    if (this._isReplace) {
+      return this._historyService.replaceURL(url);
     }
 
-    this._popupService.open({
-        hbs: 'product_bpcp',
-        iframeUrl: url
-      }, $.proxy(this._onOpenBpcpPop, this), $.proxy(this._onCloseBpcpPop, this),
-      null, (event ? $(event.currentTarget) : null));
-  },
-
-  _onOpenBpcpPop: function() {
-    if (!Tw.FormatHelper.isEmpty(this.$container)) {
-      this.$container.find('#header, #contents, #gnb').hide();
-    }
+    this._historyService.goLoad(url);
   },
 
   _onCloseBpcpPop: function() {
@@ -119,14 +72,15 @@ Tw.BpcpService.prototype = {
     return url && url.indexOf('BPCP:') !== -1;
   },
 
-  setData: function(rootEl, pathUrl, isOnCloseBack) {
+  setData: function(rootEl, pathUrl, isOnCloseBack, isReplace) {
     this.$container = rootEl;
     this._isOnCloseBack = isOnCloseBack || false;
+    this._isReplace = isReplace || false;
     this._pathUrl = pathUrl;
     this._currentHistoryLength = history.length - 1;
   },
 
-  open: function(url, svcMgmtNum, eParam, event) {
+  open: function(url, svcMgmtNum, eParam) {
     var bpcpServiceId = url.replace('BPCP:', ''),
       reqParams = {
       bpcpServiceId: bpcpServiceId
@@ -143,7 +97,7 @@ Tw.BpcpService.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_01_0039, reqParams)
-      .done($.proxy(this._responseBPCP, this, event));
+      .done($.proxy(this._responseBPCP, this));
   }
 
 };

@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 서비스해지 신청(MS_04_08)
  * FileName: myt-join.wire.set.wire-cancel-service.controller.ts
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.15
+ * Summary: 서비스 해지 신청이 있다면 신청현황화면으로 없다면 정보 조회 후 신청화면으로 이동
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -54,7 +56,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     this.logger.info(this, '[ allSvc ] : ', allSvc);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
-
+    // 서비스 해지 신청 현황을 조회 후 신청건이 있다면 신청정보 화면으로 이동
     this.apiService.request(API_CMD.BFF_05_0198, {})
       .subscribe(function(resp) {
         if ( resp.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(resp.result) ) {
@@ -97,6 +99,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     // this._typeInit();
     const thisMain = this;
 
+    // 해지 신청 대상 조회
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0172, {}), 'p1');
 
     Promise.all([p1]).then(function(resArr) {
@@ -200,6 +203,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
       // thisMain._dataInit();
 
+      // sk브로드밴드 여부 : 브로드밴드 회선인 경우 화면에서 서브메인으로 리턴시킴
       let skbdYn = 'N';
       for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ) {
         if ( thisMain._resDataInfo.wireList[i].SVC_MGMT_NUM === svcInfo.svcMgmtNum ) {
