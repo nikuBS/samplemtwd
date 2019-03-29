@@ -26,7 +26,6 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _initVariables: function (svcAttrCd) {
-    this.$uri = null;
     this.$isMobile = true;
 
     this._autoComplete = false;
@@ -90,8 +89,8 @@ Tw.MyTFareBill.prototype = {
       lineManagement: { 'txt': Tw.MYT_FARE_PAYMENT_NAME.AUTO_PAYMENT, 'spot': Tw.MYT_FARE_PAYMENT_NAME.REQUEST },
       btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
-      $.proxy(this._onOpenPopup, this),
-      $.proxy(this._goLoad, this),
+      $.proxy(this._onOpenPopup, this), 
+      null,
       'paymentselect');
   },
   _onOpenPopup: function ($layer) {
@@ -106,10 +105,10 @@ Tw.MyTFareBill.prototype = {
   },
   _setAutoField: function () {
     if (this._isAutoTarget) {
-      this.$layer.on('click', '.fe-auto', $.proxy(this._setEvent, this, 'auto'));
+      this.$layer.on('click', '.fe-auto', $.proxy(this._goPage, this, 'auto'));
     } else {
       this.$layer.find('.fe-auto').find('.spot').text(Tw.MYT_FARE_PAYMENT_NAME.USING);
-      this.$layer.on('click', '.fe-auto', $.proxy(this._setEvent, this, 'option'));
+      this.$layer.on('click', '.fe-auto', $.proxy(this._goPage, this, 'option'));
     }
   },
   _setSmsField: function () {
@@ -129,27 +128,23 @@ Tw.MyTFareBill.prototype = {
     $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
   },
   _bindEvent: function () {
-    this.$layer.on('click', '.fe-account', $.proxy(this._setEvent, this, 'account'));
-    this.$layer.on('click', '.fe-card', $.proxy(this._setEvent, this, 'card'));
-    this.$layer.on('click', '.fe-point', $.proxy(this._setEvent, this, 'point'));
-    this.$layer.on('click', '.fe-sms', $.proxy(this._setEvent, this, 'sms'));
+    this.$layer.on('click', '.fe-account', $.proxy(this._goPage, this, 'account'));
+    this.$layer.on('click', '.fe-card', $.proxy(this._goPage, this, 'card'));
+    this.$layer.on('click', '.fe-point', $.proxy(this._goPage, this, 'point'));
+    this.$layer.on('click', '.fe-sms', $.proxy(this._goPage, this, 'sms'));
 
     // point bind event
-    this.$layer.on('click', '.fe-ok-cashbag', $.proxy(this._setEvent, this, 'cashbag'));
-    this.$layer.on('click', '.fe-t-point', $.proxy(this._setEvent, this, 'tpoint'));
-    this.$layer.on('click', '.fe-rainbow-point', $.proxy(this._setEvent, this, 'rainbow'));
+    this.$layer.on('click', '.fe-ok-cashbag', $.proxy(this._goPage, this, 'cashbag'));
+    this.$layer.on('click', '.fe-t-point', $.proxy(this._goPage, this, 'tpoint'));
+    this.$layer.on('click', '.fe-rainbow-point', $.proxy(this._goPage, this, 'rainbow'));
   },
-  _setEvent: function (uri) {
-    this.$uri = uri;
-    this._popupService.close();
-  },
-  _goLoad: function () {
-    if (this.$uri !== null) {
-      var fullUrl = '/myt-fare/bill/' + this.$uri;
-      if (this.$uri === 'auto') {
+  _goPage: function ($uri) {
+    if ($uri !== null) {
+      var fullUrl = '/myt-fare/bill/' + $uri;
+      if ($uri === 'auto') {
         fullUrl = '/myt-fare/bill/option/register';
       }
-      this._historyService.goLoad(fullUrl);
+      this._historyService.replaceURL(fullUrl);
     }
   },
   _autoSuccess: function (res) {
