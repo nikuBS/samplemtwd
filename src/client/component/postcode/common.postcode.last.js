@@ -2,6 +2,7 @@
  * FileName: common.postcode.last.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.13
+ * Description: 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (3/3)
  */
 
 Tw.CommonPostcodeLast = function ($container, $target, $addressObject, $callback) {
@@ -18,6 +19,7 @@ Tw.CommonPostcodeLast = function ($container, $target, $addressObject, $callback
 
 Tw.CommonPostcodeLast.prototype = {
   _init: function ($addressObject) {
+    // 2페이지에서 다음 버튼 클릭 시 팝업 load
     this._popupService.open({
         hbs: 'CO_UT_05_04_03'
       },
@@ -36,12 +38,12 @@ Tw.CommonPostcodeLast.prototype = {
     this._bindEvent();
   },
   _saveAddress: function () {
-    if (this.$isNext) {
+    if (this.$isNext) { // 완료 시
       this.$target.focus();
 
-      if (this.$callback) {
+      if (this.$callback) { // 호출된 페이지에서 콜백을 보냈으면 콜백에 정보 전달
         this.$callback(this.$saveAddress);
-      } else {
+      } else { // 콜백이 없으면 바닥페이지의 클래스명 찾아서 선택된 정보 셋팅
         this.$container.find('.fe-zip').val(this.$saveAddress.zip);
         this.$container.find('.fe-main-address').val(this.$saveAddress.main);
         this.$container.find('.fe-detail-address').val(this.$saveAddress.detail);
@@ -84,7 +86,6 @@ Tw.CommonPostcodeLast.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
-    this.$layer.on('click', '.fe-prevent li', $.proxy(this._preventDefault, this));
     this.$layer.on('click', '.fe-save', $.proxy(this._getStandardAddress, this));
   },
   _checkIsAbled: function (event) {
@@ -94,16 +95,12 @@ Tw.CommonPostcodeLast.prototype = {
     } else {
       this.$saveBtn.removeAttr('disabled');
     }
-
     this._checkIsEnter(event);
   },
   _checkIsEnter: function (event) {
     if (Tw.InputHelper.isEnter(event)) {
       this.$layer.find('.fe-save').focus();
     }
-  },
-  _preventDefault: function (event) {
-    event.preventDefault();
   },
   _getStandardAddress: function (e) {
     var $apiName = this._getStandardApiName();

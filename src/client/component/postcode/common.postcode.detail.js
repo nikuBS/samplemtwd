@@ -2,6 +2,7 @@
  * FileName: common.postcode.detail.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.12
+ * Description: 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (2/3)
  */
 
 Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callback) {
@@ -19,6 +20,7 @@ Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callba
 
 Tw.CommonPostcodeDetail.prototype = {
   _init: function ($addressObject) {
+    // 1페이지에서 다음 버튼 클릭 시 팝업 load
     this._popupService.open({
       hbs: 'CO_UT_05_04_02'
     },
@@ -37,19 +39,20 @@ Tw.CommonPostcodeDetail.prototype = {
     this._bindEvent();
   },
   _goLast: function () {
-    if (this.$isNext) {
-      new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback);
+    if (this.$isNext) { // 다음 버튼 클릭 시
+      new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback); // 마지막 페이지 팝업 load
     }
   },
   _setInitTab: function ($addressObject) {
-    var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
-    $selectedTarget.attr('aria-selected', 'true');
+    var $selectedTarget = this.$layer.find('#' + $addressObject.tabId); // 첫 번째 팝업에서 선택된 정보 (도로명 or 지번)
+    $selectedTarget.attr('aria-selected', 'true'); // 웹접근성
 
+    // 지번주소인 경우 margin 조절
     if ($addressObject.tabId === 'tab2') {
       $selectedTarget.css('marginLeft', '0');
     }
-    $selectedTarget.siblings().attr('aria-selected', 'false');
-    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none');
+    $selectedTarget.siblings().attr('aria-selected', 'false'); // 웹접근성
+    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none'); // 선택되지 않은 탭 hidden 처리
   },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
@@ -68,7 +71,7 @@ Tw.CommonPostcodeDetail.prototype = {
   },
   _initData: function ($addressObject) {
     this.$selectedAddress.attr({'id': $addressObject.id, 'data-origin': $addressObject.originText})
-      .text($addressObject.text);
+      .text($addressObject.text); // 첫 번째 팝업에서 조회된 정보 셋팅
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-input-number', $.proxy(this._checkNumber, this));
@@ -77,8 +80,8 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
   },
   _checkNumber: function (event) {
-    this._inputHelper.inputNumberAndDashOnly(event.currentTarget);
-    this._checkIsEnter(event);
+    this._inputHelper.inputNumberAndDashOnly(event.currentTarget); // 숫자와 -만 입력 가능
+    this._checkIsEnter(event); // 키패드 이동 및 엔터 클릭 시 이벤트
   },
   _checkIsEnter: function (event) {
     if (Tw.InputHelper.isEnter(event)) {
@@ -130,15 +133,15 @@ Tw.CommonPostcodeDetail.prototype = {
     };
     if (this._selectedTabId === 'tab1') {
       reqData.stNmCd = this.$selectedAddress.attr('id');
-      if (this.$searchTarget.hasClass('fe-search-number')) {
-        if ($searchValue.indexOf('-') !== -1) {
-          reqData.bldMainNum = $searchValue.split('-')[0];
-          reqData.bldSubNum = $searchValue.split('-')[1];
+      if (this.$searchTarget.hasClass('fe-search-number')) { // 번지로 검색
+        if ($searchValue.indexOf('-') !== -1) { // 번지가 **-** 형태일 경우 '-'로 나누기
+          reqData.bldMainNum = $searchValue.split('-')[0]; // 본번지
+          reqData.bldSubNum = $searchValue.split('-')[1]; // 부번지
         } else {
           reqData.bldMainNum = $searchValue;
         }
       } else {
-        reqData.bldNm = encodeURI($searchValue);
+        reqData.bldNm = encodeURI($searchValue); // 건물명으로 검색
       }
     } else {
       if (this.$searchTarget.hasClass('fe-search-number')) {
@@ -189,7 +192,7 @@ Tw.CommonPostcodeDetail.prototype = {
       $cloneNode.attr('data-bld-cd', $content[i].bldCd);
 
       var bldNm = $content[i].bldNm;
-      if ($content[i].bldNm.indexOf('N/A') !== -1) {
+      if ($content[i].bldNm.indexOf('N/A') !== -1) { // 결과가 N/A로 내려올 경우 텍스트 변경 (건물명 없음)
         bldNm = '(' + Tw.POSTCODE_MESSAGE.NONE + ')';
       }
 

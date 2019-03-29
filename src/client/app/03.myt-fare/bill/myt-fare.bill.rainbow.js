@@ -61,13 +61,14 @@ Tw.MyTFareBillRainbow.prototype = {
     this._checkIsAbled();
   },
   _checkIsAbled: function () {
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+    // 버튼 활성화
+    if (this.$selectedTab.attr('id') === 'tab1-tab') { // 1회납부 예약일 경우
       if ((this.$fareSelector.attr('id') !== '') && ($.trim(this.$point.val()) !== '')) {
         this.$payBtn.removeAttr('disabled');
       } else {
         this.$payBtn.attr('disabled', 'disabled');
       }
-    } else {
+    } else { // 자동납부 예약일 경우
       if (this.$fareSelector.attr('id') !== this.$fareSelector.attr('data-origin-id')) {
         this.$payBtn.removeAttr('disabled');
       } else {
@@ -77,10 +78,11 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력 가능
   },
   _cancel: function (e) {
     var $target = $(e.currentTarget);
+    // 자동납부 해지 시 확인 팝업
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
       $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this, $target), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
@@ -97,7 +99,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=cancel');
+      this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=cancel'); // 해지 완료 페이지로 이동
     } else {
       this._fail($target, res);
     }
@@ -105,6 +107,7 @@ Tw.MyTFareBillRainbow.prototype = {
   _selectFare: function (event) {
     var $target = $(event.currentTarget);
 
+    // 요금제 action sheet
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -153,21 +156,21 @@ Tw.MyTFareBillRainbow.prototype = {
     $message.empty();
 
     if (!this._validation.checkEmpty(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65); // 납부할 포인트 입력
     } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$standardPoint.attr('id'), 10))) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27); // 보유 포인트 이상 입력
     } else if (!this._validation.checkIsMore(this.$point.val(), 1)) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE); // 1포인트 이상 입력
     } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT); // 10포인트 단위로 입력
     } else {
       isValid = true;
     }
 
-    this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+    this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid); // validation message
   },
-  _onePay: function (e) {
+  _onePay: function (e) { // 1회납부
     var $target = $(e.currentTarget);
     if (this.$isPointValid && this.$isOneSelectValid) {
       var reqData = this._makeRequestDataForOne();
@@ -182,7 +185,7 @@ Tw.MyTFareBillRainbow.prototype = {
       }
     }
   },
-  _autoPay: function (e) {
+  _autoPay: function (e) { // 자동납부
     var $target = $(e.currentTarget);
     if (this.$isAutoSelectValid) {
       var reqData = this._makeRequestDataForAuto();
@@ -193,7 +196,7 @@ Tw.MyTFareBillRainbow.prototype = {
       this.$fareSelector.focus();
     }
   },
-  _paySuccess: function ($target, type, res) {
+  _paySuccess: function ($target, type, res) { // 납부예약 완료
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=' + type +
         '&point=' + this._getPointValue(type) + '&add=' + this.$fareSelector.attr('id'));
@@ -212,6 +215,7 @@ Tw.MyTFareBillRainbow.prototype = {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _makeRequestDataForOne: function () {
+    // 1회납부예약 요쳥 파라미터
     var reqData = {
       reqRbpPt: $.trim(this.$point.val()),
       prodId: this.$fareSelector.attr('id')
@@ -219,6 +223,7 @@ Tw.MyTFareBillRainbow.prototype = {
     return reqData;
   },
   _makeRequestDataForAuto: function () {
+    // 자동납부예약 요청 파라미터
     var reqData = {
       prodId: this.$fareSelector.attr('id'),
       rbpChgRsnCd: 'A1'
@@ -226,7 +231,7 @@ Tw.MyTFareBillRainbow.prototype = {
     return reqData;
   },
   _onClose: function () {
-    this._backAlert.onClose();
+    this._backAlert.onClose(); // x 버튼 클릭 시 공통 얼럿 노출
   },
   _isChanged: function () {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
