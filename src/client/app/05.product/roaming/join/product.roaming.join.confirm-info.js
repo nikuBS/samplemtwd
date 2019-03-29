@@ -224,10 +224,12 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _detailAgreePopupEvt : function (){
     var $agreeElement = this._$popupContainer.find('.'+this._nowShowAgreeType);
-    this._historyService.goBack();
     if($agreeElement.attr('checked')!=='checked'){
       $agreeElement.trigger('click');
     }
+    $agreeElement.promise().done($.proxy(function(){
+      setTimeout($.proxy(this._historyService.goBack,this._historyService),300);
+    },this));
   },
   _arrangeAgree : function(data){
     var targetObj;

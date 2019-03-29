@@ -168,8 +168,11 @@ Tw.ProductRoamingTerminate.prototype = {
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
   },
   _detailAgreePopupEvt : function (){
-    this._historyService.goBack();
-    this.$rootContainer.find('input.'+this._nowShowAgreeType).trigger('click');
+    var $agreeElement = this.$rootContainer.find('input.'+this._nowShowAgreeType);
+    $agreeElement.trigger('click');
+    $agreeElement.promise().done($.proxy(function(){
+      setTimeout($.proxy(this._historyService.goBack,this._historyService),300);
+    },this));
   },
 
   _convertPrice : function (priceVal) {
