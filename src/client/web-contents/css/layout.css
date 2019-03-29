@@ -1484,6 +1484,21 @@ body.hidden {
       position: relative !important; }
       .popup-page.focusin .setting-share:before {
         display: none; }
+  .popup-page.sign-page {
+    padding-top: 0; }
+    .popup-page.sign-page .container-wrap {
+      height: 100%;
+      position: relative; }
+      .popup-page.sign-page .container-wrap .container {
+        width: 100%;
+        position: absolute;
+        top: 41%;
+        left: 0;
+        -webkit-transform: translateY(-50%);
+                transform: translateY(-50%); }
+        .popup-page.sign-page .container-wrap .container .complete-title {
+          margin-top: 0;
+          padding-top: 0 !important; }
 
 /* android 하위 단말에서 fixed버그때문에 이부분으로 대체합니다. ios는 상하 텐션효과때문에 fixed유지  */
 /*.device_android{
@@ -3475,22 +3490,77 @@ body.hidden {
   padding: 1.25rem 1.625rem;
   background: #fff; }
 
-.form-wrap.half-type {
-  display: -ms-flexbox;
-  display: -moz-box;
-  display: -webkit-box;
-  display: box; }
+.input-list > ul > li {
+  padding: 1.0625rem 0;
+  position: relative;
+  overflow: hidden; }
+  .input-list > ul > li:before {
+    content: '';
+    width: calc(100% - 36px);
+    height: 0.0625rem;
+    background: #f2f2f2;
+    position: absolute;
+    right: 0;
+    top: 0; }
+  .input-list > ul > li .custom-form {
+    position: absolute;
+    top: 1.0625rem;
+    left: 0; }
+  .input-list > ul > li label {
+    float: left;
+    padding-left: 2.25rem;
+    min-height: 1.5rem;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box; }
+    .input-list > ul > li label .tx-tit {
+      display: block; }
+    .input-list > ul > li label .tx-sub {
+      display: block;
+      padding-top: 0.625rem;
+      color: #666666; }
+    .input-list > ul > li label .tx-sub-s {
+      display: block;
+      padding-top: 0.5rem;
+      color: #666666;
+      font-size: 0.75rem; }
+  .input-list > ul > li:first-of-type:before {
+    display: none; }
+  .input-list > ul > li:last-of-type {
+    padding-bottom: 0; }
 
-.form-wrap.half-type .select {
-  display: block;
-  box-flex: 1.0;
-  -webkit-box-flex: 1.0;
-  -moz-box-flex: 1.0;
-  width: 50%; }
+.input-list.agree-type > ul > li {
+  padding: 0.9375rem 1.625rem 0.9375rem 0; }
+  .input-list.agree-type > ul > li .more-vw {
+    position: absolute;
+    right: 0;
+    top: 0.75rem;
+    width: 1.875rem;
+    height: 1.875rem;
+    background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat center right;
+    background-size: 1rem; }
+  .input-list.agree-type > ul > li .custom-form {
+    top: 0.8125rem; }
+  .input-list.agree-type > ul > li:before {
+    display: none; }
+  .input-list.agree-type > ul > li.all-agree {
+    padding: 1.0625rem 0; }
+    .input-list.agree-type > ul > li.all-agree .custom-form {
+      top: 1rem; }
+    .input-list.agree-type > ul > li.all-agree:after {
+      content: '';
+      width: calc(100% - 36px);
+      height: 0.0625rem;
+      background: #f2f2f2;
+      position: absolute;
+      right: 0;
+      bottom: 0; }
+  .input-list.agree-type > ul > li:last-of-type {
+    padding-bottom: 0; }
 
-.form-wrap.half-type .inputbox {
-  display: block;
-  box-flex: 1.0;
-  -webkit-box-flex: 1.0;
-  -moz-box-flex: 1.0;
-  width: 50%; }
+.input-list.agree-type .inner-agreement-msg {
+  margin-top: 1.0625rem;
+  padding-top: 1.0625rem;
+  font-size: 0.75rem;
+  color: #666666;
+  border-top: 1px solid #eeeeee; }
