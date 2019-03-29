@@ -241,7 +241,7 @@ Tw.ProductHelper = (function () {
 
     if (dataIfAmt >= 1024 && dataBasAmt >= 1024) {
       var ifAmt = Tw.FormatHelper.convDataFormat(dataIfAmt, 'MB'),
-        basAmt = Tw.FormatHelper.convDataFormat(dataIfAmt, 'MB');
+        basAmt = Tw.FormatHelper.convDataFormat(dataBasAmt, 'MB');
 
       return {
         dataIfAmt: ifAmt.data,

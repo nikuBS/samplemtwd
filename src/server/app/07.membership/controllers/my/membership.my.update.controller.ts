@@ -43,11 +43,7 @@ export default class MembershipMyUpdate extends TwViewController {
     myInfoData.sktTmChecked = myInfoData.sktTmYn === 'Y' ? 'checked' : '' ;
     myInfoData.mktgAgreeChecked = myInfoData.mktgAgreeYn === 'Y' ? 'checked' : '' ;
     myInfoData.ocbAccumAgreeChecked = myInfoData.ocbAccumAgreeYn === 'Y' ? 'checked' : '' ;
-    delete myInfoData.mbr_rcv_agree_ymd;
-    //this.logger.info(this, '[★★★★★★] => ', JSON.stringify(myInfoData));
-    //this.logger.info(this, '[★★★★★★] => ', myInfoData.mbr_rcv_agree_ymd);
-    myInfoData.showMbrAgreeDate = DateHelper.getFullKoreanDate(''); // 개인정보 수집/이용 동의 날짜
-
+    myInfoData.showMbrAgreeDate = DateHelper.getFullKoreanDate(myInfoData.mbr_rcv_agree_ymd);
 
     return myInfoData;
   }
