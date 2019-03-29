@@ -269,3 +269,8 @@ Tw.PRODUCT_REPLACED_RULE = {
     RESULT: '집·이동전화 무제한'
   }]
 };
+
+Tw.CUSTOMER_RESEARCH_NEXT_TYPE = {
+  END: 99,
+  NEXT: 0
+}
