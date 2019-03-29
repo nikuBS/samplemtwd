@@ -22,6 +22,14 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
     fontClose : new RegExp('</font>','g'),
     spanOpen : new RegExp('<span class="keyword-text">','g')
   };
+  this._exceptionDocId = {
+    'D00003': {
+      link: '/customer/svc-info/site#mobile'
+    },
+    'D00004': {
+      link : '/customer/svc-info/site/mcenter'
+    }
+  };
   this._tidLanding = new Tw.TidLandingComponent();
 };
 
@@ -303,6 +311,9 @@ Tw.CommonSearch.prototype = {
           Tw.CommonHelper.openUrlExternal(linkUrl);
         }
       }else{
+        if(this._exceptionDocId[$linkData.data('id')]){
+          linkUrl = this._exceptionDocId[$linkData.data('id')].link;
+        }
         this._moveUrl(linkUrl);
       }
     }
