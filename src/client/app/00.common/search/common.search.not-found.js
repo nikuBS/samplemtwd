@@ -181,16 +181,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   _doSearch : function (evt) {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
-      var closeCallback;
-      if(this._historyService.getHash()==='#input_P'){
-        closeCallback = $.proxy(function () {
-          setTimeout($.proxy(function () {
-            this.$inputElement.focus();
-          },this),100);
-        },this);
-      }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(evt.currentTarget));
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(evt.currentTarget));
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
