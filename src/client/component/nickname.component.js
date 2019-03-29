@@ -58,7 +58,7 @@ Tw.NicknameComponent.prototype = {
     if ( inputValue.length === 0 ) {
       return;
     }
-    if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 2) ) {
+    if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 3) ) {
       this.$nicknameError.parents('.inputbox').addClass('error');
       this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_VALID);
     } else {
