@@ -46,7 +46,7 @@ Tw.BenefitMyBenefit.prototype = {
     this._popupService.open({
       hbs: 'actionsheet01',
       layer: true,
-      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
+      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' ,'class': 'tw-popup-closeBtn'},
       data: [{
         'list': [
           {
@@ -73,7 +73,6 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._setEvent, this));
-    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._setEvent, this));
   },
   /**
    * 포인트 요금납부 클릭 시 다음 주소 저장
@@ -82,7 +81,9 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _setEvent: function (e) {
     this.$uri = $(e.currentTarget).attr('data-url');
-    this._historyService.replaceURL(this.$uri);
+    if(this.$uri) {
+      this._historyService.replaceURL(this.$uri);
+    }
   }
 
   /**
