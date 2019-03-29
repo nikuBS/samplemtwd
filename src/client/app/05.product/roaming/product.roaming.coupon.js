@@ -48,9 +48,6 @@ Tw.ProductRoamingCoupon.prototype = {
 
     this._title = state === 'REGISTER' ? 'REGISTER' : 'BUY';
     this._bpcpService.open(url, null, null);
-
-    // 로그인 후 redirect 될 때 _initBpcp 함수로 bpcpServiceId 전달되도록 ts에서 처리됨
-    history.replaceState(null, document.title, location.origin + '/product/roaming/coupon?bpcpServiceId=' + url);
   },
 
   _initBpcp: function() {
