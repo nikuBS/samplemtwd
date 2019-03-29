@@ -36,7 +36,7 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   _goProductPage: function(e) {
-    //T파이 이용 가능 요금제 상세 페이지 이동
+    //baro Box 이용 가능 요금제 상세 페이지 이동
     var productId = $(e.target).parents('button').attr('id') === undefined ? $(e.target).attr('id') : $(e.target).parents('button').attr('id');
     this._historyService.goLoad('/product/callplan?prod_id=' + productId);
   },
