@@ -270,7 +270,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       return this._onFail(resp);
     }
 
-    this._historyService.goLoad(href + '?prod_id=' + this._prodId);
+    this._historyService.replaceURL(href + '?prod_id=' + this._prodId);
   },
 
   /**

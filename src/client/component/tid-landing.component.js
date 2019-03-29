@@ -80,12 +80,12 @@ Tw.TidLandingComponent.prototype = {
       this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
     }
   },
-  goSLogin: function () {
+  goSLogin: function (target) {
     if ( Tw.BrowserHelper.isApp() ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
-        this._historyService.goLoad('/common/member/slogin/aos');
+        this._historyService.goLoad('/common/member/slogin/aos?target=' + encodeURIComponent(target));
       } else {
-        this._historyService.goLoad('/common/member/slogin/ios');
+        this._historyService.goLoad('/common/member/slogin/ios?target=' + encodeURIComponent(target));
       }
     }
   },
@@ -169,7 +169,7 @@ Tw.TidLandingComponent.prototype = {
       // 휴면계정
       this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.replaceURL('/common/member/login/exceed-fail?');
+      this._historyService.replaceURL('/common/member/login/exceed-fail');
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236 ) {
       this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {

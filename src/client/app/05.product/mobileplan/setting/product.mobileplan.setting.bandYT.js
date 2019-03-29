@@ -1,4 +1,5 @@
 /**
+ * MenuName: 모바일 요금제 > Band YT 요금제
  * FileName: product.mobileplan.setting.bandYT.js
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.11.14
@@ -56,6 +57,8 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
     }
 
+    // 무선 부가상품 가입 처리
+    // http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=81527169
     Tw.CommonHelper.startLoading('.wrap', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '2' }, {}, [this.info])
       .done($.proxy(this._onSuccessJoinAddition, this))

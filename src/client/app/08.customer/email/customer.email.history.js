@@ -6,12 +6,11 @@
 
 Tw.CustomerEmailHistory = function (rootEl) {
   this.$container = rootEl;
-  this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
 
   this._bindEvent();
-  this._init();
+  this._init();  
 };
 
 Tw.CustomerEmailHistory.prototype = {

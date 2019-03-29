@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 일시 정지/해제
  * FileName: myt-join.wire.set.pause.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 8. 17.
+ * Summary: 일시 정지/해제 신청
  */
 
 Tw.MytJoinWireSetPause = function (rootEl, options) {
@@ -57,6 +59,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _init: function () {
+    // SK브로드밴드 가입자의 경우 얼럿 && 화면 진입안됨
     if ( this._options.isBroadbandJoined === 'Y' ) {
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
     }
@@ -64,10 +67,22 @@ Tw.MytJoinWireSetPause.prototype = {
     this._setEndDateRange();
   },
 
+  /**
+   * 이용정지 시작 날짜 변수 세팅
+   * @private
+   */
   _setStartDate: function () {
     this._startDate = this._options.startDateMin;
   },
 
+  /**
+   * 이용정지 가능 기간 반환
+   * @return {
+   *   min: 시작날짜
+   *   max: 끝날짜
+   * }
+   * @private
+   */
   _getEndDateRange: function () {
     var maxDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._startDate, this._SELECTABLE_PAUSE_RANGE, 'days',
       this._DATE_FORMAT.INPUT, this._DATE_FORMAT.INPUT);
@@ -80,6 +95,10 @@ Tw.MytJoinWireSetPause.prototype = {
     };
   },
 
+  /**
+   * 이용정지 시작 날짜 화면 세팅
+   * @private
+   */
   _setEndDateRange: function () {
     var endDateRange = this._getEndDateRange();
     this._$inputEndDate.attr('min', endDateRange.min);
@@ -87,6 +106,10 @@ Tw.MytJoinWireSetPause.prototype = {
     this._$inputEndDate.prop('disabled', false);
   },
 
+  /**
+   * 이용정지 범위 노출 (시작날짜부터 93일까지)
+   * @private
+   */
   _showPauseRangeInfo: function () {
     var $pauseDate = this._$pauseRangeInfo.find('.fe-pause-date');
     var $pauseRange = this._$pauseRangeInfo.find('.fe-pause-range');
@@ -108,18 +131,36 @@ Tw.MytJoinWireSetPause.prototype = {
     this._$pauseRangeInfo.show();
   },
 
+  /**
+   * 신청버튼 상태 변경
+   * @private
+   */
   _setSubmitBtnStatus: function () {
     var disabled = !(this._startDate && this._endDate);
     this._$btnSubmit.prop('disabled', disabled);
   },
 
+  /**
+   * 날짜가 유효한 범위내에 있는지 판단
+   * @param val
+   * @param min
+   * @param max
+   * @return Boolean
+   * @private
+   */
   _isValidDateInRange: function (val, min, max) {
     return moment(val).isBetween(min, max, null, '[]');
   },
 
+  /**
+   * 정지 시작일 인풋 변경 시 호출
+   * @param event
+   * @private
+   */
   _onChangeInputStartDate: function (event) {
     var $currentTarget = $(event.currentTarget);
     var currentTargetVal = $currentTarget.val();
+    // 선택한 날짜가 범위(익일 ~ 30일이내)를 벗어나면 익일로 변경 후 얼럿
     if ( !this._isValidDateInRange(currentTargetVal, this._options.startDateMin, this._options.startDateMax) ) {
       $currentTarget.val(this._options.startDateMin);
       this._startDate = this._options.startDateMin;
@@ -135,10 +176,16 @@ Tw.MytJoinWireSetPause.prototype = {
     // this._isDirty = true;
   },
 
+  /**
+   * 정지 종료일 인풋 변경 시 호출
+   * @param event
+   * @private
+   */
   _onChangeInputEndDate: function (event) {
     var $currentTarget = $(event.currentTarget);
     var currentTargetVal = $currentTarget.val();
     var endDateRange = this._getEndDateRange();
+    // 선택한 날짜가 범위(정지 시작일 ~ 93일이내)를 벗어나면 이용정지 가능 기간의 최소일로 변경 후 얼럿
     if ( !this._isValidDateInRange(currentTargetVal, endDateRange.min, endDateRange.max) ) {
       $currentTarget.val(endDateRange.min);
       this._endDate = endDateRange.min;
@@ -151,9 +198,14 @@ Tw.MytJoinWireSetPause.prototype = {
     // this._isDirty = true;
   },
 
+  /**
+   * 일시 정지 신청/해제 버튼 클릭시 호출
+   * @private
+   */
   _onClickBtnSubmit: function () {
     var title, contents, btName, closeBtName, apiCmd, params;
     switch ( this._options.svcStCd ) {
+      // 이용중인 경우 일시정지 신청
       case this._SVC_ST_CD.AC:
         var sDate = Tw.DateHelper.getShortDate(this._startDate);
         var eDate = Tw.DateHelper.getShortDate(this._endDate);
@@ -169,6 +221,7 @@ Tw.MytJoinWireSetPause.prototype = {
           lto: Tw.DateHelper.getCurrentShortDate(this._endDate)
         };
         break;
+      // 정지중인 경우 일시정지 해제 신청
       case this._SVC_ST_CD.SP:
         title = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.TITLE;
         contents = null;
@@ -181,6 +234,12 @@ Tw.MytJoinWireSetPause.prototype = {
     this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
   },
 
+  /**
+   * 일시 정지 신청/해제 API호출
+   * @param apiCmd{Object}
+   * @param params{Object}
+   * @private
+   */
   _reqWireSetPause: function (apiCmd, params) {
     this._popupService.close();
     this._apiService.request(apiCmd, params)
@@ -188,6 +247,11 @@ Tw.MytJoinWireSetPause.prototype = {
       .fail($.proxy(this._reqFail, this));
   },
 
+  /**
+   * 일시 정지 신청/해제 API호출 성공
+   * @param resp
+   * @private
+   */
   _reqWireSetPauseDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL(this._URL.COMPLETE + '?svcStCd=' + this._options.svcStCd);
@@ -197,6 +261,11 @@ Tw.MytJoinWireSetPause.prototype = {
     }
   },
 
+  /**
+   * 일시 정지 신청/해제 API호출 실패
+   * @param resp
+   * @private
+   */
   _reqFail: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   }

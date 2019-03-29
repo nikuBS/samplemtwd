@@ -17,15 +17,6 @@ class CommonTidSignUpForeigner extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    let target = req.query.target || '/main/home';
-    const type = req.query.type || 'back';
-    if ( /\#/.test(target) ) {
-      target = target.replace(/\#/gi, 'urlHash');
-    }
-    if ( /\&/.test(target) ) {
-      target = target.replace(/\&/gi, 'urlQuery');
-    }
-
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -35,7 +26,7 @@ class CommonTidSignUpForeigner extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.SIGN_UP,
           redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
-            '/common/member/login/route?target=' + target + '_type_' + type,
+            '/common/member/signup/route',
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE,

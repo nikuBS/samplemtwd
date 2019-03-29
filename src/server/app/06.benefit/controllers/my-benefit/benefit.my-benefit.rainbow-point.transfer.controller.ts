@@ -1,7 +1,9 @@
 /**
+ * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 양도
  * FileName: benefit.my-benefit.rainbow-point.transfer.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.30
+ * Summary: 레인보우 포인트 포인트 양도 내역 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -69,10 +71,20 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 양도가능 회선 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointFamilies(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0103, {});
   }
 
+  /**
+   * 레인보우포인트 양도 내역 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointTransfers(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0131, {
       size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
@@ -80,6 +92,11 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 양도가능 회선 데이터 가공 후 반환
+   * @private
+   * return lines
+   */
   private getLineWithRainbowPointFamilies(resp: any): any {
     const lines = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
@@ -90,6 +107,11 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     return lines;
   }
 
+  /**
+   * 레인보우포인트 양도 내역 데이터 가공 후 반환
+   * @private
+   * return lines
+   */
   private getRainbowPointTransfersResult(resp: any): any {
     const result = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     const histories = result.history;
@@ -101,12 +123,24 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     return result;
   }
 
+  /**
+   * svcMgmtNum의 회선 반환
+   * @param svcMgmtNum
+   * @private
+   * return line
+   */
   private getLineWithSvcMgmtNum(svcMgmtNum: string, lines: any): any {
     return lines.find((line) => {
       return line.svcMgmtNum === svcMgmtNum;
     });
   }
 
+  /**
+   * 포인트 양도 받는 회선 정보 반환
+   * @param svcMgmtNum
+   * @private
+   * return lines
+   */
   private getLinesToReceive(svcMgmtNum: string, lines: any): any {
     const isChildLine = this.isChildLine(svcMgmtNum, lines);
     const receiveLineRelCd = isChildLine ? RAINBOW_POINT_REL_CD.P : RAINBOW_POINT_REL_CD.C;
@@ -115,6 +149,12 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     });
   }
 
+  /**
+   * 해당 라인이 청소년인지 여부
+   * @param svcMgmtNum
+   * @private
+   * return {Boolean}
+   */
   private isChildLine(svcMgmtNum: string, lines: any): any {
     const selectedLine = this.getLineWithSvcMgmtNum(svcMgmtNum, lines);
     return selectedLine.relCd === RAINBOW_POINT_REL_CD.C;

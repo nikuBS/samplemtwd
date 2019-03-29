@@ -1,7 +1,9 @@
 <%#
+* MenuName: 나의 데이터/통화 > 실시간 잔여량
 * FileName: myt-data.hotdata.html
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.11.28
+* Summary: 실시간 휴대폰 잔여량 및 부가 서비스 조회 화면
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -37,6 +39,10 @@
             <% } %>
             <!--// .cont-box -->
 
+            <!--
+            [DV001-9828] 기본제공 데이터는 없는데 데이터 함께쓰기에 가입된 경우 표시(통합공유데이터 영역이 없기때문에 바닥페이지에 표시함)
+            SKTX_PRO_화면정의서_SKMT_My T_나의 데이터 통화_실시간 잔여량_DV001-9828_데이터함께쓰기표기case추가(부가....pptx
+            -->
             <% if (usageData && !usageData.hasDefaultData && balanceAddOns && balanceAddOns.dataSharing === 'Y') { %>
             <div id="fe-data-share" class="cont-box pb0">
                 <div class="ti-caption-type01 fe-data-share-header">

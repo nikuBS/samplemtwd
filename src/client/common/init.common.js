@@ -17,8 +17,13 @@ Tw.Init = function () {
 
 Tw.Init.prototype = {
   _initService: function () {
+    Tw.Logger = {
+      log: function() {},
+      info: function() {},
+      warn: function() {},
+      error: function() {}
+    };
     Tw.Ui = new Tw.UIService();
-    Tw.Logger = new Tw.LoggerService();
     Tw.Popup = new Tw.PopupService();
     Tw.Native = new Tw.NativeService();
     Tw.Api = new Tw.ApiService();
@@ -47,6 +52,7 @@ Tw.Init.prototype = {
       var result = resp.result;
       Tw.Environment = result;
       Tw.Environment.init = true;
+      Tw.Logger = new Tw.LoggerService(Tw.Environment.environment);
       Tw.Logger.info('[Version]', Tw.Environment.version);
       $(window).trigger(Tw.INIT_COMPLETE);
 
@@ -58,7 +64,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.20.7');
+        Tw.Popup.toast('QA_v5.21.1');
       }
     }
   },

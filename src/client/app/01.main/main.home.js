@@ -226,15 +226,9 @@ Tw.MainHome.prototype = {
           pathUrl: '/main/home'
         });
         break;
-      case this.DATA_LINK.GIFT:
-        this._historyService.goLoad('/myt-data/giftdata');
-        break;
-      case this.DATA_LINK.TPLAN_DATA:
-        this._historyService.goLoad('/myt-data/familydata');
-        break;
       case this.DATA_LINK.TPLAN_PROD:
         this._popupService.openConfirmButton(Tw.ALERT_MSG_HOME.A08.MSG, Tw.ALERT_MSG_HOME.A08.TITLE,
-          $.proxy(this._onConfirmTplanProd, this), $.proxy(this._onCloseTplanProd, this),
+          $.proxy(this._onConfirmTplanProd, this), null,
           Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_HOME.A08.BUTTON, $target);
         break;
       default:
@@ -243,21 +237,14 @@ Tw.MainHome.prototype = {
     this._targetDataLink = '';
   },
   _onConfirmTplanProd: function () {
-    this._goTplan = true;
-    this._popupService.close();
-  },
-  _onCloseTplanProd: function () {
-    if ( this._goTplan ) {
-      this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
-    }
+    this._historyService.replaceURL('/product/callplan?prod_id=NA00006031');
   },
   _onClickRechargeLink: function () {
     this._targetDataLink = this.DATA_LINK.RECHARGE;
     this._popupService.close();
   },
   _onClickGiftLink: function () {
-    this._targetDataLink = this.DATA_LINK.GIFT;
-    this._popupService.close();
+    this._historyService.replaceURL('/myt-data/giftdata');
   },
   _onClickFamilyLink: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0044, {})
@@ -266,11 +253,11 @@ Tw.MainHome.prototype = {
   },
   _successTplan: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._targetDataLink = this.DATA_LINK.TPLAN_DATA;
+      this._historyService.replaceURL('/myt-data/familydata');
     } else {
       this._targetDataLink = this.DATA_LINK.TPLAN_PROD;
+      this._popupService.close();
     }
-    this._popupService.close();
   },
   _failTplan: function (resp) {
 

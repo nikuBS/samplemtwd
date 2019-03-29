@@ -391,11 +391,11 @@ Tw.POPUP_TPL = {
         { txt: '최근 납부 내역', 'radio-attr': 'name="myTHistory" value="0" checked' },
         { txt: '즉시납부', 'radio-attr': 'name="myTHistory" value="1"' },
         { txt: '자동납부', 'radio-attr': 'name="myTHistory" value="2"' },
-        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"' },
-        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"' },
-        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"' },
-        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"' },
-        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"' }
+        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"', onlyType: 'M'},
+        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"', onlyType: 'M' },
+        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"', onlyType: 'M' },
+        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"', onlyType: 'M' },
+        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"', onlyType: 'M' }
       ]
     }
   ],
@@ -643,8 +643,8 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
     {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind"></span></i></span>'}
   ],
   DETAIL_BTN: [
-    {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
-    {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
+    {SCH_ID : '콘텐츠이용료', ELEMENT: '콘텐츠이용료'}, // <button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},  // DV001-19127
+    {SCH_ID : '소액결제', ELEMENT: '소액결제'} // <button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
   ASTERISK_TPL: {SCH_ID : '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>'},

@@ -47,7 +47,7 @@ Tw.MembershipMy.prototype = {
     this.$goUpdate.on('click', $.proxy(this._goUpdate,this));
   },
 
-  _initPeriod: function() {
+  _initPeriod: function() { //화면 진입 후 이용기간 조회 초기값 설정
     var currentYear = this._dateHelper.getCurrentYear();
     var getPeriod = currentYear +'.1.~' + this._dateHelper.getCurrentDateTime('YYYY.M.');
     var initEDate = this._dateHelper.getCurrentDateTime('YYYY.M');
@@ -65,7 +65,7 @@ Tw.MembershipMy.prototype = {
     startDate = this.$inputSdate.val() === undefined ? currentYear +'01' : startDate;
     endDate = this.$inputEdate.val() === undefined ? this._dateHelper.getCurrentDateTime('YYYYMM') : endDate;
 
-    //시작조회일이 더 클 경우 Alert 호출
+    // 시작조회일이 더 클 경우 Alert 호출
     if(Number(startDate) - Number(endDate) > 0){
       return this._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.MSG,
         Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.TITLE, null, null, null, $(e.currentTarget));
@@ -76,6 +76,7 @@ Tw.MembershipMy.prototype = {
       endDate : endDate
     };
 
+    // 이용내역 조회 API
     this._apiService
       .request(Tw.API_CMD.BFF_11_0009, params)
       .done($.proxy(this._renderTemplate, this, params))
@@ -85,7 +86,7 @@ Tw.MembershipMy.prototype = {
   _renderTemplate: function(params, res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
-      if(res.length < 1){ //이용내역이 없을 때
+      if(res.length < 1){ // 이용내역이 없을 때
         this.$list.hide();
         this.$more.hide();
         this.$empty.show();
@@ -117,6 +118,7 @@ Tw.MembershipMy.prototype = {
   },
 
   _parseList: function(res) {
+    // 서버에서 받은 이용내역 데이터 가공
     for(var idx in res){
       res[idx].hpnMm = this._dateHelper.getShortDateWithFormat(res[idx].hpnMm, 'M' , 'MM');
       res[idx].hpnDd = this._dateHelper.getShortDateWithFormat(res[idx].hpnDd, 'D' , 'DD');
@@ -162,6 +164,7 @@ Tw.MembershipMy.prototype = {
     var currentYear = this._dateHelper.getCurrentYear();
     var data = [{'list':[]}];
 
+    // 액션시트 데이터 가공 (현재 월부터 상단에 출력)
     for(var i=0; i<endMonth; i++){
       data[0].list[i] = {
         'radio-attr': 'name="r2"',
@@ -181,7 +184,7 @@ Tw.MembershipMy.prototype = {
   },
 
   _onActionSheetOpened: function(currentSheet, $layer) {
-    //선택된 값 체크
+    // 선택된 값 체크
     $('li.type1').each(function(){
       if($(this).find('label').attr('value') === $('#'+currentSheet).text()){
         $(this).find('input[type=radio]').prop('checked', true);
@@ -202,12 +205,12 @@ Tw.MembershipMy.prototype = {
   },
 
   _requestReissueInfo: function(e) {
-    //카드 발급 후 2주이내 알럿
+    // 카드 발급 후 2주이내 알럿
     if(this._cardReqDt !== ''){
       var reissueLimitDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._cardReqDt, 15, 'day', 'YYYYMMDD', 'YYYYMMDD');
       var getDiffDate = Tw.DateHelper.getDifference(reissueLimitDate);
       
-      if(getDiffDate > 0 ){
+      if(getDiffDate > 0 ){ // getDiffDate 값이 0보다크면 카드 발급 후 2주 이내
         var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
         this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         return;
@@ -232,7 +235,7 @@ Tw.MembershipMy.prototype = {
   },
 
   _successCardChange: function(res) {
-    //카드 종류 변경 완료 페이지 이동
+    // 카드 종류 변경 완료 페이지 이동
     if(res.code === Tw.API_CODE.CODE_00){
       this._popupService.afterRequestSuccess(null, '/membership/my', null,
         Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CHANGE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
@@ -246,7 +249,7 @@ Tw.MembershipMy.prototype = {
   },
 
   _goUpdate: function(e) {
-    if($(e.currentTarget).attr('data-type') === 'SP'){
+    if($(e.currentTarget).attr('data-type') === 'SP'){ // 이용정지 회원에 대한 Alert 호출
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A59;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
       return;

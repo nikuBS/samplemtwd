@@ -183,9 +183,11 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _detectClubT: function(e) {
-    var clubT = 'http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&menuId=5,1&prod_id=TW00000103&cate=3';
+    var clubT = 'http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&menuId=5,1&prod_id=TW00000103&cate=3',
+      clubT2 = 'http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&menuId=5,1&prod_id=TW00000104';
 
-    if (['NA00004428', 'NA00004429'].indexOf(this._prodId) === -1 || $(e.currentTarget).attr('href') !== clubT) {
+    if (['NA00004428', 'NA00004429'].indexOf(this._prodId) === -1 ||
+      $(e.currentTarget).attr('href') !== clubT && $(e.currentTarget).attr('href') !== clubT2) {
       return;
     }
 
@@ -318,7 +320,7 @@ Tw.ProductCommonCallplan.prototype = {
       return true;
     }
 
-    this._bpcpService.open(url, null, null, e);
+    this._bpcpService.open(url, null, null);
 
     e.preventDefault();
     e.stopPropagation();
@@ -412,7 +414,6 @@ Tw.ProductCommonCallplan.prototype = {
     var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]'),
       $scrollContainer = $popupContainer.find('.container');
 
-    console.log(contentsIndex);
     if (contentsIndex === 0) {
       $scrollContainer.scrollTop(0);
     } else {

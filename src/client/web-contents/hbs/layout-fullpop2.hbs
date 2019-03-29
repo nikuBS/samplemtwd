@@ -1,5 +1,5 @@
 <!-- .popup hbs -->
-<div class="popup-page nobg tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+<div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .no-btn 하단에 버튼이 없을 경우 -->
 <!-- #header -->
 <div class="header-wrap">
     <div class="page-header">
@@ -31,97 +31,100 @@
             <h3 class="tit">이용할 회선 선택</h3>
         </div>
         <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="list-comp-input">
-                    <div class="widget">
-                        <div class="widget-box check">
-                            <ul class="select-list" role="group">
-                                <li class="checkbox all type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" --> <!-- .all : 전체선택용 스타일 -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">전체 회선 선택</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">휴대폰</span>
-                                            <span class="stext"><span class="info">010-12**-34**</span><span class="info">갤럭*****</span></span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">선불폰</span>
-                                            <span class="stext"><span class="info">010-12**-34**</span><span class="info">갤럭*****</span></span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">T Pocket-Fi</span>
-                                            <span class="stext">010-12**-34**</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox5" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox5" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">T Login</span>
-                                            <span class="stext">010-12**-34**</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox6" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox6" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">인터넷</span>
-                                            <span class="stext">인천 연********</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox7" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox7" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">IPTV</span>
-                                            <span class="stext">인천 연********</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox8" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox8" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">집전화</span>
-                                            <span class="stext">070-87**-43**</span>
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox9" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="comp-list-layout" id="aria-comp-checkbox9" aria-hidden="true">
-                                        <p class="layout-text">
-                                            <span class="mtext">포인트캠</span>
-                                            <span class="stext">7080163491</span>
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+        <div class="cont-box nogaps">
+            <div class="list-comp-input">
+                <div class="widget">
+                    <div class="widget-box check">
+                        <ul class="select-list" role="group">
+                            <li class="checkbox all type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" --> <!-- .all : 전체선택용 스타일 -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">전체 회선 선택</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">휴대폰</span>
+                                        <span class="stext"><span class="info">010-12**-34**</span><span class="info">갤럭*****</span></span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">선불폰</span>
+                                        <span class="stext"><span class="info">010-12**-34**</span><span class="info">갤럭*****</span></span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox4" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">T Pocket-Fi</span>
+                                        <span class="stext">010-12**-34**</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox5" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox5" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">T Login</span>
+                                        <span class="stext">010-12**-34**</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox6" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox6" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">인터넷</span>
+                                        <span class="stext">인천 연********</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox7" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox7" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">IPTV</span>
+                                        <span class="stext">인천 연********</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox8" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox8" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">집전화</span>
+                                        <span class="stext">070-87**-43**</span>
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="checkbox type01-big" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox9" /><!-- 체크상태일 경우 checked="checked" -->
+                                <div class="comp-list-layout" id="aria-comp-checkbox9" aria-hidden="true">
+                                    <p class="layout-text">
+                                        <span class="mtext">포인트캠</span>
+                                        <span class="stext">7080163491</span>
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <!--// .cont-box -->
+        </div>
+        <!--// .cont-box -->
+    </div>
+    <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+    <div class="bt-fixed-area">
         <ul class="bt-slice full">
             <li class="bt-red1">
                 <button disabled>선택 회선 등록</button>

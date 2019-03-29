@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청현황(MS_04_01_01)
  * FileName: myt-join.wire.history.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
+ * Summary: 인터넷/집전화/IPTV 신청현황 목록 조회
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -57,11 +59,11 @@ class MyTJoinWireHistory extends TwViewController {
     this._list = [];
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0167, {}),
-      this.apiService.request(API_CMD.BFF_05_0162, {}),
-      this.apiService.request(API_CMD.BFF_05_0168, {}),
-      this.apiService.request(API_CMD.BFF_05_0143, {}),
-      this.apiService.request(API_CMD.BFF_05_0153, {}))
+      this.apiService.request(API_CMD.BFF_05_0167, {}),   // 신규가입상세내역
+      this.apiService.request(API_CMD.BFF_05_0162, {}),   // 설치장소변경상세
+      this.apiService.request(API_CMD.BFF_05_0168, {}),   // 가입상품변경 상세내역
+      this.apiService.request(API_CMD.BFF_05_0143, {}),   // 유선 약정기간 상세내역
+      this.apiService.request(API_CMD.BFF_05_0153, {}))   // 요금상품변경 상세내역
       .subscribe(([r0167newJoin, r0162chgAddr, r0168prodChg, r0143periChg, r0153prodChg]) => {
 
 /*
@@ -298,6 +300,14 @@ class MyTJoinWireHistory extends TwViewController {
       });
   }
 
+  /**
+   * 조회 결과 처리
+   * atype (api type)를 생성하고 각 object에 추가
+   * detailkey (상세보기 key)를 생성하고 각 object에 추가 (상세보기 화면에서 재조회 후 해당키로 data를 찾음)
+   * @param resp
+   * @param apiType
+   * @private
+   */
   private _resultHandler( resp: any, apiType: String ): boolean {
     const list: any = resp.result;
 

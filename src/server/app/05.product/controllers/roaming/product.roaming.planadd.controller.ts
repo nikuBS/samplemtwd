@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
  * FileName: product.roaming.planadd.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.11.26
@@ -27,6 +28,7 @@ class ProductRoamingPlanAdd extends TwViewController {
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
 
+        // 로그인한 사용자인 경우 로밍 부가서비스 이용현황 데이터 요청.
         if (this.isLogin(svcInfo)) {
             Observable.combineLatest(
                 this.getRoamingPlanAddCntData(),
@@ -78,6 +80,7 @@ class ProductRoamingPlanAdd extends TwViewController {
       }
       return true;
   }
+  // 로밍 부가서비스 이용현황 데이터 요청.
   private getRoamingPlanAddCntData(): Observable<any> {
       let roamingPlanAddCntData = null;
       return this.apiService.request(API_CMD.BFF_10_0121, {}).map((resp) => {
@@ -94,6 +97,7 @@ class ProductRoamingPlanAdd extends TwViewController {
 
       });
   }
+  // 로밍 부가서비스 리스트 요청.
   private getRoamingPlanAddData(params) {
       // let roamingPlanData = null;
       return this.apiService.request(API_CMD.BFF_10_0031, params).map((resp) => {

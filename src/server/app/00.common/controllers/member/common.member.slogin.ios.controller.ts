@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CommonMemberSloginIos extends TwViewController {
   constructor() {
@@ -13,7 +14,8 @@ class CommonMemberSloginIos extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('member/common.member.slogin.ios.html', { svcInfo, pageInfo });
+    const target = req.query.target !== 'undefined' ? decodeURIComponent(req.query.target) : '';
+    res.render('member/common.member.slogin.ios.html', { svcInfo, pageInfo, target });
   }
 }
 

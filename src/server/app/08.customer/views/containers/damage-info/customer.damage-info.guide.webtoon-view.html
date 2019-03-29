@@ -39,7 +39,7 @@
                     <% } else { %>
                     <img src="" data-src="<%= CDN %>/img/webtoon/<%= data.IMG_LIST[i].IMG %>" alt="<%= data.IMG_LIST[i].TITLE %>" aria-describedby="aria-cartoon-describe" style="display: none">
                     <% } %>
-                    <div id="aria-cartoon-describe" class="blind" aria-hidden="true">
+                    <div id="aria-cartoon-describe" class="blind" aria-hidden="true" style="display: none">
                         <p><%- data.IMG_LIST[i].HIDDEN_TEXT %></p>
                     </div>
                     <% } %>

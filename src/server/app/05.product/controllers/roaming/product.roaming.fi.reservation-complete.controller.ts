@@ -18,11 +18,11 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
 
     switch (selectIdx) {
       case '0':
-        // 인천공항 1터미널 3층 로밍센터(E-F 카운터)
+        // 인천공항 1터미널 3층 로밍센터(F 카운터)
         centerImg = 'place-img-01-f';
         break;
       case '1' :
-        // 인천공항 1터미널 3층 로밍센터(G-H 카운터)
+        // 인천공항 1터미널 3층 로밍센터(H 카운터)
         centerImg = 'place-img-01-h';
         break;
       case '2' :

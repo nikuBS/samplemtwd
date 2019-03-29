@@ -40,7 +40,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page nobg tw-popup pt0 fixed-btn">
+        <div class="popup-page nobg tw-popup pt0 fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경-->
             
             <!-- .container-wrap -->
             <div class="container-wrap">
@@ -73,7 +73,9 @@
                         </div>
                     </div>
                     <!--// .cont-box -->
-                    
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
                             <button>확인</button>

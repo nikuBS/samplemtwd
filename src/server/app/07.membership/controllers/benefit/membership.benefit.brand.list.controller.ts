@@ -1,7 +1,9 @@
-/*
+/**
+ * MenuName: T멤버십 > 제휴브랜드 > 전체보기
  * FileName: membership.benefit.brand.list.controller.ts
  * Author: Hakjoon sim (hakjoon.sim@sk.com)
  * Date: 2018.11.06
+ * Summary: 가맹점 지역별 조회화면으로 이동
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

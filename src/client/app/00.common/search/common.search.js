@@ -19,8 +19,15 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._autoCompleteRegExObj = {
     fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
     fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-    fontClose : new RegExp('</font>','g'),
-    spanOpen : new RegExp('<span class="keyword-text">','g')
+    fontClose : new RegExp('</font>','g')
+  };
+  this._exceptionDocId = {
+    'D00003': {
+      link: '/customer/svc-info/site#mobile'
+    },
+    'D00004': {
+      link : '/customer/svc-info/site/mcenter'
+    }
   };
   this._tidLanding = new Tw.TidLandingComponent();
 };
@@ -282,7 +289,7 @@ Tw.CommonSearch.prototype = {
       );
     }
     if(this._bpcpService.isBpcp(linkUrl)){
-      this._bpcpService.open(linkUrl, null, null, linkEvt);
+      this._bpcpService.open(linkUrl, null, null);
     }else if(linkUrl.indexOf('Native:')>-1){
       if(linkUrl.indexOf('freeSMS')>-1){
         this._callFreeSMS($linkData);
@@ -303,6 +310,9 @@ Tw.CommonSearch.prototype = {
           Tw.CommonHelper.openUrlExternal(linkUrl);
         }
       }else{
+        if(this._exceptionDocId[$linkData.data('id')]){
+          linkUrl = this._exceptionDocId[$linkData.data('id')].link;
+        }
         this._moveUrl(linkUrl);
       }
     }
@@ -364,20 +374,13 @@ Tw.CommonSearch.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
-    $('.searchbox-lock').scroll($.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     $('.keyword-list-base').insertAfter('.fe-header-wrap');
     this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
     this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
     $(window).scrollTop(0);
-    setTimeout($.proxy(function(){
-      $(window).on('scroll',$.proxy(function () {
-        if(this._historyService.getHash()==='#input_P'){
-          this.$inputElement.blur();
-        }
-      },this));
-    },this),300);
+    this.$keywordListBase.on('touchstart',$.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -405,7 +408,7 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
       skt_landing.action.checkScroll.unLockScroll();
-      $(window).off('scroll');
+      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {
@@ -485,7 +488,7 @@ Tw.CommonSearch.prototype = {
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
-    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
+    returnObj.linkStr = Tw.FormatHelper.stripTags(returnObj.showStr);
     return returnObj;
   },
   _removeRecentlyKeywordList : function (args) {

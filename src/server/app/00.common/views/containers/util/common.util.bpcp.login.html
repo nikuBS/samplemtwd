@@ -8,12 +8,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    if (window.top === window.self) {
-      var tidLanding = new Tw.TidLandingComponent();
-      tidLanding.goLogin('<%= target %>');
-    } else {
-      window.top.postMessage('goLogin:<%- JSON.stringify(bpcpInfo) %>', location.origin);
-    }
+    var tidLanding = new Tw.TidLandingComponent();
+    tidLanding.goLogin('<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

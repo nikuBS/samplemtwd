@@ -1,7 +1,9 @@
 <%#
+* MenuName: T멤버십 > 제휴브랜드
 * FileName: membership.benefit.brand.html
 * Author: 이정민 (skt.p130713@partner.sk.com)
 * Date: 2018.12.21
+* Summary: 제휴브랜드 조회 화면
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -50,7 +52,7 @@
                             <div class="cont-box inborder">
                                 <span class="inputbox brand-search-warap">
                                     <span class="input">
-                                        <input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요" class="fe-input-co-ptnr-nm">
+                                        <input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요" class="fe-input-co-ptnr-nm" maxlength="20">
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                         <button class="bt-search fe-btn-search">검색</button>
                                     </span>

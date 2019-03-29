@@ -64,7 +64,7 @@ class MyTFareInfoHistory extends TwViewController {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0],
       sortType: req.query.sortType
-    };
+    };    
 
     // 각 납부 타입을 sortType param으로 받음 
     if (query.sortType === 'payment' || query.sortType === undefined) {
@@ -183,6 +183,7 @@ class MyTFareInfoHistory extends TwViewController {
       pageInfo,
       currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.lastAll, // 카테고리 텍스트
       data: {
+        isMobile: svcInfo.svcAttrCd.indexOf('M') >= 0, // 무선계정여부 선택 카테고리 노출여부에 적용
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse, // 자동납부 통합인출 사용 여부
         autoWithdrawalBankName: this.paymentData.withdrawalBankName, // 자동납부 통합인출 은행이름 || undefined
         autoWithdrawalBankNumber: this.paymentData.withdrawalBankAccount, // 자동납부 통합인출 계좌 || undefined
@@ -259,7 +260,7 @@ class MyTFareInfoHistory extends TwViewController {
         // 전체납부내역조회 옵션으로 조회에서 에러 반환 시 에러 페이지 처리
         // 과납내역 조회도 있으므로 해당 API에서 에러코드가 반환된다고 에러 페이지를 노출하면 안됨
         if (opt.getPayList) {
-          this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+          this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         }
         return null;
       }
@@ -305,7 +306,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getDirectPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -329,7 +330,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -353,7 +354,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -376,7 +377,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getMicroPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -400,7 +401,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getContentsPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -424,7 +425,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getPointReservePaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
 
@@ -451,7 +452,7 @@ class MyTFareInfoHistory extends TwViewController {
   private getPointAutoPaymentData = (): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
-        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        this.setErrorInfo({code: resp.code, msg: resp.msg || ''});
         return null;
       }
       resp.result.usePointList = resp.result;
@@ -569,7 +570,7 @@ class MyTFareInfoHistory extends TwViewController {
     return (queryString.match(/-\w/gi) || []).reduce((prev, cur) => prev.replace(cur, cur.toUpperCase().replace('-', '')), queryString);
   }
 
-  private setErrorInfo(resp: {code: string, msg: string, result: any}): void {
+  private setErrorInfo(resp: {code: string, msg: string}): void {
     if (!this.returnErrorInfo.code) {
       this.returnErrorInfo = {
         code: resp.code,

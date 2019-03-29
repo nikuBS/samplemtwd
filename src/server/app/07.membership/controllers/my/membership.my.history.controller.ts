@@ -22,7 +22,7 @@ export default class MembershipMyHistory extends TwViewController {
       if ( resp.code === API_CODE.CODE_00) {
         if (Object.keys(resp.result).length === 0 && JSON.stringify(resp.result) === JSON.stringify({})) {
           noHistoryData = true;
-          myHistoryData['record2'] = [];
+          myHistoryData['record2'] = []; // 발급 변경 내역이 없는 경우 record2 field가 없어 에러가 발생하여 초기화
         } else {
           myHistoryData = this.parseMyHistoryData(resp.result.mHistOut);
         }

@@ -89,7 +89,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
       prodId = e.currentTarget.getAttribute('data-prod-id');
 
     if (this._bpcpService.isBpcp(link)) {
-      return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null, e);
+      return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
     } else if (link.indexOf('http')) {
       Tw.CommonHelper.openUrlExternal(link);
     } else {

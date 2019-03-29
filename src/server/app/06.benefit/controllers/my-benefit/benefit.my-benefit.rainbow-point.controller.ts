@@ -1,7 +1,9 @@
 /**
+ * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트
  * FileName: benefit.my-benefit.rainbow-point.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 26.
+ * Summary: 레인보우 포인트 정보 조회
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -100,10 +102,20 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 정보 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointsInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0132, {});
   }
 
+  /**
+   * 레인보우포인트 이용내역 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointHistories(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0100, {
       size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
@@ -111,14 +123,30 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     });
   }
 
+  /**
+   * 레인보우포인트 동일명의 회선 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointServices(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0101, {});
   }
 
+  /**
+   * 레인보우포인트 양도가능 회선 조회
+   * @private
+   * return Observable
+   */
   private reqRainbowPointFamilies(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0103, {});
   }
 
+  /**
+   * 레인보우포인트 정보 조회 데이터 가공 후 반환
+   * @param resp
+   * @private
+   * return rainbowPointsInfo{Object}
+   */
   private getRainbowPointsInfo(resp: any): any {
     const rainbowPointsInfo = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     rainbowPointsInfo.usblPoint = FormatHelper.addComma(rainbowPointsInfo.usblPoint);
@@ -129,6 +157,12 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return rainbowPointsInfo;
   }
 
+  /**
+   * 레인보우포인트 이용내역 조회 데이터 가공 후 반환
+   * @param resp
+   * @private
+   * return rainbowPointsInfo{Object}
+   */
   private getRainbowPointHistoryResult(resp: any): any {
     const rainbowPointHistoryResult = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     rainbowPointHistoryResult.history.map((history) => {
@@ -140,6 +174,12 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return rainbowPointHistoryResult;
   }
 
+  /**
+   * 복수회선 여부 판단
+   * @param lines
+   * @private
+   * return {Boolean}
+   */
   private isMultiLine(lines: any): boolean {
     return lines.length > 1;
   }

@@ -46,7 +46,7 @@ Tw.BenefitMyBenefit.prototype = {
     this._popupService.open({
       hbs: 'actionsheet01',
       layer: true,
-      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
+      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' ,'class': 'tw-popup-closeBtn'},
       data: [{
         'list': [
           {
@@ -63,7 +63,7 @@ Tw.BenefitMyBenefit.prototype = {
           }
         ]
       }]
-    }, $.proxy(this._bindPopupEvent, this), $.proxy(this._goLoad, this), null, $(event.currentTarget));
+    }, $.proxy(this._bindPopupEvent, this), null, null, $(event.currentTarget));
   },
 
   /**
@@ -73,7 +73,6 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._setEvent, this));
-    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._setEvent, this));
   },
   /**
    * 포인트 요금납부 클릭 시 다음 주소 저장
@@ -82,14 +81,11 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _setEvent: function (e) {
     this.$uri = $(e.currentTarget).attr('data-url');
-    this._popupService.close();
-  },
-  _goLoad: function () {
-    // popup close에서 이동. back으로 이동 시 팝업이 열리는 현상 막음.
-    if ( !_.isEmpty(this.$uri) && this.$uri !== 'undefined'){
-      this._historyService.goLoad(this.$uri);
+    if(this.$uri) {
+      this._historyService.replaceURL(this.$uri);
     }
   }
+
   /**
    * BETA 버젼에서 임시로 외부링크로 이동
    * @param e

@@ -39,7 +39,7 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
@@ -112,14 +112,6 @@
                                                 <!-- TBD -->
                                                 <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align:top;"/>
                                                 <!--// TBD -->
-
-                                                <div class="bt-fixed-area">
-                                                    <ul class="bt-slice full">
-                                                        <li class="bt-red1">
-                                                            <button>해제하기</button>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -129,6 +121,14 @@
                         <!--// .component -->
                     </div>
                     <!--// .cont-box -->
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>해제하기</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
             <!-- // .container-wrap -->

@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 로밍 요금제 (RM_11)
  * FileName: product.roaming.fee.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.11.08
@@ -26,7 +27,7 @@ export default class ProductRoamingFee extends TwViewController {
             ...(req.query.order ? { searchOrder: req.query.order } : {}),
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
-
+        // 로그인한 사용자의 경우 나의 로밍 요금제 이용현황 데이터 요청.
         if (this.isLogin(svcInfo)) {
             Observable.combineLatest(
                 this.getRoamingData(),
@@ -75,6 +76,7 @@ export default class ProductRoamingFee extends TwViewController {
         }
         return true;
     }
+    // 나의 로밍 요금제 이용현황 요청.
     private getRoamingData(): Observable<any> {
         let roamingData = null;
         return this.apiService.request(API_CMD.BFF_10_0122, {}).map((resp) => {
@@ -91,7 +93,7 @@ export default class ProductRoamingFee extends TwViewController {
 
         });
     }
-
+    // 로밍 요금제 리스트 요청.
     private getRoamingPlanData(params) {
         // let roamingPlanData = null;
         return this.apiService.request(API_CMD.BFF_10_0031, params).map((resp) => {

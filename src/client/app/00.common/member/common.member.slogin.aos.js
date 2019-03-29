@@ -4,11 +4,12 @@
  * Date: 2018.07.26
  */
 
-Tw.CommonMemberSloginAos = function (rootEl, existMdn) {
+Tw.CommonMemberSloginAos = function (rootEl, existMdn, target) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._target = target;
 
   this.$inputBirth = null;
   this.$btnLogin = null;
@@ -61,7 +62,11 @@ Tw.CommonMemberSloginAos.prototype = {
   },
   _successLogin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.goBack();
+      if ( Tw.FormatHelper.isEmpty(this._target) ) {
+        this._historyService.goBack();
+      } else {
+        this._historyService.replaceURL(this._target);
+      }
     } else if ( resp.code === this.ERROR_CODE.ATH1004 ) {
       this.$errorTxt.removeClass('none');
       this.$inputBox.addClass('error');
