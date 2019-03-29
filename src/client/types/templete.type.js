@@ -391,11 +391,11 @@ Tw.POPUP_TPL = {
         { txt: '최근 납부 내역', 'radio-attr': 'name="myTHistory" value="0" checked' },
         { txt: '즉시납부', 'radio-attr': 'name="myTHistory" value="1"' },
         { txt: '자동납부', 'radio-attr': 'name="myTHistory" value="2"' },
-        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"' },
-        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"' },
-        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"' },
-        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"' },
-        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"' }
+        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"', onlyType: 'M'},
+        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"', onlyType: 'M' },
+        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"', onlyType: 'M' },
+        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"', onlyType: 'M' },
+        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"', onlyType: 'M' }
       ]
     }
   ],
