@@ -13,112 +13,117 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html',
-    { title: '이메일 상담 상세내역', svcInfo: svcInfo, option: { line: false } }); %>
-    <!--// #header -->
-    <!-- .container-wrap -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">이메일 상담 상세내역</h2>
-    <% if ( inquiryInfo ) { %>
-        <div class="container">
-            <div class="email-details-box">
-                <hr class="cont-sp type1" aria-hidden="true">
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="details-top">
-                        <strong class="tit"><%-inquiryInfo.title%></strong>
-                        <p>
-                            <em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
-                            <% if ( inquiryInfo.answYn === 'Y' ) { %>
-                            <span class="state">답변완료</span>
-                            <% } %>
-                        </p>
+    <div class="popup-page tw-popup fixed-bottom ">
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '이메일 상담 상세내역', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">이메일 상담 상세내역</h2>
+        <% if ( inquiryInfo ) { %>
+            <div class="container">
+                <div class="email-details-box">
+                    <hr class="cont-sp type1" aria-hidden="true">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="details-top">
+                            <strong class="tit"><%-inquiryInfo.title%></strong>
+                            <p>
+                                <em class="date"><%-convertDate(inquiryInfo.rgstDt)%></em>
+                                <% if ( inquiryInfo.answYn === 'Y' ) { %>
+                                <span class="state">답변완료</span>
+                                <% } %>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <!--// .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true">
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="details-btm">
-                        <div class="details-info">
-                            <div class="tit">
-                                <strong>답변 이메일</strong>
-                                <em><%-inquiryInfo.answEmailAddr%></em>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true">
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="details-btm">
+                            <div class="details-info">
+                                <div class="tit">
+                                    <strong>답변 이메일</strong>
+                                    <em><%-inquiryInfo.answEmailAddr%></em>
+                                </div>
+                            </div>
+                            <div class="details-cont">
+                                <%-inquiryInfo.contents.replace(/\n/g, '<br>')%>
                             </div>
                         </div>
-                        <div class="details-cont">
-                            <%-inquiryInfo.contents.replace(/\n/g, '<br>')%>
-                        </div>
                     </div>
-                </div>
 
-                <% if ( inquiryInfo.answList ) { %>
-                    <% inquiryInfo.answList.map( (answer) => { %>
-                <hr class="cont-sp type1" aria-hidden="true">
-                        <div class="cont-box nogaps-hoz">
-                            <div class="details-btm">
-                                <div class="details-info">
-                                    <div class="tit">
-                                        <strong>답변 이메일</strong>
-                                        <em><%-inquiryInfo.answEmailAddr%></em>
+                    <% if ( inquiryInfo.answList ) { %>
+                        <% inquiryInfo.answList.map( (answer) => { %>
+                    <hr class="cont-sp type1" aria-hidden="true">
+                            <div class="cont-box nogaps-hoz">
+                                <div class="details-btm">
+                                    <div class="details-info">
+                                        <div class="tit">
+                                            <strong>답변 이메일</strong>
+                                            <em><%-inquiryInfo.answEmailAddr%></em>
+                                        </div>
+                                    </div>
+                                    <div class="details-cont">
+                                        <%- answer %>
                                     </div>
                                 </div>
-                                <div class="details-cont">
-                                    <%- answer %>
-                                </div>
                             </div>
-                        </div>
-                    <% }) %>
-                <% } %>
+                        <% }) %>
+                    <% } %>
 
-                <!--// .cont-box -->
-                
+                    <!--// .cont-box -->
+                    
+                </div>
             </div>
-        </div>
-        <% if( inquiryInfo.supInqId === '' ) { %>
-        <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-        <div class="bt-fixed-area">
-            <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
-                <% if (inquiryInfo.answYn == 'Y') { %>
-                    <ul class="bt-slice item-two full">
-                        <li class="bt-gray1">
-                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
-                            </button>
-                        </li>
-                        <li class="bt-red1">
-                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
-                            </button>
-                        </li>
-                    </ul>
+            <% if( inquiryInfo.supInqId === '' ) { %>
+            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            <div class="bt-fixed-area">
+                <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
+                    <% if (inquiryInfo.answYn == 'Y') { %>
+                        <ul class="bt-slice item-two full">
+                            <li class="bt-gray1">
+                                <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                        data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                                </button>
+                            </li>
+                            <li class="bt-red1">
+                                <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                        data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                                </button>
+                            </li>
+                        </ul>
+                    <% } else { %>
+                        <ul class="bt-slice full">
+                            <li class="bt-gray1">
+                                <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                        data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
+                                </button>
+                            </li>
+                        </ul>
+                    <% } %>
                 <% } else { %>
-                    <ul class="bt-slice full">
-                        <li class="bt-gray1">
-                            <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
-                            </button>
-                        </li>
-                    </ul>
+                    <% if ( inquiryInfo.answYn == 'Y' && inquiryInfo.inqClCd === 'D' ) { %>
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                                        data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
+                                </button>
+                            </li>
+                        </ul>
+                    <% } %>
                 <% } %>
-            <% } else { %>
-                <% if ( inquiryInfo.answYn == 'Y' && inquiryInfo.inqClCd === 'D' ) { %>
-                    <ul class="bt-slice full">
-                        <li class="bt-red1">
-                            <button class="fe-btn_remove_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
-                                    data-inqClCd="<%-inquiryInfo.inqClCd%>">삭제하기
-                            </button>
-                        </li>
-                    </ul>
-                <% } %>
+            </div>
+            <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
             <% } %>
-        </div>
-        <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
         <% } %>
-    <% } %>
+        </div>
+        <!-- // .container-wrap -->
+         <!-- .popup-closeBtn -->
+        <button class="prev-step fe-email-close">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
-    <!-- // .container-wrap -->
 </div>
 <% include ../../components/javascript.component.html %>
 <script>

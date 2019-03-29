@@ -25,6 +25,7 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn_retry_inquiry', $.proxy(this._retryInquiry, this));
     this.$container.on('click', '.fe-btn_remove_inquiry', $.proxy(this._removeInquiry, this));
+    this.$container.on('click', '.fe-email-close', $.proxy(this._history.goBack, this));
   },
 
   _retryInquiry: function (e) {
