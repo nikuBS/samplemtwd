@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 로밍안내 > SMS, 데이터 로밍 (RM_16_04)
  * FileName: product.roaming.info.data-roaming.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.11.08

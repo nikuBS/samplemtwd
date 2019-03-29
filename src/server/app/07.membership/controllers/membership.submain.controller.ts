@@ -1,4 +1,5 @@
 /**
+ * MenuName: T멤버십 > submain (BE_01)
  * FileName: membership.submain.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.12.19
@@ -18,6 +19,7 @@ export default class MembershipSubmain extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
+      // 멤버십 등급 준회원, 선불폰, 유선서비스 가입자 인 경우
       if (svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U'
           || svcInfo.svcGr === '') {
         Observable.combineLatest(
@@ -65,6 +67,7 @@ export default class MembershipSubmain extends TwViewController {
     return true;
   }
 
+  // 나의 멤버십 카드 정보 조회
   private getMembershipData(): Observable<any> {
     let membershipData = null;
     return this.apiService.request(API_CMD.BFF_11_0001, {}).map((resp) => {
@@ -94,8 +97,8 @@ export default class MembershipSubmain extends TwViewController {
   }
 
   private parseMembershipData(membershipData): any {
-    membershipData.showCardNumDash = FormatHelper.addCardDash(membershipData.mbrCardNum.toString());
-    membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);
+    membershipData.showCardNumDash = FormatHelper.addCardDash(membershipData.mbrCardNum.toString());  // 서브메인 카드번호
+    membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);                // 멤버십바코드 팝업 카드번호
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toUpperCase();
     membershipData.mbrGrade = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toLowerCase();
@@ -104,6 +107,7 @@ export default class MembershipSubmain extends TwViewController {
     return membershipData;
   }
 
+  // 제휴브랜드 조회
   private getPopBrandData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0017, {'ordCol' : 'L', 'cateCd' : '00', 'pageNo' : '1', 'pageSize' : '10'}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {

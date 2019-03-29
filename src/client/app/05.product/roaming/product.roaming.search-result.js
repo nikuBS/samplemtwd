@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
  * FileName: product.roaming.do.search-before.js
  * Author: Eunjung Jung
  * Date: 2018.11.12
@@ -22,34 +23,34 @@ Tw.ProductRoamingSearchResult = function (rootEl, svcInfo, srchInfo, rateInfo) {
 };
 
 Tw.ProductRoamingSearchResult.prototype = {
-    type: {
-        lte:0,
-        wcdma:1,
-        cdma:2,
-        gsm:3,
-        rent:4
+    type: {     // 로밍 서비스 방식
+        lte:0,      // LTE
+        wcdma:1,    // 3G
+        cdma:2,     // 2G
+        gsm:3,      // GSM
+        rent:4      // 임대
     },
-    MFACT_CODE: {
-        ALL: 0,
-        SS: 1,
-        LG: 2,
-        PT: 3,
-        CG: 4,
-        ETC: 5
+    MFACT_CODE: {   // 휴대폰 제조사 코드
+        ALL: 0, // 전체
+        SS: 1,  // 삼성
+        LG: 2,  // LG
+        PT: 3,  // 팬텍
+        CG: 4,  // 애플
+        ETC: 5  // 기타
     },
     _roamingSearchInit: function () {
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
         this.$roamingNoti = this.$container.find('#fe-rm-noti');
         this.$notiButton = this.$container.find('.fe-noti-btn');
         this.$userPhoneInfo = this.$container.find('#fe-search-phone');
-        this._phoneInfo = {
-            eqpMdlNm : this._srchInfo.eqpMdlNm,
-            eqpMdlCd : this._srchInfo.eqpMdlCd
+        this._phoneInfo = { // 사용자 휴대폰 정보
+            eqpMdlNm : this._srchInfo.eqpMdlNm, // 휴대폰 이름
+            eqpMdlCd : this._srchInfo.eqpMdlCd  // 휴대폰 모델 코드
         };
         this.reqParams = {
-            'countryCode': this._srchInfo.countryCd,
-            'manageType': '',
-            'showDailyPrice': 'N'
+            'countryCode': this._srchInfo.countryCd,    // 국가 코드
+            'manageType': '',                           // 로밍 서비스 방식
+            'showDailyPrice': 'N'                       // 로밍서비스방식이 임대로밍 인경우는 Y , 나머지는 N
         };
 
         // 휴대폰 정보 있는 경우 사용자 휴대폰 정보 노출
@@ -81,8 +82,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         Tw.Logger.info('roaming service info : ', JSON.stringify(this._rateInfo));
 
         // 국가별 이용가능 서비스 리스트 생성
-        if(this._rateInfo.iPoPhone){
-            if(this._rateInfo.iPoPhone === '0') {
+        if(this._rateInfo.iPoPhone){    // 단말기 가능폰 확인
+            if(this._rateInfo.iPoPhone === '0') {   // 지원가능 서비스 없는 경우
                 if(this._rateInfo.eqpMthdCd === 'W'){   // wcdma+gsm
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
@@ -154,6 +155,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             }
         }
 
+        // 임대 로밍 서비스가 가능한 경우
         if(this._rateInfo.rent > 0){
             this.reqParams.showDailyPrice = 'Y';
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
@@ -171,13 +173,14 @@ Tw.ProductRoamingSearchResult.prototype = {
             // }
         }
 
+        // 이용가능 서비스가 있는 경우 로밍 요금 조회 요청.
         if(this.manageType.length > 0) {
             this.reqParams.manageType = this.manageType[0].type;
             this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
             Tw.Logger.info('this.reqParams : ', this.reqParams);
             this._getCountryRoamingRate(this.reqParams, this);
         } else {
-            Tw.Logger.info('no roaming service');
+            // 이용가능한 서비스가 없는 경우 alert 호출.
             setTimeout($.proxy(this._openAlertPopup, this, null), 500);
         }
         this._rmRateInfoTmpl = Handlebars.compile($('#fe-roaming-rate').html());
@@ -194,6 +197,9 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     /**
      * 로밍 이용가능 서비스 요금 조회
+     * @param params
+     * @param event
+     * @private
      */
     _getCountryRoamingRate: function (params, event) {
         Tw.Logger.info('get countryRoamingRate params :::: ', params);
@@ -202,18 +208,18 @@ Tw.ProductRoamingSearchResult.prototype = {
             .fail($.proxy(this._handleFailSearch, this));
     },
     _bindEvents: function () {
-        this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));
-        this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));
-        this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));
-        this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));
-        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));
-        this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));
-        this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));
-        this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));
-        this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));
-        this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
-        this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));
-        this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));
+        this.$container.on('click', '#fe-search-btn', $.proxy(this._onBtnClicked, this));       // 검색
+        this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));      // 로밍요금제
+        this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));    // 로밍 부가서비스
+        this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));         // 로밍 카드 쿠폰
+        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));       // 음성통화 수신요금 안내
+        this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));    // 휴대폰 정보 변경
+        this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));     // 이용가능 서비스 방식
+        this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));    // 휴대폰 제조사 선택
+        this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));   // 휴대폰 모델명 선택
+        this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));    // 휴대폰 정보 선택
+        this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));    // 아시아패스
+        this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));    // 유럽패스
         this.$container.on('click', '.fe-rm-data', $.proxy(this._goRoamingList, this, 'data'));
         this.$container.on('click', '.fe-rm-voice', $.proxy(this._goRoamingList, this, 'voice'));
     },
@@ -230,6 +236,9 @@ Tw.ProductRoamingSearchResult.prototype = {
     _goEuropePassPlan: function () {
         this._history.goLoad('/product/callplan?prod_id=NA00006046');
     },
+    /**
+     * 휴대폰 정보 선택.
+     */
     _onClickSelectBtn: function (e) {
         if(this.modelValue === undefined || this.modelValue === ''){
             this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG,
@@ -243,6 +252,9 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._roamingDecriptonInit();
         }
     },
+    /**
+     * 휴대폰 모델 리스트 선택.
+     */
     _onSelectModel: function () {
         if(this.cdValue === undefined || this.cdValue === ''){
             return;
@@ -267,6 +279,9 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     },
+    /**
+     * 휴대폰 제조사 선택.
+     */
     _onPhoneSelect: function ($layer, e) {
         var target = $(e.currentTarget);
         this.modelValue = target.attr('data-model-nm');
@@ -297,34 +312,34 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
         var noticeParam = {
-            voiceShown: true,
+            voiceShown: true,   // 음성통화 수신 요금 안내 노출 여부
             ableShown: true,
-            attentionShown: false,
-            svcAttention: _result.svcAttention,
-            hanaroMtCharge: _result.hanaroMtCharge,
-            dacomMtCharge: _result.dacomMtCharge,
-            ktMtCharge: _result.ktMtCharge,
-            onseMtCharge: _result.onseMtCharge
+            attentionShown: false,  // 로밍 시 국가별 주의사항 노출 여부
+            svcAttention: _result.svcAttention, // 로밍 시 국가별 주의 사항 내용
+            hanaroMtCharge: _result.hanaroMtCharge, // 음성통화 수신 요금 sk브로드밴드
+            dacomMtCharge: _result.dacomMtCharge,   // 음성통화 수신 요금 LG U+
+            ktMtCharge: _result.ktMtCharge,         // 음성통화 수신 요금 KT
+            onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
         };
 
-        if(this.reqParams.manageType === 'L'){
-            _result.lteShown = true;
+        if(this.reqParams.manageType === 'L'){  // 서비스 방식이 LTE인 경우
+            _result.lteShown = true;    // LTE 안내 사항 노출
             noticeParam.voiceShown = false;
-        }else if(this.reqParams.manageType === ''){
-            _result.rentShown = true;
-        } else if(this.reqParams.manageType === 'C' && _result.dMoChargeMin){
+        }else if(this.reqParams.manageType === ''){ // 서비스 방식이 임대로밍 인 경우
+            _result.rentShown = true;   // 임대로밍 안내사항 노출
+        } else if(this.reqParams.manageType === 'C' && _result.dMoChargeMin){   // 서비스 방식이 2G이고 데이터 이용료가 있는 경우
             _result.cdmaUnit = true;
             _result.mTxtCharge = _result.dMoChargeMin;
             _result.mMtmCharge = _result.dMoChargeMin;
         }
 
-        if(_result.ableAreaType === 'A'){
+        if(_result.ableAreaType === 'A'){   // 이용가능 지역 상세보기 여부
             noticeParam.ableShown = false;
         }
 
-        _result.dMoChargeMin = Number(_result.dMoChargeMin);
-        _result.mTxtCharge =  Number(_result.mTxtCharge);
-        _result.mMtmCharge =  Number(_result.mMtmCharge);
+        _result.dMoChargeMin = Number(_result.dMoChargeMin);    // 데이터 이용료
+        _result.mTxtCharge =  Number(_result.mTxtCharge);       // MMS-텍스트 발신
+        _result.mMtmCharge =  Number(_result.mMtmCharge);       // MMS 멀티미디어 발신
         noticeParam.attentionShown = (_result.svcAttention) ? true : false;
 
         Tw.Logger.info('result noticeParam = ', JSON.stringify(noticeParam));
@@ -338,7 +353,7 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         this.$roamingNoti.empty();
         this.$roamingNoti.append(this._rmNoticeTmpl({ items: noticeParam }));
-
+        // 서비스 국가가 러시아이고, 3G인 경우 안내팝업 호출
         if(this.reqParams.manageType === 'W' && this._srchInfo.countryCd === 'RUS'){
             this._popupService.close();
             this._popupService.open({
@@ -356,6 +371,9 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
     },
+    /**
+     * 팔라우, 세이셸, 마다가스카르의 공지팝업
+     */
     _openNoticePopup: function (desc, event) {
         this._popupService.open({
             'pop_name': 'type_tx_scroll',
@@ -370,8 +388,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._popupService.close();
     },
     _closeRusNotiPopup: function ($layer) {
-        $layer.on('click', '.bt-red1', $.proxy(this._selectOkBtn, this));
-        $layer.on('click', '.fe-rm-center', $.proxy(this._selectRoamingCenter, this));
+        $layer.on('click', '.bt-red1', $.proxy(this._selectOkBtn, this));   // 러시아 3G 안내 팝업 닫기
+        $layer.on('click', '.fe-rm-center', $.proxy(this._selectRoamingCenter, this));  // 로밍센터 안내 링크
     },
     _selectRoamingCenter: function () {
         this._popupService.close();
@@ -451,6 +469,9 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleFailModelSearch: function () {
 
     },
+    /**
+     * 휴대폰 변경 선택 시 데이터 초기화.
+     */
     _onChangeModel: function (){
         this._phoneInfo.eqpMdlNm = '';
         this._phoneInfo.eqpMdlCd = '';
@@ -476,6 +497,9 @@ Tw.ProductRoamingSearchResult.prototype = {
             $target.parents('li').removeClass('on');
         }
     },
+    /**
+     * 이용가능한 로밍 서비스 방식 액션시트 노출.
+     */
     _openMangeType: function (){
         this._popupService.open(
             {
@@ -494,6 +518,9 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[name="r2"]').on('click', $.proxy(this._handleSelectRoamingType, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     },
+    /**
+     * 로밍 서비스 방식 선택 후 이용요금 조회 요청.
+     */
     _handleSelectRoamingType: function ($layer, e) {
         var $target = $(e.currentTarget);
         var rmType = $target.attr('data-manage-type');
@@ -501,6 +528,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         if(this.reqParams.manageType === rmType){
             this._popupService.close();
         }else {
+            // 로밍 서비스 방식이 빈값인 경우는 임대로밍이므로 manageType:G, showDailyPrice:Y로 변경함.
             this.reqParams.manageType = rmType;
             if(this.reqParams.manageType === ''){
                 this.reqParams.manageType = 'G';
@@ -560,6 +588,10 @@ Tw.ProductRoamingSearchResult.prototype = {
                 .fail($.proxy(this._handleFailSearchResult, this));
         }
     },
+    /**
+     * 국가 검색.
+     * 키워드 포함된 나라가 1개 이상인 경우 액션팝업 호출.
+     */
     _handleSuccessSearchResult : function (resp) {
         var _result = resp.result;
 
@@ -609,43 +641,45 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._history.goLoad(resultUrl);
         }
     },
+    /**
+     * 휴대폰 선택 case별 상/하단 안내 메시지
+     * @private
+     */
     _roamingDecriptonInit: function () {
-        if(this._svcInfo !== null){
+        if(this._svcInfo !== null){ // 사용자 로그인
             this._svcInfo.totalSvcCnt = Number(this._svcInfo.totalSvcCnt);
             this._svcAttrCd = this._svcInfo.svcAttrCd.charAt(0);
-            if(this._svcInfo.totalSvcCnt > 1 ){
-                if(this._svcAttrCd !== 'M'){
+            if(this._svcInfo.totalSvcCnt > 1 ){ // 회선정보가 여러개일 경우
+                if(this._svcAttrCd !== 'M'){ // 유무선 서비스에 가입되어 있으나 유선 회선으로 접속한 회원
                     this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                     this.$container.find('.fe-bottom-msg').html('');
                 } else {
-                    if(this._srchInfo.eqpMdlNm !== ''){
+                    if(this._srchInfo.eqpMdlNm !== ''){ // 단말 정보가 있는 Type
                         this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
                         this.$container.find('.fe-bottom-msg').html('');
-
-                    } else {
+                    } else {    // 단말정보가 없는Type
                         this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
                         this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
                     }
                 }
-            }else if(this._svcInfo.totalSvcCnt === 1){
-                if(this._svcAttrCd !== 'M'){
+            }else if(this._svcInfo.totalSvcCnt === 1){  // 회선정보가 한개일 경우
+                if(this._svcAttrCd !== 'M'){    // 유선에만 가입된 회원
                     this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LOGIN_MSG);
                     this.$container.find('.fe-bottom-msg').html('');
                 } else {
-                    if(this._srchInfo.eqpMdlNm !== ''){
+                    if(this._srchInfo.eqpMdlNm !== ''){ // 단말 정보가 있는 Type
                         this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
                         this.$container.find('.fe-bottom-msg').html('');
-
-                    } else {
+                    } else {    // 단말정보가 없는Type
                         this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
                         this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
                     }
                 }
-            } else {
+            } else {    // 단말정보가 없는Type
                 this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
                 this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
             }
-        } else {
+        } else {    // 사용자 비로그인
             this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
             this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_LOGIN_MSG);
         }

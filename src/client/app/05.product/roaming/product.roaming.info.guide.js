@@ -1,6 +1,7 @@
 /**
+ * MenuName: T로밍 > 로밍 안내 > submain (RM_16_01)
  * FileName: product.roaming.info.guide.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
@@ -23,6 +24,10 @@ Tw.ProductRoamingGuide.prototype = {
             this._roamingGuideAnchor();
         }
     },
+    /**
+     * 분실 안내 화면으로 스크롤 이동
+     * @private
+     */
     _roamingGuideAnchor: function () {
         this.$container.find('.fe-lost-guide').addClass('on');
         this.$container.find('.fe-rm-lost').attr('aria-pressed', 'true');
@@ -31,7 +36,6 @@ Tw.ProductRoamingGuide.prototype = {
             scrollTop:_top + 200},
             1, function(){});
     },
-
     _getQueryStringObject: function () {
         var a = window.location.search.substr(1).split('&');
         if (a === '') return {};
@@ -46,25 +50,23 @@ Tw.ProductRoamingGuide.prototype = {
         return b;
     },
     _bindBtnEvents: function () {
-      this.$container.on('click', '#fe-rm-info-slide1', $.proxy(this._goLteGuide, this));
-      this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goSecureTroaming, this));
-      this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goDataRoaming, this));
-      this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));
+      this.$container.on('click', '#fe-rm-info-slide1', $.proxy(this._goLteGuide, this));           // 자동로밍
+      this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goSecureTroaming, this));     // 자동안심 T로밍
+      this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goDataRoaming, this));        // SMS 문자, 데이터 로밍
+      this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));                    // 자주하는 질문
       // this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
-      this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart'));
-      this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone'));
-      this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental'));
+      this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart')); // 로밍안내서 다운받기 스마트폰
+      this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone')); // 로밍안내서 다운받기 일반폰
+      this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental')); // 로밍안내서 다운받기 임대로밍
   },
   _goDownLoadGuide: function (type) {
-    if(type === 'smart') {
+    if(type === 'smart') {  // 스마트폰 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_GUIDE,'');
-    } else if(type === 'phone'){
+    } else if(type === 'phone'){    // 일반폰 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.PHONE_GUIDE,'');
-    } else {
+    } else {    // 임대로밍 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.RENTAL_GUIDE,'');
     }
-
-
   },
   _goLteGuide : function() {
     this._history.goLoad('/product/roaming/info/lte');

@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
  * FileName: product.roaming.search-result.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.11.08
@@ -28,10 +29,11 @@ class ProductRoamingSearchResult extends TwViewController {
           eqpMdlCd: decodeURIComponent(req.query.eqpCd)
       };
       const params = {
-          countryCode: searchInfo.countryCd,
-          command: '',
-          eqpMdlCd: searchInfo.eqpMdlCd
+          countryCode: searchInfo.countryCd,    // 국가코드
+          command: '',                          // 검색구분
+          eqpMdlCd: searchInfo.eqpMdlCd         // 단말 코드
       };
+      // 휴대폰 정보의 여부에 따라 검색구분 변경.
       if ( svcInfo ) {
           if ( !svcInfo.eqpMdlNm ) {
               params.command = 'onlyCountry';
@@ -70,6 +72,7 @@ class ProductRoamingSearchResult extends TwViewController {
         }
         return true;
     }
+    // 이용가능한 로밍 서비스 조회.
     private getManageTypeSrch (param: any): Observable<any> {
         let roamingTypeData = null;
         return this.apiService.request(API_CMD.BFF_10_0061, param).map((resp) => {

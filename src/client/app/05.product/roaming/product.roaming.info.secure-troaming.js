@@ -1,6 +1,7 @@
 /**
+ * MenuName: T로밍 > 로밍안내 > 자동안심 T로밍이란? (RM_16_03)
  * FileName: product.roaming.info.secure-troaming.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
