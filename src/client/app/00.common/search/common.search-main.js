@@ -17,8 +17,7 @@ Tw.CommonSearchMain.prototype = {
     this._autoCompleteRegExObj = {
       fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
       fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
-      fontClose : new RegExp('</font>','g'),
-      spanOpen : new RegExp('<span class="keyword-text">','g')
+      fontClose : new RegExp('</font>','g')
     };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -61,7 +60,7 @@ Tw.CommonSearchMain.prototype = {
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontColorOpen,'<span class="keyword-text">');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontSizeOpen,'');
     returnObj.showStr = returnObj.showStr.replace(this._autoCompleteRegExObj.fontClose,'</span>');
-    returnObj.linkStr = returnObj.showStr.replace(this._autoCompleteRegExObj.spanOpen,'').replace('</span>','');
+    returnObj.linkStr = Tw.FormatHelper.stripTags(returnObj.showStr);
     return returnObj;
   },
   _inputFocusEvt : function () {
