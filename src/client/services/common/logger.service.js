@@ -5,8 +5,8 @@ Tw.LOG = {
   DEBUG: 'DEBUG'
 };
 
-Tw.LoggerService = function () {
-  this._level = Tw.LOG.DEBUG;
+Tw.LoggerService = function (environment) {
+  this._level = environment === 'prd' ? Tw.LOG.ERROR : Tw.LOG.DEBUG;
   this.log = function() {};
   this.info = function() {};
   this.warn = function() {};

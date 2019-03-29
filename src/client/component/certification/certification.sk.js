@@ -292,6 +292,7 @@ Tw.CertificationSk.prototype = {
     this._clearCertError();
     this._clearConfirmError();
 
+    this.$btCert.attr('disabled', true);
     this.$btCertAdd.attr('disabled', true);
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearInterval(this._addTimer);

@@ -6,6 +6,7 @@
 
 Tw.CommonCertResult = function (target, code, msg) {
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
   this._target = target;
   this._init(code, msg);
 
@@ -35,7 +36,7 @@ Tw.CommonCertResult.prototype = {
     if ( code === Tw.API_CODE.CODE_00 ) {
       this._nativeService.send(Tw.NTV_CMD.CLOSE_INAPP, {});
     } else {
-      Tw.Error(code, msg).page();
+      this._historyService.replaceURL('/common/inapp/error?code=' + code + '&msg=' + msg);
     }
   }
 };

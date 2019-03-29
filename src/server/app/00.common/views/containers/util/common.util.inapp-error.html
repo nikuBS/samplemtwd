@@ -1,0 +1,60 @@
+<%#
+* FileName: common.util.inapp-error.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2019.03.27
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <p class="tx-tit"><span class="tx-highlight pt10">이용에 불편을 드려서 죄송합니다.</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <p class="code-txt">에러 코드 : <%= code %></p>
+                        <p class="basic-txt"><%= msg %></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--<div class="bt-fixed-area">-->
+            <!--<ul class="bt-slice full">-->
+                <!--<li>-->
+                    <!--<button type="button" class="btn-floating btn-style2 fe-common-back">돌아가기</button>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+<% include ../components/javascript.component.html %>
+<% include ../components/end.component.html %>
