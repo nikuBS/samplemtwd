@@ -28,8 +28,9 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _init : function () {
     this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
     if(this._twoMonthFlag){
-      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
-        Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      // this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
+      //   Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      this._dateSelectRange = 60;
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
     }else{
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
