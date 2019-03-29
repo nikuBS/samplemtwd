@@ -98,7 +98,7 @@ class CustomerEmail extends TwViewController {
             if (response.code === API_CODE.CODE_00) {
               allSvc = response.result || allSvc;
             }
-            res.render('email/customer.email.html', Object.assign({}, responseData, {allSvc}));
+            res.render('email/customer.email.html', Object.assign({}, responseData, Object.assign(allSvc, {userId: svcInfo.userId})));
           });
     }
   }
