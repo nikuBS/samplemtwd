@@ -74,6 +74,7 @@ class ApiRouter {
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
     GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
     SET_MASKING_COMPLETE: { path: '/masking-complete', method: API_METHOD.POST, target: this.setMaskingComplete },
+    DELETE_SESSION_STORE: { path: '/session-store', method: API_METHOD.DELETE, target: this.deleteSessionStore, },
     GET_HOME_WELCOME: { path: '/home/welcome', method: API_METHOD.GET, target: this.getHomeWelcome },
     GET_HOME_NOTICE: { path: '/home/notice', method: API_METHOD.GET, target: this.getHomeNotice },
     GET_HOME_HELP: { path: '/home/help', method: API_METHOD.GET, target: this.getHomeHelp },
@@ -86,7 +87,7 @@ class ApiRouter {
     },
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
-    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethosBlock }
+    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethosBlock },
   };
 
   private setApi() {
@@ -536,6 +537,27 @@ class ApiRouter {
     loginService.setMaskingCert(svcMgmtNum)
       .switchMap((resp) => loginService.clearSessionStore(svcMgmtNum))
       .switchMap((resp) => apiService.updateSvcInfo({}))
+      .subscribe((resp) => {
+        res.json({
+          code: API_CODE.CODE_00
+        });
+      });
+  }
+
+  private deleteSessionStore(req: Request, res: Response, next: NextFunction) {
+    const loginService = new LoginService();
+    const apiService = new ApiService();
+    apiService.setCurrentReq(req, res);
+    const svcInfo = loginService.getSvcInfo(req);
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
+    const svcMgmtNum = svcInfo.svcMgmtNum;
+    loginService.setCurrentReq(req, res);
+    loginService.clearSessionStore(svcMgmtNum)
       .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00
