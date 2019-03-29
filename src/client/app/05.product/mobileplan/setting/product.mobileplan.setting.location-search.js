@@ -1,9 +1,9 @@
 /**
+ * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_09)(hbs)
  * FileName: product.mobileplan.setting.location-search.js
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.11.13
- * Page ID: MP_02_02_03_09(hbs)
- * Desctiption: 상품 > 가입설정해지 > MYT > TTL캠퍼스10요금제> 할인지역 변경 > 할인지역 검색
+ * Desctiption: 할인지역 검색
  */
 Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback, tmplt) {
   this.$container = rootEl;
@@ -43,6 +43,10 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     // this.$container.on('click', '.inputbox .cancel', $.proxy(this._listFilter, this));
   },
 
+  /**
+   * 지역 목록 필터 후 출력
+   * @private
+   */
   _listFilter: function(){
     // Tw.CommonHelper.startLoading('.container', 'grey', true);
     var list = [];
@@ -60,6 +64,10 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     // Tw.CommonHelper.endLoading('.container');
   },
 
+  /**
+   * 지역 찾기(처음부터 모두 가져옴 그렇게 해달라고 함..)
+   * @private
+   */
   _search: function(){
     // this.$selectList.html('');
     var keyword = $('.inputbox input[type=text]', this.$container).val();
@@ -91,7 +99,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * 장소 li 추가
+   * 장소 li 추가 (장소li템플릿은 html파일에 있음)
    * @param list
    * @private
    */

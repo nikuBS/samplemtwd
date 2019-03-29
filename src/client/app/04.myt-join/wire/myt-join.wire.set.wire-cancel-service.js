@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 서비스해지 신청(MS_04_08)
  * FileName: myt-join.wire.set.wire-cancel-service.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.15
+ * Summary: 유선상품 서비스해지 신청
  */
 Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
   this.resData = resData;
@@ -66,9 +68,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.select_Termination_input.attr('max', cancelableEndDt);
   },
 
+  /**
+   * element cache
+   * @private
+   */
   _cachedElement: function () {
 
-    this.infoLi= $('[data-target="infoLi"]'); // 안내사항 확인
+    this.infoLi= $('[data-target="infoLi"], .fe-btn-show-guide'); // 안내사항 확인
     this.productLi= $('[data-target="productLi"]'); // 해지신청상품
     this.hpAndTelType= $('[data-target="hpAndTelType"]');
     this.select_Termination_input= $('[data-target="select_Termination_input"]');
@@ -90,6 +96,10 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     };
     this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
   },
+  /**
+   * bind event
+   * @private
+   */
   _bindEvent: function () {
     this.infoLi.on('click', $.proxy(this.$infoLiEvt, this));
     this.productLi.on('click', 'input[type=checkbox]', $.proxy(this.$productLiEvt, this));
@@ -112,9 +122,14 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   },
   //--------------------------------------------------------------------------[EVENT]
+  /**
+   * close 버튼 클릭시 
+   * @private
+   */
   _closeCheck: function(){
     this._history.goLoad('/myt-join/submain');
 
+    // 입력된 내용있는지 체크 후 닫기(안하기로해서 주석처리)
     //if($('input[name=checkbox-conf-info]:checked').length > 0 ||
     //  this.productLi.find('input[type=checkbox]:checked').length > 0 ||
     //  this.dataModel.TerminationDtStr ||
@@ -179,10 +194,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   },
 
-  $infoLiEvt: function() {
+  /**
+   * 안내사항 확인 클릭시 -> check되어 있으면 check해제 미선택시에는 안내사항 팝업
+   * 안내사항 팝업창에서 확인클릭시 -> check상태로 변경
+   */
+  $infoLiEvt: function(event) {
     var tempBol = this.infoLi.find('input[type=checkbox]').is(':checked'); // 체크 상태 여부
+    var isArrowBtn = $(event.currentTarget).hasClass('fe-btn-show-guide');
 
-    if(!tempBol){
+    if(!tempBol || isArrowBtn){
       this._popupService.open(
         { hbs: 'MS_04_08_L01' },
         $.proxy(function ($root) {
@@ -210,6 +230,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
 
   },
+
+  /**
+   * 해지할 상품 check 시
+   * @param event
+   */
   $productLiEvt: function(event) {
     if(this.productLi.find('input[type=checkbox]:checked').length === 0){
       $('#span-err-prod').show().attr('aria-hidden', false);
@@ -298,6 +323,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
   },
 
+  // 등록된 연락처(휴대폰) 클릭시 - 회원의 등록된 연락처는 마스킹 해제 불가로 사용안함
   phoneLiEvt: function(event) {
     if ( this.dataModel.memberPhoneBol ) {
       this.dataModel.memberPhoneBol = false;
@@ -343,7 +369,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     Tw.Logger.info('[dataModel]', this.dataModel);
 
   },
-
+  // 등록된 연락처(휴대폰) 클릭시 - 회원의 등록된 연락처는 마스킹 해제 불가로 사용안함
   uncheckPhoneLi: function(){
     this.phoneLi.attr('aria-checked', false);
     this.phoneLi.removeClass('checked');
@@ -422,6 +448,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
 
   /*
+  * 회원의 등록된 연락처는 마스킹 해제 불가로 사용안함
   * 회원정보 등록된 연락처 셋팅
   * 무선번호 경우 : actRepYn : 'Y'
   * 유선번호 경우 : actRepYn : 'Y', svcGr : 'P'
@@ -456,6 +483,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     Tw.Logger.info('[회원정보 등록된 연락처 셋팅 완료]', this.memberPhoneObj);
   },
 
+  /**
+   * data 화면 출력 hbs script 템플릿 출력
+   * @param resData - 데이터
+   * @param $jqTg - 출력될 html area
+   * @param $hbTg - hbs 템플릿
+   * @private
+   */
   _svcHbDetailList: function (resData, $jqTg, $hbTg) {
     var jqTg = $jqTg; // 뿌려지는 영역
     var hbTg = $hbTg; // 템플릿
@@ -567,6 +601,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
 
   //--------------------------------------------------------------------------[API]
+  /**
+   * 할인반환금 조회
+   * @returns {*}
+   * @private
+   */
   _getWireCancelFee: function() {
     Tw.Logger.info('[할인반환금조회]');
     // var thisMain = this;
@@ -601,6 +640,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       }, this));
 
   },
+  /**
+   * 할인반환금 조회 결과 처리
+   * @param res
+   * @private
+   */
   _getWireCancelFeeInit: function(res) {
     Tw.CommonHelper.endLoading(this.dataLoading);
     this.dataLoading.hide().attr('aria-hidden', true);
@@ -647,6 +691,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     }
   },
 
+  /**
+   * 해지신청 api 호출
+   * @param param
+   * @returns {*}
+   * @private
+   */
   _setWireCancel: function (param) {
     Tw.Logger.info('[해지신청 진행]', param);
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -658,6 +708,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+  /**
+   * 해지신청 api 호출 결과
+   * @param res
+   * @private
+   */
   _setWireCancelInit: function (res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {

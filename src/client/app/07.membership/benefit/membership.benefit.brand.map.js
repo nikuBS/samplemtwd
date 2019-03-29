@@ -1,8 +1,10 @@
 /**
+ * MenuName: T멤버십 > 제휴브랜드 > 지도보기
  * FileName: membership.benefit.brand.map.js
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Editor: InHwan Kim (skt.P132150@partner.sk.com)
  * Date: 2018.11.06
+ * Summary: tmap이용 가맹점 지도보기
  */
 
 Tw.MembershipBenefitBrandMap = function (container, location, data) {
@@ -52,6 +54,12 @@ Tw.MembershipBenefitBrandMap.prototype = {
     $('.fe-franchisee-infor-telnum').text(Tw.FormatHelper.getDashedPhoneNumber($('.fe-franchisee-infor-telnum').text()));
   },
 
+  /**
+   * wifi가 아닌 경우 팝업 호출
+   * @param mapEl
+   * @param coord
+   * @private
+   */
   _showDataChargePopupIfNeeded: function (mapEl, coord) {
     if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function() {
@@ -73,6 +81,13 @@ Tw.MembershipBenefitBrandMap.prototype = {
       this._initMap(mapEl, coord);
     }
   },
+
+  /**
+   * map 초기화
+   * @param mapEl
+   * @param coord
+   * @private
+   */
   _initMap: function (mapEl, coord) {
     var map = new Tmap.Map({
       div: mapEl[0].id,
@@ -96,18 +111,21 @@ Tw.MembershipBenefitBrandMap.prototype = {
     markerLayer.addMarker(marker);
   },
 
+  // 혜택보기화면으로 이동 (주의 area에 한글이 들어가는데 encode하지 않을 경우 로그인화면에서 오류남)
   _onClickBenefit: function () {
     this.data.brandNm = encodeURI(this.data.brandNm);
     this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand-benefit?' + $.param(this.data));
   },
 
+  // 가맹점 전체보기 화면으로 이동 (주의 area에 한글이 들어가는데 encode하지 않을 경우 로그인화면에서 오류남)
   _onClickFranchiseeList: function () {
     this.data.brandNm = encodeURI(this.data.brandNm);
     this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(this.data));
   },
 
+  // tmap app 으로 이동 -> 요건 미확정으로 기능 제외
   _goTmap: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.openUrlExternal('https://onesto.re/0000163382');

@@ -1,7 +1,9 @@
 /**
+ * MenuName: T멤버십 > 제휴브랜드 > 혜택보기
  * FileName: membership.benefit.brand-benefit.controller.ts
  * Author: Hakjoon sim (hakjoon.sim@sk.com)
  * Date: 2018.11.06
+ * Summary: 제휴브랜드의 혜택 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -33,8 +35,8 @@ class MembershipBenefitBrandBenefit extends TwViewController {
 
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_11_0018, param),
-      this.apiService.request(API_CMD.BFF_03_0021, {})
+      this.apiService.request(API_CMD.BFF_11_0018, param),      // 혜택조회
+      this.apiService.request(API_CMD.BFF_03_0021, {})   // 위치동의여부 조회
     ).subscribe(([resp1, resp2]) => {
 
       if ( resp1.code === API_CODE.CODE_00 ) {

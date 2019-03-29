@@ -413,8 +413,9 @@ class MyTFareBillGuide extends TwViewController {
     };
 
     // 로밍api호출이 느려서 일단 무조건 노출함
+    //   -> 성능 이슈로 로밍버튼 삭제(DV001-19072 2019.03.28)
     data.roamDonaCallBtnYn = {
-      roamingYn: 'Y', donationYn: 'N', callgiftYn: 'N'
+      roamingYn: 'N', donationYn: 'N', callgiftYn: 'N'
     };
 
 

@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 설치장소변경(MS_04_04)
  * FileName: myt-join.wire.modify.address.js
  * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
  * Date: 2018.10.15
+ * Summary: 인터넷/집전화/IPTV 설치장소변경 신청
  */
 Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this.resData = resData;
@@ -117,6 +119,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     // }
   },
 
+  /**
+   * 신청하기 버튼 클릭시
+   * @param event
+   */
   $submitApplyEvt: function(event) {
     Tw.Logger.info('[신청하기]', event);
 
@@ -134,6 +140,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   },
 
+  /**
+   * 휴대폰 입력시
+   * @param event
+   */
   input_hpEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
 
@@ -148,6 +158,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
+  /**
+   * 일반전화 입력시
+   * @param event
+   */
   input_phoneEvt: function(event) {
     var tempNum = this._onFormatHpNum(event);
     this.addressFormData.cntcPrefrPhonNum = tempNum;
@@ -155,6 +169,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
+  /**
+   * 건물유형 선택버튼 클릭시 -> actionsheet 팝업
+   * @param event
+   */
   select_buildingEvt: function(event) {
     Tw.Logger.info('[건물유형클릭]', event);
     var $target = $(event.currentTarget); // 클릭 한 버튼
@@ -190,7 +208,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   },
 
   //--------------------------------------------------------------------------[SVC]
-  // 건물 유형
+  // 건물 유형 팝업 오픈
   select_buildingEvtOpen: function( $target, $layer ) {
     // Tw.Logger.info('[팝업 open > $target > 클릭한 버튼]', $target);
     // Tw.Logger.info('[팝업 open > $layer > 레이어 팝업]', $layer);
@@ -220,13 +238,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     }, this));
 
   },
+  // 건물유형 팝업 close event
   select_buildingEvtClose: function() {
     Tw.Logger.info('[팝업 close > select_buildingEvtClose]');
     this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
-  // 이사 날짜
+  // 이사 날짜 변경시
   select_house_input_changeEvt: function () {
     Tw.Logger.info('[select_house_input_changeEvt]');
 
@@ -244,7 +263,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
-  // 중단 희망 날짜
+  // 중단 희망 날짜 변경시
   select_stop_input_changeEvt: function () {
     Tw.Logger.info('[select_stop_input_changeEvt]');
 
@@ -267,7 +286,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     Tw.Logger.info('[addressFormData]', this.addressFormData);
   },
 
-  // 설치 희망 날짜
+  // 설치 희망 날짜 변경시
   select_install_input_changeEvt: function () {
     // Tw.Logger.info('[select_install_input_changeEvt]');
 
@@ -332,6 +351,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   /*
   * Form Validation
+  * 유효성 체크시 유효하지 않은 경우 오류를 발생시키고 발생된 오류가 없는 경우 신청 버튼 활성화
    */
   _formValidateionChk: function() {
 
@@ -379,6 +399,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   },
 
   //--------------------------------------------------------------------------[API]
+  /**
+   * 설치장소 변경 api 호출
+   * @param param
+   * @returns {*}
+   * @private
+   */
   _chgWireAddrInfo: function (param) {
     Tw.CommonHelper.startLoading('.container', 'grey');
 
@@ -389,6 +415,11 @@ Tw.MyTJoinWireModifyAddress.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+  /**
+   * 설치장소 변경 api 호출 결과
+   * @param res
+   * @private
+   */
   _chgWireAddrInfoInit: function (res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
