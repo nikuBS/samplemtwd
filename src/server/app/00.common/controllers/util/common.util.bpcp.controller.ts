@@ -16,7 +16,7 @@ class CommonUtilBpcp extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    const renderCommonInfo = { svcInfo, pageInfo, isBpcp: true },
+    const renderCommonInfo = { svcInfo, pageInfo },
       bpcpServiceId = req.query.bpcpServiceId || '',
       eParam = req.query.eParam || '',
       sp = req.query.sp || '';
