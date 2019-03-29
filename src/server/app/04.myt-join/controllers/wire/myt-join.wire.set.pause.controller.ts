@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 일시 정지/해제
  * FileName: myt-join.wire.set.pause.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.16
+ * Summary: 일시 정지/해제 정보 조회
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -39,7 +41,9 @@ class MyTJoinWireSetPause extends TwViewController {
       const wirePauseInfo = this.getWirePauseInfo(wirePauseInfoResp);
       // console.log('~~~~~~~~~~~`wirePauseInfo', wirePauseInfo);
       const today = new Date();
+      // 정지 시작일 익일로 세팅
       const min = DateHelper.getShortDateWithFormatAddByUnit(today, 1, 'days', this._INPUT_FORMAT);
+      // 정지 시작 가능일 세팅(익일 ~ 30일 이내)
       const startDate = {
         min: min,
         max: DateHelper.getShortDateWithFormatAddByUnit(today, this._SELECTABLE_MAX_DAY, 'days', this._INPUT_FORMAT),
@@ -58,10 +62,21 @@ class MyTJoinWireSetPause extends TwViewController {
     });
   }
 
+  /**
+   * 인터넷/집전화/IPTV > 일시정지/해제 신청내역 조회
+   * @private
+   * return Observable
+   */
   private reqWirePauseInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0169, {});
   }
 
+  /**
+   * 일시정지/해제 신청내역 데이터 가공 후 반환
+   * @param resp
+   * @private
+   * return wirePauseInfo{Object}
+   */
   private getWirePauseInfo(resp: any): any {
     const wirePauseInfo = resp.result && resp.result.pauseInfo;
     // wirePauseInfo['svc_st_cd'] = 'SP';
@@ -69,6 +84,7 @@ class MyTJoinWireSetPause extends TwViewController {
     // wirePauseInfo['last_susp_dt_fr'] = '20181019';
     // wirePauseInfo['last_susp_dt_to'] = '20181120';
 
+    // 일시정지 해제 신청이 있는 경우 이용정지 기간 정보 가공
     if ( wirePauseInfo['last_susp_dt_fr'] && wirePauseInfo['last_susp_dt_to'] ) {
       const refDiffDays = DateHelper.getDiffByUnit(wirePauseInfo['last_susp_dt_to'], wirePauseInfo['last_susp_dt_fr'], 'days');
       const diffMonth = Math.floor(refDiffDays / this._DAYS_PER_MONTH);

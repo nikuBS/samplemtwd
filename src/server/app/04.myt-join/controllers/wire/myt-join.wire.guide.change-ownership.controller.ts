@@ -1,4 +1,5 @@
 /**
+ * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 가입자 명의 변경
  * FileName: myt-join.wire.guide.change-ownership.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.19

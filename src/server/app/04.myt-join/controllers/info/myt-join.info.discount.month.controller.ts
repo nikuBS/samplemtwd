@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 약정할인/기기 상환 정보 > 상세 할인 내역
  * FileName: myt-join.info.discount.month.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.10.04
+ * Summary: 약정할인/기기 상환 정보 상세 할인 내역 조회
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -54,6 +56,11 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     });
   }
 
+  /**
+   * 약정할인 월별 상세 할인내역 조회
+   * @private
+   * return Observable
+   */
   private reqDiscountInfosMonth(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0076, {
       svcAgrmtCdId: this._svcAgrmtDcId,
@@ -61,6 +68,11 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     });
   }
 
+  /**
+   * 약정할인 월별 상세 할인내역 조회 데이터 파싱
+   * @private
+   * return data{Object}
+   */
   private getFormattedData(resp: any): any {
     const data = {};
     const agrmts = resp.result.agrmt;

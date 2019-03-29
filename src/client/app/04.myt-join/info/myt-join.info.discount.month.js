@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 가입정보 > 약정할인/기기 상환 정보 > 상세 할인 내역
  * FileName: myt-join.info.discount.month.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 04.
+ * Summary: 약정할인/기기 상환 정보 상세 할인 내역 조회
  */
 Tw.MyTJoinInfoDiscountMonth = function (rootEl, options) {
   this.$container = rootEl;
@@ -13,7 +15,7 @@ Tw.MyTJoinInfoDiscountMonth = function (rootEl, options) {
   this._bindEvent();
 };
 Tw.MyTJoinInfoDiscountMonth.prototype = {
-  MAX_ITEM_LENGTH_PER_PAGE: 20,
+  MAX_ITEM_LENGTH_PER_PAGE: 20, // 한페이지당 출력 갯수
 
   _cachedElement: function () {
     this._$discountMonthList = this.$container.find('.fe-discount-month-list');
@@ -24,6 +26,10 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
     this.$container.on('click', '.fe-btn-more', $.proxy(this._onClickBtnMore, this));
   },
 
+  /**
+   * 더보기버튼 클릭 시 약정할인 월별 상세 할인내역 조회
+   * @private
+   */
   _onClickBtnMore: function () {
     if (this._agrmts) {
       return;
@@ -116,6 +122,10 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
     // });
   },
 
+  /**
+   * 약정할인 월별 상세 할인내역 조회 성공
+   * @private
+   */
   _onReqDoneDiscountMonth: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._agrmts = resp.result.agrmt.slice(this.MAX_ITEM_LENGTH_PER_PAGE); // 서버 렌더링 데이터 제외
@@ -130,6 +140,11 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
     }
   },
 
+  /**
+   * 약정할인 월별 상세 할인내역 출력
+   * @param res
+   * @private
+   */
   _renderList: function (res) {
     var list = this._getFormattedData(res.list);
     _.each(list, $.proxy(function (item) {
@@ -140,10 +155,21 @@ Tw.MyTJoinInfoDiscountMonth.prototype = {
     }, this));
   },
 
+  /**
+   * 약정할인 월별 상세 할인내역 조회 실패
+   * @param err
+   * @private
+   */
   _onReqFailDiscountMonth: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
 
+  /**
+   * 약정할인 월별 상세 할인내역 데이터 파싱 후 반환
+   * @param agrmts
+   * @returns agrmts{Array}
+   * @private
+   */
   _getFormattedData: function (agrmts) {
     _.each(agrmts, $.proxy(function (agrmt) {
       agrmt.showInvoDt = Tw.DateHelper.getShortDate(agrmt.invoDt);

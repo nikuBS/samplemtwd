@@ -1,7 +1,9 @@
 /**
+ * MenuName: 나의 데이터/통화 > 실시간 잔여량 > T데이터 셰어링 유심 해지
  * FileName: myt-data.usage.cancel-tshare.controller.ts
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018.11.12
+ * Summary: T데이터 셰어링 유심 해지 정보 출력
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -53,10 +55,22 @@ class MyTDataUsageCancelTshare extends TwViewController {
     });
   }
 
+  /**
+   * T데이터셰어링 정보조회
+   * @private
+   * return Observable
+   */
   private reqTDataSharings(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0005, {});
   }
 
+  /**
+   * 서비스관리번호에 해당하는 T데이터셰어링 정보 반환
+   * @param children
+   * @param cSvcMgmtNum
+   * @private
+   * return T데이터셰어링 정보{Object}
+   */
   private getChild(children: any, cSvcMgmtNum: string): any {
     return children.filter((child) => {
       return child.cSvcMgmtNum === cSvcMgmtNum;
@@ -67,6 +81,12 @@ class MyTDataUsageCancelTshare extends TwViewController {
     return resp.result;
   }
 
+  /**
+   * 유심 포맷으로 반환:  ****-****-****-**
+   * @param v
+   * @private
+   * return ret{String}
+   */
   private convUsimFormat(v: any): any {
     if ( !v || v.replace(/-/g).trim().length < 14 ) {
       return v || '';

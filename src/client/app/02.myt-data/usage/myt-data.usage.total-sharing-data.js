@@ -1,7 +1,21 @@
 /**
+ * MenuName: 나의 데이터/통화 > 실시간 잔여량 > 통합공유데이터
  * FileName: myt-data.usage.total-sharing-data.js
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 08.
+ * Summary: 통합공유데이터 조회(T가족공유 데이터, T끼리 데이터 선물하기, 데이터 함께쓰기)
+ */
+
+/**
+ * T끼리 선물하기 + 데이터 함께쓰기 사용량 계산
+ * @param object: {
+      reqList: [{
+        command,
+        params,
+        done: function() {}
+      }],
+      done: function() {}
+    }
  */
 Tw.SharedDataUsedCalculation = function (options) {
   this._apiService = Tw.Api;
@@ -157,14 +171,19 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     new Tw.SharedDataUsedCalculation({
       reqList: reqList,
       done: $.proxy(function (totalSumConv) {
+        // [DV001-6336] 기본제공 데이터 존재 && 가족모아데이터가 가능한 상품(T/O플랜 등)이 아닌 경우
+        // T끼리데이터선물 + 데이터 함께쓰기 사용량을 합쳐서 통합공유 데이터 영역의 사용량에 표시
         if ( _.size(this._$sharedDataUsed) ) {
-          // T/O플랜아님 && 기본제공데이터 존재
           this._$sharedDataUsed.text(totalSumConv.data + totalSumConv.unit);
         }
       }, this)
     });
   },
 
+  /**
+   * svcInfo, T가족모아 구성원 정보 조회
+   * @private
+   */
   _reqTFamilySharing: function () {
     this._apiService
       .requestArray([{ command: Tw.NODE_CMD.GET_SVC_INFO }, { command: Tw.API_CMD.BFF_06_0044 }])
@@ -236,8 +255,15 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     // });
   },
 
+  /**
+   * svcInfo, T가족모아 구성원 정보 조회 성공
+   * @param svcInfoResp
+   * @param tFamilySharingResp
+   * @private
+   */
   _onDoneTFamilySharing: function (svcInfoResp, tFamilySharingResp) {
     if ( svcInfoResp.code === Tw.API_CODE.CODE_00 && tFamilySharingResp.code === Tw.API_CODE.CODE_00 ) {
+      // [DV001-5460] mbrList 에서 본인레코드 (서비스관리번호로) 선택, 그중 shared(공유데이터GB)
       var data = this._getSharedData(svcInfoResp.result.svcMgmtNum, tFamilySharingResp.result.mbrList);
       this._$tfamilySharing.show();
       this._$tfamilySharing.attr('aria-hidden','false');
@@ -256,10 +282,19 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
+  /**
+   * svcInfo, T가족모아 구성원 정보 조회 실패
+   * @private
+   */
   _onFailTFamilySharing: function () {
     this._$tfamilySharing.hide();
   },
 
+  /**
+   * T끼리 선물하기 조회 성공 - 데이터 합산 후 노출
+   * @param resp
+   * @private
+   */
   _onDoneDataGifts: function (resp) {
     var usedData;
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -281,6 +316,11 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     this._setDataTxt(this._$dataGift, usedData);
   },
 
+  /**
+   * 데이터 함께쓰기 조회 성공
+   * @param resp
+   * @private
+   */
   _onDoneDataSharing: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.data ) {
@@ -297,6 +337,12 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     console.log(err);
   },
 
+  /**
+   * 엘리먼트에 데이터 표시
+   * @param $el
+   * @param usedData
+   * @private
+   */
   _setDataTxt: function ($el, usedData) {
     $el
       .find('.fe-data-txt')
@@ -310,6 +356,10 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       );
   },
 
+  /**
+   * T가족공유 데이터 버튼 클릭시 호출
+   * @private
+   */
   _onClickBtnTFamilySharing: function () {
     if ( !this._tFamilySharingErrCode ) {
       // 성공 : T가족모아 메인 페이지로 이동
@@ -324,6 +374,10 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     // $layer.on('click', '.fe-call-customer-center', $.proxy(this._goSubmain, this));
   },
 
+  /**
+   * T끼리 데이터 선물하기 버튼 클릭시 호출
+   * @private
+   */
   _onClickBtnDataGift: function () {
     if ( this._dataGiftSum <= 0 ) {
       // 0이면 T끼리 데이터 선물하기 페이지
@@ -333,9 +387,14 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
+  /**
+   * 데이터 함께쓰기 버튼 클릭시 호출
+   * @private
+   */
   _onClickBtnDataSharing: function () {
     if ( this._options.dataSharingJoined === 'Y' ) {
       // this._historyService.goHash('datashare_P');
+      // 데이터 함께쓰기 팝업 노출
       if (this._dataSharingList && this._dataSharingList.length > 0) {
         this._openDataSharingPopup(this._dataSharingList);
       } else {
@@ -349,6 +408,12 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
+  /**
+   * list 에서 본인레코드의 공유데이터 반환
+   * @param svcMgmtNum
+   * @param list
+   * @private
+   */
   _getSharedData: function (svcMgmtNum, list) {
     var data = _.find(list, {
       svcMgmtNum: svcMgmtNum
@@ -356,10 +421,16 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     return data ? parseInt(data.shared, 10) : 0;
   },
 
+  /**
+   * 데이터 함께쓰기 조회 성공
+   * @param resp
+   * @private
+   */
   _reqDataSharingsDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var dataSharingList = resp.result && resp.result.childList;
       if ( dataSharingList && dataSharingList.length > 0 ) {
+        // 데이터 함께쓰기 팝업 열기
         this._openDataSharingPopup(dataSharingList);
       }
     } else {
@@ -367,10 +438,20 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
+  /**
+   * 데이터 함께쓰기 조회 실패
+   * @param resp
+   * @private
+   */
   _reqDataSharingsFail: function (resp) {
     this._popupService.openAlert(resp.msg, resp.code);
   },
 
+  /**
+   * 데이터 함께쓰기 팝업 열기
+   * @param dataSharingList
+   * @private
+   */
   _openDataSharingPopup: function(dataSharingList) {
     var _dataSharingList = _.map(dataSharingList, function (data) {
       return {
@@ -386,10 +467,16 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       children: _dataSharingList
     };
     Tw.Popup.open(option, $.proxy(function ($layer) {
+      // 데이터 함께쓰기 자회선 사용량 조회
       $layer.find('.fe-btn-used-data').click($.proxy(this._onClickBtnDataSharingUsedData, this));
     }, this), null, 'datashare', this.$container.find('.fe-data-sharing button'));
   },
 
+  /**
+   * 데이터 함께쓰기 자회선 사용량 조회
+   * @param event
+   * @private
+   */
   _onClickBtnDataSharingUsedData: function (event) {
     event.preventDefault();
     var targetSelector = $(event.target);
@@ -399,6 +486,12 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       .fail($.proxy(this._reqDataSharingDetailFail, this));
   },
 
+  /**
+   * 데이터 함께쓰기 자회선 사용량 조회 성공
+   * @param targetSelector
+   * @param resp
+   * @private
+   */
   _reqDataSharingDetailDone: function (targetSelector, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._drawChild(targetSelector, resp);
@@ -407,10 +500,21 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
+  /**
+   * 데이터 함께쓰기 자회선 사용량 조회 실패
+   * @param resp
+   * @private
+   */
   _reqDataSharingDetailFail: function (resp) {
     this._popupService.openAlert(resp.msg, resp.code);
   },
 
+  /**
+   * 데이터 함께쓰기 자회선 사용량 표시
+   * @param targetSelector
+   * @param resp
+   * @private
+   */
   _drawChild: function (targetSelector, resp) {
     var used = Tw.FormatHelper.convDataFormat(resp.result.used, Tw.DATA_UNIT.KB);
     var $feUsedDataResult = targetSelector.closest('.datatogether-li-state').find('.fe-used-data-result');
