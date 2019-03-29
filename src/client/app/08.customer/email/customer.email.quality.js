@@ -10,6 +10,8 @@ Tw.CustomerEmailQuality = function (rootEl, data) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
 
+  this.userId = (data && data.allSvc) ? data.allSvc.userId : '';
+  
   this.uploadObj = data.uploadObj; // 이메일 업로드 객체
   this._usanService = new Tw.CustomerUscanService(this.uploadObj); // 유스캔 서비스
 
@@ -82,7 +84,8 @@ Tw.CustomerEmailQuality.prototype = {
         Upload: this.uploadObj, 
         type: this.$quality_depth1.data('quality-depth1'), 
         request: $.proxy(this._requestCall, this),
-        $target: $(e.currentTarget)
+        $target: $(e.currentTarget),
+        proMemo: this.userId + '/' + this.$wrap_tpl_quality.find('.fe-text_title').val()
       });
       
     } else {

@@ -10,6 +10,7 @@ Tw.CustomerEmailService = function (rootEl, data) {
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
 
+  this.userId = (data && data.allSvc) ? data.allSvc.userId : '';
   this.uploadObj = data.uploadObj; // 이메일 업로드 객체
   this._usanService = new Tw.CustomerUscanService(this.uploadObj); // 유스캔 서비스
 
@@ -84,7 +85,8 @@ Tw.CustomerEmailService.prototype = {
         Upload: this.uploadObj, 
         type: this.$service_depth1.data('service-depth1'), 
         request: $.proxy(this._requestCall, this),
-        $target: $(e.currentTarget)
+        $target: $(e.currentTarget),
+        proMemo: this.userId + '/' + this.$wrap_tpl_service.find('.fe-text_title').val()
       });
       
     } else {

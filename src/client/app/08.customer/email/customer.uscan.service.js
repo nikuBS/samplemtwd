@@ -21,6 +21,7 @@ Tw.CustomerUscanService.prototype = {
     this.files = option.files;
     this.$target = option.$target;
     this.Upload = option.Upload;
+    this.proMemo =option.proMemo;
 
     // 파일 있음
     if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
@@ -51,7 +52,7 @@ Tw.CustomerUscanService.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_01_0046, {
         recvFaxNum: recvFaxNum,
-        proMemo: '', 
+        proMemo: this.proMemo, 
         scanFiles: this._getConvFileList(res.result)
       }).done($.proxy(this._onSuccessUscanUpload, this))
         .fail($.proxy(this._apiError, this.$target));
