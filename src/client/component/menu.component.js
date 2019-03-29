@@ -170,6 +170,8 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '#fe-search-input', $.proxy(this._searchFocus, this));
     this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
+
+    this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
   },
   _componentReady: function () {
     /* history back에서 메뉴 삭제
@@ -782,5 +784,13 @@ Tw.MenuComponent.prototype = {
   },
   _onClickUrlButton: function(e) {
     location.href = e.currentTarget.dataset.url;
+  },
+  _onTelClicked: function (e) { // iOS double click 문제 해결하기 위함
+    var href = e.currentTarget.href;
+    if (href.indexOf('tel:') === 0) {
+      window.location = href;
+      return false;
+    }
+    return true;
   }
 };
