@@ -27,16 +27,28 @@ Tw.ProductRoamingFiGuide.prototype = {
     this.$btnProduct.on('click', $.proxy(this._goProductPage, this));
   },
 
+  /**
+   * baro Box 예약 페이지 이동
+   * @private
+   */
   _goReservation: function() {
     this._historyService.goLoad('/product/roaming/fi/reservation');
   },
 
+  /**
+   * baro Box 조회/취소 페이지 이동
+   * @private
+   */
   _goInquire: function() {
     this._historyService.goLoad('/product/roaming/fi/inquire');
   },
 
+  /**
+   * baro Box 이용 가능 요금제 상세 페이지 이동
+   * @param e
+   * @private
+   */
   _goProductPage: function(e) {
-    //baro Box 이용 가능 요금제 상세 페이지 이동
     var productId = $(e.target).parents('button').attr('id') === undefined ? $(e.target).attr('id') : $(e.target).parents('button').attr('id');
     this._historyService.goLoad('/product/callplan?prod_id=' + productId);
   },

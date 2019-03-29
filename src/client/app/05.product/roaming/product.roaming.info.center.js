@@ -69,14 +69,15 @@ Tw.ProductRoamingInfoCenter.prototype = {
   _openActionsheet: function (e) {
     var selected = e.target;
     var data = '';
-
-    if(this.presentId === 1 || this.presentId === 2){
+    
+    // 액션시트에 들어갈 데이터 처리
+    if(this.presentId === 1 || this.presentId === 2){ // 인천공항 1터미널
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[0].data;
-    }else if(this.presentId === 3 || this.presentId === 4){
+    }else if(this.presentId === 3 || this.presentId === 4){ // 인천공항 2터미널
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[1].data;
-    }else if(this.presentId === 7 || this.presentId === 8){
+    }else if(this.presentId === 7 || this.presentId === 8){ // 김해공항
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[2].data;
-    }else if(this.presentId === 10 || this.presentId === 11){
+    }else if(this.presentId === 10 || this.presentId === 11){ // 인천항
       data = Tw.POPUP_TPL.ROAMING_INFO_CENTER[3].data;
     }
 

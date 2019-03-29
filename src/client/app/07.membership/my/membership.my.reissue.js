@@ -34,6 +34,8 @@ Tw.MembershipMyReissue.prototype = {
 
   _handleReissueAlert: function() {
     var mbrChgRsnCd = '';
+    
+    // 체크된 재발급 사유를 찾아 항목의 코드 값 저장
     this.$chkReason.each(function(){
       if($(this).prop('checked')){
         mbrChgRsnCd = $(this).attr('data-code');
