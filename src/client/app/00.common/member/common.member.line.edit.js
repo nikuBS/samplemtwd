@@ -49,23 +49,17 @@ Tw.CommonMemberLineEdit.prototype = {
     this._popupService.open({
       hbs: 'CO_01_05_02_04_01',
       layer: true
-    }, $.proxy(this._onOpenEditGuide, this), $.proxy(this._onCloseEditGuide, this), 'guide', $target);
+    }, $.proxy(this._onOpenEditGuide, this), null, 'guide', $target);
   },
   _onOpenEditGuide: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-biz-register', $.proxy(this._onClickBizRegister, this));
     $popupContainer.on('click', '#fe-bt-biz-signup', $.proxy(this._onClickBizSignup, this));
   },
-  _onCloseEditGuide: function () {
-    if ( this._goBizRegister ) {
-      this._historyService.goLoad('/common/member/line/biz-register');
-    }
-  },
   _onUpdateDnd: function () {
 
   },
   _onClickBizRegister: function () {
-    this._goBizRegister = true;
-    this._popupService.close();
+    this._historyService.replaceURL('/common/member/line/biz-register');
   },
   _onClickBizSignup: function ($event) {
     var $target = $($event.currentTarget);
