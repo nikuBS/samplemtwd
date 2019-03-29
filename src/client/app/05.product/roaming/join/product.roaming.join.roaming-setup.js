@@ -414,9 +414,17 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     }, this));
   },
   _checkGiftNum : function (evt) {
-    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
-    if (evt.currentTarget.value.length === 0) {
-      $(evt.currentTarget).siblings('button.cancel').css('display', 'none');
+    var $target = $(evt.currentTarget);
+    var inputVal = $target.val();
+    if(inputVal.length>0&&this._numReg.test(inputVal)){
+      var changedValue = inputVal.replace(this._numReg,'');
+      $target.blur();
+      $target.val('');
+      $target.val(changedValue);
+      $target.focus();
+      if(changedValue.length<=0){
+        $target.next().trigger('click');
+      }
     }
   }
 };
