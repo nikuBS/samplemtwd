@@ -1,6 +1,7 @@
 /**
+ * MenuName: T로밍 > 로밍안내 > 자동로밍 (RM_16_02_01)
  * FileName: product.roaming.info.lte.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
@@ -13,7 +14,7 @@ Tw.ProductRoamingLteGuide = function (rootEl) {
 
 Tw.ProductRoamingLteGuide.prototype = {
   _bindInfoBtnEvents : function () {
-    this.$container.on('click', '#fe-rm-info-btn', $.proxy(this._goInfoPopup, this));
+    this.$container.on('click', '#fe-rm-info-btn', $.proxy(this._goInfoPopup, this)); // 이용가능 국가보기
   },
   _goInfoPopup : function () {
     this._popupService.open({

@@ -80,7 +80,12 @@ Tw.CustomerUscanService.prototype = {
 
   _apiError: function ($target, res) {
     Tw.Error(res.code, res.msg).pop(null, $target);
-  }
+  },
+
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
+  },
 
 
 }

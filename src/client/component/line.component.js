@@ -15,11 +15,9 @@ Tw.LineComponent = function () {
 
   this._selectedMgmt = '';
   this._index = 0;
-  this._goAuthLine = false;
   this._lineList = null;
   this._changeLine = false;
   this._customerLogin = false;
-  this._customerSetting = false;
   this._openLineList = false;
   this._callback = null;
 
@@ -42,7 +40,6 @@ Tw.LineComponent.prototype = {
   _init: function (selectedMgmt) {
     this._index = 0;
     this._selectedMgmt = selectedMgmt;
-    this._goAuthLine = false;
     this._lineList = null;
     this._changeLine = false;
     this._customerLogin = false;
@@ -95,10 +92,6 @@ Tw.LineComponent.prototype = {
       this._completeLogin({ code: Tw.CALLBACK_CODE.SUCCESS });
     } else if ( this._customerLogin ) {
       this._customerPwd.openLayer(this._mdn, this._svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
-    } else if ( this._customerSetting ) {
-      this._historyService.goLoad('/myt-join/custpassword');
-    } else if ( this._goAuthLine ) {
-      this._historyService.goLoad('/common/member/line');
     }
   },
   _closePopup: function () {
@@ -155,13 +148,11 @@ Tw.LineComponent.prototype = {
       .done($.proxy(this._successChangeLine, this));
   },
   _onClickLineButton: function () {
-    this._closePopup();
-    this._goAuthLine = true;
+    this._historyService.replaceURL('/common/member/line');
   },
   _successChangeLine: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._changeLine = true;
-
       if ( this._openLineList ) {
         this._popupService.close();
       } else {
@@ -178,13 +169,12 @@ Tw.LineComponent.prototype = {
       // 고객보호 비밀번호 잠김
       Tw.Error(resp.code, resp.msg).pop();
     } else if ( resp.code === this.ERROR_CODE.BFF0014 ) {
-      this._customerSetting = true;
-      if ( this._openLineList ) {
-        this._popupService.close();
-      } else {
-        this._onCloseListPopup();
-      }
       // 고객보호 비밀번호 설정페이지
+      if ( this._openLineList ) {
+        this._historyService.replaceURL('/myt-join/custpassword');
+      } else {
+        this._historyService.goLoad('/myt-join/custpassword');
+      }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }

@@ -30,8 +30,9 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _init : function(){
     this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
     if(this._twoMonthFlag){
-      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
-        Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      // this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
+      //   Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      this._dateSelectRange = 60;
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
     }else{
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
@@ -239,8 +240,6 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._showCompletePopup(this._prodBffInfo,targetEvt);
-      }else if(res.code==='ZNGME0005'){
-        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE,null,null,null,$(targetEvt.currentTarget));
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
       }

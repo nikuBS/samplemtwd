@@ -1,4 +1,5 @@
 /**
+ * MenuName: T로밍 > 로밍 안내 > submain (RM_16_01)
  * FileName: product.roaming.info.guide.controller.ts
  * Author: Eunjung Jung
  * Date: 2018.11.08

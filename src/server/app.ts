@@ -224,7 +224,7 @@ class App {
       '"' + req.headers['x-forwarded-for'] + '"',
       '-', // tokens['remote-user'](req, res),
       '-',
-      tokens['date'](req, res, 'clf'),
+      '[', tokens['date'](req, res, 'clf'), ']',
       tokens.status(req, res) + '_code',
       tokens['res'](req, res, 'content-length') + '_bytes',
       (tokens['response-time'](req, res, 3) * 1000) + '_usecs',

@@ -244,8 +244,9 @@ Tw.CustomerEmail.prototype = {
   _clickFaqLink: function (e) {
     e.preventDefault();
     e.stopPropagation();
-    this._popupService.close();
-    this._history.goLoad($(e.currentTarget).attr('href'));
+    // this._popupService.close();
+    // this._history.goLoad($(e.currentTarget).attr('href'));
+    this._history.replaceURL($(e.currentTarget).attr('href'));
   },
 
   _openSMSAlert: function (e) {

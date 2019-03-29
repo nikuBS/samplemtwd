@@ -38,7 +38,7 @@
 .idpt-container .idpt-mt100 { margin-top:3.125rem!important; }
 
 /* popup */
-.idpt-popup { display:none; position:fixed; top:0; left:0; width:100%; height:100vh; z-index:1000; }
+.idpt-popup { display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:1000; }
 .idpt-popup-wrap { display:none; width:100%; height:100%; background-color:#fff; }
 .idpt-popup-wrap.show { display:block; }
 .idpt-popup-header { position:relative; height:2.75rem; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom:1px solid #eeeeee; }
@@ -86,6 +86,7 @@
 .idpt-container a.underline { text-decoration:underline; }
 .idpt-container .idpt-link-solo {text-align:center}
 .idpt-container .idpt-link-solo a.ghost_normal {display:inline-block; color:#000; height:1.75rem; line-height:1.75rem; font-size:0.75rem; background-color:#fff; border:1px solid #f9f9f9; padding:0 1rem; border-radius:0.9375rem; }
+.idpt-container .idpt-link-solo a.ghost_normal.near-search { width:7.1875rem; padding:0; }
 
 /* seperator */
 .idpt-container .idpt-seperator { width:100%; height:0.625rem; background-color:#edeef0; border-top:1px solid #e6e7e8; }
@@ -112,35 +113,35 @@
 .idpt-container .idpt-cont-box p.title-howdo {font-size:0.875rem; color:#000; font-weight:600; }
 
 .idpt-container .idpt-cont-box.howdo-bg01 { background:url('../img/customer/howdo/howdo_title_bg01.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg02 { background:url('../img/customer/howdo/howdo_title_bg02.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg03 { background:url('../img/customer/howdo/howdo_title_bg03.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.625rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg02 { background:url('../img/customer/howdo/howdo_title_bg02.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg03 { background:url('../img/customer/howdo/howdo_title_bg03.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg04 { background:url('../img/customer/howdo/howdo_title_bg04.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg05 { background:url('../img/customer/howdo/howdo_title_bg05.png') #fbfbfb 92% 100% no-repeat; background-size:6.125rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg06 { background:url('../img/customer/howdo/howdo_title_bg06.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg07 { background:url('../img/customer/howdo/howdo_title_bg07.png') #fbfbfb 92% 100% no-repeat; background-size:7.5625rem 5.375rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg05 { background:url('../img/customer/howdo/howdo_title_bg05.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg06 { background:url('../img/customer/howdo/howdo_title_bg06.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg07 { background:url('../img/customer/howdo/howdo_title_bg07.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg08 { background:url('../img/customer/howdo/howdo_title_bg08.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg09 { background:url('../img/customer/howdo/howdo_title_bg09.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg10 { background:url('../img/customer/howdo/howdo_title_bg10.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg11 { background:url('../img/customer/howdo/howdo_title_bg11.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg12 { background:url('../img/customer/howdo/howdo_title_bg12.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg09 { background:url('../img/customer/howdo/howdo_title_bg09.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg10 { background:url('../img/customer/howdo/howdo_title_bg10.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg11 { background:url('../img/customer/howdo/howdo_title_bg11.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg12 { background:url('../img/customer/howdo/howdo_title_bg12.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg13 { background:url('../img/customer/howdo/howdo_title_bg13.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg14 { background:url('../img/customer/howdo/howdo_title_bg14.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg15 { background:url('../img/customer/howdo/howdo_title_bg15.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.5625rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg16 { background:url('../img/customer/howdo/howdo_title_bg16.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.5625rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg15 { background:url('../img/customer/howdo/howdo_title_bg15.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg16 { background:url('../img/customer/howdo/howdo_title_bg16.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg17 { background:url('../img/customer/howdo/howdo_title_bg17.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg18 { background:url('../img/customer/howdo/howdo_title_bg18.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg19 { background:url('../img/customer/howdo/howdo_title_bg19.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg20 { background:url('../img/customer/howdo/howdo_title_bg20.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg21 { background:url('../img/customer/howdo/howdo_title_bg21.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg22 { background:url('../img/customer/howdo/howdo_title_bg22.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg18 { background:url('../img/customer/howdo/howdo_title_bg18.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg19 { background:url('../img/customer/howdo/howdo_title_bg19.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg20 { background:url('../img/customer/howdo/howdo_title_bg20.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg21 { background:url('../img/customer/howdo/howdo_title_bg21.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg22 { background:url('../img/customer/howdo/howdo_title_bg22.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg23 { background:url('../img/customer/howdo/howdo_title_bg23.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg24 { background:url('../img/customer/howdo/howdo_title_bg24.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg25 { background:url('../img/customer/howdo/howdo_title_bg25.png') #fbfbfb 92% 100% no-repeat; background-size:5.625rem 5.375rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg26 { background:url('../img/customer/howdo/howdo_title_bg26.png') #fbfbfb 92% 100% no-repeat; background-size:6rem 5.8125rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg27 { background:url('../img/customer/howdo/howdo_title_bg27.png') #fbfbfb 92% 100% no-repeat; background-size:5.9375rem 5.5rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg28 { background:url('../img/customer/howdo/howdo_title_bg28.png') #fbfbfb 92% 100% no-repeat; background-size:5.9375rem 5.8125rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg25 { background:url('../img/customer/howdo/howdo_title_bg25.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg26 { background:url('../img/customer/howdo/howdo_title_bg26.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg27 { background:url('../img/customer/howdo/howdo_title_bg27.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg28 { background:url('../img/customer/howdo/howdo_title_bg28.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg29 { background:url('../img/customer/howdo/howdo_title_bg29.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
-.idpt-container .idpt-cont-box.howdo-bg30 { background:url('../img/customer/howdo/howdo_title_bg30.png') #fbfbfb 92% 100% no-repeat; background-size:5.9375rem 5.8125rem; padding-top:1.875rem !important; }
+.idpt-container .idpt-cont-box.howdo-bg30 { background:url('../img/customer/howdo/howdo_title_bg30.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.howdo-bg31 { background:url('../img/customer/howdo/howdo_title_bg31.png') #fbfbfb 100% 100% no-repeat; background-size:8.6875rem 6.6875rem; padding-top:1.875rem !important; }
 .idpt-container .idpt-cont-box.nopadding-bottom { padding-bottom:0 !important}
 

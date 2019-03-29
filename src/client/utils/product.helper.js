@@ -244,8 +244,8 @@ Tw.ProductHelper = (function () {
         basAmt = Tw.FormatHelper.convDataFormat(dataIfAmt, 'MB');
 
       return {
-        dataIfAmt: ifAmt.data ? ifAmt.data.toFixed(2) : 0,
-        dataBasAmt: basAmt.data ? basAmt.data.toFixed(2) : 0,
+        dataIfAmt: ifAmt.data,
+        dataBasAmt: basAmt.data,
         unit: ifAmt.unit
       };
     }

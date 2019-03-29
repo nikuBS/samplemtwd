@@ -40,8 +40,10 @@ Tw.NicknameComponent.prototype = {
     this.$nicknameLength = $popup.find('#fe-span-length');
 
     // this.$nicknameInput.val(nickname);
-    this.$nicknameInput.on('input', $.proxy(this._onKeyupNickname, this));
+    this.$nicknameInput.on('input', $.proxy(this._onInputNickname, this));
     this.$nicknameConfirm.on('click', $.proxy(this._onClickConfirmNickname, this));
+
+    $popup.on('click', '.fe-bt-nickname-delete', $.proxy(this._onInputNickname, this));
   },
   _onCloseNickname: function () {
     if ( this._isChanged ) {
@@ -56,14 +58,14 @@ Tw.NicknameComponent.prototype = {
     if ( inputValue.length === 0 ) {
       return;
     }
-    if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 2) ) {
+    if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 3) ) {
       this.$nicknameError.parents('.inputbox').addClass('error');
       this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_VALID);
     } else {
       this._changeNickname(inputValue);
     }
   },
-  _onKeyupNickname: function () {
+  _onInputNickname: function () {
     var textNickname = this.$nicknameInput.val();
     var textLength = textNickname.length;
     this.$nicknameLength.html(textLength >= Tw.MAX_NICKNAME_LEN ? Tw.MAX_NICKNAME_LEN : textLength);

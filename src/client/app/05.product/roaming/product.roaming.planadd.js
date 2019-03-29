@@ -1,6 +1,7 @@
 /**
+ * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
  * FileName: product.roaming.planadd.js
- * Author: Eunjung Jung ()
+ * Author: Eunjung Jung
  * Date: 2018.11.12
  */
 
@@ -27,13 +28,13 @@ Tw.ProductRoamingPlanAdd.prototype = {
   },
   _roamingAddInit: function () {
       this._params = {
-          'idxCtgCd':'',
-          'searchLastProdId':'',
-          'searchFltIds ':'',
-          'searchTagId':'',
-          'searchOrder':'',
-          'searchCount':'',
-          'ignoreProdId':''
+          'idxCtgCd':'',            // 인덱스 카테고리
+          'searchLastProdId':'',    // 조회 마지막 상품ID
+          'searchFltIds ':'',       // 검색 필터들
+          'searchTagId':'',         // 태그 검색
+          'searchOrder':'',         // 정렬 옵션
+          'searchCount':'',         // 조회개수(1 ~ 100)
+          'ignoreProdId':''         // 무시할 삼품 정보
       };
 
       if(this._param.searchFltIds){
@@ -58,6 +59,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._rmListTmpl = Handlebars.compile($('#fe-rmtmpl-add').html());
       this._rmFilterTmpl = Handlebars.compile($('#fe-rmtmpl-addfilter').html());
 
+      // 로밍 부가서비스 리스트가 없는 경우 alert 호출.
       var totalCnt = Number(this._roamingAddData.productCount);
       if(totalCnt === 0) {
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A18;
@@ -66,15 +68,20 @@ Tw.ProductRoamingPlanAdd.prototype = {
 
   },
   _findAddElement: function () {
-      this.$rmAddBtn = this.$container.find('.bt-more > button');
-      this.$rmPlanAddlist = this.$container.find('ul.recommendedrate-list');
-      this.$roamingAddItemCnt = this.$container.find('.fe-planadd-cnt');
+      this.$rmAddBtn = this.$container.find('.bt-more > button');               // 더보기 버튼
+      this.$rmPlanAddlist = this.$container.find('ul.recommendedrate-list');    // 로밍 요금제 상품 리스트
+      this.$roamingAddItemCnt = this.$container.find('.fe-planadd-cnt');        // 상품 리스트 개수
   },
   _bindRoamingAddBtnEvents: function () {
-      this.$container.on('click', '.bt-more > button', $.proxy(this._handleMoreRoamingAdd, this));
-      this.$container.on('click', '.fe-rmadd-order', $.proxy(this._openRmAddOrderPopup, this));
-      this.$container.on('click', '.fe-rmadd-filter', $.proxy(this._handleRoamingAddFilters, this));
+      this.$container.on('click', '.bt-more > button', $.proxy(this._handleMoreRoamingAdd, this));      // 더보기 버튼 클릭 이벤트
+      this.$container.on('click', '.fe-rmadd-order', $.proxy(this._openRmAddOrderPopup, this));         // 상품 정렬 클릭 이벤트
+      this.$container.on('click', '.fe-rmadd-filter', $.proxy(this._handleRoamingAddFilters, this));    // 조건선택 클릭 이벤트
   },
+  /**
+   * 로밍 부가서비스 필터/태그 조회 요청.
+   * @param event
+   * @private
+   */
   _handleRoamingAddFilters: function(event) {
       if (!this._rmAddFilters) {
           this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.RMADD_CODE })
@@ -84,6 +91,11 @@ Tw.ProductRoamingPlanAdd.prototype = {
           this._openRmAddFiltersPopup(event);
       }
   },
+  /**
+   * 조회된 필터 정보들로 조건선택 팝업 호출.
+   * @param event
+   * @private
+   */
   _openRmAddFiltersPopup: function (event) {
 
       var rmAddFilters = _.chain(this._rmAddFilters.filters)
@@ -135,10 +147,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
       );
   },
   _handleOpenAddFilterPopup: function ($layer) {
-      $layer.on('click', '.btn-type01', $.proxy(this._bindAddFilterBtnEvent, this, $layer));
-      $layer.on('click', '.resetbtn', $.proxy(this._handleAddResetBtn, this, $layer));
-      $layer.on('click', '.bt-red1', $.proxy(this._handleRmAddSelectFilters, this, $layer));
-      $layer.on('click', '.link', $.proxy(this._openRoamingAddTagPopup, this, $layer));
+      $layer.on('click', '.btn-type01', $.proxy(this._bindAddFilterBtnEvent, this, $layer));    // 필터 버튼 클릭 이벤트
+      $layer.on('click', '.resetbtn', $.proxy(this._handleAddResetBtn, this, $layer));          // 조건선택 팝업 초기화 클릭 이벤트
+      $layer.on('click', '.bt-red1', $.proxy(this._handleRmAddSelectFilters, this, $layer));    // 적용하기 버튼 클릭 이벤트
+      $layer.on('click', '.link', $.proxy(this._openRoamingAddTagPopup, this, $layer));         // 태그 버튼 클릭 이벤트
   },
   _handleCloseAddFilterPopup: function () {
       if (this._loadedNewSearch) {
@@ -151,6 +163,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
           }
       }
   },
+  /**
+   * 조건선택 팝업에서 태그 선택.
+   * @private
+   */
   _openRoamingAddTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
           this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A16.TITLE,
@@ -159,19 +175,26 @@ Tw.ProductRoamingPlanAdd.prototype = {
           this._handleSelectRomaingAddTag(e.currentTarget);
       }
   },
-    _handleSelectRomaingAddTag: function(target) {
-        var selectedTag = target.getAttribute('data-rmtag-id');
+  /**
+   * 로밍 부가서비스 조건선택 팝업에서 태그 선택 시 URL이동.
+   * @private
+   */
+  _handleSelectRomaingAddTag: function(target) {
+      var selectedTag = target.getAttribute('data-rmtag-id');
+      if(selectedTag) {
+          this.selectTag = true;
+      }
+      if (this._params.searchTagId === selectedTag) {
+          this._popupService.closeAll();
+          return;
+      }
 
-        if(selectedTag) {
-            this.selectTag = true;
-        }
-        if (this._params.searchTagId === selectedTag) {
-            this._popupService.closeAll();
-            return;
-        }
-
-        this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
-    },
+      this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
+  },
+  /**
+   * 로밍 부가서비스 조건선택 팝업 필터 선택 후 적용하기 버튼 기능.
+   * @private
+   */
   _handleRmAddSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-addfilter-id');
@@ -188,6 +211,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
           .done($.proxy(this._handleLoadNewAddFilters, this, originParams));
   },
+  /**
+   * _handleRmAddSelectFilters Success callback
+   * @private
+   */
   _handleLoadNewAddFilters: function(originParams, resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
@@ -201,6 +228,9 @@ Tw.ProductRoamingPlanAdd.prototype = {
           this._loadedNewSearch = true;
         }
     },
+  /**
+   * 로밍 부가서비스 조건선택 팝업 초기화 기능.
+   */
   _handleAddResetBtn: function ($layer) {
       $layer.find('.btn-type01').removeClass('checked');
       $layer.find('input').removeAttr('checked');
@@ -213,6 +243,12 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._reset = true;
       this.selectTag = false;
   },
+  /**
+   * _handleRoamingPlanFilters Success callback
+   * @param event
+   * @param resp
+   * @private
+   */
   _handleGetRmAddFilters: function(event, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
         Tw.Error(resp.code, resp.msg).pop();
@@ -221,6 +257,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._rmAddFilters = resp.result;
     this._openRmAddFiltersPopup(event);
   },
+  /**
+   * 로밍 부가서비스 조건선택 팝업 > 필터 선택.
+   * @private
+   */
   _bindAddFilterBtnEvent: function ($layer, e) {
       var $target = $(e.currentTarget);
       var $selectTag = $layer.find('.suggest-tag-list .link.active');
@@ -242,6 +282,12 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
       this._reset = false;
   },
+  /**
+   *  태그 선택 초기화 기능
+   * @param $layer
+   * @param $target
+   * @private
+   */
   _handleResetTag: function ($layer, $target) {
     this._popupService.close();
     this.selectTag = false;
@@ -260,6 +306,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
         this.$selectBtn.attr('checked','checked');
     }
   },
+  /**
+   * 로밍 요금제 리스트 정렬
+   * @private
+   */
   _openRmAddOrderPopup: function () {
       var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
       this.orderList = _.map(Tw.PRODUCT_ROAMING_ORDER, function(item) {
@@ -283,13 +333,22 @@ Tw.ProductRoamingPlanAdd.prototype = {
           'order'
       );
   },
-    _handleOpenAddOrderPopup: function ($layer) {
-      // $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectRmAddOrder, this));
-      // var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
-      // $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
-      $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-      $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
+  /**
+   * 리스트 정렬 action sheet openCallback
+   * @private
+   */
+  _handleOpenAddOrderPopup: function ($layer) {
+    // $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectRmAddOrder, this));
+    // var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
+    // $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
+    $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
+    $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
   },
+  /**
+   * 로밍 요금제 리스트 정렬 방식 선택
+   * @param e
+   * @private
+   */
   _handleSelectRmAddOrder: function (e) {
     var $target = $(e.currentTarget);
     var $list = $target.parent();
@@ -309,13 +368,26 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._handleLoadNewOrder(orderType);
     this._popupService.close();
   },
+  /**
+   * 선택한 정렬방식으로 로밍 요금제 리스트 요청.
+   * @param orderType
+   * @private
+   */
   _handleLoadNewOrder:function (orderType) {
       this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessMoreAddData, this, orderType));
   },
+  /**
+   * 더보기 버튼 선택 시 로밍 요금제 리스트 요청.
+   * @private
+   */
   _handleMoreRoamingAdd: function () {
       this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
           .done($.proxy(this._handleSuccessMoreAddData, this, undefined));
   },
+  /**
+   * _handleMoreRoamingAdd Success callback
+   * @private
+   */
   _handleSuccessMoreAddData: function (orderType, resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
