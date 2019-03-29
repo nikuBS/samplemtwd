@@ -83,7 +83,7 @@ Tw.MembershipSubmain.prototype = {
       }
 
     } else {  // 비로그인 시 로그인 화면으로 이동
-      this._goLogin();  
+      this._goLogin();
     }
   },
   /**
@@ -125,17 +125,12 @@ Tw.MembershipSubmain.prototype = {
    * @param e
    * @private
    */
-  _selectTday: function(e) {
-    // app인 경우 alert 호출
-    if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
-          $.proxy(this._goTday, this),
-          $.proxy(function () {
-            this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
-    } else {
-      this._goTday();
-    }
+  _selectTday: function (e) {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+        $.proxy(this._goTday, this),
+        $.proxy(function () {
+          this._popupService.close();
+        }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
    * 혜택바로가기 > 초콜릿
@@ -143,16 +138,11 @@ Tw.MembershipSubmain.prototype = {
    * @private
    */
   _selectChocolate: function (e) {
-    // app인 경우 alert 호출
-    if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
-          $.proxy(this._goChocolate, this),
-          $.proxy(function () {
-            this._popupService.close();
-          }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
-    } else {
-      this._goChocolate();
-    }
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+        $.proxy(this._goChocolate, this),
+        $.proxy(function () {
+          this._popupService.close();
+        }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
    * T Day 링크 이동
