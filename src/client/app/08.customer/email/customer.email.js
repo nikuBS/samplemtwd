@@ -231,9 +231,21 @@ Tw.CustomerEmail.prototype = {
         btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: {isCell: isCell}
       },
-      null, null, null,
+      $.proxy(this._handleLinkControll, this), null, null,
       $(e.currentTarget)
     );
+  },
+
+  // 링크 이동 시 팝업을 닫지 않으면 뒤로가기로 돌아왔을 때 popupservice event 가 작동하지 않는 현상 : 삼성 브라우저 한
+  _handleLinkControll: function ($template) {
+    $template.on('click', '.link-long a', $.proxy(this._clickFaqLink, this));
+  },
+
+  _clickFaqLink: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this._popupService.close();
+    this._history.goLoad($(e.currentTarget).attr('href'));
   },
 
   _openSMSAlert: function (e) {
