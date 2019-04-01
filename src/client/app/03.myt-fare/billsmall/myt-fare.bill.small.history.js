@@ -44,7 +44,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   // 인증업무
   _certShowLists: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0079,{
+    this._apiService.request(Tw.API_CMD.BFF_05_0206,{
       payMethod: 'ALL', 
       fromDt: this.fromDt,
       toDt: this.toDt
