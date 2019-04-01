@@ -373,21 +373,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
         target : ['NA00005691','NA00005694','NA00005690','NA00005693','NA00005692','NA00005695']
       },
-      RM_11_01_01_02_tip_03_23: {
-        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
-        target : ['NA00005821']
-      },
-      RM_11_01_01_02_tip_03_24: {
-        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
-        target : ['NA00005821']
-      },
       RM_11_01_01_02_tip_03_26: {
         tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
-        target : ['NA00005049','NA00005501']
-      },
-      RM_11_01_01_02_tip_03_27: {
-        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
-        target : ['NA00005049']
+        target : ['NA00005501']
       },
       RM_11_01_01_02_tip_03_28: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
@@ -399,7 +387,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       RM_11_01_01_02_tip_03_33: {
         tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
-        target : ['NA00003196','NA00005049','NA00006486']
+        target : ['NA00003196','NA00005049','NA00005501','NA00006486']
       },
       RM_11_01_01_02_tip_03_34: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
@@ -407,7 +395,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       TC000032: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
-        target : ['NA00005501']
+        target : ['NA00005501','NA00005502']
       },
       TC000033: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,

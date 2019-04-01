@@ -28,20 +28,14 @@ import {
   SVC_ATTR_NAME,
   UNIT,
   UNIT_E,
-  UNLIMIT_CODE
+  UNLIMIT_CODE,
+  TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
+  TPLAN_PROD_ID //  T가족모아 가입 가능 요금제
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 // 실시간잔여량 공제항목
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
-// T가족모아 공유 가능 요금제
-const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958'];
-// T가족모아 가입 가능 요금제
-const tmoaInsertToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
-  'NA00006155', 'NA00005627', 'NA00005628', 'NA00005629', 'NA00004891', 'NA00004769', 'NA00004770', 'NA00004771', 'NA00004772', 'NA00004773',
-  'NA00004792', 'NA00004793', 'NA00004794', 'NA00004796', 'NA00004808', 'NA00004809', 'NA00004810', 'NA00004811', 'NA00004812', 'NA00004813',
-  'NA00005012', 'NA00005013', 'NA00005014', 'NA00005016', 'NA00005017', 'NA00005134', 'NA00005292', 'NA00005293', 'NA00004825', 'NA00004826',
-  'NA00004827', 'NA00004828', 'NA00004829', 'NA00004830', 'NA00004775', 'NA00004790', 'NA00004791'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -118,14 +112,14 @@ class MytDataSubmainController extends TwViewController {
         }
         // T가족모아 가입가능한 요금제
         // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997])
-        data.isTmoaInsProdId = tmoaInsertToProdList.indexOf(data.svcInfo.prodId) > -1;
+        data.isTmoaInsProdId = TPLAN_PROD_ID.indexOf(data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
           data.isTmoaData = true;
           data.family = data.remnantData.tmoa[0];
           data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
           // T가족모아 공유가능한 요금제
-          data.isTmoaProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
+          data.isTmoaProdId = TPLAN_SHARE_ID.indexOf(data.svcInfo.prodId) > -1;
         }
       }
 

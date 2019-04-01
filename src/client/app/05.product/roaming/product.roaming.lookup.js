@@ -50,6 +50,9 @@ Tw.ProductRoamingLookup.prototype = {
       case 'NA00005821':
         this.$serviceTipElement.attr('id','RM_11_01_02_06_tip_01_03');
         break;
+      default:
+        this.$serviceTipElement.hide();
+        break;
     }
   }
 };

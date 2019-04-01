@@ -441,8 +441,11 @@ Tw.MembershipSubmain.prototype = {
   },
   _handleSuccessAreaByGeo: function (resp) {
     var _result = resp.result;
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.Logger.info('result : ', _result);
+    Tw.Logger.info('result : ', _result);
+    // [2019.03.29 BE요청사항] 좌표값 이상하게 들어오는 경우에 대해 BE에서 아래와 같이 처리하기로 함.
+    // 현재 : COM1017 에러 발생
+    // 변경 후 : success로 리턴, 각 필드 빈값('')으로 결과값 리턴
+    if ( resp.code === Tw.API_CODE.CODE_00 && _result.area1 !== '' && _result.area2 !== '') {
       var location = _result.area1 + ' ' + _result.area2;
       this.$container.find('.fe-membership-location').text(location);
       this.currentLocation.area1 = encodeURIComponent(_result.area1);
