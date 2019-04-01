@@ -42,7 +42,6 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     var endDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,this._dateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
-
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
     this.$container.find('#end_date').text(endDate);
@@ -52,6 +51,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
     this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
+    if(!this._validateTimeValueAgainstNow(this._prodBffInfo.svcStartDt,startTime,'start')){
+      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
+    }
   },
   _checkSelectedEndDate : function (endDate) {
     if(this._currentDate>=endDate){
