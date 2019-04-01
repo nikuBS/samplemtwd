@@ -16,16 +16,18 @@
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <p class="infoplus-search">{{data.title}}</p>
-                <form id="claim_list">
-                    <ul class="tworld-searchword">
-                        {{#each data.invstAnsw}}
-                            <li>
-                                <span class="custom-form"><input id="ok{{@index}}" type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
-                                <label for="ok{{@index}}">{{this.inqCtt}}</label>
-                            </li>
-                        {{/each}}
-                    </ul>
-                </form>
+                <div class="input-list">
+                    <form id="claim_list">
+                        <ul class="tworld-searchword">
+                            {{#each data.invstAnsw}}
+                                <li>
+                                    <span class="custom-form"><input id="ok{{@index}}" type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
+                                    <label for="ok{{@index}}">{{this.inqCtt}}</label>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </form>
+                </div>
             </div>
             <!--// .cont-box -->
         </div>

@@ -34,9 +34,12 @@
                                 <label for="fe-oka2" class="rad-lab">광고성 정보 수신 동의 (선택)</label>
                             </li>
                             <li>
-                                <span class="custom-form pos2"><input class="fe-agree-check" type="checkbox" id="fe-oka3" name="r1" <%= myInfoData.sktTmChecked %>><span class="c-type1"></span></span>
+                                <span class="custom-form"><input class="fe-agree-check" type="checkbox" id="fe-oka3" name="r1" <%= myInfoData.sktTmChecked %>><span class="c-type1"></span></span>
                                 <label for="fe-oka3" class="rad-lab">고객님께 혜택을 드리기 위한 개인정보 수집/이용 동의 (선택)</label>
+                                <!-- 개인정보 수집 날짜가 없는 케이스에 문구 미노출 처리 -->
+                                <% if( myInfoData.showMbrAgreeDate !== '' ){ %>
                                 <p class="agr-sub-txt"><%= myInfoData.showMbrAgreeDate %> T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</p>
+                                <% } %>
                             </li>
                         </ul>
                     </div>

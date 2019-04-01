@@ -86,16 +86,8 @@ $.extend(Tw.CommonSearchMore.prototype,
   _doSearch : function (evt) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
-      var closeCallback;
-      if(this._historyService.getHash()==='#input_P'){
-        closeCallback = $.proxy(function () {
-          setTimeout($.proxy(function () {
-            this.$inputElement.focus();
-          },this),100);
-        },this);
-      }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(evt.currentTarget));
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(evt.currentTarget));
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');

@@ -345,6 +345,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+    this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, {});
   },
 
   _bindJoinResPopup: function($popupContainer) {

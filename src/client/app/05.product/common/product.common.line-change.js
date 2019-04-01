@@ -130,6 +130,10 @@ Tw.ProductCommonLineChange.prototype = {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
     }
 
+    if (Tw.BrowserHelper.isIosChrome()) {
+      window.history.replaceState(null, document.title, this._targetUrl);
+    }
+
     this._historyService.replaceURL(this._targetUrl);
   }
 

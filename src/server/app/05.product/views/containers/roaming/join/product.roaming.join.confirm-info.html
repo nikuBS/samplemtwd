@@ -18,7 +18,7 @@
 <!-- Grand open 접근성 수정 -->
 <div class="wrap fe-tooltip-replaced-link" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000478' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup fixed-bottom h60 nobg fe-main-content txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup fixed-bottom nobg fe-main-content txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -159,7 +159,7 @@
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     <%= prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                     <%- prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                                 </span>
                                                             </span>
                                                     </p>
@@ -177,7 +177,7 @@
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.termStplAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     <%= prodBffInfo.stipulationInfo.termStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                     <%- prodBffInfo.stipulationInfo.termStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                                 </span>
                                                             </span>
                                                     </p>
@@ -195,7 +195,7 @@
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     <%= prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                     <%- prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                                 </span>
                                                             </span>
                                                     </p>
@@ -213,7 +213,7 @@
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                 <%= prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                 <%- prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                             </span>
                                                         </span>
                                                     </p>
@@ -231,7 +231,7 @@
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                <%= prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                <%- prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                             </span>
                                                         </span>
                                                     </p>

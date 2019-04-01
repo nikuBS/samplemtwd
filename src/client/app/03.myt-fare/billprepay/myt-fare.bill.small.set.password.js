@@ -27,27 +27,28 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       var cpinCode = this.$target.attr('data-cpin');
       var birth = this.$target.attr('data-birth');
 
+      // data type에 따라 보여주는 text 변경
       switch (cpinCode) {
         case 'NC': {
-          this.$type = 'new';
+          this.$type = 'new'; // 신청
           this._popupService.open({
             'hbs': 'MF_06_06'
           }, $.proxy(this._openPassword, this, birth), null, 'set-pwd', this.$target);
           break;
         }
         case 'AC': {
-          this.$type = 'change';
+          this.$type = 'change'; // 변경
           this._popupService.open({
             'hbs': 'MF_06_06'
           }, $.proxy(this._openPassword, this, birth), null, 'set-pwd', this.$target);
           break;
         }
-        case 'LC': {
+        case 'LC': { // 잠김 (안내 팝업 호출 후 처리)
           this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
-            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goAdditionalService, this), this.$target);
+            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._goAdditionalService, this), null, this.$target);
           break;
         }
-        case 'IC': {
+        case 'IC': { // 초기화
           this.$type = 'change';
           this._popupService.open({
             'hbs': 'MF_06_06'
@@ -58,6 +59,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
           break;
       }
     } else if (code === 'BIL0054') {
+      // 부가서비스 페이지로 이동
       this._goProductService();
     }
   },
@@ -110,8 +112,9 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
   },
   _checkIsAbled: function (event) {
-    this._checkNumber(event);
+    this._checkNumber(event); // 숫자만 입력 가능
 
+    // validation check
     var isValid = false;
     if (this.$type === 'new') {
       isValid = this.$newPassword.val() !== '' && this.$confirmPassword.val() !== '';
@@ -119,6 +122,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       isValid = this.$currentPassword.val() !== '' && this.$newPassword.val() !== '' && this.$confirmPassword.val() !== '';
     }
 
+    // 버튼 활성화 체크
     if (isValid) {
       this.$setBtn.removeAttr('disabled');
     } else {
@@ -130,6 +134,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _setMaxValue: function (event) {
+    // maxLength 적용
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
     if ($target.attr('maxLength')) {
@@ -143,6 +148,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$isValid = this._checkPasswordLength($target);
   },
   _checkPassword: function (event) {
+    // 패스워드 유효성 검증
     var $target = $(event.currentTarget);
     this.$isValid = this._checkPasswordLength($target);
 
@@ -154,6 +160,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _checkConfirmPassword: function (event) {
+    // 신청 및 변경할 비밀번호와 비밀번호 확인 시 입력한 비밀번호가 같은지 체크
     var $target = $(event.currentTarget);
     this.$isValid = this._checkPasswordLength($target);
 
@@ -169,6 +176,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _checkPasswordLength: function ($target) {
+    // 6자리 체크
     return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH);
   },
   _setPassword: function (e) {
@@ -185,9 +193,9 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _getApiName: function () {
     var apiName = '';
     if (this.$type === 'new') {
-      apiName = Tw.API_CMD.BFF_05_0086;
+      apiName = Tw.API_CMD.BFF_05_0086; // 비밀번호 신청
     } else {
-      apiName = Tw.API_CMD.BFF_05_0087;
+      apiName = Tw.API_CMD.BFF_05_0087; // 비밀번호 변경
     }
     return apiName;
   },
@@ -206,7 +214,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _success: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.customerInfo.resultCd === 'VS000') {
-        this._setNewPasswordData();
+        this._setNewPasswordData(); // 성공일 경우 메인화면 텍스트 변경
       } else {
         Tw.Error('', res.result.returnMessage).pop(null, $target);
       }
@@ -232,18 +240,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     $changeBtn.find('span').text(Tw.MYT_FARE_PAYMENT_NAME.CHANGE);
 
     this._popupService.close();
-    this._commonHelper.toast(message);
-  },
-  _confirmCallback: function () {
-    this._close = true;
-    this._popupService.close();
+    this._commonHelper.toast(message); // 신청 및 변경 완료 토스트 출력
   },
   _goAdditionalService: function () {
-    if (this._close) {
-      this._historyService.goLoad('/myt-join/additions');
-    }
+    this._historyService.replaceURL('/myt-join/additions'); // 부가서비스 페이지로 이동
   },
   _goProductService: function () {
-    this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin'));
+    this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin')); // 부가서비스 페이지로 이동
   }
 };

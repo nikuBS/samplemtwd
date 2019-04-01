@@ -42,7 +42,6 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     var endDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,this._dateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
-
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
     this.$container.find('#end_date').text(endDate);
@@ -52,6 +51,11 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
     this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
+    if(!this._validateTimeValueAgainstNow(this._prodBffInfo.svcStartDt,startTime,'start')){
+      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('#do_setting').attr('disabled','disabled');
+      this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
+    }
   },
   _checkSelectedEndDate : function (endDate) {
     if(this._currentDate>=endDate){
@@ -324,7 +328,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       case 'NA00006042':
       case 'NA00006044':
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
-        $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_10');
+        this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;
         break;
       case 'NA00005900':
