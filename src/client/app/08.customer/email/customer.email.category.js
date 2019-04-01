@@ -88,7 +88,7 @@ Tw.CustomerEmailCategory.prototype = {
 
     var sDepth1Category = this.$select_service_depth1.data('service-depth1');
 
-    if ( sDepth1Category ) {
+    if ( sDepth1Category && this.category[sDepth1Category] ) {
       var service2DepthList = this.category[sDepth1Category];
 
       var fnSelectLine = function (item, index) {
