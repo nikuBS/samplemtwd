@@ -8,6 +8,9 @@
 Tw.MyTFareBillPrepayMain = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
+  this._apiName = title === 'small' ? Tw.API_CMD.BFF_07_0073 : Tw.API_CMD.BFF_07_0081;
+  this._gubun = 'Request';
+  this._requestCnt = 0;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -20,13 +23,17 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title) {
 
 Tw.MyTFareBillPrepayMain.prototype = {
   _init: function () {
+    Tw.CommonHelper.startLoading('.container', 'grey');
+
     // CDN 읽어온 이후 여부 체크
     if( !Tw.Environment.init ) {
       $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkIsAfterChange, this));
     } else {
       this._checkIsAfterChange(); // 자동선결제 해지 후 다시 메인으로 왔을 경우 처리
     }
+
     this._initVariables();
+    this._getRemainLimit();
     this._setButtonVisibility();
     this._bindEvent();
   },
@@ -40,17 +47,69 @@ Tw.MyTFareBillPrepayMain.prototype = {
       }
     }
   },
+  _getRemainLimit: function () {
+    this._apiService.request(this._apiName, { gubun: this._gubun, requestCnt: this._requestCnt })
+      .done($.proxy(this._remainSuccess, this))
+      .fail($.proxy(this._remainFail, this));
+  },
+  _remainSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      if (this._gubun === 'Request') {
+        this._gubun = 'Done';
+        this._requestCnt++;
+
+        this._getRemainLimit();
+      } else {
+        if (res.result.gubun === 'Done') {
+          Tw.CommonHelper.endLoading('.container');
+          this._setData(res);
+        } else {
+          if (this._requestCnt < 3) {
+            this._requestCnt++;
+            setTimeout($.proxy(this._getRemainLimit, this), 3000);
+          } else {
+            this._remainFail({ code: 'ERROR', msg: Tw.ALERT_MSG_MYT_FARE.PREPAY_REMAIN_ERROR });
+          }
+        }
+      }
+    } else {
+      this._remainFail(res);
+    }
+  },
+  _remainFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+    Tw.Error(err.code, err.msg).page();
+  },
+  _setData: function (res) {
+    var result = res.result;
+    if (!Tw.FormatHelper.isEmpty(result)) {
+      if (result.autoChrgStCd === 'U') {
+        this.$container.find('.fe-auto-wrap').removeClass('none');
+      } else {
+        this.$container.find('.fe-non-auto-wrap').removeClass('none');
+      }
+      this._remainLimit = result.remainUseLimit;
+
+      this.$useAmount.attr('id', result.tmthUseAmt).text(Tw.FormatHelper.addComma(result.tmthUseAmt)); // 당월 사용금액에 콤마(,) 추가
+      this.$remainAmount.attr('id', result.remainUseLimit).text(Tw.FormatHelper.addComma(result.remainUseLimit)); // 잔여한도에 콤마(,) 추가
+      this.$prepayAmount.attr('id', result.tmthChrgPsblAmt).text(Tw.FormatHelper.addComma(result.tmthChrgPsblAmt)); // 선결제 가능금액에 콤마(,) 추가
+
+      this._bindEventAfterData();
+    }
+  },
   _initVariables: function () {
-    this._maxAmount = this.$container.find('.fe-max-amount').attr('id'); // 잔여한도
-    this._name = this.$container.find('.fe-name').text();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
     this._monthAmountList = [];
     this._dayAmountList = [];
     this._onceAmountList = [];
 
+    this.$useAmount = this.$container.find('.fe-use-amount');
+    this.$remainAmount = this.$container.find('.fe-remain-amount');
     this.$prepayAmount = this.$container.find('.fe-prepay-amount');
     this.$setPasswordBtn = this.$container.find('.fe-set-password');
+
+    this._name = this.$container.find('.fe-name').text();
   },
   _setButtonVisibility: function () {
     // 소액결제일 경우 비밀번호 상태값에 따라 '비밀번호 설정' 버튼 보여주기 결정
@@ -62,6 +121,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
   },
   _bindEvent: function () {
+    this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
+    this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
+  },
+  _bindEventAfterData: function () {
     this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('click', '.fe-micro-history', $.proxy(this._microHistory, this));
     this.$container.on('click', '.fe-contents-history', $.proxy(this._contentsHistory, this));
@@ -69,8 +132,6 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$container.on('click', '.fe-prepay', $.proxy(this._prepay, this));
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
     this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayInfo, this));
-    this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
-    this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
   },
   _prepayHistoryMonth: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly'); // 월별 이용내역 조회 페이지로 이동
@@ -132,7 +193,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
   },
   _goPrepay: function ($layer) {
-    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._maxAmount, this._name); // 선결제
+    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._remainLimit, this._name); // 선결제
   },
   _autoPrepay: function (e) {
     if (Tw.BrowserHelper.isApp()) {
