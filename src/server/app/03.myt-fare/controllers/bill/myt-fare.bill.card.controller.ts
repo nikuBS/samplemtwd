@@ -72,7 +72,7 @@ class MyTFareBillCard extends TwViewController {
       /* list 갯수만큼 loop */
       list.map((data, index) => {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.'); // 서버에서 내려오는 날짜를 YYYY.M. 포맷에 맞게 변경 */
-        data.intMoney = this.removeZero(data.invAmt); // 금액 앞에 불필요하게 붙는 0 제거
+        data.intMoney = this.removeZero(data.colAmt); // 금액 앞에 불필요하게 붙는 0 제거
         data.invMoney = FormatHelper.addComma(data.intMoney); // 금액에 콤마(,) 추가
         data.svcName = SVC_CD[data.svcCd]; // 서비스명 (모바일/인터넷...)
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :

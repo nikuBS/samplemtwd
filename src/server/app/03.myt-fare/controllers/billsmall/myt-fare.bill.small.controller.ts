@@ -21,68 +21,19 @@ class MyTFareBillSmall extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getMicroRemain(), // 잔여한도 조회
       this.getHistory(),
       this.getPasswordStatus()
-    ).subscribe(([microRemain, microHistory, passwordStatus]) => {
-      if (microRemain.code === API_CODE.CODE_00 && microRemain.result.gubun === 'Done') {
-        res.render('billsmall/myt-fare.bill.small.html', {
-          result: this.parseData(microRemain.result),
-          usedYn: this.getHistoryInfo(microHistory),
-          passwordInfo: this.getPasswordInfo(passwordStatus),
-          svcInfo: svcInfo, // 회선 정보 (필수)
-          pageInfo: pageInfo, // 페이지 정보 (필수)
-          currentMonth: this.getCurrentMonth() // 현재월 조회
-        });
-      } else {
-        res.render('error.get-fail.html', {
-          msg: PREPAY_ERR_MSG.FAIL,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
-        });
-      }
+    ).subscribe(([microHistory, passwordStatus]) => {
+      res.render('billsmall/myt-fare.bill.small.html', {
+        usedYn: this.getHistoryInfo(microHistory),
+        passwordInfo: this.getPasswordInfo(passwordStatus),
+        svcInfo: svcInfo, // 회선 정보 (필수)
+        pageInfo: pageInfo, // 페이지 정보 (필수)
+        currentMonth: this.getCurrentMonth() // 현재월 조회
+      });
     }, (error) => {
       this.errorRender(res, error, svcInfo, pageInfo);
     });
-  }
-
-  private getMicroRemain(): Observable<any> {
-    return this.getRemainLimit('Request', '0') // 최초 시도 시 Request, 0으로 호출
-      .switchMap((resp) => {
-        if (resp.code === API_CODE.CODE_00) {
-          return Observable.timer(3000)
-            .switchMap(() => {
-              return this.getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
-            });
-        } else {
-          throw resp;
-        }
-      })
-      .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
-          return Observable.of(next);
-        } else {
-          return Observable.timer(3000)
-            .switchMap(() => {
-              return this.getRemainLimit('Done', '2'); // 위에서 응답이 없을 경우 3초 뒤 Done, 2로 호출
-            });
-        }
-      })
-      .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
-          return Observable.of(next);
-        } else {
-          return Observable.timer(3000)
-            .switchMap(() => {
-              return this.getRemainLimit('Done', '3'); // 응답이 없을 경우 3초 뒤 Done, 3으로 호출
-            });
-        }
-      });
-  }
-
-  /* 잔여한도 조회 */
-  private getRemainLimit(gubun: string, requestCnt: any): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0073, { gubun: gubun, requestCnt: requestCnt });
   }
 
   /* 소액결제 사용여부 및 비밀번호 서비스 사용여부 조회 */
@@ -133,21 +84,6 @@ class MyTFareBillSmall extends TwViewController {
       }
     }
     return passwordStatus;
-  }
-
-  private parseData(result: any): any {
-    if (!FormatHelper.isEmpty(result)) {
-      result.tmthUseAmount = FormatHelper.addComma(result.tmthUseAmt); // 당월 사용금액에 콤마(,) 추가
-      result.remainLimit = FormatHelper.addComma(result.remainUseLimit); // 잔여한도에 콤마(,) 추가
-      result.tmthChrgPsblAmount = FormatHelper.addComma(result.tmthChrgPsblAmt); // 선결제 가능금액에 콤마(,) 추가
-
-      if (result.autoChrgStCd === MYT_FARE_PREPAY_AUTO_CHARGE_CODE.USE) { // 자동선결제 사용 중인 경우
-        result.autoChrgAmount = FormatHelper.addComma(result.autoChrgAmt); // 자동선결제 금액에 콤마(,) 추가
-        result.autoChrgStrdAmount = FormatHelper.addComma(result.autoChrgStrdAmt); // 기준금액에 콤마(,) 추가
-      }
-    }
-    result.code = API_CODE.CODE_00;
-    return result;
   }
 
   private getCurrentMonth(): any {
