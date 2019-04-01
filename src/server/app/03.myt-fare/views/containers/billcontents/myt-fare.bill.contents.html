@@ -26,8 +26,8 @@
                 <div class="cont-box">
                     <div class="monthly-billing">
                         <div class="detail"><%= currentMonth %>월 이용금액</div>
-                        <div class="price"><span id="<%= result.tmthUseAmt %>" class="str fe-max-amount"><%= result.tmthUseAmount %></span>원</div>
-                        <div class="limit">잔여한도<span id="<%= result.remainUseLimit %>" class="str fe-remain-amount"><%= result.remainLimit %></span>원</div>
+                        <div class="price"><span class="str fe-use-amount"></span>원</div>
+                        <div class="limit">잔여한도<span class="str fe-remain-amount"></span>원</div>
                     </div>
 
                     <ul class="bt-slice item-two">
@@ -50,9 +50,8 @@
                             <dl>
                                 <dt>선결제 가능금액<button id="MF_07_tip_01" class="tip-view" aria-haspopup="true" title="선결제 가능금액 정보보기">TIP</button></dt>
                                 <dd>
-                                    <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
                                     <button class="link-full fe-prepay" title="선결제 화면 이동">
-                                        <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
+                                        <span class="val"><span class="str fe-prepay-amount"></span>원</span>
                                     </button>
                                 </dd>
                             </dl>
@@ -60,19 +59,16 @@
                         <li>
                             <dl>
                                 <dt>자동 선결제<button id="MF_07_tip_02" class="tip-view" aria-haspopup="true" title="자동 선결제 정보보기">TIP</button></dt>
-                                <% if (result.autoChrgStCd === 'U') { %>
-                                <dd>
+                                <dd class="fe-auto-wrap none">
                                     <button class="link-full fe-auto-prepay-change" title="자동선결제 설정 화면 이동">
                                         <span class="val">변경 및 해지</span>
                                     </button>
                                 </dd>
-                                <% } else { %>
-                                <dd>
+                                <dd class="fe-non-auto-wrap none">
                                     <button class="link-full fe-auto-prepay" title="자동선결제 설정 화면 이동">
                                         <span class="val">신청</span>
                                     </button>
                                 </dd>
-                                <% } %>
                             </dl>
                         </li>
                     </ul>
