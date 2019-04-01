@@ -38,7 +38,7 @@
                                 <div class="widget-box radio">
                                     <ul class="select-list" role="group">
                                         <% members.map((member, i) => { %>
-                                        <li class="radiobox type01 <%= i === 0 ? 'checked' : '' %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>" data-svc="<%= member.svcMgmtNum %>" data-name="<%= member.custNm %>">
+                                        <li class="radiobox type01 <%= i === 0 ? 'checked' : '' %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>" data-svc="<%= member.svcMgmtNum %>" data-name="<%= member.custNm %>" data-phone-number="<%= member.svcNum %>">
                                             <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                             <input type="radio" name="radio" value="" title="<%= member.custNm %>" aria-labelledby="aria-comp-radio1" <%= i === 0 ? 'checked' : '' %>><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
