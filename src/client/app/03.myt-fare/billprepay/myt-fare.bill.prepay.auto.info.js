@@ -41,12 +41,13 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   },
   _changeAutoPrepay: function (e) {
     if (this._standardAmount > 0) {
-      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change');
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change'); // 자동선결제 변경 완료
     } else {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, null, null, $(e.currentTarget));
     }
   },
   _cancelAutoPrepay: function (e) {
+    // 자동선결제 해지 알림
     var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
       $.proxy(this._cancel, this, $target), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $target);
@@ -88,12 +89,12 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _setMoreData: function (e) {
     if (this._page < this._totalPage) {
       this._page++;
-      this._setAutoMoreData(e);
+      this._setAutoMoreData(e); // 더보기 버튼 셋팅 (20건 이상일 경우)
     }
   },
   _setAutoMoreData: function (e) {
     var $target = $(e.currentTarget);
-    var $api = this._getHistoryApiName();
+    var $api = this._getHistoryApiName(); // 20건 이상 시 page별로 API 호출
 
     this._apiService.request($api, { pageNo: this._page, listSize: this._defaultCnt })
       .done($.proxy(this._getSuccess, this, $target))
@@ -102,9 +103,9 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _getHistoryApiName: function () {
     var $apiName = '';
     if (this.$title === 'small') {
-      $apiName = Tw.API_CMD.BFF_07_0075;
+      $apiName = Tw.API_CMD.BFF_07_0075; // 소액결제
     } else {
-      $apiName = Tw.API_CMD.BFF_07_0079;
+      $apiName = Tw.API_CMD.BFF_07_0079; // 콘텐츠이용료
     }
     return $apiName;
   },
@@ -113,9 +114,9 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       var $result = res.result;
       var $record = [];
       if (this.$title === 'small') {
-        $record = $result.microPrepayReqRecord;
+        $record = $result.microPrepayReqRecord; // 소액결제 내역
       } else {
-        $record = $result.useContentsAutoPrepayRecord;
+        $record = $result.useContentsAutoPrepayRecord; // 콘텐츠 이용료 내역
       }
 
       if (!Tw.FormatHelper.isEmpty($record)) {
@@ -137,12 +138,13 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       cardNum = 'cardNum';
     }
 
+    // 조회된 데이터 셋팅
     for (var i = 0; i < $record.length; i++) {
       var $liNode = this.$standardNode.clone();
       $liNode.find('.fe-type').text(Tw.PAYMENT_REQUEST_TYPE[$record[i].autoChrgReqClCd]);
       $liNode.find('.fe-date').text(Tw.DateHelper.getFullDateAndTime($record[i].operDtm));
 
-      if ($record[i].autoChrgReqClDd === 'F') {
+      if ($record[i].autoChrgReqClDd === 'F') { // 해지 건
         $liNode.find('.fe-detail').remove();
       } else {
         $liNode.find('.fe-card-info').html($record[i][cardName] + '<br />' +
