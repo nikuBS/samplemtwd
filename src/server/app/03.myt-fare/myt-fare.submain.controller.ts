@@ -22,6 +22,7 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
@@ -32,7 +33,7 @@ class MyTFareSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       // 1일 기준
-      isNotFirstDate: (new Date().getDate() > 1),
+      isNotFirstDate: (new Date().getDate() > 1) || !BLOCK_ON_FIRST_DAY,
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
       isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1)
     };
