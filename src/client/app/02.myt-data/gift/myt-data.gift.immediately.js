@@ -4,12 +4,14 @@
  * Date: 2018.09.10
  */
 
-Tw.MyTDataGiftImmediately = function (rootEl) {
+Tw.MyTDataGiftImmediately = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  var data = JSON.parse(svcInfo);
+  this._tmpSvcMgmtNum = data.svcMgmtNum;
 
   this._cachedElement();
   this._bindEvent();
@@ -173,9 +175,9 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
 
     if ( isCellPhone ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     }
   },
 
@@ -223,7 +225,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     // API DATA
     this._apiService.request(Tw.API_CMD.BFF_06_0016, {
       befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
-      dataQty: this.$wrap_data_select_list.find('li.checked input').val()
+      dataQty: this.$wrap_data_select_list.find('li.checked input').val(),
+      tmpSvcMgmtNum: this._tmpSvcMgmtNum
     }).done($.proxy(this._onRequestSuccessGiftData, this, $target));
   },
 

@@ -4,12 +4,14 @@
  * Date: 2018.09.10
  */
 
-Tw.MyTDataGiftMonthly = function (rootEl) {
+Tw.MyTDataGiftMonthly = function (rootEl, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  var data = JSON.parse(svcInfo);
+  this._tmpSvcMgmtNum = data.svcMgmtNum;
 
   this._cachedElement();
   this._bindEvent();
@@ -98,7 +100,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
 
     if ( isValidPhone ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
+      this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
     }
   },
 
