@@ -150,10 +150,6 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _convertOrderInfo: function (list) {
-    if (Tw.FormatHelper.isEmpty(list)) {
-      list = this.mockOrderData();
-    }
-
     var htOrderList = $.extend({}, list, { isMoreListShop: false, isMoreListUsed: false });
 
     if (list.listShop && list.listShop.length > this.listLimit ) {
@@ -328,70 +324,5 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _error: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-
-  mockOrderData: function() {
-    return {
-      listShop: [
-        {
-          ordNo : '201604019876',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'SM-G150NS / 블랙 / 기기변경 / band  \n 데이터 29 / T 기본약정 24개월 / 29,900 원 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '1234567890',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'IPHONE6S+_16GR / 로즈 골드 / 기기변경 / band 데이터 100 / 100,000원 / T기본약정 24개월 / 미약정',
-          ordStat : '주문접수'
-        }
-      ],
-      listUsed: [
-        {
-          ordNo : '4646797979',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'SM-G150NS / 블랙 / 기기변경 / band  \n 데이터 29 / T 기본약정 24개월 / 29,900 원 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '111104019876',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'IPHONE6S+_16GR / 로즈 골드 / 기기변경 / band 데이터 100 / 100,000원 / T기본약정 24개월 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '222204019876',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'SM-G150NS / 블랙 / 기기변경 / band  \n 데이터 29 / T 기본약정 24개월 / 29,900 원 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '4646797979',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'SM-G150NS / 블랙 / 기기변경 / band  \n 데이터 29 / T 기본약정 24개월 / 29,900 원 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '111104019876',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'IPHONE6S+_16GR / 로즈 골드 / 기기변경 / band 데이터 100 / 100,000원 / T기본약정 24개월 / 미약정',
-          ordStat : '주문접수'
-        },
-        {
-          ordNo : '222204019876',
-          ordDate : '2016.04.04',
-          ordProdUrl : '',
-          ordProdNm : 'SM-G150NS / 블랙 / 기기변경 / band  \n 데이터 29 / T 기본약정 24개월 / 29,900 원 / 미약정',
-          ordStat : '주문접수'
-        }
-      ]
-    };
   }
 };
