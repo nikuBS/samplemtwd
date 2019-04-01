@@ -44,7 +44,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 인증업무
   _certShowLists: function () {
-    this._apiService.request(Tw.API_CMD.BFF_05_0064,{
+    this._apiService.request(Tw.API_CMD.BFF_05_0205,{
       fromDt: this.fromDt,
       toDt: this.toDt
     }).done($.proxy(this._callbackShowLists, this))
