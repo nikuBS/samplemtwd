@@ -222,14 +222,15 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
   },
-  _detailAgreePopupEvt : function (){
+  _detailAgreePopupEvt : function (evt){
+    $(evt.currentTarget).blur();
     var $agreeElement = this._$popupContainer.find('.'+this._nowShowAgreeType);
-    if($agreeElement.attr('checked')!=='checked'){
-      $agreeElement.trigger('click');
-    }
-    $agreeElement.promise().done($.proxy(function(){
-      setTimeout($.proxy(this._historyService.goBack,this._historyService),300);
-    },this));
+    this._historyService.goBack();
+    setTimeout($.proxy(function(){
+      if($agreeElement.attr('checked')!=='checked'){
+        $agreeElement.trigger('click');
+      }
+    },this),100);
   },
   _arrangeAgree : function(data){
     var targetObj;
