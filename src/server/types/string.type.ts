@@ -1159,3 +1159,7 @@ export const TID_MSG = {
   LOGIN_EXCEED: '1일 로그인 허용횟수 초과',
   LOGIN_EXCEED_MSG: '30회 초과하여 금일 24시까지 이용 불가합니다.'
 };
+
+export const PREPAY_ERR_MSG = {
+  FAIL: '이번 달 잔여한도가 정상적으로 조회되지 않았습니다. 잠시 후 다시 시도해 주세요.'
+};
