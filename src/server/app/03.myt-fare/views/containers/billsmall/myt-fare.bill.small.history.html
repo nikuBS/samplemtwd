@@ -19,22 +19,10 @@
 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
+                <button class="fe-show-list">조회하기</button>
 
-                <div class="ti-caption-gray">
-                    <button class="bt-select" title="월 선택" id="fe-month-selector"><%=currentMonth%></button>
-                    <span class="num">총 <em><%=totalCnt %></em>건</span>
-                </div>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps" id="fe-list-wrapper">
-                    <div class="cont-use-detail">
-                        <ul class="list-inner">
-                        </ul>
-                    </div>
-                </div>
-                <!--// .cont-box -->
+                <!--//-->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
@@ -63,16 +51,34 @@
           new Tw.MyTFareBillSmallHistory($(document), '<%- JSON.stringify(data)%>');
       });
     </script>
-    <script id="btn-more-wrapper" type="text/x-handlebars-template">
-        {{#if initialMoreData}}
-        <div class="bt-more">
-            <button>더 보기</button>
+    <script id="fe-list-wrap" type="text/x-handlebars-template">
+        <div class="fe-list-wrap">
+            <div class="ti-caption-gray">
+                <button class="bt-select fe-month-selector" title="월 선택">{{curMonth}}</button>
+                <span class="num">총 <em>{{totalCnt}}</em>건</span>
+            </div>
+
+            <!-- .cont-box -->
+            {{#if list.length}}
+            <div class="cont-box nogaps" id="fe-list-wrapper">
+                <div class="cont-use-detail">
+                    <ul class="list-inner fe-lists">
+                        {{>list list=list}}
+                    </ul>
+                    <div class="bt-more">
+                        <button class="fe-more-btn none" aria-hidden="true">더 보기</button>
+                    </div>
+                </div>
+            </div>
+            {{else}}
+            {{>empty}}
+            {{/if}}
+            <!--// .cont-box -->
         </div>
-        {{/if}}
     </script>
     <script id="list-default" type="text/x-handlebars-template">
-        {{#each billList}}
-        <li>
+        {{#each list}}
+        <li class="fe-yet-evented">
             <button title="상세내역 보기" class="fe-detail-link" data-list-id="{{listId}}">
                 <dl>
                     <dt>
