@@ -605,6 +605,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
   NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
   NOT_ALLOWED_AUTO_PREPAY: '자동 선결제는 기준금액이 1만원 이상인 경우 신청 가능합니다.',
+  PREPAY_REMAIN_ERROR: '이번 달 잔여한도가 정상적으로 조회되지 않았습니다. 잠시 후 다시 시도해 주세요.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
