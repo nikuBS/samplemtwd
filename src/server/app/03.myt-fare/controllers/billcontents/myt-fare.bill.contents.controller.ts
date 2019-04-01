@@ -12,6 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 import {MYT_FARE_PREPAY_AUTO_CHARGE_CODE} from '../../../../types/bff.type';
+import {PREPAY_ERR_MSG} from '../../../../types/string.type';
 
 class MyTFareBillContents extends TwViewController {
   constructor() {
@@ -22,7 +23,7 @@ class MyTFareBillContents extends TwViewController {
     Observable.combineLatest(
       this.getContentsRemain() // 잔여한도 조회
     ).subscribe(([contentsRemain]) => {
-      if (contentsRemain.code === API_CODE.CODE_00) {
+      if (contentsRemain.code === API_CODE.CODE_00 && contentsRemain.result.gubun === 'Done') {
         res.render('billcontents/myt-fare.bill.contents.html', {
           result: this.parseData(contentsRemain.result),
           svcInfo: svcInfo, // 회선 정보 (필수)
@@ -30,7 +31,11 @@ class MyTFareBillContents extends TwViewController {
           currentMonth: this.getCurrentMonth() // 현재월 조회
         });
       } else {
-        this.errorRender(res, contentsRemain, svcInfo, pageInfo);
+        res.render('error.get-fail.html', {
+          msg: PREPAY_ERR_MSG.FAIL,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
+        });
       }
     }, (error) => {
       this.errorRender(res, error, svcInfo, pageInfo);
@@ -42,13 +47,16 @@ class MyTFareBillContents extends TwViewController {
     return this.getRemainLimit('Request', '0') // 최초 시도 시 Request, 0으로 호출
       .switchMap((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          return this.getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
+            });
         } else {
           throw resp;
         }
       })
       .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00) {
+        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
           return Observable.of(next);
         } else {
           return Observable.timer(3000)
@@ -58,7 +66,7 @@ class MyTFareBillContents extends TwViewController {
         }
       })
       .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00) {
+        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
           return Observable.of(next);
         } else {
           return Observable.timer(3000)
@@ -95,9 +103,12 @@ class MyTFareBillContents extends TwViewController {
   }
 
   private errorRender(res, resp, svcInfo, pageInfo): any {
+    const code = resp.code === API_CODE.CODE_00 ? '' : resp.code;
+    const msg = resp.code === API_CODE.CODE_00 ? PREPAY_ERR_MSG.FAIL : resp.msg;
+
     this.error.render(res, {
-      code: resp.code,
-      msg: resp.msg,
+      code: code,
+      msg: msg,
       pageInfo: pageInfo,
       svcInfo: svcInfo
     });

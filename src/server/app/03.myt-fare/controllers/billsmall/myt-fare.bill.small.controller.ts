@@ -12,6 +12,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 import {MYT_FARE_MICRO_NAME, MYT_FARE_PREPAY_AUTO_CHARGE_CODE} from '../../../../types/bff.type';
+import {PREPAY_ERR_MSG} from '../../../../types/string.type';
 
 class MyTFareBillSmall extends TwViewController {
   constructor() {
@@ -24,7 +25,7 @@ class MyTFareBillSmall extends TwViewController {
       this.getHistory(),
       this.getPasswordStatus()
     ).subscribe(([microRemain, microHistory, passwordStatus]) => {
-      if (microRemain.code === API_CODE.CODE_00) {
+      if (microRemain.code === API_CODE.CODE_00 && microRemain.result.gubun === 'Done') {
         res.render('billsmall/myt-fare.bill.small.html', {
           result: this.parseData(microRemain.result),
           usedYn: this.getHistoryInfo(microHistory),
@@ -34,7 +35,11 @@ class MyTFareBillSmall extends TwViewController {
           currentMonth: this.getCurrentMonth() // 현재월 조회
         });
       } else {
-        this.errorRender(res, microRemain, svcInfo, pageInfo);
+        res.render('error.get-fail.html', {
+          msg: PREPAY_ERR_MSG.FAIL,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
+        });
       }
     }, (error) => {
       this.errorRender(res, error, svcInfo, pageInfo);
@@ -45,13 +50,16 @@ class MyTFareBillSmall extends TwViewController {
     return this.getRemainLimit('Request', '0') // 최초 시도 시 Request, 0으로 호출
       .switchMap((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          return this.getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '1'); // 이후 Done, 1로 호출 (필수)
+            });
         } else {
           throw resp;
         }
       })
       .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00) {
+        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
           return Observable.of(next);
         } else {
           return Observable.timer(3000)
@@ -61,7 +69,7 @@ class MyTFareBillSmall extends TwViewController {
         }
       })
       .switchMap((next) => {
-        if (next.code === API_CODE.CODE_00) {
+        if (next.code === API_CODE.CODE_00 && next.result.gubun === 'Done') {
           return Observable.of(next);
         } else {
           return Observable.timer(3000)

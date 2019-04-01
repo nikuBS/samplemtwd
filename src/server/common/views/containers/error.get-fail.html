@@ -1,0 +1,66 @@
+<%#
+* FileName: error.get-fail.html
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2019.04.01
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-bottom"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <p class="tx-tit"><span class="tx-highlight">이용에 불편을 드려서 죄송합니다.</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <p class="basic-txt"><%= msg %></p>
+                        <ul class="bt-slice item-one">
+                            <li><button type="button" class="btn-round2 btn-style3 fe-reload">새로고침</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button type="button" class="btn-floating btn-style2 fe-back">돌아가기</button></li>
+            </ul>
+        </div>
+    </div>
+    <!--// .popup hbs -->
+</div>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('.fe-reload', '.wrap').on('click', function () {
+      window.location.reload();
+    });
+
+    $('.fe-back', '.wrap').on('click', function () {
+      window.history.back();
+    });
+  });
+</script>
+<% include ../components/end.component.html %>
