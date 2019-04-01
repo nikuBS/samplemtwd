@@ -18,7 +18,7 @@
 <!--// Grand open 접근성 수정 -->
 <div class="wrap fe-tooltip-replaced-link" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000480' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg fixed-bottom h60 fe-main-content txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+    <div class="popup-page tw-popup nobg fixed-bottom fe-main-content txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -86,7 +86,7 @@
                 <% if(isPromotion){ %>
                 <div class="cont-box">
                     <h5 class="tit f-m16"><%= prodApiInfo.preinfo.reqProdInfo.prodNm.replace(' 기간형','') %> 선물</h5>
-                    <p class="tip-gift">고객님의 휴대폰번호를 입력하시면 T파이 이용기간 동안 사용 가능한 로밍 데이터 300MB(3G/LTE)가 제공됩니다. (선택사항)  </p>
+                    <p class="tip-gift">고객님의 휴대폰번호를 입력하시면 baro Box 이용기간 동안 사용 가능한 로밍 데이터 300MB(3G/LTE)가 제공됩니다. (선택사항)  </p>
                     <div class="tel-area">
                         <span class="subtit">휴대폰번호</span>
                         <div class="tel-box">
