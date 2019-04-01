@@ -4,7 +4,7 @@ const BFF_05_0201_mock = {
 
     "result": {
       "prodId": "NA00005699",
-      "prodNm": "baro Box 일본, 미국, 캐나다 선물",
+      "prodNm": "T파이 일본, 미국, 캐나다 선물",
       "total": "무제한",
       "used": "14551",
       "remained": "150",
