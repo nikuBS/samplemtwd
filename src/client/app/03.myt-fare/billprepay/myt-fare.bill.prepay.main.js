@@ -88,7 +88,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
       } else {
         this.$container.find('.fe-non-auto-wrap').removeClass('none');
       }
-      this._remainLimit = result.remainUseLimit;
+      this._prepayAmount = result.tmthChrgPsblAmt;
 
       this.$useAmount.attr('id', result.tmthUseAmt).text(Tw.FormatHelper.addComma(result.tmthUseAmt)); // 당월 사용금액에 콤마(,) 추가
       this.$remainAmount.attr('id', result.remainUseLimit).text(Tw.FormatHelper.addComma(result.remainUseLimit)); // 잔여한도에 콤마(,) 추가
@@ -193,7 +193,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
   },
   _goPrepay: function ($layer) {
-    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._remainLimit, this._name); // 선결제
+    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._prepayAmount, this._name); // 선결제
   },
   _autoPrepay: function (e) {
     if (Tw.BrowserHelper.isApp()) {
