@@ -20,6 +20,7 @@ class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
   _preBillAvailable: boolean = true;
   _isPrev: boolean = false;
+  _blockOnFirstDay = false; // 매월 1일 조회 불가 여부
 
   constructor() {
     super();
@@ -32,8 +33,8 @@ class MyTFareBillHotbill extends TwViewController {
     if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
       this._preBillAvailable = false;
     }
-    // 당월 요금은 2일부터 조회 가능(매월 1일은 안내 매세지 출력)
-    if ( new Date().getDate() === 1 && !this._isPrev) {
+    // 당월 요금은 2일부터 조회 가능(매월 1일은 안내 매세지 출력) -> [DV001-19501]가능하게 수정
+    if ( this._blockOnFirstDay && new Date().getDate() === 1 && !this._isPrev) {
       res.render('bill/myt-fare.bill.hotbill.html', {
         svcInfo,
         pageInfo,
