@@ -53,6 +53,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
     if(!this._validateTimeValueAgainstNow(this._prodBffInfo.svcStartDt,startTime,'start')){
       this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('#do_setting').attr('disabled','disabled');
       this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
     }
   },

@@ -38,6 +38,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     if(Number(this._currentDate)>=Number(this._prodBffInfo.svcStartDt)){
       this.$container.find('.bt-dropdown').attr('disabled','disabled');
       this.$container.find('.error-txt.start').removeClass('none');
+      this.$container.find('#do_setting').attr('disabled','disabled');
       this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
     }
   },
