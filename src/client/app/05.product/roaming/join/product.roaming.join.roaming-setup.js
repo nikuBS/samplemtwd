@@ -167,15 +167,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         if(selectedDateTypeId.indexOf('end')>-1){
           endDateValidationResult = false;
           this.$container.find('.error-txt.end').removeClass('none').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_END);
-          if(!this.$container.find('.error-txt.start').hasClass('none')){
-            this.$container.find('.error-txt.start').addClass('none');
-          }
         }else{
           startDateValidationResult = false;
           this.$container.find('.error-txt.start').removeClass('none').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_START);
-          if(!this.$container.find('.error-txt.end').hasClass('none')){
-            this.$container.find('.error-txt.end').addClass('none');
-          }
         }
         this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
         return;
