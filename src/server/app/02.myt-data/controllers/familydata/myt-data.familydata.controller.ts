@@ -11,6 +11,11 @@ import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 
+const DATA_ZERO = {
+  data: 0,
+  unit: DATA_UNIT.KB
+};
+
 export default class MyTDataFamily extends TwViewController {
   constructor() {
     super();
@@ -56,34 +61,28 @@ export default class MyTDataFamily extends TwViewController {
       }
 
       const data = {
-          hasLimit: mine.limitedYn === 'Y',
-          used: Number(mine.used),
-          remained: Number(mine.remained),
-          total: Number(resp.result.total) * 1024,
-          totalUsed: Number(resp.result.used),
-          totalRemained: Number(resp.result.remained),
-          myLimitation: Number(mine.limitation) * 1024 || 0
-        },
+        hasLimit: mine.limitedYn === 'Y',
+        used: Number(mine.used),
+        remained: Number(mine.remained),
+        total: Number(resp.result.total) * 1024,
+        totalUsed: Number(resp.result.used),
+        totalRemained: Number(resp.result.remained),
+        myLimitation: Number(mine.limitation) * 1024 || 0
+      },
         total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
         remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
 
-      // mine.limitedYn === 'Y'
-      //   ? {
-      //       remained: limit === 0 ? 0 : Math.min(Number(mine.limitation), Number(resp.result.total)) * 1024 - Number(mine.used),
-      //       total: limit
-      //     }
-      //   : { remained: Number(mine.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
-        total: FormatHelper.addComma(resp.result.total),
+        total: Number(resp.result.total) > 0 ? FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB) : DATA_ZERO,
         used: FormatHelper.addComma(resp.result.used),
         remained: FormatHelper.addComma(resp.result.remained),
         isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
         mine: {
           ...mine,
-          nRemained: remained,
-          remained: FormatHelper.convDataFormat(remained, DATA_UNIT.MB),
+          ratio: data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(remained / total * 100),
+          remained: remained > 0 ? FormatHelper.convDataFormat(remained, DATA_UNIT.MB) : DATA_ZERO,
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),
@@ -93,8 +92,8 @@ export default class MyTDataFamily extends TwViewController {
         mbrList: resp.result.mbrList.map(member => {
           return {
             ...member,
-            used: FormatHelper.convDataFormat(Number(member.used), DATA_UNIT.MB),
-            shared: FormatHelper.addComma(member.shared),
+            used: Number(member.used) > 0 ? FormatHelper.convDataFormat(member.used, DATA_UNIT.MB) : DATA_ZERO,
+            shared: Number(member.shared) > 0 ? FormatHelper.convDataFormat(member.shared, DATA_UNIT.GB) : DATA_ZERO,
             limitation: FormatHelper.addComma(member.limitation),
             svcNum: FormatHelper.conTelFormatWithDash(member.svcNum)
           };
