@@ -66,6 +66,7 @@ import CommonShareOldLanding from './controllers/share/common.share.old-landing.
 import CommonUtilIntro from './controllers/util/common.util.intro.controller';
 import CommonInappError from './controllers/util/common.util.inapp-error.controller';
 import CommonMemberSignupRoute from './controllers/member/common.member.signup.route.controller';
+import CommonUtil5gIntro from './controllers/util/common.util.5g-intro.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -154,5 +155,7 @@ export default class CommonRouter extends TwRouter {
 
     // intro
     this.controllers.push({ url: '/util/intro', controller: CommonUtilIntro });
+    this.controllers.push({ url: '/util/5g-intro', controller: CommonUtil5gIntro });
+    this.controllers.push({ url: '/util/5g-intro/:page', controller: CommonUtil5gIntro });
   }
 }

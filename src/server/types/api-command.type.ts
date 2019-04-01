@@ -625,7 +625,7 @@ export const API_CMD = {
     path: '/:version/products/additions/:args0/join-term-infos',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
-    bypass: false
+    bypass: true
   },
   BFF_10_0018: { path: '/core-product/:version/mobiles/additions-set/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0019: {
@@ -862,6 +862,10 @@ export const API_CMD = {
   BFF_10_0175: {
     path: '/core-product/:version/roaming/fee-plans/:args0/prechecks',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0176: {
+    path: '/core-product/:version/mobiles/additions-sets/addressid-sets',
+    method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
   },
 
   // ROAMING

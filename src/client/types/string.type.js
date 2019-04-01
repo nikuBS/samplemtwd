@@ -958,7 +958,9 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MV_02_02_03: '비밀번호 설정 완료',
   MV_02_02_04: '보호자',
   MV_02_02_06: '가족그룹',
-  INFO_SETTING_SUCCESS: '정보 입력 완료'
+  INFO_SETTING_SUCCESS: '정보 입력 완료',
+  nApp_7476_01: '결합회선',
+  nApp_7475_01: '배송정보 등록완료'
 };
 
 Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
