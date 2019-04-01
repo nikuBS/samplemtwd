@@ -408,6 +408,18 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       TC000036: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
         target : ['NA00006489','NA00006490','NA00006491','NA00006492','NA00006493','NA00006494','NA00006495','NA00006496','NA00006497','NA00006498','NA00006499','NA00006500']
+      },
+      TC000039: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : ['NA00006229','NA00006226']
+      },
+      TC000040: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006229']
+      },
+      TC000041: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006226']
       }
     };
 
