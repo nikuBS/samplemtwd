@@ -16,6 +16,8 @@ Tw.MyTDataGift = function (rootEl) {
 };
 
 Tw.MyTDataGift.prototype = {
+  LIMITED_GIFT_USAGE_QTY: 500, // 기본 잔여 데이터 500MB
+
   _init: function () {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
@@ -84,14 +86,13 @@ Tw.MyTDataGift.prototype = {
     //   this._remainApiError($target);
     //   return;
     // }
-    var nLimitedGiftUsage = 500;
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) {
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
           this._remainApiError($target);
-        } else if ( Number(result.dataRemQty) < nLimitedGiftUsage ) {
+        } else if ( Number(result.dataRemQty) < this.LIMITED_GIFT_USAGE_QTY ) {
           this.$container.trigger('showUnableGift', 'GFT0004');
         } else {
           // API DATA SUCCESS
@@ -132,7 +133,8 @@ Tw.MyTDataGift.prototype = {
   _setAmountUI: function (nLimitMount) {
     var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
-      if ( Number($input.val()) > nLimitMount ) {
+      var nInputMount = Number($input.val());
+      if ( nLimitMount - nInputMount < this.LIMITED_GIFT_USAGE_QTY) {
         $input.prop('disabled', true);
         $input.parent().parent().addClass('disabled');
       } else {
@@ -141,8 +143,8 @@ Tw.MyTDataGift.prototype = {
       }
     };
 
-    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
-    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_data_select_list.find('input').each($.proxy(fnCheckedUI, this));
+    this.$wrap_auto_select_list.find('input').each($.proxy(fnCheckedUI, this));
   },
 
   _onLoadRecently: function () {
