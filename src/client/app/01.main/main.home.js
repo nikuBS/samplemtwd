@@ -504,13 +504,13 @@ Tw.MainHome.prototype = {
     if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
       element.hide();
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
-        this._drawGiftData(element, {
-          blockUsage: true
-        }, resp);
-      } else {
+      // if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
+      //   this._drawGiftData(element, {
+      //     blockUsage: true
+      //   }, resp);
+      // } else {
         this._drawGiftData(element, this._parseGiftData(resp.result), resp);
-      }
+      // }
     } else {
       this._drawGiftData(element, {
         sender: false
