@@ -17,7 +17,6 @@ import { MYT_DATA_USAGE, SKIP_NAME } from '../../../../types/string.type';
 import {
   DAY_BTN_STANDARD_SKIP_ID,
   SVC_ATTR_E,
-  T0_PLAN_SKIP_ID,
   UNIT,
   UNIT_E,
   UNLIMIT_CODE
@@ -29,9 +28,23 @@ const VIEW = {
   ERROR: 'usage/myt-data.usage.error.html'
 };
 
+// 통합공유 데이터 표시 상품 리스트
+const TOTAL_SHARE_DATA_SKIP_ID = [
+  'DD3CX',  // NA00005959	인피니티	통합공유 데이터 40GB
+  'DD3CV',  // NA00005958	패밀리	통합공유 데이터 20GB
+  'DD3CU',  // NA00005957	라지	통합공유 데이터 15GB
+  'DD4D5',   // NA00006157	0플랜 라지	통합공유 데이터 20GB
+  // 5G 대응
+  'DD3H8',   // NA00006405	5G XL(미정) 통합공유 데이터 50GB
+  'DD3GV',   // NA00006404	5G L(미정) 통합공유 데이터 30GB
+  'DD3GC',   // NA00006403	5G M(미정) 통합공유 데이터 15GB
+];
+
 // 기본 데이터제공량이 무제한인 요금상품 리스트
-const infinityDataProdList: any = ['NA00002500', 'NA00002501', 'NA00002502', 'NA00002708', 'NA00002997',
-  'NA00002998', 'NA00003125', 'NA00003126', 'NA00003127', 'NA00003128'];
+const INFINITY_DATA_PROD_ID: any = [
+  'NA00002500', 'NA00002501', 'NA00002502', 'NA00002708', 'NA00002997',
+  'NA00002998', 'NA00003125', 'NA00003126', 'NA00003127', 'NA00003128'
+];
 
 class MyTDataHotdata extends TwViewController {
   constructor() {
@@ -113,6 +126,19 @@ class MyTDataHotdata extends TwViewController {
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
+    // 기본제공 데이터: usageData.gnrlData[n] 중에 svcInfo.prodId와 같은 prodId를 가진 data 로 잔여량 최상단에 노출
+    // 통합공유 데이터:
+    //  - 기본제공데이터가 있는 경우 기본제공 데이터 하단에 노출
+    //    - 기본제공 데이터가 있지만 기본제공 데이터량이 무제한인 경우(INFINITY_DATA_PROD_ID에 속하는 경우)엔 표시 안함[DV001-18235]
+    //    - 데이터 표시 방법: (XX GB공유가능, XXGB 공유)
+    //      - usageData.spclData[n]중 TOTAL_SHARE_DATA_SKIP_ID에 속하는 데이터가 있는경우
+    //        - 가능량: usageData.spclData[n].showRemained
+    //        - 사용량: usageData.spclData[n].showUsed
+    //      - 아닌 경우
+    //        - 가능량: 기본제공데이터.showRemaineds,
+    //        - 사용량: T끼리 데이터 선물하기 + 데이터 함께쓰기 사용량
+    //  - 기본제공데이터가 없는 경우 표시안함
+
     if ( gnrlData ) {
       // 총데이터 잔여량 표시 데이터 세팅
       this.setTotalRemained(usageData);
@@ -138,7 +164,7 @@ class MyTDataHotdata extends TwViewController {
 
     if ( spclData ) {
       // 통합공유데이터
-      tOPlanSharedData = this.getDataInTarget(T0_PLAN_SKIP_ID, spclData) || {};
+      tOPlanSharedData = this.getDataInTarget(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
 
       // 통합공유데이터 제외한 데이터 배열 취합
       dataArr = dataArr.concat(spclData.filter((_data) => {
@@ -152,7 +178,7 @@ class MyTDataHotdata extends TwViewController {
           defaultData.tOPlanSharedData = tOPlanSharedData;
         } else {
           // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
-          if (infinityDataProdList.indexOf(defaultData.prodId) !== -1) {
+          if (INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) !== -1) {
             defaultData.sharedData = false;
           } else {
             defaultData.sharedData = true;
