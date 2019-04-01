@@ -5,7 +5,7 @@
 %>
 
 <%- include('../../../components/start.component.height100.html', { pageInfo: locals.pageInfo }); %>
-<body class="bg-white" style="height: 100%">
+<body class="bg-white">
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
@@ -13,18 +13,18 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap" style="padding: 0">
+    <div class="wrap h60">
         <!-- #header -->
         <%- include('../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
-        <div id="contents" class="container-wrap" style="margin: 0; font-size: 0">
+        <div id="contents" class="container-wrap mb0">
             <h2 class="blind">내용</h2>
             <div class="container">
                <hr class="cont-sp type1" id="bar" aria-hidden="true"/>
-                <div class="cont-box noborder" style="height: 100%; padding: 0">
+                <div class="cont-box noborder" style="padding: 0">
                     <!-- <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;"> -->
-                    <iframe src="<%= url %>" id="ifr" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                    <iframe src="<%= url %>" id="ifr" frameborder="0" style="width: 100%;"></iframe>
                 </div>
                 <!-- div class="bt-top">
                     <button><span class="blind">최상단으로 가기</span></button>

@@ -1414,14 +1414,12 @@ body.hidden {
     .popup-page.coupon-type .popup-closeBtn {
       top: auto;
       bottom: 1.25rem; }
-  .popup-page.txt-screed {
-    overflow: hidden; }
-    .popup-page.txt-screed .container-wrap {
-      height: 100%; }
-    .popup-page.txt-screed .container {
-      height: 100%;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch !important; }
+  .popup-page.txt-screed .container-wrap {
+    height: 100%; }
+  .popup-page.txt-screed .container {
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch !important; }
   .popup-page.cont-overflow-hide {
     overflow-y: hidden; }
   .popup-page.fixed-bottom {
@@ -1430,11 +1428,12 @@ body.hidden {
     padding-bottom: 3.75rem; }
     .popup-page.fixed-bottom .container-wrap {
       position: static;
-      height: 100%; }
+      height: 100%;
+      overflow-y: auto; }
     .popup-page.fixed-bottom .container {
       height: 100%;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: scroll;
       -webkit-overflow-scrolling: auto; }
       .popup-page.fixed-bottom .container .section-menu-box {
         padding-bottom: 1.625rem; }

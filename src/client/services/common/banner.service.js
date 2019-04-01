@@ -13,7 +13,13 @@ Tw.BannerService = function(rootEl, type, banners, target, callback) {
     return;
   }
 
-  this._init(type, banners, target, callback);
+  if( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, type, banners, target, callback));
+  } else {
+    this._init(type, banners, target, callback);
+  }
+  
+  this._cachedElement(target);
   this._bindEvent();
 };
 
@@ -21,9 +27,12 @@ Tw.BannerService.prototype = {
   _init: function(type, banners, target, callback) {
     this._type = type;
     this._banners = this._getProperBanners(type, banners);
-    this.$banners = this.$container.find('ul.slider[data-location=' + target + ']');
 
     this._renderBanners(target, callback);
+  },
+
+  _cachedElement: function(target) {
+    this.$banners = this.$container.find('ul.slider[data-location=' + target + ']');
   },
 
   _renderBanners: function(target, callback) {  // get banner.hbs

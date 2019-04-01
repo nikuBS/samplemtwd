@@ -498,6 +498,17 @@ Tw.PopupService.prototype = {
         this._prevHashList.pop();
         this._popupClose(closeCallback);
         history.replaceState(this._popupObj, '', '');
+      } else if ( Tw.BrowserHelper.isIosChrome() && /search_keyword_err/.test(location.hash) ){
+        //검색 ios chrome 에서 팝업 안닫히는 현상 예외
+        this._popupClose();
+        this._historyService.goBack();
+        setTimeout($.proxy(function(){
+          if(this._prevHashList[this._prevHashList.length - 1].curHash!=='#'&&this._historyService.getHash()===''){
+            this._addHash(function () {
+              $('.keyword-list-base').remove();
+            },'input');
+          }
+        },this),300);
       } else {
         if ( /\/main\/home/.test(location.href) || /\/main\/store/.test(location.href) ) {
           setTimeout($.proxy(function () {

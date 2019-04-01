@@ -76,6 +76,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
     this.$container.on('click', '.fe-btn-search', $.proxy(this._onClickBtnSearch, this));
     this.$container.on('keyup', '.fe-input-co-ptnr-nm', $.proxy(this._onKeyupInputCoPtnrNm, this));
+    this.$container.on('keypress', '.fe-input-co-ptnr-nm', $.proxy(this._onKeypressInputCoPtnrNm, this));
     // this.$container.on('click', '.fe-orders button', $.proxy(this._onClickBtnOrder, this));
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._onInitComplete, this));
     // 사파리 브라우저에서 뒤로가기시 새로고침
@@ -478,6 +479,19 @@ Tw.MembershipBenefitBrand.prototype = {
     var isEnter = 13;
     if ( event.keyCode === isEnter ) {
       this._searchWithKeyword();
+    }
+  },
+
+  /**
+   * 검색 인풋 keypress이벤트 발생시 호출
+   * @private
+   */
+  _onKeypressInputCoPtnrNm: function (e) {
+    // [DV001-19148] 한글입력시 ios에서 마지막 글자 갱신되는 문제 수정
+    var $input = $(e.currentTarget);
+    var nLength = Number($input.attr('maxlength'));
+    if ($input && $input.val().length >= nLength) {
+      e.preventDefault();
     }
   }
 

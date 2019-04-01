@@ -86,6 +86,7 @@ Tw.CommonSearch.prototype = {
       this._addRecentlyKeyword(this._searchInfo.query);
     }
     new Tw.XtractorService(this.$container);
+    this._closeKeywordListBase();
   },
   _setRank : function (data) {
     var compareKeyName1 , compareKeyName2;
@@ -185,7 +186,7 @@ Tw.CommonSearch.prototype = {
   },
   _inputChangeEvent : function (args) {
     if(Tw.InputHelper.isEnter(args)){
-      this._doSearch(args);
+      this.$container.find('.icon-gnb-search').trigger('click');
     }else{
       if(this._historyService.getHash()==='#input_P'){
         if(this.$inputElement.val().trim().length>0){
@@ -199,16 +200,8 @@ Tw.CommonSearch.prototype = {
   _doSearch : function (event) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
-      var closeCallback;
-      if(this._historyService.getHash()==='#input_P'){
-        closeCallback = $.proxy(function () {
-          setTimeout($.proxy(function () {
-            this.$inputElement.focus();
-          },this),100);
-        },this);
-      }
       this.$inputElement.blur();
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback,null,$(event.currentTarget));
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -378,6 +371,7 @@ Tw.CommonSearch.prototype = {
     this.$container.find('.fe-container-wrap').attr('aria-hidden',true);
     this.$container.find('.fe-header-wrap').attr('aria-hidden',false);
     $(window).scrollTop(0);
+    this.$keywordListBase.off('touchstart');
     this.$keywordListBase.on('touchstart',$.proxy(function () {
       this.$inputElement.blur();
     },this));
@@ -408,7 +402,6 @@ Tw.CommonSearch.prototype = {
       this.$container.find('.keyword-list-base').remove();
       this.$container.find('.fe-container-wrap').attr('aria-hidden',false);
       skt_landing.action.checkScroll.unLockScroll();
-      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {

@@ -147,7 +147,7 @@ Tw.CommonSearchMain.prototype = {
   },
   _doSearch : function (searchKeyword) {
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,null,$(event.currentTarget));
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
       return;
     }
     if(this._historyService.getHash()==='#input_P'){
@@ -213,7 +213,6 @@ Tw.CommonSearchMain.prototype = {
       this.$container.find('.search-content').attr('aria-hidden',false);
       this.$inputElement.blur();
       skt_landing.action.checkScroll.unLockScroll();
-      this.$keywordListBase.off('touchstart');
     },this));
   },
   _keywordListBaseClassCallback : function () {
@@ -279,6 +278,7 @@ Tw.CommonSearchMain.prototype = {
     this.$container.find('.search-content').attr('aria-hidden',true);
     $('.keyword-list-base').insertAfter('.searchbox-header');
     $(window).scrollTop(0);
+    this.$keywordListBase.off('touchstart');
     this.$keywordListBase.on('touchstart',$.proxy(function () {
       this.$inputElement.blur();
     },this));

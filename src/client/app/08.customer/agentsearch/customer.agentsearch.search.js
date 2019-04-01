@@ -148,7 +148,7 @@ Tw.CustomerAgentsearch.prototype = {
     $(e.currentTarget).attr('aria-selected', 'true');
   },
   _onInput: function (e) {
-    var text = e.currentTarget.value;
+    var text = e.currentTarget.value.trim();
     var enable = Tw.FormatHelper.isEmpty(text) ? false : true;
 
     var targetId = e.currentTarget.id;

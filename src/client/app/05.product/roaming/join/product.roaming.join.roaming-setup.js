@@ -31,9 +31,12 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
     if(this._isPromotion){
       this._numReg = /[^0-9]/g;
+      this._testInputState = false;
       this._validatedGiftPhoneNum = '010';
       this._promotionValidState = true;
       this.$container.on('click','.fe-selected-number.head',$.proxy(this._showPhoneHeadSelector,this));
+      this.$container.on('focus','.fe-input-number',$.proxy(this._changeTextInputState,this,'focus'));
+      this.$container.on('blur','.fe-input-number',$.proxy(this._changeTextInputState,this,'blur'));
       this.$container.on('keyup','.fe-selected-number',$.proxy(function () {
         this._promotionValidState = false;
       },this));
@@ -97,7 +100,13 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       actionSheetData[0].list[0].option = 'checked';
     }
     actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
-    this._openSelectDatePop(actionSheetData,'',eventObj);
+    if(this._isPromotion&&this._testInputState){
+      setTimeout($.proxy(function () {
+        this._openSelectDatePop(actionSheetData,'',eventObj);
+      },this),500);
+    }else{
+      this._openSelectDatePop(actionSheetData,'',eventObj);
+    }
   },
   _btnTimeEvent : function(eventObj){
     if(this._historyService.getHash()==='#select_date_P'){
@@ -107,7 +116,13 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     var timeArr = this._getTimeArr();
     var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
-    this._openSelectDatePop(actionSheetData,'',eventObj);
+    if(this._isPromotion&&this._testInputState){
+      setTimeout($.proxy(function () {
+        this._openSelectDatePop(actionSheetData,'',eventObj);
+      },this),500);
+    }else{
+      this._openSelectDatePop(actionSheetData,'',eventObj);
+    }
   },
 
   _bindActionSheetElementEvt : function($layer){
@@ -165,6 +180,26 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         }
       }else{
         $endErrElement.addClass('none');
+      }
+    }
+    if(!isNaN(endDate)&&!isNaN(startDate)){
+      if(endDate<=startDate){
+        if(selectedDateTypeId.indexOf('end')>-1){
+          endDateValidationResult = false;
+          this.$container.find('.error-txt.end').removeClass('none').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_END);
+          if(!this.$container.find('.error-txt.start').hasClass('none')){
+            this.$container.find('.error-txt.start').addClass('none');
+          }
+        }else{
+          startDateValidationResult = false;
+          this.$container.find('.error-txt.start').removeClass('none').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_START);
+          if(!this.$container.find('.error-txt.end').hasClass('none')){
+            this.$container.find('.error-txt.end').addClass('none');
+          }
+        }
+      }else{
+        this.$container.find('.error-txt.start').addClass('none');
+        this.$container.find('.error-txt.end').addClass('none');
       }
     }
     if(startDateValidationResult&&endDateValidationResult){
@@ -414,9 +449,26 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     }, this));
   },
   _checkGiftNum : function (evt) {
-    Tw.InputHelper.inputNumberOnly(evt.currentTarget);
-    if (evt.currentTarget.value.length === 0) {
-      $(evt.currentTarget).siblings('button.cancel').css('display', 'none');
+    var $target = $(evt.currentTarget);
+    var inputVal = $target.val();
+    if(inputVal.length>0&&this._numReg.test(inputVal)){
+      var changedValue = inputVal.replace(this._numReg,'');
+      $target.blur();
+      $target.val('');
+      $target.val(changedValue);
+      $target.focus();
+      if(changedValue.length<=0){
+        $target.next().trigger('click');
+      }
+    }
+  },
+  _changeTextInputState : function (evtType) {
+    if(evtType==='focus'){
+      this._testInputState = true;
+    }else if(evtType==='blur'){
+      setTimeout($.proxy(function(){
+        this._testInputState = false;
+      },this),500);
     }
   }
 };
