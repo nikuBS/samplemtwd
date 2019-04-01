@@ -20,18 +20,18 @@ Tw.MyTDataGift.prototype = {
 
   _init: function () {
     // If there is hash #auto, show second tab(auto gift)
-    if ( window.location.hash === '#auto' ) {
+    if ( window.location.hash === '#auto' ) { // 자동선물
       this._goAutoGiftTab();
       $('.fe-request_sending_data').hide();
       $('.fe-request_sending_auto').show();
-    }else{
+    }else{ // 바로선물
       $('.fe-request_sending_auto').hide();
       $('.fe-request_sending_data').show();
-    }
 
-    this.reqCnt = 0;
-    this.currentRemainDataInfo = null;
-    this._getRemainDataInfo();
+      this.reqCnt = 0;
+      this.currentRemainDataInfo = null;
+      this._getRemainDataInfo();
+    }
   },
 
   _cachedElement: function () {
@@ -144,7 +144,6 @@ Tw.MyTDataGift.prototype = {
     };
 
     this.$wrap_data_select_list.find('input').each($.proxy(fnCheckedUI, this));
-    this.$wrap_auto_select_list.find('input').each($.proxy(fnCheckedUI, this));
   },
 
   _onLoadRecently: function () {
