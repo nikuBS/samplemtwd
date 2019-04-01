@@ -258,35 +258,23 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getPreCheckApiReqInfo: function(joinTermCd) {
-    var api = null;
-
     if (['AB', 'C', 'H_P', 'H_A', 'G'].indexOf(this._prodTypCd) !== -1) {
-      api = {
-        '01': Tw.API_CMD.BFF_10_0007,
-        '03': Tw.API_CMD.BFF_10_0151
-      };
-
       return {
-        API_CMD: api[joinTermCd],
+        API_CMD: joinTermCd === '01' ? Tw.API_CMD.BFF_10_0007 : Tw.API_CMD.BFF_10_0151,
         PARAMS: {}
       };
     }
 
     if (['E_I', 'E_P', 'E_T'].indexOf(this._prodTypCd) !== -1) {
-      api = {
-        '01': Tw.API_CMD.BFF_10_0164,
-        '03': Tw.API_CMD.BFF_10_0168
-      };
-
       return {
-        API_CMD: api[joinTermCd],
+        API_CMD: joinTermCd === '01' ? Tw.API_CMD.BFF_10_0164 : Tw.API_CMD.BFF_10_0168,
         PARAMS: {}
       };
     }
 
     if (this._prodTypCd === 'F') {
       return {
-        API_CMD: Tw.API_CMD.BFF_10_0119,
+        API_CMD: joinTermCd === '01' ? Tw.API_CMD.BFF_10_0119 : Tw.API_CMD.BFF_10_0113,
         PARAMS: {}
       };
     }
