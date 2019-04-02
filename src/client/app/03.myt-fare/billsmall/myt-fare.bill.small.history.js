@@ -105,7 +105,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
           return $.extend(o, {
             listId: index,
             plainTime: plainTime,
-            FullDate: Tw.DateHelper.getFullDateAndTime(plainTime),
+            FullDate: Tw.DateHelper.getFullDateAnd24Time(plainTime),
             useAmt: Tw.FormatHelper.addComma(o.sumPrice), // 이용금액
             payMethodNm: Tw.MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
           })
