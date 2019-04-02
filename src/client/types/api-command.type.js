@@ -411,12 +411,13 @@ Tw.API_CMD = {
   // PRODUCT
   BFF_10_0001: { path: '/core-product/:version/ledger/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0007: { path: '/core-product/:version/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
-  BFF_10_0008: { path: '/v1/products/fee-plans/:args0/join-term-infos', method: Tw.API_METHOD.GET },
+  BFF_10_0008: { path: '/:version/products/fee-plans/:args0/join-term-infos', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/:version/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/:version/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0013: { path: '/core-product/:version/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.GET },
   BFF_10_0014: { path: '/core-product/:version/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.PUT },
   BFF_10_0015: { path: '/core-product/:version/mobiles/fee-plans/:args0/tplan-benefits', method: Tw.API_METHOD.GET },
+  BFF_10_0017: { path: '/:version/products/additions/:args0/join-term-infos', method: Tw.API_METHOD.GET },
   BFF_10_0018: { path: '/core-product/:version/mobiles/additions-set/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0019: { path: '/core-product/:version/mobiles/additions-sets/:args0/sets/lines', method: Tw.API_METHOD.DELETE },
   BFF_10_0020: { path: '/core-product/:version/mobiles/additions-sets/:args0/sets/lines', method: Tw.API_METHOD.POST },
@@ -472,6 +473,7 @@ Tw.API_CMD = {
   BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
   BFF_10_0174: { path: '/core-product/:version/roaming/auto-dial', method: Tw.API_METHOD.GET },
   BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0176: { path: '/core-product/:version/mobiles/additions-sets/addressid-sets', method: Tw.API_METHOD.POST },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },

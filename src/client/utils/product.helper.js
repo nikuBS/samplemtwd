@@ -122,6 +122,28 @@ Tw.ProductHelper = (function () {
     });
   };
 
+  var convAdditionsJoinTermInfo = function(_joinTermInfo) {
+    var joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
+
+    return $.extend(joinTermInfo, {
+      preinfo: Tw.ProductHelper.convAdditionsPreInfo(joinTermInfo.preinfo),
+      stipulationInfo: Tw.ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+    });
+  };
+
+  var convAdditionsPreInfo = function(preInfo) {
+    var isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
+
+    return $.extend(preInfo, {
+      reqProdInfo: $.extend(preInfo.reqProdInfo, {
+        isNumberBasFeeInfo: isNumberBasFeeInfo,
+        basFeeInfo: isNumberBasFeeInfo ? Tw.FormatHelper.addComma(preInfo.reqProdInfo.basFeeInfo) : preInfo.reqProdInfo.basFeeInfo
+      }),
+      autoJoinList: Tw.ProductHelper.convAutoJoinTermList(preInfo.autoJoinList),
+      autoTermList: Tw.ProductHelper.convAutoJoinTermList(preInfo.autoTermList)
+    });
+  };
+
   var convInstallmentAgreement = function(installmentAgreement) {
     var isNumberPenAmt = !isNaN(Number(installmentAgreement.penAmt)),
       isNumberFrDcAmt = !isNaN(Number(installmentAgreement.frDcAmt)),
@@ -269,6 +291,8 @@ Tw.ProductHelper = (function () {
     convStipulation: convStipulation,
     convAutoJoinTermList: convAutoJoinTermList,
     convDataAmtIfAndBas: convDataAmtIfAndBas,
-    getPremTermMsg: getPremTermMsg
+    getPremTermMsg: getPremTermMsg,
+    convAdditionsJoinTermInfo: convAdditionsJoinTermInfo,
+    convAdditionsPreInfo: convAdditionsPreInfo
   };
 })();
