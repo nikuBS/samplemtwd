@@ -32,12 +32,12 @@ class CommonSearch extends TwViewController {
           thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
           thisObj.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
         ).subscribe((resultObj) => {
-          if (resultObj[0].code !== API_CODE.CODE_00 || resultObj[1].code !== 0) {
+          if (resultObj[1].code !== 0) {
             return thisObj.error.render(res, {
               svcInfo: svcInfo,
               pageInfo: pageInfo,
-              code: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].code : resultObj[1].code,
-              msg: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].msg : resultObj[1].msg
+              code: resultObj[1].code,
+              msg: resultObj[1].msg
             });
           }
           res.render('search/common.search.not-found.html', {

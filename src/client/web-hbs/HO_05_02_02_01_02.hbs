@@ -16,9 +16,9 @@
             <!-- .cont-box -->
             <div class="cont-box noborder">
                 <p class="infoplus-search">{{data.title}}</p>
-                <div class="input-list">
-                    <form id="claim_list">
-                        <ul class="tworld-searchword">
+
+                    <form class="input-list" id="claim_list">
+                        <ul>
                             {{#each data.invstAnsw}}
                                 <li>
                                     <span class="custom-form"><input id="ok{{@index}}" type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
@@ -27,7 +27,7 @@
                             {{/each}}
                         </ul>
                     </form>
-                </div>
+
             </div>
             <!--// .cont-box -->
         </div>

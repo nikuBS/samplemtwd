@@ -13,7 +13,7 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'), null, true); // 유효성 검증
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'), null); // 유효성 검증
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 공통 얼럿 노출

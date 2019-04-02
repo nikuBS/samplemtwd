@@ -1,26 +1,26 @@
 /**
- * 상품 해지 - T+B결합상품
- * FileName: benefit.terminate.tb-combination.controller.ts
+ * 상품 해지 - TB끼리 온가족 프리 결합상품
+ * FileName: benefit.terminate.all-family-free.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.23
+ * Date: 2019.04.01
  */
 
-import TwViewController from '../../../common/controllers/tw.view.controller';
+import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { PRODUCT_TYPE_NM } from '../../../types/string.type';
-import { SVC_CD } from '../../../types/bff.type';
-import FormatHelper from '../../../utils/format.helper';
-import DateHelper from '../../../utils/date.helper';
-import {Observable} from 'rxjs/Observable';
-import {REDIS_KEY} from '../../../types/redis.type';
+import { API_CMD } from '../../../../types/api-command.type';
+import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import { SVC_CD } from '../../../../types/bff.type';
+import { Observable } from 'rxjs/Observable';
+import { REDIS_KEY } from '../../../../types/redis.type';
+import FormatHelper from '../../../../utils/format.helper';
+import DateHelper from '../../../../utils/date.helper';
 
-class BenefitTerminateTbCombination extends TwViewController {
+class BenefitTerminateAllFamilyFree extends TwViewController {
   constructor() {
     super();
   }
 
-  private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041', 'TW00000062', 'TW00000063'];
+  private _allowedProdIds = ['NA00002040', 'TW20000008'];
 
   /**
    * @param termInfo
@@ -92,7 +92,7 @@ class BenefitTerminateTbCombination extends TwViewController {
         }));
       }
 
-      res.render('terminate/benefit.terminate.tb-combination.html', Object.assign(renderCommonInfo, {
+      res.render('terminate/benefit.terminate.all-faimly-free.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
         termInfo: this._convertTermInfo(termInfo.result)
@@ -101,4 +101,4 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 }
 
-export default BenefitTerminateTbCombination;
+export default BenefitTerminateAllFamilyFree;
