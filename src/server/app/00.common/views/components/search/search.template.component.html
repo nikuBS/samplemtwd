@@ -309,23 +309,3 @@
         </a>
     </li>
 </script>
-
-<script type="text/x-handlebars-template" id="auto_complete_template">
-    <li>
-        <a href="/common/search?step=<%= Number(step)+1 %>&keyword={{encodeParam}}" data-xt_eid="CMMA_A11_B4-2{{xtractorIndex}}" data-xt_csid="NO" data-xt_action="BC" data-param="{{listData.linkStr}}" class="category-type search-element xtractor">
-            <p class="text">{{{listData.showStr}}}</p>
-        </a>
-    </li>
-</script>
-
-<script type="text/x-handlebars-template" id="recently_keyword_template">
-    <li>
-        <a href="/common/search?step=<%= Number(step)+1 %>&keyword={{encodeParam}}"  data-xt_eid="CMMA_A11_B4-1{{xtractorIndex}}" data-xt_csid="NO" data-xt_action="BC" class="searchword-text search-element xtractor">
-            {{listData.keyword}}
-        </a>
-        <div class="date">
-            <span class="str">{{listData.searchTime}}</span>
-            <button class="del remove-recently-list" data-index="{{index}}">삭제</button>
-        </div>
-    </li>
-</script>
