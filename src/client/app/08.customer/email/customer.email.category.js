@@ -49,7 +49,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
 
-  _onLoadQuestionList: function (res) {    
+  _onLoadQuestionList: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.category = res.result;
     } else {
@@ -88,7 +88,7 @@ Tw.CustomerEmailCategory.prototype = {
 
     var sDepth1Category = this.$select_service_depth1.data('service-depth1');
 
-    if ( sDepth1Category && this.category[sDepth1Category] ) {
+    if ( sDepth1Category ) {
       var service2DepthList = this.category[sDepth1Category];
 
       var fnSelectLine = function (item, index) {
