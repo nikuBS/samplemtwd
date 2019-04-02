@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body class="og-5mktp-wrap"><!-- 배경이 흰색일 경우 .bg-white -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+            <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">초[超]시대의 마음껏 누리는 생활</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<!-- keyVisual -->
+				<div class="og-5mktp-keyvisual">
+					<div class="text-wrap">
+						<h2 class="tit">오직 SK 텔레콤에서만 <strong>초[超]시대<br> <span class="em">마음껏 누리는</span> 생활</strong></h2>
+						<p>SKT 5GX만의 특별한 혜택</p>
+					</div>
+					<div class="img"><img src="/img/t_m5g/og_5mktp_keyvisual_img_03.png" alt=""></div>
+				</div>
+				<!-- //keyVisual -->
+
+				<!-- tabWrap -->
+				<div class="component">
+					<div class="component-box tabs">
+						<div class="tab-area og-5mktp-tab"><!-- JS: 탭영역 상단 fixed시 class="fixed" 추가 -->
+							<div class="tab-linker">
+								<ul role="tablist">
+									<li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#"><span>5GX Club</span></a></li>
+									<li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#"><span>카드 제휴 할인</span></a></li>
+									<li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="#"><span>T멤버십 혜택</span></a></li>
+								</ul>
+							</div>
+							<div class="tab-contents">
+								<ul>
+									<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+										<!-- cont-box -->
+										<div class="cont-box nogaps">
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS24">5GX Club 가입하고, SKT만의 최고 혜택 받으세요!</p>
+												<p class="og-5mktp-txtS15 mt18 og-color3">기기교체/파손/분실 등 모든 상황에 든든하게 대비해주니까</p>
+											</div><!-- og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS22">교체할 때 걱정 없이</p>
+												<p class="og-5mktp-txtype1 mt12">T갤럭시클럽 S10_5G 혜택으로,<br>잔여할부금 <strong>최대 70%</strong> 면제받으세요.</p>
+												<div class="og-5mktp-imgwrap-type1 mt50">
+													<div class="img mt38">
+														<img src="/img/t_m5g/og_life3_chart.png" alt="6개월 70%면제 12개월 50%면제 24개월 40%면제">
+													</div>
+												</div>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS22">파손되어도 걱정 없이</p>
+												<p class="og-5mktp-txtype1 mt12">삼성전자 공식 서비스센터에서, 액정 수리 최대 <strong>50% 할인혜택</strong> 받으세요. </p>
+												<div class="og-5mktp-imgwrap-type1">
+													<div class="img mt38">
+														<img src="/img/t_m5g/og_life3_bnfimg01.png" alt="액정수리 할인혜택 최대 50% OFF">
+													</div>
+												</div>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap">
+												<p class="og-5mktp-titS22">분실해도 걱정 없이</p>
+												<p class="og-5mktp-txtype1 mt12 og-5mktp-word-break">5G핸드폰 분실해도, 최신 프리미엄 핸드폰을 임대폰으로 사용할 수 있는 혜택을 <strong>12개월간 무료</strong>로 이용하세요! </p>
+                                                <div class="og-5mktp-imgwrap-type1 mt50">
+													<div class="img mt38">
+														<img src="/img/t_m5g/og_life3_bnfimg02.png" alt="분실안심 990 1년간 FREE">
+													</div>
+												</div>
+											</div><!-- //og-5mktp-contwrap -->
+										</div><!-- //cont-box -->
+									</li>
+									<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+										<div class="cont-box nogaps">
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS24">5G 단말을 경제적으로<br>구매하는 <span class="og-chcolor-red">제휴카드+안심보장</span></p>
+												<p class="og-5mktp-txtS15 mt18">제휴카드 74만 + T안심보장 30만으로 <span class="og-chcolor-red">100만원 이상</span> 할인! </p>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<ul class="og-plan-card-sale">
+													<li>
+														<dl>
+															<dt class="og-plan-sale-tit">제휴카드 <strong>74만원</strong></dt>
+															<dd class="og-plan-sale-list">
+																<ul>
+																	<li class="og-5mktp-txtS14">(삼성) 월 1.5만원 할인 x 24개월</li>
+																	<li class="og-5mktp-txtS14">(롯데) 월 1.6만원 할인 x 24개월</li>
+																</ul>
+															</dd>
+														</dl>
+														<div class="og-5mktp-imgwrap-type1 mt16">
+															<div class="img">
+																<img src="/img/t_m5g/og_life3_cards.png" alt=" ">
+															</div>
+														</div>
+													</li>
+													<li class="og-plan-tsafe">
+														<div class="og-5mktp-imgwrap-type1">
+															<div class="img">
+																<img src="/img/t_m5g/og_life3_cards_2.png" alt=" ">
+															</div>
+														</div>
+														<dl>
+															<dt class="og-plan-sale-tit">T안심보장 <strong>30만원</strong></dt>
+															<dd class="og-plan-sale-list">
+																<ul>
+																	<li class="og-5mktp-txtS14">갤럭시 S10 B등급 보상가 30만원</li>
+																</ul>
+															</dd>
+														</dl>
+													</li>
+												</ul>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<div class="og-life-graybox">
+													<dl class="og-life-graybox-cont">
+														<dt class="og-life-box-tit">전용발급 센터</dt>
+														<dd class="og-life-card-define">
+															<ul>
+																<li class="og-card-item">
+																	<span class="og-samsung og-card-name">삼성카드 : </span>	
+																	<span class="og-card-tel"><strong>1800-1396</strong> (온라인 24시간)</span>
+																</li>
+																<li class="og-card-item">
+																	<span class="og-telo og-card-name">텔로카드 : </span>	
+																	<span class="og-card-tel"><strong>1811-8100</strong> (9시~21시)</span>
+																</li>
+															</ul>
+														</dd>
+													</dl>
+												</div>
+											</div><!-- //og-5mktp-contwrap -->
+										</div>
+									</li>
+									<li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+										<div class="cont-box nogaps">
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS22">T Day Week &amp; Day 혜택</p>
+												<p class="og-5mktp-txtS14 mt8 og-color3">매달 첫째 주(월~금), 매주 수요일 파격 할인 혜택</p>
+												<div class="og-5mktp-imgwrap-type1">
+													<div class="img mt16">
+														<img src="/img/t_m5g/og_life3_tbnf01.png" alt="달력에 T자를 그려봐 T DAY엔 혜택이 펑펑!">
+													</div>
+												</div>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS22">T Day 내맘대로 혜택</p>
+												<p class="og-5mktp-txtS14 mt8 og-color3">내가 원하는 날 누리는, 스페셜 혜택!<br>(제휴사별 월 1회 사용 가능)</p>
+												<ul class="og-spbnf-list mt16">
+													<li class="og-sp-item">
+														<dl>
+															<dt class="og-sp-term">
+																<img src="/img/t_m5g/og_life3_tbnf02_1.png" alt="T map 택시">
+															</dt>
+															<dd class="og-sp-define">
+																T map 택시
+																<p class="og-5mktp-txtS13 mt4 og-color3">전 고객 20% 할인</p>
+															</dd>
+														</dl>
+													</li>
+													<li class="og-sp-item">
+														<dl>
+															<dt class="og-sp-term">
+																<img src="/img/t_m5g/og_life3_tbnf02_2.png" alt="세븐일레븐">
+															</dt>
+															<dd class="og-sp-define">
+																세븐일레븐
+																<p class="og-5mktp-txtS13 mt4 og-color3">전 고객 천 원당 200원 할인</p>
+															</dd>
+														</dl>
+													</li>
+												</ul>
+											</div><!-- //og-5mktp-contwrap -->
+											<!-- og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS22">5GX 런칭 기념 스페셜 혜택 (4~5월)</p>
+												<p class="og-5mktp-txtS14 mt8 og-color3">5GX 요금제 이용 고객님께는 Big 5 제휴사 50% 할인 혜택<br>(월별로 제휴사별 1회 사용 가능)</p>
+												<ul class="og-big5-list">
+													<li class="og-big5-item">
+														<div class="og-big5-img"><img src="/img/t_m5g/og_life3_tbnf03_1.png" alt="11번가"></div>
+														<dl class="og-big5-detail">
+															<dt class="og-big5-tit">11번가</dt>
+															<dd class="og-big5-txt">5G 악세서리 50% 할인 (최대 1만원)</dd>
+														</dl>
+													</li>
+													<li class="og-big5-item">
+														<div class="og-big5-img"><img src="/img/t_m5g/og_life3_tbnf03_2.png" alt="세븐일레븐"></div>
+														<dl class="og-big5-detail">
+															<dt class="og-big5-tit">세븐일레븐</dt>
+															<dd class="og-big5-txt">천 원당 500원 할인</dd>
+														</dl>
+													</li>
+													<li class="og-big5-item">
+														<div class="og-big5-img"><img src="/img/t_m5g/og_life3_tbnf03_3.png" alt="도미노피자"></div>
+														<dl class="og-big5-detail">
+															<dt class="og-big5-tit">도미노피자</dt>
+															<dd class="og-big5-txt">방문포장 50% 할인</dd>
+														</dl>
+													</li>
+													<li class="og-big5-item">
+														<div class="og-big5-img"><img src="/img/t_m5g/og_life3_tbnf03_4.png" alt="VIPS"></div>
+														<dl class="og-big5-detail">
+															<dt class="og-big5-tit">VIPS</dt>
+															<dd class="og-big5-txt">50% 할인</dd>
+														</dl>
+													</li>
+													<li class="og-big5-item">
+														<div class="og-big5-img"><img src="/img/t_m5g/og_life3_tbnf03_5.png" alt="파리바게뜨"></div>
+														<dl class="og-big5-detail">
+															<dt class="og-big5-tit">파리바게뜨</dt>
+															<dd class="og-big5-txt">천 원당 500 원 할인</dd>
+														</dl>
+													</li>
+												</ul>
+											</div><!-- //og-5mktp-contwrap -->
+											<div class="og-5mktp-contwrap pb0 pt0">
+												<div class="og-life-graybox og-life-tbnf-box" >
+													<dl class="og-life-tbnf-wrap og-life-graybox-cont">
+														<dt class="og-life-box-tit">T멤버십 혜택 바로가기</dt>
+														<dd class="og-tbnf-txt">
+															<p class="og-5mktp-txtS13">제휴처별 상세 혜택 및 유의사항 확인 후, 이용해주시기 바랍니다.</p>
+															<a href="#" class="og-tbnf-btn">바로가기</a>
+															<div class="og-life-tbnf-img">
+																<img src="/img/t_m5g/og_life3_tbnf04.png" alt="">
+															</div>
+														</dd>
+													</dl>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //tabWrap -->
+
+				<!-- og-5mktp-benefit-wrap -->
+				<div class="og-5mktp-benefit-wrap">
+					<div class="cont-box nogaps-btm bgnone">
+						<div class="headingbox-wrap">
+							<div class="title">다른 혜택 보러가기</div>
+						</div>
+						<div class="productinfoscroll-box block-type slide-nopd">
+							<!-- .widget -->
+							<div class="widget"> 
+								<div class="widget-box horizontal">
+									<div class="horizontal-slide slide-nopd">
+										<ul class="horizontal-list">
+											<li>
+												<a href="5gmkt_intro.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대,<br>생활이 되다<br>SKT 5GX</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_1.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>안심이 되는<br>생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_2.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>놀라운 생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_3.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>마음껏 누리는<br>생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_4.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대 5GX!<br>데이터 무제한!<br>콘텐츠도 무제한!</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- .widget -->
+						</div>
+					</div>
+				</div><!-- //og-5mktp-benefit-wrap --> 
+
+				<div class="og-5mktp-btm-banner-wrap">
+					<div class="og-5mktp-btm-banner og-fixed">
+						<a href="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000039&utm_source=tworld&utm_medium=m_banner&utm_campaign=s10_5g&ututm_content=preorder&fSiteCd=1010" class="og-5mktp-banner banrimg" target="_blank" title="갤럭시 S10 5G 예약페이지 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+            //탭 공통 스크립트
+			function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.href);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            var $tablinker = $('.tab-linker'),
+				$anchor = $('.og-tab-linker > ul > li > a'),
+                tablinkerTop = $tablinker.offset().top,
+				headerHeight = $('#header').outerHeight(),
+                tablinkerHeight = $tablinker.outerHeight(),
+                $win = $(window),
+                tabCode = parseInt(getParameterByName('tab') === '' ? 0 : getParameterByName('tab'), 10) - 1,
+                anchorCode = parseInt(getParameterByName('anchor') === '' ? 0 : getParameterByName('anchor'), 10) - 1,
+                target;
+
+            $tablinker.find('ul > li > a').on('click', function (e) {
+		        e.preventDefault();
+		        if ($win.scrollTop() > tablinkerTop - headerHeight) {
+                    $win.scrollTop(tablinkerTop - headerHeight);
+				}
+				setTimeout(function () {
+                    $('.slider1').find('.slider').slick('refresh');
+				}, 300);
+			});
+
+            $anchor.on('click', function (e) {
+                e.preventDefault();
+                target = $(this).attr('href');
+                if ($(target).length) {
+                    $('html, body').animate({
+                        'scrollTop': $(target).offset().top - headerHeight - tablinkerHeight
+                    }, 300, function () {
+                        $(target).find('.og-tab-linker > ul > li.on > a').focus();
+                    });
+                }
+            });
+
+            $win.on('scroll', function () {
+	            $('.og-5mktp-tab').toggleClass('fixed', $win.scrollTop() + headerHeight >= tablinkerTop);
+			});
+
+            if (tabCode > 0) {
+                $tablinker.find('> ul > li').attr('aria-selected', false).eq(tabCode).attr('aria-selected', true);
+                if (anchorCode >= 0) {
+                    setTimeout(function () {
+                        $('html, body').animate({
+							'scrollTop': $('.og-5mktp-contwrap:visible > div').eq(anchorCode).offset().top - headerHeight - tablinkerHeight
+						}, 500);
+                    }, 1500);
+                }
+			}
+
+			//하단 배너 플로팅
+			var $win = $(window),
+                $banner = $('.og-5mktp-btm-banner'),
+                $bannerWrap = $('.og-5mktp-btm-banner-wrap'),
+                timer;
+
+            $bannerWrap.toggleClass('app', !!$('.g-wrap').length);	//App 일 경우 .app class 추가 (하단 플로팅배너 위치값)
+            $win.on('touchstart touchend', function (e) {
+                if (e.type === 'touchstart') {
+                    clearTimeout(timer);
+                    $banner.stop(true, true).slideUp();
+                } else {
+                    timer = setTimeout(function () {
+                        $banner.stop(true, true).slideDown();
+                    }, 500);
+                }
+            });
+		});
+	</script>
+</body>
+</html>

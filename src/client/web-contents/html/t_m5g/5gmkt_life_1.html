@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body class="og-5mktp-wrap"><!-- 배경이 흰색일 경우 .bg-white -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+            <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">초[超]시대의 안심이 되는 생활</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+		<!-- 190329 수정 -->
+        <div id="contents" class="container-wrap"> 
+			<div class="container">
+				<!-- keyVisual -->
+				<div class="og-5mktp-keyvisual">
+					<div class="text-wrap">
+						<h2 class="tit">가장 빠르고, 안전한 네트워크 <strong>초[超]시대<br> <span class="em">안심이 되는</span><br> 생활</strong></h2>
+						<p>독보적인 속도와 보안으로<br> 초연결 시대를 엽니다</p>
+					</div>
+					<div class="img"><img src="/img/t_m5g/og_5mktp_keyvisual_img_01.png" alt=""></div>
+				</div>
+				<!-- //keyVisual -->
+	
+				<!-- og-5mktp-box-wrap -->
+				<div class="og-5mktp-box-wrap">
+					<!-- og-5mktp-box -->
+					<div class="og-5mktp-box">
+						<div class="box-tit-wrap">
+							<p class="og-5mktp-box-tit">5G에서도<br>압도적인 속도</p>
+							<p class="og-5mktp-box-subtit">가장 빠른 5G 생활</p>		
+						</div>
+						<div class="og-good-num og-wide-gap">
+							<img src="/img/t_m5g/og_speed.png" class="img" alt="최고속도 2.7Gbps = LTE 1.2 + 5G 1.5Gbps" >
+						</div>
+						<div class="og-cont-wrap">
+							<p class="cont-em og-strong">LTE보다 20배 빠른 속도<span class="else">(LTE 1Gbps vs 5G 20Gbps)</span><br>LTE + 5G 동시 사용 기준</p>
+							<p class="cont-box-normal">고화질/고용량 콘텐츠를 제대로 즐기기 위해 가장 중요한 것은 속도.<br>SKT에서 압도적으로 빠른 5GX를 누리세요.</p>
+							<p class="og-gray-txt-pra">
+								<span class="box-refer og-strong">5GX 이용 가능 지역 확대 계획</span>	
+								2019년 9월까지 주요 85개 시에 커버리지 구축 완료 예정
+							</p>
+						</div>
+					</div><!-- //og-5mktp-box -->
+	
+					<!-- og-5mktp-box -->
+					<div class="og-5mktp-box og-no-border og-nth-box2">
+						<div class="box-tit-wrap">
+							<p class="og-5mktp-box-tit">넘볼 수 없는<br>완벽 보안</p>
+						</div>
+						<div class="og-cont-wrap">
+							<p class="og-5mktp-box-subtit">가장 안전한 5G 생활</p>	
+							<p class="cont-box-normal mg-type01">모든 것이 연결되는 시대, 보안의 중요성은 더 커졌죠. SKT만의 양자암호 기술로 안전한<br>5GX를 즐기세요!</p>
+							<p class="og-gray-txt-pra mg-type01">
+								SKT 5GX는 정보를<br>복제하거나 훔쳐가지 못하게<br>원천적으로 차단하는 보안 기술을<br>가지고 있습니다.
+							</p>
+						</div>
+					</div><!-- //og-5mktp-box -->
+	
+					<!-- og-5mktp-box -->
+					<div class="og-5mktp-box og-nth-box3">
+						<div class="box-tit-wrap">
+							<p class="og-5mktp-box-tit">가장 넓은<br>5G 커버리지</p>
+						</div>
+						<div class="og-cont-wrap">
+							<p class="og-5mktp-box-subtit">가장 넓은 5G 생활</p>
+							<p class="cont-box-normal mg-type01">“85개 시 전국망 구축을 시작으로<br>빈틈없는 커버리지 확대”</p>
+						</div>
+						<div class="og-good-num">
+							<img src="/img/t_m5g/og_open_map.png" class="img" alt="국내 최다 기지국 3월 중순 기준 (업데이트 예정)">
+						</div>
+					</div><!-- //og-5mktp-box -->
+					<div class="og-bg-wrap">
+						<img src="/img/t_m5g/og_skew_bg.png" alt="">
+					</div>
+				</div><!-- //og-5mktp-box-wrap -->
+	
+				<!-- og-5mktp-benefit-wrap -->
+				<div class="og-5mktp-benefit-wrap">
+					<div class="cont-box nogaps-btm bgnone">
+						<div class="headingbox-wrap">
+							<div class="title">다른 혜택 보러가기</div>
+						</div>
+						<div class="productinfoscroll-box block-type slide-nopd">
+							<!-- .widget -->
+							<div class="widget"> 
+								<div class="widget-box horizontal">
+									<div class="horizontal-slide slide-nopd">
+										<ul class="horizontal-list">
+											<li>
+												<a href="5gmkt_intro.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대,<br>생활이 되다<br>SKT 5GX</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_1.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>안심이 되는<br>생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_2.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>놀라운 생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_3.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대의<br>마음껏 누리는<br>생활</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_4.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대 5GX!<br>데이터 무제한!<br>콘텐츠도 무제한!</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- .widget -->
+						</div>
+					</div>
+				</div><!-- //og-5mktp-benefit-wrap -->
+	
+				<div class="og-5mktp-btm-banner-wrap">
+					<div class="og-5mktp-btm-banner og-fixed">
+						<a href="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000039&utm_source=tworld&utm_medium=m_banner&utm_campaign=s10_5g&ututm_content=preorder&fSiteCd=1010" class="og-5mktp-banner banrimg" target="_blank" title="갤럭시 S10 5G 예약페이지 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #contents -->
+		<!-- //190329 수정 -->
+    </div>
+
+	<!-- 190329 수정 -->
+	<script type="text/javascript">
+        $(document).ready(function () {
+			//하단 배너 플로팅
+			var $win = $(window),
+                $banner = $('.og-5mktp-btm-banner'),
+                $bannerWrap = $('.og-5mktp-btm-banner-wrap'),
+                timer;
+
+            $bannerWrap.toggleClass('app', !!$('.g-wrap').length);	//App 일 경우 .app class 추가 (하단 플로팅배너 위치값)
+            $win.on('touchstart touchend', function (e) {
+                if (e.type === 'touchstart') {
+                    clearTimeout(timer);
+                    $banner.stop(true, true).slideUp();
+                } else {
+                    timer = setTimeout(function () {
+                        $banner.stop(true, true).slideDown();
+                    }, 500);
+                }
+            });
+        });
+	</script>
+	<!-- //190329 수정 -->
+</body>
+</html>
