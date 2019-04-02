@@ -326,6 +326,7 @@ export const API_CMD = {
   BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0203: { path: '/core-bill/:version/bill-pay/bills-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0204: { path: '/core-bill/:version/bill-pay/used-amounts-submain', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

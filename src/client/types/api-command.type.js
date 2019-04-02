@@ -212,6 +212,7 @@ Tw.API_CMD = {
   BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: Tw.API_METHOD.PUT },
   BFF_05_0201: { path: '/core-balance/:version/troaming-data', method: Tw.API_METHOD.GET },
   BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: Tw.API_METHOD.GET },
+  BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: Tw.API_METHOD.POST },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },

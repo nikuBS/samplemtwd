@@ -922,6 +922,14 @@ Tw.ALERT_MSG_AUTH = {
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
 
 Tw.MYT_FARE_HISTORY_MICRO_TYPE = {
+  '01': '일반결제',
+  '02': '묶음결제',
+  '03': '자동결제',
+  '04': '간편결제',
+  '05': '복합결제'
+}
+
+Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE = {
   Y: '무선',
   N: 'Web'
 };
