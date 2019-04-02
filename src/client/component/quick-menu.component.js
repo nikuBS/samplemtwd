@@ -71,6 +71,11 @@ Tw.QuickMenuComponent.prototype = {
   _addQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
+
+      if(menuIdStr.indexOf(this._menuId) !== -1) {
+        return;
+      }
+
       var menuId = menuIdStr.indexOf('|') !== -1 ? menuIdStr.replace(/\|/g, ',') + ',' + this._menuId :
         Tw.FormatHelper.isEmpty(menuIdStr) ? this._menuId : menuIdStr + ',' + this._menuId;
 
