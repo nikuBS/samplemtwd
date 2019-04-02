@@ -155,8 +155,8 @@ abstract class TwViewController {
           }
 
           if ( loginType === '' ) {
-            // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            // admin 정보 입력 오류 (accessType이 비어있음)
+            res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
             return;
           }
           if ( isLogin ) {
@@ -164,9 +164,9 @@ abstract class TwViewController {
             if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
               const urlAuth = urlMeta.auth.grades;
               const svcGr = svcInfo.svcGr;
-              // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
+              // admin 정보 입력 오류 (접근권한이 입력되지 않음)
               if ( urlAuth === '' ) {
-                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
                 return;
               }
               if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
@@ -182,14 +182,12 @@ abstract class TwViewController {
               } else {
                 // 접근권한 없음
                 this.errorAuth(req, res, next);
-                // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               }
-            } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+            } else if ( loginType.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
               // 현재 로그인 방법으론 이용할 수 없음
               if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-                // res.redirect('/common/member/slogin/fail');
                 res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
               } else {
                 // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
@@ -206,8 +204,9 @@ abstract class TwViewController {
           }
         });
       } else {
-        // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
-        this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+        // 등록되지 않은 메뉴
+        res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+        return;
       }
     });
   }
@@ -250,15 +249,6 @@ abstract class TwViewController {
     delete query.sso_session_id;
 
     return url + ParamsHelper.setQueryParams(query);
-  }
-
-  private checkError(error: string, errorMessage: string) {
-    return !FormatHelper.isEmpty(error);
-
-  }
-
-  private renderError(req: Request, res: Response, next: NextFunction, message: any) {
-    res.send(message);
   }
 
   private checkServiceBlock(urlMeta: any, svcInfo: any, res): Observable<boolean> {
