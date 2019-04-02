@@ -1,9 +1,9 @@
-Tw.ValidationService = function (rootEl, submitBtn, change, isPrepay) {
+Tw.ValidationService = function (rootEl, submitBtn, change, isAuto) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
   this.$expirationTarget = null;
-  this.$isPrepay = isPrepay;
+  this.$isAuto = isAuto;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -210,12 +210,12 @@ Tw.ValidationService.prototype = {
   },
   _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var cardCode = res.result.bankCardCoCd;
-      var cardName = res.result.cardNm;
+      var cardCode = res.result.prchsCardCd;
+      var cardName = res.result.prcchsCardNm;
 
-      if (this.$isPrepay) {
-        cardCode = res.result.prchsCardCd;
-        cardName = res.result.prcchsCardNm;
+      if (this.$isAuto) {
+        cardCode = res.result.bankCardCoCd;
+        cardName = res.result.cardNm;
       }
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
