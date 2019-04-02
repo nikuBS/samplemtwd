@@ -70,7 +70,7 @@
 
                     <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/submain" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
+                        <a href="/myt-data/hotdata" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -123,7 +123,7 @@
                     </div>
                     <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/submain" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
+                        <a href="/myt-data/hotdata" class="chart-box" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -153,7 +153,7 @@
                     </div>
                     <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/submain" class="chart-box">
+                        <a href="/myt-data/hotdata" class="chart-box">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -302,10 +302,15 @@
                                 <ul class="slider">
                                     <li>
                                         <ul class="quick-menu-list">
+                                            <% if (String(process.env.NODE_ENV) !== 'prd') { %>
+                                            <li><a href="/common/util/5g-intro" class="bt new"><i class="icon-5gx"></i>5GX</a></li>
+                                            <% } %>
                                             <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
                                             <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
                                             <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
+                                            <% if (String(process.env.NODE_ENV) === 'prd') { %>
                                             <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-150" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
+                                            <% } %>
                                         </ul>
                                     </li>
                                     <li>
@@ -398,21 +403,21 @@
                     </button>
                     <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=m_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-166" data-xt_csid="NO" data-xt_action="BC">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010014&productGrpId=000003532&utm_source=tworld&utm_medium=app_device&utm_campaign=s10_5G" data-xt_eid="CMMA_A2_B6-166" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
-                                <strong class="ti">iPhone XS</strong>
+                                <strong class="ti">갤럭시 S10 5G</strong>
                             </button>
                         </li>
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132&utm_source=tworld&utm_medium=m_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-167" data-xt_csid="NO" data-xt_action="BC">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=app_device&utm_campaign=iphoneXS" data-xt_eid="CMMA_A2_B6-167" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
-                                <strong class="ti">갤럭시 노트9</strong>
+                                <strong class="ti">아이폰 XS</strong>
                             </button>
                         </li>
                         <li>
-                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472&utm_source=tworld&utm_medium=m_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-168" data-xt_csid="NO" data-xt_action="BC">
+                            <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003533&utm_source=tworld&utm_medium=app_device&utm_campaign=G8" data-xt_eid="CMMA_A2_B6-168" data-xt_csid="NO" data-xt_action="BC">
                                 <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
-                                <strong class="ti">엘지 Q9</strong>
+                                <strong class="ti">엘지 G8 ThinQ</strong>
                             </button>
                         </li>
                     </ul>

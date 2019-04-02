@@ -6,7 +6,8 @@
  */
 
 Tw.MyTFareBillBankList = function (rootEl, bankList) {
-  this.$bankList = [];
+  this.$accountBankList = [];
+  this.$refundBankList = [];
   this.$currentTarget = null;
   this.$container = rootEl;
 
@@ -21,14 +22,15 @@ Tw.MyTFareBillBankList = function (rootEl, bankList) {
 Tw.MyTFareBillBankList.prototype = {
   init: function (event, callback) {
     this.$currentTarget = $(event.currentTarget);
+    this.$isBank = this.$currentTarget.hasClass('fe-account-bank');
+
     if (callback !== undefined) {
       this._callbackFunction = callback;
     }
 
-    if (Tw.FormatHelper.isEmpty(this.$bankList)) {
+    if (Tw.FormatHelper.isEmpty(this.$refundBankList) && Tw.FormatHelper.isEmpty(this.$accountBankList)) {
       this._getBankList(); // 저장된 은행리스트가 없으면 API 호출 (최초 1회)
-    }
-    else {
+    } else {
       this._openBank(); // 은행리스트가 저장되어 있으면 바로 open
     }
   },
@@ -68,7 +70,12 @@ Tw.MyTFareBillBankList.prototype = {
   },
   _getBankListSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._setBankList(res.result.payovrBankList, true);
+      var result = res.result;
+      var accountList = Tw.FormatHelper.isEmpty(result.payBankList) ? result.payovrBankList : result.payBankList;
+
+      this._setBankList(accountList, true, 'account');
+      this._setBankList(result.payovrBankList, true, 'refund');
+      this._openBank();
     } else {
       this._getBankListFail(res);
     }
@@ -76,7 +83,7 @@ Tw.MyTFareBillBankList.prototype = {
   _getBankListFail: function (err) {
     Tw.Error(err.code, err.msg).pop(null, this.$currentTarget);
   },
-  _setBankList: function (bankList, isData) { // 조회된 은행리스트를 actionsheet format에 맞춰 변수에 저장
+  _setBankList: function (bankList, isData, type) { // 조회된 은행리스트를 actionsheet format에 맞춰 변수에 저장
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
@@ -86,12 +93,11 @@ Tw.MyTFareBillBankList.prototype = {
       };
       formatList.push(bankObj);
     }
-    this.$bankList.push({
-      'list': formatList
-    });
 
-    if (isData) {
-      this._openBank();
+    if (type === 'account') {
+      this.$accountBankList.push({ 'list': formatList });
+    } else {
+      this.$refundBankList.push({ 'list': formatList });
     }
   },
   _openBank: function () {
@@ -100,7 +106,7 @@ Tw.MyTFareBillBankList.prototype = {
       url: '/hbs/',
       hbs: 'actionsheet01',
       layer: true,
-      data: this.$bankList,
+      data: this.$isBank ? this.$accountBankList : this.$refundBankList,
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onOpenList, this), null, null, this.$currentTarget);
   }

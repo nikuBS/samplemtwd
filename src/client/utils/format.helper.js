@@ -113,7 +113,7 @@ Tw.FormatHelper = (function () {
   };
 
   var convDataFormat = function (data, curUnit) {
-    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
+    var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB, Tw.DATA_UNIT.TB], maxIdx = units.length - 1;
     var unitIdx = _.findIndex(units, function (value) {
       return value === curUnit;
     });
@@ -126,7 +126,7 @@ Tw.FormatHelper = (function () {
       };
     }
 
-    while ( data >= 1024 ) {
+    while ( data >= 1024 && unitIdx < maxIdx ) {
       data /= 1024;
       unitIdx++;
     }

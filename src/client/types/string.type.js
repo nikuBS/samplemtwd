@@ -922,6 +922,14 @@ Tw.ALERT_MSG_AUTH = {
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
 
 Tw.MYT_FARE_HISTORY_MICRO_TYPE = {
+  '01': '일반결제',
+  '02': '묶음결제',
+  '03': '자동결제',
+  '04': '간편결제',
+  '05': '복합결제'
+}
+
+Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE = {
   Y: '무선',
   N: 'Web'
 };
@@ -1699,7 +1707,7 @@ Tw.NOTI_POPUP_BTN = {
 };
 
 Tw.MENU_STRING = {
-  FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 단말기에 Usim을 넣어주시거나 SK텔레콤 가입 회선이 있으시다면, T월에서 이용하실 회선을 등록해 주세요.',
+  FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 단말기에 Usim을 넣어주시거나 SK텔레콤 가입 회선이 있으시다면, T월드에서 이용하실 회선을 등록해 주세요.',
   FREE_SMS_PPS: '선불요금제 이용 고객님은 무료문자 서비스를 사용하실 수 없습니다.',
   TOTAL: '총 ',
   DESC: '개의 회선',

@@ -101,6 +101,7 @@ Tw.MainHome.prototype = {
   _bindEventStore: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
@@ -123,10 +124,12 @@ Tw.MainHome.prototype = {
   _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
     this._historyService.goLoad(url);
-    // Tw.CommonHelper.openUrlInApp(url);
 
     $event.preventDefault();
     $event.stopPropagation();
+  },
+  _onClickCharge: function ($event) {
+    Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
   },
   _onClickLine: function ($event) {
     var $target = $($event.currentTarget);
