@@ -264,6 +264,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
             this.$cAgreeCheckBox.find('input').trigger('click');
           }
           this._checkOkCashbag = false;
+          this._onClickContainer();
           this._popupService.close();
         }, this), $.proxy(function () {
           if ( this._checkOkCashbag ) {
