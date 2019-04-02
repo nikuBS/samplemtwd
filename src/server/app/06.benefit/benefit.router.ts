@@ -12,15 +12,17 @@ import BenefitSelectContractController from './controllers/program/benefit.selec
 import BenefitTPlusSalesController from './controllers/program/benefit.t-plus-sales.controller';
 import BenefitDisPgmInput from './controllers/program/benefit.dis-pgm.input.controller';
 import BenefitDisPgmCancel from './controllers/program/benefit.dis-pgm.cancel.controller';
-import BenefitTerminateTbCombination from './controllers/benefit.terminate.tb-combination.controller';
 import BenefitSubmainCombinationPreview from './controllers/submain/benefit.submain.combination-preview.info.controller';
 import BenefitSubmainFareInfo from './controllers/submain/benefit.submain.fare.info.controller';
 import BenefitJoinTbCombination from './controllers/benefit.join.tb-combination.controller';
+import BenefitTerminateTbCombination from './controllers/terminate/benefit.terminate.tb-combination.controller';
+import BenefitTerminateAllFamily from './controllers/terminate/bneefit.terminate.all-family.controller';
+import BenefitTerminateAllFamilyFree from './controllers/terminate/bneefit.terminate.all-family-free.controller';
 
 class BenefitRouter extends TwRouter {
   constructor() {
     super();
-    // new IA
+
     this.controllers.push({ url: '/submain', controller: BenefitIndex });
     this.controllers.push({ url: '/submain(/discount|/combinations|/long-term|/participation)?', controller: BenefitIndex });
     this.controllers.push({ url: '/submain/detail/select-contract', controller: BenefitSelectContractController });
@@ -39,6 +41,8 @@ class BenefitRouter extends TwRouter {
     this.controllers.push({ url: '/my/rainbowpoint/transfer/complete', controller: BenefitMyBenefitRainbowPointTransferComplete });
     this.controllers.push({ url: '/join/tb-combination', controller: BenefitJoinTbCombination });
     this.controllers.push({ url: '/terminate/tb-combination', controller: BenefitTerminateTbCombination });
+    this.controllers.push({ url: '/terminate/all-family', controller: BenefitTerminateAllFamily });
+    this.controllers.push({ url: '/terminate/all-family-free', controller: BenefitTerminateAllFamilyFree });
   }
 }
 
