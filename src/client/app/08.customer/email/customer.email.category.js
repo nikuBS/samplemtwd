@@ -49,21 +49,9 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
 
-  _onLoadQuestionList: function (res) {    
+  _onLoadQuestionList: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.category = res.result;
-      // 임시
-      $.extend(this.category, {
-        DIRECT: [
-          { ctgNm: '휴대폰 구매', ofrCtgSeq: '07' },
-          { ctgNm: '기타 문의', ofrCtgSeq: '10' },
-          { ctgNm: 'T기프트/액세서리', ofrCtgSeq: '12' },
-          { ctgNm: '휴대폰배송', ofrCtgSeq: '08' },
-          { ctgNm: '휴대폰 교환/반품', ofrCtgSeq: '09' }
-        ]
-      });
-      console.log(this.category, 'compare category');
-      
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
