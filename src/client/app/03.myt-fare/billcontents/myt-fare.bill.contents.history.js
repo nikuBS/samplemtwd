@@ -19,7 +19,7 @@ Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
 
 Tw.MyTFareBillContentsHitstory.prototype = {
   _init: function (data) {
-    this.limitLength = 1; // 한번에 노출될 리스트 갯수 TODO: 20
+    this.limitLength = Tw.DEFAULT_LIST_COUNT; // 한번에 노출될 리스트 갯수 TODO: 20
     this.monthActionSheetListData = null; //현재로부터 지난 6개월 구하기 (액션시트 선택)
     this.totalList = this._setMonthList(this.data.beforeYear, this.data.beforeMonth, 6, 'key');
     this.list = [];
