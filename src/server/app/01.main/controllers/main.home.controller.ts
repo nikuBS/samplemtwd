@@ -328,6 +328,9 @@ class MainHome extends TwViewController {
       if ( !FormatHelper.isEmpty(findData) ) {
         result[kind] = findData;
         this.convShowData(result[kind]);
+      } else if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
+        result[kind] = usageData[kind][0];
+        this.convShowData(result[kind]);
       }
     });
     return result;
