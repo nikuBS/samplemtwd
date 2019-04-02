@@ -240,7 +240,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       userSettingInfo.svcStartDt===this._prodBffInfo.svcStartDt&&
       userSettingInfo.svcEndDt===this._prodBffInfo.svcEndDt&&
       userSettingInfo.svcStartTm===this._prodBffInfo.svcStartTm&&
-      userSettingInfo.svcEndTm===this._prodBffInfo.svcStartDt
+      userSettingInfo.svcEndTm===this._prodBffInfo.svcEndTm
     ){
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE,null,null,null,$(targetEvt.currentTarget));
       return;
