@@ -205,12 +205,13 @@ abstract class TwViewController {
         });
       } else {
         // 등록되지 않은 메뉴
-        if ( /\/product\/callplan/.test(path) ) {
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-        } else {
-          res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-          return;
-        }
+        this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+        // if ( /\/product\/callplan/.test(path) ) {
+        //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+        // } else {
+        //   res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+        //   return;
+        // }
       }
     });
   }
