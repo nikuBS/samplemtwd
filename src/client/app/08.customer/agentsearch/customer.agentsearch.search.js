@@ -140,6 +140,10 @@ Tw.CustomerAgentsearch.prototype = {
       this.$divResult.addClass('none');
       this._prevTab = window.location.hash;
       this._isSearched = false;
+
+      this.$btnSearchAddr.attr('disabled', 'disabled');
+      this.$btnSearchName.attr('disabled', 'disabled');
+      this.$btnSearchTube.attr('disabled', 'disabled');
     }
     location.replace(e.currentTarget.href);
 

@@ -21786,6 +21786,10 @@ a.bt-link-tx.underline.small {
     height: 0.1875rem;
     background: #666;
     border-radius: 100%; }
+  .round-dot-list li .validation-txt {
+    display: inline-block;
+    font-size: 0.8125rem;
+    margin: 0; }
 
 .round-dot-list.type01 li, .shop-info .shop-txt .round-dot-list.type02 li, .shop-info .shop-txt .round-dot-list.type03 li {
   font-size: 0.75rem; }
@@ -24202,6 +24206,9 @@ input[type="radio"].formradio-small.type2 + label {
       padding-top: 1.5rem; }
       .complete-wrap .title-box .tx-tit span {
         display: inline-block; }
+      .complete-wrap .title-box .tx-tit .tx-sub-tit {
+        font-size: 0.875rem;
+        display: block; }
       .complete-wrap .title-box .tx-tit .tx-highlight {
         font-size: 1.5625rem;
         line-height: 1.875rem; }

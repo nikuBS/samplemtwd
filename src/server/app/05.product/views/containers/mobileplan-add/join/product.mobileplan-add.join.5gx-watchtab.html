@@ -1,0 +1,112 @@
+<%#
+* FileName: product.mobileplan-add.join.5gx-watchtab.html
+* Author: ankle breaker (byunma@sk.com)
+* Date: 2019.04.05
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>가입</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
+                        <span class="tit-big">5GX 워치tab할인_모</span>
+                    </div>
+                </div>
+
+                <div class="ti-caption-gray">
+                    <h4 class="tit">결합회선 설정
+                        <button type="button" class="tip-view" title="내폰끼리 결합회선 설정 정보보기" id="MV_02_02_02_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button>
+                    </h4>
+                    <p class="num"><%= svcInfo.svcNumDash %></p>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="input-number-wrap">
+                        <h3 class="tit">결합할 회선</h3>
+                        <div class="form-box">
+                            <!-- 2019-01-17 inp-btn 추가 -->
+                            <span class="inputbox bt-add inp-btn error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                <span class="input">
+                                    <input type="tel" class="fe-num_input" placeholder="숫자만 입력" title="내폰끼리 결합 할 회선 숫자만 입력" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                                    <!-- 2019.01.15 title 값 수정 -->
+                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
+                                </span>
+                                <% if ( isApp ) { %>
+                                <span class="bt-box">
+                                    <button type="button" class="fe-btn_native_contact">주소록</button>
+                                </span>
+                                <% } %>
+                            </span>
+                        </div>
+                    </div>
+                    <ul class="bt-slice pt26">
+                        <li class="bt-blue1">
+                            <button class="fe-btn_add_num" disabled>추가하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="fe-line_wrap" style="display: none" aria-hidden="true">
+                    <div class="cont-box nogaps">
+                        <div class="input-number-wrap">
+                            <h3 class="tit type1">신청하신 회선</h3>
+                            <div class="list-comp-thumnail">
+                                <ul class="comp-box fe-line_list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled>설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+<% include ../../../components/mobileplan-add/product.line.onlynumber.component.html %>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoin5gxWatchtab($('.wrap'), '<%= prodId %>', 'nApp_7476_01');
+  });
+</script>
+</body>
+<% include ../../../components/end.component.html %>

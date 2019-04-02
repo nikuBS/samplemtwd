@@ -1,10 +1,10 @@
 /**
- * FileName: benefit.terminate.tb-combination.js
+ * FileName: benefit.terminate.all-family-free.js
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.26
+ * Date: 2019.04.01
  */
 
-Tw.BenefitTerminateTbCombination = function(rootEl, prodId, prodNm, svcCd) {
+Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm, svcCd) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -18,7 +18,7 @@ Tw.BenefitTerminateTbCombination = function(rootEl, prodId, prodNm, svcCd) {
   this._bindEvent();
 };
 
-Tw.BenefitTerminateTbCombination.prototype = {
+Tw.BenefitTerminateAllFamilyFree.prototype = {
 
   _cachedElement: function() {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
@@ -88,23 +88,10 @@ Tw.BenefitTerminateTbCombination.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId])
-      .done($.proxy(this._isVasTerm, this));
-  },
-
-  _isVasTerm: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      this._isResultPop = true;
-      return this._openSuccessPop();
-    }
-
-    this._openVasTermPopup(resp.result);
+      .done($.proxy(this._openSuccessPop, this));
   },
 
   _openSuccessPop: function() {
-    if ( !this._isResultPop ) {
-      return;
-    }
-
     this._popupService.open({
       hbs: 'complete_product',
       data: {
@@ -123,7 +110,6 @@ Tw.BenefitTerminateTbCombination.prototype = {
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-    $popupContainer.focus();
   },
 
   _closeAndGo: function(e) {
@@ -131,43 +117,6 @@ Tw.BenefitTerminateTbCombination.prototype = {
     e.stopPropagation();
 
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
-  },
-
-  _openVasTermPopup: function(respResult) {
-    var popupOptions = {
-      hbs:'MV_01_02_02_01',
-      'bt': [{
-        style_class: 'unique fe-btn_back',
-        txt: Tw.BUTTON_LABEL.CLOSE
-      }]
-    };
-
-    if (respResult.prodTmsgTypCd === 'H') {
-      popupOptions = $.extend(popupOptions, {
-        editor_html: Tw.CommonHelper.replaceCdnUrl(respResult.prodTmsgHtmlCtt)
-      });
-    }
-
-    if (respResult.prodTmsgTypCd === 'I') {
-      popupOptions = $.extend(popupOptions, {
-        img_url: respResult.rgstImgUrl,
-        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
-      });
-    }
-
-    this._isResultPop = true;
-    this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this),
-      $.proxy(this._openSuccessPop, this), 'vasterm_pop');
-  },
-
-  _bindVasTermPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
-    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-  },
-
-  _closeAndOpenResultPopup: function() {
-    this._isResultPop = true;
-    this._popupService.close();
   },
 
   _closePop: function() {

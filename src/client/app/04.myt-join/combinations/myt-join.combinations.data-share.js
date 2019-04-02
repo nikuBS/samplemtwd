@@ -26,8 +26,9 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
 
   _handleSelectSubject: function(e) { // 데이터 나눠쓰기 대상 변경 시
     this._subject = {
-      number: e.currentTarget.getAttribute('data-svc'),
-      name: e.currentTarget.getAttribute('data-name')
+      mgmtNum: e.currentTarget.getAttribute('data-svc'),
+      name: e.currentTarget.getAttribute('data-name'),
+      phoneNum: e.currentTarget.getAttribute('data-phone-number')
     };
   },
 
@@ -45,8 +46,9 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     if (!this._subject) { // 대상 설정 안되어 있는 경우
       var $subject = this.$container.find('.list-comp-input li.checked'); // 대상 리스트에서 checked된 대상 찾기
       this._subject = {
-        number: $subject.data('svc'),
-        name: $subject.data('name')
+        mgmtNum: $subject.data('svc'),
+        name: $subject.data('name'),
+        phoneNum: $subject.data('phone-number')
       };
     }
 
@@ -55,7 +57,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
         ofrrSvcMgmtNum: this._group.svcMgmtNum,
         ofrrSvcProdGrpCd: this._group.svcProdGrpCd,
         ofrrSvcProdGrpId: this._group.svcProdGrpId,
-        befrSvcMgmtNum: String(this._subject.number),
+        befrSvcMgmtNum: String(this._subject.mgmtNum),
         reqQty: String(this._selected),
         remainPt: String(this._remain - this._selected)
       })
@@ -70,7 +72,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
         {
           hbs: 'MS_07_01_03_01_complete',
           name: this._subject.name,
-          number: this._subject.number,
+          number: this._subject.phoneNum,
           remainData: this._remain - this._selected,
           benefitData: this._group.grpOfrPt,
           layer: true

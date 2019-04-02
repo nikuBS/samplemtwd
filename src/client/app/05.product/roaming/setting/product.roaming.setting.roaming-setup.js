@@ -46,11 +46,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
     this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
-    if(!this._validateTimeValueAgainstNow(this._prodBffInfo.svcStartDt,startTime,'start')){
-      this.$container.find('.bt-dropdown').attr('disabled','disabled');
-      this.$container.find('#do_change').attr('disabled','disabled');
-      this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
-    }
+    this._validateTimeValueAgainstNow(this._prodBffInfo.svcStartDt,startTime,'checkStartPrd');
   },
   _checkSelectedEndDate : function (endDate) {
     if(this._currentDate>=endDate){
@@ -193,7 +189,18 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate<=this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
+    if(className==='checkStartPrd'){
+      var prdTime = parseInt(paramDate+''+paramTime,10);
+      var currentTime = parseInt(this._currentDate+''+Tw.DateHelper.getCurrentDateTime('HH'),10);
+      if(prdTime>currentTime){
+        returnValue = true;
+      }else{
+        this.$container.find('.bt-dropdown').attr('disabled','disabled');
+        this.$container.find('#do_change').attr('disabled','disabled');
+        this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
+        this.$container.find('.error-txt.start').removeClass('none');
+      }
+    }else if((paramDate<=this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.removeClass('none');
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
     }else{

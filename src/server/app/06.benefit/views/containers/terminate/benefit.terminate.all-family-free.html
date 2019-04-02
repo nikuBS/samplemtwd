@@ -1,0 +1,169 @@
+<%#
+* FileName: benefit.terminate.all-family-free.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.04.01
+%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div class="popup-page nobg tw-popup fixed-bottom"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                                <span class="sub-disc01">
+                                    <span class="elem">해지할 결합상품</span>
+                                </span>
+                            <span class="tit-tx"><%= prodNm %></span>
+                        </div>
+                        <div class="basic-list bg-type mt10">
+                            <ul>
+                                <li>
+                                    <span class="title">신청일</span>
+                                    <span class="tx-cont"><%= termInfo.combinationGroup.combStaDt %></span>
+                                </li>
+                                <li>
+                                    <span class="title">결합회선</span>
+                                    <span class="tx-cont"><%= termInfo.combinationGroup.mblSvcCnt + termInfo.combinationWireMemberList.length %>회선</span>
+                                </li>
+                                <li>
+                                    <span class="title">가입상태</span>
+                                    <span class="tx-cont"><%= termInfo.combinationGroup.combSt %></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="item-list">
+                        <ul>
+                            <li class="pt20">
+                                <div class="title-wrap">
+                                    <span class="elem tx-bold">T상품</span>
+                                    <span class="elem"><%= termInfo.combinationWirelessMember.svcNum %> (<%= termInfo.combinationWirelessMember.svcStNm %>)</span>
+                                </div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">고객명</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.custNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">요금제</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.feeProdNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">서비스 제공회사</span>
+                                            <span class="tx-cont">SK텔레콤</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">사용 개월 수</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.useYearCnt %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">T끼리온가족할인</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.famlUseYn === 'Y' ? '할인제도 사용 중' : '할인제도 미사용' %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <% if ( termInfo.combinationWireMember ) { %>
+                            <li>
+                                <div class="title-wrap">
+                                    <span class="elem tx-bold">B상품</span>
+                                    <span class="elem"><%= termInfo.combinationWireMember.svcCdNm %></span>
+                                </div>
+                                <div class="basic-list">
+                                    <ul>
+                                        <li>
+                                            <span class="title">고객명</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWireMember.custNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">요금제</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWireMember.feeProdNm %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">서비스 제공회사</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWireMember.coClCd === 'T' ? 'SK텔레콤' : 'SK브로드밴드' %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">사용 개월 수</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWireMember.useYearCnt %></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">결합상태</span>
+                                            <span class="tx-cont"><%= termInfo.combinationWireMember.combYn %></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02">
+                        <li>
+                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                                본인인증 안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                                결합상품 자동 해지 안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_03" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                                할인 적용 안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn_terminate">해지하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-btn_cancel_join">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>$(function () {new Tw.BenefitTerminateTbCombination($('.wrap'), '<%= prodId %>', '<%= termInfo.combinationGroup.svcProdGrpNm %>', '<%= termInfo.combinationWireMember ? termInfo.combinationWireMember.svcCd : "" %>');});</script>
+<% include ../../components/end.component.html %>
