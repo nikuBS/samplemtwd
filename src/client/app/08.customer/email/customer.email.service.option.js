@@ -209,6 +209,7 @@ Tw.CustomerEmailServiceOption.prototype = {
   _setOrderNumber: function ($tempWrap, e) {
     var orderNumber = $('li.checked .fe-order-number', $tempWrap).text();
     $('.fe-text_order', this.$container).val(orderNumber);
+    $('.fe-text_order', this.$container).trigger('change');
     this._popupService.close();
   },
 
