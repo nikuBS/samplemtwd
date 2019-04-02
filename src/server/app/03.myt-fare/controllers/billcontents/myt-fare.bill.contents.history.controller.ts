@@ -6,10 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
-import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
-import {MYT_STRING_KOR_TERM} from '../../../../types/string.type';
 
 interface Info {
   [key: string]: string;

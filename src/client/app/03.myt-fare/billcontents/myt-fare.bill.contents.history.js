@@ -20,13 +20,14 @@ Tw.MyTFareBillContentsHitstory = function (rootEl, data) {
 Tw.MyTFareBillContentsHitstory.prototype = {
   _init: function (data) {
     this.limitLength = 1; // 한번에 노출될 리스트 갯수 TODO: 20
+    this.monthActionSheetListData = null; //현재로부터 지난 6개월 구하기 (액션시트 선택)
+    this.totalList = this._setMonthList(this.data.beforeYear, this.data.beforeMonth, 6, 'key');
     this.list = [];
     this.totalCnt = 0; 
 
-    this.monthActionSheetListData = null; //현재로부터 지난 6개월 구하기 (액션시트 선택)
     this.selectedYear = this._params.year || this.data.curYear;
     this.selectedMonth = this._params.month || this.data.curMonth;
-    $.extend(this, this._getQueryFromTo(this.selectedYear, this.selectedMonth)); // get fromDt, toDt,
+    $.extend(this, this._getQueryFromTo(this.data.beforeYear, this.data.beforeMonth, this.data.curYear, this.data.curMonth)); // get fromDt, toDt,
   },
 
   _cachedElement: function () {
@@ -56,9 +57,16 @@ Tw.MyTFareBillContentsHitstory.prototype = {
       return this._onError(this.$btnShowList, res);
       // res = this.bill_guide_BFF_05_0064; // TODO: delete
     }
+
+    $.extend(this.totalList, this._devData(this._convData(res)));
     
+    this._showWholeList();
+    
+  },
+  
+  _showWholeList: function () {
     // 결과 노출
-    this._showLists(this._convData(res));
+    this._showLists(this.totalList[this._getStrYearMonth(this.selectedYear, this.selectedMonth)]);
 
     // 이벤트 바인드
     this._afterShowListEvent();
@@ -105,9 +113,25 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     }
   },
 
+  _getStrYearMonth: function (year, month) {
+    return year + (month.toString().length < 2 ? '0' : '') + month;
+  },
+
+  // convData -> 배열로 
+  _devData: function (arr) {
+    return _.reduce(arr, function(prev, o) {
+      var key = o.payDt.substr(0, 6);
+      if (Tw.FormatHelper.isEmpty(prev[key])) {
+        prev[key] = [];
+      }
+      prev[key].push(o);
+      return prev;
+    }, {});
+  },
+
   // 결과 노출
   _showLists: function (list) {
-    this.list = list;
+    this.list = [].concat(list);
     this.totalCnt = this.list.length;
 
     var $el = this.$btnShowList; 
@@ -186,10 +210,13 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     // 월 교체
     this.selectedYear = year;
     this.selectedMonth = month;
-    $.extend(this, this._getQueryFromTo(year, month));
+    // $.extend(this, this._getQueryFromTo(year, month));
     this.$moreBtn = null;
     this.$selectMonth = null;
-    this._certShowLists();
+    // this._certShowLists();
+
+    this._showWholeList();
+
   },
 
   // 디테일 페이지
@@ -204,11 +231,12 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 6월 데이터
   _setMonthActionSheetData: function () {
-    return this.monthActionSheetListData || this._setMonthActionSheetListData(this.data.beforeYear, this.data.beforeMonth, 6); // 캐싱된것 or 함수 실행
+    return this.monthActionSheetListData || this._setMonthList(this.data.beforeYear, this.data.beforeMonth, 6); // 캐싱된것 or 함수 실행
   },
 
-  _setMonthActionSheetListData: function (beforeYear, beforeMonth, months) {
+  _setMonthList: function (beforeYear, beforeMonth, months, type) {
     var tempArr = [],
+    keyArr = [],
     year = beforeYear, 
     month = beforeMonth, 
     month_limit = 12; 
@@ -225,21 +253,28 @@ Tw.MyTFareBillContentsHitstory.prototype = {
         attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
         // option:(this.selectedYear === year && this.selectedMonth === month.toString()) ? 'checked' : ''
       });
+      keyArr.push(this._getStrYearMonth(year, month));
     }
 
     this.monthActionSheetListData = [{
       list: tempArr.reverse()
     }];
 
-    return this.monthActionSheetListData;
+    if (type === 'key') {
+      return _.reduce(keyArr, function(prev, key_name){
+        prev[key_name] = [];
+        return prev;
+      }, {});
+    }
   },
 
   // get From To
-  _getQueryFromTo: function(year, month) {
-    var firstDate = year + (month.toString().length < 2 ? '0' : '') + month + '01';
+  _getQueryFromTo: function(prev_year, prev_month, year, month) {
+    var firstDate = prev_year + (prev_month.toString().length < 2 ? '0' : '') + prev_month + '01';
+    var firstEndDate = year + (month.toString().length < 2 ? '0' : '') + month + '01';
     return {
       fromDt: firstDate,
-      toDt: Tw.DateHelper.getEndOfMonth(firstDate, 'YYYYMMDD', 'YYYYMMDD')
+      toDt: Tw.DateHelper.getEndOfMonth(firstEndDate, 'YYYYMMDD', 'YYYYMMDD')
     }
   },
 
