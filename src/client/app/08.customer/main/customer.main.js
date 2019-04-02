@@ -39,7 +39,7 @@ Tw.CustomerMain.prototype = {
   },
   _activateFaqSearch: function (e) {
     var isEnter = Tw.InputHelper.isEnter(e);
-    if ( !!this.$fe_faq_search_text.val() ) {
+    if ( !!this.$fe_faq_search_text.val().trim() ) {
       this.$fe_faq_search.prop('disabled', false);
       if (isEnter) {
         this._goToFaq();
