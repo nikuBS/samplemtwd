@@ -70,7 +70,7 @@
                             <div class="widget-box radio">
                                 <div class="radio-slide small">
                                     <ul class="select-list" role="radiogroup">
-                                        <% const max = Number(group.grpOfrPt) / 100, remain = Number(group.grpRemainPt) / 100; 
+                                        <% const max = Math.min(Number(group.grpOfrPt) / 100, 10), remain = Number(group.grpRemainPt) / 100; 
                                         for (let i = max; i > 0; i--) { %>
                                             <li class="radiobox" role="radio" aria-checked="false" data-amount="<%= i * 100 %>">
                                                 <input type="radio" name="radio1" value="<%= i * 100 %>MB" title="나눠쓰기 할 데이터양" aria-labelledby="aria-comp-radio<%= i %>" <%= i > remain ? 'disabled' : '' %> /><!-- 체크상태일 경우 checked="checked" -->
