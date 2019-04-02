@@ -168,7 +168,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
    */
   _afterComparePop: function (_data, $layer) {
     // [요금제 가입하기] 버튼 노출/비노출
-    $layer.find('#fe-btn-change').toggleClass('none', !this._isShowBtn);
+    if (!this._isShowBtn) {
+      $layer.find('#fe-btn-change').addClass('none');
+      $layer.removeClass('fixed-bottom');
+    }
     // [요금제 가입하기] 버튼 클릭 이벤트
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
     this._initChart($layer, _data);
