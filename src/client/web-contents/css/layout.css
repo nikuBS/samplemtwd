@@ -3563,3 +3563,6 @@ body.hidden {
   font-size: 0.75rem;
   color: #666666;
   border-top: 1px solid #eeeeee; }
+
+.btn-al-center {
+  text-align: center; }
