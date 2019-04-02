@@ -67,7 +67,7 @@ class App {
     this.app.use(UA.express()); // req.useragent
     this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
-    // this.app.use(express.static(path.join(__dirname, '/public/cdn')));
+    this.app.use(express.static(path.join(__dirname, '/public')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.exceptionHandler();
