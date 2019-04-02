@@ -31,14 +31,11 @@
                 <% if (familyInfo.mine) { %>
                 <ul class="data-realtime-wrap">
                     <li>
-                        <% const data = familyInfo.mine.data,
-                            total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total, 
-                            ratio = data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(familyInfo.mine.nRemained / total * 100); %>
                         <div class="graph">
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
                                     <!-- loop -->
-                                    <div id="fe-data-graph" class="c100 p<%= ratio %>"><!-- .p+(0~100) // -->
+                                    <div id="fe-data-graph" class="c100 p<%= familyInfo.mine.ratio %>"><!-- .p+(0~100) // -->
                                         <div class="blue"><!-- red, yellow, green, blue // -->
                                             <div class="slice">
                                                 <div class="bar"></div>
@@ -52,7 +49,7 @@
                         </div>
                         <div class="cont">
                             <span class="stit">나의 T가족모아데이터<button id="DC_02_tip_01" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">나의 T가족모아데이터 tip</span></i></button></span>
-                            <span class="txt1"><span class="ff-type1" id="fe-remained-data"><%= familyInfo.mine.nRemained > 0 ? familyInfo.mine.remained.data + familyInfo.mine.remained.unit : '0KB' %> </span>남음</span>
+                            <span class="txt1"><span class="ff-type1" id="fe-remained-data"><%= familyInfo.mine.remained.data + familyInfo.mine.remained.unit %> </span>남음</span>
                         </div>
                         <% if (familyInfo.mine.shrblYn === "Y") { %>
                         <span class="btn-r">
@@ -64,7 +61,7 @@
                 <% } %>
                 <div class="total-data">
                     <span class="stit">총 가족 공유 데이터</span>
-                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total > 0 ? familyInfo.total + 'GB' : '0KB' %></span></span>
+                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total.data + familyInfo.total.unit %></span></span>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -90,7 +87,7 @@
                                         <% if (isInfinity) { %>
                                             <span class="ff-type1">무제한</span>
                                         <% } else { %>
-                                            <span class="ff-type1"><%= member.used.data > 0 ? member.used.data + member.used.unit : '0KB' %></span>이용
+                                            <span class="ff-type1"><%= member.used.data + member.used.unit %></span>이용
                                         <% } %>
                                     </span>
                                     <p><%= member.svcNum %></p>
@@ -100,7 +97,7 @@
                                         <dt>이용요금제</dt>
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
-                                        <dd><%= member.shared > 0 ? member.shared + 'GB' : '0KB' %></dd>
+                                        <dd><%= member.shared.data + member.shared.unit %></dd>
                                         <% if (!isInfinity) { %>
                                             <dt>이용한도</dt>
                                             <dd>
