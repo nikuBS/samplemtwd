@@ -383,28 +383,6 @@ gulp.task('css-idpt', function() {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('css-5g', function () {
-  return gulp.src(['src/client/web-contents/css/t_m5g.css'])
-  .pipe(concat('style-5g.css'))
-  .pipe(cleanCSS())
-  .pipe(gulp.dest(dist + 'css'))
-  .on('error', function (err) {
-    gutil.log(gutil.colors.red('[Error]'), err.toString());
-  })
-  .pipe(rename('style-5g.min.css'))
-  .pipe(rev())
-  .pipe(logger({
-    before: 'Starting hash css-5g',
-    after: 'Complete hash css-5g',
-    showChange: true
-  }))
-  .pipe(gulp.dest(dist + 'css'))
-  .pipe(rev.manifest(dist + 'tmp/css-5g-manifest.json', {
-    merge: true
-  }))
-  .pipe(gulp.dest('.'));
-});
-
 gulp.task('img', function () {
   return gulp.src('src/client/web-contents/img/**/*')
     .pipe(gulp.dest(dist + 'img'));
@@ -478,7 +456,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'css-5g', 'img', 'hbs', 'font', 'mp4']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font', 'mp4']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);
