@@ -142,7 +142,7 @@ Tw.MyTFareHotBill.prototype = {
   _onReceivedBillData: function (child, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( !resp.result || !resp.result.hotBillInfo ) {
-        this._getBillResponse();
+        this._getBillResponse(child, resp);
         return;
       }
       var billData = resp.result.hotBillInfo[0];

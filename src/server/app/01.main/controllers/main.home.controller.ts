@@ -321,8 +321,12 @@ class MainHome extends TwViewController {
     }
 
     etcKinds.map((kind, index) => {
-      if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
-        result[kind] = usageData[kind][0];
+      const findData = usageData[kind].find((usage) => {
+        return !FormatHelper.isEmpty(usage) &&
+          (UNLIMIT_CODE.indexOf(usage.unlimit) !== -1 || (UNLIMIT_CODE.indexOf(usage.unlimit) === -1 && +usage.remained > 0));
+      });
+      if ( !FormatHelper.isEmpty(findData) ) {
+        result[kind] = findData;
         this.convShowData(result[kind]);
       }
     });

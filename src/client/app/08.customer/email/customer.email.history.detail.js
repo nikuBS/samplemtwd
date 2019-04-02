@@ -68,7 +68,7 @@ Tw.CustomerEmailHistoryDetail.prototype = {
 
   _onSuccessRemoveInquiry: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer');
+      this._history.replaceURL('/customer/emailconsult/history');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -1034,3 +1034,10 @@
     .idpt-benefit .idpt-series-wrap { width:100%; overflow-x: auto; max-width:20.5rem; margin:0 auto; }
     .idpt-benefit .benefit-button .button-red-round.guamsaipan { font-size: 0.75rem; }
 }
+
+/* TWD 추가 */
+/* 190327 공통영역 */
+.idpt-benefit table.tbl-align-left th, .idpt-benefit table.tbl-align-left td, .idpt-benefit table[class|=idpt-tbl] th.align-left, .idpt-benefit table[class|=idpt-tbl] td.align-left{padding:0.625rem 0.75rem;text-align:left}
+.idpt-benefit table[class|=idpt-tbl] th.algin-top{vertical-align:top}
+
+/* //TWD 추가 */

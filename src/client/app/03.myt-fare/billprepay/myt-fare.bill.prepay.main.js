@@ -78,7 +78,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _remainFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
-    Tw.Error(err.code, err.msg).page();
+    Tw.Error(err.code, err.msg).replacePage();
   },
   _setData: function (res) {
     var result = res.result;
