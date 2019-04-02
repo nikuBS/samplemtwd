@@ -310,10 +310,15 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _setSelectedBrand: function ($target, el) {
+    var prev_txt = $target.text();
     this._popupService.close();
 
     $target.text($(el.currentTarget).text().trim());
     $target.data('brandcd', $(el.currentTarget).data('brandcd'));
+
+    if (prev_txt !== $target.text()) {
+      this.$container.find('.fe-select-device').removeData('phoneid').text(Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_DEVICE);
+    }
   },
 
   _setSelectedDevice: function ($target, el) {
