@@ -306,7 +306,7 @@ Tw.CommonMemberSloginIos.prototype = {
   _successRequestLogin: function ($target, resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.FormatHelper.isEmpty(this._target) ) {
+      if ( Tw.FormatHelper.isEmpty(this._target) || this._target === 'undefined' ) {
         this._historyService.goBack();
       } else {
         this._historyService.replaceURL(this._target);
