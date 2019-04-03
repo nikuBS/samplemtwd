@@ -225,7 +225,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     var detail = $.extend(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
       chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
-      date: Tw.DateHelper.getShortDate(history.chargeDt),
+      date: Tw.DateHelper.getShortDate(history.chargeDtm),
       amt: Tw.FormatHelper.addComma(history.amt),
       payment:
         history.cardNm && history.wayCd === '02' ? 
