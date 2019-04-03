@@ -43,7 +43,6 @@ Tw.MenuComponent = function (notAboutMenu) {
 
     this._init();
     this._bindEvents();
-    this._componentReady();
 
     new Tw.XtractorService(this.$container);
   }, this));
@@ -173,23 +172,7 @@ Tw.MenuComponent.prototype = {
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
   },
-  _componentReady: function () {
-    /* history back에서 메뉴 삭제
-    if ( location.hash === '#menu' ) {
-      setTimeout($.proxy(function () {
-        this.$gnbBtn.click();
-      }, this), 100);
-    }
-    */
-
-    this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
-    if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid) ) {
-
-    }
-
-
-  },
-  _checkNewTNoti: function () {
+  _checkNewTNoti: function () { // 읽지 않은 신규 noti 있는지 확인하고 있을 경우 아이콘에 빨간 점 추가
     var showNotiIfNeeded = function (latestSeq, self) {
       self._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ },
         $.proxy(function (res) {
@@ -278,7 +261,7 @@ Tw.MenuComponent.prototype = {
 
     this.$container.find('#fe-close').focus();  // 웹 접근성, 포커스 메뉴 div로 이동
   },
-  _onTNoti: function (e) {
+  _onTNoti: function (e) { // T-noti 클릭하여 진입 시 아이콘에 빨간 점 제거
     if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
