@@ -41,9 +41,9 @@ class MyTJoinWireSetPause extends TwViewController {
       const wirePauseInfo = this.getWirePauseInfo(wirePauseInfoResp);
       // console.log('~~~~~~~~~~~`wirePauseInfo', wirePauseInfo);
       const today = new Date();
-      // 정지 시작일 익일로 세팅
-      const min = DateHelper.getShortDateWithFormatAddByUnit(today, 1, 'days', this._INPUT_FORMAT);
-      // 정지 시작 가능일 세팅(익일 ~ 30일 이내)
+      // 정지 시작일 당일로 세팅
+      const min = DateHelper.getShortDateWithFormat( DateHelper.getCurrentDate(), this._INPUT_FORMAT );
+      // 정지 시작 가능일 세팅(당일 ~ 30일 이내)
       const startDate = {
         min: min,
         max: DateHelper.getShortDateWithFormatAddByUnit(today, this._SELECTABLE_MAX_DAY, 'days', this._INPUT_FORMAT),
