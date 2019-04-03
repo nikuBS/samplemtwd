@@ -138,15 +138,15 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
-    this.controllers.push({ url: '/wireplan/join/basic-info', controller: ProductWireplanJoinBasicInfo });
-    this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
-    this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
+    // this.controllers.push({ url: '/wireplan/join/basic-info', controller: ProductWireplanJoinBasicInfo });
+    // this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
+    // this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
     this.controllers.push({ url: '/wireplan/join', controller: ProductWireplanJoin });
-    this.controllers.push({ url: '/wireplan/setting/basic-info', controller: ProductWireplanSettingBasicInfo });
-    this.controllers.push({ url: '/wireplan/setting/lettering', controller: ProductWireplanSettingLettering });
-    this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
+    // this.controllers.push({ url: '/wireplan/setting/basic-info', controller: ProductWireplanSettingBasicInfo });
+    // this.controllers.push({ url: '/wireplan/setting/lettering', controller: ProductWireplanSettingLettering });
+    // this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
-    this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
+    // this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
