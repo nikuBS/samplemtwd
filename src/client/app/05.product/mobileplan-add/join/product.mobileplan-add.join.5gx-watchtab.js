@@ -51,17 +51,15 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
 
 
   _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact);
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact.bind(this));
   },
 
   _onContact: function (res) {
     if (res.resultCode !== Tw.NTV_CODE.CODE_00) {
       return;
     }
-    //var params = response.params;
-
+    this._data.addList.push(Tw.StringHelper.phoneStringToDash(res.params.phoneNumber));
   },
-
 
   _addNum: function () {
     if (this.$inputNumber.val().length < 10) {
