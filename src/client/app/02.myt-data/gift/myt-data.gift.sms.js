@@ -51,7 +51,9 @@ Tw.MyTDataGiftSms.prototype = {
     }
   },
 
-  _onClickSendSMS: function () {
+_onClickSendSMS: function () {
+    this._lockSms();
+
     this._apiService.request(Tw.API_CMD.BFF_06_0017, {
       befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
       msg: this.$textarea_sms.val()
@@ -63,6 +65,17 @@ Tw.MyTDataGiftSms.prototype = {
       this._historyService.replaceURL('/myt-data/submain');
     } else {
       Tw.Error(res.code, res.msg).pop();
+      this._unlockSms();
     }
+  },
+
+  _lockSms: function () {
+    this.$textarea_sms.prop('disabled', true);
+    this.$btn_send_sms.prop('disabled', true);
+  },
+
+  _unlockSms: function () {
+    this.$textarea_sms.prop('disabled', false);
+    this.$btn_send_sms.prop('disabled', false);
   }
 };

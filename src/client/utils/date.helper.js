@@ -231,6 +231,14 @@ Tw.DateHelper = (function () {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1. 12:00:00
+   */
+  var getFullDateAnd24Time = function (date) {
+    return moment(convDateFormat(date)).format('YYYY.M.D. HH:mm:ss');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018-06-02 11:59
    */
   var getAddDay = function (date, format) {
@@ -420,6 +428,7 @@ Tw.DateHelper = (function () {
     getShortDateNoYear: getShortDateNoYear,
     getShortDateAndTime: getShortDateAndTime,
     getFullDateAndTime: getFullDateAndTime,
+    getFullDateAnd24Time: getFullDateAnd24Time,
     getAddDay: getAddDay,
     convDateFormat: convDateFormat,
     convDateCustomFormat: convDateCustomFormat,
