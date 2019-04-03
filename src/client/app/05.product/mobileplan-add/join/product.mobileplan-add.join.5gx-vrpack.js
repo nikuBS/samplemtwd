@@ -65,7 +65,7 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
       zip: data.zip
     })
     .done(function (res) {
-      if(res.code !== '00') {
+      if (res.code !== '00') {
         Tw.Error('', Tw.ALERT_MSG_COMMON.SERVER_ERROR).pop();
         $.proxy(Tw.CommonHelper.endLoading('.container'), this);
         return;
@@ -76,7 +76,7 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
       this.$inputAddressDetail.val(data.detail);
       this.$btnSetupOk.attr('disabled', false);
     }.bind(this))
-    .fail(function() {
+    .fail(function () {
       Tw.Error('', Tw.ALERT_MSG_COMMON.SERVER_ERROR).pop();
       $.proxy(Tw.CommonHelper.endLoading('.container'), this);
     }.bind(this));

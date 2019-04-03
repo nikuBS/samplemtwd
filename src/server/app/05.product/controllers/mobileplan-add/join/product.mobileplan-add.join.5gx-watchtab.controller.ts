@@ -10,9 +10,8 @@ import {NextFunction, Request, Response} from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
 import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
+import {API_CMD} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import ProductHelper from '../../../../../utils/product.helper';
 
 class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   constructor() {
