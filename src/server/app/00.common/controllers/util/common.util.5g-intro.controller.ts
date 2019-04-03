@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class CommonUtil5gIntro extends TwViewController {
   constructor() {
@@ -27,7 +28,7 @@ class CommonUtil5gIntro extends TwViewController {
         svcInfo
       });
     }
-    res.render(`util/common.util.5g-intro_${page}.html`, {pageInfo, svcInfo});
+    res.render(`util/common.util.5g-intro_${page}.html`, {pageInfo, svcInfo, isAndroid: BrowserHelper.isAndroid(req)});
   }
 
 
