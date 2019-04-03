@@ -9,11 +9,11 @@ class ProductHelper {
       return null;
     }
 
-    function _getStipulationYnCnt(yNarray) {
+    function _getStipulationCnt(yNarray) {
       let count = 0;
 
       yNarray.forEach(flag => {
-        if (flag === 'Y') {
+        if (flag) {
           count++;
         }
       });
@@ -29,18 +29,22 @@ class ProductHelper {
       return FormatHelper.stripTags(htmlContext);
     }
 
-    const isScrbStplAgree = stipulation.scrbStplAgreeYn === 'Y',
-      isPsnlInfoCnsgAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
-      isPsnlInfoOfrAgree = stipulation.psnlInfoOfrAgreeYn === 'Y',
-      isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.termStplAgreeYn === 'Y';
+    function _isAgree(agreeYn: any, title: any, htmlCtt: any): boolean {
+      return agreeYn === 'Y' && !FormatHelper.isEmpty(title) && !FormatHelper.isEmpty(htmlCtt);
+    }
 
-    let existsCount = _getStipulationYnCnt([
-        stipulation.scrbStplAgreeYn,
-        stipulation.psnlInfoCnsgAgreeYn,
-        stipulation.psnlInfoOfrAgreeYn,
-        stipulation.adInfoOfrAgreeYn,
-        stipulation.termStplAgreeYn
+    const isScrbStplAgree = _isAgree(stipulation.scrbStplAgreeYn, stipulation.scrbStplAgreeTitNm, stipulation.scrbStplAgreeHtmlCtt),
+      isPsnlInfoCnsgAgree = _isAgree(stipulation.psnlInfoCnsgAgreeYn, stipulation.psnlInfoCnsgAgreeTitNm, stipulation.psnlInfoCnsgAgreeHtmlCtt),
+      isPsnlInfoOfrAgree = _isAgree(stipulation.psnlInfoOfrAgreeYn, stipulation.psnlInfoOfrAgreeTitNm, stipulation.psnlInfoOfrAgreeHtmlCtt),
+      isAdInfoOfrAgree = _isAgree(stipulation.adInfoOfrAgreeYn, stipulation.adInfoOfrAgreeTitNm, stipulation.adInfoOfrAgreeHtmlCtt),
+      isTermStplAgree = _isAgree(stipulation.termStplAgreeYn, stipulation.termStplAgreeTitNm, stipulation.termStplAgreeHtmlCtt);
+
+    let existsCount = _getStipulationCnt([
+      isScrbStplAgree,
+      isPsnlInfoCnsgAgree,
+      isPsnlInfoOfrAgree,
+      isAdInfoOfrAgree,
+      isTermStplAgree
       ]);
 
     if (isInstallAgreement) {

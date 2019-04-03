@@ -179,11 +179,11 @@ Tw.ProductHelper = (function () {
       return null;
     }
 
-    function _getStipulationYnCnt(yNarray) {
+    function _getStipulationCnt(yNarray) {
       var count = 0;
 
       $.each(yNarray, function(idx, flag) {
-        if (flag === 'Y') {
+        if (flag) {
           count++;
         }
       });
@@ -199,17 +199,21 @@ Tw.ProductHelper = (function () {
       return Tw.FormatHelper.stripTags(htmlContext);
     }
 
-    var isScrbStplAgree = stipulation.scrbStplAgreeYn === 'Y',
-      isPsnlInfoCnsgAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
-      isPsnlInfoOfrAgree = stipulation.psnlInfoOfrAgreeYn === 'Y',
-      isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.termStplAgreeYn === 'Y',
-      existsCount = _getStipulationYnCnt([
-        stipulation.scrbStplAgreeYn,
-        stipulation.psnlInfoCnsgAgreeYn,
-        stipulation.psnlInfoOfrAgreeYn,
-        stipulation.adInfoOfrAgreeYn,
-        stipulation.termStplAgreeYn
+    function _isAgree(agreeYn, title, htmlCtt) {
+      return agreeYn === 'Y' && !Tw.FormatHelper.isEmpty(title) && !Tw.FormatHelper.isEmpty(htmlCtt);
+    }
+
+    var isScrbStplAgree = _isAgree(stipulation.scrbStplAgreeYn, stipulation.scrbStplAgreeTitNm, stipulation.scrbStplAgreeHtmlCtt),
+      isPsnlInfoCnsgAgree = _isAgree(stipulation.psnlInfoCnsgAgreeYn, stipulation.psnlInfoCnsgAgreeTitNm, stipulation.psnlInfoCnsgAgreeHtmlCtt),
+      isPsnlInfoOfrAgree = _isAgree(stipulation.psnlInfoOfrAgreeYn, stipulation.psnlInfoOfrAgreeTitNm, stipulation.psnlInfoOfrAgreeHtmlCtt),
+      isAdInfoOfrAgree = _isAgree(stipulation.adInfoOfrAgreeYn, stipulation.adInfoOfrAgreeTitNm, stipulation.adInfoOfrAgreeHtmlCtt),
+      isTermStplAgree = _isAgree(stipulation.termStplAgreeYn, stipulation.termStplAgreeTitNm, stipulation.termStplAgreeHtmlCtt),
+      existsCount = _getStipulationCnt([
+        isScrbStplAgree,
+        isPsnlInfoCnsgAgree,
+        isPsnlInfoOfrAgree,
+        isAdInfoOfrAgree,
+        isTermStplAgree
       ]);
 
     if (isInstallAgreement) {
