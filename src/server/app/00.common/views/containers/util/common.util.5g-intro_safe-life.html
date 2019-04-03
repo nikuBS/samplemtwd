@@ -14,23 +14,15 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
-            <div class="h-default">
-                <div class="h-tit">초[超]시대의 안심이 되는 생활</div>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '초[超]격차 네트워크로 안심이 되는 생활', svcInfo: svcInfo, home: 'app' }) %>
     <!-- #contents -->
-    <!-- 190329 수정 -->
+    <!-- 190402 수정 -->
     <div id="contents" class="container-wrap">
         <div class="container">
             <!-- keyVisual -->
             <div class="og-5mktp-keyvisual">
                 <div class="text-wrap">
-                    <h2 class="tit">가장 빠르고, 안전한 네트워크 <strong>초[超]시대<br> <span class="em">안심이 되는</span><br> 생활</strong></h2>
+                    <h2 class="tit">초[超]격차 네트워크로 안심이 되는 생활 <strong>가장 <span class="em">빠르고,</span><br> 가장 <span class="em">넓고,</span><br> 가장 <span class="em">안전한</span> 네트워크</strong></h2>
                     <p>독보적인 속도와 보안으로<br> 초연결 시대를 엽니다</p>
                 </div>
                 <div class="img"><img src="<%= CDN %>/img/t_m5g/og_5mktp_keyvisual_img_01.png" alt=""></div>
@@ -46,15 +38,10 @@
                         <p class="og-5mktp-box-subtit">가장 빠른 5G 생활</p>
                     </div>
                     <div class="og-good-num og-wide-gap">
-                        <img src="<%= CDN %>/img/t_m5g/og_speed.png" class="img" alt="최고속도 2.7Gbps = LTE 1.2 + 5G 1.5Gbps">
+                        <img src="<%= CDN %>/img/t_m5g/og_speed.png" class="img" alt="최고속도 2.7Gbps">
                     </div>
                     <div class="og-cont-wrap">
-                        <p class="cont-em og-strong">LTE보다 20배 빠른 속도<span class="else">(LTE 1Gbps vs 5G 20Gbps)</span><br>LTE + 5G 동시 사용 기준</p>
                         <p class="cont-box-normal">고화질/고용량 콘텐츠를 제대로 즐기기 위해 가장 중요한 것은 속도.<br>SKT에서 압도적으로 빠른 5GX를 누리세요.</p>
-                        <p class="og-gray-txt-pra">
-                            <span class="box-refer og-strong">5GX 이용 가능 지역 확대 계획</span>
-                            2019년 9월까지 주요 85개 시에 커버리지 구축 완료 예정
-                        </p>
                     </div>
                 </div><!-- //og-5mktp-box -->
 
@@ -65,7 +52,7 @@
                     </div>
                     <div class="og-cont-wrap">
                         <p class="og-5mktp-box-subtit">가장 안전한 5G 생활</p>
-                        <p class="cont-box-normal mg-type01">모든 것이 연결되는 시대, 보안의 중요성은 더 커졌죠. SKT만의 양자암호 기술로 안전한<br>5GX를 즐기세요!</p>
+                        <p class="cont-box-normal mg-type01">모든 것이 연결되는 시대, 보안의 중요성은 더 커졌죠.<br> SKT만의 양자암호 기술로 안전한<br>5GX를 즐기세요!</p>
                         <p class="og-gray-txt-pra mg-type01">
                             SKT 5GX는 정보를<br>복제하거나 훔쳐가지 못하게<br>원천적으로 차단하는 보안 기술을<br>가지고 있습니다.
                         </p>
@@ -79,10 +66,9 @@
                     </div>
                     <div class="og-cont-wrap">
                         <p class="og-5mktp-box-subtit">가장 넓은 5G 생활</p>
-                        <p class="cont-box-normal mg-type01">“85개 시 전국망 구축을 시작으로<br>빈틈없는 커버리지 확대”</p>
                     </div>
-                    <div class="og-good-num">
-                        <img src="<%= CDN %>/img/t_m5g/og_open_map.png" class="img" alt="국내 최다 기지국 3월 중순 기준 (업데이트 예정)">
+                    <div class="og-good-num og-wide-gap">
+                        <img src="<%= CDN %>/img/t_m5g/og_open_num.png" class="img" alt="85개 시 전국망 구축을 시작으로 빈틈없는 커버리지 확대">
                     </div>
                 </div><!-- //og-5mktp-box -->
                 <div class="og-bg-wrap">
@@ -94,7 +80,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <!-- //190329 수정 -->
+    <!-- //190402 수정 -->
 </div>
 
 <% include ../../components/javascript.component.html %>
@@ -118,6 +104,15 @@
         }, 500);
       }
     });
+
+    if (Tw.BrowserHelper.isApp()) {
+      $('.fe-link-external').on('click', function (e) {
+        e.preventDefault();
+        Tw.CommonHelper.showDataCharge(function () {
+          Tw.CommonHelper.openUrlExternal(e.currentTarget.href);
+        });
+      })
+    }
   });
 </script>
 <!-- //190329 수정 -->

@@ -31,13 +31,13 @@
                 <div class="cont-box">
                     <div class="product-tit-wrap">
                         <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
-                        <span class="tit-big">5GX 워치tab할인_모</span>
+                        <span class="tit-big"><%= prodRedisInfo.summary.prodNm %></span>
                     </div>
                 </div>
 
                 <div class="ti-caption-gray">
                     <h4 class="tit">결합회선 설정
-                        <button type="button" class="tip-view" title="내폰끼리 결합회선 설정 정보보기" id="MV_02_02_02_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button>
+                        <button type="button" class="tip-view" title="내폰끼리 결합회선 설정 정보보기" id="TC000042" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button>
                     </h4>
                     <p class="num"><%= svcInfo.svcNumDash %></p>
                 </div>
@@ -105,7 +105,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoin5gxWatchtab($('.wrap'), '<%= prodId %>', 'nApp_7476_01');
+    new Tw.ProductMobileplanAddJoin5gxWatchtab($('.wrap'), '<%= prodId %>', 'nApp_7476_01', '<%= svcInfo.prodId %>');
   });
 </script>
 </body>

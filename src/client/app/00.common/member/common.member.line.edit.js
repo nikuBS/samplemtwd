@@ -37,7 +37,7 @@ Tw.CommonMemberLineEdit.prototype = {
     this.$exposedList = this.$container.find('.fe-item-active');
 
     this.$container.on('click', '#fe-bt-guide', $.proxy(this._openGuidePopup, this));
-    this.$container.on('click', '#fe-bt-complete', $.proxy(this._completeEdit, this));
+    this.$container.find('#fe-bt-complete').click(_.debounce($.proxy(this._completeEdit, this), 500));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickRemove, this));
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickAdd, this));
 

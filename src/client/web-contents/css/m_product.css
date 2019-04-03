@@ -928,104 +928,6 @@
 .idpt-benefit .tb-phone-list > li::before { position:absolute; display:block; counter-increment: numList; content: counter(numList); top:0.09rem; left:0; width:0.8rem; height:0.8rem; line-height:0.8rem; font-size: 0.6rem; color:#959595; text-align:center; border:1px solid #959595; border-radius:0.4rem; -webkit-box-sizing:border-box; box-sizing:border-box; }
 .idpt-benefit .tb-phone-download { text-decoration: underline; color:#178bce; }
 
-/* baro 2019.03.22 */
-.idpt-baro-top {height:22.6875rem;background:#f3f5f7 url(/img/product/img_collab_top.png) no-repeat center bottom;background-size:19.75rem auto;text-align:center;color:#333;}
-.idpt-baro-top > img { height:1.9375rem; margin-top:1.875rem; }
-.idpt-baro-top > p { font-size: 0.9375rem; font-weight: 400; color:#333; margin-top:1.25rem; }
-
-.idpt-baro-intro { padding:2.5rem 1rem 1.125rem; background-color:#fff; }
-.idpt-baro-intro .baro-intro-left { text-align:center; }
-.idpt-baro-intro .baro-intro-left > img { width:7.3125rem; }
-.idpt-baro-intro .baro-intro-right > p { font-size: 0.875rem; font-weight: 400; color:#333; margin-top:0.9375rem; text-align:center; }
-.idpt-baro-intro .baro-intro-right > div { margin-top:1.875rem; }
-.idpt-baro-intro .baro-intro-right .baro-list-title { font-size: 0.9375rem; font-weight: bold; color:#4765ff; }
-.idpt-baro-intro .baro-intro-right .idpt-baro-list { margin-top:0.625rem; }
-.idpt-baro-list > li { padding-left:0.5625rem; font-size: 0.875rem; font-weight: 400; color:#666; background:url(/img/product/bu_collab_blue.png) no-repeat 0 0.4375rem; }
-.idpt-baro-list > li + li { margin-top:0.625rem; }
-.idpt-baro-list + .baro-list-title { margin-top:1.25rem; }
-
-.idpt-baro-use { text-align:center; background-color:#4766ff; }
-.idpt-baro-use > img { width:10.4375rem; margin-top:1.875rem; }
-.idpt-baro-use .idpt-baro-use-list { width:17.9375rem; margin:1.0625rem auto 0; padding-bottom:2.5rem; }
-.idpt-baro-use .idpt-baro-use-list > li { position:relative; float:left; width:5.3125rem; height:9rem; -webkit-box-sizing: border-box; box-sizing: border-box; padding-top:5.625rem; font-size: 0.875rem; font-weight: 700; color:#fff; background-repeat:no-repeat; background-position: 0 0; background-size:5.3125rem auto; }
-.idpt-baro-use .idpt-baro-use-list > li:nth-child(1) { background-image:url(/img/product/img_collab_ico1.png); }
-.idpt-baro-use .idpt-baro-use-list > li:nth-child(2) { background-image:url(/img/product/img_collab_ico2.png); }
-.idpt-baro-use .idpt-baro-use-list > li:nth-child(3) { background-image:url(/img/product/img_collab_ico3.png); }
-.idpt-baro-use .idpt-baro-use-list > li + li { margin-left: 1rem; }
-.idpt-baro-use .idpt-baro-use-list > li::before { position: absolute; content:''; display:block; top:2.25rem; left:-0.6875rem; width:0.4375rem; height:0.8125rem; background:url(/img/product/ico_collab_arr.png) no-repeat 0 0; background-size:0.4375rem auto; }
-.idpt-baro-use .idpt-baro-use-list > li:first-child::before { display:none; }
-
-.idpt-baro-network { padding:0 1rem 1.875rem; background-color:#3952cc; text-align: center; }
-.idpt-baro-network > img { margin-top:1.875rem; width:10.875rem; }
-.idpt-baro-network .baro-network-left { margin-top:0.625rem; }
-.idpt-baro-network .baro-network-right { margin-top:0.3125rem; }
-.idpt-baro-network > div img { width:100%; max-width:36.3125rem; }
-.idpt-baro-network > p { margin-top:0.625rem; text-align: left; font-size: 0.9375rem; font-weight: 400; color:#fff; }
-
-/* guam & saipan 2019.03.25 */
-.idpt-gs-wrap { width:100%; margin:0; padding:0; }
-.idpt-gs-wrap > img { width:100%; vertical-align: top; }
-
-.idpt-gs-container { margin-top:-33%; width:100%; padding:0 1rem 1.875rem; -webkit-box-sizing: border-box; box-sizing:border-box; background-color:#e0c6a6; text-align:center; }
-.idpt-gs { position:relative; width:100%; background-color:#fff; box-shadow:rgba(148,119,92,0.3) 0.1875rem 0.3125rem 0.3125rem; }
-.idpt-gs .idpt-tab-wrap .tab-menu > li { position:relative; float:left; width:50%; height:2.8125rem; font-size: 0.75rem; font-weight: bold; color:#fff; line-height:2.8125rem; cursor:pointer; }
-.idpt-gs .idpt-tab-wrap .tab-menu > li:first-child { background-color:#fb7023; }
-.idpt-gs .idpt-tab-wrap .tab-menu > li:last-child { background-color:#ef3550; }
-.idpt-gs .idpt-tab-wrap .tab-menu > li.on::after { position:absolute; display:block; content:''; top:100%; left:50%; width:0.75rem; height:0.4375rem; background-repeat:no-repeat; background-position:0 0; background-size:0.75rem auto; -webkit-transform: translateX(-50%); transform: translateX(-50%); }
-.idpt-gs .idpt-tab-wrap .tab-menu > li:first-child.on::after { background-image:url(/img/product/img_guamSaipan_arr1.png); }
-.idpt-gs .idpt-tab-wrap .tab-menu > li:last-child.on::after { background-image:url(/img/product/img_guamSaipan_arr2.png); }
-.idpt-gs .idpt-tab-wrap .tab-contents { display:none; padding: 1.25rem 0 0; }
-.idpt-gs .idpt-tab-wrap .tab-contents.show { display:block; }
-.idpt-gs .gs-info-wrap { padding:0 1rem; }
-.idpt-gs .idpt-gs-title { font-size: 0.875rem; font-weight: bold; color:#333; }
-.idpt-gs .gs-orange .idpt-gs-title > strong { font-size: 1.125rem; color:#fb7023; }
-.idpt-gs .gs-red .idpt-gs-title > strong { font-size: 1.125rem; color:#ef3550; }
-.idpt-gs .idpt-gs-txt { font-size: 0.75rem; color:#333; font-weight: 400; line-height:1.0625rem; }
-.idpt-gs .gs-orange .idpt-gs-txt > span { color:#fb7023; }
-.idpt-gs .gs-red .idpt-gs-txt > span { color:#ef3550; }
-.idpt-gs .idpt-gs-point { display:inline-block; padding-left:1.0625rem; font-size: 0.8125rem; line-height:1.125rem; color:#666; background:url(/img/product/bl_info.png) no-repeat 0 0.125rem; background-size:0.75rem 0.75rem; }
-
-.idpt-gs .idpt-gs-title + .idpt-gs-txt { margin-top:0.9375rem; }
-.idpt-gs .idpt-gs-txt + .idpt-gs-txt { margin-top:0.9375rem; }
-.idpt-gs .idpt-gs-txt + .idpt-gs-point { margin-top:0.9375rem; }
-
-.idpt-gs-list { margin-top:1.25rem; padding-bottom:1.25rem; }
-.idpt-gs-list > li { min-height:4.0625rem; padding:0.625rem 0 0.625rem 8.1875rem; border-bottom:1px dashed #ccc; background-repeat: no-repeat; background-position:1.25rem center; background-size: 4.8125rem auto; }
-.idpt-gs-list > li:last-child { border-bottom:0; }
-.idpt-gs-list > li.gs-list-01 { background-image:url(/img/product/img_guamSaipan_benefit1.png); }
-.idpt-gs-list > li.gs-list-02 { background-image:url(/img/product/img_guamSaipan_benefit2.png); }
-.idpt-gs-list > li.gs-list-03 { background-image:url(/img/product/img_guamSaipan_benefit3.png); }
-.idpt-gs-list > li.gs-list-04 { background-image:url(/img/product/img_guamSaipan_benefit4.png); }
-.idpt-gs-list > li > div { display:table-cell; vertical-align: middle; text-align: left; height:4.0625rem; }
-.idpt-gs-list > li > div .gs-list-title { font-size: 0.75rem; font-weight: 700; color:#333; }
-.idpt-gs-list > li > div .gs-list-txt { font-size: 0.75rem; font-weight: 400; color:#333; }
-.idpt-gs-list > li > div .gs-list-refer { font-size: 0.6875rem; font-weight: 400; color:#333; }
-.idpt-gs-list > li > div .gs-list-title + .gs-list-txt { margin-top:0.3125rem; }
-.idpt-gs-list > li > div .gs-list-txt + .gs-list-refer { margin-top:0.3125rem; }
-
-.idpt-gs .gs-table-wrap { padding:1.5625rem 1rem; -webkit-box-sizing: border-box; box-sizing:border-box; background-color:#f3f5f7; }
-.idpt-gs .gs-table-title { font-size: 0.875rem; font-weight: bold; color:#333; }
-.idpt-gs .gs-table { margin-top:1.25rem; border-bottom: 1px solid #d0d0d0; background-color: #fff; font-size: 0.75rem; color: #333; }
-.idpt-gs .gs-table th { font-weight: bold; padding:0.625rem 0; border-top:1px solid #e9e9e9; }
-.idpt-gs .gs-table thead th { padding:0.625rem 0; background-color:#fffbf8; border-bottom:1px solid #d0d0d0; border-left:1px solid #e9e9e9; }
-.idpt-gs .gs-table thead th:first-child { border:0; }
-.idpt-gs .gs-table tr:first-child th,
-.idpt-gs .gs-table tr:first-child td { border-top:1px solid #d0d0d0; }
-.idpt-gs .gs-table td { padding: 0.625rem 0; border-top: 1px solid #e9e9e9; border-left: 1px solid #e9e9e9; vertical-align: top; }
-.idpt-gs .gs-table td strong { letter-spacing: -0.09375rem; line-height:1.25rem; word-break: keep-all; }
-
-.idpt-gs .gs-orange .gs-table { border-top: 2px solid #ff771d; }
-.idpt-gs .gs-orange .gs-table thead th { color:#ff771d; }
-.idpt-gs .gs-red .gs-table { border-top: 2px solid #ef3550; }
-.idpt-gs .gs-red .gs-table thead th { color:#ef3550; }
-
-.idpt-gs .gs-table-wrap .idpt-gs-point { display:block; text-align: left; margin-top:0.625rem; }
-
-.idpt-gs .gs-button { display: inline-block; padding: 0.5625rem 1.25rem; font-size: 0.875rem; color: #fff; margin-top:1.25rem; }
-.idpt-gs .gs-orange .gs-button { background-color:#ff771d; }
-.idpt-gs .gs-red .gs-button { background-color:#ef3550; }
-
-
 @media screen and (max-width:359px) {
     .idpt-benefit,
     .idpt-benefit .inside-box { overflow-x: hidden; }
@@ -1036,8 +938,21 @@
 }
 
 /* TWD 추가 */
-/* 190327 공통영역 */
+/* 190402 공통영역 */
 .idpt-benefit table.tbl-align-left th, .idpt-benefit table.tbl-align-left td, .idpt-benefit table[class|=idpt-tbl] th.align-left, .idpt-benefit table[class|=idpt-tbl] td.align-left{padding:0.625rem 0.75rem;text-align:left}
 .idpt-benefit table[class|=idpt-tbl] th.algin-top{vertical-align:top}
-
+/* 190402 5GX */
+.idpt-benefit .idpt-dot-list > li:before{background-color:#cd0e2c}
+.idpt-benefit .benefit-title.bg-line{position:relative;background-color:inherit}
+.idpt-benefit .benefit-title.bg-line:after{content:'';position:absolute;top:50%;right:-1rem;left:1rem;border-top:1px solid #242424;z-index:0}	
+.idpt-benefit .benefit-title.bg-line .inner-text{position:relative;display:inline-block;padding-right:1.875rem;background-color:inherit;z-index:1}
+.idpt-benefit .benefit-title.bg-line .inner-text:after{content:'';position:absolute;display:block;top:0;right:0;bottom:0;left:0;background-color:inherit;z-index:-1}
+.idpt-benefit .benefit-button .button-more.icon-arrow-type{position:relative;text-decoration:none}
+.idpt-benefit .benefit-button .button-more.icon-arrow-type.icon-arrow-red{color:#cd0e2c}
+.idpt-benefit .benefit-button .button-more.icon-arrow-type:after{content:'';display:inline-block;width:1.21875rem;height:0.75rem;margin-left:0.5rem;background:url('/img/product/icon-arrow-red_m.png') 0 0 no-repeat;background-size:100% auto}
+.idpt-benefit .benefit-title .bg-text-deco{position:relative;padding:0 0.125rem;z-index:1}
+.idpt-benefit .benefit-title .bg-text-deco:after{content:'';position:absolute;right:0;bottom:0;left:0;border-bottom:0.6875rem solid #54c1ff;z-index:-1}
+.idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li img {height:auto}
+.idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li.display-flex .sub-title {font-size:1.5rem; letter-spacing:-0.125rem;}
+.idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li.display-flex .sub-txt {font-size:0.8125rem}
 /* //TWD 추가 */

@@ -4065,6 +4065,9 @@ body.apphome {
       padding-top: 1.5rem; }
       .complete-wrap .title-box .tx-tit span {
         display: inline-block; }
+      .complete-wrap .title-box .tx-tit .tx-sub-tit {
+        font-size: 0.875rem;
+        display: block; }
       .complete-wrap .title-box .tx-tit .tx-highlight {
         font-size: 1.5625rem;
         line-height: 1.875rem; }

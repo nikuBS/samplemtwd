@@ -9,11 +9,11 @@ class ProductHelper {
       return null;
     }
 
-    function _getStipulationYnCnt(yNarray) {
+    function _getStipulationCnt(yNarray) {
       let count = 0;
 
       yNarray.forEach(flag => {
-        if (flag === 'Y') {
+        if (flag) {
           count++;
         }
       });
@@ -29,18 +29,22 @@ class ProductHelper {
       return FormatHelper.stripTags(htmlContext);
     }
 
-    const isScrbStplAgree = stipulation.scrbStplAgreeYn === 'Y',
-      isPsnlInfoCnsgAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
-      isPsnlInfoOfrAgree = stipulation.psnlInfoOfrAgreeYn === 'Y',
-      isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.termStplAgreeYn === 'Y';
+    function _isAgree(agreeYn: any, title: any, htmlCtt: any): boolean {
+      return agreeYn === 'Y' && !FormatHelper.isEmpty(title) && !FormatHelper.isEmpty(htmlCtt);
+    }
 
-    let existsCount = _getStipulationYnCnt([
-        stipulation.scrbStplAgreeYn,
-        stipulation.psnlInfoCnsgAgreeYn,
-        stipulation.psnlInfoOfrAgreeYn,
-        stipulation.adInfoOfrAgreeYn,
-        stipulation.termStplAgreeYn
+    const isScrbStplAgree = _isAgree(stipulation.scrbStplAgreeYn, stipulation.scrbStplAgreeTitNm, stipulation.scrbStplAgreeHtmlCtt),
+      isPsnlInfoCnsgAgree = _isAgree(stipulation.psnlInfoCnsgAgreeYn, stipulation.psnlInfoCnsgAgreeTitNm, stipulation.psnlInfoCnsgHtmlCtt),
+      isPsnlInfoOfrAgree = _isAgree(stipulation.psnlInfoOfrAgreeYn, stipulation.psnlInfoOfrAgreeTitNm, stipulation.psnlInfoOfrHtmlCtt),
+      isAdInfoOfrAgree = _isAgree(stipulation.adInfoOfrAgreeYn, stipulation.adInfoOfrAgreeTitNm, stipulation.adInfoOfrHtmlCtt),
+      isTermStplAgree = _isAgree(stipulation.termStplAgreeYn, stipulation.termStplAgreeTitNm, stipulation.termStplAgreeHtmlCtt);
+
+    let existsCount = _getStipulationCnt([
+      isScrbStplAgree,
+      isPsnlInfoCnsgAgree,
+      isPsnlInfoOfrAgree,
+      isAdInfoOfrAgree,
+      isTermStplAgree
       ]);
 
     if (isInstallAgreement) {
@@ -57,7 +61,7 @@ class ProductHelper {
       scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.scrbStplAgreeHtmlCtt),
       psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.psnlInfoCnsgHtmlCtt),
       psnlInfoOfrCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.psnlInfoOfrHtmlCtt),
-      adInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.psnlInfoCnsgHtmlCtt),
+      adInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.adInfoOfrHtmlCtt),
       termStplAgreeCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.termStplAgreeHtmlCtt),
       existsCount: existsCount
     });
