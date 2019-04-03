@@ -51,7 +51,7 @@
                                     <label class="tit mb0" for="inpName">이름</label>
                                     <div class="inputbox readonly">
                                         <span class="input">
-                                            <input type="text" id="inpName" value="<%= svcInfo.mbrNm %>" readonly aria-describedby>
+                                            <input type="text" id="inpName" class="fe-input-disabled" value="<%= svcInfo.mbrNm %>" readonly aria-describedby>
                                         </span>
                                     </div>
                                 </li>
@@ -59,7 +59,7 @@
                                     <label class="tit mb0" for="inpPhnum">휴대폰 번호</label>
                                     <div class="inputbox readonly">
                                         <span class="input">
-                                            <input type="text" id="inpPhnum" value="<%= svcInfo.svcNumDash %>" title="휴대폰번호 숫자만 입력해 주세요" readonly aria-describedby>
+                                            <input type="text" id="inpPhnum" class="fe-input-disabled" value="<%= svcInfo.svcNumDash %>" title="휴대폰번호 숫자만 입력해 주세요" readonly aria-describedby>
                                         </span>
                                     </div>
                                 </li>
@@ -67,7 +67,7 @@
                                     <label class="tit mb0" for="inpAddr">배송주소</label>
                                     <div class="inputbox bt-add inp-btn">
                                         <span class="input">
-                                            <input type="text" class="fe-address-zipcode" id="inpAddr" placeholder="우편번호 조회" title="우편번호 조회 입력" readonly>
+                                            <input type="text" class="fe-address-zipcode fe-input-disabled" id="inpAddr" placeholder="우편번호 조회" title="우편번호 조회 입력" readonly>
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                         <span class="bt-box">
@@ -76,13 +76,13 @@
                                     </div>
                                     <div class="inputbox mt8">
                                         <div class="input">
-                                            <input type="text" class="fe-address-main" title="상세 주소" readonly>
+                                            <input type="text" class="fe-address-main fe-input-disabled" title="상세 주소" readonly>
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </div>
                                     </div>
                                     <div class="inputbox mt8">
                                         <div class="input">
-                                            <input type="text" class="fe-address-detail" title="상세 주소 입력" aria-describedby readonly>
+                                            <input type="text" class="fe-address-detail fe-input-disabled" title="상세 주소 입력" aria-describedby readonly>
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </div>
                                     </div>
