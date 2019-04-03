@@ -3,7 +3,6 @@ import MainHome from './controllers/main.home.controller';
 import MainMenuRefund from './controllers/menu/main.menu.refund.controller';
 import MainMenuSettings from './controllers/menu/settings/main.menu.settings.controller';
 import MainMenuSettingsNotifications from './controllers/menu/settings/main.menu.settings.notifications.controller';
-import MainMenuSettingsPrivacy from './controllers/menu/settings/main.menu.settings.privacy.controller';
 import MainMenuSettingsBusinessInfo from './controllers/menu/settings/main.menu.settings.business-info.controller';
 import MainMenuSettingsTerms from './controllers/menu/settings/main.menu.settings.terms.controller';
 import MainMenuSettingsLocation from './controllers/menu/settings/main.menu.settings.location.controller';
@@ -21,7 +20,6 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings', controller: MainMenuSettings });
     this.controllers.push({ url: '/menu/settings/biometrics', controller: MainMenuSettingsBiometrics });
     this.controllers.push({ url: '/menu/settings/notification', controller: MainMenuSettingsNotifications });
-    this.controllers.push({ url: '/menu/settings/privacy', controller: MainMenuSettingsPrivacy });
     this.controllers.push({ url: '/menu/settings/business-info', controller: MainMenuSettingsBusinessInfo });
     this.controllers.push({ url: '/menu/settings/certificates', controller: MainMenuSettingsCertificates });
     this.controllers.push({ url: '/menu/settings/terms', controller: MainMenuSettingsTerms });
@@ -29,6 +27,9 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings/family-sites', controller: MainMenuSettingsFamilySites });
     this.controllers.push({ url: '/menu/settings/oss', controller: MainMenuSettingsOss });
     this.controllers.push({ url: '/menu/refund', controller: MainMenuRefund });
+
+    // 기획 변경으로 사용하지 않음
+    // this.controllers.push({ url: '/menu/settings/privacy', controller: MainMenuSettingsPrivacy });
   }
 }
 
