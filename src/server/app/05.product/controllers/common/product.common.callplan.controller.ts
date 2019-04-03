@@ -468,7 +468,7 @@ class ProductCommonCallplan extends TwViewController {
 
       const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, basDataTxt.txt,
         item.basOfrVcallTmsCtt, item.basOfrCharCntCtt, basDataTxt.unit, false),
-        isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
+        isSeeContents = convResult.basFeeInfo && convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
       return [item, convResult, this._getIsCategory(item.prodTypCd),
         this._getDisplayFlickSlideCondition(item.prodTypCd, isSeeContents, convResult)]
