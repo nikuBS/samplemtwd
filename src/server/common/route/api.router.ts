@@ -257,13 +257,14 @@ class ApiRouter {
             resp.result.userInfo = svcInfo;
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
             resp.result.userInfo.canSendFreeSMS = svcInfo.loginType === 'T';
-            resp.result.userInfo.pps = false;
-            resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
-              if ( elem.svcAttrCd.includes('M2') ) {
-                return true;
-              }
-              return memo;
-            }, false);
+            resp.result.userInfo.pps = svcInfo.svcGr === 'P';
+            // resp.result.userInfo.pps = false;
+            // resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
+              // if ( elem.svcAttrCd.includes('M2') ) {
+                // return true;
+              // }
+              // return memo;
+            // }, false);
             if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
               resp.result.userInfo.canSendFreeSMS = true;
             }
