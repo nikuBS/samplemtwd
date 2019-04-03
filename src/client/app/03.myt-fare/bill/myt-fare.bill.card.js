@@ -197,6 +197,7 @@ Tw.MyTFareBillCard.prototype = {
       bankOrCardCode: this.$container.find('.fe-payment-option-name').attr('id'),
       bankOrCardName: this.$container.find('.fe-payment-option-name').text(),
       bankOrCardAccn: this.$container.find('.fe-payment-option-number').attr('id'),
+      ccPwd: $.trim(this.$cardPw.val()),
       cdexpy: $.trim(this.$cardY.val()).substr(2,2),
       cdexpm: $.trim(this.$cardM.val()),
       instmm: this.$cardTypeSelector.attr('id'),
