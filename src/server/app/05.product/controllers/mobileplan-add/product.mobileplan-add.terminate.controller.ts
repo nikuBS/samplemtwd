@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import {Observable} from 'rxjs/Observable';
 
 class ProductMobileplanAddTerminate extends TwViewController {
   constructor() {
@@ -32,12 +33,16 @@ class ProductMobileplanAddTerminate extends TwViewController {
       });
     }
 
-    this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, [prodId])
-      .subscribe((joinTermInfo) => {
-      if (joinTermInfo.code !== API_CODE.CODE_00) {
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_10_0151, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, [prodId])
+    ]).subscribe(([preCheckInfo, joinTermInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, joinTermInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: joinTermInfo.code,
-          msg: joinTermInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           isBackCheck: true
         }));
       }

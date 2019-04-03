@@ -31,18 +31,22 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
-    ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-      if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
+    ).subscribe(([ preCheckInfo, prodRedisInfo, prodBffInfo ]) => {
+      const apiError = this.error.apiError([preCheckInfo, prodRedisInfo, prodBffInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           title: PRODUCT_TYPE_NM.JOIN,
-          code: prodBffInfo.code,
-          msg: prodBffInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
         });
       }
+
       for (let i = 0; i < prodBffInfo.result.togetherMemList.length; i++) {
         prodBffInfo.result.togetherMemList[i].svcNum = StringHelper.phoneStringToDash(prodBffInfo.result.togetherMemList[i].svcNum);
       }

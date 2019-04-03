@@ -49,13 +49,15 @@ class ProductMobileplanJoin0planSm extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0169, {}),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
-    ).subscribe(([ basicInfo, settingInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
-      const apiError = this.error.apiError([basicInfo, settingInfo]);
+    ).subscribe(([ preCheckInfo, basicInfo, settingInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
+      const apiError = this.error.apiError([preCheckInfo, basicInfo, settingInfo]);
+
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: apiError.code,

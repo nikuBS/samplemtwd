@@ -10,6 +10,8 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import ProductHelper from '../../../../utils/product.helper';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import {Observable} from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class BenefitSelectContract extends TwViewController {
   constructor() {
@@ -23,14 +25,20 @@ class BenefitSelectContract extends TwViewController {
         svcInfo: svcInfo,
         title: PRODUCT_TYPE_NM.JOIN
       };
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
-      .subscribe((basicInfo) => {
-        if ( basicInfo.code !== API_CODE.CODE_00 ) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: basicInfo.code,
-            msg: basicInfo.msg
-          }));
-        }
+
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
+    ]).subscribe(([preCheckInfo, basicInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, basicInfo]);
+
+      if ( !FormatHelper.isEmpty(apiError) ) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: apiError.code,
+          msg: apiError.msg
+        }));
+      }
+
         if ( selType ) {
           this.apiService.request(API_CMD.BFF_10_0062, {}, {})
             .subscribe((seldis) => {
