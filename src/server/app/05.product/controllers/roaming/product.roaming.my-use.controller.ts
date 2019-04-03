@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
-import moment = require('moment');
 import DateHelper from '../../../../utils/date.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import BFF_10_0056_mock from '../../../../mock/server/product.BFF_10_0056.mock';
@@ -42,36 +41,24 @@ export default class ProductRoamingMyUse extends TwViewController {
         return this.error.render(res, { ...error, svcInfo, pageInfo });
       }
 
-      roamingFeePlan.remainedDays = null;
-      troamingLikeHome.remainedDays = null;
-      roamingFeePlan.roamingProdList.forEach(prod => {
-        prod.remainedDays = null;
-        if (troamingData && (prod.prodId === troamingData.prodId)) {
-          if (!FormatHelper.isEmpty(troamingData.rgstDtm)) {
-            prod.remainedDays = DateHelper.getDiffByUnit(
-              DateHelper.getCurrentShortDate(troamingData.exprDtm),
-              DateHelper.getCurrentShortDate(),
-              'days').toString();
-            roamingFeePlan.remainedDays = prod.remainedDays;
-            troamingLikeHome.remainedDays = prod.remainedDays;
-          }
-        }
-      });
-
-      if (troamingLikeHome.length > 0) {
-        troamingLikeHome.forEach(data => {
-          if (!FormatHelper.isEmpty(data.rgstDtm)) {
-            troamingLikeHome.remainedDays = DateHelper.getDiffByUnit(
-              DateHelper.getCurrentShortDate(data.exprDtm),
-              DateHelper.getCurrentShortDate(),
-              'days').toString();
-            roamingFeePlan.roamingProdList[0].remainedDays = troamingLikeHome.remainedDays;
-          }
-        });
-      }
+      this.updateRemainedDays(roamingFeePlan, troamingData);
 
       res.render('roaming/product.roaming.my-use.html',
         { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, troamingData, troamingLikeHome});
+    });
+  }
+
+  private updateRemainedDays(roamingFeePlan: any, troamingData: any) {
+    roamingFeePlan.roamingProdList.forEach(prod => {
+      prod.remainedDays = null;
+      if ( troamingData && (prod.prodId === troamingData.prodId) ) {
+        if ( !FormatHelper.isEmpty(troamingData.rgstDtm) ) {
+          prod.remainedDays = DateHelper.getDiffByUnit(
+            DateHelper.getCurrentShortDate(troamingData.exprDtm),
+            DateHelper.getCurrentShortDate(),
+            'days').toString();
+        }
+      }
     });
   }
 

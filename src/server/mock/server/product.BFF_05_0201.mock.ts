@@ -1,16 +1,17 @@
 const BFF_05_0201_mock = {
-    "code": "00",
-    "msg": "success",
-
-    "result": {
-      "prodId": "NA00005699",
-      "prodNm": "baro Box 일본, 미국, 캐나다 선물",
-      "total": "무제한",
-      "used": "14551",
-      "remained": "150",
-      "rgstDtm": "2019032021",
-      "exprDtm": "2019032523"
-    }
-  };
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "prodId": "NA00006226",
+    "prodNm": "T괌사이판 국내처럼",
+    "total": "0.00",
+    "used": "0.00",
+    "remained": "0.00",
+    "unit": "MB",
+    "rgstDtm": "2019040218",
+    "exprDtm": "2019050218"
+  },
+  "loginType": "T"
+};
 
 export default BFF_05_0201_mock;
