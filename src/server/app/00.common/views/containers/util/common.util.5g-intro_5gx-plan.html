@@ -317,10 +317,10 @@
 
                                                             <ul class="bt-slice item-two mt18">
                                                                 <li class="bt-white3">
-                                                                    <a href="https://www.5gxvr.com/web/index" target="_blank" title="새창">쿠폰 발급받기</a>
+                                                                    <a href="https://www.5gxvr.com/web/index" target="_blank" title="새창" class="fe-link-external">쿠폰 발급받기</a>
                                                                 </li>
                                                                 <li class="bt-white3">
-                                                                    <a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창">배송 조회하기</a>
+                                                                    <a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창" class="fe-link-external">배송 조회하기</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -332,7 +332,7 @@
                                                                 </p>
                                                                 <div class="og-5mktp-youtube-wrap">
                                                                     <div class="img"><img src="<%= CDN %>/img/t_m5g/og_vr_video_img01.png" alt="삼성 기어 VR 시작하기"></div>
-                                                                    <a href="https://youtu.be/APw-ZFPFvpM" class="og-youtube-play" target="_blank" title="삼성 기어 VR 이용방법 동영상 보기(새창)"><img src="<%= CDN %>/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
+                                                                    <a href="https://youtu.be/APw-ZFPFvpM" class="og-youtube-play fe-link-external" target="_blank" title="삼성 기어 VR 이용방법 동영상 보기(새창)"><img src="<%= CDN %>/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -411,10 +411,10 @@
                                                             </p>
                                                             <ul class="bt-slice item-two mt18">
                                                                 <li class="bt-white3">
-                                                                    <a href="https://www.5gxvr.com/web/index" target="_blank" title="새창">쿠폰 발급받기</a>
+                                                                    <a href="https://www.5gxvr.com/web/index" target="_blank" title="새창" class="fe-link-external">쿠폰 발급받기</a>
                                                                 </li>
                                                                 <li class="bt-white3">
-                                                                    <a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창">배송 조회하기</a>
+                                                                    <a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창" class="fe-link-external">배송 조회하기</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -426,7 +426,7 @@
                                                                 </p>
                                                                 <div class="og-5mktp-youtube-wrap">
                                                                     <div class="img"><img src="<%= CDN %>/img/t_m5g/og_vr_video_img02.png" alt="BOBO VR 시작하기"></div>
-                                                                    <a href="https://youtu.be/C3gLg1Fawbk" class="og-youtube-play" target="_blank" title="BOBO VR 이용방법 동영상 보기(새창)"><img src="<%= CDN %>/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
+                                                                    <a href="https://youtu.be/C3gLg1Fawbk" class="og-youtube-play fe-link-external" target="_blank" title="BOBO VR 이용방법 동영상 보기(새창)"><img src="<%= CDN %>/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -525,6 +525,15 @@
         }, 500);
       }
     });
+
+    if (Tw.BrowserHelper.isApp()) {
+      $('.fe-link-external').on('click', function (e) {
+        e.preventDefault();
+        Tw.CommonHelper.showDataCharge(function () {
+          Tw.CommonHelper.openUrlExternal(e.currentTarget.href);
+        });
+      })
+    }
   });
 </script>
 </body>
