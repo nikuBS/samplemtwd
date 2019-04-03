@@ -4,7 +4,7 @@
  * Date: 2019.04.01
  */
 
-Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm, svcCd) {
+Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -12,7 +12,6 @@ Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm, svcCd) {
   this.$container = rootEl;
   this._prodId = prodId;
   this._prodNm = prodNm;
-  this._svcCd = svcCd;
 
   this._cachedElement();
   this._bindEvent();
@@ -21,6 +20,7 @@ Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm, svcCd) {
 Tw.BenefitTerminateAllFamily.prototype = {
 
   _cachedElement: function() {
+    this.$list = this.$container.find('.fe-list');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnCancelJoin = this.$container.find('.fe-btn_cancel_join');
   },
@@ -30,11 +30,38 @@ Tw.BenefitTerminateAllFamily.prototype = {
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
-  _openConfirmAlert: function() {
+  _openConfirmAlert: function(e) {
     this._isTerminate = false;
-    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
-      null, $.proxy(this._onCloseConfirmAlert, this));
+
+    var $btn = $(e.currentTarget),
+      isLeader = $btn.data('leader') === 'Y',
+      confirmAlert = this._getConfirmAlert(isLeader);
+
+    if (confirmAlert === null) {
+      this._isTerminate = true;
+      this._onCloseConfirmAlert();
+      return;
+    }
+
+    this._popupService.openModalTypeATwoButton(confirmAlert.TITLE, confirmAlert.MSG,
+      Tw.BUTTON_LABEL.CONFIRM, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
+      null, $.proxy(this._onCloseConfirmAlert, this), 'is_term', $btn);
+  },
+
+  _getConfirmAlert: function(isLeader) {
+    if (isLeader) {
+      return Tw.ALERT_MSG_PRODUCT.ALERT_3_A61;
+    }
+
+    if (this.$list.find('li').length < 2) {
+      return Tw.ALERT_MSG_PRODUCT.ALERT_3_A62;
+    }
+
+    if (this.$list.find('li').length > 2) {
+      return Tw.ALERT_MSG_PRODUCT.ALERT_3_A63;
+    }
+
+    return null;
   },
 
   _bindConfirmAlert: function($popupContainer) {
@@ -55,7 +82,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
+    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: '' }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
