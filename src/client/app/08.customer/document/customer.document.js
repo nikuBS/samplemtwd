@@ -35,6 +35,7 @@ Tw.CustomerDocument.prototype = {
     this.$container.on('click', '.disabled', $.proxy(this._offClickEvent, this));
   },
   _onTabChange: function (event) {
+    // tab change event
     var $target = $(event.currentTarget);
     $target.find('a').attr('aria-selected', 'true');
     $target.siblings().find('a').attr('aria-selected', 'false');
@@ -43,6 +44,7 @@ Tw.CustomerDocument.prototype = {
     this._initList();
   },
   _offClickEvent: function (event) {
+    // 하위 요소 선택 시 상위 메뉴 click off
     var $target = $(event.currentTarget);
     $target.removeClass('on');
   },
@@ -71,12 +73,14 @@ Tw.CustomerDocument.prototype = {
     this.$docResult.hide();
   },
   _setTitle: function ($parentTarget, $target) {
+    // 각 영역의 타이틀을 동적으로 셋팅
     var $titleNode = $parentTarget.find('.acco-title');
     $titleNode.find('.question').hide();
     $titleNode.find('.result-txt').text($target.attr('title')).show();
     $titleNode.attr('id', $target.attr('id'));
   },
   _resetChildren: function ($parentTarget, index) {
+    // 상위 선택 요소에 따라 하위 영역 데이터 변경
     $parentTarget.siblings().each($.proxy(this._resetEachSelector, this, index));
 
     this._resetOption(index);
@@ -97,7 +101,7 @@ Tw.CustomerDocument.prototype = {
   },
   _resetOption: function (index) {
     if (index < this.nextIndex) {
-      this.nextIndex = 1;
+      this.nextIndex = 1; // 3번에 데이터가 없는 경우 4번을 바로 호출해야 하는 경우가 있음
     }
   },
   _resetReqData: function (index) {
@@ -117,6 +121,7 @@ Tw.CustomerDocument.prototype = {
     var idx = $parentTarget.data('index');
     var id = this.$selector.find('.acco-list[data-index="' + idx + '"] .acco-title').attr('id');
 
+    // 바로 아래 영역에 데이터가 없을 경우 그 다음으로 넘김
     if (isEmpty) {
       id = 'NONE';
     }
@@ -130,6 +135,7 @@ Tw.CustomerDocument.prototype = {
     }
   },
   _makeRequestData: function (idx, id) {
+    // API 호출 시 카테고리 영역만 변경 - 미리 초기화된 array에서 값을 가져와서 요청 파라미터 생성
     if (this._paramList[idx] !== undefined) {
       this._reqData[this._paramList[idx]] = id;
     }
@@ -204,9 +210,9 @@ Tw.CustomerDocument.prototype = {
     $currentTarget.addClass('checked').attr('aria-checked', 'true');
     $currentTarget.siblings().removeClass('checked').attr('aria-checked', 'false');
 
-    this._setTitle($parentTarget, $target);
-    this._resetChildren($parentTarget, idx);
-    this._setData($parentTarget, $nextTarget, $currentTarget);
+    this._setTitle($parentTarget, $target); // 타이틀 셋팅
+    this._resetChildren($parentTarget, idx); // 상위 요소 변경 시 하위 영역 리셋
+    this._setData($parentTarget, $nextTarget, $currentTarget); // 데이터 셋팅
   },
   _closeList: function ($target) {
     $target.removeClass('on');

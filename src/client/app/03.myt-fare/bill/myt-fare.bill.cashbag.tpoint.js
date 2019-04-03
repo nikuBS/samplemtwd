@@ -76,8 +76,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       $point = result.availTPt; // tpoint
     }
 
-    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
-    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true);
+    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point)); // 보유한 포인트
+    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true); // 서버에서 조회된 카드번호
     this.$selectedTab.siblings().find('.fe-point-card').val(result.ocbCcno).attr('readonly', true);
     this.$isAutoCardValid = true;
 
@@ -304,7 +304,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       Tw.Error(err.code, err.msg).pop(null, $target);
     }
   },
-  _makeRequestDataForOne: function () {
+  _makeRequestDataForOne: function () { // 1회납부 요청 파라미터
     var reqData = {
       ocbCcno: $.trim(this.$pointCardNumber.val()),
       ptClCd: this.$pointType,
@@ -313,7 +313,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     };
     return reqData;
   },
-  _makeRequestDataForAuto: function () {
+  _makeRequestDataForAuto: function () { // 자동납부 요청 파라미터
     var autoType = this._getAutoType();
     var cardNumber = $.trim(this.$pointCardNumber.val());
 
@@ -331,9 +331,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _getAutoType: function () {
     if (this.$autoInfo.is(':visible')) {
-      return 2;
+      return 2; // 자동납부
     }
-    return 1;
+    return 1; // 1회납부
   },
   _onClose: function () {
     this._backAlert.onClose(); // x 버튼 클릭 시 팝업 노출

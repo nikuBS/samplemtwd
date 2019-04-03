@@ -48,6 +48,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
   },
   _getRemainLimit: function () {
+    // 오래걸리는 API라 JS에서 호출 - 최초 1회 시 gubun: Request, requestCnt: 0으로 호출
+    // 그 이후 즉시 gubun: Done, request: 1로 호출
+    // 성공하면 return, 실패 시 (실패여부는 응답값의 gubun이 Retry로 내려옴) gubun은 그대로 두고 request는 1씩 증가
+    // 위 작업을 3초 term을 두고 실행, requestCnt가 3이 될 때까지 실행 후 그래도 실패하면 에러페이지 렌더링
     this._apiService.request(this._apiName, { gubun: this._gubun, requestCnt: this._requestCnt })
       .done($.proxy(this._remainSuccess, this))
       .fail($.proxy(this._remainFail, this));
@@ -56,19 +60,19 @@ Tw.MyTFareBillPrepayMain.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (this._gubun === 'Request') {
         this._gubun = 'Done';
-        this._requestCnt++;
+        this._requestCnt++; // 최초 호출 이후 gubun과 requestCnt 변경
 
-        this._getRemainLimit();
+        this._getRemainLimit(); // 다시 호출
       } else {
         if (res.result.gubun === 'Done') {
           Tw.CommonHelper.endLoading('.container');
-          this._setData(res);
-        } else {
+          this._setData(res); // 성공하면 데이터 셋팅 (잔여한도 등)
+        } else { // 실패하면 다시 호출
           if (this._requestCnt < 3) {
-            this._requestCnt++;
-            setTimeout($.proxy(this._getRemainLimit, this), 3000);
+            this._requestCnt++; // requestCnt 증가 (+1)
+            setTimeout($.proxy(this._getRemainLimit, this), 3000); // 3초 delay 후 재호출
           } else {
-            this._remainFail({ code: 'ERROR', msg: Tw.ALERT_MSG_MYT_FARE.PREPAY_REMAIN_ERROR });
+            this._remainFail({ code: 'ERROR', msg: Tw.ALERT_MSG_MYT_FARE.PREPAY_REMAIN_ERROR }); // 3번째 시도에도 실패 시 에러 처리
           }
         }
       }
@@ -83,12 +87,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _setData: function (res) {
     var result = res.result;
     if (!Tw.FormatHelper.isEmpty(result)) {
-      if (result.autoChrgStCd === 'U') {
-        this.$container.find('.fe-auto-wrap').removeClass('none');
+      if (result.autoChrgStCd === 'U') { // 자동선결제 신청 상태일 경우
+        this.$container.find('.fe-auto-wrap').removeClass('none'); // 변경 필드 노출
       } else {
-        this.$container.find('.fe-non-auto-wrap').removeClass('none');
+        this.$container.find('.fe-non-auto-wrap').removeClass('none'); // 신청 필드 노출
       }
-      this._prepayAmount = result.tmthChrgPsblAmt;
+      this._prepayAmount = result.tmthChrgPsblAmt; // 선결제 가능금액 (선결제 팝업으로 보내야 하는 값)
 
       this.$useAmount.attr('id', result.tmthUseAmt).text(Tw.FormatHelper.addComma(result.tmthUseAmt)); // 당월 사용금액에 콤마(,) 추가
       this.$remainAmount.attr('id', result.remainUseLimit).text(Tw.FormatHelper.addComma(result.remainUseLimit)); // 잔여한도에 콤마(,) 추가
@@ -150,7 +154,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     );
   },
   _selectPopupCallback: function ($layer) {
-    $layer.on('click', '.ac-list', $.proxy(this._goMicroHistory, this));
+    $layer.on('click', '.ac-list', $.proxy(this._goMicroHistory, this)); // 소액결제 내역조회
   },
   _goMicroHistory: function (event) {
     // actionsheet에서 선택한 내역으로 이동
@@ -174,9 +178,9 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _prepay: function (e) {
     // 선결제
-    var hbsName = 'MF_06_03';
+    var hbsName = 'MF_06_03'; // 소액결제 선결제 팝업
     if (this.$title === 'contents') {
-      hbsName = 'MF_07_03';
+      hbsName = 'MF_07_03'; // 콘텐츠이용료 선결제 팝업
     }
 
     if (this._isPrepayAble()) {

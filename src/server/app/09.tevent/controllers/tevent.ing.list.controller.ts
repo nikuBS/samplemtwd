@@ -11,7 +11,6 @@ import { DEFAULT_LIST_COUNT } from '../../../types/config.type';
 import { PROMOTION_TYPE } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
-import teventMock from '../../../mock/server/tevent.mock';
 
 class TeventIngList extends TwViewController {
   constructor() {
@@ -27,7 +26,6 @@ class TeventIngList extends TwViewController {
     }).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         const result = resp.result;
-        // const result = teventMock.result;
         res.render('tevent.ing.list.html', {
           isExist: result.content.length > 0,
           content: this.parseData(result.content),

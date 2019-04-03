@@ -128,6 +128,7 @@ Tw.MyTFareBillAccount.prototype = {
     $layer.on('click', '.fe-pay', $.proxy(this._pay, this)); // 납부하기
   },
   _setData: function ($layer) {
+    // 납부내역 확인 팝업에 데이터 셋팅
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
@@ -142,6 +143,8 @@ Tw.MyTFareBillAccount.prototype = {
     var isRefundInput = this.$refundInputBox.hasClass('checked');
 
     var data = {};
+
+    // 납부할 계좌번호 (직접입력/자동납부계좌 선택)
     if (isAccountInput) {
       data.bankCd = this.$selectBank.attr('id');
       data.bankNm = this.$selectBank.text();
@@ -154,6 +157,7 @@ Tw.MyTFareBillAccount.prototype = {
       this._bankAutoYn  = 'Y';
     }
 
+    // 환불계좌 (직접입력/자동납부계좌 선택)
     if (isRefundInput) {
       data.refundCd = this.$refundBank.attr('id');
       data.refundNm = this.$refundBank.text();

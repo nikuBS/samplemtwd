@@ -12,7 +12,7 @@ Tw.MyTFareBillBankList = function (rootEl, bankList) {
   this.$container = rootEl;
 
   if (!Tw.FormatHelper.isEmpty(bankList)) {
-    this._setBankList(bankList);
+    this._setBankList(bankList); // 자동납부 신청 및 변경일 경우 기존 bankList를 받아옴
   }
 
   this._apiService = Tw.Api;
@@ -22,7 +22,7 @@ Tw.MyTFareBillBankList = function (rootEl, bankList) {
 Tw.MyTFareBillBankList.prototype = {
   init: function (event, callback) {
     this.$currentTarget = $(event.currentTarget);
-    this.$isBank = this.$currentTarget.hasClass('fe-account-bank');
+    this.$isBank = this.$currentTarget.hasClass('fe-account-bank'); // 계좌이체 납부 대상 selector (환불계좌아님)
 
     if (callback !== undefined) {
       this._callbackFunction = callback;
@@ -71,10 +71,11 @@ Tw.MyTFareBillBankList.prototype = {
   _getBankListSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var result = res.result;
+      // 납부할 은행리스트에 값이 있으면 셋팅하고 없으면 환불계좌리스트로 셋팅
       var accountList = Tw.FormatHelper.isEmpty(result.payBankList) ? result.payovrBankList : result.payBankList;
 
-      this._setBankList(accountList, true, 'account');
-      this._setBankList(result.payovrBankList, true, 'refund');
+      this._setBankList(accountList, true, 'account'); // 납부할 은행리스트
+      this._setBankList(result.payovrBankList, true, 'refund'); // 환불계좌 리스트
       this._openBank();
     } else {
       this._getBankListFail(res);

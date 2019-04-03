@@ -29,6 +29,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _setInitValue: function () {
     this.$container.find('.fe-name').val(this._name);
+    // 선결제 가능금액 셋팅
     this.$container.find('.fe-max-amount').attr('id', this._maxAmount).text(Tw.FormatHelper.addComma(this._maxAmount.toString()));
   },
   _initVariables: function () {
@@ -50,7 +51,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
   },
   _setMaxValue: function (event) {
-    // maxLength check
+    // maxLength 적용
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
     if ($target.attr('maxLength')) {
@@ -142,15 +143,16 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _getApiName: function () {
     var apiName = '';
     if (this.$title === 'small') {
-      apiName = Tw.API_CMD.BFF_07_0074;
+      apiName = Tw.API_CMD.BFF_07_0074; // 소액결제 선결제
     } else {
-      apiName = Tw.API_CMD.BFF_07_0082;
+      apiName = Tw.API_CMD.BFF_07_0082; // 콘텐츠이용료 선결제
     }
     return apiName;
   },
   _makeRequestData: function ($layer) {
+    // 요청 파라미터
     var reqData = {
-      tmthChrgPsblAmt: this._maxAmount.toString(),
+      tmthChrgPsblAmt: this._maxAmount.toString(), // 선결제 가능금액
       checkAuto: 'N',
       requestSum: $.trim(this.$prepayAmount.val().toString()),
       cardNumVal: $layer.find('.fe-payment-option-number').text(),

@@ -14,7 +14,7 @@ Tw.MyTFareBillOptionSms = function (rootEl) {
   this._commonHelper = Tw.CommonHelper;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._getBankList();
+  this._getBankList(); // 입금전용계좌 리스트
 };
 
 Tw.MyTFareBillOptionSms.prototype = {
@@ -83,7 +83,7 @@ Tw.MyTFareBillOptionSms.prototype = {
   _request: function (e) {
     var $target = $(e.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_07_0064, {
-      acntNum: Tw.UrlHelper.getQueryParams().num,
+      acntNum: Tw.UrlHelper.getQueryParams().num, // 이전 화면에서 넘어온 정보
       billSmsYn: 'Y',
       bankCd1: this.$container.find('.fe-select-bank').attr('id')
     }).done($.proxy(this._smsSuccess, this, $target))

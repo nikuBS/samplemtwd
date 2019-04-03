@@ -24,7 +24,7 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$isAutoSelectValid = false;
     this.$isPointValid = false;
 
-    this._initVariables('tab1');
+    this._initVariables('tab1'); // 최초 1회납부 탭으로 initialize
     this._bindEvent();
   },
   _initVariables: function ($targetId) {
@@ -52,6 +52,7 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
+    // 1회납부/자동납부 탭 change
     var $target = $(event.currentTarget);
     $target.find('button').attr('aria-selected', 'true');
     $target.siblings().find('button').attr('aria-selected', 'false');
@@ -137,9 +138,9 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _setSelectorValidation: function (isValid) {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      this.$isOneSelectValid = isValid;
+      this.$isOneSelectValid = isValid; // 1회납부 유효성 검증결과
     } else {
-      this.$isAutoSelectValid = isValid;
+      this.$isAutoSelectValid = isValid; // 자동납부 유효성 검증결과
     }
   },
   _checkSelected: function () {
