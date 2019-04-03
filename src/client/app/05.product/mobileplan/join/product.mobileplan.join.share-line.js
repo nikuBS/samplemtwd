@@ -41,6 +41,10 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
     this.$btnSetupOk.on('click', $.proxy(this._reqOverpay, this));
+
+    if (Tw.BrowserHelper.isIos()) {
+      $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
+    }
   },
 
   _openAppAddressBook: function() {

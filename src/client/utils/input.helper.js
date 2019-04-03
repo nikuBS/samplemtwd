@@ -104,6 +104,16 @@ Tw.InputHelper = (function () {
     return false;
   }
 
+  function iosBlurCheck(e) {
+    var isTextInput = function(node) {
+      return ['INPUT'].indexOf(node.nodeName) !== -1;
+    };
+
+    if (!isTextInput(e.target) && isTextInput(document.activeElement)) {
+      document.activeElement.blur();
+    }
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
@@ -117,6 +127,7 @@ Tw.InputHelper = (function () {
     getByteCount: getByteCount,
     insertDashCellPhone: insertDashCellPhone,
     inputNumberMaxLength: inputNumberMaxLength,
-    isEnter: isEnter
+    isEnter: isEnter,
+    iosBlurCheck: iosBlurCheck
   };
 })();

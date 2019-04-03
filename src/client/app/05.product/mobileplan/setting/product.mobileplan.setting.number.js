@@ -41,6 +41,10 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
+
+    if (Tw.BrowserHelper.isIos()) {
+      $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
+    }
   },
 
   _openAppAddressBook: function() {
