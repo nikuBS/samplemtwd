@@ -79,10 +79,11 @@ class BenefitTerminateTbCombination extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0113, {}, {}, [prodId]),
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this.apiService.request(API_CMD.BFF_10_0114, {}, {}, [prodId])
-    ).subscribe(([prodInfo, termInfo]) => {
-      const apiError = this.error.apiError([prodInfo, termInfo]);
+    ).subscribe(([preCheckInfo, prodInfo, termInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, prodInfo, termInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {

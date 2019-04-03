@@ -7,10 +7,11 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CODE } from '../../../types/api-command.type';
+import {API_CMD, API_CODE} from '../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../types/string.type';
 import { REDIS_KEY } from '../../../types/redis.type';
 import FormatHelper from '../../../utils/format.helper';
+import {Observable} from 'rxjs/Observable';
 
 class BenefitJoinTbCombination extends TwViewController {
   constructor() {
@@ -47,12 +48,16 @@ class BenefitJoinTbCombination extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId)
-      .subscribe((prodInfo) => {
-      if (prodInfo.code !== API_CODE.CODE_00) {
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_10_0119, {}, {}, [prodId]),
+      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId)
+    ]).subscribe(([preCheckInfo, prodInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, prodInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: prodInfo.code,
-          msg: prodInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           isBackCheck: true
         }));
       }

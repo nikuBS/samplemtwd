@@ -45,10 +45,11 @@ class ProductWireplanJoinLettering extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0164, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '01' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0164, { joinTermCd: '01' }, {}, [prodId])
-    ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
-      const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
+    ).subscribe(([preCheckInfo, joinTermInfo, currentAdditionsInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, joinTermInfo, currentAdditionsInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {

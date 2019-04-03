@@ -34,10 +34,11 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-    ).subscribe(([ basicInfo, joinTermInfo ]) => {
-      const apiError = this.error.apiError([basicInfo, joinTermInfo]);
+    ).subscribe(([ preCheckInfo, basicInfo, joinTermInfo ]) => {
+      const apiError = this.error.apiError([preCheckInfo, basicInfo, joinTermInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {

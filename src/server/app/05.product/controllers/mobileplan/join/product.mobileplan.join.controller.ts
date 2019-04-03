@@ -43,16 +43,18 @@ class ProductMobileplanJoin extends TwViewController {
       };
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
-    ).subscribe(([joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo]) => {
-      console.log(joinTermInfo.result);
-      if (joinTermInfo.code !== API_CODE.CODE_00) {
+    ).subscribe(([preCheckInfo, joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, joinTermInfo, prodRedisInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: joinTermInfo.code,
-          msg: joinTermInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           isBackCheck: true
         }));
       }

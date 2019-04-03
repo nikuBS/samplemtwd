@@ -1,6 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
 import MainHome from './controllers/main.home.controller';
-import MainSearch from './controllers/main.search.controller';
 import MainMenuRefund from './controllers/menu/main.menu.refund.controller';
 import MainMenuSettings from './controllers/menu/settings/main.menu.settings.controller';
 import MainMenuSettingsNotifications from './controllers/menu/settings/main.menu.settings.notifications.controller';
@@ -20,7 +19,6 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/home', controller: MainHome });
     this.controllers.push({ url: '/store', controller: MainStore });
     this.controllers.push({ url: '/menu/settings', controller: MainMenuSettings });
-    // biometrics
     this.controllers.push({ url: '/menu/settings/biometrics', controller: MainMenuSettingsBiometrics });
     this.controllers.push({ url: '/menu/settings/notification', controller: MainMenuSettingsNotifications });
     this.controllers.push({ url: '/menu/settings/privacy', controller: MainMenuSettingsPrivacy });
@@ -31,7 +29,6 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings/family-sites', controller: MainMenuSettingsFamilySites });
     this.controllers.push({ url: '/menu/settings/oss', controller: MainMenuSettingsOss });
     this.controllers.push({ url: '/menu/refund', controller: MainMenuRefund });
-    this.controllers.push({ url: '/search', controller: MainSearch });
   }
 }
 

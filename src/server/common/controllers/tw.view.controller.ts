@@ -15,7 +15,6 @@ import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import ParamsHelper from '../../utils/params.helper';
 
-
 abstract class TwViewController {
   private readonly _apiService: ApiService;
   private readonly _loginService: LoginService;
@@ -205,13 +204,17 @@ abstract class TwViewController {
         });
       } else {
         // 등록되지 않은 메뉴
-        this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-        // if ( /\/product\/callplan/.test(path) ) {
-        //   this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-        // } else {
-        //   res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
-        //   return;
-        // }
+        if ( String(process.env.NODE_ENV) === 'prd' ) {
+          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+        } else {
+          if ( /\/product\/callplan/.test(path) ) {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+          } else {
+            res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+            return;
+          }
+        }
+
       }
     });
   }
