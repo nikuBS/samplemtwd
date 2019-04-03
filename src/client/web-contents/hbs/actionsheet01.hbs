@@ -19,6 +19,7 @@
                                                         <span class="txt">{{{txt}}}</span>
                                                     </span>
                                                     <span class="table-cell right">
+                                                        {{{right-txt}}}
                                                         <span class="link"></span>
                                                     </span>
                                                 </span>
@@ -37,7 +38,7 @@
                             {{#if title}}<div class="ac-tit">{{title}}</div>{{/if}}
                             <ul class="ac-list">
                                 {{#each list}}
-                                    <li class="type1">
+                                    <li class="type1 focus-elem">
                                         {{#if button-attr}}<button {{{button-attr}}}>{{/if}}
                                         {{#if a-attr}}<a {{{a-attr}}}>{{/if}}
                                         {{#if label-attr}}<label {{{label-attr}}}>{{/if}}
