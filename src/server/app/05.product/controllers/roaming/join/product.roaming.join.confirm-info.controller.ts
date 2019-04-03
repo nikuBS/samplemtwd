@@ -30,16 +30,19 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId])
-    ).subscribe(([ prodTypeInfo, prodBffInfo ]) => {
-      if ((prodTypeInfo.code !== API_CODE.CODE_00) || (prodBffInfo.code !== API_CODE.CODE_00)) {
+    ).subscribe(([ preCheckInfo, prodTypeInfo, prodBffInfo ]) => {
+      const apiError = this.error.apiError([preCheckInfo, prodTypeInfo, prodBffInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           title: PRODUCT_TYPE_NM.JOIN,
-          code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodBffInfo.code,
-          msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodBffInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           isBackCheck : true
         });
       }
