@@ -115,10 +115,10 @@
 
                     <div class="call-message">
                         <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                        <a href="/myt-data/submain" class="call" data-xt_eid="CMMA_A2_B6-158" data-xt_csid="NO" data-xt_action="BC"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemainedText %></a>
+                        <a href="/myt-data/hotdata" class="call" data-xt_eid="CMMA_A2_B6-158" data-xt_csid="NO" data-xt_action="BC"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemainedText %></a>
                         <% } %>
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-159" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
+                        <a href="/myt-data/hotdata" class="message" data-xt_eid="CMMA_A2_B6-159" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -148,7 +148,7 @@
                     </div>
                     <div class="call-message">
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/submain" class="message" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
+                        <a href="/myt-data/hotdata" class="message" data-xt_eid="CMMA_A2_B6-156" data-xt_csid="NO" data-xt_action="BC"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemainedText %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
@@ -302,15 +302,11 @@
                                 <ul class="slider">
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <% if (String(process.env.NODE_ENV) !== 'prd') { %>
-                                            <li><a href="/common/util/5g-intro" class="bt new"><i class="icon-5gx"></i>5GX</a></li>
-                                            <% } %>
+                                            <li><a href="/common/util/5g-intro" class="bt new" data-xt_eid="CMMA_A2_B6-181" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</a></li>
                                             <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
                                             <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
                                             <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
-                                            <% if (String(process.env.NODE_ENV) === 'prd') { %>
-                                            <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-150" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
-                                            <% } %>
+                                            <!--<li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-150" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>-->
                                         </ul>
                                     </li>
                                     <li>

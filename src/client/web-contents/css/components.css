@@ -6863,6 +6863,9 @@
   margin-top: 0.3125rem; }
   .bundle-tit-wrap .subtxt .txt {
     font-size: 0.8125rem; }
+  .bundle-tit-wrap .subtxt .black_txt {
+    font-size: 1.5rem;
+    font-weight: 700; }
   .bundle-tit-wrap .subtxt .val {
     color: #e22f26;
     font-size: 1.5rem; }
@@ -15151,7 +15154,8 @@ a.bt-link-tx.underline.small {
       text-align: left;
       white-space: nowrap; }
       .cont-actionsheet .ac-list .type1 .table-cell.right {
-        text-align: right; }
+        text-align: right;
+        color: #959595; }
       .cont-actionsheet .ac-list .type1 .table-cell.disabled > span.txt {
         color: #dcdcdc; }
       .cont-actionsheet .ac-list .type1 .table-cell.disabled > span.add {
@@ -27562,6 +27566,8 @@ body.apphome {
   padding: 0.5rem 0 0;
   border-top: 1px solid #f2f2f2;
   margin-top: 1.0625rem; }
+  .join-footer ul.border-none {
+    border: 0; }
   .join-footer ul li {
     font-size: 0.75rem; }
     .join-footer ul li span {

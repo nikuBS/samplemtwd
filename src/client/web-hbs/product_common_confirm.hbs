@@ -25,14 +25,16 @@
                         <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         <span class="sub-info">
                             <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
-                            <span class="elem">
+                            {{#if svcProdBasFeeInfo}}
+                                <span class="elem">
                                 <span class="blind">월 이용요금</span>
-                                {{#if svcProdBasFeeInfo.isNaN}}
-                                    {{svcProdBasFeeInfo.value}}
-                                {{else}}
-                                    월 {{svcProdBasFeeInfo.value}} 원
-                                {{/if}}
+                                    {{#if svcProdBasFeeInfo.isNaN}}
+                                        {{svcProdBasFeeInfo.value}}
+                                    {{else}}
+                                        월 {{svcProdBasFeeInfo.value}} 원
+                                    {{/if}}
                             </span>
+                            {{/if}}
                         </span>
                         {{else}}
                         <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>

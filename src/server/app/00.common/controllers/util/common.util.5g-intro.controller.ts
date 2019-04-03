@@ -27,7 +27,7 @@ class CommonUtil5gIntro extends TwViewController {
         svcInfo
       });
     }
-    res.render(`util/common.util.5g-intro_${page}.html`, {pageInfo});
+    res.render(`util/common.util.5g-intro_${page}.html`, {pageInfo, svcInfo});
   }
 
 

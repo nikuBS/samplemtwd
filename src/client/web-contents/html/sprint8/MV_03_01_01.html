@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+
+        <div class="popup-page tw-popup no-btn"><!-- 버튼이 없을때 no-btn, 버튼이 있을때 fixed-bottom -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>해지</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="bundle-tit-wrap">
+                            <h3 class="tit">해지할 결합상품</h3>
+                            <div class="subtxt">
+                                <p class="black_txt">T끼리 온가족 할인</p>
+                            </div>
+                        </div>
+                        <div class="basic-list bg-type mt10">
+                            <ul>
+                                <li>
+                                    <span class="title">신청일</span>
+                                    <span class="tx-cont">2018.8.15</span>
+                                </li>
+                                <li>
+                                    <span class="title">결합회선</span>
+                                    <span class="tx-cont">5회선</span>
+                                </li>
+                                <li>
+                                    <span class="title">가입상태</span>
+                                    <span class="tx-cont">결합완료</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box accordion2">
+                                <div class="acco-style data-famliy-group-list type2">
+                                    <ul class="acco-box">
+                                        
+                                        <li class="acco-list"><!-- on , off -->
+                                            <div class="acco-title">
+                                                <button role="button" aria-pressed="false">
+                                                    <div class="list-wrap">
+                                                        <div class="list-info">
+                                                            <div>
+                                                                <strong class="me">최*영</strong>
+                                                                <i class="icon-f-delegate ml9"><span class="blind">가족대표</span></i><!-- 뱃지-가족대표 -->
+                                                                <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                                <i class="icon-parents ml4"><span class="blind">부모</span></i><!-- 뱃지-부모 -->
+                                                            </div>
+                                                            <div class="num">010-12**-24**</div>
+                                                        </div>
+                                                        <div class="list-arrow">
+                                                            <span class="ico-arrow"><span class="blind">결합가족 최*영 내용 자세히 보기</span></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div class="acco-content">
+                                                <div class="data-info-list toggle-inner-list">
+                                                    <ul>
+                                                        <li>
+                                                            <dl>
+                                                                <dt>관계</dt>
+                                                                <dd>본인(내번호)<br /><button class="bt-link-tx underline red">해지</button></dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt>요금제</dt>
+                                                                <dd>band 데이터 퍼펙트</dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt>월정액 할인율</dt>
+                                                                <dd>50%</dd>
+                                                            </dl>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="acco-list"><!-- on , off -->
+                                            <div class="acco-title">
+                                                <button role="button" aria-pressed="false">
+                                                    <div class="list-wrap">
+                                                        <div class="list-info">
+                                                            <div>
+                                                                <em class="me">최*석</em>
+                                                                <i class="icon-children ml9"><span class="blind">자녀</span></i>
+                                                            </div>
+                                                            <div class="num">010-12**-24**</div>
+                                                        </div>
+                                                        <div class="list-arrow">
+                                                            <span class="ico-arrow"><span class="blind">결합가족 최*석 내용 자세히 보기</span></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div class="acco-content">
+                                                <div class="data-info-list toggle-inner-list">
+                                                    <ul>
+                                                        <li>
+                                                            <dl>
+                                                                <dt>관계</dt>
+                                                                <dd>자녀</dd>
+                                                            </dl>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="acco-list"><!-- on , off -->
+                                            <div class="acco-title">
+                                                <button role="button" aria-pressed="false">
+                                                    <div class="list-wrap">
+                                                        <div class="list-info">
+                                                            <div>
+                                                                <em class="me">박*민</em>
+                                                                <i class="icon-partner ml9"><span class="blind">배우자</span></i>
+                                                            </div>
+                                                            <div class="num">010-12**-24**</div>
+                                                        </div>
+                                                        <div class="list-arrow">
+                                                            <span class="ico-arrow"><span class="blind">결합가족 박*민 내용 자세히 보기</span></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div class="acco-content">
+                                                <div class="data-info-list toggle-inner-list">
+                                                    <ul>
+                                                        <li>
+                                                            <dl>
+                                                                <dt>관계</dt>
+                                                                <dd>배우자</dd>
+                                                            </dl>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                        <li class="acco-list"><!-- on , off -->
+                                            <div class="acco-title">
+                                                <button role="button" aria-pressed="false">
+                                                    <div class="list-wrap">
+                                                        <div class="list-info">
+                                                            <div>
+                                                                <em class="me">최*진</em>
+                                                                <i class="icon-brother ml9"><span class="blind">형제자매</span></i>
+                                                            </div>
+                                                            <div class="num">010-12**-24**</div>
+                                                        </div>
+                                                        <div class="list-arrow">
+                                                            <span class="ico-arrow"><span class="blind">결합가족 최*진 내용 자세히 보기</span></span>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            <div class="acco-content">
+                                                <div class="data-info-list toggle-inner-list">
+                                                    <ul>
+                                                        <li>
+                                                            <dl>
+                                                                <dt>관계</dt>
+                                                                <dd>형제 자매</dd>
+                                                            </dl>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //.widget -->
+                        
+                    </div>
+                    <!--// .cont-box -->
+                    
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box --><!-- 2018-11-02 수정 -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list">
+                            <li><button type="button" class="tip-view-btn" title="band데이터 요금제 TIP보기" aria-haspopup="true">band데이터 요금제 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="실제 할인금액 TIP보기" aria-haspopup="true">실제 할인금액 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="통화료 내역 제외 TIP보기" aria-haspopup="true">통화료 내역 제외 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="더블할인 혜택 이용 고객 TIP보기" aria-haspopup="true">더블할인 혜택 이용 고객 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="가입연수 산정 TIP보기" aria-haspopup="true">가입연수 산정 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="가족그룹의 해지 TIP보기" aria-haspopup="true">가족그룹의 해지 <span class="tip-view">TIP</span></button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+    </div>
+</body>
+
+</html>
