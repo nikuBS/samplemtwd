@@ -25,6 +25,7 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
   _addressId: null,
 
   _cachedElement: function () {
+    this.$inputDisabled = this.$container.find('.fe-input-disabled');
     this.$inputAddressZipcode = this.$container.find('.fe-address-zipcode');
     this.$inputAddressMain = this.$container.find('.fe-address-main');
     this.$inputAddressDetail = this.$container.find('.fe-address-detail');
@@ -34,8 +35,11 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btnSearchZipcode.on('click', this._onClickSearchZipcode.bind(this));
-    this.$btnSetupOk.on('click', this._procConfirm.bind(this));
+    this.$btnSearchZipcode.on('click', $.proxy(this._onClickSearchZipcode, this));
+    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$inputDisabled.on('focus', function() {
+      $(this).trigger('blur');
+    });
   },
 
   _convConfirmOptions: function () {
