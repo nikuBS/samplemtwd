@@ -6,12 +6,9 @@
 
 import TwRouter from '../../common/route/tw.router';
 import CommonError from './controllers/util/common.util.error.controller';
-import CommonCertMotp from './controllers/cert/common.cert.motp.controller';
-import CommonCertMotpFail from './controllers/cert/common.cert.motp-fail.controller';
 import CommonCertPublicExport from './controllers/cert/common.cert.public-export.controller';
 import CommonCertNice from './controllers/cert/common.cert.nice.controller';
 import CommonCertIpin from './controllers/cert/common.cert.ipin.controller';
-// import CommonCertComplete from './controllers/cert/common.cert.complete.controller';
 import CommonMemberLine from './controllers/member/common.member.line.controller';
 import CommonMemberLineEdit from './controllers/member/common.member.line.edit.controller';
 import CommonMemberLineBizRegister from './controllers/member/common.member.line.biz-register.controller';
@@ -50,7 +47,6 @@ import CommonCertNiceRefund from './controllers/cert/common.cert.nice.refund.con
 import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
 import CommonShareAppInstallInfo from './controllers/share/common.share.app-install.info.controller';
 import CommonMemberWithdrawalComplete from './controllers/member/common.member.withdrawal-complete';
-import CommonMemberLogin from './controllers/member/common.member.login.controller';
 import CommonSearchMore from './controllers/search/common.search.more.controller';
 import CommonSearch from './controllers/search/common.search.controller';
 import CommonMemberInit from './controllers/member/common.member.init.controller';
@@ -72,19 +68,15 @@ export default class CommonRouter extends TwRouter {
   constructor() {
     super();
     // cert
-    this.controllers.push({ url: '/cert/motp', controller: CommonCertMotp });
-    this.controllers.push({ url: '/cert/motp/fail', controller: CommonCertMotpFail });
     this.controllers.push({ url: '/cert/public/export', controller: CommonCertPublicExport });
     this.controllers.push({ url: '/cert/nice', controller: CommonCertNice });
     this.controllers.push({ url: '/cert/nice/refund', controller: CommonCertNiceRefund });
     this.controllers.push({ url: '/cert/ipin', controller: CommonCertIpin });
     this.controllers.push({ url: '/cert/ipin/refund', controller: CommonCertIpinRefund });
-    // this.controllers.push({ url: '/cert/complete', controller: CommonCertComplete });
     this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
     this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
-    // this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/signup/route', controller: CommonMemberSignupRoute });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
