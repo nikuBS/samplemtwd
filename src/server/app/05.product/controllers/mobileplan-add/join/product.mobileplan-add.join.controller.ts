@@ -26,12 +26,16 @@ class ProductMobileplanAddJoin extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       };
 
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
-      .subscribe((basicInfo) => {
-      if (basicInfo.code !== API_CODE.CODE_00) {
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
+    ]).subscribe(([preCheckInfo, basicInfo]) => {
+      const apiError = this.error.apiError([preCheckInfo, basicInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: basicInfo.code,
-          msg: basicInfo.msg
+          code: apiError.code,
+          msg: apiError.msg
         }));
       }
 

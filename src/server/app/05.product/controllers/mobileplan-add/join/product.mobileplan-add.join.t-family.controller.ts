@@ -34,10 +34,11 @@ class ProductMobileplanAddJoinTFamily extends TwViewController {
     }
 
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0171, {}, {}, []),
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-    ).subscribe(([ preInfo, joinTermInfo ]) => {
-      const apiError = this.error.apiError([preInfo, joinTermInfo]);
+    ).subscribe(([ preCheckInfo, preInfo, joinTermInfo ]) => {
+      const apiError = this.error.apiError([preCheckInfo, preInfo, joinTermInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
