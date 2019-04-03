@@ -104,6 +104,15 @@
         }, 500);
       }
     });
+
+    if (Tw.BrowserHelper.isApp()) {
+      $('.fe-link-external').on('click', function (e) {
+        e.preventDefault();
+        Tw.CommonHelper.showDataCharge(function () {
+          Tw.CommonHelper.openUrlExternal(e.currentTarget.href);
+        });
+      })
+    }
   });
 </script>
 <!-- //190329 수정 -->
