@@ -1163,3 +1163,9 @@ export const TID_MSG = {
 export const PREPAY_ERR_MSG = {
   FAIL: '이번 달 잔여한도가 정상적으로 조회되지 않았습니다. 잠시 후 다시 시도해 주세요.'
 };
+
+export const MOBILEPLAN_ADD_ERROR_MSG = {
+  WATCHTAB: {
+    NON_USER: '5GX 프라임, 5GX 플래티넘 이용중인 고객들 대상으로 가입 가능한 부가서비스입니다.'
+  }
+};

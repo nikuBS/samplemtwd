@@ -8,11 +8,10 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
-import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
+import {MOBILEPLAN_ADD_ERROR_MSG, PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
+import {API_CMD} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import ProductHelper from '../../../../../utils/product.helper';
 
 class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   constructor() {
@@ -20,6 +19,7 @@ class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   }
 
   private readonly _prodIdList = ['NA00006484'];
+  private readonly _mobileplanIdList = ['NA00006404', 'NA00006405'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
@@ -31,6 +31,9 @@ class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
 
     if (FormatHelper.isEmpty(prodId) || this._prodIdList.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
+    }
+    if (this._mobileplanIdList.indexOf(svcInfo.prodId) === -1) {
+      return this.error.render(res, {...renderCommonInfo, msg: MOBILEPLAN_ADD_ERROR_MSG.WATCHTAB.NON_USER});
     }
 
     Observable.combineLatest([
