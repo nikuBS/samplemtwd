@@ -18,7 +18,7 @@ class CommonUtil5gIntro extends TwViewController {
     const page = req.params.page;
 
     if (!page) {
-      return res.render('util/common.util.5g-intro.html', {pageInfo});
+      return res.render('util/common.util.5g-intro.html', {pageInfo, svcInfo});
     } else if (!this._isAllow(page)) {
       return this.error.render(res, {
         code: '404',
