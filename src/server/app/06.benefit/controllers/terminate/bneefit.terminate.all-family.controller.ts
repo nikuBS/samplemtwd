@@ -9,7 +9,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 import { PRODUCT_COMBINE_FAMILY_TYPE, PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import { SVC_CD } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -20,7 +19,7 @@ class BenefitTerminateAllFamily extends TwViewController {
     super();
   }
 
-  private _allowedProdIds = ['NH00000084', 'TW20000010'];
+  private _allowedProdIds = ['NA00002040', 'TW20000010'];
 
   /**
    * @param termInfo
@@ -31,9 +30,7 @@ class BenefitTerminateAllFamily extends TwViewController {
     return Object.assign(termInfo, {
       combinationGroup: this._convCombinationGroup(termInfo.combinationGroup),
       combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
-        this._convertWirelessMemberList(termInfo.combinationWirelessMemberList, currentSvcMgmtNum),
-      combinationWireMember: FormatHelper.isEmpty(termInfo.combinationWireMemberList) ? null :
-        this._convertWireInfo(termInfo.combinationWireMemberList[0])
+        this._convertWirelessMemberList(termInfo.combinationWirelessMemberList, currentSvcMgmtNum)
     });
   }
 
@@ -43,9 +40,37 @@ class BenefitTerminateAllFamily extends TwViewController {
    * @private
    */
   private _convertWirelessMemberList(wireLessMemberList: any, currentSvcMgmtNum: any): any {
-    return wireLessMemberList.map((item) => {
+    const wireMemberList: any = wireLessMemberList.map((item) => {
       return this._convertWirelessInfo(item, currentSvcMgmtNum);
     });
+
+    return this._sortCombinationList(wireMemberList);
+  }
+
+  /**
+   * @param list
+   * @private
+   */
+  private _sortCombinationList(list: any): any {
+    const myLine: any = [],
+      leaderLine: any = [],
+      otherLine: any = [];
+
+    list.forEach((item) => {
+      if (item.fam.me) {
+        myLine.push(item);
+        return true;
+      }
+
+      if (item.fam.leader) {
+        leaderLine.push(item);
+        return true;
+      }
+
+      otherLine.push(item);
+    });
+
+    return [...myLine, ...leaderLine, ...otherLine];
   }
 
   /**
@@ -79,16 +104,6 @@ class BenefitTerminateAllFamily extends TwViewController {
       brother: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.brother,
       me: wireLessInfo.svcMgmtNum === currentSvcMgmtNum
     };
-  }
-
-  /**
-   * @param wireInfo
-   * @private
-   */
-  private _convertWireInfo(wireInfo: any): any {
-    return Object.assign(wireInfo, {
-      svcCdNm: SVC_CD[wireInfo.svcCd]
-    });
   }
 
   /**

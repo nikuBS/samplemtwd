@@ -4,7 +4,7 @@
  * Date: 2019.04.01
  */
 
-Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm, svcCd) {
+Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -12,7 +12,6 @@ Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm, svcCd) {
   this.$container = rootEl;
   this._prodId = prodId;
   this._prodNm = prodNm;
-  this._svcCd = svcCd;
 
   this._cachedElement();
   this._bindEvent();
@@ -21,41 +20,23 @@ Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm, svcCd) {
 Tw.BenefitTerminateAllFamilyFree.prototype = {
 
   _cachedElement: function() {
+    this.$list = this.$container.find('.fe-list');
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$btnCancelJoin = this.$container.find('.fe-btn_cancel_join');
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._openConfirmAlert, this));
+    this.$btnTerminate.on('click', $.proxy(this._onTerminate, this));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
-  _openConfirmAlert: function() {
-    this._isTerminate = false;
-    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
-      null, $.proxy(this._onCloseConfirmAlert, this));
-  },
-
-  _bindConfirmAlert: function($popupContainer) {
-    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmAlertApply, this));
-  },
-
-  _setConfirmAlertApply: function() {
-    this._isTerminate = true;
-
-    if (this._isPopup) {
-      this._popupService.close();
-    }
-  },
-
-  _onCloseConfirmAlert: function() {
-    if (!this._isTerminate) {
-      return;
-    }
+  _onTerminate: function(e) {
+    var $btn = $(e.currentTarget),
+      svcCd = Tw.FormatHelper.isEmpty($btn.data('svc_cd')) ? '' : $btn.data('svc_cd');
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
+
+    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
