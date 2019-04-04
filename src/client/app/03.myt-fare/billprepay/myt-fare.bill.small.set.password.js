@@ -109,7 +109,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('blur', '.fe-new-password', $.proxy(this._checkPassword, this));
     this.$layer.on('blur', '.fe-confirm-password', $.proxy(this._checkConfirmPassword, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
-    this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
+    this.$setBtn.click(_.debounce($.proxy(this._setPassword, this), 500));
   },
   _checkIsAbled: function (event) {
     this._checkNumber(event); // 숫자만 입력 가능

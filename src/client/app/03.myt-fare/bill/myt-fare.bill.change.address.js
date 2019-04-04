@@ -7,6 +7,7 @@
 
 Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$container = rootEl;
+  this.$changeBtn = this.$container.find('.fe-change');
   this.$isValid = true;
   this._phoneModifyYn = 'N';
   this._addrModifyYn = 'N';
@@ -31,7 +32,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
     this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this));
-    this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
+    this.$changeBtn.click(_.debounce($.proxy(this._changeAddress, this), 500));
   },
   _checkNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.target); // 숫자만 입력 가능

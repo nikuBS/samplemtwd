@@ -47,7 +47,7 @@ Tw.MyTFareBillAccount.prototype = {
     this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this)); // 환불계좌 체크박스
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this)); // x버튼 클릭
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this)); // 납부확인
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
@@ -123,9 +123,10 @@ Tw.MyTFareBillAccount.prototype = {
   _openCheckPay: function ($layer) {
     this._setData($layer); // 바닥페이지에서 넘어온 데이터 셋팅
     this._paymentCommon.getListData($layer); // 납부내역 확인 시 공통 컴포넌트의 리스트 호출
+    this._payBtn = $layer.find('.fe-pay');
 
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this)); // 닫기버튼 클릭 시 alert 노출
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this)); // 납부하기
+    this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
   _setData: function ($layer) {
     // 납부내역 확인 팝업에 데이터 셋팅

@@ -43,6 +43,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$pointPw = this.$selectedTab.find('.fe-point-pw');
     this.$agree = this.$container.find('.fe-agree');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
+    this.$onePayBtn = this.$container.find('.fe-tab1-pay');
+    this.$autoPayBtn = this.$container.find('.fe-tab2-pay');
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
@@ -61,9 +63,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-agree-view', $.proxy(this._openAgreePop, this));
-    this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
-    this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$onePayBtn.click(_.debounce($.proxy(this._onePay, this), 500));
+    this.$autoPayBtn.click(_.debounce($.proxy(this._autoPay, this), 500));
   },
   _openGetPoint: function (e) {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회하기 공통 컴포넌트 호출

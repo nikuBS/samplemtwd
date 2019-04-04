@@ -34,6 +34,8 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$fareSelector = this.$selectedTab.find('.fe-select-fare');
     this.$point = this.$selectedTab.find('.fe-point');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
+    this.$onePayBtn = this.$container.find('.fe-tab1-pay');
+    this.$autoPayBtn = this.$container.find('.fe-tab2-pay');
     this.$isSelectValid = true;
 
     this.$payBtn.show();
@@ -47,9 +49,9 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-fare', $.proxy(this._selectFare, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
-    this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
-    this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$onePayBtn.click(_.debounce($.proxy(this._onePay, this), 500));
+    this.$autoPayBtn.click(_.debounce($.proxy(this._autoPay, this), 500));
   },
   _changeTab: function (event) {
     // 1회납부/자동납부 탭 change

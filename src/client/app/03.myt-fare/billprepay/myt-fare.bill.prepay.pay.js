@@ -39,6 +39,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
+    this.$payBtn = this.$container.find('.fe-check-pay');
     this.$isValid = false;
     this.$isCardValid = false;
 
@@ -47,8 +48,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _bindEvent: function () {
     this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500));
   },
   _setMaxValue: function (event) {
     // maxLength 적용
@@ -115,7 +116,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
     $layer.find('.fe-mbr-name').text(this._name);
     $layer.find('.fe-payment-type').text(this.$cardTypeSelector.text());
 
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this, $layer));
+    this._payBtn = $layer.find('.fe-pay');
+    this._payBtn.click(_.debounce($.proxy(this._pay, this, $layer), 500)); // 납부하기
     $layer.on('click', '.fe-close', $.proxy(this._close, this));
   },
   _afterPaySuccess: function () {
