@@ -41,7 +41,7 @@
                     <button class="bt-link-tx underline fe-myuse-link-btn" data-url="<%= btnList[keyBtn].btnLinkUrl %>" data-prod_id="<%= prodList[keyProd].prodId %>"><%= btnList[keyBtn].btnNm %></button>
                     <% } %>
                 </div>
-                <% if (troamingData && troamingData.rgstDtm && prodList[keyProd].remainedDays) { %>
+                <% if ( prodList[keyProd].remainedDays && troamingLikeHome.length === 0 ) { %>
                 <div class="use-info-box">
                     <span class="info-title">사용량 정보</span>
                     <ul class="info-list">
@@ -84,73 +84,71 @@
                     </ul>
                 </div>
                 <% } %> <!-- if -->
+
+                <% if (prodList[keyProd].remainedDays && troamingLikeHome.length > 0) { %>
+                <div class="use-info-box">
+                    <span class="info-title">사용량 정보</span>
+                    <% for (var data in troamingLikeHome) { %>
+                    <ul class="info-list">
+                        <li>
+                            <dl>
+                                <dt>기본제공혜택</dt>
+                                <dd><strong><%= troamingLikeHome[data].prodNm %></strong></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>제공량</dt>
+                                <dd><strong>
+                                    <% if (/^[0-9,.]+$/.test(troamingLikeHome[data].convTotal.data)) { %>
+                                    <%= troamingLikeHome[data].convTotal.data %><%= troamingLikeHome[data].convTotal.unit %>
+                                    <% } else { %>
+                                    <%= troamingLikeHome[data].convTotal.data %>
+                                    <% } %>
+                                </strong> 제공</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>사용량</dt>
+                                <dd><strong>
+                                    <% if (/^[0-9,.]+$/.test(troamingLikeHome[data].convUsed.data)) { %>
+                                    <%= troamingLikeHome[data].convUsed.data %><%= troamingLikeHome[data].convUsed.unit %>
+                                    <% } else { %>
+                                    <%= troamingLikeHome[data].convUsed.data %>
+                                    <% } %>
+                                </strong> 사용</dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <% } %> <!-- for -->
+                </div>
+                <div class="rm-tip-list">
+                    <ul>
+                        <li>
+                            데이터 한도형 상품 가입 고객의 경우 기본 데이터 소진 후 속도제어(400kbps 이하) 상태에서 지속 사용 가능합니다.
+                            <p>대표 요금제 : 0플랜(스몰, 미디엄), T플랜(스몰, 미디엄), band 데이터(세이브, 1.2G, 2.2G, 3.5G, 6.5G)</p>
+                        </li>
+                        <li>
+                            데이터 무제한 상품 가입 고객의 경우 기본 데이터 소진 후 한국시간 기준 00시~24시 기준으로 매일 1GB 추가 제공되며, 추가제공된 1GB 소진 후 속도제어(400kbps 이하) 상태로 지속 사용가능합니다.
+                            <p>대표 요금제 : 0플랜(라지), T플랜(라지, 패밀리), band 데이터(퍼펙트, 퍼펙트S), T 시그니처(Classic, Master) </p>
+                        </li>
+                        <li>
+                            완전 무제한 요금제 상품 가입 고객의 경우 용량 및 속도 제한 없이 무제한 이용 가능합니다.
+                            <p>대표 요금제 : T플랜 Data인피니티</p>
+                        </li>
+                        <li>
+                            <p>상세 국내 요금제 유형에 대한 문의는 고객센터(국내: 02-6343-9000 / 해외: +82-2-6343-9000)를 통해서 확인해주세요.</p>
+                        </li>
+                        <li>
+                            <p>실제 데이터 사용량과 다소 차이가 있을 수 있으니 참고용으로 활용하시기 바랍니다.</p>
+                        </li>
+                    </ul>
+                </div>
+                <% } %> <!-- if -->
             </li>
             <% } %> <!-- for -->
         </ul>
-
-        <% if (troamingLikeHome.length > 0 && troamingLikeHome.remainedDays) { %>
-        <div class="use-info-box">
-            <span class="info-title">사용량 정보</span>
-            <% for (var data in troamingLikeHome) { %>
-            <% if (troamingLikeHome[data].rgstDtm) { %>
-            <ul class="info-list">
-                <li>
-                    <dl>
-                        <dt>기본제공혜택</dt>
-                        <dd><strong><%= troamingLikeHome[data].prodNm %></strong></dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>제공량</dt>
-                        <dd><strong>
-                        <% if (/^[0-9,.]+$/.test(troamingLikeHome[data].convTotal.data)) { %>
-                        <%= troamingLikeHome[data].convTotal.data %><%= troamingLikeHome[data].convTotal.unit %>
-                        <% } else { %>
-                        <%= troamingLikeHome[data].convTotal.data %>
-                        <% } %>
-                        </strong> 제공</dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>사용량</dt>
-                        <dd><strong>
-                        <% if (/^[0-9,.]+$/.test(troamingLikeHome[data].convUsed.data)) { %>
-                        <%= troamingLikeHome[data].convUsed.data %><%= troamingLikeHome[data].convUsed.unit %>
-                        <% } else { %>
-                        <%= troamingLikeHome[data].convUsed.data %>
-                        <% } %>
-                        </strong> 사용</dd>
-                    </dl>
-                </li>
-            </ul>
-            <% } %> <!-- if -->
-            <% } %> <!-- for -->
-        </div>
-        <div class="rm-tip-list">
-            <ul>
-                <li>
-                    데이터 한도형 상품 가입 고객의 경우 기본 데이터 소진 후 속도제어(400kbps 이하) 상태에서 지속 사용 가능합니다.
-                    <p>대표 요금제 : 0플랜(스몰, 미디엄), T플랜(스몰, 미디엄), band 데이터(세이브, 1.2G, 2.2G, 3.5G, 6.5G)</p>
-                </li>
-                <li>
-                    데이터 무제한 상품 가입 고객의 경우 기본 데이터 소진 후 한국시간 기준 00시~24시 기준으로 매일 1GB 추가 제공되며, 추가제공된 1GB 소진 후 속도제어(400kbps 이하) 상태로 지속 사용가능합니다.
-                    <p>대표 요금제 : 0플랜(라지), T플랜(라지, 패밀리), band 데이터(퍼펙트, 퍼펙트S), T 시그니처(Classic, Master) </p>
-                </li>
-                <li>
-                    완전 무제한 요금제 상품 가입 고객의 경우 용량 및 속도 제한 없이 무제한 이용 가능합니다.
-                    <p>대표 요금제 : T플랜 Data인피니티</p>
-                </li>
-                <li>
-                    <p>상세 국내 요금제 유형에 대한 문의는 고객센터(국내: 02-6343-9000 / 해외: +82-2-6343-9000)를 통해서 확인해주세요.</p>
-                </li>
-                <li>
-                    <p>실제 데이터 사용량과 다소 차이가 있을 수 있으니 참고용으로 활용하시기 바랍니다.</p>
-                </li>
-            </ul>
-        </div>
-        <% } %> <!-- if -->
 
         <% if (roamingFeePlan.roamingProdList.length !== 0 && wirelessAdd.isAdditionUse !== 'Y') { %>
         <div class="arrival-noti">
