@@ -1,7 +1,7 @@
 /**
- * FileName: customer.main.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
- * Date: 2018.07.23
+ * @file customer.main.controller.ts
+ * @author 박지만 (jiman.park@sk.com)
+ * @since 2018.07.23
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -69,7 +69,7 @@ class CustomerMain extends TwViewController {
       }) ;
     }
     return resultData;
-  }
+  };
 
   // GET BANNER THROUGH BFF SERVER
   /*private getBanners = () => this.apiService.request(API_CMD.BFF_08_0066, {})
@@ -86,7 +86,7 @@ class CustomerMain extends TwViewController {
   private getBanners = () => this.redisService.getData(REDIS_KEY.BANNER_ADMIN + 'M000673')
     .map((resp) => {
       return resp.result ? resp.result.banners : [];
-    })
+    });
 
   // GETBANNER CURRENT REDIS FUNCTION SHOULD CALL 1 ~ N BRING EACH VARIABLES, SO IT SHOULD USE THIS
   /*private getBanners = (): Observable<Banners | any> => combineLatest(this.setBannersNumber(this.bannersNumber)).pipe( map (x => x));
@@ -106,7 +106,7 @@ class CustomerMain extends TwViewController {
       } else {
         return null;
       }
-    })
+    });
 
   private getNotice = (req) => {
     const expsChnlCd = this._getTworldChannel(req);
@@ -121,7 +121,7 @@ class CustomerMain extends TwViewController {
         return null;
       }
     });
-  }
+  };
 
   private _getTworldChannel(req): any {
     if ( BrowserHelper.isAndroid(req) ) {

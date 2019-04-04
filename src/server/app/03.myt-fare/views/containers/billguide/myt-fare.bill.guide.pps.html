@@ -1,8 +1,8 @@
 <%#
 * MenuName: 나의 요금 > 요금안내서 > 선불폰(PPS)(MF_02_04)
-* FileName: myt-fare.bill.guide.pps.html
-* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
-* Date: 2018.09.12
+* @file myt-fare.bill.guide.pps.html
+* @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* @since 2018.09.12
 * Summary: 선불폰 이용내역 조회
 %>
 
@@ -201,9 +201,9 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuidePps( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      ppsInfo: <%-JSON.stringify(ppsInfo) %>,
-      commDataInfo: <%-JSON.stringify(commDataInfo) %>
-  } );
+      ppsInfo;: <%-JSON.stringify(ppsInfo) %>,
+      commDataInfo;: <%-JSON.stringify(commDataInfo) %>
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>

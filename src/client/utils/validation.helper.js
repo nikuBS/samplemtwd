@@ -1,3 +1,9 @@
+/**
+ * @file validation.helper.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.ValidationHelper = (function () {
   function regExpTest(exp, str) {
     return exp.test(str);

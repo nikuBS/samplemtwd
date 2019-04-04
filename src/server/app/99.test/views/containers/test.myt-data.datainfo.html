@@ -1,7 +1,7 @@
 <%#
-* FileName: test.myt-data.datainfo.html
+* @file test.myt-data.datainfo.html
 * @author Jiyoung Jo
-* Date: 2018.11.23
+* @since 2018.11.23
 %>
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -111,7 +111,13 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.TestMyTDataInfo($('.wrap'), <%- JSON.stringify({ ...chargeData.all, dayIdx: dIdx, itemIdx: iIdx, displayCount }) %>);
+    new Tw.TestMyTDataInfo($('.wrap') < % -JSON.stringify({
+      ...chargeData.all,
+      dayIdx: dIdx,
+      itemIdx: iIdx,
+      displayCount
+    }) % >
+  )
   });
 </script>
 <% include ../components/end.component.html %>

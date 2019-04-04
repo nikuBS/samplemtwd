@@ -1,3 +1,9 @@
+/**
+ * @file hash.service.js
+ * @author Ara Jo
+ * @since 2018.05
+ */
+
 Tw.HashService = function () {
   this._callbackList = [];
   this._currentHashNav = undefined;

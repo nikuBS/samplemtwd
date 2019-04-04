@@ -1,3 +1,9 @@
+/**
+ * @file native.service.js
+ * @author Ara Jo
+ * @since 2018.05
+ */
+
 Tw.NativeService = function () {
   this._bridge = null;
   this._callbackList = [];

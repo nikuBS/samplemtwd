@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.coupon.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.11.09
+ * @file product.roaming.coupon.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.11.09
  */
 
 Tw.ProductRoamingCoupon = function(rootEl, bpcpServiceId) {

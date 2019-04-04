@@ -1,7 +1,7 @@
 /**
- * FileName: product.apps.js
+ * @file product.apps.js
  * @author Jiyoung Jo
- * Date: 2018.11.14
+ * @since 2018.11.14
  */
 
 Tw.ProductApps = function(rootEl, menuId) {

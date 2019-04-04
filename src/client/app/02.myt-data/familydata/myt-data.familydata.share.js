@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.share.js
+ * @file myt-data.familydata.share.js
  * @author Jiyoung Jo
- * Date: 2018.11.29
+ * @since 2018.11.29
  */
 
 Tw.MyTDataFamilyShare = function(rootEl, $submit) {

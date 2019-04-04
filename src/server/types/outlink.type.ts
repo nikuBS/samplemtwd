@@ -1,3 +1,9 @@
+/**
+ * @file outlink.type.ts
+ * @author
+ * @since 2018.05
+ */
+
 export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
   {
     TEXT: '이메일을 통한 피싱주의',

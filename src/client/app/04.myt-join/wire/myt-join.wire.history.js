@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청현황(MS_04_01_01)
- * FileName: myt-join.wire.history.js
- * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * Date: 2018.10.08
+ * @file myt-join.wire.history.js
+ * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * @since 2018.10.08
  * Summary: 인터넷/집전화/IPTV 신청현황 목록 조회
  */
 Tw.MyTJoinWireHistory = function (rootEl, strInitData) {

@@ -1,7 +1,7 @@
 /**
- * FileName: customer.useguide.service.controller.ts
- * Author: Lee Sanghyoung (silion@sk.com)
- * Date: 2018.10.25
+ * @file customer.useguide.service.controller.ts
+ * @author Lee Sanghyoung (silion@sk.com)
+ * @since 2018.10.25
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

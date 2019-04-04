@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.recharge.coupon.complete.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.26
+ * @file myt-data.recharge.coupon.complete.controller.ts
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.11.26
  */
 
 import { NextFunction, Request, Response } from 'express';

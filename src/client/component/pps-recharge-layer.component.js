@@ -1,7 +1,7 @@
 /**
- * FileName: pps-recharge-layer.component.js
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.11.20
+ * @file pps-recharge-layer.component.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.11.20
  *
  */
 

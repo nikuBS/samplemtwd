@@ -1,3 +1,9 @@
+/**
+ * @file api.router.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 import express, { NextFunction, Request, Response, Router } from 'express';
 import multer from 'multer';
 import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';

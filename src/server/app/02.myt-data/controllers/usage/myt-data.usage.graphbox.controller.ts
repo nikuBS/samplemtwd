@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.usage.graphbox.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.09.17
+ * @file myt-data.usage.graphbox.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.09.17
  */
 
 import FormatHelper from '../../../../utils/format.helper';

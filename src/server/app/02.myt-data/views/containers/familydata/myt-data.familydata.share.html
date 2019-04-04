@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-data.familydata.share.html
+* @file myt-data.familydata.share.html
 * @author Jiyoung Jo
-* Date: 2018.10.01
+* @since 2018.10.01
 * id: DC_02_01
 %>
 
@@ -93,7 +93,8 @@
     $(document).ready(function () {
         var $container = $('.wrap');
         new Tw.MyTDataFamilyShareImmediately($container, 'tab1-tab');
-        new Tw.MyTDataFamilyShareMonthly($container, 'tab2-tab', <%= monthly.regularShrYn === "Y" %>);
+      new Tw.MyTDataFamilyShareMonthly($container, 'tab2-tab' < %= monthly.regularShrYn === "Y" % >
+    )
     });
 </script>
 <% include ../../components/end.component.html %>

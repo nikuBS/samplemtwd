@@ -1,8 +1,8 @@
 <%#
 * MenuName: 나의 요금 > 요금안내서 개별청구회선(MF_02_03)
-* FileName: myt-fare.bill.guide.individual.html
-* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
-* Date: 2018.09.12
+* @file myt-fare.bill.guide.individual.html
+* @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* @since 2018.09.12
 * Summay: 요금안내서 개별청구회선 조회 화면
 %>
 
@@ -302,14 +302,14 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideIndividual( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcMgmtNum: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
-      svcAttrCd: <%-JSON.stringify(svcInfo.svcAttrCd) %>,
-      allSvc: <%-JSON.stringify(allSvc) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      commDataInfo : <%-JSON.stringify(commDataInfo) %>,
-      intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
-      childLineInfo : <%-JSON.stringify(childLineInfo) %>
-  } );
+      svcMgmtNum;: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
+      svcAttrCd;: <%-JSON.stringify(svcInfo.svcAttrCd) %>,
+      allSvc;: <%-JSON.stringify(allSvc) %>,
+      billpayInfo; : <%-JSON.stringify(billpayInfo) %>,
+      commDataInfo; : <%-JSON.stringify(commDataInfo) %>,
+      intBillLineInfo; : <%-JSON.stringify(intBillLineInfo) %>,
+      childLineInfo; : <%-JSON.stringify(childLineInfo) %>
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>

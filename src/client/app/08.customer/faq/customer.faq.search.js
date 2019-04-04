@@ -1,7 +1,7 @@
 /**
- * FileName: customer.faq.search.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.05
+ * @file customer.faq.search.js
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.11.05
  */
 
 Tw.CustomerFaqSearch = function (rootEl, keyword) {

@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan-add.terminate.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * @file product.mobileplan-add.terminate.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.13
  */
 
 Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {

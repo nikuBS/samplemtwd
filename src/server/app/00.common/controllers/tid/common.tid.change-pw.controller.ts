@@ -1,7 +1,7 @@
 /**
- * FileName: common.tid.change-pw.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.03
+ * @file common.tid.change-pw.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.07.03
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -32,7 +32,7 @@ class CommonTidChangePw extends TwViewController {
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {

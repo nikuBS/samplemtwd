@@ -1,7 +1,7 @@
 /**
- * FileName: tevent.detail.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.21
+ * @file tevent.detail.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.21
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

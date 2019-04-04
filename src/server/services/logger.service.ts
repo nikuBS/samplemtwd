@@ -1,3 +1,9 @@
+/**
+ * @file logger.service.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 import winston from 'winston';
 import fs from 'fs';
 

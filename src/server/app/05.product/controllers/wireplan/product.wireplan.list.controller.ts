@@ -1,7 +1,7 @@
 /**
- * FileName: product.wires.controller.ts
+ * @file product.wires.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.11.06
+ * @since 2018.11.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -62,7 +62,7 @@ export default class ProductWires extends TwViewController {
     }
 
     return of(undefined);
-  }
+  };
 
   private getList = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {

@@ -1,9 +1,9 @@
 
 
 /**
- * FileName: customer.svc-info.service.detail.controller.ts
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018.12.20
+ * @file customer.svc-info.service.detail.controller.ts
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018.12.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -93,7 +93,7 @@ class CustomerUseguideService extends TwViewController {
       });
     });
     return result[returnKey].toString();
-  }
+  };
 
   // 해당 리스트에서 같은 코드 찾기
   private getCurTitleFromDeps = (list, code: string) => {
@@ -102,12 +102,12 @@ class CustomerUseguideService extends TwViewController {
         next.code === code) ? next : prev;
     }, {});
     return FormatHelper.isEmpty(content) ? '' : content.dep_title;
-  }
+  };
 
   // 전송된 데이터 준 html 따로 관리
   private exceptHTML = (obj: object): object => {
     return Object.assign(obj, {icntsCtt: ''});
-  }
+  };
 
   // 전송된 html 수정 변경
   private modifyHTML = (html: string): string => {

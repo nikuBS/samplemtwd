@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.bill-tax.send-fax.controller.ts
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2019.01.29
+ * @file myt-fare.info.bill-tax.send-fax.controller.ts
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2019.01.29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

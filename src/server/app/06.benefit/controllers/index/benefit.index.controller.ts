@@ -2,9 +2,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {NextFunction, Request, Response} from 'express';
 
 /**
- * FileName: benefit.index.controller.ts
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.26
+ * @file benefit.index.controller.ts
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.26
  */
 
 class BenefitIndex extends TwViewController {

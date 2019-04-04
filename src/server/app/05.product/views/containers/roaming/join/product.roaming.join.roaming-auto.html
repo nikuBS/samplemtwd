@@ -1,7 +1,7 @@
 <%#
-* FileName: product.roaming.join.roaming-auto.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.03
+* @file product.roaming.join.roaming-auto.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.03
 %>
 
 
@@ -129,7 +129,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingJoinRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>', <%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>', '<%- expireDate %>')
+      new Tw.ProductRoamingJoinRoamingAuto($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>', <%- JSON.stringify(prodApiInfo) %>,;<%- JSON.stringify(svcInfo) %>, '<%- prodId %>', '<%- expireDate %>';)
     });
 </script>
 <% include ../../../components/end.component.html %>

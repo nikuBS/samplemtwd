@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 서브메인(MF2)
- * FileName: myt-fare-submain.js
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.28
+ * @file myt-fare-submain.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.09.28
  * Summary: 최근 청구/사용/미납요금 조회, 및 각 상세화면으로 이동 등
  * Description:
  *   청구,사용요금 조회 - data.type이 UF인 경우 사용요금 조회 아닌 경우 청구요금 조회

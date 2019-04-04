@@ -1,7 +1,7 @@
 /**
- * FileName: customer.helpline.js
+ * @file customer.helpline.js
  * @author Jiyoung Jo
- * Date: 2018.10.18
+ * @since 2018.10.18
  */
 
 Tw.CustomerHelpline = function(rootEl, timeInfo) {

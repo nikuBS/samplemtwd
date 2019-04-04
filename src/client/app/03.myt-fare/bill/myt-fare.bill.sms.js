@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.sms.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.bill.sms.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.09.17
  * Annotation: 요금납부 시 입금전용계좌 SMS 신청
  */
 

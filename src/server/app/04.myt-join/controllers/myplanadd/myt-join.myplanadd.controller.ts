@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.myplanadd.controller.ts
+ * @file myt-join.myplanadd.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.09.19
+ * @since 2018.09.19
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -69,7 +69,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           {}
       };
     });
-  }
+  };
 
   private getWireAdditions = () => {  // 유선 가입 부가서비스 가져오기
     return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
@@ -83,7 +83,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
         reserved: resp.result.reserveds.map(this.convertAdditions)  // 가입 예약된 부가서비스 목록
       };
     });
-  }
+  };
 
   private convertAdditions = (addition: any) => { // 부가서비스 데이터 형태 변경
     return {
@@ -100,7 +100,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDate(addition.scrbDt)
     };
-  }
+  };
 
   // private _sortButtons = (a, _b) => {
   //   if (a.btnTypCd) {

@@ -1,7 +1,7 @@
 /**
- * FileName: common.tid.signup-foreigner.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.09
+ * @file common.tid.signup-foreigner.controller.ts
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.07.09
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -32,7 +32,7 @@ class CommonTidSignUpForeigner extends TwViewController {
           response_type: TID.RESP_TYPE,
           frgnr_yn: 'Y'
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {

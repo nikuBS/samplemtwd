@@ -1,7 +1,7 @@
 /**
- * FileName: common.member.line.empty.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.02
+ * @file common.member.line.empty.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.02
  */
 
 Tw.CommonMemberLineEmpty = function (rootEl) {

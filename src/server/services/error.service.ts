@@ -1,3 +1,9 @@
+/**
+ * @file tw.router.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.05
+ */
+
 import { Response } from 'express';
 import { API_CODE } from '../types/api-command.type';
 import FormatHelper from '../utils/format.helper';

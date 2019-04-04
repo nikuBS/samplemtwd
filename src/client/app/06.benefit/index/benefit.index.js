@@ -1,8 +1,8 @@
 /**
- * FileName: benefit.index.js
- * Author: 양정규 (skt.P130715@partner.sk.com)
+ * @file benefit.index.js
+ * @author 양정규 (skt.P130715@partner.sk.com)
  * 혜택 할인 Index
- * Date: 2018.10.26
+ * @since 2018.10.26
  */
 Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this.$container = rootEl;

@@ -1,3 +1,9 @@
+/**
+ * @file tevent.router.ts
+ * @author
+ * @since 2018.05
+ */
+
 import TwRouter from '../../common/route/tw.router';
 import TeventIngList from './controllers/tevent.ing.list.controller';
 import TeventLastList from './controllers/tevent.last.list.controller';

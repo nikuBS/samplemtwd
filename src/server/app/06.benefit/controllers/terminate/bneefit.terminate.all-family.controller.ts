@@ -1,8 +1,8 @@
 /**
  * 상품 해지 - T끼리 온가족할인
- * FileName: benefit.terminate.all-family.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.04.01
+ * @file benefit.terminate.all-family.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.04.01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

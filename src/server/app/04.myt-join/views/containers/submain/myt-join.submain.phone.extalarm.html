@@ -1,8 +1,8 @@
 <%#
 * MenuName: 나의 가입정보 > 서브메인 > 번호변경 안내서비스 연장/해지 신청(MS_03_01_04)
-* FileName: myt-join.submain.phone.extalarm.html
-* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
-* Date: 2018.10.19
+* @file myt-join.submain.phone.extalarm.html
+* @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* @since 2018.10.19
 * Summary: 번호변경 안내서비스 연장/해지
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -163,7 +163,8 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinPhoneNumChgAlarmExt($('.wrap'), <%- JSON.stringify(data) %>);
+    new Tw.MyTJoinPhoneNumChgAlarmExt($('.wrap') < % -JSON.stringify(data) % >
+  )
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.cookiz.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
- * Date: 2018.09.13
+ * @file myt-data.cookiz.controller.ts
+ * @author 박지만 (jiman.park@sk.com)
+ * @since 2018.09.13
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -78,7 +78,7 @@ class MyTDataCookiz extends TwViewController {
       } else {
         return null;
       }
-    })
+    });
 
   public addComma = (sAmount) => FormatHelper.addComma(sAmount);
   public convertDate = (sDate) => DateHelper.getShortDate(sDate);

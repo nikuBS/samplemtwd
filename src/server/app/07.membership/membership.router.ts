@@ -1,3 +1,9 @@
+/**
+ * @file membership.router.ts
+ * @author
+ * @since 2018.05
+ */
+
 import TwRouter from '../../common/route/tw.router';
 import MembershipJoinController from './controllers/join/membership.join.controller';
 import MembershipBenefitBrandList from './controllers/benefit/membership.benefit.brand.list.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: test.main.menu.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.12.14
+ * @file test.main.menu.controller.ts
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.12.14
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

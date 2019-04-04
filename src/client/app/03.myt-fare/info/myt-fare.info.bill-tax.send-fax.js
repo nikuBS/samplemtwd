@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.bill-tax.js
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2019. 1. 31
+ * @file myt-fare.info.bill-tax.js
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2019. 1. 31
 */
 
 Tw.MyTFareInfoBillTaxSendFax = function (rootEl, data) {

@@ -1,7 +1,7 @@
 <%#
-* FileName: common.search.result.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.11
+* @file common.search.result.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.11
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -645,7 +645,7 @@
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,;<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>';)._init();
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.reissue.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.01.29
+ * @file membership.my.reissue.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.01.29
  */
 
 Tw.MembershipMyReissue = function(rootEl, mbrTypCd) {

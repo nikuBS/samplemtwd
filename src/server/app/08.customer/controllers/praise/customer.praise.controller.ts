@@ -1,7 +1,7 @@
 /**
- * FileName: customer.praise.controller.ts
+ * @file customer.praise.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.10.22
+ * @since 2018.10.22
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

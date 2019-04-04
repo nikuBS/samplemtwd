@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.info.center.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.11.12
+ * @file product.roaming.info.center.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.11.12
  */
 
 Tw.ProductRoamingInfoCenter = function(rootEl) {

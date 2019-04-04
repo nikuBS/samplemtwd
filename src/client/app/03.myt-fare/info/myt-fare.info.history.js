@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.history.js
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018. 9. 17
+ * @file myt-fare.info.history.js
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018. 9. 17
  */
 Tw.MyTFareInfoHistory = function (rootEl, data) {
   this.$container = rootEl;

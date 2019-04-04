@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 서비스해지 신청(MS_04_08)
- * FileName: myt-join.wire.set.wire-cancel-service.js
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.10.15
+ * @file myt-join.wire.set.wire-cancel-service.js
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.10.15
  * Summary: 유선상품 서비스해지 신청
  */
 Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {

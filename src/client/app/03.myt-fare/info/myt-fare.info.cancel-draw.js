@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.cancel-draw.js
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018. 9. 17
+ * @file myt-fare.info.cancel-draw.js
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018. 9. 17
  */
 
 Tw.MyTFareInfoCancelDraw = function (rootEl, data) {

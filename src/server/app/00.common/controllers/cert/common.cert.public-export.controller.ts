@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.public-export.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.09.21
+ * @file common.cert.public-export.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.09.21
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

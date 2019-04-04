@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 > 기부금/후원금 상세조회(MF_02_01_04)
- * FileName: myt-fare.bill.guide.donation.controllers.ts
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.09.21
+ * @file myt-fare.bill.guide.donation.controllers.ts
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.09.21
  * Summary: 기부금/후원금 내역 조회화면
  */
 

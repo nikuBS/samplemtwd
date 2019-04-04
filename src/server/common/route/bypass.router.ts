@@ -1,3 +1,9 @@
+/**
+ * @file bypass.router.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';

@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.join.roaming-combine.js
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.05
+ * @file product.roaming.join.roaming-combine.js
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.05
  * ID : RM_11_01_02_07
  */
 

@@ -1,7 +1,7 @@
 /*
- * FileName: myt-join.submain.ts
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.10.05
+ * @file myt-join.submain.ts
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.10.05
  *
  */
 

@@ -1,3 +1,9 @@
+/**
+ * @file format.helper.ts
+ * @author
+ * @since 2018.05
+ */
+
 import { DATA_UNIT } from '../types/string.type';
 import { VOICE_UNIT } from '../types/bff.type';
 import StringHelper from './string.helper';

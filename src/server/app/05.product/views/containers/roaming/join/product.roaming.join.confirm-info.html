@@ -1,7 +1,7 @@
 <%#
-* FileName: product.roaming.join.confirm-info.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.04
+* @file product.roaming.join.confirm-info.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.04
 %>
 
 
@@ -298,7 +298,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingJoinConfirmInfo($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, null, null, null,<%- JSON.stringify(prodTypeInfo) %>, '<%- prodId %>')
+      new Tw.ProductRoamingJoinConfirmInfo($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, null, null, null,;<%- JSON.stringify(prodTypeInfo) %>, '<%- prodId %>';)
     });
 </script>
 <% include ../../../components/end.component.html %>

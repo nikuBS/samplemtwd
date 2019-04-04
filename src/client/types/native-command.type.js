@@ -1,3 +1,9 @@
+/**
+ * @file native-command.type.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.NTV_CMD = {
   TOAST: 'toast',
   GET_CONTACT: 'getContact',

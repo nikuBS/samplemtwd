@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.04
+ * @file main.menu.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.04
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

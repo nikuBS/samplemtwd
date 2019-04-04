@@ -1,8 +1,8 @@
 <%#
 * MenuName: 나의 요금 > 요금안내서 통합(일반)청구회선(MF_02_02)
-* FileName: myt-fare.bill.guide.integrated-normal.html
-* Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
-* Date: 2018.09.12
+* @file myt-fare.bill.guide.integrated-normal.html
+* @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+* @since 2018.09.12
 * Summay: 요금안내서 통합일반(사용요금) 조회 화면
 * Description: 메인(svcInfo) 회선이 통합(일반)청구 회선인 경우 조회화면
 %>
@@ -281,13 +281,13 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideIntegratedNormal( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcMgmtNum: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
-      allSvc: <%-JSON.stringify(allSvc) %>,
-      billpayInfo : <%-JSON.stringify(billpayInfo) %>,
-      commDataInfo : <%-JSON.stringify(commDataInfo) %>,
-      intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
-      childLineInfo : <%-JSON.stringify(childLineInfo) %>
-  } );
+      svcMgmtNum;: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
+      allSvc;: <%-JSON.stringify(allSvc) %>,
+      billpayInfo; : <%-JSON.stringify(billpayInfo) %>,
+      commDataInfo; : <%-JSON.stringify(commDataInfo) %>,
+      intBillLineInfo; : <%-JSON.stringify(intBillLineInfo) %>,
+      childLineInfo; : <%-JSON.stringify(childLineInfo) %>
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>

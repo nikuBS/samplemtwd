@@ -1,7 +1,7 @@
 /**
- * FileName: commmon.tid.logout.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.03
+ * @file commmon.tid.logout.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.07.03
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -59,7 +59,7 @@ class CommonTidLogout extends TwViewController {
         });
       }
 
-      const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
+      const url = this.apiService.getServerUri(API_CMD.LOGOUT, req) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
 
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);

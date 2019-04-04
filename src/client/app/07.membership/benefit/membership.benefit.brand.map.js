@@ -1,9 +1,9 @@
 /**
  * MenuName: T멤버십 > 제휴브랜드 > 지도보기
- * FileName: membership.benefit.brand.map.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * @file membership.benefit.brand.map.js
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
  * Editor: InHwan Kim (skt.P132150@partner.sk.com)
- * Date: 2018.11.06
+ * @since 2018.11.06
  * Summary: tmap이용 가맹점 지도보기
  */
 
