@@ -470,6 +470,7 @@
                         </div>
 
                         <!-- 2019.03.20 카드 추가 -->
+                        <% if (String(process.env.NODE_ENV) !== 'prd') { %>
                         <div class="section-box nogaps-ver">
                             <ul class="quick-menu-list type3">
                                 <li><a href="/common/util/5g-intro" class="bt" data-xt_eid="CMMA_A2_B6-178" data-xt_csid="NO" data-xt_action="BC"><i class="ico-my-5gx"></i>5GX</a></li>
@@ -477,6 +478,7 @@
                                 <li><button class="bt fe-home-charge" data-url="https://www.younghandong.com/app" data-xt_eid="CMMA_A2_B6-180" data-xt_csid="NO" data-xt_action="BC"><i class="ico-my-zero"></i>0한동</button></li>
                             </ul>
                         </div>
+                        <% } %>
                         <!--// 2019.03.20 카드 추가 -->
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
