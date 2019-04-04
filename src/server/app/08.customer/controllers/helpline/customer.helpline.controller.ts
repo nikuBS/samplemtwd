@@ -1,6 +1,6 @@
 /**
  * FileName: customer.helpline.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.18
  */
 
@@ -16,6 +16,10 @@ interface ITimeInfo {
 }
 
 export default class CustomerHelpline extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0001, {}).subscribe((resp: { code: string; msg: string; result: ITimeInfo }) => {
       if (resp.code !== API_CODE.CODE_00) {

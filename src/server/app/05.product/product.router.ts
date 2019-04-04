@@ -89,6 +89,8 @@ import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
 import ProductRoamingInfoPhBook from './controllers/roaming/product.roaming.info.ph-book.controller';
 import ProductCommonCallplanBackup from './controllers/common/product.common.callplan-backup.controller';
+import ProductWireServiceArea from './controllers/wireplan/product.wireplan.service-area.controller';
+import ProductWirePortability from './controllers/wireplan/product.wireplan.portability.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -131,8 +133,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/lookup/payment', controller: ProductMobileplanAddLookupPayment });
     this.controllers.push({ url: '/mobileplan-add/terminate', controller: ProductMobileplanAddTerminate });
 
-    this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
-    this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
+    this.controllers.push({ url: '/wireplan', controller: ProductWire });
+    this.controllers.push({ url: '/wireplan/service-area', controller: ProductWireServiceArea });
+    this.controllers.push({ url: '/wireplan/portability', controller: ProductWirePortability });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });

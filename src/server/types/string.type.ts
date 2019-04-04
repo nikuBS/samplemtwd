@@ -566,9 +566,9 @@ export enum SELECT_POINT {
 }
 
 export const PRODUCT_WIRE_CATEGORIES = {
-  internet: '인터넷',
-  phone: '집전화',
-  tv: 'TV'
+  INTERNET: '인터넷',
+  PHONE: '집전화',
+  TV: 'TV'
 };
 
 export enum DEFAULT_SELECT {

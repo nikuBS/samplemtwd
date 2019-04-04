@@ -1,6 +1,6 @@
 /**
  * FileName: product.mobileplan-add.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.08
  */
 
@@ -11,10 +11,12 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
-import EnvHelper from '../../../../utils/env.helper';
+import { PRODUCT_CODE } from '../../../../types/bff.type';
 
 export default class ProductAddition extends TwViewController {
-  private ADDITION_CODE = 'F01200';
+  constructor() {
+    super();
+  }
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
@@ -60,7 +62,7 @@ export default class ProductAddition extends TwViewController {
   }
 
   private getBestAdditions = () => {
-    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -86,7 +88,7 @@ export default class ProductAddition extends TwViewController {
   }
 
   private getRecommendedAdditions = () => {
-    return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -112,7 +114,7 @@ export default class ProductAddition extends TwViewController {
   }
 
   private getRecommendedTags = () => {
-    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.ADDITION_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,

@@ -1,6 +1,6 @@
 /**
  * FileName: myt-join.product.additions.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.11
  */
 
