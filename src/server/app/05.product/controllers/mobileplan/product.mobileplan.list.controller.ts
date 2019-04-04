@@ -70,7 +70,7 @@ export default class ProductPlans extends TwViewController {
               : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter(filter => {
-              return /^F011[2|3|6]/.test(filter.prodFltId);
+              return 'F01713' === filter.prodFltId || /^F011[2|3|6]/.test(filter.prodFltId);
             })
           };
         })
