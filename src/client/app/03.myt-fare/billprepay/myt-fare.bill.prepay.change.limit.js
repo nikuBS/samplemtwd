@@ -237,15 +237,16 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   _setRemainAmount: function () {
     // 한도 변경 성공 시 잔여한도 표시
-    var usedAmount = this.$container.find('.fe-max-amount').attr('id');
+    var usedAmount = this.$container.find('.fe-use-amount').attr('id');
     var remainAmount = this.$monthSelector.attr('id');
     var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
 
     if (remain < 0) {
       remain = 0;
     }
-    this.$container.find('.fe-remain-amount').attr('id', remain)
-      .text(Tw.FormatHelper.addComma(remain));
+    var remainText = remain.toString();
+    this.$container.find('.fe-remain-amount').attr('id', remainText)
+      .text(Tw.FormatHelper.addComma(remainText));
   },
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||
