@@ -18,7 +18,7 @@ class CommonCertIpinRefund extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const authKind = req.query.authKind;
     const params = {
-      resultUrl: 'https://' + this.loginService.getDns() + '/common/cert/result?type=ipin&kind=' + authKind,
+      resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=ipin&kind=' + authKind,
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind,
     };
     this.apiService.request(API_CMD.BFF_01_0047, params).subscribe((resp) => {

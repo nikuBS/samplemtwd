@@ -21,7 +21,7 @@ class CommonCertIpin extends TwViewController {
     const prodAuthKey = decodeURIComponent(req.query.prodAuthKey) || ''; // 상품인증이 있는 경우
     const params = {
       authUrl,
-      resultUrl: 'https://' + this.loginService.getDns() + '/common/cert/result?type=ipin&kind=' + authKind,
+      resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=ipin&kind=' + authKind,
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + authKind,
       authKind,
       prodAuthKey

@@ -5,7 +5,6 @@ Tw.ApiService = function () {
 
 Tw.ApiService.prototype = {
   request: function (command, params, headers, pathParams, version) {
-    // var pathVariables = this._getPathVariables(arguments);
     pathParams = pathParams || [];
     var htOptions = this._makeOptions(command, params, headers, pathParams, version);
     Tw.Logger.info('[API REQ]', htOptions);

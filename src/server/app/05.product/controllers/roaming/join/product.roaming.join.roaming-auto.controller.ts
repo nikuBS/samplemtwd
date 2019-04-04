@@ -52,7 +52,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
 
 
       res.render('roaming/join/product.roaming.join.roaming-auto.html', {
-        svcInfo : this.loginService.getSvcInfo(),
+        svcInfo : svcInfo,
         prodTypeInfo : prodTypeInfo.result,
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,

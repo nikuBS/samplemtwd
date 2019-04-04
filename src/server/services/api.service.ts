@@ -17,40 +17,45 @@ class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
   private logger: LoggerService = new LoggerService();
+  private req;
+  private res;
 
   constructor() {
   }
 
-  public setCurrentReq(res, req) {
-    this.loginService.setCurrentReq(res, req);
+  public setCurrentReq(req, res) {
+    this.req = req;
+    this.res = res;
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
   }
 
   public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
+    const req = this.req;
+    const res = this.res;
     pathParams = pathParams || [];
 
-    const apiUrl = this.getServerUri(command);
-    const options = this.getOption(command, apiUrl, params, header, pathParams, version);
+    const apiUrl = this.getServerUri(command, req);
+    const options = this.getOption(command, apiUrl, params, header, pathParams, version, req);
     const startTime = new Date().getTime();
     this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
       axios(options)
-        .then(this.apiCallback.bind(this, observer, command, startTime))
-        .catch(this.handleError.bind(this, observer, command));
+        .then(this.apiCallback.bind(this, observer, command, req, res, startTime))
+        .catch(this.handleError.bind(this, observer, command, req, res));
     });
   }
 
-  public getServerUri(command: any): string {
-    const buildType = (command.server === API_SERVER.BFF && this.loginService.isGreen() === BUILD_TYPE.GREEN) ? '_G' : '';
+  public getServerUri(command: any, req: any): string {
+    const buildType = (command.server === API_SERVER.BFF && this.loginService.isGreen(req) === BUILD_TYPE.GREEN) ? '_G' : '';
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
-  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[], version): any {
+  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[], version, req: any): any {
     let option = {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
-      headers: this.makeHeader(command, header, params),
+      headers: this.makeHeader(command, header, params, req),
       timeout: 30000,
       data: params
     };
@@ -62,7 +67,7 @@ class ApiService {
     return option;
   }
 
-  private makeHeader(command: any, header: any, params): any {
+  private makeHeader(command: any, header: any, params, req): any {
     if ( FormatHelper.isEmpty(header) ) {
       header = {};
     }
@@ -71,12 +76,12 @@ class ApiService {
       case API_SERVER.BFF:
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
-          'x-user-ip': this.loginService.getNodeIp(),
-          'x-node-url': this.loginService.getPath(),
-          'x-useragent': this.loginService.getUserAgent(),
-          'x-env': this.loginService.isGreen(),
+          'x-user-ip': this.loginService.getNodeIp(req),
+          'x-node-url': this.loginService.getPath(req),
+          'x-useragent': this.loginService.getUserAgent(req),
+          'x-env': this.loginService.isGreen(req),
           cookie: (FormatHelper.isEmpty(header.cookie) || (header.cookie).indexOf(COOKIE_KEY.APP_API) === -1) ?
-            this.makeCookie() : this.makeNativeCookie(header.cookie)
+            this.makeCookie(req) : this.makeNativeCookie(header.cookie, req)
           // 'cookie': this.makeCookie()
         });
       case API_SERVER.SEARCH:
@@ -92,14 +97,14 @@ class ApiService {
     }
   }
 
-  private makeCookie(): string {
-    return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';' +
-      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel() + ';' +
-      COOKIE_KEY.DEVICE + '=' + this.loginService.getDevice();
+  private makeCookie(req): string {
+    return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession(req) + ';' +
+      COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel(req) + ';' +
+      COOKIE_KEY.DEVICE + '=' + this.loginService.getDevice(req);
   }
 
-  private makeNativeCookie(cookie): string {
-    return cookie + ';' + COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';';
+  private makeNativeCookie(cookie, req): string {
+    return cookie + ';' + COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession(req) + ';';
   }
 
   private makePath(path: string, method: API_METHOD, params: any, args: any[], version): string {
@@ -116,23 +121,23 @@ class ApiService {
     return path;
   }
 
-  private apiCallback(observer, command, startTime, resp) {
+  private apiCallback(observer, command, req, res, startTime, resp) {
     const contentType = resp.headers['content-type'];
 
     const respData = resp.data;
     this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
-      this.setServerSession(resp.headers).subscribe(() => {
+      this.setServerSession(resp.headers, req, res).subscribe(() => {
         if ( contentType.includes('json') ) {
           if ( respData.code === API_CODE.BFF_0003 ) {
-            this.logger.error(this, '[API RESP] Session Expired', resp.code, resp.msg, this.loginService.getFullPath());
-            this.loginService.getResponse().redirect('/common/member/logout/expire?target=' + this.loginService.getFullPath());
+            this.logger.error(this, '[API RESP] Session Expired', respData.code, respData.msg, this.loginService.getFullPath(req));
+            this.res.redirect('/common/member/logout/expire?target=' + this.loginService.getFullPath(req));
             return;
 
           } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0007 ) {
             this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
-            const path = this.loginService.getFullPath();
+            const path = this.loginService.getFullPath(req);
             if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
               this.checkServiceBlock(resp.result);
             }
@@ -148,14 +153,14 @@ class ApiService {
     }
   }
 
-  private handleError(observer, command, err) {
+  private handleError(observer, command, req, res, err) {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
       const headers = err.response.headers;
       this.logger.error(this, '[API ERROR]', command.path, error);
 
       if ( command.server === API_SERVER.BFF ) {
-        this.setServerSession(headers).subscribe((resp) => {
+        this.setServerSession(headers, req, res).subscribe((resp) => {
           observer.next(error);
           observer.complete();
         });
@@ -170,13 +175,13 @@ class ApiService {
     }
   }
 
-  private setServerSession(headers): Observable<any> {
+  private setServerSession(headers, req, res): Observable<any> {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
       if ( !FormatHelper.isEmpty(serverSession) ) {
-        return this.loginService.setServerSession(serverSession);
+        return this.loginService.setServerSession(req, res, serverSession);
       } else {
         return Observable.of({});
       }
@@ -197,13 +202,13 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return Observable.combineLatest([
-            this.loginService.setSvcInfo({
+            this.loginService.setSvcInfo(this.req, this.res, {
               mbrNm: resp.result.mbrNm,
               // noticeType: resp.result.noticeTypCd,
               loginType: type
             }),
-            this.loginService.setNoticeType(resp.result.noticeTypCd)
-            // this.loginService.setNoticeType('05')
+            this.loginService.setNoticeType(this.req, resp.result.noticeTypCd)
+            // this.loginService.setNoticeType(this.req, '05')
           ]);
         } else {
           throw resp;
@@ -234,26 +239,26 @@ class ApiService {
             }
           });
 
-          this.loginService.clearXtCookie();
+          this.loginService.clearXtCookie(this.res);
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(curSvcInfo),
-            this.loginService.setAllSvcInfo(resp.result));
+            this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
+            this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
         } else {
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(null),
-            this.loginService.setAllSvcInfo(null));
+            this.loginService.setSvcInfo(this.req, this.res, null),
+            this.loginService.setAllSvcInfo(this.req, this.res, null));
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setChildInfo(resp.result);
+          return this.loginService.setChildInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setChildInfo(null);
+          return this.loginService.setChildInfo(this.req, this.res, null);
         }
       })
       .map((resp) => {
-        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo() };
+        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo(this.req) };
       });
   }
 
@@ -262,12 +267,12 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return Observable.combineLatest([
-            this.loginService.setSvcInfo({
+            this.loginService.setSvcInfo(this.req, this.res, {
               mbrNm: resp.result.mbrNm,
               // noticeType: resp.result.noticeTypCd,
               loginType: type
             }),
-            this.loginService.setNoticeType(resp.result.noticeTypCd)
+            this.loginService.setNoticeType(this.req, resp.result.noticeTypCd)
           ]);
         } else {
           throw resp;
@@ -282,29 +287,29 @@ class ApiService {
           };
           Object.assign(curSvcInfo, resp.result);
 
-          this.loginService.clearXtCookie();
-          return this.loginService.setSvcInfo(curSvcInfo);
+          this.loginService.clearXtCookie(this.res);
+          return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
         } else {
-          return this.loginService.setSvcInfo(null);
+          return this.loginService.setSvcInfo(this.req, this.res, null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          return this.loginService.setAllSvcInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return this.loginService.setAllSvcInfo(this.req, this.res, null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setChildInfo(resp.result);
+          return this.loginService.setChildInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setChildInfo(null);
+          return this.loginService.setChildInfo(this.req, this.res, null);
         }
       }).map((resp) => {
-        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo() };
+        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo(this.req) };
       });
   }
 
@@ -314,7 +319,7 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({
+          return this.loginService.setSvcInfo(this.req, this.res, {
             mbrNm: resp.result.mbrNm,
             // noticeType: resp.result.noticeTypCd,
             loginType: LOGIN_TYPE.TID
@@ -348,12 +353,12 @@ class ApiService {
             }
           });
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(currentSvcInfo),
-            this.loginService.setAllSvcInfo(resp.result));
+            this.loginService.setSvcInfo(this.req, this.res, currentSvcInfo),
+            this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
         } else {
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(null),
-            this.loginService.setAllSvcInfo(null));
+            this.loginService.setSvcInfo(this.req, this.res, null),
+            this.loginService.setAllSvcInfo(this.req, this.res, null));
         }
       })
       .map((resp) => {
@@ -397,7 +402,7 @@ class ApiService {
         }
       }).switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
+          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
         } else {
           throw resp;
         }
@@ -420,13 +425,13 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          const svcInfo = this.loginService.getSvcInfo();
+          const svcInfo = this.loginService.getSvcInfo(this.req);
           const newSvc = new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
             // noticeType: svcInfo.noticeType,
             loginType: svcInfo.loginType
           });
-          return this.loginService.setSvcInfo(newSvc);
+          return this.loginService.setSvcInfo(this.req, this.res, newSvc);
         } else {
           throw resp;
         }
@@ -446,10 +451,10 @@ class ApiService {
     return this.request(API_CMD.BFF_01_0005, {})
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
+          return this.loginService.setSvcInfo(this.req, this.res, resp.result);
         } else if ( resp.code === 'BFF0030' ) {
-          const svcInfo = this.loginService.getSvcInfo();
-          return this.loginService.setSvcInfo(new SvcInfoModel({
+          const svcInfo = this.loginService.getSvcInfo(this.req);
+          return this.loginService.setSvcInfo(this.req, this.res, new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
             // noticeType: svcInfo.noticeType,
             loginType: svcInfo.loginType
@@ -469,20 +474,20 @@ class ApiService {
             expsSvcCnt: resp.result.expsSvcCnt
           };
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(currentSvcInfo),
-            this.loginService.setAllSvcInfo(resp.result));
+            this.loginService.setSvcInfo(this.req, this.res, currentSvcInfo),
+            this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
         } else {
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(null),
-            this.loginService.setAllSvcInfo(null));
+            this.loginService.setSvcInfo(this.req, this.res, null),
+            this.loginService.setAllSvcInfo(this.req, this.res, null));
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setChildInfo(resp.result);
+          return this.loginService.setChildInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setChildInfo(null);
+          return this.loginService.setChildInfo(this.req, this.res, null);
         }
       }).map(() => {
         return { code: API_CODE.CODE_00, result: result };
@@ -490,17 +495,17 @@ class ApiService {
   }
 
   public requestStore(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
-    const svcInfo = this.loginService.getSvcInfo();
+    const svcInfo = this.loginService.getSvcInfo(this.req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       // need login
       return this.request(API_CMD[command], params, header, pathParams, version);
     }
     const svcMgmtNum = svcInfo.svcMgmtNum;
-    const storeData = this.loginService.getSessionStore(command, svcMgmtNum);
+    const storeData = this.loginService.getSessionStore(this.req, command, svcMgmtNum);
     if ( FormatHelper.isEmpty(storeData) || storeData.data.code !== API_CODE.CODE_00 ||
       DateHelper.convDateFormat(storeData.expired).getTime() < new Date().getTime() ) {
       return this.request(API_CMD[command], params, header, pathParams, version)
-        .switchMap((resp) => this.loginService.setSessionStore(command, svcMgmtNum, resp))
+        .switchMap((resp) => this.loginService.setSessionStore(this.req, command, svcMgmtNum, resp))
         .map((resp) => resp.data);
     } else {
       return Observable.of(storeData.data);
@@ -513,7 +518,7 @@ class ApiService {
     const endTime = DateHelper.convDateFormat(block.toDtm).getTime();
     if ( today > startTime && today < endTime ) {
       const blockUrl = '/common/util/service-block';
-      this.loginService.getResponse().redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
+      this.res.redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
       return;
     }
   }
