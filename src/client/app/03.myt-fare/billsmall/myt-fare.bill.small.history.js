@@ -102,12 +102,19 @@ Tw.MyTFareBillSmallHistory.prototype = {
       ) {
         return _.map(res.result.histories.reverse(), function(o, index) {
           var plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, '');
+          var blockState = Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState] === undefined ? 
+                         null : Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];
           return $.extend(o, {
             listId: index,
             plainTime: plainTime,
             FullDate: Tw.DateHelper.getFullDateAnd24Time(plainTime),
             useAmt: Tw.FormatHelper.addComma(o.sumPrice), // 이용금액
             payMethodNm: Tw.MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
+            // 상세 내용 관련 데이터
+            payWay: Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE[o.wapYn],
+            blockState: blockState || '', // 차단 상태
+            isShowBlockBtn: (o.payMethod === '03' && (blockState === null || !blockState)), // blockState !== null),
+            isBlocked: (o.cpState.indexOf('A') === 0) // 정책변경 : A로 시작되지 않는 상태값은 모두 차단중이 아닌것으로 변경 19.1.3
           })
         });
     } else {
@@ -133,7 +140,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
 
   // 결과 노출
   _showLists: function (list) {
-    this.list = list;
+    this.list = [].concat(list);
     this.totalCnt = this.list.length;
 
     var $el = this.$btnShowList; 
@@ -212,23 +219,67 @@ Tw.MyTFareBillSmallHistory.prototype = {
     // 월 교체
     this.selectedYear = year;
     this.selectedMonth = month;
-    // $.extend(this, this._getQueryFromTo(year, month));
     this.$moreBtn = null;
     this.$selectMonth = null;
-    // this._certShowLists();
     
     this._showWholeList();
   },
 
   // 디테일 페이지
   _moveDetailPage: function (e) {
-    this._historyService.goLoad(
+    var $target = $(e.currentTarget);
+    var thisData = this._getDetailData($target.data('listDate'), $target.data('listId'));
+    this._popupService.open(
+      $.extend({
+          hbs: 'MF_06_01_01',
+          layer: true
+        }, 
+        thisData
+      ),
+      $.proxy(this._detailPageCallback, this, thisData),
+      $.proxy(this._detailPageCloseCallback, this),
+      null,
+      $target
+    );
+    /* this._historyService.goLoad(
       this._historyService.pathname+'/detail?fromDt=' + 
         this.fromDt + '&toDt=' + 
         this.toDt + '&listId=' + 
         $(e.currentTarget).data('listId')
-    );
+    );*/
   },  
+
+  _getDetailData: function(listDate, listId) {    
+    var curList = this.totalList[listDate.toString().substr(0,6)];
+    var result;
+    if (!Tw.FormatHelper.isEmpty(curList)) {
+      result = _.reduce(curList, function(prev, o){
+        if (o.listId === listId) {
+          return o;
+        } else {
+          return prev;
+        }
+      }, {});
+    } else {
+      result = {}
+    }
+    return result;
+  },
+
+  _detailPageCallback: function (thisData, $template) {
+    this.detailPage = new Tw.MyTFareBillSmallHitstoryDetail($template, thisData, $.proxy(this._updateData, this));
+  },
+
+  _updateData: function (date, idx, obj) {
+    var curData = this._getDetailData(date, idx);
+    if (!Tw.FormatHelper.isEmpty(curData)) {
+      curData = $.extend(curData, obj);
+    }
+  },
+
+  _detailPageCloseCallback: function () {
+    this.detailPage = null;
+  },
 
   // 6월 데이터
   _setMonthActionSheetData: function () {

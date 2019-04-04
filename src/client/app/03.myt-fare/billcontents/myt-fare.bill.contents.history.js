@@ -221,12 +221,63 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 디테일 페이지
   _moveDetailPage: function (e) {
-    this._historyService.goLoad(
+    var $target = $(e.currentTarget);
+    var thisData = this._getDetailData($target.data('listDate'), $target.data('listId'));
+    this._popupService.open(
+      $.extend({
+          hbs: 'MF_07_01_01',
+          layer: true
+        }, 
+        thisData
+      ),
+      $.proxy(this._detailPageCallback, this),
+      null, null,
+      $target
+    );
+    /*this._historyService.goLoad(
       this._historyService.pathname+'/detail?fromDt=' + 
         this.fromDt + '&toDt=' + 
         this.toDt + '&listId=' + 
         $(e.currentTarget).data('listId')
-    );
+    );*/
+  },
+
+  _getDetailData: function(listDate, listId) {    
+    var curList = this.totalList[listDate.toString().substr(0,6)];
+    var result;
+    if (!Tw.FormatHelper.isEmpty(curList)) {
+      result = _.reduce(curList, function(prev, o){
+        if (o.listId === listId) {
+          return o;
+        } else {
+          return prev;
+        }
+      }, {});
+    } else {
+      result = {}
+    }
+    return result;
+  },
+
+  _detailPageCallback: function ($template) {
+    $template.on('click', '.fe-link-external', $.proxy(this._openConfirmUrl, this));
+  },
+
+  _openConfirmUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var url = $(e.currentTarget).attr('href');
+
+    if (Tw.BrowserHelper.isApp()) {
+      return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url));
+    } else {
+      return this._openExternalUrl(url);
+    }
+    
+  },
+  _openExternalUrl: function (url) {
+    Tw.CommonHelper.openUrlExternal(url);
   },
 
   // 6월 데이터
