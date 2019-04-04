@@ -710,17 +710,17 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
       { title: '기타', ofrCtgSeq: '5000153' }
     ]
   },
-  // { TODO: 공효원M 요청사항 (2019.02.15) 해당 메뉴 비노출 요청
-  //   title: 'T world 다이렉트',
-  //   category: 'DIRECT',
-  //   list: [
-  //     { title: '휴대폰 구매', ofrCtgSeq: '07' },
-  //     { title: '기타 문의', ofrCtgSeq: '10' },
-  //     { title: 'T기프트/액세서리', ofrCtgSeq: '12' },
-  //     { title: '휴대폰배송', ofrCtgSeq: '08' },
-  //     { title: '휴대폰 교환/반품', ofrCtgSeq: '09' }
-  //   ]
-  // },
+  {
+    title: 'T world 다이렉트',
+    category: 'DIRECT',
+    list: [
+      { title: '휴대폰 구매', ofrCtgSeq: '07' },
+      { title: '기타 문의', ofrCtgSeq: '10' },
+      { title: 'T기프트/액세서리', ofrCtgSeq: '12' },
+      { title: '휴대폰배송', ofrCtgSeq: '08' },
+      { title: '휴대폰 교환/반품', ofrCtgSeq: '09' }
+    ]
+  },
   {
     title: '초콜릿',
     category: 'CHOCO',
@@ -786,11 +786,8 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
 };
 
 Tw.CUSTOMER_EMAIL_FILLED_CONTENT_CASE = {
-  '5000275': 'MEMBERSHIP',
-  '010700': 'CHOCO',
-  '010600': 'CHOCO',
-  '010800': 'CHOCO',
-  '010900': 'CHOCO'
+  'CELL_MEMBER': 'MEMBERSHIP',
+  'CHOCO': 'CHOCO'
 };
 
 Tw.REGION_LIST_ITEM = {

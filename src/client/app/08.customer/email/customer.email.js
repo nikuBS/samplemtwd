@@ -51,8 +51,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
     this.$container.on('click', '.fe-service-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
     this.$container.on('click', '.fe-quality-cntcNumClCd li', $.proxy(this._onChangeReceiveContact, this));
-    this.$container.on('click', '.tab-linker a', $.proxy(this._TabLinker, this));
-    this.$container.on('click', '.tab-linker li', $.proxy(this._TabClick, this));
+    this.$container.on('click', '.tab-linker.fe-email-tab a', $.proxy(this._TabLinker, this));
+    this.$container.on('click', '.tab-linker.fe-email-tab li', $.proxy(this._TabClick, this));
 
     new Tw.InputFocusService(this.$container, $('.bt-fixed-area button', this.$container)); // 이동 버튼으로 다음 입력으로 움직이도록 
   },
