@@ -125,9 +125,17 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
+    // 190404_수정 START
+    $('.og-5mktp-intro-cover').on('touchstart touchmove', function (e) {
+      e.preventDefault();
+    });
+            
     setTimeout(function () {
-      $('.og-5mktp-intro-cover').fadeOut();
+      $('.og-5mktp-intro-cover').fadeOut(400, function () {
+        $(window).scrollTop(0);
+      });
     }, 2000);
+    // 190404_수정 END
 
     //하단 배너 플로팅
     var $win = $(window),
@@ -158,4 +166,4 @@
   });
 </script>
 </body>
-</html>
+<%- include('../components/end.component.html'); %>
