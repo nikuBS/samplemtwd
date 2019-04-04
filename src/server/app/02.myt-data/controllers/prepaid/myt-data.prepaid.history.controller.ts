@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.prepaid.history.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.11.20
  */
 

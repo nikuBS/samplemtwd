@@ -1,6 +1,6 @@
 /**
  * FileName: myt-join.myplancombine.share.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2019.02.07
  */
 

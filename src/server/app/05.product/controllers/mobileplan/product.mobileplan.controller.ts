@@ -1,6 +1,6 @@
 /**
  * FileName: product.mobileplan.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.09.06
  */
 

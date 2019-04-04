@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.prepaid.history.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2019.03.15
  */
 

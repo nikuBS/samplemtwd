@@ -1122,7 +1122,7 @@ Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE = '변경불가';
 Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA = '데이터 변경';
 
 Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS = {
-  NOT_CMPLETE: '공유가 완료되지 않은 데이터는 변경이 불가능합니다.',
+  NOT_COMPLETE: '공유가 완료되지 않은 데이터는 변경이 불가능합니다.',
   NOT_THIS_MONTH: '이번 달 공유한 데이터만 변경이 가능합니다.',
   NOT_MINE: '다른 가족이 공유한 내역은 변경이 불가능합니다.',
   NOT_SAME_PLAN: '요금제가 변경되었습니다.<br />공유할 때 이용 중이었던 요금제일 경우에만 데이터 변경이 가능합니다.',

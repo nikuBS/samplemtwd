@@ -1,6 +1,6 @@
 /**
  * FileName: product.wire.service-area.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.11.07
  */
 

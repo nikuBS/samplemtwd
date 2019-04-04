@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.familydata.history.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2019.01.16
  */
 

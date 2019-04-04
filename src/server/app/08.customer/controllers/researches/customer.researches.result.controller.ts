@@ -1,6 +1,6 @@
 /**
  * FileName: customer.researches.result.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2019.01.04
  */
 

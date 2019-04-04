@@ -1,6 +1,6 @@
 /**
  * FileName: customer.praise.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.22
  */
 
