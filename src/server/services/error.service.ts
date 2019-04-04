@@ -56,7 +56,7 @@ class ErrorService {
     let errorResult: any = null;
 
     apiArray.forEach((api) => {
-      if ( API_CODE.CODE_00 === api.code ) {
+      if ( API_CODE.CODE_00 === api.code || !FormatHelper.isEmpty(errorResult) ) {
         return true;
       }
 
@@ -64,8 +64,6 @@ class ErrorService {
         code: api.code,
         msg: api.msg
       };
-
-      return false;
     });
 
     return errorResult;
