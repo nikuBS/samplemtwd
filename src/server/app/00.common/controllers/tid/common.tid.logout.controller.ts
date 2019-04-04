@@ -59,7 +59,7 @@ class CommonTidLogout extends TwViewController {
         });
       }
 
-      const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
+      const url = this.apiService.getServerUri(API_CMD.LOGOUT, req) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
 
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);

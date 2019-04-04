@@ -40,7 +40,7 @@ class CommonTidLogin extends TwViewController {
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
