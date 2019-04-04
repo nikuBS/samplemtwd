@@ -24,7 +24,7 @@ Tw.CommonPostcodeMain.prototype = {
       hbs: 'CO_UT_05_04_01'
     },
       $.proxy(this._onMainSearch, this), // open callback
-      $.proxy(this._goDetail, this), // close callback
+      null, // close callback
       'post0001',
       this.$target
     );
@@ -35,16 +35,10 @@ Tw.CommonPostcodeMain.prototype = {
     this._initVariables('tab1'); // 도로명탭 변수 초기화
     this._bindEvent(); // 이벤트 바인딩
   },
-  _goDetail: function () {
-    if (this.$isNext) { // 다음 버튼 클릭 시
-      new Tw.CommonPostcodeDetail(this.$container, this.$target, this.$addressObject, this.$callback); // 2페이지 팝업 load
-    }
-  },
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
     this._page = 0;
     this.$addressObject = {};
-    this.$isNext = false;
     this.$selectedTab = this.$layer.find('#' + $targetId + '-tab');
     this.$searchField = this.$selectedTab.find('.fe-input');
     this.$emptyBox = this.$selectedTab.find('.fe-empty-box');
@@ -182,7 +176,6 @@ Tw.CommonPostcodeMain.prototype = {
   _goNextPage: function (event) {
     var $target = $(event.currentTarget);
 
-    this.$isNext = true; // 다음페이지로 이동
     this.$addressObject = {
       tabId: this._selectedTabId,
       id: $target.attr('id'),
@@ -190,6 +183,6 @@ Tw.CommonPostcodeMain.prototype = {
       originText: $target.attr('data-origin')
     }; // 다음 팝업에서 필요한 object
 
-    this._popupService.close(); // 팝업 닫고 close callback에서 next popup 호출
+    new Tw.CommonPostcodeDetail(this.$container, this.$target, this.$addressObject, this.$callback); // 2페이지 팝업 load
   }
 };
