@@ -127,8 +127,7 @@ class CommonSearch extends TwViewController {
               if (resultData.code !== API_CODE.CODE_00) {
                 searchResult = removeImmediateData(searchResult);
               } else {
-                const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                searchResult.result.search[0].immediate.data[0].subData = remainData;
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });
