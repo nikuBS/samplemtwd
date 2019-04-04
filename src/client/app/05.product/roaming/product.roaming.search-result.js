@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
- * FileName: product.roaming.do.search-before.js
- * Author: Eunjung Jung
- * Date: 2018.11.12
+ * @file product.roaming.do.search-before.js
+ * @author Eunjung Jung
+ * @since 2018.11.12
  */
 
 Tw.ProductRoamingSearchResult = function (rootEl, svcInfo, srchInfo, rateInfo) {

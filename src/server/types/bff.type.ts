@@ -1,3 +1,9 @@
+/**
+ * @file bff.type.ts
+ * @author
+ * @since 2018.05
+ */
+
 export enum SVC_ATTR_NAME {
   M1 = '휴대폰',
   M2 = '선불폰',

@@ -1,7 +1,7 @@
 /**
- * FileName: membership.info.grade.js
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.31
+ * @file membership.info.grade.js
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.31
  */
 Tw.MembershipInfoGrade = function (svcInfo) {
   this.$container = $('.wrap');

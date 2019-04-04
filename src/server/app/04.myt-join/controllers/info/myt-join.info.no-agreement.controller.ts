@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.info.no-agreement.controller.ts
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.08
+ * @file myt-join.info.no-agreement.controller.ts
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.08
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';

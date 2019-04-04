@@ -1,3 +1,9 @@
+/**
+ * @file common.helper.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.CommonHelper = (function () {
   var openUrl = function (url, browserType, option, title) {
     if ( url.indexOf('http') === -1 ) {

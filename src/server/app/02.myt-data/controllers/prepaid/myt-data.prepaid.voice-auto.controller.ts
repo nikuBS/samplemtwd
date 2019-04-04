@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.voice-auto.controller.ts
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.28
+ * @file myt-data.prepaid.voice-auto.controller.ts
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.28
  * Description: 선불폰 음성 자동 충전
  */
 
@@ -38,7 +38,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
         convertAmount: this.convertAmount, // 금액 정보 format
         convertDashDate: this.convertDashDate // 날짜 정보 format
       });
-  })
+  });
 
   public getAutoPPSInfo = () => this.apiService.request(API_CMD.BFF_06_0055, {}); // PPS 정보 조회
 

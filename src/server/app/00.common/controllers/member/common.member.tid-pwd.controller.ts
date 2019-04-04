@@ -1,7 +1,7 @@
 /**
- * FileName: common.member.tid-pwd.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.31
+ * @file common.member.tid-pwd.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.31
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

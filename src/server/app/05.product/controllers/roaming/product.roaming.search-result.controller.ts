@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
- * FileName: product.roaming.search-result.controller.ts
- * Author: Eunjung Jung
- * Date: 2018.11.08
+ * @file product.roaming.search-result.controller.ts
+ * @author Eunjung Jung
+ * @since 2018.11.08
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.option.cancel.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.12.17
+ * @file myt-fare.bill.option.cancel.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.12.17
  * Description: 자동납부 해지
  */
 

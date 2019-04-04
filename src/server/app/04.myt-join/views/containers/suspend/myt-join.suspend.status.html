@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-join.suspend.status.html
-* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
-* Date: 2018. 11. 13.
+* @file myt-join.suspend.status.html
+* @author Hyeryoun Lee (skt.P130712@partner.sk.com)
+* @since 2018. 11. 13.
 * 일시정지 신청현황(MS_03_05_03_01)
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -59,7 +59,8 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend'), <%- JSON.stringify({status, progress}) %> );
+    new Tw.MyTJoinSuspendStatus($('#fe-myt-join-suspend') < % -JSON.stringify({ status, progress }) % >
+  )
   });
 </script>
 <% include ../../components/end.component.html %>

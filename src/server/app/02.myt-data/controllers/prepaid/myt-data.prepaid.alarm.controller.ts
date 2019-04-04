@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.alarm.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
- * Date: 2018.11.14
+ * @file myt-data.prepaid.alarm.controller.ts
+ * @author 박지만 (jiman.park@sk.com)
+ * @since 2018.11.14
  * Description: 선불폰 충전 알람 설정 페이지
  */
 
@@ -44,7 +44,7 @@ class MyTDataPrepaidAlarm extends TwViewController {
       } else {
         return null;
       }
-    })
+    });
 
   public parseInfo = (result) => {
     if (result.term) {
@@ -56,7 +56,7 @@ class MyTDataPrepaidAlarm extends TwViewController {
     }
 
     return result;
-  }
+  };
 
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate); // 날짜 YYYY.M.D.
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount); // 금액에 콤마(,) 추가

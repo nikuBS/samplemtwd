@@ -1,7 +1,7 @@
 /**
- * FileName: common.share.landing.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.11.20
+ * @file common.share.landing.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.11.20
  */
 
 Tw.CommonShareLanding = function (target, targetLoginType, loginType) {

@@ -1,7 +1,7 @@
 /**
- * FileName: certification.representative.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.12.12
+ * @file certification.representative.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.12.12
  */
 
 Tw.CertificationRepresentative = function () {

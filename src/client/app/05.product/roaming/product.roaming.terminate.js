@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.terminate.js
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.06
+ * @file product.roaming.terminate.js
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.06
  */
 
 Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodTypeInfo) {

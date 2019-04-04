@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.12.17
+ * @file membership.my.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.12.17
  */
 
 Tw.MembershipMy = function(rootEl, cardReqDt) {

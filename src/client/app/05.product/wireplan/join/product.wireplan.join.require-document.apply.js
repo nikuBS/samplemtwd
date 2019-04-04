@@ -1,7 +1,7 @@
 /**
- * FileName: product.wireplan.join.require-document.apply.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.08
+ * @file product.wireplan.join.require-document.apply.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.08
  */
 
 Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl, historyList) {

@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 요금제 (RM_11)
- * FileName: product.roaming.fee.controller.ts
- * Author: Eunjung Jung
- * Date: 2018.11.08
+ * @file product.roaming.fee.controller.ts
+ * @author Eunjung Jung
+ * @since 2018.11.08
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

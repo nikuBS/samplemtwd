@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.suspend.temporary
- * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2018. 10. 18.
+ * @file myt-join.suspend.temporary
+ * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * @since 2018. 10. 18.
  */
 Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this.$container = tabEl;

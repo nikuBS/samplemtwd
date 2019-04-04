@@ -1,3 +1,9 @@
+/**
+ * @file shortcut.router.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import RedisService from '../../services/redis.service';

@@ -1,3 +1,8 @@
+/**
+ * @file banner.service.js
+ * @author Jiyoung Jo
+ * @since 2018.05
+ */
 
   /**
    * @param {jquery element} rootEl the container haven banners

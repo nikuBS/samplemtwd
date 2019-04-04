@@ -1,3 +1,9 @@
+/**
+ * @file product.helper.ts
+ * @author
+ * @since 2018.05
+ */
+
 import {DATA_UNIT, PREMTERM_MSG} from '../types/string.type';
 import {PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT} from '../types/bff.type';
 import FormatHelper from './format.helper';

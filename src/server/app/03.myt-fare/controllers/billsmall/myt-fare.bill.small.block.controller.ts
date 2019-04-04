@@ -1,13 +1,12 @@
 /**
- * FileName: myt-fare.bill.small.block.controller.ts
- * Author: Lee kirim (kirim@sk.com)
- * Date: 2018. 12. 2
+ * @file myt-fare.bill.small.block.controller.ts
+ * @author Lee kirim (kirim@sk.com)
+ * @since 2018. 12. 2
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import bill_guide_BFF_05_0093 from '../../../../mock/server/bill.guide.BFF_05_0093.mock';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_FARE_HISTORY_MICRO_BLOCK_TYPE } from '../../../../types/bff.type';
 

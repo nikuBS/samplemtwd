@@ -1,3 +1,9 @@
+/**
+ * @file input-focus.service.js
+ * @author Ara Jo
+ * @since 2018.05
+ */
+
 Tw.InputFocusService = function ($container, $confirm) {
   this.$container = $container;
   this.$confirm = $confirm;

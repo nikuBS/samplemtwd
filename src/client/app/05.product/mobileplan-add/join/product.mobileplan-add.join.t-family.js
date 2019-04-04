@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan-add.join.t-family.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.02.12
+ * @file product.mobileplan-add.join.t-family.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.02.12
  */
 
 Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmtNum, confirmOptions) {

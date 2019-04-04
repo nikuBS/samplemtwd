@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.info.sms.js
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018. 10. 15
+ * @file myt-join.info.sms.js
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018. 10. 15
  * 망 작업 SMS 알림 신청
  */
 Tw.MyTJoinInfoSms = function (rootEl, options) {

@@ -1,3 +1,9 @@
+/**
+ * @file api-command.type.ts
+ * @author
+ * @since 2018.05
+ */
+
 export enum API_METHOD {
   POST = 'POST',
   GET = 'GET',

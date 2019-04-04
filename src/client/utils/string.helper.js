@@ -1,3 +1,9 @@
+/**
+ * @file string.helper.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.StringHelper = (function () {
   var replaceAt = function (str, index, replacement) {
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);

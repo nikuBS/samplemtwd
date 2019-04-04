@@ -1,7 +1,7 @@
 <%#
-* FileName: common.search.result.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.11
+* @file common.search.result.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.11
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -117,8 +117,8 @@
 <script>
     $(document).ready(function () {
 
-        new Tw.CommonSearchMain($('.wrap'),<%- JSON.stringify(svcInfo)%>,'<%- CDN %>','<%- step %>');
-
+      new Tw.CommonSearchMain($('.wrap') < % -JSON.stringify(svcInfo) % >, '<%- CDN %>', '<%- step %>'
+    )
     });
 </script>
 <% include ../../components/end.component.html %>

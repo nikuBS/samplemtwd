@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 유용한 부가서비스
- * FileName: customer.damage-info.additions.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.24
+ * @file customer.damage-info.additions.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';

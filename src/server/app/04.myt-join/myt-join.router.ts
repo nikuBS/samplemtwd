@@ -1,3 +1,9 @@
+/**
+ * @file myt-join.router.ts
+ * @author
+ * @since 2018.05
+ */
+
 import TwRouter from '../../common/route/tw.router';
 import MyTJoinSubmainController from './myt-join.submain.controller';
 import MyTJoinMyplan from './controllers/myplan/myt-join.myplan.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: customer.faq.controller.ts
- * Author: Hakjoon sim (hakjoon.sim@sk.com)
- * Date: 2018.11.05
+ * @file customer.faq.controller.ts
+ * @author Hakjoon sim (hakjoon.sim@sk.com)
+ * @since 2018.11.05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

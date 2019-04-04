@@ -1,3 +1,9 @@
+/**
+ * @file templete.type.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.POPUP_TPL = {
   CHANGE_NICKNAME:
   '<div class="cont-box"><div class="inputbox"><div class="input">' +
@@ -1025,4 +1031,4 @@ Tw.LINE_RESITTER_TMPL =
   '{{/each}}';
 
 
-Tw.BANNER_DOT_TMPL = '<span class="blind">{{index}} 선택됨</span>'
+Tw.BANNER_DOT_TMPL = '<span class="blind">{{index}} 선택됨</span>';

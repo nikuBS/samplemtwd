@@ -1,7 +1,7 @@
 <%#
-* FileName: common.search.more.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.11
+* @file common.search.more.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.11
 %>
 <%
     keyword = encodeURIComponent(keyword);
@@ -418,7 +418,14 @@
 <script>
     $(document).ready(function () {
         new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>
-            ,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>',<%- JSON.stringify(paramObj) %>,'<%- pageNum %>','<%- nowUrl %>');
+          ,;
+    <%
+      -JSON.stringify(svcInfo) % >, '<%- CDN %>',;
+    <%
+      -JSON.stringify(accessQuery) % >, '<%- step %>',;
+    <%
+      -JSON.stringify(paramObj) % >, '<%- pageNum %>', '<%- nowUrl %>';
+    )
     });
 </script>
 <% include ../../components/end.component.html %>

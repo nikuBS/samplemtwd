@@ -1,3 +1,9 @@
+/**
+ * @file logger.service.js
+ * @author Ara Jo
+ * @since 2018.05
+ */
+
 Tw.LOG = {
   ERROR: 'ERROR',
   WARN: 'WARN',

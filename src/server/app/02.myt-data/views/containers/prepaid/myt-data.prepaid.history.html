@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-data.prepaid.history.html
+* @file myt-data.prepaid.history.html
 * @author Jiyoung Jo
-* Date: 2018.11.20
+* @since 2018.11.20
 * id: DC_09_06
 %>
 
@@ -127,7 +127,10 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTDataPrepaidHistory($('.wrap'), { voice: <%- JSON.stringify(voice.origin) %>, data: <%- JSON.stringify(data.origin) %> });
+      new Tw.MyTDataPrepaidHistory($('.wrap'), { voice: < % -JSON.stringify(voice.origin) % >, data;
+    : <%
+      -JSON.stringify(data.origin) % >
+    })
     });
 </script>
 <% include ../../components/end.component.html %>

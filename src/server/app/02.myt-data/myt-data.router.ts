@@ -1,3 +1,9 @@
+/**
+ * @file myt-data.router.ts
+ * @author
+ * @since 2018.05
+ */
+
 import TwRouter from '../../common/route/tw.router';
 import MyTDataSubMain from './myt-data.submain.controller';
 import MyTDataHotdata from './controllers/usage/myt-data.hotdata.controller';

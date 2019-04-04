@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 국가별 로밍 요금조회 검색 전 화면 (RM_03_01_01_01)
- * FileName: product.roaming.do.search-before.js
- * Author: Eunjung Jung
- * Date: 2018.11.12
+ * @file product.roaming.do.search-before.js
+ * @author Eunjung Jung
+ * @since 2018.11.12
  */
 
 Tw.ProductRoamingSearchBefore = function (rootEl, svcInfo) {
@@ -116,7 +116,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
      */
   _onSelectModel: function () {
       if(this.cdValue === undefined || this.cdValue === ''){
-          return;
+
       }else {
           var data = [{
               list: null

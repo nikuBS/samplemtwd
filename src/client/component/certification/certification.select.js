@@ -1,7 +1,7 @@
 /**
- * FileName: certification.select.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.08.20
+ * @file certification.select.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.08.20
  */
 
 Tw.CertificationSelect = function () {

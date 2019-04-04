@@ -1,7 +1,7 @@
 /**
- * FileName: main.home.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.06
+ * @file main.home.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.06
 
  */
 
@@ -197,7 +197,7 @@ Tw.TestHome.prototype = {
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
-    console.log('successMicroPay', resp)
+    console.log('successMicroPay', resp);
     var result = {
       showMicro: false,
       invMonth: Tw.DateHelper.getCurrentMonth()
@@ -317,7 +317,7 @@ Tw.TestHome.prototype = {
 
   },
   _successRechargeData: function (element, resp) {
-    console.log('successRechargeData', resp)
+    console.log('successRechargeData', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var refillCoupons = resp.result.length;
       var $rechargeTemp = $('#fe-smart-recharge');

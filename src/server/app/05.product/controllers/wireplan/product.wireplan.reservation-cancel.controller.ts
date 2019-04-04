@@ -1,8 +1,8 @@
 /**
  * 예약 취소 - 유선 부가서비스
- * FileName: product.wireplan.reservation-cancel.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.02.12
+ * @file product.wireplan.reservation-cancel.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.02.12
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

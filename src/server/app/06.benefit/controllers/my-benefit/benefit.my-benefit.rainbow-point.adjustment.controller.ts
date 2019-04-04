@@ -1,8 +1,8 @@
 /**
  * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 합산
- * FileName: benefit.my-benefit.rainbow-point.adjustment.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.10.29
+ * @file benefit.my-benefit.rainbow-point.adjustment.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.10.29
  * Summary: 레인보우 포인트 포인트 합산 내역 조회
  */
 

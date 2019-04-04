@@ -1,7 +1,7 @@
 /**
- * FileName: common.search.in-result.controller.ts
- * Author: Hyunkuk Lee ( max5500@pineone.com )
- * Date: 2019.02.01
+ * @file common.search.in-result.controller.ts
+ * @author Hyunkuk Lee ( max5500@pineone.com )
+ * @since 2019.02.01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

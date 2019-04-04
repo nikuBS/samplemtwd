@@ -1,3 +1,9 @@
+/**
+ * @file benefit.router.ts
+ * @author
+ * @since 2018.05
+ */
+
 import TwRouter from '../../common/route/tw.router';
 import BenefitIndex from './controllers/index/benefit.index.controller';
 import { BenefitMyBenefitRainbowPoint } from './controllers/my-benefit/benefit.my-benefit.rainbow-point.controller';

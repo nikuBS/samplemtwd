@@ -1,3 +1,9 @@
+/**
+ * @file format.helper.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.FormatHelper = (function () {
   var leadingZeros = function (number, length) {
     var result = number + '';

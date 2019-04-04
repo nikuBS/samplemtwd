@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.bill.controller.ts
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.info.bill.controller.ts
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018.09.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -105,7 +105,7 @@ class MyTFareInfoBillTax extends TwViewController {
 
       return resp.result.taxReprintList;
     });
-  }
+  };
 
   
 
@@ -119,13 +119,13 @@ class MyTFareInfoBillTax extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  }
+  };
   
   private mergeList = (taxlist): TaxList[] => {
     return [].concat.apply([], taxlist).reverse().map((tax, i) => {
       return Object.assign(tax, {listId: i});
     });
-  }
+  };
 
   // 꼭 확인해 주세요 팁 메뉴 정리
   private getNoticeInfo(): Info[] {

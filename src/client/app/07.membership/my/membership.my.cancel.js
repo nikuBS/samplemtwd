@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.cancel.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.01.09
+ * @file membership.my.cancel.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.01.09
  */
 
 Tw.MembershipMyCancel = function(rootEl) {

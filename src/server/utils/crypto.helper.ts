@@ -1,3 +1,9 @@
+/**
+ * @file crypto.helper.ts
+ * @author
+ * @since 2018.05
+ */
+
 import crypto from 'crypto';
 
 class CryptoHelper {

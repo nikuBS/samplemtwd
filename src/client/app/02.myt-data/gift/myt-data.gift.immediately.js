@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.gift.immediately.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.10
+ * @file myt-data.gift.immediately.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.10
  */
 
 Tw.MyTDataGiftImmediately = function (rootEl, svcInfo) {

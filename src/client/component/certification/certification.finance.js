@@ -1,7 +1,7 @@
 /**
- * FileName: certification.finance.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.10
+ * @file certification.finance.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.10
  */
 
 Tw.CertificationFinance = function () {

@@ -1,8 +1,8 @@
 /**
  * MenuName: T멤버십 > 제휴브랜드 > 혜택보기
- * FileName: membership.benefit.brand-benefit.controller.ts
- * Author: Hakjoon sim (hakjoon.sim@sk.com)
- * Date: 2018.11.06
+ * @file membership.benefit.brand-benefit.controller.ts
+ * @author Hakjoon sim (hakjoon.sim@sk.com)
+ * @since 2018.11.06
  * Summary: 제휴브랜드의 혜택 조회
  */
 

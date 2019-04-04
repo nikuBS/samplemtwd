@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 > SK브로드밴드
- * FileName: myt-fare.bill.guide.skbd.js
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.12.06
+ * @file myt-fare.bill.guide.skbd.js
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.12.06
  * Summary: 대표청구가 SK브로드밴드 회선인 경우
  * Description: 대표청구는 요금을 내는 기준 회선을 말함,
  *    회선이 skb이지만 대표청구가 skt인 경우는 이 화면으로 오지 않고, 통합(일반)청구 화면으로 조회

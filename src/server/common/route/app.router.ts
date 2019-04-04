@@ -1,3 +1,9 @@
+/**
+ * @file app.router.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 import express from 'express';
 import { Router } from 'express';
 

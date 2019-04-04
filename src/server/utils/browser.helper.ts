@@ -1,3 +1,9 @@
+/**
+ * @file browser.helper.ts
+ * @author
+ * @since 2018.05
+ */
+
 class BrowserHelper {
   static isAndroid(req): boolean {
     return req.useragent.isAndroid;

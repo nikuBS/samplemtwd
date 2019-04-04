@@ -1,3 +1,9 @@
+/**
+ * @file popup.service.js
+ * @author Ara Jo
+ * @since 2018.05
+ */
+
 Tw.PopupService = function () {
   this.$document = $(document);
   this.$window = $(window);

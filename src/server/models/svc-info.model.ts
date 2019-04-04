@@ -1,3 +1,9 @@
+/**
+ * @file svc-info.model.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 export interface ISvcInfo {
   svcMgmtNum: string;       // 서비스 관리번호
   xtSvcMgmtNum: string;     // xtractor 암호화 서비스 관리번호

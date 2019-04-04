@@ -1,3 +1,9 @@
+/**
+ * @file redis.type.ts
+ * @author
+ * @since 2018.05
+ */
+
 export enum REDIS_KEY {
   URL_META = 'UrlMetaNode:',
   MASKING_METHOD = 'MaskAuthMethods',

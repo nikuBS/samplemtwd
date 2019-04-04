@@ -1,3 +1,9 @@
+/**
+ * @file string.type.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.COMMON_STRING = {
   ALL: '전체',
   AGREE: '동의',

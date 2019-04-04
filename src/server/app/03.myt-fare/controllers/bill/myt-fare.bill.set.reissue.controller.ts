@@ -1,9 +1,9 @@
 /**
- * FileName: myt-fare.bill.set.reissue.controller.ts
+ * @file myt-fare.bill.set.reissue.controller.ts
  * 화면 ID : MF_04_01
  * 설명 : 나의요금 > 요금안내서 설정 > 재발행
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.01
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.01
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

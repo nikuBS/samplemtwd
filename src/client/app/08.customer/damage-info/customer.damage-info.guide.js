@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 이용자 피해예방 가이드
- * FileName: customer.damage-info.guide.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.24
+ * @file customer.damage-info.guide.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.24
  */
 
 Tw.CustomerDamageInfoGuide = function(rootEl) {

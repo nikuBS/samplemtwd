@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.small.set.use.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.09
+ * @file myt-fare.bill.small.set.use.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.09
  * Annotation: 소액결제 사용 및 차단 설정
  */
 

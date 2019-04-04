@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 결제안심통보
- * FileName: product.mobileplan-add.join.payment.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.21
+ * @file product.mobileplan-add.join.payment.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.21
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

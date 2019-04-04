@@ -1,3 +1,9 @@
+/**
+ * @file params.helper.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.ParamsHelper = (function () {
   var getQueryParams = function(url) {
     if (url.indexOf('?') !== -1) {

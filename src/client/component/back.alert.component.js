@@ -1,7 +1,7 @@
 /**
- * FileName: back.alert.component.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2019.02.14
+ * @file back.alert.component.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2019.02.14
  */
 
 Tw.BackAlert = function (rootEl, isPage) {

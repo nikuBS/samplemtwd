@@ -1,3 +1,9 @@
+/**
+ * @file config.type.js
+ * @author
+ * @since 2018.05
+ */
+
 // Common
 Tw.DEFAULT_LIST_COUNT = 20;
 Tw.MAX_FILE_SIZE = 2 * 1024 * 1024;

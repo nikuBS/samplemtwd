@@ -1,7 +1,7 @@
 <%#
-* FileName: product.apps.detail.html
+* @file product.apps.detail.html
 * @author Jiyoung Jo
-* Date: 2018.11.20
+* @since 2018.11.20
 * id: TA_01
 %>
 
@@ -113,7 +113,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.ProductAppsDetail($('.wrap'), <%- JSON.stringify(app) %>);
+      new Tw.ProductAppsDetail($('.wrap') < % -JSON.stringify(app) % >
+    )
     })
 </script>
 <% include ../../components/end.component.html %>

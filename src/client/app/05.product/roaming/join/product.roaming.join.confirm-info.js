@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.join.confirm-info.js
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.11.30
+ * @file product.roaming.join.confirm-info.js
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.11.30
  */
 
 Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData,pageProdId,targetEvt) {

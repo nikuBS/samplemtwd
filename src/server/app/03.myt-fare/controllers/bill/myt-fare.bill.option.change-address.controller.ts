@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.option.change-address.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2019.01.18
+ * @file myt-fare.bill.option.change-address.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2019.01.18
  * Description: 자동납부 미사용자 연락처 및 주소 변경 관리
  */
 

@@ -1,3 +1,9 @@
+/**
+ * @file api-command.type.js
+ * @author
+ * @since 2018.05
+ */
+
 Tw.API_METHOD = {
   GET: 'GET',
   POST: 'POST',

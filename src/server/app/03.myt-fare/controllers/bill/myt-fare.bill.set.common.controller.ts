@@ -1,9 +1,9 @@
 /**
- * FileName: myt-fare.bill.set.common.controller.ts
+ * @file myt-fare.bill.set.common.controller.ts
  * 화면 ID : MF_04, MF_04_02
  * 설명 : 나의요금 > 요금안내서 설정, 안내서 변경 공통 ts
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.09.20
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.09.20
  */
 import {Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
