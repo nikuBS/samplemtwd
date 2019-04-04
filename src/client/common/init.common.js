@@ -66,6 +66,8 @@ Tw.Init.prototype = {
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
         Tw.Popup.toast('QA_v5.25.12');
       }
+
+      this._initTrackerApi();
     }
   },
 
@@ -146,6 +148,7 @@ Tw.Init.prototype = {
         }
       }, this));
   },
+
   _setGesture: function () {
     if ( /\/home/.test(location.href) ) {
       this._nativeService.send(Tw.NTV_CMD.SET_SWIPE_GESTURE_ENABLED, {
@@ -156,8 +159,46 @@ Tw.Init.prototype = {
         isEnabled: true
       });
     }
+  },
 
+  _initTrackerApi: function() {
+    if (!Tw.BrowserHelper.isApp()) {  // App 환경에서만 동작
+      return;
+    }
 
+    this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._sendTrackerApi, this));
+  },
+
+  _sendTrackerApi: function(res) {
+    if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
+      return;
+    }
+
+    var url = Tw.Environment.environment !== 'prd' ? Tw.TRACKER_API.targetUrl.development : Tw.TRACKER_API.targetUrl.production,
+      params = {
+        site: Tw.TRACKER_API.siteId,
+        platform: 1,
+        ua: navigator.userAgent,
+        page: location.href
+      };
+
+    if (location.referrer && !Tw.FormatHelper.isEmpty(location.referrer)) {
+      params.referer = location.referrer;
+    }
+
+    if (screen && screen.width && screen.height) {
+      params.res = screen.width + 'x' + screen.height;
+    }
+
+    if (Tw.BrowserHelper.isAndroid()) {
+      params.adid = res.params.adid;
+    }
+
+    if (Tw.BrowserHelper.isIos()) {
+      params.idfa = res.params.adid;
+    }
+
+    Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
   }
 
 };

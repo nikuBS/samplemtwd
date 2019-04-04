@@ -232,6 +232,10 @@ Tw.CommonHelper = (function () {
     });
   };
 
+  var sendRequestImg = function(url) {
+    document.createElement('img').setAttribute('src', url);
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -255,6 +259,7 @@ Tw.CommonHelper = (function () {
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
     isLowerVersionAndroid: isLowerVersionAndroid,
-    replaceExternalLinkTarget: replaceExternalLinkTarget
+    replaceExternalLinkTarget: replaceExternalLinkTarget,
+    sendRequestImg: sendRequestImg
   };
 })();
