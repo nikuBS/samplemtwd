@@ -25,7 +25,7 @@ Tw.CommonPostcodeDetail.prototype = {
       hbs: 'CO_UT_05_04_02'
     },
       $.proxy(this._onDetailSearchEvent, this, $addressObject),
-      $.proxy(this._goLast, this),
+      null,
       'post0002',
       this.$target
     );
@@ -37,11 +37,6 @@ Tw.CommonPostcodeDetail.prototype = {
     this._initVariables($addressObject.tabId);
     this._initData($addressObject);
     this._bindEvent();
-  },
-  _goLast: function () {
-    if (this.$isNext) { // 다음 버튼 클릭 시
-      new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback); // 마지막 페이지 팝업 load
-    }
   },
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId); // 첫 번째 팝업에서 선택된 정보 (도로명 or 지번)
@@ -58,7 +53,6 @@ Tw.CommonPostcodeDetail.prototype = {
     this._selectedTabId = $targetId;
     this._page = 0;
     this.$selectedAddressObject = {};
-    this.$isNext = false;
     this.$selectedTab = this.$layer.find('#' + $targetId + '-tab');
     this.$selectedAddress = this.$selectedTab.find('.fe-selected-address');
     this.$searchNumberField = this.$selectedTab.find('.fe-input-number');
@@ -78,6 +72,7 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$layer.on('keyup', 'input[type="text"]', $.proxy(this._checkIsEnter, this));
     this.$layer.on('click', '.fe-search', $.proxy(this._search, this, null));
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
+    this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
   },
   _checkNumber: function (event) {
     this._inputHelper.inputNumberAndDashOnly(event.currentTarget); // 숫자와 -만 입력 가능
@@ -124,6 +119,9 @@ Tw.CommonPostcodeDetail.prototype = {
   _getMoreList: function () {
     this._page++;
     this._getList();
+  },
+  _close: function () {
+    this._popupService.closeAll();
   },
   _makeRequestData: function ($searchValue) {
     var reqData = {
@@ -226,7 +224,6 @@ Tw.CommonPostcodeDetail.prototype = {
   _goNextPage: function (event) {
     var $target = $(event.currentTarget);
 
-    this.$isNext = true;
     this.$selectedAddressObject = {
       'tabId': this._selectedTabId,
       'originText': $.trim(this.$selectedAddress.attr('data-origin')),
@@ -238,6 +235,6 @@ Tw.CommonPostcodeDetail.prototype = {
       'bldCd': $target.attr('data-bld-cd')
     };
 
-    this._popupService.close();
+    new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback); // 마지막 페이지 팝업 load
   }
 };

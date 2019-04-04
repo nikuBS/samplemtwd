@@ -1026,7 +1026,7 @@ skt_landing.action = {
     },
     allClose : function (){
       var popups = $('.wrap > .popup,.wrap > .popup-page');
-      popups.empty().remove();
+      popups.not($('.page')).empty().remove();
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
       }

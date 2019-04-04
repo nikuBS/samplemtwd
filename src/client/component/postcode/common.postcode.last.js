@@ -87,6 +87,7 @@ Tw.CommonPostcodeLast.prototype = {
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-save', $.proxy(this._getStandardAddress, this));
+    this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
   },
   _checkIsAbled: function (event) {
     var $address = $(event.currentTarget).val();
@@ -147,8 +148,7 @@ Tw.CommonPostcodeLast.prototype = {
       detail: code.sub,
       addrId: $result.addrId
     };
-
-    this._popupService.close();
+    this._close();
   },
   _getStandardCode: function ($result) {
     var code = {
@@ -165,5 +165,8 @@ Tw.CommonPostcodeLast.prototype = {
       }
     }
     return code;
+  },
+  _close: function () {
+    this._popupService.closeAll();
   }
 };

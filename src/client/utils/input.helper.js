@@ -110,7 +110,9 @@ Tw.InputHelper = (function () {
     };
 
     if (!isTextInput(e.target) && isTextInput(document.activeElement)) {
-      document.activeElement.blur();
+      setTimeout(function() {
+        document.activeElement.blur();
+      }, 100);
     }
   }
 
