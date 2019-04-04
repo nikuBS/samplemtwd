@@ -70,7 +70,6 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
       return;
     }
     this.$inputNumber.val(Tw.StringHelper.phoneStringToDash(res.params.phoneNumber));
-    this._addNum();
   },
 
   _addNum: function () {
