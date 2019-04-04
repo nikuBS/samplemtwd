@@ -4,9 +4,10 @@ Tw.ApiService = function () {
 };
 
 Tw.ApiService.prototype = {
-  request: function (command, params, headers, pathParams, version) {
+  request: function (command, params, headers, pathParams, version, option) {
+    // var pathVariables = this._getPathVariables(arguments);
     pathParams = pathParams || [];
-    var htOptions = this._makeOptions(command, params, headers, pathParams, version);
+    var htOptions = this._makeOptions(command, params, headers, pathParams, version, option);
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
@@ -112,12 +113,12 @@ Tw.ApiService.prototype = {
     deferred.resolve(resp);
   },
 
-  _makeOptions: function (command, params, headers, pathVariables, version) {
+  _makeOptions: function (command, params, headers, pathVariables, version, option) {
     var prefix = this._setPrefix(command);
     var path = command.path;
 
     // var data = prefix === '/bypass' ? { parameter: params, pathVariables: pathVariables } : params;
-    return {
+    var result = {
       method: command.method,
       url: prefix + this._makePath(path, pathVariables, version),
       timeout: 10000,
@@ -125,6 +126,11 @@ Tw.ApiService.prototype = {
       headers: this._makeHeaders(command, headers),
       data: command.method === Tw.API_METHOD.GET ? params : JSON.stringify(params)
     };
+
+    if ( !Tw.FormatHelper.isEmpty(option) ) {
+      $.extend(result, option);
+    }
+    return result;
   },
 
   _makePath: function (path, pathVariables, version) {
