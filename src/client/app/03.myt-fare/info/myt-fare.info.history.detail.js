@@ -1,8 +1,16 @@
 /**
- * @file myt-fare.info.history.js
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018. 9. 17
+ * @file [나의요금-요금납부조회-상세보기] 관련 처리
+ * @author Lee Kirim 
+ * @since 2018-09-17
  */
+
+ /**
+  * @class 
+  * @desc 요금납부조회 상세내역을 위한 class
+  * 
+  * @param {Object} rootEl - 최상위 element Object
+  * @param {JSON} data - myt-fare.info.history.controlloer.ts 로 부터 전달되어 온 납부내역 정보
+  */
 Tw.MyTFareInfoHistoryDetail = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
@@ -15,10 +23,21 @@ Tw.MyTFareInfoHistoryDetail = function (rootEl, data) {
 };
 
 Tw.MyTFareInfoHistoryDetail.prototype = {
+
+  /**
+   * @function
+   * @member 
+   * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
+   * - rootPathName 현재 주소
+   * - detailData 자료 데이터
+   * - queryParams 쿼리로 받아온 객체
+   * - query type 에 따라 표기될 렌더링될 템플릿 설정
+   * @return {void}
+   */
   _init: function () {
     this.rootPathName = this._historyService.pathname;
 
-    this.detailData = this.data.content ? this.data.content : JSON.parse(Tw.CommonHelper.getLocalStorage('detailData'));
+    this.detailData = this.data.content ? this.data.content : {};
     this.queryParams = Tw.UrlHelper.getQueryParams();
 
     switch (this.queryParams.type) {
@@ -58,11 +77,12 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
         break;
     }
   },
-
-  _updateViewMoreBtnRestCounter: function(e) {
-    e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
-  },
-
+  /**
+   * @function
+   * @member
+   * @desc 생성자 생성시 템플릿 엘리먼트 설정
+   * - myt-fare.info.history.detail.html 참고
+   */
   _cachedElement: function () {
     this.$templateWrapper = this.$container.find('#fe-detail-wrapper');
 
@@ -78,15 +98,31 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @member
+   * @desc 생성시 이벤트 바인드
+   */
   _bindEvent: function () {
+    // 세금계산서 보기 버튼
     this.$templateWrapper.find('.go-bill-tax').on('click',$.proxy(this._moveBillTax,this));
+    // 현금영수증 보기 버튼
     this.$templateWrapper.find('.go-bill-cash').on('click',$.proxy(this._moveBillCash,this));
   },
 
+  /**
+   * @function
+   * @member
+   * @desc 세금계산서 보기로 이동
+   */
   _moveBillTax: function (){
     this._historyService.goLoad('/myt-fare/info/bill-tax');
   },
-
+  /**
+   * @function
+   * @member
+   * @desc 현금영수증 보기로 이동
+   */
   _moveBillCash: function (){
     this._historyService.goLoad('/myt-fare/info/bill-cash');
   }
