@@ -11,6 +11,10 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
 export default class MyTJoinMyPlanCombineShare extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.query.id) {
       this.getCombination(req.query.id).subscribe(comb => {

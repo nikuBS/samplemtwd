@@ -13,9 +13,13 @@ import DateHelper from '../../../../utils/date.helper';
 import { MYT_JOIN_PERSONAL, MYT_JOIN_FAMILY } from '../../../../types/string.type';
 
 export default class MyTJoinMyPlanCombine extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.params.combination) { // last path에 prodId가 추가되어 있을 경우 결합가족보기(유선상품의 경우 결합상품보기)
-      const prodId = req.params.combination;  
+      const prodId = req.params.combination;
       const pageId = COMBINATION_PRODUCT[prodId || '']; // 하나의 결합상품에 prodId가 여러개 매핑되어 있는 경우도 있고, 여러개의 상품이 하나의 html을 쓰는 경우도 있어 별도의 식별자 추가함
 
       if (!pageId) {  // pageId가 없는 경우 에러 페이지 랜딩
@@ -97,7 +101,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         ...resp.result,
         combinationGroup: {
           ...group,
-          combProdNm: type && type === '1' ? group.combProdNm.replace(MYT_JOIN_FAMILY, MYT_JOIN_PERSONAL) : group.combProdNm, 
+          combProdNm: type && type === '1' ? group.combProdNm.replace(MYT_JOIN_FAMILY, MYT_JOIN_PERSONAL) : group.combProdNm,
           // 유선 상품일 경우, BFF에서 상품명에 개인형, 패밀리형 구분이 되어 있지 않아서 프론트에서 처리 추가
           totBasFeeDcTx: FormatHelper.addComma(String(group.totBasFeeDcTx)),
           combStaDt: DateHelper.getShortDate(group.combStaDt),

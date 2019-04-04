@@ -12,6 +12,10 @@ import DateHelper from '../../../../utils/date.helper';
 // import { ResearchResult } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearchesResult extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.getResult(req.query.id).subscribe(result => {
       if (result.code) {

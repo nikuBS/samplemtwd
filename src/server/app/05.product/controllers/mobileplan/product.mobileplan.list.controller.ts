@@ -12,12 +12,16 @@ import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
+import { PRODUCT_CODE } from '../../../../types/bff.type';
 
-const PLAN_CODE = 'F01100';
 export default class ProductPlans extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
-      idxCtgCd: PLAN_CODE,
+      idxCtgCd: PRODUCT_CODE.MOBILE_PLAN,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
       ...(req.query.order ? { searchOrder: req.query.order } : {}),
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})

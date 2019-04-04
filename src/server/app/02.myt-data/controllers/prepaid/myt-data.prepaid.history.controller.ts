@@ -12,11 +12,16 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { PREPAID_PAYMENT_TYPE } from '../../../../types/bff.type';
 
+const DEFAULT_PARAMS = {
+  pageNum: 1,
+  rowNum: 20
+};
+
 export default class MyTDataPrepaidHistory extends TwViewController {
-  private DEFAULT_PARAMS = {
-    pageNum: 1,
-    rowNum: 20
-  };
+  constructor() {
+    super();
+  }
+
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this.getVoiceRecharges(), this.getDataRecharges()).subscribe(([voice, data]) => {
@@ -32,7 +37,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
   }
 
   private getVoiceRecharges = () => {
-    return this.apiService.request(API_CMD.BFF_06_0062, this.DEFAULT_PARAMS).map(resp => {
+    return this.apiService.request(API_CMD.BFF_06_0062, DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_VOICE;
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -51,7 +56,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
   }
 
   private getDataRecharges = () => {
-    return this.apiService.request(API_CMD.BFF_06_0063, this.DEFAULT_PARAMS).map(resp => {
+    return this.apiService.request(API_CMD.BFF_06_0063, DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_DATA;
       if (resp.code !== API_CODE.CODE_00) {
         return {
