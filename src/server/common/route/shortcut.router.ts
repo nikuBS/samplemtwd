@@ -8,6 +8,7 @@ import DateHelper from '../../utils/date.helper';
 import { SHORTCUT_LOGIN_TYPE } from '../../types/bff.type';
 import FormatHelper from '../../utils/format.helper';
 
+const mapping = require('../mtwmweb_op.json');
 
 class ShortcutRouter {
   public router: Router;
@@ -47,10 +48,13 @@ class ShortcutRouter {
       } else if ( req.path === '/s.jsp' ) {
         const encParam = req.query.p || '';
         res.redirect('/common/auto-sms/cert?p=' + encParam);
-      } else if ( req.path === '/mpoc/html/main/mMa.html' ) {
-        res.redirect('/main/home');
       } else {
-        next();
+        const findUrl = this.checkMapTable(req.url);
+        if ( !FormatHelper.isEmpty(findUrl) ) {
+          res.redirect(findUrl);
+        } else {
+          next();
+        }
       }
     });
   }
@@ -66,6 +70,15 @@ class ShortcutRouter {
     } else {
       next();
     }
+  }
+
+  private checkMapTable(path): string {
+    const findMapping = mapping.find((urlInfo) => urlInfo.old === path);
+
+    if ( !FormatHelper.isEmpty(findMapping) ) {
+      return findMapping.new;
+    }
+    return '';
   }
 }
 
