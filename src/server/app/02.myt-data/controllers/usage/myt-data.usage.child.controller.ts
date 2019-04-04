@@ -22,7 +22,6 @@ const VIEW = {
 
 class MyTDataUsageChild extends TwViewController {
   private childSvcMgmtNum;
-  private myTDataHotData = new MyTDataHotData();
 
   constructor() {
     super();
@@ -52,7 +51,7 @@ class MyTDataUsageChild extends TwViewController {
       if (FormatHelper.isEmpty(childInfo)) {
         return this.renderErr(res, svcInfo, pageInfo, {});
       }
-      const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
+      const usageData = MyTDataHotData.parseUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
       usageData['childSvcNum'] = StringHelper.phoneStringToDash(childInfo.svcNum);
       usageData['childSvcMgmtNum'] = childInfo.svcMgmtNum;

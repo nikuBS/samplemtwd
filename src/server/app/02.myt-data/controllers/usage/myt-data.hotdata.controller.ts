@@ -51,34 +51,30 @@ class MyTDataHotdata extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.reqBalances()).subscribe(([_usageDataResp]) => {
-      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
-      if ( usageDataResp.code === API_CODE.CODE_00 ) {
-        let extraDataReq;
-        switch ( svcInfo.svcAttrCd ) {
-          case SVC_ATTR_E.MOBILE_PHONE :
-            extraDataReq = this.reqBalanceAddOns(); // 부가 서비스
-            break;
-          case SVC_ATTR_E.PPS :
-            extraDataReq = this.reqPpsCard(); // PPS 정보
-            break;
-        }
-        if ( extraDataReq ) {
-          Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
-            this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
-          }, (resp) => {
-            this._render(res, svcInfo, pageInfo, usageDataResp);
-          });
-        } else {
-          this._render(res, svcInfo, pageInfo, usageDataResp);
-        }
-      } else {
-        this._renderError(res, svcInfo, pageInfo, usageDataResp);
+  /**
+   * 총데이터 잔여량 데이터 세팅
+   * @param usageData
+   * @private
+   */
+  static setTotalRemained(usageData: any) {
+    const gnrlData = usageData.gnrlData || [];
+    let totalRemainUnLimited = false;
+    // 범용데이터 중 무제한 데이터가 있는지 확인
+    gnrlData.map((_data) => {
+      if ( UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
+        totalRemainUnLimited = true;
       }
-    }, (resp) => {
-      this._renderError(res, svcInfo, pageInfo, resp);
     });
+    // 무제한 데이터가 있으면 무제한 표시, 없으면 합산 잔여량 표시
+    if ( totalRemainUnLimited ) {
+      usageData.totalRemainUnLimited = true;
+      usageData.totalRemained = SKIP_NAME.UNLIMIT;
+    } else {
+      const totalRemained = gnrlData.reduce((_memo, _data) => {
+        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo + 0;
+      }, 0);
+      usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
+    }
   }
 
   /**
@@ -86,14 +82,14 @@ class MyTDataHotdata extends TwViewController {
    * @param usageData
    * @public
    */
-  public parseUsageData(usageData: any): any {
+  static parseUsageData(usageData: any): any {
     const kinds = [
       MYT_DATA_USAGE.DATA_TYPE.DATA,
       MYT_DATA_USAGE.DATA_TYPE.VOICE,
       MYT_DATA_USAGE.DATA_TYPE.SMS,
       MYT_DATA_USAGE.DATA_TYPE.ETC
     ];
-    this.setTotalRemained(usageData);
+    MyTDataHotdata.setTotalRemained(usageData);
     usageData.data = usageData.gnrlData || [];
 
     kinds.map((kind) => {
@@ -106,14 +102,31 @@ class MyTDataHotdata extends TwViewController {
     return usageData;
   }
 
-
   /**
    * 사용량 데이터 가공(휴대폰)
    * @param usageData
    * @param svcInfo
    * @public
    */
-  public parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
+  static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
+
+    /**
+     * dataArray중 target의 공제ID에 해당하는 데이터 반환
+     * @param target
+     * @param dataArray
+     * @private
+     * return data
+     */
+    function getDataInTarget(target: any, dataArray: any): any {
+      let data;
+      dataArray.map((_data) => {
+        if ( target.indexOf(_data.skipId) !== -1 ) {
+          data = _data;
+        }
+      });
+      return data;
+    };
+
     const kinds = [
       MYT_DATA_USAGE.DATA_TYPE.DATA,
       MYT_DATA_USAGE.DATA_TYPE.VOICE,
@@ -141,7 +154,7 @@ class MyTDataHotdata extends TwViewController {
 
     if ( gnrlData ) {
       // 총데이터 잔여량 표시 데이터 세팅
-      this.setTotalRemained(usageData);
+      MyTDataHotdata.setTotalRemained(usageData);
 
       // 기본제공데이터
       defaultData = gnrlData.find((_data) => {
@@ -164,7 +177,7 @@ class MyTDataHotdata extends TwViewController {
 
     if ( spclData ) {
       // 통합공유데이터
-      tOPlanSharedData = this.getDataInTarget(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
+      tOPlanSharedData = getDataInTarget(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
 
       // 통합공유데이터 제외한 데이터 배열 취합
       dataArr = dataArr.concat(spclData.filter((_data) => {
@@ -219,6 +232,41 @@ class MyTDataHotdata extends TwViewController {
     return usageData;
   }
 
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    Observable.combineLatest(this.reqBalances()).subscribe(([_usageDataResp]) => {
+      const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
+      if ( usageDataResp.code === API_CODE.CODE_00 ) {
+        let extraDataReq;
+        switch ( svcInfo.svcAttrCd ) {
+          case SVC_ATTR_E.MOBILE_PHONE :
+            extraDataReq = this.reqBalanceAddOns(); // 부가 서비스
+            break;
+          case SVC_ATTR_E.PPS :
+            extraDataReq = this.reqPpsCard(); // PPS 정보
+            break;
+        }
+        if ( extraDataReq ) {
+          Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
+            this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
+          }, (resp) => {
+            this._render(res, svcInfo, pageInfo, usageDataResp);
+          });
+        } else {
+          this._render(res, svcInfo, pageInfo, usageDataResp);
+        }
+      } else {
+        this._renderError(res, svcInfo, pageInfo, usageDataResp);
+      }
+    }, (resp) => {
+      this._renderError(res, svcInfo, pageInfo, resp);
+    });
+  }
+
+
+
+
+
   /**
    * 회선 타입에 따른 화면 렌더링
    * @param res
@@ -240,14 +288,14 @@ class MyTDataHotdata extends TwViewController {
 
     switch ( svcInfo.svcAttrCd ) {
       case SVC_ATTR_E.MOBILE_PHONE :
-        option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
+        option['usageData'] = MyTDataHotdata.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
         if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
           option['balanceAddOns'] = extraDataResp['result'];
         }
         view = VIEW.CIRCLE;
         break;
       case SVC_ATTR_E.PPS :
-        option['usageData'] = this.parseUsageData(usageDataResp.result);
+        option['usageData'] = MyTDataHotdata.parseUsageData(usageDataResp.result);
         // PPS 정보
         if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
           const extraData = extraDataResp['result'];
@@ -258,7 +306,7 @@ class MyTDataHotdata extends TwViewController {
         }
         break;
       default:
-        option['usageData'] = this.parseUsageData(usageDataResp.result);
+        option['usageData'] = MyTDataHotdata.parseUsageData(usageDataResp.result);
         break;
     }
     res.render(view, option);
@@ -285,31 +333,6 @@ class MyTDataHotdata extends TwViewController {
     });
   }
 
-  /**
-   * 총데이터 잔여량 데이터 세팅
-   * @param usageData
-   * @private
-   */
-  private setTotalRemained(usageData: any) {
-    const gnrlData = usageData.gnrlData || [];
-    let totalRemainUnLimited = false;
-    // 범용데이터 중 무제한 데이터가 있는지 확인
-    gnrlData.map((_data) => {
-      if ( UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
-        totalRemainUnLimited = true;
-      }
-    });
-    // 무제한 데이터가 있으면 무제한 표시, 없으면 합산 잔여량 표시
-    if ( totalRemainUnLimited ) {
-      usageData.totalRemainUnLimited = true;
-      usageData.totalRemained = SKIP_NAME.UNLIMIT;
-    } else {
-      const totalRemained = gnrlData.reduce((_memo, _data) => {
-        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo + 0;
-      }, 0);
-      usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
-    }
-  }
 
   /**
    * 실시간 잔여량 요청
@@ -338,22 +361,4 @@ class MyTDataHotdata extends TwViewController {
     return this.apiService.request(API_CMD.BFF_05_0013, {});
   }
 
-  /**
-   * dataArray중 target의 공제ID에 해당하는 데이터 반환
-   * @param target
-   * @param dataArray
-   * @private
-   * return data
-   */
-  private getDataInTarget(target: any, dataArray: any): any {
-    let data;
-    dataArray.map((_data) => {
-      if ( target.indexOf(_data.skipId) !== -1 ) {
-        data = _data;
-      }
-    });
-    return data;
-  }
-}
-
-export default MyTDataHotdata;
+}export default MyTDataHotdata;

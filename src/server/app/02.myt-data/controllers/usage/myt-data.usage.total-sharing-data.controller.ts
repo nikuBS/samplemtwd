@@ -15,7 +15,6 @@ import FormatHelper from '../../../../utils/format.helper';
 import { MYT_DATA_USAGE_TOTAL_SHARING_DATA } from '../../../../types/string.type';
 
 class MyTDataUsageTotalSharingData extends TwViewController {
-  private myTDataHotData = new MyTDataHotData();
 
   constructor() {
     super();
@@ -35,7 +34,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
         return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
-      const usageData = this.myTDataHotData.parseCellPhoneUsageData(balancesResp.result, svcInfo);
+      const usageData = MyTDataHotData.parseCellPhoneUsageData(balancesResp.result, svcInfo);
       let defaultData;
       if (usageData.hasDefaultData) {
         defaultData = usageData.data[0];
