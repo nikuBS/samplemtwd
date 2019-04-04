@@ -1,5 +1,6 @@
+var current_scrollTop="";
+var fixScroll_onoff="";
 $(document).on('ready', function () {
-  var scroll_top="";
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
   //skt_landing.action.keyboard();
@@ -290,6 +291,7 @@ skt_landing.action = {
   },
   scroll_gap: [],
   fix_scroll: function () {
+    fixScroll_onoff = true;
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? popups.eq(popups.length-2).find('.container-wrap') : $('#contents'),
         scroll_value = $('.wrap > .popup,.wrap > .popup-page').length > 1 ? fix_target.scrollTop() : $(window).scrollTop();
@@ -301,7 +303,7 @@ skt_landing.action = {
         'width':'100%',
         'top': 0,
         'z-index': 100,
-        'overflow-y':'visible'
+        'overflowY':'visible'
       }).find('input').attr('tabindex',-1);
       $('.idpt-popup').css({
         'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
@@ -312,7 +314,7 @@ skt_landing.action = {
         'transform': 'translate(0 ,-' + this.scroll_gap[this.scroll_gap.length -1] + 'px)',
         'width':'100%',
         'z-index': -1,
-        'overflow-y':'visible'
+        'overflowY':'visible'
       }).find('input').attr('tabindex',-1);
     }
     if($('.container-wrap').length == 1){
@@ -492,6 +494,7 @@ skt_landing.action = {
     }
   },
   auto_scroll: function () {
+    fixScroll_onoff = false;
     var popups = $('.wrap > .popup,.wrap > .popup-page'),
         fix_target = $('.wrap > .popup,.wrap > .popup-page').length > 0 ? popups.eq(popups.length-1).find('.container-wrap') : $('#contents');
     if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
@@ -500,7 +503,7 @@ skt_landing.action = {
         'transform': '',
         'top': '',
         'z-index': '',
-        'overflow-y':''
+        'overflowY':''
       }).find('input').attr('tabindex','');
       $('.idpt-popup').css({
         'transform': ''
@@ -510,7 +513,7 @@ skt_landing.action = {
         'position':'',
         'transform': '',
         'z-index':'',
-        'overflow-y':''
+        'overflowY':''
       }).find('input').attr('tabindex','');
     }      
     if($('.container-wrap').length == 1){
@@ -535,6 +538,13 @@ skt_landing.action = {
       $(window).scrollTop(this.scroll_gap[this.scroll_gap.length -1]);
     }
     this.scroll_gap.pop();
+    //@19155, 19494, 19325
+    $('body').css({
+      '-webkit-overflow-scrolling': 'touch'
+    });
+    setTimeout(function () {
+      $('body').removeAttr('style');
+    }, 0);
   },
   checkScroll: {
   //19.03.22 레이어 팝업내 input 영역
@@ -829,9 +839,10 @@ skt_landing.action = {
             layerContainerWrap.css({'height':layer_h});
           }
         }
-        scroll_top = $(window).scrollTop(); // 19.03.25 팝업떴을때 바닥 스크롤 생기는 이슈
+        current_scrollTop = $(window).scrollTop(); // 19.03.25 팝업떴을때 바닥 스크롤 생기는 이슈
         if( $(".fixed-bottom-lock").css("display") == "block" ){
           $(".wrap, html").css({"height":"100%", "overflowY":"hidden"});
+          $(window).scrollTop(current_scrollTop);
         }
         //wai-aria
         popups.attr('role','')
@@ -876,7 +887,7 @@ skt_landing.action = {
         var $popup = $('.popup.tw-popup');
         var $popWrap = $popup.not($popup.last()).find('.container-wrap');
         $popWrap.css({
-            'overflow-y': 'hidden'
+            'overflowY': 'hidden'
         });
         $(document).trigger('modal:open', {obj: this});
         //@@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
@@ -897,18 +908,19 @@ skt_landing.action = {
           var popCk = $('.popup-page.tw-popup'),
               popCk_wrap = popCk.not($(".actionsheet"));
           popCk_wrap.each(function(){
-            $(this).css('overflow-y', 'hidden');
+            $(this).css('overflowY', 'hidden');
           });
           $("html, .wrap").css("height", "100%"); // 19.03.28 추가
           skt_landing.action.checkScroll.lockScroll();
           skt_landing.action.checkScroll.input_scroll_fix();
+          $(window).scrollTop(current_scrollTop);
         }
         // 19.03.22 딤드처리된 popup 스크롤락
 
         ////@190329: DV001-19141
         if($('.tw-popup').length > 1){
           $('.tw-popup').not(createdTarget).find('.container').css({
-            'overflow-y': 'hidden'
+            'overflowY': 'hidden'
           });
         }
 
@@ -916,6 +928,7 @@ skt_landing.action = {
         if ( createdTarget.find(".popup-blind").css("display") == "block" && $("[role='alertdialog']").length > 0 ){
           $("html, .wrap").css({"height":"100%", "overflowY":"hidden"});
           skt_landing.action.checkScroll.lockScroll();
+          $(window).scrollTop(current_scrollTop);
         }
         // 19.03.29 툴팁부분
       }).fail(function() {
@@ -960,24 +973,43 @@ skt_landing.action = {
         var popCk = $('.popup-page.tw-popup'),
             popCk_wrap = popCk.not($(".actionsheet"));
         popCk_wrap.each(function(){
-          $(this).css('overflow-y', '');
+          $(this).css('overflowY', '');
         });
         $("html, .wrap").css("height", ""); // 19.03.28 추가
         skt_landing.action.checkScroll.unLockScroll();
+        $(window).scrollTop(current_scrollTop);
       }
       // 19.03.22 딤드처리된 popup 스크롤락
+
+      //@190329: DV001-19141
+      $('.tw-popup').not(createdTarget).find('.container').css({
+        'overflowY': ''
+      });
 
       // 19.03.29 툴팁부분
       if ( createdTarget.find(".popup-blind").css("display") == "block" && $("[role='alertdialog']").length > 0 ){
         $("html, .wrap").css({"height":"", "overflowY":""});
         skt_landing.action.checkScroll.unLockScroll();
+        $(window).scrollTop(current_scrollTop);
+        if( popups.length == 1 && fixScroll_onoff ){
+          skt_landing.action.auto_scroll();
+        }
       }
       // 19.03.29 툴팁부분
 
       if( $(".fixed-bottom-lock").css("display") == "block" ){ // 19.03.25 팝업떴을때 바닥 스크롤 생기는 이슈
         $(".wrap, html").css({"height":"", "overflowY":""});
-        $(window).scrollTop(scroll_top);
+        $(window).scrollTop(current_scrollTop);
       }
+
+      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
+      var $popup = $('.popup.tw-popup');
+      var $popWrap = $popup.find('.container-wrap');
+      $popWrap.css({
+          'overflowY': ''
+      });
+      $(document).trigger('modal:close', {obj: this, target: target});
+      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
 
       if(target){
         $(target).closest('.popup,.popup-page').empty().remove();
@@ -991,20 +1023,6 @@ skt_landing.action = {
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
       }
-
-      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-      var $popup = $('.popup.tw-popup');
-      var $popWrap = $popup.find('.container-wrap');
-      $popWrap.css({
-          'overflow-y': ''
-      });
-      $(document).trigger('modal:close', {obj: this, target: target});
-      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-
-      //@190329: DV001-19141
-      $('.tw-popup').not(createdTarget).find('.container').css({
-        'overflow-y': ''
-      });
     },
     allClose : function (){
       var popups = $('.wrap > .popup,.wrap > .popup-page');

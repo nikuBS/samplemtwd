@@ -1,0 +1,94 @@
+[
+  {
+    "old": "/mpoc/html/main/mMa.html",
+    "new": "/main/home"
+  },
+  {
+    "old": "/mnormal.do?serviceId=SDUMMY0001&viewId=M_CENT0024",
+    "new": "/myt-join/submain"
+  },
+  {
+    "old": "/mmbrs.do?serviceId=S_MBRS0088&viewId=M_MBRS0311",
+    "new": "/membership/my/cancel"
+  },
+  {
+    "old": "/mwire.do?serviceId=S_WIRE3000&viewId=M_WIRE3000&prod_id=NI00000567&uCode=u51_1_2&paramThmId=T000084",
+    "new": "/product/callplan?prod_id=NI00000567"
+  },
+  {
+    "old": "/mwire.do?serviceId=SDUMMY0001&viewId=M_WIRE5001&uCode=u51_1_2&prodNm=T_Giga%C0%CE%C5%CD%B3%DD%B6%F3%C0%CC%C6%AE",
+    "new": "/product/wireplan/join/reservation"
+  },
+  {
+    "old": "/mpoc/html/util/member_policy/mUT2.2.html",
+    "new": "/main/menu/settings/terms?id=68&type=a"
+  },
+  {
+    "old": "/mpoc/html/util/member_policy/mUT2.1.2.2T.7.html",
+    "new": "/main/menu/settings/terms?id=64&type=a"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_MYTW0083&viewId=M_MEMB0011",
+    "new": "/common/member/line "
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=TW00001062 ",
+    "new": "/product/callplan?prod_id=TW00001062"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=NA00005923",
+    "new": "/product/callplan?prod_id=NA00005923"
+  },
+  {
+    "old": "/mwire.do?serviceId=S_ETC_0035&viewId=M_WIRE7701&VIEW_TYPE=POPUP&uCode=u51_1_2",
+    "new": "/product/wireplan/service-area"
+  },
+  {
+    "old": "/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=TW00001062&_ga=2.263633227.671641090.1531189279-2004319453.1522740541",
+    "new": "product/callplan?prod_id=TW00001062"
+  },
+  {
+    "old": "/mpoc/tid/tid_member.jsp",
+    "new": "/common/member/manage"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_CMIS0001&viewId=V_CENT9070",
+    "new": "/customer/agentsearch"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_CMIS0075&viewId=V_CENT7002&ifaqId=1402050004",
+    "new": "/customer/faq/view?category=T¸â¹ö½Ê%20>%20T¸â¹ö½Ê%20È°¿ë/ÇýÅÃ&faq_Id=1402050004"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_CMIS0065&viewId=V_CENT9079",
+    "new": "/customer/agentsearch/repair"
+  },
+  {
+    "old": "/mpoc/html/center/mCS2.2.6.1.2P.html",
+    "new": "/customer/faq/do-like-this?id=B00044#popup04"
+  },
+  {
+    "old": "/mpoc/html/center/mCS4.3.2T.html",
+    "new": "/customer/agentsearch/repair-manufacturer"
+  },
+  {
+    "old": "/mnormal.do?serviceId=SDUMMY0001&viewId=M_MBRS1017",
+    "new": "/membership/my"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_PHOW0004&viewId=M_PHOW1002&prodId=TW50000002",
+    "new": "/product/apps/app?appId=TW50000002"
+  },
+  {
+    "old": "/mpoc/html/product/mTS2a.html",
+    "new": "https://m.sktsmarthome.com/html/home.html"
+  },
+  {
+    "old": "/tglink.jsp?urlname=mna_001",
+    "new": "/product/callplan?prod_id=NI00000567"
+  },
+  {
+    "old": "/mwire.do?serviceId=S_WIRE3000&viewId=M_WIRE3000&prod_id=TW20000013",
+    "new": "/product/callplan?prod_id=TW20000013"
+  }
+]

@@ -14,23 +14,15 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
-            <div class="h-default">
-                <div class="h-tit">초[超]시대의 마음껏 누리는 생활</div>
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '초[超]시대의 마음껏 누리는 생활', svcInfo: svcInfo, home: 'app' }) %>
+    <!-- 190402_수정 -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
             <!-- keyVisual -->
             <div class="og-5mktp-keyvisual">
                 <div class="text-wrap">
-                    <h2 class="tit">오직 SK 텔레콤에서만 <strong>초[超]시대<br> <span class="em">마음껏 누리는</span> 생활</strong></h2>
-                    <p>SKT 5GX만의 특별한 혜택</p>
+                    <h2 class="tit">초[超]시대의 마음껏 누리는 생활 <strong>오직 <span class="em">SK텔레콤에서만</span><br> 제공하는 혜택</strong></h2>
                 </div>
                 <div class="img"><img src="<%= CDN %>/img/t_m5g/og_5mktp_keyvisual_img_03.png" alt=""></div>
             </div>
@@ -42,7 +34,7 @@
                     <div class="tab-area og-5mktp-tab"><!-- JS: 탭영역 상단 fixed시 class="fixed" 추가 -->
                         <div class="tab-linker">
                             <ul role="tablist">
-                                <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#"><span>5GX Club</span></a></li>
+                                <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#"><span>5GX 클럽</span></a></li>
                                 <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#"><span>카드 제휴 할인</span></a></li>
                                 <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="#"><span>T멤버십 혜택</span></a></li>
                             </ul>
@@ -54,7 +46,7 @@
                                     <div class="cont-box nogaps">
                                         <!-- og-5mktp-contwrap -->
                                         <div class="og-5mktp-contwrap pb0">
-                                            <p class="og-5mktp-titS24">5GX Club 가입하고, SKT만의 최고 혜택 받으세요!</p>
+                                            <p class="og-5mktp-titS24">5G의 시작, 아무런 걱정없이</p>
                                             <p class="og-5mktp-txtS15 mt18 og-color3">기기교체/파손/분실 등 모든 상황에 든든하게 대비해주니까</p>
                                         </div><!-- og-5mktp-contwrap -->
                                         <!-- og-5mktp-contwrap -->
@@ -63,7 +55,7 @@
                                             <p class="og-5mktp-txtype1 mt12">T갤럭시클럽 S10_5G 혜택으로,<br>잔여할부금 <strong>최대 70%</strong> 면제받으세요.</p>
                                             <div class="og-5mktp-imgwrap-type1 mt50">
                                                 <div class="img mt38">
-                                                    <img src="<%= CDN %>/img/t_m5g/og_life3_chart.png" alt="6개월 70%면제 12개월 50%면제 24개월 40%면제">
+                                                    <img src="<%= CDN %>/img/t_m5g/og_life3_chart.png" alt="6개월 70%면제 12개월 50%면제 24개월 50%면제">
                                                 </div>
                                             </div>
                                         </div><!-- //og-5mktp-contwrap -->
@@ -86,6 +78,7 @@
                                                     <img src="<%= CDN %>/img/t_m5g/og_life3_bnfimg02.png" alt="분실안심 990 1년간 FREE">
                                                 </div>
                                             </div>
+                                            <p class="og-small-refer mt10">&nbsp;전국 지점-대리점-고객센터(114)에서 가입 가능합니다.</p>
                                         </div><!-- //og-5mktp-contwrap -->
                                     </div><!-- //cont-box -->
                                 </li>
@@ -93,15 +86,18 @@
                                     <div class="cont-box nogaps">
                                         <!-- og-5mktp-contwrap -->
                                         <div class="og-5mktp-contwrap pb0">
-                                            <p class="og-5mktp-titS24">5G 단말을 경제적으로<br>구매하는 <span class="og-chcolor-red">제휴카드+안심보장</span></p>
-                                            <p class="og-5mktp-txtS15 mt18">제휴카드 74만 + T안심보장 30만으로 <span class="og-chcolor-red">100만원 이상</span> 할인! </p>
+                                            <p class="og-5mktp-titS24">5G 단말을 경제적으로<br>구매하는 <span class="og-chcolor-red">더블할인 + T안심보상</span></p>
+                                            <p class="og-5mktp-txtS15 mt18">더블할인 약 74만원 + T안심보상 30만원으로 <em class="og-chcolor-red">100만원 이상</em> 할인! </p>
                                         </div><!-- //og-5mktp-contwrap -->
                                         <!-- og-5mktp-contwrap -->
                                         <div class="og-5mktp-contwrap pb0">
                                             <ul class="og-plan-card-sale">
                                                 <li>
                                                     <dl>
-                                                        <dt class="og-plan-sale-tit">제휴카드 <strong>74만원</strong></dt>
+                                                        <dt class="og-plan-sale-tit">
+                                                            <span class="og-small_tit">라이트 할부와 요금 할인</span>
+                                                            제휴카드 <strong>혜택은 더블!</strong>
+                                                        </dt>
                                                         <dd class="og-plan-sale-list">
                                                             <ul>
                                                                 <li class="og-5mktp-txtS14">(삼성) 월 1.5만원 할인 x 24개월</li>
@@ -111,29 +107,33 @@
                                                     </dl>
                                                     <div class="og-5mktp-imgwrap-type1 mt16">
                                                         <div class="img">
-                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_cards.png" alt=" ">
+                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_cards.png" alt="">
                                                         </div>
                                                     </div>
                                                 </li>
                                                 <li class="og-plan-tsafe">
                                                     <div class="og-5mktp-imgwrap-type1">
                                                         <div class="img">
-                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_cards_2.png" alt=" ">
+                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_cards_2.png" alt="">
                                                         </div>
                                                     </div>
                                                     <dl>
-                                                        <dt class="og-plan-sale-tit">T안심보장 <strong>30만원</strong></dt>
+                                                        <dt class="og-plan-sale-tit">
+                                                            <span class="og-small_tit">최대 2배 보상 혜택</span>
+                                                            <strong>T안심보상!</strong>
+                                                        </dt>
                                                         <dd class="og-plan-sale-list">
                                                             <ul>
                                                                 <li class="og-5mktp-txtS14">갤럭시 S10 B등급 보상가 30만원</li>
                                                             </ul>
                                                         </dd>
                                                     </dl>
+                                                    <p class="og-small-refer mt60 ta-left">&nbsp;제휴할인 카드 가입은 전용발급센터를 이용해주세요.</p>
                                                 </li>
                                             </ul>
                                         </div><!-- //og-5mktp-contwrap -->
                                         <!-- og-5mktp-contwrap -->
-                                        <div class="og-5mktp-contwrap pb0">
+                                        <div class="og-5mktp-contwrap pb0 pt15">
                                             <div class="og-life-graybox">
                                                 <dl class="og-life-graybox-cont">
                                                     <dt class="og-life-box-tit">전용발급 센터</dt>
@@ -156,49 +156,9 @@
                                 </li>
                                 <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
                                     <div class="cont-box nogaps">
-                                        <!-- og-5mktp-contwrap -->
                                         <div class="og-5mktp-contwrap pb0">
-                                            <p class="og-5mktp-titS22">T Day Week &amp; Day 혜택</p>
-                                            <p class="og-5mktp-txtS14 mt8 og-color3">매달 첫째 주(월~금), 매주 수요일 파격 할인 혜택</p>
-                                            <div class="og-5mktp-imgwrap-type1">
-                                                <div class="img mt16">
-                                                    <img src="<%= CDN %>/img/t_m5g/og_life3_tbnf01.png" alt="달력에 T자를 그려봐 T DAY엔 혜택이 펑펑!">
-                                                </div>
-                                            </div>
-                                        </div><!-- //og-5mktp-contwrap -->
-                                        <!-- og-5mktp-contwrap -->
-                                        <div class="og-5mktp-contwrap pb0">
-                                            <p class="og-5mktp-titS22">T Day 내맘대로 혜택</p>
-                                            <p class="og-5mktp-txtS14 mt8 og-color3">내가 원하는 날 누리는, 스페셜 혜택!<br>(제휴사별 월 1회 사용 가능)</p>
-                                            <ul class="og-spbnf-list mt16">
-                                                <li class="og-sp-item">
-                                                    <dl>
-                                                        <dt class="og-sp-term">
-                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_tbnf02_1.png" alt="T map 택시">
-                                                        </dt>
-                                                        <dd class="og-sp-define">
-                                                            T map 택시
-                                                            <p class="og-5mktp-txtS13 mt4 og-color3">전 고객 20% 할인</p>
-                                                        </dd>
-                                                    </dl>
-                                                </li>
-                                                <li class="og-sp-item">
-                                                    <dl>
-                                                        <dt class="og-sp-term">
-                                                            <img src="<%= CDN %>/img/t_m5g/og_life3_tbnf02_2.png" alt="세븐일레븐">
-                                                        </dt>
-                                                        <dd class="og-sp-define">
-                                                            세븐일레븐
-                                                            <p class="og-5mktp-txtS13 mt4 og-color3">전 고객 천 원당 200원 할인</p>
-                                                        </dd>
-                                                    </dl>
-                                                </li>
-                                            </ul>
-                                        </div><!-- //og-5mktp-contwrap -->
-                                        <!-- og-5mktp-contwrap -->
-                                        <div class="og-5mktp-contwrap pb0">
-                                            <p class="og-5mktp-titS22">5GX 런칭 기념 스페셜 혜택 (4~5월)</p>
-                                            <p class="og-5mktp-txtS14 mt8 og-color3">5GX 요금제 이용 고객님께는 Big 5 제휴사 50% 할인 혜택<br>(월별로 제휴사별 1회 사용 가능)</p>
+                                            <p class="og-5mktp-titS22">5GX 런칭 기념 스페셜 혜택 <span class="og-5mktp-txtS15">(4~5월 한정)</span></p>
+                                            <p class="og-5mktp-txtS14 mt8">5GX 고객님께는 <strong class="og-chcolor-red">Big 5 브랜드 50% 할인 혜택</strong> <br><span class="og-color3">(월별로 제휴사별 1회 사용 가능)</span></p>
                                             <ul class="og-big5-list">
                                                 <li class="og-big5-item">
                                                     <div class="og-big5-img"><img src="<%= CDN %>/img/t_m5g/og_life3_tbnf03_1.png" alt="11번가"></div>
@@ -229,26 +189,29 @@
                                                     </dl>
                                                 </li>
                                                 <li class="og-big5-item">
-                                                    <div class="og-big5-img"><img src="<%= CDN %>/img/t_m5g/og_life3_tbnf03_5.png" alt="파리바게뜨"></div>
+                                                    <div class="og-big5-img"><img src="<%= CDN %>/img/t_m5g/og_life3_tbnf03_5.png" alt="롯데월드"></div>
                                                     <dl class="og-big5-detail">
-                                                        <dt class="og-big5-tit">파리바게뜨</dt>
-                                                        <dd class="og-big5-txt">천 원당 500 원 할인</dd>
+                                                        <dt class="og-big5-tit">롯데월드</dt>
+                                                        <dd class="og-big5-txt">본인 및 동반 1인 50% 할인</dd>
                                                     </dl>
                                                 </li>
                                             </ul>
                                         </div><!-- //og-5mktp-contwrap -->
                                         <div class="og-5mktp-contwrap pb0 pt0">
-                                            <div class="og-life-graybox og-life-tbnf-box">
-                                                <dl class="og-life-tbnf-wrap og-life-graybox-cont">
-                                                    <dt class="og-life-box-tit">T멤버십 혜택 바로가기</dt>
-                                                    <dd class="og-tbnf-txt">
+                                            <div class="og-life-graybox og-life-tbnf-box" >
+                                                <div class="og-life-tbnf-wrap og-life-graybox-cont">
+                                                    <div class="og-tbnf-txt mt0">
                                                         <p class="og-5mktp-txtS13">제휴처별 상세 혜택 및 유의사항 확인 후, 이용해주시기 바랍니다.</p>
-                                                        <a href="#" class="og-tbnf-btn">바로가기</a>
+                                                        <ul class="bt-slice mt18 og-tbnf-btn">
+                                                            <li class="bt-white3">
+                                                                <a href="http://bit.ly/2TR9Cgu" target="_blank" title="새창">T멤버십 혜택 바로가기</a>
+                                                            </li>
+                                                        </ul>
                                                         <div class="og-life-tbnf-img">
                                                             <img src="<%= CDN %>/img/t_m5g/og_life3_tbnf04.png" alt="">
                                                         </div>
-                                                    </dd>
-                                                </dl>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -264,6 +227,7 @@
         </div>
     </div>
     <!--// #contents -->
+    <!-- //190402_수정 -->
 </div>
 
 <% include ../../components/javascript.component.html %>
@@ -341,6 +305,15 @@
         }, 500);
       }
     });
+
+    if (Tw.BrowserHelper.isApp()) {
+      $('.fe-link-external').on('click', function (e) {
+        e.preventDefault();
+        Tw.CommonHelper.showDataCharge(function () {
+          Tw.CommonHelper.openUrlExternal(e.currentTarget.href);
+        });
+      })
+    }
   });
 </script>
 </body>

@@ -1,0 +1,87 @@
+<div class="popup-page tw-popup nobg fixed-bottom">
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>상세내역</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div id="contents" class="container-wrap">
+       <div class="container">
+           <div class="payment-detail-wrap">
+                {{#if FullDate}}
+                <div class="payment-detail-box">
+                    <div class="detail-inner">
+                        <div class="detail-list">
+                            <ul>
+                                <li>
+                                    <div>
+                                        <span class="title">사용처</span>
+                                        <span class="tx-cont">{{cpNm}}</span>
+                                    </div>
+                                    <div>
+                                        <ul class="inner-list">
+                                            <li>
+                                                <span class="title">서비스명</span>
+                                                <span class="tx-cont">{{serviceNm}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">결제대행업체</span>
+                                                <span class="tx-cont">{{pgNm}}</span>
+                                            </li>
+                                            <li>
+                                                <span class="title">구분</span>
+                                                <span class="tx-cont">{{payWay}}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="title">금액</span>
+                                    <span class="tx-cont">{{useAmt}} <span class="tx-regular">원</span></span>
+                                </li>
+                                <li>
+                                    <span class="title">일시</span>
+                                    <span class="tx-cont">{{FullDate}}</span>
+                                </li>
+                                <!-- CASE: 일반결제 -->
+                                <li>
+                                    <span class="title">구분
+                                    <br /><span class="state fe-block-state">{{blockState}}</span>
+                                    </span>
+                                    <span class="tx-cont">{{payMethodNm}}
+                                    {{#if isShowBlockBtn}}
+                                    <br />
+                                        <button class="red-btn 
+                                            {{#unless isBlocked}}none{{/unless}}" 
+                                            {{#unless isBlocked}}aria-hidden="true"{{/unless}}
+                                            id="fe-btn-view-block">차단내역</button>
+
+                                        <button class="red-btn 
+                                            {{#if isBlocked}}none{{/if}}" 
+                                            {{#if isBlocked}}aria-hidden="true"{{/if}}
+                                            id="fe-btn-set-block" >차단하기</button>
+                                    </span>
+                                    {{/if}}
+                                </li>
+                                <!--// CASE: 일반결제 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {{else}}
+                <div class="cont-box nogaps-hoz">
+                    <div class="result-none type2">상세 내역을 조회할 수 없습니다.</div>
+                </div>
+                {{/if}}
+           </div>
+       </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step tw-popup-closeBtn">취소</button>
+    <!--// .popup-closeBtn -->
+</div>

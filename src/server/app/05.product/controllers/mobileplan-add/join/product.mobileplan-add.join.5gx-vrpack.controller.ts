@@ -10,7 +10,7 @@ import {NextFunction, Request, Response} from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
 import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
+import {API_CMD} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 import ProductHelper from '../../../../../utils/product.helper';
 
@@ -24,7 +24,7 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
-        pageInfo: {...pageInfo, menuId: 'M000410'},
+        pageInfo: {...pageInfo},
         svcInfo: Object.assign(svcInfo, {svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)}),
         title: PRODUCT_TYPE_NM.JOIN
       };
@@ -35,9 +35,9 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-    ).subscribe(([ preCheckInfo, basicInfo, joinTermInfo ]) => {
+      this.apiService.request(API_CMD.BFF_10_0001, {prodExpsTypCd: 'P'}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0017, {joinTermCd: '01'}, {}, [prodId])
+    ).subscribe(([preCheckInfo, basicInfo, joinTermInfo]) => {
       const apiError = this.error.apiError([preCheckInfo, basicInfo, joinTermInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {

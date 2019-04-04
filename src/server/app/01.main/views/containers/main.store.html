@@ -59,10 +59,15 @@
                                 <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B66-2" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</a></li>
                                 <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B66-3" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B66-4" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
+                                <% if (String(process.env.NODE_ENV) !== 'prd') { %>
+                                <li><a href="/common/util/5g-intro" class="bt new" data-xt_eid="CMMA_A2_B66-65" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</a></li>
+                                <% } %>
                                 <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B66-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
                                 <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B66-6" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tablet-80-1"></i>태블릿</button></li>
                                 <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B66-7" data-xt_csid="NO" data-xt_action="BC"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                <% if (String(process.env.NODE_ENV) === 'prd') { %>
                                 <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B66-8" data-xt_csid="NO" data-xt_action="BC"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                <% } %>
                             </ul>
                             <!-- //MY 바로가기 -->
                         </div>

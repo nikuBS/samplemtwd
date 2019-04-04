@@ -799,6 +799,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
   ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
   ALERT_3_A90: { TITLE: '선물받는 번호를 확인해 주세요.', MSG: '' },
+  ALERT_3_A91: { TITLE: '지정번호 1회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
+  ALERT_3_A92: { TITLE: '지정번호 2회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -937,7 +939,9 @@ Tw.MYT_FARE_HISTORY_MICRO_PAY_TYPE = {
 Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
   A0: '차단중',
   A1: '다음 달 차단예정',
-  C1: '다음 달 해제예정'
+  C0: '', // 해제상태
+  C1: '다음 달 해제예정',
+  N: '' // 신청내역 없음
 };
 
 Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST = {

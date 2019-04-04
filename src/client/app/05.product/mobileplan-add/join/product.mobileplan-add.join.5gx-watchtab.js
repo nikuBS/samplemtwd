@@ -4,7 +4,7 @@
  * Date: 2019.04.05
  */
 
-Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId) {
+Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mobileplanId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -16,6 +16,13 @@ Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId) {
   this._displayId = displayId;
   this._confirmOptions = {};
 
+  if (mobileplanId === 'NA00006404') {
+    this._maxLine = 0;
+    this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A91;
+  } else if (mobileplanId === 'NA00006405') {
+    this._maxLine = 1;
+    this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A92;
+  }
   this._cachedElement();
   this._bindEvent();
 };
@@ -47,21 +54,24 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+
+    if (Tw.BrowserHelper.isIos()) {
+      $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
+    }
   },
 
 
   _onClickBtnAddr: function () {
-    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact);
+    this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact.bind(this));
   },
 
   _onContact: function (res) {
     if (res.resultCode !== Tw.NTV_CODE.CODE_00) {
       return;
     }
-    //var params = response.params;
-
+    this.$inputNumber.val(Tw.StringHelper.phoneStringToDash(res.params.phoneNumber));
+    this._addNum();
   },
-
 
   _addNum: function () {
     if (this.$inputNumber.val().length < 10) {
@@ -70,9 +80,9 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
 
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
-    if (this.$lineList.find('li').length > 3) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
+    if (this.$lineList.find('li').length > this._maxLine) {
+      return this._popupService.openAlert(this._overMaxlineAlert.MSG,
+        this._overMaxlineAlert.TITLE);
     }
 
     if (!Tw.ValidationHelper.isCellPhone(number) || this._data.addList.indexOf(number) !== -1) {
