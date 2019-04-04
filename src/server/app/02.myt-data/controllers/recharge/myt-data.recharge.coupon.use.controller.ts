@@ -51,7 +51,10 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00004705', 0],
     ['NA00005957', 15], // T plan large
     ['NA00005958', 20], // T plan family
-    ['NA00006157', 20] // 0 plan large
+    ['NA00006157', 20], // 0 plan large
+    ['NA00006403', 20], // 5gx standard
+    ['NA00006404', 30], // 5gx prime
+    ['NA00006405', 50] // 5gx platinum
   ]);
 
   private planAdaptive = {  // 맞춤형 요금제 - '요금상품별 상이' 표기
@@ -222,7 +225,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         } else if (option.dataVoiceClCd === 'D') {
           const converted = FormatHelper.convDataFormat(this.planType.get(plan), DATA_UNIT.GB);
           option.qttText = converted.data + ' ' + converted.unit;
-          if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157') { // Tplan large/family의 경우 '최대' 삽입, 0Plan large 포함
+          if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157' ||
+              plan === 'NA00006403' || plan === 'NA00006404' || plan === 'NA00006405') { // Tplan large/family의 경우 '최대' 삽입, 0Plan large 포함
             option.qttText = '최대 ' + option.qttText;
             option.copnDtlClNm = option.copnDtlClNm.replace('100%', '');
           }
