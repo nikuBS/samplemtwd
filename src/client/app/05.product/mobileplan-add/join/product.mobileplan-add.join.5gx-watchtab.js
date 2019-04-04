@@ -69,7 +69,9 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
     if (res.resultCode !== Tw.NTV_CODE.CODE_00) {
       return;
     }
-    this.$inputNumber.val(res.params.phoneNumber).trigger('input');
+    this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
     this._blurInputNumber();
   },
 
