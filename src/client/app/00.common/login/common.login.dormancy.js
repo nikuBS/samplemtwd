@@ -1,9 +1,14 @@
 /**
- * FileName: common.login.dormancy.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.07.05
+ * @file: 휴면계정 해제
+ * @author: Hakjoon Sim
+ * @since: 2018-07-05
  */
 
+/**
+ * @class
+ * @param (Object) rootEl - 최상위 element
+ * @param (String) target - 휴면해제 후 이동할 url
+ */
 Tw.CommonLoginDormancy = function (rootEl, target) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -15,6 +20,10 @@ Tw.CommonLoginDormancy = function (rootEl, target) {
 };
 
 Tw.CommonLoginDormancy.prototype = {
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function () {
     this.$container.on('click', '#btn-activate', $.proxy(function () {
       Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
@@ -32,6 +41,11 @@ Tw.CommonLoginDormancy.prototype = {
         });
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 완료 후 target url 로 이동
+   */
   _successSetSession: function () {
     this._historyService.goLoad(this._target);
   }
