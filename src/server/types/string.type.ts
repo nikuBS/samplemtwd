@@ -1118,6 +1118,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   }
 ];
 
+export const PRODUCT_COMBINE_FAMILY_TYPE = {
+  leader: '가족대표',
+  parents: '부모',
+  grandparents: '(증)조부모',
+  grandchildren: '손자녀',
+  spouse: '배우자',
+  children: '자녀',
+  brother: '형제자매',
+  me: '본인'
+};
+
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';
 export const MYT_SUSPEND_REASON = {
