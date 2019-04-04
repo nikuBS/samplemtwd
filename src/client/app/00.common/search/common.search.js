@@ -16,6 +16,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
   this._nowUrl = nowUrl;
+  this._requestRealTimeFeeFlag = false;
   this._autoCompleteRegExObj = {
     fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
     fontSizeOpen : new RegExp('<font style=\'font-size:12px\'>','g'),
@@ -57,6 +58,8 @@ Tw.CommonSearch.prototype = {
             this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
           }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===2){
             this._calculdateRemainData(this._searchInfo.search[i][keyName].data[0].subData);
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===3&&this._nowUser!=='logOutUser'){
+            this._requestRealTimeFeeFlag = true;
           }
         }
         if(keyName==='smart'){
@@ -87,6 +90,10 @@ Tw.CommonSearch.prototype = {
     }
     new Tw.XtractorService(this.$container);
     this._closeKeywordListBase();
+    if(this._requestRealTimeFeeFlag){
+      Tw.CommonHelper.startLoading('.container-wrap', 'white');
+      this._requestRealTimeFee(0);
+    }
   },
   _setRank : function (data) {
     var compareKeyName1 , compareKeyName2;
@@ -584,5 +591,35 @@ Tw.CommonSearch.prototype = {
       returnStr = usageData.totalRemained.data+usageData.totalRemained.unit;
     }
     this.$container.find('.fe-data-remaind').text(returnStr);
+  },
+  _requestRealTimeFee : function (count) {
+    this._apiService.request(Tw.API_CMD.BFF_05_0022, { count: count }, {})
+        .done($.proxy(function(res){
+          this._requestRealTimeCallback(res,count);
+        },this))
+        .fail(function () {
+          this._requestRealTimeFeeFail();
+        });
+  },
+  _requestRealTimeCallback : function (res,cnt) {
+    if(res.code===Tw.API_CODE.CODE_00){
+      if( res.result.hotBillInfo && res.result.hotBillInfo[0] && res.result.hotBillInfo[0].record1 ){
+        Tw.CommonHelper.endLoading('.container-wrap');
+        this.$container.find('.fe-realtime-fee').text(res.result.hotBillInfo[0].totOpenBal2);
+        this.$container.find('.paymentcharge-box.type03').removeClass('none');
+      }else if(cnt>=2){
+        this._requestRealTimeFeeFail();
+      }else{
+        setTimeout($.proxy(this._requestRealTimeFee,this,cnt+1),2500);
+      }
+    }else{
+      this._requestRealTimeFeeFail();
+    }
+  },
+  _requestRealTimeFeeFail : function () {
+    Tw.CommonHelper.endLoading('.container-wrap');
+    if(this._searchInfo.totalcount<=1){
+      this._historyService.replaceURL(this._nowUrl+'&from=empty');
+    }
   }
 };
