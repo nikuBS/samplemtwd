@@ -34,12 +34,13 @@ Tw.MyTFareBillCard.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
     this.$refundBank = this.$container.find('.fe-select-refund-bank');
     this.$refundNumber = this.$container.find('.fe-refund-account-number');
-    this.$refundBox = this.$container.find('.fe-refund-box');
+    this.$refundCheckBox = this.$container.find('.fe-refund-check-btn');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
+    this._isFirstCheck = true;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
@@ -71,9 +72,21 @@ Tw.MyTFareBillCard.prototype = {
 
     if ($target.is(':checked')) {
       $parentTarget.addClass('on');
+
+      if (this._isFirstCheck) {
+        this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
+        this._isFirstCheck = false;
+      }
     } else {
       $parentTarget.removeClass('on');
     }
+    this._checkIsAbled();
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+
+    this._checkIsAbled();
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -137,8 +150,11 @@ Tw.MyTFareBillCard.prototype = {
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+
+    if (this.$refundCheckBox.hasClass('on')) {
+      $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
+        .text(data.refundNm + ' ' + data.refundNum);
+    }
   },
   _getData: function () {
     var isRefundInput = this.$refundInputBox.hasClass('checked');
@@ -146,17 +162,20 @@ Tw.MyTFareBillCard.prototype = {
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
-    // 직접입력/자동납부계좌 사용
-    if (isRefundInput) {
-      data.refundCd = this.$refundBank.attr('id');
-      data.refundNm = this.$refundBank.text();
-      data.refundNum = this.$refundNumber.val();
-      this._refundAutoYn = 'N';
+    if (this.$refundCheckBox.hasClass('on')) {
+      if (isRefundInput) {
+        data.refundCd = this.$refundBank.attr('id');
+        data.refundNm = this.$refundBank.text();
+        data.refundNum = this.$refundNumber.val();
+        this._refundAutoYn = 'N';
+      } else {
+        data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
+        data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
+        data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+        this._refundAutoYn = 'Y';
+      }
     } else {
-      data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
-      data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
-      data.refundNum = this.$container.find('.fe-auto-refund-number').text();
-      this._refundAutoYn = 'Y';
+      this._refundAutoYn = 'N';
     }
     return data;
   },

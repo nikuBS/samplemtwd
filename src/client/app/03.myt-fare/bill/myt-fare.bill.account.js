@@ -32,7 +32,7 @@ Tw.MyTFareBillAccount.prototype = {
     this.$refundBank = this.$container.find('.fe-select-refund-bank');
     this.$accountNumber = this.$container.find('.fe-account-number');
     this.$refundNumber = this.$container.find('.fe-refund-account-number');
-    this.$refundBox = this.$container.find('.fe-refund-box');
+    this.$refundCheckBox = this.$container.find('.fe-refund-check-btn');
     this.$accountInputBox = this.$container.find('.fe-account-input');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
@@ -40,6 +40,7 @@ Tw.MyTFareBillAccount.prototype = {
     this._bankAutoYn = 'N';
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
+    this._isFirstCheck = true;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
@@ -87,16 +88,29 @@ Tw.MyTFareBillAccount.prototype = {
 
     if ($target.is(':checked')) {
       $parentTarget.addClass('on');
+
+      if (this._isFirstCheck) {
+        this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
+        this._isFirstCheck = false;
+      }
     } else {
       $parentTarget.removeClass('on');
     }
+    this._checkIsAbled();
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+
+    this._checkIsAbled();
   },
   _selectBank: function (event) {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this)); // 은행리스트 가져오는 공통 컴포넌트 호출
   },
   _checkIsAbled: function () {
     // 하단 버튼 활성화 (입력필드 모두 채워졌을 경우)
-    if (this.$accountNumber.attr('disabled') === 'disabled' && this.$refundNumber.attr('disabled') === 'disabled') {
+    if (this.$accountNumber.attr('disabled') === 'disabled' &&
+      (this.$refundCheckBox.hasClass('on') || this.$refundNumber.attr('disabled') === 'disabled')) {
       this.$payBtn.removeAttr('disabled');
     } else {
       this._validationService.checkIsAbled(); // 공통 validation service 호출
@@ -136,8 +150,11 @@ Tw.MyTFareBillAccount.prototype = {
     $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
       .text(data.accountNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+
+    if (this.$refundCheckBox.hasClass('on')) {
+      $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
+        .text(data.refundNm + ' ' + data.refundNum);
+    }
   },
   _getData: function () {
     var isAccountInput = this.$accountInputBox.hasClass('checked');
@@ -158,17 +175,20 @@ Tw.MyTFareBillAccount.prototype = {
       this._bankAutoYn  = 'Y';
     }
 
-    // 환불계좌 (직접입력/자동납부계좌 선택)
-    if (isRefundInput) {
-      data.refundCd = this.$refundBank.attr('id');
-      data.refundNm = this.$refundBank.text();
-      data.refundNum = this.$refundNumber.val();
-      this._refundAutoYn = 'N';
+    if (this.$refundCheckBox.hasClass('on')) {
+      if (isRefundInput) {
+        data.refundCd = this.$refundBank.attr('id');
+        data.refundNm = this.$refundBank.text();
+        data.refundNum = this.$refundNumber.val();
+        this._refundAutoYn = 'N';
+      } else {
+        data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
+        data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
+        data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+        this._refundAutoYn = 'Y';
+      }
     } else {
-      data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
-      data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
-      data.refundNum = this.$container.find('.fe-auto-refund-number').text();
-      this._refundAutoYn = 'Y';
+      this._refundAutoYn = 'N';
     }
     return data;
   },
