@@ -12,8 +12,6 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
-import {delay, mergeMap} from 'rxjs/operators';
-import {MYT_FARE_HOTBILL_TITLE} from '../../../../types/title.type';
 
 class CommonSearch extends TwViewController {
   constructor() {
@@ -27,7 +25,7 @@ class CommonSearch extends TwViewController {
     const from = req.header('referer') ? req.query.from : null;
     let requestObj, researchCd, researchQuery, searchApi ;
     function showSearchResult(searchResult, relatedKeyword , thisObj) {
-      if ( searchResult.result.totalcount === 0 ) {
+      if ( searchResult.result.totalcount === 0 || from === 'empty' ) {
         Observable.combineLatest(
           thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
           thisObj.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
@@ -133,23 +131,6 @@ class CommonSearch extends TwViewController {
               showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
-          case 3:
-            this._requestHotbillInfo().
-            subscribe((resultData) => {
-              if (FormatHelper.isEmpty(resultData) || resultData.resp.code !== API_CODE.CODE_00) {
-                searchResult = removeImmediateData(searchResult);
-              } else {
-                searchResult.result.search[0].immediate.data[0].subData = resultData.resp.result.hotBillInfo[0].totOpenBal2;
-              }
-            },
-              () => {
-                searchResult = removeImmediateData(searchResult);
-                showSearchResult(searchResult, relatedKeyword , this);
-              },
-              () => {
-                showSearchResult(searchResult, relatedKeyword , this);
-              });
-            break;
           case 4:
             this._getMicroRemain().
             subscribe((resultData) => {
@@ -186,45 +167,6 @@ class CommonSearch extends TwViewController {
       }
     });
 
-  }
-
-  private _requestHotbillInfo(): Observable<any> {
-    const self = this;
-    const params = { count: 0 };
-    return self.apiService.request(API_CMD.BFF_05_0022, params, {})
-      .pipe(
-        delay(2500), // 요청 후 2.5초 후 조회
-        mergeMap(res => {
-            return self._getBillResponse(false)
-              .catch(error => {
-                if ( error.message === 'Retry again' ) {
-                  return self._getBillResponse(true);
-                } else {
-                  throw Error(error.message);
-                }
-              });
-          }
-        )
-      );
-  }
-
-  private _getBillResponse(isRetry: boolean): Observable<any> {
-    const self = this;
-    const params = { count: !isRetry ? 1 : 2 };
-    return self.apiService.request(API_CMD.BFF_05_0022, params, {})
-      .map(resp => {
-        if ( resp.code !== API_CODE.CODE_00 ) {
-          return null;
-        } else if ( !resp.result.hotBillInfo[0] || !resp.result.hotBillInfo[0].record1 ) {
-          // 2번째 시도에도 fail이면 error 처리
-          if ( isRetry ) {
-            throw Error(MYT_FARE_HOTBILL_TITLE.ERROR.BIL0063);
-          }
-          // catch block 에서 retry 시도
-          throw Error('Retry again');
-        }
-        return { resp };
-      });
   }
 
   private _getMicroRemain(): Observable<any> {
