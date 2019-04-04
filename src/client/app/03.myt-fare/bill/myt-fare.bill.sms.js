@@ -31,6 +31,7 @@ Tw.MyTFareBillSms.prototype = {
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _selectAccountList: function (event) {
+    // 입금전용계좌 조회
     var $target = $(event.currentTarget);
     this._popupService.open({
       url: '/hbs/',
@@ -55,6 +56,7 @@ Tw.MyTFareBillSms.prototype = {
     this._popupService.close();
   },
   _getAccountList: function () {
+    // 리스트 만들기
     var accountList = [];
     var listObj = {
       'list': []

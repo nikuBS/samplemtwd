@@ -145,6 +145,7 @@ Tw.MyTFareBillCard.prototype = {
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
+    // 직접입력/자동납부계좌 사용
     if (isRefundInput) {
       data.refundCd = this.$refundBank.attr('id');
       data.refundNm = this.$refundBank.text();

@@ -72,7 +72,7 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
@@ -129,6 +129,7 @@ Tw.MyTFareBillPoint.prototype = {
     $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _setData: function ($layer) {
+    // 납부내역 확인 팝업에 데이터 셋팅
     $layer.find('.fe-check-title').text(this.$pointSelector.text());
     $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code'))
       .text(this._pointCardNumber);
@@ -188,6 +189,7 @@ Tw.MyTFareBillPoint.prototype = {
     var reqData = this._makeRequestData();
     var $target = $(e.currentTarget);
 
+    // 포인트 요금납부
     Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
       .done($.proxy(this._paySuccess, this, $target))

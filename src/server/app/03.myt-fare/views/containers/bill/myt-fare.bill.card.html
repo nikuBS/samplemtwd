@@ -118,6 +118,7 @@
                             </div>
                             <div class="acco-cont fe-refund-box">
                                 <div class="input-list">
+                                    <!-- 자동납부계좌가 존재할 경우 -->
                                     <% if (autoInfo && autoInfo.isAuto) { %>
                                     <ul class="fe-auto-info fe-refund-account-info">
                                         <li>
@@ -156,6 +157,7 @@
                                             </label>
                                         </li>
                                     </ul>
+                                    <!-- 자동납부계좌가 없을 경우 -->
                                     <% } else { %>
                                     <ul>
                                         <li class="pt20 fe-refund-input checked fe-bank-wrap">

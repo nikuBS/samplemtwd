@@ -181,7 +181,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _isAmountValid: function () {
     return this._validation.showAndHideErrorMsg(this.$prepayAmount,
-      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount));
+      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount)); // 선결제 금액보다 기준금액이 클 경우 기준금액에 맞게 셋팅
   },
   _pay: function (e) {
     var reqData = this._makeRequestData();

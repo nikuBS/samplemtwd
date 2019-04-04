@@ -75,9 +75,9 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this._historyService.replaceURL('/myt-fare/submain');
   },
   _changeLimit: function (result) {
-    var hbsName = 'MF_06_02';
+    var hbsName = 'MF_06_02'; // 소액결제 한도변경
     if (this.$title === 'contents') {
-      hbsName = 'MF_07_02';
+      hbsName = 'MF_07_02'; // 콘텐츠이용료 한도변경
     }
     this._popupService.open({
       'hbs': hbsName
@@ -168,7 +168,8 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     // 한도변경 확인 alert
     var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-      $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON, $target);
+      $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
+      $target);
   },
   _onChange: function () {
     this.$isChange = true;
