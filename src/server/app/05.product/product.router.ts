@@ -61,7 +61,6 @@ import ProductWireplanReservationCancel from './controllers/wireplan/product.wir
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
-import ProductRoamingSearchAfter from './controllers/roaming/product.roaming.do.search-after.controller';
 import ProductRoamingSearchResult from './controllers/roaming/product.roaming.search-result.controller';
 import ProductRoamingGuide from './controllers/roaming/product.roaming.info.guide.controller';
 import ProductRoamingLteGuide from './controllers/roaming/product.roaming.info.lte.controller';
@@ -152,7 +151,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
-    this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
     this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
     this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
