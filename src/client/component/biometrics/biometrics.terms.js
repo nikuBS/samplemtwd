@@ -4,10 +4,10 @@
  * Date: 2018.10.13
  */
 
-Tw.BiometricsTerms = function (target, svcMgmtNum) {
+Tw.BiometricsTerms = function (target, userId) {
   this._target = target;
   this._callback = null;
-  this._svcMgmtNum = svcMgmtNum;
+  this._userId = userId;
 
   this._popupService = Tw.Popup;
 };
@@ -60,7 +60,7 @@ Tw.BiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    var biometiricsCert = new Tw.BiometricsCert(this._target, this._svcMgmtNum);
+    var biometiricsCert = new Tw.BiometricsCert(this._target, this._userId);
     biometiricsCert.open(this._callback, $.proxy(this._onCloseCallback, this));
   },
   _checkElement: function ($element) {

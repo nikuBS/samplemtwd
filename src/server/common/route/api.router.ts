@@ -440,8 +440,6 @@ class ApiRouter {
 
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
-    const apiService = new ApiService();
-    apiService.setCurrentReq(req, res);
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) {
       this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
@@ -524,6 +522,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
+
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return res.json({
@@ -533,9 +532,8 @@ class ApiRouter {
     }
     const svcMgmtNum = req.body.svcMgmtNum;
 
-    loginService.setCurrentReq(req, res);
-    loginService.setMaskingCert(svcMgmtNum)
-      .switchMap((resp) => loginService.clearSessionStore(svcMgmtNum))
+    loginService.setMaskingCert(req, svcMgmtNum)
+      .switchMap((resp) => loginService.clearSessionStore(req, svcMgmtNum))
       .switchMap((resp) => apiService.updateSvcInfo({}))
       .subscribe((resp) => {
         res.json({
@@ -548,6 +546,7 @@ class ApiRouter {
     const loginService = new LoginService();
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
+
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return res.json({
@@ -556,8 +555,7 @@ class ApiRouter {
       });
     }
     const svcMgmtNum = svcInfo.svcMgmtNum;
-    loginService.setCurrentReq(req, res);
-    loginService.clearSessionStore(svcMgmtNum)
+    loginService.clearSessionStore(req, svcMgmtNum)
       .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00
@@ -652,8 +650,7 @@ class ApiRouter {
   private updateNoticeType(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     this.logger.info(this, '[update noticeType]');
-    loginService.setCurrentReq(req, res);
-    loginService.setNoticeType('').subscribe((resp) => {
+    loginService.setNoticeType(req, '').subscribe((resp) => {
       res.json(resp);
     });
   }
@@ -698,7 +695,6 @@ class ApiRouter {
     const loginService = new LoginService();
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);
-    loginService.setCurrentReq(req, res);
 
     const svcInfo = loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
@@ -710,7 +706,7 @@ class ApiRouter {
 
     apiService.request(API_CMD.BFF_03_0001, {})
       .switchMap((resp) => {
-        return loginService.logoutSession();
+        return loginService.logoutSession(req, res);
       })
       .subscribe((resp) => {
         this.logger.info(this, '[TID logout]', loginService.getSvcInfo(req));
@@ -720,7 +716,6 @@ class ApiRouter {
 
   private generateSession(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
-    loginService.setCurrentReq(req, res);
     loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, '[Session ID]', loginService.getSessionId(req));
       res.json({ code: API_CODE.CODE_00 });

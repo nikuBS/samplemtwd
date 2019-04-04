@@ -640,8 +640,8 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
     {SCH_LB:'TV', ELEMENT : '<span class="ico-wrap"><i class="icon-pc-48"><span class="blind"></span></i></span>'}
   ],
   DETAIL_BTN: [
-    {SCH_ID : '콘텐츠이용료', ELEMENT: '콘텐츠이용료'}, // <button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},  // DV001-19127
-    {SCH_ID : '소액결제', ELEMENT: '소액결제'} // <button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
+    {SCH_ID : '콘텐츠이용료', ELEMENT: '<button class="bt-link-tx underline" data-target="detailContentsBtn">콘텐츠이용료</button>'},
+    {SCH_ID : '소액결제', ELEMENT: '<button class="bt-link-tx underline" data-target="detailMicroBtn">소액결제</button>'}
   ],
   THIRD_PARTY_TPL: '<i class="icon-acompany"><span class="blind">타사</span></i>',
   ASTERISK_TPL: {SCH_ID : '*', ELEMENT: '<i class="icon-fnote"><span class="blind">각주 참고</span></i>'},

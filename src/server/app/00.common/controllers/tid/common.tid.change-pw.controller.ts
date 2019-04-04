@@ -26,7 +26,7 @@ class CommonTidChangePw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.CHANGE_PW,
-          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+          redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
             '/common/tid/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,

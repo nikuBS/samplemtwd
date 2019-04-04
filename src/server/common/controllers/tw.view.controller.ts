@@ -60,14 +60,13 @@ abstract class TwViewController {
     this._type = req.query.type;
 
     this._apiService.setCurrentReq(req, res);
-    this._loginService.setCurrentReq(req, res);
 
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.set('expires', '0');
     res.set('pragma', 'no-cache');
 
     this.setChannel(req, res).subscribe((resp) => {
-      if ( this.checkLogin(req.session) ) {
+      if ( this.checkLogin(req) ) {
         this.sessionLogin(req, res, next, path);
       } else {
         if ( this.existId(tokenId, userId) ) {
@@ -83,8 +82,8 @@ abstract class TwViewController {
     return !(FormatHelper.isEmpty(tokenId) && FormatHelper.isEmpty(userId));
   }
 
-  private checkLogin(session): boolean {
-    return this._loginService.isLogin(session);
+  private checkLogin(req): boolean {
+    return this._loginService.isLogin(req);
   }
 
   private login(req, res, next, path, tokenId, userId) {
@@ -132,18 +131,18 @@ abstract class TwViewController {
   private setChannel(req, res): Observable<any> {
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
     this.logger.info(this, '[set cookie]', channel);
-    return this._loginService.setChannel(channel);
+    return this._loginService.setChannel(req, channel);
   }
 
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
-    this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType());
-    this.loginService.setNoticeType('').subscribe();
+    this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
+    this.loginService.setNoticeType(req, '').subscribe();
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       urlMeta.isApp = BrowserHelper.isApp(req);
-      urlMeta.fullUrl = this.loginService.getProtocol() + this.loginService.getDns() + this.loginService.getFullPath();
+      urlMeta.fullUrl = this.loginService.getProtocol(req) + this.loginService.getDns(req) + this.loginService.getFullPath(req);
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         const loginType = urlMeta.auth.accessTypes;
@@ -159,7 +158,7 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-            urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
+            urlMeta.masking = this.loginService.getMaskingCert(req, svcInfo.svcMgmtNum);
             if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
               const urlAuth = urlMeta.auth.grades;
               const svcGr = svcInfo.svcGr;
@@ -228,9 +227,9 @@ abstract class TwViewController {
   }
 
   private renderPage(req, res, next, path) {
-    const svcInfo = this._loginService.getSvcInfo();
-    const allSvc = this._loginService.getAllSvcInfo();
-    const childInfo = this._loginService.getChildInfo();
+    const svcInfo = this._loginService.getSvcInfo(req);
+    const allSvc = this._loginService.getAllSvcInfo(req);
+    const childInfo = this._loginService.getChildInfo(req);
     this.getAuth(req, res, next, path, svcInfo, allSvc, childInfo);
   }
 
