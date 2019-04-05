@@ -9,7 +9,6 @@ import { Request, Response, NextFunction } from 'express';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import { APP_DETAIL, APP_DETAIL2 } from '../../../../mock/server/product.apps.mock';
 import ProductHelper from '../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
 
@@ -63,7 +62,7 @@ export default class ProductAppsDetail extends TwViewController {
         }, images)
       };
     });
-  }
+  };
 
   private getRecommendedApps = appId => {
     return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [appId]).map(resp => {
@@ -78,7 +77,7 @@ export default class ProductAppsDetail extends TwViewController {
         };
       });
     });
-  }
+  };
 
   private getProductInfo = appId => {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + appId).map(resp => {

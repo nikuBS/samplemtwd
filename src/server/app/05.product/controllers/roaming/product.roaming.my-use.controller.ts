@@ -11,9 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
-import BFF_10_0056_mock from '../../../../mock/server/product.BFF_10_0056.mock';
-import BFF_05_0201_mock from '../../../../mock/server/product.BFF_05_0201.mock';
-import BFF_05_0202_mock from '../../../../mock/server/product.BFF_05_0202.mock';
 
 export default class ProductRoamingMyUse extends TwViewController {
   constructor() {
