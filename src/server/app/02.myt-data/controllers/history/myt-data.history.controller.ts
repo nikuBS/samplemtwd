@@ -1,4 +1,5 @@
 /**
+ * @description 충전 선물 내역
  * @file myt-data.datainfo.controller.ts
  * @author Jiyoung Jo
  * @since 2018.09.20
@@ -40,8 +41,12 @@ export default class MyTDataHistory extends TwViewController {
     super();
   }
 
+  /**
+   * @description 화면 랜더
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this.apiService.request(API_CMD.BFF_06_0077, { fromDt: this.fromDt, toDt: this.toDt }).subscribe(resp => {
+    this.apiService.request(API_CMD.BFF_06_0077, { fromDt: this.fromDt, toDt: this.toDt }).subscribe(resp => {  // 오늘 부터 1년치 데이터 가져 옴
+      // BFF 성능 개선 사항으로, 6개 항목에 대한 데이터 갯수 조회 후 갯수가 1이상인 케이스만 호출해야 함
       if (resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           ...resp,
@@ -53,12 +58,12 @@ export default class MyTDataHistory extends TwViewController {
       const historyCounts = resp.result || {};
 
       Observable.combineLatest(
-        this.getDataGifts(Number(historyCounts.tdataSndCnt || 0) + Number(historyCounts.tdataRcvCnt || 0)),
-        this.getLimitCharges(Number(historyCounts.lmtChrgCnt || 0)),
-        this.getTingCharges(Number(historyCounts.tingIneeCnt || 0)),
-        this.getTingGifts(Number(historyCounts.tingGiftRcvCnt || 0) + Number(historyCounts.tingGiftSndCnt || 0)),
-        this.getRefillUsages(Number(historyCounts.rifilUseCnt || 0)),
-        this.getRefillGifts(Number(historyCounts.rifilSndCnt || 0) + Number(historyCounts.rifilRcvCnt || 0))
+        this.getDataGifts(Number(historyCounts.tdataSndCnt || 0) + Number(historyCounts.tdataRcvCnt || 0)), // 데이터 선물 보냄, 받음 횟수 
+        this.getLimitCharges(Number(historyCounts.lmtChrgCnt || 0)),  // 데이터 한도 충전 횟수
+        this.getTingCharges(Number(historyCounts.tingIneeCnt || 0)),  // 팅 충전 횟수
+        this.getTingGifts(Number(historyCounts.tingGiftRcvCnt || 0) + Number(historyCounts.tingGiftSndCnt || 0)), // 팅 선물하기 횟수
+        this.getRefillUsages(Number(historyCounts.rifilUseCnt || 0)), // 리필쿠폰 사용 횟수
+        this.getRefillGifts(Number(historyCounts.rifilSndCnt || 0) + Number(historyCounts.rifilRcvCnt || 0))  // 리필 쿠폰 선물 횟수
       ).subscribe(histories => {
         const errorIdx = histories.findIndex(history => {
           return history && history.code;
@@ -74,12 +79,12 @@ export default class MyTDataHistory extends TwViewController {
         }
 
         const chargeData: { all: any[]; display?: any[] } = {
-          all: this.mergeCharges(histories)
+          all: this.mergeCharges(histories) // BFF에서 충전/선물 내역 소팅이 불가하여 전체 리스트 머지 후, 최신 날짜부터 정렬 함
         };
 
         let filterIdx = -1;
 
-        switch (req.query.filter) {
+        switch (req.query.filter) { // 충전 선물 페이지 진입 시 특정 유형만 표시되어야 하는 경우
           case 'data-gifts':
             filterIdx = RechargeTypes.DATA_GIFT;
             break;
@@ -110,9 +115,12 @@ export default class MyTDataHistory extends TwViewController {
       });
     });
   }
-
+  /** 
+   * @description 데이터 선물 보냄, 받음 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 데이터 선물 보냄, 받음 횟수
+   */
   private getDataGifts = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -142,8 +150,12 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 데이터 한도 충전 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 데이터 한도 충전 횟수
+   */
   private getLimitCharges = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -160,6 +172,11 @@ export default class MyTDataHistory extends TwViewController {
           bottom = item.opTypCd === '3' ? [MYT_DATA_CHARGE_TYPES.FIXED] : [];
         bottom.push(item.opOrgNm || ETC_CENTER);
 
+        /**
+         * BFF 요청사항
+         * opTypCd 1: 당월 충전, 2: 당월 충전 취소, 3: 자동 충전, 4: 자동 충전 취소
+         * 충전이고, 당일 일 때 취소 가능로직
+         */
         return {
           key,
           type: RechargeTypes.LIMIT_CHARGE,
@@ -175,8 +192,12 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 팅/쿠키즈 충전 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 팅/쿠키즈 충전 횟수
+   */
   private getTingCharges = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -185,6 +206,11 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
+      /**
+       * BFF 요청사항
+       * opTypCd 1: 일반 충전, 2: 일반 충전 취소, 3: 자동 충전, 4: 자동 충전 취소
+       * 충전이고, 당일 일 때 취소 가능로직
+       */
       return resp.result
         .filter(item => {
           return Number(item.opTypCd) !== 4;
@@ -216,8 +242,12 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 팅/쿠키즈 선물 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 팅/쿠키즈 선물 보냄, 받음 횟수
+   */
   private getTingGifts = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -242,8 +272,13 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+
+  /**
+   * @description 리필 쿠폰 사용 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 리필 쿠폰 사용 횟수
+   */
   private getRefillUsages = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -272,8 +307,12 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 리필 쿠폰 선물 내역 api 호출(유형마다 노출 property가 달라 별도 처리함)
+   * @param  {number} count 리필 쿠폰 선물 횟수
+   */
   private getRefillGifts = (count: number) => {
-    if (count <= 0) {
+    if (count <= 0) { // 횟수가 0이하인 경우 빈 Array 리턴
       return of([]);
     }
 
@@ -301,6 +340,10 @@ export default class MyTDataHistory extends TwViewController {
     });
   }
 
+  /**
+    @description 충전/선물 내역 전체 리스트 날짜 별로 소팅(BFF 요청 사항)
+    @param {Array} histories 충전 선물 전체 내역
+  */
   private mergeCharges = histories => {
     return Array.prototype.concat.apply([], histories).sort((a, b) => {
       if (a.key > b.key) {
