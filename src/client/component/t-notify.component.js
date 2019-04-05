@@ -29,17 +29,17 @@ Tw.TNotifyComponent.prototype = {
       this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ, value: list[0].seq });
     }
     this._popupService.open({
-      hbs: 'HO_04_06_01',
-      layer: true,
-      data: {
-        list: list,
-        showMore: list.length > Tw.DEFAULT_LIST_COUNT
-      }
-    },
-    $.proxy(this._onOpenTNotify, this),
-    $.proxy(this._onCloseTNotify, this),
-    this._extraHash ? this._extraHash + '-t-notify' : 't-notify',
-    this._evt);
+        hbs: 'HO_04_06_01',
+        layer: true,
+        data: {
+          list: list,
+          showMore: list.length > Tw.DEFAULT_LIST_COUNT
+        }
+      },
+      $.proxy(this._onOpenTNotify, this),
+      $.proxy(this._onCloseTNotify, this),
+      this._extraHash ? this._extraHash + '-t-notify' : 't-notify',
+      this._evt);
   },
   _onOpenTNotify: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-list-item');
@@ -91,7 +91,11 @@ Tw.TNotifyComponent.prototype = {
   _onClickLink: function ($event) {
     var url = $($event.currentTarget).data('link');
     if ( !Tw.FormatHelper.isEmpty(url) ) {
-      Tw.CommonHelper.openUrlExternal(url);
+      if ( url.indexOf('app.tworld.co.kr') !== -1 ) {
+        this._historyService.goLoad(url);
+      } else {
+        Tw.CommonHelper.openUrlExternal(url);
+      }
     }
   },
   _onClickGoSetting: function () {
