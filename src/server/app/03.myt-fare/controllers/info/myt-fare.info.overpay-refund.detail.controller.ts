@@ -1,6 +1,6 @@
 /**
- * @file myt-fare.info.overpay-refund.controller.ts
- * @author Lee Kirim (kirim@sk.com)
+ * @file [나의요금-환불처리-상세] 관련 처리
+ * @author Lee Kirim
  * @since 2018.12.6
  */
 
@@ -14,6 +14,10 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_PAYMENT_DETAIL_ERROR } from '../../../../types/string.type';
 
+/**
+ * 환불처리내역 상세보기 구현
+ * 쿼리로 listId 필요
+ */
 class MyTFareInfoOverpayRefund extends TwViewController {
 
   constructor() {
@@ -61,8 +65,16 @@ class MyTFareInfoOverpayRefund extends TwViewController {
     }
   }
 
-  // 오류 페이지
-  private _renderError(code, msg, res, svcInfo, pageInfo) {
+  /**
+   * 오류 페이지
+   * API 조회에서 에러 발생시 에러페이지 렌더링
+   * @param code 
+   * @param msg 
+   * @param res 
+   * @param svcInfo 
+   * @param pageInfo 
+   */
+  private _renderError(code: any, msg: any, res: Response, svcInfo: any, pageInfo: any): any {
     return this.error.render(res, {
       code,
       msg,

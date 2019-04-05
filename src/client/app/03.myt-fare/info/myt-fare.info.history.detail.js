@@ -42,6 +42,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
 
     switch (this.queryParams.type) {
       case Tw.MYT_FARE_PAYMENT_TYPE.DIRECT:
+        // 즉시납부 
         switch (this.detailData.dataPayType) {
           case 'CARD':
           case 'POINT':

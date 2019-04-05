@@ -1,38 +1,34 @@
 /**
- * @file myt-fare.info.bill.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.09.17
+ * @file [나의요금-현금영수증발급내역_리스트] 관련 처리
+ * @author Lee Kirim
+ * @since 2018-09-17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 
-// import {MYT_PAY_HISTORY_TITL} from '../../../../types/bff.type';
-// import {DATE_FORMAT, MYT_BILL_HISTORY_STR} from '../../../../types/string.type';
-
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-interface Query {
-  isQueryEmpty: boolean;
-}
 
-interface Info {
+/**
+ * 팁정보 형태 정의
+ */
+interface TipInfo {
   [key: string]: string;
 }
 
+/**
+ * 현급영수증 발급내역 리스트 구현
+ */
 class MyTFareInfoBill extends TwViewController {
 
   constructor() {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-
-    const query: Query = {
-      isQueryEmpty: FormatHelper.isEmpty(req.query)
-    };
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
   
     this.apiService.request(API_CMD.BFF_07_0004, {}).subscribe((resp) => {
 
@@ -52,10 +48,11 @@ class MyTFareInfoBill extends TwViewController {
         o.dataPhoneNumber = FormatHelper.conTelFormatWithDash(o.svcNum);
       });
 
-      resp.result = resp.result.reduce((prev, cur, index) => {
-        cur.listId = index;
-        cur.listDt = cur.dataDt; // .slice(5);
+      resp.result = resp.result.reduce((prev: any[], cur: any, index: number): any[] => {
+        cur.listId = index; // 번호
+        cur.listDt = cur.dataDt; // 날짜
 
+        // 년도 바뀌면 표기를 위해 yearHeader 속성을 추가해 반환함
         if (prev.length) {
           if (prev.slice(-1)[0].sortDt.slice(0, 4) !== cur.sortDt.slice(0, 4)) {
             cur.yearHeader = cur.sortDt.slice(0, 4);
@@ -69,13 +66,13 @@ class MyTFareInfoBill extends TwViewController {
 
       res.render('info/myt-fare.info.bill-cash.html', {svcInfo: svcInfo, pageInfo: pageInfo, data: {
           list: resp.result,
-          noticeInfo: this.getNoticeInfo() || []
+          noticeInfo: this.getTipInfo() || []
         }});
     });    
   }
 
    // 꼭 확인해 주세요 팁 메뉴 정리
-   private getNoticeInfo(): Info[] {
+   private getTipInfo(): TipInfo[] {
     return [
       {link: 'MF_08_01_02_tip_01', view: 'M000295', title: '현금영수증 발급내역 확인'}
     ];
