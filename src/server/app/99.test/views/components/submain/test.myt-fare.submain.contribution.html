@@ -1,0 +1,34 @@
+<%#
+* @file myt-fare.submain.contribution.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.09.28
+%>
+
+<!-- .cont-box -->
+<div class="cont-box nogaps noborder">
+    <ul class="link-long-list">
+        <% if (data.taxInvoice) { %>
+        <li data-id="taxinv">
+            <div class="link-long">
+                <button>세금계산서 재발행
+                    <span class="tx-sub">
+                        <span class="ico"></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+        <% } %>
+        <% if (data.contribution) { %>
+        <li data-id="contbt">
+            <div class="link-long">
+                <button>기부금・후원금 납부내역
+                    <span class="tx-sub">
+                        <span class="ico"></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+        <% } %>
+    </ul>
+</div>
+<!-- //.cont-box -->

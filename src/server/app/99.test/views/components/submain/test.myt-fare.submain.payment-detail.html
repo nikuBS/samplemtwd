@@ -1,0 +1,62 @@
+<%#
+* @file myt-fare.submain.payment-detail.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.09.27
+%>
+
+<hr class="cont-sp type1" aria-hidden="true"/>
+<!-- .cont-box -->
+<div class="cont-box nogaps noborder">
+    <ul class="link-long-list">
+        <% if (data.unPaidTotSum) { %>
+        <li>
+            <div class="link-long">
+                <button data-id="non-payment">미납요금
+                    <span class="tx-sub">
+                        <span class="point1">
+                            <i class="tx-bold"><%= data.unPaidTotSum %></i> 원
+                        </span>
+                        <span class="ico"></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+       <% } %>
+        <li>
+            <div class="link-long">
+                <button data-id="realtime-pay">실시간 요금
+                    <span class="tx-sub">
+                        <span class="normal">
+                            <i class="tx-bold">0</i> 원</span>
+                        <span class="ico"></span>
+                    </span>
+                </button>
+            </div>
+        </li>
+        <% if (data.paymentInfo) { %>
+            <% if (data.type !== 'UF') { %>
+            <li>
+                <div class="link-long">
+                    <button data-id="bill-type">요금안내서 설정
+                        <span class="tx-sub">
+                            <span class="normal"><%= data.paymentInfo.billTypeNm %></span>
+                            <span class="ico"></span>
+                        </span>
+                    </button>
+                </div>
+            </li>
+            <% } %>
+            <li>
+                <div class="link-long">
+                    <button data-id="pay-mthd">납부방법
+                        <span class="tx-sub">
+                            <span class="normal"><%= data.paymentInfo.payMthdNm %></span>
+                            <span class="ico"></span>
+                        </span>
+                    </button>
+                </div>
+            </li>
+        <% } %>
+    </ul>
+</div>
+<!-- //.cont-box -->

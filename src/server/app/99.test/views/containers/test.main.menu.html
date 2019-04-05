@@ -1,0 +1,247 @@
+<%#
+* @file test.main.menu.html
+* @author Hakjoon Sim (hakjoon.sim@sk.com)
+* @since 2018.12.14
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!-- body -->
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="mainHome" class="wrap">
+    <!-- #header -->
+<div id="header" class="header-wrap">
+        <div class="h-belt">
+            <div class="h-default">
+                <div class="h-menu">
+                    <a href="#menu" id="fe-bt-gnb" type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></a>
+                </div>
+                <div class="h-tit">
+                    메뉴
+                </div>
+                <div class="h-serarch">
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                </div>
+
+                <!-- #common-menu -->
+                <div id="common-menu" class="user-type on">
+                    <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
+                    <div class="section-userinfo">
+                        <!-- 로그인 전 -->
+                        <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button>
+                        <!-- //로그인 전 -->
+                        <!-- 로그인 후 -->
+                        <!-- case1 -->
+                        <span class="userinfo fe-when-login-type0 none">
+                            <button class="ti-tx">
+                                <strong class="ti" id="fe-device-name"></strong>
+                                <em class="tx underline" id="fe-svc-number"></em>
+                                <!-- <em class="tx underline">010-4034-1396</em> -->
+                            </button>
+                            <button class="bt fe-bt-free-sms">무료문자</button>
+                        </span>
+                        <!-- //case1 -->
+                        <!-- case2 -->
+                        <span class="userinfo fe-when-login-type2 none">
+                            <strong class="ti">반갑습니다</strong>
+                            <em class="tx"><span id="fe-user-name"></span> 님</em>
+                        </span>
+                        <!-- //case2 -->
+                        <!-- case3 -->
+                        <span class="userinfo fe-when-login-type1 none">
+                            <strong class="ti">반갑습니다</strong>
+                            <button class="tx underline">회선등록</button>
+                            <button class="bt fe-bt-free-sms">무료문자</button>
+                        </span>
+                        <!-- //case3 -->
+                        <!-- //로그인 후 -->
+                        <button class="c-notify on fe-when-login none"><span class="blind">알림</span></button><!-- 새로운 알림 있는경우 on 추가 -->
+                        <a class="c-option fe-when-app-or-login none" href='/main/menu/settings'><span class="blind">설정</span></a>
+                    </div>
+                    <div class="section-cont" id="fe-menu-area">
+                        <!-- 검색영역 오픈시 제외
+                    <div class="section-search">
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="text" placeholder="업무 검색 (예: 무료문자)" title="input" value="">
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                    </div>
+                    -->
+                        <!-- gnb -->
+
+                        <!-- footer -->
+                        <div class="footer">
+                            <ul class="f-menu">
+                                <li><a class="bt" href="/main/menu/settings/terms">이용약관</a></li>
+                                <li><button class="bt fe-outlink" value="https://privacy.sktelecom.com/view.do?ctg=policy&name=policy"><strong>개인정보 처리방침</strong></button></li>
+                                <li><a class="bt fe-when-web none" href="http://piuh.sktelecom.com" target=_blank><strong>개인정보 이용내역</strong></a></li>
+                                <!-- li><button class="bt"><strong>인증서 불러오기</strong></button></li -->
+                                <!-- 모바일 web -->
+                                <li><button class="bt" id="fe-refund" value="/main/menu/refund">미환급금 조회</button></li>
+                                <li><a class="bt" href="/customer/damage-info">이용자 피해예방센터</a></li>
+                            </ul>
+                            <p class="f-info">
+                                휴대폰 고객센터 : 국번없이 <a href="tel:114">114</a>(무료) 또는 <a href="tel:080-011-6000">080-011-6000</a>(무료)<br>
+                                국번없이 <a href="tel:1599-0011">1599-0011</a>(유료)<br>
+                                인터넷 · 집전화 고객센터 : <a href="tel:080-816-2000">080-816-2000</a>(무료) 또는 <a href="tel:1600-2000">1600-2000</a>(유료)<br>
+                                초콜릿 고객센터 : <a href="tel:1599-3377">1599-3377</a>(유료)<br>
+                            </p>
+                            <strong class="f-ltd">SK telecom., LTD</strong>
+                            <div class="f-bt">
+                                <!-- 로그인 전 -->
+                                <a class="f-member fe-when-logout none" href="/common/member/signup-guide">회원가입</a>
+                                <button class="f-login fe-bt-login fe-when-logout none">로그인</button>
+                                <button class="f-login2 fe-when-logout-and-app none" id="fe-btn-simple-login">간편 로그인</button>
+                                <!-- //로그인 전 -->
+                                <!-- 로그인 후 -->
+                                <a class="f-member fe-when-login none" href="/common/member/manage">회원정보</a>
+                                <button class="f-logout fe-when-login none fe-bt-logout">로그아웃</button>
+                                <!-- //로그인 후 -->
+                            </div>
+                        </div>
+                        <!-- //footer -->
+                    </div>
+
+                    <button class="c-close" id="fe-close"><span class="blind">닫기</span></button>
+                </div>
+                <!-- // #common-menu -->
+
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+        </div>
+    </div>
+</div>
+</body>
+<% include ../components/javascript.component.html %>
+<script id="fe-tpl-menu" type="text/x-handlebars-template">
+    {{#each list}}
+    <div class="section-gnb">
+        {{#each this}}
+        {{#if showThis}}
+        <ul class="gnb-depth1">
+            <li>
+                {{#if isBg}}
+                <div class="bt-depth1" style="background-image:url(<%= CDN %>{{bgimgFilePathNm}});">
+                {{else}}
+                <div class="bt-depth1">
+                {{/if}}
+                    {{#if isLink}}
+                    <button class="bt fe-menu-link" value="{{menuUrl}}">
+                    {{else}}
+                    <button class="bt">
+                    {{/if}}
+                        {{#if isIcon}}
+                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="샘플아이콘"></span>
+                        {{/if}}
+                        <span class="ti-info">
+                            {{menuNm}}
+                            {{#if isRealtime}}
+                            <em class="info fe-menu-realtime" value="{{realtimeBFF}}"></em>
+                            {{/if}}
+                            {{#if isDesc}}
+                            <em class="tx">{{menuDesc}}</em>
+                            {{/if}}
+                        </span>
+                    </button>
+                    {{#if hasChildren}}
+                    <button class="more">하위메뉴 보기</button>
+                    {{/if}}
+                </div>
+                {{#if hasChildren}}
+                {{#if isLine}}
+                <div class="depth2">
+                    <ul>
+                        {{#each children}}
+                        {{#if hasChildren}}
+                        <strong class="ti">{{menuNm}}</strong>
+                        {{#each children}}
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        {{/each}}
+                        {{else}}
+                        <li class="line"><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                </div>
+                {{else}}
+                <div class="depth2">
+                    <ul>
+                        {{#each children}}
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
+                {{/if}}
+            </li>
+        </ul>
+        {{else}}
+        <ul class="gnb-depth1">
+            {{#each this.children}}
+            <li>
+                {{#if isBg}}
+                <div class="bt-depth1" style="background-image:url(<%= CDN %>{{bgimgFilePathNm}});">
+                {{else}}
+                <div class="bt-depth1">
+                {{/if}}
+                    {{#if isLink}}
+                    <button class="bt fe-menu-link" value="{{menuUrl}}">
+                    {{else}}
+                    <button class="bt">
+                    {{/if}}
+                        {{#if isIcon}}
+                        <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="샘플아이콘"></span>
+                        {{/if}}
+                        <span class="ti-info">
+                            {{menuNm}}
+                            {{#if isRealtime}}
+                            <em class="info fe-menu-realtime" data-value="{{realtimeBFF}}"></em>
+                            {{/if}}
+                            {{#if isDesc}}
+                            <em class="tx">{{menuDesc}}</em>
+                            {{/if}}
+                        </span>
+                    </button>
+                    {{#if hasChildren}}
+                    <button class="more">하위메뉴 보기</button>
+                    {{/if}}
+                </div>
+                {{#if hasChildren}}
+                <div class="depth2">
+                    <ul>
+                        {{#each children}}
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}">{{menuNm}}</button></li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        {{/each}}
+    </div>
+    {{/each}}
+    </script>
+
+<script>
+  $(document).ready(function () {
+      new Tw.TestMenuComponent();
+  });
+</script>
+<% include ../components/end.component.html %>

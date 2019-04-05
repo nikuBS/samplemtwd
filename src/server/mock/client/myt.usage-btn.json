@@ -1,0 +1,10 @@
+{
+  "code": "00",
+  "msg": "",
+  "result": {
+    "troamingSharing":"Y",
+    "dataSharing":"Y",
+    "tdataSharing":"Y",
+    "refillCoupon": "5"
+  }
+}

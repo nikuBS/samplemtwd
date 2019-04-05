@@ -1,0 +1,97 @@
+<%#
+* @file test.myt-fare.submain.non-payment.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.10.01
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: data.pageInfo }); %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '미납요금', svcInfo: data.svcInfo});
+    %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container" data-id="non-container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="unpaid-charges">
+                    <dl class="total-box">
+                        <% if (data.unPaidTotSum) { %>
+                        <dt>미납요금</dt>
+                        <dd>
+                            <span class="num ff-tg-black"><%= data.unPaidTotSum %></span>
+                            <span class="ff-tg-medium">원</span>
+                        </dd>
+                        <% } else { %>
+                        <dt>미납요금이 없습니다.</dt>
+                        <% } %>
+                    </dl>
+                    <% if (data.unPaidAmtList && data.unPaidAmtList.length > 0) { %>
+                    <ul class="point-box">
+                        <% for (var i=0; i < data.unPaidAmtList.length; i++) { %>
+                        <%- include('../components/submain/test.myt-fare.submain.non-plist.html', data.unPaidAmtList[i]) %>
+                        <% } %>
+                    </ul>
+                    <% } %>
+                </div>
+                <% var itemTwo = data.possibleDay && data.suspension; %>
+                <% if (data.possibleDay || data.suspension) { %>
+                <ul class="bt-slice <%= itemTwo? 'item-two':''; %>">
+                    <% if (data.possibleDay) { %>
+                    <li class="bt-white2">
+                        <button data-id="day">납부가능일 선택</button>
+                    </li>
+                    <% } %>
+                    <% if (data.suspension) { %>
+                    <li class="bt-white2">
+                        <button data-id="susp">이용정지 해제</button>
+                    </li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </div>
+            <!--// .cont-box -->
+            <div class="cont-box bgnone noborder">
+                <div class="box-suggest">
+                    <div class="suggest-info">
+                        <ul class="suggest-dot type2">
+                            <li>2대이상의 회선을 통합청구신청 하신 고객님은 합산된 청구요금이 보여집니다.</li>
+                            <li>고객님은 현재 미납된 요금이 있습니다.<br/>이용에 불편이 없도록 납부바랍니다.</li>
+                            <% if (data.possibleDay) { %>
+                            <li>즉시요금 납부가 어려우시면 &lsquo;납부 가능일 입력&rsquo;을 선택하여 주세요.</li>
+                            <li>고객님의 이용정지 예정일은 <%= data.suspStaDt %> 입니다.</li>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </footer>
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  var data = '<%- JSON.stringify(data) %>';
+  $(document).ready(function () {
+    new Tw.TestMyTFareSubMainNonPayment({
+      $element: $('[data-id=non-container]'),
+      data: JSON.parse(data)
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -1,0 +1,14 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "microPayLimitAmt" : "100000",
+    "tmthUseAmt" : "100000",
+    "tmthChrgAmt" : "100000",
+    "tmthChrgPsblAmt" : "100000",
+    "remainUseLimit":"100000",
+    "autoChrgStCd" : "U",
+    "autoChrgStrdAmt" : "100000",
+    "autoChrgAmt" : "100000"
+  }
+}

@@ -1,0 +1,55 @@
+<%#
+* @file recharge.component..html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.10.06
+%>
+<script id="fe-smart-recharge" type="text/x-handlebars-template">
+    <!-- .cont-box -->
+        <div class="shadow-box mt30">
+            <div class="cont-card-ti"><!-- 링크가 있을 경우 구조 -->
+                <button class="fe-bt-go-recharge">
+                    <span class="card-ti-txt">즉시 충전하기</span>
+                    <span class="ico"></span>
+                </button>
+            </div>
+            <div class="main-tdate-giftbox">
+                <p class="tdate-giftbox-ti">데이터가 부족하시다면<br /><em class="tx-bold">충전</em>해보세요.</p>
+                <div class="tdate-giftbox-graph">
+                    <span class="ico-tdate-giftbox type2"></span><!-- icon종류 .type1 .type2 -->
+                    <dl class="real-remaining">
+                        <dt>남은 데이터</dt>
+                        <dd>
+                            <% if(usageData.data) { %>
+                            <div class="remaining-amount"><span class="num ff-tg-black"><%= usageData.data.showRemained.data %></span><span class="dingbat <%= (usageData.data.showRemained.unit).toLowerCase() %>-trans"><span class="blind"><%= usageData.data.showRemained.unit %></span></span></div>
+                            <div class="graph-area-type4">
+                                            <span class="graph-bar1" style="width:<%= homeData.usageData.data.remainedRatio %>%;">
+                                                <span class="bar"></span>
+                                            </span>
+                                <span class="graph-bar2">
+                                                <span class="bar"></span>
+                                            </span>
+                            </div>
+                            <% } else { %>
+                            <div class="remaining-amount"><span class="num ff-tg-black">0</span><span class="dingbat mb-trans"><span class="blind">MB</span></span></div>
+                            <div class="graph-area-type4">
+                                            <span class="graph-bar1" style="width:0%;">
+                                                <span class="bar"></span>
+                                            </span>
+                                <span class="graph-bar2">
+                                                <span class="bar"></span>
+                                            </span>
+                            </div>
+                            <% } %>
+                        </dd>
+                    </dl>
+                </div>
+                <p class="real-remaining-number">나의 리필 쿠폰<em class="number">{{ refillCoupons }}장</em></p>
+            </div>
+            <ul class="bt-slice">
+                <li class="bt-white1">
+                    <button class="fe-bt-go-recharge">즉시충전</button>
+                </li>
+            </ul>
+        </div>
+    <!--// .cont-box -->
+</script>

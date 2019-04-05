@@ -1,0 +1,19 @@
+<%#
+* @file test.cert-sms.html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.12.17
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!-- body -->
+<body>
+SMS 인증 <br />
+<%= result.code %> <%= result.msg %>
+</body>
+<% include ../components/javascript.component.html %>
+
+<script>
+  $(document).ready(function () {
+  });
+</script>
+<% include ../components/end.component.html %>

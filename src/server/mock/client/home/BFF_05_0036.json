@@ -1,0 +1,179 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "selSvcMgmtNum": "",
+    "acntNum": "2035366409",
+    "custNum": "9822293909",
+    "invDt": "20180731",
+    "invDtArr": [
+      "20180731",
+      "20180630",
+      "20180531",
+      "20180430",
+      "20180331",
+      "20180228"
+    ],
+    "useAmtTot": "0",
+    "deduckTotInvAmt": "-36000",
+    "detailYn": "N",
+    "autopayYn": "Y",
+    "repSvcYn": "Y",
+    "coClCd": "T",
+    "paidAmtMonthSvcCnt": 1,
+    "paidAmtMonthCnt": "6",
+    "paidAmtMonthSvcNum": [
+      {
+        "svcMgmtNum": "1367514809",
+        "name": "이동전화(01031**28**)"
+      }
+    ],
+    "paidAmtDetailInfo": [
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "월정액",
+        "ibilItmCreMclAmt": "100000",
+        "billItmNm": "월정액",
+        "invAmt": "100000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "요금할인",
+        "ibilItmCreMclAmt": "-36000",
+        "billItmNm": "T시그니처 안심콜할인",
+        "invAmt": "-1000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "요금할인",
+        "ibilItmCreMclAmt": "-36000",
+        "billItmNm": "온가족+B인터넷할인",
+        "invAmt": "-30000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "요금할인",
+        "ibilItmCreMclAmt": "-36000",
+        "billItmNm": "모바일 그룹웨어 할인",
+        "invAmt": "-5000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "부가가치세(세금)*",
+        "ibilItmCreMclAmt": "7000",
+        "billItmNm": "부가세총액*",
+        "invAmt": "10100",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "통신서비스요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "부가가치세(세금)*",
+        "ibilItmCreMclAmt": "7000",
+        "billItmNm": "할인부가세*",
+        "invAmt": "-3100",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "부가사용금액",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "부가서비스이용료",
+        "ibilItmCreMclAmt": "6000",
+        "billItmNm": "T안심콜라이트",
+        "invAmt": "1000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "부가사용금액",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "부가서비스이용료",
+        "ibilItmCreMclAmt": "6000",
+        "billItmNm": "모바일 그룹웨어",
+        "invAmt": "5000",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "부가사용금액",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "콘텐츠이용료(#)",
+        "ibilItmCreMclAmt": "106590",
+        "billItmNm": "oksusu 콘텐츠*",
+        "invAmt": "72600",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "부가사용금액",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "콘텐츠이용료(#)",
+        "ibilItmCreMclAmt": "106590",
+        "billItmNm": "멜론콘텐츠*",
+        "invAmt": "33990",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "단말기할부금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "분할상환금",
+        "ibilItmCreMclAmt": "38050",
+        "billItmNm": "단말기분할상환금*",
+        "invAmt": "37320",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "단말기할부금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "분할상환금",
+        "ibilItmCreMclAmt": "38050",
+        "billItmNm": "단말분할상환수수료*",
+        "invAmt": "730",
+        "svcInfoNm": "01031**28**"
+      },
+      {
+        "billItmLclNm": "기타요금",
+        "billItmSclNm": "",
+        "svcNm": "이동전화",
+        "coClNm": "SKT",
+        "ibilItmCreMclNm": "분리지원금액",
+        "ibilItmCreMclAmt": "-221640",
+        "billItmNm": "분리지원금액",
+        "invAmt": "-221640",
+        "svcInfoNm": "01031**28**"
+      }
+    ]
+  },
+  "serverSession": "YmFiNDA4MGUtYzBmYy00MDFlLWFlZDQtOGZkMjdiMTJlOTli",
+  "loginType": "T"
+}

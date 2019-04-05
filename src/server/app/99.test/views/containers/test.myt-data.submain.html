@@ -1,0 +1,231 @@
+<%#
+* @file test.myt-data.submain.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.09.17
+%>
+
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', {
+    title: '나의 데이터・통화 관리', svcInfo: data.svcInfo, option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap" data-id="wrapper">
+        <h2 class="blind">내용</h2>
+        <div class="container" data-id="submain-container">
+            <!-- .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-top" data-id="remnant-container">
+            <%- include('../components/submain/test.myt-data.submain.remnant.html', data) %>
+            </div>
+            <!--// .cont-box -->
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                <ul class="liststyle-type01">
+                    <% if(data.refill) { %>
+                    <li class="category-type" data-id="refill">
+                        <p class="title">리필쿠폰 <button class="tip-view">TIP</button></p>
+                        <div class="infobox">
+                            <strong class="text"><%= data.refill.length %>장</strong>
+                            <button type="button" class="link">보기</button>
+                        </div>
+                    </li>
+                    <% } %>
+                    <% if(data.isBenefit) { %>
+                    <% if(data.isApp) { %>
+                        <li class="category-type">
+                            <p class="title">데이터 조르기</p>
+                            <div class="infobox" data-id="pester">
+                                <button type="button" class="link">보기</button>
+                            </div>
+                        </li>
+                    <% } %>
+                    <li class="category-type" data-id="benefit">
+                        <p class="title">데이터 혜택</p>
+                        <div class="infobox">
+                            <button type="button" class="link">보기</button>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+
+            <% if (data.isPrepayment) { %>
+            <!-- .coupon-genre-box -->
+            <div class="coupon-genre-box" data-id="prepay-container">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box slider1">
+                        <div class="coupon-genre-banner-slide">
+                            <div class="slider-box">
+                                <ul class="slider">
+                                    <li>
+                                        <div class="cont-box nogaps noborder">
+                                            <div class="coupon-genre-banner">
+                                                <span class="banner-ti">선불쿠폰</span>
+                                                <span class="banner-tx">편하고 합리적인<br /><em class="tx-bold"><span class="ff-tg-black">T</span>데이터 쿠폰</em></span>
+                                                <span class="banner-tip">요금상품 변경 없이 데이터 추가!<br />데이터가 남으면 다음에 쓰세요!</span>
+                                                <span class="ico"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="cont-box nogaps noborder">
+                                            <div class="coupon-genre-banner">
+                                                <span class="banner-ti">선불쿠폰</span>
+                                                <span class="banner-tx">편하고 합리적인<br /><em class="tx-bold"><span class="ff-tg-black">T</span>데이터 쿠폰</em></span>
+                                                <span class="banner-tip">요금상품 변경 없이 데이터 추가!<br />데이터가 남으면 다음에 쓰세요!</span>
+                                                <span class="ico"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="cont-box nogaps noborder">
+                                            <div class="coupon-genre-banner">
+                                                <span class="banner-ti">선불쿠폰</span>
+                                                <span class="banner-tx">편하고 합리적인<br /><em class="tx-bold"><span class="ff-tg-black">T</span>데이터 쿠폰</em></span>
+                                                <span class="banner-tip">요금상품 변경 없이 데이터 추가!<br />데이터가 남으면 다음에 쓰세요!</span>
+                                                <span class="ico"></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!--// .coupon-genre-box -->
+            <% } %>
+            <!-- 충전/선물 내역 -->
+            <% if (data.breakdownList) { %>
+                <div class="cont-box nogaps" data-id="bd-container">
+                    <p class="list-comp-title">
+                        최근 충전・선물 내역
+                        <button class="bt">더보기</button>
+                    </p>
+                    <div class="contents-info-list">
+                        <ul class="result-history">
+                            <% for (var i=0; i < data.breakdownList.length; i++) { %>
+                            <%- include('../components/submain/test.myt-data.submain.breakdown.html', { data: data.breakdownList[i] }); %>
+                            <% } %>
+                        </ul>
+                    </div>
+                </div>
+            <% } %>
+            <!-- 사용량 -->
+            <% if (data.pattern) { %>
+                <%- include('../components/submain/test.myt-data.submain.usage-pattern.html', data) %>
+            <% } %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="bnr-show"><button><img src="/img/dummy/dmy-banner.png" alt="더미배너" class="img" /></button></div>
+            </div>
+            <!-- //.cont-box -->
+            <% if (data.otherLines.length > 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps" data-id="other-lines">
+                    <p class="list-comp-title">다른 회선의 실시간 잔여량<button class="tip-view">TIP</button></p>
+                    <ul class="list-comp-lineinfo">
+                        <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
+                        <% for (var i=0; i < length; i++) { %>
+                        <%- include('../components/submain/test.myt-data.submain.other-line.html', { data: data.otherLines[i] }); %>
+                        <% } %>
+                    </ul>
+                    <% if (length === 20) { %>
+                    <!-- 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
+                    <div class="bt-more">
+                        <button>더 보기</button>
+                    </div>
+                    <% } %>
+                </div>
+                <!-- .cont-box -->
+            <% } %>
+
+            <div class="cont-box nogaps noborder">
+                <ul class="link-long-list nobg">
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 요금제
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 부가상품
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>요금안내서
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>실시간 요금
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 로밍
+                                <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </footer>
+</div>
+<% include ../components/javascript.component.html %>
+</body>
+<script>
+    var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.TestMyTDataSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
+</script>
+<% include ../components/end.component.html %>

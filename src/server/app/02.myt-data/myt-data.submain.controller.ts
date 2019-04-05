@@ -163,7 +163,7 @@ class MytDataSubmainController extends TwViewController {
         data.refill = refill;
       }
 
-      const reqBkdArr = new Array();
+      const reqBkdArr = [];
 
       if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());

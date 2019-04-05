@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import { APP_DETAIL, APP_DETAIL2 } from '../../../../mock/server/product.apps.mock';
 import ProductHelper from '../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
 

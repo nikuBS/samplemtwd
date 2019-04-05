@@ -1,0 +1,160 @@
+<%#
+* @file test.myt-fare.submain.html
+* @author Kim InHwan (skt.p132150@partner.sk.com)
+* @since 2018.09.27
+%>
+
+<%- include('../components/start.component.html', { pageInfo: data.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', {
+            title: '나의 요금', svcInfo: data.svcInfo,  option: { line: true } }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap" data-id="wrapper">
+        <h2 class="blind">내용</h2>
+        <div class="container" data-id="submain-container">
+            <!-- 청구요금 -->
+            <%- include('../components/submain/test.myt-fare.submain.claim-pay.html', data) %>
+            <!-- 상세항목 -->
+            <%- include('../components/submain/test.myt-fare.submain.payment-detail.html', data) %>
+            <!-- 소액결제 콘텐츠이용 -->
+            <% if (data.isMicroPrepay || data.isContentPrepay) { %>
+            <%- include('../components/submain/test.myt-fare.submain.micro-payment.html', data) %>
+            <% } %>
+
+            <% if (data.totalPayment && data.totalPayment.length > 0) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <p class="list-comp-title">최근 납부내역
+                    <button class="ico" data-id="payment-detail"></button>
+                </p>
+                <ul class="list-comp-lineinfo type2">
+                    <% var totPlength = data.totalPayment.length > 3 ? 3 : data.totalPayment.length; %>
+                    <% for(var i=0; i < totPlength; i++) { %>
+                    <%- include('../components/submain/test.myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
+                    <% } %>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <% } %>
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box graph-back" data-id="bill-chart">
+                <h3>최근 청구요금내역</h3>
+                <div class="graph-area-type3 chart4">
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <% if (data.taxInvoice || data.contribution) { %>
+            <%- include('../components/submain/test.myt-fare.submain.contribution.html', data) %>
+            <% } %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <% if (data.type !== 'UF' && data.otherLines.length > 0) { %>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps" data-id="other-line">
+                <p class="list-comp-title">다른 회선 요금 조회</p>
+                <ul class="list-comp-lineinfo">
+                </ul>
+            </div>
+            <!-- .cont-box -->
+            <% } %>
+
+            <div class="cont-box nogaps noborder">
+                <ul class="link-long-list nobg">
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>약정할인 및 단말분할상환정보
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>요금할인혜택
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button>
+                                <span class="ico-thum"></span>나의 할인혜택
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 포인트 혜택
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 요금제
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <a href="">
+                                <span class="ico-thum"></span>나의 부가상품
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <footer id="fe-all-menu">
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: data.svcInfo }); %>
+        <%- include('../../../common/views/components/masking.component.html', { svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+    </footer>
+</div>
+<% include ../components/javascript.component.html %>
+</body>
+<script>
+    // client 작업 중
+    var data = '<%- JSON.stringify(data) %>';
+    $(document).ready(function () {
+      new Tw.TestMyTFareSubMain({
+        $element: $('[data-id=submain-container]'),
+        data: JSON.parse(data)
+      });
+    });
+
+</script>
+<% include ../components/end.component.html %>
