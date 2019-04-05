@@ -147,7 +147,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataFamily($('.container-wrap'), <%- JSON.stringify(familyInfo.mine.data) %>);
+    new Tw.MyTDataFamily($('.container-wrap'), JSON.parse('<%- JSON.stringify(familyInfo.mine.data) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>

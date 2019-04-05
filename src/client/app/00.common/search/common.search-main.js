@@ -4,12 +4,15 @@
  * @since 2018.12.18
  */
 
-Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
+Tw.CommonSearchMain = function (rootEl,cdn,step) {
+  this._apiService = Tw.Api;
+  this._historyService = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
   this.$container = rootEl;
-  this._svcInfo = svcInfo;
+  this._svcInfo = null;
   this._cdn = cdn;
   this._step = parseInt(step,10);
-  this._init();
+  this._svcInfoInit();
 };
 
 Tw.CommonSearchMain.prototype = {
@@ -21,9 +24,6 @@ Tw.CommonSearchMain.prototype = {
     };
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
-    this._historyService = new Tw.HistoryService();
-    this._popupService = Tw.Popup;
-    this._apiService = Tw.Api;
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     this._recentlyKeywordListData = this._getRecentlyKeywordList();
     this.$inputElement = this.$container.find('#search_input');
@@ -292,5 +292,15 @@ Tw.CommonSearchMain.prototype = {
       },this),
       $.proxy(this._popupService.close,this._popupService),$target
     );
+  },
+  _svcInfoInit : function () {
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+        .done($.proxy(function(res){
+          if(res.code===Tw.API_CODE.CODE_00){
+            this._svcInfo = res.result;
+          }
+          this._init();
+        },this))
+        .fail($.proxy(this._init,this));
   }
 };

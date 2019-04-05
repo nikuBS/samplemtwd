@@ -89,7 +89,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataHistory($('.wrap'), <%- JSON.stringify(chargeData) %>);
+    new Tw.MyTDataHistory($('.wrap'), JSON.parse('<%- JSON.stringify(chargeData) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>

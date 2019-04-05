@@ -84,7 +84,6 @@ class CommonSearchMore extends TwViewController {
             });
           }
           res.render('search/common.search.not-found.html', {
-            svcInfo : svcInfo,
             pageInfo: pageInfo,
             popularKeyword : popularKeyword.result,
             keyword : searchResult.result.query,
@@ -98,7 +97,6 @@ class CommonSearchMore extends TwViewController {
         });
       } else {
         res.render('search/common.search.more.html', {
-          svcInfo : svcInfo,
           pageInfo: pageInfo,
           searchInfo : searchResult.result,
           keyword : searchResult.result.query,

@@ -4,14 +4,14 @@
  * @since 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
+Tw.CommonSearch = function (rootEl,searchInfo,cdn,step,from,nowUrl) {
   this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
-  this._svcInfo = svcInfo;
+  this._svcInfo = null;
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._from = from;
@@ -34,7 +34,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from,nowUrl) {
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function () {
+  _nextInit : function () {
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
@@ -605,7 +605,7 @@ Tw.CommonSearch.prototype = {
     if(res.code===Tw.API_CODE.CODE_00){
       if( res.result.hotBillInfo && res.result.hotBillInfo[0] && res.result.hotBillInfo[0].record1 ){
         Tw.CommonHelper.endLoading('.container-wrap');
-        this.$container.find('.fe-realtime-fee').text(res.result.hotBillInfo[0].totOpenBal2);
+        this.$container.find('.fe-realtime-fee').text(res.result.hotBillInfo[0].totOpenBal2+Tw.CURRENCY_UNIT.WON);
         this.$container.find('.paymentcharge-box.type03').removeClass('none');
       }else if(cnt>=2){
         this._requestRealTimeFeeFail();
@@ -621,5 +621,15 @@ Tw.CommonSearch.prototype = {
     if(this._searchInfo.totalcount<=1){
       this._historyService.replaceURL(this._nowUrl+'&from=empty');
     }
+  },
+  _init : function () {
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+        .done($.proxy(function(res){
+          if(res.code===Tw.API_CODE.CODE_00){
+            this._svcInfo = res.result;
+          }
+          this._nextInit();
+        },this))
+        .fail($.proxy(this._nextInit,this));
   }
 };
