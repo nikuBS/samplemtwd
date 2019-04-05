@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.fi.reservation-complete.js
- * @author SeungKyu Kim (ksk4788@pineone.com)
- * @since 2018.11.16
+ * FileName: product.roaming.fi.reservation-complete.js
+ * Author: SeungKyu Kim (ksk4788@pineone.com)
+ * Date: 2018.11.16
  */
 
 Tw.ProductRoamingFiReservationComplete = function(rootEl) {

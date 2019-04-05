@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.contents.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.08
+ * FileName: myt-fare.bill.contents.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.08
  * Description: 콘텐츠이용료 메인화면
  */
 

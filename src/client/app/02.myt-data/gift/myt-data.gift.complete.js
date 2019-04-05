@@ -1,7 +1,7 @@
 /**
- * @file myt-data.gift.complete.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.09.17
+ * FileName: myt-data.gift.complete.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.09.17
  */
 
 Tw.MyTDataGiftComplete = function (rootEl) {

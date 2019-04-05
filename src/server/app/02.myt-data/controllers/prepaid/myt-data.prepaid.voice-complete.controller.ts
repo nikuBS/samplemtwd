@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.voice-complete.controller.ts
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.11.28
+ * FileName: myt-data.prepaid.voice-complete.controller.ts
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.11.28
  * Description: 선불폰 음성 충전 완료 페이지
  */
 
@@ -53,7 +53,7 @@ class MyTDataPrepaidVoiceComplete extends TwViewController {
       centerUrl: '/myt-data/recharge/prepaid/history',
       confirmUrl: '/myt-data/submain'
     };
-  };
+  }
 
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
 

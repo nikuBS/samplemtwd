@@ -1,7 +1,7 @@
 /**
- * @file quick-menu.edit.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.25
+ * FileName: quick-menu.edit.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.25
  */
 Tw.QuickMenuEditComponent = function () {
   this._popupService = Tw.Popup;

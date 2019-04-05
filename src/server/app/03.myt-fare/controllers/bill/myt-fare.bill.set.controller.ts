@@ -1,9 +1,9 @@
 /**
- * @file myt-fare.bill.set.controller.ts
+ * FileName: myt-fare.bill.set.controller.ts
  * 화면 ID : MF_04
  * 설명 : 나의요금 > 요금안내서 설정
- * @author 양정규 (skt.P130715@partner.sk.com)
- * @since 2018.09.12
+ * Author: 양정규 (skt.P130715@partner.sk.com)
+ * Date: 2018.09.12
  */
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
@@ -160,7 +160,7 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
    * @param data
    */
   private makeAnotherBillList(data: any): void {
-    const billList = [];
+    const billList = new Array();
 
     'P,H,B,2,1'.split(',').forEach((cd) => {
       // 현재 안내서는 빼기

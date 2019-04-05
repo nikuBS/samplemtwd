@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.term-type-b-btn.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.11
+ * FileName: main.menu.settings.term-type-b-btn.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.11
  */
 
 Tw.MainMenuSettingsTermTypeB = function (rootEl) {

@@ -1,8 +1,8 @@
 /**
  * 인터넷/전화/TV > 가입 상담/예약
- * @file product.wireplan.join-reservation.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.30
+ * FileName: product.wireplan.join-reservation.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.30
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

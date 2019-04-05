@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.rentphone.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2019.2.14
+ * FileName: customer.agentsearch.rentphone.controller.ts
+ * Author: Hakjoon sim (hakjoon.sim@sk.com)
+ * Date: 2019.2.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

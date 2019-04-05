@@ -1,7 +1,7 @@
 /**
- * @file product.wireplan.service-area.controller.ts
- * @author Jiyoung Jo (jiyoungjo@sk.com)
- * @since 2019.04.04
+ * FileName: product.wireplan.service-area.controller.ts
+ * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * Date: 2019.04.04
  */
 
 

@@ -1,7 +1,7 @@
 /**
- * @file myt-join.product.combinations.tb-free.js
+ * FileName: myt-join.product.combinations.tb-free.js
  * @author Jiyoung Jo
- * @since 2018.11.01
+ * Date: 2018.11.01
  */
 
 Tw.MyTJoinCombinationsTBFree = function(rootEl, svcInfo) {

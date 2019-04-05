@@ -1,7 +1,7 @@
 /*
- * @file myt-fare.submain.non-payment.ts
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.01
+ * FileName: myt-fare.submain.non-payment.ts
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.10.01
  *
  */
 

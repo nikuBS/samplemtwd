@@ -1,9 +1,3 @@
-/**
- * @file url.helper.js
- * @author
- * @since 2018.05
- */
-
 Tw.UrlHelper = (function() {
   var getQueryParams = function(url) {
     var qs = url || document.location.search;

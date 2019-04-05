@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan-add.controller.ts
+ * FileName: product.mobileplan-add.controller.ts
  * @author Jiyoung Jo
- * @since 2018.10.08
+ * Date: 2018.10.08
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -59,7 +59,7 @@ export default class ProductAddition extends TwViewController {
     }
 
     return of(undefined);
-  };
+  }
 
   private getBestAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
@@ -85,7 +85,7 @@ export default class ProductAddition extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getRecommendedAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
@@ -111,7 +111,7 @@ export default class ProductAddition extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {

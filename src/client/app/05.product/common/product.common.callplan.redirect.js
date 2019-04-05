@@ -1,7 +1,7 @@
 /**
- * @file product.common.callplan.redirect.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.12.04
+ * FileName: product.common.callplan.redirect.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.12.04
  */
 
 Tw.ProductCommonCallplanRedirect = function(prodId, svcMgmtNum, redirectUrl) {

@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.rentphone.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2019.2.14
+ * FileName: customer.agentsearch.rentphone.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2019.2.14
  */
 
 Tw.CustomerAgentsearchRentPhone = function (root, list) {

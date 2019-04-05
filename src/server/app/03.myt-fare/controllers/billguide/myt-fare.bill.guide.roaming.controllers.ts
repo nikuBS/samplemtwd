@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 > 로밍 사용요금 조회(MF_02_01_03)
- * @file myt-fare.bill.guide.roaming.controllers.ts
- * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * @since 2018.09.21
+ * FileName: myt-fare.bill.guide.roaming.controllers.ts
+ * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * Date: 2018.09.21
  * Summary: 로밍 사용요금 조회화면
  */
 

@@ -1,7 +1,7 @@
 /**
- * @file common.util.5g-intro.controller.ts
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * FileName: common.util.5g-intro.controller.ts
+ * Author: ankle breaker (byunma@sk.com)
+ * Date: 2019.04.05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

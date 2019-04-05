@@ -1,7 +1,7 @@
 <%#
-* @file product.roaming.lookup.html
-* @author Hyunkuk Lee (max5500@pineone.com)
-* @since 2018.12.03
+* FileName: product.roaming.lookup.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.03
 * ID: RM_11_01_02_06
 %>
 
@@ -90,7 +90,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, '<%- prodId %>'; )
+    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, '<%- prodId %>' )
   });
 </script>
 

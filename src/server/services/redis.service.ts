@@ -1,9 +1,3 @@
-/**
- * @file redis.service.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.05
- */
-
 import session from 'express-session';
 import connect from 'connect-redis';
 import Redis from 'ioredis';

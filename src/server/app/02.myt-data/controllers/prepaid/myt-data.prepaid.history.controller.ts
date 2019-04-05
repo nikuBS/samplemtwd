@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.history.controller.ts
+ * FileName: myt-data.prepaid.history.controller.ts
  * @author Jiyoung Jo
- * @since 2018.11.20
+ * Date: 2018.11.20
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -53,7 +53,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
         origin: resp.result.history
       };
     });
-  };
+  }
 
   private getDataRecharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0063, DEFAULT_PARAMS).map(resp => {
@@ -72,7 +72,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
         origin: resp.result.history
       };
     });
-  };
+  }
 
   private sortHistory = (histories, history, idx) => {
     let key = history.chargeDtm || history.chargeDt;

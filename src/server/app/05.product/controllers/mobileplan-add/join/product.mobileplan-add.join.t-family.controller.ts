@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > T가족모아데이터
- * @file product.mobileplan-add.join.t-family.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.12
+ * FileName: product.mobileplan-add.join.t-family.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.12
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

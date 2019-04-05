@@ -1,7 +1,7 @@
 <%#
-* @file product.roaming.html
-* @author Juho Kim (jhkim@pineone.com)
-* @since 2018.11.20
+* FileName: product.roaming.html
+* Author: Juho Kim (jhkim@pineone.com)
+* Date: 2018.11.20
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -230,7 +230,7 @@
   $(document).ready(function () {
     new Tw.ProductRoaming($('#productRoaming'), {
       banners: <%-JSON.stringify(banners)%>
-  })
+  });
   });
 </script>
 <% include ../../components/end.component.html %>

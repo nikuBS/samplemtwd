@@ -1,9 +1,3 @@
-/**
- * @file config.type.ts
- * @author
- * @since 2018.05
- */
-
 // Common
 export const DEFAULT_LIST_COUNT = 20;
 

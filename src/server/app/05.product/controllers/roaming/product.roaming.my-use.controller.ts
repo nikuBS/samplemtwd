@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.my-use.controller.ts
- * @author Juho Kim (jhkim@pineone.com)
- * @since 2018.11.20
+ * FileName: product.roaming.my-use.controller.ts
+ * Author: Juho Kim (jhkim@pineone.com)
+ * Date: 2018.11.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

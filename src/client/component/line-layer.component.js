@@ -1,7 +1,7 @@
 /**
- * @file line-layer.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2019.02.01
+ * FileName: line-layer.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2019.02.01
  */
 
 Tw.LineLayerComponent = function () {

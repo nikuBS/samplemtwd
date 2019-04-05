@@ -1,7 +1,7 @@
 /**
- * @file customer.faq.do-like-this.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.12.02
+ * FileName: customer.faq.do-like-this.controller.ts
+ * Author: Hakjoon sim (hakjoon.sim@sk.com)
+ * Date: 2018.12.02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

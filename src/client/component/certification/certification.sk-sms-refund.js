@@ -1,7 +1,7 @@
 /**
- * @file certification.sk-sms-refund.js
- * @author Hakjoon. sim (hakjoon.sim@sk.com)
- * @since 2018.11.29
+ * FileName: certification.sk-sms-refund.js
+ * Author: Hakjoon. sim (hakjoon.sim@sk.com)
+ * Date: 2018.11.29
  */
 
 Tw.CertificationSkSmsRefund = function () {
@@ -311,4 +311,4 @@ Tw.CertificationSkSmsRefund.prototype = {
       }, this));
     }
   }
-};
+}

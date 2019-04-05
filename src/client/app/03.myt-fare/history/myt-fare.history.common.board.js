@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.history.common.board.js
- * @author Lee Sanghyoung (silion@sk.com)
- * @since 2018. 9. 27
+ * FileName: myt-fare.history.common.board.js
+ * Author: Lee Sanghyoung (silion@sk.com)
+ * Date: 2018. 9. 27
  */
 Tw.MyTFareHistoryCommonBoard = function (rootEl) {
   this.$container = rootEl;

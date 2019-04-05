@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.lookup.js
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.03
+ * FileName: product.roaming.lookup.js
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.03
  */
 
 Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {

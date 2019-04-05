@@ -1,8 +1,8 @@
 /**
  * MenuName: T멤버십 > submain (BE_01)
- * @file membership.submain.controller.ts
- * @author Eunjung Jung
- * @since 2018.12.19
+ * FileName: membership.submain.controller.ts
+ * Author: Eunjung Jung
+ * Date: 2018.12.19
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 <%#
-* @file product.roaming.terminate.html
-* @author Hyunkuk Lee (max5500@pineone.com)
-* @since 2018.12.06
+* FileName: product.roaming.terminate.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.06
 %>
 
 
@@ -290,7 +290,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingTerminate($('.wrap'), <%- JSON.stringify(prodBffInfo) %>,;<%- JSON.stringify(svcInfo) %>, '<%- String(prodId) %>',;<%- JSON.stringify(prodTypeInfo) %>;)
+      new Tw.ProductRoamingTerminate($('.wrap'), <%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- String(prodId) %>',<%- JSON.stringify(prodTypeInfo) %>)
     });
 </script>
 <% include ../../components/end.component.html %>

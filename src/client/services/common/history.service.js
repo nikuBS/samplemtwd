@@ -1,9 +1,3 @@
-/**
- * @file history.service.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.05
- */
-
 Tw.HistoryService = function (selector) {
   this.history = history;
   this.$window = $(window);

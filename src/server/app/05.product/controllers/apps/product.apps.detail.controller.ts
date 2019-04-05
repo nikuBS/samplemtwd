@@ -1,7 +1,7 @@
 /**
- * @file product.apps.detail.controller.ts
+ * FileName: product.apps.detail.controller.ts
  * @author Jiyoung Jo
- * @since 2018.11.22
+ * Date: 2018.11.22
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -63,7 +63,7 @@ export default class ProductAppsDetail extends TwViewController {
         }, images)
       };
     });
-  };
+  }
 
   private getRecommendedApps = appId => {
     return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [appId]).map(resp => {
@@ -78,7 +78,7 @@ export default class ProductAppsDetail extends TwViewController {
         };
       });
     });
-  };
+  }
 
   private getProductInfo = appId => {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + appId).map(resp => {

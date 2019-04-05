@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 이용자 피해예방 관련 사이트
- * @file customer.damage-info.related.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.25
+ * FileName: customer.damage-info.related.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.25
  */
 
 Tw.CustomerDamageInfoRelated = function(rootEl) {

@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.near.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * FileName: customer.agentsearch.near.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.29
  */
 
 Tw.CustomerAgentsearchNear = function (rootEl) {

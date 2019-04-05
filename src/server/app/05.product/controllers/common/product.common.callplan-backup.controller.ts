@@ -1,8 +1,8 @@
 /**
  * 상품 원장 URL PathVariable Backup. 방어용
- * @file product.common.callplan-backup.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.20
+ * FileName: product.common.callplan-backup.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

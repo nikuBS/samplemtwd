@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 내폰끼리 결합
- * @file product.mobileplan-add.join.combine-line.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.08
+ * FileName: product.mobileplan-add.join.combine-line.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.08
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

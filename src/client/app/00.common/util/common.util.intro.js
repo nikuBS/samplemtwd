@@ -1,5 +1,5 @@
 /**
- * @file common.util.intro.js
+ * FileName: common.util.intro.js
  */
 
 Tw.CommonUtilIntro = function (rootEl) {

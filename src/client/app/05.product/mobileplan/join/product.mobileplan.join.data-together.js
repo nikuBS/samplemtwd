@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan.join.data-together.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * FileName: product.mobileplan.join.data-together.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.14
  */
 
 Tw.ProductMobileplanJoinDataTogether = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {

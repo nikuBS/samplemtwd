@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.card.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.09.17
+ * FileName: myt-fare.bill.card.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.17
  * Annotation: 체크/신용카드 즉시납부
  */
 

@@ -1,7 +1,7 @@
 /**
- * @file customer.voice.register.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.10.25
+ * FileName: customer.voice.register.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.10.25
  */
 
 Tw.CustomerVoiceRegister = function (rootEl, allSvc) {

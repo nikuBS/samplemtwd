@@ -1,7 +1,7 @@
 /**
- * @file customer.researches.controller.ts
+ * FileName: customer.researches.controller.ts
  * @author Jiyoung Jo
- * @since 2018.11.02
+ * Date: 2018.11.02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -99,7 +99,7 @@ export default class CustomerResearches extends TwViewController {
         showCount: quizIdx && quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
       };
     });
-  };
+  }
 
   private getResearch = id => {
     // return of(StepResearch).map(resp => {

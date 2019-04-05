@@ -1,7 +1,7 @@
 /**
- * @file benefit.my-benefit.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 31.
+ * FileName: benefit.my-benefit.js
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 10. 31.
  * 혜택 > 나의 할인/혜택 화면(BS_01)
  */
 Tw.BenefitMyBenefit = function (rootEl, okCash, t, rainbow) {

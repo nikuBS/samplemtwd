@@ -1,7 +1,7 @@
 /**
- * @file myt-data.datainfo.controller.ts
+ * FileName: myt-data.datainfo.controller.ts
  * @author Jiyoung Jo
- * @since 2018.09.20
+ * Date: 2018.09.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -140,7 +140,7 @@ export default class MyTDataHistory extends TwViewController {
         };
       });
     });
-  };
+  }
 
   private getLimitCharges = (count: number) => {
     if (count <= 0) {
@@ -173,7 +173,7 @@ export default class MyTDataHistory extends TwViewController {
         };
       });
     });
-  };
+  }
 
   private getTingCharges = (count: number) => {
     if (count <= 0) {
@@ -214,7 +214,7 @@ export default class MyTDataHistory extends TwViewController {
           };
         });
     });
-  };
+  }
 
   private getTingGifts = (count: number) => {
     if (count <= 0) {
@@ -240,7 +240,7 @@ export default class MyTDataHistory extends TwViewController {
         };
       });
     });
-  };
+  }
 
   private getRefillUsages = (count: number) => {
     if (count <= 0) {
@@ -270,7 +270,7 @@ export default class MyTDataHistory extends TwViewController {
           };
         });
     });
-  };
+  }
 
   private getRefillGifts = (count: number) => {
     if (count <= 0) {
@@ -299,7 +299,7 @@ export default class MyTDataHistory extends TwViewController {
           };
         });
     });
-  };
+  }
 
   private mergeCharges = histories => {
     return Array.prototype.concat.apply([], histories).sort((a, b) => {

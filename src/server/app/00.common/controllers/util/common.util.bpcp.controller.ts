@@ -1,7 +1,7 @@
 /**
- * @file common.util.bpcp.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.03.07
+ * FileName: common.util.bpcp.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.03.07
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

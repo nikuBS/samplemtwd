@@ -1,7 +1,7 @@
 /**
- * @file benefit.dis-pgm.cancel.js
- * @author Kim In Hwan (skt.P132150@partner.sk.com)
- * @since 2018.12.18
+ * FileName: benefit.dis-pgm.cancel.js
+ * Author: Kim In Hwan (skt.P132150@partner.sk.com)
+ * Date: 2018.12.18
  */
 
 Tw.BenefitDisPgmCancel = function(rootEl, prodId, confirmOptions) {

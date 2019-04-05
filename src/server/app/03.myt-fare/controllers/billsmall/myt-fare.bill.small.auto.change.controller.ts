@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.small.auto.change.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.05
+ * FileName: myt-fare.bill.small.auto.change.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.05
  * Description: 소액결제 자동선결제 변경
  */
 

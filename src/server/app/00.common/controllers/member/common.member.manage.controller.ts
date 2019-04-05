@@ -1,7 +1,7 @@
 /**
- * @file common.member.manage.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.31
+ * FileName: common.member.manage.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.31
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
- * @file product.roaming.planadd.controller.ts
- * @author Eunjung Jung
- * @since 2018.11.26
+ * FileName: product.roaming.planadd.controller.ts
+ * Author: Eunjung Jung
+ * Date: 2018.11.26
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

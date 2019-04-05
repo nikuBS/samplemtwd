@@ -1,7 +1,7 @@
 /**
- * @file common.member.login.route.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.12
+ * FileName: common.member.login.route.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.12
  */
 
 Tw.CommonMemberLoginRoute = function (target, type, isLogin) {

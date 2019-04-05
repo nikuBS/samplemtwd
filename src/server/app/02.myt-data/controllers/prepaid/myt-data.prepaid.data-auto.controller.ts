@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.data-auto.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.29
+ * FileName: myt-data.prepaid.data-auto.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.29
  * Description: 선불폰 데이터 자동 충전
  */
 

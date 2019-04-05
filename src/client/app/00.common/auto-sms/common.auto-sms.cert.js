@@ -1,7 +1,7 @@
 /**
- * @file common.auto-sms.cert.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2019.03.14
+ * FileName: common.auto-sms.cert.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.03.14
  */
 
 Tw.CommonAutoSmsCert = function (rootEl, encParam) {

@@ -1,7 +1,7 @@
 /**
- * @file test.customer.svc-info.notice.tworld.nohyst.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.19
+ * FileName: test.customer.svc-info.notice.tworld.nohyst.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.19
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

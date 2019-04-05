@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.search-options.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.26
+ * FileName: customer.agentsearch.search-options.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.26
  */
 
 Tw.CustomerAgentsearchSearchOptions = function (rootEl, currentOptions, applyCallback) {

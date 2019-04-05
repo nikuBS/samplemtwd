@@ -1,9 +1,3 @@
-/**
- * @file login.service.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.05
- */
-
 import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';

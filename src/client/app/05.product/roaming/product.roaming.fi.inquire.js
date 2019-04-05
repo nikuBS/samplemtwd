@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.fi.inquire.js
- * @author 김승규 (ksk4788@pineone.com)
- * @since 2018.11.27
+ * FileName: product.roaming.fi.inquire.js
+ * Author: 김승규 (ksk4788@pineone.com)
+ * Date: 2018.11.27
  */
 Tw.ProductRoamingFiInquire = function (rootEl, countryCode) {
   this.$container = rootEl;

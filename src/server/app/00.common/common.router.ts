@@ -1,7 +1,7 @@
 /**
- * @file common.router.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.02
+ * FileName: common.router.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.02
  */
 
 import TwRouter from '../../common/route/tw.router';

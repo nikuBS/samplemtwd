@@ -1,7 +1,7 @@
 /**
- * @file line.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.26
+ * FileName: line.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.26
  */
 
 Tw.LineComponent = function () {

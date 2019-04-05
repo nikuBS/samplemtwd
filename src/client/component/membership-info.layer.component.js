@@ -1,8 +1,8 @@
 /**
- * @file membership-info.layer.component.js
- * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * FileName: membership-info.layer.component.js
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Editor: 양정규 (skt.P130715@partner.sk.com)
- * @since 2018.10.29
+ * Date: 2018.10.29
  *
  */
 

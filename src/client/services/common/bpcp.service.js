@@ -1,9 +1,3 @@
-/**
- * @file bpcp.service.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.05
- */
-
 Tw.BpcpService = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;

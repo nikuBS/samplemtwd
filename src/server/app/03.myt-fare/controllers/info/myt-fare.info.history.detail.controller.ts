@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.history.detail.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.09.17
+ * FileName: myt-fare.info.history.detail.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018.09.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -126,7 +126,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         this.getBizTaxCnt(callback, renderObj);
       }
     });
-  };
+  }
   
   // 현금영수증 내역 조회
   private checkCashBill = (callback, renderObj) => {
@@ -136,7 +136,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
       callback.call(this, renderObj);
     });
-  };
+  }
 
   // 즉시납부
   private getDirectPaymentData(renderObj: RenderObj) {
@@ -329,7 +329,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }, 0);
       callback.call(this, renderObj); // 이후 콜백
     });
-  };
+  }
 
   private getBillTaxLists = (date: Date, monthPeriod: number) => {
     // monthPeriod 개월 전 구하기
@@ -341,7 +341,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  };
+  }
 
   private getBillTaxList = (date: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
@@ -350,7 +350,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
       return resp.result.taxReprintList;
     });
-  };
+  }
   // 사업자 회원 세금계산서 갯수 계산 end
 
   // 렌더링

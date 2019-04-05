@@ -1,9 +1,3 @@
-/**
- * @file product.helper.js
- * @author
- * @since 2018.05
- */
-
 Tw.ProductHelper = (function () {
 
   var convProductSpecifications = function (basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt, _basDataUnit, _isVcallFormat) {

@@ -1,7 +1,7 @@
 /**
- * @file common.member.withdrawal.complete.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2019.02.14
+ * FileName: common.member.withdrawal.complete.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2019.02.14
  */
 
 Tw.CommonMemberWithdrawalComplete = function ($container) {

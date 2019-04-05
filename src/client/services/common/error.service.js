@@ -1,9 +1,3 @@
-/**
- * @file error.service.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.05
- */
-
 Tw.ErrorService = function() {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();

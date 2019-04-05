@@ -1,7 +1,7 @@
 /**
- * @file customer.document.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.16
+ * FileName: customer.document.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.16
  */
 
 Tw.CustomerDocument = function (rootEl) {

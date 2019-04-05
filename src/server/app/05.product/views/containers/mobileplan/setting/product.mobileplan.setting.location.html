@@ -1,8 +1,8 @@
 <%#
 * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
-* @file product.setting.target-discount.html
-* @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
-* @since 2018.11.14
+* FileName: product.setting.target-discount.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.11.14
 * Summary: 할인지역,지정번호 입력/변경
 %>
 <%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -170,10 +170,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanSettingLocation($('.wrap') < % -JSON.stringify(data) % >,
-  <%
-    -showNumberSetting % >;
-  )
+    new Tw.ProductMobileplanSettingLocation($('.wrap'), <%- JSON.stringify(data) %>, <%- showNumberSetting %>);
   });
 </script>
 <% include ../../../components/end.component.html %>

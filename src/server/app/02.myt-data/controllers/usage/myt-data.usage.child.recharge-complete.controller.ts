@@ -1,7 +1,7 @@
 /**
- * @file myt-data.usage.child.recharge-complete.controller.ts
- * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018.12.14
+ * FileName: myt-data.usage.child.recharge-complete.controller.ts
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.12.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

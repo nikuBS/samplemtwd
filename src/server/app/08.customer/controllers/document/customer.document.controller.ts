@@ -1,7 +1,7 @@
 /**
- * @file customer.document.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.16
+ * FileName: customer.document.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.16
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

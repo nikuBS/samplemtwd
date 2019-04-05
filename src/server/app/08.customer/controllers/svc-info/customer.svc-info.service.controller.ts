@@ -1,9 +1,9 @@
 
 
 /**
- * @file customer.svc-info.service.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.18
+ * FileName: customer.svc-info.service.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018.12.18
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -71,7 +71,7 @@ class CustomerUseguideService extends TwViewController {
       }
     }, []); 
     return result; 
-  };
+  }
 
   // 다른 카테고리 메뉴와 조합되는지 여부 
   private isUnited = (unit_name: string): boolean => {
@@ -85,7 +85,7 @@ class CustomerUseguideService extends TwViewController {
       this.united.push(unit_name);
     }
     return result;
-  };
+  }
 
   private getUnitedList = (unit_name: string): CustomerServiceList => {
     const result = CUSTOMER_SERVICE_OPTION_TYPE.reduce((prev: any, list: any, listIndex) => {
@@ -127,14 +127,14 @@ class CustomerUseguideService extends TwViewController {
     }, {});
 
     return result;
-  };
+  }
 
   // subIndex 추가
   private getIndexedSubList = (sub_list: Array<CustomerServiceSubs>, listIndex:  number): Array<CustomerServiceSubs> => {
     return sub_list.map((list: CustomerServiceSubs, subIndex: number) => {
       return Object.assign(list, { listIndex, subIndex });
     });
-  };
+  }
 
   private getDepsList = (sub_list: Array<CustomerServiceSubs>): Array<CustomerServiceDeps> => {
     const result = sub_list.map((list: CustomerServiceSubs) => {

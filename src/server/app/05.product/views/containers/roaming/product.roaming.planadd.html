@@ -1,8 +1,8 @@
 <%#
 * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
-* @file product.roaming.planadd.html
-* @author Eunjung Jung
-* @since 2018.11.08
+* FileName: product.roaming.planadd.html
+* Author: Eunjung Jung
+* Date: 2018.11.08
 %>
 
 
@@ -160,10 +160,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingPlanAdd($('.wrap') < % -JSON.stringify(params) % >,
-  <%
-    -JSON.stringify(roamingAddData) % >, { code: 'F01600' };
-  )
+    new Tw.ProductRoamingPlanAdd($('.wrap'), <%- JSON.stringify(params) %>, <%- JSON.stringify(roamingAddData) %>, { code: 'F01600' });
   });
 </script>
 <% include ../../components/roaming/product.roaming.planadd.component.html %>

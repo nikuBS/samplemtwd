@@ -1,14 +1,14 @@
 /**
- * @file customer.uscan.service.js
- * @author Kirim Lee (kirim@sk.com)
- * @since 2019. 03. 28
+ * FileName: customer.uscan.service.js
+ * Author: Kirim Lee (kirim@sk.com)
+ * Date: 2019. 03. 28
 */
 Tw.CustomerUscanService = function () {
   this._popupService = Tw.PopupService;
   this._apiService = Tw.Api;
   this._history = new Tw.HistoryService();
   this._init();
-};
+}
 
 Tw.CustomerUscanService.prototype = {
   _init: function () {
@@ -88,4 +88,4 @@ Tw.CustomerUscanService.prototype = {
   },
 
 
-};
+}

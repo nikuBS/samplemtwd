@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청내역 > 장애/AS 신청현황 > 상세화면 (MS_04_01_03_01)
- * @file myt-join.wire.as.detail.controller.ts
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.10.08
+ * FileName: myt-join.wire.as.detail.controller.ts
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.10.08
  * Summary: 인터넷/집전화/IPTV 장애/AS 신청내역 상세 조회
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

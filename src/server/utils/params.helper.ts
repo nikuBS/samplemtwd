@@ -1,9 +1,3 @@
-/**
- * @file params.helper.ts
- * @author
- * @since 2018.05
- */
-
 import FormatHelper from './format.helper';
 
 class ParamsHelper {

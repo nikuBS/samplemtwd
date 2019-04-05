@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 시그니처워치 설정
- * @file product.mobileplan-add.setting.signature-line.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.14
+ * FileName: product.mobileplan-add.setting.signature-line.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

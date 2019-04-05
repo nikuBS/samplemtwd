@@ -1,8 +1,8 @@
 /**
  * 유선 부가서비스 > 가입 공통 (옵션입력 없음)
- * @file product.wireplan.join.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.22
+ * FileName: product.wireplan.join.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.22
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

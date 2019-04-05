@@ -1,7 +1,7 @@
 /**
- * @file benefit.terminate.tb-combination.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.26
+ * FileName: benefit.terminate.tb-combination.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.26
  */
 
 Tw.BenefitTerminateTbCombination = function(rootEl, prodId, prodNm, svcCd) {

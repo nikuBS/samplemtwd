@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.upload.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 15.
+ * FileName: myt-join.suspend.upload.js
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 11. 15.
  * 일시정지신청/현황에서 사용하는 File Upload Dialog
  */
 Tw.MytJoinSuspendUpload = function () {

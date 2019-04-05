@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 최신 이용자 피해예방 주의보
- * @file customer.damage-info.warning.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * FileName: customer.damage-info.warning.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';

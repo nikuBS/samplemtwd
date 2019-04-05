@@ -1,7 +1,7 @@
 /**
- * @file common.member.line.biz-register.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.09.27
+ * FileName: common.member.line.biz-register.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.09.27
  */
 
 Tw.CommonMemberLineBizRegister = function (rootEl) {

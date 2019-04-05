@@ -1,8 +1,8 @@
 /**
  * 상품 가입 - T+B결합상품
- * @file benefit.join.tb-combination.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.11
+ * FileName: benefit.join.tb-combination.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.11
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file test.logout.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.12.17
+ * FileName: test.logout.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.12.17
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

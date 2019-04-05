@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.fi.inquire.controller.ts
- * @author Seungkyu Kim (ksk4788@pineone.com)
- * @since 2018.11.14
+ * FileName: product.roaming.fi.inquire.controller.ts
+ * Author: Seungkyu Kim (ksk4788@pineone.com)
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

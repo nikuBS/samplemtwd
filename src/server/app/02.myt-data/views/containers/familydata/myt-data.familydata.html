@@ -1,7 +1,7 @@
 <%#
-* @file myt-data.familydata.html
+* FileName: myt-data.familydata.html
 * @author Jiyoung Jo
-* @since 2018.09.28
+* Date: 2018.09.28
 * id: DC_02
 %>
 
@@ -147,8 +147,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataFamily($('.container-wrap') < % -JSON.stringify(familyInfo.mine.data) % >
-  )
+    new Tw.MyTDataFamily($('.container-wrap'), <%- JSON.stringify(familyInfo.mine.data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

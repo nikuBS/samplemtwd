@@ -1,7 +1,7 @@
 /**
- * @file common.login.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.12.07
+ * FileName: common.login.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.12.07
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

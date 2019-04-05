@@ -1,7 +1,7 @@
 /**
- * @file product.common.callplan.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.11
+ * FileName: product.common.callplan.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.09.11
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file myt-join.common.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2019.2.1
+ * FileName: myt-join.common.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2019.2.1
  */
 Tw.MyTJoinCommon = function () {
 };

@@ -1,7 +1,7 @@
 /**
- * @file myt-join.info.no-agreement.js
- * @author 양정규 (skt.P130715@partner.sk.com)
- * @since 2018. 10. 08
+ * FileName: myt-join.info.no-agreement.js
+ * Author: 양정규 (skt.P130715@partner.sk.com)
+ * Date: 2018. 10. 08
  * 무약정 플랜 포인트 내역
  */
 Tw.MyTJoinInfoNoAgreement = function (rootEl) {

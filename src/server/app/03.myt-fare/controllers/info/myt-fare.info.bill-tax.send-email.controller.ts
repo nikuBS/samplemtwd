@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.bill-tax.send-email.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2019. 2. 1
+ * FileName: myt-fare.info.bill-tax.send-email.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2019. 2. 1
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

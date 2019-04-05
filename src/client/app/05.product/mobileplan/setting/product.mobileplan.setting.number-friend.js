@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan.setting.number-friend.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.15
+ * FileName: product.mobileplan.setting.number-friend.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.15
  */
 
 Tw.ProductMobileplanSettingNumberFriend = function(rootEl, prodId, displayId, frBestAsgnNum) {

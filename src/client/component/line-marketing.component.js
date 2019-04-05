@@ -1,7 +1,7 @@
 /**
- * @file line-marketing.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.16
+ * FileName: line-marketing.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.16
  */
 
 Tw.LineMarketingComponent = function () {

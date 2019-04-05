@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.info.center.controller.ts
- * @author Seungkyu Kim (ksk4788@pineone.com)
- * @since 2018.11.12
+ * FileName: product.roaming.info.center.controller.ts
+ * Author: Seungkyu Kim (ksk4788@pineone.com)
+ * Date: 2018.11.12
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

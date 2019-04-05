@@ -1,9 +1,3 @@
-/**
- * @file date.helper.ts
- * @author
- * @since 2018.05
- */
-
 import moment from 'moment';
 
 moment.locale('ko'); // set 'ko' timezone

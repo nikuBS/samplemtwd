@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan-add.join.remote-pwd.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.15
+ * FileName: product.mobileplan-add.join.remote-pwd.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.15
  */
 
 Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confirmOptions) {

@@ -1,9 +1,3 @@
-/**
- * @file tooltip.service.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.05
- */
-
 Tw.TooltipService = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;

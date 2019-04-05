@@ -1,7 +1,7 @@
 /**
- * @file product.join.common-confirm.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.09
+ * FileName: product.join.common-confirm.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.09
  */
 
 Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {

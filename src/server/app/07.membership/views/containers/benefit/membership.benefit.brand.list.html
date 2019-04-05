@@ -1,8 +1,8 @@
 <%#
 * MenuName: T멤버십 > 제휴브랜드 > 전체보기
-* @file membership.benefit.franchisee.list.html
-* @author 이규광 (skt.p134910@partner.sk.com)
-* @since 2018.10.30
+* FileName: membership.benefit.franchisee.list.html
+* Author: 이규광 (skt.p134910@partner.sk.com)
+* Date: 2018.10.30
 * Summary: 가맹점 지역별 조회화면
 %>
 
@@ -120,8 +120,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitBrandList($('.wrap') < % -JSON.stringify(data) % >
-  )
+    new Tw.MembershipBenefitBrandList($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

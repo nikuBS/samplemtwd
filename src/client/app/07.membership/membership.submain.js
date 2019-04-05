@@ -1,8 +1,8 @@
 /**
  * MenuName: T멤버십 > submain (BE_01)
- * @file membership.submain.js
- * @author EunJung Jung
- * @since 2018.12.26
+ * FileName: membership.submain.js
+ * Author: EunJung Jung
+ * Date: 2018.12.26
  */
 
 Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, menuId) {

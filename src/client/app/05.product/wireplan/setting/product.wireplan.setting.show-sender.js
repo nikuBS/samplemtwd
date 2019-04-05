@@ -1,7 +1,7 @@
 /**
- * @file product.wireplan.setting.show-sender.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.14
+ * FileName: product.wireplan.setting.show-sender.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.14
  */
 
 Tw.ProductWireplanSettingShowSender = function(rootEl, prodId, displayId, opCtt1) {

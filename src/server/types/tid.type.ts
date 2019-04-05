@@ -1,9 +1,3 @@
-/**
- * @file tid.type.ts
- * @author
- * @since 2018.05
- */
-
 export enum TID_SVC_TYPE {
   SSO_LOGIN = 9,
   LOGIN = 14,

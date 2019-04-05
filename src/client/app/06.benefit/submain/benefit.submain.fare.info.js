@@ -1,8 +1,8 @@
 /**
- * @file benefit.submain.fare.info.js
- * @author 양정규 (skt.P130715@partner.sk.com)
+ * FileName: benefit.submain.fare.info.js
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * 단통법관련문의안내 팝업
- * @since 2018.12.19
+ * Date: 2018.12.19
  */
 Tw.BenefitSubmainFareInfo = function () {
   this.$container = $('.container-wrap');

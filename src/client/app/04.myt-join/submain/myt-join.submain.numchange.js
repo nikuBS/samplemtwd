@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 010 전환 번호변경(MS_03_02)
- * @file myt-join.submain.numchange.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.10.22
+ * FileName: myt-join.submain.numchange.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.10.22
  * Summary: 010 전환 번호변경
  */
 Tw.MyTJoinPhoneNumChange = function (rootEl, options) {

@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.region.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * FileName: customer.agentsearch.region.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.29
  */
 
 Tw.CustomerAgentsearchRegion = function (rootEl, currentDo, currentGu, regions, callback) {

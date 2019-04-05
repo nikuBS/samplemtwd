@@ -1,9 +1,3 @@
-/**
- * @file common.type.js
- * @author
- * @since 2018.05
- */
-
 Tw.LSTORE_KEY = {
   HOME_WELCOME: 'homeWelcome',
   HOME_EMR_NOTICE: 'homeEmrNotice',

@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍안내 > 자동로밍 (RM_16_02_01)
- * @file product.roaming.info.lte.js
- * @author Eunjung Jung
- * @since 2018.11.12
+ * FileName: product.roaming.info.lte.js
+ * Author: Eunjung Jung
+ * Date: 2018.11.12
  */
 
 Tw.ProductRoamingLteGuide = function (rootEl) {

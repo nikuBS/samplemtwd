@@ -1,9 +1,3 @@
-/**
- * @file browser.helper.js
- * @author
- * @since 2018.05
- */
-
 Tw.BrowserHelper = (function () {
   var userAgent = window.navigator.userAgent;
   var isAndroid = function () {

@@ -1,8 +1,8 @@
 /**
  * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
- * @file product.setting.target-discount.controller.ts
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.11.13
+ * FileName: product.setting.target-discount.controller.ts
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.11.13
  * Page ID: MP_02_02_03_08
  * Summary: 할인지역,지정번호 입력/변경
  */

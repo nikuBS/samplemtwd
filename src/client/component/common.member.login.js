@@ -1,7 +1,7 @@
 /**
- * @file common.member.login.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.12.07
+ * FileName: common.member.login.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.12.07
  */
 
 Tw.CommonMemberLogin = function (target) {

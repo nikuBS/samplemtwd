@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan.controller.ts
+ * FileName: product.mobileplan.controller.ts
  * @author Jiyoung Jo
- * @since 2018.09.06
+ * Date: 2018.09.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -71,7 +71,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getDisplayData = (gbData?: string, mbData?: string, voice?: string, char?: string) => {
     const info: { icon?: string; value?: string; unit?: string } = {};
@@ -111,7 +111,7 @@ export default class Product extends TwViewController {
     }
 
     return info;
-  };
+  }
 
   private getMyFilters = isLogin => {
     if (isLogin) {
@@ -128,7 +128,7 @@ export default class Product extends TwViewController {
     }
 
     return of(undefined);
-  };
+  }
 
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
@@ -154,7 +154,7 @@ export default class Product extends TwViewController {
         })
       };
     });
-  };
+  }
 
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {

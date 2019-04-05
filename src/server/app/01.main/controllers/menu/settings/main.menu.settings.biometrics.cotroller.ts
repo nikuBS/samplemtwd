@@ -1,7 +1,7 @@
 /**
- * @file common.biometrics.menu.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.09
+ * FileName: common.biometrics.menu.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.09
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

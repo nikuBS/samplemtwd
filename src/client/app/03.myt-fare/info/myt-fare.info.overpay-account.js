@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.overpay-account.js
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018. 9. 17
+ * FileName: myt-fare.info.overpay-account.js
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018. 9. 17
  */
 Tw.MyTFareInfoOverpayAccount = function (rootEl, data) {
   this.$container = rootEl;

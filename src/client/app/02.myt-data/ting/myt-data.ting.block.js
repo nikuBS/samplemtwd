@@ -1,7 +1,7 @@
 /**
- * @file myt-data.ting.block.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.09.18
+ * FileName: myt-data.ting.block.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.09.18
  */
 
 Tw.MyTDataTingBlock = function (rootEl) {

@@ -1,7 +1,7 @@
 /**
- * @file common.member.slogin.aos.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.26
+ * FileName: common.member.slogin.aos.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.26
  */
 
 Tw.CommonMemberSloginAos = function (rootEl, existMdn, target) {

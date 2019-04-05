@@ -1,7 +1,7 @@
 /**
- * @file test.myt-data.datainfo.controller.ts
+ * FileName: test.myt-data.datainfo.controller.ts
  * @author Jiyoung Jo
- * @since 2018.11.23
+ * Date: 2018.11.23
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
@@ -152,7 +152,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.DATA_GIFT
     };
-  };
+  }
 
   private getLimitCharges = () => {
     const resp = LIMIT_CHARGES;
@@ -193,7 +193,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.LIMIT_CHARGE
     };
-  };
+  }
 
   private getTingCharges = () => {
     const resp = TING_CHARGES;
@@ -233,7 +233,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.TING_CHARGE
     };
-  };
+  }
 
   private getTingGifts = () => {
     const resp = TING_GIFTS;
@@ -273,7 +273,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.TING_GIFT
     };
-  };
+  }
 
   private getRefillUsages = () => {
     const resp = REFILL_USAGES;
@@ -329,7 +329,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.REFILL_USAGE
     };
-  };
+  }
 
   private getRefillGifts = () => {
     const resp = REFILL_GIFTS;
@@ -363,7 +363,7 @@ export default class TestMyTDataInfo extends TwViewController {
       count: resp.result.length,
       typeName: TypeNames.REFILL_GIFT
     };
-  };
+  }
 
   private mergeCharges = (histories: Array<IChargeData | null>): IChargeData => {
     return histories.reduce(

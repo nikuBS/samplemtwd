@@ -1,8 +1,8 @@
 /*
  * MenuName: 나의 요금 > 서브메인 > 미납요금내역(MF_02)
- * @file myt-fare.submain.non-payment.ts
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.01
+ * FileName: myt-fare.submain.non-payment.ts
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.10.01
  * Summay: 미납요금내역, 자녀미납요금내역 조회
  */
 

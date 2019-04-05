@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.option.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.02
+ * FileName: myt-fare.bill.option.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.02
  * Description: 납부방법 조회
  */
 

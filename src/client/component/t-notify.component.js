@@ -1,7 +1,7 @@
 /**
- * @file t-notify.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.12.13
+ * FileName: t-notify.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.12.13
  */
 Tw.TNotifyComponent = function () {
   this._apiService = Tw.Api;

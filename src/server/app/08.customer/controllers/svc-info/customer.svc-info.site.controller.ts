@@ -1,7 +1,7 @@
 /**
- * @file customer.svc-info.site.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.13
+ * FileName: customer.svc-info.site.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018.12.13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -57,7 +57,7 @@ class CustomerSvcInfoSite extends TwViewController {
     // 이미지경로 변경
     .replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
   return html;
-};
+}
 
   private setListUp = (list) => {
     return list.map((o, listIndex) => Object.assign(o, {listIndex}));

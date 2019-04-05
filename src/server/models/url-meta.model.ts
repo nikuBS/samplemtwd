@@ -1,9 +1,3 @@
-/**
- * @file url-meta.model.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.05
- */
-
 export interface IUrlMeta {
   menuId: string;
   menuNm: string;

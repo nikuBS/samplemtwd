@@ -1,7 +1,7 @@
 /**
- * @file common.search.not-found.js
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.31
+ * FileName: common.search.not-found.js
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.31
  */
 
 Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod) {

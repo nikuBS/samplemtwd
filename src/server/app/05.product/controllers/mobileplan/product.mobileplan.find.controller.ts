@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 - 내게 맞는 요금제 찾기
- * @file product.mobileplan.find.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.11
+ * FileName: product.mobileplan.find.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.11
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

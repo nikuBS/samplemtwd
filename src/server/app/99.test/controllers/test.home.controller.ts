@@ -1,7 +1,7 @@
 /**
- * @file test.home.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.11.22
+ * FileName: test.home.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.11.22
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 안내 > submain (RM_16_01)
- * @file product.roaming.info.guide.controller.ts
- * @author Eunjung Jung
- * @since 2018.11.08
+ * FileName: product.roaming.info.guide.controller.ts
+ * Author: Eunjung Jung
+ * Date: 2018.11.08
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

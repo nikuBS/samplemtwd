@@ -1,8 +1,8 @@
 <%#
 * MenuName: T로밍 > 로밍 요금제 (RM_11)
-* @file product.roaming.fee.html
-* @author Eunjung Jung
-* @since 2018.11.08
+* FileName: product.roaming.fee.html
+* Author: Eunjung Jung
+* Date: 2018.11.08
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -157,8 +157,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingFee($('.wrap') < % -JSON.stringify(params) % >, { code: 'F01500' }
-  )
+    new Tw.ProductRoamingFee($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01500' });
   });
 </script>
 <% include ../../components/roaming/product.roaming.fee.component.html %>

@@ -1,7 +1,7 @@
 /**
- * @file myt-data.cookiz.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.09.10
+ * FileName: myt-data.cookiz.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.09.10
  */
 
 Tw.MyTDataCookiz = function (rootEl) {

@@ -1,7 +1,7 @@
 /**
- * @file common.member.logout.complete.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.12.19
+ * FileName: common.member.logout.complete.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.12.19
  */
 
 Tw.CommonMemberLogoutComplete = function (rootEl) {
