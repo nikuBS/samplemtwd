@@ -113,7 +113,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function() {
-        new Tw.ProductAppsDetail($('.wrap'), <%- JSON.stringify(app) %>);
+        new Tw.ProductAppsDetail($('.wrap'), JSON.parse('<%- JSON.stringify(app) %>'));
     })
 </script>
 <% include ../../components/end.component.html %>

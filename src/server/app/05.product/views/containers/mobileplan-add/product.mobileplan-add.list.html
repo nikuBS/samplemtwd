@@ -149,7 +149,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01200', type: 'additions' });
+        new Tw.ProductList($('.wrap'), JSON.parse('<%- JSON.stringify(params) %>'), { code: 'F01200', type: 'additions' });
     });
 </script>
 <% include ../../components/mobileplan-add/product.mobileplan-add.list.component.html %>

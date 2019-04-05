@@ -77,7 +77,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.MyTDataFamilyHistory($('.wrap'), <%- JSON.stringify(histories) %>);
+      new Tw.MyTDataFamilyHistory($('.wrap'), JSON.parse('<%- JSON.stringify(histories) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -189,7 +189,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01100', type: 'plans' });
+      new Tw.ProductList($('.wrap'), JSON.parse('<%- JSON.stringify(params) %>'), { code: 'F01100', type: 'plans' });
   });
 </script>
 <% include ../../components/mobileplan/product.mobileplan.list.component.html %>
