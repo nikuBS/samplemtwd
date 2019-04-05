@@ -1,10 +1,13 @@
 /**
- * 이용안내 > 이용자피해예방센터 > 최신 이용자 피해예방 주의보
- * @file customer.damage-info.warning.js
+ * @file 이용안내 > 이용자피해예방센터 > 최신 이용자 피해예방 주의보
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.07.26
+ * @since 2018-07-26
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ */
 Tw.CustomerDamageInfoWarning = function(rootEl) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
@@ -23,18 +26,27 @@ Tw.CustomerDamageInfoWarning = function(rootEl) {
 
 Tw.CustomerDamageInfoWarning.prototype = {
 
-  // Element 캐싱
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$list = this.$container.find('.fe-list');  // 목록
     this.$btnMoreList = this.$container.find('.fe-btn_more_list');  // 목록 더보기 버튼
   },
 
-  // 이벤트 바인딩
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this)); // 더보기 버튼 클릭시
   },
 
-  // 더보기 버튼 클릭시; 일반 목록만 추가로 가져온다.
+  /**
+   * @function
+   * @desc 더보기 버튼 클릭시; 일반 목록만 추가로 가져온다.
+   */
   _loadMoreList: function() {
     this._apiService.request(Tw.API_CMD.BFF_08_0063, {
       repCtgCd: 'A00002',
@@ -42,13 +54,23 @@ Tw.CustomerDamageInfoWarning.prototype = {
     }).done($.proxy(this._appendMoreList, this));
   },
 
-  // 더보기 개수 계산
+  /**
+   * @function
+   * @desc 더보기 개수 계산
+   * @param param - 페이징 정보 값
+   * @returns {number}
+   */
   _getRemainCount: function(param) {
     var count = param.total - ((++param.page) * param.size);
     return count < 0 ? 0 : count;
   },
 
-  // 더보기 응답 목록 append
+  /**
+   * @function
+   * @desc 더보기 응답 목록 append
+   * @param res - 더보기 추가요청한 목록 API 응답 값
+   * @returns {*}
+   */
   _appendMoreList: function(res) {
     // 오류 응답시 오류 팝업 처리
     if (res.code !== Tw.API_CODE.CODE_00) {

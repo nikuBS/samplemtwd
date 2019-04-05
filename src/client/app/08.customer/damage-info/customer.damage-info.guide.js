@@ -1,10 +1,13 @@
 /**
- * 이용안내 > 이용자피해예방센터 > 이용자 피해예방 가이드
- * @file customer.damage-info.guide.js
+ * @file 이용안내 > 이용자피해예방센터 > 이용자 피해예방 가이드
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * @since 2018-10-24
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ */
 Tw.CustomerDamageInfoGuide = function(rootEl) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
@@ -21,21 +24,31 @@ Tw.CustomerDamageInfoGuide = function(rootEl) {
 
 Tw.CustomerDamageInfoGuide.prototype = {
 
-  // Element 캐싱
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category'); // 카테고리 설정 버튼
     this.$btnListMore = this.$container.find('.fe-btn_list_more');  // 목록 더보기 버튼
     this.$list = this.$container.find('.fe-list');  // 목록
   },
 
-  // 이벤트 바인딩
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));  // 카테고리 설정 버튼 클릭시
     this.$btnListMore.on('click', $.proxy(this._showListMore, this)); // 더보기 버튼 클릭시
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));  // 외부 링크 클릭 시
   },
 
-  // 카테고리 설정 팝업
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업
+   * @param e - 카테고리 선택 버튼 클릭 이벤트
+   */
   _openCategorySelectPopup: function(e) {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -56,7 +69,10 @@ Tw.CustomerDamageInfoGuide.prototype = {
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'guide_category', $(e.currentTarget));
   },
 
-  // 카테고리 설정 팝업 닫을 때
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업 닫을 때
+   */
   _goCategory: function() {
     if (this.$container.data('category') === this._category) {  // 선택된 값이 현재 카테고리와 같을때 추가 동작 하지 않음
       return;
@@ -65,18 +81,30 @@ Tw.CustomerDamageInfoGuide.prototype = {
     this._history.goLoad('/customer/damage-info/guide?category=' + this._category);
   },
 
-  // 카테고리 설정 팝업 이벤트 바인딩
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업 이벤트 바인딩
+   * @param $layer - 팝업 컨테이너 레이어
+   */
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
   },
 
-  // 카테고리 설정 팝업에서 카테고리 선택 시
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업에서 카테고리 선택 시
+   * @param e - 팝업에서 항목 클릭시 클릭 이벤트
+   */
   _applyCategory: function(e) {
     this._category = $(e.currentTarget).data('category');
     this._popupService.close();
   },
 
-  // 더보기 버튼 클릭시
+  /**
+   * @function
+   * @desc 더보기 버튼 클릭시
+   * @param e - 더보기 버튼 클릭 이벤트
+   */
   _showListMore: function(e) {
     var hiddenLength = this.$list.find('li:hidden').length,
       listSize = this.$list.data('size');
@@ -94,7 +122,12 @@ Tw.CustomerDamageInfoGuide.prototype = {
     }
   },
 
-  // 외부 링크 연결
+  /**
+   * @function
+   * @desc 외부 링크 연결
+   * @param e - 외부 링크 클릭 이벤트
+   * @returns {*|void}
+   */
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -107,7 +140,11 @@ Tw.CustomerDamageInfoGuide.prototype = {
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
-  // 외부 링크 연결
+  /**
+   * @function
+   * @desc 외부 링크 연결
+   * @param href - 링크 값
+   */
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   }

@@ -1,20 +1,22 @@
 /**
  * 공지사항 > 상세 (T world Only)
- * @file customer.svc-info.notice.view.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.01.17
+ * @since 2019-01-17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
 import { CUSTOMER_NOTICE_CTG_CD } from '../../../../types/bff.type';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import sanitizeHtml from 'sanitize-html';
 import BrowserHelper from '../../../../utils/browser.helper';
 
+/**
+ * @class
+ */
 class CustomerSvcInfoNoticeView extends TwViewController {
   constructor() {
     super();
@@ -22,8 +24,7 @@ class CustomerSvcInfoNoticeView extends TwViewController {
 
   /**
    * 게시물 값 변환
-   * @param resultData
-   * @private
+   * @param resultData - 게시물 값
    */
   private _convertData(resultData): any {
     return Object.assign(resultData, {
@@ -35,9 +36,8 @@ class CustomerSvcInfoNoticeView extends TwViewController {
 
   /**
    * T world 채널 값 처리
-   * @param isAndroid
-   * @param isIos
-   * @private
+   * @param isAndroid - 안드로이드 여부
+   * @param isIos - ios 여부
    */
   private _getChannel(isAndroid, isIos): any {
     if (isAndroid) {  // 안드로이드 일떄
