@@ -80,7 +80,6 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
-    this.$container.find('#contents').removeClass('none');
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
@@ -94,6 +93,7 @@ Tw.CommonSearch.prototype = {
       Tw.CommonHelper.startLoading('.container-wrap', 'white');
       this._requestRealTimeFee(0);
     }
+    this.$container.find('.container').removeClass('none');
   },
   _setRank : function (data) {
     var compareKeyName1 , compareKeyName2;
