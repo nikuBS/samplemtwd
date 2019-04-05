@@ -23,7 +23,8 @@ Tw.MyTFareBillOptionCancel = function (rootEl) {
 
 Tw.MyTFareBillOptionCancel.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.fe-go-cancel', $.proxy(this._cancel, this)); // 해지하기
+    this.$cancelBtn = this.$container.find('.fe-go-cancel');
+    this.$cancelBtn.click(_.debounce($.proxy(this._cancel, this), 500));
   },
   _cancel: function (e) {
     var $target = $(e.currentTarget);

@@ -8,6 +8,7 @@
 Tw.MyTFareBillOptionSms = function (rootEl) {
   this.$container = rootEl;
   this.$bankList = [];
+  this.$requestBtn = this.$container.find('.fe-request');
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -53,7 +54,7 @@ Tw.MyTFareBillOptionSms.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBankList, this));
-    this.$container.on('click', '.fe-request', $.proxy(this._request, this));
+    this.$requestBtn.click(_.debounce($.proxy(this._request, this), 500)); // 납부하기
   },
   _selectBankList: function (event) {
     var $target = $(event.currentTarget);

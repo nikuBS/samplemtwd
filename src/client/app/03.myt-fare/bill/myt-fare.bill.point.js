@@ -32,6 +32,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$pointPw = this.$container.find('.fe-point-pw');
     this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
+    this.$payBtn = this.$container.find('.fe-check-pay');
     this.$isValid = false;
     this.$isChanged = false;
 
@@ -48,7 +49,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
   _openGetPoint: function (e) {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회 공통 컴포넌트 호출
@@ -124,9 +125,10 @@ Tw.MyTFareBillPoint.prototype = {
   _openCheckPay: function ($layer) {
     this._setData($layer);
     this._paymentCommon.getListData($layer);
+    this._payBtn = $layer.find('.fe-pay');
 
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+    this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
   _setData: function ($layer) {
     // 납부내역 확인 팝업에 데이터 셋팅

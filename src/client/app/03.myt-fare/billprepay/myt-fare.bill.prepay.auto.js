@@ -45,6 +45,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
     this.$changeMoneyInfo = this.$container.find('.fe-change-money-info');
     this.$changeCardInfo = this.$container.find('.fe-change-card-info');
+    this.$payBtn = this.$container.find('.fe-pay');
     this.$changeType = 'A';
     this.$isFirstChangeToC = true;
     this.$isFirstChangeToT = true;
@@ -53,8 +54,9 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
     this.$container.on('click', '.fe-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
     this.$container.on('click', '.fe-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
-    this.$container.on('click', '.fe-pay', $.proxy(this._autoPrepay, this));
+    this.$payBtn.click(_.debounce($.proxy(this._autoPrepay, this), 500));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+
   },
   _checkStandardAmount: function () {
     // 기준금액 0원일 경우 에러 팝업 보여주고 뒤로가기

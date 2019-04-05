@@ -43,6 +43,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$cardY = this.$cardWrap.find('.fe-card-y');
     this.$cardM = this.$cardWrap.find('.fe-card-m');
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
+    this.$payBtn = this.$container.find('.fe-pay');
     this.$isRadioChanged = false;
     this.$isAccountTabValid = false;
     this.$isCardTabValid = false;
@@ -53,8 +54,8 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-payment-date', $.proxy(this._changePaymentDate, this));
-    this.$container.on('click', '.fe-pay', $.proxy(this._submit, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$payBtn.click(_.debounce($.proxy(this._submit, this), 500)); // 납부하기
   },
   _changeRadioBox: function (event) {
     // 라디오버튼 change에 따른 값 셋팅
