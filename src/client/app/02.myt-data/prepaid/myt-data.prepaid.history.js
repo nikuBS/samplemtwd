@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.history.js
+ * @file myt-data.prepaid.history.js
  * @author Jiyoung Jo
- * Date: 2019.03.15
+ * @since 2019.03.15
  */
 
 

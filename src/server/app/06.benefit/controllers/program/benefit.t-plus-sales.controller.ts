@@ -1,7 +1,7 @@
 /*
- * FileName: product.dis-pgm.join.ts
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.10.22
+ * @file product.dis-pgm.join.ts
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.10.22
  *
  */
 

@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 데이터/통화 > 자녀 실시간 잔여량 > 충전 허용금액 변경
- * FileName: myt-data.usage.child.recharge.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.11.27
+ * @file myt-data.usage.child.recharge.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.11.27
  * Summary: 충전 허용금액 조회
  */
 

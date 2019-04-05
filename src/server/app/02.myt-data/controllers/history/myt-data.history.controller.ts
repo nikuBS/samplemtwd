@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.datainfo.controller.ts
+ * @file myt-data.datainfo.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.09.20
+ * @since 2018.09.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

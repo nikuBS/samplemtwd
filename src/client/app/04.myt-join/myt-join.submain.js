@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.submain.js
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.10.10
+ * @file myt-join.submain.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.10.10
  *
  */
 

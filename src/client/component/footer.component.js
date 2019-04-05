@@ -1,7 +1,7 @@
 /**
- * FileName: footer.component.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2019.01.25
+ * @file footer.component.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2019.01.25
  */
 
 Tw.FooterComponent = function () {

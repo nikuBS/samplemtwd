@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.limit.monthly.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.10
+ * @file myt-data.limit.monthly.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.10
  */
 
 Tw.MyTDataLimitMonthly = function (rootEl) {

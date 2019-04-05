@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.data-complete.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.28
+ * @file myt-data.prepaid.data-complete.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.28
  * Description: 선불폰 데이터 충전 완료 페이지
  */
 

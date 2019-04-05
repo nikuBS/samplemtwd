@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.voice-auto.controller.ts
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.28
+ * @file myt-data.prepaid.voice-auto.controller.ts
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.28
  * Description: 선불폰 음성 자동 충전
  */
 

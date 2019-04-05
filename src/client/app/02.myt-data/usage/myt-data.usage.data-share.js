@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.usage.data-share.js
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018. 9. 18.
+ * @file myt-data.usage.data-share.js
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018. 9. 18.
  */
 
 Tw.MyTDataUsageDataShare = function (rootEl) {

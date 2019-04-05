@@ -1,9 +1,9 @@
 /**
- * FileName: myt-fare.bill.set.controller.ts
+ * @file myt-fare.bill.set.controller.ts
  * 화면 ID : MF_04
  * 설명 : 나의요금 > 요금안내서 설정
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.09.12
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.09.12
  */
 import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';

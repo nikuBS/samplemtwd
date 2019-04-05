@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 지정번호(절친) 할인 설정; TTL절친10
- * FileName: product.mobileplan.setting.number-friend.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.15
+ * @file product.mobileplan.setting.number-friend.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.15
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

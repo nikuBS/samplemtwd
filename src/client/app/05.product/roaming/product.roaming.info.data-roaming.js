@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍안내 > SMS, 데이터 로밍 (RM_16_04)
- * FileName: product.roaming.info.data-roaming.js
- * Author: Eunjung Jung
- * Date: 2018.11.12
+ * @file product.roaming.info.data-roaming.js
+ * @author Eunjung Jung
+ * @since 2018.11.12
  */
 
 Tw.ProductRoamingDataRoaming = function (rootEl) {

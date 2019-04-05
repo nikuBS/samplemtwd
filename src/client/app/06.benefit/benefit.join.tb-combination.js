@@ -1,7 +1,7 @@
 /**
- * FileName: benefit.join.tb-combination.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.02.11
+ * @file benefit.join.tb-combination.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.02.11
  */
 
 Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {

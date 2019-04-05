@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.join.tplan.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.09
+ * @file product.mobileplan.join.tplan.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.09
  */
 
 Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfCtt, isOverPayReqYn, isComparePlanYn, watchInfo) {

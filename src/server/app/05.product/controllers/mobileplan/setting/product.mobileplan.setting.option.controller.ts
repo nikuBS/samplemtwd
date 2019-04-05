@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 사용량 변경 옵션 설정
- * FileName: product.mobileplan.setting.option.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * @file product.mobileplan.setting.option.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.13
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.history.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.12.27
+ * @file membership.my.history.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.12.27
  */
 
 Tw.MembershipMyHistory = function(rootEl, myHistoryData) {

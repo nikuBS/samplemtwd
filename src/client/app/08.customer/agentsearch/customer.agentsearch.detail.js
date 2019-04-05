@@ -1,7 +1,7 @@
 /**
- * FileName: customer.agentsearch.detail.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.10.29
+ * @file customer.agentsearch.detail.js
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.10.29
  */
 
 Tw.CustomerAgentsearchDetail = function (mapEl, coord) {

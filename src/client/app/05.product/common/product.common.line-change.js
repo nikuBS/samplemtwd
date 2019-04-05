@@ -1,7 +1,7 @@
 /**
- * FileName: product.common.line-change.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.01.17
+ * @file product.common.line-change.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.01.17
  */
 
 Tw.ProductCommonLineChange = function(rootEl, prodTypCd, pageMode, targetProdId, targetUrl, currentSvcMgmtNum) {

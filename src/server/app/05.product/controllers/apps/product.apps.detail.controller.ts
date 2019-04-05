@@ -1,7 +1,7 @@
 /**
- * FileName: product.apps.detail.controller.ts
+ * @file product.apps.detail.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.11.22
+ * @since 2018.11.22
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

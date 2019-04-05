@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 서비스해지 신청(MS_04_08)
- * FileName: myt-join.wire.set.wire-cancel-service.controller.ts
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.10.15
+ * @file myt-join.wire.set.wire-cancel-service.controller.ts
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.10.15
  * Summary: 서비스 해지 신청이 있다면 신청현황화면으로 없다면 정보 조회 후 신청화면으로 이동
  */
 

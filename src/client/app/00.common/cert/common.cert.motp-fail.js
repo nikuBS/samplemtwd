@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.motp-fail.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.09.20
+ * @file common.cert.motp-fail.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.09.20
  */
 
 Tw.CommonCertMotpFail = function (rootEl) {

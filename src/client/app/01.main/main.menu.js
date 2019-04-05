@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.06
+ * @file main.menu.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.06
 
  */
 

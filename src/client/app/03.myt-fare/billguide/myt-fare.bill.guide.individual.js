@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 > 다른회선요금조회(자녀)(MF_09_01)
- * FileName: myt-fare.bill.guide.individual.js
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.09.12
+ * @file myt-fare.bill.guide.individual.js
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.09.12
  * Summay: 요금안내서 자녀 이용요금 조회화면 처리, 자녀 미납요금 버튼처리
  */
 Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {

@@ -1,7 +1,7 @@
 /**
- * FileName: customer.voice.controller.ts
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.10.24
+ * @file customer.voice.controller.ts
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.10.24
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

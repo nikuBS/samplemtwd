@@ -1,7 +1,7 @@
 /**
- * FileName: customer.svc-info.service.js
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018. 12. 20
+ * @file customer.svc-info.service.js
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018. 12. 20
  */
 Tw.CustomerSvcinfoService = function (rootEl, data) {
   this.$container = rootEl;

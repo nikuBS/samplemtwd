@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.data.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.28
+ * @file myt-data.prepaid.data.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.28
  */
 
 Tw.MyTDataPrepaidData = function (rootEl) {

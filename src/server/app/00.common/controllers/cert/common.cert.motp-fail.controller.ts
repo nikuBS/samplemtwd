@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.motp-fail.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.09.20
+ * @file common.cert.motp-fail.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.09.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

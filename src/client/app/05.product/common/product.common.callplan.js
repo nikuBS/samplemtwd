@@ -1,7 +1,7 @@
 /**
- * FileName: product.common.callplan.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.09.11
+ * @file product.common.callplan.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.09.11
  */
 
 Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,

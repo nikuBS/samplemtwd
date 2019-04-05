@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.gift.js
- * Author: Hakjoon Sim (hakjoon.simk@sk.com)
- * Date: 2018.10.08
+ * @file myt-data.gift.js
+ * @author Hakjoon Sim (hakjoon.simk@sk.com)
+ * @since 2018.10.08
  */
 
 Tw.MyTDataGift = function (rootEl) {

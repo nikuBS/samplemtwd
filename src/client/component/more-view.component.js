@@ -1,7 +1,7 @@
 /**
- * FileName: more-view.component
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.08.09
+ * @file more-view.component
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.08.09
  */
 Tw.MoreViewComponent = function () {
   this._lastYear = '';

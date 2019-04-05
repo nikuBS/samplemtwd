@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.rainbow.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.7
+ * @file myt-fare.bill.rainbow.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.7
  * Annotation: 레인보우포인트 1회 요금납부 예약 및 자동납부 관리
  */
 

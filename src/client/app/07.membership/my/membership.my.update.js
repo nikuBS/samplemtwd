@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.update.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.12.21
+ * @file membership.my.update.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.12.21
  */
 
 Tw.MembershipMyUpdate = function(rootEl, myInfoData) {

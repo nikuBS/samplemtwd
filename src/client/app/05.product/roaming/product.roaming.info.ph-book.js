@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.info.ph-book.js
- * Author: SeungKyu Kim (ksk4788@pineone.com)
- * Date: 2018.1.19
+ * @file product.roaming.info.ph-book.js
+ * @author SeungKyu Kim (ksk4788@pineone.com)
+ * @since 2018.1.19
  */
 
 Tw.ProductRoamingInfoPhBook = function(rootEl) {

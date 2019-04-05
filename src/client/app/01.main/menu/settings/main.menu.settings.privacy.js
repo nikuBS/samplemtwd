@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.settings.privacy.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.10.04
+ * @file main.menu.settings.privacy.js
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.10.04
  */
 
 Tw.MainMenuSettingsPrivacy = function (rootEl) {

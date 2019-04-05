@@ -1,7 +1,7 @@
 /**
- * FileName: common.util.service-block.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2019.01.17
+ * @file common.util.service-block.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2019.01.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
