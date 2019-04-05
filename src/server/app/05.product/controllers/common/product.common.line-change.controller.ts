@@ -1,8 +1,8 @@
 /**
  * 상품 가입시 회선 변경 Process
- * FileName: product.common.line-change.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.01.17
+ * @file product.common.line-change.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.01.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

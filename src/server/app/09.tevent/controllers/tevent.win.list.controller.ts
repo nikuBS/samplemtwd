@@ -1,7 +1,7 @@
 /**
- * FileName: tevent.win.list.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.21
+ * @file tevent.win.list.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.21
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

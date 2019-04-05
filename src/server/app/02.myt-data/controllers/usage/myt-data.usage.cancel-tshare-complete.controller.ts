@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.usage.cancel-tshare-complete.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.2.21
+ * @file myt-data.usage.cancel-tshare-complete.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.2.21
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

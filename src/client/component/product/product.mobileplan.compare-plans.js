@@ -1,9 +1,9 @@
 /**
- * FileName: product.mobileplan.compare-plans.js
+ * @file product.mobileplan.compare-plans.js
  * MP_02_02_01
  * 설명 : 상품 > 요금제 비교하기
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.11.26
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.11.26
  */
 Tw.ProductMobilePlanComparePlans = function () {
 

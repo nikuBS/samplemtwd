@@ -1,8 +1,8 @@
 /**
  * MenuName: 모바일 요금제 > Band YT 요금제
- * FileName: product.mobileplan.setting.bandYT.js
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.11.14
+ * @file product.mobileplan.setting.bandYT.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.11.14
  */
 
 Tw.ProductMobileplanSettingBandYT = function (params) {

@@ -1,7 +1,7 @@
 /**
- * FileName: share.component.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.25
+ * @file share.component.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.25
  */
 Tw.ShareComponent = function () {
   this._nativeService = Tw.Native;

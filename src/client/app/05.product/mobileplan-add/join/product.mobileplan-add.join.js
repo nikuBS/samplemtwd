@@ -1,8 +1,8 @@
 /**
  * 상품 가입 - 모바일 부가서비스
- * FileName: product.mobileplan-add.join.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.01
+ * @file product.mobileplan-add.join.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.01
  */
 
 Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {

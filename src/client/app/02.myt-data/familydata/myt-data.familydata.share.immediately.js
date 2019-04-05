@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.share.immediately.js
+ * @file myt-data.familydata.share.immediately.js
  * @author Jiyoung Jo
- * Date: 2018.10.04
+ * @since 2018.10.04
  */
 
 Tw.MyTDataFamilyShareImmediately = function($wrap, tabId) {

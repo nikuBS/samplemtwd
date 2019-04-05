@@ -1,7 +1,7 @@
 /**
- * FileName: membership.join.complete.ts
- * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2019. 3. 22.
+ * @file membership.join.complete.ts
+ * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * @since 2019. 3. 22.
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

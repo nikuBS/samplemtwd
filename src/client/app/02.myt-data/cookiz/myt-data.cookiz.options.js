@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.cookiz.Options.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.10
+ * @file myt-data.cookiz.Options.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.10
  */
 
 Tw.MyTDataCookizOptions = function (rootEl, svcInfo) {

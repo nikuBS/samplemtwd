@@ -1,9 +1,9 @@
 
 
 /**
- * FileName: customer.svc-info.service.detail.controller.ts
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018.12.20
+ * @file customer.svc-info.service.detail.controller.ts
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018.12.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

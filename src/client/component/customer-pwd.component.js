@@ -1,7 +1,7 @@
 /**
- * FileName: customer-pwd.component.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.12.04
+ * @file customer-pwd.component.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.12.04
  */
 
 Tw.CustomerPwdComponent = function (rootEl, target) {

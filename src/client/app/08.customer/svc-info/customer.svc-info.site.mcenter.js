@@ -1,7 +1,7 @@
 /**
- * FileName: customer.svc-info.site.mcenter.js
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018. 12. 18
+ * @file customer.svc-info.site.mcenter.js
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018. 12. 18
  */
 Tw.CustomerSvcInfoMcenter = function (rootEl) {
   this.$container = rootEl;

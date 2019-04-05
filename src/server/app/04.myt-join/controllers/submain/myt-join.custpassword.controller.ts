@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 고객보호 비밀번호 설정/변경(MS_01_01_01)
- * FileName: myt-join.custpassword.controller.ts
- * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * Date: 2018.07.25
+ * @file myt-join.custpassword.controller.ts
+ * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * @since 2018.07.25
  * Summary: 고객 비밀번호 설정/변경
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

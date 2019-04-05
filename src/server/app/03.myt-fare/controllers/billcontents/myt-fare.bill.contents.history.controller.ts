@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.contents.history.controller.ts
- * Author: Lee kirim (kirim@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.bill.contents.history.controller.ts
+ * @author Lee kirim (kirim@sk.com)
+ * @since 2018.09.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

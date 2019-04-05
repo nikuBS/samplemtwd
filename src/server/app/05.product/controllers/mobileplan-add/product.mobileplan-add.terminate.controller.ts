@@ -1,8 +1,8 @@
 /**
  * 상품 해지 - 모바일 부가상품
- * FileName: product.mobileplan-add.terminate.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * @file product.mobileplan-add.terminate.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

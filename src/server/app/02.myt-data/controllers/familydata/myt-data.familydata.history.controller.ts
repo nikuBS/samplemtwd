@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.history.controller.ts
+ * @file myt-data.familydata.history.controller.ts
  * @author Jiyoung Jo
- * Date: 2019.01.16
+ * @since 2019.01.16
  */
 
 import { NextFunction, Request, Response } from 'express';

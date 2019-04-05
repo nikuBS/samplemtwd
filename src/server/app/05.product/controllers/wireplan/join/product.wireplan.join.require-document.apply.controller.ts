@@ -1,8 +1,8 @@
 /**
  * 인터넷/전화/TV > 구비서류 제출 조회
- * FileName: product.wireplan.join.require-document.apply.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.08
+ * @file product.wireplan.join.require-document.apply.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.08
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.myplanadd.controller.ts
+ * @file myt-join.myplanadd.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.09.19
+ * @since 2018.09.19
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

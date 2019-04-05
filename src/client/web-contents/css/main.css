@@ -4198,6 +4198,11 @@ body.apphome .main-membershop-box {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis; }
 
+.charge-product .bt-cont-box .tx.tx-b {
+  color: #333;
+  margin-top: 0;
+  font-size: 0.69rem; }
+
 .charge-product .bt-cont-box .tag {
   display: block;
   margin-top: 0.19rem;

@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > Couple 요금제
- * FileName: product.mobileplan.lookup.couple.controller.ts
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.11.20
+ * @file product.mobileplan.lookup.couple.controller.ts
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.11.20
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

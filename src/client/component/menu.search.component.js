@@ -1,7 +1,7 @@
 /**
- * FileName: menu.search.component
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2019.2.12
+ * @file menu.search.component
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2019.2.12
  */
 Tw.MenuSearchComponent = function (container, menu) {
   this.$container = container;

@@ -1,6 +1,6 @@
 /*
- * FileName: membership.benefit.tday.ts
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * @file membership.benefit.tday.ts
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

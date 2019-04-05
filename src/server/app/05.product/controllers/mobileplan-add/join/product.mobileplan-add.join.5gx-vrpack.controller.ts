@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 5GX VR 팩 카드보드 & 기어
- * FileName: product.mobileplan-add.join.5gx-vrpack.controller.ts
- * Author: ankle breaker (byunma@sk.com)
- * Date: 2019.04.05
+ * @file product.mobileplan-add.join.5gx-vrpack.controller.ts
+ * @author ankle breaker (byunma@sk.com)
+ * @since 2019.04.05
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

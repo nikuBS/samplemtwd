@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 설치장소변경(MS_04_04)
- * FileName: myt-join.wire.modify.address.controller.ts
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.10.15
+ * @file myt-join.wire.modify.address.controller.ts
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.10.15
  * Summary: 회선 가입정보를 조회하고 인터넷/집전화/IPTV 설치장소 변경 신청화면으로 이동
  */
 

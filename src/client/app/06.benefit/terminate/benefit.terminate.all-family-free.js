@@ -1,7 +1,7 @@
 /**
- * FileName: benefit.terminate.all-family-free.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.04.01
+ * @file benefit.terminate.all-family-free.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.04.01
  */
 
 Tw.BenefitTerminateAllFamilyFree = function(rootEl, prodId, prodNm) {
