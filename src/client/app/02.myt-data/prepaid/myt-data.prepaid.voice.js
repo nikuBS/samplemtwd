@@ -1,9 +1,15 @@
 /**
  * @file myt-data.prepaid.voice.js
+ * @desc 선불폰 음성 1회 충전
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.11.14
  */
 
+/**
+ * @namespace
+ * @desc 선불폰 음성 1회 충전 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTDataPrepaidVoice = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -18,6 +24,10 @@ Tw.MyTDataPrepaidVoice = function (rootEl) {
 };
 
 Tw.MyTDataPrepaidVoice.prototype = {
+  /**
+   * @function
+   * @desc 변수 초기화
+   */
   _cachedElement: function () {
     this.$wrapExampleCard = this.$container.find('.fe-wrap-example-card');
     this.$btnRequestCreditCard = this.$container.find('.fe-request-credit-card');
@@ -31,11 +41,19 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$creditAmount = this.$container.find('.fe-select-amount');
   },
 
+  /**
+   * @function
+   * @desc get pps info and get email address
+   */
   _init: function () {
     this._getPpsInfo();
     this._getEmailAddress();
   },
 
+  /**
+   * @function
+   * @desc PPS info API 호출
+   */
   _getPpsInfo: function () {
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
@@ -43,6 +61,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
       .fail($.proxy(this._getFail, this));
   },
 
+  /**
+   * @function
+   * @desc PPS info API 응답 처리 (성공)
+   * @param res
+   */
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.popup-page');
@@ -53,17 +76,31 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc PPS info API 응답 처리 (실패)
+   * @param err
+   */
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
   },
 
+  /**
+   * @function
+   * @desc email address API 호출
+   */
   _getEmailAddress: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
       .done($.proxy(this._emailSuccess, this))
       .fail($.proxy(this._emailFail, this));
   },
 
+  /**
+   * @function
+   * @desc email address API 응답 처리 (성공)
+   * @param res
+   */
   _emailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this.$emailAddress = res.result.email;
@@ -72,10 +109,19 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc email address API 응답 처리 (실패)
+   * @param err
+   */
   _emailFail: function () {
     this.$emailAddress = '';
   },
 
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-wrap > li', $.proxy(this._changeTab, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
@@ -97,6 +143,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$prepaid_serial.on('keyup blur', $.proxy(this._validatePrepaidSerial, this));
   },
 
+  /**
+   * @function
+   * @desc tab change (선불카드/신용카드)
+   * @param event
+   */
   _changeTab: function (event) {
     var $target = $(event.currentTarget);
     $target.find('a').attr('aria-selected', 'true');
@@ -111,6 +162,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc set data
+   * @param result
+   */
   _setData: function (result) {
     var data = 0, dataText = 0;
     if (!Tw.FormatHelper.isEmpty(result.prodAmt) && result.prodAmt !== '0') {
@@ -124,6 +180,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
 
+  /**
+   * @function
+   * @desc 선불카드 번호 유효성 검증
+   * @param e
+   */
   _validatePrepaidNumber: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
@@ -135,6 +196,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 선불카드 시리얼넘버 유효성 검증
+   * @param e
+   */
   _validatePrepaidSerial: function (e) {
     Tw.InputHelper.inputNumberAndAlphabet(e.target);
 
@@ -148,6 +214,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신용카드 번호 유효성 검증
+   * @param e
+   */
   _validateCard: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
@@ -165,6 +236,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신용카드번호 앞 6자리로 카드사 조회 API 호출
+   */
   _getCardInfo: function () {
     var isValid = this._validation.checkMoreLength(this.$cardNumber, 15);
 
@@ -178,6 +253,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신용카드번호 앞 6자리로 카드사 조회 응답 처리
+   * @param res
+   */
   _getCardCode: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
     } else {
@@ -187,6 +267,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 유효기간 유효성 검증
+   * @param e
+   */
   _validateExpired: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
@@ -199,6 +284,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc password 유효성 검증
+   * @param e
+   */
   _validatePwd: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
@@ -208,10 +298,19 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc maxLength 적용
+   * @param e
+   */
   _checkMaxLength: function (e) {
     Tw.InputHelper.inputNumberMaxLength(e.currentTarget);
   },
 
+  /**
+   * @function
+   * @desc input null check 후 버튼 활성화/비활성화 처리
+   */
   _checkIsAbled: function () {
     if ( this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' &&
       this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '' ) {
@@ -221,6 +320,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신용카드번호 6자리로 카드사 정보 조회
+   * @param e
+   */
   _validateCreditCard: function (e) {
     var $elButton = $(e.currentTarget);
     var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
@@ -239,6 +343,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 필수 input field check 및 버튼 활성화/비활성화 처리
+   * @returns {boolean}
+   */
   _validatePrepaidCard: function () {
     var arrValid = $.map($('#tab1-tab [required]'), function (elInput) {
       if ( $(elInput).val().length !== 0 ) {
@@ -258,6 +367,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     return isValid;
   },
 
+  /**
+   * @function
+   * @desc 선불카드 조회 API 호출
+   * @param e
+   */
   _requestPrepaidCard: function (e) {
     var $elButton = $(e.currentTarget);
     var htParams = {
@@ -269,6 +383,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
       .done($.proxy(this._getPrepaidCardInfo, this, $elButton));
   },
 
+  /**
+   * @function
+   * @desc 신용카드 충전내역 확인
+   * @param $elButton
+   * @param res
+   */
   _getCreditCardInfo: function ($elButton, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
@@ -300,6 +420,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 선불카드 충전내역 확인
+   * @param $elButton
+   * @param resp
+   */
   _getPrepaidCardInfo: function ($elButton, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var previousAmount = Number(resp.result.curAmt);
@@ -329,6 +455,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 금액 선택 actionsheet 생성
+   * @param e
+   */
   _onShowSelectAmount: function (e) {
     var $elButton = $(e.currentTarget);
     var fnSelectAmount = function ($elButton, item) {
@@ -352,11 +483,22 @@ Tw.MyTDataPrepaidVoice.prototype = {
     );
   },
 
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
+  /**
+   * @function
+   * @desc actionsheet 선택된 값 있는지 체크 및 에러메시지 노출
+   * @param $elButton
+   */
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton).closest('li').find('.error-txt');
     $error.addClass('blind').attr('aria-hidden', 'true');
@@ -366,6 +508,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc actionsheet 선택된 값 처리
+   * @param $target
+   * @param e
+   */
   _setSelectedValue: function ($target, e) {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
@@ -375,18 +523,35 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._checkIsAbled();
   },
 
+  /**
+   * @function
+   * @desc show example card
+   */
   _onShowExampleCard: function () {
     this.$wrapExampleCard.show();
   },
 
+  /**
+   * @function
+   * @desc close example card popup
+   */
   _onCloseExampleCard: function () {
     this.$wrapExampleCard.hide();
   },
 
+  /**
+   * @function
+   * @desc close prepaid card popup
+   */
   _closePrepaidPopup: function () {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 신용카드 선불폰 충전 API 호출
+   * @param e
+   */
   _requestCreditCard: function (e) {
     var htParams = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
@@ -410,6 +575,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
       .fail($.proxy(this._fail, this, $(e.currentTarget)));
   },
 
+  /**
+   * @function
+   * @desc 신용카드 충전 API 응답 처리
+   * @param $target
+   * @param res
+   */
   _onCompleteRechargeByCreditCard: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.endLoading('.popup-page');
@@ -420,6 +591,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc API Error 처리
+   * @param $target
+   * @param err
+   */
   _fail: function ($target, err) {
     Tw.CommonHelper.endLoading('.popup-page');
     this._rechargeFail = true;
@@ -430,6 +607,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 충전완료 페이지로 이동 및 에러 처리
+   */
   _afterRecharge: function () {
     if (this._rechargeSuccess) {
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
@@ -438,6 +619,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc X 버튼 클릭 시 닫기 처리 (공통 confirm)
+   */
   _stepBack: function () {
     this._backAlert.onClose();
   }
