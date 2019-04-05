@@ -418,7 +418,7 @@
 <script>
     $(document).ready(function () {
         new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>
-            ,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>',<%- JSON.stringify(paramObj) %>,'<%- pageNum %>','<%- nowUrl %>');
+            ,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>',<%- JSON.stringify(paramObj) %>,'<%- pageNum %>','<%- nowUrl %>');
     });
 </script>
 <% include ../../components/end.component.html %>
