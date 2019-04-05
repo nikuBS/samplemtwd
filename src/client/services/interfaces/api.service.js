@@ -1,9 +1,3 @@
-/**
- * @file api.service.js
- * @author Ara Jo
- * @since 2018.05
- */
-
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;

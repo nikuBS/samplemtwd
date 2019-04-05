@@ -1,0 +1,12 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result": {
+    "realNameYn": "Y",
+    "cardCreatableYn": "N",
+    "adultYn": "Y",
+    "feeProdYn": "Y",
+    "hasNotCardYn": "N",
+    "ownNameYn": "Y"
+  }
+}

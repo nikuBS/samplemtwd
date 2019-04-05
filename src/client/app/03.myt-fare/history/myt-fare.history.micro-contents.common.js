@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.history.micro-contents.common.js
- * @author Lee Sanghyoung (silion@sk.com)
- * @since 2018. 9. 17
+ * FileName: myt-fare.history.micro-contents.common.js
+ * Author: Lee Sanghyoung (silion@sk.com)
+ * Date: 2018. 9. 17
  */
 Tw.MyTFareHistoryMicroContents = function (rootEl, data) {
   this.$container = rootEl;

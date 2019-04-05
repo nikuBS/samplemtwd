@@ -1,0 +1,38 @@
+{
+  "code": "00",
+  "msg": "success",
+  "result":
+  {
+    "svcMgmtNum": "7286359873",
+    "returnUrl": null,
+    "feeProdNm": "(N)스마트",
+    "coClCd": "B",
+    "svcCd": "T",
+    "svcNm": "",
+    "rcvOperStCd": "",
+    "rcvOperStNm": "",
+    "svcRelGrpId": null,
+    "svcChgCd": null,
+    "basAddr": "서울 양천구 중앙로39길 29-10,",
+    "dtlAddr": "(신정동) 2층",
+    "acntNum": null,
+    "reqDate": null,
+    "svcMgmtNumArr": null,
+    "acntNumArr": null,
+    "grpIdArr": null,
+    "termPrefrDy": "20181010",
+    "visitCntcNum": "0212345678",
+    "cacelAuthCheckResult": "Y",
+    "custNum": "9720313200",
+    "custNm": "박태영",
+    "success": "Y",
+    "termDtlRsnNm": "이용불필요",
+    "termDtlCtt": "월드 해지접수",
+    "resultSmn": "",
+    "penaltyOut": null,
+    "cancelCharge": null,
+    "cntcNum1": null,
+    "cntcNum2": null,
+    "cntcNum3": null
+  }
+}

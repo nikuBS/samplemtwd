@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.account.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.09.17
+ * FileName: myt-fare.bill.account.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.17
  * Annotation: 계좌이체 즉시납부
  */
 

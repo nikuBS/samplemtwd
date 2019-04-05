@@ -1,7 +1,7 @@
 /**
- * @file coach-mark.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2019.02.11
+ * FileName: coach-mark.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2019.02.11
  */
 
 Tw.CoachMark = function ($container, targetId, nativeCmd) {

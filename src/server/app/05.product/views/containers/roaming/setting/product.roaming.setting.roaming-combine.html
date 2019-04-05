@@ -1,7 +1,7 @@
 <%#
-* @file product.roaming.setting.roaming-combine.html
-* @author Hyunkuk Lee (max5500@pineone.com)
-* @since 2018.12.05
+* FileName: product.roaming.setting.roaming-combine.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.05
 %>
 
 
@@ -129,7 +129,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingCombine($('.wrap'), '<%- JSON.stringify(prodRedisInfo) %>', <%- JSON.stringify(prodBffInfo) %>,;<%- JSON.stringify(svcInfo) %>, '<%- prodId %>';)
+    new Tw.ProductRoamingSettingRoamingCombine($('.wrap'), '<%- JSON.stringify(prodRedisInfo) %>', <%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>')
   });
 
 </script>

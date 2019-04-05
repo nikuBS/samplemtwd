@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.voice.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.11.14
+ * FileName: myt-data.prepaid.voice.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.11.14
  */
 
 Tw.MyTDataPrepaidVoice = function (rootEl) {

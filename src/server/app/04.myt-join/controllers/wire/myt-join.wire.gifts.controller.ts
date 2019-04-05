@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 사은품 조회(MS_04_01_04)
- * @file myt-join.wire.gifts.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.10.08
+ * FileName: myt-join.wire.gifts.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.10.08
  * Summary: 사은품 조회
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

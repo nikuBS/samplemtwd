@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 가입 공통 (옵션입력 없음)
- * @file product.mobileplan-add.join.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.11
+ * FileName: product.mobileplan-add.join.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.09.11
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.voice.controller.ts
- * @author 박지만 (jiman.park@sk.com)
- * @since 2018.11.14
+ * FileName: myt-data.prepaid.voice.controller.ts
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.11.14
  * Description: 선불폰 음성 1회 충전
  */
 

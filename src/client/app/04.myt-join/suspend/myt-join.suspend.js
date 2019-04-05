@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 15.
+ * FileName: myt-join.suspend.js
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 10. 15.
  */
 
 Tw.MyTJoinSuspend = function (rootEl, params) {

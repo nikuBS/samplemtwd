@@ -1,9 +1,3 @@
-/**
- * @file validation.service.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.05
- */
-
 Tw.ValidationService = function (rootEl, submitBtn, change, isAuto) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;

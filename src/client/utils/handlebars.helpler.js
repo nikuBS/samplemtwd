@@ -1,9 +1,3 @@
-/**
- * @file handlebars.helper.js
- * @author
- * @since 2018.05
- */
-
 Tw.HandlebarHelper = (function () {
   Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     switch ( operator ) {

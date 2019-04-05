@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 일시 정지/해제
- * @file myt-join.wire.set.pause.js
- * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018. 8. 17.
+ * FileName: myt-join.wire.set.pause.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018. 8. 17.
  * Summary: 일시 정지/해제 신청
  */
 

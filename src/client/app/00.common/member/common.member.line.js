@@ -1,7 +1,7 @@
 /**
- * @file common.member.line.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.09.27
+ * FileName: common.member.line.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.09.27
  */
 
 Tw.CommonMemberLine = function (rootEl, defaultCnt) {

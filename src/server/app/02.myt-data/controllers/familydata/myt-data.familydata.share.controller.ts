@@ -1,7 +1,7 @@
 /**
- * @file myt-data.familydata.controller.ts
- * @author 박지만 (jiman.park@sk.com)
- * @since 2018.10.01
+ * FileName: myt-data.familydata.controller.ts
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.10.01
  */
 
 import { NextFunction, Request, Response } from 'express';

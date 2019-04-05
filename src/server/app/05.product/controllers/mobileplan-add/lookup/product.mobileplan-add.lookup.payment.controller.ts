@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 휴대폰결제안심인증
- * @file product.mobileplan-add.lookup.payment.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.12.03
+ * FileName: product.mobileplan-add.lookup.payment.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.12.03
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

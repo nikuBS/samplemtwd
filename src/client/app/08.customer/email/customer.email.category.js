@@ -1,7 +1,7 @@
 /**
- * @file customer.email.category.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.10.26
+ * FileName: customer.email.category.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.10.26
  */
 
 Tw.CustomerEmailCategory = function (rootEl) {

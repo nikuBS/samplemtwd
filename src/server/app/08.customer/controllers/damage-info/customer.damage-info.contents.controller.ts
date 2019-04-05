@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 콘텐츠 페이지
- * @file customer.damage-info.contents.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.30
+ * FileName: customer.damage-info.contents.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.30
  */
 
 import { NextFunction, Request, Response } from 'express';

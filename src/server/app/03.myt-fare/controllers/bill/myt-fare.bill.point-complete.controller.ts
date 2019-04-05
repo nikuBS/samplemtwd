@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.point-complete.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.28
+ * FileName: myt-fare.bill.point-complete.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.28
  * Description: 포인트 요금납부 완료
  */
 
@@ -13,6 +13,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_COMPLETE_MSG, MYT_FARE_PAYMENT_NAME, MYT_FARE_POINT_MSG} from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, RAINBOW_FARE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
+import UnpaidList from '../../../../mock/server/payment/payment.realtime.unpaid.list.mock';
 import ParamsHelper from '../../../../utils/params.helper';
 
 class MyTFareBillPointComplete extends TwViewController {

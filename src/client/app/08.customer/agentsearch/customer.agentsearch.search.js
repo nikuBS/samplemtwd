@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.search.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.16
+ * FileName: customer.agentsearch.search.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.16
  */
 
 Tw.CustomerAgentsearch = function (rootEl, params) {

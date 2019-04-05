@@ -1,9 +1,3 @@
-/**
- * @file ui.service.js
- * @author Ara Jo
- * @since 2018.05
- */
-
 Tw.UIService = function () {
   this.setBack();
   this.setForward();

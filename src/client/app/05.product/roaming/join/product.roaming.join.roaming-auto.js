@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.setting.roaming-auto.js
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.03
+ * FileName: product.roaming.setting.roaming-auto.js
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.03
  */
 
 Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId,expireDate) {

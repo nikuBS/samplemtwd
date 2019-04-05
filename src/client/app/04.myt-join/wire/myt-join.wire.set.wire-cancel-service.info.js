@@ -1,7 +1,7 @@
 /**
- * @file myt-join.wire.set.wire-cancel-service.info.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.12.12
+ * FileName: myt-join.wire.set.wire-cancel-service.info.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.12.12
  * ViewId: MS_04_08_01
  */
 Tw.MyTJoinWireSetWireCancelServiceInfo = function (rootEl, data) {

@@ -1,7 +1,7 @@
 /**
- * @file common.util.error.controller.ts
- * @author 7Ara Jo (araara.jo@sk.com)
- * @since 2019.03.2
+ * FileName: common.util.error.controller.ts
+ * Author: 7Ara Jo (araara.jo@sk.com)
+ * Date: 2019.03.2
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

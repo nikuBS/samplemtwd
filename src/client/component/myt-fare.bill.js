@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.09.17
+ * FileName: myt-fare.bill.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.17
  */
 
 Tw.MyTFareBill = function (rootEl, svcAttrCd) {

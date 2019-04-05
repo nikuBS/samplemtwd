@@ -1,7 +1,7 @@
 /**
- * @file myt-data.gift.monthly.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.09.10
+ * FileName: myt-data.gift.monthly.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.09.10
  */
 
 Tw.MyTDataGiftMonthly = function (rootEl, svcInfo) {

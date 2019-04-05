@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 안내 > submain (RM_16_01)
- * @file product.roaming.info.guide.js
- * @author Eunjung Jung
- * @since 2018.11.12
+ * FileName: product.roaming.info.guide.js
+ * Author: Eunjung Jung
+ * Date: 2018.11.12
  */
 
 Tw.ProductRoamingGuide = function (rootEl) {

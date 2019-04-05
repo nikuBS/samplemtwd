@@ -1,7 +1,7 @@
 /**
- * @file customer.useguide.common.js
- * @author Lee Sanghyoung (silion@sk.com)
- * @since 2018. 10. 18
+ * FileName: customer.useguide.common.js
+ * Author: Lee Sanghyoung (silion@sk.com)
+ * Date: 2018. 10. 18
  */
 Tw.CustomerSvcInfoSite = function (rootEl) {
   this.$container = rootEl;

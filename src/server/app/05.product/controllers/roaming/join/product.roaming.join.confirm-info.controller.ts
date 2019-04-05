@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.setting.roaming-setup.controller.ts
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.04
+ * FileName: product.roaming.setting.roaming-setup.controller.ts
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.04
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

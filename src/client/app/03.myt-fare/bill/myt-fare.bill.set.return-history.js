@@ -1,8 +1,8 @@
 /**
- * @file myt-fare.bill.set.return-history.js
- * @author 양정규 (skt.P130715@partner.sk.com)
+ * FileName: myt-fare.bill.set.return-history.js
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * 요금안내서 반송내역
- * @since 2018. 9. 14
+ * Date: 2018. 9. 14
  */
 Tw.MyTFareBillSetReturnHistory = function (rootEl) {
   this.$container = rootEl;

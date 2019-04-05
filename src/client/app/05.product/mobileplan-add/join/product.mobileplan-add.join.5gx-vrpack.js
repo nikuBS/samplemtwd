@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan-add.join.5gx-vrpack.js
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * FileName: product.mobileplan-add.join.5gx-vrpack.js
+ * Author: ankle breaker (byunma@sk.com)
+ * Date: 2019.04.05
  */
 
 Tw.ProductMobileplanAddJoin5gxVRpack = function (rootEl, prodId, displayId, confirmOptions) {

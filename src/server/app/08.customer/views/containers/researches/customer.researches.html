@@ -1,7 +1,7 @@
 <%#
-* @file customer.researches.html
+* FileName: customer.researches.html
 * @author Jiyoung Jo
-* @since 2018.11.02
+* Date: 2018.11.02
 * id: CS_12_01
 %>
 
@@ -135,8 +135,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.CustomerResearches($('.wrap') < % -JSON.stringify(researches.slice(20)) % >
-    )
+        new Tw.CustomerResearches($('.wrap'), <%- JSON.stringify(researches.slice(20)) %>);
     });
 </script>
 <% include ../../components/end.component.html %>

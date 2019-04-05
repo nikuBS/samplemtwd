@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.fi.guide.js
- * @author SeungKyu Kim (ksk4788@pineone.com)
- * @since 2018.11.07
+ * FileName: product.roaming.fi.guide.js
+ * Author: SeungKyu Kim (ksk4788@pineone.com)
+ * Date: 2018.11.07
  */
 
 Tw.ProductRoamingFiGuide = function(rootEl) {

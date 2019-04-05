@@ -1,7 +1,7 @@
 /**
- * @file common.cert.result.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.09.03
+ * FileName: common.cert.result.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.09.03
  */
 
 Tw.CommonCertResult = function (target, code, msg) {

@@ -1,7 +1,7 @@
 /**
- * @file product.wireplan.join.reservation.explain.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.05
+ * FileName: product.wireplan.join.reservation.explain.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.05
  */
 
 Tw.ProductWireplanJoinReservationExplain = function(familyList, callback) {

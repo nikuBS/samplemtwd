@@ -1,9 +1,3 @@
-/**
- * @file api.service.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.05
- */
-
 import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_METHOD, API_SERVER, API_VERSION } from '../types/api-command.type';

@@ -1,7 +1,7 @@
 /**
- * @file common.share.app-install.info.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.30
+ * FileName: common.share.app-install.info.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.30
  */
 
 Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {

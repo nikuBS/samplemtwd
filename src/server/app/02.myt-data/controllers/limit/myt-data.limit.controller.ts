@@ -1,7 +1,7 @@
 /**
- * @file myt-data.limit.controller.ts
- * @author 박지만 (jiman.park@sk.com)
- * @since 2018.09.13
+ * FileName: myt-data.limit.controller.ts
+ * Author: 박지만 (jiman.park@sk.com)
+ * Date: 2018.09.13
  */
 
 import { NextFunction, Request, Response } from 'express';

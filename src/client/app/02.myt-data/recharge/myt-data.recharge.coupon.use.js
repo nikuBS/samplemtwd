@@ -1,7 +1,7 @@
 /**
- * @file myt-data.recharge.coupon.use.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.09.19
+ * FileName: myt-data.recharge.coupon.use.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.09.19
  */
 
 Tw.MyTDataRechargeCouponUse = function (rootEl, couponNo) {

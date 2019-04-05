@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 고객보호 비밀번호 설정/변경(MS_01_01_01)
- * @file myt-join.custpassword.check.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.09.28
+ * FileName: myt-join.custpassword.check.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.09.28
  * Summary: 고객보호 비밀번호 설정/변경 화면에서 비밀번호 확인
  */
 Tw.MytJoinCustpasswordCheck = function() {

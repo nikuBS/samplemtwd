@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 서브메인(MF2)
- * @file myt-fare.submain.controller.ts
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.09.27
+ * FileName: myt-fare.submain.controller.ts
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.09.27
  *
  */
 

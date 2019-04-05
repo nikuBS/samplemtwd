@@ -1,7 +1,7 @@
 /**
- * @file customer.email.upload.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.11.16
+ * FileName: customer.email.upload.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.11.16
  */
 
 Tw.CustomerEmailUpload = function (rootEl, data) {

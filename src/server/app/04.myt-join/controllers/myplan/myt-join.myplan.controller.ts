@@ -1,8 +1,8 @@
 /**
  * MyT > 나의 가입정보 > 나의 요금제
- * @file myt-join.myplan.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.19
+ * FileName: myt-join.myplan.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.09.19
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.repair.controller.ts (CS_03_01)
- * @author Hakjoon Sim(hakjoon.sim@sk.com)
- * @since 2018.11.01
+ * FileName: customer.agentsearch.repair.controller.ts (CS_03_01)
+ * Author: Hakjoon Sim(hakjoon.sim@sk.com)
+ * Date: 2018.11.01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

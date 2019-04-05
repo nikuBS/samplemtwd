@@ -1,7 +1,7 @@
 /**
- * @file membership.benefit.plus.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.06
+ * FileName: membership.benefit.plus.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.11.06
  */
 
 Tw.MembershipBenefitPlus = function (rootEl) {

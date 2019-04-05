@@ -1,7 +1,7 @@
 /**
- * @file myt-data.familydata.share.monthly.js
+ * FileName: myt-data.familydata.share.monthly.js
  * @author Jiyoung Jo
- * @since 2018.10.04
+ * Date: 2018.10.04
  */
 
 Tw.MyTDataFamilyShareMonthly = function($wrap, tabId, hasShare) {

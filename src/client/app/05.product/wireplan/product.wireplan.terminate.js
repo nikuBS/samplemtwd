@@ -1,7 +1,7 @@
 /**
- * @file product.wireplan.terminate.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.22
+ * FileName: product.wireplan.terminate.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.22
  */
 
 Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) {

@@ -1,7 +1,7 @@
 /**
- * @file membership-clause.layer.component.js
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.29
+ * FileName: membership-clause.layer.component.js
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.10.29
  *
  */
 Tw.MembershipClauseLayerPopup = function (params) {

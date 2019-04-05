@@ -1,8 +1,8 @@
 /**
  * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_09)(hbs)
- * @file product.mobileplan.setting.location-search.js
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.11.13
+ * FileName: product.mobileplan.setting.location-search.js
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.11.13
  * Desctiption: 할인지역 검색
  */
 Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback, tmplt) {

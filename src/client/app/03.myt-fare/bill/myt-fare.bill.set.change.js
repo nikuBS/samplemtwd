@@ -1,8 +1,8 @@
 /**
- * @file myt-fare.bill.set.change.js
- * @author 양정규 (skt.P130715@partner.sk.com)
+ * FileName: myt-fare.bill.set.change.js
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * 요금 안내서 설정 > 안내서 변경
- * @since 2018. 9. 21
+ * Date: 2018. 9. 21
  */
 Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$container = rootEl;

@@ -1,7 +1,7 @@
 /**
- * @file main.home.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.06
+ * FileName: main.home.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.06
  */
 
 Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn) {

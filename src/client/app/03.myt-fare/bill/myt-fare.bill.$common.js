@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.common.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.09.18
+ * FileName: myt-fare.bill.common.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.18
  * Annotation: 요금 즉시납부 화면에서 미납요금 조회 및 납부할 회선 선택하는 공통 모듈
  */
 

@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.complete.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2019. 1. 29.
+ * FileName: myt-join.suspend.complete.ts
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2019. 1. 29.
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

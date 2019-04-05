@@ -1,7 +1,7 @@
 /**
- * @file certification.sk.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.08.20
+ * FileName: certification.sk.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.08.20
  */
 
 Tw.CertificationSk = function () {

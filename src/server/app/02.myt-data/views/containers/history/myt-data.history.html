@@ -1,7 +1,7 @@
 <%#
-* @file myt-data.history.html
+* FileName: myt-data.history.html
 * @author Jiyoung Jo
-* @since 2018.09.20
+* Date: 2018.09.20
 * ID: DC_07
 %>
 
@@ -89,8 +89,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function() {
-    new Tw.MyTDataHistory($('.wrap') < % -JSON.stringify(chargeData) % >
-  )
+    new Tw.MyTDataHistory($('.wrap'), <%- JSON.stringify(chargeData) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

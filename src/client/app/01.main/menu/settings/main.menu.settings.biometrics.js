@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.biometrics.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.10
+ * FileName: main.menu.settings.biometrics.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.10
  */
 
 Tw.MainMenuSettingsBiometrics = function (rootEl, target, userId) {

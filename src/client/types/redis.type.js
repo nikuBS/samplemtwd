@@ -1,9 +1,3 @@
-/**
- * @file redis.type.js
- * @author
- * @since 2018.05
- */
-
 Tw.BANNER_LINK_TYPE = {
   CHANNEL_APP: '1',
   OTHER_WEB: '2'

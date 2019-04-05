@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.history.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.09.17
+ * FileName: myt-fare.info.history.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018.09.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -215,7 +215,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return null;
     });
-  };
+  }
 
   // 자동납부통합인출 해지 버튼 노출을 위한 조회 (대상자 아니라면 비노출)
   private getAutoWithdrawalAccountInfo = (): Observable<any | null> => {
@@ -233,7 +233,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return null;
     });
-  };
+  }
 
   // 2019.02.21 deprecated 전체납부내역 조회 케이스 -> 최근납부내역으로 수정 서브메인 최근납부내역과 싱크가 맞지 않는 이슈
   /* private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any, pageInfo: any) {
@@ -300,7 +300,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   // 즉시납부내역 조회
   private getDirectPaymentData = (): Observable<any | null> => {
@@ -324,7 +324,7 @@ class MyTFareInfoHistory extends TwViewController {
       });
       return resp.result;
     });
-  };
+  }
 
   // 자동납부내역 조회
   private getAutoPaymentData = (): Observable<any | null> => {
@@ -348,7 +348,7 @@ class MyTFareInfoHistory extends TwViewController {
       });
       return resp.result;
     });
-  };
+  }
 
   // 자동납부 통합인출 내역 조회
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
@@ -371,7 +371,7 @@ class MyTFareInfoHistory extends TwViewController {
       });
       return resp.result;
     });
-  };
+  }
 
   // 소액결제 내역 조회
   private getMicroPaymentData = (): Observable<any | null> => {
@@ -395,7 +395,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   // 콘텐츠 결제 내역 조회
   private getContentsPaymentData = (): Observable<any | null> => {
@@ -419,7 +419,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   // 포인트 납부예약(1회 납부예약)
   private getPointReservePaymentData = (): Observable<any | null> => {
@@ -446,7 +446,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   // 포인트 자동납부
   private getPointAutoPaymentData = (): Observable<any | null> => {
@@ -472,7 +472,7 @@ class MyTFareInfoHistory extends TwViewController {
 
       return resp.result;
     });
-  };
+  }
 
   // 조회된 데이터 통합
   private mergeData(data: PaymentList): any {

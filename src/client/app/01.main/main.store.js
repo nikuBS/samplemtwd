@@ -1,7 +1,7 @@
 /**
- * @file main.store.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.03.12
+ * FileName: main.store.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.03.12
  */
 
 Tw.MainStore = function (rootEl, menuId) {

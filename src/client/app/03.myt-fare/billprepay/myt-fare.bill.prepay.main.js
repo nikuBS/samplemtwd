@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.prepay.main.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.04
+ * FileName: myt-fare.bill.prepay.main.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.04
  * Annotation: 소액결제/콘텐츠이용료 메인화면
  */
 

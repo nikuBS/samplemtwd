@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 > 다른회선요금조회(자녀)(MF_09_01)
- * @file myt-fare.bill.guide.child.controller.ts
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.12.13
+ * FileName: myt-fare.bill.guide.child.controller.ts
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.12.13
  * Summary: 나의 요금 > 요금안내서 > 자녀이용요금 화면
  */
 

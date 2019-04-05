@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.join.roaming-alarm.js
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.05
+ * FileName: product.roaming.join.roaming-alarm.js
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.05
  */
 
 Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId) {

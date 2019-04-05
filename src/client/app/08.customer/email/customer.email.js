@@ -1,7 +1,7 @@
 /**
- * @file customer.email.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.10.26
+ * FileName: customer.email.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.10.26
  */
 
 Tw.CustomerEmail = function (rootEl) {
@@ -177,7 +177,7 @@ Tw.CustomerEmail.prototype = {
 
   // 이메일인풋, 전화번호 삭제버튼 클릭 후 추가 밸리데이션 정보 가리기
   _onTextInputClear: function (e) {
-    var valiClass = '';
+    var valiClass = ''
     if ($(e.currentTarget).siblings('input').attr('class').indexOf('email') >= 0 ) {
       valiClass = 'fe-error-email';
     } else {

@@ -1,7 +1,7 @@
 <%#
-* @file product.mobileplan-add.html
+* FileName: product.mobileplan-add.html
 * @author Jiyoung Jo
-* @since 2018.10.09
+* Date: 2018.10.09
 * id: MV_01
 %>
 
@@ -149,8 +149,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductList($('.wrap') < % -JSON.stringify(params) % >, { code: 'F01200', type: 'additions' }
-    )
+        new Tw.ProductList($('.wrap'), <%- JSON.stringify(params) %>, { code: 'F01200', type: 'additions' });
     });
 </script>
 <% include ../../components/mobileplan-add/product.mobileplan-add.list.component.html %>

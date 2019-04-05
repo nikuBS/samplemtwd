@@ -1,7 +1,7 @@
 /**
- * @file membership.benefit.plus.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.11.06
+ * FileName: membership.benefit.plus.controller.ts
+ * Author: Hakjoon sim (hakjoon.sim@sk.com)
+ * Date: 2018.11.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

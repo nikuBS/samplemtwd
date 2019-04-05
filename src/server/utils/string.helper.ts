@@ -1,9 +1,3 @@
-/**
- * @file string.helper.ts
- * @author
- * @since 2018.05
- */
-
 class StringHelper {
   static replaceAt(str: string, index: number, replacement: string): string {
     return str.substr(0, index) + replacement + str.substr(index + replacement.length);

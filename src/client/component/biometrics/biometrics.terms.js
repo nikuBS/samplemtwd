@@ -1,7 +1,7 @@
 /**
- * @file biometrics.terms.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.13
+ * FileName: biometrics.terms.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.13
  */
 
 Tw.BiometricsTerms = function (target, userId) {

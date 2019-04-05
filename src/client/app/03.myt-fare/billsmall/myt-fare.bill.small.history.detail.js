@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.contents.history.detail.js
- * @author Lee kirim (kirim@sk.com)
- * @since 2018. 11. 29
+ * FileName: myt-fare.bill.contents.history.detail.js
+ * Author: Lee kirim (kirim@sk.com)
+ * Date: 2018. 11. 29
  */
 Tw.MyTFareBillSmallHitstoryDetail = function (rootEl, data, updateFunc) {
   this.$container = rootEl;
@@ -75,7 +75,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);
     
     // view 
-    this.$setBlock.addClass('none').attr('aria-hidden', true);
+    this.$setBlock.addClass('none').attr('aria-hidden', true)
     this.$showBlockList.removeClass('none').attr('aria-hidden', false);
     if (this.$container.find('.fe-block-state').length) {
       this.$container.find('.fe-block-state').text(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A1);

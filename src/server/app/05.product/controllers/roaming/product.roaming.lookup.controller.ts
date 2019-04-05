@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.lookup.controller.ts
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.13
+ * FileName: product.roaming.lookup.controller.ts
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

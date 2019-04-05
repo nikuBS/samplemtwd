@@ -1,9 +1,3 @@
-/**
- * @file input.helper.js
- * @author
- * @since 2018.05
- */
-
 Tw.InputHelper = (function () {
   function inputNumberOnly(input) {
     var $input = $(input);

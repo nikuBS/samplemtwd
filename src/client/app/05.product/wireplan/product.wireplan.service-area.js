@@ -1,7 +1,7 @@
 /**
- * @file product.wire.service-area.js
+ * FileName: product.wire.service-area.js
  * @author Jiyoung Jo
- * @since 2018.11.07
+ * Date: 2018.11.07
  */
 
 Tw.ProductWireServiceArea = function(rootEl) {

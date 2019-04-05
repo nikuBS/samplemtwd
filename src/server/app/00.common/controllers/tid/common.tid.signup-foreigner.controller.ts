@@ -1,7 +1,7 @@
 /**
- * @file common.tid.signup-foreigner.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.07.09
+ * FileName: common.tid.signup-foreigner.controller.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.07.09
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

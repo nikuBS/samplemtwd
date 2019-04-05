@@ -1,0 +1,28 @@
+<%#
+* FileName: myt-fare.submain.total-payment.html
+* Author: Kim InHwan (skt.p132150@partner.sk.com)
+* Date: 2018.09.27
+%>
+
+<li>
+    <button>
+        <div class="lineinfo-user">
+            <span class="info-title"><%= payMthdCdNm %>
+                <% if (overPayYn === 'Y') { %>
+                <!--<span class="badge badge-over ml8"><span class="blind">과납</span></span>-->
+                <% } %>
+            </span>
+            <span class="info-sub">
+                <%= opDt.slice(0, 4) %>.<%= opDt.slice(4, 6) %>.<%= opDt.slice(6, 8) %>
+            </span>
+        </div>
+        <div class="lineinfo-data">
+            <span class="info-title">
+                <span class="num ff-tg-black">
+                    <%= payAmt.replace(/\B(?=(\d{3})+(?!\d))/g, ',') %>
+                </span>
+                <span class="ff-tg-medium">원</span>
+            </span>
+        </div>
+    </button>
+</li>

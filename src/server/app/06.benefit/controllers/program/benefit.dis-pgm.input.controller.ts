@@ -1,7 +1,7 @@
 /*
- * @file benefit.dis-pgm.input.ts
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.12.18
+ * FileName: benefit.dis-pgm.input.ts
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.12.18
  *
  */
 

@@ -1,8 +1,8 @@
 /**
  * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트
- * @file benefit.my-benefit.rainbow-point.js
- * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018. 11. 02.
+ * FileName: benefit.my-benefit.rainbow-point.js
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018. 11. 02.
  */
 
 Tw.BenefitMyBenefitRainbowPoint = function (rootEl, options) {

@@ -1,9 +1,3 @@
-/**
- * @file common.type.ts
- * @author
- * @since 2018.05
- */
-
 export const CHANNEL_TYPE = {
   MOBILE_APP: 'mobile-app',
   MOBILE_WEB: 'mobile-web'

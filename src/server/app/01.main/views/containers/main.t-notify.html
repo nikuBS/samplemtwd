@@ -1,0 +1,132 @@
+<%#
+* FileName: t-notify.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2018.10.04
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '<a class="logo" href=""><img src="/img/common/logo-tworld.png" alt="Tworld" /></a>', svcInfo: svcInfo, option: { line: true, back: 'none', home: true } }) %>
+    <!--// #header -->
+    <% if (svcInfo) { %>
+    <% if (svcInfo.totalSvcCnt === '0') { %>
+    <% include ../components/t-notify/empty-line.component.html %>
+    <% } else if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') { %>
+    <% include ../components/t-notify/no-register.component.html %>
+    <% } else if (svcInfo.svcAttrCd != 'M1') { %>
+    <% include ../components/t-notify/no-mobile.component.html %>
+    <% } else { %>
+    <% if (history.length > 0) { %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray bgnone">
+                <p class="tit"><%= currentDate.year%>년 <%= currentDate.month %>월</p>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box bgnone noborder nogaps-hoz">
+                <% history.map((target) => { %>
+                <% if (target.type === 'GIFT') { %>
+                <% if (target.giftType === '1') { %>
+                <div class="shadow-box mt8">
+                    <div class="alarm_list">
+                        <div class="con-box">
+                            <p class="con0">
+                                <span><%= target.showDate %></span>
+                                <span></span>
+                            </p>
+                            <p class="con1"><strong>데이터 선물하기</strong><br/><%= target.custNm %>(<%= target.svcNum %>)님에게 데이터<br/>선물을 완료했습니다.</p>
+                            <p class="con2">선물 한 데이터 <strong><%= target.dataQty %> MB</strong></p>
+                        </div>
+                        <button class="detail-view">선물내역 보기<i class="detail-view-ic"></i></button>
+                    </div>
+                </div>
+                <% } %>
+                <!--<div class="shadow-box">-->
+                    <!--<div class="alarm_list">-->
+                        <!--<div class="con-box">-->
+                            <!--<p class="con0">-->
+                                <!--<span>09월 06일 목요일</span>-->
+                                <!--&lt;!&ndash;<span>오전 11시 09분</span>&ndash;&gt;-->
+                            <!--</p>-->
+                            <!--<p class="con1"><strong>데이터 선물하기</strong><br/>홍*동(010-12**-34**)님에게 데이터<br/>선물을 완료했습니다.</p>-->
+                            <!--<p class="con2">선물 한 데이터 <strong>500 MB</strong></p>-->
+                        <!--</div>-->
+                        <!--<button class="detail-view">선물내역 보기<i class="detail-view-ic"></i></button>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <% } else if (target.type === 'PROD') { %>
+                <div class="shadow-box mt8">
+                    <div class="alarm_list">
+                        <div class="con-box">
+                            <p class="con0">
+                                <span><%= target.showDate %></span>
+                                <span><%= target.showTime %></span>
+                            </p>
+                            <p class="con1"><strong>요금제 변경</strong><br/>band 데이터 6.5G 요금제에서 <%= target.name %><br/>요금제로 변경 되었습니다.</p>
+                            <p class="con2">변경된 요금제 <strong><%= target.name %></strong></p>
+                        </div>
+                        <button class="detail-view">더보기<i class="detail-view-ic"></i></button>
+                    </div>
+                </div>
+                <% } else if (target.type === 'ADD') { %>
+                <% if (target.scrbTermCd === 'A') { %>
+                <div class="shadow-box mt8">
+                    <div class="alarm_list">
+                        <div class="con-box">
+                            <p class="con0">
+                                <span><%= target.showDate %></span>
+                                <span><%= target.showTime %></span>
+                            </p>
+                            <p class="con1"><strong>부가서비스 신청</strong><br/>부가서비스 가입이 완료 되었습니다.</p>
+                            <p class="con2">가입한 부가서비스 <strong><%= target.name %></strong></p>
+                        </div>
+                        <button class="detail-view">나의 부가서비스 보기<i class="detail-view-ic"></i></button>
+                    </div>
+                </div>
+                <% } else { %>
+                <div class="shadow-box mt8">
+                    <div class="alarm_list">
+                        <div class="con-box">
+                            <p class="con0">
+                                <span><%= target.showDate %></span>
+                                <span><%= target.showTime %></span>
+                            </p>
+                            <p class="con1"><strong>부가서비스 해지</strong><br/>부가서비스 해지가 완료 되었습니다.</p>
+                            <p class="con2">해지한 부가서비스 <strong><%= target.name %></strong></p>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% } %>
+
+                <% }) %>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <% } else { %>
+    <%- include('../components/t-notify/no-history.component.html', { svcInfo: svcInfo }); %>
+    <% } %>
+    <% } %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    <% } %>
+</div>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+  });
+</script>
+<% include ../components/end.component.html %>

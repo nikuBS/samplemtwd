@@ -1,8 +1,8 @@
 /**
  * 유선 부가서비스 > 설정 (발신번호표시)
- * @file product.wireplan.setting.show-sender.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.14
+ * FileName: product.wireplan.setting.show-sender.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

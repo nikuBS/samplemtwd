@@ -1,9 +1,3 @@
-/**
- * @file string.type.ts
- * @author
- * @since 2018.05
- */
-
 export enum DATA_UNIT {
   KB = 'KB',
   MB = 'MB',

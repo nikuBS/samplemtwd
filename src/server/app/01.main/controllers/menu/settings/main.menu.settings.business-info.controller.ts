@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.business-info.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.05
+ * FileName: main.menu.settings.business-info.controller.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.05
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

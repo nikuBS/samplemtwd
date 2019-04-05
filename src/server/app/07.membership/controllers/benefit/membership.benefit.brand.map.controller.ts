@@ -1,8 +1,8 @@
 /*
- * @file membership.benefit.brand.map.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * FileName: membership.benefit.brand.map.controller.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Editor: Inhwan Kim (skt.P132150@partner.sk.com)
- * @since 2018.11.06
+ * Date: 2018.11.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

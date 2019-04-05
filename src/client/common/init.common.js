@@ -1,9 +1,3 @@
-/**
- * @file init.common.js
- * @author Ara Jo
- * @since 2018.05
- */
-
 Tw.Environment = {
   init: false,
   cdn: ''

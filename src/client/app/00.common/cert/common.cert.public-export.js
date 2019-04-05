@@ -1,7 +1,7 @@
 /**
- * @file common.cert.public-export.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.11
+ * FileName: common.cert.public-export.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.10.11
  */
 
 Tw.CommonCertPublicExport = function (rootEl, signgateHost, signgatePort) {

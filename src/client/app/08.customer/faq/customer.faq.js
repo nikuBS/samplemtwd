@@ -1,7 +1,7 @@
 /**
- * @file customer.faq.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.05
+ * FileName: customer.faq.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.11.05
  */
 
 Tw.CustomerFaq = function (rootEl) {

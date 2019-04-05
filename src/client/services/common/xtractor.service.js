@@ -1,9 +1,3 @@
-/**
- * @file xtractor.service.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.05
- */
-
 Tw.XtractorService = function($container) {
   this.$container = $container;
   Tw.Logger.info('[Xtractor] init container', this.$container);

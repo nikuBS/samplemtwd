@@ -1,8 +1,8 @@
 /**
  * 상품 해지 - 유선 부가서비스
- * @file product.wireplan.terminate.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.13
+ * FileName: product.wireplan.terminate.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

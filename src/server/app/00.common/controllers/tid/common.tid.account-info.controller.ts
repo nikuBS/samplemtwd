@@ -1,7 +1,7 @@
 /**
- * @file common.account-info.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.02
+ * FileName: common.account-info.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan.setting.ting.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * FileName: product.mobileplan.setting.ting.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.14
  */
 
 Tw.ProductMobileplanSettingTing = function(rootEl, prodId, displayId, currentTingSettings) {

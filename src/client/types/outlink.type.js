@@ -1,9 +1,3 @@
-/**
- * @file outlink.type.js
- * @author
- * @since 2018.05
- */
-
 Tw.OUTLINK = {
   MOBILE_TWORLD: 'http://m2.tworld.co.kr/jsp/op.jsp?p=w70&f=a0001',
   GOOGLE_STORE: 'https://play.google.com/store/apps/details?id=Com.sktelecom.minit',

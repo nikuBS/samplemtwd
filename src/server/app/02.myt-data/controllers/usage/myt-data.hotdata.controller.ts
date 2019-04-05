@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 데이터/통화 > 실시간 잔여량
- * @file myt-data.hotdata.controller.ts
- * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018.11.28
+ * FileName: myt-data.hotdata.controller.ts
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.11.28
  * Summary: 실시간 잔여량 및 부가 서비스 노출 여부 조회
  */
 

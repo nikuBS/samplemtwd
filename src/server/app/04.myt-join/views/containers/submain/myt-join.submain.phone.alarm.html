@@ -1,8 +1,8 @@
 <%#
 * MenuName: 나의 가입정보 > 서브메인 > 번호변경 안내서비스 신청(MS_03_01_03)
-* @file myt-join.submain.phone.alarm.html
-* @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
-* @since 2018.10.19
+* FileName: myt-join.submain.phone.alarm.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.10.19
 * Summary: 번호변경 안내서비스 신청
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -114,8 +114,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinPhoneNumChgAlarm($('.wrap') < % -JSON.stringify(data) % >
-  )
+    new Tw.MyTJoinPhoneNumChgAlarm($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

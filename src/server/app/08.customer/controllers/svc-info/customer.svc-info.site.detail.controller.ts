@@ -1,7 +1,7 @@
 /**
- * @file customer.svc-info.site.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.13
+ * FileName: customer.svc-info.site.controller.ts
+ * Author: Lee Kirim (kirim@sk.com)
+ * Date: 2018.12.13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -71,7 +71,7 @@ class CustomerSvcInfoSite extends TwViewController {
         return prev;
       }
     }, {});
-  };
+  }
 
   // 전송된 html 수정 변경
   private modifyHTML = (html: string): string => {

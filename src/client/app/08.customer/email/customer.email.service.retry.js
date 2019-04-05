@@ -1,7 +1,7 @@
 /**
- * @file customer.email.service.retry.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.11.07
+ * FileName: customer.email.service.retry.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.11.07
  */
 
 Tw.CustomerEmailServiceRetry = function (rootEl) {

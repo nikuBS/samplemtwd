@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 약정기간 변경
- * @file myt-join.wire.modify.period.controller.ts
- * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018.10.16
+ * FileName: myt-join.wire.modify.period.controller.ts
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.10.16
  * Summary: 유선 약정기간 정보 조회
  */
 

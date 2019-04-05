@@ -4,9 +4,9 @@
  *           나의 요금 > 요금안내서 개별청구회선(MF_02_03)
  *           나의 요금 > 요금안내서 선불폰(PPS)(MF_02_04)
  *           나의 요금 > 요금안내서 > SK브로드밴드
- * @file myt-fare.bill.guide.controller.ts
- * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * @since 2018.09.12
+ * FileName: myt-fare.bill.guide.controller.ts
+ * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * Date: 2018.09.12
  * Summary: 요금안내서 화면으로 진입 후 조건에 맞게 화면 분기 및 청구요금/사용요금 조회
  */
 

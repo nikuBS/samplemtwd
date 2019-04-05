@@ -1,9 +1,3 @@
-/**
- * @file env.helper.ts
- * @author
- * @since 2018.05
- */
-
 import environment from '../config/environment.config';
 import FormatHelper from './format.helper';
 

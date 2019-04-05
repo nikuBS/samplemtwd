@@ -1,7 +1,7 @@
 /**
- * @file benefit.myt-benefit.cookiz
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 5.
+ * FileName: benefit.myt-benefit.cookiz
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 11. 5.
  * 혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트(BS_01_01_06)
  */
 Tw.BenefitMyBenefitCookiz = function (rootEl) {

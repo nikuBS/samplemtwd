@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.fi.reservation.controller.ts
- * @author Seungkyu Kim (ksk4788@pineone.com)
- * @since 2018.11.16
+ * FileName: product.roaming.fi.reservation.controller.ts
+ * Author: Seungkyu Kim (ksk4788@pineone.com)
+ * Date: 2018.11.16
 */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';

@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 통합(일반)청구회선(MF_02_02)
- * @file myt-fare.bill.guide.integrated-normal.js
- * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * @since 2018.09.12
+ * FileName: myt-fare.bill.guide.integrated-normal.js
+ * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * Date: 2018.09.12
  * Summay: 요금안내서 통합(일반)청구회선 조회화면 처리, 자녀 이용요금 조회
  */
 Tw.MyTFareBillGuideIntegratedNormal = function (rootEl, resData) {

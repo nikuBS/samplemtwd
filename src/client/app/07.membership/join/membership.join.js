@@ -1,7 +1,7 @@
 /**
- * @file benefit.membership.join.js
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.29
+ * FileName: benefit.membership.join.js
+ * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Date: 2018.10.29
  * Annotation: T멤버십 가입
  */
 

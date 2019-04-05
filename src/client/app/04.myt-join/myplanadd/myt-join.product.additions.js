@@ -1,7 +1,7 @@
 /**
- * @file myt-join.product.additions.js
+ * FileName: myt-join.product.additions.js
  * @author Jiyoung Jo
- * @since 2018.10.11
+ * Date: 2018.10.11
  */
 
 Tw.MyTJoinMyPlanAdd = function(rootEl) {

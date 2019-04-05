@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
- * @file product.roaming.planadd.js
- * @author Eunjung Jung
- * @since 2018.11.12
+ * FileName: product.roaming.planadd.js
+ * Author: Eunjung Jung
+ * Date: 2018.11.12
  */
 
 Tw.ProductRoamingPlanAdd = function (rootEl, params, roamingAddData, pageInfo) {

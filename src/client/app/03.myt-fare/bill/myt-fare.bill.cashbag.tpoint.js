@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.cashbag.tpoint.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.7
+ * FileName: myt-fare.bill.cashbag.tpoint.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.7
  * Annotation: OK cashbag 및 Tpoint 1회 예약납부 및 자동납부 관리
  */
 

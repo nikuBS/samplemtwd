@@ -1,0 +1,34 @@
+{
+  "code": "00",
+  "msg": "0005 결과메세지",
+
+  "result": {
+
+    "prodNm" : "사용 중인 요금상품",
+    "isAdultInd" : "T",
+
+    "used" : "1025000",
+
+    "totUsed" : "10260000",
+    "totShar" : "1027000",
+    "opmdBasic" : "1024000",
+
+    "childList" : [{
+      "mSvcMgmtNum" : "722XXXXXX",
+      "cSvcMgmtNum" : "723XXXXXX",
+      "usimNum" : "1010100373991F",
+      "svcScrbDt" : "20180516",
+      "svcTermDt" : "20180712",
+      "svcStNm" : "사용중",
+      "svcStCd" : "",
+      "svcStChgCd" : "서비스상태 변경코드",
+      "svcSt" : "사용중",
+
+      "eqpMgmtStCd" : "09",
+      "useAmt" : "33330"
+
+    }]
+
+  }
+
+}

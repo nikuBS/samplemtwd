@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 번호변경 안내서비스 신청(MS_03_01_03)
- * @file myt-join.submain.phone.alarm.controller.ts
- * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.10.19
+ * FileName: myt-join.submain.phone.alarm.controller.ts
+ * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * Date: 2018.10.19
  * Summary: 번호변경 안내서비스 신청
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file certification.bio.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.09.11
+ * FileName: certification.bio.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.09.11
  */
 
 Tw.CertificationBio = function () {

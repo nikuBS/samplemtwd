@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 데이터 상한금액 설정
- * @file product.mobileplan.setting.ting.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * FileName: product.mobileplan.setting.ting.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

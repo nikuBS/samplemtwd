@@ -1,7 +1,7 @@
 /**
- * @file common.member.slogin.ios.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.07.26
+ * FileName: common.member.slogin.ios.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.07.26
  */
 
 Tw.CommonMemberSloginIos = function (rootEl, target) {

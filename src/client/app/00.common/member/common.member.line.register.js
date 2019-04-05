@@ -1,7 +1,7 @@
 /**
- * @file line-register.component.js
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2018.10.01
+ * FileName: line-register.component.js
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2018.10.01
  */
 
 Tw.CommonMemberLineRegister = function ($container, landing) {

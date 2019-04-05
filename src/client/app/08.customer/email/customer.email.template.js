@@ -1,7 +1,7 @@
 /**
- * @file customer.email.template.js
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.10.29
+ * FileName: customer.email.template.js
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.10.29
  */
 
 Tw.CustomerEmailTemplate = function (rootEl, data) {
@@ -41,7 +41,7 @@ Tw.CustomerEmailTemplate.prototype = {
       tpl_quality_wibro: Handlebars.compile($('#tpl_quality_wibro').html()),
       tpl_quality_internet: Handlebars.compile($('#tpl_quality_internet').html()),
       tpl_quality_phone: Handlebars.compile($('#tpl_quality_phone').html())
-    };
+    }
 
     this.templateObj = this._addNameObj(this.templateObj); // 이름 추가
 
@@ -52,7 +52,7 @@ Tw.CustomerEmailTemplate.prototype = {
       DIRECT_BRAND: 'tpl_service_direct_brand',
       DIRECT: 'tpl_service_direct',
       CHOCO: 'tpl_service_chocolate',
-    };
+    }
 
     this.qualityTemplateCase = {
       cell: 'tpl_quality_cell',

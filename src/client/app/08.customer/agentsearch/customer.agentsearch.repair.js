@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.repair.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.12.19
+ * FileName: customer.agentsearch.repair.js
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.12.19
  */
 
 Tw.CustomerAgentsearchRepair = function (rootEl) {

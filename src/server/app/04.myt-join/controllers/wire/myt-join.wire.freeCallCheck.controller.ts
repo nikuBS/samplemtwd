@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV B끼리 무료 통화 대상자 조회(MS_04_02)
- * @file myt-join.freeCallCheck.controller.ts
- * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * @since 2018.10.15
+ * FileName: myt-join.freeCallCheck.controller.ts
+ * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * Date: 2018.10.15
  * Summary: B끼리 무료 통화 대상자 조회화면 controller
  */
 

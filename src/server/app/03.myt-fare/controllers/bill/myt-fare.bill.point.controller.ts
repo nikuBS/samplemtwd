@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.point.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.09.18
+ * FileName: myt-fare.bill.point.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.09.18
  * Description: 포인트 요금납부
  */
 

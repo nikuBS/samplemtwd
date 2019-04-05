@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.longterm
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 18.
+ * FileName: myt-join.suspend.longterm
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 10. 18.
  */
 /**
  * 일시정지 내 장기일시정지 탭 관리

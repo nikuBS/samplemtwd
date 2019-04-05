@@ -1,8 +1,8 @@
 /**
  * 상품 가입 - 유선 부가서비스
- * @file product.wireplan.join.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.01
+ * FileName: product.wireplan.join.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.10.01
  */
 
 Tw.ProductWireplanJoin = function(rootEl, prodId, confirmOptions, btnData) {

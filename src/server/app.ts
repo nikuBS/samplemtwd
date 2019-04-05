@@ -68,6 +68,7 @@ class App {
     this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
     this.app.use(express.static(path.join(__dirname, '/public')));
+    this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.exceptionHandler();
     this.setViewPath();

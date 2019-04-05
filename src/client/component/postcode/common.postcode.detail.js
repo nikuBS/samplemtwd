@@ -1,7 +1,7 @@
 /**
- * @file common.postcode.detail.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.12
+ * FileName: common.postcode.detail.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.11.12
  * Description: 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (2/3)
  */
 

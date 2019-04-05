@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.setting.roaming-combine.js
- * @author Hyunkuk Lee (max5500@pineone.com)
- * @since 2018.12.05
+ * FileName: product.roaming.setting.roaming-combine.js
+ * Author: Hyunkuk Lee (max5500@pineone.com)
+ * Date: 2018.12.05
  * ID : RM_11_01_02_07
  */
 
@@ -162,7 +162,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
   },
   _removeOnList : function (targetEvt) {
-    var $target = $(targetEvt.currentTarget);
+    var $target = $(targetEvt.currentTarget)
     var selectedIdx = $target.parents('li').index();
     selectedIdx = parseInt(selectedIdx,10);
     var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;

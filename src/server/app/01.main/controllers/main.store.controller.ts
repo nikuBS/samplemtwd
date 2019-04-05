@@ -1,7 +1,7 @@
 /**
- * @file main.store.controller.ts
- * @author Ara Jo (araara.jo@sk.com)
- * @since 2019.03.12
+ * FileName: main.store.controller.ts
+ * Author: Ara Jo (araara.jo@sk.com)
+ * Date: 2019.03.12
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';

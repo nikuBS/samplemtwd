@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 약정할인/기기상환 정보(MS_09)
- * @file myt-join.info.discount.controller.ts
- * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * @since 2018.10.04
+ * FileName: myt-join.info.discount.controller.ts
+ * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * Date: 2018.10.04
  * Summary: 약정정보, 기기상환 정보 조회
  */
 
@@ -16,6 +16,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE, TIME_UNIT } from '../../../../types/string.type';
 import { MYT_JOIN_CONTRACT_TERMINAL } from '../../../../types/string.type';
+import contractTerminal_BFF_05_0063 from '../../../../mock/server/contractTerminal.BFF_05_0063.mock';
 
 class MytJoinInfoDiscount extends TwViewController {
   constructor() {

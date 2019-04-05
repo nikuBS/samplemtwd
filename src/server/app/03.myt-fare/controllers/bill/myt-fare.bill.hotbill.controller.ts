@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.hotbill.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 9. 20.
+ * FileName: myt-fare.bill.hotbill.ts
+ * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * Date: 2018. 9. 20.
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

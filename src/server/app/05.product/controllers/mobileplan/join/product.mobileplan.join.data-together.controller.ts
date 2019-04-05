@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 데이터 함께쓰기
- * @file product.mobileplan.join.data-together.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * FileName: product.mobileplan.join.data-together.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

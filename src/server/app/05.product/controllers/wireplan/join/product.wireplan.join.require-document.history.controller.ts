@@ -1,8 +1,8 @@
 /**
  * 인터넷/전화/TV > 가입신청 내역
- * @file product.wireplan.join.require-document.history.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.08
+ * FileName: product.wireplan.join.require-document.history.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.08
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file common.withdrawal.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.31
+ * FileName: common.withdrawal.js
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.31
  */
 
  Tw.CommonWithdrawal = function () {

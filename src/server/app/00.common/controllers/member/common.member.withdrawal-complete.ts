@@ -1,7 +1,7 @@
 /**
- * @file common.member.withdrawal-complete.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.12.05
+ * FileName: common.member.withdrawal-complete.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.12.05
  */
 
 import { NextFunction, Request, Response } from 'express';

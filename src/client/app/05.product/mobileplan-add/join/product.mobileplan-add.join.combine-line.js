@@ -1,7 +1,7 @@
 /**
- * @file product.mobileplan-add.join.combine-line.js
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.09
+ * FileName: product.mobileplan-add.join.combine-line.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.11.09
  */
 
 Tw.ProductMobileplanAddJoinCombineLine = function(rootEl, prodId, displayId, confirmOptions) {

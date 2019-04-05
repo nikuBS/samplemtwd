@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.family-sites.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.26
+ * FileName: main.menu.settings.family-sites.controller.ts
+ * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Date: 2018.11.26
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

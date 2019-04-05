@@ -1,8 +1,8 @@
 /**
  * 어드민 전용 상품원장 미리보기
- * @file product.common.callplan.preview.controller.ts
- * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.12.05
+ * FileName: product.common.callplan.preview.controller.ts
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2018.12.05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.small.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.10.04
+ * FileName: myt-fare.bill.small.controller.ts
+ * Author: Jayoon Kong (jayoon.kong@sk.com)
+ * Date: 2018.10.04
  * Description: 소액결제 메인화면
  */
 

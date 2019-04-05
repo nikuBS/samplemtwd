@@ -1,9 +1,3 @@
-/**
- * @file myt-fare.router.ts
- * @author
- * @since 2018.05
- */
-
 import TwRouter from '../../common/route/tw.router';
 import MyTFareSubMain from './myt-fare.submain.controller';
 import MyTFareBillGuide from './controllers/billguide/myt-fare.bill.guide.controllers';

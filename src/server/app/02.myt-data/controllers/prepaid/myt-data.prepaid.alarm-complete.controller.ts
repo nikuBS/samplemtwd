@@ -1,7 +1,7 @@
 /**
- * @file myt-data.prepaid.alarm-complete.controller.ts
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.11.28
+ * FileName: myt-data.prepaid.alarm-complete.controller.ts
+ * Author: Jiman Park (jiman.park@sk.com)
+ * Date: 2018.11.28
  * Description: 선불폰 충전 알람 설정 완료 페이지
  */
 

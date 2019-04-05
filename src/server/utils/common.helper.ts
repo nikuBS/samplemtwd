@@ -1,9 +1,3 @@
-/**
- * @file common.helper.ts
- * @author
- * @since 2018.05
- */
-
 class CommonHelper {
 
   static getPaging (uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
