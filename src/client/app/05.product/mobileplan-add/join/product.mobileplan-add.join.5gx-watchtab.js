@@ -220,7 +220,7 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
       }]
     });
 
