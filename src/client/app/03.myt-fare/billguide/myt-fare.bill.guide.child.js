@@ -128,11 +128,11 @@ Tw.MyTFareBillGuideChild.prototype = {
     this.$container.on('click', '[data-target="conditionChangeBtn"]', $.proxy(this._conditionChangeEvt, this));
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function() { // 콘텐츠 이용료 최초화면 바로가기
-      this._history.goLoad('/myt-fare/bill/contents');
+      this._history.goLoad('/myt-fare/bill/contents/history');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function() { // 소액결재 최초화면 바로가기
-      this._history.goLoad('/myt-fare/bill/small');
+      this._history.goLoad('/myt-fare/bill/small/history');
     }, this));
 
     this.$container.on('click', '#divUnpaidBill button', $.proxy(function() { // 미납요금으로 이동

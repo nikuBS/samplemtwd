@@ -88,7 +88,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>', '<%= svcInfo.svcMgmtNum %>');
+    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>', '<%= svcInfo.userId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

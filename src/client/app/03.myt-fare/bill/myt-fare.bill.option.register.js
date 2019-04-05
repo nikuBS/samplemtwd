@@ -11,14 +11,14 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true, true);
-  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay'));
-  this._backAlert = new Tw.BackAlert(rootEl, true);
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true, true); // 유효성 검증
+  this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay')); // 이동 키 클릭 시 다음 input으로 이동
+  this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert
 
   if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
-    bankList = JSON.parse(window.unescape(bankList));
+    bankList = JSON.parse(window.unescape(bankList)); // 은행리스트(컨트롤러에서 조회)
   }
-  this._bankList = new Tw.MyTFareBillBankList(rootEl, bankList);
+  this._bankList = new Tw.MyTFareBillBankList(rootEl, bankList); // 미리 조회된 은행리스트 전송
 
   this._init();
 };
@@ -43,6 +43,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$cardY = this.$cardWrap.find('.fe-card-y');
     this.$cardM = this.$cardWrap.find('.fe-card-m');
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
+    this.$payBtn = this.$container.find('.fe-pay');
     this.$isRadioChanged = false;
     this.$isAccountTabValid = false;
     this.$isCardTabValid = false;
@@ -53,10 +54,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-payment-date', $.proxy(this._changePaymentDate, this));
-    this.$container.on('click', '.fe-pay', $.proxy(this._submit, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$payBtn.click(_.debounce($.proxy(this._submit, this), 500)); // 납부하기
   },
   _changeRadioBox: function (event) {
+    // 라디오버튼 change에 따른 값 셋팅
     this.$isRadioChanged = true;
 
     var $target = $(event.target);
@@ -74,13 +76,14 @@ Tw.MyTFareBillOptionRegister.prototype = {
 
     this._checkIsAbled();
 
+    // 첫 change일 경우 유효성 검증 서비스 새로 호출
     if (this.$isFirstChange) {
       this._validationService.bindEvent();
     }
     this.$isFirstChange = false;
   },
   _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this)); // 은행리스트 관련 공통 컴포넌트 호출
   },
   _checkIsAbled: function () {
     this._validationService.checkIsAbled();
@@ -88,6 +91,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
   _changePaymentDate: function (event) {
     var $target = $(event.currentTarget);
 
+    // 카드납부 시 납부일 선택
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -115,6 +119,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
 
+      // 자동납부 신청 및 변경
       Tw.CommonHelper.startLoading('.container', 'grey');
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._success, this))
@@ -133,26 +138,8 @@ Tw.MyTFareBillOptionRegister.prototype = {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).replacePage();
   },
-  _aftetSuccessGetOption: function (res) {
-    var reqData = {
-      authConfirm: res.result.authConfirm,
-      acntNum: this.$infoWrap.attr('data-acnt-num'),
-      rltmSerNum: res.result.rltmSerNum
-    };
-
-    this._apiService.request(Tw.API_CMD.BFF_07_0060, reqData)
-      .done($.proxy(this._afterGetSuccess, this))
-      .fail($.proxy(this._fail, this));
-  },
-  _afterGetSuccess: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
-    } else {
-      this._fail(res);
-    }
-  },
   _makeRequestData: function () {
-    var reqData = {};
+    var reqData = {}; // 요청 파라미터 (컨트롤러에서 BFF_07_0060 호출 후 가져온 정보를 그대로 전송함)
     reqData.acntNum = this.$infoWrap.attr('data-acnt-num');
     reqData.payMthdCd = this.$selectedWrap.attr('id');
     reqData.payerNumClCd = this.$infoWrap.attr('data-payer-num-cl-cd');
@@ -160,11 +147,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
     reqData.authReqSerNum = this.$infoWrap.attr('data-auth-req-ser-num');
     reqData.rltmSerNum = this.$infoWrap.attr('data-rltm-ser-num');
 
-    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
+    if (this.$selectedWrap.hasClass('fe-bank-wrap')) { // 계좌이체일 경우 정보
       reqData.bankCardNum = $.trim(this.$accountNumber.val());
       reqData.bankCardCoCd = this.$selectBank.attr('id').toString();
       reqData.cntcNum = $.trim(this.$accountPhoneNumber.val());
-    } else {
+    } else { // 카드납부일 경우 정보
       reqData.bankCardNum = $.trim(this.$cardNumber.val());
       reqData.cardEffYm = $.trim(this.$cardY.val()) + $.trim(this.$cardM.val());
       reqData.cntcNum = $.trim(this.$cardPhoneNumber.val());
@@ -172,16 +159,16 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
 
     if (this.$infoWrap.attr('id') === 'new') {
-      reqData.fstDrwSchdDt = this.$infoWrap.attr('data-fst-drw-schd-dt');
+      reqData.fstDrwSchdDt = this.$infoWrap.attr('data-fst-drw-schd-dt'); // 신청일 경우 정보 추가
     }
     return reqData;
   },
   _getApiName: function () {
     var apiName = '';
     if (this.$infoWrap.attr('id') === 'new') {
-      apiName = Tw.API_CMD.BFF_07_0061;
+      apiName = Tw.API_CMD.BFF_07_0061; // 자동납부 신청
     } else {
-      apiName = Tw.API_CMD.BFF_07_0062;
+      apiName = Tw.API_CMD.BFF_07_0062; // 자동납부 변경
     }
     return apiName;
   },

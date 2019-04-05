@@ -54,10 +54,11 @@ Tw.MyTDataGiftSms.prototype = {
 _onClickSendSMS: function () {
     this._lockSms();
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0017, {
-      befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
-      msg: this.$textarea_sms.val()
-    }).done($.proxy(this._onSuccessRequestSms, this));
+    this._apiService.request(
+      Tw.API_CMD.BFF_06_0017,
+      { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum, msg: this.$textarea_sms.val() }, null, null, null,
+      { jsonp : false }
+    ).done($.proxy(this._onSuccessRequestSms, this));
   },
 
   _onSuccessRequestSms: function (res) {

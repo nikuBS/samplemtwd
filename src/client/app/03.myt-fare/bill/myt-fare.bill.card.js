@@ -34,12 +34,13 @@ Tw.MyTFareBillCard.prototype = {
     this.$cardPw = this.$container.find('.fe-card-pw');
     this.$refundBank = this.$container.find('.fe-select-refund-bank');
     this.$refundNumber = this.$container.find('.fe-refund-account-number');
-    this.$refundBox = this.$container.find('.fe-refund-box');
+    this.$refundCheckBox = this.$container.find('.fe-refund-check-btn');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
+    this._isFirstCheck = true;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
@@ -48,7 +49,7 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this)); // 카드 할부기간 선택
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this)); // x버튼 클릭
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this)); // 납부확인
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
   _onChangeOption: function (event) {
     var $target = $(event.currentTarget);
@@ -71,9 +72,21 @@ Tw.MyTFareBillCard.prototype = {
 
     if ($target.is(':checked')) {
       $parentTarget.addClass('on');
+
+      if (this._isFirstCheck) {
+        this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
+        this._isFirstCheck = false;
+      }
     } else {
       $parentTarget.removeClass('on');
     }
+    this._checkIsAbled();
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+
+    this._checkIsAbled();
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
@@ -126,9 +139,10 @@ Tw.MyTFareBillCard.prototype = {
   _openCheckPay: function ($layer) {
     this._setData($layer); // 바닥페이지에서 넘어온 데이터 셋팅
     this._paymentCommon.getListData($layer); // 납부내역 확인 시 공통 컴포넌트의 리스트 호출
+    this._payBtn = $layer.find('.fe-pay');
 
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this)); // 닫기버튼 클릭 시 alert 노출
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this)); // 납부하기
+    this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
   _setData: function ($layer) {
     var data = this._getData();
@@ -136,8 +150,11 @@ Tw.MyTFareBillCard.prototype = {
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+
+    if (this.$refundCheckBox.hasClass('on')) {
+      $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
+        .text(data.refundNm + ' ' + data.refundNum);
+    }
   },
   _getData: function () {
     var isRefundInput = this.$refundInputBox.hasClass('checked');
@@ -145,16 +162,20 @@ Tw.MyTFareBillCard.prototype = {
     var data = {};
     data.cardNum = $.trim(this.$cardNumber.val());
 
-    if (isRefundInput) {
-      data.refundCd = this.$refundBank.attr('id');
-      data.refundNm = this.$refundBank.text();
-      data.refundNum = this.$refundNumber.val();
-      this._refundAutoYn = 'N';
+    if (this.$refundCheckBox.hasClass('on')) {
+      if (isRefundInput) {
+        data.refundCd = this.$refundBank.attr('id');
+        data.refundNm = this.$refundBank.text();
+        data.refundNum = this.$refundNumber.val();
+        this._refundAutoYn = 'N';
+      } else {
+        data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
+        data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
+        data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+        this._refundAutoYn = 'Y';
+      }
     } else {
-      data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
-      data.refundNm = this.$container.find('.fe-auto-refund-bank').text();
-      data.refundNum = this.$container.find('.fe-auto-refund-number').text();
-      this._refundAutoYn = 'Y';
+      this._refundAutoYn = 'N';
     }
     return data;
   },

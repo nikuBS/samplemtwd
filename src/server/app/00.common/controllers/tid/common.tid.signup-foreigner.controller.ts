@@ -25,14 +25,14 @@ class CommonTidSignUpForeigner extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.SIGN_UP,
-          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+          redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
             '/common/member/signup/route',
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE,
           frgnr_yn: 'Y'
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {

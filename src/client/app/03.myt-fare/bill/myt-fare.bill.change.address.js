@@ -7,6 +7,7 @@
 
 Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$container = rootEl;
+  this.$changeBtn = this.$container.find('.fe-change');
   this.$isValid = true;
   this._phoneModifyYn = 'N';
   this._addrModifyYn = 'N';
@@ -31,29 +32,29 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
     this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this));
-    this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
+    this.$changeBtn.click(_.debounce($.proxy(this._changeAddress, this), 500));
   },
   _checkNumber: function (event) {
-    Tw.InputHelper.inputNumberOnly(event.target);
+    Tw.InputHelper.inputNumberOnly(event.target); // 숫자만 입력 가능
     var $target = $(event.target);
 
-    if (this._phoneModifyYn === 'N') {
-      if (Tw.InputHelper.isDeleteKey(event)) {
+    if (this._phoneModifyYn === 'N') { // 휴대폰번호 수정여부 체크
+      if (Tw.InputHelper.isDeleteKey(event)) { // 삭제 시도 시 전체 지우기 (for masking)
         $target.val('');
       }
 
       if ($target.attr('data-origin-value') !== $target.val()) {
-        this._phoneModifyYn = 'Y';
+        this._phoneModifyYn = 'Y'; // 원래값과 다르면 폰번호 수정으로 간주
       }
     }
 
-    $target.val(Tw.FormatHelper.conTelFormatWithDash($target.val()));
-    this._setChangeBtnAble();
+    $target.val(Tw.FormatHelper.conTelFormatWithDash($target.val())); // '-' 자동 입력
+    this._setChangeBtnAble(); // 버튼 활성화
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
 
-    if ($target.val().indexOf('*') === -1) {
+    if ($target.val().indexOf('*') === -1) { // 마스킹된 폰번호일 경우 유효성 검증 제외 - 직접 수정한 휴대폰 번호에 한해 유효성 검증
       this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 11), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
 
       if (this.$isValid) {
@@ -63,10 +64,10 @@ Tw.MyTFareBillChangeAddress.prototype = {
     }
   },
   _getPostcode: function (e) {
-    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this));
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this)); // 우편번호 조회 공통 컴포넌트
   },
   _deleteAddress: function (e) {
-    if (this._firstTouch) {
+    if (this._firstTouch) { // 상세주소 영역 터치 시 전체 주소 삭제
       this.$container.find('.fe-zip').val('');
       this.$container.find('.fe-main-address').val('');
       e.target.value = '';
@@ -75,12 +76,13 @@ Tw.MyTFareBillChangeAddress.prototype = {
     }
   },
   _setAddress: function (address) {
+    // 우편번호 검색 후 조회된 데이터 셋팅
     this.$container.find('.fe-zip').val(address.zip);
     this.$container.find('.fe-main-address').val(address.main);
     this.$container.find('.fe-detail-address').removeAttr('disabled').val(address.detail);
 
-    this._addrModifyYn = 'Y';
-    this._firstTouch = false;
+    this._addrModifyYn = 'Y'; // 주소 수정됨
+    this._firstTouch = false; // 주소 삭제 방지값
 
     this._setChangeBtnAble();
   },
@@ -105,6 +107,8 @@ Tw.MyTFareBillChangeAddress.prototype = {
     if (this._addrModifyYn === 'N') {
       this._checkIsChangedDetailAddress();
     }
+
+    // 요청 파라미터
     this._changeData = {
       billSvcNum: $.trim(this.$container.find('.fe-phone').val()),
       zip: $.trim(this.$container.find('.fe-zip').val()),
@@ -116,6 +120,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     return this._changeData;
   },
   _checkIsChangedDetailAddress: function () {
+    // 주소 변경 여부 체크
     var $detailAddress = this.$container.find('.fe-detail-address');
     if ($detailAddress.attr('data-origin-value') !== $.trim($detailAddress.val())) {
       this._addrModifyYn = 'Y';

@@ -1,6 +1,6 @@
 /**
  * FileName: product.mobileplan-add.list.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.09
  */
 
@@ -12,12 +12,16 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
+import { PRODUCT_CODE } from '../../../../types/bff.type';
 
-const ADDITION_CODE = 'F01200';
 export default class ProductAdditions extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
-      idxCtgCd: ADDITION_CODE,
+      idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
       ...(req.query.order ? { searchOrder: req.query.order } : {}),
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})

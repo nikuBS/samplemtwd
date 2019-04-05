@@ -33,16 +33,16 @@ class CommonTidLogout extends TwViewController {
     ).switchMap(([key, bff_logout]) => {
       if ( key.code === API_CODE.CODE_00 ) {
         clientId = key.result.clientId;
-        return this.loginService.logoutSession();
+        return this.loginService.logoutSession(req, res);
       } else {
         throw key;
       }
     }).subscribe((resp) => {
       const params = {
         client_id: clientId,
-        redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+        redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
           '/common/member/logout/route?target=' + encodeURIComponent(routeUrl),
-        sso_logout_redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
+        sso_logout_redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
           '/main/home',
         client_type: TID.CLIENT_TYPE,
       };
@@ -59,7 +59,7 @@ class CommonTidLogout extends TwViewController {
         });
       }
 
-      const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
+      const url = this.apiService.getServerUri(API_CMD.LOGOUT, req) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
 
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);

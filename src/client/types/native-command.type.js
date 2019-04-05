@@ -46,7 +46,8 @@ Tw.NTV_CMD = {
   OPEN_FILE_CHOOSER: 'openFileChooser',
   CAN_GO_HISTORY: 'canGoHistory',
   SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled',
-  READY_SMS: 'readySMS'
+  READY_SMS: 'readySMS',
+  GET_ADID: 'getAdId'
 };
 
 Tw.NTV_CODE = {

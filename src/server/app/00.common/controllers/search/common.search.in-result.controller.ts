@@ -6,8 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import CommonSearch from './common.search.controller';
-import CommonSearchMore from './common.search.more.controller';
+import url from 'url';
 
 class CommonSearchInResult extends TwViewController {
   constructor() {
@@ -16,9 +15,15 @@ class CommonSearchInResult extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( req.query.category ) {
-      new CommonSearchMore().initPage(req, res, next);
+      res.redirect(url.format({
+        pathname : '/common/search/more',
+        query : req.query,
+      }));
     } else {
-      new CommonSearch().initPage(req, res, next);
+      res.redirect(url.format({
+        pathname : '/common/search',
+        query : req.query,
+      }));
     }
 
   }

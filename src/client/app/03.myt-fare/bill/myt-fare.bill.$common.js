@@ -28,7 +28,7 @@ Tw.MyTFareBillCommon.prototype = {
     this._selectedLine = [];
     this._billList = [];
     this._moreCnt = 0;
-    this._standardCnt = 5;
+    this._standardCnt = 5; // 더보기 기준 갯수
     this._amount = this.$container.find('.fe-amount').data('value');
     this._isClicked = false;
   },

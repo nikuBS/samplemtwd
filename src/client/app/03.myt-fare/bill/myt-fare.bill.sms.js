@@ -9,6 +9,7 @@ Tw.MyTFareBillSms = function (rootEl) {
   this.$container = rootEl;
   this.$accountSelector = this.$container.find('.fe-account-selector');
   this.$accountList = this.$container.find('.fe-account-list');
+  this.$payBtn = this.$container.find('.fe-pay');
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -28,9 +29,10 @@ Tw.MyTFareBillSms.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-account-selector', $.proxy(this._selectAccountList, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
-    this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
+    this.$payBtn.click(_.debounce($.proxy(this._pay, this), 500));
   },
   _selectAccountList: function (event) {
+    // 입금전용계좌 조회
     var $target = $(event.currentTarget);
     this._popupService.open({
       url: '/hbs/',
@@ -55,6 +57,7 @@ Tw.MyTFareBillSms.prototype = {
     this._popupService.close();
   },
   _getAccountList: function () {
+    // 리스트 만들기
     var accountList = [];
     var listObj = {
       'list': []

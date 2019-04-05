@@ -61,7 +61,6 @@ import ProductWireplanReservationCancel from './controllers/wireplan/product.wir
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
 import ProductRoamingSearchBefore from './controllers/roaming/product.roaming.do.search-before.controller';
-import ProductRoamingSearchAfter from './controllers/roaming/product.roaming.do.search-after.controller';
 import ProductRoamingSearchResult from './controllers/roaming/product.roaming.search-result.controller';
 import ProductRoamingGuide from './controllers/roaming/product.roaming.info.guide.controller';
 import ProductRoamingLteGuide from './controllers/roaming/product.roaming.info.lte.controller';
@@ -90,6 +89,8 @@ import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
 import ProductRoamingInfoPhBook from './controllers/roaming/product.roaming.info.ph-book.controller';
 import ProductCommonCallplanBackup from './controllers/common/product.common.callplan-backup.controller';
+import ProductWireServiceArea from './controllers/wireplan/product.wireplan.service-area.controller';
+import ProductWirePortability from './controllers/wireplan/product.wireplan.portability.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -132,27 +133,27 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/lookup/payment', controller: ProductMobileplanAddLookupPayment });
     this.controllers.push({ url: '/mobileplan-add/terminate', controller: ProductMobileplanAddTerminate });
 
-    this.controllers.push({ url: '/wireplan(/service-area|/portability)?', controller: ProductWire });
-    this.controllers.push({ url: '/wireplan(/service-area)?', controller: ProductWire });
+    this.controllers.push({ url: '/wireplan', controller: ProductWire });
+    this.controllers.push({ url: '/wireplan/service-area', controller: ProductWireServiceArea });
+    this.controllers.push({ url: '/wireplan/portability', controller: ProductWirePortability });
     this.controllers.push({ url: '/wireplan/internet|phone|tv', controller: ProductWires });
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
-    this.controllers.push({ url: '/wireplan/join/basic-info', controller: ProductWireplanJoinBasicInfo });
-    this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
-    this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
+    // this.controllers.push({ url: '/wireplan/join/basic-info', controller: ProductWireplanJoinBasicInfo });
+    // this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
+    // this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
     this.controllers.push({ url: '/wireplan/join', controller: ProductWireplanJoin });
-    this.controllers.push({ url: '/wireplan/setting/basic-info', controller: ProductWireplanSettingBasicInfo });
-    this.controllers.push({ url: '/wireplan/setting/lettering', controller: ProductWireplanSettingLettering });
-    this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
+    // this.controllers.push({ url: '/wireplan/setting/basic-info', controller: ProductWireplanSettingBasicInfo });
+    // this.controllers.push({ url: '/wireplan/setting/lettering', controller: ProductWireplanSettingLettering });
+    // this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
-    this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
+    // this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
 
     this.controllers.push({ url: '/roaming/do/search-before', controller: ProductRoamingSearchBefore });
-    this.controllers.push({ url: '/roaming/do/search-after', controller: ProductRoamingSearchAfter });
     this.controllers.push({ url: '/roaming/search-result', controller: ProductRoamingSearchResult });
     this.controllers.push({ url: '/roaming/info/guide', controller: ProductRoamingGuide });
     this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });

@@ -86,8 +86,8 @@ Tw.CommonPostcodeLast.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
-    this.$layer.on('click', '.fe-save', $.proxy(this._getStandardAddress, this));
     this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
+    this.$saveBtn.click(_.debounce($.proxy(this._getStandardAddress, this), 500));
   },
   _checkIsAbled: function (event) {
     var $address = $(event.currentTarget).val();

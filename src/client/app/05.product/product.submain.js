@@ -1,6 +1,6 @@
 /**
  * FileName: product.submain.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.12.07
  */
 

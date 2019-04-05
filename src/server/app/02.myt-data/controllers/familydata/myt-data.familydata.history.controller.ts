@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.familydata.history.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2019.01.16
  */
 
@@ -13,6 +13,10 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 
 export default class MyTDataFamilyHistory extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this.getShareAmount(svcInfo, req.query.amount), this.getHistory()).subscribe(([total, histories]) => {
       const error = {

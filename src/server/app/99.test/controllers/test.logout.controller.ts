@@ -14,7 +14,7 @@ export default class TestLogoutController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_03_0001, {}),
-      this.loginService.logoutSession()
+      this.loginService.logoutSession(req, res)
     ).subscribe(([logout, session]) => {
       res.render('test.logout.html', { result: logout });
     });

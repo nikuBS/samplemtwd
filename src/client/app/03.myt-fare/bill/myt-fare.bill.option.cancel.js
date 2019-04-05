@@ -23,7 +23,8 @@ Tw.MyTFareBillOptionCancel = function (rootEl) {
 
 Tw.MyTFareBillOptionCancel.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '.fe-go-cancel', $.proxy(this._cancel, this));
+    this.$cancelBtn = this.$container.find('.fe-go-cancel');
+    this.$cancelBtn.click(_.debounce($.proxy(this._cancel, this), 500));
   },
   _cancel: function (e) {
     var $target = $(e.currentTarget);
@@ -35,6 +36,8 @@ Tw.MyTFareBillOptionCancel.prototype = {
   },
   _makeRequestData: function () {
     var $selectBox = this.$container.find('.fe-select-payment-option');
+
+    // 요청 파라미터 (BFF_07_0060 에서 조회한 데이터 그대로 전송_컨트롤러에서 조회 후 html에 셋팅해 둠)
     var reqData = {
       acntNum: this.$infoBox.attr('data-acnt-num'),
       payerNumClCd: this.$infoBox.attr('data-payer-num-cl-cd'),
@@ -52,6 +55,7 @@ Tw.MyTFareBillOptionCancel.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       var completeUrl = '/myt-fare/bill/option/cancel-complete';
 
+      // 입금전용계좌로 해지했을 경우 문자알림서비스 옵션 노출 (지로는 없음)
       if (this.$container.find('.fe-select-payment-option').find('.checked').attr('id') === '04') {
         completeUrl += '?isSms=Y&num=' + this.$infoBox.attr('data-acnt-num');
       }

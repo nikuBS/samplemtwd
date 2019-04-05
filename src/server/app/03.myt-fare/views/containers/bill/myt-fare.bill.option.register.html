@@ -53,6 +53,7 @@
                     </div>
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- .cont-box -->
+                    <!-- 계좌이체 납부 -->
                     <div id="01" class="cont-box fe-wrap fe-bank-wrap">
                         <ul class="form-data-list">
                             <li>
@@ -97,6 +98,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- 카드납부 -->
                     <div id="02" class="cont-box fe-wrap fe-card-wrap" style="display:none;">
                         <ul class="form-data-list">
                             <li>
@@ -155,6 +157,7 @@
                             </li>
                         </ul>
                     </div>
+                    <!-- BFF_07_0060에서 조회 후 가지고 있다가 신청 및 변경 때 보낼 데이터 (hidden처리) -->
                     <div id="<%= paymentOption.type %>" class="fe-info-wrap none" data-acnt-num="<%= paymentOption.acntNum %>" data-payer-num-cl-cd="<%= paymentOption.payerNumClCd %>"
                          data-ser-num="<%= paymentOption.serNum %>" data-auth-req-ser-num="<%= paymentOption.authReqSerNum %>"
                          data-rltm-ser-num="<%= paymentOption.rltmSerNum %>" data-fst-drw-schd-dt="<%= paymentOption.fstDrwSchdDt %>">

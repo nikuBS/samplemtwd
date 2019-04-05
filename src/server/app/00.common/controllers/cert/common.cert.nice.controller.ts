@@ -22,7 +22,7 @@ class CommonCertNice extends TwViewController {
     this.apiService.request(API_CMD.BFF_01_0024, {
       mobileco,
       authUrl,
-      resultUrl:  'https://' + this.loginService.getDns() + '/common/cert/result?type=nice&kind=' + authKind,
+      resultUrl:  'https://' + this.loginService.getDns(req) + '/common/cert/result?type=nice&kind=' + authKind,
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind,
       authKind,
       prodAuthKey

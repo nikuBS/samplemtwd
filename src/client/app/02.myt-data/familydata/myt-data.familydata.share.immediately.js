@@ -1,6 +1,6 @@
 /**
  * FileName: myt-data.familydata.share.immediately.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
+ * @author Jiyoung Jo
  * Date: 2018.10.04
  */
 

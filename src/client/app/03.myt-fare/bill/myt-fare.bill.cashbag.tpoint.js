@@ -43,6 +43,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$pointPw = this.$selectedTab.find('.fe-point-pw');
     this.$agree = this.$container.find('.fe-agree');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
+    this.$onePayBtn = this.$container.find('.fe-tab1-pay');
+    this.$autoPayBtn = this.$container.find('.fe-tab2-pay');
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
@@ -61,9 +63,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-agree-view', $.proxy(this._openAgreePop, this));
-    this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
-    this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$onePayBtn.click(_.debounce($.proxy(this._onePay, this), 500));
+    this.$autoPayBtn.click(_.debounce($.proxy(this._autoPay, this), 500));
   },
   _openGetPoint: function (e) {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회하기 공통 컴포넌트 호출
@@ -76,8 +78,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       $point = result.availTPt; // tpoint
     }
 
-    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
-    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true);
+    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point)); // 보유한 포인트
+    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true); // 서버에서 조회된 카드번호
     this.$selectedTab.siblings().find('.fe-point-card').val(result.ocbCcno).attr('readonly', true);
     this.$isAutoCardValid = true;
 
@@ -304,7 +306,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       Tw.Error(err.code, err.msg).pop(null, $target);
     }
   },
-  _makeRequestDataForOne: function () {
+  _makeRequestDataForOne: function () { // 1회납부 요청 파라미터
     var reqData = {
       ocbCcno: $.trim(this.$pointCardNumber.val()),
       ptClCd: this.$pointType,
@@ -313,7 +315,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     };
     return reqData;
   },
-  _makeRequestDataForAuto: function () {
+  _makeRequestDataForAuto: function () { // 자동납부 요청 파라미터
     var autoType = this._getAutoType();
     var cardNumber = $.trim(this.$pointCardNumber.val());
 
@@ -331,9 +333,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _getAutoType: function () {
     if (this.$autoInfo.is(':visible')) {
-      return 2;
+      return 2; // 자동납부
     }
-    return 1;
+    return 1; // 1회납부
   },
   _onClose: function () {
     this._backAlert.onClose(); // x 버튼 클릭 시 팝업 노출
