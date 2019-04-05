@@ -1,7 +1,7 @@
 /**
- * FileName: common.tid.route.controller.ts
- * Author: Ara Jo(araara.jo@sk.com)
- * Date: 2018.07.18
+ * @file common.tid.route.controller.ts
+ * @author Ara Jo(araara.jo@sk.com)
+ * @since 2018.07.18
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

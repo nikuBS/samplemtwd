@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.lookup.tplan.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.01
+ * @file product.mobileplan.lookup.tplan.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.01
  */
 
 Tw.ProductMobileplanLookupTplan = function(rootEl, prodId) {

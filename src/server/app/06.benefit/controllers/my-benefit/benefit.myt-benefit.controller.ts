@@ -1,7 +1,7 @@
 /**
- * FileName: benefit.myt-benefit.controller.ts
- * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2018. 10. 30.
+ * @file benefit.myt-benefit.controller.ts
+ * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * @since 2018. 10. 30.
  * 혜택 > 나의 혜택/할인
  */
 import { NextFunction, Request, Response } from 'express';

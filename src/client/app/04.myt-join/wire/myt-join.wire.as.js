@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인 > 인터넷/집전화/IPTV 신청내역 > 장애/AS 신청현황(MS_04_01_03)
- * FileName: myt-join.wire.as.js
- * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * Date: 2018.10.08
+ * @file myt-join.wire.as.js
+ * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * @since 2018.10.08
  * Summary: 인터넷/집전화/IPTV 장애/AS 신청내역 목록 조회
  */
 Tw.MyTJoinWireAS = function (rootEl, strInitData) {

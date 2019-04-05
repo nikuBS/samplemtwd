@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 공지사항
- * FileName: customer.svc-info.notice.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.23
+ * @file customer.svc-info.notice.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.23
  */
 
 Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {

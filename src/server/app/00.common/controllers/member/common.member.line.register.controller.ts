@@ -1,7 +1,7 @@
 /**
- * FileName: common.member.line.register.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2019.02.20
+ * @file common.member.line.register.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2019.02.20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

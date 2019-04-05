@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.myplancombine.share.controller.ts
+ * @file myt-join.myplancombine.share.controller.ts
  * @author Jiyoung Jo
- * Date: 2019.02.07
+ * @since 2019.02.07
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

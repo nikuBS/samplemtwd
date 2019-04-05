@@ -1,7 +1,7 @@
 /**
- * FileName: customer.faq.view.js
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2019.02.15
+ * @file customer.faq.view.js
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2019.02.15
  */
 
 Tw.CustomerFaqView = function (rootEl) {

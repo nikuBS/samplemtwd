@@ -1,7 +1,7 @@
 /**
- * FileName: customer.email.quality.retry.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.08
+ * @file customer.email.quality.retry.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.08
  */
 
 Tw.CustomerEmailQualityRetry = function (rootEl) {

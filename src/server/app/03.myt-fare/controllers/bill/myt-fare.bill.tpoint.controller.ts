@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.tpoint.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.7
+ * @file myt-fare.bill.tpoint.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.7
  * Description: T포인트 요금납부 1회 예약 및 자동납부 관리
  */
 

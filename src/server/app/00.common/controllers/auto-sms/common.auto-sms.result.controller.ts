@@ -1,7 +1,7 @@
 /**
- * FileName: common.auto-sms.result.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2019.03.14
+ * @file common.auto-sms.result.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2019.03.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

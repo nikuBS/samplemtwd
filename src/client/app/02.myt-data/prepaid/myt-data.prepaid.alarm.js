@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.alarm.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.19
+ * @file myt-data.prepaid.alarm.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.19
  */
 
 Tw.MyTDataPrepaidAlarm = function (rootEl) {

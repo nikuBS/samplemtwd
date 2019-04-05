@@ -1,8 +1,8 @@
 /**
  * MenuName: T멤버십 > 제휴브랜드
- * FileName: membership.benefit.brand.js
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018. 12. 21.
+ * @file membership.benefit.brand.js
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018. 12. 21.
  * Summary: 제휴브랜드 조회
  */
 

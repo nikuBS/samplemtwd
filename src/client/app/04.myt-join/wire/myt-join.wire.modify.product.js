@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 서브메인(인터넷/집전화/IPTV 회선) > 상품변경(MS_04_05)
- * FileName: myt-join.wire.modify.product.js
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.10.15
+ * @file myt-join.wire.modify.product.js
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.10.15
  * Summary: 유선상품 상품변경 신청
  */
 Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {

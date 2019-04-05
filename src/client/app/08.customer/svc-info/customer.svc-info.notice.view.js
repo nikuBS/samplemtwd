@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 공지사항 > 상세 (검색엔진 및 서브메인 등에서 진입 시)
- * FileName: customer.svc-info.notice.view.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.02.27
+ * @file customer.svc-info.notice.view.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.02.27
  */
 
 Tw.CustomerSvcInfoNoticeView = function(rootEl) {

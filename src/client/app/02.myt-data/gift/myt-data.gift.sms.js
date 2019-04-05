@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.gift.sms.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.17
+ * @file myt-data.gift.sms.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.17
  */
 
 Tw.MyTDataGiftSms = function (rootEl) {

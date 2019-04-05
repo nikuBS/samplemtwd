@@ -1,7 +1,7 @@
 /**
- * FileName: customer.email.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
- * Date: 2018.10.24
+ * @file customer.email.controller.ts
+ * @author 박지만 (jiman.park@sk.com)
+ * @since 2018.10.24
  */
 
 import { NextFunction, Request, Response } from 'express';

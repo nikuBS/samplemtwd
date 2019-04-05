@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 가입정보 > 약정할인/기기 상환 정보 > 상세 할인 내역
- * FileName: myt-join.info.discount.month.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.10.04
+ * @file myt-join.info.discount.month.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.10.04
  * Summary: 약정할인/기기 상환 정보 상세 할인 내역 조회
  */
 

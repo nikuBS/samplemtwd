@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 지정번호 할인 설정
- * FileName: product.mobileplan.setting.number.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.15
+ * @file product.mobileplan.setting.number.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.15
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

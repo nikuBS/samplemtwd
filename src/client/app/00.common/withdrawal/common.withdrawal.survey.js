@@ -1,7 +1,7 @@
 /**
- * FileName: common.withdrawal.survey.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.31
+ * @file common.withdrawal.survey.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.31
  */
 
 Tw.CommonWithdrawalSurvey = function () {

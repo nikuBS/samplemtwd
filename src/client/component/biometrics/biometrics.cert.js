@@ -1,7 +1,7 @@
 /**
- * FileName: biometrics.cert.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.13
+ * @file biometrics.cert.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.13
  */
 
 Tw.BiometricsCert = function (target, userId) {

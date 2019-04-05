@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.motp.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.08.28
+ * @file common.cert.motp.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.08.28
  */
 
 Tw.CommonCertMotp = function (rootEl) {

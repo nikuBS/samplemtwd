@@ -1,8 +1,8 @@
 /**
  * MenuName: T로밍 > 로밍 요금제 (RM_11)
- * FileName: product.roaming.fee.js
- * Author: Eunjung Jung
- * Date: 2018.11.12
+ * @file product.roaming.fee.js
+ * @author Eunjung Jung
+ * @since 2018.11.12
  */
 
 Tw.ProductRoamingFee = function (rootEl, params, pageInfo) {

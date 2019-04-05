@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.history.controller.ts
+ * @file myt-data.prepaid.history.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.11.20
+ * @since 2018.11.20
  */
 
 import { NextFunction, Request, Response } from 'express';

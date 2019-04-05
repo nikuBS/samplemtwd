@@ -1,8 +1,8 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 최신 이용자 피해예방 주의보 (상세)
- * FileName: customer.damage-info.warning.view.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.01.31
+ * @file customer.damage-info.warning.view.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.01.31
  */
 
 Tw.CustomerDamageInfoWarningView = function(rootEl) {

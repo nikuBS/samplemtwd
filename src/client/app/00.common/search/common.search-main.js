@@ -1,7 +1,7 @@
 /**
- * FileName: common.search-main.js
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.18
+ * @file common.search-main.js
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.18
  */
 
 Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.info.overpay-refund.controller.ts
- * Author: Lee Kirim (kirim@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.info.overpay-refund.controller.ts
+ * @author Lee Kirim (kirim@sk.com)
+ * @since 2018.09.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

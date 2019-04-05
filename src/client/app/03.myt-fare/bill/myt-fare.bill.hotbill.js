@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.hotbill
- * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
- * Date: 2018. 9. 20.
+ * @file myt-fare.bill.hotbill
+ * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
+ * @since 2018. 9. 20.
  */
 Tw.MyTFareHotBill = function (rootEl, params) {
   this.$container = rootEl;

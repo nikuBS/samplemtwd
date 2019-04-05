@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.controller.ts
+ * @file product.mobileplan.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.09.06
+ * @since 2018.09.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.settings.oss.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2019.1.25
+ * @file main.menu.settings.oss.controller.ts
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2019.1.25
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

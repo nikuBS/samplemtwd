@@ -1,7 +1,7 @@
 /**
- * FileName: product.wires.controller.ts
+ * @file product.wires.controller.ts
  * @author Jiyoung Jo
- * Date: 2018.11.06
+ * @since 2018.11.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

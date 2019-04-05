@@ -1,7 +1,7 @@
 /**
- * FileName: certification.nice.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.11.29
+ * @file certification.nice.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.11.29
  */
 
 Tw.CertificationNice = function () {

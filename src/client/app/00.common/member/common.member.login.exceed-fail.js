@@ -1,7 +1,7 @@
 /**
- * FileName: common.member.login.exceed-fail.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.12.19
+ * @file common.member.login.exceed-fail.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.12.19
  */
 
 Tw.CommonMemberLoginExceedFail = function (rootEl) {

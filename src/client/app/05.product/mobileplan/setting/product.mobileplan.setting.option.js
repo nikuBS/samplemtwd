@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.setting.option.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.11.13
+ * @file product.mobileplan.setting.option.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.11.13
  */
 
 Tw.ProductMobileplanSettingOption = function(rootEl, prodId, displayId, currentOptionProdId) {

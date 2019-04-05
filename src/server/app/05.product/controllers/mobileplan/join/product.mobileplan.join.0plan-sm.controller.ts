@@ -1,8 +1,8 @@
 /**
  * 모바일 요금제 > 0플랜 스몰, 미디엄
- * FileName: product.mobileplan.join.0plan-sm.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.01.10
+ * @file product.mobileplan.join.0plan-sm.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.01.10
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

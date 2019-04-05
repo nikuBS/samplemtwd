@@ -1,7 +1,7 @@
 /**
- * FileName: biometrics.register.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.10
+ * @file biometrics.register.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.10
  */
 
 Tw.BiometricsRegister = function (target, userId) {

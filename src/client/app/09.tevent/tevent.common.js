@@ -1,7 +1,7 @@
 /**
- * FileName: tevent.common.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.21
+ * @file tevent.common.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.21
  */
 
 Tw.TeventCommon = function (rootEl) {

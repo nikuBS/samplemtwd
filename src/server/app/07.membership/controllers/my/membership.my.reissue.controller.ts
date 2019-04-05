@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.reissue.controller.ts
- * Author: Seungkyu Kim (ksk4788@pineone.com)
- * Date: 2018.01.29
+ * @file membership.my.reissue.controller.ts
+ * @author Seungkyu Kim (ksk4788@pineone.com)
+ * @since 2018.01.29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

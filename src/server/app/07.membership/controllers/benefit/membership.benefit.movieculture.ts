@@ -1,7 +1,7 @@
 /*
- * FileName: membership.benefit.movieculture.ts
- * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * Date: 2018.10.30
+ * @file membership.benefit.movieculture.ts
+ * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
+ * @since 2018.10.30
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

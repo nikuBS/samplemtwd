@@ -1,7 +1,7 @@
 /**
- * FileName: common.login.customer-pwd.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.12.04
+ * @file common.login.customer-pwd.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.12.04
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

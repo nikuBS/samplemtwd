@@ -1,8 +1,8 @@
 /**
  * 상품 가입 - 모바일 요금제
- * FileName: product.mobileplan.join.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.01
+ * @file product.mobileplan.join.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.10.01
  */
 
 Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReqYn, isComparePlanYn) {

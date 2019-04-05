@@ -1,7 +1,7 @@
 /**
- * FileName: product.submain.js
+ * @file product.submain.js
  * @author Jiyoung Jo
- * Date: 2018.12.07
+ * @since 2018.12.07
  */
 
 Tw.ProductSubmain = function(rootEl, menuId) {

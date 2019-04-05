@@ -1,8 +1,8 @@
 /**
- * FileName: myt-fare.bill.set.reissue.js
- * Author: 양정규 (skt.P130715@partner.sk.com)
+ * @file myt-fare.bill.set.reissue.js
+ * @author 양정규 (skt.P130715@partner.sk.com)
  * 요금안내서 재발행
- * Date: 2018.10.01
+ * @since 2018.10.01
  */
 Tw.MyTFareBillSetReIssue = function (rootEl, options) {
   this.$container = rootEl;
