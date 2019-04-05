@@ -4,17 +4,19 @@
  * Date: 2018.12.31
  */
 
-Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod) {
+Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._svcInfo = svcInfo;
+  this._svcInfo = null;
   this._surveyList = surveyList;
   this._popupService = Tw.Popup;
   this._step = step;
   this.$ariaHiddenEl = this.$container.find('.fe-aria-hidden-el');
-  this._init(from,keywrod);
+  this._from = from;
+  this._keyword = keyword;
+  this._init();
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
   HO_05_02_02_01_02.hbs : 검새 의견 신청 선택
@@ -24,7 +26,7 @@ Tw.CommonSearchNotFound.prototype = new Tw.CommonSearch();
 Tw.CommonSearchNotFound.prototype.constructor = Tw.CommonSearchNotFound;
 $.extend(Tw.CommonSearchNotFound.prototype,
 {
-  _init : function (from,keywrod) {
+  _nextInit : function () {
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -43,8 +45,8 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
-    if(from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
-      this._addRecentlyKeyword(decodeURIComponent(keywrod));
+    if(this._from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
+      this._addRecentlyKeyword(decodeURIComponent(this._keyword));
     }
     new Tw.XtractorService(this.$container);
   },

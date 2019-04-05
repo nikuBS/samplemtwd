@@ -34,7 +34,6 @@ class CommonSearchMain extends TwViewController {
       }
 
       res.render('search/common.search-main.html', {
-        svcInfo : svcInfo,
         pageInfo: pageInfo,
         popularKeyword : popularKeyword,
         recommendKeyword : recommendKeyword,

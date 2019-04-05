@@ -113,7 +113,7 @@ function recognizeLastChar(keyword){
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(svcInfo) %>,<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>');
+        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>');
     });
 </script>
 <% include ../../components/end.component.html %>

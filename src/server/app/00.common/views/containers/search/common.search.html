@@ -645,7 +645,7 @@
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
     });
 </script>
 <% include ../../components/end.component.html %>

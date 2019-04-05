@@ -4,7 +4,7 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,paramObj,pageNum,nowUrl) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,cdn,accessQuery,step,paramObj,pageNum,nowUrl) {
   this.$container = rootEl;
   //this._category = category;
   this._historyService = new Tw.HistoryService();
@@ -15,31 +15,31 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step,p
   this._accessQuery = accessQuery;
   this._popupService = Tw.Popup;
   this._searchInfo = searchInfo;
-  this._svcInfo = svcInfo;
+  this._svcInfo = null;
   this._accessKeyword = this._searchInfo.query;
   this._category = accessQuery.category;
   this._paramObj = paramObj;
   this._pageNum = parseInt(pageNum,10);
   this._nowUrl = nowUrl;
   this._bpcpService = Tw.Bpcp;
-  this._init(this._searchInfo,accessQuery.category);
+  this._init();
 };
 Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
 Tw.CommonSearchMore.prototype.constructor = Tw.CommonSearchMain;
 $.extend(Tw.CommonSearchMore.prototype,
 {
-  _init : function (searchInfo,category) {
+  _nextInit : function () {
     this._bpcpService.setData(this.$container, this._nowUrl);
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
-    if(searchInfo.search.length<=0){
+    if(this._searchInfo.search.length<=0){
       return;
     }
-    this._listData =this._arrangeData(searchInfo.search[0][category].data,category);
+    this._listData =this._arrangeData(this._searchInfo.search[0][this._category].data,this._category);
     //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
-    this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'),this._cdn);
+    this._showShortcutList(this._listData,$('#'+this._category+'_template'),this.$container.find('#'+this._category+'_list'),this._cdn);
     this.$inputElement =this.$container.find('#keyword');
     this.$inputElement.on('keyup',$.proxy(this._inputChangeEvent,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
