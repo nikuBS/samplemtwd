@@ -1,9 +1,14 @@
 /**
- * FileName: main.menu.refund.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.15
+ * @file 미환급금 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-15
  */
 
+/**
+ * @class
+ * @param (Object) rootEl - 최상위 element
+ * @param (String) data - 미환급금 관련 data
+ */
 Tw.MainMenuRefund = function (rootEl, data) {
   this.$container = rootEl;
   this._data = JSON.parse(data);
@@ -37,6 +42,11 @@ Tw.MainMenuRefund.prototype = {
     this.$accountInput.on('keyup', $.proxy(this._toggleSubmit, this));
     this.$btnSubmitRefund.on('click', $.proxy(this._onSubmitRefund, this));
   },
+
+  /**
+   * @function
+   * @desc 각 미환급금 항목 상세보기 화면 처리
+   */
   _onDetail: function () {
     this._popupService.open({
       hbs: 'actionsheet_link_b_type',
@@ -55,6 +65,12 @@ Tw.MainMenuRefund.prototype = {
       root.find('.ico').hide();
     });
   },
+
+  /**
+   * @function
+   * @desc 환급/기부 변경 시 화면 처리
+   * @param  {Object} e change event
+   */
   _onMethodChanged: function (e) {
     if (!!$(e.currentTarget).attr('dsiabled')) {
       return;
@@ -68,6 +84,11 @@ Tw.MainMenuRefund.prototype = {
       this.$divDonation.removeClass('none');
     }
   },
+
+  /**
+   * @function
+   * @desc 외부 url로 이동. app 인 경우 과금 팝업 발생
+   */
   _onOutToSmartChoice: function () {
     var move = function () { Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.SMART_CHOICE); };
 
@@ -80,6 +101,11 @@ Tw.MainMenuRefund.prototype = {
 
     move();
   },
+
+  /**
+   * @function
+   * @desc 은행 리스트 보여줌
+   */
   _onBankNeeded: function () {
     var selectedBankCode = this.$bankInput.attr('data-code');
     if (!Tw.FormatHelper.isEmpty(this._bankList)) {
@@ -87,7 +113,7 @@ Tw.MainMenuRefund.prototype = {
       return;
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0045, {})
+    this._apiService.request(Tw.API_CMD.BFF_01_0045, {}) // 최초 시도인 경우 BFF에 은행 리스트 조회하고 저장
       .then($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           this._bankList = _.map(res.result, function (bankInfo) {
@@ -106,6 +132,12 @@ Tw.MainMenuRefund.prototype = {
         Tw.Error(err.code, err.msg).pop();
       });
   },
+
+  /**
+   * @function
+   * @desc 은행 리스트 actionsheet 로 보여줌
+   * @param  {String} selectedBankCode 현재 선택된 은행 코드
+   */
   _showBankList: function (selectedBankCode) {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
@@ -127,6 +159,11 @@ Tw.MainMenuRefund.prototype = {
       }, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc submit 버튼 활성/비활성 처리
+   */
   _toggleSubmit: function () {
     var account = this.$accountInput.val();
     var bank = this.$bankInput.val();
@@ -137,6 +174,12 @@ Tw.MainMenuRefund.prototype = {
       this.$btnSubmitRefund.attr('disabled', 'disabled');
     }
   },
+
+
+  /**
+   * @function
+   * @desc 환급 선택시 BFF 로 요청
+   */
   _onSubmitRefund: function () {
     this.$accountError.addClass('none');
     var param = {
@@ -171,6 +214,11 @@ Tw.MainMenuRefund.prototype = {
       });
 
   },
+
+  /**
+   * @function
+   * @desc 기부 선택시 팝업 발생
+   */
   _onSubmitDonation: function () {
     this._popupService.openConfirm(
       Tw.POPUP_CONTENTS.DONATION,
@@ -178,6 +226,11 @@ Tw.MainMenuRefund.prototype = {
       $.proxy(this._requestDonation, this)
     );
   },
+
+  /**
+   * @function
+   * @desc BFF 로 기부 신청 요청
+   */
   _requestDonation: function () {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_01_0044, {
@@ -201,6 +254,12 @@ Tw.MainMenuRefund.prototype = {
       Tw.Error(err.code, err.msg).pop();
     });
   },
+
+  /**
+   * @function
+   * @desc 환급 계좌 변경 시도 시 처리
+   * @param  {Object} e click 이벤트
+   */
   _onChangeAccount: function (e) {
     var svcMgmtNum = e.currentTarget.value;
     var target = _.filter(this._data.submittedArr, function (item) {

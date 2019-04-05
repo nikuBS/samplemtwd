@@ -1,7 +1,7 @@
 /**
- * FileName: certification.select.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.08.20
+ * @file certification.select.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.08.20
  */
 
 Tw.CertificationSelect = function () {
@@ -122,7 +122,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.svcMgmtNum }, $.proxy(this._onCheckFido, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.userId }, $.proxy(this._onCheckFido, this));
   },
   _onCheckFido: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -133,7 +133,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkFidoUse: function () {
-    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.svcMgmtNum }, $.proxy(this._onCheckFidoUse, this));
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.userId }, $.proxy(this._onCheckFidoUse, this));
   },
   _onCheckFidoUse: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {

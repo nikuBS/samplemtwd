@@ -1,7 +1,7 @@
 /**
- * FileName: myt.fare.bill.prepay.change.limit.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.09
+ * @file myt.fare.bill.prepay.change.limit.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.09
  * Annotation: 소액결제/콘텐츠이용료 한도변경
  */
 
@@ -75,9 +75,9 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this._historyService.replaceURL('/myt-fare/submain');
   },
   _changeLimit: function (result) {
-    var hbsName = 'MF_06_02';
+    var hbsName = 'MF_06_02'; // 소액결제 한도변경
     if (this.$title === 'contents') {
-      hbsName = 'MF_07_02';
+      hbsName = 'MF_07_02'; // 콘텐츠이용료 한도변경
     }
     this._popupService.open({
       'hbs': hbsName
@@ -117,7 +117,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
-    $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
+    this.$changeBtn.click(_.debounce($.proxy(this._openChangeConfirm, this), 500));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -168,7 +168,8 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     // 한도변경 확인 alert
     var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-      $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON, $target);
+      $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
+      $target);
   },
   _onChange: function () {
     this.$isChange = true;
@@ -236,15 +237,16 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   _setRemainAmount: function () {
     // 한도 변경 성공 시 잔여한도 표시
-    var usedAmount = this.$container.find('.fe-max-amount').attr('id');
+    var usedAmount = this.$container.find('.fe-use-amount').attr('id');
     var remainAmount = this.$monthSelector.attr('id');
     var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
 
     if (remain < 0) {
       remain = 0;
     }
-    this.$container.find('.fe-remain-amount').attr('id', remain)
-      .text(Tw.FormatHelper.addComma(remain));
+    var remainText = remain.toString();
+    this.$container.find('.fe-remain-amount').attr('id', remainText)
+      .text(Tw.FormatHelper.addComma(remainText));
   },
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||

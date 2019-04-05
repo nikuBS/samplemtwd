@@ -1,7 +1,7 @@
 /**
- * FileName: common.member.init.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.12.19
+ * @file common.member.init.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.12.19
  */
 
 Tw.CommonMemberInit = function (rootEl) {

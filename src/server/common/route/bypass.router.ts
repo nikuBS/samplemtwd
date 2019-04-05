@@ -53,7 +53,6 @@ class BypassRouter {
     const apiService = new ApiService();
     const loginService = new LoginService();
     apiService.setCurrentReq(req, res);
-    // this.loginService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     // const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
@@ -71,7 +70,6 @@ class BypassRouter {
 
         const svcInfo = loginService.getSvcInfo(req);
         if ( !FormatHelper.isEmpty(svcInfo) ) {
-          // data.serverSession = this.loginService.getServerSession();
           data.loginType = svcInfo.loginType;
         } else {
           data.loginType = '';

@@ -1,7 +1,7 @@
 /**
- * FileName: customer.researches.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.11.02
+ * @file customer.researches.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.11.02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -14,6 +14,10 @@ import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 // import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearches extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.query.id) {
       this.getResearch(req.query.id).subscribe(research => {
@@ -54,8 +58,8 @@ export default class CustomerResearches extends TwViewController {
 
       const quizIdx = quizId
         ? resp.result.findIndex(research => {
-            return research.bnnrRsrchId === quizId;
-          })
+          return research.bnnrRsrchId === quizId;
+        })
         : undefined;
 
       return {

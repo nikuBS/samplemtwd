@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.setting.roaming-auto.controller.ts
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.03
+ * @file product.roaming.setting.roaming-auto.controller.ts
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.03
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -52,7 +52,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
 
 
       res.render('roaming/join/product.roaming.join.roaming-auto.html', {
-        svcInfo : this.loginService.getSvcInfo(),
+        svcInfo : svcInfo,
         prodTypeInfo : prodTypeInfo.result,
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,

@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.motp.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.08.28
+ * @file common.cert.motp.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.08.28
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

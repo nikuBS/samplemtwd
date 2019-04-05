@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.contents.history.detail.js
- * Author: Lee kirim (kirim@sk.com)
- * Date: 2018. 11. 29
+ * @file myt-fare.bill.contents.history.detail.js
+ * @author Lee kirim (kirim@sk.com)
+ * @since 2018. 11. 29
  */
 Tw.MyTFareBillSmallHitstoryDetail = function (rootEl, data, updateFunc) {
   this.$container = rootEl;

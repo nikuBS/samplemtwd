@@ -1,7 +1,7 @@
 /**
- * FileName: common.search.more.controller.ts
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.11
+ * @file common.search.more.controller.ts
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.11
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -84,7 +84,6 @@ class CommonSearchMore extends TwViewController {
             });
           }
           res.render('search/common.search.not-found.html', {
-            svcInfo : svcInfo,
             pageInfo: pageInfo,
             popularKeyword : popularKeyword.result,
             keyword : searchResult.result.query,
@@ -98,7 +97,6 @@ class CommonSearchMore extends TwViewController {
         });
       } else {
         res.render('search/common.search.more.html', {
-          svcInfo : svcInfo,
           pageInfo: pageInfo,
           searchInfo : searchResult.result,
           keyword : searchResult.result.query,

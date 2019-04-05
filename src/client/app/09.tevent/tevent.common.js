@@ -1,7 +1,7 @@
 /**
- * FileName: tevent.common.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.21
+ * @file tevent.common.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.21
  */
 
 Tw.TeventCommon = function (rootEl) {
@@ -36,6 +36,7 @@ Tw.TeventCommon.prototype = {
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
   },
   _openEventPop: function (e) {
+    // 이벤트 리스트 변경
     this._popupService.open({
         url: '/hbs/',
         hbs: 'actionsheet01',
@@ -64,6 +65,7 @@ Tw.TeventCommon.prototype = {
     this._popupService.close();
   },
   _setMoreData: function (e) {
+    // 더보기
     var $target = $(e.currentTarget);
     if (this._page < this._totalPage) {
       this._page++;
@@ -81,11 +83,11 @@ Tw.TeventCommon.prototype = {
   _getApiName: function () {
     var $apiName = '';
     if (this._uri === 'ing') {
-      $apiName = Tw.API_CMD.BFF_09_0001;
+      $apiName = Tw.API_CMD.BFF_09_0001; // 진행중 리스트
     } else if (this._uri === 'last') {
-      $apiName = Tw.API_CMD.BFF_09_0003;
+      $apiName = Tw.API_CMD.BFF_09_0003; // 지난이벤트
     } else {
-      $apiName = Tw.API_CMD.BFF_09_0004;
+      $apiName = Tw.API_CMD.BFF_09_0004; // 당첨자발표
     }
     return $apiName;
   },

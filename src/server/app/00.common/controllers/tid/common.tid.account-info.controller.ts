@@ -1,7 +1,7 @@
 /**
- * FileName: common.account-info.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.02
+ * @file common.account-info.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.07.02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -25,12 +25,12 @@ class CommonTidAccountInfo extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.GET_ACCOUNT,
-          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() + '/common/tid/route',
+          redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) + '/common/tid/route',
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
         };
-        const url = this.apiService.getServerUri(API_CMD.OIDC) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
+        const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {

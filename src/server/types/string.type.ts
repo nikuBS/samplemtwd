@@ -566,9 +566,9 @@ export enum SELECT_POINT {
 }
 
 export const PRODUCT_WIRE_CATEGORIES = {
-  internet: '인터넷',
-  phone: '집전화',
-  tv: 'TV'
+  INTERNET: '인터넷',
+  PHONE: '집전화',
+  TV: 'TV'
 };
 
 export enum DEFAULT_SELECT {
@@ -1117,6 +1117,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   }
 ];
+
+export const PRODUCT_COMBINE_FAMILY_TYPE = {
+  leader: '가족대표',
+  parents: '부모',
+  grandparents: '(증)조부모',
+  grandchildren: '손자녀',
+  spouse: '배우자',
+  children: '자녀',
+  brother: '형제자매',
+  me: '본인'
+};
 
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';

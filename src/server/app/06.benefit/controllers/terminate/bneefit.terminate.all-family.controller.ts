@@ -1,15 +1,14 @@
 /**
- * 상품 해지 - T끼리 온가족할인 결합상품
- * FileName: benefit.terminate.all-family.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.04.01
+ * 상품 해지 - T끼리 온가족할인
+ * @file benefit.terminate.all-family.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.04.01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import { SVC_CD } from '../../../../types/bff.type';
+import { PRODUCT_COMBINE_FAMILY_TYPE, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -20,40 +19,91 @@ class BenefitTerminateAllFamily extends TwViewController {
     super();
   }
 
-  private _allowedProdIds = ['NH00000084', 'TW20000010'];
+  private _allowedProdIds = ['NA00002040', 'TW20000010'];
 
   /**
    * @param termInfo
+   * @param currentSvcMgmtNum
    * @private
    */
-  private _convertTermInfo(termInfo: any): any {
+  private _convertTermInfo(termInfo: any, currentSvcMgmtNum: any): any {
     return Object.assign(termInfo, {
       combinationGroup: this._convCombinationGroup(termInfo.combinationGroup),
       combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
-        this._convertWirelessInfo(termInfo.combinationWirelessMemberList[0]),
-      combinationWireMember: FormatHelper.isEmpty(termInfo.combinationWireMemberList) ? null :
-        this._convertWireInfo(termInfo.combinationWireMemberList[0])
+        this._convertWirelessMemberList(termInfo.combinationWirelessMemberList, currentSvcMgmtNum)
+    });
+  }
+
+  /**
+   * @param wireLessMemberList
+   * @param currentSvcMgmtNum
+   * @private
+   */
+  private _convertWirelessMemberList(wireLessMemberList: any, currentSvcMgmtNum: any): any {
+    const wireMemberList: any = wireLessMemberList.map((item) => {
+      return this._convertWirelessInfo(item, currentSvcMgmtNum);
+    });
+
+    return this._sortCombinationList(wireMemberList);
+  }
+
+  /**
+   * @param list
+   * @private
+   */
+  private _sortCombinationList(list: any): any {
+    const myLine: any = [],
+      leaderLine: any = [],
+      otherLine: any = [];
+
+    list.forEach((item) => {
+      if (item.fam.me) {
+        myLine.push(item);
+        return true;
+      }
+
+      if (item.fam.leader) {
+        leaderLine.push(item);
+        return true;
+      }
+
+      otherLine.push(item);
+    });
+
+    return [...myLine, ...leaderLine, ...otherLine];
+  }
+
+  /**
+   * @param wireLessInfo
+   * @param currentSvcMgmtNum
+   * @private
+   */
+  private _convertWirelessInfo(wireLessInfo: any, currentSvcMgmtNum: any): any {
+    const familyType: any = this._getFamilyType(wireLessInfo, currentSvcMgmtNum);
+
+    return Object.assign(wireLessInfo, {
+      svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum),
+      isFamilyLeaderYn: familyType.leader ? 'Y' : 'N',
+      fam: familyType
     });
   }
 
   /**
    * @param wireLessInfo
+   * @param currentSvcMgmtNum
    * @private
    */
-  private _convertWirelessInfo(wireLessInfo: any): any {
-    return Object.assign(wireLessInfo, {
-      svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum)
-    });
-  }
-
-  /**
-   * @param wireInfo
-   * @private
-   */
-  private _convertWireInfo(wireInfo: any): any {
-    return Object.assign(wireInfo, {
-      svcCdNm: SVC_CD[wireInfo.svcCd]
-    });
+  private _getFamilyType(wireLessInfo: any, currentSvcMgmtNum: any): any {
+    return {
+      leader: wireLessInfo.relClCd === '00',
+      parents: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.parents,
+      grandparents: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.grandparents,
+      grandchildren: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.grandchildren,
+      spouse: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.spouse,
+      children: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.children,
+      brother: wireLessInfo.relClNm === PRODUCT_COMBINE_FAMILY_TYPE.brother,
+      me: wireLessInfo.svcMgmtNum === currentSvcMgmtNum
+    };
   }
 
   /**
@@ -68,6 +118,7 @@ class BenefitTerminateAllFamily extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
+      svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '',
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo,
@@ -96,7 +147,8 @@ class BenefitTerminateAllFamily extends TwViewController {
       res.render('terminate/benefit.terminate.all-family.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
-        termInfo: this._convertTermInfo(termInfo.result)
+        termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
       }));
     });
   }

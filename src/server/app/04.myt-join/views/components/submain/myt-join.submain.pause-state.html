@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-join.submain.pause-state.html
-* Author: Kim InHwan (skt.P132150@partner.sk.com)
-* Date: 2018.10.10
+* @file myt-join.submain.pause-state.html
+* @author Kim InHwan (skt.P132150@partner.sk.com)
+* @since 2018.10.10
 %>
 
 <% if (data.myPausedState || data.isOldNumber || data.isNotChangeNumber) { %>
@@ -23,7 +23,7 @@
                         <span class="tit">일시정지 현황
                                 <% if(!longStateCd) { %>
                                 <span class="sub">
-                                    <%= data.myLongPausedState.sDate %> ~ <%= data.myLongPausedState.eDate %>
+                                    <%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
                                 </span>
                                 <% } %>
                         </span>
@@ -52,7 +52,7 @@
                             <% if (longStateCd === 'R') { %>
                             일시정지 중 /
                             <% } %>
-                            <%= data.myLongPausedState.sDate %> ~ <%= data.myLongPausedState.eDate %>
+                            <%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
                         </span>
                     </span>
                     <span class="text">

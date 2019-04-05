@@ -1,7 +1,7 @@
 /**
- * FileName: myt.join.product.combinations.data-share.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.30
+ * @file myt.join.product.combinations.data-share.js
+ * @author Jiyoung Jo
+ * @since 2018.10.30
  */
 
 Tw.MyTJoinCombinationsDataShare = function(rootEl, group) {

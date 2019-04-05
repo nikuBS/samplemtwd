@@ -1,7 +1,7 @@
 /**
- * FileName: product.wires.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.11.06
+ * @file product.wires.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.11.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -12,27 +12,24 @@ import { PRODUCT_WIRE_CATEGORIES } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import { PRODUCT_CODE, PRODUCT_WIRE_PLAN_CATEGORIES as CATEGORIES } from '../../../../types/bff.type';
+
+const MAX_SEARCH_COUNT = 100;
 
 export default class ProductWires extends TwViewController {
-  private WIRE_CODE = 'F01300';
-  private CATEGORIES = {
-    internet: 'F01321',
-    phone: 'F01322',
-    tv: 'F01323'
-  };
-  private PLAN_CODE = 'F01331';
-  private ADDITION_CODE = 'F01332';
-  private MAX_SEARCH_COUNT = 100;
+  constructor() {
+    super();
+  }
+
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    const page = req.url.replace('/wireplan/', '');
-
-    const params = { idxCtgCd: this.WIRE_CODE, searchCount: this.MAX_SEARCH_COUNT };
+    const page = req.url.replace('/wireplan/', '').toUpperCase();
+    const params = { idxCtgCd: PRODUCT_CODE.WIRE_PLAN, searchCount: MAX_SEARCH_COUNT };
 
     Observable.combineLatest(
       this.getMyWireInfo(svcInfo),
-      this.getList({ ...params, searchFltIds: this.CATEGORIES[page] + ',' + this.PLAN_CODE }),
-      this.getList({ ...params, searchFltIds: this.CATEGORIES[page] + ',' + this.ADDITION_CODE })
+      this.getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.PLAN }),
+      this.getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.ADDITION })
     ).subscribe(([myWire, plan, additions]) => {
       const error = {
         code: (myWire && myWire.code) || plan.code || additions.code,

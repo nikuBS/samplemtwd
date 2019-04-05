@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-join.myplancombine.combination.html
-* Author: Jiyoung Jo (jiyoungjo@sk.com)
-* Date: 2018.10.26
+* @file myt-join.myplancombine.combination.html
+* @author Jiyoung Jo
+* @since 2018.10.26
 * id: MS_07_01
 %>
 
@@ -36,7 +36,7 @@
 <% if (pageId === 'tb-free') { %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTJoinCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
+        new Tw.MyTJoinCombinationsTBFree($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
     });
 </script>
 <% } %>

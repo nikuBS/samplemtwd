@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.09.06
+ * @file product.mobileplan.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.09.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -12,10 +12,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
+import { PRODUCT_CODE } from '../../../../types/bff.type';
 
 export default class Product extends TwViewController {
-  private PLAN_CODE = 'F01100';
-
   constructor() {
     super();
   }
@@ -42,7 +41,7 @@ export default class Product extends TwViewController {
   }
 
   private getProductGroups = () => {
-    return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -116,7 +115,7 @@ export default class Product extends TwViewController {
 
   private getMyFilters = isLogin => {
     if (isLogin) {
-      return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+      return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
           return {
             code: resp.code,
@@ -132,7 +131,7 @@ export default class Product extends TwViewController {
   }
 
   private getRecommendedPlans = () => {
-    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -158,7 +157,7 @@ export default class Product extends TwViewController {
   }
 
   private getRecommendedTags = () => {
-    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: this.PLAN_CODE }).map(resp => {
+    return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,

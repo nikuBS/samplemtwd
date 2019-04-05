@@ -1,7 +1,7 @@
 /**
- * FileName: myt-join.myplanadd.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.09.19
+ * @file myt-join.myplanadd.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.09.19
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -62,10 +62,10 @@ class MyTJoinMyPlanAdd extends TwViewController {
         roaming: resp.result.roamingProd ? // 가입된 로밍 요금제가 있을 경우
           {
             ...resp.result.roamingProd,
-            addRoamingProdCnt: resp.result.roamingProd.recentlyJoinsProdNm ? 
-              Number(resp.result.roamingProd.addRoamingProdCnt) - 1 : 
+            addRoamingProdCnt: resp.result.roamingProd.recentlyJoinsProdNm ?
+              Number(resp.result.roamingProd.addRoamingProdCnt) - 1 :
               Number(resp.result.roamingProd.addRoamingProdCnt)
-          } : 
+          } :
           {}
       };
     });
@@ -86,16 +86,16 @@ class MyTJoinMyPlanAdd extends TwViewController {
   }
 
   private convertAdditions = (addition: any) => { // 부가서비스 데이터 형태 변경
-    return {  
+    return {
       ...addition,  // 추가작업 불필요한 속성들 스프레드
       ...(addition.btnList && addition.btnList.length > 0 ? // 버튼 리스트가 있을 경우
-        { 
+        {
           btnList: addition.btnList
             .filter(btn => {
               return btn.btnTypCd === PLAN_BUTTON_TYPE.SET && addition.prodSetYn === 'Y'; // 설정 버튼이 있고, 어드민에서 설정버튼 노출 Y일 경우(가입, 해지버튼 미노출)
             })
-            // .sort(this._sortButtons) // 해지버튼을 제일 뒤에 노출해달라는 요구사항이 있어 추가 -> 설정 버튼 외 미노출로 변경되어 삭제
-        } : 
+          // .sort(this._sortButtons) // 해지버튼을 제일 뒤에 노출해달라는 요구사항이 있어 추가 -> 설정 버튼 외 미노출로 변경되어 삭제
+        } :
         {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDate(addition.scrbDt)

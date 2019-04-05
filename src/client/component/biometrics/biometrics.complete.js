@@ -1,7 +1,7 @@
 /**
- * FileName: biometrics.complete.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.11.30
+ * @file biometrics.complete.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.11.30
  */
 
 Tw.BiometricsComplete = function (target) {

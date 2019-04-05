@@ -1,7 +1,7 @@
 /**
- * FileName: common.share.bridge.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.11.20
+ * @file common.share.bridge.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.11.20
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

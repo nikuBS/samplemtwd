@@ -1,7 +1,7 @@
 /**
- * FileName: product.submain.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.12.07
+ * @file product.submain.js
+ * @author Jiyoung Jo
+ * @since 2018.12.07
  */
 
 Tw.ProductSubmain = function(rootEl, menuId) {

@@ -42,3 +42,11 @@ Tw.TID_LOGOUT = {
   LOGIN_FAIL: 1,
   EXCEED_FAIL: 2
 };
+
+Tw.TRACKER_API = {
+  siteId: 103,
+  targetUrl: {
+    development: 'http://dev.dbp.sktelecom.com/tracker',
+    production: 'https://dbp.sktelecom.com/tracker'
+  }
+};

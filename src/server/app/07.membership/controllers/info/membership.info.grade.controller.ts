@@ -5,9 +5,9 @@ import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {LOGIN_TYPE} from '../../../../types/bff.type';
 /**
- * FileName: membership.info.grade.controller.ts
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.31
+ * @file membership.info.grade.controller.ts
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.31
  */
 
 class MembershipInfoGrade extends TwViewController {

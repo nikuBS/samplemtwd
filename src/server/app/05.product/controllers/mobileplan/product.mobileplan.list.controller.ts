@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan.list.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.08
+ * @file product.mobileplan.list.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.10.08
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -12,12 +12,16 @@ import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
+import { PRODUCT_CODE } from '../../../../types/bff.type';
 
-const PLAN_CODE = 'F01100';
 export default class ProductPlans extends TwViewController {
+  constructor() {
+    super();
+  }
+
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
-      idxCtgCd: PLAN_CODE,
+      idxCtgCd: PRODUCT_CODE.MOBILE_PLAN,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
       ...(req.query.order ? { searchOrder: req.query.order } : {}),
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
@@ -66,7 +70,7 @@ export default class ProductPlans extends TwViewController {
               : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter(filter => {
-              return /^F011[2|3|6]/.test(filter.prodFltId);
+              return 'F01713' === filter.prodFltId || /^F011[2|3|6]/.test(filter.prodFltId);
             })
           };
         })

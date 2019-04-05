@@ -5,11 +5,11 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 
 /**
- * FileName: myt-join.info.contract.controller.ts
+ * @file myt-join.info.contract.controller.ts
  * MS_02_01
  * 설명 : 나의가입정보(인터넷/집전화/IPTV) > 이용계약정보
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.15
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.15
  */
 
 class MyTJoinInfoContract extends TwViewController {

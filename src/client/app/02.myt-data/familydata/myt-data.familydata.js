@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.01
+ * @file myt-data.familydata.js
+ * @author Jiyoung Jo
+ * @since 2018.10.01
  */
 
 Tw.MyTDataFamily = function(rootEl, dataInfo) {

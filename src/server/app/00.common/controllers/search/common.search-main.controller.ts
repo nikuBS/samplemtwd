@@ -1,7 +1,7 @@
 /**
- * FileName: common.search.in-result.controller.ts
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.11
+ * @file common.search.in-result.controller.ts
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.11
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -34,7 +34,6 @@ class CommonSearchMain extends TwViewController {
       }
 
       res.render('search/common.search-main.html', {
-        svcInfo : svcInfo,
         pageInfo: pageInfo,
         popularKeyword : popularKeyword,
         recommendKeyword : recommendKeyword,

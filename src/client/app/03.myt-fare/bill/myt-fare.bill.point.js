@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.point.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.bill.point.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.09.17
  * Annotation: 포인트 요금납부
  */
 
@@ -32,6 +32,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$pointPw = this.$container.find('.fe-point-pw');
     this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
+    this.$payBtn = this.$container.find('.fe-check-pay');
     this.$isValid = false;
     this.$isChanged = false;
 
@@ -48,7 +49,7 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
   _openGetPoint: function (e) {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회 공통 컴포넌트 호출
@@ -72,7 +73,7 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력
   },
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
@@ -124,11 +125,13 @@ Tw.MyTFareBillPoint.prototype = {
   _openCheckPay: function ($layer) {
     this._setData($layer);
     this._paymentCommon.getListData($layer);
+    this._payBtn = $layer.find('.fe-pay');
 
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
+    this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
   _setData: function ($layer) {
+    // 납부내역 확인 팝업에 데이터 셋팅
     $layer.find('.fe-check-title').text(this.$pointSelector.text());
     $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code'))
       .text(this._pointCardNumber);
@@ -188,6 +191,7 @@ Tw.MyTFareBillPoint.prototype = {
     var reqData = this._makeRequestData();
     var $target = $(e.currentTarget);
 
+    // 포인트 요금납부
     Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
       .done($.proxy(this._paySuccess, this, $target))

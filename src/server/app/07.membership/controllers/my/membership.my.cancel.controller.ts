@@ -1,7 +1,7 @@
 /**
- * FileName: membership.my.controller.ts
- * Author: Seungkyu Kim (ksk4788@pineone.com)
- * Date: 2018.12.18
+ * @file membership.my.controller.ts
+ * @author Seungkyu Kim (ksk4788@pineone.com)
+ * @since 2018.12.18
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

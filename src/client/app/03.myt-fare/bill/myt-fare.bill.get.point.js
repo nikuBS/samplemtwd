@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.get.point.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2019.01.10
+ * @file myt-fare.bill.get.point.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2019.01.10
  * Annotation: 포인트 즉시납부 및 OK cashbag 포인트 예약납부 시 카드번호 조회
  */
 
@@ -33,7 +33,7 @@ Tw.MyTFareBillGetPoint.prototype = {
   },
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력 가능
   },
   _checkIsLayerAbled: function ($layer) {
     if ($layer.find('.fe-point-card-number').val() !== '' &&
@@ -43,7 +43,7 @@ Tw.MyTFareBillGetPoint.prototype = {
       $layer.find('.fe-get').attr('disabled', 'disabled');
     }
   },
-  _setMaxValue: function (event) {
+  _setMaxValue: function (event) { // maxLength 적용
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
     if ($target.attr('maxLength')) {
@@ -55,6 +55,8 @@ Tw.MyTFareBillGetPoint.prototype = {
   _checkCardNumber: function ($layer) {
     var $pointCardNumber = $layer.find('.fe-point-card-number');
     this._pointCardNumber = $.trim($pointCardNumber.val());
+
+    // 포인트카드번호 유효성 검증
     this.$isValid = this._validation.showAndHideErrorMsg($pointCardNumber, this._validation.checkMoreLength($pointCardNumber, 16));
   },
   _getPoint: function (e) {
@@ -68,7 +70,7 @@ Tw.MyTFareBillGetPoint.prototype = {
   _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.close();
-      this.$callback(res.result);
+      this.$callback(res.result); // 포인트 카드정보 성공 시 호출한 화면으로 데이터 전송
     } else {
       this._getFail($target, res);
     }

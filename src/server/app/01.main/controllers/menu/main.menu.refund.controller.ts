@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.refund.controller.ts
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.14
+ * @file main.menu.refund.controller.ts
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.11.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

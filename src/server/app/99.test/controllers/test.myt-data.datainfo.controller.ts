@@ -1,7 +1,7 @@
 /**
- * FileName: test.myt-data.datainfo.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.11.23
+ * @file test.myt-data.datainfo.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.11.23
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
@@ -132,15 +132,15 @@ export default class TestMyTDataInfo extends TwViewController {
         right:
           amount > 1000
             ? {
-                amount: (amount / 1000).toFixed(1),
-                unit: DATA_UNIT.GB,
-                color: item.type === '1' ? 'red' : 'blue'
-              }
+              amount: (amount / 1000).toFixed(1),
+              unit: DATA_UNIT.GB,
+              color: item.type === '1' ? 'red' : 'blue'
+            }
             : {
-                amount: amount,
-                unit: DATA_UNIT.MB,
-                color: item.type === '1' ? 'red' : 'blue'
-              },
+              amount: amount,
+              unit: DATA_UNIT.MB,
+              color: item.type === '1' ? 'red' : 'blue'
+            },
         bottom: item.giftType === 'GC' ? [item.svcNum, ChargeTypeNames.FIXED] : [item.svcNum]
       });
 

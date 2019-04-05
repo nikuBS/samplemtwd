@@ -1,8 +1,8 @@
 /**
  * 모바일 부가서비스 > 리모콘
- * FileName: product.mobileplan-add.join.remote-pwd.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.15
+ * @file product.mobileplan-add.join.remote-pwd.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.15
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

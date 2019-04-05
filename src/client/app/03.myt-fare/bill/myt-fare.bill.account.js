@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.account.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.09.17
+ * @file myt-fare.bill.account.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.09.17
  * Annotation: 계좌이체 즉시납부
  */
 
@@ -32,7 +32,7 @@ Tw.MyTFareBillAccount.prototype = {
     this.$refundBank = this.$container.find('.fe-select-refund-bank');
     this.$accountNumber = this.$container.find('.fe-account-number');
     this.$refundNumber = this.$container.find('.fe-refund-account-number');
-    this.$refundBox = this.$container.find('.fe-refund-box');
+    this.$refundCheckBox = this.$container.find('.fe-refund-check-btn');
     this.$accountInputBox = this.$container.find('.fe-account-input');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
@@ -40,6 +40,7 @@ Tw.MyTFareBillAccount.prototype = {
     this._bankAutoYn = 'N';
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
+    this._isFirstCheck = true;
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this)); // 자동납부 정보와 수동입력 중 선택
@@ -47,7 +48,7 @@ Tw.MyTFareBillAccount.prototype = {
     this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this)); // 환불계좌 체크박스
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this)); // 은행선택
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this)); // x버튼 클릭
-    this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this)); // 납부확인
+    this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
@@ -87,16 +88,29 @@ Tw.MyTFareBillAccount.prototype = {
 
     if ($target.is(':checked')) {
       $parentTarget.addClass('on');
+
+      if (this._isFirstCheck) {
+        this.$refundNumber.on('keyup', $.proxy(this._checkNumber, this));
+        this._isFirstCheck = false;
+      }
     } else {
       $parentTarget.removeClass('on');
     }
+    this._checkIsAbled();
+  },
+  _checkNumber: function (event) {
+    var target = event.target;
+    Tw.InputHelper.inputNumberOnly(target);
+
+    this._checkIsAbled();
   },
   _selectBank: function (event) {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this)); // 은행리스트 가져오는 공통 컴포넌트 호출
   },
   _checkIsAbled: function () {
     // 하단 버튼 활성화 (입력필드 모두 채워졌을 경우)
-    if (this.$accountNumber.attr('disabled') === 'disabled' && this.$refundNumber.attr('disabled') === 'disabled') {
+    if (this.$accountNumber.attr('disabled') === 'disabled' &&
+      (this.$refundCheckBox.hasClass('on') || this.$refundNumber.attr('disabled') === 'disabled')) {
       this.$payBtn.removeAttr('disabled');
     } else {
       this._validationService.checkIsAbled(); // 공통 validation service 호출
@@ -123,25 +137,32 @@ Tw.MyTFareBillAccount.prototype = {
   _openCheckPay: function ($layer) {
     this._setData($layer); // 바닥페이지에서 넘어온 데이터 셋팅
     this._paymentCommon.getListData($layer); // 납부내역 확인 시 공통 컴포넌트의 리스트 호출
+    this._payBtn = $layer.find('.fe-pay');
 
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this)); // 닫기버튼 클릭 시 alert 노출
-    $layer.on('click', '.fe-pay', $.proxy(this._pay, this)); // 납부하기
+    this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
   _setData: function ($layer) {
+    // 납부내역 확인 팝업에 데이터 셋팅
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
     $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
       .text(data.accountNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
-    $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + data.refundNum);
+
+    if (this.$refundCheckBox.hasClass('on')) {
+      $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
+        .text(data.refundNm + ' ' + data.refundNum);
+    }
   },
   _getData: function () {
     var isAccountInput = this.$accountInputBox.hasClass('checked');
     var isRefundInput = this.$refundInputBox.hasClass('checked');
 
     var data = {};
+
+    // 납부할 계좌번호 (직접입력/자동납부계좌 선택)
     if (isAccountInput) {
       data.bankCd = this.$selectBank.attr('id');
       data.bankNm = this.$selectBank.text();
@@ -154,16 +175,20 @@ Tw.MyTFareBillAccount.prototype = {
       this._bankAutoYn  = 'Y';
     }
 
-    if (isRefundInput) {
-      data.refundCd = this.$refundBank.attr('id');
-      data.refundNm = this.$refundBank.text();
-      data.refundNum = this.$refundNumber.val();
-      this._refundAutoYn = 'N';
+    if (this.$refundCheckBox.hasClass('on')) {
+      if (isRefundInput) {
+        data.refundCd = this.$refundBank.attr('id');
+        data.refundNm = this.$refundBank.text();
+        data.refundNum = this.$refundNumber.val();
+        this._refundAutoYn = 'N';
+      } else {
+        data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
+        data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
+        data.refundNum = this.$container.find('.fe-auto-refund-number').text();
+        this._refundAutoYn = 'Y';
+      }
     } else {
-      data.refundCd = this.$container.find('.fe-auto-refund-bank').attr('data-code');
-      data.refundNm = this.$container.find('.fe-auto-refund-bank').attr('data-name');
-      data.refundNum = this.$container.find('.fe-auto-refund-number').text();
-      this._refundAutoYn = 'Y';
+      this._refundAutoYn = 'N';
     }
     return data;
   },

@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-fare.bill.option.cancel-complete.html
-* Author: Jayoon Kong (jayoon.kong@sk.com)
-* Date: 2018.12.17
+* @file myt-fare.bill.option.cancel-complete.html
+* @author Jayoon Kong (jayoon.kong@sk.com)
+* @since 2018.12.17
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -26,6 +26,7 @@
                                 <span class="tx-highlight pt10">해지 완료</span>
                             </p>
                         </div>
+                        <!-- 해지 시 입금전용계좌 옵션으로 해지한 경우 버튼 추가 -->
                         <% if (isSms) { %>
                         <div class="tx-contents">
                             <p class="code-txt">문자 알림서비스(무료) 신청하시고,<br />매월 문자로 입금안내 서비스 받으세요.</p>

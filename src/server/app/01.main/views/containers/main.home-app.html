@@ -1,7 +1,7 @@
 <%#
-* FileName: home.html
-* Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.12.04
+* @file home.html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.12.04
 * HO_01_01
 %>
 
@@ -333,12 +333,13 @@
                                     <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                     <% } %>
                                 </em>
-                                <div class="main-error-box">
-                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">시스템 점검중입니다.</strong>
-                                    <p class="desc"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                                <div class="cont-box nogaps b-line-none">
+                                    <div class="notice-point">
+                                        <p class="t-np1">서비스 점검 중 입니다.</p>
+                                        <p class="t-np2">잠시 후 다시 이용해 주세요.</p>
+                                        <p class="t-np3"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                                    </div>
                                 </div>
-
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">

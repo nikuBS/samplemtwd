@@ -5,11 +5,11 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
 /**
- * FileName: myt-join.info.sms.controller.ts
+ * @file myt-join.info.sms.controller.ts
  * 화면 ID : MS_02_02
  * 설명 : 나의가입정보 > 망 작업 SMS 알림 신청
- * Author: 양정규 (skt.P130715@partner.sk.com)
- * Date: 2018.10.15
+ * @author 양정규 (skt.P130715@partner.sk.com)
+ * @since 2018.10.15
  */
 
 class MyTJoinInfoSms extends TwViewController {

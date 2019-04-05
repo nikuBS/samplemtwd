@@ -1,7 +1,7 @@
 /**
- * FileName: auth.line.nickname.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.07.12
+ * @file auth.line.nickname.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.07.12
  */
 Tw.NicknameComponent = function () {
   this._popupService = Tw.Popup;

@@ -1,9 +1,13 @@
 /**
- * FileName: main.menu.settings.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.10.02
+ * @file 설정메뉴 화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-02
  */
 
+/**
+ * @class
+ * @param (Object) rootEl - 최상위 element
+ */
 Tw.MainMenuSettings = function (rootEl) {
   if (!Tw.BrowserHelper.isApp()) {
     return;
@@ -28,6 +32,11 @@ Tw.MainMenuSettings.prototype = {
     this.$versionText = this.$container.find('#fe-version');
     this.$updateBox = this.$container.find('#fe-update-box');
   },
+
+  /**
+   * @function
+   * @desc 현재 버전 정보 설정 및 단말 지원범위에 따른 인증메뉴 설정
+   */
   _init: function () {
     this._setVersionInfo();
     // Set FIDO type
@@ -45,6 +54,11 @@ Tw.MainMenuSettings.prototype = {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
     this.$container.on('click', '#fe-btn-update', $.proxy(this._onUpdate, this));
   },
+
+  /**
+   * @function
+   * @desc 현재 버전 확인하고 최신버전 조회
+   */
   _setVersionInfo: function () {
     var userAgentString = Tw.BrowserHelper.getUserAgent();
     var version = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
@@ -58,6 +72,12 @@ Tw.MainMenuSettings.prototype = {
     this._apiService.request(Tw.NODE_CMD.GET_VERSION, {})
       .done($.proxy(this._onLatestVersion, this));
   },
+
+  /**
+   * @function
+   * @desc 최신버전 조회 결과와 현재 버전 비교하여 '최신' 노출할지 업데이트 버튼 노출할지 처리
+   * @param  {Object} res 최신버전 조회 결과
+   */
   _onLatestVersion: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var currentOsType = this._osType;
@@ -73,6 +93,11 @@ Tw.MainMenuSettings.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 업데이트 버튼 선택시 Android/iOS 각 마켓으로 이동
+   */
   _onUpdate: function () {
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
@@ -88,6 +113,11 @@ Tw.MainMenuSettings.prototype = {
       });
     }
   },
+
+  /**
+   * @function
+   * @desc 공인인증서 선택시 native 화면 호출
+   */
   _onCertificates: function () {
     this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
     return false;

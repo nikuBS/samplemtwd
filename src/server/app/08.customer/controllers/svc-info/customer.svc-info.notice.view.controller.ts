@@ -1,8 +1,8 @@
 /**
  * 공지사항 > 상세 (T world Only)
- * FileName: customer.svc-info.notice.view.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.01.17
+ * @file customer.svc-info.notice.view.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.01.17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

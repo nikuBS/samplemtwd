@@ -1,7 +1,7 @@
 /**
- * FileName: common.share.old-landing.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2019.03.21
+ * @file common.share.old-landing.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2019.03.21
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';

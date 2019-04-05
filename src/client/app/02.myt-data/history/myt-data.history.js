@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.datainfo.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.09.21
+ * @file myt-data.datainfo.js
+ * @author Jiyoung Jo
+ * @since 2018.09.21
  */
 
 Tw.MyTDataHistory = function(rootEl, histories) {

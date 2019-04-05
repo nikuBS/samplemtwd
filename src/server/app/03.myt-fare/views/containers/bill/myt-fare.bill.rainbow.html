@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-fare.bill.rainbow.html
-* Author: Jayoon Kong (jayoon.kong@sk.com)
-* Date: 2018.11.7
+* @file myt-fare.bill.rainbow.html
+* @author Jayoon Kong (jayoon.kong@sk.com)
+* @since 2018.11.7
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -34,7 +34,7 @@
                                     <li>1회 납부(예약)은 1포인트 이상부터 사용하실 수 있습니다.</li>
                                     <li>1,000포인트 이상 보유 시 자동납부 신청하실 수 있습니다.</li>
                                 </ul>
-                                <% if (autoInfo.isAuto) { %>
+                                <% if (autoInfo.isAuto) { %><!-- 자동납부 사용자일 경우 해지버튼 노출 -->
                                 <ul class="bt-slice mb20 fe-auto-info">
                                     <li class="bt-white2">
                                         <button class="fe-cancel">자동납부 해지 ></button>
@@ -61,6 +61,7 @@
                                     </div>
                                     <div class="tab-contents">
                                         <ul>
+                                            <!-- 1회납부 예약 -->
                                             <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
                                                 <div class="cont-box">
                                                     <ul class="form-data-list">
@@ -92,6 +93,7 @@
                                                     </ul>
                                                 </div>
                                             </li>
+                                            <!-- 자동납부 예약 -->
                                             <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                                 <div class="cont-box">
                                                     <ul class="form-data-list">

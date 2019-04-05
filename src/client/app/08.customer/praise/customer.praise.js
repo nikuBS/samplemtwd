@@ -1,7 +1,7 @@
 /**
- * FileName: customer.praise.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.22
+ * @file customer.praise.js
+ * @author Jiyoung Jo
+ * @since 2018.10.22
  */
 
 Tw.CustomerPraise = function(rootEl) {

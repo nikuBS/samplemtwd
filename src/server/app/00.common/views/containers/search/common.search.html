@@ -1,7 +1,7 @@
 <%#
-* FileName: common.search.result.html
-* Author: Hyunkuk Lee (max5500@pineone.com)
-* Date: 2018.12.11
+* @file common.search.result.html
+* @author Hyunkuk Lee (max5500@pineone.com)
+* @since 2018.12.11
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -111,7 +111,7 @@
                 </a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
-            <p class="paymentcharge-box type03">
+            <p class="paymentcharge-box type03 none">
                 이용하고 계신
                 <a href="/myt-join/submain" class="phonnumber list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
@@ -119,7 +119,7 @@
                 </a>회선의<br>실시간 이용요금은<span class="str">
                 <a class="list-data" href="/myt-fare/bill/hotbill"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
+                    <strong class="money fe-realtime-fee"></strong>
                 </a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
@@ -645,7 +645,7 @@
 <% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,'<%- CDN %>','<%- step %>','<%- from %>','<%- nowUrl %>')._init();
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.card.controller.ts
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.09.18
+ * @file myt-fare.bill.card.controller.ts
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.09.18
  * Description: 체크/신용카드 요금납부
  */
 

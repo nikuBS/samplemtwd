@@ -1,7 +1,7 @@
 /**
- * FileName: customer.email.service.option.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.10.29
+ * @file customer.email.service.option.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.10.29
  */
 
 Tw.CustomerEmailServiceOption = function (rootEl, allSvc) {
@@ -18,6 +18,7 @@ Tw.CustomerEmailServiceOption = function (rootEl, allSvc) {
 
 Tw.CustomerEmailServiceOption.prototype = {
   _init: function () {
+    this.listLimit = 20; // 한번에 더 보기 갯수 (리스트에서 사용)
   },
 
   _cachedElement: function () {
@@ -28,13 +29,9 @@ Tw.CustomerEmailServiceOption.prototype = {
   _bindEvent: function () {
     this.$wrap_tpl_service.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
     // this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
-    this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
+    this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this)); // 브랜드 선택 (다이렉트 케이스)
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
-    this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
-    this.$container.on('click', '.fe-select-order', $.proxy(this._setOrderNumber, this));
-    this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
-    this.$container.on('click', '.fe-wrap_direct_order input[type="checkbox"]', $.proxy(this._disabledCheckbox, this));
-    this.$container.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this));
+    this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this)); // 주문조회 버튼 (다이렉트 케이스)
   },
 
   // 서비스문의 > 회선변경 
@@ -104,34 +101,22 @@ Tw.CustomerEmailServiceOption.prototype = {
     this._popupService.close();
   },
 
-  _disabledCheckbox: function (e) {
-    $('.fe-wrap_direct_order li.checked').each(function (nIndex, elChecked) {
-      if ( !$(e.currentTarget).closest('li.checked').is($(elChecked)) ) {
-        $(elChecked).removeClass('checked');
-      }
-    });
-
-    $('.fe-select-order').prop('disabled', false);
-  },
-
-  _setOrderNumber: function () {
-    var orderNumber = $('.fe-wrap_direct_order li.checked .fe-order-number').text();
-    $('.fe-text_order').val(orderNumber);
-    this._closeDirectOrder();
-  },
-
+  // 주문조회 API
   _getOrderInfo: function (e) {
     this._apiService.request(Tw.API_CMD.BFF_08_0016, { svcDvcClCd: 'M' })
-      .done($.proxy(this._onSuccessOrderInfo, this, $(e.currentTarget)));
+      .done($.proxy(this._onSuccessOrderInfo, this, $(e.currentTarget)))
+      .fail($.proxy(this._error, this));
   },
 
+  // 브랜드 조회
   _getDirectBrand: function (e) {
     e.stopPropagation();
     e.preventDefault();
     var $elTarget = $(e.currentTarget);
 
     this._apiService.request(Tw.API_CMD.BFF_08_0015)
-      .done($.proxy(this._onSuccessDirectBrand, this, $elTarget));
+      .done($.proxy(this._onSuccessDirectBrand, this, $elTarget))
+      .fail($.proxy(this._error, this));
   },
 
   _getDirectDevice: function (e) {
@@ -141,15 +126,23 @@ Tw.CustomerEmailServiceOption.prototype = {
 
     if ( $('.fe-select-brand').data('brandcd') ) {
       this._apiService.request(Tw.API_CMD.BFF_08_0015, { brandCd: $('.fe-select-brand').data('brandcd') })
-        .done($.proxy(this._onSuccessDirectDevice, this, $elTarget));
+        .done($.proxy(this._onSuccessDirectDevice, this, $elTarget))
+        .fail($.proxy(this._error, this));
     }
   },
 
   _onSuccessOrderInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var htOrderInfo = this._convertOrderInfo(res.result);
-      this.$container.append(this.tpl_service_direct_order(htOrderInfo));
-      this._hideListItem();
+      var htOrderInfo = this._convertOrderInfo(res.result || {});
+      this._popupService.open($.extend({
+          hbs: 'CS_04_01_L03',
+          layer: true,
+        }, htOrderInfo),
+        $.proxy(this._handleOrderCallback, this),
+        null,
+        'OrderInfo',
+        $target
+      );
       skt_landing.widgets.widget_init('.fe-wrap_direct_order');
     } else {
       Tw.Error(res.code, res.msg).pop(null, $target);
@@ -159,33 +152,85 @@ Tw.CustomerEmailServiceOption.prototype = {
   _convertOrderInfo: function (list) {
     var htOrderList = $.extend({}, list, { isMoreListShop: false, isMoreListUsed: false });
 
-    if ( list.listShop.length > 20 ) {
+    if (list.listShop && list.listShop.length > this.listLimit ) {
       htOrderList.isMoreListShop = true;
     }
 
-    if ( list.listUsed.length > 20 ) {
+    if (list.listUsed && list.listUsed.length > this.listLimit ) {
       htOrderList.isMoreListUsed = true;
     }
 
     return htOrderList;
   },
 
+  // 더 보기
   _onShowMoreList: function (e) {
-    var elTarget = e.currentTarget;
-    var elTabPanel = $(elTarget).closest('[role=tabpanel]');
+    var $elTarget = $(e.currentTarget);
+    var $elTabPanel = $elTarget.closest('[role=tabpanel]');
+    var leftLength = $elTabPanel.find('.list-comp-input.none').length - this.listLimit;
 
-    if ( elTabPanel.find('.list-comp-input').not(':visible').size() !== 0 ) {
-      elTabPanel.find('.list-comp-input').not(':visible').slice(0, 20).show();
-    }
+    this._setListStatus.show($elTabPanel.find('.list-comp-input.none').slice(0, this.listLimit));
 
-    if ( elTabPanel.find('.list-comp-input').not(':visible').size() === 0 ) {
-      elTarget.remove();
+    if (leftLength <= 0) {
+      $elTarget.remove();
     }
   },
 
-  _hideListItem: function () {
-    $('#tab1-tab .list-comp-input').slice(20).hide();
-    $('#tab2-tab .list-comp-input').slice(20).hide();
+  _handleOrderCallback: function ($tempWrap) {
+    // 주문조회 팝업 후
+    // 20개 까지 리스트 노출
+    this._setListStatus.show($tempWrap.find('#tab1-tab .list-comp-input').slice(0, this.listLimit));
+    this._setListStatus.show($tempWrap.find('#tab2-tab .list-comp-input').slice(0, this.listLimit));
+    
+    $tempWrap.on('click', 'li.checkbox', $.proxy(this._selectOrder, this, $tempWrap)); // 체크이벤트 
+    $tempWrap.on('click', '.fe-select-order', $.proxy(this._setOrderNumber, this, $tempWrap)); // 적용하기 버튼
+    $tempWrap.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this)) // 더보기 버튼
+  },
+
+  // 주문조회 선택
+  _selectOrder: function ($tempWrap, e) {
+    var $target = $(e.currentTarget);
+    if ($target.is('.checked')) {
+      // 선택된 주문 해제
+      this._checkBox.uncheck($target);
+      // 버튼 비활성화
+      $('.fe-select-order', $tempWrap).prop('disabled', true);
+    } else {
+      // 선택된 주문 외 해제
+      this._checkBox.uncheck($tempWrap.find('li.checkbox.checked'));
+      // 선택된 주문 선택
+      this._checkBox.check($target);
+      // 버튼 활성화
+      $('.fe-select-order', $tempWrap).prop('disabled', false);
+    }
+  },
+
+  // 주문조회 적용하기
+  _setOrderNumber: function ($tempWrap, e) {
+    var orderNumber = $('li.checked .fe-order-number', $tempWrap).text();
+    $('.fe-text_order', this.$container).val(orderNumber);
+    $('.fe-text_order', this.$container).trigger('change');
+    this._popupService.close();
+  },
+
+  // 주문조회 체크박스 
+  _checkBox: {
+    check: function ($target) {
+      return $target.addClass('checked').find('input[type=checkbox]').prop('checked', true);
+    },
+    uncheck: function ($target) {
+      return $target.removeClass('checked').find('input[type=checkbox]').prop('checked', false);
+    }
+  },
+
+  // 주문조회 show / hide
+  _setListStatus: {
+    show: function ($target) {
+      return $target.removeClass('none').attr('aria-hidden', false);
+    },
+    hide: function ($target) {
+      return $target.addClass('none').attr('aria-hidden', true);
+    }
   },
 
   _onSuccessDirectBrand: function ($elButton, res) {
@@ -266,10 +311,15 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _setSelectedBrand: function ($target, el) {
+    var prev_txt = $target.text();
     this._popupService.close();
 
     $target.text($(el.currentTarget).text().trim());
     $target.data('brandcd', $(el.currentTarget).data('brandcd'));
+
+    if (prev_txt !== $target.text()) {
+      this.$container.find('.fe-select-device').removeData('phoneid').text(Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_DEVICE);
+    }
   },
 
   _setSelectedDevice: function ($target, el) {
@@ -278,12 +328,7 @@ Tw.CustomerEmailServiceOption.prototype = {
     $target.text($(el.currentTarget).text().trim());
   },
 
-  _closeDirectOrder: function () {
-    $('.fe-wrap_direct_order').remove();
-    // this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-    //   $.proxy($.proxy(function () {
-    //     this._popupService.close();
-    //     $('.fe-wrap_direct_order').remove();
-    //   }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  _error: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 };

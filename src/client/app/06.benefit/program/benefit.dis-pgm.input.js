@@ -1,7 +1,7 @@
 /**
- * FileName: benefit.dis-pgm.input.js
- * Author: Kim In Hwan (skt.P132150@partner.sk.com)
- * Date: 2018.12.18
+ * @file benefit.dis-pgm.input.js
+ * @author Kim In Hwan (skt.P132150@partner.sk.com)
+ * @since 2018.12.18
  */
 
 Tw.BenefitDisPgmInput = function (rootEl, prodId, confirmOptions, selType) {

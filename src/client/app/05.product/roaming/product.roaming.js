@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.js
- * Author: Juho Kim (jhkim@pineone.com)
- * Date: 2018.12.06
+ * @file product.roaming.js
+ * @author Juho Kim (jhkim@pineone.com)
+ * @since 2018.12.06
  */
 
 Tw.ProductRoaming = function(rootEl, options) {

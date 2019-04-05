@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.cookiz.immediately.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.10
+ * @file myt-data.cookiz.immediately.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.10
  */
 
 Tw.MyTDataCookizImmediately = function (rootEl) {

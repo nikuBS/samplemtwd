@@ -1,7 +1,7 @@
 <%#
-* FileName: customer.helpline.html
-* Author: Jiyoung Jo (jiyoungjo@sk.com)
-* Date: 2018.10.16
+* @file customer.helpline.html
+* @author Jiyoung Jo
+* @since 2018.10.16
 * id: CS_14_01
 %>
 
@@ -142,8 +142,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerHelpline($('.wrap'), <%- JSON.stringify(timeInfo) %>
-  )
+    new Tw.CustomerHelpline($('.wrap'), JSON.parse('<%- JSON.stringify(timeInfo) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>

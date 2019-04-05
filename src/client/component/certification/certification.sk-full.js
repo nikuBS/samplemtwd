@@ -1,7 +1,7 @@
 /**
- * FileName: certification.sk-full.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.12.01
+ * @file certification.sk-full.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.12.01
  */
 
 Tw.CertificationSkFull = function () {

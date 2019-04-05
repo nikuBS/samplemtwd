@@ -1,7 +1,7 @@
 <%#
-* FileName: home.html
-* Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.01.11
+* @file home.html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.01.11
 * HO_03
 %>
 
@@ -217,13 +217,14 @@
                 </div>
                 <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
                 <div class="member-non-box">
-                    <strong class="ti"><i class="icon-warning-120"></i> 시스템 점검중입니다.</strong>
-                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
+                    <strong class="ti"><i class="icon-warning-120"></i> 서비스 점검 중 입니다.</strong>
+                    <p class="tx">잠시 후 다시 이용해 주세요</p>
+                    <p class="desc"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
                 </div>
                 <% } else { %>
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
-                    <p class="tx"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
                 </div>
                 <% } %>
                 <% } %>

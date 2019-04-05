@@ -1,7 +1,7 @@
 /**
- * FileName: product.plans.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.09
+ * @file product.plans.js
+ * @author Jiyoung Jo
+ * @since 2018.10.09
  */
 
 Tw.ProductList = function(rootEl, params, pageInfo) {

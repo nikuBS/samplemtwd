@@ -1,7 +1,7 @@
 <%#
-* FileName: myt-fare.bill.option.cancel.html
-* Author: Jayoon Kong (jayoon.kong@sk.com)
-* Date: 2018.12.17
+* @file myt-fare.bill.option.cancel.html
+* @author Jayoon Kong (jayoon.kong@sk.com)
+* @since 2018.12.17
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -52,6 +52,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- BFF_07_0060에서 조회 후 가지고 있다가 신청 및 변경 때 보낼 데이터 -->
                         <div data-acnt-num="<%= paymentOption.acntNum %>"
                              data-payer-num-cl-cd="<%= paymentOption.payerNumClCd %>"
                              data-bank-card-co-cd="<%= paymentOption.bankCardCoCd %>"

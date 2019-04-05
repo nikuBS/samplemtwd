@@ -1,7 +1,7 @@
 /**
- * FileName: quick-menu.component.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.25
+ * @file quick-menu.component.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.25
  */
 Tw.QuickMenuComponent = function () {
   this._apiService = Tw.Api;

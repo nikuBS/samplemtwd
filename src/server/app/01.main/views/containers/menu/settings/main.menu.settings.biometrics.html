@@ -1,7 +1,7 @@
 <%#
-* FileName: common.biometrics.menu.html
-* Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.10.09
+* @file common.biometrics.menu.html
+* @author Ara Jo (araara.jo@sk.com)
+* @since 2018.10.09
 * MA_03_01_02
 %>
 
@@ -88,7 +88,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>', '<%= svcInfo.svcMgmtNum %>');
+    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>', '<%= svcInfo.userId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

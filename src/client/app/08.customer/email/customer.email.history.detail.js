@@ -1,7 +1,7 @@
 /**
- * FileName: customer.email.history.detail.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.05
+ * @file customer.email.history.detail.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.05
  */
 
 Tw.CustomerEmailHistoryDetail = function (rootEl) {
@@ -68,7 +68,7 @@ Tw.CustomerEmailHistoryDetail.prototype = {
 
   _onSuccessRemoveInquiry: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer');
+      this._history.replaceURL('/customer/emailconsult/history');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

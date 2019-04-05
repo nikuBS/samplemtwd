@@ -1,7 +1,7 @@
 /**
- * FileName: certification.bio.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.09.11
+ * @file certification.bio.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.09.11
  */
 
 Tw.CertificationBio = function () {
@@ -52,7 +52,7 @@ Tw.CertificationBio.prototype = {
     }
   },
   _goBioRegister: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcInfo.svcMgmtNum);
+    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcInfo.userId);
     biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
   _fidoAuth: function () {
@@ -60,7 +60,7 @@ Tw.CertificationBio.prototype = {
       authUrl: this._authUrl,
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : '',
-      svcMgmtNum: this._svcInfo.svcMgmtNum
+      svcMgmtNum: this._svcInfo.userId
     }, $.proxy(this._onFidoAuth, this));
   },
   _onFidoAuth: function (resp) {

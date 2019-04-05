@@ -1,7 +1,7 @@
 /**
- * FileName: common.postcode.last.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.11.13
+ * @file common.postcode.last.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.11.13
  * Description: 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (3/3)
  */
 
@@ -86,8 +86,8 @@ Tw.CommonPostcodeLast.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
-    this.$layer.on('click', '.fe-save', $.proxy(this._getStandardAddress, this));
     this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
+    this.$saveBtn.click(_.debounce($.proxy(this._getStandardAddress, this), 500));
   },
   _checkIsAbled: function (event) {
     var $address = $(event.currentTarget).val();

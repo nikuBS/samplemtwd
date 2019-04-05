@@ -1,7 +1,7 @@
 /**
- * FileName:
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.09.17
+ * @file
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.09.17
  *
  */
 var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];

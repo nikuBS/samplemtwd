@@ -274,4 +274,12 @@ Tw.PRODUCT_REPLACED_RULE = {
 Tw.CUSTOMER_RESEARCH_NEXT_TYPE = {
   END: 99,
   NEXT: 0
+};
+
+Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE = {
+  RCG0066: 'NOT_COMPLETE',  // 공유 완료되지 않음
+  RCG0067: 'NOT_THIS_MONTH',  // 이번 달 공유 내역 아님
+  RCG0068: 'NOT_MINE',  // 내 공유 내역 아님
+  RCG0069: 'NOT_SAME_PLAN' , // 공유 당시와 동일한 요금제가 아님
+  RCG0070: 'GREATER_THAN_CHANGABLE' // 변경하려는 데이터 양이 공유 데이터 양보다 큼 
 }

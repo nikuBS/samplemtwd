@@ -11,17 +11,9 @@ import DateHelper from '../utils/date.helper';
 
 class LoginService {
   static instance;
-  private request;
-  private response;
   private logger = new LoggerService();
 
   constructor() {
-  }
-
-  public setCurrentReq(req, res) {
-    this.request = req;
-    this.response = res;
-    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], this.getSessionId(req), req.baseUrl + req.path);
   }
 
   public sessionGenerate(req): Observable<any> {
@@ -38,31 +30,24 @@ class LoginService {
     return req.session.id;
   }
 
-  public isLogin(session): boolean {
-    if ( !FormatHelper.isEmpty(session) ) {
-      return !FormatHelper.isEmpty(session.svcInfo) && !FormatHelper.isEmpty(session.serverSession);
+  public isLogin(req): boolean {
+    if ( !FormatHelper.isEmpty(req.session) ) {
+      return !FormatHelper.isEmpty(req.session.svcInfo) && !FormatHelper.isEmpty(req.session.serverSession);
     }
     return false;
   }
 
-  public isNewSession(): boolean {
-    const prevUrl = this.request.headers.referer || '';
-    const currentHost = this.request.hostname;
-
-    return prevUrl.indexOf(currentHost) === -1;
+  public setCookie(res, key: string, value: string) {
+    res.cookie(key, value);
   }
 
-  public setCookie(key: string, value: string) {
-    this.response.cookie(key, value);
-  }
-
-  public getCookie(key: string) {
-    return this.request.cookies[key];
+  public getCookie(req, key: string) {
+    return req.cookies[key];
   }
 
 
-  public getSvcInfo(req?): any {
-    const request = req || this.request;
+  public getSvcInfo(req): any {
+    const request = req; // || this.request;
     // this.logger.debug(this, '[getSvcInfo]', request.session);
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
       this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
@@ -77,63 +62,63 @@ class LoginService {
     return null;
   }
 
-  public setSvcInfo(svcInfo: any): Observable<any> {
+  public setSvcInfo(req, res, svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
-      this.response.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
-      this.setXtractorCookie(svcInfo);
+      res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
+      this.setXtractorCookie(req, res, svcInfo);
 
-      if ( FormatHelper.isEmpty(this.request.session.svcInfo) ) {
-        this.request.session.svcInfo = new SvcInfoModel(svcInfo);
+      if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
+        req.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
-        Object.assign(this.request.session.svcInfo, svcInfo);
+        Object.assign(req.session.svcInfo, svcInfo);
       }
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setSvcInfo]', this.request.session.svcInfo);
-        observer.next(this.request.session.svcInfo);
+      req.session.save(() => {
+        this.logger.debug(this, '[setSvcInfo]', req.session.svcInfo);
+        observer.next(req.session.svcInfo);
         observer.complete();
       });
     });
   }
 
-  public clearXtCookie(): any {
-    this.response.clearCookie(COOKIE_KEY.XTLID);
-    this.response.clearCookie(COOKIE_KEY.XTLOGINID);
-    this.response.clearCookie(COOKIE_KEY.XTLOGINTYPE);
-    this.response.clearCookie(COOKIE_KEY.XTSVCGR);
+  public clearXtCookie(res): any {
+    res.clearCookie(COOKIE_KEY.XTLID);
+    res.clearCookie(COOKIE_KEY.XTLOGINID);
+    res.clearCookie(COOKIE_KEY.XTLOGINTYPE);
+    res.clearCookie(COOKIE_KEY.XTSVCGR);
   }
 
-  private setXtractorCookie(svcInfo: any): any {
-    if ( FormatHelper.isEmpty(this.request.session.svcInfo) ) {
+  private setXtractorCookie(req, res, svcInfo: any): any {
+    if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
       return;
     }
 
-    const currentXtInfo = this.request.session.svcInfo.xtInfo || {},
+    const currentXtInfo = req.session.svcInfo.xtInfo || {},
       xtInfo: any = {};
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       xtInfo.XTLID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
-      this.response.cookie(COOKIE_KEY.XTLID, xtInfo.XTLID);
+      res.cookie(COOKIE_KEY.XTLID, xtInfo.XTLID);
     }
 
     if ( !FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       xtInfo.XTUID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
-      this.response.cookie(COOKIE_KEY.XTUID, xtInfo.XTUID);
+      res.cookie(COOKIE_KEY.XTUID, xtInfo.XTUID);
     }
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTLOGINID) && !FormatHelper.isEmpty(svcInfo.userId) ) {
       xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
-      this.response.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
+      res.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
     }
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTSVCGR) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       xtInfo.XTSVCGR = svcInfo.svcGr;
     }
 
-    this.request.session.svcInfo.xtInfo = xtInfo;
+    req.session.svcInfo.xtInfo = xtInfo;
   }
 
-  public getAllSvcInfo(req?): any {
-    const request = req || this.request;
+  public getAllSvcInfo(req): any {
+    const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.allSvcInfo) ) {
       this.logger.debug(this, '[getAllSvcInfo]', request.session.allSvcInfo);
       let result = null;
@@ -147,19 +132,19 @@ class LoginService {
     return null;
   }
 
-  public setAllSvcInfo(allSvcInfo: any): Observable<any> {
+  public setAllSvcInfo(req, res, allSvcInfo: any): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.allSvcInfo = allSvcInfo;
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setAllSvcInfo]', this.request.session.allSvcInfo);
-        observer.next(this.request.session.allSvcInfo);
+      req.session.allSvcInfo = allSvcInfo;
+      req.session.save(() => {
+        this.logger.debug(this, '[setAllSvcInfo]', req.session.allSvcInfo);
+        observer.next(req.session.allSvcInfo);
         observer.complete();
       });
     });
   }
 
-  public getChildInfo(req?): any {
-    const request = req || this.request;
+  public getChildInfo(req): any {
+    const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.childInfo) ) {
       this.logger.debug(this, '[getChildInfo]', request.session.childInfo);
       let result = null;
@@ -173,137 +158,137 @@ class LoginService {
     return null;
   }
 
-  public setChildInfo(childInfo: any): Observable<any> {
+  public setChildInfo(req, res, childInfo: any): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.childInfo = childInfo;
-      this.request.session.save(() => {
-        this.logger.debug(this, '[setChildInfo]', this.request.session.childInfo);
-        observer.next(this.request.session.childInfo);
+      req.session.childInfo = childInfo;
+      req.session.save(() => {
+        this.logger.debug(this, '[setChildInfo]', req.session.childInfo);
+        observer.next(req.session.childInfo);
         observer.complete();
       });
     });
   }
 
-  public getServerSession(): string {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.serverSession) ) {
-      this.logger.debug(this, '[getServerSession]', this.request.cookies[COOKIE_KEY.TWM], this.request.session.serverSession);
-      return this.request.session.serverSession;
+  public getServerSession(req): string {
+    if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.serverSession) ) {
+      this.logger.debug(this, '[getServerSession]', req.cookies[COOKIE_KEY.TWM], req.session.serverSession);
+      return req.session.serverSession;
     }
     return '';
   }
 
-  public setServerSession(serverSession: string): Observable<any> {
+  public setServerSession(req, res, serverSession: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
-        this.request.session.serverSession = serverSession;
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setServerSession]', this.request.session);
-          observer.next(this.request.session.serverSession);
+      if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
+        req.session.serverSession = serverSession;
+        req.session.save(() => {
+          this.logger.debug(this, '[setServerSession]', req.session);
+          observer.next(req.session.serverSession);
           observer.complete();
         });
       }
     });
   }
 
-  public setChannel(channel: string): Observable<any> {
+  public setChannel(req, channel: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
-        this.request.session.channel = channel;
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setChannel]', this.request.session);
-          observer.next(this.request.session.channel);
+      if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
+        req.session.channel = channel;
+        req.session.save(() => {
+          this.logger.debug(this, '[setChannel]', req.session);
+          observer.next(req.session.channel);
           observer.complete();
         });
       }
     });
   }
 
-  public getChannel(): string {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.channel) ) {
-      return this.request.session.channel;
+  public getChannel(req): string {
+    if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.channel) ) {
+      return req.session.channel;
     }
-    return this.request.cookies[COOKIE_KEY.CHANNEL];
+    return req.cookies[COOKIE_KEY.CHANNEL];
   }
 
-  public setMaskingCert(svcMgmtNum: string): Observable<any> {
+  public setMaskingCert(req, svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.session.masking) ) {
-          this.request.session.masking = [];
+      if ( !FormatHelper.isEmpty(req) ) {
+        if ( FormatHelper.isEmpty(req.session.masking) ) {
+          req.session.masking = [];
         }
-        this.request.session.masking.push(svcMgmtNum);
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setMaskingCert]', this.request.session);
-          observer.next(this.request.session.masking);
+        req.session.masking.push(svcMgmtNum);
+        req.session.save(() => {
+          this.logger.debug(this, '[setMaskingCert]', req.session);
+          observer.next(req.session.masking);
           observer.complete();
         });
       }
     });
   }
 
-  public getMaskingCert(svcMgmtNum: string): boolean {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.masking) ) {
-      return this.request.session.masking.indexOf(svcMgmtNum) !== -1;
+  public getMaskingCert(req, svcMgmtNum: string): boolean {
+    if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.masking) ) {
+      return req.session.masking.indexOf(svcMgmtNum) !== -1;
     }
     return false;
   }
 
-  public setNoticeType(noticeType: string): Observable<any> {
+  public setNoticeType(req, noticeType: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.session.noticeType) ) {
-          this.request.session.noticeType = '';
+      if ( !FormatHelper.isEmpty(req) ) {
+        if ( FormatHelper.isEmpty(req.session.noticeType) ) {
+          req.session.noticeType = '';
         }
-        this.request.session.noticeType = noticeType;
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setNoticeType]', this.request.session, this.request.session.noticeType);
-          observer.next(this.request.session.noticeType);
+        req.session.noticeType = noticeType;
+        req.session.save(() => {
+          this.logger.debug(this, '[setNoticeType]', req.session, req.session.noticeType);
+          observer.next(req.session.noticeType);
           observer.complete();
         });
       }
     });
   }
 
-  public getNoticeType(): string {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.noticeType) ) {
-      return this.request.session.noticeType;
+  public getNoticeType(req): string {
+    if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.noticeType) ) {
+      return req.session.noticeType;
     }
     return '';
   }
 
-  public setSessionStore(command: string, svcMgmtNum: string, result: any): Observable<any> {
+  public setSessionStore(req, command: string, svcMgmtNum: string, result: any): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.session.store) ) {
-          this.request.session.store = {};
+      if ( !FormatHelper.isEmpty(req) ) {
+        if ( FormatHelper.isEmpty(req.session.store) ) {
+          req.session.store = {};
         }
-        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) ) {
-          this.request.session.store[svcMgmtNum] = {};
+        if ( FormatHelper.isEmpty(req.session.store[svcMgmtNum]) ) {
+          req.session.store[svcMgmtNum] = {};
         }
-        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
-          this.request.session.store[svcMgmtNum][command] = {};
+        if ( FormatHelper.isEmpty(req.session.store[svcMgmtNum][command]) ) {
+          req.session.store[svcMgmtNum][command] = {};
         }
-        this.request.session.store[svcMgmtNum][command] = {
+        req.session.store[svcMgmtNum][command] = {
           data: result,
           expired: DateHelper.add5min(new Date())
         };
-        this.request.session.save(() => {
-          this.logger.debug(this, '[setSessionStore]', this.request.session.store);
-          observer.next(this.request.session.store[svcMgmtNum][command]);
+        req.session.save(() => {
+          this.logger.debug(this, '[setSessionStore]', req.session.store);
+          observer.next(req.session.store[svcMgmtNum][command]);
           observer.complete();
         });
       }
     });
   }
 
-  public clearSessionStore(svcMgmtNum: string): Observable<any> {
+  public clearSessionStore(req, svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( !FormatHelper.isEmpty(this.request.session.store) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) ) {
-          this.request.session.store[svcMgmtNum] = {};
-          this.request.session.save(() => {
-            this.logger.debug(this, '[clearSessionStore]', this.request.session.store);
-            observer.next(this.request.session.store[svcMgmtNum]);
+      if ( !FormatHelper.isEmpty(req) ) {
+        if ( !FormatHelper.isEmpty(req.session.store) && !FormatHelper.isEmpty(req.session.store[svcMgmtNum]) ) {
+          req.session.store[svcMgmtNum] = {};
+          req.session.save(() => {
+            this.logger.debug(this, '[clearSessionStore]', req.session.store);
+            observer.next(req.session.store[svcMgmtNum]);
             observer.complete();
           });
         } else {
@@ -317,13 +302,13 @@ class LoginService {
     });
   }
 
-  public getSessionStore(command: string, svcMgmtNum: string): any {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.store) &&
-      !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
-      this.logger.debug(this, '[getSessionStore]', this.request.session.store[svcMgmtNum][command]);
+  public getSessionStore(req, command: string, svcMgmtNum: string): any {
+    if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.store) &&
+      !FormatHelper.isEmpty(req.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(req.session.store[svcMgmtNum][command]) ) {
+      this.logger.debug(this, '[getSessionStore]', req.session.store[svcMgmtNum][command]);
       let result = null;
       try {
-        result = JSON.parse(JSON.stringify(this.request.session.store[svcMgmtNum][command]));
+        result = JSON.parse(JSON.stringify(req.session.store[svcMgmtNum][command]));
       } catch ( e ) {
         this.logger.error(this, '[getSessionStore] JSON parse Error');
       }
@@ -332,39 +317,40 @@ class LoginService {
     return null;
   }
 
-  public logoutSession(): Observable<any> {
+  public logoutSession(req, res): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.destroy((error) => {
-        this.logger.debug(this, '[logoutSession]', this.request.session, error);
-        this.response.clearCookie(COOKIE_KEY.TWM);
-        this.response.clearCookie(COOKIE_KEY.TWM_LOGIN);
+      req.session.destroy((error) => {
+        this.logger.debug(this, '[logoutSession]', req.session, error);
+        res.clearCookie(COOKIE_KEY.TWM);
+        res.clearCookie(COOKIE_KEY.TWM_LOGIN);
         observer.next();
         observer.complete();
       });
     });
   }
 
-  public getDevice(): string {
-    const userAgent = this.getUserAgent();
+  public getDevice(req): string {
+    const userAgent = this.getUserAgent(req);
     if ( /TWM_DEVICE/.test(userAgent) ) {
       return userAgent.split(COOKIE_KEY.DEVICE + '=')[1];
     }
     return '';
   }
 
-  public getNodeIp(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      const ip = this.request.headers['x-forwarded-for'] ||
-        this.request.connection.remoteAddress ||
-        this.request.socket.remoteAddress ||
-        (this.request.connection.socket ? this.request.connection.socket.remoteAddress : '');
+  public getNodeIp(req): string {
+    const request = req;
+    if ( !FormatHelper.isEmpty(request) ) {
+      const ip = request.headers['x-forwarded-for'] ||
+        request.connection.remoteAddress ||
+        request.socket.remoteAddress ||
+        (request.connection.socket ? request.connection.socket.remoteAddress : '');
       return ip;
     }
     return '';
   }
 
-  public getPath(req?: any): string {
-    const request = req || this.request;
+  public getPath(req: any): string {
+    const request = req; // || this.request;
     let path = this.getFullPath(request);
     if ( path.indexOf('?') !== -1 ) {
       path = path.split('?')[0];
@@ -372,8 +358,8 @@ class LoginService {
     return path;
   }
 
-  public getFullPath(req?: any): string {
-    const request = req || this.request;
+  public getFullPath(req: any): string {
+    const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {
       const baseUrl = request.baseUrl;
       if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 || baseUrl.indexOf('native') !== -1 ) {
@@ -385,8 +371,8 @@ class LoginService {
     return '';
   }
 
-  public getReferer(req?: any): string {
-    const request = req || this.request;
+  public getReferer(req: any): string {
+    const request = req; // || this.request;
     const referer = request.headers.referer;
     if ( !FormatHelper.isEmpty(referer) ) {
       const path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
@@ -396,22 +382,24 @@ class LoginService {
     }
   }
 
-  public getDns(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      return this.request.headers.host;
+  public getDns(req: any): string {
+    const request = req; // || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      return request.headers.host;
     }
     return '';
   }
 
-  public getProtocol(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      return this.request.protocol + '://';
+  public getProtocol(req: any): string {
+    const request = req; // || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      return request.protocol + '://';
     }
     return 'https://';
   }
 
-  public isGreen(): string {
-    const dns = this.getDns();
+  public isGreen(req): string {
+    const dns = this.getDns(req);
 
     if ( dns === EnvHelper.getEnvironment('DOMAIN_GAPP') || dns === EnvHelper.getEnvironment('DOMAIN_GWEB') ) {
       return BUILD_TYPE.GREEN;
@@ -419,9 +407,10 @@ class LoginService {
     return '';
   }
 
-  public getUserAgent(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      return this.request.headers['user-agent'];
+  public getUserAgent(req): string {
+    const request = req; // || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      return request.headers['user-agent'];
     }
     return '';
   }

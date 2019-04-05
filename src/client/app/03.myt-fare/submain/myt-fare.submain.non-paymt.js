@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 서브메인 > 미납요금내역(MF_02)
- * FileName: myt-fare-submain.non-paymt.js
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.10.02
+ * @file myt-fare-submain.non-paymt.js
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.10.02
  * Summay: 미납내역 조회 후 처리
  * Description: 납부가능일 선택, 이용정제 해제
  */

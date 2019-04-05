@@ -1,9 +1,13 @@
 /**
- * FileName: main.menu.settings.family-sites.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.26
+ * @file Family site 화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-26
  */
 
+/**
+ * @class
+ * @param (Object) rootEl - 최상위 element
+ */
 Tw.MainMenuSettingsFamilySites = function (rootEl) {
   this.$container = rootEl;
 
@@ -18,6 +22,12 @@ Tw.MainMenuSettingsFamilySites.prototype = {
     this.$container.on('click', '.fe-outlink', $.proxy(this._onLink, this));
     this.$container.on('click', '.fe-link-app', $.proxy(this._onAppLink, this));
   },
+
+  /**
+   * @function
+   * @desc link 선택 시 이동, app 인 경우 과금 팝업 노출
+   * @param  {Object} e click event
+   */
   _onLink: function (e) {
     var url = $(e.currentTarget).attr('href');
 
@@ -29,6 +39,11 @@ Tw.MainMenuSettingsFamilySites.prototype = {
       Tw.CommonHelper.openUrlExternal(url);
     }
   },
+
+  /**
+   * @function
+   * @desc Android/iOS 각각 마켓으로 이동
+   */
   _onAppLink: function () {
     var appKey = 'gtwd';
     var scheme = 'gtwdschem://';

@@ -1,12 +1,12 @@
 /**
- * FileName: biometrics.register.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.10
+ * @file biometrics.register.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.10
  */
 
-Tw.BiometricsRegister = function (target, svcMgmtNum) {
+Tw.BiometricsRegister = function (target, userId) {
   this._target = target;
-  this._svcMgmtNum = svcMgmtNum;
+  this._userId = userId;
   this._callback = null;
 
   this._popupService = Tw.Popup;
@@ -41,7 +41,7 @@ Tw.BiometricsRegister.prototype = {
 
     this.$infoIng = $popupContainer.find('.fe-info-ing');
     this.$infoClick = $popupContainer.find('.fe-info-click');
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._userId }, $.proxy(this._onFidoRegister, this));
   },
   _onClickCancel: function () {
     this._allClose = true;
@@ -52,7 +52,7 @@ Tw.BiometricsRegister.prototype = {
     $event.stopPropagation();
     this.$infoClick.addClass('none');
     this.$infoIng.removeClass('none');
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._userId }, $.proxy(this._onFidoRegister, this));
   },
   _onFidoRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -60,7 +60,7 @@ Tw.BiometricsRegister.prototype = {
       // this._popupService.closeAll();
       this._popupService.close();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'Y'
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {

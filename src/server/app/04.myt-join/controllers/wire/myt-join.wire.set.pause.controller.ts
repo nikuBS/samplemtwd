@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 일시 정지/해제
- * FileName: myt-join.wire.set.pause.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018.10.16
+ * @file myt-join.wire.set.pause.controller.ts
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018.10.16
  * Summary: 일시 정지/해제 정보 조회
  */
 
@@ -41,9 +41,9 @@ class MyTJoinWireSetPause extends TwViewController {
       const wirePauseInfo = this.getWirePauseInfo(wirePauseInfoResp);
       // console.log('~~~~~~~~~~~`wirePauseInfo', wirePauseInfo);
       const today = new Date();
-      // 정지 시작일 익일로 세팅
-      const min = DateHelper.getShortDateWithFormatAddByUnit(today, 1, 'days', this._INPUT_FORMAT);
-      // 정지 시작 가능일 세팅(익일 ~ 30일 이내)
+      // 정지 시작일 당일로 세팅
+      const min = DateHelper.getShortDateWithFormat( DateHelper.getCurrentDate(), this._INPUT_FORMAT );
+      // 정지 시작 가능일 세팅(당일 ~ 30일 이내)
       const startDate = {
         min: min,
         max: DateHelper.getShortDateWithFormatAddByUnit(today, this._SELECTABLE_MAX_DAY, 'days', this._INPUT_FORMAT),

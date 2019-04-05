@@ -1,7 +1,7 @@
 /**
- * FileName: product.mobileplan-add.join.5gx-watchtab.js
- * Author: ankle breaker (byunma@sk.com)
- * Date: 2019.04.05
+ * @file product.mobileplan-add.join.5gx-watchtab.js
+ * @author ankle breaker (byunma@sk.com)
+ * @since 2019.04.05
  */
 
 Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mobileplanId) {
@@ -220,7 +220,7 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
       }]
     });
 

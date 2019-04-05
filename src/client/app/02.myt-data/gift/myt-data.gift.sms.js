@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.gift.sms.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.09.17
+ * @file myt-data.gift.sms.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.09.17
  */
 
 Tw.MyTDataGiftSms = function (rootEl) {
@@ -54,10 +54,11 @@ Tw.MyTDataGiftSms.prototype = {
 _onClickSendSMS: function () {
     this._lockSms();
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0017, {
-      befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
-      msg: this.$textarea_sms.val()
-    }).done($.proxy(this._onSuccessRequestSms, this));
+    this._apiService.request(
+      Tw.API_CMD.BFF_06_0017,
+      { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum, msg: this.$textarea_sms.val() }, null, null, null,
+      { jsonp : false }
+    ).done($.proxy(this._onSuccessRequestSms, this));
   },
 
   _onSuccessRequestSms: function (res) {

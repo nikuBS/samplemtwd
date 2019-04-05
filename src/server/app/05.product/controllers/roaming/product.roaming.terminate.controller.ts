@@ -1,7 +1,7 @@
 /**
- * FileName: product.roaming.terminate.controller.ts
- * Author: Hyunkuk Lee (max5500@pineone.com)
- * Date: 2018.12.06
+ * @file product.roaming.terminate.controller.ts
+ * @author Hyunkuk Lee (max5500@pineone.com)
+ * @since 2018.12.06
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -32,7 +32,7 @@ class ProductRoamingTerminate extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0151, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '03'}, {}, [prodId])
     ).subscribe(([ preCheckInfo, prodTypeInfo, prodBffInfo ]) => {

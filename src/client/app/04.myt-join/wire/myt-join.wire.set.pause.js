@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의가입정보(인터넷/집전화/IPTV) > 일시 정지/해제
- * FileName: myt-join.wire.set.pause.js
- * Author: 이정민 (skt.p130713@partner.sk.com)
- * Date: 2018. 8. 17.
+ * @file myt-join.wire.set.pause.js
+ * @author 이정민 (skt.p130713@partner.sk.com)
+ * @since 2018. 8. 17.
  * Summary: 일시 정지/해제 신청
  */
 
@@ -86,8 +86,7 @@ Tw.MytJoinWireSetPause.prototype = {
   _getEndDateRange: function () {
     var maxDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._startDate, this._SELECTABLE_PAUSE_RANGE, 'days',
       this._DATE_FORMAT.INPUT, this._DATE_FORMAT.INPUT);
-    var startDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._startDate, 1, 'days',
-      this._DATE_FORMAT.INPUT, this._DATE_FORMAT.INPUT);
+    var startDate = Tw.DateHelper.getShortDateWithFormat(this._startDate, this._DATE_FORMAT.INPUT);
 
     return {
       min: startDate,
@@ -160,7 +159,7 @@ Tw.MytJoinWireSetPause.prototype = {
   _onChangeInputStartDate: function (event) {
     var $currentTarget = $(event.currentTarget);
     var currentTargetVal = $currentTarget.val();
-    // 선택한 날짜가 범위(익일 ~ 30일이내)를 벗어나면 익일로 변경 후 얼럿
+    // 선택한 날짜가 범위(당일 ~ 30일이내)를 벗어나면 당일로 변경 후 얼럿
     if ( !this._isValidDateInRange(currentTargetVal, this._options.startDateMin, this._options.startDateMax) ) {
       $currentTarget.val(this._options.startDateMin);
       this._startDate = this._options.startDateMin;

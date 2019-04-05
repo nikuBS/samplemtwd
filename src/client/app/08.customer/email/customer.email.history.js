@@ -1,7 +1,7 @@
 /**
- * FileName: customer.email.history.js
- * Author: Jiman Park (jiman.park@sk.com)
- * Date: 2018.11.01
+ * @file customer.email.history.js
+ * @author Jiman Park (jiman.park@sk.com)
+ * @since 2018.11.01
  */
 
 Tw.CustomerEmailHistory = function (rootEl) {

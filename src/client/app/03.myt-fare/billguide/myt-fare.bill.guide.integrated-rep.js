@@ -1,8 +1,8 @@
 /**
  * MenuName: 나의 요금 > 요금안내서 통합(대표,일반)청구회선(MF_02_01)
- * FileName: myt-fare.bill.guide.integrated-rep.js
- * Author: Kim Myoung-Hwan (skt.P130714@partner.sk.com)
- * Date: 2018.09.12
+ * @file myt-fare.bill.guide.integrated-rep.js
+ * @author Kim Myoung-Hwan (skt.P130714@partner.sk.com)
+ * @since 2018.09.12
  * Summay: 요금안내서 통합(대표,일반)청구회선 조회화면 처리, 자녀 이용요금 조회
  */
 
@@ -179,11 +179,11 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this.$container.on('click', '[data-target="payListBtn"]', $.proxy(this._payListBtnEvt, this)); // 납부내역조회
 
     this.$container.on('click', '[data-target="detailContentsBtn"]', $.proxy(function () { // 콘텐츠 이용료 최초화면 바로가기
-      this._history.goLoad('/myt-fare/bill/contents');
+      this._history.goLoad('/myt-fare/bill/contents/history');
     }, this));
 
     this.$container.on('click', '[data-target="detailMicroBtn"]', $.proxy(function () { // 소액결재 최초화면 바로가기
-      this._history.goLoad('/myt-fare/bill/small');
+      this._history.goLoad('/myt-fare/bill/small/history');
     }, this));
 
     this.$container.on('click', '[data-target="childBillInfo"]', $.proxy(this._goChildBillInfo, this)); // 자녀사용량 조회화면으로 이동

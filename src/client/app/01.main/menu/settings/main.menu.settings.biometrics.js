@@ -1,13 +1,13 @@
 /**
- * FileName: main.menu.settings.biometrics.js
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.10.10
+ * @file main.menu.settings.biometrics.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.10.10
  */
 
-Tw.MainMenuSettingsBiometrics = function (rootEl, target, svcMgmtNum) {
+Tw.MainMenuSettingsBiometrics = function (rootEl, target, userId) {
   this.$container = rootEl;
   this._target = target;
-  this._svcMgmtNum = svcMgmtNum;
+  this._userId = userId;
 
   this._nativeService = Tw.Native;
 
@@ -30,14 +30,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     this.$container.on('click', '#fe-bt-register-' + this._target, $.proxy(this._onClickRegisterFido, this));
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoCheck, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._userId }, $.proxy(this._onFidoCheck, this));
   },
   _onClickRegisterFido: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcMgmtNum);
+    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._userId);
     biometricsTerm.open($.proxy(this._updateFidoInfo, this));
   },
   _onClickCancelFido: function () {
-    var biometricsDeregister = new Tw.BiometricsDeregister(this._target, this._svcMgmtNum);
+    var biometricsDeregister = new Tw.BiometricsDeregister(this._target, this._userId);
     biometricsDeregister.openPopup($.proxy(this._updateFidoInfo, this));
   },
   _onFidoCheck: function (resp) {
@@ -47,7 +47,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
       } else {
         this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_ON);
       }
-      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum }, $.proxy(this._onFidoUse, this));
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId }, $.proxy(this._onFidoUse, this));
     } else {
       if ( this._target === Tw.FIDO_TYPE.FINGER ) {
         this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_OFF);
@@ -82,14 +82,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     if ( $currentTarget.attr('checked') === 'checked' ) {
       // off
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'N'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
     } else {
       // on
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'Y'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_USE);

@@ -1,8 +1,8 @@
 /**
  * 유선 부가서비스 > 설정 (레터링)
- * FileName: product.wireplan.setting.lettering.controller.ts
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2019.02.14
+ * @file product.wireplan.setting.lettering.controller.ts
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2019.02.14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';

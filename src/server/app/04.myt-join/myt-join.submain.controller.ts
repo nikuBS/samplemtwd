@@ -1,7 +1,7 @@
 /*
- * FileName: myt-join.submain.ts
- * Author: Kim InHwan (skt.P132150@partner.sk.com)
- * Date: 2018.10.05
+ * @file myt-join.submain.ts
+ * @author Kim InHwan (skt.P132150@partner.sk.com)
+ * @since 2018.10.05
  *
  */
 
@@ -197,7 +197,9 @@ class MyTJoinSubmainController extends TwViewController {
         if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
           data.myLongPausedState = {
             state: true,
-            opState: data.myPausedState.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '')
+            opState: data.myPausedState.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , ''),
+            fromDt: data.myPausedState.fromDt,
+            toDt: data.myPausedState.toDt
           };
         }
       } else if ( data.myPausedState && data.myPausedState.armyDt ) {

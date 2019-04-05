@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.prepaid.voice-info.controller.ts
- * Author: 박지만 (jiman.park@sk.com)
- * Date: 2019.02.20
+ * @file myt-data.prepaid.voice-info.controller.ts
+ * @author 박지만 (jiman.park@sk.com)
+ * @since 2019.02.20
  */
 
 import { NextFunction, Request, Response } from 'express';

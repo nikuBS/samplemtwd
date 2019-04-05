@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.option.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.02
+ * @file myt-fare.bill.option.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.02
  * Annotation: 자동납부 방법 조회
  */
 
@@ -18,7 +18,7 @@ Tw.MyTFareBillOption = function (rootEl) {
 
 Tw.MyTFareBillOption.prototype = {
   _init: function () {
-    if( !Tw.Environment.init ) {
+    if( !Tw.Environment.init ) { // After call CDN
       $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkIsAfterChange, this));
     } else {
       this._checkIsAfterChange();
@@ -26,18 +26,19 @@ Tw.MyTFareBillOption.prototype = {
     this._bindEvent();
   },
   _checkIsAfterChange: function () {
+    // 다른 화면에서 자동납부 신청 및 변경 등의 작업 후 toast 노출 필요 시 쿼리스트링으로 해당 정보 보내온 값(type) 처리
     var type = Tw.UrlHelper.getQueryParams().type;
     if (type) {
       var message = '';
 
       if (type === 'new' || type === 'sms') {
-        message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_NEW;
+        message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_NEW; // 신청이 완료되었습니다.
       }
       if (type === 'change') {
-        message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE;
+        message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE; // 변경이 완료되었습니다.
       }
 
-      if (!this._isBackOrReload() && message !== '') {
+      if (!this._isBackOrReload() && message !== '') { // back key나 새로고침이 아닌 경우 토스트 노출
         this._commonHelper.toast(message);
       }
     }
@@ -49,12 +50,13 @@ Tw.MyTFareBillOption.prototype = {
     this.$container.on('click', '.fe-change-address', $.proxy(this._changeAddress, this));
   },
   _goAutoPayment: function () {
-    this._historyService.goLoad('/myt-fare/bill/option/register');
+    this._historyService.goLoad('/myt-fare/bill/option/register'); // 자동납부 신청/변경
   },
   _cancelAutoPayment: function () {
-    this._historyService.goLoad('/myt-fare/bill/option/cancel');
+    this._historyService.goLoad('/myt-fare/bill/option/cancel'); // 자동납부 해지
   },
   _changePaymentDate: function (event) {
+    // 현재 계좌이체 자동납부 시 요금납부일 변경 가능 - 요금납부일 변경 actionsheet load
     var $target = $(event.currentTarget);
     this._popupService.open({
       url: '/hbs/',
@@ -76,6 +78,7 @@ Tw.MyTFareBillOption.prototype = {
     var code = $selectedValue.attr('id');
     var date = $selectedValue.parents('label').text().replace(Tw.PERIOD_UNIT.DAYS, '');
 
+    // 계좌이체 요금납부일 변경
     this._apiService.request(Tw.API_CMD.BFF_07_0065, { payCyClCd: code })
       .done($.proxy(this._changeSuccess, this, date, $selectedValue))
       .fail($.proxy(this._changeFail, this, $selectedValue));
@@ -87,7 +90,7 @@ Tw.MyTFareBillOption.prototype = {
       this.$container.find('.fe-pay-date').text(date);
       this.$container.find('.fe-change-date').hide();
 
-      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_DATE);
+      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_DATE); // 변경 성공
     } else {
       this._changeFail($target, res);
     }
@@ -96,7 +99,7 @@ Tw.MyTFareBillOption.prototype = {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
   _changeAddress: function () {
-    this._historyService.goLoad('/myt-fare/bill/option/change-address');
+    this._historyService.goLoad('/myt-fare/bill/option/change-address'); // 지로/입금전용계좌 납부 시 주소 및 연락처변경 화면 이동
   },
   _isBackOrReload: function () {
     if (window.performance) {

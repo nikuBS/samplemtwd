@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.history.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2019.01.21
+ * @file myt-data.familydata.history.js
+ * @author Jiyoung Jo
+ * @since 2019.01.21
  */
 
 Tw.MyTDataFamilyHistory = function(rootEl, histories) {

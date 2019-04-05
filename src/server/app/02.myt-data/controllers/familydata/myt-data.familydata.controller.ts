@@ -1,7 +1,7 @@
 /**
- * FileName: myt-data.familydata.controller.ts
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.10.01
+ * @file myt-data.familydata.controller.ts
+ * @author Jiyoung Jo
+ * @since 2018.10.01
  */
 
 import { NextFunction, Request, Response } from 'express';

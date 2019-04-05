@@ -1,7 +1,7 @@
 /**
- * FileName: common.cert.nice.refund.controller.ts
- * Author: Ara Jo (araara.jo@sk.com)
- * Date: 2018.11.29
+ * @file common.cert.nice.refund.controller.ts
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.11.29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -19,7 +19,7 @@ class CommonCertNiceRefund extends TwViewController {
     const authKind = req.query.authKind;
     this.apiService.request(API_CMD.BFF_01_0049, {
       mobileco,
-      resultUrl: 'https://' + this.loginService.getDns() + '/common/cert/result?type=nice&kind=' + authKind
+      resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=nice&kind=' + authKind
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {

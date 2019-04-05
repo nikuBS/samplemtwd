@@ -1,7 +1,7 @@
 /**
- * FileName: product.common.callplan.js
- * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.09.11
+ * @file product.common.callplan.js
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018.09.11
  */
 
 Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
@@ -318,10 +318,10 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      var targetUrl = location.origin + url + '?prod_id=' + this._prodId;
+      var targetUrl = '/product/callplan?prod_id=' + this._prodId;
 
       if (this._bpcpService.isBpcp(url)) {
-        targetUrl = '/product/callplan?prod_id=' + this._prodId + '&bpcpServiceId=' + url.replace('BPCP:', '');
+        targetUrl += '&bpcpServiceId=' + url.replace('BPCP:', '');
       }
 
       return this._tidLanding.goLogin(targetUrl);

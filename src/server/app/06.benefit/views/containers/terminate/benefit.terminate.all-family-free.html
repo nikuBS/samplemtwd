@@ -1,7 +1,7 @@
 <%#
-* FileName: benefit.terminate.all-family-free.html
-* Author: Ji Hun Yang (jihun202@sk.com)
-* Date: 2019.04.01
+* @file benefit.terminate.all-family-free.html
+* @author Ji Hun Yang (jihun202@sk.com)
+* @since 2019.04.01
 %>
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
@@ -13,7 +13,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page nobg tw-popup fixed-bottom"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
+    <div class="popup-page nobg tw-popup"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -38,7 +38,7 @@
                                 </li>
                                 <li>
                                     <span class="title">결합회선</span>
-                                    <span class="tx-cont"><%= termInfo.combinationGroup.mblSvcCnt + termInfo.combinationWireMemberList.length %>회선</span>
+                                    <span class="tx-cont"><%= termInfo.combinationGroup.mblSvcCnt + termInfo.combinationGroup.wirSvcCnt %>회선</span>
                                 </li>
                                 <li>
                                     <span class="title">가입상태</span>
@@ -54,72 +54,73 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <div class="item-list">
-                        <ul>
-                            <li class="pt20">
-                                <div class="title-wrap">
-                                    <span class="elem tx-bold">T상품</span>
-                                    <span class="elem"><%= termInfo.combinationWirelessMember.svcNum %> (<%= termInfo.combinationWirelessMember.svcStNm %>)</span>
-                                </div>
-                                <div class="basic-list">
-                                    <ul>
-                                        <li>
-                                            <span class="title">고객명</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.custNm %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">요금제</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.feeProdNm %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">서비스 제공회사</span>
-                                            <span class="tx-cont">SK텔레콤</span>
-                                        </li>
-                                        <li>
-                                            <span class="title">사용 개월 수</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.useYearCnt %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">T끼리온가족할인</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWirelessMember.famlUseYn === 'Y' ? '할인제도 사용 중' : '할인제도 미사용' %></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <% if ( termInfo.combinationWireMember ) { %>
-                            <li>
-                                <div class="title-wrap">
-                                    <span class="elem tx-bold">B상품</span>
-                                    <span class="elem"><%= termInfo.combinationWireMember.svcCdNm %></span>
-                                </div>
-                                <div class="basic-list">
-                                    <ul>
-                                        <li>
-                                            <span class="title">고객명</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWireMember.custNm %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">요금제</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWireMember.feeProdNm %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">서비스 제공회사</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWireMember.coClCd === 'T' ? 'SK텔레콤' : 'SK브로드밴드' %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">사용 개월 수</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWireMember.useYearCnt %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">결합상태</span>
-                                            <span class="tx-cont"><%= termInfo.combinationWireMember.combYn %></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <% } %>
-                        </ul>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion2">
+                            <div class="acco-style data-famliy-group-list type2">
+                                <ul class="acco-box">
+                                    <% for (var i in termInfo.combinationList) { %>
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <button role="button" aria-pressed="false">
+                                                <div class="list-wrap">
+                                                    <div class="list-info">
+                                                        <div>
+                                                            <strong class="me"><%= termInfo.combinationList[i].custNm %></strong>
+                                                            <% if (termInfo.combinationList[i].isWireless) { %>
+                                                            <% if (termInfo.combinationList[i].fam.leader) { %><i class="icon-f-delegate ml5"><span class="blind">가족대표</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.parents) { %><i class="icon-parents ml5"><span class="blind">부모</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.grandparents) { %><i class="icon-grandparents ml5"><span class="blind">(증)조부모</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.grandchildren) { %><i class="icon-grandchildren ml5"><span class="blind">손자녀</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.spouse) { %><i class="icon-partner ml5"><span class="blind">배우자</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.children) { %><i class="icon-children ml5"><span class="blind">자녀</span></i><% } %>
+                                                            <% if (termInfo.combinationList[i].fam.brother) { %><i class="icon-brother ml5"><span class="blind">형제자매</span></i><% } %>
+                                                            <% } %>
+                                                        </div>
+                                                        <div class="num">
+                                                            <% if (termInfo.combinationList[i].isWireless) { %>
+                                                            <%= termInfo.combinationList[i].svcNum %>
+                                                            <% } else { %>
+                                                            <%= termInfo.combinationList[i].svcCdNm %>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                    <div class="list-arrow">
+                                                        <span class="ico-arrow"><span class="blind">결합가족 <%= termInfo.combinationList[i].custNm %> 내용 자세히 보기</span></span>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <div class="acco-content">
+                                            <div class="data-info-list toggle-inner-list">
+                                                <ul>
+                                                    <li>
+                                                        <dl>
+                                                            <dt>관계</dt>
+                                                            <dd>
+                                                                <% if (termInfo.combinationList[i].isWireless) { %>
+                                                                <%= termInfo.combinationList[i].relClNm %><% if (termInfo.combinationList[i].fam.me) { %>(내번호)<% } %>
+                                                                <% } else { %>
+                                                                - <% if (termInfo.combinationList[i].isMe) { %>(내번호)<% } %>
+                                                                <% } %>
+                                                                <% if (isRepSvc) { %>
+                                                                <br /><button class="bt-link-tx underline red fe-btn_terminate" data-svc_cd="<%= termInfo.combinationList[i].svcCd %>" data-leader="<%= termInfo.combinationList[i].isFamilyLeaderYn %>">해지</button>
+                                                                <% } %>
+                                                            </dd>
+                                                        </dl>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% } %>
+
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                    <!-- //.widget -->
+
                 </div>
                 <!--// .cont-box -->
 
@@ -130,31 +131,19 @@
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
                         <li>
-                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                                본인인증 안내 <span class="tip-view">TIP</span>
+                            <button type="button" class="tip-view-btn" id="MS_07_01_04_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                                TB끼리 온가족프리 해지 할 경우 <span class="tip-view">TIP</span>
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                                결합상품 자동 해지 안내 <span class="tip-view">TIP</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="tip-view-btn" id="BS_06_01_01_01_tip_03" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                                할인 적용 안내 <span class="tip-view">TIP</span>
+                            <button type="button" class="tip-view-btn" id="MS_07_01_04_tip_02" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                                휴대폰·인터넷 서비스 해지 할 경우 <span class="tip-view">TIP</span>
                             </button>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
-            </div>
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button class="fe-btn_terminate">해지하기</button>
-                    </li>
-                </ul>
             </div>
         </div>
         <!--// .container-wrap -->
@@ -165,5 +154,5 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>$(function () {new Tw.BenefitTerminateTbCombination($('.wrap'), '<%= prodId %>', '<%= termInfo.combinationGroup.svcProdGrpNm %>', '<%= termInfo.combinationWireMember ? termInfo.combinationWireMember.svcCd : "" %>');});</script>
+<script>$(function () {new Tw.BenefitTerminateAllFamilyFree($('.wrap'), '<%= prodId %>', '<%= termInfo.combinationGroup.svcProdGrpNm %>');});</script>
 <% include ../../components/end.component.html %>

@@ -1,7 +1,7 @@
 /**
- * FileName: myt-fare.bill.prepay.auto.info.js
- * Author: Jayoon Kong (jayoon.kong@sk.com)
- * Date: 2018.10.05
+ * @file myt-fare.bill.prepay.auto.info.js
+ * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @since 2018.10.05
  * Annotation: 소액결제/콘텐츠이용료 자동 선결제 신청/변경/해지 내역 관리
  */
 
@@ -53,7 +53,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       $.proxy(this._cancel, this, $target), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $target);
   },
   _cancel: function ($target) {
-    var $api = this._getCancelApiName();
+    var $api = this._getCancelApiName(); // 자동선결제 해지 API 조회
 
     this._apiService.request($api, {})
       .done($.proxy(this._cancelSuccess, this, $target))
@@ -64,15 +64,15 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _getCancelApiName: function () {
     var $apiName = '';
     if (this.$title === 'small') {
-      $apiName = Tw.API_CMD.BFF_07_0077;
+      $apiName = Tw.API_CMD.BFF_07_0077; // 소액결제
     } else {
-      $apiName = Tw.API_CMD.BFF_07_0084;
+      $apiName = Tw.API_CMD.BFF_07_0084; // 콘텐츠이용료
     }
     return $apiName;
   },
   _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel');
+      this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel'); // 해지완료
     } else {
       this._cancelFail($target, res);
     }
@@ -83,7 +83,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _setEventEachData: function (idx, target) {
     var $target = $(target);
     if (idx >= this._defaultCnt) {
-      $target.addClass('none');
+      $target.addClass('none'); // 조회된 데이터 중 일부 숨김
     }
   },
   _setMoreData: function (e) {
@@ -103,9 +103,9 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _getHistoryApiName: function () {
     var $apiName = '';
     if (this.$title === 'small') {
-      $apiName = Tw.API_CMD.BFF_07_0075; // 소액결제
+      $apiName = Tw.API_CMD.BFF_07_0075; // 소액결제 자동선결제 신청/변경 내역조회
     } else {
-      $apiName = Tw.API_CMD.BFF_07_0079; // 콘텐츠이용료
+      $apiName = Tw.API_CMD.BFF_07_0079; // 콘텐츠이용료 자동선결제 신청/변경 내역조회
     }
     return $apiName;
   },
@@ -130,10 +130,10 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     var cardName = '';
     var cardNum = '';
 
-    if (this.$title === 'small') {
+    if (this.$title === 'small') { // 소액결제일 경우 카드이름
       cardName = 'cardNm';
       cardNum = 'cardNumH';
-    } else {
+    } else { // 콘텐츠이용료
       cardName = 'prchsCardNm';
       cardNum = 'cardNum';
     }
@@ -142,7 +142,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     for (var i = 0; i < $record.length; i++) {
       var $liNode = this.$standardNode.clone();
       $liNode.find('.fe-type').text(Tw.PAYMENT_REQUEST_TYPE[$record[i].autoChrgReqClCd]);
-      $liNode.find('.fe-date').text(Tw.DateHelper.getFullDateAndTime($record[i].operDtm));
+      $liNode.find('.fe-date').text(Tw.DateHelper.getFullDateAnd24Time($record[i].operDtm));
 
       if ($record[i].autoChrgReqClDd === 'F') { // 해지 건
         $liNode.find('.fe-detail').remove();

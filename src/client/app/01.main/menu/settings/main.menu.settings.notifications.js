@@ -1,7 +1,7 @@
 /**
- * FileName: main.menu.settings.notifications.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.10.08
+ * @file main.menu.settings.notifications.js
+ * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @since 2018.10.08
  */
 
 Tw.MainMenuSettingsNotifications = function (rootEl) {

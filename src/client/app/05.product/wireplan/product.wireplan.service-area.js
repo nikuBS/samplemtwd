@@ -1,7 +1,7 @@
 /**
- * FileName: product.wire.service-area.js
- * Author: Jiyoung Jo (jiyoungjo@sk.com)
- * Date: 2018.11.07
+ * @file product.wire.service-area.js
+ * @author Jiyoung Jo
+ * @since 2018.11.07
  */
 
 Tw.ProductWireServiceArea = function(rootEl) {
