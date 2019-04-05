@@ -1,9 +1,13 @@
 /**
- * @file main.menu.settings.notifications.js
+ * @file T 알림 설정 화면 관련 처리
  * @author Hakjoon Sim (hakjoon.sim@sk.com)
  * @since 2018.10.08
  */
 
+/**
+ * @class
+ * @param  {Object} rootEl - 최상위 element
+ */
 Tw.MainMenuSettingsNotifications = function (rootEl) {
   this.$container = rootEl;
 
@@ -22,6 +26,11 @@ Tw.MainMenuSettingsNotifications = function (rootEl) {
 };
 
 Tw.MainMenuSettingsNotifications.prototype = {
+
+  /**
+   * @function
+   * @desc device의 notification on/off 여부 확인하여 안내 영역 노출 결정
+   */
   _init: function () {
     // check which terms is agreed
     var $agreedTerms = this.$container.find('.fe-term.checked');
@@ -48,6 +57,12 @@ Tw.MainMenuSettingsNotifications.prototype = {
       'click', '#fe-service-terms, #fe-recommend-terms', $.proxy(this._onTermsClicked, this));
     this.$container.on('click', '#fe-go-device-noti', $.proxy(this._onDeviceNotiClicked, this));
   },
+
+  /**
+   * @function
+   * @desc 각각의 notification 설정이 바뀌는 경우 BFF로 변경된 설정 요청
+   * @param  {Object} e click event
+   */
   _onNotiChanged: function (e) {
     var id = e.currentTarget.id;
     var checked = !!$(e.currentTarget).attr('checked');
@@ -68,7 +83,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
     );
 
     // check and show layer popup for terms
-    if (checked) { // When switch changes to on from off
+    if (checked) { // When switch changes to on from off, show layer popup for detail settings
       if (id.indexOf('service') !== -1) {
         if (!this._termsAgreed.twdAdRcvAgreeYn || !this._termsAgreed.twdInfoRcvAgreeYn) {
           this.$container.find('#fe-service-terms').trigger('click'); // show terms layer popup
@@ -81,6 +96,13 @@ Tw.MainMenuSettingsNotifications.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc BFF 요청 실패시 라디오버튼 다시 복구
+   * @param  {String} id - notification 항목 id
+   * @param  {Object} err - BFF 로 부터 잔달받은 error object
+   */
   _onFailChangingNoti: function (id, err) {
     var $switch = $('#' + id).closest('.btn-switch');
     if ($switch.hasClass('on')) {
@@ -91,6 +113,12 @@ Tw.MainMenuSettingsNotifications.prototype = {
 
     Tw.Error(err.code, err.msg).pop();
   },
+
+  /**
+   * @function
+   * @desc 약관 클릭시 레이어 팝업으로 약관 노출
+   * @param  {Object} e click event
+   */
   _onTermsClicked: function (e) {
     var id = e.target.id;
     this._popupService.open({
@@ -98,6 +126,13 @@ Tw.MainMenuSettingsNotifications.prototype = {
       layer: true
     }, $.proxy(this._onTermsOpened, this, id));
   },
+
+  /**
+   * @function
+   * @desc 약관 layouer popup 관련 처리
+   * @param  {String} id - 약관 ID
+   * @param  {Object} $root - 레이어팝업의 최상위 elem
+   */
   _onTermsOpened: function (id, $root) {
     //init
     $root.find('input[type=checkbox]').map($.proxy(function (i, elem) {
@@ -125,6 +160,12 @@ Tw.MainMenuSettingsNotifications.prototype = {
       Tw.CommonHelper.openTermLayer2(code);
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 선택한(동의한) 약관을 BFF로 갱신 요청
+   * @param  {Array} terms - 선택된 약관의 array
+   */
   _onTermsConfirmed: function (terms) {
     this._popupService.close();
 
@@ -138,6 +179,12 @@ Tw.MainMenuSettingsNotifications.prototype = {
         Tw.Error(err.code, err.msg).pop();
       }, this));
   },
+
+  /**
+   * @function
+   * @desc BFF에 변경 요청한 약관이 성공일 경우 화면 갱신
+   * @param  {Array} terms - 선택(변경)한 약관 array
+   */
   _onSuccessTerms: function (terms) {
     this.$container.find('.fe-term').each(function (i, elem) {
       if (terms.hasOwnProperty(elem.dataset.key)) {
@@ -154,6 +201,11 @@ Tw.MainMenuSettingsNotifications.prototype = {
       this._termsAgreed[key] = terms[key];
     }
   },
+
+  /**
+   * @function
+   * @desc 기기 notification 알림영역 선택시 native 설정으로 이동시킴
+   */
   _onDeviceNotiClicked: function () {
     this._nativeService.send(Tw.NTV_CMD.OPEN_SETTINGS, {
       type: 'notification'
