@@ -135,7 +135,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CustomerResearches($('.wrap'), <%- JSON.stringify(researches.slice(20)) %>);
+        new Tw.CustomerResearches($('.wrap'), JSON.parse('<%- JSON.stringify(researches.slice(20)) %>'));
     });
 </script>
 <% include ../../components/end.component.html %>
