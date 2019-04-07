@@ -1,8 +1,7 @@
 /**
  * MyT > 나의 가입정보 > 나의 요금제 > 요금제 변경 가능일 알림 서비스 해지
- * @file myt-join.myplan.alarmterminate.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.08.19
+ * @since 2018-08-19
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -11,6 +10,9 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ */
 class MyTJoinMyplanAlarmterminate extends TwViewController {
   constructor() {
     super();
@@ -18,8 +20,7 @@ class MyTJoinMyplanAlarmterminate extends TwViewController {
 
   /**
    * 요금제 가입 정보값 변환
-   * @param feePlan
-   * @private
+   * @param feePlan - 요금제 정보
    */
   private _convertFeePlanInfo(feePlan): any {
     return Object.assign(feePlan, {
@@ -29,8 +30,7 @@ class MyTJoinMyplanAlarmterminate extends TwViewController {
 
   /**
    * 알림 서비스 가입 상태 값 변환
-   * @param alarmStatus
-   * @private
+   * @param alarmStatus - 알림 서비스 가입 상태
    */
   private _convertAlarmStatusInfo(alarmStatus): any {
     return Object.assign(alarmStatus, {

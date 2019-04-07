@@ -1,18 +1,18 @@
 /**
  * MyT > 나의 가입정보 > 나의 요금제
- * @file myt-join.myplan.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.19
+ * @since 2018-09-19
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import {DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT, CURRENCY_UNIT} from '../../../../types/string.type';
+import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT, CURRENCY_UNIT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../../utils/product.helper';
 
+/* 상품 카테고리 별 툴팁 코드 목록 */
 const FEE_PLAN_TIP = {
   M1: ['MS_05_tip_01'], // 휴대폰
   M2: ['MS_05_tip_02'], // 선불폰(PPS)
@@ -24,6 +24,9 @@ const FEE_PLAN_TIP = {
   S3: ['MS_05_tip_03'] // 집전화
 };
 
+/**
+ * @class
+ */
 class MyTJoinMyplan extends TwViewController {
   constructor() {
     super();
@@ -31,8 +34,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 무선/유선 별 요청 API 분기처리
-   * @param svcAttrCd
-   * @private
+   * @param svcAttrCd - 회선 카테고리 값
    */
   private _getFeePlanApiInfo(svcAttrCd): any {
     if ( SVC_CDGROUP.WIRELESS.indexOf(svcAttrCd) !== -1 ) { // 무선
@@ -54,8 +56,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 옵션 및 할인프로그램, 혜택 목록 데이터 변환
-   * @param optionAndDiscountProgramList
-   * @private
+   * @param optionAndDiscountProgramList - 옵션 및 할인프로그램 목록
    */
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
@@ -70,8 +71,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 혜택 종료일 변환
-   * @param dcEndDt
-   * @private
+   * @param dcEndDt - 혜택 종료일
    */
   private _getDcEndDt(dcEndDt: any): any {
     if (dcEndDt === '99991231') {
@@ -83,9 +83,8 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 목록의 각 항목 데이터 변환
-   * @param data
-   * @param isWire
-   * @private
+   * @param data - 요금제 정보
+   * @param isWire - 유선 요금제 여부
    */
   private _convertFeePlan(data, isWire): any {
     return isWire ? this._convertWirePlan(data.result) : this._convertWirelessPlan(data.result);
@@ -93,8 +92,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 유선 값 변환
-   * @param wirePlan
-   * @private
+   * @param wirePlan - 유선 요금제 정보
    */
   private _convertWirePlan(wirePlan): any {
     const isNumberBasFeeAmt = !isNaN(Number(wirePlan.basFeeAmt)); // 금액 숫자 여부
@@ -109,8 +107,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 유선 혜택 데이터 변환
-   * @param dcBenefits
-   * @private
+   * @param dcBenefits - 유선 혜택 데이터 값
    */
   private _convertWireDcBenefits(dcBenefits): any {
     const dcTypeMoneyList: any = [],
@@ -135,8 +132,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 혜택 값이 높은 순으로 정렬
-   * @param list
-   * @private
+   * @param list - 옵션 및 할인 프로그램 목록
    */
   private _sortByHigher(list: any): any {
     return list.sort((itemA, itemB) => {
@@ -154,8 +150,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 유선 혜택 항목 데이터 변환
-   * @param dcBenefitItem
-   * @private
+   * @param dcBenefitItem - 헤택 목록
    */
   private _convertWireDcBenefitItem(dcBenefitItem: any): any {
     return Object.assign(dcBenefitItem, {
@@ -169,8 +164,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 무선 데이터 변환
-   * @param wirelessPlan
-   * @private
+   * @param wirelessPlan - 무선 요금제 데이터
    */
   private _convertWirelessPlan(wirelessPlan): any {
     if (FormatHelper.isEmpty(wirelessPlan.feePlanProd)) {
@@ -206,9 +200,8 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 데이터 값 분기 처리
-   * @param basDataGbTxt
-   * @param basDataMbTxt
-   * @private
+   * @param basDataGbTxt - 기가 값
+   * @param basDataMbTxt - 메가 값
    */
   private _getBasDataTxt(basDataGbTxt: any, basDataMbTxt: any): any {
     if (!FormatHelper.isEmpty(basDataGbTxt)) {  // Gb 값 우선 사용
@@ -233,8 +226,7 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 툴팁 목록 가져오기
-   * @param svcAttrCd
-   * @private
+   * @param svcAttrCd - 회선 카테고리 값
    */
   private _getTipList(svcAttrCd: any): any {
     if (FormatHelper.isEmpty(svcAttrCd)) {
@@ -251,9 +243,8 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * 버튼 목록 컨버팅
-   * @param btnList
-   * @param prodSetYn
-   * @private
+   * @param btnList - 버튼 목록
+   * @param prodSetYn - 해당 상품의 설정 허용 여부
    */
   private _convertBtnList(btnList: any, prodSetYn: any): any {
     if (FormatHelper.isEmpty(btnList)) {

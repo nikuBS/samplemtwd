@@ -1,29 +1,36 @@
 /**
- * @file customer.svc-info.notice.controller.ts
+ * 이용안내 > 공지사항
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.19
+ * @since 2018-10-19
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
 import { CUSTOMER_NOTICE_CTG_CD } from '../../../../types/bff.type';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import sanitizeHtml from 'sanitize-html';
 import BrowserHelper from '../../../../utils/browser.helper';
 import CommonHelper from '../../../../utils/common.helper';
 
+/**
+ * @class
+ */
 class CustomerSvcInfoNotice extends TwViewController {
   constructor() {
     super();
   }
 
-  private _category;  // 카테고리
-  private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming']; // 허용되는 카테고리 변수 값
-  private _baseUrl = '/customer/svc-info/notice'; // 페이지 URL
-  private _categoryApis = { // 각 카테고리 별 사용 API BFF No.
+  /* 카테고리 */
+  private _category;
+  /* 허용되는 카테고리 변수 값 */
+  private _allowedCategoryList = ['tworld', 'directshop', 'membership', 'roaming'];
+  /* 페이지 URL */
+  private _baseUrl = '/customer/svc-info/notice';
+  /* 각 카테고리 별 사용 API BFF No. */
+  private _categoryApis = {
     tworld: API_CMD.BFF_08_0029,  // T world
     directshop: API_CMD.BFF_08_0039,  // T다이렉트
     membership: API_CMD.BFF_08_0031,  // T멤버쉽
@@ -33,7 +40,6 @@ class CustomerSvcInfoNotice extends TwViewController {
   /**
    * API 응답 값 변환
    * @param resultData
-   * @private
    */
   private _convertData(resultData): any {
     return {
@@ -44,7 +50,6 @@ class CustomerSvcInfoNotice extends TwViewController {
   /**
    * 공지사항 게시물 값 변환
    * @param content
-   * @private
    */
   private _convertListItem(content) {
     return content.map(item => {
@@ -68,7 +73,8 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * API 요청시 파라미터 처리
-   * @private
+   * @param page - 페이지
+   * @param tworldChannel - 요청 채널값
    */
   private _getReqParams(page: any, tworldChannel: any): any {
     let params = {
@@ -88,9 +94,8 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * T world 공지사항 목록 API 요청시 채널값 분기 처리
-   * @param isAndroid
-   * @param isIos
-   * @private
+   * @param isAndroid - 안드로이드 여부
+   * @param isIos - iPhone 여부
    */
   private _getTworldChannel(isAndroid, isIos): any {
     if (isAndroid) {  // 안드로이드 일때

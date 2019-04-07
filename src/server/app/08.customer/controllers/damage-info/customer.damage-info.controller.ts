@@ -1,8 +1,7 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 메인
- * @file customer.damage-info.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * @since 2018-10-24
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -12,6 +11,9 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class CustomerDamageInfo extends TwViewController {
   constructor() {
     super();
