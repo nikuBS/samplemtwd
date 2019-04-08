@@ -318,7 +318,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.dataIsBankOrCard ? o.cardCdNm + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.cardCdNm;
         o.isPoint = (o.settleWayCd === MYT_FARE_PAYMENT_CODE.POINT);
         o.dataDt = DateHelper.getShortDate(o.opDt);
-        o.dataFullDt = DateHelper.getFullDateAndTime(o.opDt + o.payOpTm);
+        o.dataFullDt = DateHelper.getFullDateAnd24Time(o.opDt + o.payOpTm);
         o.dataAmt = FormatHelper.addComma(o.cardAmt);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.direct + (o.cardProcCd === 'N' ? '' + MYT_FARE_PAYMENT_HISTORY_TYPE.CANCEL_KOR_TITLE : '');
       });
@@ -388,7 +388,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.settlWayNm;
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
-        o.dataFullDt = DateHelper.getFullDateAndTime(o.opDt + o.payOpTm);
+        o.dataFullDt = DateHelper.getFullDateAnd24Time(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.microPrepay;
         o.dataSubInfo3 = (o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : '');
       });
@@ -412,7 +412,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.listTitle = o.settlWayNm;
         o.dataAmt = FormatHelper.addComma(o.chrgAmt);
         o.dataDt = DateHelper.getShortDate(o.opDt);
-        o.dataFullDt = DateHelper.getFullDateAndTime(o.opDt + o.payOpTm);
+        o.dataFullDt = DateHelper.getFullDateAnd24Time(o.opDt + o.payOpTm);
         o.dataSubInfo = MYT_FARE_PAYMENT_HISTORY_TYPE.contentPrepay;
         o.dataSubInfo3 = (o.autoChrgYn === 'Y' ? MYT_FARE_PAYMENT_HISTORY_TYPE.AUTO_KOR_TITLE : '');
       });
