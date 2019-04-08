@@ -1210,5 +1210,9 @@
   {
     "old": "http://m2.tworld.co.kr/tweb/main/sub_membership.html?domainVer=m2",
     "menuId": "M000570"
+  },
+  {
+    "old": "http://m2.tworld.co.kr/html/t_m5g/5gmkt_intro.html?domainVer=m2",
+    "menuId": "M001840"
   }
 ]
