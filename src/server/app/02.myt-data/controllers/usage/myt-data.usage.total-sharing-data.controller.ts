@@ -10,12 +10,11 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import MyTDataHotData from './myt-data.hotdata.controller';
+import MyTHelper from '../../../../utils/myt.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_DATA_USAGE_TOTAL_SHARING_DATA } from '../../../../types/string.type';
 
 class MyTDataUsageTotalSharingData extends TwViewController {
-  private myTDataHotData = new MyTDataHotData();
 
   constructor() {
     super();
@@ -35,7 +34,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
         return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
-      const usageData = this.myTDataHotData.parseCellPhoneUsageData(balancesResp.result, svcInfo);
+      const usageData = MyTHelper.parseCellPhoneUsageData(balancesResp.result, svcInfo);
       let defaultData;
       if (usageData.hasDefaultData) {
         defaultData = usageData.data[0];
