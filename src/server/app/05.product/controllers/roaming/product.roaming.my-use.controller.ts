@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.my-use.controller.ts
- * @author Juho Kim (jhkim@pineone.com)
- * @since 2018.11.20
+ * 나의 T로밍 이용현황 화면 처리
+ * @author Juho Kim
+ * @since 2018-11-20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -45,6 +45,11 @@ export default class ProductRoamingMyUse extends TwViewController {
     });
   }
 
+  /**
+   * 로밍 잔여일 업데이트
+   * @param roamingFeePlan 로밍 요금제 (SWING 정보 사용)
+   * @param troamingData 로밍 데이터 (ICAS 정보 사용)
+   */
   private updateRemainedDays(roamingFeePlan: any, troamingData: any) {
     roamingFeePlan.roamingProdList.forEach(prod => {
       prod.remainedDays = null;
@@ -59,6 +64,10 @@ export default class ProductRoamingMyUse extends TwViewController {
     });
   }
 
+  /**
+   * 나의 로밍 이용현황 (로밍 요금제) 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 에러코드 반환
+   */
   private getRoamingFeePlan(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0056, {})
       .map((resp) => {
@@ -88,6 +97,10 @@ export default class ProductRoamingMyUse extends TwViewController {
     });
   }
 
+  /**
+   * 나의 로밍 이용현황 (로밍 부가서비스) 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 에러코드 반환
+   */
   private getRoamingAdd(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0057, {}).map((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -117,7 +130,8 @@ export default class ProductRoamingMyUse extends TwViewController {
   }
 
   /**
-   * T로밍 도착알리미 가입 여부
+   * T로밍 도착알리미 가입 여부 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 에러코드 반환
    */
   private getWirelessAdd(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, ['NA00003200']).map( resp => {
@@ -133,7 +147,8 @@ export default class ProductRoamingMyUse extends TwViewController {
   }
 
   /**
-   * 실시간 잔여량 - 로밍 데이터
+   * 실시간 잔여량 (로밍 데이터) 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 에러코드 반환
    */
   private getTroamingData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0201, {})
@@ -166,7 +181,8 @@ export default class ProductRoamingMyUse extends TwViewController {
   }
 
   /**
-   * 실시간 잔여량 - RLH
+   * 실시간 잔여량 (RLH - Romaing Like Home) 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 에러코드 반환
    */
   private getTroamingLikeHome(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0202, {})
