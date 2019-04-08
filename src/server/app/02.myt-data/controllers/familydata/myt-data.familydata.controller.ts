@@ -21,6 +21,9 @@ export default class MyTDataFamily extends TwViewController {
     super();
   }
 
+  /**
+   * @description 화면 랜더링
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this.getFamilyData(svcInfo), this.getHistory()).subscribe(([familyInfo, histories]) => {
       // this.getFamilyData(svcInfo).subscribe(familyInfo => {
@@ -41,6 +44,9 @@ export default class MyTDataFamily extends TwViewController {
     });
   }
 
+  /**
+   * @description T 가족모아 데이터 가져오기
+   */
   private getFamilyData = svcInfo => {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -69,8 +75,11 @@ export default class MyTDataFamily extends TwViewController {
         totalRemained: Number(resp.result.remained),
         myLimitation: Number(mine.limitation) * 1024 || 0
       },
+        // 한도 있는 경우 한도, 가족 공유 데이터 양 중 최소, 한도 없는 경우 가족 총 공유 데이터가 total
         total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
+        // 한도 있는 경우 총량 - 자신의 사용량, 가족 남은 양 중 최소, 한도 없는 경우 총 남은 양(BFF 데이터에서 종종 remained 값이 다르게 내려오는 경우가 있어 방어 코드)
         remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
+
 
 
       return {
@@ -102,6 +111,9 @@ export default class MyTDataFamily extends TwViewController {
     });
   }
 
+  /**
+   * @description 이번달 공유 내역 가져오기
+   */
   private getHistory = () => {
     return this.apiService.request(API_CMD.BFF_06_0071, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

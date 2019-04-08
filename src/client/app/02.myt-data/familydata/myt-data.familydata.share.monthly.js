@@ -22,6 +22,9 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
     new Tw.MyTDataFamilyShare(this.$container, this.$mSubmit.find('button'));
   },
 
+  /**
+   * @description jquery 객체 캐싱
+   */
   _cachedElement: function() {
     this.$iSubmit = this.$wrap.find('#fe-submit-immediatly');
     this.$mSubmit = this.$wrap.find('#fe-submit-monthly');
@@ -29,12 +32,19 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
     this.$switch = this.$container.find('');
   },
 
+  /**
+   * @description 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$container.on('touchstart click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
     this.$mSubmit.on('click', $.proxy(this._confirmSubmit, this));
     this.$wrap.on('click', '.tab-linker li', $.proxy(this._changeTab, this));
   },
 
+  /**
+   * @description '바로 공유' or '매달 자동 공유' 탭 체인지 시 하단 바닥 버튼 변경(마크업 요청 사항으로 바닥 버튼이 tab 바깥으로 빠져서 해당 로직 추가됨)
+   * @param {Event} e 클릭 이벤트
+   */
   _changeTab: function(e) {
     if (e.currentTarget.id === 'tab2') {
       if (this.$mSubmit.hasClass('none')) {
@@ -49,11 +59,17 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
     }
   },
 
+  /**
+   * @description 다음 달 부터 공유하기 확인 팝업 열기
+   */
   _confirmSubmit: function() {
     var POPUP = this._hasShare ? Tw.MYT_DATA_FAMILY_CONFIRM_EDIT_MONTHLY : Tw.MYT_DATA_FAMILY_CONFIRM_SHARE_MONTHLY;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._handleSubmit, this));
   },
 
+  /**
+   * @description 사용자가 확인 팝업에서 확인 버튼 클릭 시
+   */
   _handleSubmit: function() {
     this._popupService.close();
     var today = new Date();
@@ -71,6 +87,12 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
       );
   },
 
+  /**
+   * @description 매달 공유 설정 or 공유 해제 공통 완료 팝업 오픈
+   * @param {string} title 팝업 타이틀
+   * @param {string} contents 팝업 컨텐츠
+   * @param {object} resp 서버 응답 데이터
+   */
   _handleSuccessSubmit: function(title, contents, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
@@ -79,12 +101,18 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
     }
   },
 
+  /**
+   * @description 자동 공유 설정 내용 삭제 확인 팝업 오픈
+   */
   _openDeleteMonthlyDataPopup: function() {
     var POPUP = Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this));
     return false;
   },
 
+  /**
+   * @description 사용자가 자동 공유 설정 내용 삭제 확인 버튼 클릭 시
+   */
   _deleteMonthlyData: function() {
     this._popupService.close();
     this._apiService
