@@ -1,10 +1,18 @@
 /**
  * @file common.postcode.detail.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.12
- * Description: 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (2/3)
+ * @desc 우편번호 조회 컴포넌트, 풀팝업으로 되어 있음 (2/3)
  */
 
+/**
+ * @namespace
+ * @desc 우편번호 2페이지 namespace
+ * @param $container - 우편번호 호출한 부모페이지
+ * @param $target - 우편번호 풀팝업 객체
+ * @param $addressObject - 1페이지에서 넘어온 데이터
+ * @param callback - 우편번호 검색 완료 후 처리할 callback function
+ */
 Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callback) {
   this.$container = $container;
   this.$target = $target;
@@ -19,8 +27,12 @@ Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callba
 };
 
 Tw.CommonPostcodeDetail.prototype = {
+  /**
+   * @function
+   * @desc 1페이지에서 다음 버튼 클릭 시 팝업 load
+   * @param $addressObject
+   */
   _init: function ($addressObject) {
-    // 1페이지에서 다음 버튼 클릭 시 팝업 load
     this._popupService.open({
       hbs: 'CO_UT_05_04_02'
     },
@@ -30,6 +42,12 @@ Tw.CommonPostcodeDetail.prototype = {
       this.$target
     );
   },
+  /**
+   * @function
+   * @desc search event binding
+   * @param $addressObject - 1페이지에서 넘어온 데이터
+   * @param $layer - 우편번호 2페이지 객체
+   */
   _onDetailSearchEvent: function ($addressObject, $layer) {
     this.$layer = $layer;
 
@@ -38,6 +56,11 @@ Tw.CommonPostcodeDetail.prototype = {
     this._initData($addressObject);
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc tab 처리
+   * @param $addressObject - 1페이지에서 넘어온 데이터
+   */
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId); // 첫 번째 팝업에서 선택된 정보 (도로명 or 지번)
     $selectedTarget.attr('aria-selected', 'true'); // 웹접근성
@@ -49,6 +72,11 @@ Tw.CommonPostcodeDetail.prototype = {
     $selectedTarget.siblings().attr('aria-selected', 'false'); // 웹접근성
     $selectedTarget.siblings().find('a').addClass('disabled').addClass('none'); // 선택되지 않은 탭 hidden 처리
   },
+  /**
+   * @function
+   * @desc 변수 초기화
+   * @param $targetId
+   */
   _initVariables: function ($targetId) {
     this._selectedTabId = $targetId;
     this._page = 0;
@@ -63,10 +91,19 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$moreBtn = this.$selectedTab.find('.fe-more-btn');
     this._postType = this.$selectedTab.attr('data-type');
   },
+  /**
+   * @function
+   * @desc 1페이지에서 조회된 데이터 셋팅
+   * @param $addressObject - 1페이지에서 넘어온 데이터
+   */
   _initData: function ($addressObject) {
     this.$selectedAddress.attr({'id': $addressObject.id, 'data-origin': $addressObject.originText})
-      .text($addressObject.text); // 첫 번째 팝업에서 조회된 정보 셋팅
+      .text($addressObject.text);
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-input-number', $.proxy(this._checkNumber, this));
     this.$layer.on('keyup', 'input[type="text"]', $.proxy(this._checkIsEnter, this));
@@ -74,16 +111,32 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
     this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
   },
+  /**
+   * @function
+   * @desc input event
+   * @param event
+   */
   _checkNumber: function (event) {
     this._inputHelper.inputNumberAndDashOnly(event.currentTarget); // 숫자와 -만 입력 가능
     this._checkIsEnter(event); // 키패드 이동 및 엔터 클릭 시 이벤트
   },
+  /**
+   * @function
+   * @desc 키패드 이동 및 엔터 클릭 시 검색
+   * @param event
+   */
   _checkIsEnter: function (event) {
     if (Tw.InputHelper.isEnter(event)) {
       var $target = $(event.currentTarget);
       this._search($target.siblings('.fe-search'));
     }
   },
+  /**
+   * @function
+   * @desc 검색
+   * @param $target
+   * @param event
+   */
   _search: function($target, event) {
     this.$resultBox.find('.fe-clone').remove();
     this.$resultBox.hide();
@@ -96,9 +149,19 @@ Tw.CommonPostcodeDetail.prototype = {
       this._getList();
     }
   },
+  /**
+   * @function
+   * @desc 2자리 이상 입력 여부 체크
+   * @param $target
+   * @returns {boolean|*}
+   */
   _isValid: function ($target) {
     return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
   },
+  /**
+   * @function
+   * @desc 우편번호 검색 API 호출
+   */
   _getList: function () {
     var $searchValue = this._getSearchValue();
     var $reqData = this._makeRequestData($searchValue);
@@ -107,6 +170,11 @@ Tw.CommonPostcodeDetail.prototype = {
       .done($.proxy(this._success, this))
       .fail($.proxy(this._fail, this));
   },
+  /**
+   * @function
+   * @desc 검색조건 셋팅
+   * @returns {string}
+   */
   _getSearchValue: function () {
     var $searchValue = '';
     if (this.$searchTarget.hasClass('fe-search-number')) {
@@ -116,13 +184,27 @@ Tw.CommonPostcodeDetail.prototype = {
     }
     return $searchValue;
   },
+  /**
+   * @function
+   * @desc 더보기
+   */
   _getMoreList: function () {
     this._page++;
     this._getList();
   },
+  /**
+   * @function
+   * @desc 우편번호 조회 all close
+   */
   _close: function () {
     this._popupService.closeAll();
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @param $searchValue
+   * @returns {{postType: *, page: number, size: number}}
+   */
   _makeRequestData: function ($searchValue) {
     var reqData = {
       postType: this._postType,
@@ -154,6 +236,11 @@ Tw.CommonPostcodeDetail.prototype = {
     }
     return reqData;
   },
+  /**
+   * @function
+   * @desc API 조회 응답 처리
+   * @param res
+   */
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setContents(res.result);
@@ -161,9 +248,19 @@ Tw.CommonPostcodeDetail.prototype = {
       this._fail(res);
     }
   },
+  /**
+   * @function
+   * @desc API error 처리
+   * @param err
+   */
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop(null, this.$searchTarget);
   },
+  /**
+   * @function
+   * @desc set result contents
+   * @param $result
+   */
   _setContents: function ($result) {
     var $content = $result.bldgAddress.content;
     var $resultLength = $content.length;
@@ -179,6 +276,13 @@ Tw.CommonPostcodeDetail.prototype = {
       this.$emptyBox.show();
     }
   },
+  /**
+   * @function
+   * @desc 검색결과 list 생성
+   * @param $result
+   * @param $content
+   * @param $resultLength
+   */
   _setList: function ($result, $content, $resultLength) {
     this._setMoreBtn($result);
 
@@ -195,9 +299,9 @@ Tw.CommonPostcodeDetail.prototype = {
       }
 
       var number = '';
-      if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      if (this.$selectedTab.attr('id') === 'tab1-tab') { // 도로명일 경우
         number = $content[i].bldTotNum;
-      } else {
+      } else { // 지번일 경우
         number = $content[i].totHouse_numCtt;
       }
       $cloneNode.find('.fe-building').text(bldNm);
@@ -208,6 +312,11 @@ Tw.CommonPostcodeDetail.prototype = {
       this.$resultBox.find('ul').append($cloneNode);
     }
   },
+  /**
+   * @function
+   * @desc 결과 갯수에 따라 더보기 버튼 생성
+   * @param $result
+   */
   _setMoreBtn: function ($result) {
     var _totalElements = $result.bldgAddress.totalElements;
     var _remainLength = _totalElements - ((this._page + 1) * Tw.DEFAULT_LIST_COUNT);
@@ -221,6 +330,11 @@ Tw.CommonPostcodeDetail.prototype = {
       this.$moreBtn.hide();
     }
   },
+  /**
+   * @function
+   * @desc 다음 페이지로 이동
+   * @param event
+   */
   _goNextPage: function (event) {
     var $target = $(event.currentTarget);
 

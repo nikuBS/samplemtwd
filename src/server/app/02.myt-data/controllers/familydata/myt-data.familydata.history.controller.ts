@@ -17,6 +17,9 @@ export default class MyTDataFamilyHistory extends TwViewController {
     super();
   }
 
+  /**
+   * @description 화면 랜더링
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(this.getShareAmount(svcInfo, req.query.amount), this.getHistory()).subscribe(([total, histories]) => {
       const error = {
@@ -32,8 +35,13 @@ export default class MyTDataFamilyHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 이번달 총 공유 양 가져오기
+   * @param svcInfo server input
+   * @param amount 이번 달 공유 양
+   */
   private getShareAmount(svcInfo, amount) {
-    if (amount) {
+    if (amount) { // 총양이 넘어온 경우, api 요청 필요 없음
       return of(amount);
     }
 
@@ -47,6 +55,9 @@ export default class MyTDataFamilyHistory extends TwViewController {
     });
   }
 
+  /**
+   * @description 이번달 공유 내역 가져오기
+   */
   private getHistory = () => {
     return this.apiService.request(API_CMD.BFF_06_0071, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

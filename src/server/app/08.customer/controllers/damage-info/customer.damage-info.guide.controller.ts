@@ -1,8 +1,7 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 이용자 피해예방 가이드
- * @file customer.damage-info.guide.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * @since 2018-10-24
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -11,15 +10,18 @@ import { CUSTOMER_PROTECT_GUIDE } from '../../../../types/string.type';
 import { CUSTOMER_PROTECT_GUIDE_WEBTOON } from '../../../../types/static.type';
 import { CUSTOMER_PROTECT_GUIDE_LATEST, CUSTOMER_PROTECT_GUIDE_VIDEO } from '../../../../types/outlink.type';
 
+/**
+ * @class
+ */
 class CustomerDamagenfoGuide extends TwViewController {
   constructor() {
     super();
   }
 
-  // 허용되는 카테고리 종류
+  /* 허용되는 카테고리 종류 */
   private _allowedCategoryList = ['video', 'latest', 'webtoon'];
 
-  // 카테고리 별 목록 선언
+  /* 카테고리 별 목록 선언 */
   private _categoryLists = {
     video: CUSTOMER_PROTECT_GUIDE_VIDEO,  // 동영상으로 보는 피해예방법
     latest: CUSTOMER_PROTECT_GUIDE_LATEST,  // 웹툰으로 보는 피해예방법
@@ -28,10 +30,9 @@ class CustomerDamagenfoGuide extends TwViewController {
 
   /**
    * 목록 변환
-   * @param category
-   * @param guideList
-   * @param listMaxSize
-   * @private
+   * @param category - 카테고리
+   * @param guideList - 목록
+   * @param listMaxSize - 목록 최대 값
    */
   private _convertList(category, guideList, listMaxSize): any {
     if (category === 'webtoon') { // 웹툰 리스트는 유형이 달라서 다른 메소드에서 처리
@@ -48,9 +49,8 @@ class CustomerDamagenfoGuide extends TwViewController {
 
   /**
    * 웹툰 목록 변환
-   * @param guideList
-   * @param listMaxSize
-   * @private
+   * @param guideList - 목록
+   * @param listMaxSize - 목록 최대 값
    */
   private _convertWebtoonList(guideList, listMaxSize): any {
     const deepCopyList: any = JSON.parse(JSON.stringify(guideList)).reverse();

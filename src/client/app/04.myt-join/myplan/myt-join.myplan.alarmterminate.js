@@ -1,10 +1,13 @@
 /**
- * MyT > 나의 가입정보 > 나의 요금제 > 요금제 변경 가능일 알림 서비스 해지
- * @file myt-join.myplan.alarmterminate.js
+ * @file MyT > 나의 가입정보 > 나의 요금제 > 요금제 변경 가능일 알림 서비스 해지
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.10
+ * @since 2018-10-10
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ */
 Tw.MyTJoinMyplanAlarmterminate = function(rootEl) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
@@ -23,25 +26,39 @@ Tw.MyTJoinMyplanAlarmterminate = function(rootEl) {
 
 Tw.MyTJoinMyplanAlarmterminate.prototype = {
 
-  // Element 캐싱
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate'); // 해지 버튼
     this.$btnBack = this.$container.find('.fe-btn_back'); // 뒤로가기 버튼
   },
 
-  // 이벤트 바인딩
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnTerminate.on('click', $.proxy(this._alarmTerminate, this));  // 해지 버튼 클릭시
     this.$btnBack.on('click', $.proxy(this._replaceAlarm, this)); // 뒤로가기 버튼 클릭시
   },
 
-  // 해지 버튼 클릭시
+  /**
+   * @function
+   * @desc 해지 버튼 클릭시
+   */
   _alarmTerminate: function() {
     this._apiService.request(Tw.API_CMD.BFF_05_0127, {}, {})
       .done($.proxy(this._alarmTerminateResult, this));
   },
 
-  // 해지 API 요청 응답
+  /**
+   * @function
+   * @desc 해지 API 요청 응답
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _alarmTerminateResult: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {  // API 오류 응답시
       return Tw.Error(resp.code, resp.msg).pop();
@@ -52,12 +69,18 @@ Tw.MyTJoinMyplanAlarmterminate.prototype = {
       Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A40.TITLE, null, $.proxy(this._replaceMyplan, this));
   },
 
-  // 가입 완료 팝업서 확인시
+  /**
+   * @function
+   * @desc 가입 완료 팝업서 확인시
+   */
   _replaceAlarm: function() {
     this._historyService.replaceURL('/myt-join/myplan/alarm');
   },
 
-  // 해지 완료시 나의 요금제 화면으로 이동
+  /**
+   * @function
+   * @desc 해지 완료시 나의 요금제 화면으로 이동
+   */
   _replaceMyplan: function() {
     this._historyService.replaceURL('/myt-join/myplan');
   }

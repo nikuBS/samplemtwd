@@ -65,7 +65,7 @@ class MyTFareBillSmallAutoInfo extends TwViewController {
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
         data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd]; // 신청, 변경, 해지
-        data.date = DateHelper.getFullDateAndTime(data.operDtm); // 신청일 YYYY.M.D. hh:mm:ss
+        data.date = DateHelper.getFullDateAnd24Time(data.operDtm); // 신청일 YYYY.M.D. hh:mm:ss
         data.autoChrgStrdAmount = FormatHelper.addComma(parseInt(data.autoChrgStrdAmt, 10).toString()); // 기준금액에 콤마(,) 추가
         data.autoChrgAmount = FormatHelper.addComma(parseInt(data.autoChrgAmt, 10).toString()); // 선결제 신청금액에 콤마(,) 추가
       });

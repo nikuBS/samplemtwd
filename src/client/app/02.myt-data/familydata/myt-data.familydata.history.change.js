@@ -43,7 +43,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   /**
-   * @desc jquert element 캐싱
+   * @desc jquery element 캐싱
    * @returns {void}
   */
   _cachedElement: function() {
@@ -167,7 +167,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       $.proxy(this._handleClosePopup, this),
       Tw.BUTTON_LABEL.CANCEL,
       ALERT.BUTTON,
-      $target
+      $target // 웹접근성 포커스 처리를 위한 jquery 객체
     );
   },
 
@@ -208,7 +208,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _handleDoneSubmit: function($target, resp) {
     var CODE = Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE[resp.code];
     if (CODE) {
-      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null, $.proxy(this._setRetrieveStatus, this), undefined, $target);
+      this._popupService.openAlert(Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS[CODE], null, null, $.proxy(this._setRetrieveStatus, this), undefined, $target);  // 웹접근성 포커스 처리를 위한 jquery 객체
     } else if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
@@ -267,7 +267,14 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _handleDoneRetrieve: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
       this._setRetrieveStatus();
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, this.$retrieveBtn);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
+        Tw.POPUP_TITLE.NOTIFY, 
+        undefined, 
+        undefined, 
+        undefined, 
+        this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
+      );
       return;
     }
 
@@ -275,7 +282,14 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt), 3000); // 3초 후에 재요청(BFF 요청 사항)
     } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
       this._setRetrieveStatus();
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, this.$retrieveBtn);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
+        Tw.POPUP_TITLE.NOTIFY, 
+        undefined, 
+        undefined, 
+        undefined, 
+        this.$retrieveBtn // 웹접근성 포커스 처리를 위한 jquery 객체
+      );
     } else {
       this._handleSuccessRetrieve(resp.result);
     }

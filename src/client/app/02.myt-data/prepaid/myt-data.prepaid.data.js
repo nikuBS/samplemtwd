@@ -1,9 +1,15 @@
 /**
  * @file myt-data.prepaid.data.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @data PPS (선불폰) 데이터 1회충천
+ * @author Jayoon Kong
  * @since 2018.11.28
  */
 
+/**
+ * @namespace
+ * @desc 선불폰 데이터 충전 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTDataPrepaidData = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -18,6 +24,10 @@ Tw.MyTDataPrepaidData = function (rootEl) {
 };
 
 Tw.MyTDataPrepaidData.prototype = {
+  /**
+   * @function
+   * @desc 변수 초기화
+   */
   _cachedElement: function () {
     this.$data = this.$container.find('.fe-data');
     this.$dataSelector = this.$container.find('.fe-select-data');
@@ -28,16 +38,29 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$rechargeBtn = this.$container.find('.fe-check-recharge');
     this.$emailAddress = this.$container.find('.fe-email-address');
   },
+  /**
+   * @function
+   * @desc get pps info and email address
+   */
   _init: function () {
     this._getPpsInfo();
     this._getEmailAddress();
   },
+  /**
+   * @function
+   * @desc PPS info API 호출
+   */
   _getPpsInfo: function () {
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
+  /**
+   * @function
+   * @desc PPS info API 응답 처리 (성공)
+   * @param res
+   */
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.popup-page');
@@ -47,15 +70,29 @@ Tw.MyTDataPrepaidData.prototype = {
       this._getFail(res);
     }
   },
+  /**
+   * @function
+   * @desc PPS info API 응답 처리 (실패)
+   * @param err
+   */
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
   },
+  /**
+   * @function
+   * @desc 이메일 주소 API 호출
+   */
   _getEmailAddress: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
       .done($.proxy(this._emailSuccess, this))
       .fail($.proxy(this._emailFail, this));
   },
+  /**
+   * @function
+   * @desc 이메일 주소 API 응답 처리 (성공)
+   * @param res
+   */
   _emailSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this.$emailAddress.text(res.result.email);
@@ -63,14 +100,27 @@ Tw.MyTDataPrepaidData.prototype = {
       this._emailFail();
     }
   },
+  /**
+   * @function
+   * @desc 이메일 주소 API 응답 처리 (실패)
+   */
   _emailFail: function () {
     this.$emailAddress.text('');
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
     this.$container.on('click', '.fe-close-popup', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
   },
+  /**
+   * @function
+   * @desc set data
+   * @param result
+   */
   _setData: function (result) {
     var data = 0, dataText = 0;
     if (!Tw.FormatHelper.isEmpty(result.remained) && result.remained !== '0') {
@@ -84,6 +134,11 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
     this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
+  /**
+   * @function
+   * @desc actionsheet data 생성
+   * @param event
+   */
   _openSelectPop: function (event) {
     var $target = $(event.currentTarget);
     var popupName = Tw.MYT_PREPAID_RECHARGE_DATA;
@@ -104,6 +159,12 @@ Tw.MyTDataPrepaidData.prototype = {
       null,
       $target);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -112,6 +173,12 @@ Tw.MyTDataPrepaidData.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
+  /**
+   * @function
+   * @desc actionsheet select 값 처리
+   * @param $target
+   * @param $layer
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr({
@@ -125,6 +192,10 @@ Tw.MyTDataPrepaidData.prototype = {
     this._validationService.checkIsAbled();
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc check 여부 검증 및 에러메시지 노출
+   */
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) {
       this.$dataSelector.siblings('.fe-error-msg').show();
@@ -132,9 +203,18 @@ Tw.MyTDataPrepaidData.prototype = {
     }
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc X버튼 클릭 시 닫기 처리 (공통 confirm 호출)
+   */
   _onClose: function () {
     this._backAlert.onClose();
   },
+  /**
+   * @function
+   * @desc 충전내역 확인
+   * @param e
+   */
   _checkPay: function (e) {
     if (this._validationService.isAllValid()) {
       this._popupService.open({
@@ -148,10 +228,20 @@ Tw.MyTDataPrepaidData.prototype = {
       );
     }
   },
+  /**
+   * @function
+   * @desc set layer data and event binding
+   * @param $layer - 팝업 객체
+   * @private
+   */
   _openCheckPay: function ($layer) {
     this._setLayerData($layer);
     this._setEvent($layer);
   },
+  /**
+   * @function
+   * @desc 데이터 충전 후 처리
+   */
   _afterRechargeSuccess: function () {
     if (this._isRechargeSuccess) {
       var data = Tw.FormatHelper.customDataFormat(this._afterData.toString().replace(',',''), Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB);
@@ -160,6 +250,11 @@ Tw.MyTDataPrepaidData.prototype = {
       Tw.Error(this._err.code, this._err.msg).pop();
     }
   },
+  /**
+   * @function
+   * @desc set layer data
+   * @param $layer - 팝업 객체
+   */
   _setLayerData: function ($layer) {
     var remainData = this.$data.attr('data-value');
     this._afterData = parseInt(remainData, 10) +
@@ -173,10 +268,20 @@ Tw.MyTDataPrepaidData.prototype = {
     $layer.find('.fe-recharge-amount').text($.trim(this.$dataSelector.text()));
     $layer.find('.fe-email-address').text($.trim(this.$emailAddress.text()));
   },
+  /**
+   * @function
+   * @desc event binding
+   * @param $layer - 팝업 객체
+   */
   _setEvent: function ($layer) {
     $layer.on('click', '.fe-popup-close', $.proxy(this._close, this));
     $layer.on('click', '.fe-recharge', $.proxy(this._recharge, this, $layer));
   },
+  /**
+   * @function
+   * @desc 데이터 충전 API 호출
+   * @param $layer - 팝업 객체
+   */
   _recharge: function ($layer) {
     var reqData = this._makeRequestData();
 
@@ -193,9 +298,14 @@ Tw.MyTDataPrepaidData.prototype = {
       .done($.proxy(this._rechargeSuccess, this))
       .fail($.proxy(this._rechargeFail, this));
   },
+  /**
+   * @function
+   * @desc 데이터 충전 요청 파라미터 생성
+   * @returns {{amtCd, amt, cardNum: string, expireMM: string, expireYY: string, pwd: string}}
+   */
   _makeRequestData: function () {
     return {
-      amtCd: this.$dataSelector.attr('id'),
+      amtCd: this.$dataSelector.attr('id'), // 충전코드
       amt: this.$dataSelector.attr('data-amount'),
       cardNum: $.trim(this.$cardNumber.val()),
       expireMM: $.trim(this.$cardM.val()),
@@ -203,6 +313,11 @@ Tw.MyTDataPrepaidData.prototype = {
       pwd: $.trim(this.$cardPw.val())
     };
   },
+  /**
+   * @function
+   * @desc 데이터 충전 API 응답 처리 (성공)
+   * @param res
+   */
   _rechargeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.popup-page');
@@ -212,6 +327,11 @@ Tw.MyTDataPrepaidData.prototype = {
       this._rechargeFail(res);
     }
   },
+  /**
+   * @function
+   * @desc 데이터 충전 API 응답 처리 (실패)
+   * @param err
+   */
   _rechargeFail: function (err) {
     Tw.CommonHelper.endLoading('.popup-page');
     this._isRechargeFail = true;
@@ -221,6 +341,10 @@ Tw.MyTDataPrepaidData.prototype = {
     };
     this._close();
   },
+  /**
+   * @function
+   * @desc 팝업(페이지) 종료
+   */
   _close: function () {
     this._popupService.close();
   }

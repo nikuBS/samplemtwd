@@ -25,25 +25,44 @@ Tw.MyTDataFamilyHistory.prototype = {
     this._leftCount = this._histories.length - Tw.DEFAULT_LIST_COUNT;
   },
 
+  /**
+   * @description 이벤트 바인딩
+   * @returns {void}
+  */
   _bindEvent: function() {
     this.$container.on('click', '.fe-before', $.proxy(this._handleRetrieveData, this));
     this.$container.on('click', '.fe-edit', $.proxy(this._handleClickEditData, this));
     this.$container.on('click', '.btn-more', $.proxy(this._handleLoadMore, this));
   },
 
+  /**
+   * @description jquery element 캐싱
+   * @returns {void}
+  */
   _cachedElement: function() {
     this.$list = this.$container.find('ul.type1');
   },
-
+  
+  /**
+   * @description 조회하기 버튼 클릭 시 UI 변경
+   * @param {Event} 클릭 이벤트
+   * @returns {void}
+   */
   _handleRetrieveData: function(e) {
     var $target = $(e.currentTarget),
       $parent = $target.parent('li');
 
     $target.addClass('none').attr('aria-hidden', true);
-    $parent.append(this._ingTmpl());
+    $parent.append(this._ingTmpl());  // 조회중 입니다. 노출
     this._requestRetrieve('0', $target, $parent);
   },
-
+  
+  /**
+   * @description T가족모아 변경 가능 데이터 조회
+   * @param {string} requestCount  서버 input param
+   * @param {$jquery} $before  조회하기 버튼 jquery 객체
+   * @param {$jquery} $parent  조회하기 버튼의 parent
+   */
   _requestRetrieve: function(requestCount, $before, $parent) {
     var serial = $parent.data('serial-number');
     // this._handleDoneRetrieve($before, $parent, { code: '00', result: { remGbGty: '1', remMbGty: '11' } });
@@ -52,21 +71,32 @@ Tw.MyTDataFamilyHistory.prototype = {
       .done($.proxy(this._handleDoneRetrieve, this, $before, $parent));
   },
 
+  /**
+   * @description 변경 가능 데이터 조회 응답 시
+   * @param {$jquery} $before 조회하기 버튼
+   * @param {$jquery} $parent 조회하기 버튼의 부모 객체
+   * @param {object} resp 서버 응답 결과
+   */
   _handleDoneRetrieve: function($before, $parent, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
-      this._setRetrieveStatus($before, resp);
+      this._setRetrieveStatus($before, resp); // 조회하기 버튼 노출
       return;
     }
 
-    if (resp.result.nextReqYn === 'Y') {
-      setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt, $before, $parent), 3000);
-    } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
+    if (resp.result.nextReqYn === 'Y') {  // 서버에 재요청이 필요한 경우(BFF 요청사항)
+      setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt, $before, $parent), 3000); // BFF요청 사항 - 응답 이후 3초 딜레이
+    } else if (!resp.result.remGbGty && !resp.result.remMbGty) {  // 데이터가 안내려온 경우
       this._setRetrieveStatus($before);
-    } else {
+    } else {  
       this._handleSuccessRetrieve(resp.result, $before, $parent);
     }
   },
 
+  /**
+   * @description 조회하기 버튼 상태 변경
+   * @param {$object} $before 조회하기 버튼 jquery 객체
+   * @param {object} resp 서버 응답 결과
+   */
   _setRetrieveStatus: function($before, resp) {
     $before.removeClass('none').attr('aria-hidden', false);
     $before
@@ -76,10 +106,23 @@ Tw.MyTDataFamilyHistory.prototype = {
     if (resp && resp.code) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY, undefined, undefined, undefined, $before);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, 
+        Tw.POPUP_TITLE.NOTIFY, 
+        undefined, 
+        undefined, 
+        undefined, 
+        $before // 웹접근성 포커스 처리를 위한 jquery 객체
+      );  
     }
   },
 
+  /**
+   * @description 변경 가능 데이터 양 표시
+   * @param {object} share 변경 가능한 공유 데이터 양
+   * @param {$object} $before 조회하기 버튼 jquery 객체
+   * @param {$object} $parent 조회하기 버튼의 부모
+   */
   _handleSuccessRetrieve: function(share, $before, $parent) {
     var serial = $parent.data('serial-number');
     $before.siblings('.fe-ing').remove();
@@ -96,25 +139,36 @@ Tw.MyTDataFamilyHistory.prototype = {
     }
   },
 
+  /**
+   * @description 공유한 데이터 변경하기 버튼 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   */
   _handleClickEditData: function(e) {
     var $target = $(e.currentTarget),
       $parent = $target.closest('li'),
       idx = $parent.data('idx') || 0,
       serial = $parent.data('serial-number'),
-      changable = {
+      changable = { // 전체 버튼 클릭시 BFF 서버에서 내려준 데이터 그대로 전달해야 해서 필요
         gb: $target.data('gb'),
         mb: $target.data('mb')
       };
 
-    changable.data = Number((Number(changable.gb) + Number(changable.mb) / 1024 || 0).toFixed(2));
+    changable.data = Number((Number(changable.gb) + Number(changable.mb) / 1024 || 0).toFixed(2));  // 변경 가능 데이터 GB 로 표시
 
-    if (serial) {
+    if (serial) { // 변경 공유 내역 가져오기
       this._apiService
         .request(Tw.API_CMD.BFF_06_0073, { shrpotSerNo: serial })
         .done($.proxy(this._handleDoneGetHistories, this, $parent, idx, changable));
     }
   },
 
+  /**
+   * @description 공유 변경 내역 가져오기 서버 응답 시
+   * @param {$object} $parent 변경하기 버튼의 부모
+   * @param {number} idx 내역의 인덱스
+   * @param {object} changable 변경 가능 데이터
+   * @param {object} resp 서버 응답 값
+   */
   _handleDoneGetHistories: function($parent, idx, changable, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -140,12 +194,30 @@ Tw.MyTDataFamilyHistory.prototype = {
       $.proxy(this._handleOpenChangePopup, this, $parent, changable),
       $.proxy(this._handleCloseChangePopup, this, $target),
       'change',
-      $target
+      $target // 웹접근성 포커스 처리를 위한 jquery 객체
     );
   },
 
+  /**
+   * @description 변경하기 팝업 오픈 시
+   * @param {$jquery} $parent 
+   * @param {object} changable 변경 가능 데이터
+   * @param {$jquery} $layer 
+   */
+  _handleOpenChangePopup: function($parent, changable, $layer) {
+    this._historyChange.init($layer, $parent, changable);
+    if (changable.data < 1) {
+      $layer.find('.fe-all').trigger('click');
+    }
+    $layer.on('click', '.prev-step', this._popupService.close);
+  },
+
+  /**
+   * @description 변경하기 팝업 close 시
+   * @param {$object} $target 변경하기 버튼
+   */
   _handleCloseChangePopup: function($target) {
-    if (this._historyChange.isSuccess) {
+    if (this._historyChange.isSuccess) {  // 변경하기 성공후 완료 페이지 띄우기 위함
       this._historyChange.isSuccess = false;
       this._popupService.open(
         {
@@ -156,47 +228,23 @@ Tw.MyTDataFamilyHistory.prototype = {
         $.proxy(this._handleOpenComplete, this),
         undefined,
         undefined,
-        $target
+        $target // 웹접근성 포커스 처리를 위한 jquery 객체
       );
     }
   },
 
+  /**
+   * 완료 팝업 이벤트 바인딩
+   * @param {$object} $layer 팝업 레이어 jquery 객체
+   */
   _handleOpenComplete: function($layer) {
-    $layer.on('click', '.fe-submain', this._popupService.close);
+    $layer.on('click', '.fe-submain', this._popupService.close);  // fe-submain 완료 팝업 닫기 버튼 클래스
   },
 
-  _handleOpenChangePopup: function($parent, changable, $layer) {
-    this._historyChange.init($layer, $parent, changable);
-    if (changable.data < 1) {
-      $layer.find('.fe-all').trigger('click');
-    }
-    $layer.on('click', '.prev-step', this._popupService.close);
-  },
-
-  // _handleClickClose: function() {
-  //   this._popupService.close();
-  // this._popupService.openConfirmButton(
-  //   Tw.ALERT_CANCEL,
-  //   null,
-  //   $.proxy(this._goBack, this),
-  //   $.proxy(this._handleAfterClose, this),
-  //   Tw.BUTTON_LABEL.NO,
-  //   Tw.BUTTON_LABEL.YES
-  // );
-  // },
-
-  // _goBack: function() {
-  //   this._popupService.close();
-  //   this._isClose = true;
-  // },
-
-  // _handleAfterClose: function() {
-  //   if (this._isClose) {
-  //     history.back();
-  //     this._isClose = false;
-  //   }
-  // },
-
+  /**
+   * @description 더보기 버튼 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   */
   _handleLoadMore: function(e) {
     var display = this._histories.length - this._leftCount,
       items = _.map(this._histories.slice(display, display + Tw.DEFAULT_LIST_COUNT), function(item, idx) {

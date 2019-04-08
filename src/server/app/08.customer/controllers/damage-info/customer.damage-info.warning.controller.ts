@@ -1,17 +1,19 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 최신 이용자 피해예방 주의보
- * @file customer.damage-info.warning.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * @since 2018-10-24
  */
 
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ */
 class CustomerDamageInfoWarning extends TwViewController {
   constructor() {
     super();
@@ -19,8 +21,7 @@ class CustomerDamageInfoWarning extends TwViewController {
 
   /**
    * 목록 변환
-   * @param list
-   * @private
+   * @param list - 목록
    */
   private _convertList(list): any {
     return list.map(item => {

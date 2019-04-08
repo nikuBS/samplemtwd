@@ -7,7 +7,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import bill_guide_BFF_05_0093 from '../../../../mock/server/bill.guide.BFF_05_0093.mock';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_FARE_HISTORY_MICRO_BLOCK_TYPE } from '../../../../types/bff.type';
 
