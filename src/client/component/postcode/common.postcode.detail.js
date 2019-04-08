@@ -11,7 +11,7 @@
  * @param $container - 우편번호 호출한 부모페이지
  * @param $target - 우편번호 풀팝업 객체
  * @param $addressObject - 1페이지에서 넘어온 데이터
- * @param callback - 우편번호 검색 완료 후 처리할 callback function
+ * @param $callback - 우편번호 검색 완료 후 처리할 callback function
  */
 Tw.CommonPostcodeDetail = function ($container, $target, $addressObject, $callback) {
   this.$container = $container;

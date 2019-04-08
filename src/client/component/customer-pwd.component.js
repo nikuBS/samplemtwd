@@ -1,6 +1,6 @@
 /**
  * @file customer-pwd.component.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Hakjoon Sim
  * @since 2018.12.04
  */
 

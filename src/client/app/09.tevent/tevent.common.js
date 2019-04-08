@@ -1,6 +1,6 @@
 /**
  * @file tevent.common.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.21
  * @desc 이벤트
  */

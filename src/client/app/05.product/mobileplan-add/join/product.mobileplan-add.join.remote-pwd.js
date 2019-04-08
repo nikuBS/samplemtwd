@@ -1,6 +1,6 @@
 /**
  * @file product.mobileplan-add.join.remote-pwd.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jihun Yang
  * @since 2018.11.15
  */
 
