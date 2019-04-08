@@ -24,7 +24,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 초기화 함수
+   * @desc 초기화 함수
    * @param {object} histories BFF 에서 전체 내역 소팅 및 페이징이 안된다고 하여, node에서 소팅 후 더보기 로직을 위해 js로 토스
    */
   _init: function(histories) {
@@ -43,7 +43,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description jquery 객체 캐싱
+   * @desc jquery 객체 캐싱
    */
   _cachedElement: function() {
     this.$list = this.$container.find('ul.comp-box');
@@ -52,7 +52,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 이벤트 바인딩
+   * @desc 이벤트 바인딩
    */
   _bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
@@ -61,7 +61,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 더보기 버튼 클릭 시
+   * @desc 더보기 버튼 클릭 시
    */
   _handleLoadMore: function() {
     var type = this._type,
@@ -113,7 +113,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 충전/선물 유형 변경 팝업 오픈 시
+   * @desc 충전/선물 유형 변경 팝업 오픈 시
    * @param {$object} $layer 
    */
   _handleOpenType: function($layer) {
@@ -121,7 +121,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 충전/선물 유형 변경 선택 시
+   * @desc 충전/선물 유형 변경 선택 시
    * @param {Event} e 클릭 이벤트 객체
    */
   _handleSelectType: function(e) {
@@ -136,7 +136,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 충전/선물 표시 데이터 변경
+   * @desc 충전/선물 표시 데이터 변경
    * @param {number} selectedIdx 선택된 충전/선물 유형 인덱스
    */
   _handleLoadFilteredData: function(selectedIdx) {
@@ -173,7 +173,7 @@ Tw.MyTDataHistory.prototype = {
   },
 
   /**
-   * @description 충전 취소 버튼 클릭 시 안내 팝업
+   * @desc 충전 취소 버튼 클릭 시 안내 팝업
    * @param {Event} e 클릭 이벤트 객체
    */
   _openCancelableChargeAlert: function(e) {

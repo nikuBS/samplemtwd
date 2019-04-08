@@ -12,6 +12,9 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { PREPAID_PAYMENT_TYPE } from '../../../../types/bff.type';
 
+/**
+ * @desc BFF api 페이징 기본 파라미터
+ */
 const DEFAULT_PARAMS = {
   pageNum: 1,
   rowNum: 20
@@ -22,12 +25,19 @@ export default class MyTDataPrepaidHistory extends TwViewController {
     super();
   }
 
-
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} _req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.getVoiceRecharges(), this.getDataRecharges()).subscribe(([voice, data]) => {
-      // const voice: any = this.getVoiceRecharges(),
-      //   data: any = this.getDataRecharges();
-
+    Observable.combineLatest(this._getVoiceRecharges(), this._getDataRecharges()).subscribe(([voice, data]) => {
+      // 음성 or 데이터 중 더 최신인 데이터 보여줌(BFF 요청 사항 - 전체 소팅 불가)
       const visible = voice.histories.latest >= data.histories.latest ? 'voice' : 'data';
       delete voice.histories.latest;
       delete data.histories.latest;
@@ -36,7 +46,11 @@ export default class MyTDataPrepaidHistory extends TwViewController {
     });
   }
 
-  private getVoiceRecharges = () => {
+  /**
+   * @desc 선불폰 음성 충전 내역 가져오기
+   * @private
+   */
+  private _getVoiceRecharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0062, DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_VOICE;
       if (resp.code !== API_CODE.CODE_00) {
@@ -48,14 +62,18 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       }
 
       return {
-        histories: resp.result.history.reduce(this.sortHistory, { latest: '' }),
+        histories: resp.result.history.reduce(this._sortHistory, { latest: '' }),
         count: resp.result.totCnt,
         origin: resp.result.history
       };
     });
   }
 
-  private getDataRecharges = () => {
+  /**
+   * @desc 선불폰 데이터 충전 내역 가져오기
+   * @private
+   */
+  private _getDataRecharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0063, DEFAULT_PARAMS).map(resp => {
       // const resp = PREPAID_DATA;
       if (resp.code !== API_CODE.CODE_00) {
@@ -67,14 +85,18 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       }
 
       return {
-        histories: resp.result.history.reduce(this.sortHistory, { latest: '' }),
+        histories: resp.result.history.reduce(this._sortHistory, { latest: '' }),
         count: resp.result.totCnt,
         origin: resp.result.history
       };
     });
   }
 
-  private sortHistory = (histories, history, idx) => {
+  /**
+   * @desc 최근 충전 내역 순으로 소팅
+   * @private
+   */
+  private _sortHistory = (histories, history, idx) => {
     let key = history.chargeDtm || history.chargeDt;
 
     histories.latest = key > histories.latest ? key : histories.latest;
