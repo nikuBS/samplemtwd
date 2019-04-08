@@ -60,17 +60,19 @@ export default class ProductPlans extends TwViewController {
           return {
             ...plan,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt)
-              ? this.isEmptyAmount(plan.basOfrMbDataQtyCtt)
-                ? null
-                : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt)
-              : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
-            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt)
-              ? null
-              : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt) ?
+              this.isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+                null :
+                ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
+              ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
+            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+              null :
+              ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter(filter => {
-              return 'F01713' === filter.prodFltId || /^F011[2|3|6]/.test(filter.prodFltId);
+              return filter.supProdFltId ?
+                /^F011[2|3|6]0$/.test(filter.supProdFltId) :  // 기기, 데이터, 대상 필터만 노출
+                'F01713' === filter.prodFltId || /^F011[2|3|6]/.test(filter.prodFltId); // BFF 에서 상위 필터 안내려줄 경우에 대한 방어 코드
             })
           };
         })

@@ -2,8 +2,14 @@
  * @file tevent.common.js
  * @author Jayoon Kong (jayoon.kong@sk.com)
  * @since 2018.11.21
+ * @desc 이벤트
  */
 
+/**
+ * @namespace
+ * @desc 이벤트 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.TeventCommon = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -14,10 +20,18 @@ Tw.TeventCommon = function (rootEl) {
 };
 
 Tw.TeventCommon.prototype = {
+  /**
+   * @function
+   * @desc 변수 초기화 및 이벤트 바인딩
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc 변수 초기화
+   */
   _initVariables: function () {
     this.$eventSelector = this.$container.find('.fe-select-event');
     this.$contentList = this.$container.find('.fe-content-list');
@@ -25,53 +39,71 @@ Tw.TeventCommon.prototype = {
     this.$moreBtn = this.$container .find('.fe-more-btn');
 
     this._uri = window.location.pathname.split('/')[2];
-    this._isClicked = false;
     this._page = 0;
     this._totalPage = this.$contentList.attr('data-page') - 1;
     this._totalCnt = this.$contentList.attr('data-cnt');
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
   },
+  /**
+   * @function
+   * @desc 이벤트 리스트 선택
+   * @param e
+   */
   _openEventPop: function (e) {
-    // 이벤트 리스트 변경
     this._popupService.open({
-        url: '/hbs/',
-        hbs: 'actionsheet01',
-        layer: true,
-        data: Tw.POPUP_TPL.TEVENT_LIST,
-        btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-      },
+      url: '/hbs/',
+      hbs: 'actionsheet01',
+      layer: true,
+      data: Tw.POPUP_TPL.TEVENT_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
+    },
       $.proxy(this._onOpenPopup, this),
-      $.proxy(this._goLoad, this),
+      null,
       'select',
       $(e.currentTarget));
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $layer
+   */
   _onOpenPopup: function ($layer) {
     $layer.find('input#' + this._uri).attr('checked', 'checked');
-    $layer.on('change', '.ac-list', $.proxy(this._setUrl, this));
+    $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
   },
-  _goLoad: function () {
-    if (this._isClicked) {
-      this._historyService.goLoad('/tevent/' + this._uri);
-    }
+  /**
+   * @function
+   * @desc 선택한 이벤트 페이지로 이동
+   */
+  _goLoad: function (event) {
+    var $uri = $(event.target).attr('id');
+    this._historyService.replaceURL('/tevent/' + $uri);
   },
-  _setUrl: function (event) {
-    this._uri = $(event.target).attr('id');
-    this._isClicked = true;
-
-    this._popupService.close();
-  },
-  _setMoreData: function (e) {
-    // 더보기
-    var $target = $(e.currentTarget);
+  /**
+   * @function
+   * @desc 더보기
+   * @param event
+   */
+  _setMoreData: function (event) {
+    var $target = $(event.currentTarget);
     if (this._page < this._totalPage) {
       this._page++;
       this._requestForList($target);
     }
   },
+  /**
+   * @function
+   * @desc 리스트 더보기 API 호출
+   * @param $target
+   */
   _requestForList: function ($target) {
     var $apiName = this._getApiName();
     var $reqData = this._makeRequestData();
@@ -80,6 +112,11 @@ Tw.TeventCommon.prototype = {
       .done($.proxy(this._getSuccess, this, $target))
       .fail($.proxy(this._getFail, this, $target));
   },
+  /**
+   * @function
+   * @desc get api name
+   * @returns {string}
+   */
   _getApiName: function () {
     var $apiName = '';
     if (this._uri === 'ing') {
@@ -91,6 +128,11 @@ Tw.TeventCommon.prototype = {
     }
     return $apiName;
   },
+  /**
+   * @function
+   * @desc 요청 데이터 생성
+   * @returns {{svcDvcClCd: string, mtwdExpYn: string, page: number, size: number}}
+   */
   _makeRequestData: function () {
     return {
       svcDvcClCd: 'M',
@@ -99,6 +141,12 @@ Tw.TeventCommon.prototype = {
       size: Tw.DEFAULT_LIST_COUNT
     };
   },
+  /**
+   * @function
+   * @desc list API 결과 처리
+   * @param $target
+   * @param res
+   */
   _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setData(res.result.content);
@@ -106,9 +154,20 @@ Tw.TeventCommon.prototype = {
       this._getFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc API error 처리
+   * @param $target
+   * @param err
+   */
   _getFail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc set result data
+   * @param $content
+   */
   _setData: function ($content) {
     if (!this.$standardNode.hasClass('fe-done')) {
       this.$standardNode.addClass('fe-done');
@@ -153,6 +212,12 @@ Tw.TeventCommon.prototype = {
     }
     this._setHiddenMoreBtn();
   },
+  /**
+   * @function
+   * @desc show more data
+   * @param idx
+   * @param target
+   */
   _showMoreData: function (idx, target) {
     var $target = $(target);
     if ($target.hasClass('none')) {
@@ -162,6 +227,10 @@ Tw.TeventCommon.prototype = {
     }
     this._setHiddenMoreBtn();
   },
+  /**
+   * @function
+   * @desc 더보기 버튼 셋팅
+   */
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {
       this.$moreBtn.hide();
@@ -169,6 +238,11 @@ Tw.TeventCommon.prototype = {
       this.$moreBtn.show();
     }
   },
+  /**
+   * @function
+   * @desc 이벤트 상세페이지로 이동
+   * @param id
+   */
   _getDetailEvent: function (id) {
     if (typeof(id) !== 'string') {
       var event = id;

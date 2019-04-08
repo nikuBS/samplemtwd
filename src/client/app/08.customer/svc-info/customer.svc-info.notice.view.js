@@ -1,10 +1,13 @@
 /**
- * 이용안내 > 공지사항 > 상세 (검색엔진 및 서브메인 등에서 진입 시)
- * @file customer.svc-info.notice.view.js
+ * @file 이용안내 > 공지사항 > 상세 (검색엔진 및 서브메인 등에서 진입 시)
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.27
+ * @since 2019-02-27
  */
 
+/**
+ * @class
+ * @param rootEl
+ */
 Tw.CustomerSvcInfoNoticeView = function(rootEl) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
@@ -18,21 +21,33 @@ Tw.CustomerSvcInfoNoticeView = function(rootEl) {
   this._bindEvent();
 
   // 최초 동작
+  this._init();
 };
 
 Tw.CustomerSvcInfoNoticeView.prototype = {
 
-  // 최초 동작
+  /**
+   * @function
+   * @desc 최초 동작
+   */
   _init: function() {
     Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
   },
 
-  // 이벤트 바인딩
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));  // 외부 링크 지원
   },
 
-  // 외부 링크 클릭 시
+  /**
+   * @function
+   * @desc 외부 링크 클릭 시
+   * @param e - 클릭 이벤트
+   * @returns {*|void}
+   */
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -45,7 +60,11 @@ Tw.CustomerSvcInfoNoticeView.prototype = {
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
-  // 외부 링크 실행
+  /**
+   * @function
+   * @desc 외부 링크 실행
+   * @param href - 링크 값
+   */
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   }

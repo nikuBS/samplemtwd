@@ -1,14 +1,16 @@
 /**
  * 이용안내 > 이용자피해예방센터 > 유용한 부가서비스
- * @file customer.damage-info.additions.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.24
+ * @since 2018-10-24
  */
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 
+/**
+ * @class
+ */
 class CustomerDamageInfoAdditions extends TwViewController {
   constructor() {
     super();

@@ -1,10 +1,16 @@
 /**
- * 이용안내 > 공지사항
- * @file customer.svc-info.notice.js
+ * @file 이용안내 > 공지사항
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.23
+ * @since 2018-10-23
  */
 
+/**
+ * @class
+ * @param rootEl
+ * @param category
+ * @param ntcId
+ * @param tworldChannel
+ */
 Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {
   // 컨테이너 레이어 설정
   this.$container = rootEl;
@@ -29,13 +35,19 @@ Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {
 
 Tw.CustomerSvcInfoNotice.prototype = {
 
-  // Element 캐싱
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$list = this.$container.find('.fe-list');  // 목록
     this.$btnCategory = this.$container.find('.fe-btn_category'); // 카테고리 버튼
   },
 
-  // 이벤트 바인딩
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$list.on('cssClassChanged', 'li.acco-box', $.proxy(this._setContentsReq, this)); // 공지사항 제목이 최초 클릭 되었을 때
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));  // 카테고리 설정 버튼 클릭시
@@ -51,7 +63,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
     };
   },
 
-  // 최초 동작
+  /**
+   * @function
+   * @desc 최초 동작
+   */
   _init: function() {
     if (Tw.FormatHelper.isEmpty(this._ntcId)) { // 파라미터로 ntcId 값이 없었다면 진입 하지 않아도 된다.
       return;
@@ -73,7 +88,12 @@ Tw.CustomerSvcInfoNotice.prototype = {
     Tw.CommonHelper.replaceExternalLinkTarget(this.$container);
   },
 
-  // 외부 링크 클릭시
+  /**
+   * @function
+   * @desc 외부 링크 클릭시
+   * @param e - 클릭 이벤트
+   * @returns {*|void}
+   */
   _confirmExternalUrl: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -87,12 +107,20 @@ Tw.CustomerSvcInfoNotice.prototype = {
     Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
-  // 외부 링크 실행
+  /**
+   * @function
+   * @desc 외부 링크 실행
+   * @param href - 링크값
+   */
   _openExternalUrl: function(href) {
     Tw.CommonHelper.openUrlExternal(href);
   },
 
-  // 제목을 클릭시
+  /**
+   * @function
+   * @desc 제목을 클릭시
+   * @param e - 이벤트
+   */
   _setContentsReq: function(e) {
     if (this._category !== 'tworld') {  // T world 카테고리 일때만 내용 값을 가져오는 동작이 필요하므로 다른 카테고리 일때는 진입 안되도록 함
       return;
@@ -114,7 +142,12 @@ Tw.CustomerSvcInfoNotice.prototype = {
       .done($.proxy(this._setContentsRes, this));
   },
 
-  // T world 공지사항 내용 응답
+  /**
+   * @function
+   * @desc T world 공지사항 내용 응답
+   * @param resp - API 응답값
+   * @returns {*}
+   */
   _setContentsRes: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {  // API 요청 실패시 오류 팝업 노출
       return Tw.Error(resp.code, resp.msg).pop();
@@ -130,7 +163,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
     Tw.CommonHelper.replaceExternalLinkTarget($targetElem);
   },
 
-  // 카테고리 설정 팝업 오픈
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업 오픈
+   */
   _openCategorySelectPopup: function() {
     this._isCategoryMove = false;
     this._popupService.open({
@@ -154,7 +190,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category', this.$btnCategory);
   },
 
-  // 카테고리 이동
+  /**
+   * @function
+   * @desc 카테고리 이동
+   */
   _goCategory: function() {
     if (!this._isCategoryMove) {  // 카테고리 설정 창을 바로 닫았을 경우 카테고리 이동을 실행하지 않는다.
       return;
@@ -163,19 +202,32 @@ Tw.CustomerSvcInfoNotice.prototype = {
     this._historyService.goLoad('/customer/svc-info/notice?category=' + this._category);
   },
 
-  // 카테고리 설정 팝업 이벤트 바인딩
+  /**
+   * @function
+   * @desc 카테고리 설정 팝업 이벤트 바인딩
+   * @param $layer - 팝업 레이어 컨테이너 Element
+   */
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
   },
 
-  // 카테고리 선택됨을 boolean 처리
+  /**
+   * @function
+   * @desc 카테고리 선택됨을 boolean 처리
+   * @param e - 카테고리 선택 버튼 클릭 이벤트
+   */
   _applyCategory: function(e) {
     this._isCategoryMove = true;
     this._category = $(e.currentTarget).data('category');
     this._popupService.close();
   },
 
-  // Dirty Html 방지
+  /**
+   * @function
+   * @desc Dirty Html 방지
+   * @param html - Html 마크업 코드
+   * @returns {*}
+   */
   _fixHtml: function(html) {
     var doc = document.createElement('div');
     doc.innerHTML = html;

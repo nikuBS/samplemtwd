@@ -64,7 +64,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.26.4');
+        Tw.Popup.toast('QA_v5.27.0');
       }
 
       this._initTrackerApi();
@@ -80,7 +80,6 @@ Tw.Init.prototype = {
       key: Tw.NTV_STORAGE.XTVID
     }, $.proxy(function(res) {
       if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
-        this._sendXtvId(res.params.value);
         return Tw.CommonHelper.setCookie('XTVID', res.params.value);
       }
 

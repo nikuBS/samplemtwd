@@ -13,6 +13,9 @@ Tw.MyTDataFamilyShare = function(rootEl, $submit) {
 };
 
 Tw.MyTDataFamilyShare.prototype = {
+  /**
+   * @description jquery 객체 캐싱
+   */
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
     this.$error = this.$container.find('.input-txt-type02');
@@ -21,6 +24,9 @@ Tw.MyTDataFamilyShare.prototype = {
     this.$cancel = this.$container.find('.cancel');
   },
 
+  /**
+   * @description 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addShareData, this));
     this.$container.on('click', '.cancel', $.proxy(this._validateShareAmount, this));
@@ -28,11 +34,15 @@ Tw.MyTDataFamilyShare.prototype = {
     this.$amountInput.on('keyup', $.proxy(this._validateShareAmount, this));
   },
 
+  /**
+   * 데이터 플러스 버튼 클릭 시 
+   * @param {Event} e 클릭 이벤트 객체
+   */
   _addShareData: function(e) {
     var value = e.currentTarget.getAttribute('data-value'),
       $target = $(e.currentTarget);
 
-    if (value === 'all') {
+    if (value === 'all') {  // 전체 클릭 시 인풋, +1, +5 버튼 비활성화
       if (this._all) {
         this.$amountInput.val('');
         this.$amountInput.removeAttr('disabled');
@@ -55,6 +65,9 @@ Tw.MyTDataFamilyShare.prototype = {
     this._validateShareAmount();
   },
 
+  /**
+   * @description 사용자 입력 값 validation
+   */
   _validateShareAmount: function() {
     var sValue = this.$amountInput
       .val()
@@ -89,6 +102,10 @@ Tw.MyTDataFamilyShare.prototype = {
     }
   },
 
+  /**
+   * @description 변경하기 버튼 상태 변경
+   * @param {boolean} disable
+   */
   _setDisableSubmit: function(disable) {
     disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
   }
