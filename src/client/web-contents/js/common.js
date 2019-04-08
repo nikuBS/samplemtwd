@@ -1025,6 +1025,7 @@ skt_landing.action = {
       }
     },
     allClose : function (){      
+      var popups = $('.wrap > .popup,.wrap > .popup-page');
       popups.not($('.page')).empty().remove();
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
@@ -1032,8 +1033,6 @@ skt_landing.action = {
         $(".wrap, html").css({"height":"", "overflowY":""});
         skt_landing.action.auto_scroll();
         skt_landing.action.checkScroll.unLockScroll();
-
-        $(document).trigger('modal:close', {obj: this, target: target});
       }
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
