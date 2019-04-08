@@ -1214,5 +1214,13 @@
   {
     "old": "http://m2.tworld.co.kr/html/t_m5g/5gmkt_intro.html?domainVer=m2",
     "menuId": "M001840"
+  },
+  {
+    "old": "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006516",
+    "menuId": "/product/callplan?prod_id=NA00006516"
+  },
+  {
+    "old": "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006522",
+    "menuId": "/product/callplan?prod_id=NA00006522"
   }
 ]
