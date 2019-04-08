@@ -60,7 +60,6 @@ export default class ProductRoamingMyUse extends TwViewController {
   }
 
   private getRoamingFeePlan(): Observable<any> {
-    // return Observable.of(BFF_10_0056_mock)
     return this.apiService.request(API_CMD.BFF_10_0056, {})
       .map((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -137,7 +136,6 @@ export default class ProductRoamingMyUse extends TwViewController {
    * 실시간 잔여량 - 로밍 데이터
    */
   private getTroamingData(): Observable<any> {
-    // return Observable.of(BFF_05_0201_mock)
     return this.apiService.request(API_CMD.BFF_05_0201, {})
       .map(r => {
         const resp = FormatHelper.objectClone(r);
@@ -171,7 +169,6 @@ export default class ProductRoamingMyUse extends TwViewController {
    * 실시간 잔여량 - RLH
    */
   private getTroamingLikeHome(): Observable<any> {
-    // return Observable.of(BFF_05_0202_mock)
     return this.apiService.request(API_CMD.BFF_05_0202, {})
       .map(resp => {
         if ( resp.code !== API_CODE.CODE_00 ) {
