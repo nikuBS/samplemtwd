@@ -8,8 +8,8 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
-import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
+import MyTHelper from '../../../../utils/myt.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
 
@@ -146,7 +146,7 @@ class MyTDataUsage extends TwViewController {
     kinds.map((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
         usageData[kind].map((data) => {
-          MyTUsageGraphbox.convShowData(data);
+          MyTHelper.convShowData(data);
         });
       }
     });

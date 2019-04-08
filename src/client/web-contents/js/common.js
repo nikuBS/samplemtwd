@@ -1024,54 +1024,15 @@ skt_landing.action = {
         skt_landing.action.auto_scroll();
       }
     },
-    allClose : function (){
-      var popups = $('.wrap > .popup,.wrap > .popup-page'),
-          createdTarget = popups.last();
-      if ( createdTarget.find(".popup-blind").css("display") == "block" && $(".actionsheet").length > 0 || $('.popup .input-scroll-fix').length > 0 ){
-        var popCk = $('.popup-page.tw-popup'),
-            popCk_wrap = popCk.not($(".actionsheet"));
-        popCk_wrap.each(function(){
-          $(this).css('overflowY', '');
-        });
-        $("html, .wrap").css("height", ""); // 19.03.28 추가
-        skt_landing.action.checkScroll.unLockScroll();
-        $(window).scrollTop(current_scrollTop);
-      }
-      // 19.03.22 딤드처리된 popup 스크롤락
-
-      //@190329: DV001-19141
-      $('.tw-popup').not(createdTarget).find('.container').css({
-        'overflowY': ''
-      });
-
-      // 19.03.29 툴팁부분
-      if ( createdTarget.find(".popup-blind").css("display") == "block" && $("[role='alertdialog']").length > 0 ){
-        $("html, .wrap").css({"height":"", "overflowY":""});
-        skt_landing.action.checkScroll.unLockScroll();
-        $(window).scrollTop(current_scrollTop);
-        if( popups.length == 1 && fixScroll_onoff ){
-          skt_landing.action.auto_scroll();
-        }
-      }
-      // 19.03.29 툴팁부분
-
-      if( $(".fixed-bottom-lock").css("display") == "block" ){ // 19.03.25 팝업떴을때 바닥 스크롤 생기는 이슈
-        $(".wrap, html").css({"height":"", "overflowY":""});
-        $(window).scrollTop(current_scrollTop);
-      }
-
-      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-      var $popup = $('.popup.tw-popup');
-      var $popWrap = $popup.find('.container-wrap');
-      $popWrap.css({
-          'overflowY': ''
-      });
-      $(document).trigger('modal:close', {obj: this, target: target});
-      //@190319: DV001-17729 수정( 중복레이어 팝업내 스크롤 )
-      
+    allClose : function (){      
+      var popups = $('.wrap > .popup,.wrap > .popup-page');
       popups.not($('.page')).empty().remove();
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
+      } else { // 19.04.08 수정
+        $(".wrap, html").css({"height":"", "overflowY":""});
+        skt_landing.action.auto_scroll();
+        skt_landing.action.checkScroll.unLockScroll();
       }
       if ( $(".idpt-popup").length > 0 ){ // 19.03.15 수정
         skt_landing.action.auto_scroll();
