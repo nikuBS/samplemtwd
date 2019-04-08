@@ -1,5 +1,6 @@
 /**
  * @file membership.my.update.js
+ * @desc 나의 T멤버십 > 정보 수정
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.12.21
  */
@@ -45,6 +46,11 @@ Tw.MembershipMyUpdate.prototype = {
     this.$agreeViewBtn.on('click', $.proxy(this._onClickAgreeView, this));
   },
 
+  /**
+   * @function
+   * @desc 컨트롤러에서 가공된 데이터를 정보수정 완료 API에 보낼 param에서 삭제하는 함수
+   * @private
+   */
   _deleteKeys: function() { // 가공된 데이터는 정보수정 완료 API에 보낼 parameter에서 삭제
     delete this._myInfoData.smsAgreeChecked;
     delete this._myInfoData.sktNewsChecked;
@@ -54,6 +60,11 @@ Tw.MembershipMyUpdate.prototype = {
     delete this._myInfoData.cardIsueTypCd;
   },
 
+  /**
+   * @function
+   * @desc OK캐쉬백 기능 추가하기 체크박스 해제
+   * @private
+   */
   _okCashbagUncheck: function() {
     this.$checkCashbag.prop('checked', false);
     this.$actionCheckAll.prop('checked', false);
@@ -70,6 +81,12 @@ Tw.MembershipMyUpdate.prototype = {
     },50);
   },
 
+  /**
+   * function
+   * @desc 멤버십 정보수정내 모든 체크박스 체크/해제 Event
+   * @param e
+   * @private
+   */
   _agreeCheck: function(e) {
     var selected = e.target;
 
@@ -114,7 +131,12 @@ Tw.MembershipMyUpdate.prototype = {
     }
   },
 
-  // OK 캐시백 모든 약관 동의여부 체크
+  /**
+   * @function
+   * @desc OK 캐시백 모든 약관 동의여부 체크 함수
+   * @param selected
+   * @private
+   */
   _allAgreeCheck: function(selected){
     var sumCheckAll = 0;
     if($(selected).hasClass('fe-part')){ // OK 캐시백 개별 설정
@@ -130,6 +152,12 @@ Tw.MembershipMyUpdate.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 정보 수정하기 버튼 선택
+   * @param e
+   * @private
+   */
   _requestUpdate: function(e) {
 
     // OK 캐쉬백 조건 체크, 필수항목 미 동의시 알럿 띄우기
@@ -157,11 +185,22 @@ Tw.MembershipMyUpdate.prototype = {
       $.proxy(this._handleUpdateAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.BUTTON, $(e.currentTarget));
   },
 
+  /**
+   * @function
+   * @desc BFF_11_0012 나의 멤버십 - 정보수정하기(완료) API Request
+   * @private
+   */
   _handleUpdateAlert: function() {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_11_0012, this._myInfoData).done($.proxy(this._handleSuccessInfoUpdate, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_11_0012 나의 멤버십 - 정보수정하기(완료) API Response
+   * @param res
+   * @private
+   */
   _handleSuccessInfoUpdate: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       // 완료 페이지 이동
@@ -175,14 +214,25 @@ Tw.MembershipMyUpdate.prototype = {
     this._historyService.goBack();
   },
 
-  _onClickAgreeView: function(e){ // 마케팅 약관 팝업
+  /**
+   * @function
+   * @desc 마케팅 약관 동의 팝업 Open
+   * @param e
+   * @private
+   */
+  _onClickAgreeView: function(e){
     new Tw.MembershipClauseLayerPopup({
       $element: this.$container,
       callback: $.proxy(this._agreeViewCallback, this)
     }).open('BE_04_02_L07', e);
   },
 
-  _agreeViewCallback: function(){ // 마케팅 활용 동의 약관보기 팝업에서 확인 선택시
+  /**
+   * @function
+   * @desc 마케팅 활용 동의 약관보기 팝업에서 확인 선택
+   * @private
+   */
+  _agreeViewCallback: function(){
     if(this._myInfoData.ctzNumAgreeYn === 'N') { // 기존에 동의한 경우
       this.$checkThird.prop('checked', true);
       this.$checkThird.attr('checked', 'checked');

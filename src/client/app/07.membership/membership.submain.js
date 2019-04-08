@@ -1,6 +1,6 @@
 /**
- * MenuName: T멤버십 > submain (BE_01)
  * @file membership.submain.js
+ * @desc T멤버십 > submain (BE_01)
  * @author EunJung Jung
  * @since 2018.12.26
  */
@@ -52,8 +52,8 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));  // T day
   },
   /**
-   * 내주변 제휴 브랜드 위치 선택 시
-   * 위치동의 여부 확인
+   * @function
+   * @desc 내주변 제휴 브랜드 위치 선택 시 위치동의 여부 확인
    * @private
    */
   _selectLocationAgreement:function () {
@@ -87,8 +87,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * 위치 동의 여부 확인 후
-   * 현재 위치 요청
+   * @function
+   * @desc 위치 동의 여부 확인 후 현재 위치 요청
    * @private
    */
   _checkLocationAgreement:function () {
@@ -121,7 +121,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * 혜택바로가기 > T Day
+   * @function
+   * @desc 혜택바로가기 > T Day
    * @param e
    * @private
    */
@@ -133,7 +134,8 @@ Tw.MembershipSubmain.prototype = {
       }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
-   * 혜택바로가기 > 초콜릿
+   * @function
+   * @desc 혜택바로가기 > 초콜릿
    * @param e
    * @private
    */
@@ -145,7 +147,8 @@ Tw.MembershipSubmain.prototype = {
       }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
-   * T Day 링크 이동
+   * @function
+   * @desc T Day 링크 이동
    * @private
    */
   _goTday: function () {
@@ -153,15 +156,16 @@ Tw.MembershipSubmain.prototype = {
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
   /**
-   * 로그인페이지 이동
+   * @function
+   * @desc 로그인페이지 이동
    * @private
    */
   _goLogin: function () {
     this._tidLanding.goLogin();
   },
   /**
-   * 위치 정보 이용 동의 여부 'N'일 경우
-   * 위치 정보 이용 동의 팝업 호출
+   * @function
+   * @desc 위치 정보 이용 동의 여부 'N'일 경우 위치 정보 이용 동의 팝업 호출
    * @private
    */
   _showAgreementPopup: function () {
@@ -200,8 +204,8 @@ Tw.MembershipSubmain.prototype = {
     );
   },
   /**
-   * 멤버십 서브메인 및 멤버십 바코드 팝업
-   * Tos 배너 정보요청.
+   * @function
+   * @desc 멤버십 서브메인 및 멤버십 바코드 팝업. Tos 배너 정보요청.
    * @private
    */
   _getMembershipBanner: function (){
@@ -256,8 +260,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * Tos 배너 정보 없는 경우
-   * Redis 배너 정보 요청
+   * @function
+   * @desc Tos 배너 정보 없는 경우 Redis 배너 정보 요청
    * @param adminList
    * @private
    */
@@ -280,7 +284,8 @@ Tw.MembershipSubmain.prototype = {
     return false;
   },
   /**
-   * 나의 멤버십 화면으로 이동
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
    * @private
    */
   _goMyMembership: function() {
@@ -311,7 +316,8 @@ Tw.MembershipSubmain.prototype = {
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
   /**
-   * 초콜릿 링크 이동
+   * @function
+   * @desc 초콜릿 링크 이동
    * @private
    */
   _goChocolate: function () {
@@ -325,7 +331,8 @@ Tw.MembershipSubmain.prototype = {
     this._historyService.goLoad('/membership/membership_info/mbrs_0001');
   },
   /**
-   * 제휴 브랜드 화면으로 이동
+   * @function
+   * @desc 제휴 브랜드 화면으로 이동
    * @private
    */
   _goBenefitBrand: function () {
@@ -339,7 +346,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * 현재 사용자 위치 정보 요청
+   * @function
+   * @desc 현재 사용자 위치 정보 요청
    * @private
    */
   _askCurrentLocation: function() {
@@ -393,8 +401,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * 현재 사용자 위치 정보 요청 실패한 경우,
-   * 서울 중구를 기본값으로 지역정보 요청.
+   * @function
+   * @desc 현재 사용자 위치 정보 요청 실패한 경우 서울 중구를 기본값으로 지역정보 요청.
    * @param resp
    * @private
    */
@@ -409,8 +417,8 @@ Tw.MembershipSubmain.prototype = {
     });
   },
   /**
-   * 현재 사용자 위치 정보 요청 성공한 경우,
-   * 현재 위치의 지역정보 요청.
+   * @function
+   * @desc 현재 사용자 위치 정보 요청 성공한 경우 현재 위치의 지역정보 요청.
    * @param location
    * @private
    */
@@ -422,7 +430,8 @@ Tw.MembershipSubmain.prototype = {
     });
   },
   /**
-   * 사용자 위치의 지역정보 요청
+   * @function
+   * @desc 사용자 위치의 지역정보 요청
    * @param location
    * @private
    */
@@ -465,7 +474,8 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   /**
-   * 내 주변 제휴브랜드 등급별 혜택 아이콘 정렬
+   * @function
+   * @desc 내 주변 제휴브랜드 등급별 혜택 아이콘 정렬
    * @param ico
    * @private
    */
@@ -478,7 +488,8 @@ Tw.MembershipSubmain.prototype = {
     return iconArr;
   },
   /**
-   * 내 주변 제휴브랜드 노출
+   * @function
+   * @desc 내 주변 제휴브랜드 노출
    * @param resp
    * @private
    */
@@ -515,7 +526,8 @@ Tw.MembershipSubmain.prototype = {
 
   },
   /**
-   * 멤버십 바코드 팝업 호출
+   * @function
+   * @desc 멤버십 바코드 팝업 호출
    * @param event
    * @private
    */
@@ -539,7 +551,8 @@ Tw.MembershipSubmain.prototype = {
     }, $.proxy(this._onOpenBarcode, this, cardNum), null, null,  $(event.currentTarget));
   },
   /**
-   * 멤버십 바코드 생성 및 배너 그리기
+   * @function
+   * @desc 멤버십 바코드 생성 및 배너 그리기
    * @param cardNum
    * @param $popupContainer
    */

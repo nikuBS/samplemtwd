@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.fi.reservation.js
+ * @desc T로밍 > boro Box 예약
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.13
  */
@@ -49,6 +50,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
   },
 
+  /**
+   * @function
+   * @desc 값 초기화
+   * @param minDate - 예약 가능한 최소 날짜
+   * @private
+   */
   _init: function(minDate) {
     //다른 화면에서 돌아올 경우 값 상태 초기화
     this.$inputPhone.val('');
@@ -65,6 +72,13 @@ Tw.ProductRoamingFiReservation.prototype = {
     },50);
   },
 
+  /**
+   * @function
+   * @desc 예약하기 버튼 선택
+   * @param e
+   * @returns {*|void}
+   * @private
+   */
   _searchCountryCode: function(e){ //국가코드 가져오기 및 유효성 검사
     var inputNumber = this.$inputPhone.val();
 
@@ -93,8 +107,13 @@ Tw.ProductRoamingFiReservation.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc 한글로된 국가 배열을 코드 배열로 교체
+   * @param res
+   * @private
+   */
   _handleSuccessSearchCountry: function(res){
-    //한글로된 국가 배열 -> 코드 배열로 교체
     if(res.code === Tw.API_CODE.CODE_00) {
       var allCountryCode = res.result;
       var countyArr = this.countryArr.map(function(x){return x;});
@@ -111,6 +130,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0065(new) 로밍> T파이 임대 > T파이 예약 신청 API Request
+   * @param countryArr - 국가 코드 배열
+   * @private
+   */
   _handleFiReservation: function(countryArr) {
     var expbranchnm = this.$inputReturn.text();
     var boothcode = this.$inputReceive.attr('data-booth');
@@ -124,14 +149,14 @@ Tw.ProductRoamingFiReservation.prototype = {
     var date = new Date();
     var hsrsvrcvdtm = date.toISOString().substring(0,10).replace(/\-/gi, '');
 
-    //수령장소 기본 값 세팅
+    // 수령장소 기본 값(인천공항 1터미널 3층 F카운터) 세팅
     if(boothcode === null || boothcode === undefined){
       boothcode = '1000004045';
       impbranch = 'A100110000';
       this.selectIdx = 0;
     }
 
-    //반납장소 기본 값 세팅
+    // 반납장소 기본 값(인천공항 1터미널 1층) 세팅
     if(expbranch === null || expbranch === undefined){
       expbranch = 'A100110000';
     }
@@ -157,6 +182,12 @@ Tw.ProductRoamingFiReservation.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0065(new) 로밍> T파이 임대 > T파이 예약 신청 API Response
+   * @param res
+   * @private
+   */
   _handleSuccessFiReservation: function(res){
     if(res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/product/roaming/fi/reservation-complete?selectIdx=' + this.selectIdx);
@@ -165,6 +196,13 @@ Tw.ProductRoamingFiReservation.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 방문국가 선택
+   * @param e
+   * @returns {*|void}
+   * @private
+   */
   _addVisitCountry: function(e){
     //추가된 국가가 5개 이상이면 Alert 호출 
     if(this.countryArr.length > 4){
@@ -187,6 +225,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     this._changeCheck();
   },
 
+  /**
+   * @function
+   * @desc 방문국가 삭제
+   * @param e
+   * @private
+   */
   _removeVisitCountry : function(e){
     var removeName = $(e.target).parents('.tx-cont').siblings('.title').text();
     this.countryArr.splice(this.countryArr.indexOf(removeName),1);
@@ -195,6 +239,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     this._changeCheck();
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet Open
+   * @param e
+   * @private
+   */
   _openLocationPop : function(e){
     var selected = e.target;
     var data = [];
@@ -220,6 +270,14 @@ Tw.ProductRoamingFiReservation.prototype = {
 
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet Open Callback
+   * @param selected
+   * @param currentCenter - 선택한 장소 명
+   * @param $layer
+   * @private
+   */
   _onActionSheetOpened: function (selected, currentCenter, $layer) {
     $('li.type1').each(function(){
       if($(this).find('label').attr('value') === currentCenter){
@@ -232,6 +290,13 @@ Tw.ProductRoamingFiReservation.prototype = {
     $layer.one('click', '#fe-back', this._popupService.close);
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet 값 선택
+   * @param selected
+   * @param e
+   * @private
+   */
   _onActionSelected: function (selected, e) {
 
     if(selected.id === 'flab04'){
@@ -259,6 +324,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 개인 정보 수집 이용동의 약관 전문 팝업 Open
+   * @param e
+   * @private
+   */
   _openAgreeView: function(e){
     this._popupService.open({
       hbs: 'RM_14_02_02_01',
@@ -271,6 +342,12 @@ Tw.ProductRoamingFiReservation.prototype = {
     $root.on('click', '#agreeBtn', $.proxy(this._clickConfirmBtn, this));
   },
 
+  /**
+   * @function
+   * @desc 정보수정 하단 버튼 활성화/비활성화 처리
+   * @param state - 발생한 event 종류
+   * @private
+   */
   _changeCheck: function(state) {
     if(state === 'keyup'){
       if(this.$inputPhone.val().length > 11){
@@ -307,10 +384,20 @@ Tw.ProductRoamingFiReservation.prototype = {
     },0);
   },
 
+  /**
+   * @function
+   * @desc T로밍센터로 이동
+   * @private
+   */
   _goRoamingCenter: function() {
     this._historyService.goLoad('/product/roaming/info/center');
   },
 
+  /**
+   * @function
+   * @desc 핸드폰 번호 하이픈('-') 생성
+   * @private
+   */
   _insertDashPhone: function() {
     // 9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
@@ -319,7 +406,8 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   /**
-   * Event listener for the button click on '#flab01'(핸드폰 번호 입력)
+   * @function
+   * @desc Event listener for the button click on '#flab01'(핸드폰 번호 입력)
    * @private
    */
   _removeDashPhone: function() {
@@ -327,6 +415,11 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$inputPhone.val(phoneNum);
   },
 
+  /**
+   * @function
+   * @desc 개인 정보 수집 이용동의 약관 전문 팝업에서 확인버튼 선택
+   * @private
+   */
   _clickConfirmBtn: function() {
     this.$agreeCheckOne.addClass('checked');
     this.$agreeCheckOne.attr('aria-checked', 'true');

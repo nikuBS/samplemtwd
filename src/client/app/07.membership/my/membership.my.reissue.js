@@ -1,5 +1,6 @@
 /**
  * @file membership.my.reissue.js
+ * @desc 나의 T멤버십 > 재발급 신청
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.01.29
  */
@@ -26,12 +27,23 @@ Tw.MembershipMyReissue.prototype = {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
+  /**
+   * @function
+   * @desc 재발급 Alert(1_A51) Open
+   * @param e
+   * @private
+   */
   _openReissueAlert: function(e) {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
       $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON, $(e.currentTarget));
   },
 
+  /**
+   * @function
+   * @desc 재발급 Alert(1_A51)에서 재발급 버튼 선택
+   * @private
+   */
   _handleReissueAlert: function() {
     var mbrChgRsnCd = '';
     
@@ -48,6 +60,12 @@ Tw.MembershipMyReissue.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_11_0004 나의 멤버십 - 멤버십 재발급 신청 API Response
+   * @param res
+   * @private
+   */
   _successReissueRequest: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
       // '발급 카드 정보 : </br> T멤버십(' 과 ') 모바일 카드' 사이에 카드 종류 넣기
@@ -55,7 +73,7 @@ Tw.MembershipMyReissue.prototype = {
         Tw.MEMBERSHIP_TYPE[this._mbrTypCd] + Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.POST;
 
       this._popupService.afterRequestSuccess(null, '/membership/my', null,
-        Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, reissueComplete );
+        Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, reissueComplete ); // 완료 팝업 Open
     }else{
       this._onFail(res);
     }

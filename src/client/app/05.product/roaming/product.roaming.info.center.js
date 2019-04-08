@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.info.center.js
+ * @desc T로밍 > 로밍센터
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.12
  */
@@ -14,6 +15,12 @@ Tw.ProductRoamingInfoCenter = function(rootEl) {
 };
 
 Tw.ProductRoamingInfoCenter.prototype = {
+
+  /**
+   * @function
+   * @desc 로밍센터 화면 초기화
+   * @private
+   */
   _init: function() {
     for( var i=1; i<14; i++){
       $('#center'+i).hide();
@@ -45,6 +52,12 @@ Tw.ProductRoamingInfoCenter.prototype = {
     this.$btnDropdown.on('click', $.proxy(this._openActionsheet, this));
   },
 
+  /**
+   * @function
+   * @desc 로밍센터 탭 선택
+   * @param e
+   * @private
+   */
   _widgetSelect: function(e) {
     var centerArr = Tw.ROAMING_CENTER;
     var selectCenter;
@@ -66,6 +79,12 @@ Tw.ProductRoamingInfoCenter.prototype = {
 
   },
 
+  /**
+   * @function
+   * @desc 로밍센터 선택 Action Sheet Open
+   * @param e
+   * @private
+   */
   _openActionsheet: function (e) {
     var selected = e.target;
     var data = '';
@@ -94,6 +113,13 @@ Tw.ProductRoamingInfoCenter.prototype = {
 
   },
 
+  /**
+   * @function
+   * @desc 로밍센터 선택 Open Callback
+   * @param currentCenter
+   * @param $layer
+   * @private
+   */
   _onActionSheetOpened: function (currentCenter, $layer) {
     $('li.type1').each(function(){
       if($(this).find('label').text().trim() === currentCenter){
@@ -106,6 +132,11 @@ Tw.ProductRoamingInfoCenter.prototype = {
     $layer.one('click', '#fe-back', this._popupService.close);
   },
 
+  /**
+   * 로밍센터 선택 Action Sheet Select
+   * @param e
+   * @private
+   */
   _onSelectCenter: function (e) {
     var centerId = Number($(e.target).parents('label').attr('id'));
 
