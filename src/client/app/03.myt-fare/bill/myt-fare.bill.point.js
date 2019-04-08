@@ -192,7 +192,7 @@ Tw.MyTFareBillPoint.prototype = {
     var $target = $(e.currentTarget);
 
     // 포인트 요금납부
-    Tw.CommonHelper.startLoading('.container', 'grey');
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
@@ -211,7 +211,7 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._isPaySuccess = true;
       this._popupService.close();
     } else {
@@ -219,7 +219,7 @@ Tw.MyTFareBillPoint.prototype = {
     }
   },
   _payFail: function ($target, err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     this._isPayFail = true;
     this._err = {
       code: err.code,

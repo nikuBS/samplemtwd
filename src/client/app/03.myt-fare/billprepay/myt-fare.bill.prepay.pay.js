@@ -137,7 +137,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     var apiName = this._getApiName();
     var reqData = this._makeRequestData($layer);
 
-    Tw.CommonHelper.startLoading('.container', 'grey');
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._paySuccess, this))
       .fail($.proxy(this._payFail, this));
@@ -168,7 +168,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._isPaySuccess = true;
       this._popupService.closeAll();
     } else {
@@ -176,7 +176,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     }
   },
   _payFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
 
     this._isPayFail = true;
     this._err = {
