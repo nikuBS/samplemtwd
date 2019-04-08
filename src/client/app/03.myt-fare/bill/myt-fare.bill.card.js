@@ -203,7 +203,7 @@ Tw.MyTFareBillCard.prototype = {
     var $target = $(e.currentTarget);
     var reqData = this._makeRequestData();
 
-    Tw.CommonHelper.startLoading('.container', 'grey');
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0025, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
@@ -228,7 +228,7 @@ Tw.MyTFareBillCard.prototype = {
   },
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._isPaySuccess = true;
       this._popupService.close();
     } else {
@@ -236,7 +236,7 @@ Tw.MyTFareBillCard.prototype = {
     }
   },
   _payFail: function ($target, err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     this._isPayFail = true;
     this._err = {
       code: err.code,
