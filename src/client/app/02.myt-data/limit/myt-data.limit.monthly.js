@@ -1,5 +1,6 @@
 /**
  * @file myt-data.limit.monthly.js
+ * @desc 데이터 한도 요금제 > 매달 자동충전 기능 처리
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.10
  */
@@ -33,15 +34,21 @@ Tw.MyTDataLimitMonthly.prototype = {
     this.$btn_cancel_monthly_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
   },
 
+  /**
+   * @function
+   * @desc 매월 자동 충전 > 데이터 차단 토글 버튼 선택
+   * @param e
+   * @private
+   */
   _onToggleBlockMonthly: function (e) {
     var $target = $(e.currentTarget);
     var isChecked = $target.attr('checked');
 
     if ( !this._isToggle ) {
-      if ( isChecked ) {
+      if ( isChecked ) { // 차단 꺼짐
         this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
           .done($.proxy(this._onSuccessBlockMonthly, this, $target, 'unblock'));
-      } else {
+      } else { // 차단 켜짐
         this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
           .done($.proxy(this._onSuccessBlockMonthly, this, $target, 'block'));
       }
@@ -50,6 +57,14 @@ Tw.MyTDataLimitMonthly.prototype = {
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
+  /**
+   * @function
+   * @desc 데이터 한도 요금제 매월 자동 한도 차단(BFF_06_0041) / 차단해제(BFF_06_0040) API Response
+   * @param $target
+   * @param sCheckType - 꺼짐/켜짐 Flag
+   * @param res
+   * @private
+   */
   _onSuccessBlockMonthly: function ($target, sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {

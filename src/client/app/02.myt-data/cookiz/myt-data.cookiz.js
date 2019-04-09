@@ -1,5 +1,6 @@
 /**
  * @file myt-data.cookiz.js
+ * @desc 팅/쿠키즈/안심음성 요금 공통 기능 처리
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.10
  */
@@ -16,6 +17,11 @@ Tw.MyTDataCookiz = function (rootEl) {
 };
 
 Tw.MyTDataCookiz.prototype = {
+  /**
+   * @function
+   * @desc 당월 충전 / 매월 자동 충전 화면 분기
+   * @private
+   */
   _init: function () {
     // If there is hash #auto, show second tab(auto gift)
     if ( window.location.hash === '#auto' ) {
@@ -23,7 +29,7 @@ Tw.MyTDataCookiz.prototype = {
       $('.fe-recharge_cookiz_immediately').hide();
       $('.fe-recharge_cookiz_monthly').show();
       
-      //하단 버튼이 없을 경우 fixed-bottom 클래스 삭제
+      //하단 버튼이 없는 경우 fixed-bottom 클래스 삭제
       if($('.fe-recharge_cookiz_monthly').length === 0 ){
         $('#fe-cookiz-wrap').removeClass('fixed-bottom');
       }else{
@@ -65,10 +71,21 @@ Tw.MyTDataCookiz.prototype = {
   //   }
   // },
 
+  /**
+   * @function
+   * @desc BFF_06_0028 팅/쿠키즈/안심음성 가입정보조회 API Request
+   * @private
+   */
   _getReceiveUserInfo: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0028, { childSvcMgmtNum: '' }).done($.proxy(this._onSuccessReceiveUserInfo, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0028 팅/쿠키즈/안심음성 가입정보조회 API Response
+   * @param res API response 값
+   * @private
+   */
   _onSuccessReceiveUserInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
@@ -78,11 +95,17 @@ Tw.MyTDataCookiz.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 충전 금액 영역 활성화/비활성화 세팅
+   * @param nLimitMount - 충전 가능 금액
+   * @private
+   */
   _setAmountUI: function (nLimitMount) {
     var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
 
-      if ( Number($input.val()) > nLimitMount ) {
+      if ( Number($input.val()) > nLimitMount ) { // 충전 금액이 현재 충전 가능 금액보다 큰 경우 비활성화
         $input.prop('disabled', true);
         $input.parent().addClass('disabled');
       }
@@ -92,6 +115,11 @@ Tw.MyTDataCookiz.prototype = {
     this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
   },
 
+  /**
+   * @function
+   * @desc 매월 자동충전으로 이동시 Tap 웹 접근성 처리
+   * @private
+   */
   _goAutoTab: function () {
     this.$container.find('#tab1').attr('aria-selected', false).find('a').attr('aria-selected', false);
     this.$container.find('#tab2').attr('aria-selected', true).find('a').attr('aria-selected', true);

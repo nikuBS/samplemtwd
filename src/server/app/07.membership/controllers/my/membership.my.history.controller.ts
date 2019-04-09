@@ -45,13 +45,10 @@ export default class MembershipMyHistory extends TwViewController {
   }
 
   private parseMyHistoryData(myHistoryData): any {
-
     for (let i = 0; i < myHistoryData.record2.length; i++) {
+      // 서버에서 내려온 값에서 T'PLE 값과 같이 '(single quotation)이 붙는 경우 json 문자열로 변경 후 문제가 발생하여 값 초기화
       myHistoryData.record2[i].mbr_typ_nm_cnt2 = '';
     }
-
-    myHistoryData.record1.show_card_req_cd = MEMBERSHIP_DELIVERY_CODE[myHistoryData.record1[0].card_req_cd];
-    myHistoryData.record1.show_card_req_dt = DateHelper.getShortDateWithFormat(myHistoryData.record1.card_req_dt, 'YYYY.M.D.', 'YYYYMMDD');
 
     return myHistoryData;
   }

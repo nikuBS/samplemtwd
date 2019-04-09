@@ -1,5 +1,6 @@
 /**
  * @file myt-data.gift.complete.js
+ * @desc T끼리 데이터 선물 > 완료 페이지
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.17
  */
@@ -16,6 +17,10 @@ Tw.MyTDataGiftComplete = function (rootEl) {
 };
 
 Tw.MyTDataGiftComplete.prototype = {
+  /**
+   * query string 처리하기 위한 Init 함수
+   * @private
+   */
   _init: function () {
     this.paramData = Tw.UrlHelper.getQueryParams();
     this._setReceiverInfo();
@@ -34,6 +39,11 @@ Tw.MyTDataGiftComplete.prototype = {
     this.$btn_gift_history.on('click', $.proxy(this._goToHistory, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 화면에 출력될 데이터 가공
+   * @private
+   */
   _setReceiverInfo: function () {
     if ( this.paramData.custNm ) {
       this.$name.text(this.paramData.custNm);
@@ -49,10 +59,20 @@ Tw.MyTDataGiftComplete.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 문자 보내기로 이동
+   * @private
+   */
   _goToSms: function () {
     this._historyService.replaceURL('/myt-data/giftdata/sms?' + $.param(this.paramData));
   },
 
+  /**
+   * @function
+   * @desc 최근 충전/선물 내역으로 이동
+   * @private
+   */
   _goToHistory: function () {
     this._historyService.replaceURL('/myt-data/history');
   }

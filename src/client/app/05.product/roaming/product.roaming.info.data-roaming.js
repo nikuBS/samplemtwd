@@ -1,6 +1,6 @@
 /**
- * MenuName: T로밍 > 로밍안내 > SMS, 데이터 로밍 (RM_16_04)
  * @file product.roaming.info.data-roaming.js
+ * @desc T로밍 > 로밍안내 > SMS, 데이터 로밍 (RM_16_04)
  * @author Eunjung Jung
  * @since 2018.11.12
  */

@@ -1,5 +1,6 @@
 /**
  * @file membership.my.history.js
+ * @desc 나의 T멤버십 > 발급 변경 내역
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.12.27
  */
@@ -36,6 +37,11 @@ Tw.MembershipMyHistory.prototype = {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
+  /**
+   * @function
+   * @desc 발급 변경 내역 유무에 따라 화면 처리 분기
+   * @private
+   */
   _renderTemplate: function() {
     if(this._myHistoryData < 1){
       this.$more.hide();
@@ -45,6 +51,11 @@ Tw.MembershipMyHistory.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 발급 변경 내역 화면 초기화
+   * @private
+   */
   _renderListOne: function() {
     var list = this._myHistoryData;
 
@@ -53,11 +64,18 @@ Tw.MembershipMyHistory.prototype = {
     this.$empty.hide();
 
     if ( list.length > 0 ){
-      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
-      this._renderList(this.$list, this._totoalList.shift());
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT); // 배열을 정해진 갯수의 배열로 나눔
+      this._renderList(this.$list, this._totoalList.shift()); // .shift() 배열의 첫번째 요소를 제거하고 제거된 요소 반환
     }
   },
 
+  /**
+   * @function
+   * @desc 서버에서 받은 발급 변경 내역 데이터를 가공
+   * @param history - 발급 변경 내역 Response
+   * @returns {*}
+   * @private
+   */
   _parseList: function(history) {
     for(var idx in history){
       history[idx].show_chg_dt_cnt2 = this._dateHelper.getShortDateWithFormat(history[idx].chg_dt_cnt2,'YYYY.M.D.','YYYYMMDDhhmmss');
@@ -65,7 +83,13 @@ Tw.MembershipMyHistory.prototype = {
     return history;
   },
 
-  // 예약내역 템플릿 생성
+  /**
+   * @function
+   * @desc 발급 변경 내역을 전달받아 템플릿 생성
+   * @param $container
+   * @param history - 발급 변경 내역
+   * @private
+   */
   _renderList: function($container, history) {
 
     var source = $('#tmplList').html();
@@ -77,8 +101,13 @@ Tw.MembershipMyHistory.prototype = {
     this._moreButton();
   },
 
+  /**
+   * @function
+   * @desc 데이터 갯수에 따라 더보기 버튼 Show/Hide 처리
+   * @private
+   */
   _moreButton: function() {
-    var nextList = _.first(this._totoalList);
+    var nextList = _.first(this._totoalList); // 배열의 첫번째 요소 반환
 
     if ( nextList ) {
       this.$more.show();
@@ -87,6 +116,11 @@ Tw.MembershipMyHistory.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 더보기 버튼 선택
+   * @private
+   */
   _onMore : function () {
     if( this._totoalList.length > 0 ){
       this._renderList(this.$list, this._totoalList.shift());

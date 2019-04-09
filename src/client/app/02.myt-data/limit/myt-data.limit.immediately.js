@@ -1,5 +1,6 @@
 /**
  * @file myt-data.limit.immediately.js
+ * @desc 데이터 한도 요금제 > 이번 달 충전 기능 처리
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.10
  */
@@ -31,15 +32,21 @@ Tw.MyTDataLimitImmediately.prototype = {
     this.$btn_immediately_recharge.on('click', $.proxy(this._requestLimitRechargeImmediately, this));
   },
 
+  /**
+   * @function
+   * @desc 이번 달 충전 > 이번 달 차단 토글 버튼 선택
+   * @param e
+   * @private
+   */
   _onToggleBlockImmediately: function (e) {
     var $target = $(e.currentTarget);
     var isChecked = $target.attr('checked');
 
     if ( !this._isToggle ) {
-      if ( isChecked ) {
+      if ( isChecked ) {  // 차단 꺼짐
         this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
           .done($.proxy(this._onSuccessBlockImmediately, this, $target, 'unblock'));
-      } else {
+      } else {  // 차단 켜짐
         this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
           .done($.proxy(this._onSuccessBlockImmediately, this, $target, 'block'));
       }
@@ -48,6 +55,14 @@ Tw.MyTDataLimitImmediately.prototype = {
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
   },
 
+  /**
+   * @function
+   * @desc 데이터 한도 요금제 당월 한도차단(BFF_06_0039) / 차단해제(BFF_06_0038) API Response
+   * @param $target
+   * @param sCheckType - 꺼짐/켜짐 Flag
+   * @param res
+   * @private
+   */
   _onSuccessBlockImmediately: function ($target, sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {
@@ -71,6 +86,12 @@ Tw.MyTDataLimitImmediately.prototype = {
     }
   },
 
+  /**
+   * 데이터 차단 토글 버튼에 따라 화면 Show/Hide 처리
+   * @param nIndex - each 함수 index
+   * @param elItem - index 번째 .cont-box Element
+   * @private
+   */
   _toggleDisplay: function (nIndex, elItem) {
     if ( $(elItem).css('display') === 'none' ) {
       $(elItem).show();
@@ -79,15 +100,28 @@ Tw.MyTDataLimitImmediately.prototype = {
     }
   },
 
+  /**
+   * @desc 이번 달 충전 > 충전하기 버튼 선택
+   * @param e
+   * @private
+   */
   _requestLimitRechargeImmediately: function (e) {
     var $target = $(e.currentTarget);
     var htParams = {
       amt: this.$wrap_immediately_select_list.find('.checked input').val()
     };
 
+    // BFF_06_0036 데이터한도요금제 당월충전 API Request
     this._apiService.request(Tw.API_CMD.BFF_06_0036, htParams).done($.proxy(this._onSuccessLimitRechargeImmediately, this, $target));
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0036 데이터한도요금제 당월충전 API Response
+   * @param $target
+   * @param res
+   * @private
+   */
   _onSuccessLimitRechargeImmediately: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/limit/complete');
@@ -97,6 +131,11 @@ Tw.MyTDataLimitImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 나의 데이터 통화 서브메인으로 이동
+   * @private
+   */
   _goSubmain: function () {
     this._historyService.replaceURL('/myt-data/submain');
   }
