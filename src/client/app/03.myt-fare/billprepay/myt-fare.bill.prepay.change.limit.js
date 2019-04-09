@@ -1,10 +1,16 @@
 /**
  * @file myt.fare.bill.prepay.change.limit.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.09
- * Annotation: 소액결제/콘텐츠이용료 한도변경
+ * @desc 소액결제/콘텐츠이용료 한도변경
  */
 
+/**
+ * @namespace
+ * @desc 소액결제/콘텐츠이용료 한도변경 namespace
+ * @param rootEl - dom 객체
+ * @param title - 소액결제/콘텐츠이용료
+ */
 Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
@@ -20,6 +26,10 @@ Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
 };
 
 Tw.MyTFareBillPrepayChangeLimit.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this._getLimit();
 
@@ -27,14 +37,23 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this.$daySelector = null;
     this.$onceSelector = null;
   },
+  /**
+   * @function
+   * @desc 한도 조회 API 호출
+   */
   _getLimit: function () {
-    // 한도 조회
     var $target = this.$container.find('.tw-popup-closeBtn');
     var apiName = this._getLimitApiName();
+
     this._apiService.request(apiName, {})
       .done($.proxy(this._getLimitSuccess, this, $target))
       .fail($.proxy(this._fail, this, $target));
   },
+  /**
+   * @function
+   * @desc 한도조회 api name 조회
+   * @returns {string}
+   */
   _getLimitApiName: function () {
     var apiName = '';
     if (this.$title === 'small') {
@@ -44,6 +63,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
     return apiName;
   },
+  /**
+   * @function
+   * @desc 한도조회 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _getLimitSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.isUnpaid === 'Y') {
@@ -55,6 +80,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 한도조회 API 응답 처리 (실패)
+   */
   _getLimitFail: function () {
     this._popupService.openOneBtTypeB(
       Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_CHANGE_LIMIT,
@@ -68,12 +97,26 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       null
     );
   },
+  /**
+   * @function
+   * @desc 한도조회 실패 시 처리
+   * @param $layer
+   */
   _openLimitFail: function ($layer) {
     $layer.on('click', '.fe-payment', $.proxy(this._goSubmain, this));
   },
+  /**
+   * @function
+   * @desc 서브메인 페이지로 이동
+   */
   _goSubmain: function () {
     this._historyService.replaceURL('/myt-fare/submain');
   },
+  /**
+   * @function
+   * @desc 한도변경 팝업 load
+   * @param result
+   */
   _changeLimit: function (result) {
     var hbsName = 'MF_06_02'; // 소액결제 한도변경
     if (this.$title === 'contents') {
@@ -83,14 +126,31 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       'hbs': hbsName
     }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit'); // 한도변경 팝업
   },
+  /**
+   * @function
+   * @desc 한도변경 팝업 load 후 init
+   * @param result
+   * @param $layer
+   */
   _openChangeLimit: function (result, $layer) {
     this._initLayerVar($layer);
     this._setLimitData(result, $layer);
     this._setLimitEvent($layer);
   },
+  /**
+   * @function
+   * @desc initialize variable
+   * @param $layer
+   */
   _initLayerVar: function ($layer) {
     this.$changeBtn = $layer.find('.fe-change');
   },
+  /**
+   * @function
+   * @desc 한도 셋팅
+   * @param result
+   * @param $layer
+   */
   _setLimitData: function (result, $layer) {
     this.$monthSelector = $layer.find('.fe-month'); // 월 한도
     this.$daySelector = $layer.find('.fe-day'); // 일 한도
@@ -113,12 +173,23 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       .attr({ 'id': result.onceLimit, 'origin-value': result.onceLimit })
       .text(this._getLittleAmount(result.onceLimit));
   },
+  /**
+   * @function
+   * @desc event binding
+   * @param $layer
+   */
   _setLimitEvent: function ($layer) {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     this.$changeBtn.click(_.debounce($.proxy(this._openChangeConfirm, this), 500));
   },
+  /**
+   * @function
+   * @desc 금액 list 셋팅
+   * @param amount
+   * @returns {string}
+   */
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
     if (amount > 0) {
@@ -126,6 +197,11 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
     return defaultValue + Tw.CURRENCY_UNIT.TEN_THOUSAND; // 단위 바꿔서 보여주기
   },
+  /**
+   * @function
+   * @desc 금액 list load
+   * @param event
+   */
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
@@ -142,6 +218,13 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $amount
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $amount, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -149,6 +232,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
+  /**
+   * @function
+   * @desc 선택된 값 처리
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
@@ -157,6 +246,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this._checkIsChanged();
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 변경여부 체크 후 버튼 활성화 처리
+   */
   _checkIsChanged: function () {
     if (this._isChanged()) {
       this.$changeBtn.removeAttr('disabled');
@@ -164,17 +257,30 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this.$changeBtn.attr('disabled', 'disabled');
     }
   },
+  /**
+   * @function
+   * @desc 한도변경 확인 confirm
+   * @param e
+   */
   _openChangeConfirm: function (e) {
-    // 한도변경 확인 alert
     var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
       $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
       $target);
   },
+  /**
+   * @function
+   * @desc 한도변경 확인
+   */
   _onChange: function () {
     this.$isChange = true;
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 한도변경 API 호출
+   * @param $target
+   */
   _change: function ($target) {
     if (this.$isChange) {
       var apiName = this._changeLimitApiName();
@@ -187,6 +293,11 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
         .fail($.proxy(this._fail, this, $target));
     }
   },
+  /**
+   * @function
+   * @desc 한도변경 api name 조회
+   * @returns {string}
+   */
   _changeLimitApiName: function () {
     var apiName = '';
     var isUp = this._checkIsUp();
@@ -206,12 +317,21 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
     return apiName;
   },
+  /**
+   * @function
+   * @desc 한도 상향 여부 확인
+   * @returns {boolean}
+   */
   _checkIsUp: function () {
-    // 한도 상향 여부 확인
     return ((parseInt(this.$monthSelector.attr('id'), 10) > parseInt(this.$monthSelector.attr('origin-value'), 10)) ||
       (parseInt(this.$daySelector.attr('id'), 10) > parseInt(this.$daySelector.attr('origin-value'), 10)) ||
       (parseInt(this.$onceSelector.attr('id'), 10) > parseInt(this.$onceSelector.attr('origin-value'), 10)));
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {{}}
+   */
   _makeRequestData: function () {
     var reqData = {};
 
@@ -221,6 +341,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
 
     return reqData;
   },
+  /**
+   * @function
+   * @desc 한도변경 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _changeLimitSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (this.$isChanged) {
@@ -232,11 +358,20 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 한도변경 API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _fail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc 한도 변경 성공 시 잔여한도 표시
+   */
   _setRemainAmount: function () {
-    // 한도 변경 성공 시 잔여한도 표시
     var usedAmount = this.$container.find('.fe-use-amount').attr('id');
     var remainAmount = this.$monthSelector.attr('id');
     var remain = parseInt(remainAmount, 10) - parseInt(usedAmount, 10);
@@ -248,6 +383,11 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     this.$container.find('.fe-remain-amount').attr('id', remainText)
       .text(Tw.FormatHelper.addComma(remainText));
   },
+  /**
+   * @function
+   * @desc 한도변경 여부 체크
+   * @returns {boolean}
+   */
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||
       this.$daySelector.attr('id') !== this.$daySelector.attr('origin-value') ||

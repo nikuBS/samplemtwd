@@ -1,6 +1,6 @@
 /**
  * @file customer.document.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.16
  * @desc 필요서류안내
  */

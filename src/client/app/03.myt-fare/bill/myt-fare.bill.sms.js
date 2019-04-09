@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.sms.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.17
- * Annotation: 요금납부 시 입금전용계좌 SMS 신청
+ * @desc 요금납부 시 입금전용계좌 SMS 신청
  */
 
+/**
+ * @namespace
+ * @desc 입금전용계좌 요금납부 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillSms = function (rootEl) {
   this.$container = rootEl;
   this.$accountSelector = this.$container.find('.fe-account-selector');
@@ -19,20 +24,25 @@ Tw.MyTFareBillSms = function (rootEl) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
-  this._init();
+  this._bindEvent();
 };
 
 Tw.MyTFareBillSms.prototype = {
-  _init: function () {
-    this._bindEvent();
-  },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-account-selector', $.proxy(this._selectAccountList, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._pay, this), 500));
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 list 조회
+   * @param event
+   */
   _selectAccountList: function (event) {
-    // 입금전용계좌 조회
     var $target = $(event.currentTarget);
     this._popupService.open({
       url: '/hbs/',
@@ -42,6 +52,12 @@ Tw.MyTFareBillSms.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -49,6 +65,12 @@ Tw.MyTFareBillSms.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
+  /**
+   * @function
+   * @desc 선택된 값 셋팅
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
@@ -56,8 +78,12 @@ Tw.MyTFareBillSms.prototype = {
 
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 리스트 만들기
+   * @returns {Array}
+   */
   _getAccountList: function () {
-    // 리스트 만들기
     var accountList = [];
     var listObj = {
       'list': []
@@ -75,9 +101,18 @@ Tw.MyTFareBillSms.prototype = {
 
     return accountList;
   },
+  /**
+   * @function
+   * @desc x 버튼 클릭 시 공통 confirm 노출
+   */
   _onClose: function () {
     this._backAlert.onClose();
   },
+  /**
+   * @function
+   * @desc 납부할 금액 변경 여부 체크
+   * @returns {boolean}
+   */
   _isChanged: function () {
     var $amount = this.$container.find('.fe-amount');
     if ($amount.is(':visible')) {
@@ -87,21 +122,40 @@ Tw.MyTFareBillSms.prototype = {
     }
     return this.$accountSelector.attr('id') !== this.$accountSelector.attr('data-origin-id');
   },
+  /**
+   * @function
+   * @desc close popup
+   */
   _closePop: function () {
     this._isClose = true;
     this._popupService.closeAll();
   },
+  /**
+   * @function
+   * @desc popup close 이후 원래 페이지로 이동
+   */
   _afterClose: function () {
     if (this._isClose) {
       this._historyService.goBack();
     }
   },
+  /**
+   * @function
+   * @desc pay API 호출
+   * @param e
+   */
   _pay: function (e) {
     var $target = $(e.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: $.trim(this.$accountSelector.text()) })
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
   },
+  /**
+   * @function
+   * @desc pay API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var svcNum = '';
@@ -113,6 +167,12 @@ Tw.MyTFareBillSms.prototype = {
       this._payFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc pay API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _payFail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   }

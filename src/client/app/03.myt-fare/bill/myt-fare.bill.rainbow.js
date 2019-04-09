@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.rainbow.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.7
- * Annotation: 레인보우포인트 1회 요금납부 예약 및 자동납부 관리
+ * @desc 레인보우포인트 1회 요금납부 예약 및 자동납부 관리
  */
 
+/**
+ * @function
+ * @desc 레인보우포인트 1회납부 및 자동납부 예약 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillRainbow = function (rootEl) {
   this.$container = rootEl;
 
@@ -19,6 +24,10 @@ Tw.MyTFareBillRainbow = function (rootEl) {
 };
 
 Tw.MyTFareBillRainbow.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this.$isOneSelectValid = false;
     this.$isAutoSelectValid = false;
@@ -27,6 +36,11 @@ Tw.MyTFareBillRainbow.prototype = {
     this._initVariables('tab1'); // 최초 1회납부 탭으로 initialize
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc initialize variables
+   * @param $targetId - 선택된 tab id
+   */
   _initVariables: function ($targetId) {
     this.$standardPoint = this.$container.find('.fe-standard-point');
     this.$autoInfo = this.$container.find('.fe-auto-info');
@@ -41,6 +55,10 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
@@ -53,8 +71,12 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$onePayBtn.click(_.debounce($.proxy(this._onePay, this), 500));
     this.$autoPayBtn.click(_.debounce($.proxy(this._autoPay, this), 500));
   },
+  /**
+   * @function
+   * @desc change tab event (1회납부/자동납부 탭 change)
+   * @param event
+   */
   _changeTab: function (event) {
-    // 1회납부/자동납부 탭 change
     var $target = $(event.currentTarget);
     $target.find('button').attr('aria-selected', 'true');
     $target.siblings().find('button').attr('aria-selected', 'false');
@@ -63,8 +85,11 @@ Tw.MyTFareBillRainbow.prototype = {
     this._initVariables($targetId);
     this._checkIsAbled();
   },
+  /**
+   * @function
+   * @desc 버튼 활성화 처리
+   */
   _checkIsAbled: function () {
-    // 버튼 활성화
     if (this.$selectedTab.attr('id') === 'tab1-tab') { // 1회납부 예약일 경우
       if ((this.$fareSelector.attr('id') !== '') && ($.trim(this.$point.val()) !== '')) {
         this.$payBtn.removeAttr('disabled');
@@ -79,20 +104,39 @@ Tw.MyTFareBillRainbow.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 숫자만 입력 가능
+   * @param event
+   */
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력 가능
+    Tw.InputHelper.inputNumberOnly(target);
   },
+  /**
+   * @function
+   * @desc 자동납부 해지
+   * @param e
+   */
   _cancel: function (e) {
     var $target = $(e.currentTarget);
     // 자동납부 해지 시 확인 팝업
     this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
       $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this, $target), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON, $(e.currentTarget));
   },
+  /**
+   * @function
+   * @desc 해지 확인
+   */
   _onCancel: function () {
     this._isCancel = true;
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 해지 API 호출
+   * @param $target
+   */
   _autoCancel: function ($target) {
     if (this._isCancel) {
       this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'T1' })
@@ -100,6 +144,12 @@ Tw.MyTFareBillRainbow.prototype = {
         .fail($.proxy(this._fail, this, $target));
     }
   },
+  /**
+   * @function
+   * @desc 해지 API 응답 처리
+   * @param $target
+   * @param res
+   */
   _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=cancel'); // 해지 완료 페이지로 이동
@@ -107,10 +157,14 @@ Tw.MyTFareBillRainbow.prototype = {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 납부대상 actionsheet 생성
+   * @param event
+   */
   _selectFare: function (event) {
     var $target = $(event.currentTarget);
 
-    // 요금제 action sheet
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -119,6 +173,12 @@ Tw.MyTFareBillRainbow.prototype = {
       btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -127,6 +187,12 @@ Tw.MyTFareBillRainbow.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
+  /**
+   * @function
+   * @desc 선택된 값 처리
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
@@ -138,6 +204,11 @@ Tw.MyTFareBillRainbow.prototype = {
     this._checkIsAbled();
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc validation 대상 셋팅
+   * @param isValid
+   */
   _setSelectorValidation: function (isValid) {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
       this.$isOneSelectValid = isValid; // 1회납부 유효성 검증결과
@@ -145,6 +216,10 @@ Tw.MyTFareBillRainbow.prototype = {
       this.$isAutoSelectValid = isValid; // 자동납부 유효성 검증결과
     }
   },
+  /**
+   * @function
+   * @desc 선택된 값이 있는지 체크
+   */
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
       this.$fareSelector.parent().siblings('.fe-error-msg').show().attr('aria-hidden', 'false');
@@ -153,6 +228,10 @@ Tw.MyTFareBillRainbow.prototype = {
     }
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc point validation check
+   */
   _checkPoint: function () {
     var isValid = false;
     var $message = this.$point.parent().siblings('.fe-error-msg');
@@ -173,7 +252,12 @@ Tw.MyTFareBillRainbow.prototype = {
 
     this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid); // validation message
   },
-  _onePay: function (e) { // 1회납부
+  /**
+   * @function
+   * @desc 1회 납부 API 호출
+   * @param e
+   */
+  _onePay: function (e) {
     var $target = $(e.currentTarget);
     if (this.$isPointValid && this.$isOneSelectValid) {
       var reqData = this._makeRequestDataForOne();
@@ -188,7 +272,12 @@ Tw.MyTFareBillRainbow.prototype = {
       }
     }
   },
-  _autoPay: function (e) { // 자동납부
+  /**
+   * @function
+   * @desc 자동납부 API 호출
+   * @param e
+   */
+  _autoPay: function (e) {
     var $target = $(e.currentTarget);
     if (this.$isAutoSelectValid) {
       var reqData = this._makeRequestDataForAuto();
@@ -199,14 +288,27 @@ Tw.MyTFareBillRainbow.prototype = {
       this.$fareSelector.focus();
     }
   },
-  _paySuccess: function ($target, type, res) { // 납부예약 완료
-    if (res.code === Tw.API_CODE.CODE_00) {
+  /**
+   * @function
+   * @desc 납부 API 응답 처리
+   * @param $target
+   * @param type
+   * @param res
+   */
+  _paySuccess: function ($target, type, res) {
+    if (res.code === Tw.API_CODE.CODE_00) { // 납부예약 완료
       this._historyService.replaceURL('/myt-fare/bill/point-complete?title=rainbow&type=' + type +
         '&point=' + this._getPointValue(type) + '&add=' + this.$fareSelector.attr('id'));
     } else {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc get point value
+   * @param type
+   * @returns {string}
+   */
   _getPointValue: function (type) {
     var point = $.trim(this.$point.val());
     if (type === 'auto') {
@@ -214,46 +316,44 @@ Tw.MyTFareBillRainbow.prototype = {
     }
     return point;
   },
+  /**
+   * @function
+   * @desc API error 처리
+   * @param $target
+   * @param err
+   */
   _fail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성 (1회납부예약)
+   * @returns {{reqRbpPt: string, prodId}}
+   */
   _makeRequestDataForOne: function () {
-    // 1회납부예약 요쳥 파라미터
     var reqData = {
       reqRbpPt: $.trim(this.$point.val()),
       prodId: this.$fareSelector.attr('id')
     };
     return reqData;
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성 (자동납부예약)
+   * @returns {{prodId, rbpChgRsnCd: string}}
+   */
   _makeRequestDataForAuto: function () {
-    // 자동납부예약 요청 파라미터
     var reqData = {
       prodId: this.$fareSelector.attr('id'),
       rbpChgRsnCd: 'A1'
     };
     return reqData;
   },
+  /**
+   * @function
+   * @desc x 버튼 클릭 시 공통 confirm 노출
+   */
   _onClose: function () {
-    this._backAlert.onClose(); // x 버튼 클릭 시 공통 얼럿 노출
-  },
-  _isChanged: function () {
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      return !Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$point.val());
-    } else {
-      if (this.$autoInfo.is(':visible')) {
-        return (this.$fareSelector.attr('id') !== this.$fareSelector.attr('data-origin-id'));
-      } else {
-        return !Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'));
-      }
-    }
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
   }
 };

@@ -2,9 +2,16 @@
  * @file myt-fare.bill.prepay.auto.js
  * @author 공자윤 (jayoon.kong@sk.com)
  * @since 2018.08.06
- * Annotation: 소액결제/콘텐츠이용료 자동 선결제 신청 및 변경
+ * @desc 소액결제/콘텐츠이용료 자동 선결제 신청 및 변경
  */
 
+/**
+ * @namespace
+ * @desc 소액결제/콘텐츠이용료 자동 선결제 신청 및 변경 namespace
+ * @param rootEl - dom 객체
+ * @param title - 소액결제/콘텐츠이용료
+ * @param type - 신청/변경
+ */
 Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this.$container = rootEl;
   this.$title = title;
@@ -23,6 +30,10 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
 };
 
 Tw.MyTFareBillPrepayAuto.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
@@ -30,6 +41,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this._validationService.bindEvent();
     setTimeout($.proxy(this._checkStandardAmount, this), 100); // 기준금액 체크
   },
+  /**
+   * @function
+   * @desc initialize variables
+   */
   _initVariables: function () {
     this._standardAmountList = [];
     this._prepayAmountList = [];
@@ -50,6 +65,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$isFirstChangeToC = true;
     this.$isFirstChangeToT = true;
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
     this.$container.on('click', '.fe-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
@@ -58,15 +77,27 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
 
   },
+  /**
+   * @function
+   * @desc 기준금액 0원일 경우 에러 팝업 보여주고 뒤로가기
+   */
   _checkStandardAmount: function () {
-    // 기준금액 0원일 경우 에러 팝업 보여주고 뒤로가기
     if (this.$standardAmount.attr('id') < 1) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, $.proxy(this._goBack, this));
     }
   },
+  /**
+   * @function
+   * @desc go back
+   */
   _goBack: function () {
     this._historyService.goBack();
   },
+  /**
+   * @function
+   * @desc type change 처리
+   * @param event
+   */
   _changeType: function (event) {
     var $target = $(event.target);
 
@@ -109,15 +140,23 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     this._checkIsAbled();
   },
+  /**
+   * @function
+   * @desc 필수 입력 필드 체크 후 버튼 활성화 처리
+   */
   _checkIsAbled: function () {
-    // 버튼 활성화 체크
-    this._validationService.checkIsAbled();
+    this._validationService.checkIsAbled(); // 공통 모듈 호출
   },
+  /**
+   * @function
+   * @desc 기준금액 및 선결제 금액 action sheet
+   * @param $list
+   * @param event
+   */
   _selectAmount: function ($list, event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('data-max-value');
 
-    // 기준금액 및 선결제 금액 action sheet
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -126,6 +165,12 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -133,12 +178,17 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
+  /**
+   * @function
+   * @desc 선택된 값 처리
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
-    // 선택된 값 세팅
     if ($target.hasClass('fe-standard-amount')) {
       this.$prepayAmount.attr('id', $selectedValue.attr('id'));
       this.$prepayAmount.text($selectedValue.parents('label').text());
@@ -147,15 +197,24 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this._checkSelected();
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 기준금액 및 선결제금액 값 확인 후 버튼 활성화 처리
+   */
   _checkSelected: function () {
-    // 버튼 활성화 체크
     if (this.$prepayAmount.attr('id') !== this.$prepayAmount.attr('data-origin-id') ||
     this.$standardAmount.attr('id') !== this.$standardAmount.attr('data-origin-id')) {
       this._validationService._setButtonAbility($.proxy(this._isAmountValid, this));
     }
   },
+  /**
+   * @function
+   * @desc 기준금액 list로 만드는 작업
+   * @param $amountList
+   * @param $amount
+   * @returns {*}
+   */
   _getAmountList: function ($amountList, $amount) {
-    // 기준금액 List로 만드는 작업
     if (Tw.FormatHelper.isEmpty($amountList)) {
       var listObj = {
         'list': []
@@ -175,29 +234,46 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     return $amountList;
   },
+  /**
+   * @function
+   * @desc 유효성 검증 후 자동선결제
+   * @param e
+   */
   _autoPrepay: function (e) {
-    // 유효성 검증 후 자동선결제
     if (this._isAmountValid() && this._validationService.isAllValid()) {
       this._pay(e);
     }
   },
+  /**
+   * @function
+   * @desc 선결제 금액보다 기준금액이 클 경우 기준금액에 맞게 셋팅
+   * @returns {boolean|*}
+   */
   _isAmountValid: function () {
     return this._validation.showAndHideErrorMsg(this.$prepayAmount,
-      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount)); // 선결제 금액보다 기준금액이 클 경우 기준금액에 맞게 셋팅
+      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount));
   },
+  /**
+   * @function
+   * @desc 자동선결제 신청 및 변경 API 호출
+   * @param e
+   */
   _pay: function (e) {
     var reqData = this._makeRequestData();
     var apiName = this._getApiName();
     var $target = $(e.currentTarget);
 
-    // 자동선결제 신청 및 변경 API 호출
     Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(apiName, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
   },
+  /**
+   * @function
+   * @desc 조건에 따라 요청 파라미터 셋팅
+   * @returns {{checkAuto: string, autoChrgStrdAmt, autoChrgAmt}}
+   */
   _makeRequestData: function () {
-    // 조건에 따라 요청 파라미터 셋팅
     var reqData = {
       checkAuto: 'N',
       autoChrgStrdAmt: this.$standardAmount.attr('id'),
@@ -217,6 +293,11 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     return reqData;
   },
+  /**
+   * @function
+   * @desc api name 조회
+   * @returns {string}
+   */
   _getApiName: function () {
     var apiName = '';
     if (this.$title === 'small') {
@@ -226,6 +307,12 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
     return apiName;
   },
+  /**
+   * @function
+   * @desc 자동선결제 신청 및 변경 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.container');
@@ -234,20 +321,21 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       this._payFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 자동선결제 신청 및 변경 API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _payFail: function ($target, err) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc x 버튼 클릭 시 공통 confirm 노출
+   */
   _onClose: function () {
     this._backAlert.onClose();
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.close();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
   }
 };

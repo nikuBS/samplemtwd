@@ -1,10 +1,16 @@
 /**
  * @file myt-fare.bill.prepay.auto.info.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.05
- * Annotation: 소액결제/콘텐츠이용료 자동 선결제 신청/변경/해지 내역 관리
+ * @desc 소액결제/콘텐츠이용료 자동 선결제 신청/변경/해지 내역 관리
  */
 
+/**
+ * @namespace
+ * @desc 소액결제/콘텐츠이용료 자동 선결제 신청/변경/해지 내역 관리 namespace
+ * @param rootEl - dom 객체
+ * @param title - 소액결제/콘텐츠이용료
+ */
 Tw.MyTFareBillPrepayAutoInfo = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
@@ -18,10 +24,18 @@ Tw.MyTFareBillPrepayAutoInfo = function (rootEl, title) {
 };
 
 Tw.MyTFareBillPrepayAutoInfo.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this._initVariables();
     this.$selectList.find('> li').each($.proxy(this._setEventEachData, this));
   },
+  /**
+   * @function
+   * @desc initialize variables
+   */
   _initVariables: function () {
     this.$selectList = this.$container.find('.fe-history-list');
     this.$standardNode = this.$selectList.find('li:first');
@@ -34,26 +48,44 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     this._totalCnt = this.$selectList.attr('data-cnt');
     this._totalPage = Math.ceil(this._totalCnt / this._defaultCnt);
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-auto-change', $.proxy(this._changeAutoPrepay, this));
     this.$container.on('click', '.fe-auto-cancel', $.proxy(this._cancelAutoPrepay, this));
     this.$container.on('click', '.fe-more-btn', $.proxy(this._setMoreData, this));
   },
+  /**
+   * @function
+   * @desc 자동선결제 변경 페이지로 이동
+   * @param e
+   */
   _changeAutoPrepay: function (e) {
     if (this._standardAmount > 0) {
-      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change'); // 자동선결제 변경 완료
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/change'); // 자동선결제 변경
     } else {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.NOT_ALLOWED_AUTO_PREPAY, null, null, null, null, $(e.currentTarget));
     }
   },
+  /**
+   * @function
+   * @desc 자동선결제 해지 알림
+   * @param e
+   */
   _cancelAutoPrepay: function (e) {
-    // 자동선결제 해지 알림
     var $target = $(e.currentTarget);
     this._popupService.openConfirmButton(Tw.AUTO_PAY_CANCEL.CONTENTS, Tw.AUTO_PAY_CANCEL.TITLE,
       $.proxy(this._cancel, this, $target), null, Tw.BUTTON_LABEL.CLOSE, Tw.AUTO_PAY_CANCEL.BTN_NAME, $target);
   },
+  /**
+   * @function
+   * @desc 자동선결제 해지 API 조회
+   * @param $target
+   */
   _cancel: function ($target) {
-    var $api = this._getCancelApiName(); // 자동선결제 해지 API 조회
+    var $api = this._getCancelApiName();
 
     this._apiService.request($api, {})
       .done($.proxy(this._cancelSuccess, this, $target))
@@ -61,6 +93,11 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
 
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 해지 api name 조회
+   * @returns {string}
+   */
   _getCancelApiName: function () {
     var $apiName = '';
     if (this.$title === 'small') {
@@ -70,6 +107,12 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     return $apiName;
   },
+  /**
+   * @function
+   * @desc 해지 완료 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.goLoad('/myt-fare/bill/pay-complete?type=' + this.$title + '&sub=cancel'); // 해지완료
@@ -77,21 +120,43 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       this._cancelFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 해지 완료 API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _cancelFail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc set list
+   * @param idx
+   * @param target
+   */
   _setEventEachData: function (idx, target) {
     var $target = $(target);
     if (idx >= this._defaultCnt) {
       $target.addClass('none'); // 조회된 데이터 중 일부 숨김
     }
   },
+  /**
+   * @function
+   * @desc 더보기 (20건 이상일 경우)
+   * @param e
+   */
   _setMoreData: function (e) {
     if (this._page < this._totalPage) {
       this._page++;
-      this._setAutoMoreData(e); // 더보기 버튼 셋팅 (20건 이상일 경우)
+      this._setAutoMoreData(e);
     }
   },
+  /**
+   * @function
+   * @desc 페이지별 내역조회 API 호출
+   * @param e
+   */
   _setAutoMoreData: function (e) {
     var $target = $(e.currentTarget);
     var $api = this._getHistoryApiName(); // 20건 이상 시 page별로 API 호출
@@ -100,6 +165,11 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       .done($.proxy(this._getSuccess, this, $target))
       .fail($.proxy(this._getFail, this, $target));
   },
+  /**
+   * @function
+   * @desc 내역조회 API name
+   * @returns {string}
+   */
   _getHistoryApiName: function () {
     var $apiName = '';
     if (this.$title === 'small') {
@@ -109,6 +179,12 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     return $apiName;
   },
+  /**
+   * @function
+   * @desc 조회 API 응답 처리
+   * @param $target
+   * @param res
+   */
   _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var $result = res.result;
@@ -126,6 +202,11 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
       this._getFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc set data
+   * @param $record
+   */
   _setData: function ($record) {
     var cardName = '';
     var cardNum = '';
@@ -156,9 +237,19 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
     }
     this._setHiddenMoreBtn();
   },
+  /**
+   * @function
+   * @desc API Error 처리
+   * @param $target
+   * @param err
+   */
   _getFail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc 마지막 페이지일 경우 더보기 버튼 숨김
+   */
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {
       this.$moreBtn.hide();

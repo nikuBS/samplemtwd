@@ -1,10 +1,16 @@
 /**
  * @file myt-fare.bill.option.register.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.02
- * Annotation: 자동납부 신청 및 변경
+ * @desc 자동납부 신청 및 변경
  */
 
+/**
+ * @namespace
+ * @desc 자동납부 신청 및 변경 namespace
+ * @param rootEl - dom 객체
+ * @param bankList - 납부 가능한 은행리스트
+ */
 Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -24,11 +30,19 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
 };
 
 Tw.MyTFareBillOptionRegister.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this._validationService.bindEvent();
     this._initVariables();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc initialize variables
+   */
   _initVariables: function () {
     this.$radioBox = this.$container.find('.fe-radio-box');
     this.$infoWrap = this.$container.find('.fe-info-wrap');
@@ -50,6 +64,10 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$isCardValid = true;
     this.$isFirstChange = true;
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
     this.$container.on('click', '.fe-select-bank', $.proxy(this._selectBank, this));
@@ -57,6 +75,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._submit, this), 500)); // 납부하기
   },
+  /**
+   * @function
+   * @desc 계좌이체/카드 변경 event
+   * @param event
+   */
   _changeRadioBox: function (event) {
     // 라디오버튼 change에 따른 값 셋팅
     this.$isRadioChanged = true;
@@ -82,16 +105,29 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
     this.$isFirstChange = false;
   },
+  /**
+   * @function
+   * @desc 은행리스트 관련 공통 컴포넌트 호출
+   * @param event
+   */
   _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkIsAbled, this)); // 은행리스트 관련 공통 컴포넌트 호출
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
+  /**
+   * @function
+   * @desc 필수 입력 필드 유효성 검증 및 버튼 활성화/비활성화 처리
+   */
   _checkIsAbled: function () {
-    this._validationService.checkIsAbled();
+    this._validationService.checkIsAbled(); // validation check 공통 모듈 호출
   },
+  /**
+   * @function
+   * @desc 카드납부 시 납부일 선택
+   * @param event
+   */
   _changePaymentDate: function (event) {
     var $target = $(event.currentTarget);
 
-    // 카드납부 시 납부일 선택
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -100,6 +136,12 @@ Tw.MyTFareBillOptionRegister.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target), null, null ,$target);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -107,6 +149,12 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
+  /**
+   * @function
+   * @desc 선택된 값 셋팅
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
@@ -114,18 +162,26 @@ Tw.MyTFareBillOptionRegister.prototype = {
 
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 및 변경 API 호출
+   */
   _submit: function () {
     if (this._validationService.isAllValid()) {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
 
-      // 자동납부 신청 및 변경
       Tw.CommonHelper.startLoading('.container', 'grey');
       this._apiService.request(apiName, reqData)
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 및 변경 API 응답 처리 (성공)
+   * @param res
+   */
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.container');
@@ -134,12 +190,24 @@ Tw.MyTFareBillOptionRegister.prototype = {
       this._fail(res);
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 및 변경 API 응답 처리 (실패)
+   * @param err
+   */
   _fail: function (err) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).replacePage();
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {{}}
+   */
   _makeRequestData: function () {
-    var reqData = {}; // 요청 파라미터 (컨트롤러에서 BFF_07_0060 호출 후 가져온 정보를 그대로 전송함)
+    var reqData = {};
+
+    // 요청 파라미터 (컨트롤러에서 BFF_07_0060 호출 후 가져온 정보를 그대로 전송함)
     reqData.acntNum = this.$infoWrap.attr('data-acnt-num');
     reqData.payMthdCd = this.$selectedWrap.attr('id');
     reqData.payerNumClCd = this.$infoWrap.attr('data-payer-num-cl-cd');
@@ -147,11 +215,13 @@ Tw.MyTFareBillOptionRegister.prototype = {
     reqData.authReqSerNum = this.$infoWrap.attr('data-auth-req-ser-num');
     reqData.rltmSerNum = this.$infoWrap.attr('data-rltm-ser-num');
 
-    if (this.$selectedWrap.hasClass('fe-bank-wrap')) { // 계좌이체일 경우 정보
+    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
+      // 계좌이체일 경우 정보
       reqData.bankCardNum = $.trim(this.$accountNumber.val());
       reqData.bankCardCoCd = this.$selectBank.attr('id').toString();
       reqData.cntcNum = $.trim(this.$accountPhoneNumber.val());
-    } else { // 카드납부일 경우 정보
+    } else {
+      // 카드납부일 경우 정보
       reqData.bankCardNum = $.trim(this.$cardNumber.val());
       reqData.cardEffYm = $.trim(this.$cardY.val()) + $.trim(this.$cardM.val());
       reqData.cntcNum = $.trim(this.$cardPhoneNumber.val());
@@ -163,6 +233,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
     return reqData;
   },
+  /**
+   * @function
+   * @desc get API name
+   * @returns {string}
+   */
   _getApiName: function () {
     var apiName = '';
     if (this.$infoWrap.attr('id') === 'new') {
@@ -172,30 +247,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
     return apiName;
   },
+  /**
+   * @function
+   * @desc x 버튼 클릭 시 공통 confirm 노출
+   */
   _onClose: function () {
     this._backAlert.onClose();
-  },
-  _isChanged: function () {
-    var isValid = this.$isRadioChanged;
-
-    if (!isValid) {
-      if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
-        isValid = !Tw.FormatHelper.isEmpty(this.$accountPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$accountNumber.val()) ||
-          !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
-      } else {
-        isValid = !Tw.FormatHelper.isEmpty(this.$cardPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
-          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val());
-      }
-    }
-    return isValid;
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
   }
 };
