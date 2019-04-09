@@ -2,6 +2,7 @@
  * @file common.member.line.edit.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.09.28
+ * @desc 공통 > 회선관리 > 회선편집
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,6 +14,9 @@ import DateHelper from '../../../../utils/date.helper';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 
+/**
+ * @desc 공통 - 회선편집 초기화를 위한 class
+ */
 class CommonMemberLineEdit extends TwViewController {
   private category = '';
 
@@ -20,6 +24,16 @@ class CommonMemberLineEdit extends TwViewController {
     super();
   }
 
+  /**
+   * 회선편집 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.category = req.query.category;
     Observable.combineLatest([
@@ -55,6 +69,11 @@ class CommonMemberLineEdit extends TwViewController {
     });
   }
 
+  /**
+   * 회선 데이터 파싱
+   * @param exposable
+   * @param exposed
+   */
   private parseLineList(exposable, exposed): any {
     let exposableList = [];
     let exposedList = [];
@@ -77,6 +96,11 @@ class CommonMemberLineEdit extends TwViewController {
     };
   }
 
+  /**
+   * 회선 데이터 화면에 나타내는 데이터로 변경
+   * @param category
+   * @param lineData
+   */
   private convLineData(category, lineData): any {
     FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     lineData.map((line) => {
