@@ -129,6 +129,7 @@ Tw.MyTDataFamily.prototype = {
    * @param {Event} e 클릭 이벤트 객체
    */
   _handleSubmitLimitation: function(mgmtNum, originLimit, e) {
+    e.currentTarget.setAttribute('disabled', 'disabled');
     var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation), $target = $(e.currentTarget);
 
     // this._successChangeLimitation({ code: '00' });
