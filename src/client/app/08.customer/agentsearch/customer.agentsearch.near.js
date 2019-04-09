@@ -1,9 +1,13 @@
 /**
- * @file customer.agentsearch.near.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * @file 나와 가까운 지점 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-29
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상단 elem
+ */
 Tw.CustomerAgentsearchNear = function (rootEl) {
   this.$container = rootEl;
 
@@ -24,7 +28,7 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._currentDo = undefined;
   this._currentGu = undefined;
 
-  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
       this._showDataChargeIfNeeded($.proxy(function () {
       this._init();
       this._cacheElements();
@@ -46,6 +50,11 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$btnMore = this.$container.find('#fe-btn-more');
     this.$pshop = this.$container.find('#fe-p-shop');
   },
+
+  /**
+   * @function
+   * @desc app인 경우 현재 위치 조회하고, mweb인 경우 약관 먼저 조회
+   */
   _init: function () {
     this.$container.find('.btn-switch').css('z-index', 1000);
 
@@ -63,6 +72,12 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$btnMore.on('click', $.proxy(this._onMore, this));
     this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
   },
+
+  /**
+   * @function
+   * @desc app인 경우 과금팝업 노출하고, 동의 시 callback 호출
+   * @param  {Function} callback - 동의 시 실행할 callback
+   */
   _showDataChargeIfNeeded: function (callback) {
     if (Tw.BrowserHelper.isApp()) {
       var confirmed = false;
@@ -82,6 +97,12 @@ Tw.CustomerAgentsearchNear.prototype = {
       callback();
     }
   },
+
+  /**
+   * @function
+   * @desc 위치권한 동의 여부 BFF로 부터 조회 후 미동의시 동의 받기 위한 팝업 발생
+   * @param  {Object} location - 현재 위치 좌표
+   */
   _checkTermAgreement: function (location) {  // 위치권한 설정여부 확인 후 미동의 시 동의받기 위한 팝업 발생
     var isAgreed = false;
     this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
@@ -105,6 +126,11 @@ Tw.CustomerAgentsearchNear.prototype = {
         Tw.Error(err.code, err.msg).pop();
       });
   },
+
+  /**
+   * @function
+   * @desc app인 경우 native로, mweb인 경우 browser 로 각각 현재 위치 조회
+   */
   _askCurrentLocation: function () {  // app인 경우, mweb인 경우에 대한 각각의 현재위치 조회
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
@@ -127,6 +153,12 @@ Tw.CustomerAgentsearchNear.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 위치정보 이용동의 받기 위한 팝업 노출
+   * @param  {Object} location - 좌표값
+   */
   _showPermission: function (location) {  // 위치정보 이용동의를 위한 팝업 보여줌
     if (this._permissionShowed) {
       return;
@@ -191,6 +223,13 @@ Tw.CustomerAgentsearchNear.prototype = {
       }
     }, this), 'mainAuto');
   },
+
+  /**
+   * @function
+   * @desc 현재 위치가 확보되었을 경우 tmap api를 통해 지도를 그려줌
+   * @param  {Object} location - 좌표값
+   * @param  {Boolean} isManuallyChanged - 위치변경을 통해 임의로 위치를 변경한 경우
+   */
   _onCurrentLocation: function (location, isManuallyChanged) { // isManuallyChanged: true - 임의로 현재 위치를 변경한 경우
     var $tmapBox = this.$container.find('#fe-tmap-box');
     // init Tmap and show
@@ -268,6 +307,11 @@ Tw.CustomerAgentsearchNear.prototype = {
       Tw.Error(err.code, err.msg).pop();
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 주변 매장 검색이 완료되면 이를 tmap 상의 layer에 marker로 표시
+   */
   _onNearShops: function () {  // Add near shops' markers
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
@@ -308,6 +352,11 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$resultList.empty();
     this._onMore();
   },
+
+  /**
+   * @function
+   * @desc list 화면에서 더보기 버튼 클릭에 대한 처리
+   */
   _onMore: function () {
     var currentCount = this.$resultList.children().length;
 
@@ -348,9 +397,20 @@ Tw.CustomerAgentsearchNear.prototype = {
 
     this._regionChanged = false; // 검색 결과 없음 popup 은 지점/대리점/전체 옵견 변경과 상관없이 최초 한번만 보여줌
   },
+
+  /**
+   * @function
+   * @desc marker 클릭 시 해당 지점의 상세화면으로 이동
+   */
   _onMarkerClicked: function () {
     window.location.href = '/customer/agentsearch/detail?code=' + this.popup.contentHTML;
   },
+
+  /**
+   * @function
+   * @desc 리스트 화면에서 지점 선택시 해당 지점의 셍세화면으로 이동
+   * @param  {Object} e - click event
+   */
   _onListItemClicked: function (e) {
     if (e.target.nodeName.toLowerCase() === 'a') {
       return;
@@ -358,12 +418,26 @@ Tw.CustomerAgentsearchNear.prototype = {
     var code = $(e.currentTarget).attr('value');
     this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
   },
+
+  /**
+   * @function
+   * @desc 위치변경 클릭 시 layer popup 발생시킴
+   */
   _onRegionChangeClicked: function () {
     this._popupService.open({ hbs: 'CS_02_03_L01'}, $.proxy(function (container) {
       new Tw.CustomerAgentsearchRegion(container, this._currentDo, this._currentGu, this._regions,
         $.proxy(this._onRegionChanged, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 위치변경 레이어팝업에서 다른 위치가 선택되었을 경우 middle name + 청(..시청, ..군청, ..구청) 통해 해당 행정
+   *       구역의 중심점을 검색하여 지도 중심을 변경
+   * @param  {String} largeCd - tmap 상의 지역코드(서울시, 경상남도, 강원도 등 최상위 지역의 코드)
+   * @param  {String} middleName - 시청, 군청, 구청 등을 조회하기 위한 지역명(강동구, 창원시 등)
+   * @param  {Array} regions - tmap에 조회한 지역코드 리스트를 caching하기 위함
+   */
   _onRegionChanged: function (largeCd, middleName, regions) {
     this._popupService.close();
 
@@ -384,6 +458,11 @@ Tw.CustomerAgentsearchNear.prototype = {
       Tw.Error(err.status, err.statusText).pop();
     });
   },
+
+  /**
+   * @function
+   * @desc 전체/지점/대리점 option 선택을 위한 actionsheet 발생
+   */
   _onTypeOption: function () {
     var list = [
           { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], option: 'fe-type', attr: 'value="0"' },
@@ -408,6 +487,12 @@ Tw.CustomerAgentsearchNear.prototype = {
       }, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 전체/지점/대리점 option값이 변경될 경우 지도화면에서는 marker layer switch, 리스트 화면에서는 리스트 filtering
+   * @param  {Object} e - click event
+   */
   _onBranchTypeChanged: function (e) {
     this._currentBranchType = parseInt(e.currentTarget.value, 10);
     this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
@@ -440,12 +525,22 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$resultList.empty();
     this._onMore();
   },
+
+  /**
+   * @function
+   * @desc 지도 화면 숨기고 list 화면 노출
+   */
   _switchToList: function () {
     this.$divMap.addClass('none');
     this.$divList.removeClass('none');
     this.$divListBtns.removeClass('none');
     this.$pshop.removeClass('p-shop');
   },
+
+  /**
+   * @function
+   * @desc 리스트 화면 숨기고 지도화면 노출
+   */
   _switchToMap: function () {
     this.$divList.addClass('none');
     this.$divListBtns.addClass('none');

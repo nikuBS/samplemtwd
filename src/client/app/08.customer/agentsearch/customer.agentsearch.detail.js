@@ -1,9 +1,14 @@
 /**
- * @file customer.agentsearch.detail.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * @file 지점 상세화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-29
  */
 
+/**
+ * @constructor
+ * @param  {Object} mapEl - map이 위치할 elem
+ * @param  {Object} coord - 해당 지점의 좌표 값
+ */
 Tw.CustomerAgentsearchDetail = function (mapEl, coord) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -16,6 +21,13 @@ Tw.CustomerAgentsearchDetail = function (mapEl, coord) {
 };
 
 Tw.CustomerAgentsearchDetail.prototype = {
+
+  /**
+   * @function
+   * @desc app인 경우 tmap으로 인해 과금 팝업 보여줘야 함
+   * @param  {Object} mapEl - map이 위치할 elem
+   * @param  {Object} coord - 해당 지점의 좌표 값
+   */
   _showDataChargePopupIfNeeded: function (mapEl, coord) {
     if (Tw.BrowserHelper.isApp()) {
       var confirmed = false;
@@ -36,6 +48,13 @@ Tw.CustomerAgentsearchDetail.prototype = {
       this._initMap(mapEl, coord);
     }
   },
+
+  /**
+   * @function
+   * @desc tmap api 사용하여 지도 화면에 표시
+   * @param  {Object} mapEl - map이 위치할 elem
+   * @param  {Object} coord - 해당 지점의 좌표 값
+   */
   _initMap: function (mapEl, coord) {
     var map = new Tmap.Map({
       div: mapEl[0].id,
