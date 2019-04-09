@@ -1,5 +1,6 @@
 /**
  * @file myt-data.gift.monthly.js
+ * @desc T끼리 데이터 선물 > 자동 선물 기능 처리
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.10
  */
@@ -47,20 +48,42 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_wrap_add_contact.show();
   },
 
+  /**
+   * @function
+   * @desc 선물할 데이터양 버튼 선택
+   * @private
+   */
   _onClickDataQty: function () {
     this._checkValidateSendingButton();
   },
 
+
+  /**
+   * @function
+   * @desc 자동 선물 받는 분 번호 영역 input, blur event Handler
+   * @private
+   */
   _onKeyUpAutoGiftNumber: function () {
     this._validateInputNumber();
     this._checkValidateSendingButton();
     this.$input_auto_gift.val(this._convertDashNumber(this.$input_auto_gift.val()));
   },
 
+  /**
+   * @function
+   * @desc native에 주소록 오픈 요청
+   * @private
+   */
   _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
+  /**
+   * @function
+   * @desc 주소록에서 전화번호 선택 native Response
+   * @param response
+   * @private
+   */
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
@@ -71,6 +94,12 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 자동 선물하기 해지 버튼 선택
+   * @param e
+   * @private
+   */
   _unSubscribeAutoGift: function (e) {
     var $target = $(e.currentTarget);
     var serNum = $target.data('sernum');
@@ -89,21 +118,42 @@ Tw.MyTDataGiftMonthly.prototype = {
     );
   },
 
+  /**
+   * @function
+   * @desc T끼리 데이터 선물하기 자동선물 해지하기 API Request
+   * @param $target
+   * @param serNum - 서비스 번호
+   * @private
+   */
   _requestUnsubscribeAutoGift: function ($target, serNum) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_06_0005, { serNum: serNum })
       .done($.proxy(this._onSuccessUnsubscribeAutoGift, this, $target));
   },
 
+  /**
+   * @function
+   * @desc 선물하기 버튼 선택
+   * @param e
+   * @private
+   */
   _getReceiveUserInfo: function (e) {
-    this.befrSvcNum = this.$input_auto_gift.val().match(/\d+/g).join('');
+    this.befrSvcNum = this.$input_auto_gift.val().match(/\d+/g).join(''); // 입력한 번호의 하이픈 제거
     var isValidPhone = this._validatePhoneNumber(this.befrSvcNum);
 
-    if ( isValidPhone ) {
+    if ( isValidPhone ) { // 유효한 번호인 경우 API 호출
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: this.befrSvcNum, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $(e.currentTarget)));
     }
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0019 (new IA) T끼리데이터선물하기 수혜자 조회 API Response
+   * @param $target
+   * @param res
+   * @returns {boolean}
+   * @private
+   */
   _onSuccessReceiveUserInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
@@ -119,6 +169,12 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 선물하기 버튼 선택
+   * @param $target
+   * @private
+   */
   _subscribeAutoGift: function ($target) {
     var htParams = {
       befrSvcNum: this.$input_auto_gift.val().match(/\d+/g).join(''),
@@ -127,10 +183,18 @@ Tw.MyTDataGiftMonthly.prototype = {
 
     this.paramData = $.extend({}, this.paramData, htParams);
 
+    // BFF_06_0004 T끼리데이터선물하기 자동선물 신청 API Request
     this._apiService.request(Tw.API_CMD.BFF_06_0004, htParams)
       .done($.proxy(this._onSuccessAutoGift, this, $target));
   },
 
+  /**
+   * BFF_06_0004 T끼리데이터선물하기 자동선물 신청 API Response
+   * @param $target
+   * @param res
+   * @returns {boolean}
+   * @private
+   */
   _onSuccessAutoGift: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
@@ -142,6 +206,13 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc T끼리 데이터 선물하기 자동선물 해지하기 API Response
+   * @param $target
+   * @param serNum
+   * @private
+   */
   _onSuccessUnsubscribeAutoGift: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
@@ -158,10 +229,21 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 핸드폰 번호에 하이픈(-) 처리
+   * @param sTelNumber - 입력된 번호
+   * @private
+   */
   _convertDashNumber: function (sTelNumber) {
     return Tw.FormatHelper.getDashedCellPhoneNumber(sTelNumber);
   },
 
+  /**
+   * @function
+   * @desc 바로 선물 하단 버튼 활성화/비활성화 처리
+   * @private
+   */
   _checkValidateSendingButton: function () {
     var isValidQty = this.$wrap_auto_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$input_auto_gift.val().length !== 0;
@@ -173,6 +255,13 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 선물하기 버튼 선택시 선물 받는 분 번호 Validation Check
+   * @param sPhone
+   * @returns {boolean}
+   * @private
+   */
   _validatePhoneNumber: function (sPhone) {
     if ( sPhone.length < 10 ) {
       Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
@@ -187,6 +276,11 @@ Tw.MyTDataGiftMonthly.prototype = {
     return true;
   },
 
+  /**
+   * @function
+   * @desc 선물 받는 분 번호 입력시 Validation Check
+   * @private
+   */
   _validateInputNumber: function () {
     var sPhoneNumber = this.$input_auto_gift.val() ? this.$input_auto_gift.val().replace(/-/g, '') : '';
 
@@ -209,6 +303,11 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 자동 선물 받는 분 번호 하단 Validation 문구 제거
+   * @private
+   */
   _removeErrorComment: function () {
     this.$container.find('[class*="fe-error"]').addClass('blind');
     this.$container.find('[class*="fe-error"]').attr('aria-hidden', true);

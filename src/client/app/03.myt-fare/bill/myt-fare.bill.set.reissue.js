@@ -1,8 +1,14 @@
 /**
  * @file myt-fare.bill.set.reissue.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * 요금안내서 재발행
- * @since 2018.10.01
+ * @since 2018-10-01
+ */
+
+/**
+ * @class
+ * @desc MyT > 나의요금 > 요금 안내서 설정 > 안내서 재발행
+ * @param {Object} rootEl - dom 객체
+ * @param {JSON} options
  */
 Tw.MyTFareBillSetReIssue = function (rootEl, options) {
   this.$container = rootEl;
@@ -30,8 +36,8 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _cachedElement: function () {
     this._$billIsueTyps = this.$container.find('.fe-bill-isue-typs input[type="radio"]');
@@ -41,8 +47,8 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
@@ -50,8 +56,8 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 닫기 버튼 클릭 시 [확인]
-   * @private
+   * @function
+   * @desc 닫기 버튼 클릭 시 [확인]
    */
   _onCloseConfirm: function() {
     if (!this._isInputChanged) {
@@ -68,25 +74,25 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 재발행 요청
-   * @private
+   * @function
+   * @desc 재발행 요청
    */
   _onClickBtnSubmit : function () {
     this._requestReissue();
   },
 
   /**
-   * 재발행 타입 존재 유무
-   * @returns {string|any|boolean}
-   * @private
+   * @function
+   * @desc 재발행 타입 존재 유무
+   * @returns {boolean}
    */
   _isComplexBill: function () {
     return this._options.billIsueTyps && this._options.billIsueTyps.length > 0;
   },
 
   /**
-   * 재발행 요청 파라미터 생성
-   * @private
+   * @function
+   * @desc 재발행 요청 파라미터 생성
    */
   _getReqData: function () {
     var data = {};
@@ -129,8 +135,8 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 재발행 요청
-   * @private
+   * @function
+   * @desc 재발행 요청
    */
   _requestReissue: function () {
     this._popupService.close();
@@ -142,9 +148,9 @@ Tw.MyTFareBillSetReIssue.prototype = {
   },
 
   /**
-   * 재발행 요청 성공 콜백
-   * @param params
-   * @private
+   * @function
+   * @desc 재발행 요청 성공 콜백
+   * @param {JSON} params
    */
   _onApiSuccess: function (params) {
     if ( params.code && params.code === 'ZORDE1206' ) {
@@ -158,12 +164,18 @@ Tw.MyTFareBillSetReIssue.prototype = {
     }
   },
 
-  _onApiError: function (err) {
+  /**
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
+   */
+   _onApiError: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
 
   /**
-   * 재발행 성공 시 화면 이동
+   * @function
+   * @desc 재발행 성공 시 화면 이동
    * @private
    */
   _goToComplete: function () {

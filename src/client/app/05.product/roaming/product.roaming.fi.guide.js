@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.fi.guide.js
+ * @desc T로밍 > baro Box 임대
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.07
  */
@@ -28,7 +29,8 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   /**
-   * baro Box 예약 페이지 이동
+   * @function
+   * @desc baro Box 예약 페이지 이동
    * @private
    */
   _goReservation: function() {
@@ -36,7 +38,8 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   /**
-   * baro Box 조회/취소 페이지 이동
+   * @function
+   * @desc baro Box 조회/취소 페이지 이동
    * @private
    */
   _goInquire: function() {
@@ -44,8 +47,9 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   /**
-   * baro Box 이용 가능 요금제 상세 페이지 이동
-   * @param e
+   * @function
+   * @desc baro Box 이용 가능 요금제 상세 페이지 이동
+   * @param e - event 객체
    * @private
    */
   _goProductPage: function(e) {

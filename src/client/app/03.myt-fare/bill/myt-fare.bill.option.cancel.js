@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.option.cancel.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.04
- * Annotation: 자동납부 해지
+ * @desc 자동납부 해지
  */
 
+/**
+ * @namespace
+ * @desc 자동납부 해지 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillOptionCancel = function (rootEl) {
   this.$container = rootEl;
   this.$bankList = [];
@@ -22,10 +27,19 @@ Tw.MyTFareBillOptionCancel = function (rootEl) {
 };
 
 Tw.MyTFareBillOptionCancel.prototype = {
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$cancelBtn = this.$container.find('.fe-go-cancel');
     this.$cancelBtn.click(_.debounce($.proxy(this._cancel, this), 500));
   },
+  /**
+   * @function
+   * @desc 자동납부 해지 API 호출
+   * @param e
+   */
   _cancel: function (e) {
     var $target = $(e.currentTarget);
     var reqData = this._makeRequestData();
@@ -34,6 +48,11 @@ Tw.MyTFareBillOptionCancel.prototype = {
       .done($.proxy(this._cancelSuccess, this, $target))
       .fail($.proxy(this._fail, this, $target));
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {{acntNum, payerNumClCd, payMthdCd, newPayMthdCd, bankCardCoCd, bankPrtYn, serNum, authReqSerNum, rltmSerNum}}
+   */
   _makeRequestData: function () {
     var $selectBox = this.$container.find('.fe-select-payment-option');
 
@@ -51,6 +70,12 @@ Tw.MyTFareBillOptionCancel.prototype = {
     };
     return reqData;
   },
+  /**
+   * @function
+   * @desc 자동납부 해지 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _cancelSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var completeUrl = '/myt-fare/bill/option/cancel-complete';
@@ -64,6 +89,12 @@ Tw.MyTFareBillOptionCancel.prototype = {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 해지 API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _fail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   }

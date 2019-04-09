@@ -10,7 +10,6 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
-import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductRoaming extends TwViewController {
   constructor() {

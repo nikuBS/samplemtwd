@@ -1,6 +1,6 @@
 /**
- * MenuName: T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
  * @file product.roaming.do.search-before.js
+ * @desc T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
  * @author Eunjung Jung
  * @since 2018.11.12
  */
@@ -196,7 +196,8 @@ Tw.ProductRoamingSearchResult.prototype = {
       this._history.goLoad('/product/roaming/do/search-before');
     },
     /**
-     * 로밍 이용가능 서비스 요금 조회
+     * @function
+     * @desc 로밍 이용가능 서비스 요금 조회
      * @param params
      * @param event
      * @private
@@ -236,9 +237,12 @@ Tw.ProductRoamingSearchResult.prototype = {
     _goEuropePassPlan: function () {
         this._history.goLoad('/product/callplan?prod_id=NA00006046');
     },
-    /**
-     * 휴대폰 정보 선택.
-     */
+  /**
+   * @function
+   * @desc 휴대폰 정보 선택.
+   * @param e
+   * @private
+   */
     _onClickSelectBtn: function (e) {
         if(this.modelValue === undefined || this.modelValue === ''){
             this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG,
@@ -252,10 +256,12 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._roamingDecriptonInit();
         }
     },
-    /**
-     * 휴대폰 모델 리스트 선택.
-     */
-    _onSelectModel: function () {
+  /**
+   * @function
+   * @desc 휴대폰 모델 리스트 선택.
+   * @private
+   */
+  _onSelectModel: function () {
         if(this.cdValue === undefined || this.cdValue === ''){
             return;
         }else {
@@ -279,9 +285,13 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     },
-    /**
-     * 휴대폰 제조사 선택.
-     */
+  /**
+   * @function
+   * @desc 휴대폰 제조사 선택.
+   * @param $layer
+   * @param e
+   * @private
+   */
     _onPhoneSelect: function ($layer, e) {
         var target = $(e.currentTarget);
         this.modelValue = target.attr('data-model-nm');
@@ -371,9 +381,13 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
 
     },
-    /**
-     * 팔라우, 세이셸, 마다가스카르의 공지팝업
-     */
+  /**
+   * @function
+   * @desc 팔라우, 세이셸, 마다가스카르의 공지팝업
+   * @param desc
+   * @param event
+   * @private
+   */
     _openNoticePopup: function (desc, event) {
         this._popupService.open({
             'pop_name': 'type_tx_scroll',
@@ -469,10 +483,12 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleFailModelSearch: function () {
 
     },
-    /**
-     * 휴대폰 변경 선택 시 데이터 초기화.
-     */
-    _onChangeModel: function (){
+  /**
+   * @function
+   * @desc 휴대폰 변경 선택 시 데이터 초기화.
+   * @private
+   */
+  _onChangeModel: function (){
         this._phoneInfo.eqpMdlNm = '';
         this._phoneInfo.eqpMdlCd = '';
         this._srchInfo.eqpMdlNm = '';
@@ -497,10 +513,12 @@ Tw.ProductRoamingSearchResult.prototype = {
             $target.parents('li').removeClass('on');
         }
     },
-    /**
-     * 이용가능한 로밍 서비스 방식 액션시트 노출.
-     */
-    _openMangeType: function (){
+  /**
+   * @function
+   * @desc 이용가능한 로밍 서비스 방식 액션시트 노출.
+   * @private
+   */
+  _openMangeType: function (){
         this._popupService.open(
             {
                 hbs: 'actionsheet01',
@@ -518,9 +536,13 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[name="r2"]').on('click', $.proxy(this._handleSelectRoamingType, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     },
-    /**
-     * 로밍 서비스 방식 선택 후 이용요금 조회 요청.
-     */
+  /**
+   * @function
+   * @desc 로밍 서비스 방식 선택 후 이용요금 조회 요청.
+   * @param $layer
+   * @param e
+   * @private
+   */
     _handleSelectRoamingType: function ($layer, e) {
         var $target = $(e.currentTarget);
         var rmType = $target.attr('data-manage-type');
@@ -589,8 +611,10 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
     },
     /**
-     * 국가 검색.
-     * 키워드 포함된 나라가 1개 이상인 경우 액션팝업 호출.
+     * @function
+     * @desc 국가 검색. 키워드 포함된 나라가 1개 이상인 경우 액션팝업 호출.
+     * @param resp
+     * @private
      */
     _handleSuccessSearchResult : function (resp) {
         var _result = resp.result;
@@ -642,7 +666,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
     },
     /**
-     * 휴대폰 선택 case별 상/하단 안내 메시지
+     * @function
+     * @desc 휴대폰 선택 case별 상/하단 안내 메시지
      * @private
      */
     _roamingDecriptonInit: function () {

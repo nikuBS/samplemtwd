@@ -14,7 +14,7 @@ Tw.MyTDataFamilyShare = function(rootEl, $submit) {
 
 Tw.MyTDataFamilyShare.prototype = {
   /**
-   * @description jquery 객체 캐싱
+   * @desc jquery 객체 캐싱
    */
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
@@ -25,7 +25,7 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   /**
-   * @description 이벤트 바인딩
+   * @desc 이벤트 바인딩
    */
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addShareData, this));
@@ -66,7 +66,7 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   /**
-   * @description 사용자 입력 값 validation
+   * @desc 사용자 입력 값 validation
    */
   _validateShareAmount: function() {
     var sValue = this.$amountInput
@@ -103,7 +103,7 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   /**
-   * @description 변경하기 버튼 상태 변경
+   * @desc 변경하기 버튼 상태 변경
    * @param {boolean} disable
    */
   _setDisableSubmit: function(disable) {

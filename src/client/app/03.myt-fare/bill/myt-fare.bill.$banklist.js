@@ -1,10 +1,16 @@
 /**
  * @file myt-fare.bill.$banklist.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.19
- * Annotation: 요금납부 [은행 선택] 셀렉트박스 선택 시 은행리스트 가져오는 공통 모듈
+ * @desc 요금납부 [은행 선택] 셀렉트박스 선택 시 은행리스트 가져오는 공통 모듈
  */
 
+/**
+ * @namespace
+ * @desc 은행리스트 namespace
+ * @param rootEl - dom 객체
+ * @param bankList - 기존에 조회된 bank list
+ */
 Tw.MyTFareBillBankList = function (rootEl, bankList) {
   this.$accountBankList = [];
   this.$refundBankList = [];
@@ -20,6 +26,12 @@ Tw.MyTFareBillBankList = function (rootEl, bankList) {
 };
 
 Tw.MyTFareBillBankList.prototype = {
+  /**
+   * @function
+   * @desc 다른 모듈에서 호출하는 초기함수
+   * @param event
+   * @param callback
+   */
   init: function (event, callback) {
     this.$currentTarget = $(event.currentTarget);
     this.$isBank = this.$currentTarget.hasClass('fe-account-bank'); // 계좌이체 납부 대상 selector (환불계좌아님)
@@ -34,6 +46,11 @@ Tw.MyTFareBillBankList.prototype = {
       this._openBank(); // 은행리스트가 저장되어 있으면 바로 open
     }
   },
+  /**
+   * @function
+   * @desc list event binding
+   * @param $layer
+   */
   _onOpenList: function ($layer) {
     var $id = this.$currentTarget.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -42,6 +59,11 @@ Tw.MyTFareBillBankList.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this)); // 선택 시 이벤트
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this)); // 닫기 이벤트
   },
+  /**
+   * @function
+   * @desc 선택한 은행 버튼에 셋팅
+   * @param event
+   */
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
     var $target = $(event.target);
@@ -56,6 +78,10 @@ Tw.MyTFareBillBankList.prototype = {
       callbackFunction();
     }
   },
+  /**
+   * @function
+   * @desc 선택한 값이 있는지 체크
+   */
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$currentTarget.attr('id'))) {
       this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').show().attr('aria-hidden', 'false');
@@ -63,11 +89,20 @@ Tw.MyTFareBillBankList.prototype = {
     }
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 은행리스트 조회 API 호출
+   */
   _getBankList: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0022, {}) // 은행리스트 가져오는 API 호출
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },
+  /**
+   * @function
+   * @desc 은행리스트 조회 API 응답 처리 (성공)
+   * @param res
+   */
   _getBankListSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var result = res.result;
@@ -81,10 +116,22 @@ Tw.MyTFareBillBankList.prototype = {
       this._getBankListFail(res);
     }
   },
+  /**
+   * @function
+   * @desc 은행리스트 조회 API 응답 처리 (실패)
+   * @param err
+   */
   _getBankListFail: function (err) {
     Tw.Error(err.code, err.msg).pop(null, this.$currentTarget);
   },
-  _setBankList: function (bankList, isData, type) { // 조회된 은행리스트를 actionsheet format에 맞춰 변수에 저장
+  /**
+   * @function
+   * @desc 조회된 은행리스트를 actionsheet format에 맞춰 변수에 저장
+   * @param bankList
+   * @param isData - API 조회 데이터 여부
+   * @param type - 은행계좌/환불계좌 구분
+   */
+  _setBankList: function (bankList, isData, type) {
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
@@ -101,8 +148,11 @@ Tw.MyTFareBillBankList.prototype = {
       this.$refundBankList.push({ 'list': formatList });
     }
   },
+  /**
+   * @function
+   * @desc open banklist actionsheet
+   */
   _openBank: function () {
-    // 은행리스트를 actionsheet로 열기
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',

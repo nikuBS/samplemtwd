@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.common.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.18
- * Annotation: 요금 즉시납부 화면에서 미납요금 조회 및 납부할 회선 선택하는 공통 모듈
+ * @desc 요금 즉시납부 화면에서 미납요금 조회 및 납부할 회선 선택하는 공통 모듈
  */
 
+/**
+ * @namespace
+ * @desc 미납요금회선 선택 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillCommon = function (rootEl) {
   this.$container = rootEl;
 
@@ -16,11 +21,19 @@ Tw.MyTFareBillCommon = function (rootEl) {
 };
 
 Tw.MyTFareBillCommon.prototype = {
+  /**
+   * @function
+   * @desc initialize
+   */
   _init: function () {
     this._initVariables();
     this._setInitArray();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc 변수 초기화
+   */
   _initVariables: function () {
     this.$unpaidList = this.$container.find('.fe-unpaid-list');
     this.$appendTarget = this.$container.find('.fe-selected-line');
@@ -32,15 +45,27 @@ Tw.MyTFareBillCommon.prototype = {
     this._amount = this.$container.find('.fe-amount').data('value');
     this._isClicked = false;
   },
+  /**
+   * @function
+   * @desc set initial array
+   */
   _setInitArray: function () {
     var $targetId = this.$unpaidList.find('.fe-line.checked').attr('id');
     this._selectedLine.push($targetId);
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
   },
+  /**
+   * @function
+   * @desc 함께 납부 가능한 회선 팝업 load
+   * @param e
+   */
   _selectLine: function (e) {
-    // 함께 납부 가능한 회선 팝업 load
     this._popupService.open({
         'hbs': 'MF_01_01_02'
       },
@@ -50,16 +75,31 @@ Tw.MyTFareBillCommon.prototype = {
       $(e.currentTarget)
     );
   },
+  /**
+   * @function
+   * @desc open layer
+   * @param $layer - 팝업 객체
+   */
   _openSelectLine: function ($layer) {
     this.$layer = $layer;
     this.$selectBtn = $layer.find('.fe-select');
 
     this._bindLayerEvent();
   },
+  /**
+   * @function
+   * @desc popup event binding
+   */
   _bindLayerEvent: function () {
     this.$unpaidList.find('.fe-line').each($.proxy(this._setEachData, this)); // 각 line별 이벤트
     this.$layer.on('click', '.fe-select', $.proxy(this._onClickDoneBtn, this)); // 선택 버튼 클릭 시 이벤트
   },
+  /**
+   * @function
+   * @desc set each data
+   * @param idx
+   * @param target
+   */
   _setEachData: function (idx, target) {
     var $target = $(target).clone();
     $target.removeClass('none');
@@ -85,6 +125,11 @@ Tw.MyTFareBillCommon.prototype = {
     $target.on('change', $.proxy(this._onCheck, this));
     $target.appendTo(this.$layer.find('.fe-line-list'));
   },
+  /**
+   * @function
+   * @desc 선택 버튼 클릭 시 처리
+   * @param e
+   */
   _onClickDoneBtn: function (e) {
     if (this._amount === 0) { // 선택된 회선이 없을 경우 얼럿 노출
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.SELECT_LINE, null, null, null, null, $(e.currentTarget));
@@ -93,14 +138,27 @@ Tw.MyTFareBillCommon.prototype = {
       this._popupService.close();
     }
   },
+  /**
+   * @function
+   * @desc layer close 이후 합계 구하기
+   */
   _afterClose: function () {
     if (this._isClicked) {
       this._setAmount(); // 합계 셋팅
     }
   },
+  /**
+   * @function
+   * @desc set amount
+   */
   _setAmount: function () {
     this.$container.find('.fe-amount').text(Tw.FormatHelper.addComma(this._amount.toString()));
   },
+  /**
+   * @function
+   * @desc check된 데이터 처리
+   * @param event
+   */
   _onCheck: function (event) {
     var $parentTarget = $(event.currentTarget);
     var $target = $(event.target);
@@ -124,6 +182,12 @@ Tw.MyTFareBillCommon.prototype = {
       this.$selectBtn.removeAttr('disabled');
     }
   },
+  /**
+   * @function
+   * @desc 더보기 버튼 event binding
+   * @param $layer
+   * @param selectedCnt
+   */
   _setMoreBtnEvent: function ($layer, selectedCnt) {
     var $moreBtn = $layer.find('.fe-more');
     this._moreCnt = selectedCnt - this._standardCnt;
@@ -131,6 +195,13 @@ Tw.MyTFareBillCommon.prototype = {
     $moreBtn.removeClass('none');
     $moreBtn.on('click', $.proxy(this._onClickMore, this, $layer, selectedCnt));
   },
+  /**
+   * @function
+   * @desc 더보기 처리
+   * @param $layer
+   * @param selectedCnt
+   * @param event
+   */
   _onClickMore: function ($layer, selectedCnt, event) { // 더보기 클릭
     var firstInvisibleCnt = selectedCnt - this._moreCnt;
     for (var i = firstInvisibleCnt; i < firstInvisibleCnt + this._standardCnt; i++) {
@@ -144,7 +215,14 @@ Tw.MyTFareBillCommon.prototype = {
       this._moreCnt = this._moreCnt - this._standardCnt;
     }
   },
-  _setList: function ($target, $layer, index) { // 납부내역 확인 시 사용할 리스트
+  /**
+   * @function
+   * @desc 납부내역 확인 시 사용할 리스트
+   * @param $target
+   * @param $layer
+   * @param index
+   */
+  _setList: function ($target, $layer, index) {
     var originNode = $layer.find('.fe-origin');
     var cloneNode = originNode.clone();
 
@@ -160,6 +238,11 @@ Tw.MyTFareBillCommon.prototype = {
 
     $layer.find('.fe-selected-line').append(cloneNode);
   },
+  /**
+   * @function
+   * @desc 요청 파라미터에 들어갈 bill list 셋팅
+   * @param $target
+   */
   _setBillList: function ($target) {
     var billObj = {
       invDt: $target.find('.fe-inv-dt').attr('data-value'),
@@ -169,12 +252,27 @@ Tw.MyTFareBillCommon.prototype = {
     };
     this._billList.push(billObj);
   },
+  /**
+   * @function
+   * @desc 외부에서 회선리스트 호출
+   * @returns {Array}
+   */
   getBillList: function () {
-    return this._billList; // 외부에서 회선리스트 호출
+    return this._billList;
   },
+  /**
+   * @function
+   * @desc 외부에서 합계 호출
+   * @returns {*}
+   */
   getAmount: function () {
-    return this._amount; // 외부에서 합계 호출
+    return this._amount;
   },
+  /**
+   * @function
+   * @desc 외부에서 list data 호출
+   * @param $layer
+   */
   getListData: function ($layer) {
     var selectedCnt = this._selectedLine.length;
     if (selectedCnt > this._standardCnt) {

@@ -1,10 +1,16 @@
 /**
  * @file myt-fare.bill.small.set.password.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.09
- * Annotation: 소액결제 비밀번호 설정
+ * @desc 소액결제 비밀번호 설정
  */
 
+/**
+ * @namespace
+ * @desc 소액결제 비밀번호 설정
+ * @param rootEl - dom 객체
+ * @param $target
+ */
 Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
   this.$container = rootEl;
   this.$target = $target;
@@ -20,6 +26,10 @@ Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
 };
 
 Tw.MyTFareBillSmallSetPassword.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     var code = this.$target.attr('data-code');
 
@@ -63,6 +73,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       this._goProductService();
     }
   },
+  /**
+   * @function
+   * @desc 비밀번호 변경 레이어 load
+   * @param birth
+   * @param $layer
+   */
   _openPassword: function (birth, $layer) {
     this._focusService = new Tw.InputFocusService($layer, $layer.find('.fe-set'));
 
@@ -70,6 +86,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._setData();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc initialize variables
+   * @param $layer
+   * @param birth
+   */
   _initVariables: function ($layer, birth) {
     this.$layer = $layer;
     this.$birth = birth;
@@ -78,6 +100,10 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$confirmPassword = $layer.find('.fe-confirm-password');
     this.$setBtn = $layer.find('.fe-set');
   },
+  /**
+   * @function
+   * @desc set data
+   */
   _setData: function () {
     var newPasswordTitle = '';
     var confirmPasswordTitle = '';
@@ -102,6 +128,10 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
 
     this.$setBtn.text(btnName);
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$layer.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
@@ -111,6 +141,11 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$setBtn.click(_.debounce($.proxy(this._setPassword, this), 500));
   },
+  /**
+   * @function
+   * @desc 입력필드 체크
+   * @param event
+   */
   _checkIsAbled: function (event) {
     this._checkNumber(event); // 숫자만 입력 가능
 
@@ -129,12 +164,21 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       this.$setBtn.attr('disabled', 'disabled');
     }
   },
+  /**
+   * @function
+   * @desc 숫자만 입력 가능
+   * @param event
+   */
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
+  /**
+   * @function
+   * @desc maxLength 적용
+   * @param event
+   */
   _setMaxValue: function (event) {
-    // maxLength 적용
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
     if ($target.attr('maxLength')) {
@@ -143,12 +187,21 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 현재 패스워드 validation check
+   * @param event
+   */
   _checkCurrentPassword: function (event) {
     var $target = $(event.currentTarget);
     this.$isValid = this._checkPasswordLength($target);
   },
+  /**
+   * @function
+   * @desc 패스워드 유효성 검증
+   * @param event
+   */
   _checkPassword: function (event) {
-    // 패스워드 유효성 검증
     var $target = $(event.currentTarget);
     this.$isValid = this._checkPasswordLength($target);
 
@@ -159,8 +212,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       this.$isValid = this._validation.showAndHideErrorMsg(this.$newPassword, isValid, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V30);
     }
   },
+  /**
+   * @function
+   * @desc 신청 및 변경할 비밀번호와 비밀번호 확인 시 입력한 비밀번호가 같은지 체크
+   * @param event
+   */
   _checkConfirmPassword: function (event) {
-    // 신청 및 변경할 비밀번호와 비밀번호 확인 시 입력한 비밀번호가 같은지 체크
     var $target = $(event.currentTarget);
     this.$isValid = this._checkPasswordLength($target);
 
@@ -175,10 +232,20 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 6자리 체크
+   * @param $target
+   * @returns {boolean|*}
+   */
   _checkPasswordLength: function ($target) {
-    // 6자리 체크
     return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH);
   },
+  /**
+   * @function
+   * @desc set password API 호출
+   * @param e
+   */
   _setPassword: function (e) {
     var $target = $(e.currentTarget);
     if (this.$isValid) {
@@ -190,6 +257,11 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
         .fail($.proxy(this._fail, this, $target));
     }
   },
+  /**
+   * @function
+   * @desc set password API name 조회
+   * @returns {string}
+   */
   _getApiName: function () {
     var apiName = '';
     if (this.$type === 'new') {
@@ -199,6 +271,11 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
     return apiName;
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {{}}
+   */
   _makeRequestData: function () {
     var reqData = {};
 
@@ -211,6 +288,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     
     return reqData;
   },
+  /**
+   * @function
+   * @desc set password API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _success: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (res.result.customerInfo.resultCd === 'VS000') {
@@ -222,9 +305,19 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       this._fail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc set password API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _fail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   },
+  /**
+   * @function
+   * @desc password 신청 이후 부모페이지의 text 변경
+   */
   _setNewPasswordData: function () {
     var message = '';
     var code = 'AC';
@@ -242,10 +335,18 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._popupService.close();
     this._commonHelper.toast(message); // 신청 및 변경 완료 토스트 출력
   },
+  /**
+   * @function
+   * @desc 잠김 시 부가서비스 페이지로 이동
+   */
   _goAdditionalService: function () {
-    this._historyService.replaceURL('/myt-join/additions'); // 부가서비스 페이지로 이동
+    this._historyService.replaceURL('/myt-join/additions');
   },
+  /**
+   * @function
+   * @desc 초기화 시 부가서비스 페이지로 이동
+   */
   _goProductService: function () {
-    this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin')); // 부가서비스 페이지로 이동
+    this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin'));
   }
 };

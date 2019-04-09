@@ -9,17 +9,27 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 
+/**
+ * @class
+ * @desc T 가족모아 데이터 > 공유하기
+ */
 export default class MyTDataFamilyShare extends TwViewController {
   constructor() {
     super();
   }
 
   /**
-   * @description 화면 랜더링
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    // Observable.combineLatest(this.getShareData(), this.getMonthlyInfo()).subscribe(([immediately, monthly]) => {
-    this.getMonthlyInfo().subscribe((monthly) => {
+    this._getMonthlyInfo().subscribe((monthly) => {
       if (monthly.code) {
         return this.error.render(res, {
           ...monthly,
@@ -37,9 +47,10 @@ export default class MyTDataFamilyShare extends TwViewController {
     });
   }
   /**
-   * @description 자동 공유 설정 내용 가져오기
+   * @desc 자동 공유 설정 내용 가져오기
+   * @private
    */
-  private getMonthlyInfo() {
+  private _getMonthlyInfo() {
     return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;

@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.point.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.17
- * Annotation: 포인트 요금납부
+ * @desc 포인트 요금납부
  */
 
+/**
+ * @namespace
+ * @desc 포인트 요금납부 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillPoint = function (rootEl) {
   this.$container = rootEl;
 
@@ -22,10 +27,18 @@ Tw.MyTFareBillPoint = function (rootEl) {
 };
 
 Tw.MyTFareBillPoint.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc initialize variables
+   */
   _initVariables: function () {
     this.$pointSelector = this.$container.find('.fe-select-point');
     this.$point = this.$container.find('.fe-point');
@@ -39,6 +52,10 @@ Tw.MyTFareBillPoint.prototype = {
     this._pointCardNumber = null;
     this._isPaySuccess = false;
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
@@ -51,9 +68,19 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500)); // 납부확인
   },
+  /**
+   * @function
+   * @desc 포인트 조회 공통 컴포넌트 호출
+   * @param e
+   */
   _openGetPoint: function (e) {
-    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e); // 포인트 조회 공통 컴포넌트 호출
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this), e);
   },
+  /**
+   * @function
+   * @desc 조회된 포인트 정보 셋팅
+   * @param result
+   */
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt)
       .text(Tw.FormatHelper.addComma(result.availPt.toString())); // 조회 후 cashbag point
@@ -64,6 +91,10 @@ Tw.MyTFareBillPoint.prototype = {
     this.$getPointBtn.hide();
     this.$pointBox.show();
   },
+  /**
+   * @function
+   * @desc 버튼 활성화 처리
+   */
   _checkIsAbled: function () {
     if (this.$point.val() !== '' && this.$pointPw.val() !== '') {
       this.$container.find('.fe-check-pay').removeAttr('disabled');
@@ -71,10 +102,20 @@ Tw.MyTFareBillPoint.prototype = {
       this.$container.find('.fe-check-pay').attr('disabled', 'disabled');
     }
   },
+  /**
+   * @function
+   * @desc 숫자만 입력
+   * @param event
+   */
   _checkNumber: function (event) {
     var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target); // 숫자만 입력
+    Tw.InputHelper.inputNumberOnly(target);
   },
+  /**
+   * @function
+   * @desc select point actionsheet
+   * @param event
+   */
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
@@ -85,6 +126,12 @@ Tw.MyTFareBillPoint.prototype = {
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $target
+   * @param $layer
+   */
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
@@ -92,6 +139,12 @@ Tw.MyTFareBillPoint.prototype = {
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
+  /**
+   * @function
+   * @desc 선택된 값 셋팅
+   * @param $target
+   * @param event
+   */
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr({
@@ -102,14 +155,25 @@ Tw.MyTFareBillPoint.prototype = {
 
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc 비밀번호찾기 (OK cashbag site로 이동)
+   */
   _goCashbagSite: function () {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
   },
+  /**
+   * @function
+   * @desc x 버튼 클릭 시 공통 confirm 노출
+   */
   _onClose: function () {
     this._backAlert.onClose();
   },
+  /**
+   * @function
+   * @desc 모든 유효성 검증 후 납부내역 확인 풀팝업 load
+   */
   _checkPay: function () {
-    // 모든 유효성 검증 후 납부내역 확인 풀팝업 load
     if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
@@ -122,6 +186,11 @@ Tw.MyTFareBillPoint.prototype = {
       );
     }
   },
+  /**
+   * @function
+   * @desc 납부내역 확인 팝업 event 및 data 처리
+   * @param $layer
+   */
   _openCheckPay: function ($layer) {
     this._setData($layer);
     this._paymentCommon.getListData($layer);
@@ -130,8 +199,12 @@ Tw.MyTFareBillPoint.prototype = {
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
     this._payBtn.click(_.debounce($.proxy(this._pay, this), 500)); // 납부하기
   },
+  /**
+   * @function
+   * @desc 납부내역 확인 팝업에 데이터 셋팅
+   * @param $layer
+   */
   _setData: function ($layer) {
-    // 납부내역 확인 팝업에 데이터 셋팅
     $layer.find('.fe-check-title').text(this.$pointSelector.text());
     $layer.find('.fe-payment-option-name').attr('data-code', this.$pointSelector.attr('data-code'))
       .text(this._pointCardNumber);
@@ -139,6 +212,10 @@ Tw.MyTFareBillPoint.prototype = {
 
     $layer.find('.refund-pament-account').hide();
   },
+  /**
+   * @function
+   * @desc 납부 완료 및 에러 처리
+   */
   _afterPaySuccess: function () {
     if (this._isPaySuccess) {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
@@ -146,6 +223,10 @@ Tw.MyTFareBillPoint.prototype = {
       Tw.Error(this._err.code, this._err.msg).pop();
     }
   },
+  /**
+   * @function
+   * @desc 필수 입력값 유효성 검증
+   */
   _checkValidation: function () {
     var $isSelectedPoint = this.$pointSelector.attr('id');
     var className = '.fe-cashbag-point';
@@ -170,35 +251,60 @@ Tw.MyTFareBillPoint.prototype = {
 
     this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid); // 에러메시지
   },
+  /**
+   * @function
+   * @desc password validation check
+   * @param event
+   */
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
     this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
   },
+  /**
+   * @function
+   * @desc 요금납부 종료 confirm
+   */
   _checkClose: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
       $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
   },
+  /**
+   * @function
+   * @desc close popup
+   */
   _closePop: function () {
     this._isClose = true;
     this._popupService.close();
   },
+  /**
+   * @function
+   * @desc close 이후 원래 페이지로 돌아가기
+   */
   _afterClose: function () {
     if (this._isClose) {
       this._historyService.resetHistory(-2);
     }
   },
+  /**
+   * @function
+   * @desc 포인트 요금납부 API 호출
+   * @param e
+   */
   _pay: function (e) {
     var reqData = this._makeRequestData();
     var $target = $(e.currentTarget);
 
-    // 포인트 요금납부
     Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
       .done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {{ocbCcno: null|*, ptClCd, point: string, pwd: string, count: number, contents: *|Array}}
+   */
   _makeRequestData: function () {
-    // 요청 파라미터
     var reqData = {
       ocbCcno: this._pointCardNumber,
       ptClCd: this.$container.find('.fe-payment-option-name').attr('data-code'),
@@ -209,6 +315,12 @@ Tw.MyTFareBillPoint.prototype = {
     };
     return reqData;
   },
+  /**
+   * @function
+   * @desc pay API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _paySuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       Tw.CommonHelper.endLoading('.popup-page');
@@ -218,6 +330,12 @@ Tw.MyTFareBillPoint.prototype = {
       this._payFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc pay API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _payFail: function ($target, err) {
     Tw.CommonHelper.endLoading('.popup-page');
     this._isPayFail = true;

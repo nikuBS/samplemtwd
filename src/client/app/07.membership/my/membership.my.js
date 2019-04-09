@@ -1,5 +1,6 @@
 /**
  * @file membership.my.js
+ * @desc 나의 T멤버십
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.12.17
  */
@@ -47,7 +48,12 @@ Tw.MembershipMy.prototype = {
     this.$goUpdate.on('click', $.proxy(this._goUpdate,this));
   },
 
-  _initPeriod: function() { //화면 진입 후 이용기간 조회 초기값 설정
+  /**
+   * @function
+   * @desc 화면 진입 후 이용기간 조회 초기값 설정
+   * @private
+   */
+  _initPeriod: function() {
     var currentYear = this._dateHelper.getCurrentYear();
     var getPeriod = currentYear +'.1.~' + this._dateHelper.getCurrentDateTime('YYYY.M.');
     var initEDate = this._dateHelper.getCurrentDateTime('YYYY.M');
@@ -57,6 +63,12 @@ Tw.MembershipMy.prototype = {
     this.$inputEdate.text(initEDate);
   },
 
+  /**
+   * 이용내역 조회하기 버튼 선택
+   * @param e
+   * @returns {*|void}
+   * @private
+   */
   _getUseHistory: function(e) {
     var currentYear = this._dateHelper.getCurrentYear();
     var startDate = this._dateHelper.getShortDateWithFormat(this.$inputSdate.text(), 'YYYYMM' , 'YYYY.M');
@@ -83,10 +95,19 @@ Tw.MembershipMy.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_11_0009 나의 멤버십 - 이용내역조회 API Response
+   * @param params
+   * @param res
+   * @private
+   */
   _renderTemplate: function(params, res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
-      if(res.length < 1){ // 이용내역이 없을 때
+
+      // 이용 내역 유무에 따라 화면 처리 분기
+      if(res.length < 1){
         this.$list.hide();
         this.$more.hide();
         this.$empty.show();
@@ -98,6 +119,13 @@ Tw.MembershipMy.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 이용 내역 화면 초기화
+   * @param params
+   * @param res
+   * @private
+   */
   _renderListOne: function(params, res) {
     var list = res;
     var sDate = this._dateHelper.getShortDateWithFormat(params.startDate, 'YYYY.M.' , 'YYYYMM');
@@ -112,13 +140,19 @@ Tw.MembershipMy.prototype = {
     this.$empty.hide();
 
     if ( list.length > 0 ){
-      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
-      this._renderList(this.$list, this._totoalList.shift());
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT); // 배열을 정해진 갯수의 배열로 나눔
+      this._renderList(this.$list, this._totoalList.shift()); // .shift() 배열의 첫번째 요소를 제거하고 제거된 요소 반환
     }
   },
 
+  /**
+   * @function
+   * @desc 서버에서 받은 이용내역 데이터 가공
+   * @param res
+   * @returns {*}
+   * @private
+   */
   _parseList: function(res) {
-    // 서버에서 받은 이용내역 데이터 가공
     for(var idx in res){
       res[idx].hpnMm = this._dateHelper.getShortDateWithFormat(res[idx].hpnMm, 'M' , 'MM');
       res[idx].hpnDd = this._dateHelper.getShortDateWithFormat(res[idx].hpnDd, 'D' , 'DD');
@@ -130,7 +164,13 @@ Tw.MembershipMy.prototype = {
     return res;
   },
 
-  // 예약내역 템플릿 생성
+  /**
+   * @function
+   * @desc 이용 내역 템플릿 생성
+   * @param $container
+   * @param res
+   * @private
+   */
   _renderList: function($container, res) {
 
     var source = $('#tmplList').html();
@@ -142,8 +182,13 @@ Tw.MembershipMy.prototype = {
     this._moreButton();
   },
 
+  /**
+   * @function
+   * @desc 데이터 갯수에 따라 더보기 버튼 Show/Hide 처리
+   * @private
+   */
   _moreButton: function() {
-    var nextList = _.first(this._totoalList);
+    var nextList = _.first(this._totoalList); // 배열의 첫번째 요소 반환
 
     if ( nextList ) {
       this.$more.show();
@@ -152,14 +197,25 @@ Tw.MembershipMy.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 더보기 버튼 선택
+   * @private
+   */
   _onMore : function () {
     if( this._totoalList.length > 0 ){
       this._renderList(this.$list, this._totoalList.shift());
     }
   },
 
+  /**
+   * @function
+   * @desc 기간 조회 Action Sheet Open
+   * @param e
+   * @private
+   */
   _openDateActionSheet: function(e) {
-    var currentSheet = e.target.id;
+    var currentSheet = e.target.id; // 선택한 기간 조회 id('fe-sdate' or 'fe-edate')
     var endMonth = Number(this._dateHelper.getCurrentMonth());
     var currentYear = this._dateHelper.getCurrentYear();
     var data = [{'list':[]}];
@@ -183,6 +239,13 @@ Tw.MembershipMy.prototype = {
     );
   },
 
+  /**
+   * @function
+   * @desc 기간 조회 Action Sheet Open Callback
+   * @param currentSheet - 선택한 기간 조회 id
+   * @param $layer
+   * @private
+   */
   _onActionSheetOpened: function(currentSheet, $layer) {
     // 선택된 값 체크
     $('li.type1').each(function(){
@@ -197,6 +260,13 @@ Tw.MembershipMy.prototype = {
     $layer.one('click', '#fe-back', this._popupService.close);
   },
 
+  /**
+   * @function
+   * @desc 기간 조회 ActionSheet 값 선택
+   * @param currentSheet- 선택한 기간 조회 id
+   * @param e
+   * @private
+   */
   _onActionSelected: function(currentSheet, e) {
       var dateTxt = $(e.target).parents('label').attr('value');
       $('#'+currentSheet).text(dateTxt);
@@ -204,6 +274,12 @@ Tw.MembershipMy.prototype = {
       this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 재발급 신청 버튼 선택하여 재발급 화면 이동
+   * @param e
+   * @private
+   */
   _requestReissueInfo: function(e) {
     // 카드 발급 후 2주이내 알럿
     if(this._cardReqDt !== ''){
@@ -220,12 +296,22 @@ Tw.MembershipMy.prototype = {
     this._historyService.goLoad('my/reissue');
   },
 
+  /**
+   * @desc 카드 종류 변경 확인 Alert Open
+   * @param e
+   * @private
+   */
   _cardChangeAlert: function(e) {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
       $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON, $(e.currentTarget));
   },
 
+  /**
+   * @function
+   * @desc BFF_11_0006 나의 멤버십 - 카드종류 변경 API Request
+   * @private
+   */
   _handleChangeAlert: function() {
     this._popupService.close();
     this._apiService
@@ -234,6 +320,12 @@ Tw.MembershipMy.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc 카드 종류 변경 API Response
+   * @param res
+   * @private
+   */
   _successCardChange: function(res) {
     // 카드 종류 변경 완료 페이지 이동
     if(res.code === Tw.API_CODE.CODE_00){
@@ -248,6 +340,12 @@ Tw.MembershipMy.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 정보수정 화면으로 이동
+   * @param e
+   * @private
+   */
   _goUpdate: function(e) {
     if($(e.currentTarget).attr('data-type') === 'SP'){ // 이용정지 회원에 대한 Alert 호출
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A59;
@@ -257,6 +355,11 @@ Tw.MembershipMy.prototype = {
     this._historyService.goLoad('/membership/my/update');
   },
 
+  /**
+   * @function
+   * @desc 해지하기 화면으로 이동
+   * @private
+   */
   _goMyCancel: function() {
     this._historyService.goLoad('/membership/my/cancel');
   },
