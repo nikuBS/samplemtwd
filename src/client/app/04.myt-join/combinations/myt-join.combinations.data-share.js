@@ -17,6 +17,10 @@ Tw.MyTJoinCombinationsDataShare = function(rootEl, group) {
 };
 
 Tw.MyTJoinCombinationsDataShare.prototype = {
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.list-comp-input li', $.proxy(this._handleSelectSubject, this));
@@ -24,7 +28,12 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     this.$container.on('click', '#fe-submit', $.proxy(this._handleSubmitShare, this));
   },
 
-  _handleSelectSubject: function(e) { // 데이터 나눠쓰기 대상 변경 시
+  /**
+   * @desc 데이터 나눠쓰기 대상 변경 시
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSelectSubject: function(e) { 
     this._subject = {
       mgmtNum: e.currentTarget.getAttribute('data-svc'),
       name: e.currentTarget.getAttribute('data-name'),
@@ -32,7 +41,12 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     };
   },
 
-  _handleSelectAmount: function(e) {  // 데이터 나눠쓰기 양 선택 시
+  /**
+   * @desc 데이터 나눠쓰기 양 변경 시
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSelectAmount: function(e) {  
     var $target = $(e.currentTarget);
     this._selected = $target.data('amount');
 
@@ -42,7 +56,11 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     }
   },
 
-  _handleSubmitShare: function() {  // 나눠쓰기 버튼 클릭시
+  /**
+   * @desc 나눠쓰기 버튼 선택
+   * @private
+   */
+  _handleSubmitShare: function() {  
     if (!this._subject) { // 대상 설정 안되어 있는 경우
       var $subject = this.$container.find('.list-comp-input li.checked'); // 대상 리스트에서 checked된 대상 찾기
       this._subject = {
@@ -64,6 +82,10 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
       .done($.proxy(this._successSubmit, this));
   },
 
+  /**
+   * @desc 나눠쓰기 요청에 대한 응답이 돌아온 경우
+   * @param {object} resp BFF 응답
+   */
   _successSubmit: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -83,29 +105,11 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     }
   },
 
+  /**
+   * @desc 클로즈 팝업
+   * @private
+   */
   _closeCompletePopup: function() { // 데이터 나눠쓰기 완료화면 close
     history.back();
   }
-
-  // _openCancelPopup: function() {
-  //   this._popupService.openConfirmButton(
-  //     Tw.ALERT_CANCEL,
-  //     null,
-  //     $.proxy(this._goBack, this),
-  //     $.proxy(this._handleAfterClose, this),
-  //     Tw.BUTTON_LABEL.NO,
-  //     Tw.BUTTON_LABEL.YES
-  //   );
-  // },
-
-  // _goBack: function() {
-  //   this._popupService.close();
-  //   this._isClose = true;
-  // },
-
-  // _handleAfterClose: function() {
-  //   if (this._isClose) {
-  //     history.back();
-  //   }
-  // }
 };

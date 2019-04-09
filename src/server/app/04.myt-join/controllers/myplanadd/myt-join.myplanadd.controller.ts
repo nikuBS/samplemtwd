@@ -10,20 +10,37 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @desc 버튼 타입(가입, 설정, 해지)
+ */
 const PLAN_BUTTON_TYPE = {
   SET: 'SE',  // 설정
   TERMINATE: 'TE',  // 해지
   SUBSCRIBE: 'SC' // 가입
 };
 
+/**
+ * @class
+ * @desc 나의 부가서비스
+ */
 class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} _req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (svcInfo.svcAttrCd.includes('M')) {  // 모바일 회선일 경우
-      this.getMobileAdditions().subscribe(mobile => {
+      this._getMobileAdditions().subscribe(mobile => {
         if (mobile.code) {
           return this.error.render(res, {
             ...mobile,
@@ -36,7 +53,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
         res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...mobile });
       });
     } else {  // 유선 회선일 경우
-      this.getWireAdditions().subscribe(wire => {
+      this._getWireAdditions().subscribe(wire => {
         if (wire.code) {
           return this.error.render(res, {
             ...wire,
@@ -51,14 +68,18 @@ class MyTJoinMyPlanAdd extends TwViewController {
     }
   }
 
-  private getMobileAdditions = () => {  // 무선 가입 부가서비스 가져오기
+  /**
+   * @desc 무선 부가서비스 가져오기
+   * @private
+   */
+  private _getMobileAdditions = () => {  // 무선 가입 부가서비스 가져오기
     return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
 
       return {
-        additions: (resp.result.addProdList || []).map(this.convertAdditions),
+        additions: (resp.result.addProdList || []).map(this._convertAdditions),
         roaming: resp.result.roamingProd ? // 가입된 로밍 요금제가 있을 경우
           {
             ...resp.result.roamingProd,
@@ -71,21 +92,29 @@ class MyTJoinMyPlanAdd extends TwViewController {
     });
   }
 
-  private getWireAdditions = () => {  // 유선 가입 부가서비스 가져오기
+  /**
+   * @desc 유선 부가서비스 가져오기
+   * @private
+   */
+  private _getWireAdditions = () => {  // 유선 가입 부가서비스 가져오기
     return this.apiService.request(API_CMD.BFF_05_0129, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
 
       return {
-        joined: (resp.result.pays || []).concat(resp.result.frees || []).map(this.convertAdditions),  // 가입된 유료 부가서비스, 무료 부가서비스 합치기
-        joinable: resp.result.joinables.map(this.convertAdditions).sort(this._sortAdditions), // 가입 가능한 부가서비스 목록
-        reserved: resp.result.reserveds.map(this.convertAdditions)  // 가입 예약된 부가서비스 목록
+        joined: (resp.result.pays || []).concat(resp.result.frees || []).map(this._convertAdditions),  // 가입된 유료 부가서비스, 무료 부가서비스 합치기
+        joinable: resp.result.joinables.map(this._convertAdditions).sort(this._sortAdditions), // 가입 가능한 부가서비스 목록
+        reserved: resp.result.reserveds.map(this._convertAdditions)  // 가입 예약된 부가서비스 목록
       };
     });
   }
 
-  private convertAdditions = (addition: any) => { // 부가서비스 데이터 형태 변경
+  /**
+   * @desc 부가서비스 BFF 데이터 가공
+   * @private
+   */
+  private _convertAdditions = (addition: any) => {
     return {
       ...addition,  // 추가작업 불필요한 속성들 스프레드
       ...(addition.btnList && addition.btnList.length > 0 ? // 버튼 리스트가 있을 경우
@@ -102,19 +131,12 @@ class MyTJoinMyPlanAdd extends TwViewController {
     };
   }
 
-  // private _sortButtons = (a, _b) => {
-  //   if (a.btnTypCd) {
-  //     if (a.btnTypCd === PLAN_BUTTON_TYPE.TERMINATE) {
-  //       return 1;
-  //     } else {
-  //       return -1;
-  //     }
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
-  private _sortAdditions = (a, b) => {  // 등록일 오름차순으로 보이도록 설정
+  
+  /**
+   * @desc 등록일 오름차순으로 보이도록 설정
+   * @private
+   */
+  private _sortAdditions = (a, b) => {
     const diff = DateHelper.getDifference(a.scrbDt, b.scrbDt);
     if (diff > 0) {
       return 1;
