@@ -1,10 +1,15 @@
 /**
  * @file myt-fare.bill.change.address.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.13
- * Annotation: 자동납부 미사용자의 연락처 및 주소 변경
+ * @desc 자동납부 미사용자의 연락처 및 주소 변경
  */
 
+/**
+ * @namespace
+ * @desc 주소 및 연락처 변경 namespace
+ * @param rootEl - dom 객체
+ */
 Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$container = rootEl;
   this.$changeBtn = this.$container.find('.fe-change');
@@ -25,6 +30,10 @@ Tw.MyTFareBillChangeAddress = function (rootEl) {
 };
 
 Tw.MyTFareBillChangeAddress.prototype = {
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
@@ -34,6 +43,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this));
     this.$changeBtn.click(_.debounce($.proxy(this._changeAddress, this), 500));
   },
+  /**
+   * @function
+   * @desc 숫자만 입력 가능
+   * @param event
+   */
   _checkNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.target); // 숫자만 입력 가능
     var $target = $(event.target);
@@ -51,6 +65,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
     $target.val(Tw.FormatHelper.conTelFormatWithDash($target.val())); // '-' 자동 입력
     this._setChangeBtnAble(); // 버튼 활성화
   },
+  /**
+   * @function
+   * @desc check phone number
+   * @param event
+   */
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
 
@@ -63,11 +82,21 @@ Tw.MyTFareBillChangeAddress.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 우편번호 조회 공통 컴포넌트 호출
+   * @param e
+   */
   _getPostcode: function (e) {
-    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this)); // 우편번호 조회 공통 컴포넌트
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this));
   },
+  /**
+   * @function
+   * @desc 상세주소 영역 터치 시 전체 주소 삭제
+   * @param e
+   */
   _deleteAddress: function (e) {
-    if (this._firstTouch) { // 상세주소 영역 터치 시 전체 주소 삭제
+    if (this._firstTouch) {
       this.$container.find('.fe-zip').val('');
       this.$container.find('.fe-main-address').val('');
       e.target.value = '';
@@ -75,8 +104,12 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this._firstTouch = false;
     }
   },
+  /**
+   * @function
+   * @desc 우편번호 검색 후 조회된 데이터 셋팅
+   * @param address
+   */
   _setAddress: function (address) {
-    // 우편번호 검색 후 조회된 데이터 셋팅
     this.$container.find('.fe-zip').val(address.zip);
     this.$container.find('.fe-main-address').val(address.main);
     this.$container.find('.fe-detail-address').removeAttr('disabled').val(address.detail);
@@ -86,6 +119,10 @@ Tw.MyTFareBillChangeAddress.prototype = {
 
     this._setChangeBtnAble();
   },
+  /**
+   * @function
+   * @desc 버튼 활성화/비활성화 처리
+   */
   _setChangeBtnAble: function () {
     if (!Tw.FormatHelper.isEmpty($.trim(this.$container.find('.fe-phone').val()))) {
       this.$container.find('.fe-change').removeAttr('disabled');
@@ -93,6 +130,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this.$container.find('.fe-change').attr('disabled', 'disabled');
     }
   },
+  /**
+   * @function
+   * @desc 주소 및 연락처 변경 API 호출
+   * @param e
+   */
   _changeAddress: function (e) {
     var $target = $(e.currentTarget);
     if (this.$isValid) {
@@ -103,12 +145,16 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this.$container.find('.fe-phone').focus();
     }
   },
+  /**
+   * @function
+   * @desc 요청 파라미터 생성
+   * @returns {*}
+   */
   _makeRequestData: function () {
     if (this._addrModifyYn === 'N') {
       this._checkIsChangedDetailAddress();
     }
 
-    // 요청 파라미터
     this._changeData = {
       billSvcNum: $.trim(this.$container.find('.fe-phone').val()),
       zip: $.trim(this.$container.find('.fe-zip').val()),
@@ -119,13 +165,22 @@ Tw.MyTFareBillChangeAddress.prototype = {
     };
     return this._changeData;
   },
+  /**
+   * @function
+   * @desc 주소 변경 여부 체크
+   */
   _checkIsChangedDetailAddress: function () {
-    // 주소 변경 여부 체크
     var $detailAddress = this.$container.find('.fe-detail-address');
     if ($detailAddress.attr('data-origin-value') !== $.trim($detailAddress.val())) {
       this._addrModifyYn = 'Y';
     }
   },
+  /**
+   * @function
+   * @desc 주소 및 연락처 변경 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _changeSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._historyService.goLoad('/myt-fare/bill/option?type=change');
@@ -133,6 +188,12 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this._changeFail($target, res);
     }
   },
+  /**
+   * @function
+   * @desc 주소 및 연락처 변경 API 응답 처리 (실패)
+   * @param $target
+   * @param err
+   */
   _changeFail: function ($target, err) {
     Tw.Error(err.code, err.msg).pop(null, $target);
   }

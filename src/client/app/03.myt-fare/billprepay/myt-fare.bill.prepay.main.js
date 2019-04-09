@@ -1,10 +1,16 @@
 /**
  * @file myt-fare.bill.prepay.main.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.04
- * Annotation: 소액결제/콘텐츠이용료 메인화면
+ * @desc 소액결제/콘텐츠이용료 메인화면
  */
 
+/**
+ * @namespace
+ * @desc 소액결제/콘텐츠이용료 메인화면 namespace
+ * @param rootEl - dom 객체
+ * @param title - 소액결제/콘텐츠이용료
+ */
 Tw.MyTFareBillPrepayMain = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
@@ -22,6 +28,10 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title) {
 };
 
 Tw.MyTFareBillPrepayMain.prototype = {
+  /**
+   * @function
+   * @desc init
+   */
   _init: function () {
     Tw.CommonHelper.startLoading('.container', 'grey');
 
@@ -37,8 +47,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this._setButtonVisibility();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc 쿼리스트링에 type이 있을 경우 toast 출력 (자동선결제 해지 후 돌아왔을 때)
+   */
   _checkIsAfterChange: function () {
-    var type = Tw.UrlHelper.getQueryParams().type; // 쿼리스트링에 type이 있을 경우 toast 출력 (자동선결제 해지 후 돌아왔을 때)
+    var type = Tw.UrlHelper.getQueryParams().type;
     if (type) {
       var message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CANCEL_AUTO_PREPAY; // 자동선결제 해지가 완료되었습니다.
 
@@ -47,15 +61,26 @@ Tw.MyTFareBillPrepayMain.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 잔여한도 조회 API 호출
+   */
   _getRemainLimit: function () {
-    // 오래걸리는 API라 JS에서 호출 - 최초 1회 시 gubun: Request, requestCnt: 0으로 호출
-    // 그 이후 즉시 gubun: Done, request: 1로 호출
-    // 성공하면 return, 실패 시 (실패여부는 응답값의 gubun이 Retry로 내려옴) gubun은 그대로 두고 request는 1씩 증가
-    // 위 작업을 3초 term을 두고 실행, requestCnt가 3이 될 때까지 실행 후 그래도 실패하면 에러페이지 렌더링
+    /*
+    오래걸리는 API라 JS에서 호출 - 최초 1회 시 gubun: Request, requestCnt: 0으로 호출
+    그 이후 즉시 gubun: Done, request: 1로 호출
+    성공하면 return, 실패 시 (실패여부는 응답값의 gubun이 Retry로 내려옴) gubun은 그대로 두고 request는 1씩 증가
+    위 작업을 3초 term을 두고 실행, requestCnt가 3이 될 때까지 실행 후 그래도 실패하면 에러페이지 렌더링
+    */
     this._apiService.request(this._apiName, { gubun: this._gubun, requestCnt: this._requestCnt })
       .done($.proxy(this._remainSuccess, this))
       .fail($.proxy(this._remainFail, this));
   },
+  /**
+   * @function
+   * @desc 잔여한도 조회 API 응답 처리
+   * @param res
+   */
   _remainSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       if (this._gubun === 'Request') {
@@ -80,10 +105,20 @@ Tw.MyTFareBillPrepayMain.prototype = {
       this._remainFail(res);
     }
   },
+  /**
+   * @function
+   * @desc 잔여한도 조회 API Error 처리
+   * @param err
+   */
   _remainFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).replacePage();
   },
+  /**
+   * @function
+   * @desc set data
+   * @param res
+   */
   _setData: function (res) {
     var result = res.result;
     if (!Tw.FormatHelper.isEmpty(result)) {
@@ -101,6 +136,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
       this._bindEventAfterData();
     }
   },
+  /**
+   * @function
+   * @desc initialize variables
+   */
   _initVariables: function () {
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
@@ -115,8 +154,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
     this._name = this.$container.find('.fe-name').text();
   },
+  /**
+   * @function
+   * @desc 소액결제일 경우 비밀번호 상태값에 따라 '비밀번호 설정' 버튼 보여주기 결정
+   */
   _setButtonVisibility: function () {
-    // 소액결제일 경우 비밀번호 상태값에 따라 '비밀번호 설정' 버튼 보여주기 결정
     if (this.$title === 'small') {
       if (this.$setPasswordBtn.attr('data-cpin') === undefined || this.$setPasswordBtn.attr('data-cpin') === null ||
         this.$setPasswordBtn.attr('data-cpin') === '' || this.$setPasswordBtn.attr('data-cpin') === 'IC') {
@@ -124,10 +166,18 @@ Tw.MyTFareBillPrepayMain.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$container.on('change', '.fe-set-use', $.proxy(this._changeUseStatus, this));
     this.$container.on('click', '.fe-set-password', $.proxy(this._setPassword, this));
   },
+  /**
+   * @function
+   * @desc API 응답 이후 event binding
+   */
   _bindEventAfterData: function () {
     this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('click', '.fe-micro-history', $.proxy(this._microHistory, this));
@@ -137,11 +187,19 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$container.on('click', '.fe-auto-prepay', $.proxy(this._autoPrepay, this));
     this.$container.on('click', '.fe-auto-prepay-change', $.proxy(this._autoPrepayInfo, this));
   },
+  /**
+   * @function
+   * @desc 월별 이용내역 조회 페이지로 이동
+   */
   _prepayHistoryMonth: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly'); // 월별 이용내역 조회 페이지로 이동
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
   },
+  /**
+   * @function
+   * @desc 이용내역 조회 - 소액결제일 경우 actionsheet로 이용내역/차단내역 선택
+   * @param e
+   */
   _microHistory: function (e) {
-    // 이용내역 조회 - 소액결제일 경우 actionsheet로 이용내역/차단내역 선택
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
@@ -153,31 +211,56 @@ Tw.MyTFareBillPrepayMain.prototype = {
       null, null, $(e.currentTarget)
     );
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   * @param $layer
+   */
   _selectPopupCallback: function ($layer) {
     $layer.on('click', '.ac-list', $.proxy(this._goMicroHistory, this)); // 소액결제 내역조회
   },
+  /**
+   * @function
+   * @desc actionsheet에서 선택한 내역으로 이동
+   * @param event
+   */
   _goMicroHistory: function (event) {
-    // actionsheet에서 선택한 내역으로 이동
     var microHistoryUri = $(event.target).attr('data-link');
     if (!Tw.FormatHelper.isEmpty(microHistoryUri)) {
       this._historyService.replaceURL(microHistoryUri);
     }
   },
+  /**
+   * @function
+   * @desc 콘텐츠이용료 내역조회 페이지로 이동
+   */
   _contentsHistory: function () {
-    this._historyService.goLoad('/myt-fare/bill/contents/history'); // 콘텐츠이용료 내역조회 페이지로 이동
+    this._historyService.goLoad('/myt-fare/bill/contents/history');
   },
+  /**
+   * @function
+   * @desc 이용한도 변경
+   */
   _changeLimit: function () {
-    new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title); // 이용한도 변경
+    new Tw.MyTFareBillPrepayChangeLimit(this.$container, this.$title);
   },
+  /**
+   * @function
+   * @desc 선결제 금액이 0원일 경우 return false
+   * @returns {boolean}
+   */
   _isPrepayAble: function () {
-    // 선결제 금액이 0원일 경우 return false
     if (this.$prepayAmount.text() === '0') {
       return false;
     }
     return true;
   },
+  /**
+   * @function
+   * @desc 선결제 팝업 로드
+   * @param e
+   */
   _prepay: function (e) {
-    // 선결제
     var hbsName = 'MF_06_03'; // 소액결제 선결제 팝업
     if (this.$title === 'contents') {
       hbsName = 'MF_07_03'; // 콘텐츠이용료 선결제 팝업
@@ -196,27 +279,54 @@ Tw.MyTFareBillPrepayMain.prototype = {
         null, null, null, $(e.currentTarget)); // 0원이면 안내 alert 노출
     }
   },
+  /**
+   * @function
+   * @desc 선결제
+   * @param $layer
+   */
   _goPrepay: function ($layer) {
-    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._prepayAmount, this._name); // 선결제
+    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._prepayAmount, this._name);
   },
+  /**
+   * @function
+   * @desc 자동선결제 페이지로 이동
+   * @param e
+   */
   _autoPrepay: function (e) {
     if (Tw.BrowserHelper.isApp()) {
-      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto'); // 자동선결제 페이지로 이동
+      this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto');
     } else {
       this._goAppInfo(e);
     }
   },
+  /**
+   * @function
+   * @desc 자동선결제 신청자일 경우 변경 및 해지 페이지로 이동
+   */
   _autoPrepayInfo: function () {
-    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info'); // 자동선결제 신청자일 경우 변경 및 해지 페이지로 이동
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/auto/info');
   },
+  /**
+   * @function
+   * @desc 소액결제 사용/차단 설정
+   * @param event
+   */
   _changeUseStatus: function (event) {
-    new Tw.MyTFareBillSmallSetUse(this.$container, $(event.target)); // 소액결제 사용/차단 설정
+    new Tw.MyTFareBillSmallSetUse(this.$container, $(event.target));
   },
+  /**
+   * @function
+   * @desc 소액결제 비밀번호 신청 및 변경
+   */
   _setPassword: function () {
-    new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn); // 소액결제 비밀번호 신청 및 변경
+    new Tw.MyTFareBillSmallSetPassword(this.$container, this.$setPasswordBtn);
   },
+  /**
+   * @function
+   * @desc 앱 설치 유도 페이지로 이동
+   * @param e
+   */
   _goAppInfo: function (e) {
-    // 앱 설치 유도 페이지로 이동
     var isAndroid = Tw.BrowserHelper.isAndroid();
     this._popupService.open({
       'hbs': 'open_app_info',
@@ -224,11 +334,20 @@ Tw.MyTFareBillPrepayMain.prototype = {
       'cdn': Tw.Environment.cdn
     }, $.proxy(this._onOpenTworld, this), null, null, $(e.currentTarget));
   },
+  /**
+   * @function
+   * @desc 앱 설치 유도 페이지
+   * @param $layer
+   */
   _onOpenTworld: function ($layer) {
     new Tw.CommonShareAppInstallInfo($layer);
   },
+  /**
+   * @function
+   * @desc 뒤로가기 및 새로고침 체크
+   * @returns {boolean}
+   */
   _isBackOrReload: function () {
-    // 뒤로가기 및 새로고침 체크
     if (window.performance) {
       if (performance.navigation.type === 1 || performance.navigation.type === 2) {
         return true;

@@ -14,11 +14,25 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { PRODUCT_CODE } from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 상품 > 모바일 부가서비스 > 리스트
+ */
 export default class ProductAdditions extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
       idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION,
@@ -27,7 +41,7 @@ export default class ProductAdditions extends TwViewController {
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
-    Observable.combineLatest(this.getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')), this.getAdditions(params)).subscribe(
+    Observable.combineLatest(this._getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')), this._getAdditions(params)).subscribe(
       ([myAdditions, additions]) => {
         const error = {
           code: (myAdditions && myAdditions.code) || additions.code,
@@ -43,7 +57,11 @@ export default class ProductAdditions extends TwViewController {
     );
   }
 
-  private getMyAdditions = isLogin => {
+  /**
+   * @desc 나의 가입 부가서비스 요청
+   * @private
+   */
+  private _getMyAdditions = isLogin => {
     if (isLogin) {
       return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
@@ -60,7 +78,12 @@ export default class ProductAdditions extends TwViewController {
     return of(undefined);
   }
 
-  private getAdditions = params => {
+  /**
+   * @desc 부가서비스 리스트 요청
+   * @param {object} params 필터 or 태그 파라미터
+   * @private
+   */
+  private _getAdditions = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -79,15 +102,15 @@ export default class ProductAdditions extends TwViewController {
           return {
             ...addition,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(addition.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt)
-              ? this.isEmptyAmount(addition.basOfrMbDataQtyCtt)
+            basOfrDataQtyCtt: this._isEmptyAmount(addition.basOfrDataQtyCtt)
+              ? this._isEmptyAmount(addition.basOfrMbDataQtyCtt)
                 ? null
                 : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrMbDataQtyCtt)
               : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt, DATA_UNIT.GB),
-            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt)
+            basOfrVcallTmsCtt: this._isEmptyAmount(addition.basOfrVcallTmsCtt)
               ? null
               : ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt, false),
-            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt)
+            basOfrCharCntCtt: this._isEmptyAmount(addition.basOfrCharCntCtt)
               ? null
               : ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
           };
@@ -96,7 +119,12 @@ export default class ProductAdditions extends TwViewController {
     });
   }
 
-  private isEmptyAmount(value: string) {
+  /**
+   * @desc BFF 데이터 빈값 여부 확인
+   * @param {string} value 음성, 문자, 데이터 값
+   * @private
+   */
+  private _isEmptyAmount(value: string) {
     return !value || value === '' || value === '-';
   }
 }

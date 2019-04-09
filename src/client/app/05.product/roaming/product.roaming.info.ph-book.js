@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.info.ph-book.js
+ * @desc 국가별 수신자 전화번호 안내
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.1.19
  */

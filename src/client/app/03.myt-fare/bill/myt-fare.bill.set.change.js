@@ -1,8 +1,14 @@
 /**
  * @file myt-fare.bill.set.change.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * 요금 안내서 설정 > 안내서 변경
- * @since 2018. 9. 21
+ * @since 2018-09-21
+ */
+
+/**
+ * @class
+ * @desc MyT > 나의요금 > 요금 안내서 설정 > 안내서 변경
+ * @param {Object} rootEl - dom 객체
+ * @param {JSON} data
  */
 Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$container = rootEl;
@@ -14,8 +20,8 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
 };
 Tw.MyTFareBillSetChange.prototype = {
   /**
-   * 최초 실행
-   * @private
+   * @function
+   * @desc 최초 실행
    */
   _init: function () {
     this._initVariables();
@@ -26,8 +32,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _initVariables: function () {
     this._billType = Tw.UrlHelper.getQueryParams().billType; // 메인 안내서 유형
@@ -45,8 +51,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
     this.$container.on('change', 'input[name="together"]', $.proxy(this._onChangeTogetherBill, this));
@@ -61,17 +67,16 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 모든 input 필드(radio, checkobx 포함) 변경유무 확인
-   * @param e event
-   * @private
+   * @function
+   * @desc 모든 input 필드(radio, checkobx 포함) 변경유무 확인
    */
   _checkInputType : function () {
     this._isInputChanged = true;
   },
 
   /**
-   * 닫기 버튼 클릭 시
-   * @private
+   * @function
+   * @desc 닫기 버튼 클릭 시 취소 알림팝업 생성 (input이 수정된 경우만 알림팝업 띄움)
    */
   _onCloseConfirm: function() {
     if (!this._isInputChanged) {
@@ -87,17 +92,18 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 우편번호 조회 서비스 호출
-   * @private
+   * @function
+   * @desc 우편번호 조회 서비스 호출
+   * @param {Object} e - 이벤트
    */
   _searchZip: function (e) {
     new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._callBackSearchZip, this));
   },
 
   /**
-   * 우편번호 조회 서비스 콜백
-   * @param resp
-   * @private
+   * @function
+   * @desc 우편번호 조회 서비스 콜백
+   * @param {Object} resp
    */
   _callBackSearchZip: function (resp) {
     this._addrArea.find('input[name="dtlAddr"]').trigger('focusin');
@@ -113,9 +119,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 기타(우편) 데이터 설정
-   * @param data : 주소 데이터 {zip: 우편번호, basAddr: 기본주소, dtlAddr: 상세주소}
-   * @private
+   * @function
+   * @desc 기타(우편) 데이터 설정
+   * @param {Object} data : 주소 데이터 {zip: 우편번호, basAddr: 기본주소, dtlAddr: 상세주소}
    */
   _setAddrData: function (data) {
     this.$container.find('#fe-no-addr-area').addClass('none');
@@ -132,11 +138,10 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * "옵션설정" 항목 enabled/disabled 처리
-   * (check 상태는 그대로 유지)
-   * @param context
-   * @param disabled
-   * @private
+   * @function
+   * @desc "옵션설정" 항목 enabled/disabled 처리 (check 상태는 그대로 유지)
+   * @param {Object} context
+   * @param {boolean} disabled
    */
   _disabledOptions: function (context, disabled) {
     if (disabled) {
@@ -151,11 +156,10 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * "옵션설정" 항목 enabled/disabled 처리
-   * (check 상태는 false)
-   * @param context
-   * @param disabled
-   * @private
+   * @function
+   * @desc "옵션설정" 항목 enabled/disabled 처리 (check 상태는 false)
+   * @param {Object} context
+   * @param {boolean} disabled
    */
   _toggleDisabledCheckbox: function (context, disabled) {
     if (disabled) {
@@ -170,19 +174,19 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 함께 받을 요금 안내서 값 반환
+   * @function
+   * @desc 함께 받을 요금 안내서 값 반환
    * @returns {this | string | number | string[] | * | jQuery}
-   * @private
    */
   _getTogetherVal: function () {
     return this.$container.find('input[name="together"]:checked').val() || '';
   },
 
   /**
-   * input(checkbox, radio) 체크하기
-   * @param _$el    : 셀렉터
-   * @param checked : 체크 상태 (true|false)
-   * @private
+   * @function
+   * @desc input(checkbox, radio) 체크하기
+   * @param {Object} _$el    : 셀렉터
+   * @param {boolean} checked : 체크 상태 (true|false)
    */
   _prop: function (_$el, checked) {
     var _parent = _$el.prop('checked', checked)
@@ -198,10 +202,10 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 체크박스/ 라디오 버튼 체크표시
-   * @param name  : 엘리먼트 이름
-   * @param value : 값
-   * @private
+   * @function
+   * @desc 체크박스/ 라디오 버튼 체크표시
+   * @param {String} name  : 엘리먼트 이름
+   * @param {String} value : 값
    */
   _checkedElement: function (name, value) {
     var _$this = this;
@@ -212,10 +216,10 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 슬라이더형식 체크 박스 체크표시
-   * @param name
-   * @param value
-   * @private
+   * @function
+   * @desc 슬라이더형식 체크 박스 체크표시
+   * @param {String} name
+   * @param {String} value
    */
   _checkedSlideCheckbox: function (name, value) {
     var _$curCheckbox = this.$container.find('[name="{0}"]'.replace('{0}', name));
@@ -234,8 +238,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 옵션 설정 Default 설정
-   * @private
+   * @function
+   * @desc 옵션 설정 Default 설정
    */
   _initDefaultOptions: function () {
     var _data = this._data;
@@ -263,19 +267,19 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 이메일 보안설정 이벤트
-   * @private
+   * @function
+   * @desc 이메일 보안설정 이벤트
    */
   _onChangeScurMailYn: function () {
     this._setOptionsContents(true);
   },
 
   /**
-   * 콘텐츠 이용 상세내역 표시 ( 무선 회선일때만 )
+   * @function
+   * @desc 콘텐츠 이용 상세내역 표시 ( 무선 회선일때만 )
    * "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
    * scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
-   * @param isShow
-   * @private
+   * @param {boolean} isShow
    */
   _setOptionsContents: function(isShow) {
     // 무선 회선일때만
@@ -295,9 +299,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * "옵션설정" 설정
-   * @param gubun : 1: 노출여부 , 2: 옵션 체크
-   * @private
+   * @function
+   * @desc "옵션설정" 설정
+   * @param {int} gubun : 1: 노출여부 , 2: 옵션 체크
    */
   _setOptions: function (gubun) {
     var billType = this._billType;
@@ -381,9 +385,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 함께 받을 요금 안내서 변경 시
-   * @param e
-   * @private
+   * @function
+   * @desc 함께 받을 요금 안내서 변경 시
+   * @param {Object} e
    */
   _onChangeTogetherBill: function (e) {
     // 이메일 인경우 이메일 입력 부분 보이기
@@ -392,10 +396,10 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * tag 엘리먼트 보임/숨김 및 하위 input 에 state 설정 (*state : 안내서 변경 요청 파라미터 생성시 state 상태를 보고 생성함)
-   * @param context
-   * @param state
-   * @private
+   * @function
+   * @desc tag 엘리먼트 보임/숨김 및 하위 input 에 state 설정 (*state : 안내서 변경 요청 파라미터 생성시 state 상태를 보고 생성함)
+   * @param {Object} context
+   * @param {boolean} state - request 요청 생성여부
    */
   _toggleElement: function (context, state) {
     context = (typeof context === 'string') ? this.$container.find('#' + context) : context;
@@ -404,9 +408,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 휴대폰 번호 입력 시 자동 하이픈 넣기
-   * @param e
-   * @private
+   * @function
+   * @desc 휴대폰 번호 입력 시 자동 하이픈 넣기
+   * @param {Object} e
    */
   _onFormatHpNum: function (e) {
     var _$this = $(e.currentTarget);
@@ -436,19 +440,19 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * Native 주소록 호출
-   * @param e
-   * @private
+   * @function
+   * @desc Native 주소록 호출
+   * @param {Object} e
    */
   _onClickBtnAddr: function (e) {
     Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, e));
   },
 
   /**
-   * Native 주소록 호출 후 콜백. 전화번호 input에 값을 입력해준다.
-   * @param e
-   * @param resp
-   * @private
+   * @function
+   * @desc Native 주소록 호출 후 콜백. 전화번호 input에 값을 입력해준다.
+   * @param {Object} e
+   * @param {Object} resp
    */
   _onContact: function (e, resp) {
     if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
@@ -461,9 +465,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 법정대리인 함께 수령 스위칭
-   * @param context
-   * @private
+   * @function
+   * @desc 법정대리인 함께 수령 스위칭
+   * @param {Object} context
    */
   _changeCcurNotiYn: function(context) {
     var _isChecked = context.is(':checked');
@@ -471,18 +475,18 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 법정대리인 함께 수령 스위칭
-   * @param e
-   * @private
+   * @function
+   * @desc 법정대리인 함께 수령 스위칭
+   * @param {Object} e
    */
   _onChangeCcurNotiYn: function (e) {
     this._changeCcurNotiYn($(e.currentTarget));
   },
 
   /**
-   * 변경 할 안내서 유형 생성
-   * @returns {string|*}
-   * @private
+   * @function
+   * @desc 변경 할 안내서 유형 생성
+   * @returns {string} - 현재 회선에 맞는 안내서 유형
    */
   _convertBillType: function () {
     var _billType = this._billType;
@@ -526,9 +530,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 유효성(밸리데이션) 체크
-   * @returns {{result: boolean, data}}
-   * @private
+   * @function
+   * @desc 유효성(밸리데이션) 체크
+   * @returns {JSON} 유효성 결과 및 요청 파라미터 정보
    */
   _checkValidation: function () {
     var $this = this;
@@ -619,9 +623,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * input focus 및 변경 이벤트.
-   * @param e
-   * @private
+   * @function
+   * @desc input focus 및 변경 이벤트.
+   * @param {Object} e
    */
   _onCheckedInput : function (e) {
     this._clearInput(e);
@@ -629,9 +633,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * input focus 시에 입력된 값을 지운다.
-   * @param e
-   * @private
+   * @function
+   * @desc input focus 시에 입력된 값을 지운다.
+   * @param {Object} e
    */
   _clearInput : function (e) {
     var $target = $(e.currentTarget);
@@ -652,8 +656,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 변경하기 버튼 disable / enable
-   * @private
+   * @function
+   * @desc 변경하기 버튼 disable / enable
    */
   _onDisableSubmitButton: function () {
     var _$target = this.$container.find('[data-inactive-target]');
@@ -675,11 +679,11 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 우편안내서 > 연락처 값 변환 (12자리로 맞춰서 보내야 함)
+   * @function
+   * @desc 우편안내서 > 연락처 값 변환 (12자리로 맞춰서 보내야 함)
    * 예) 011-728-4508 -> 001107284508
-   * @param hpNum
-   * @returns {*}
-   * @private
+   * @param {String} hpNum
+   * @returns {String} 12자리 고정 연락처 값
    */
   _getHpNum: function (hpNum) {
     var lpad = Tw.FormatHelper.lpad;
@@ -688,8 +692,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 변경하기 클릭 이벤트
-   * @private
+   * @function
+   * @desc 변경하기 클릭 이벤트
    */
   _onSubmit: function () {
     var _result = this._checkValidation();
@@ -699,9 +703,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 안내서 변경(정보변경) 요청
-   * @param data
-   * @private
+   * @function
+   * @desc 안내서 변경(정보변경) 요청
+   * @param {JSON} data
    */
   _reqChangeBillType : function (data) {
     Tw.Api
@@ -711,9 +715,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * _reqChangeBillType 성공 콜백
-   * @param resp
-   * @private
+   * @function
+   * @desc _reqChangeBillType 성공 콜백
+   * @param {JSON} resp
    */
   _onSucessChangeBillType: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -734,9 +738,9 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();

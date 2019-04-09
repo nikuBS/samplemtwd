@@ -1,5 +1,6 @@
 /**
  * @file myt-data.gift.immediately.js
+ * @desc T끼리 데이터 선물 > 바로 선물 기능 처리
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.09.10
  */
@@ -23,6 +24,8 @@ Tw.MyTDataGiftImmediately.prototype = {
     // this.reqCnt = 0;
     // this._getRemainDataInfo();
     this.runBlur = true;
+
+    // BFF_06_0015 (new IA) T끼리데이터선물하기 제공자 조회 API Request
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this._successGiftData, this));
   },
@@ -52,6 +55,10 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$container.on('mouseleave', '.fe-opdtm', $.proxy(this._mouseLeave, this));
   },
 
+  /**
+   * _mouseEnter, _mouseLeave 함수
+   * click, blur Event가 동시에 발생하는 경우 blur를 방지하는 Flag 값 설정
+   */
   _mouseEnter: function() {
     this.runBlur = false;
   },
@@ -60,6 +67,13 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.runBlur = true;
   },
 
+  /**
+   * @function
+   * @desc T끼리 데이터 선물하기 제공자 조회 API Response Fail
+   * @param e - 이벤트 객체
+   * @param errorCode - 에러 코드
+   * @private
+   */
   _showUnableGift: function (e, errorCode) {
     var $wrapImmediatelyGift = $('.fe-wrap-immediately');
     var code = e;
@@ -95,6 +109,12 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0015 (new IA) T끼리데이터선물하기 제공자 조회 API Response
+   * @param resp - API response 값
+   * @private
+   */
   _successGiftData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.parsedGiftData = this._parseGiftData(resp.result);
@@ -103,6 +123,13 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 제공자 조회 데이터 파싱
+   * @param sender - response result 값
+   * @returns {{dataGiftCnt: *, familyDataGiftCnt: *, familyMemberYn: boolean, goodFamilyMemberYn: boolean}}
+   * @private
+   */
   _parseGiftData: function (sender) {
     return {
       dataGiftCnt: sender.dataGiftCnt,
@@ -112,14 +139,30 @@ Tw.MyTDataGiftImmediately.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 선물할 데이터량 선택
+   * @private
+   */
   _onClickDataQty: function () {
     this._checkValidateSendingButton();
   },
 
+  /**
+   * @function
+   * @desc native에 주소록 오픈 요청
+   * @private
+   */
   _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
+  /**
+   * @function
+   * @desc 주소록에서 전화번호 선택 native Response
+   * @param response - response 값
+   * @private
+   */
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var phoneNumber = response.params.phoneNumber;
@@ -130,6 +173,11 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 선물 받는 분 번호 영역 input Event Handler
+   * @private
+   */
   _onInputImmediatelyGiftNumber: function () {
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
@@ -137,12 +185,23 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputImmediatelyGift.val()));
   },
 
+  /**
+   * @function
+   * @desc 선물 받는 분 번호 영역 blur Event Handler
+   * @private
+   */
   _onBlurImmediatelyGiftNumber: function () {
     if(this.runBlur) {
       this._onInputImmediatelyGiftNumber();
     }
   },
 
+  /**
+   * @function
+   * @desc 최근 선물한 번호 선택
+   * @param e - 이벤트 객체
+   * @private
+   */
   _onSelectRecentContact: function (e) {
     this.runBlur = false;
     var opdtm = $(e.currentTarget).data('opdtm');
@@ -155,6 +214,13 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._removeErrorComment();
   },
 
+  /**
+   * @function
+   * @desc 선물하기 버튼 선택
+   * @param e
+   * @returns {void|*|T}
+   * @private
+   */
   _getReceiveUserInfo: function (e) {
     var $target = $(e.currentTarget);
     this.befrSvcNum = this.$inputImmediatelyGift.val();
@@ -164,6 +230,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
     var isNumber = Tw.FormatHelper.isNumber(this.$inputImmediatelyGift.val().replace(/\-/gi, ''));
 
+    // 선물하기 버튼 선택시 Validation 조건에 따라 팝업을 호출
     if( isNumber ) {
       if ( svcNum.length < 10 ) {
         return Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
@@ -175,12 +242,21 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
 
     if ( isCellPhone ) {
+      // 입력된 번호의 형식이 휴대폰 번호인 경우
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { befrSvcNum: svcNum, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     } else {
+      // 최근 사용한 번호 선택시(입력된 번호가 휴대폰 번호 형식에 맞지 않음)
       this._apiService.request(Tw.API_CMD.BFF_06_0019, { opDtm: this.opDtm, tmpSvcMgmtNum: this._tmpSvcMgmtNum }).done($.proxy(this._onSuccessReceiveUserInfo, this, $target));
     }
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0019 (new IA) T끼리 데이터 선물하기 수혜자 조회 API Response
+   * @param $target
+   * @param res
+   * @private
+   */
   _onSuccessReceiveUserInfo: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
@@ -194,6 +270,12 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc T끼리 데이터 선물 팝업 호출
+   * @param $target
+   * @private
+   */
   _requestSendingData: function ($target) {
     var htParams = {
       befrSvcNum: this.$inputImmediatelyGift.val(),
@@ -216,6 +298,12 @@ Tw.MyTDataGiftImmediately.prototype = {
     );
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0016 (new IA) T끼리데이터선물하기 API Request
+   * @param $target
+   * @private
+   */
   _onSuccessSendingData: function ($target) {
     this._popupService.close();
 
@@ -230,6 +318,13 @@ Tw.MyTDataGiftImmediately.prototype = {
     }).done($.proxy(this._onRequestSuccessGiftData, this, $target));
   },
 
+  /**
+   * @function
+   * @desc BFF_06_0016 (new IA) T끼리데이터선물하기 API Response
+   * @param $target
+   * @param res
+   * @private
+   */
   _onRequestSuccessGiftData: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
@@ -240,6 +335,11 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 바로 선물 하단 버튼 활성화/비활성화 처리
+   * @private
+   */
   _checkValidateSendingButton: function () {
     var isValidQty = this.$wrap_data_select_list.find('input:checked').length !== 0;
     var isValidPhone = this.$inputImmediatelyGift.val().length !== 0;
@@ -251,6 +351,11 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc input Box Validation Check
+   * @private
+   */
   _validateInputNumber: function () {
     var sPhoneNumber = this.$inputImmediatelyGift.val() ? this.$inputImmediatelyGift.val().replace(/-/g, '') : '';
 
@@ -273,17 +378,31 @@ Tw.MyTDataGiftImmediately.prototype = {
     }
   },
 
+  /**
+   * @desc 선물 받는 분 번호 하단 validation 문구 제거
+   * @private
+   */
   _removeErrorComment: function () {
     this.$container.find('[class*="fe-error"]').addClass('blind');
     this.$container.find('[class*="fe-error"]').attr('aria-hidden', true);
   },
 
+  /**
+   * @function
+   * @desc 최근 선물한 번호 영역 닫기
+   * @private
+   */
   _hideRecentNumberLayer: function () {
     $('.recently-tel').hide();
   },
 
+  /**
+   * @function
+   * @desc 최근 사용한 번호 영역 Focus
+   * @private
+   */
   _onFocusImmediatelyGiftNumber: function () {
-    //최근 사용한 번호(특수문자 포함) 선택 후 입력 창 포커스시 번호 지움
+    // 최근 사용한 번호(특수문자 포함) 선택 후 Input Box 포커스시 입력된 번호 지움
     var isNumber = Tw.FormatHelper.isNumber(this.$inputImmediatelyGift.val().replace(/\-/gi, ''));
     if( !isNumber ){
       this.$inputImmediatelyGift.val('');

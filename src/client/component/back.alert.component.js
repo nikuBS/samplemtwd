@@ -1,6 +1,6 @@
 /**
  * @file back.alert.component.js
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2019.02.14
  */
 

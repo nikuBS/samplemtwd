@@ -10,14 +10,27 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ * @desc 결합 가족 보기 / 결합 상품 보기
+ */
 export default class MyTJoinMyPlanCombineShare extends TwViewController {
   constructor() {
     super();
   }
-
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.query.id) {
-      this.getCombination(req.query.id).subscribe(comb => {
+      this._getCombination(req.query.id).subscribe(comb => {
         if (comb.code) {
           return this.error.render(res, {
             ...comb,
@@ -35,7 +48,12 @@ export default class MyTJoinMyPlanCombineShare extends TwViewController {
     }
   }
 
-  private getCombination = id => {  // 데이터를 나눠쓸 결합 가족 정보 가져오기
+  /**
+   * @desc 결합 가족 정보 요청
+   * @param {string} id 결합상품 id
+   * @private
+   */
+  private _getCombination = id => {  
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {

@@ -1,6 +1,6 @@
 /**
- * MenuName: T로밍 > 로밍 안내 > submain (RM_16_01)
  * @file product.roaming.info.guide.js
+ * @desc T로밍 > 로밍 안내 > submain (RM_16_01)
  * @author Eunjung Jung
  * @since 2018.11.12
  */
@@ -25,7 +25,8 @@ Tw.ProductRoamingGuide.prototype = {
         }
     },
     /**
-     * 분실 안내 화면으로 스크롤 이동
+     * @function
+     * @desc 분실 안내 화면으로 스크롤 이동
      * @private
      */
     _roamingGuideAnchor: function () {
@@ -36,6 +37,12 @@ Tw.ProductRoamingGuide.prototype = {
             scrollTop:_top + 200},
             1, function(){});
     },
+    /**
+     * @function
+     * @desc query string을 Object로 변환
+     * @returns {{}}
+     * @private
+     */
     _getQueryStringObject: function () {
         var a = window.location.search.substr(1).split('&');
         if (a === '') return {};
@@ -59,6 +66,12 @@ Tw.ProductRoamingGuide.prototype = {
       this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone')); // 로밍안내서 다운받기 일반폰
       this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental')); // 로밍안내서 다운받기 임대로밍
   },
+  /**
+   * @function
+   * @desc 로밍 가이드 다운로드
+   * @param type
+   * @private
+   */
   _goDownLoadGuide: function (type) {
     if(type === 'smart') {  // 스마트폰 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_GUIDE,'');

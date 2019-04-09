@@ -100,7 +100,7 @@ Tw.ValidationHelper = (function () {
   }
 
   /** 아래 validation check function은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
-   *  by Jayoon Kong (jayoon.kong@sk.com)
+   *  by Jayoon Kong
    */
   /* input 값을 입력하지 않았을 경우 */
   function checkEmpty(value) {

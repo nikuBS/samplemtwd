@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.coupon.js
+ * @desc T로밍 > 카드/쿠폰
  * @author SeungKyu Kim (ksk4788@pineone.com)
  * @since 2018.11.09
  */
@@ -34,8 +35,9 @@ Tw.ProductRoamingCoupon.prototype = {
   },
 
   /**
-   * BPCP 페이지 이동
-   * @param state
+   * @function
+   * @desc BPCP 페이지 이동
+   * @param state - 선택된 영역 Flag
    * @param event
    * @private
    */
@@ -50,6 +52,11 @@ Tw.ProductRoamingCoupon.prototype = {
     this._bpcpService.open(url, null, null);
   },
 
+  /**
+   * @function
+   * @desc bpcpServiceId 가 있는 경우 BPCP 팝업을 오픈
+   * @private
+   */
   _initBpcp: function() {
     this._bpcpService.open(this._bpcpServiceId);
     history.replaceState(null, document.title, location.origin + '/product/roaming/coupon');

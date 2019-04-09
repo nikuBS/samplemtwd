@@ -1,8 +1,13 @@
 /**
  * @file myt-fare.bill.set.return-history.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * 요금안내서 반송내역
- * @since 2018. 9. 14
+ * @since 2018-09-14
+ */
+
+/**
+ * @class
+ * @desc MyT > 나의요금 > 요금 안내서 설정 > 안내서 반송내역
+ * @param {Object} rootEl - dom 객체
  */
 Tw.MyTFareBillSetReturnHistory = function (rootEl) {
   this.$container = rootEl;
@@ -12,8 +17,8 @@ Tw.MyTFareBillSetReturnHistory = function (rootEl) {
 
 Tw.MyTFareBillSetReturnHistory.prototype = {
   /**
-   * 최초 실행
-   * @private
+   * @function
+   * @desc 최초 실행
    */
   _init : function() {
     this._initVariables();
@@ -21,8 +26,8 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._reqReturnHistory();
   },
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _initVariables: function () {
     this.returnHistory = this.$container.find('#fe-return-history');
@@ -30,16 +35,16 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._noReturnHistory =  this.$container.find('#fe-no-list');
   },
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
 
   },
 
   /**
-   * 요금 안내서 반송내역 조회
-   * @private
+   * @function
+   * @desc 요금 안내서 반송내역 조회
    */
   _reqReturnHistory : function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -50,9 +55,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   },
 
   /**
-   * _reqReturnHistory() 성공 콜백. 반송내역 리스트 더보기 세팅
-   * @param res : API Response
-   * @private
+   * @function
+   * @desc _reqReturnHistory() 성공 콜백. 반송내역 리스트 더보기 세팅
+   * @param {JSON} res : API Response
    */
   _successReturnHistory : function (res) {
     Tw.CommonHelper.endLoading('.container');
@@ -79,9 +84,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   },
 
   /**
-   * 수신 데이터 파싱
-   * @param list : 반송내역 리스트
-   * @private
+   * @function
+   * @desc 수신 데이터 파싱
+   * @param {Array} list : 반송내역 리스트
    */
   _parseData : function (list) {
     // 반송 등록일 기준으로 내림차순 정렬
@@ -95,9 +100,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   },
 
   /**
-   * 반송내역 리스트 생성
-   * @param res
-   * @private
+   * @function
+   * @desc 반송내역 리스트 생성
+   * @param {JSON} res
    */
   _renderList : function (res) {
     var source = $('#tmplMore').html();
@@ -107,9 +112,9 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.CommonHelper.endLoading('.container');

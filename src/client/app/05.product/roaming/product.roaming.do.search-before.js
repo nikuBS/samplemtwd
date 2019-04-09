@@ -1,6 +1,6 @@
 /**
- * MenuName: T로밍 > 국가별 로밍 요금조회 검색 전 화면 (RM_03_01_01_01)
  * @file product.roaming.do.search-before.js
+ * @desc T로밍 > 국가별 로밍 요금조회 검색 전 화면 (RM_03_01_01_01)
  * @author Eunjung Jung
  * @since 2018.11.12
  */
@@ -63,7 +63,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this._desciptionInit();
   },
   /**
-   * 휴대폰 선택 case별 상/하단 안내 메시지
+   * @function
+   * @desc 휴대폰 선택 case별 상/하단 안내 메시지
    * @private
    */
   _desciptionInit: function () {
@@ -111,7 +112,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));   // 휴대폰 모델명 선택
   },
     /**
-     * 휴대폰 모델명 선택
+     * @function
+     * @desc 휴대폰 모델명 선택
      * @private
      */
   _onSelectModel: function () {
@@ -134,7 +136,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }
   },
   /**
-   * 휴대폰 정보 선택
+   * @function
+   * @desc 휴대폰 정보 선택
    * @param e
    * @private
    */
@@ -151,7 +154,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }
   },
   /**
-   * 국가 검색
+   * @function
+   * @desc 국가 검색
    * @param e
    * @private
    */
@@ -171,7 +175,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     }
   },
   /**
-   * 휴대폰 변경 버튼 선택 시 휴대폰 정보 초기화
+   * @function
+   * @desc 휴대폰 변경 버튼 선택 시 휴대폰 정보 초기화
    * @private
    */
   _onChangeModel: function () {
@@ -187,7 +192,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this._desciptionInit();
   },
   /**
-   * _onBtnClicked Success callback
+   * @function
+   * @desc _onBtnClicked Success callback
    * @param resp
    * @private
    */
@@ -252,7 +258,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }
   },
   /**
-   * _onBtnClicked Fail callback
+   * @function
+   * @desc _onBtnClicked Fail callback
    * @param err
    * @private
    */
@@ -260,7 +267,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
       Tw.Error(err.code, err.msg).pop();
   },
   /**
-   * 휴대폰 제조사 선택
+   * @function
+   * @desc 휴대폰 제조사 선택
    * @private
    */
   _onHpSearch : function () {
@@ -274,7 +282,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
       );
   },
   /**
-   * _onHpSearch open callback
+   * @function
+   * @desc _onHpSearch open callback
     * @param $layer
    * @private
    */
@@ -283,6 +292,13 @@ Tw.ProductRoamingSearchBefore.prototype = {
       $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
   },
+  /**
+   * @function
+   * @desc Action Sheet 값 선택
+   * @param $layer
+   * @param e
+   * @private
+   */
   _getModelInfo: function ($layer, e) {
       // $layer.find('button').removeClass('checked');
       var target = $(e.currentTarget);
@@ -293,8 +309,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
       this._onSearchModel(this.cdValue);    // 휴대폰 제조사 모델명 리스트 요청
   },
   /**
-   * 휴대폰 제조사 모델명 리스트 요청.
-    * @param val
+   * @function
+   * @desc 휴대폰 제조사 모델명 리스트 요청.
+   * @param val
    * @private
    */
   _onSearchModel: function (val) {
@@ -303,6 +320,12 @@ Tw.ProductRoamingSearchBefore.prototype = {
         .done($.proxy(this._handleSuccessSearchModelResult, this))
         .fail($.proxy(this._handleFailModelSearch, this));
   },
+  /**
+   * @function
+   * @desc 휴대폰 제조사 모델명 리스트 요청에 대한 Response
+   * @param resp
+   * @private
+   */
   _handleSuccessSearchModelResult : function (resp) {
     var _result = resp.result;
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -330,6 +353,11 @@ Tw.ProductRoamingSearchBefore.prototype = {
         Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  /**
+   * @function
+   * @desc ALERT_3_A71 Close Callback
+   * @private
+   */
   _closeAlertPopup: function () {
       this.cdValue = '';
       for (var i in Tw.ROAMING_MFACTCD_LIST.list){
@@ -337,11 +365,24 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }
       this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
   },
+  /**
+   * @function
+   * @desc 휴대폰 모델명 선택 Action Sheet Open Callback
+   * @param $layer
+   * @private
+   */
   _selectModelCallback: function ($layer) {
       $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
       $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
   },
+  /**
+   * @function
+   * @desc 휴대폰 모델명 선택 Action Sheet 값 선택
+   * @param $layer
+   * @param e
+   * @private
+   */
   _onPhoneSelect: function ($layer, e) {
     var target = $(e.currentTarget);
     this.modelValue = target.attr('data-model-nm');
@@ -355,6 +396,12 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _handleFailModelSearch: function () {
 
   },
+  /**
+   * @function
+   * @desc 검색된 방문 국가 Action Sheet 값 선택
+   * @param $layer
+   * @private
+   */
   _selectPopupCallback : function ($layer) {
     $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
@@ -362,7 +409,11 @@ Tw.ProductRoamingSearchBefore.prototype = {
   _closeActionPopup : function () {
   },
   /**
-   * 국가별 로밍 요금조회 결과 화면으로 이동
+   * @function
+   * @desc 국가별 로밍 요금조회 결과 화면으로 이동
+   * @param $layer
+   * @param e
+   * @private
    */
   _goLoadSearchResult: function ($layer, e) {
       var target = $(e.currentTarget);

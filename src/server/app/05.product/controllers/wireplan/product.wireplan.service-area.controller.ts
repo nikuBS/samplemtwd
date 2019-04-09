@@ -8,6 +8,10 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 
+/**
+ * @class
+ * @desc 상품 > 인터넷/집전화/IPTV > 서비스가능지역 조회
+ */
 export default class ProductWireServiceArea extends TwViewController {
   constructor() {
     super();

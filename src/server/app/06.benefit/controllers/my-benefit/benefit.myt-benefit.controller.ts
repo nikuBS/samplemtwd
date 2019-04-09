@@ -136,10 +136,8 @@ class BenefitMyBenefit extends TwViewController {
           options['loyalty'] = `${dc.dcItmTypNm} ${dc.dcAmt}${dc.dcUnit}`;
           options['count'] += 1;
         }
-        // options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), svcInfo.svcScrbDt, 'days');
-        // options['days'] = FormatHelper.addComma(options['days'].toString());
 
-        let duration = joininfo.result.scrbYrMthCnt;
+        let duration = joininfo.result.scrbYrMthCnt || '';
         // 마스킹 해제 시 앞에 0 제거
         if ( duration.indexOf('*') < 0 ) {
           duration = duration.replace(/(0)([1-9])/gi, '$2');

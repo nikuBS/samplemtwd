@@ -1,5 +1,6 @@
 /**
  * @file product.roaming.fi.inquire.js
+ * @desc T로밍 > baro Box 조회/취소
  * @author 김승규 (ksk4788@pineone.com)
  * @since 2018.11.27
  */
@@ -51,6 +52,11 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$certBtn.on('click', $.proxy(this._getTfiResponse, this));
   },
 
+  /**
+   * @function
+   * @desc 조회기간 날짜 설정 초기화
+   * @private
+   */
   _getInitPeriod: function() {
     //최초 날짜 설정
     var startDate = moment().format('YYYY[-]MM[-]DD');
@@ -69,6 +75,11 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inquirePeriod.text(getPeriod);
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0067(new) 로밍> T파이 임대 > T파이 조회 API Request
+   * @private
+   */
   _getTfiResponse: function() {
     //연속 선택시 인증팝업 여러개 뜬다는 이슈로 인해 500ms의 시간 동안 재입력 불가
     if(this._requestYn){
@@ -98,6 +109,12 @@ Tw.ProductRoamingFiInquire.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0067(new) 로밍> T파이 임대 > T파이 조회 API Response
+   * @param res
+   * @private
+   */
   _renderTemplate: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
@@ -109,7 +126,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   /**
    * 한글로된 국가 배열을 영문 코드 배열로 교체
-   * @param code
+   * @param code - 방문 국가 리스트
    * @private
    */
   _changeCountryCode: function(code) {
@@ -130,37 +147,50 @@ Tw.ProductRoamingFiInquire.prototype = {
     return codeArr;
   },
 
+  /**
+   * @function
+   * @desc 서버에서 받은 예약 내역 데이터 가공
+   * @param res
+   * @returns {*}
+   * @private
+   */
   _parseList: function(res) {
     this._receiveObj = Tw.ROAMING_RECEIVE_CODE;
     this._returnObj = Tw.ROAMING_RETURN_CODE;
 
-    //서버에서 내려오는 데이터를 가공
+    // 서버에서 내려오는 데이터를 가공
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
       res[x].show_rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id].name;
       res[x].impbranch = this._receiveObj[res[x].rental_booth_org_id].code;
       res[x].show_rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
-      if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){ //예약 시작 당일에 예약 취소/수정 버튼 비활성화
+      if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){ // 예약 시작 당일에 예약 취소/수정 버튼 비활성화
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
       }
       res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
       res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_end_dtm, 'YYYY.M.DD');
       res[x].show_rental_st_nm = Tw.ROAMING_RESERVATION_STATE[res[x].rental_st_cd];
 
-      if(res[x].rental_st_cd === '17') { //예약취소 상태에서 버튼 비활성화
+      if(res[x].rental_st_cd === '17') { // 예약취소 상태에서 버튼 비활성화
         res[x].dateDifference = '';
       }
     }
 
     return res;
   },
-  
+
+  /**
+   * baro Box 예약 내역 화면 초기화
+   * @param res
+   * @private
+   */
   _renderListOne: function(res){
     this._popupService.close();
 
     var list = res.romlist;
 
+    // 핸들바에 바인딩할 데이터를 하나의 필드로 압축(romlist). romlist에 없는 데이터 파싱
     for(var x in list){
       list[x].rental_schd_end_dtm = res.roamTpieList[x].rental_schd_end_dtm;
       list[x].expbranch = res.roamTpieList[x].rtn_sale_org_id;
@@ -181,17 +211,26 @@ Tw.ProductRoamingFiInquire.prototype = {
     $('#fe-before-tip').hide();
     $('#fe-after-tip').show();
 
-    if ( list.length > 0 ){
-      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
-      this._renderList(this.$list, this._totoalList.shift());
-    }else{
+    if ( list.length > 0 ){ // 데이터가 있는 경우 최초에 20개까지만 노출
+      this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT); // 배열을 정해진 갯수의 배열로 나눔
+      this._renderList(this.$list, this._totoalList.shift()); // .shift() 배열의 첫번째 요소를 제거하고 제거된 요소 반환
+    }else{ // 조회 시 데이터가 없는 경우 ALERT_3_A87 호출
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A87;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
     }
   },
 
-  // 예약내역 템플릿 생성
+  /**
+   * baro Box 예약 내역 템플릿 생성
+   * @param $container
+   * @param res
+   * @private
+   */
   _renderList: function($container, res) {
+    /**
+     * 객체를 json 형태로 출력해주는 Handlebars registerHelper
+     * product.inquire.component.html 에서 {{json this}} 형태로 사용
+     */
     Handlebars.registerHelper('json', function(context) {
       return JSON.stringify(context);
     });
@@ -205,8 +244,13 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._moreButton();
   },
 
+  /**
+   * @function
+   * @desc 데이터 갯수에 따라 더보기 버튼 Show/Hide 처리
+   * @private
+   */
   _moreButton: function(){
-    var nextList = _.first(this._totoalList);
+    var nextList = _.first(this._totoalList); // 배열의 첫번째 요소 반환
 
     if ( nextList ) {
       this.$moreCnt.text( '(0)'.replace('0', nextList.length) );
@@ -216,6 +260,11 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 더보기 버튼 선택
+   * @private
+   */
   _onMore : function () {
     if( this._totoalList.length > 0 ){
       this._renderList(this.$list, this._totoalList.shift());
@@ -224,7 +273,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   /**
    * 예약 수정 버튼 선택
-   * @param e
+   * @param e - 이벤트 객체
    * @private
    */
   _clickEditBtn: function(e){
@@ -248,7 +297,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   /**
    * 예약 취소 버튼 선택
-   * @param e
+   * @param e - 이벤트 객체
    * @private
    */
   _clickCancelBtn : function(e){
@@ -259,7 +308,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   /**
    * 예약 취소 Alert에서 확인 선택하여 취소 API 호출
-   * @param e
+   * @param e - 이벤트 객체
    * @private
    */
   _handleConfirmAlert : function(e){
@@ -310,22 +359,27 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 예약 취소 완료 팝업
+   * @private
+   */
   _cancleCompletePop: function (){
     var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A28;
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
   },
 
   /**
-   * 예약 수정 API Callback 함수
+   * BFF_10_0068(new) 로밍> T파이 임대 > T파이 예약 상세 API Response
    * @param changeCountry
-   * @param e
+   * @param e - 이벤트 객체
    * @param res
    * @private
    */
   _openEditPop : function(changeCountry, e ,res ){
     if(res.code === Tw.API_CODE.CODE_00){
 
-      //예약 수정 팝업에서 필요한 데이터 가공
+      // 예약 수정 팝업에서 필요한 데이터 가공
       res.result.rominfo.rental_schd_sta_dtm =
         this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
@@ -351,6 +405,12 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 예약 수정 팝업 Open Callback
+   * @param $popupLayer - 팝업 element 객체
+   * @private
+   */
   _onEditPopOpened : function($popupLayer){
     this.$btnRegister = $popupLayer.find('#fe-register');
     this.$inputPhone = $popupLayer.find('#flab01');
@@ -374,15 +434,21 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._changeCheck();
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet Open
+   * @param e
+   * @private
+   */
   _openLocationPop : function(e){
     var selected = e.target;
     var data = [];
 
     if(selected.id === 'flab04'){
-      //수령 장소 선택
+      // 수령 장소 선택
       data = Tw.POPUP_TPL.ROAMING_RECEIVE_PLACE;
     }else{
-      //반납 장소 선택
+      // 반납 장소 선택
       data = Tw.POPUP_TPL.ROAMING_RETURN_PLACE;
     }
 
@@ -399,6 +465,14 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet Open Callback
+   * @param selected
+   * @param currentCenter
+   * @param $layer
+   * @private
+   */
   _onActionSheetOpened: function (selected, currentCenter, $layer) {
     $('li.type1').each(function(){
       if($(this).find('label').attr('value') === currentCenter){
@@ -411,24 +485,31 @@ Tw.ProductRoamingFiInquire.prototype = {
     $layer.one('click', '#fe-back', this._popupService.close);
   },
 
+  /**
+   * @function
+   * @desc 수령 장소 선택, 반납 장소 선택 Action Sheet 값 선택
+   * @param selected - 수령/반납 event target
+   * @param e
+   * @private
+   */
   _onActionSelected: function (selected, e) {
 
-    if(selected.id === 'flab04'){ //수령 장소 선택 ActionSheet
-      $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
-      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); //부스코드를 data-code값에 넣기
+    if(selected.id === 'flab04'){ // 수령 장소 선택 ActionSheet
+      $(selected).text($(e.target).parents('label').attr('value')); // 센터명 출력
+      $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); // 부스코드를 data-code값에 넣기
       $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
-      this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
+      this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; // 예약 완료 페이지에 넘기는 값
 
-      //약도 이미지 변경
+      // 약도 이미지 변경
       var imgUrl = this.$receiveImg.attr('src');
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
       this.$receiveImg.attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
-    }else{ //반납 장소 선택 ActionSheet
+    }else{ // 반납 장소 선택 ActionSheet
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
 
-      //약도 이미지 변경
+      // 약도 이미지 변경
       var imgUrl1 = this.$returnImg.attr('src');
       var startLen1 = imgUrl1.lastIndexOf('/');
       var cdnUrl1 = imgUrl1.substring(0,startLen1+1);
@@ -438,6 +519,12 @@ Tw.ProductRoamingFiInquire.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 정보수정 하단 버튼 활성화/비활성화 처리
+   * @param state - 발생한 event 종류
+   * @private
+   */
   _changeCheck : function(state){
     if(state === 'keyup'){
       if(this.$inputPhone.val().length > 11){
@@ -462,6 +549,11 @@ Tw.ProductRoamingFiInquire.prototype = {
     },0);
   },
 
+  /**
+   * @function
+   * @desc 핸드폰 번호 하이픈(-) 생성
+   * @private
+   */
   _insertDashPhone : function() {
     // 9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
@@ -469,11 +561,23 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inputPhone.val(hypenPhoneNum);
   },
 
+  /**
+   * @function
+   * @desc Event listener for the button click on '#flab01'(핸드폰 번호 입력)
+   * @private
+   */
   _removeDashPhone : function() {
     var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     this.$inputPhone.val(phoneNum);
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0066(new) 로밍> T파이 임대 > T파이 예약 수정 Request
+   * @param e
+   * @returns {*|void}
+   * @private
+   */
   _handleEditReservation: function(e) {
     var inputNumber = this.$inputPhone.val();
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
@@ -528,6 +632,13 @@ Tw.ProductRoamingFiInquire.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc BFF_10_0066(new) 로밍> T파이 임대 > T파이 예약 수정 Response
+   * @param e
+   * @param res
+   * @private
+   */
   _handleSuccessEditReservation: function(e, res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
@@ -537,10 +648,20 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc T로밍센터로 이동
+   * @private
+   */
   _goRoamingCenter: function() {
     this._historyService.goLoad('/product/roaming/info/center');
   },
 
+  /**
+   * @function
+   * @desc 페이지 Reload
+   * @private
+   */
   _reload: function() {
     this._popupService.close();
     var self = this;

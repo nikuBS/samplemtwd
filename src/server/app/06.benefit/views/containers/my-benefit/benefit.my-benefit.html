@@ -26,7 +26,11 @@
             <div class="cont-box">
                 <div class="myinfo-wrap">
                     <div class="myinfo-cont">
+                        <% if( days ){ %>
                         <div class="title-m">고객님은 SK텔레콤과 함께 하신지<br /><span class="tx-bold tx-red"><%= days %></span>째 입니다.</div>
+                        <% } else { %>
+                        <div class="title-m">SK텔레콤과 함께 해주신 고객님을 위한 다양한 혜택을 확인하세요!</div>
+                        <% } %>
                     </div>
                     <% if( locals.membership ){ %>
                     <div class="ico-wrap">

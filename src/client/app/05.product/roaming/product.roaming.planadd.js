@@ -1,6 +1,6 @@
 /**
- * MenuName: T로밍 > 로밍 부가서비스 (RM_12)
  * @file product.roaming.planadd.js
+ * @desc T로밍 > 로밍 부가서비스 (RM_12)
  * @author Eunjung Jung
  * @since 2018.11.12
  */
@@ -78,7 +78,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this.$container.on('click', '.fe-rmadd-filter', $.proxy(this._handleRoamingAddFilters, this));    // 조건선택 클릭 이벤트
   },
   /**
-   * 로밍 부가서비스 필터/태그 조회 요청.
+   * @function
+   * @desc 로밍 부가서비스 필터/태그 조회 요청.
    * @param event
    * @private
    */
@@ -92,7 +93,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
   },
   /**
-   * 조회된 필터 정보들로 조건선택 팝업 호출.
+   * @function
+   * @desc 조회된 필터 정보들로 조건선택 팝업 호출.
    * @param event
    * @private
    */
@@ -164,7 +166,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
   },
   /**
-   * 조건선택 팝업에서 태그 선택.
+   * @function
+   * @desc 조건선택 팝업에서 태그 선택.
    * @private
    */
   _openRoamingAddTagPopup: function($layer, e) {
@@ -176,7 +179,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }
   },
   /**
-   * 로밍 부가서비스 조건선택 팝업에서 태그 선택 시 URL이동.
+   * @function
+   * @desc 로밍 부가서비스 조건선택 팝업에서 태그 선택 시 URL이동.
    * @private
    */
   _handleSelectRomaingAddTag: function(target) {
@@ -192,7 +196,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
   },
   /**
-   * 로밍 부가서비스 조건선택 팝업 필터 선택 후 적용하기 버튼 기능.
+   * @function
+   * @desc 로밍 부가서비스 조건선택 팝업 필터 선택 후 적용하기 버튼 기능.
    * @private
    */
   _handleRmAddSelectFilters: function ($layer){
@@ -212,7 +217,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
           .done($.proxy(this._handleLoadNewAddFilters, this, originParams));
   },
   /**
-   * _handleRmAddSelectFilters Success callback
+   * @function
+   * @desc _handleRmAddSelectFilters Success callback
    * @private
    */
   _handleLoadNewAddFilters: function(originParams, resp) {
@@ -229,7 +235,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
         }
     },
   /**
-   * 로밍 부가서비스 조건선택 팝업 초기화 기능.
+   * @function
+   * @desc 로밍 부가서비스 조건선택 팝업 초기화 기능.
+   * @param $layer
+   * @private
    */
   _handleAddResetBtn: function ($layer) {
       $layer.find('.btn-type01').removeClass('checked');
@@ -244,7 +253,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this.selectTag = false;
   },
   /**
-   * _handleRoamingPlanFilters Success callback
+   * @function
+   * @desc _handleRoamingPlanFilters Success callback
    * @param event
    * @param resp
    * @private
@@ -258,7 +268,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._openRmAddFiltersPopup(event);
   },
   /**
-   * 로밍 부가서비스 조건선택 팝업 > 필터 선택.
+   * @function
+   * @desc 로밍 부가서비스 조건선택 팝업 > 필터 선택.
    * @private
    */
   _bindAddFilterBtnEvent: function ($layer, e) {
@@ -283,7 +294,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._reset = false;
   },
   /**
-   *  태그 선택 초기화 기능
+   * @function
+   * @desc 태그 선택 초기화 기능
    * @param $layer
    * @param $target
    * @private
@@ -307,7 +319,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
     }
   },
   /**
-   * 로밍 요금제 리스트 정렬
+   * @function
+   * @desc 로밍 요금제 리스트 정렬
    * @private
    */
   _openRmAddOrderPopup: function () {
@@ -334,7 +347,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       );
   },
   /**
-   * 리스트 정렬 action sheet openCallback
+   * @function
+   * @desc 리스트 정렬 action sheet openCallback
    * @private
    */
   _handleOpenAddOrderPopup: function ($layer) {
@@ -345,7 +359,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
     $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
   },
   /**
-   * 로밍 요금제 리스트 정렬 방식 선택
+   * @function
+   * @desc 로밍 요금제 리스트 정렬 방식 선택
    * @param e
    * @private
    */
@@ -369,7 +384,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._popupService.close();
   },
   /**
-   * 선택한 정렬방식으로 로밍 요금제 리스트 요청.
+   * @function
+   * @desc 선택한 정렬방식으로 로밍 요금제 리스트 요청.
    * @param orderType
    * @private
    */
@@ -377,7 +393,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessMoreAddData, this, orderType));
   },
   /**
-   * 더보기 버튼 선택 시 로밍 요금제 리스트 요청.
+   * @function
+   * @desc 더보기 버튼 선택 시 로밍 요금제 리스트 요청.
    * @private
    */
   _handleMoreRoamingAdd: function () {
@@ -385,7 +402,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
           .done($.proxy(this._handleSuccessMoreAddData, this, undefined));
   },
   /**
-   * _handleMoreRoamingAdd Success callback
+   * @function
+   * @desc _handleMoreRoamingAdd Success callback
    * @private
    */
   _handleSuccessMoreAddData: function (orderType, resp) {
@@ -419,6 +437,13 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this.$rmPlanAddlist.append(this._rmListTmpl({ items: items }));
       this.$roamingAddItemCnt.text(resp.result.productCount);
     },
+    /**
+     * @function
+     * @desc 선택된 정렬 Type 값 반환
+     * @param idx
+     * @returns {string}
+     * @private
+     */
     _getRmAddOrderType: function(idx) {
         var keys = Object.keys(this.ORDER),
             i = 0;

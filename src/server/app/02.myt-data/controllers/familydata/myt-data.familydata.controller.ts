@@ -16,17 +16,28 @@ const DATA_ZERO = {
   unit: DATA_UNIT.KB
 };
 
+
+/**
+ * @class
+ * @desc T 가족모아 데이터
+ */
 export default class MyTDataFamily extends TwViewController {
   constructor() {
     super();
   }
-
+  
   /**
-   * @description 화면 랜더링
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.getFamilyData(svcInfo), this.getHistory()).subscribe(([familyInfo, histories]) => {
-      // this.getFamilyData(svcInfo).subscribe(familyInfo => {
+    Observable.combineLatest(this._getFamilyData(svcInfo), this._getHistory()).subscribe(([familyInfo, histories]) => {
       const error = {
         code: familyInfo.code || histories.code,
         msg: familyInfo.msg || histories.msg
@@ -45,9 +56,10 @@ export default class MyTDataFamily extends TwViewController {
   }
 
   /**
-   * @description T 가족모아 데이터 가져오기
+   * @desc T 가족모아 데이터 가져오기
+   * @private
    */
-  private getFamilyData = svcInfo => {
+  private _getFamilyData = svcInfo => {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -112,9 +124,10 @@ export default class MyTDataFamily extends TwViewController {
   }
 
   /**
-   * @description 이번달 공유 내역 가져오기
+   * @desc 이번달 공유 내역 가져오기
+   * @private
    */
-  private getHistory = () => {
+  private _getHistory = () => {
     return this.apiService.request(API_CMD.BFF_06_0071, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
