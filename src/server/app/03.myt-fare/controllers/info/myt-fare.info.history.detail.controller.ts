@@ -7,17 +7,17 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
-import {MYT_PAYMENT_DETAIL_TITLE, 
-  MYT_PAYMENT_DETAIL_ERROR, 
-  MYT_FARE_PAYMENT_HISTORY_TYPE, 
+import {MYT_PAYMENT_DETAIL_TITLE,
+  MYT_PAYMENT_DETAIL_ERROR,
+  MYT_FARE_PAYMENT_HISTORY_TYPE,
   MYT_FARE_PAYMENT_NAME,
   MYT_FARE_PAYMENT_TYPE
 } from '../../../../types/string.type';
 
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-import { MYT_PAYMENT_HISTORY_AUTO_TYPE, MYT_FARE_PAYMENT_CODE, 
-  MYT_FARE_POINT_PAYMENT_STATUS, 
+import { MYT_PAYMENT_HISTORY_AUTO_TYPE, MYT_FARE_PAYMENT_CODE,
+  MYT_FARE_POINT_PAYMENT_STATUS,
   MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE,
   MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING,
   MYT_FARE_PAYMENT_PROCESS_DATE,
@@ -60,16 +60,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
     const renderObj: RenderObj = {
-      req, 
-      res, 
-      next, 
-      svcInfo, 
-      pageInfo, 
+      req,
+      res,
+      next,
+      svcInfo,
+      pageInfo,
       current: query.current,
       innerIndex: (req && req.query && req.query.innerIndex !== undefined) ? req.query.innerIndex : ''
     };
     this.renderURL = 'info/myt-fare.info.history.detail.html';
-    
+
     switch (req.query.type) {
       case MYT_FARE_PAYMENT_TYPE.DIRECT:
         const {opDt, payOpTm} = req.query;
@@ -88,7 +88,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         this.getContentsPaymentData(renderObj);
         break;
       case MYT_FARE_PAYMENT_TYPE.AUTO:
-        // 자동납부         
+        // 자동납부
         this.includeBillHistory(this.getAutoPaymentData, renderObj);
         break;
       case MYT_FARE_PAYMENT_TYPE.PRESERVE:
@@ -115,7 +115,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   // 사업자 여부, 세금계산서 / 현금영수증 조회 포함 (계좌이체 일 경우 해당함)
   private includeBillHistory = (callback, renderObj) => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).subscribe((resp: { code: string; result: any; }) => {
-      // let isPersonalBiz; 
+      // let isPersonalBiz;
       if (resp.code !== API_CODE.CODE_00) {
         this.isPersonalBiz = false;
         // 현금영수증 조회
@@ -127,7 +127,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
     });
   }
-  
+
   // 현금영수증 내역 조회
   private checkCashBill = (callback, renderObj) => {
     return this.apiService.request(API_CMD.BFF_07_0004, {}).subscribe(response => {
@@ -143,13 +143,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     const { res, svcInfo, pageInfo, opDt, payOpTm } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0091, {opDt, payOpTm}).subscribe((resp) => {
 
-      
+
       if (resp.code !== API_CODE.CODE_00) {
         return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
 
-      const resultData = resp.result; 
-            
+      const resultData = resp.result;
+
       resultData.dataAmt = FormatHelper.addComma(resultData.cardAmt); // 납부금액
       resultData.invYearMonth = DateHelper.getYearNextMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M.
       resultData.invYearNoDotMonth = DateHelper.getYearNextNoDotMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M
@@ -183,7 +183,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
 
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
-      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
+      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액
       resultData.dataRequestAmt = FormatHelper.addComma(resultData.drwReqAmt); // 청구금액
       resultData.dataReqYearMonth = DateHelper.getYearNextMonthFromDate(resultData.lastInvDt); // 청구년월 YYYY.M.
       resultData.dataUseTermStart = DateHelper.getShortFirstDate(resultData.lastInvDt); // 이용기간 YYYY.M.1.
@@ -197,8 +197,8 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         isPersonalBiz: this.isPersonalBiz,
         isBillCnt: this.billCnt > 0
       }));
-      
-    });     
+
+    });
   }
 
   // 통합납부
@@ -216,11 +216,11 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
 
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
-      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
+      resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액
       resultData.dataTmthColClCd = MYT_PAYMENT_HISTORY_AUTO_TYPE[resultData.tmthColClCd]; // 구분
       resultData.dataDtTitle = MYT_FARE_PAYMENT_PROCESS_DATE[resultData.drwAmtTyp] || '';
       resultData.dataAmtTitle = MYT_FARE_PAYMENT_PROCESS_ATM[resultData.drwAmtTyp] || '';
-      
+
       this.renderView(renderObj, Object.assign(resultData, {
         isPersonalBiz: this.isPersonalBiz,
         isBillCnt: this.billCnt > 0
@@ -242,11 +242,11 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
-      resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
+      resultData.dataFullDt = DateHelper.getFullDateAnd24Time(resultData.opDt + resultData.payOpTm); // 결제일자
       resultData.dataAmt = FormatHelper.addComma(resultData.chrgAmt); // 선결제 금액
       resultData.listTitle = resultData.settlWayNm; // 결제수단
       resultData.isAutoCharg = (resultData.autoChrgYn === 'Y'); // 상세내역에서 기준납부 영역 노출여부를 결정
-      
+
       this.renderView(renderObj, resultData);
     });
   }
@@ -264,10 +264,10 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       if (!resultData || !innerIndex) {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
-    
-      resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
+
+      resultData.dataFullDt = DateHelper.getFullDateAnd24Time(resultData.opDt + resultData.payOpTm); // 결제일자
       resultData.dataAmt = FormatHelper.addComma(resultData.chrgAmt); // 선결제금액
-      
+
       this.renderView(renderObj, resultData);
     });
   }
@@ -288,10 +288,10 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       }
 
       resultData.dataAmt = FormatHelper.addComma(resultData.point); // 신청포인트
-      resultData.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === resultData.reqSt || 
+      resultData.payComplete = (MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE === resultData.reqSt ||
                                 MYT_FARE_POINT_PAYMENT_STATUS.COMPLETE2 === resultData.reqSt); // 납부완료여부
       resultData.dataDt = DateHelper.getShortDate(resultData.opDt); // 처리 일자
-      
+
       this.renderView(renderObj, resultData);
     });
   }
@@ -313,17 +313,17 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       resultData.dataDt = DateHelper.getShortDate(resultData.opDt); // 신청일자
       resultData.dataAmt = FormatHelper.addComma(resultData.point); // 예약 포인트
       resultData.listTitle = resultData.pointNm; // 포인트 종류
-      
+
       this.renderView(renderObj, resultData);
     });
   }
 
-  // 사업자 회원 세금계산서 갯수 계산 .. 19.1.3 반기옵션으로 
+  // 사업자 회원 세금계산서 갯수 계산 .. 19.1.3 반기옵션으로
   // 단순 조회시에는 1-6/7-12월로만 조회되는 이슈
   private getBizTaxCnt = (callback, renderObj) => {
     return Observable.combineLatest(
       this.getBillTaxLists(DateHelper.getCurrentDate(), 6)
-    ).subscribe(taxlist => {      
+    ).subscribe(taxlist => {
       this.billCnt = (taxlist || []).reduce((prev, cur) => {
         return prev + (cur ? cur.length : 0);
       }, 0);
@@ -340,7 +340,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       list.push(this.getBillTaxList(DateHelper.getCurrentShortDate(new Date(date)).substring(0, 6)));
       date.setMonth(date.getMonth() + 1);
     }
-    return list; 
+    return list;
   }
 
   private getBillTaxList = (date: string): Observable<any | null> => {
