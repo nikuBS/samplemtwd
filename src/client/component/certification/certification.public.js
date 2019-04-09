@@ -64,7 +64,8 @@ Tw.CertificationPublic.prototype = {
   _requestAppMessage: function (authUrl) {
     this._apiService.request(Tw.API_CMD.BFF_01_0035, {
       authUrl: authUrl
-    }).done($.proxy(this._successAppMessage, this));
+    }).done($.proxy(this._successAppMessage, this))
+      .fail($.proxy(this._failAppMessage, this));
   },
   _successAppMessage: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -72,6 +73,10 @@ Tw.CertificationPublic.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failAppMessage: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _openPublicCert: function (message) {
     this._nativeService.send(Tw.NTV_CMD.AUTH_CERT, {
@@ -116,7 +121,8 @@ Tw.CertificationPublic.prototype = {
       authUrl: this._authUrl,
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : ''
-    }).done($.proxy(this._successComplete, this));
+    }).done($.proxy(this._successComplete, this))
+      .fail($.proxy(this._failComplete, this));
   },
   _successComplete: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -124,5 +130,9 @@ Tw.CertificationPublic.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failComplete: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

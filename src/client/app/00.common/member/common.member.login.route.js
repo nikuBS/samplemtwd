@@ -54,7 +54,8 @@ Tw.CommonMemberLoginRoute.prototype = {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {
         tokenId: tidResp.id_token,
         state: tidResp.state
-      }).done($.proxy(this._successLogin, this, url + hash, type));
+      }).done($.proxy(this._successLogin, this, url + hash, type))
+        .fail($.proxy(this._failLogin, this));
     }
   },
 
@@ -85,5 +86,16 @@ Tw.CommonMemberLoginRoute.prototype = {
       this._historyService.goLoad('/common/tid/logout?type=' + Tw.TID_LOGOUT.LOGIN_FAIL + '&errorCode=' + resp.code);
       // this._historyService.replaceURL('/common/member/login/fail?errorCode=' +  resp.code);
     }
+  },
+
+  /**
+   * @function
+   * @desc 로그인 실패 처리
+   * @param error
+   * @private
+   */
+  _failLogin: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

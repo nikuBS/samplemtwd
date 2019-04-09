@@ -32,13 +32,18 @@ Tw.BiometricsCert.prototype = {
   },
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
-      .done($.proxy(this._successGetAuthMethodBlock, this));
+      .done($.proxy(this._successGetAuthMethodBlock, this))
+      .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._authBlock = this._parseAuthBlock(resp.result);
     }
     this._openPopup();
+  },
+  _failGetAuthMethodBlock: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _parseAuthBlock: function (list) {
     var block = {};
@@ -119,7 +124,8 @@ Tw.BiometricsCert.prototype = {
     }
   },
   _failSvcInfo: function () {
-
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onClickSkSms: function () {
     this._certSk = new Tw.CertificationSk();

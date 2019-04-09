@@ -130,7 +130,8 @@ Tw.CommonMemberSloginAos.prototype = {
    * @param error
    * @private
    */
-  _failLogin: function(error) {
+  _failLogin: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 

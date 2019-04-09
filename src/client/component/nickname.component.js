@@ -90,7 +90,8 @@ Tw.NicknameComponent.prototype = {
       this._apiService.request(Tw.NODE_CMD.CHANGE_NICKNAME, {
         params: params,
         pathParams: [this._svcMgmtNum]
-      }).done($.proxy(this._successChangeNickname, this, nickname));
+      }).done($.proxy(this._successChangeNickname, this, nickname))
+        .fail($.proxy(this._failChangeNickname, this));
 
     } else {
       this._isChanged = true;
@@ -105,5 +106,9 @@ Tw.NicknameComponent.prototype = {
       this.$nicknameError.parents('.inputbox').addClass('error');
       this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_ERROR);
     }
+  },
+  _failChangeNickname: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

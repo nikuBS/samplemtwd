@@ -31,19 +31,20 @@ Tw.LineLayerComponent.prototype = {
   },
   _updateNoticeType: function () {
     this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
-      .done($.proxy(this._successUpdateNoticeType, this));
+      .done($.proxy(this._successUpdateNoticeType, this))
+      .fail($.proxy(this._failUpdateNoticeType, this));
   },
   _successUpdateNoticeType: function () {
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
   },
+  _failUpdateNoticeType: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _openLineResisterPopup: function (layerType) {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._successGetSvcInfo, this, layerType));
-
-    // var lineRegisterLayer = new Tw.LineRegisterComponent();
-    // setTimeout($.proxy(function () {
-    //   lineRegisterLayer.openRegisterLinePopup(layerType);
-    // }, this), 2000);
+      .done($.proxy(this._successGetSvcInfo, this, layerType))
+      .fail($.proxy(this._failGetSvcInfo, this));
   },
   _successGetSvcInfo: function (layerType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -54,6 +55,10 @@ Tw.LineLayerComponent.prototype = {
         }, this), 1000);
       }
     }
+  },
+  _failGetSvcInfo: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _openPasswordGuide: function () {
     setTimeout($.proxy(function () {

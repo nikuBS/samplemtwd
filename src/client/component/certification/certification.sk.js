@@ -64,7 +64,12 @@ Tw.CertificationSk.prototype = {
   },
   _getAllSvcInfo: function (callback) {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done(callback);
+      .done(callback)
+      .fail($.proxy(this._failAllSvcInfo, this));
+  },
+  _failAllSvcInfo: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onSuccessAllSvcInfoCheck: function (svcInfo, opMethods, optMethods, methodCnt, callback, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -345,7 +350,8 @@ Tw.CertificationSk.prototype = {
       this._sendCert();
     } else {
       this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
-        .done($.proxy(this._successGetUrlMeta, this));
+        .done($.proxy(this._successGetUrlMeta, this))
+        .fail($.proxy(this._failGetUrlMeta, this));
     }
   },
   _successGetUrlMeta: function (resp) {
@@ -358,6 +364,10 @@ Tw.CertificationSk.prototype = {
       }
     }
     this._sendCert();
+  },
+  _failGetUrlMeta: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _sendCert: function (reCert) {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
@@ -375,16 +385,18 @@ Tw.CertificationSk.prototype = {
         jobCode: this._jobCode,
         receiverNum: this._onKeyin ? this.$inputMdn.val() : '',
         mdn: this._securityMdn
-      }).done($.proxy(this._onSuccessCert, this, reCert));
+      }).done($.proxy(this._successCert, this, reCert))
+        .fail($.proxy(this._failCert, this));
     } else if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
       this._apiService.request(Tw.API_CMD.BFF_01_0057, {
         jobCode: this._jobCode,
         mdn: this._securityMdn
-      }).done($.proxy(this._onSuccessCert, this, reCert));
+      }).done($.proxy(this._successCert, this, reCert))
+        .fail($.proxy(this._failCert, this));
 
     }
   },
-  _onSuccessCert: function (reCert, resp) {
+  _successCert: function (reCert, resp) {
     this._clearCertError();
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -424,6 +436,10 @@ Tw.CertificationSk.prototype = {
     }
     Tw.CommonHelper.resetPopupHeight();
   },
+  _failCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _getCertNum: function () {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
@@ -458,7 +474,8 @@ Tw.CertificationSk.prototype = {
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
-      .done($.proxy(this._successCertAdd, this));
+      .done($.proxy(this._successCertAdd, this))
+      .fail($.proxy(this._failCertAdd, this));
   },
   _successCertAdd: function (resp) {
     this._clearConfirmError();
@@ -475,6 +492,10 @@ Tw.CertificationSk.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _failCertAdd: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _onClickConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
       jobCode: this._jobCode,
@@ -484,7 +505,8 @@ Tw.CertificationSk.prototype = {
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : '',
       authMethod: this._onKeyin ? Tw.AUTH_CERTIFICATION_METHOD.K : this._smsType
-    }).done($.proxy(this._successConfirm, this));
+    }).done($.proxy(this._successConfirm, this))
+      .fail($.proxy(this._failConfirm, this));
   },
   _successConfirm: function (resp) {
     this._clearConfirmError();
@@ -508,6 +530,10 @@ Tw.CertificationSk.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failConfirm: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _showError: function (inputBox, input, error) {
     inputBox.addClass('error');

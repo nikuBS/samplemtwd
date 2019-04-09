@@ -307,7 +307,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param error
    * @private
    */
-  _failBizSession: function(error) {
+  _failBizSession: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -405,7 +406,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param error
    * @private
    */
-  _failRequestCert: function(error) {
+  _failRequestCert: function (error) {
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -507,7 +508,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param error
    * @private
    */
-  _failRequestCertAdd: function(error) {
+  _failRequestCertAdd: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -565,7 +567,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @param error
    * @private
    */
-  _failConfirmCert: function(error) {
+  _failConfirmCert: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -597,7 +600,8 @@ Tw.CommonMemberLineBizRegister.prototype = {
   _successRegisterBiz: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
-        .done($.proxy(this._successUpdateSvc, this));
+        .done($.proxy(this._successUpdateSvc, this))
+        .fail($.proxy(this._failUpdateSvc, this));
     } else if ( resp.code === this.ERROR_CODE.ICAS4027 || resp.code === this.ERROR_CODE.ICAS3356 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A8, null, null, null, null, $target);
     } else {
@@ -617,12 +621,24 @@ Tw.CommonMemberLineBizRegister.prototype = {
 
   /**
    * @function
+   * @desc 회선 정보 업데이트 실패 처리
+   * @param error
+   * @private
+   */
+  _failUpdateSvc: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
    * @desc 법인회선 등록 실패 처리
    * @param error
    * @private
    */
   _failRegisterBiz: function (error) {
     Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
