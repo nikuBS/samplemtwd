@@ -121,7 +121,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingCombine($('.wrap'), '<%- JSON.stringify(prodRedisInfo) %>',<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>')
+    new Tw.ProductRoamingJoinRoamingCombine($('.wrap'), '<%- JSON.stringify(prodRedisInfo) %>',<%- JSON.stringify(prodBffInfo) %>,'<%- prodId %>')
   });
 </script>
 <% include ../../../components/end.component.html %>

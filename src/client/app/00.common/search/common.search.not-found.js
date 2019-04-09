@@ -149,7 +149,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._claimCallback(res,51, evt);
     }, this))
     .fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,nul,$(evt.currentTarget));
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
     }, this));
   },
   _claimCallback : function (res,srchId, evt) {

@@ -1,4 +1,5 @@
 /**
+ * 로밍 상품 가입 시작일, 종료일 설정
  * @file product.roaming.setting.roaming-setup.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.11.28
@@ -20,7 +21,7 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
     const prodId = req.query.prod_id || null;
-    const promotionProdIdArr = ['NA00005632', 'NA00005634', 'NA00005635'];
+    const promotionProdIdArr = ['NA00005632', 'NA00005634', 'NA00005635'];  //프로모션 상품 id
     const isPromotion = promotionProdIdArr.indexOf(prodId) > -1;
 
     if (FormatHelper.isEmpty(prodId)) {

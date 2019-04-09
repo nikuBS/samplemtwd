@@ -3,15 +3,23 @@
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.03
  */
-
-Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId) {
+/**
+ * @class
+ * @desc 로밍 시작일 설정 case 설정 변경 페이지
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {String} prodTypeInfo - 상품 원장 정보
+ * @param {Object} prodBffInfo – 상품 상세 정보
+ * @param {String} prodId - 상품 id
+ * @returns {void}
+ */
+Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodTypeInfo,prodBffInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
-  this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -24,6 +32,12 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodTypeInfo,prodBf
 };
 
 Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
+  /**
+   * @function
+   * @member
+   * @desc 초기화 함수
+   * @returns {void}
+   */
   _init : function(){
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
     var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
@@ -42,11 +56,23 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 이벤트 바인딩
+   * @returns {void}
+   */
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 오늘 기준 날짜 배열 생성
+   * @returns {Array}
+   */
   _getDateArrFromToDay : function(range,format){
     var dateFormat = this._showDateFormat;
     var resultArr = [];
@@ -58,6 +84,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     }
     return resultArr;
   },
+  /**
+   * @function
+   * @member
+   * @desc 생성된 날짜 배열 액션시트 포맷으로 변경
+   * @param {Array} dateArr - 날짜 배열
+   * @param {String} attr - 속성
+   * @param {String} nowValue - 선택된 값
+   * @returns {Array}
+   */
   _convertDateArrForActionSheet : function(dateArr,attr,nowValue){
     var returnArr = [];
     for(var i=0;i<dateArr.length;i++){
@@ -65,7 +100,13 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     }
     return returnArr;
   },
-
+  /**
+   * @function
+   * @member
+   * @desc 액션시트 데이터 생성
+   * @param {Array} data - 액션시트 데이터
+   * @returns {Array}
+   */
   _makeActionSheetDate : function(data){
     var returnActionSheetData = [
       {
@@ -74,6 +115,13 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     ];
     return returnActionSheetData;
   },
+  /**
+   * @function
+   * @member
+   * @desc 날짜 선택 액션시트 출력
+   * @param {Object} eventObj - 이벤트 각체
+   * @returns {Array}
+   */
   _btnDateEvent : function(eventObj){
     if(this._historyService.getHash()==='#select_date_P'){
       return;
@@ -89,16 +137,36 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     this._openSelectDatePop(actionSheetData,'',eventObj);
   },
 
-
+  /**
+   * @function
+   * @member
+   * @desc 액션시트 이벤트 바인딩
+   * @param {Object} $layer - 팝업 jquery 객체
+   * @returns {void}
+   */
   _bindActionSheetElementEvt : function($layer){
     $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
     //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 액션시트 선택 이벤트
+   * @param {Object} eventObj - 이벤트 객체
+   * @returns {void}
+   */
   _actionSheetElementEvt : function(eventObj){
     $(eventObj.delegateTarget).find('button').removeClass('checked');
     $(eventObj.currentTarget).addClass('checked');
     this._actionSheetCloseEvt(eventObj);
   },
+  /**
+   * @function
+   * @member
+   * @desc 액션시트 close 이벤트
+   * @param {Object} eventObj - 이벤트 객체
+   * @returns {void}
+   */
   _actionSheetCloseEvt : function(eventObj){
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
     var dateValue = $selectedTarget.text().trim().substr(0,13);
@@ -111,6 +179,12 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     this._validateDateValue();
     this._popupService.close();
   },
+  /**
+   * @function
+   * @member
+   * @desc 선택한 날짜 검증
+   * @returns {void}
+   */
   _validateDateValue : function(){
     var startDate = this.$container.find('#start_date').attr('data-number');
 
@@ -123,6 +197,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     }
 
   },
+  /**
+   * @function
+   * @member
+   * @desc 현재 시간을 기준으로 시간 확인
+   * @param {String} paramDate 선택한 날짜
+   * @param {String} paramTime 선택한 시간
+   * @param {String} className 선택한 시간 타입(시작일 , 종료일)
+   * @returns {boolean}
+   */
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
@@ -136,7 +219,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     }
     return returnValue;
   },
-
+  /**
+   * @function
+   * @member
+   * @desc 액션시트 출력 함수
+   * @param {Object} data 액션시트 데이터
+   * @param {String} title 액션시트 타이틀
+   * @param {Object} evt 이벤트 객체
+   * @returns {void}
+   */
   _openSelectDatePop: function (data,title,evt) {
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',// hbs의 파일명
@@ -150,7 +241,13 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       },this),
       'select_date',$(evt.currentTarget));
   },
-
+  /**
+   * @function
+   * @member
+   * @desc 설정 정보 변경 요청
+   * @param {Object} targetEvt 선택한 요소의 jQuery 객체 ( $(evt.currentTarget) )
+   * @returns {void}
+   */
   _changeInformationSetting : function (targetEvt) {
     var userSettingInfo = {
       'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
@@ -175,6 +272,14 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 설정정보 변경 완료 팝업 출력 함수
+   * @param {Object} data 변경된 설정 정보
+   * @param {Object} targetEvt 이벤트객체
+   * @returns {void}
+   */
   _showCompletePopup : function(data,targetEvt){
     var completePopupData = {
       prodNm : data.prodNm,
@@ -192,13 +297,35 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       $.proxy(this._goPlan,this),
       'complete');
   },
+  /**
+   * @function
+   * @member
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param {Object} popupEvt 팝업 이벤트 객체
+   * @returns {void}
+   */
   _bindCompletePopupBtnEvt : function (popupEvt) {
     $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._popupService.closeAll,this._popupService));
   },
+  /**
+   * @function
+   * @member
+   * @desc 상품 가입 이전 페이지 이동 함수
+   * @returns {void}
+   */
   _goPlan : function () {
     this._popupService.closeAll();
     setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
+  /**
+   * @function
+   * @member
+   * @desc 상품별 툴팁 출력 구분
+   * @param {String} prodId 상품 id
+   * @param {Object} $tooltipHead 화면 상단 툴팁 jquery 객체
+   * @param {Object} $tooltipBody 화면 하단 툴팁 jquery 객체
+   * @returns {void}
+   */
   _tooltipInit : function (prodId) {
     switch (prodId) {
       case 'NA00003015':
@@ -212,6 +339,13 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
         break;
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 상품 가격 변환 함수
+   * @param {String} priceVal 상품 가격
+   * @returns {String}
+   */
   _convertPrice : function (priceVal) {
     if(!isNaN(priceVal)){
       priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;

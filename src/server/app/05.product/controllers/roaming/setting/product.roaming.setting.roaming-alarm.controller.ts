@@ -1,4 +1,5 @@
 /**
+ * 로밍 도착알리미 회선 설정
  * @file product.roaming.setting.roaming-alarm.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.05
