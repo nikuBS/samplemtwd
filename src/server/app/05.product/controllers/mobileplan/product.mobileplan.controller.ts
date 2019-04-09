@@ -14,16 +14,30 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT, TIME_UNIT, UNIT } from '../../../../types/string.type';
 import { PRODUCT_CODE } from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 상품 > 모바일 요금제 
+ */
 export default class Product extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getProductGroups(),
+      this._getProductGroups(),
       this.getRecommendedPlans(),
-      this.getMyFilters(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
+      this._getMyFilters(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
       this.getRecommendedTags()
     ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
       const error = {
@@ -40,7 +54,11 @@ export default class Product extends TwViewController {
     });
   }
 
-  private getProductGroups = () => {
+  /**
+   * @desc 많이 찾는 요금제 요청
+   * @private
+   */
+  private _getProductGroups = () => {
     return this.apiService.request(API_CMD.BFF_10_0026, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -64,7 +82,7 @@ export default class Product extends TwViewController {
               return {
                 ...plan,
                 basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-                displayInfo: this.getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
+                displayInfo: this._getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
               };
             })
           };
@@ -73,7 +91,11 @@ export default class Product extends TwViewController {
     });
   }
 
-  private getDisplayData = (gbData?: string, mbData?: string, voice?: string, char?: string) => {
+  /**
+   * @desc BFF 데이터 음성, 데이터, 문자 데이터 가공
+   * @private
+   */
+  private _getDisplayData = (gbData?: string, mbData?: string, voice?: string, char?: string) => {
     const info: { icon?: string; value?: string; unit?: string } = {};
 
     if (gbData && gbData !== '-') {
@@ -113,7 +135,12 @@ export default class Product extends TwViewController {
     return info;
   }
 
-  private getMyFilters = isLogin => {
+  /**
+   * @desc 내가 가입한 요금제의 필터 요청(유사한 요금제를 찾아보세요!)
+   * @param {boolean} isLogin 로그인 여부
+   * @private
+   */
+  private _getMyFilters = isLogin => {
     if (isLogin) {
       return this.apiService.request(API_CMD.BFF_10_0025, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
@@ -130,6 +157,10 @@ export default class Product extends TwViewController {
     return of(undefined);
   }
 
+  /**
+   * @desc 추천 요금제 요청
+   * @private
+   */
   private getRecommendedPlans = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -149,13 +180,17 @@ export default class Product extends TwViewController {
           return {
             ...plan,
             basFeeInfo: ProductHelper.convProductBasfeeInfo(plan.basFeeInfo),
-            displayInfo: this.getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
+            displayInfo: this._getDisplayData(plan.basOfrGbDataQtyCtt, plan.basOfrMbDataQtyCtt, plan.basOfrVcallTmsCtt, plan.basOfrCharCntCtt)
           };
         })
       };
     });
   }
 
+  /**
+   * @desc 추천 태그
+   * @private
+   */
   private getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_PLAN }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

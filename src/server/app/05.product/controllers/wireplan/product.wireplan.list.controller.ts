@@ -16,20 +16,33 @@ import { PRODUCT_CODE, PRODUCT_WIRE_PLAN_CATEGORIES as CATEGORIES } from '../../
 
 const MAX_SEARCH_COUNT = 100;
 
+/**
+ * @class
+ * @desc 상품 > 인터넷/전화/TV 리스트
+ */
 export default class ProductWires extends TwViewController {
   constructor() {
     super();
   }
 
-
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const page = req.url.replace('/wireplan/', '').toUpperCase();
     const params = { idxCtgCd: PRODUCT_CODE.WIRE_PLAN, searchCount: MAX_SEARCH_COUNT };
 
     Observable.combineLatest(
-      this.getMyWireInfo(svcInfo),
-      this.getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.PLAN }),
-      this.getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.ADDITION })
+      this._getMyWireInfo(svcInfo),
+      this._getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.PLAN }),
+      this._getList({ ...params, searchFltIds: CATEGORIES[page] + ',' + PRODUCT_CODE.ADDITION })
     ).subscribe(([myWire, plan, additions]) => {
       const error = {
         code: (myWire && myWire.code) || plan.code || additions.code,
@@ -48,7 +61,12 @@ export default class ProductWires extends TwViewController {
     });
   }
 
-  private getMyWireInfo = svcInfo => {
+  /**
+   * @desc 나의 가입 유선 상품 요청
+   * @param {any} svcInfo 세션 정보
+   * @private
+   */
+  private _getMyWireInfo = svcInfo => {
     if (svcInfo && svcInfo.svcAttrCd.startsWith('S')) {
       return this.apiService.request(API_CMD.BFF_05_0179, {}).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
@@ -64,7 +82,12 @@ export default class ProductWires extends TwViewController {
     return of(undefined);
   }
 
-  private getList = params => {
+  /**
+   * @desc 상품 리스트 요청
+   * @param {object} params 필터, 태그, 요금제 or 부가서비스
+   * @private
+   */
+  private _getList = params => {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;

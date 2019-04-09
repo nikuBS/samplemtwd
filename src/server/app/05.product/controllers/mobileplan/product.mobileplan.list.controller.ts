@@ -14,11 +14,25 @@ import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { PRODUCT_CODE } from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 상품 > 모바일 요금제 > 리스트
+ */
 export default class ProductPlans extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
       idxCtgCd: PRODUCT_CODE.MOBILE_PLAN,
@@ -27,7 +41,7 @@ export default class ProductPlans extends TwViewController {
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
-    this.getPlans(params).subscribe(plans => {
+    this._getPlans(params).subscribe(plans => {
       if (plans.code) {
         this.error.render(res, {
           code: plans.code,
@@ -41,7 +55,12 @@ export default class ProductPlans extends TwViewController {
     });
   }
 
-  private getPlans(params) {
+  /**
+   * @desc 리스트 가져오기 요청
+   * @param {object} params 적용된 필터 및 태그
+   * @private
+   */
+  private _getPlans(params) {
     return this.apiService.request(API_CMD.BFF_10_0031, params).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -60,15 +79,15 @@ export default class ProductPlans extends TwViewController {
           return {
             ...plan,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt) ?
-              this.isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
+            basOfrDataQtyCtt: this._isEmptyAmount(plan.basOfrDataQtyCtt) ?
+              this._isEmptyAmount(plan.basOfrMbDataQtyCtt) ?
                 null :
                 ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt) :
               ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
-            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ?
+            basOfrVcallTmsCtt: this._isEmptyAmount(plan.basOfrVcallTmsCtt) ?
               null :
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
-            basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
+            basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter((filter, idx, filters) => {
               return filter.supProdFltId ?
                 // 기기, 데이터, 대상 필터 1개씩만 노출
@@ -82,7 +101,12 @@ export default class ProductPlans extends TwViewController {
     });
   }
 
-  private isEmptyAmount(value: string) {
+  /**
+   * @desc BFF 데이터 빈값 여부 확인
+   * @param {string} value 음성, 문자, 데이터 값
+   * @private
+   */
+  private _isEmptyAmount(value: string) {
     return !value || value === '' || value === '-';
   }
 }

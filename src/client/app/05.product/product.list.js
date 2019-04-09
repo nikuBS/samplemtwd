@@ -14,9 +14,9 @@ Tw.ProductList = function(rootEl, params, pageInfo) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this.cachedElement();
-  this.bindEvent();
-  this.init();
+  this._cachedElement();
+  this._bindEvent();
+  this._init();
 };
 
 Tw.ProductList.prototype = {
@@ -27,7 +27,11 @@ Tw.ProductList.prototype = {
     lowprice: 2
   },
 
-  init: function() {
+  /**
+   * @desc 핸들바 등 추기화
+   * @private
+   */
+  _init: function() {
     this._params.idxCtgCd = this.CODE;
     this._params.searchLastProdId = this.$moreBtn.data('last-product');
     this._leftCount = this.$moreBtn.data('left-count');
@@ -35,13 +39,21 @@ Tw.ProductList.prototype = {
     this._filterTmpl = Handlebars.compile($('#fe-templ-filters').html());
   },
 
-  bindEvent: function() {
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
+  _bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$orderBtn.click(_.debounce($.proxy(this._openOrderPopup, this), 300));
     this.$container.find('.fe-select-filter').click(_.debounce($.proxy(this._handleClickChangeFilters, this), 300));
   },
 
-  cachedElement: function() {
+  /**
+   * @desc jquery 객체 캐싱
+   * @private
+   */
+  _cachedElement: function() {
     this.$total = this.$container.find('.number-text');
     this.$moreBtn = this.$container.find('.extraservice-more > button');
     this.$list = this.$container.find('ul.extraservice-list');
@@ -49,14 +61,29 @@ Tw.ProductList.prototype = {
     this.$filters = this.$container.find('.fe-select-filter');
   },
 
+  /**
+   * @desc 더보기 버튼 클릭시 BFF 서버에 요청
+   * @private
+   */
   _handleLoadMore: function() {
     this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this, undefined));
   },
 
+  /**
+   * @desc 순서를 바겼을 때
+   * @param {string} order 리스팅 순서
+   * @private
+   */
   _handleLoadWithNewOrder: function(order) {
     this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this, order));
   },
 
+  /**
+   * @desc 새로운 데이터가 로딩됐을 때
+   * @param {string} order 리스팅 순서
+   * @param {object} resp 서버 응답
+   * @private
+   */
   _handleSuccessLoadingData: function(order, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
@@ -84,6 +111,10 @@ Tw.ProductList.prototype = {
     this.$list.append(this._listTmpl({ items: items }));
   },
 
+  /**
+   * @desc 상품 데이터 변경
+   * @param {object} item 상품 항목 1개
+   */
   _mapProperData: function(item) {
     if (item.basFeeAmt && /^[0-9]+$/.test(item.basFeeAmt)) {
       item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
@@ -116,6 +147,10 @@ Tw.ProductList.prototype = {
     return item;
   },
 
+  /**
+   * @desc 리스팅 순서 변경 팝업 오픈
+   * @private
+   */
   _openOrderPopup: function() {
     var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
     var list = _.map(Tw.PRODUCT_LIST_ORDER, function(item) {
@@ -142,10 +177,20 @@ Tw.ProductList.prototype = {
     );
   },
 
+  /**
+   * @desc 리스팅 순서 변경 팝업 오픈 시 이벤트 바인딩
+   * @param {$object} $layer 팝업 레이어 jquery 객체
+   * @private
+   */
   _handleOpenOrderPopup: function($layer) {
     $layer.on('change', 'li input', $.proxy(this._handleSelectOrder, this));
   },
 
+  /**
+   * @desc 리스팅 순서 변경 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
   _handleSelectOrder: function(e) {
     var $target = $(e.currentTarget),
       $li = $target.parents('li');
@@ -165,15 +210,26 @@ Tw.ProductList.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @desc 사용자가 필터 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
   _handleClickChangeFilters: function(e) {
     var $target = $(e.currentTarget);
-    if (!this._filters) {
+    if (!this._filters) { // 필터 리스트가 없을 경우 BFF에 요청
       this._apiService.request(Tw.API_CMD.BFF_10_0032, { idxCtgCd: this.CODE }).done($.proxy(this._handleLoadFilters, this, $target));
     } else {
       this._openSelectFiltersPopup($target);
     }
   },
 
+  /**
+   * @desc 필터 리스트 요청 응답 시
+   * @param {$object} $target 팝업 닫은 후 포커스 이동을 위한 jquery 객체
+   * @param {*} resp 
+   * @private
+   */
   _handleLoadFilters: function($target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
@@ -184,6 +240,11 @@ Tw.ProductList.prototype = {
     this._openSelectFiltersPopup($target);
   },
 
+  /**
+   * @desc 필터 변경 팝업 오픈 시 기선택된 필터, 태그 선택 처리 추가
+   * @param {$object} $target 팝업 닫은 후 포커스 이동을 위한 jquery 객체
+   * @private
+   */
   _openSelectFiltersPopup: function($target) {
     var currentFilters = this._params.searchFltIds,
       currentTag = this._params.searchTagId;
@@ -195,26 +256,26 @@ Tw.ProductList.prototype = {
           prodFltId: filter.prodFltId,
           prodFltNm: filter.prodFltNm,
           subFilters:
-            currentFilters && currentFilters.length > 0
-              ? _.map(filter.subFilters, function(subFilter) {
-                  if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
-                    return $.extend({ checked: true }, subFilter);
-                  }
-                  return subFilter;
-                })
-              : filter.subFilters
+            currentFilters && currentFilters.length > 0 ? 
+              _.map(filter.subFilters, function(subFilter) {
+                if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
+                  return $.extend({ checked: true }, subFilter);
+                }
+                return subFilter;
+              }) : 
+              filter.subFilters
         };
       })
       .value();
 
-    var tags = currentTag
-      ? _.map(this._filters.tags, function(tag) {
-          if (currentTag === tag.tagId) {
-            return $.extend({ checked: true }, tag);
-          }
-          return tag;
-        })
-      : this._filters.tags;
+    var tags = currentTag ? 
+      _.map(this._filters.tags, function(tag) {
+        if (currentTag === tag.tagId) {
+          return $.extend({ checked: true }, tag);
+        }
+        return tag;
+      }) : 
+      this._filters.tags;
 
     this._popupService.open(
       {
@@ -230,6 +291,11 @@ Tw.ProductList.prototype = {
     );
   },
 
+  /**
+   * @desc 필터 변경 팝업 오픈 시 팝업에 이벤트 바인딩
+   * @param {$object} $layer 팝업 레이어 jquery 객체
+   * @private
+   */
   _handleOpenSelectFilterPopup: function($layer) {
     $layer.find('.select-list li.checkbox').click(_.debounce($.proxy(this._handleClickFilter, this, $layer), 300));
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
@@ -237,6 +303,10 @@ Tw.ProductList.prototype = {
     $layer.find('.link').click(_.debounce($.proxy(this._openSelectTagPopup, this, $layer), 300));
   },
 
+  /**
+   * @desc 필터 변경 후, 히스토리 관리를 위해서 새로운 페이지로 이동 시킴(기획 요청 사항)
+   * @private
+   */
   _handleCloseSelectFilterPopup: function() {
     if (this._loadedNewSearch) {
       if (this._params.searchFltIds) {
@@ -249,6 +319,12 @@ Tw.ProductList.prototype = {
     }
   },
 
+  /**
+   * @desc 필터 클릭 시 
+   * @param {$object} $layer 필터 변경 팝업 레이어 jquery 객체
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
   _handleClickFilter: function($layer, e) {
     var $target = $(e.currentTarget),
       $selectedTag = $layer.find('.suggest-tag-list .link.active');
@@ -267,12 +343,20 @@ Tw.ProductList.prototype = {
     }
   },
 
+  /**
+   * @desc 기 선택된 태그가 있을 때, 사용자가 필터 선택 Alert에서 취소 버튼 클릭 시 현재 선택된 필터 지움
+   * @private
+   */
   _handleCloseFilterAlert: function() {
     if (this._hasSelectedTag) {
       this.$container.find('.select-list li.checkbox.checked').removeClass('checked').prop('aria-checked', false).find('input').removeAttr('checked');
     }
   },
 
+  /**
+   * @desc 기 선택된 태그가 있을 때, 사용자가 필터 선택 Alert에서 확인 버튼 클릭 시 기선택된 태그 상태 지움
+   * @private
+   */
   _handleResetSelectedTag: function($selectedTag, $target) {
     this._hasSelectedTag = false;
     $selectedTag.removeClass('active');
@@ -280,6 +364,11 @@ Tw.ProductList.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @desc 필터 선택 초기화 버튼 클릭 시 선택된 필터 or 태그 지움
+   * @param {$object} $layer 필터 변경 팝업 레이어 jquery 객체
+   * @private
+   */
   _handleResetFilters: function($layer) {
     var selectedFilters = $layer.find('li[aria-checked="true"]'),
       selectedTag = $layer.find('.suggest-tag-list .link.active');
@@ -291,23 +380,34 @@ Tw.ProductList.prototype = {
     }
   },
 
+  /**
+   * @desc 필터 변경 팝업에서 태그 클릭 시
+   * @param {$object} $layer 필터 변경 팝업 레이어 jquery 객체
+   * @param {Event}} e 클릭 이벤트 객체
+   */
   _openSelectTagPopup: function($layer, e) {
+    var $target = $(e.currentTarget);
     if ($layer.find('li[aria-checked="true"]').length > 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
       this._popupService.openConfirmButton(
         ALERT.MSG,
         ALERT.TITLE,
-        $.proxy(this._handleConfirmSelectTag, this, e.currentTarget),
+        $.proxy(this._handleConfirmSelectTag, this, $target),
         null,
         Tw.BUTTON_LABEL.CLOSE,
         undefined,
-        $(e.currentTarget)
+        $target
       );
     } else {
-      this._handleSelectTag(e.currentTarget);
+      this._handleSelectTag($target);
     }
   },
 
+  /**
+   * @desc 필터 변경하기 버튼 클릭 시 필터 적용
+   * @param {$object} $layer 필터 변경 팝업 레이어 jquery 객체
+   * @private
+   */
   _handleSelectFilters: function($layer) {
     var searchFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
         return input.getAttribute('data-filter-id');
@@ -327,6 +427,13 @@ Tw.ProductList.prototype = {
       .done($.proxy(this._handleLoadDataWithNewFilters, this, originParams, $layer.find('.bt-red1')));
   },
 
+  /**
+   * @desc 리스트 데이터 요청 응답 시
+   * @param {object} originParams 필터 변경되기 전 파라미터
+   * @param {$object} $target alert 후 포커스 이동을 위한 타깃 jquery 객체
+   * @param {object} resp 서버 응답 값
+   * @private
+   */
   _handleLoadDataWithNewFilters: function(originParams, $target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
@@ -343,13 +450,23 @@ Tw.ProductList.prototype = {
     }
   },
 
-  _handleConfirmSelectTag: function(target) {
+  /**
+   * @desc '선택된 필터가 해제되고 태그가 선택됩니다' alert 창에서 확인 버튼 클릭 시
+   * @param {$object} $target alert 후 포커스 이동을 위한 타깃 jquery 객체
+   * @private
+   */
+  _handleConfirmSelectTag: function($target) {
     this._popupService.close();
-    this._handleSelectTag(target);
+    this._handleSelectTag($target);
   },
 
-  _handleSelectTag: function(target) {
-    var selectedTag = target.getAttribute('data-tag-id'),
+  /**
+   * @desc 태그 선택 시
+   * @param {$object} $target alert 후 포커스 이동을 위한 타깃 jquery 객체
+   * @private
+   */
+  _handleSelectTag: function($target) {
+    var selectedTag = $target.data('tag-id'),
       originParams = this._params;
 
     if (this._params.searchTagId === selectedTag) {
@@ -359,9 +476,14 @@ Tw.ProductList.prototype = {
 
     this._params = { idxCtgCd: this.CODE };
     this._params.searchTagId = selectedTag;
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams, $(target)));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams, $target));
   },
 
+  /**
+   * @desc BFF의 음성, 데이터, 문자 데이터가 빈 값인지 확인
+   * @param {string} value BFF의 음성, 데이터, 문자 데이터
+   * @private
+   */
   _isEmptyAmount: function(value) {
     return !value || value === '' || value === '-';
   }

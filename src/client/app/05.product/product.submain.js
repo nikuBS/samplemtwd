@@ -15,14 +15,30 @@ Tw.ProductSubmain = function(rootEl, menuId) {
 };
 
 Tw.ProductSubmain.prototype = {
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {
     this.$container.on('click', '.fe-go-plan', this._goPlan);
   },
 
+  /**
+   * @desc TOS 배너 가져옴
+   * @private
+   */
   _getTosBanner: function() {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: this._getBannerCode() }).done($.proxy(this._successTosBanner, this));
+    this._apiService.request(
+      Tw.NODE_CMD.GET_BANNER_TOS, 
+      { code: this._getBannerCode(Tw.UrlHelper.getLastPath()) }
+    ).done($.proxy(this._successTosBanner, this));
   },
 
+  /**
+   * @desc TOS 배너 요청에 대한 응답 시
+   * @param {object} resp 서버 응답
+   * @private
+   */
   _successTosBanner: function(resp) {
     if (this._checkTosBanner(resp)) {
       if (!Tw.FormatHelper.isEmpty(resp.result.summary)) {
@@ -36,15 +52,29 @@ Tw.ProductSubmain.prototype = {
     }
   },
 
+  /**
+   * @desc TOS 배너 노출 여부 확인
+   * @param {object} tosBanner 서버 응답
+   * @private
+   */
   _checkTosBanner: function(tosBanner) {
     return tosBanner.code === Tw.API_CODE.CODE_00 && (tosBanner.result.bltnYn === 'N' || tosBanner.result.tosLnkgYn === 'Y');
   },
 
+  /**
+   * @desc TOS 배너 노출이 아닐 경우 admin 배너 가져옴
+   * @param {string} menuId 해당 페이지 menu id
+   * @private
+   */
   _getAdminBanners: function(menuId) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId }).done($.proxy(this._handleLoadBanners, this));
     // $.ajax('http://localhost:3000/mock/product.banners.json').done($.proxy(this._handleLoadBanners, this));
   },
 
+  /**
+   * @desc 배너 로딩
+   * @param {object} resp 어드민 배너 응답
+   */
   _handleLoadBanners: function(resp) {
     if (resp.result && resp.result.banners) {
       var topBanners = _.filter(resp.result.banners, function(banner) {
@@ -73,6 +103,10 @@ Tw.ProductSubmain.prototype = {
     }
   },
 
+  /**
+   * @desc 특정 단말에서 a 태그가 동작안하는 현상이 있어 js에서 url 랜딩하도록 수정
+   * @param {Event} e 클릭 이벤트
+   */
   _goPlan: function(e) {
     var url = e.currentTarget.getAttribute('data-url');
     if (url) {
@@ -80,20 +114,18 @@ Tw.ProductSubmain.prototype = {
     }
   },
 
-  _getBannerCode: function() {
-    var uri = Tw.UrlHelper.getLastPath();
+  /**
+   * @desc TOS 배너 코드 리턴
+   * @returns {string} TOS 배너 코드
+   * @private
+   */
+  TOS_BANNER_CODES: {
+    'mobileplan': '0011',
+    'mobileplan-add': '0012',
+    'wireplan': '0013'
+  },
 
-    switch (uri) {
-      case 'mobileplan-add': {
-        return '0012';
-      }
-      case 'wireplan': {
-        return '0013';
-      }
-      // case 'mobileplan':
-      default: {
-        return '0011';
-      }
-    }
+  _getBannerCode: function(uri) {
+    return this.TOS_BANNER_CODES[uri];
   }
 };
