@@ -1,9 +1,15 @@
 /**
- * @file customer.agentsearch.repair-detail.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.01
+ * @file A/S 센터 상세화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-01
  */
 
+
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ * @param  {Object} location - 해당 A/S센터의 위치값
+ */
 Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
   this.$container = rootEl;
   this._location = location;
@@ -13,12 +19,17 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
 
   this._dataChargeConfirmed = false;
 
-  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생 후 나머지 처리
     this._showDataChargePopupIfNeeded();
   }, this));
 };
 
 Tw.CustomerAgentsearchRepairDetail.prototype = {
+
+  /**
+   * @function
+   * @desc Tmap 보여주기 위해 과금팝업 발생시키고 동의 시 지도 표시
+   */
   _showDataChargePopupIfNeeded: function () {
     if (Tw.BrowserHelper.isApp()) {
       var confirmed = false;
@@ -44,6 +55,11 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
   _cacheElements: function () {
     this.$tmapBox = this.$container.find('#fe-map-box');
   },
+
+  /**
+   * @function
+   * @desc Tmap 통해 지도 표시하고 해당 지점 위치를 marker 로 표시
+   */
   _showMap: function () {
     var map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),

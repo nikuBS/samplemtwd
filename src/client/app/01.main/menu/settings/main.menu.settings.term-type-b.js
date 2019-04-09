@@ -1,9 +1,13 @@
 /**
- * @file main.menu.settings.term-type-b-btn.js
+ * @file 약관 세부화면 페이지 처리
  * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.11
+ * @since 2018-10-11
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ */
 Tw.MainMenuSettingsTermTypeB = function (rootEl) {
   this.$container = rootEl;
 
@@ -18,6 +22,12 @@ Tw.MainMenuSettingsTermTypeB.prototype = {
     this.$container.on('click', '#fe-btn-view', $.proxy(this._onViewClicked, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
+
+  /**
+   * @function
+   * @desc 약관보기 클릭시 BFF로 약관 내용 조회하여 화면에 출력
+   * @param  {Object} e - click event
+   */
   _onViewClicked: function (e) {
     var viewId = e.currentTarget.value;
     this._apiService.request(Tw.API_CMD.BFF_08_0059, {
@@ -38,6 +48,12 @@ Tw.MainMenuSettingsTermTypeB.prototype = {
       Tw.Error(err.code, err.msg).pop();
     });
   },
+
+  /**
+   * @function
+   * @desc 외부 브라우저로 링크 열기
+   * @param  {Object} e - click event
+   */
   _onExternalLink: function (e) {
     var url = $(e.currentTarget).attr('href');
     Tw.CommonHelper.openUrlExternal(url);

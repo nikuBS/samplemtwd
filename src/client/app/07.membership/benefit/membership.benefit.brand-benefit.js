@@ -1,7 +1,7 @@
 /**
  * MenuName: T멤버십 > 제휴브랜드 > 혜택보기
  * @file membership.benefit.brand-benefit.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @author 이규광
  * @since 2018.11.05
  * Summary: 제휴브랜드 혜택조회내역 출력, 내주변가맹점 조회, 인기브랜드 조회
  */
