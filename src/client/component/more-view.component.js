@@ -1,7 +1,12 @@
 /**
  * @file more-view.component
  * @author 양정규 (skt.P130715@partner.sk.com)
- * @since 2018.08.09
+ * @since 2018-08-09
+ */
+
+/**
+ * @class
+ * @desc "더보기" 리스트인 경우 관련기능 제공
  */
 Tw.MoreViewComponent = function () {
   this._lastYear = '';
@@ -9,7 +14,11 @@ Tw.MoreViewComponent = function () {
 
 Tw.MoreViewComponent.prototype = {
 
-  // 더보기 버튼 이벤트 유무
+  /**
+   * @function
+   * @desc 더보기 버튼 이벤트 유무
+   * @returns {boolean}
+   */
   _hasMoreEvent : function () {
     var _data = this._data;
     var format = Tw.FormatHelper;
@@ -26,7 +35,10 @@ Tw.MoreViewComponent.prototype = {
     }
   },
 
-  // 더보기 클릭 이벤트
+  /**
+   * @function
+   * @desc 더보기 클릭 이벤트
+   */
   _moreViewEvent : function () {
     if ( !this._hasMoreEvent() ) {
       return;
@@ -35,12 +47,12 @@ Tw.MoreViewComponent.prototype = {
   },
 
   /**
-   * 타임라인 형식 리스트로 변환
-   * @param list
-   * @param groupDateKey : 년도, 일자 로 묶을 키명
-   * @param subSortDateKey : 같은 일자일 경우 정렬할 키명
-   * @returns {*[]}
-   * @private
+   * @function
+   * @desc 타임라인 형식 리스트로 변환
+   * @param {ArrayList} list
+   * @param {String} groupDateKey : 년도, 일자 로 묶을 키명
+   * @param {String} subSortDateKey : 같은 일자일 경우 정렬할 키명
+   * @returns {JSON}
    */
   _convertData : function (list, groupDateKey) {
     if ( Tw.FormatHelper.isEmpty(list) || Tw.FormatHelper.isEmpty(groupDateKey) ) {
@@ -75,7 +87,11 @@ Tw.MoreViewComponent.prototype = {
     return _.sortBy(data, 'year').reverse();
   },
 
-  // 최초 한번 전체 리스트를 셋 한다.
+  /**
+   * @function
+   * @desc 최초 한번 전체 리스트를 셋 한다.
+   * @param {JSON} data
+   */
   init : function (data) {
     if ( !data ) {
       return;
@@ -100,7 +116,10 @@ Tw.MoreViewComponent.prototype = {
     }
   },
 
-  // 더보기
+  /**
+   * @function
+   * @desc "더보기" 버튼 클릭 시 수행로직
+   */
   onMoreView : function () {
     if( !this._hasMoreEvent() ){
       return;
@@ -130,7 +149,11 @@ Tw.MoreViewComponent.prototype = {
     }
   },
 
-  // _MORE_CNT 만큼의 리스트 와 다음 리스트의 잔여 카운트를 리턴한다.
+  /**
+   * @function
+   * @desc _MORE_CNT 만큼의 리스트 와 다음 리스트의 잔여 카운트를 리턴한다.
+   * @returns {JSON}
+   */
   shift : function () {
     if ( !this._moreList || !this._moreList.length ) {
       return {
