@@ -1,7 +1,7 @@
 /**
- * @file product.roaming.controller.ts
- * @author Juho Kim (jhkim@pineone.com)
- * @since 2018.11.20
+ * T로밍 서브메인 화면 처리
+ * @author Juho Kim
+ * @since 2018-11-20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -24,6 +24,12 @@ export default class ProductRoaming extends TwViewController {
     }
   }
 
+  /**
+   * 미로그인 상태에서 render 실행
+   * @param res Response 객체
+   * @param svcInfo 서비스 정보
+   * @param pageInfo 페이지 정보
+   */
   private renderLogout(res: Response, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getBanners(pageInfo),
@@ -40,6 +46,12 @@ export default class ProductRoaming extends TwViewController {
     });
   }
 
+  /**
+   * 로그인 상태에서 render 실행
+   * @param res Response 객체
+   * @param svcInfo 서비스 정보
+   * @param pageInfo 페이지 정보
+   */
   private renderLogin(res: Response, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getRoamingCount(),
@@ -58,6 +70,11 @@ export default class ProductRoaming extends TwViewController {
     });
   }
 
+  /**
+   * 로그인 여부 확인
+   * @param svcInfo 서비스 정보
+   * @returns 로그인 상태면 true로 반환
+   */
   private isLogin(svcInfo: any): boolean {
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return false;
@@ -65,6 +82,10 @@ export default class ProductRoaming extends TwViewController {
     return true;
   }
 
+  /**
+   * 나의 로밍 요금제 정보 영역 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 null 반환
+   */
   private getRoamingCount(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0055, {}).map((resp) => {
       if ( resp.code !== API_CODE.CODE_00 ) {
@@ -76,6 +97,11 @@ export default class ProductRoaming extends TwViewController {
     });
   }
 
+  /**
+   * 배너조회
+   * @param pageInfo 페이지정보
+   * @returns 성공 시 result에 상단, 중단 배너를 분류한 프로퍼티를 추가하여 반한하고, 실패 시 null 반환
+   */
   private getBanners(pageInfo): Observable<any> {
     return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map((resp) => {
       if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
@@ -105,6 +131,10 @@ export default class ProductRoaming extends TwViewController {
     });
   }
 
+  /**
+   * 로밍 개별상품 조회
+   * @returns 성공 시 result 값을 반환하고, 실패 시 null 반환
+   */
   private getSprateProds(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0123, {}).map((resp) => {
       if ( resp.code !== API_CODE.CODE_00 ) {
