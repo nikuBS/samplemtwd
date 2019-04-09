@@ -1,8 +1,16 @@
 /**
  * @file benefit.index.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * 혜택 할인 Index
- * @since 2018.10.26
+ * @since 2018-10-26
+ */
+
+/**
+ * @class
+ * @desc 혜택 할인 Index
+ * @param {Object} rootEl - dom 객체
+ * @param {JSON} svcInfo
+ * @param {String} bpcpServiceId
+ * @param {String} eParam
  */
 Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this.$container = rootEl;
@@ -23,8 +31,8 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
 
 Tw.BenefitIndex.prototype = {
   /**
-   * 최초 실행
-   * @private
+   * @function
+   * @desc 최초 실행
    */
   _init: function () {
     this._initVariables();
@@ -37,8 +45,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * BPCP 최초 호출
-   * @private
+   * @function
+   * @desc BPCP 최초 호출
    */
   _initBpcp: function() {
     this._bpcpService.open(this._bpcpServiceId);
@@ -46,8 +54,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _initVariables: function () {
     this.$benefitArea = this.$container.find('#fe-my-benefit-area');
@@ -74,8 +82,8 @@ Tw.BenefitIndex.prototype = {
     this._G1 = 'G1'; // Giga code값
   },
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
     // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
@@ -89,8 +97,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * API 요청모음
-   * @private
+   * @function
+   * @desc API 요청모음
    */
   _allRequest: function () {
     // 미 로그인, 준회원, 유선인 경우 [혜택/할인] 리스트만 조회한다.
@@ -102,9 +110,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 카테고리 아이디에 해당하는 탭 위치로 스크롤
-   * @param categoryId
-   * @private
+   * @function
+   * @desc 카테고리 아이디에 해당하는 탭 위치로 스크롤
+   * @param {String} categoryId
    */
   _setScrollLeft: function (categoryId) {
     var $target = this.$categoryTab.find('[data-category="' + categoryId + '"]').parent();
@@ -114,15 +122,15 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 리스트 내의 카테고리 클릭 시 해당 상품 원장으로 이동
+   * @function
+   * @desc 리스트 내의 카테고리 클릭 시 해당 상품 원장으로 이동
    * 예외 case
    * + 외부 브라우저로 띄우기
    *  무엇이든 될 수 있는0(TW20000014)
    *  T 아너스 클럽(TW20000018)
    * + in app 으로 띄우기
    *  데이터 충전소(TW20000019) : 이건 BPCP 호출
-   * @param e
-   * @private
+   * @param {Object} e
    */
   _onClickProduct: function (e) {
     var _benefitId = $(e.currentTarget).data('benefitId');
@@ -140,9 +148,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 과금발생 알러트
-   * @param e
-   * @private
+   * @function
+   * @desc 과금발생 알러트
+   * @param {String} _href - 이동할 url
    */
   _alertCharge: function (_href) {
     if (Tw.FormatHelper.isEmpty(_href)) {
@@ -160,9 +168,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 인터넷 회선 선택에 따른, 이동전화 증/감(+,-) 버튼 Disabled 처리함.
-   * @param e
-   * @private
+   * @function
+   * @desc 인터넷 회선 선택에 따른, 이동전화 증/감(+,-) 버튼 Disabled 처리함.
+   * @param {Object} e
    */
   _checkStateLine: function (e) {
     var $this = $(e.currentTarget);
@@ -198,9 +206,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 이동전화 회선 증/감 클릭 이벤트
-   * @param e
-   * @private
+   * @function
+   * @desc 이동전화 회선 증/감 클릭 이벤트
+   * @param {Object} e
    */
   _onVariations: function (e) {
     var $this = $(e.currentTarget);
@@ -228,8 +236,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * '할인금액 보기' 버튼 disabled 체크 (인터넷 & TV 가 체크 되어야 활성화)
-   * @private
+   * @function
+   * @desc '할인금액 보기' 버튼 disabled 체크 (인터넷 & TV 가 체크 되어야 활성화)
    */
   _onCheckDisabled: function () {
     var isDisabled = false;
@@ -244,17 +252,17 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 페이지 이동
-   * @param e
-   * @private
+   * @function
+   * @desc 페이지 이동
+   * @param {Object} e
    */
   _goUrl: function (e) {
     window.location.href = $(e.currentTarget).data('url');
   },
 
   /**
-   * 핸들바스 파일에서 사용할 펑션 등록
-   * @private
+   * @function
+   * @desc 핸들바스 파일에서 사용할 펑션 등록
    */
   _registerHelper: function () {
     Handlebars.registerHelper('numComma', function(val){
@@ -275,17 +283,17 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 나의 혜택/할인 요청 가능여부
+   * @function
+   * @desc 나의 혜택/할인 요청 가능여부
    * @returns {boolean}
-   * @private
    */
   _isAbleDiscountInfoReq: function () {
     return !(!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1);
   },
 
   /**
-   * 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
-   * @private
+   * @function
+   * @desc 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
    */
   _reqMyBenefitDiscountInfo: function () {
     this.$benefitArea.removeClass('none');
@@ -304,9 +312,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * _reqMyBenefitDiscountInfo 성공 콜백
+   * @function
+   * @desc _reqMyBenefitDiscountInfo 성공 콜백
    * 상단 > 나의 혜택.할인 정보 값 설정
-   * @private
    */
   _successMyBenefitDiscountInfo: function () {
     var data = {
@@ -369,9 +377,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 카테고리 '탭' 선택
-   * @param categoryId
-   * @private
+   * @function
+   * @desc 카테고리 '탭' 선택
+   * @param {String} categoryId
    */
   _switchTab: function (categoryId) {
     // 모두 체크해제 , 현재 탭 활성화
@@ -389,9 +397,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * URL 마지막 Path 에 해당하는 카테고리 아이디 반환
-   * @returns {*}
-   * @private
+   * @function
+   * @desc URL 마지막 Path 에 해당하는 카테고리 아이디 반환
+   * @returns {String}
    */
   _convertPathToCategory : function () {
     var categoryId = {
@@ -405,9 +413,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 상품 리스트 조회요청
-   * @param category
-   * @private
+   * @function
+   * @desc 상품 리스트 조회요청
+   * @param {String} category
    */
   _reqProductList: function (category) {
     this._apiService
@@ -421,20 +429,20 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps
-   * @param list        : 상품 리스트
-   * @returns {string}  : 클래스 이름
-   * @private
+   * @function
+   * @desc 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps
+   * @param {int} nextCount - 다음 리스트 카운트
+   * @returns {string}  - 클래스 이름
    */
   _getCssMore: function (nextCount) {
     return nextCount < 1 ? 'nogaps-top' : 'nogaps';
   },
 
   /**
-   * _reqProductList() 성공시 콜백
-   * @param category
-   * @param resp
-   * @private
+   * @function
+   * @desc _reqProductList() 성공시 콜백
+   * @param {String} category
+   * @param {JSON} resp
    */
   _successProductList: function (category, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -463,10 +471,10 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 상품 리스트 렌더
-   * @param category
-   * @param res
-   * @private
+   * @function
+   * @desc 상품 리스트 렌더
+   * @param {String} category
+   * @param {JSON} res
    */
   _renderList: function (category, res) {
     var source = $('#productList').html();
@@ -480,8 +488,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 할인금액 보기 조회 요청
-   * @private
+   * @function
+   * @desc 할인금액 보기 조회 요청
    */
   _reqDiscountAmt: function () {
     this._apiService
@@ -495,9 +503,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 할인금액 보기 조회 요청 성공시
-   * @param resp
-   * @private
+   * @function
+   * @desc 할인금액 보기 조회 요청 성공시
+   * @param {JSON} resp
    */
   _successDiscountAmt: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -520,8 +528,8 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 할인금액 미리보기 선택값 초기화
-   * @private
+   * @function
+   * @desc 할인금액 미리보기 선택값 초기화
    */
   _previewClear: function() {
     // 인터넷
@@ -545,9 +553,9 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();

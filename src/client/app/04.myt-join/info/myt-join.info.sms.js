@@ -1,8 +1,14 @@
 /**
  * @file myt-join.info.sms.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * @since 2018. 10. 15
- * 망 작업 SMS 알림 신청
+ * @since 2018-10-15
+ */
+
+/**
+ * @class
+ * @desc MyT > 나의가입정보(인터넷) > 망 작업 SMS 알림 신청
+ * @param {Object} rootEl - dom 객체
+ * @param {JSON} options
  */
 Tw.MyTJoinInfoSms = function (rootEl, options) {
   this.$container = rootEl;
@@ -15,8 +21,8 @@ Tw.MyTJoinInfoSms = function (rootEl, options) {
 
 Tw.MyTJoinInfoSms.prototype = {
   /**
-   * 최초 실행
-   * @private
+   * @function
+   * @desc 최초 실행
    */
   _init: function () {
     this._initVariables();
@@ -26,8 +32,8 @@ Tw.MyTJoinInfoSms.prototype = {
     }
   },
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _initVariables: function () {
     this.$btnSubmit = this.$container.find('#fe-btn-submit');
@@ -35,8 +41,8 @@ Tw.MyTJoinInfoSms.prototype = {
     this.$telErrorTxt = this.$container.find('#fe-tel-error-txt');
   },
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
     this.$container.on('keyup focus change', '[data-require]', $.proxy(this._onDisableStatus, this));
@@ -45,8 +51,8 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   /**
-   * 닫기 버튼 클릭 시 [확인]
-   * @private
+   * @function
+   * @desc 닫기 버튼 클릭 시 [확인]
    */
   _onCloseConfirm: function() {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
@@ -57,9 +63,9 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   /**
-   * 필수값 입력 유무에 따른 "[신청|변경]하기" 버튼 disabled/enabled 처리
-   * @param e
-   * @private
+   * @function
+   * @desc 필수값 입력 유무에 따른 "[신청|변경]하기" 버튼 disabled/enabled 처리
+   * @param {Object} e
    */
   _onDisableStatus: function (e) {
     var isOk = false;
@@ -89,8 +95,8 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   /**
-   * 망 작업 SMS 알림 신청 요청
-   * @private
+   * @function
+   * @desc 망 작업 SMS 알림 신청 요청
    */
   _reqSms: function () {
     var _tels = this.$tel.val().split('-');
@@ -106,9 +112,9 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   /**
-   * _reqSms 성공 콜백. 신청|변경 완료 알러트 띄움
-   * @param resp
-   * @private
+   * @function
+   * @desc _reqSms 성공 콜백. 신청|변경 완료 알러트 띄움
+   * @param {JSON} resp
    */
   _onSuccess: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -122,17 +128,17 @@ Tw.MyTJoinInfoSms.prototype = {
   },
 
   /**
-   * 뒤로가기
-   * @private
+   * @function
+   * @desc 뒤로가기
    */
   _onClose: function () {
     this._historyService.goBack();
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();

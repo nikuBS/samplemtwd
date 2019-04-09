@@ -1,8 +1,14 @@
 /**
  * @file myt-fare.bill.set.js
  * @author 양정규 (skt.P130715@partner.sk.com)
- * 요금 안내서 설정
- * @since 2018. 9. 13
+ * @since 2018-09-13
+ */
+
+/**
+ * @class
+ * @desc MyT > 나의요금 > 요금 안내서 설정
+ * @param {Object} rootEl - dom 객체
+ * @param {ArrayList} integrateList - 통합청구 등록회선 리스트
  */
 Tw.MyTFareBillSet = function (rootEl, integrateList) {
   this.$container = rootEl;
@@ -13,8 +19,8 @@ Tw.MyTFareBillSet = function (rootEl, integrateList) {
 
 Tw.MyTFareBillSet.prototype = {
   /**
-   * 최초 실행
-   * @private
+   * @function
+   * @desc 최초 실행
    */
   _init: function () {
     this._initVariables();
@@ -22,23 +28,23 @@ Tw.MyTFareBillSet.prototype = {
     this._initIntegrateList();
   },
   /**
-   * 초기값 설정
-   * @private
+   * @function
+   * @desc 초기값 설정
    */
   _initVariables: function () {
     this.$integrateListArea = this.$container.find('#fe-integrate-list'); // 통합청구 등록회선 리스트 영역
   },
   /**
-   * 이벤트 설정
-   * @private
+   * @function
+   * @desc 이벤트 설정
    */
   _bindEvent: function () {
     this.$container.on('click', '#fe-app-down', $.proxy(this._onDownload, this));
   },
 
   /**
-   * 통합청구 등록회선 리스트
-   * @private
+   * @function
+   * @desc 통합청구 등록회선 리스트
    */
   _initIntegrateList: function () {
     if (this._integrateList.length < 1) {
@@ -54,9 +60,9 @@ Tw.MyTFareBillSet.prototype = {
   },
 
   /**
-   * 통합청구 등록회선 리스트 render
-   * @param res
-   * @private
+   * @function
+   * @cesc 통합청구 등록회선 리스트 render
+   * @param {JSON} res
    */
   _renderList: function (res) {
     var source = $('#integrateList').html();
@@ -69,8 +75,9 @@ Tw.MyTFareBillSet.prototype = {
   },
 
   /**
-   * Bill Letter app 다운로드
-   * @private
+   * @function
+   * @desc Bill Letter app 다운로드
+   * @param {JSON} event
    */
   _onDownload: function (e) {
     e.preventDefault();
@@ -79,9 +86,9 @@ Tw.MyTFareBillSet.prototype = {
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();

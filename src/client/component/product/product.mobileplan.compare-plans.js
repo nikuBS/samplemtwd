@@ -1,9 +1,12 @@
 /**
  * @file product.mobileplan.compare-plans.js
- * MP_02_02_01
- * 설명 : 상품 > 요금제 비교하기
  * @author 양정규 (skt.P130715@partner.sk.com)
- * @since 2018.11.26
+ * @since 2018-11-26
+ */
+
+/**
+ * @class
+ * @desc 상품 > 요금제 > 리스트 > 요금제 비교하기
  */
 Tw.ProductMobilePlanComparePlans = function () {
 
@@ -17,6 +20,7 @@ Tw.ProductMobilePlanComparePlans = function () {
 Tw.ProductMobilePlanComparePlans.prototype = {
 
   /**
+   * @function
    * 요금제 비교하기 팝업생성
    * @param prodId    : 상품ID
    * @param isShowBtn : 하단 [요금제 가입하기] 버튼 노출유무
@@ -67,9 +71,9 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * API 에러 유무
+   * @function
+   * @desc API 에러 유무
    * @returns {boolean}
-   * @private
    */
   _apiError: function () {
     var $this = this;
@@ -86,12 +90,12 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * openCompare.callAll() 펑션 호출 성공시 콜백함수
-   * @param basicInfo     : 상품기본정보(BFF_10_0001) 리턴값
-   * @param recentUsage   : 최근사용량(BFF_05_0091) 리턴값
-   * @param prodRedisInfo : redis 상품원장(GET_PRODUCT_INFO) 리턴값
-   * @param contents      : resit 컨텐츠 조회(GET_PRODUCT_COMPARISON) 리턴값
-   * @private
+   * @function
+   * @desc openCompare.callAll() 펑션 호출 성공시 콜백함수
+   * @param {JSON} basicInfo     : 상품기본정보(BFF_10_0001) 리턴값
+   * @param {JSON} recentUsage   : 최근사용량(BFF_05_0091) 리턴값
+   * @param {JSON} prodRedisInfo : redis 상품원장(GET_PRODUCT_INFO) 리턴값
+   * @param {JSON} contents      : resit 컨텐츠 조회(GET_PRODUCT_COMPARISON) 리턴값
    */
   _successOnInit: function (basicInfo, recentUsage, prodRedisInfo, contents) {
     if (this._apiError(basicInfo, prodRedisInfo, contents)) return;
@@ -161,10 +165,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * MP_02_02_01 팝업 생성이후 콜백함수
-   * @param _data
-   * @param $layer
-   * @private
+   * @function
+   * @desc MP_02_02_01 팝업 생성이후 콜백함수
+   * @param {JSON} _data - 차트 생성 전달 데이터
+   * @param {Object} $layer
    */
   _afterComparePop: function (_data, $layer) {
     // [요금제 가입하기] 버튼 노출/비노출
@@ -182,18 +186,18 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * MP_02_02_01 팝업 생성이후 close 시 콜백함수
-   * @private
+   * @function
+   * @desc MP_02_02_01 팝업 생성이후 close 시 콜백함수
    */
   _closeComparePop: function () {
     this._isOpen = false;
   },
 
   /**
-   * 요금제 데이타 파싱
-   * @param productInfo
-   * @returns {*}
-   * @private
+   * @function
+   * @desc 요금제 데이타 파싱
+   * @param {JSON} productInfo
+   * @returns {JSON} productInfo
    */
   _parseProduct: function (productInfo) {
     if (Tw.FormatHelper.isEmpty(productInfo) || Tw.FormatHelper.isEmpty(productInfo.summary)) {
@@ -222,10 +226,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * 가입 페이지 URL 반환
-   * @param basicInfo
-   * @returns {*}
-   * @private
+   * @function
+   * @desc 가입 페이지 URL 반환
+   * @param {JSON} basicInfo
+   * @returns {JSON} - 수신한 가입 url
    */
   _getJoinUrl: function(basicInfo) {
     var res = {
@@ -243,9 +247,9 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * 무선상품 가입 사전체크 API 호출
-   * @param e
-   * @private
+   * @function
+   * @desc 무선상품 가입 사전체크 API 호출
+   * @param {Object} e
    */
   _goJoinUrl: function (e) {
     var joinUrl = $(e.currentTarget).data('joinUrl');
@@ -261,12 +265,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * _goJoinUrl 성공 콜백함수
-   * 성공시 가입하기 페이지로 이동
-   * @param href
-   * @param resp
-   * @returns {*|void}
-   * @private
+   * @function
+   * @desc _goJoinUrl 성공 콜백함수(성공시 가입하기 페이지로 이동)
+   * @param {String} href
+   * @param {JSON} resp
    */
   _goJoinDone: function (href, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -277,10 +279,10 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * 현재 요금제와 비교 요금제 차트 생성
-   * @param $layer
-   * @param data
-   * @private
+   * @function
+   * @desc 현재 요금제와 비교 요금제 차트 생성
+   * @param {Object} $layer
+   * @param {JSON} data - 차트 생성할 데이터
    */
   _initChart: function ($layer, data) {
     /*
@@ -315,9 +317,9 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   /**
-   * API Fail
-   * @param err
-   * @private
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
    */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
