@@ -16,9 +16,9 @@ Tw.CustomerPraise = function(rootEl) {
 };
 
 Tw.CustomerPraise.prototype = {
-  REPLACE_CONTENTS: '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY + '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE,
-  MAX_REASON_BYTES: 12000,
-  TYPES: {
+  REPLACE_CONTENTS: '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY + '|' + Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE, // 대상 변경 시 label 변경을 위한 const
+  MAX_REASON_BYTES: 12000,  // textarea 최대 입력 값(bytes)
+  TYPES: {  // BFF 타입
     OFFICE: 'T40',
     STORE: 'T10',
     CUSTOMER_CENTER: 'T30',
@@ -27,6 +27,10 @@ Tw.CustomerPraise.prototype = {
     HAPPY_MANAGER: 'T60'
   },
 
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {
     this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this, false));
     this.$container.on('keydown', '.input > input', $.proxy(this._handleKeydownInput, this));
@@ -42,6 +46,10 @@ Tw.CustomerPraise.prototype = {
     new Tw.InputFocusService(this.$container, this.$submitBtn);
   },
 
+  /**
+   * @desc jquery 객체 캐싱
+   * @private
+   */
   _cachedElement: function() {
     this.$reasons = this.$container.find('textarea.inner-tx');
     this.$reasonBytes = this.$container.find('span.byte-current');
@@ -54,10 +62,19 @@ Tw.CustomerPraise.prototype = {
     this.$statement = this.$container.find('#fe-statement');
   },
 
+  /**
+   * @desc [DV001-16183] 칭찬합니다 저사양 단말에서 전의 인풋 입력 값 복사되는 현상 수정
+   * @param {Event} e 클릭 이벤트 객체
+   * @desc
+   */
   _handleKeydownInput: function(e) {
     e.stopPropagation();
   },
 
+  /**
+   * @desc 대상 변경 클릭 시
+   * @private
+   */
   _openSelectTypePopup: function() {
     var selectedType = this._selectedType,
       list = selectedType ?
@@ -83,10 +100,18 @@ Tw.CustomerPraise.prototype = {
     );
   },
 
+  /**
+   * @desc 대상 선택 팝업 이벤트 바인딩
+   * @private
+   */
   _handleOpenSelectType: function($layer) {
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 
+  /**
+   * @desc 대상 선택 시 입력 값 설정
+   * @private
+   */
   _handleSelectType: function(e) {
     if (this.$statement.hasClass('none')) {
       this.$statement.removeClass('none').prop('aria-hidden', false);
@@ -146,6 +171,10 @@ Tw.CustomerPraise.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @desc 대상에 따른 인풋 라벨 설정
+   * @private
+   */
   _setInputField: function(replace) {
     var $input = this.$divRole.find('input');
     var currentTitle = $input.attr('title');
@@ -161,11 +190,19 @@ Tw.CustomerPraise.prototype = {
     this.$divRole.removeClass('none').attr('aria-hidden', false);
   },
 
+  /**
+   * @desc 대상에 따른 인풋 최대 입력값 세팅
+   * @private
+   */
   _setInputMaxLength: function(role, subject) {
     this.$divRole.find('input').attr('maxLength', role);
     this.$subject.find('input').attr('maxLength', subject);
   },
 
+  /**
+   * @desc 지역 변경 선택 시
+   * @private
+   */
   _openSelectAreaPopup: function() {
     var selected = this._selectedArea,
       list = selected ?
@@ -192,10 +229,18 @@ Tw.CustomerPraise.prototype = {
     );
   },
 
+  /**
+   * @desc 지역 변경 팝업 이벤트 바인딩
+   * @private
+   */
   _handleOpenSelectArea: function($layer) {
     $layer.on('change', 'li input', $.proxy(this._handleSelectArea, this));
   },
 
+  /**
+   * @desc 지역 선택 시 라벨 설정
+   * @private
+   */
   _handleSelectArea: function(e) {
     var $target = $(e.currentTarget),
       $li = $target.parents('li');
@@ -212,6 +257,10 @@ Tw.CustomerPraise.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @desc 칭찬하는 이유 타이핑 시
+   * @private
+   */
   _handleTypeReasons: function(e) {
     var target = e.currentTarget;
     var byteCount = Tw.InputHelper.getByteCount(target.value);
@@ -225,12 +274,21 @@ Tw.CustomerPraise.prototype = {
     this._setAvailableSubmit();
   },
 
+  /**
+   * @desc 칭찬하는 이유 byte 값 초기화
+   * @private
+   */
   _resetCount: function() {
     this.$reasonBytes.text('0');
   },
 
-  _setAvailableSubmit: function(disabled) {
-    if (disabled) {
+  /**
+   * @desc 칭찬하기 버튼 활성화
+   * @param {boolean} disable 버튼 활성화 여부
+   * @private
+   */
+  _setAvailableSubmit: function(disable) {
+    if (disable) {
       this.$submitBtn.attr('disabled', true);
       return;
     }
@@ -248,6 +306,10 @@ Tw.CustomerPraise.prototype = {
     }
   },
 
+  /**
+   * @desc 칭찬하기 버튼 클릭 시 서버에 요청
+   * @private
+   */
   _handleSubmit: function() {
     var values = {
       office: this.$divRole.find('input').val(),
@@ -274,6 +336,11 @@ Tw.CustomerPraise.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0058, params).done($.proxy(this._successSubmit, this));
   },
 
+  /**
+   * @desc 칭찬합니다 서버 요청 응답 시
+   * @param {object} resp 서비 응답 데이터
+   * @private
+   */
   _successSubmit: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
@@ -299,10 +366,19 @@ Tw.CustomerPraise.prototype = {
     }
   },
 
+  /**
+   * @desc 완료 팝업 오픈 시
+   * @param {$object} $layer 팝업 레이어 jquery 객체
+   * @private
+   */
   _openCompletePopup: function($layer) {
     $layer.find('.fe-btn_close').on('click', this._popupService.close);
   },
 
+  /**
+   * @desc 입력 데이터 초기화
+   * @private
+   */
   _clearForm: function() {
     this.$divRole.addClass('none').attr('aria-hidden', true);
     this.$pRole.addClass('none').attr('aria-hidden', true);
