@@ -1,4 +1,5 @@
 /**
+ * 로밍 상품 가입 종료일 자동설정 case
  * @file product.roaming.setting.roaming-auto.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.03

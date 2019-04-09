@@ -1,4 +1,5 @@
 /**
+ * 로밍 함께쓰기 가입 회선 설정
  * @file product.roaming.join.roaming-combine.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.05

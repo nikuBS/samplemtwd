@@ -5,7 +5,17 @@
  * ID : RM_11_01_02_07
  */
 
-Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
+/**
+ * @class
+ * @desc 로밍 함께쓰기 설정 변경 페이지
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {String} prodRedisInfo - 상품 원장 정보
+ * @param {Object} prodBffInfo – 상품 상세 정보
+ * @param {String} prodId - 상품 id
+ * @returns {void}
+ */
+Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -13,7 +23,6 @@ Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffI
   this._nativeService = Tw.Native;
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
-  this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);

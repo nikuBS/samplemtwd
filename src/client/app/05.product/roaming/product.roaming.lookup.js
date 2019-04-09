@@ -3,7 +3,15 @@
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.03
  */
-
+/**
+ * @class
+ * @desc 로밍 시작일 종료일 조회 페이지
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {String} prodBffInfo- 상품 원장 정보
+ * @param {Object} prodId  – 상품 id
+ * @returns {void}
+ */
 Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {
 
   this.$container = rootEl;
@@ -17,6 +25,12 @@ Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {
 };
 
 Tw.ProductRoamingLookup.prototype = {
+  /**
+   * @function
+   * @member
+   * @desc 초기화
+   * @returns {void}
+   */
   _init : function(){
     var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,'YYYYMMDD');
     var endDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,'YYYYMMDD');
@@ -28,12 +42,31 @@ Tw.ProductRoamingLookup.prototype = {
       this.$container.find('.point').text(Tw.FormatHelper.addComma(this._prodBffInfo.prodFee+Tw.CURRENCY_UNIT.WON));
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 이벤트 바인딩
+   * @returns {void}
+   */
   _bindBtnEvents: function () {
     this.$container.on('click','.popup-closeBtn',$.proxy(this._goBack,this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 뒤로가기
+   * @returns {void}
+   */
   _goBack : function () {
     this._history.goBack();
   },
+  /**
+   * @function
+   * @member
+   * @desc 상품별 툴팁 출력 구분
+   * @param {String} prodId 상품 id
+   * @returns {void}
+   */
   _tooltipInit : function (prodId) {
     switch (prodId) {
       case 'NA00004088':
