@@ -33,30 +33,6 @@ Tw.ProductRoamingMyUse.prototype = {
   },
   _init : function() {
     this._initTab();
-    // this._checkLogin();
-
-    this._checkDataApi();
-    // setTimeout($.proxy(this._checkDataApi, this), 1000);
-  },
-  _checkDataApi: function() {
-    // this._apiService.request(Tw.API_CMD.BFF_05_0201, {})
-    //   .done($.proxy(this._successDataApi, this));
-
-    this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_10_0056, params: {} },
-      { command: Tw.API_CMD.BFF_05_0201, params: {} },
-      { command: Tw.API_CMD.BFF_05_0202, params: {} }
-    ]).done($.proxy(this._successDataApi, this))
-      .fail($.proxy(this._failDataApi, this));
-  },
-  _successDataApi: function(roamingFeePlan, troamingData, troamingLikeHome) {
-  // _successDataApi: function(troamingData) {
-    Tw.Logger.info('[BFF_10_0056]', JSON.stringify(roamingFeePlan));
-    Tw.Logger.info('[BFF_05_0201]', JSON.stringify(troamingData));
-    Tw.Logger.info('[BFF_05_0202]', JSON.stringify(troamingLikeHome));
-  },
-  _failDataApi: function() {
-
   },
   _initTab: function() {
     var hash = window.location.hash;
