@@ -2,6 +2,7 @@
  * @file main.home.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.09.06
+ * @desc 메인 > 홈
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
@@ -27,11 +28,25 @@ import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
+/**
+ * @desc 메인화면-MY 초기화를 위한 class
+ */
 class MainHome extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * 메인화면-MY 렌더 함수
+   * @param {Request} req
+   * @param {Response} res
+   * @param {NextFunction} next
+   * @param {object} svcInfo
+   * @param {object} allSvc
+   * @param {object} childInfo
+   * @param {object} pageInfo
+   * @return {void}
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const svcType = this.getSvcType(svcInfo);
     const homeData = {
@@ -91,7 +106,12 @@ class MainHome extends TwViewController {
     }
   }
 
-  private getSmartCardOrder(svcMgmtNum): Observable<any> {
+  /**
+   * redis에서 스마트 카드 순서를 가져옴
+   * @param {string} svcMgmtNum
+   * @return {Observable<any>}
+   */
+  private getSmartCardOrder(svcMgmtNum: string): Observable<any> {
     if ( FormatHelper.isEmpty(svcMgmtNum) ) {
       return Observable.of([]);
     }
@@ -118,7 +138,12 @@ class MainHome extends TwViewController {
       });
   }
 
-  private getSvcType(svcInfo): any {
+  /**
+   * svcInfo 에서 필요한 정보를 object로 구성
+   * @param {object} svcInfo
+   * @return {object}
+   */
+  private getSvcType(svcInfo: any): any {
     const svcType = {
       svcCategory: LINE_NAME.MOBILE,
       mobilePhone: false,
@@ -139,7 +164,13 @@ class MainHome extends TwViewController {
     return svcType;
   }
 
-  private getRedisData(noticeCode, svcMgmtNum): Observable<any> {
+  /**
+   * 홈화면 렌더링에 필요한 redis 데이터 요청
+   * @param {string} noticeCode
+   * @param {string} svcMgmtNum
+   * @return {Observable<any>}
+   */
+  private getRedisData(noticeCode: string, svcMgmtNum: string): Observable<any> {
     return Observable.combineLatest(
       this.getNoti(),
       this.getHomeNotice(noticeCode),
@@ -156,6 +187,10 @@ class MainHome extends TwViewController {
     });
   }
 
+  /**
+   * 홈화면 Welcome Message 요청
+   * @return {Observable<any>}
+   */
   private getNoti(): Observable<any> {
     return this.redisService.getData(REDIS_KEY.HOME_NOTI)
       .map((resp) => {
@@ -166,7 +201,12 @@ class MainHome extends TwViewController {
       });
   }
 
-  private getHomeNotice(noticeCode): Observable<any> {
+  /**
+   * 홈화면 공지사항 요청
+   * @param {string} noticeCode
+   * @return {Observable<any>}
+   */
+  private getHomeNotice(noticeCode: string): Observable<any> {
     return this.redisService.getData(REDIS_KEY.HOME_NOTICE + noticeCode)
       .map((resp) => {
         // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
@@ -176,6 +216,10 @@ class MainHome extends TwViewController {
       });
   }
 
+  /**
+   * 홈화면 이럴땐 이렇게 하세요 데이터 요청
+   * @return {Observable<any>}
+   */
   private getHomeHelp(): Observable<any> {
     let result = null;
     return this.redisService.getData(REDIS_KEY.HOME_HELP)
@@ -187,7 +231,12 @@ class MainHome extends TwViewController {
       });
   }
 
-  private parseHelpData(cicntsList): any {
+  /**
+   * 홈화면 이럴땐 이렇게 하세요 데이터 파싱
+   * @param {object} cicntsList
+   * @return {object}
+   */
+  private parseHelpData(cicntsList: any): any {
     const resultArr = <any>[];
     for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
@@ -195,7 +244,12 @@ class MainHome extends TwViewController {
     return resultArr;
   }
 
-  private getMembershipData(svcInfo): Observable<any> {
+  /**
+   * 홈화면 멤버십 카드 정보 요청
+   * @param {object} svcInfo
+   * @return {Observable<any>}
+   */
+  private getMembershipData(svcInfo: any): Observable<any> {
     let membershipData = {
       code: ''
     };
@@ -213,14 +267,24 @@ class MainHome extends TwViewController {
     }
   }
 
-  private parseMembershipData(membershipData): any {
+  /**
+   * 홈화면 멤버십 카드 데이터 파싱
+   * @param {object} membershipData
+   * @return {object}
+   */
+  private parseMembershipData(membershipData: any): any {
     // membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
     membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);
     return membershipData;
   }
 
-  private getBillData(svcInfo): Observable<any> {
+  /**
+   * 홈화면 요금안내서 데이터 요청
+   * @param {object} svcInfo
+   * @return {Observable<any>}
+   */
+  private getBillData(svcInfo: any): Observable<any> {
     let billData = {
       showBill: false,
       showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
@@ -237,6 +301,10 @@ class MainHome extends TwViewController {
     });
   }
 
+  /**
+   * 홈화면 요금안내서-청구요금 데이터 요청
+   * @return {object}
+   */
   private getCharge(): any {
     return this.apiService.request(API_CMD.BFF_05_0036, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -246,6 +314,10 @@ class MainHome extends TwViewController {
     });
   }
 
+  /**
+   * 홈화면 요금안내서-사용요금 데이터 요청
+   * @return {object}
+   */
   private getUsed(): any {
     return this.apiService.request(API_CMD.BFF_05_0047, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -255,7 +327,12 @@ class MainHome extends TwViewController {
     });
   }
 
-  private parseBillData(billData): any {
+  /**
+   * 홈화면 요금안내서 데이터 파싱
+   * @param {object} billData
+   * @return {object}
+   */
+  private parseBillData(billData: any): any {
     if ( !FormatHelper.isEmpty(billData.charge) && !FormatHelper.isEmpty(billData.used) ) {
       if ( billData.charge.coClCd === MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
         return {
@@ -285,8 +362,12 @@ class MainHome extends TwViewController {
     return null;
   }
 
-  // 사용량 조회
-  private getUsageData(svcInfo): Observable<any> {
+  /**
+   * 홈화면 실시간 사용량 요청
+   * @param {object} svcInfo
+   * @return {Observable<any>}
+   */
+  private getUsageData(svcInfo: any): Observable<any> {
     let usageData = {
       code: '',
       msg: '',
@@ -306,7 +387,12 @@ class MainHome extends TwViewController {
     });
   }
 
-
+  /**
+   * 홈화면 실시간 사용량 파싱
+   * @param {object} usageData
+   * @param {object} svcInfo
+   * @return {object}
+   */
   private parseUsageData(usageData: any, svcInfo: any): any {
     const etcKinds = ['voice', 'sms'];
     const result = {
@@ -336,6 +422,12 @@ class MainHome extends TwViewController {
     return result;
   }
 
+  /**
+   * 홈화면 사용량 데이터 합산
+   * @param {object} list
+   * @param {object} data
+   * @return {void}
+   */
   private mergeData(list: any, data: any) {
     data.isShow = true;
     data.isUnlimit = false;
@@ -378,6 +470,11 @@ class MainHome extends TwViewController {
     }
   }
 
+  /**
+   * 홈화면 사용량 음성/문자 파싱
+   * @param {object} data
+   * @return {void}
+   */
   private convShowData(data: any) {
     data.isShow = true;
     data.isUnlimit = UNLIMIT_CODE.indexOf(data.unlimit) !== -1;
@@ -394,6 +491,12 @@ class MainHome extends TwViewController {
     }
   }
 
+  /**
+   * 홈화면 사용량 포맷 변경
+   * @param {string} data
+   * @param {string} unit
+   * @return {object}
+   */
   private convFormat(data: string, unit: string): any {
     switch ( unit ) {
       case UNIT_E.DATA:
