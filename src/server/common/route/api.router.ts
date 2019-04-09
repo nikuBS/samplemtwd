@@ -509,7 +509,7 @@ class ApiRouter {
     this.redisService.getData(REDIS_KEY.AUTH_METHOD_BLOCK)
       .subscribe((resp) => {
         res.json(resp);
-      })
+      });
   }
 
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {

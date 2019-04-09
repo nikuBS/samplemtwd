@@ -4,6 +4,12 @@
  * @since 2018.12.19
  */
 
+/**
+ * @class
+ * @desc 공통 > 로그인/로그아웃 > 세션만료
+ * @param rootEl
+ * @constructor
+ */
 Tw.CommonMemberLogoutExpire = function (rootEl) {
   this.$container = rootEl;
 
@@ -13,6 +19,11 @@ Tw.CommonMemberLogoutExpire = function (rootEl) {
 };
 
 Tw.CommonMemberLogoutExpire.prototype = {
+  /**
+   * @function
+   * @desc Native 세션 삭제
+   * @private
+   */
   _init: function () {
     this._apiService.sendNativeSession('');
     Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
