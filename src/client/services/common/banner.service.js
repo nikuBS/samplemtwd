@@ -1,10 +1,11 @@
 
   /**
+   * @class
    * @param {jquery element} rootEl the container haven banners
    * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
    * @param {Array<object>} banners banner list
    * @param {string} target location code
-   * @param {function} callback when loaded banners
+   * @param {function} callback excutable code after load banners
    */
 
 Tw.BannerService = function(rootEl, type, banners, target, callback) {
@@ -24,6 +25,14 @@ Tw.BannerService = function(rootEl, type, banners, target, callback) {
 };
 
 Tw.BannerService.prototype = {
+  /**
+   * @desc initialize
+   * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {Array<object>} banners banner list
+   * @param {string} target location code
+   * @param {function} callback excutable code after load banners
+   * @private
+   */
   _init: function(type, banners, target, callback) {
     this._type = type;
     this._banners = this._getProperBanners(type, banners);
@@ -31,11 +40,21 @@ Tw.BannerService.prototype = {
     this._renderBanners(target, callback);
   },
 
+  /**
+   * @desc cached jquery object
+   * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   */
   _cachedElement: function(target) {
     this.$banners = this.$container.find('ul.slider[data-location=' + target + ']');
   },
 
-  _renderBanners: function(target, callback) {  // get banner.hbs
+  /**
+   * @desc get banner.hbs
+   * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {function} callback excutable code after load banners
+   * @private
+   */
+  _renderBanners: function(target, callback) {  
     var CDN = Tw.Environment.cdn;
 
     $.ajax(CDN + '/hbs/banner.hbs', {})
@@ -43,7 +62,14 @@ Tw.BannerService.prototype = {
       .fail($.proxy(this._renderBanners, this));
   },
 
-  _handleSuccessBanners: function(target, callback, hbs) {  // after get hbs
+  /**
+   * @desc after get hbs
+   * @param {string} target Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {function} callback excutable code after load banners
+   * @param {string} hbs 
+   * @private
+   */
+  _handleSuccessBanners: function(target, callback, hbs) {  
     var CDN = Tw.Environment.cdn;
     this._bannerTmpl = Handlebars.compile(hbs);
 
@@ -144,10 +170,18 @@ Tw.BannerService.prototype = {
     }
   },
 
+  /**
+   * @desc bind event
+   * @private
+   */
   _bindEvent: function() {
     this.$banners.on('click', '.slick-current', $.proxy(this._openBannerLink, this)); // when click banner
   },
 
+  /**
+   * @desc when click the banner
+   * @param {Event} e click event object
+   */
   _openBannerLink: function(e) {
     var $target = $(e.currentTarget).find('img'),
       idx = $target.data('idx'),
@@ -180,6 +214,11 @@ Tw.BannerService.prototype = {
     }
   },
 
+  /**
+   * @desc return browser code
+   * @returns {string} browser code
+   * @private
+   */
   _getBrowserCode: function() {
     return Tw.BrowserHelper.isApp() ? 
       Tw.BrowserHelper.isAndroid() ? 
@@ -188,6 +227,12 @@ Tw.BannerService.prototype = {
       Tw.REDIS_DEVICE_CODE.MWEB;
   },
 
+  /**
+   * @desc set data for presentation
+   * @param {string} type Tw.REDIS_BANNER_TYPE.TOS or Tw.REDIS_BANNER_TYPE.ADMIN
+   * @param {Array<object>} banners banner list
+   * @private
+   */
   _getProperBanners: function(type, banners) {
     var browserCode = this._getBrowserCode(),
       today = new Date();
