@@ -23,10 +23,18 @@ Tw.CustomerHelpline = function(rootEl, timeInfo) {
 };
 
 Tw.CustomerHelpline.prototype = {
+  /**
+   * @desc 초기화
+   * @private
+   */
   _init: function() {
     this._reservationTime = this._availableTimes[0];
   },
 
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {  
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', 'span.bt-box', $.proxy(this._openContacts, this));
@@ -41,6 +49,10 @@ Tw.CustomerHelpline.prototype = {
     this.$btnTime.on('click', $.proxy(this._openSelectTimePopup, this));
   },
 
+  /**
+   * @desc jquery 객체 캐싱
+   * @private
+   */
   _cachedElement: function() {
     this.$btnType = this.$container.find('#fe-type');
     this.$btnArea = this.$container.find('#fe-area');
@@ -53,19 +65,19 @@ Tw.CustomerHelpline.prototype = {
     this.$cancel = this.$container.find('#fe-cancel');
   },
 
-  // _openCancelPopup: function() {
-  //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  // },
-
-  // _handleCancel: function() {
-  //   this._historyService.go(-2);
-  // },
-
-  _openContacts: function() { // 주소록 native에 요청
+  /**
+   * @desc 주소록 열기(native 요청)
+   * @private
+   */
+  _openContacts: function() { 
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._handleGetContact, this));
   },
 
-  _handleGetContact: function(resp) { // 주소록에서 특정 전화번호 선택 시
+  /**
+   * @desc 주소록에서 연락처를 가져온 경우
+   * @param {object} resp 
+   */
+  _handleGetContact: function(resp) { 
     if (resp.params && resp.params.phoneNumber) {
       var number = resp.params.phoneNumber.replace(/-/g, '');
       this.$phoneInput.val(number);
@@ -78,12 +90,20 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-  handleFocusinInput: function() {  // 전화번호 입력에 포커스가 들어오면, 숫자만 입력가능하도록 속성 추가
+  /**
+   * @desc 전화번호 입력에 포커스가 들어오면, 숫자만 입력가능하도록 속성 추가
+   * @private
+   */
+  handleFocusinInput: function() {  
     this.$phoneInput.val(this.$phoneInput.val().replace(/-/g, ''));
     this.$phoneInput.attr('type', 'number');
     this.$phoneInput.attr('pattern', '[0-9]*');
   },
 
+  /**
+   * @desc 전화번호 입력에 포커스 아웃된 경우 validation 및 dash 추가
+   * @private
+   */
   handleFocusoutInput: function() {
     this._isCheckedLen = true;
     if (this._validatePhoneNumber()) {  // 입력된 전화번호가 유효하면 dash 추가
@@ -93,7 +113,11 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-  _validatePhoneNumber: function() {  // 입력된 번호가 유효한 지 검사
+  /**
+   * @desc 전화번호 유효성 검사
+   * @private
+   */
+  _validatePhoneNumber: function() { 
     var $errorText = this.$container.find('#aria-phone-tx1'),
       $input = this.$phoneInput,
       errorState = this.$areaPhone.hasClass('error'),
@@ -144,7 +168,11 @@ Tw.CustomerHelpline.prototype = {
     return isValid;
   },
 
-  _openSelectTypePopup: function() {  // 전화상담 예약 상담 유형 팝업 열기
+  /**
+   * @desc 전화상담 예약 상담 유형 팝업 열기
+   * @private
+   */
+  _openSelectTypePopup: function() {  
     var selected = this._reservationType || 0;  // default 값은 일반(0)
     var data = _.map(Tw.HELPLINE_TYPES, function(type, idx) { // 현재 선택된 상담 유형 checked 추가
       if (idx === selected) {
@@ -167,7 +195,11 @@ Tw.CustomerHelpline.prototype = {
     );
   },
 
-  _openSelectAreaPopup: function() {  // 전화상담 예약 상담 지역 팝업 열기
+  /**
+   * @desc 전화상담 예약 상담 지역 팝업 열기
+   * @private
+   */
+  _openSelectAreaPopup: function() {  
     var type = this._reservationArea || 1;
     var data = _.map(Tw.CUSTOMER_HELPLINE_AREAS, function(area) { // 현재 선택된 지역 checked 추가
       if (area['radio-attr'].indexOf(type) !== -1) {
@@ -190,7 +222,11 @@ Tw.CustomerHelpline.prototype = {
     );
   },
 
-  _openSelectTimePopup: function() {  // 전화상담 예약 상담 시간 팝업 열기
+  /**
+   * @desc 전화상담 예약 상담 시간 팝업 열기
+   * @private
+   */
+  _openSelectTimePopup: function() {  
     var selectedTime = this._reservationTime;
     var times = _.chain(this._availableTimes)
       .map(function(time) { // 현재 선택된 시간 checked 추가
@@ -219,19 +255,39 @@ Tw.CustomerHelpline.prototype = {
     );
   },
 
-  _handleOpenSelectTypePopup: function($layer) {  // 상담 유형 팝업 이벤트 추가
+  /**
+   * @desc 상담 유형 팝업 이벤트 추가
+   * @param {$object} $layer 
+   * @private
+   */
+  _handleOpenSelectTypePopup: function($layer) {  
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
-  _handleOpenSelectAreaPopup: function($layer) {  // 상담 지역 팝업 이벤트 추가
+  /**
+   * @desc 상담 지역 팝업 이벤트 추가
+   * @param {$object} $layer 
+   * @private
+   */
+  _handleOpenSelectAreaPopup: function($layer) {  
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectArea, this));
   },
 
-  _handleOpenSelectTimePopup: function($layer) {  // 상담 시간 팝업 이벤트 추가
+  /**
+   * @desc 상담 시간 팝업 이벤트 추가
+   * @param {$object} $layer 
+   * @private
+   */
+  _handleOpenSelectTimePopup: function($layer) {  
     $layer.on('click', 'li.type1', $.proxy(this._handlSelectTime, this));
   },
 
-  _handleSelectType: function(e) {  // 상담 유형이 클릭 되면
+  /**
+   * @desc 상담 유형이 클릭 되면
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSelectType: function(e) { 
     var $target = $(e.currentTarget),
       $input = $target.find('input'),
       selectedIdx = $input.data('type-idx'),
@@ -244,7 +300,12 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _handleSelectArea: function(e) {  // 상담 지역 클릭 되면
+  /**
+   * @desc 상담 지역이 클릭 되면
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSelectArea: function(e) {  
     var $target = $(e.currentTarget),
       $input = $target.find('input'),
       selectedArea = $input.data('area-code');
@@ -256,7 +317,12 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _handlSelectTime: function(e) { // 상담 시간 클릭 되면 
+  /**
+   * @desc 상담 시간이 클릭 되면
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handlSelectTime: function(e) { 
     var $target = $(e.currentTarget),
       $input = $target.find('input'),
       selectedHours = $input.data('time'),
@@ -270,7 +336,12 @@ Tw.CustomerHelpline.prototype = {
     this._popupService.close();
   },
 
-  _setSubmitState: function(enable) { // 예약하기 버튼 상태 변경, enable 이 true 이면 버튼 활성화
+  /**
+   * @desc 예약하기 버튼 상태 변경, enable 이 true 이면 버튼 활성화
+   * @param {boolean} enable 버튼 상태
+   * @private
+   */
+  _setSubmitState: function(enable) { 
     if (enable) {
       this.$btnSubmit.removeAttr('disabled');
     } else {
@@ -278,7 +349,11 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
-  _handleSubmit: function() { // 예약하기 버튼 클릭
+  /**
+   * @desc 예약하기 버튼 클릭
+   * @private
+   */
+  _handleSubmit: function() { 
     if (!this._validatePhoneNumber()) { // 유효한 번호가 아닐 경우 전화번호 입력창에 포커스
       return this.$phoneInput.focus();
     }
@@ -293,7 +368,11 @@ Tw.CustomerHelpline.prototype = {
       .done($.proxy(this._successSubmit, this));
   },
 
-  _successSubmit: function(resp) {  // 전화상담 예약 완료시
+  /**
+   * @desc 전화상담 예약 완료시
+   * @private
+   */
+  _successSubmit: function(resp) {  
     if (resp.code === Tw.API_CODE.CODE_00) {  
       if (resp.result.historiesYn === 'Y') {  // 이미 예약 내용이 있을 경우
         this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_HELPLINE_A02);

@@ -9,12 +9,20 @@ Tw.CustomerResearch = function(rootEl) {
 };
 
 Tw.CustomerResearch.prototype = {
+  /**
+   * @desc 초기화
+   * @private
+   */
   _init: function() {
     this._currentIdx = 0;
     this._answers = {};
     this._questionCount = this.$questions.length;
   },
 
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {
     this.$container.on('change click', 'li input', $.proxy(this._handleSelectAnswer, this));
     this.$container.on('click', '.fe-go-next', $.proxy(this._goNext, this));
@@ -23,6 +31,10 @@ Tw.CustomerResearch.prototype = {
     this.$container.on('click', '.fe-submit-research', $.proxy(this._submitResearch, this));
   },
 
+  /**
+   * @desc jquery 객체 캐싱
+   * @private
+   */
   _cachedElement: function() {
     this.$questions = _.map(this.$container.find('.poll-box'), function(question) {
       return $(question);
@@ -31,7 +43,12 @@ Tw.CustomerResearch.prototype = {
     this.$rateBar = this.$container.find('.data-bar');
   },
 
-  _handleSelectAnswer: function(e) {  // 답변 선택 시 다음 문항(분기형의 경우 답변마다 다음 문항번호가 다름) 지정 및 하단 버튼 활성화
+  /**
+   * @desc 답변 선택 시 다음 문항(분기형의 경우 답변마다 다음 문항번호가 다름) 지정 및 하단 버튼 활성화
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSelectAnswer: function(e) {  
     var $root = this.$questions[this._currentIdx],
       next = e.currentTarget.getAttribute('data-next-question'),
       isEtc = e.currentTarget.getAttribute('data-is-etc'),
@@ -76,6 +93,11 @@ Tw.CustomerResearch.prototype = {
     this._setButtonStatus($btn, enable);
   },
 
+  /**
+   * @desc 다음 문항 index 가져오기
+   * @param {$ojbect} $selected 선택된 답변
+   * @private
+   */
   _getNextQuestion: function($selected) { // 다음 문항 index 가져오기
     if ($selected.hasClass('radiobox')) {
       var next_type = $selected.data('next-question') || 0;
@@ -95,6 +117,12 @@ Tw.CustomerResearch.prototype = {
     return this._currentIdx + 1;
   },
 
+  /**
+   * @desc 이전으로, 다음으로, 제추랗기 버튼 활성화 처리
+   * @param {$object} $btn 활성화 처리될 버튼
+   * @param {boolean} enable 활성화 여부
+   * @private
+   */
   _setButtonStatus: function($btn, enable) {
     if (enable) {
       $btn.removeAttr('disabled');
@@ -106,7 +134,12 @@ Tw.CustomerResearch.prototype = {
     }
   },
 
-  _goNext: function(e) {  // '다음으로' 클릭한 경우
+  /**
+   * @desc '다음으로' 클릭한 경우
+   * @param {Event} e 클릭이벤트
+   * @private
+   */
+  _goNext: function(e) { 
     var next = this._currentIdx + 1;
 
     if (this._nextIdx) {
@@ -131,7 +164,12 @@ Tw.CustomerResearch.prototype = {
     delete this.$maxLength;
   },
 
-  _goPrev: function(e) {  // '이전으로 클릭한 경우
+  /**
+   * @desc '이전으로 클릭한 경우
+   * @param {Event} e 클릭이벤트
+   * @private
+   */
+  _goPrev: function(e) {  
     var prev = Number(e.currentTarget.getAttribute('data-prev-question')),
       $prev = this.$questions[prev];
 
@@ -151,13 +189,23 @@ Tw.CustomerResearch.prototype = {
     delete this.$maxLength;
   },
 
+  /**
+   * @desc 진행률 표시 처리
+   * @param {number} idx 진행중인 설문 문항 번호
+   * @private
+   */
   _setProgress: function(idx) {
     var rate = Math.floor((idx / this._questionCount) * 100) + '%';
     this.$rateTxt.text(rate);
     this.$rateBar.width(rate);
   },
 
-  _handleTypeEssay: function(e) { // 주관식, 기타 항목에 키보드 입력이 들어온 경우 
+  /**
+   * @desc 주관식, 기타 항목에 키보드 입력이 들어온 경우 
+   * @param {Event} e 타입이벤트
+   * @private
+   */
+  _handleTypeEssay: function(e) { 
     var target = e.currentTarget,
       $root = this.$questions[this._currentIdx];
     var byteCount = Tw.InputHelper.getByteCount(target.value);
@@ -192,7 +240,11 @@ Tw.CustomerResearch.prototype = {
     }
   },
 
-  _setAnswer: function() {  // 서버에 응답 제출을 위한 응답 object 셋팅
+  /**
+   * @desc 서버에 응답 제출을 위한 응답 object 셋팅(BFF 인풋 파라미터가 특이함)
+   * @private
+   */
+  _setAnswer: function() {  
     var $root = this.$questions[this._currentIdx],
       answerType = $root.data('answer-type'),
       answer = {
@@ -232,7 +284,11 @@ Tw.CustomerResearch.prototype = {
     this._answers[this._currentIdx] = answer;
   },
 
-  _submitResearch: function() { // 설문조사 제출
+  /**
+   * @desc 설문조사 제출
+   * @private
+   */
+  _submitResearch: function() { 
     this._setAnswer();  // 마지막 문항 추가
     var values = $.map(this._answers, function(answer) {
       return answer;
@@ -247,14 +303,19 @@ Tw.CustomerResearch.prototype = {
       .done($.proxy(this._successSubmit, this));
   },
 
+  /**
+   * @desc 설문조사 제출 응답 시
+   * @param {object} resp 서버 응답
+   * @private
+   */
   _successSubmit: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result) {
         case 'DUPLICATE': // 기참여인경우
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._cloaseResearch);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._closeResearch);
           break;
         case 'SUCCESS':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._cloaseResearch);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._closeResearch);
           break;
       }
     } else {
@@ -262,7 +323,11 @@ Tw.CustomerResearch.prototype = {
     }
   },
 
-  _cloaseResearch: function() {
+  /**
+   * @desc 설문조사 닫기
+   * @private
+   */
+  _closeResearch: function() {
     history.back();
   }
 };

@@ -10,6 +10,11 @@ Tw.CustomerResearches = function(rootEl, researches) {
 };
 
 Tw.CustomerResearches.prototype = {
+  /**
+   * @desc 설문조사 데이터 변경
+   * @param {Array} researches
+   * @private
+   */
   _init: function(researches) {
     this._tmpl = Handlebars.compile($('#fe-templ-researches').html());
     this._researches = _.map(researches, function(research) {
@@ -31,6 +36,10 @@ Tw.CustomerResearches.prototype = {
     this._leftCount = researches.length;
   },
 
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function() {
     this.$container.find('.fe-submit').click(_.debounce($.proxy(this._handleSubmit, this), 300));
     this.$container.on('change', 'ul.survey-researchbox > li input', $.proxy(this._handleChangeSelect, this));
@@ -43,18 +52,32 @@ Tw.CustomerResearches.prototype = {
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
   },
 
+  /**
+   * @desc jquery 객체 캐싱
+   * @private
+   */
   _cachedElement: function() {
     this.$list = this.$container.find('.acco-list');
   },
 
-  _openExternalUrl: function(e) { // 외부 링크 열기
+  /**
+   * @desc 외부 링크 열기
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _openExternalUrl: function(e) { 
     e.preventDefault();
     e.stopPropagation();
 
     Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
   },
 
-  _handleChangeSelect: function(e) {  // 라디오 orr 체크박스 선택 처리
+  /**
+   * @desc 라디오 or 체크박스 선택 처리
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
+  _handleChangeSelect: function(e) {  
     var $target = $(e.currentTarget);
 
     $target
@@ -66,7 +89,12 @@ Tw.CustomerResearches.prototype = {
     this._setEnableSubmit(e);
   },
 
-  _handleSubmit: function(e) {  // 설문조사 제출
+  /**
+   * @desc 설문조사 제출
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleSubmit: function(e) {  
     var $target = $(e.currentTarget),
       $root = $target.parents('li.acco-box');
     var $list = $root.find('ul.survey-researchbox > li');
@@ -100,13 +128,22 @@ Tw.CustomerResearches.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this, $target));
   },
 
-  _clearForm: function() {  // 기입된 문항 clear
+  /**
+   * @desc 입력 폼 초기화
+   * @private
+   */
+  _clearForm: function() {  
     var $list = this.$container.find('ul.survey-researchbox > li');
     $list.prop('aria-checked', false);
     $list.find('input').prop('checked', false);
     this.$container.find('.fe-submit').prop('disabled', true);
   },
 
+  /**
+   * @desc 설문조사 참여 완료시
+   * @param {$object} $target 저장하기 버튼(팝업 닫은 후 포커싱 처리를 위한 객체)
+   * @param {object} resp 서버응답 데이터
+   */
   _handleSuccessSubmit: function($target, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -123,7 +160,12 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _setEnableSubmit: function(e) { // 참여하기 버튼 활성화
+  /**
+   * @desc 참여하기 버튼 활성화
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _setEnableSubmit: function(e) { 
     var $target = $(e.currentTarget);
     var $root = $target.parents('li.acco-box');
     var $btn = $root.find('.item-two > .bt-blue1 button');
@@ -133,7 +175,12 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _goHint: function(e) {  // 힌트보기 클릭시
+  /**
+   * @desc 힌트보기 클릭시 외부 링크, 과금 팝업 처리
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _goHint: function(e) {  
     var link = e.target.getAttribute('data-hint-url');
     if (link.indexOf('http') !== -1) {
       if (Tw.BrowserHelper.isApp()) {
@@ -148,7 +195,12 @@ Tw.CustomerResearches.prototype = {
     }
   },
 
-  _handleLoadMore: function(e) {  // 더보기 클릭 시
+  /**
+   * @desc 더보기 클릭 시
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _handleLoadMore: function(e) {  
     this._leftCount = this._leftCount - Tw.DEFAULT_LIST_COUNT;
     var list = this._researches;
 
@@ -162,6 +214,10 @@ Tw.CustomerResearches.prototype = {
     this.$list.append(this._tmpl({ researches: list }));
   },
 
+  /**
+   * @desc 더보기 추가된 항목들에 대해 마크업 이벤트가 처리가 안되어 추가 - 라디오, 체크박스 change 처리
+   * @param {Event} e 클릭 이벤트 
+   */
   _setSelect: function(e) {
     var $target = $(e.currentTarget);
 
@@ -187,6 +243,10 @@ Tw.CustomerResearches.prototype = {
     this._setEnableSubmit(e);
   },
 
+  /**
+   * @desc 더보기 추가된 항목들에 대해 마크업 이벤트가 처리가 안되어 추가 - 자세히 보기
+   * @param {Event} e 클릭 이벤트 
+   */
   _toggleShowDetail: function(e) {
     var $target = $(e.currentTarget).closest('li');
     if ($target.hasClass('on')) {
