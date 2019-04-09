@@ -61,7 +61,7 @@
     </div>
     <% } %>
     <% if ( basicInfo.prodTermYn === 'Y' && isJoined && basicInfo.linkBtnList.terminate.length > 0 ) { %>
-    <div class="limit">
+    <div class="btn fe-btn_wrap">
         <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" aria-hidden="true" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
     </div>
     <% } %>
