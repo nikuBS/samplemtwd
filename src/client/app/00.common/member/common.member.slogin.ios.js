@@ -205,7 +205,8 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
+    this.$btLogin.click(_.debounce($.proxy(this._onClickLogin, this), 500));
+
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
