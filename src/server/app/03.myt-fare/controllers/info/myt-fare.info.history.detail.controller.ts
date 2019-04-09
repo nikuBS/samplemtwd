@@ -1,15 +1,14 @@
 /**
- * @file myt-fare.info.history.detail.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.09.17
+ * @file [나의요금-요금납부조회-상세보기] 관련 처리
+ * @author Lee Kirim
+ * @since 2018-09-17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import FormatHelper from '../../../../utils/format.helper';
-import {MYT_PAYMENT_DETAIL_TITLE,
-  MYT_PAYMENT_DETAIL_ERROR,
-  MYT_FARE_PAYMENT_HISTORY_TYPE,
+import {MYT_PAYMENT_DETAIL_TITLE, 
+  MYT_PAYMENT_DETAIL_ERROR, 
   MYT_FARE_PAYMENT_NAME,
   MYT_FARE_PAYMENT_TYPE
 } from '../../../../types/string.type';
@@ -24,54 +23,52 @@ import { MYT_PAYMENT_HISTORY_AUTO_TYPE, MYT_FARE_PAYMENT_CODE,
   MYT_FARE_PAYMENT_PROCESS_ATM
 } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
-interface Query {
-  current: string;
-  isQueryEmpty: boolean;
-  // sortType: string;
-}
-
+/**
+ * render에서 전달할 인터페이스 정의
+ */
 interface RenderObj {
   req: Request;
   res: Response;
   next: NextFunction;
   svcInfo: any;
-  pageInfo: any;
-  current?: string;
+  pageInfo: any;  
   innerIndex?: any;
   opDt?: string;
   payOpTm?: string;
 }
 
-
+/**
+ * 요금조회납부 상세보기 구현
+ * query type 에 따라 호출하는 API 가 달라짐
+ */
 class MyTFareInfoHistoryDetail extends TwViewController {
   constructor() {
     super();
   }
 
-  renderURL;
-  isPersonalBiz;
-  billCnt;
+  renderURL: string = ''; // 렌더링할 file 이름
+  isPersonalBiz: boolean = false; // 사업자인지 여부
+  billCnt: number = 0; // 현금영수증 또는 세금계산서발행내역 갯수 저장
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-
-    const query: Query = {
-      isQueryEmpty: FormatHelper.isEmpty(req.query),
-      current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
-    };
     const renderObj: RenderObj = {
-      req,
-      res,
-      next,
-      svcInfo,
-      pageInfo,
-      current: query.current,
+      req, 
+      res, 
+      next, 
+      svcInfo, 
+      pageInfo, 
+      /**
+       * @prop {number>string} innerIndex 상세조회에서 기준이 되는 값이 됨 즉시납부 조회에서는 다른 query값을 사용함
+       */
       innerIndex: (req && req.query && req.query.innerIndex !== undefined) ? req.query.innerIndex : ''
     };
     this.renderURL = 'info/myt-fare.info.history.detail.html';
 
     switch (req.query.type) {
       case MYT_FARE_PAYMENT_TYPE.DIRECT:
+        // 즉시납부
         const {opDt, payOpTm} = req.query;
         this.includeBillHistory(this.getDirectPaymentData, Object.assign(renderObj, {opDt, payOpTm}));
         break;
@@ -104,7 +101,6 @@ class MyTFareInfoHistoryDetail extends TwViewController {
           svcInfo: svcInfo,
           pageInfo: pageInfo,
           data: {
-            current: query.current,
             headerTitle: MYT_PAYMENT_DETAIL_TITLE.DI
           }
         });
@@ -112,34 +108,53 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     }
   }
 
-  // 사업자 여부, 세금계산서 / 현금영수증 조회 포함 (계좌이체 일 경우 해당함)
-  private includeBillHistory = (callback, renderObj) => {
+  /**
+   * 사업자 여부, 세금계산서 / 현금영수증 조회 포함 (계좌이체 일 경우 해당함)
+   * 위의 경우 현금영수증 발급 내역 및 세금계산서 발행 내역 조회함 해당 API 에서는 사업자 회원여부 검증
+   * 사업자일경우 세금계산서 발행내역 getBizTaxCnt 호출
+   * 아닌경우 현금영수증 조회 checkCashBill 호출
+   * @param {Function} callback
+   * @param {RenderObj} renderObj
+   * @returns {Subscription}
+   */
+  private includeBillHistory = (callback: Function, renderObj: RenderObj): Subscription  => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'H'}).subscribe((resp: { code: string; result: any; }) => {
       // let isPersonalBiz;
       if (resp.code !== API_CODE.CODE_00) {
         this.isPersonalBiz = false;
         // 현금영수증 조회
-        this.checkCashBill(callback, renderObj);
+        return this.checkCashBill(callback, renderObj);
       } else {
         this.isPersonalBiz = true;
         // 사업자회원일경우 세금계산서 갯수 계산 로직 우선 수행 19.1.3
-        this.getBizTaxCnt(callback, renderObj);
+        return this.getBizTaxCnt(callback, renderObj);
       }
     });
   }
-
-  // 현금영수증 내역 조회
-  private checkCashBill = (callback, renderObj) => {
+  
+  /**
+   * 현금영수증 내역 조회
+   * billCnt 에 내역 조회 갯수 설정 후 callback 호출
+   * @param {Function} callback
+   * @param {RenderObj} renderObj
+   * @returns {Subscription}
+   */
+  private checkCashBill = (callback: Function, renderObj: RenderObj): Subscription => {
     return this.apiService.request(API_CMD.BFF_07_0004, {}).subscribe(response => {
       if (response.code === API_CODE.CODE_00) {
         this.billCnt = response.result.length ;
       }
-      callback.call(this, renderObj);
+      return callback.call(this, renderObj);
     });
   }
 
-  // 즉시납부
-  private getDirectPaymentData(renderObj: RenderObj) {
+  /**
+   * 즉시납부내역조회
+   * 즉시납부내역조회는 상세내역조회 API가 있으므로 결제날짜, 결제시간으로 상세내역 조회가 가능
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getDirectPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, opDt, payOpTm } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0091, {opDt, payOpTm}).subscribe((resp) => {
 
@@ -168,8 +183,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 자동납부
-  private getAutoPaymentData(renderObj: RenderObj) {
+  /**
+   * 자동납부
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getAutoPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0092, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -201,8 +221,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 통합납부
-  private getAutoUnitedPaymentData(renderObj: RenderObj) {
+  /**
+   * 통합납부
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getAutoUnitedPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0089, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -228,8 +253,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 소액결제 선결제
-  private getMicroPaymentData(renderObj: RenderObj) {
+  /**
+   * 소액결제 선결제
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getMicroPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0071, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -251,8 +281,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 콘텐츠 선결제
-  private getContentsPaymentData(renderObj: RenderObj) {
+  /**
+   * 콘텐츠 선결제
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getContentsPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0078, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -273,8 +308,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   }
 
 
-  // 포인트 자동납부
-  private getPointAutoPaymentData(renderObj: RenderObj) {
+  /**
+   * 포인트 자동납부
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getPointAutoPaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0094, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -296,8 +336,13 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 포인트 납부예약
-  private getPointReservePaymentData(renderObj: RenderObj) {
+  /**
+   * 포인트 납부예약
+   * innerIndex를 상세조회 필요변수로 사용
+   * @param {RenderObj} renderObj 
+   * @returns {Subscription}
+   */
+  private getPointReservePaymentData(renderObj: RenderObj): Subscription {
     const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0093, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -318,9 +363,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  // 사업자 회원 세금계산서 갯수 계산 .. 19.1.3 반기옵션으로
-  // 단순 조회시에는 1-6/7-12월로만 조회되는 이슈
-  private getBizTaxCnt = (callback, renderObj) => {
+  
+  /**
+   * 사업자 회원 세금계산서 갯수 계산 .. 19.1.3 반기옵션으로 
+   * 단순 조회시에는 1-6/7-12월로만 조회되는 이슈가 있어 각 달을 조회함
+   * 구한 세금계산서 내역 갯수를 billCnt 에 저장하고 callback call
+   * @param {Function} callback
+   * @param {RenderObj} renderObj
+   * @returns {Subscription}
+   */
+  private getBizTaxCnt = (callback: Function, renderObj: RenderObj): Subscription => {
     return Observable.combineLatest(
       this.getBillTaxLists(DateHelper.getCurrentDate(), 6)
     ).subscribe(taxlist => {
@@ -331,11 +383,18 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     });
   }
 
-  private getBillTaxLists = (date: Date, monthPeriod: number) => {
+  /**
+   * getBizTaxCnt로 부터 호출됨
+   * date로 부터 monthPeriod 전의 데이터를 조회하는 Observable array 를 반환
+   * @param {Date} date 
+   * @param {number} monthPeriod 
+   * @return {Observable<any | null>[]}
+   */
+  private getBillTaxLists = (date: Date, monthPeriod: number): Observable<any | null>[] => {
     // monthPeriod 개월 전 구하기
     date.setDate(1);
     date.setMonth(date.getMonth() - monthPeriod);
-    const list: any[] = [];
+    const list: Observable<any | null>[] = [];
     for ( let i = 0; i < monthPeriod; i++) {
       list.push(this.getBillTaxList(DateHelper.getCurrentShortDate(new Date(date)).substring(0, 6)));
       date.setMonth(date.getMonth() + 1);
@@ -343,32 +402,49 @@ class MyTFareInfoHistoryDetail extends TwViewController {
     return list;
   }
 
+  /**
+   * getBillTaxLists로부터 호출됨
+   * @param {string} date
+   * @return {Observable<any | null>}
+   */
   private getBillTaxList = (date: string): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return [];
-      }
-      return resp.result.taxReprintList;
-    });
+    return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date})
+      .map((resp: {code: string, msg: string, result: any}) => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return [];
+        }
+        return resp.result.taxReprintList;
+      });
   }
   // 사업자 회원 세금계산서 갯수 계산 end
 
-  // 렌더링
-  private renderView(renderObj: RenderObj, content) {
-    const { res, svcInfo, pageInfo, current } = renderObj;
+  /**
+   * 각 상세조회 데이터로부터 렌더링 
+   * @param {RenderObj} renderObj 
+   * @param {any} content 
+   */
+  private renderView(renderObj: RenderObj, content: any): void {
+    const { res, svcInfo, pageInfo } = renderObj;
     res.render(this.renderURL, {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       data: {
-        current,
         headerTitle: MYT_PAYMENT_DETAIL_TITLE.DI,
         content
       }
     });
   }
 
-  // 오류 페이지
-  private _renderError(code, msg, res, svcInfo, pageInfo) {
+  /**
+   * 오류 페이지
+   * 각 API 조회에서 에러 발생시 에러페이지 렌더링
+   * @param code 
+   * @param msg 
+   * @param res 
+   * @param svcInfo 
+   * @param pageInfo 
+   */
+  private _renderError(code: any, msg: any, res: Response, svcInfo: any, pageInfo: any): any {
     return this.error.render(res, {
       code,
       msg,
@@ -378,20 +454,40 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   }
 
 
-  private isBank(o: string) {
+  /**
+   * 주어진 문자열로부터 은행인지 여부를 확인
+   * @param {string} o 
+   * @return {boolean}
+   */
+  private isBank(o: string): boolean {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK2) > 0)
         || (o.indexOf(MYT_FARE_PAYMENT_NAME.BANK3) > 0 || (o === MYT_FARE_PAYMENT_CODE.BANK) || (o === MYT_FARE_PAYMENT_CODE.BANK2));
   }
 
-  private isCard(o: string) {
+  /**
+   * 주어진 문자열로부터 카드인지 여부를 확인
+   * @param {string} o 
+   * @return {boolean}
+   */
+  private isCard(o: string): boolean {
     return (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD) > 0) || (o.indexOf(MYT_FARE_PAYMENT_NAME.CARD2) > 0
         || (o === MYT_FARE_PAYMENT_CODE.CARD));
   }
 
-  private isBankOrCard(o: string) {
+  /**
+   * 주어진 문자열로부터 은행이나 카드인지 여부를 확인
+   * @param {string} o 
+   * @return {boolean}
+   */
+  private isBankOrCard(o: string): boolean {
     return this.isBank(o) || this.isCard(o);
   }
 
+  /**
+   * 주어진 문자열로부터 납부 종류를 반환 즉시납부내역조회에서 사용
+   * @param {string} o
+   * @return {string}
+   */
   private checkPayType(o: string): string {
     return MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING[o] || o;
   }

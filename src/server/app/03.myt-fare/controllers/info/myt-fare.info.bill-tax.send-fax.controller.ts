@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.bill-tax.send-fax.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2019.01.29
+ * @file [나의요금-세금계산서_팩스재발행하기] 관련 처리
+ * @author Lee Kirim
+ * @since 2019-01-29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,11 +10,17 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
-
+/**
+ * 팩스재발행을 위한 데이터 조회 렌더링
+ * query값으로 date 필요
+ */
 class MytFareInfoBillTaxSendFax extends TwViewController {
     public render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
         const date: string = req.query.date;
         
+        /**
+         * @if date 없으면 페이지 없음 처리
+         */
         if (FormatHelper.isEmpty(date)) {
             return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
         }
