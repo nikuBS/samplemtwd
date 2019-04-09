@@ -26,7 +26,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 이벤트 바인딩
+   * @desc 이벤트 바인딩
    * @returns {void}
   */
   _bindEvent: function() {
@@ -36,7 +36,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description jquery element 캐싱
+   * @desc jquery element 캐싱
    * @returns {void}
   */
   _cachedElement: function() {
@@ -44,7 +44,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
   
   /**
-   * @description 조회하기 버튼 클릭 시 UI 변경
+   * @desc 조회하기 버튼 클릭 시 UI 변경
    * @param {Event} 클릭 이벤트
    * @returns {void}
    */
@@ -58,7 +58,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
   
   /**
-   * @description T가족모아 변경 가능 데이터 조회
+   * @desc T가족모아 변경 가능 데이터 조회
    * @param {string} requestCount  서버 input param
    * @param {$jquery} $before  조회하기 버튼 jquery 객체
    * @param {$jquery} $parent  조회하기 버튼의 parent
@@ -72,7 +72,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 변경 가능 데이터 조회 응답 시
+   * @desc 변경 가능 데이터 조회 응답 시
    * @param {$jquery} $before 조회하기 버튼
    * @param {$jquery} $parent 조회하기 버튼의 부모 객체
    * @param {object} resp 서버 응답 결과
@@ -93,7 +93,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 조회하기 버튼 상태 변경
+   * @desc 조회하기 버튼 상태 변경
    * @param {$object} $before 조회하기 버튼 jquery 객체
    * @param {object} resp 서버 응답 결과
    */
@@ -118,7 +118,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 변경 가능 데이터 양 표시
+   * @desc 변경 가능 데이터 양 표시
    * @param {object} share 변경 가능한 공유 데이터 양
    * @param {$object} $before 조회하기 버튼 jquery 객체
    * @param {$object} $parent 조회하기 버튼의 부모
@@ -140,7 +140,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 공유한 데이터 변경하기 버튼 클릭 시
+   * @desc 공유한 데이터 변경하기 버튼 클릭 시
    * @param {Event} e 클릭 이벤트 객체
    */
   _handleClickEditData: function(e) {
@@ -163,7 +163,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 공유 변경 내역 가져오기 서버 응답 시
+   * @desc 공유 변경 내역 가져오기 서버 응답 시
    * @param {$object} $parent 변경하기 버튼의 부모
    * @param {number} idx 내역의 인덱스
    * @param {object} changable 변경 가능 데이터
@@ -199,7 +199,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 변경하기 팝업 오픈 시
+   * @desc 변경하기 팝업 오픈 시
    * @param {$jquery} $parent 
    * @param {object} changable 변경 가능 데이터
    * @param {$jquery} $layer 
@@ -213,7 +213,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 변경하기 팝업 close 시
+   * @desc 변경하기 팝업 close 시
    * @param {$object} $target 변경하기 버튼
    */
   _handleCloseChangePopup: function($target) {
@@ -242,7 +242,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   /**
-   * @description 더보기 버튼 클릭 시
+   * @desc 더보기 버튼 클릭 시
    * @param {Event} e 클릭 이벤트 객체
    */
   _handleLoadMore: function(e) {

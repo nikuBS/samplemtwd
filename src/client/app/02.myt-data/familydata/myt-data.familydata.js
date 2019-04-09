@@ -18,14 +18,14 @@ Tw.MyTDataFamily.prototype = {
   MAX_LIMITATION: 200,
 
   /**
-   * @description 이벤트 바인딩
+   * @desc 이벤트 바인딩
    */
   _bindEvent: function() {
     this.$container.on('click', '.fe-setting-limit', $.proxy(this._openChangeLimit, this));
   },
 
   /**
-   * @description 한도 변경 성공 시
+   * @desc 한도 변경 성공 시
    * @param {object} resp 서버 응답
    */
   _successChangeLimitation: function(resp) {
@@ -82,7 +82,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   /**
-   * @description 한도 설정 버튼 클릭 시
+   * @desc 한도 설정 버튼 클릭 시
    * @param {Event} e 클릭 이벤트
    */
   _openChangeLimit: function(e) {
@@ -111,7 +111,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   /**
-   * @description 한도 설정 팝업 오픈 시
+   * @desc 한도 설정 팝업 오픈 시
    * @param {string} mgmtNum 변경할 사용자 관리 번호
    * @param {boolean or number} limitation 현재 한도
    * @param {$object} $layer 팝업 jquery 객체
@@ -123,7 +123,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   /**
-   * @description 이용한도 변경하기 버튼 클릭 시
+   * @desc 이용한도 변경하기 버튼 클릭 시
    * @param {string} mgmtNum 변경할 사용자 관리 번호
    * @param {boolean or number} originLimit 현재 한도
    * @param {Event} e 클릭 이벤트 객체
@@ -167,7 +167,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   /**
-   * @description 자유한도 or 한도설정 변경 시
+   * @desc 자유한도 or 한도설정 변경 시
    * @param {$object} $layer 팝업 jquery 객체
    * @param {Event} e 라디오 체인지 이벤트 객체
    */
@@ -189,7 +189,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   /**
-   * @description 한도 설정 인풋에 키보드 입력시
+   * @desc 한도 설정 인풋에 키보드 입력시
    * @param {$object} $layer 팝업 jquery 객체
    * @param {Event} e 인풋 체인지 이벤트 객체
    */

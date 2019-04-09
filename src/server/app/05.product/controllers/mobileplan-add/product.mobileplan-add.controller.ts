@@ -13,17 +13,31 @@ import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { PRODUCT_CODE } from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 상품 > 모바일 부가서비스
+ */
 export default class ProductAddition extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} _req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
-      this.getBestAdditions(),
-      this.getRecommendedAdditions(),
-      this.getRecommendedTags()
+      this._getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
+      this._getBestAdditions(),
+      this._getRecommendedAdditions(),
+      this._getRecommendedTags()
     ).subscribe(([myAdditions, bestAdditions, recommendedAdditions, recommendedTags]) => {
       const error = {
         code: (myAdditions && myAdditions.code) || bestAdditions.code || recommendedAdditions.code || recommendedTags.code,
@@ -44,7 +58,11 @@ export default class ProductAddition extends TwViewController {
     });
   }
 
-  private getMyAdditions = isLogin => {
+  /**
+   * @desc 나의 가입 부가서비스 정보 요청
+   * @private
+   */
+  private _getMyAdditions = isLogin => {
     if (isLogin) {
       return this.apiService.request(API_CMD.BFF_05_0166, {}).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
@@ -61,7 +79,11 @@ export default class ProductAddition extends TwViewController {
     return of(undefined);
   }
 
-  private getBestAdditions = () => {
+  /**
+   * @desc SK텔레콤의 대표 부가서비스 요청
+   * @private
+   */
+  private _getBestAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0027, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -87,7 +109,11 @@ export default class ProductAddition extends TwViewController {
     });
   }
 
-  private getRecommendedAdditions = () => {
+  /**
+   * @desc 이런 부가서비스는 어떠세요? 요청
+   * @private
+   */
+  private _getRecommendedAdditions = () => {
     return this.apiService.request(API_CMD.BFF_10_0028, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -113,7 +139,11 @@ export default class ProductAddition extends TwViewController {
     });
   }
 
-  private getRecommendedTags = () => {
+  /**
+   * @desc 추천 태그 요청
+   * @private
+   */
+  private _getRecommendedTags = () => {
     return this.apiService.request(API_CMD.BFF_10_0029, { idxCtgCd: PRODUCT_CODE.MOBILE_ADDITION }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {

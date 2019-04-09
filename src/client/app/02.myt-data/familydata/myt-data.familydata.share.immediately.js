@@ -24,7 +24,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description jquery 객체 캐싱
+   * @desc jquery 객체 캐싱
    */
   _cachedElement: function() {
     this.$submit = this.$wrap.find('#fe-submit-immediatly button');
@@ -34,7 +34,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 이벤트 바인딩
+   * @desc 이벤트 바인딩
    */
   _bindEvent: function() {
     // $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
@@ -43,7 +43,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 조회하기 버튼 클릭 시
+   * @desc 조회하기 버튼 클릭 시
    */
   _handleClickRetrive: function() {
     this.$container.find('#fe-ing').removeClass('none');  // 조회중입니다. 노출
@@ -52,7 +52,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 서버에 공유 가능 데이터 조회 요청 
+   * @desc 서버에 공유 가능 데이터 조회 요청 
    * @param {string} requestCount 서버 input parameter
    */
   _getShareData: function(requestCount) {
@@ -60,7 +60,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 서버 응답 시
+   * @desc 서버 응답 시
    */
   _handleDoneShareData: function(resp) {
     if (resp.code === Tw.MYT_DATA_FAMILYDATA_SHARE_DATA_CODE.TIMEOUT) { // 조회하기 요청 Timeout
@@ -79,7 +79,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 조회하기 버튼 노출
+   * @desc 조회하기 버튼 노출
    */
   _setRetrieveStatus: function() {
     this.$container.find('#fe-ing').addClass('none');
@@ -95,7 +95,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 공유 가능 데이터 가져오기 성공 시
+   * @desc 공유 가능 데이터 가져오기 성공 시
    * @param {string} share 공유 가능 데이터 양(BFF 서버에서 내려주는 모든 타입이 string 임)
    */
   _successGetShareData: function(share) {
@@ -126,7 +126,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 공유하기 버튼 클릭 시
+   * @desc 공유하기 버튼 클릭 시
    * @param {Event} e 클릭 이벤트 객체
    */
   _confirmSubmit: function(e) {
@@ -145,7 +145,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 사용자가 공유 확인 팝업에서 확인 버튼 클릭 시
+   * @desc 사용자가 공유 확인 팝업에서 확인 버튼 클릭 시
    */
   _handleSubmit: function() { 
     this._popupService.close();
@@ -157,7 +157,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   /**
-   * @description 서버에서 공유하기 응답 시
+   * @desc 서버에서 공유하기 응답 시
    * @param {object} resp 서버 응답 데이터
    */
   _handleSuccessSubmit: function(resp) {

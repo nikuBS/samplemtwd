@@ -10,15 +10,24 @@ Tw.MyTJoinCombinationsTBFree = function(rootEl, svcInfo) {
   this._member = svcInfo;
 
   this.$container = rootEl;
-  this.bindEvent();
+  this._bindEvent();
 };
 
 Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
-  bindEvent: function() {
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
+  _bindEvent: function() {
     this.$container.on('click', '.fe-benefit', $.proxy(this._openChangeBenefitPopup, this));
   },
 
-  _openChangeBenefitPopup: function(e) {  // 헤택 1 또는 혜택 2 변경하기 버튼 클릭 시
+  /**
+   * @desc 헤택 1 또는 혜택 2 변경하기 버튼 클릭 시
+   * @param {Event} e 클릭 이벤트
+   * @private
+   */
+  _openChangeBenefitPopup: function(e) {  
     this.$changeBtn = $(e.target);
     this._bIdx = e.target.getAttribute('data-index'); // 혜택 1 변경인 지 혜택 2 변경인 지 
     this._benefit = e.target.getAttribute('data-benefit');  // 현재 설정된 혜택 값
@@ -37,7 +46,12 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
     );
   },
 
-  _handleOpenChangeBenefitPopup: function($layer) { // 혜택 변경 팝업 이벤트 바인딩
+  /**
+   * @desc 혜택 변경 팝업 이벤트 바인딩
+   * @param {$object} $layer 팝업 jquery object
+   * @private
+   */
+  _handleOpenChangeBenefitPopup: function($layer) { 
     $layer.on('click', '.bt-red1', $.proxy(this._submitChangeBenefit, this, $layer));
 
     if (this._bIdx === '2') {
@@ -50,6 +64,11 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
     }
   },
 
+  /**
+   * @desc 혜택 변경 버튼 클릭 시 서버에 요청
+   * @param {$object} $layer 팝업 레이어 jquery object
+   * @private
+   */
   _submitChangeBenefit: function($layer) {
     var value = '',
       code = 0;
@@ -84,7 +103,12 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       .done($.proxy(this._successChangeBenefit, this));
   },
 
-  _successChangeBenefit: function(resp) { // BFF_05_0135에서 response가 오면
+  /**
+   * @desc 혜택 변경 요청에 대한 BFF 응답 시
+   * @param {object} resp BFF 응답
+   * @private
+   */
+  _successChangeBenefit: function(resp) { 
     if (resp.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A12;
       var parent = this.$changeBtn
@@ -99,7 +123,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
       if (this._bIdx === '1') {
         parent.textContent = parent.textContent.replace(/.+\s/, Tw.MYT_JOIN_TB_FREE_BENEFIT[this._benefit] + ' ');
       } else {
-        parent.textContent = parent.textContent.replace(/[0-9\-\*]+/, this._benefit);
+        parent.textContent = parent.textContent.replace(/[0-9\-\*]+/, FormatHelper.getDashedCellPhoneNumber(this._benefit));
       }
 
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closePopup, this));
@@ -110,11 +134,21 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
     }
   },
 
+  /**
+   * @desc 혜택 변경 팝업 닫기
+   * @private
+   */
   _closePopup: function() {
     this._popupService.close();
   },
 
-  _validPhoneNumber: function(value, $error) {  // 입력한 번호 유효성 검사
+  /**
+   * @desc 혜택2변경 핸드폰 번호 유효성 검사
+   * @param {string} value 인풋 입력 값
+   * @param {$object} $error 에러 표시 jquery 객체
+   * @private
+   */
+  _validPhoneNumber: function(value, $error) {  
     var number = value.replace(/-/g, '');
 
     if (number.indexOf('010') === 0) {  
@@ -138,7 +172,12 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
     }
   },
 
-  _handleFocusoutInput: function($input, $error) {  // 인풋이 포커스를 잃었을 때
+  /**
+   * @desc 인풋이 포커스를 잃었을 때
+   * @param {$object} $input 인풋 jquery 객체
+   * @param {$object} $error 에러 표시 jquery 객체
+   */
+  _handleFocusoutInput: function($input, $error) {  
     var value = $input.val(),
       isValid = this._validPhoneNumber(value, $error);
 
@@ -147,17 +186,35 @@ Tw.MyTJoinCombinationsTBFree.prototype = {  // TB끼리 온가족 프리
     }
   },
 
-  _setInvalidInput: function($error, msg) { // 에러스테이트 설정
+  /**
+   * @desc 에러 스테이트 설정
+   * @param {$object} $error 에러 표시 jquery 객체
+   * @param {string} msg 에러메세지
+   * @private
+   */
+  _setInvalidInput: function($error, msg) { 
     if ($error.hasClass('none')) {
       $error.removeClass('none').attr('aria-hidden', false);
     }
     $error.text(msg);
   },
 
-  _removeDash: function($input) { // 입력에 포커스가 되면 대쉬 지우고, input 타입 변경
+  /**
+   * @desc 입력에 포커스가 되면 대쉬 지움
+   * @param {$object} $input 인풋 jquery 객체
+   * @private
+   */
+  _removeDash: function($input) { 
     $input.val(($input.val() || '').replace(/-/g, ''));
   },
 
+  /**
+   * @desc 인풋에 입력 시
+   * @param  {$object} $input
+   * @param  {$object} $error
+   * @param  {$object} $submitBtn
+   * @private
+   */
   _handleTypeInput: function($input, $error, $submitBtn) { 
     var value = $input
       .val()
