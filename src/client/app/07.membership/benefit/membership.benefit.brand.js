@@ -1,11 +1,15 @@
 /**
- * MenuName: T멤버십 > 제휴브랜드
  * @file membership.benefit.brand.js
  * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018. 12. 21.
- * Summary: 제휴브랜드 조회
+ * @since 2018-12-21
  */
 
+/**
+ * @class
+ * @desc T멤버십 > 제휴브랜드
+ * @param {Object} rootEl
+ * @param {JSON} options
+ */
 Tw.MembershipBenefitBrand = function (rootEl, options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -23,17 +27,35 @@ Tw.MembershipBenefitBrand.prototype = {
     S: 'silver',
     A: 'all'
   },
+  /**
+   * @member {Object}
+   * @readonly
+   * @prop {String} ALL 
+   */
   _CATE_CD: {
-    ALL: '00'         // ALL
+    ALL: '00'         
   },
+  /**
+   * @member {Object}
+   * @readonly
+   * @prop {String} LIKE    좋아요
+   * @prop {String} LATEST  최신순
+   */
   _ORD_COL_CD: {
-    LIKE: 'L',        // 좋아요
-    LATEST: 'R'       // 최신순
+    LIKE: 'L',
+    LATEST: 'R'
   },
+  /**
+   * @member {Object}
+   * @readonly
+   * @prop {String} A  전체 등급
+   * @prop {String} V  VIP 혜택 등급
+   * @prop {String} M  내 등급
+   */
   _SUB_TAB_CD: {
-    A: 'A',           // 전체 등급
-    V: 'V',           // VIP 혜택 등급
-    M: 'M'            // 내 등급
+    A: 'A',
+    V: 'V',
+    M: 'M'
   },
   _ACTION_SHEET_HBS: 'actionsheet_select_a_type',
   _reqOptions: {
@@ -110,8 +132,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 전체 카테고리 레이어 토글시 특정 엘리먼트 aria-hidden처리 - 접근성 대응
-   * @private
+   * @function
+   * @desc 전체 카테고리 레이어 토글시 특정 엘리먼트 aria-hidden처리 - 접근성 대응
+   * @param {String} type
    */
   _setAreaHiddenAttr: function(type) {
     var attr = {
@@ -128,9 +151,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 전체 카테고리 레이어 토글
-   * @param open
-   * @private
+   * @function
+   * @desc 전체 카테고리 레이어 토글
+   * @param {boolean} open
    */
   _toggleCategoryLayer: function (open) {
     if ( open ) {
@@ -154,8 +177,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 등급 세팅
-   * @private
+   * @function
+   * @desc 등급 세팅
    */
   _setGrade: function () {
     var self = this;
@@ -179,9 +202,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 카테고리 선택시 호출
-   * @param cateCd
-   * @private
+   * @function
+   * @desc 카테고리 선택시 호출
+   * @param {String} cateCd
    */
   _selectCategory: function (cateCd) {
     var option = {
@@ -198,9 +221,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 제휴브랜드 목록 조회
-   * @param options
-   * @private
+   * @function
+   * @desc 제휴브랜드 목록 조회
+   * @param {JSON} options
    */
   _reqBrandList: function (options) {
     if ( Tw.FormatHelper.isEmpty(options.coPtnrNm) ) {
@@ -212,10 +235,10 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 제휴브랜드 목록 조회 성공
-   * @param options
-   * @param resp
-   * @private
+   * @function
+   * @desc 제휴브랜드 목록 조회 성공
+   * @param {JSON} options
+   * @param {JSON} resp
    */
   _onDoneReqBrandList: function (options, resp) {
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
@@ -239,18 +262,18 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 제휴브랜드 목록 조회 실패
-   * @param err
-   * @private
+   * @function
+   * @desc 제휴브랜드 목록 조회 실패
+   * @param {JSON} err
    */
   _onFailReq: function (err) {
     this._popupService.openAlert(err.msg, err.code);
   },
 
   /**
-   * 더보기 버튼 세팅
-   * @param totalCnt
-   * @private
+   * @function
+   * @desc 더보기 버튼 세팅
+   * @param {Object} totalCnt
    */
   _setBtnMore: function (totalCnt) {
     if ( parseInt(totalCnt, 10) > this._reqOptions.pageSize * this._reqOptions.pageNo ) {
@@ -261,8 +284,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 카테고리 세팅
-   * @private
+   * @function
+   * @desc 카테고리 세팅
    */
   _setCategory: function () {
     var $buttons = this.$categoryList.find('button');
@@ -273,8 +296,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 젠체 카테고리 레이어 세팅
-   * @private
+   * @function
+   * @desc 젠체 카테고리 레이어 세팅
    */
   _setCategoryInLayer: function () {
     var $btns = this.$categoryListInLayer.find('button');
@@ -288,8 +311,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 검색 키워드 세팅
-   * @private
+   * @function
+   * @desc 검색 키워드 세팅
    */
   _setKeywords: function () {
     if ( Tw.FormatHelper.isEmpty(this._reqOptions.coPtnrNm) ) {
@@ -298,9 +321,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 제휴브랜드 목록 세팅
-   * @param list
-   * @private
+   * @function
+   * @desc 제휴브랜드 목록 세팅
+   * @param {ArrayList} list
    */
   _setBrandList: function (list) {
     var source = this.$brandItemTmpl.html();
@@ -316,15 +339,21 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$contentsEmpty.hide();
   },
 
+  /**
+   * @function
+   * @desc API result 리턴
+   * @param {JSON} resp
+   * @returns {JSON}
+   */
   _getResult: function (resp) {
     return resp.result;
   },
 
   /**
-   * 제휴브랜드 목록 반환
-   * @param resp
-   * return list{Array}
-   * @private
+   * @function
+   * @desc 제휴브랜드 목록 반환
+   * @param {JSON} resp
+   * @returns {ArrayList}
    */
   _getBrandList: function (resp) {
     var self = this;
@@ -346,9 +375,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * cateCd에 따른 스크롤 세팅
-   * @param cateCd
-   * @private
+   * @function
+   * @desc cateCd에 따른 스크롤 세팅
+   * @param {String} cateCd
    */
   _setScrollLeft: function (cateCd) {
     var $buttons = this.$categoryList.find('button');
@@ -360,9 +389,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 키워드 검색
-   * @param cateCd
-   * @private
+   * @function
+   * @desc 키워드 검색
    */
   _searchWithKeyword: function () {
     var inputVal = this.$inputCoPtnrNm.val();
@@ -384,9 +412,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 검색결과 없는 경우 노출
-   * @param cateCd
-   * @private
+   * @function
+   * @desc 검색결과 없는 경우 노출
    */
   _showEmptyResult: function() {
     var inputVal = this.$inputCoPtnrNm.val();
@@ -399,9 +426,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 등급선택 액션시트 오픈
-   * @param $container
-   * @private
+   * @function
+   * @desc 등급선택 액션시트 오픈
+   * @param {Object} $container
    */
   _onOpenGradeActionSheet: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
@@ -419,9 +446,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 카테고리 클릭 시 호출
-   * @param event
-   * @private
+   * @function
+   * @desc 카테고리 클릭 시 호출
+   * @param {Obejct} event
    */
   _onClickBtnCategory: function (event) {
     var dataCd = $(event.currentTarget).attr('cate-cd');
@@ -430,8 +457,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 더보기 버튼 클릭 시 호출
-   * @private
+   * @function
+   * @desc 더보기 버튼 클릭 시 호출
    */
   _onClickBtnMore: function () {
     this._reqBrandList({
@@ -440,9 +467,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 전체 카테고리 레이어의 카테고리 클릭 시 호출
-   * @param event
-   * @private
+   * @function
+   * @desc 전체 카테고리 레이어의 카테고리 클릭 시 호출
+   * @param {Object} event
    */
   _onClickBtnCategoryInLayer: function (event) {
     var cateCd = $(event.currentTarget).attr('cate-cd');
@@ -452,8 +479,8 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 등급버튼 클릭 시 호출
-   * @private
+   * @function
+   * @desc 등급버튼 클릭 시 호출
    */
   _onClickBtnSelectGrade: function () {
     this._popupService.open({
@@ -464,16 +491,17 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 검색 버튼 클릭 시 호출
-   * @private
+   * @function
+   * @desc 검색 버튼 클릭 시 호출
    */
   _onClickBtnSearch: function () {
     this._searchWithKeyword();
   },
 
   /**
-   * 검색 인풋 keyup이벤트 발생시 호출
-   * @private
+   * @function
+   * @desc 검색 인풋 keyup이벤트 발생시 호출
+   * @param {Object} event
    */
   _onKeyupInputCoPtnrNm: function (event) {
     var isEnter = 13;
@@ -483,8 +511,9 @@ Tw.MembershipBenefitBrand.prototype = {
   },
 
   /**
-   * 검색 인풋 keypress이벤트 발생시 호출
-   * @private
+   * @function
+   * @desc 검색 인풋 keypress이벤트 발생시 호출
+   * @param {Object} e
    */
   _onKeypressInputCoPtnrNm: function (e) {
     // [DV001-19148] 한글입력시 ios에서 마지막 글자 갱신되는 문제 수정

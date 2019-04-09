@@ -1,15 +1,14 @@
 /**
- * MenuName: 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 합산
  * @file benefit.my-benefit.rainbow-point.adjustment.js
  * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018. 10. 29.
+ * @since 2018-10-29
  * Summary: 레인보우 포인트 포인트 합산
  */
 
 /**
- * 레인보우 포인트 공통(합산과 양도 페이지에서 확장해서 사용)
+ * @class
+ * @desc 레인보우 포인트 공통(합산과 양도 페이지에서 확장해서 사용)
  * @param rootEl
- *
  */
 Tw.BenefitMyBenefitRainbowPointCommon = function (rootEl) {
   this.$container = rootEl;
@@ -34,11 +33,11 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 회선중 svcMgmtNum와 같은 회선을 선택해서 반환
-   * @param lines
-   * @param svcMgmtNum
-   * @return list{Array}
-   * @private
+   * @function
+   * @desc 회선중 svcMgmtNum와 같은 회선을 선택해서 반환
+   * @param {ArrayList} lines
+   * @param {String} svcMgmtNum
+   * @returns {ArrayList}
    */
   _getLinesAttrToSelect: function (lines, svcMgmtNum) {
     return [{
@@ -53,10 +52,10 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 회선 변경 후 화면 반영시 호출
-   * @param line
-   * @param $target
-   * @private
+   * @function
+   * @desc 회선 변경 후 화면 반영시 호출
+   * @param {JSON} line
+   * @param {Object} $target
    */
   _changeLine: function (line, $target) {
     var dashedSvcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
@@ -65,8 +64,9 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 합산하기 버튼 클릭시 유효성 체크
-   * @private
+   * @function
+   * @desc 합산하기 버튼 클릭시 유효성 체크
+   * @returns {boolean}
    */
   _validate: function () {
     var inputPoint = parseInt(this._$inputPoint.val(), 10) || 0;
@@ -90,8 +90,9 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 합산/양도 완료 성공시 호출
-   * @private
+   * @function
+   * @desc 합산/양도 완료 성공시 호출
+   * @param {JSON} resp
    */
   _submitDone: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -103,16 +104,17 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 합산/양도 완료 실패시 호출
-   * @private
+   * @function
+   * @desc 합산/양도 완료 실패시 호출
+   * @param {JSON} err
    */
   _reqFail: function (err) {
     this._popupService.openAlert(err.msg, err.code, null, null, null, this.$btnSubmit);
   },
 
   /**
-   * 미리보기 팝업 오픈
-   * @private
+   * @function
+   * @desc 미리보기 팝업 오픈
    */
   _openPreviewPopup: function () {
     var previewData = this._getPreviewData();
@@ -129,8 +131,9 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 포인트 받는 회선 버튼 선택시 호출
-   * @private
+   * @function
+   * @desc 포인트 받는 회선 버튼 선택시 호출
+   * @param {Object} evt
    */
   _onClickBtnLineToReceive: function (evt) {
     this._linesToReceiveActionsheet = this._getReceiveLine();
@@ -138,8 +141,8 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 미리보기 팝업 버튼 클릭 시 호출
-   * @private
+   * @function
+   * @desc 미리보기 팝업 버튼 클릭 시 호출
    */
   _onClickBtnPreview: function () {
     var isValid = this._validate();
@@ -149,11 +152,11 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   /**
-   * 회선 변경 액션시트 팝업 오픈
-   * @param data
-   * @param callback
-   * @param $target
-   * @private
+   * @function
+   * @desc 회선 변경 액션시트 팝업 오픈
+   * @param {JSON} data
+   * @param {Object} callback
+   * @param {Object} $target
    */
   _openLineActionsheet: function (data, callback, $target) {
     this._popupService.open({
@@ -166,11 +169,11 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
 
 
   /**
-   * 포인트 받는 회선 선택 시 callback
-   * @param data
-   * @param callback
-   * @param $target
-   * @private
+   * @function
+   * @desc 포인트 받는 회선 선택 시 callback
+   * @param {JSON} data
+   * @param {Object} callback
+   * @param {Object} $target
    */
   _lineToReceiveActionsheetOpenCallback: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
@@ -181,6 +184,10 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
 
 };
 
+/**
+ * @class
+ * @desc 할인/혜택 > 나의 할인 혜택 > 레인보우 포인트 > 포인트 합산
+ */
 Tw.BenefitMyBenefitRainbowPointAdjustment = function () {
   Tw.BenefitMyBenefitRainbowPointCommon.apply(this, arguments);
   this._cachedElement();
@@ -212,9 +219,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 포인트 주는 회선 버튼 선택시 호출
-   * @param evt
-   * @private
+   * @function
+   * @desc 포인트 주는 회선 버튼 선택시 호출
+   * @param {Object} evt
    */
   _onClickBtnLineToGive: function (evt) {
     var svcMgmtNumToGive = this._$btnLineToGive.data('svc-mgmt-num').toString();
@@ -223,9 +230,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 포인트 주는 회선 팝업 > 회선 선택시 호출
-   * @param evt
-   * @private
+   * @function
+   * @desc 포인트 주는 회선 팝업 > 회선 선택시 호출
+   * @param {Object} $container
    */
   _lineToGiveActionsheetOpenCallback: function ($container) {
     $container.find('li button').click($.proxy(function (event) {
@@ -236,9 +243,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 포인트 주는 회선 변경
-   * @param svcMgmtNum
-   * @private
+   * @function
+   * @desc 포인트 주는 회선 변경
+   * @param {String} svcMgmtNum
    */
   _changeLineToGive: function (svcMgmtNum) {
     var selectedLine = _.find(this._lines, {
@@ -254,8 +261,8 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 미리보기 > 합산완료 버튼 클릭 시 호출
-   * @private
+   * @function
+   * @desc 미리보기 > 합산완료 버튼 클릭 시 호출
    */
   _submit: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0102, {
@@ -267,9 +274,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 포인트 받는 회선 변경
-   * @param svcMgmtNum
-   * @private
+   * @function
+   * @desc 포인트 받는 회선 변경
+   * @param {String} svcMgmtNum
    */
   _changeLineToReceive: function (svcMgmtNum) {
     var selectedLine = _.find(this._lines, {
@@ -279,10 +286,10 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 미리보기 데이터 가공 후 반환
-   * @param svcMgmtNum
-   * return {Object}
-   * @private
+   * @function
+   * @desc 미리보기 데이터 가공 후 반환
+   * @param {String} svcMgmtNum
+   * @returns {Object}
    */
   _getPreviewData: function () {
     var inputPoint = parseInt(this._$inputPoint.val(), 10) || 0;
@@ -312,9 +319,9 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
   },
 
   /**
-   * 포인트 받는 회선 정보 반환
-   * return {Object}
-   * @private
+   * @function
+   * @desc 포인트 받는 회선 정보 반환
+   * @returns {Object}
    */
   _getReceiveLine: function () {
     var svcMgmtNumToGive = this._$btnLineToGive.data('svc-mgmt-num').toString();
