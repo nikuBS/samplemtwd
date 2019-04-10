@@ -7,7 +7,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Request, Response, NextFunction} from 'express';
 import {MYT_FARE_PAYMENT_HISTORY_TYPE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE } from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_CODE, MYT_FARE_POINT_PAYMENT_STATUS, MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING } from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_CODE, MYT_FARE_POINT_PAYMENT_STATUS } from '../../../../types/bff.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 
