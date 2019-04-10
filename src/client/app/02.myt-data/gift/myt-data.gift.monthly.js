@@ -37,7 +37,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));
+    this.$btnRequestSendingAuto.click(_.debounce($.proxy(this._getReceiveUserInfo, this), 500));
     this.$input_auto_gift.on('input blur', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
     this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
