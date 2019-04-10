@@ -427,8 +427,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     $popupLayer.on('change', '#flab01', $.proxy(this._changeCheck, this));
     $popupLayer.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
     $popupLayer.on('click', '.cancel', $.proxy(this._changeCheck, this));
-    $popupLayer.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
     $popupLayer.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
+    this.$btnRegister.click(_.debounce($.proxy(this._handleEditReservation, this), 500));
 
     this._insertDashPhone(); // 예약 수정 팝업 띄운 후 핸드폰 번호에 Dash 추가
     this._changeCheck();
