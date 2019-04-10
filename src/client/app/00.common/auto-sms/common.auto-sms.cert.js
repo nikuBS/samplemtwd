@@ -298,8 +298,7 @@ Tw.CommonAutoSmsCert.prototype = {
   },
   _successRequestConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // TODO: go /common/auto-sms/result
-      this._historyService.goLoad('/common/auto-sms/result')
+      this._historyService.goLoad('/common/auto-sms/result');
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.NOT_MATCH_CODE, null, null, $.proxy(this._onCloseCertError, this));
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
