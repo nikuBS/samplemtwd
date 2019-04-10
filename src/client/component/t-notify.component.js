@@ -15,6 +15,11 @@ Tw.TNotifyComponent = function () {
 };
 
 Tw.TNotifyComponent.prototype = {
+  LANDING_TYPE: {
+    INTERNAL: '01',
+    EXTERNAL: '02',
+    CHARGE: '04'
+  },
   open: function (userId, evt) {
     this._evt = evt;
     this._getPushDate(userId);
@@ -94,14 +99,37 @@ Tw.TNotifyComponent.prototype = {
 
   },
   _onClickLink: function ($event) {
-    var url = $($event.currentTarget).data('link');
+    var currentTarget = $($event.currentTarget);
+    var url = currentTarget.data('link');
+    var type = currentTarget.data('link-type');
     if ( !Tw.FormatHelper.isEmpty(url) ) {
-      if ( url.indexOf('app.tworld.co.kr') !== -1 ) {
-        this._historyService.goLoad(url);
+      if ( Tw.FormatHelper.isEmpty(type) ) {
+        if ( url.indexOf('app.tworld.co.kr') !== -1 ) {
+          this._historyService.goLoad(url);
+        } else {
+          Tw.CommonHelper.openUrlExternal(url);
+        }
       } else {
-        Tw.CommonHelper.openUrlExternal(url);
+        this._landing(url, type);
       }
     }
+  },
+  _landing: function (url, type) {
+    switch ( type ) {
+      case this.LANDING_TYPE.INTERNAL:
+        this._historyService.goLoad(url);
+        break;
+      case this.LANDING_TYPE.EXTERNAL:
+        this._goExternalUrl(url);
+        break;
+      case this.LANDING_TYPE.CHARGE:
+        Tw.CommonHelper.showDataCharge($.proxy(this._goExternalUrl, this, url));
+        break;
+      default:
+    }
+  },
+  _goExternalUrl: function (url) {
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _onClickGoSetting: function () {
     this._goSetting = true;
