@@ -30,7 +30,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,cdn,step,from,nowUrl) {
       link : '/customer/svc-info/site/mcenter'
     },
     'C00001': {
-      link : Tw.OUTLINK.DIRECTSHOP_GUIDE_LINK.common+Tw.OUTLINK.DIRECTSHOP_BENEFIT_LINK.discount
+      link : Tw.OUTLINK.DIRECTSHOP_GUIDE_LINK.common+Tw.OUTLINK.DIRECTSHOP_GUIDE_LINK.discount
     }
   };
   this._tidLanding = new Tw.TidLandingComponent();
