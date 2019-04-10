@@ -36,7 +36,7 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
 
   _bindEvent: function () {
     this.$btnSearchZipcode.on('click', $.proxy(this._onClickSearchZipcode, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
     this.$inputDisabled.on('focus', function() {
       $(this).trigger('blur');
     });

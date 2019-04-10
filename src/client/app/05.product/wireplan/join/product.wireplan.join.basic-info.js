@@ -46,7 +46,7 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
     this.$container.on('focus', 'input[type=tel]', $.proxy(this._focusInputNumber, this));
 
     this.$btnClear.on('click', $.proxy(this._clear, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
   },
 
   _detectInputNumber: function(maxLength, e) {

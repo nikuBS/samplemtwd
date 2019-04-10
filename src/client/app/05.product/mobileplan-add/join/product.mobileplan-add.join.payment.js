@@ -99,7 +99,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnGetAuthCode.on('click', $.proxy(this._getAuthCode, this));
     this.$btnValidate.on('click', $.proxy(this._reqValidateAuthCode, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
   },
 
   _detectInputNumber: function(e) {

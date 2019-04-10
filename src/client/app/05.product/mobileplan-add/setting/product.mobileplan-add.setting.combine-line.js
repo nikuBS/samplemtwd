@@ -33,8 +33,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnAddNum.on('click', $.proxy(this._addNum, this));
-    this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
+    this.$btnAddNum.on('click', _.debounce($.proxy(this._addNum, this), 500));
+    this.$lineList.on('click', '.fe-btn_del_num', _.debounce($.proxy(this._delNum, this), 500));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));

@@ -50,7 +50,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnApply.on('click', $.proxy(this._openConfirmAlert, this));
+    this.$btnApply.on('click', _.debounce($.proxy(this._openConfirmAlert, this), 500));
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));

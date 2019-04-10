@@ -26,7 +26,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._openConfirmAlert, this));
+    this.$btnTerminate.on('click', _.debounce($.proxy(this._openConfirmAlert, this), 500));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 

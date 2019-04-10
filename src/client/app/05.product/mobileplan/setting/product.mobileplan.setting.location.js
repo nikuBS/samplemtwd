@@ -41,15 +41,15 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#loc-search-input').click($.proxy(this._onclickLocSchPopup, this));
 
     // 지정번호 tab
-    $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
-    $('#btnNumAdd').click($.proxy(this._addNumber, this));
+    $('#btnAddr').click(_.debounce($.proxy(this._onClickBtnAddr, this), 500));
+    $('#btnNumAdd').click(_.debounce($.proxy(this._addNumber, this), 500));
     $('.discount-number').on('click', '.fe-bt-masking-alert', $.proxy(this._openMaskingAlert, this));
     $('.discount-number').on('click', '.fe-bt-num-cancel', $.proxy(this._removeNumber, this));
     $('#num-input').on('input', $.proxy(this._oninputTelNumber, this));
     $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
     $('#num-input').on('focus', $.proxy(this._onfocusNumInput, this));
     $('#num-input').on('blur', $.proxy(this._onblurNumInput, this));
-    $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
+    $('#num-inputbox .cancel').on('click', _.debounce($.proxy(this._onclickInputDel, this), 500));
 
     $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
 

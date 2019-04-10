@@ -26,7 +26,7 @@ Tw.BenefitTerminateAllFamilyFree.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._onTerminate, this));
+    this.$btnTerminate.on('click', _.debounce($.proxy(this._onTerminate, this), 500));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 

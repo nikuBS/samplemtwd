@@ -141,7 +141,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this)); // input 옆 X버튼 클릭시
 
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));  // 약관동의 팝업 자세히 보기 클릭 시
-    this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));  // 신청하기 or 다음 버튼 클릭 시
+    this.$btnApply.on('click', _.debounce($.proxy(this._procApplyCheck, this), 500));  // 신청하기 or 다음 버튼 클릭 시
     this.$btnSelectTypeCd.on('click', $.proxy(this._openTypeCdPop, this));  // 상품 카테고리 선택 버튼 클릭 시
     this.$btnSelectCombine.on('click', $.proxy(this._openCombinePop, this));
 
