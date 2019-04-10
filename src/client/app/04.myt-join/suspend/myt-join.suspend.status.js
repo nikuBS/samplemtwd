@@ -59,7 +59,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    */
   _onOpenResuspendPopup: function ($popup) {
     $popup.find('input[type="date"]').val(Tw.DateHelper.getAddDay(null, 'YYYY-MM-DD'));
-    $popup.find('#fe-resuspend').on('click', $.proxy(this._requestResuspend, this, $popup));
+    $popup.find('#fe-resuspend').on('click', _.debounce($.proxy(this._requestResuspend, this, $popup), 500));
   },
   /**
    * @function
@@ -120,7 +120,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param $popup Cancel resuspend(재신청 취소) popup element
    */
   _onOpenCancelResuspendPopup: function ($popup) {
-    $popup.find('#fe-reset').on('click', $.proxy(this._requestCancelResuspend, this, $popup));
+    $popup.find('#fe-reset').on('click', _.debounce($.proxy(this._requestCancelResuspend, this, $popup), 500));
   },
   /**
    * @function
@@ -172,7 +172,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @param $popup Reset(해제하기) popup element
    */
   _onOpenResetPopup: function ($popup) {
-    $popup.on('click', '#fe-reset', $.proxy(this._requestReset, this));
+    $popup.on('click', '#fe-reset', _.debounce($.proxy(this._requestReset, this), 500));
   },
   /**
    * @function

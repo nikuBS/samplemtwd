@@ -22,7 +22,7 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._fileDialog = null;
-
+  this._uscanCompleted = false;
   this._cachedElement();
   this._requestSvcInfo();
 
@@ -57,7 +57,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$optionType.on('change', $.proxy(this._onSuspendTypeChanged, this));
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
-    this.$btSuspend.on('click', $.proxy(this._onClickSuspend, this));
+    this.$btSuspend.on('click', _.debounce($.proxy(this._onClickSuspend, this), 500));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this._changeSuspendType('military');
   },
@@ -99,6 +99,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _changeSuspendType: function (type) {
     this._files = null;
+    this._uscanCompleted = false;
     this._popupService.close();
     if ( type === 'military' ) {
       this.$container.find('.fe-military').show();
@@ -168,6 +169,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
+    this._uscanCompleted = false;
     this.$btSuspend.prop('disabled', false);
   },
   /**
@@ -227,6 +229,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onSuccessUscanUpload: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._uscanCompleted = true;
       this._requestSuspend();
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -338,18 +341,22 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
     this._suspendOptions = option;
 
-    // 모바일웹 4.4 버젼은 파일 업로드 미지원
-    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
-      var convFileList = _.compact(this._files).map(function (item) {
-        return {
-          fileSize: item.size,
-          fileName: item.name,
-          filePath: item.path
-        };
-      });
-      this._requestUscan(convFileList);
+    if( this._uscanCompleted ){ // 인증 취소 후 재시도 시 중복 업로드 방지
+      this._requestSuspend();
     } else {
-      this._requestUpload(this._files);
+      // 모바일웹 4.4 버젼은 파일 업로드 미지원
+      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+        var convFileList = _.compact(this._files).map(function (item) {
+          return {
+            fileSize: item.size,
+            fileName: item.name,
+            filePath: item.path
+          };
+        });
+        this._requestUscan(convFileList);
+      } else {
+        this._requestUpload(this._files);
+      }
     }
   },
   /**
