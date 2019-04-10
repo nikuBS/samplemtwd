@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.small.block.controller.ts
- * @author Lee kirim (kirim@sk.com)
- * @since 2018. 12. 2
+ * @file [소액결제-차단내역-리스트]
+ * @author Lee kirim
+ * @since 2018-12-02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,16 +10,27 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { MYT_FARE_HISTORY_MICRO_BLOCK_TYPE } from '../../../../types/bff.type';
 
-interface Info {
+/**
+ * @interface
+ * @desc 팁정보 형태 정의
+ */
+interface TipInfo {
   [key: string]: string;
 }
 
+/**
+ * @interface
+ * @desc API 결과값 형태 정의
+ */
 interface Result {
   [key: string]: string;
 }
 
+/**
+ * 소액결제 월별내역 구현
+ */
 class MyTFareBillSmallHistoryDetail extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+  render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_05_0093, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -30,8 +41,7 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
           svcInfo: svcInfo
         });
       }
-      // const mockData = bill_guide_BFF_05_0093;
-      const data: Result | any = resp.result; // || mockData.result;
+      const data: Result | any = resp.result;
 
       // 사용처 / 결제대행업체 / 신청일
       if (data.cpHistories && data.cpHistories.length) {
@@ -55,15 +65,21 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
         pageInfo: pageInfo,
         totalCnt: data.payHistoryCnt,
         data: Object.assign(data, {
-          noticeInfo: this.getNoticeInfo()
+          noticeInfo: this.getTipInfo()
         })
       });
     });
     
   }
 
-  // 꼭 확인해 주세요 팁 메뉴 정리
-  private getNoticeInfo(): Info[] {
+  /**
+   * @desc 꼭 확인해주세요 TIP 정리
+   * @prop {string} link 팁 클래스
+   * @prop {string} view 팁 아이디
+   * @prop {srting} title 문구
+   * @returns {TipInfo[]}
+   */
+  private getTipInfo(): TipInfo[] {
     return [
       {link: 'MF_06_01_02_tip_01', view: 'M000271', title: '차단내역 안내'},
       {link: 'MF_06_01_02_tip_02', view: 'M000271', title: '차단/해제 적용 기준'},
