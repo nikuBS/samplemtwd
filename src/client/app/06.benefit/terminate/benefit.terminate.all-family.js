@@ -44,7 +44,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
     }
 
     this._popupService.openModalTypeATwoButton(confirmAlert.TITLE, confirmAlert.MSG,
-      Tw.BUTTON_LABEL.CONFIRM, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
+      confirmAlert.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this), 'is_term', $btn);
   },
 
