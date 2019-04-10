@@ -1267,7 +1267,7 @@
   width: 3.13rem;
   height: 3.13rem;
   background: url(/img/ico/ico-popup.png) no-repeat 0 0;
-  background-size: 3.13rem; }
+  background-size: 50px; }
 
 .popup .popup-info .popup-header .ico.type1 {
   background-position: 0 0; }
@@ -1670,7 +1670,7 @@
   width: 1.56rem;
   height: 1.56rem;
   background: url(/img/ico/ico-group.png) no-repeat 0 -42.19rem;
-  background-size: 3.13rem; }
+  background-size: 50px; }
 
 .popup .popup-dropdown .dropdown-list li .line {
   float: right;
@@ -3686,7 +3686,7 @@ body.apphome .main-membershop-box {
   width: 1.56rem;
   height: 1.56rem;
   background: url(/img/ico/ico-group.png) no-repeat -1.56rem -67.19rem;
-  background-size: 3.13rem; }
+  background-size: 50px; }
 
 .custom-form {
   position: relative;
@@ -4742,7 +4742,7 @@ body.apphome .main-membershop-box {
   width: 1.56rem;
   height: 1.56rem;
   background: url(/img/ico/ico-group.png) no-repeat -1.56rem -65.63rem;
-  background-size: 3.13rem; }
+  background-size: 50px; }
 
 .shadow-box {
   position: relative;
@@ -5271,7 +5271,7 @@ body.apphome .main-membershop-box {
   background-image: url(/img/ico/ico-group.png);
   background-repeat: no-repeat;
   background-position: 0 -17.19rem;
-  background-size: 3.13rem; }
+  background-size: 50px; }
 
 .sms-confirm-box button.disabled {
   border-top: 1px solid #e5e5e5;

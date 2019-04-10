@@ -2,8 +2,15 @@
  * @file myt-fare.bill.js
  * @author Jayoon Kong
  * @since 2018.09.17
+ * @desc 나의요금 서브메인 등에서 요금납부 클릭 시 호출하는 actionsheet
  */
 
+/**
+ * @namespace
+ * @desc 요금납부 클릭 시 호출하는 actionsheet namespace
+ * @param rootEl - dom 객체
+ * @param svcAttrCd
+ */
 Tw.MyTFareBill = function (rootEl, svcAttrCd) {
   this.$container = rootEl;
 
@@ -15,6 +22,11 @@ Tw.MyTFareBill = function (rootEl, svcAttrCd) {
 };
 
 Tw.MyTFareBill.prototype = {
+  /**
+   * @function
+   * @desc init
+   * @param svcAttrCd
+   */
   _init: function (svcAttrCd) {
     this._initVariables(svcAttrCd);
     this._getAutoPayment();
@@ -25,6 +37,11 @@ Tw.MyTFareBill.prototype = {
       this._getRainbowPoint();
     }
   },
+  /**
+   * @function
+   * @desc initialize variables
+   * @param svcAttrCd
+   */
   _initVariables: function (svcAttrCd) {
     this.$isMobile = true;
 
@@ -49,32 +66,56 @@ Tw.MyTFareBill.prototype = {
       this._rainbowComplete = true;
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 여부 조회 API 호출
+   */
   _getAutoPayment: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0058, {})
       .done($.proxy(this._autoSuccess, this))
       .fail($.proxy(this._autoFail, this));
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 list 유무 조회 API 호출
+   */
   _getSmsList: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
       .done($.proxy(this._smsSuccess, this))
       .fail($.proxy(this._smsFail, this));
   },
+  /**
+   * @function
+   * @desc OK cashbag/T포인트 조회 API 호출
+   */
   _getPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0041, {})
       .done($.proxy(this._pointSuccess, this))
       .fail($.proxy(this._pointFail, this));
   },
+  /**
+   * @function
+   * @desc 레인보우포인트 조회 API 호출
+   */
   _getRainbowPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0132, {})
       .done($.proxy(this._rainbowSuccess, this))
       .fail($.proxy(this._rainbowFail, this));
   },
+  /**
+   * @function
+   * @desc 모든 API 응답 완료 여부 체크
+   */
   _isAllComplete: function () {
     if (this._autoComplete && this._isSmsComplete &&
       this._pointComplete && this._rainbowComplete) {
       this._openPaymentOption();
     }
   },
+  /**
+   * @function
+   * @desc 요금납부 actionsheet load
+   */
   _openPaymentOption: function () {
     var data = Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA;
     if (!this.$isMobile) {
@@ -93,6 +134,11 @@ Tw.MyTFareBill.prototype = {
       null,
       'paymentselect');
   },
+  /**
+   * @function
+   * @desc actionsheet set data and event binding
+   * @param $layer
+   */
   _onOpenPopup: function ($layer) {
     this.$layer = $layer;
 
@@ -103,6 +149,10 @@ Tw.MyTFareBill.prototype = {
     this._setSmsField();
     this._bindEvent();
   },
+  /**
+   * @function
+   * @desc 자동납부 데이터 셋팅
+   */
   _setAutoField: function () {
     if (this._isAutoTarget) {
       this.$layer.on('click', '.fe-auto', $.proxy(this._goPage, this, 'auto'));
@@ -111,11 +161,19 @@ Tw.MyTFareBill.prototype = {
       this.$layer.on('click', '.fe-auto', $.proxy(this._goPage, this, 'option'));
     }
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 데이터 셋팅
+   */
   _setSmsField: function () {
     if (!this._isSmsTarget) {
       this.$layer.find('.fe-sms').parent().hide();
     }
   },
+  /**
+   * @function
+   * @desc 포인트 데이터 셋팅
+   */
   _setPointInfo: function () {
     var $cashbagSelector = this.$layer.find('.fe-ok-cashbag');
     var $tpointSelector = this.$layer.find('.fe-t-point');
@@ -127,6 +185,10 @@ Tw.MyTFareBill.prototype = {
     }
     $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
   },
+  /**
+   * @function
+   * @desc actionsheet event binding
+   */
   _bindEvent: function () {
     this.$layer.on('click', '.fe-account', $.proxy(this._goPage, this, 'account'));
     this.$layer.on('click', '.fe-card', $.proxy(this._goPage, this, 'card'));
@@ -138,6 +200,11 @@ Tw.MyTFareBill.prototype = {
     this.$layer.on('click', '.fe-t-point', $.proxy(this._goPage, this, 'tpoint'));
     this.$layer.on('click', '.fe-rainbow-point', $.proxy(this._goPage, this, 'rainbow'));
   },
+  /**
+   * @function
+   * @desc 페이지 이동
+   * @param $uri
+   */
   _goPage: function ($uri) {
     if ($uri !== null) {
       var fullUrl = '/myt-fare/bill/' + $uri;
@@ -147,6 +214,11 @@ Tw.MyTFareBill.prototype = {
       this._historyService.replaceURL(fullUrl);
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 여부 조회 API 응답 처리 (성공)
+   * @param res
+   */
   _autoSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setAutoPaymentTarget(res.result.payMthdCd);
@@ -157,12 +229,21 @@ Tw.MyTFareBill.prototype = {
       this._autoFail();
     }
   },
+  /**
+   * @function
+   * @desc 자동납부 신청 여부 조회 API 응답 처리 (실패)
+   */
   _autoFail: function () {
     this._isAutoTarget = false;
     this._autoComplete = true;
 
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 대상 조회 API 응답 처리 (성공)
+   * @param res
+   */
   _smsSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._setSmsTarget(res.result.virtualBankList);
@@ -173,12 +254,21 @@ Tw.MyTFareBill.prototype = {
       this._smsFail();
     }
   },
+  /**
+   * @function
+   * @desc 입금전용계좌 대상 조회 API 응답 처리 (실패)
+   */
   _smsFail: function () {
     this._isSmsTarget = false;
     this._isSmsComplete = true;
 
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc OK cashbag/T포인트 대상 조회 API 응답 처리 (성공)
+   * @param res
+   */
   _pointSuccess: function (res) {
     this._pointComplete = true;
     var svcYn = 'N';
@@ -190,12 +280,21 @@ Tw.MyTFareBill.prototype = {
     this._setPointTarget(svcYn);
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc OK cashbag/T포인트 대상 조회 API 응답 처리 (실패)
+   */
   _pointFail: function () {
     this._isPointTarget = false;
     this._pointComplete = true;
 
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc 레인보우포인트 대상 조회 API 응답 처리 (성공)
+   * @param res
+   */
   _rainbowSuccess: function (res) {
     this._rainbowComplete = true;
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -205,21 +304,41 @@ Tw.MyTFareBill.prototype = {
     }
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc 레인보우포인트 대상 조회 API 응답 처리 (실패)
+   */
   _rainbowFail: function () {
     this._rainbowComplete = true;
 
     this._isAllComplete();
   },
+  /**
+   * @function
+   * @desc set auto target
+   * @param code - 01 : 계좌이체, 02: 카드납부
+   */
   _setAutoPaymentTarget: function (code) {
     if (code !== '01' && code !== '02') {
       this._isAutoTarget = true;
     }
   },
+  /**
+   * @function
+   * @desc set SMS target
+   * @param list
+   */
   _setSmsTarget: function (list) {
     if (list.length > 0) {
       this._isSmsTarget = true;
     }
   },
+  /**
+   * @function
+   * @desc set OK cashbag/Tpoint target
+   * @param svcYn
+   * @private
+   */
   _setPointTarget: function (svcYn) {
     if (svcYn === 'N') {
       this._isPointTarget = false;

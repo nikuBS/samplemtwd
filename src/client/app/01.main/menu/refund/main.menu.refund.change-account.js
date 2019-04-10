@@ -6,10 +6,10 @@
 
 /**
  * @class
- * @param (Object) rootEl - 최상위 element
- * @param (Array) bankList - 선택 가능한 은행 리스트
- * @param (String) target - 휴면해제 후 이동할 url
- * @param (Function) callback - 계좌 변경 후 실행할 callback
+ * @param {Object} rootEl - 최상위 element
+ * @param {Array} bankList - 선택 가능한 은행 리스트
+ * @param {String} target - 휴면해제 후 이동할 url
+ * @param {Function} callback - 계좌 변경 후 실행할 callback
  */
 Tw.MainMenuRefundChangeAccount = function (rootEl, bankList, target, callback) {
   this.$container = rootEl;

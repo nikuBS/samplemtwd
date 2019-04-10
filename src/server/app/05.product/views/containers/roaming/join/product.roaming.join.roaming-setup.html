@@ -165,7 +165,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>, '<%- prodId %>',<%- isPromotion %>)
+    new Tw.ProductRoamingJoinRoamingSetup($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodApiInfo) %>,'<%- svcInfo.svcNum %>', '<%- prodId %>',<%- isPromotion %>)
   });
 </script>
 <% include ../../../components/end.component.html %>

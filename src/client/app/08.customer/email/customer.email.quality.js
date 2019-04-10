@@ -33,7 +33,7 @@ Tw.CustomerEmailQuality.prototype = {
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
-    this.$container.on('click', '.fe-quality-register', $.proxy(this._request, this));
+    this.$container.on('click', '.fe-quality-register', _.debounce($.proxy(this._request, this), 500));
   },
 
   _request: function (e) {
@@ -98,7 +98,7 @@ Tw.CustomerEmailQuality.prototype = {
 
   _requestCall: function ($target) {
     var qualityCategory = this.$quality_depth1.data('quality-depth1');
-
+    $target.prop('disabled', true);
     switch ( qualityCategory ) {
       case 'cell':
         this._requestCell($target);
@@ -161,7 +161,8 @@ Tw.CustomerEmailQuality.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
-      .done($.proxy(this._onSuccessRequest, this, $target));
+      .done($.proxy(this._onSuccessRequest, this, $target))
+      .fail($.proxy(this._apiError, this, $target));
   },
 
   _requestInternet: function ($target) {
@@ -187,14 +188,15 @@ Tw.CustomerEmailQuality.prototype = {
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
-      .done($.proxy(this._onSuccessRequest, this, $target));
+      .done($.proxy(this._onSuccessRequest, this, $target))
+      .fail($.proxy(this._apiError, this, $target));
   },
 
   _onSuccessRequest: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-quality_email').val());
     } else {
-      Tw.Error(res.code, res.msg).pop(null, $target);
+      Tw.Error(res.code, res.msg).pop($.proxy(this._handleButtonAbled, this, $target), $target);
     }
   },
 
@@ -239,5 +241,14 @@ Tw.CustomerEmailQuality.prototype = {
     var sEmail = $('.fe-quality_email').val();
 
     return Tw.ValidationHelper.isEmail(sEmail);
-  }
+  },
+
+  _apiError: function ($target, res) {
+    Tw.Error(res.code, res.msg).pop($.proxy(this._handleButtonAbled, this, $target), $target);
+  },
+
+  // 요청 버튼 클릭가능하도록 처리
+  _handleButtonAbled: function ($target) {
+    $target.prop('disabled', false);
+  },
 };

@@ -4,6 +4,13 @@
  * @since 2018.07.26
  */
 
+/**
+ * @class
+ * @desc 공통 > 로그인/로그아웃 > IOS 간편로그인
+ * @param rootEl
+ * @param target
+ * @constructor
+ */
 Tw.CommonMemberSloginIos = function (rootEl, target) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -43,17 +50,44 @@ Tw.CommonMemberSloginIos = function (rootEl, target) {
 
   this._addTimer = null;
   this._addTime = null;
-  window.onRefresh = $.proxy(this._onRefreshCallback, this);
+  // window.onRefresh = $.proxy(this._onRefreshCallback, this);
 
   this._bindEvent();
   this._getMethodBlock();
 };
 
 Tw.CommonMemberSloginIos.prototype = {
+  /**
+   * @member {object}
+   * @desc 성별 코드
+   * @readonly
+   * @prop {string} 1
+   * @prop {string} 2
+   */
   GENDER_CODE: {
     '1': 'MALE',
     '2': 'FEMALE'
   },
+  /**
+   * @member {object}
+   * @desc SMS 인증 오류 코드
+   * @readonly
+   * @prop {string} ATH1004 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
+   * @prop {string} ATH1005 휴대폰번호 입력오류
+   * @prop {string} ATH2001 시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주십시오.
+   * @prop {string} ATH2003 재전송제한시간이 지난 후에 이용하세요.
+   * @prop {string} ATH2006 제한시간 내에 보낼수있는 발송량이 초과하였습니다.
+   * @prop {string} ATH2007 입력하신 인증번호가 맞지 않습니다. 다시 입력해 주세요.
+   * @prop {string} ATH2008 인증번호를 입력할 수 있는 시간이 초과 하였습니다.
+   * @prop {string} ATH2009 시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주십시오.
+   * @prop {string} ATH1221 인증번호 유효시간이 경과되었습니다.
+   * @prop {string} ATH2011 인증번호의 입력 오류 횟수가 초과 되었습니다.
+   * @prop {string} ATH2013 이미 인증을 받은번호입니다.
+   * @prop {string} ATH2014 잘못된 인증요청입니다.
+   * @prop {string} ICAS3101 인증번호를 전송할 수 없는 번호입니다.
+   * @prop {string} ICAS3162 인증번호를 전송할 수 없는 번호입니다.
+   *
+   */
   SMS_ERROR: {
     ATH1004: 'ATH1004',     // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
     ATH1005: 'ATH1005',     // 휴대폰번호 입력오류
@@ -70,10 +104,24 @@ Tw.CommonMemberSloginIos.prototype = {
     ICAS3101: 'ICAS3101',
     ICAS3162: 'ICAS3162'
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 확인
+   * @private
+   */
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
-      .done($.proxy(this._successGetAuthMethodBlock, this));
+      .done($.proxy(this._successGetAuthMethodBlock, this))
+      .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 처리
+   * @param resp
+   * @private
+   */
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._authBlock = this._parseAuthBlock(resp.result);
@@ -83,6 +131,24 @@ Tw.CommonMemberSloginIos.prototype = {
         null, $.proxy(this._onCloseBlockPopup, this));
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 실패 처리
+   * @param error
+   * @private
+   */
+  _failGetAuthMethodBlock: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 파싱
+   * @param list
+   * @private
+   */
   _parseAuthBlock: function (list) {
     var block = {};
     var today = new Date().getTime();
@@ -97,11 +163,23 @@ Tw.CommonMemberSloginIos.prototype = {
     }, this));
     return block;
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 팝업 확인 callback
+   * @private
+   */
   _onCloseBlockPopup: function () {
     this._historyService.goBack();
   },
+
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function () {
-    this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
+    // this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
 
     this.$inputName = this.$container.find('#fe-input-name');
     this.$inputBirth = this.$container.find('#fe-input-birth');
@@ -139,7 +217,8 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
+    this.$btLogin.click(_.debounce($.proxy(this._onClickLogin, this), 500));
+
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
@@ -150,6 +229,13 @@ Tw.CommonMemberSloginIos.prototype = {
 
     new Tw.InputFocusService(this.$container, this.$btLogin);
   },
+
+  /**
+   * @function
+   * @desc 휴대폰 번호 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputMdn: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
@@ -162,6 +248,13 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     this._checkEnableConfirmButton();
   },
+
+  /**
+   * @function
+   * @desc 생년월일 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputBirth: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirth.val();
@@ -169,6 +262,13 @@ Tw.CommonMemberSloginIos.prototype = {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputCert: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
@@ -177,6 +277,12 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     this._checkEnableConfirmButton();
   },
+
+  /**
+   * @function
+   * @desc 로그인 하기 버튼 enable/disable 판단
+   * @private
+   */
   _checkEnableConfirmButton: function () {
     var inputCert = this.$inputCert.val();
     var inputMdn = this.$inputMdn.val();
@@ -187,6 +293,13 @@ Tw.CommonMemberSloginIos.prototype = {
       this.$btLogin.attr('disabled', true);
     }
   },
+
+  /**
+   * @function
+   * @desc 성별 클릭 event 처리
+   * @param $event
+   * @private
+   */
   _onClickGender: function ($event) {
     var $currentTarget = $($event.currentTarget);
     this.$inputGender.prop('checked', false);
@@ -196,14 +309,35 @@ Tw.CommonMemberSloginIos.prototype = {
     $currentTarget.parent().addClass('checked');
     $currentTarget.attr('aria-checked', true);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 전송 버튼 클릭 처리
+   * @param $event
+   * @private
+   */
   _onClickCert: function ($event) {
     var $target = $($event.currentTarget);
     this._sendCert(false, $target);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 재정송 버튼 클릭 처리
+   * @param $event
+   * @private
+   */
   _onClickReCert: function ($event) {
     var $target = $($event.currentTarget);
     this._sendCert(true, $target);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청
+   * @param reCert
+   * @param $target
+   */
   _sendCert: function (reCert, $target) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
@@ -213,14 +347,31 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, [this.mdn])
-        .done($.proxy(this._successRequestCert, this, reCert, $target));
+        .done($.proxy(this._successRequestCert, this, reCert, $target))
+        .fail($.proxy(this._failRequestCert, this));
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 버튼 클릭 처리
+   * @param $event
+   */
   _onClickCertAdd: function ($event) {
     var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
-      .done($.proxy(this._successRequestCertAdd, this, $target));
+      .done($.proxy(this._successRequestCertAdd, this, $target))
+      .fail($.proxy(this._failRequestCertAdd, this));
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 응답 처리
+   * @param reCert
+   * @param $target
+   * @param resp
+   * @private
+   */
   _successRequestCert: function (reCert, $target, resp) {
     this._clearCertError();
     this._clearLoginError();
@@ -241,6 +392,24 @@ Tw.CommonMemberSloginIos.prototype = {
       this._checkCertError(resp.code, resp.msg, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 실패 처
+   * @param error
+   * @private
+   */
+  _failRequestCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 타이머 설정
+   * @param startTime
+   * @private
+   */
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     this.$showTime.val(Tw.DateHelper.convertMinSecFormat(remainedSec));
@@ -252,6 +421,15 @@ Tw.CommonMemberSloginIos.prototype = {
   //   this.$btReCert.removeClass('none');
   //   this.$btCertAdd.addClass('none');
   // },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 에러 처리
+   * @param errorCode
+   * @param errorMsg
+   * @param $target
+   * @private
+   */
   _checkCertError: function (errorCode, errorMsg, $target) {
     // this._clearCertError();
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
@@ -266,6 +444,14 @@ Tw.CommonMemberSloginIos.prototype = {
       Tw.Error(errorCode, errorMsg).pop(null, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 응답 처리
+   * @param $target
+   * @param resp
+   * @private
+   */
   _successRequestCertAdd: function ($target, resp) {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
@@ -285,6 +471,24 @@ Tw.CommonMemberSloginIos.prototype = {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 실패 처리
+   * @param error
+   * @private
+   */
+  _failRequestCertAdd: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
+   * @desc 로그인하기 클릭 이벤트 처
+   * @param $event
+   * @private
+   */
   _onClickLogin: function ($event) {
     var $target = $($event.currentTarget);
     var inputCert = this.$inputCert.val();
@@ -299,10 +503,26 @@ Tw.CommonMemberSloginIos.prototype = {
       this._requestLogin(params, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc IOS 간편로그인 API 요청
+   * @param params
+   * @param $target
+   */
   _requestLogin: function (params, $target) {
     this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_IOS, params)
-      .done($.proxy(this._successRequestLogin, this, $target));
+      .done($.proxy(this._successRequestLogin, this, $target))
+      .fail($.proxy(this._failRequestLogin, this));
   },
+
+  /**
+   * @function
+   * @desc 로그인 응답 처리
+   * @param $target
+   * @param resp
+   * @private
+   */
   _successRequestLogin: function ($target, resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -329,6 +549,24 @@ Tw.CommonMemberSloginIos.prototype = {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc 로그인 실패 처리
+   * @param error
+   * @private
+   */
+  _failRequestLogin: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
+   * @desc input validation 체크
+   * @returns {boolean}
+   * @private
+   */
   _checkCertValidation: function () {
     var inputName = this.$inputName.val();
     var inputBirth = this.$inputBirth.val();
@@ -351,12 +589,30 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     return result;
   },
+
+  /**
+   * @function
+   * @desc inputbox 에러 메시지 표기
+   * @param inputBox
+   * @param input
+   * @param error
+   * @private
+   */
   _showError: function (inputBox, input, error) {
     inputBox.addClass('error');
     input.attr('aria-describedby', error.attr('id'));
     error.removeClass('none');
     error.attr('aria-hidden', false);
   },
+
+  /**
+   * @function
+   * @desc inputbox 에러 메시지 삭제
+   * @param inputBox
+   * @param input
+   * @param error
+   * @private
+   */
   _clearError: function (inputBox, input, error) {
     inputBox.removeClass('error');
     input.attr('aria-describedby', '');
@@ -375,6 +631,12 @@ Tw.CommonMemberSloginIos.prototype = {
   //     }
   //   }
   // },
+
+  /**
+   * @function
+   * @desc input 에러 삭제
+   * @private
+   */
   _clearAllError: function () {
     this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
     this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
@@ -382,12 +644,24 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearError(this.$inputboxBirth, this.$inputBirth, this.$errorBirthLen);
     this._clearError(this.$inputboxGender, this.$inputGender, this.$errorGender);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 요청 에러 삭제
+   * @private
+   */
   _clearCertError: function () {
     this._clearError(this.$inputboxMdn, this.$inputMdn, this.$validSendCert);
     this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertTime);
     this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertCount);
     this._clearError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 확인 에러 삭제
+   * @private
+   */
   _clearLoginError: function () {
     this._clearError(this.$inputboxCert, this.$inputCert, this.$validAddCert);
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorCertAddTime);
@@ -395,17 +669,26 @@ Tw.CommonMemberSloginIos.prototype = {
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginTime);
     this._clearError(this.$inputboxCert, this.$inputCert, this.$errorLoginCnt);
   },
+
+  /**
+   * @function
+   * @desc 로그인 validation 체크
+   * @param inputCert
+   * @param $target
+   * @returns {boolean}
+   * @private
+   */
   _checkLoginValidation: function (inputCert, $target) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT, null, null, null, null, $target);
       return false;
     }
     return true;
-  },
-  _onClickCopBtn: function () {
-    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-      type: Tw.NTV_BROWSER.EXTERNAL,
-      href: Tw.URL_PATH.COP_SERVICE
-    });
   }
+  // _onClickCopBtn: function () {
+  //   this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+  //     type: Tw.NTV_BROWSER.EXTERNAL,
+  //     href: Tw.URL_PATH.COP_SERVICE
+  //   });
+  // }
 };

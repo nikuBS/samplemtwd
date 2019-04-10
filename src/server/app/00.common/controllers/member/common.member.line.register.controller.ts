@@ -2,6 +2,7 @@
  * @file common.member.line.register.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2019.02.20
+ * @desc 공통 > 회선등록
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,6 +14,9 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 
+/**
+ * @desc 공통 - 회선등록 초기화를 위한 class
+ */
 class CommonMemberLineRegister extends TwViewController {
   private pageNo = 1;
 
@@ -20,6 +24,16 @@ class CommonMemberLineRegister extends TwViewController {
     super();
   }
 
+  /**
+   * 회선등록 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const type = req.query.type || '01';
     const landing = req.query.landing || 'none';
@@ -44,6 +58,9 @@ class CommonMemberLineRegister extends TwViewController {
     });
   }
 
+  /**
+   * 회선 데이터 요청
+   */
   getLineInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0029, {
       svcCtg: LINE_NAME.ALL,
@@ -52,6 +69,10 @@ class CommonMemberLineRegister extends TwViewController {
     });
   }
 
+  /**
+   * 회선 데이터 파싱
+   * @param lineList
+   */
   parseLineInfo(lineList) {
     const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     let list = [];
@@ -63,6 +84,11 @@ class CommonMemberLineRegister extends TwViewController {
     return list;
   }
 
+  /**
+   * 회선 데이터 화면에 나타내는 데이터로 변경
+   * @param lineData
+   * @param type
+   */
   convLineData(lineData, type) {
     FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
     const result = <any>[];

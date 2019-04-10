@@ -108,6 +108,9 @@ Tw.NativeService.prototype = {
       var fn = _.find(this._callbackList, function (data) {
         return data.randomCode === resp.randomCode;
       }).callback;
+      this._callbackList = _.filter(this._callbackList, function(data) {
+        return data.randomCode !== resp.randomCode;
+      });
       fn(resp);
     }
   },

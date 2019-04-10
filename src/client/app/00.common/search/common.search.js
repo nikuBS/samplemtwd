@@ -28,6 +28,9 @@ Tw.CommonSearch = function (rootEl,searchInfo,cdn,step,from,nowUrl) {
     },
     'D00004': {
       link : '/customer/svc-info/site/mcenter'
+    },
+    'C00001': {
+      link : Tw.OUTLINK.DIRECTSHOP_GUIDE_LINK.common+Tw.OUTLINK.DIRECTSHOP_GUIDE_LINK.discount
     }
   };
   this._tidLanding = new Tw.TidLandingComponent();
@@ -297,6 +300,9 @@ Tw.CommonSearch.prototype = {
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
+      if(this._exceptionDocId[$linkData.data('id')]){
+        linkUrl = this._exceptionDocId[$linkData.data('id')].link;
+      }
       if(linkUrl.indexOf('http')>-1){
         if($linkData.data('require-pay')==='Y'){
           this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
@@ -310,9 +316,6 @@ Tw.CommonSearch.prototype = {
           Tw.CommonHelper.openUrlExternal(linkUrl);
         }
       }else{
-        if(this._exceptionDocId[$linkData.data('id')]){
-          linkUrl = this._exceptionDocId[$linkData.data('id')].link;
-        }
         this._moveUrl(linkUrl);
       }
     }

@@ -1,3 +1,11 @@
+/**
+ * @namespace
+ * @desc 요금납부 등 input field가 중복되는 화면의 validation check 공통 서비스
+ * @param rootEl
+ * @param submitBtn
+ * @param change
+ * @param isAuto
+ */
 Tw.ValidationService = function (rootEl, submitBtn, change, isAuto) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
@@ -15,12 +23,20 @@ Tw.ValidationService = function (rootEl, submitBtn, change, isAuto) {
 };
 
 Tw.ValidationService.prototype = {
+  /**
+   * @function
+   * @desc event binding
+   */
   bindEvent: function () {
     this.$container.find('.cancel').on('click', $.proxy(this._setButtonAbility, this, false));
     this.$container.find('input.fe-only-number:visible').on('keyup', $.proxy(this._checkNumber, this));
     this.$container.find('input.required-input-field:visible').on('keyup', $.proxy(this.checkIsAbled, this));
     this.$container.find('input.required-input-field:visible').on('blur', $.proxy(this.checkValidation, this));
   },
+  /**
+   * @function
+   * @desc null check and 버튼 활성화/비활성화 처리
+   */
   checkIsAbled: function () {
     this.$container.find('input.required-input-field:visible:not(:disabled)').each($.proxy(this._checkNull, this,
       $.proxy(this._setButtonAbility, this)));
@@ -30,6 +46,14 @@ Tw.ValidationService.prototype = {
         $.proxy(this._setButtonAbility, this)));
     }
   },
+  /**
+   * @function
+   * @desc check null
+   * @param callback
+   * @param idx
+   * @param target
+   * @returns {boolean}
+   */
   _checkNull: function (callback, idx, target) {
     var $target = $(target);
     var isNull = Tw.FormatHelper.isEmpty($target.val());
@@ -44,6 +68,11 @@ Tw.ValidationService.prototype = {
     }
     callback(true);
   },
+  /**
+   * @function
+   * @desc 버튼 활성화 처리
+   * @param isValid
+   */
   _setButtonAbility: function (isValid) {
     if (this.$submitBtn === undefined) {
       this.$submitBtn = this.$container.find('.fe-pay:visible');
@@ -57,10 +86,20 @@ Tw.ValidationService.prototype = {
       this.$disabled = true;
     }
   },
+  /**
+   * @function
+   * @desc 숫자만 입력
+   * @param event
+   */
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
+  /**
+   * @function
+   * @desc check validation
+   * @param event
+   */
   checkValidation: function (event) {
     var $target = $(event.currentTarget);
     var $messageTarget = this._getMessageTarget($target);
@@ -68,6 +107,7 @@ Tw.ValidationService.prototype = {
     var message = '';
     var isValid = false;
 
+    // get message
     if (this._isEmpty($target)) {
       message = this._getEmptyMessage(label);
     } else if (this._isWrong($target)) {
@@ -125,9 +165,21 @@ Tw.ValidationService.prototype = {
       $messageTarget.attr('aria-hidden', 'false');
     }
   },
+  /**
+   * @function
+   * @desc isEmpty
+   * @param $target
+   * @returns {boolean}
+   */
   _isEmpty: function ($target) {
     return Tw.FormatHelper.isEmpty($target.val());
   },
+  /**
+   * @function
+   * @desc isWrong
+   * @param $target
+   * @returns {boolean}
+   */
   _isWrong: function ($target) {
     var isWrong = true;
 
@@ -146,6 +198,12 @@ Tw.ValidationService.prototype = {
     }
     return isWrong;
   },
+  /**
+   * @function
+   * @desc check expiration
+   * @param isWrong
+   * @returns {*}
+   */
   _expirationValid: function (isWrong) {
     var cardY = this.$container.find('.fe-card-y');
     var cardM = this.$container.find('.fe-card-m');
@@ -176,6 +234,12 @@ Tw.ValidationService.prototype = {
     }
     return isWrong;
   },
+  /**
+   * @function
+   * @desc get message target
+   * @param $target
+   * @returns {this | *}
+   */
   _getMessageTarget: function ($target) {
     var $messageTarget = $target.parent().siblings('.fe-error-msg');
     if ($target.attr('data-valid-label') === 'expiration') {
@@ -183,6 +247,12 @@ Tw.ValidationService.prototype = {
     }
     return $messageTarget;
   },
+  /**
+   * @function
+   * @desc get empty message
+   * @param label
+   * @returns {*}
+   */
   _getEmptyMessage: function (label) {
     var message = label;
     if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH || label === Tw.VALIDATION_LABEL.PREPAY) {
@@ -193,6 +263,12 @@ Tw.ValidationService.prototype = {
     message += Tw.VALIDATION_LABEL.MESSAGE_EMPTY;
     return message;
   },
+  /**
+   * @function
+   * @desc get wrong message
+   * @param label
+   * @returns {*}
+   */
   _getWrongMessage: function (label) {
     var message = label;
     if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH || label === Tw.VALIDATION_LABEL.PREPAY) {
@@ -203,11 +279,22 @@ Tw.ValidationService.prototype = {
     message += Tw.VALIDATION_LABEL.MESSAGE_WRONG;
     return message;
   },
+  /**
+   * @function
+   * @desc 카드번호 앞 6자리로 카드사 조회 API 호출
+   * @param $target
+   */
   _getCardCode: function ($target) {
     this._apiService.request(Tw.API_CMD.BFF_07_0068, { cardNum: $.trim($target.val()).substr(0, 6) })
       .done($.proxy(this._getSuccess, this, $target))
       .fail($.proxy(this._getFail, this, $target));
   },
+  /**
+   * @function
+   * @desc 카드사 조회 API 응답 처리 (성공)
+   * @param $target
+   * @param res
+   */
   _getSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       var cardCode = res.result.prchsCardCd;
@@ -230,10 +317,21 @@ Tw.ValidationService.prototype = {
       this._getFail($target);
     }
   },
+  /**
+   * @function
+   * @desc 카드사 조회 API 응답 처리 (실패)
+   * @param $target
+   */
   _getFail: function ($target) {
     $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show().attr('aria-hidden', 'false');
     this.$cardNumber = '';
   },
+  /**
+   * @function
+   * @desc get point message
+   * @param $target
+   * @returns {string}
+   */
   _getPointMessage: function ($target) {
     var $isSelectedPoint = this.$container.find('.fe-select-point').attr('id');
     var className = '.fe-cashbag-point';
@@ -253,6 +351,11 @@ Tw.ValidationService.prototype = {
 
     return message;
   },
+  /**
+   * @function
+   * @desc 모든 유효성 검증 완료 체크
+   * @returns {boolean}
+   */
   isAllValid: function () {
     if (this.$container.find('.fe-error-msg').is(':visible')) {
       var $target = this.$container.find('.fe-error-msg:visible').first();
@@ -280,6 +383,11 @@ Tw.ValidationService.prototype = {
     }
     return true;
   },
+  /**
+   * @function
+   * @desc 버튼 비활성화 return
+   * @returns {boolean}
+   */
   getDisabled: function () {
     return this.$disabled;
   }

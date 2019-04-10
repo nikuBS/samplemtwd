@@ -50,15 +50,9 @@ Tw.LineComponent.prototype = {
     this._mdn = '';
   },
   _getLineList: function ($target) {
-    // if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successGetLineList, this, $target));
-    // $.ajax('/mock/auth.line.json')
-    //   .done($.proxy(this._successGetLineList, this));
-    // } else {
-    //   this._openListPopup(this._lineList);
-    // }
-
+      .done($.proxy(this._successGetLineList, this, $target))
+      .fail($.proxy(this._failGetLineList, this));
   },
   _successGetLineList: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -69,6 +63,10 @@ Tw.LineComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failGetLineList: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _openListPopup: function (lineData, $target) {
     this._popupService.open({
@@ -145,7 +143,8 @@ Tw.LineComponent.prototype = {
     this._svcMgmtNum = svcMgmtNum;
     this._mdn = mdn;
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
-      .done($.proxy(this._successChangeLine, this));
+      .done($.proxy(this._successChangeLine, this))
+      .fail($.proxy(this._failChangeLine, this));
   },
   _onClickLineButton: function () {
     this._historyService.replaceURL('/common/member/line');
@@ -178,6 +177,10 @@ Tw.LineComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failChangeLine: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onClickMore: function () {
     var $hideList = this.$list.filter('.none');

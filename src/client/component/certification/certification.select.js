@@ -55,7 +55,8 @@ Tw.CertificationSelect.prototype = {
   },
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._successGetSvcInfo, this));
+      .done($.proxy(this._successGetSvcInfo, this))
+      .fail($.proxy(this._failGetSvcInfo, this));
   },
   _successGetSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -63,15 +64,24 @@ Tw.CertificationSelect.prototype = {
       this._getMethodBlock();
     }
   },
+  _failGetSvcInfo: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
-      .done($.proxy(this._successGetAuthMethodBlock, this));
+      .done($.proxy(this._successGetAuthMethodBlock, this))
+      .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._authBlock = this._parseAuthBlock(resp.result);
     }
     this._selectKind();
+  },
+  _failGetAuthMethodBlock: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _parseAuthBlock: function (list) {
     var block = {};

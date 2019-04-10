@@ -1,3 +1,7 @@
+/**
+ * @namespace
+ * @desc Error 팝업 및 페이지를 공통으로 처리하는 Service
+ */
 Tw.ErrorService = function() {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
@@ -8,6 +12,13 @@ Tw.ErrorService = function() {
 Tw.ErrorService.prototype = {
   _data: {},
 
+  /**
+   * @function
+   * @desc code, msg 선언
+   * @param code
+   * @param msg
+   * @returns {Tw.ErrorService}
+   */
   _init: function(code, msg) {
     this._data = {
       code: code || '',
@@ -17,6 +28,12 @@ Tw.ErrorService.prototype = {
     return this;
   },
 
+  /**
+   * @function
+   * @desc replace break lines
+   * @param msg
+   * @returns {null}
+   */
   _replaceBreakLines: function(msg) {
     if (Tw.FormatHelper.isEmpty(msg)) {
       return null;
@@ -25,7 +42,13 @@ Tw.ErrorService.prototype = {
     return msg.replace(/\\n/g, '<br>');
   },
 
-  pop: function(closeCallback, $target) { // open alert for error
+  /**
+   * @function
+   * @desc 공통 에러 팝업
+   * @param closeCallback
+   * @param $target
+   */
+  pop: function(closeCallback, $target) {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'title': Tw.POPUP_TITLE.NOTIFY,
@@ -44,17 +67,32 @@ Tw.ErrorService.prototype = {
     );
   },
 
-  _request: function ($layer) { // when open alert
+  /**
+   * @function
+   * @desc error popup button click event
+   * @param $layer
+   */
+  _request: function ($layer) {
     $layer.on('click', '.fe-request', $.proxy(this._goLoad, this));
   },
 
-  _goLoad: function () {  // when click question button
+  /**
+   * @function
+   * @desc error popup confirm
+   * @private
+   */
+  _goLoad: function () {
     this._isRequest = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 이메일 상담 페이지로 이동 및 콜백 함수 처리
+   * @param closeCallback
+   */
   _close: function (closeCallback) {
-    if (this._isRequest) {  // go to question by email after click question button 
+    if (this._isRequest) {
       location.href = '/customer/email'; 
     }
 
@@ -63,11 +101,19 @@ Tw.ErrorService.prototype = {
     }
   },
 
-  page: function(replace) { // go to error page
+  /**
+   * @function
+   * @desc go to error page
+   */
+  page: function() {
     this._historyService.goLoad('/common/error?' + $.param(this._data));
   },
 
-  replacePage: function(replace) {// go to error page with replace
+  /**
+   * @function
+   * @desc go to error page with replace
+   */
+  replacePage: function() {
     this._historyService.replaceURL('/common/error?' + $.param(this._data));
   }
 

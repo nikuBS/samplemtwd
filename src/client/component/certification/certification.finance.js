@@ -7,7 +7,6 @@
 Tw.CertificationFinance = function () {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
-  this._apiService = Tw.Api;
 
   this._svcInfo = null;
   this._authUrl = null;
@@ -159,7 +158,7 @@ Tw.CertificationFinance.prototype = {
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
 
     this.$privacyCheck.on('change', $.proxy(this._onChangePrivacy, this));
-    this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
+    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
 
     $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
   },

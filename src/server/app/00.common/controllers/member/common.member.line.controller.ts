@@ -2,6 +2,7 @@
  * @file common.member.line.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.09.27
+ * @desc 공통 > 화선관리
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,11 +14,24 @@ import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 
+/**
+ * @desc 공통 - 회선관리 초기화를 위한 class
+ */
 class CommonMemberLine extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * 회선관리 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest([
       this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.MOBILE, pageSize: DEFAULT_LIST_COUNT }),
@@ -54,6 +68,10 @@ class CommonMemberLine extends TwViewController {
     });
   }
 
+  /**
+   * 회선 데이터 파싱
+   * @param lineList
+   */
   private parseLineList(lineList): any {
     const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     const list: string[] = [];
@@ -69,6 +87,11 @@ class CommonMemberLine extends TwViewController {
     return { lineList, showParam: this.setShowList(list, lineList.totalCnt) };
   }
 
+  /**
+   * 회선 데이터 화면에 나타내는 데이터로 변경
+   * @param category
+   * @param lineData
+   */
   private convLineData(category, lineData) {
     const seqData = lineData.filter((line) => !FormatHelper.isEmpty(line.expsSeq));
     const nonSeqData = lineData.filter((line) => FormatHelper.isEmpty(line.expsSeq));
@@ -87,6 +110,11 @@ class CommonMemberLine extends TwViewController {
     });
   }
 
+  /**
+   * 최초 리스트 개수 및 펼침 여부 결정
+   * @param list
+   * @param totalCount
+   */
   private setShowList(list, totalCount): any {
     const showParam = {
       m: '',

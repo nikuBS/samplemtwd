@@ -1,10 +1,15 @@
 /**
  * @file myt-join.submain.js
  * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.10
+ * @since 2018-10-10
  *
  */
 
+/**
+ * @class
+ * @desc MyT > 나의 가입정보 > submain
+ * @param {JSON} params
+ */
 Tw.MyTJoinSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
@@ -143,12 +148,22 @@ Tw.MyTJoinSubMain.prototype = {
     this._initBanners();
   },
 
+  /**
+   * @function
+   * @desc Redis 배너 TOS 조회
+   */
   _initBanners: function () {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
       .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
       .fail($.proxy(this._errorRequest, this));
   },
 
+  /**
+   * @function
+   * @desc _initBanners() > 성공 콜백
+   * @param {String} type
+   * @param {JSON} resp
+   */
   _successBanner: function (type, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
@@ -169,10 +184,20 @@ Tw.MyTJoinSubMain.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc TOS 연동 및 게시여부 확인
+   * @param {JSON} result
+   * @returns {boolean}
+   */
   _checkBanner: function (result) {
     return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
+  /**
+   * @function
+   * @desc Tw.BannerService 콜백
+   */
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     if ( Tw.BrowserHelper.isApp() ) {
@@ -180,16 +205,26 @@ Tw.MyTJoinSubMain.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 닉네임 변경
+   */
   _onChangeNickName: function () {
     var nickNm = this.data.svcInfo.nickNm;
     var svcMgmtNum = this.data.svcInfo.svcMgmtNum;
     this._nicknamePopup.openNickname(nickNm, svcMgmtNum, $.proxy(this._onCloseNickNAmePopup, this));
   },
-
+  /**
+   * @function
+   * @desc _onChangeNickName() close 콜백
+   */
   _onCloseNickNAmePopup: function () {
     this._historyService.reload();
   },
-
+  /**
+   * @function
+   * @desc 가입상담예약 신청 및 조회 이동
+   */
   _onMovedJoinService: function () {
     var type = 'cellphone';
     switch ( this.data.svcInfo.svcAttrCd ) {
@@ -206,12 +241,18 @@ Tw.MyTJoinSubMain.prototype = {
     this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=' + type);
   },
 
-  // 010 번호 전환 서비스
+  /**
+   * @function
+   * @desc 010 번호 전환 서비스
+   */
   _onMoveOldNum: function () {
     this._historyService.goLoad('/myt-join/submain/numchange');
   },
 
-  // 번호안내서비스
+  /**
+   * @function
+   * @desc 번호안내서비스
+   */
   _onMoveChgNumSvc: function () {
     if ( this.data.numberChanged ) {
       // 연장 & 해지
@@ -223,27 +264,45 @@ Tw.MyTJoinSubMain.prototype = {
     }
   },
 
-  // 나의요금제
+  /**
+   * @function
+   * @desc  나의요금제
+   */
   _onMovedMyPlan: function () {
     this._historyService.goLoad('/myt-join/myplan');
   },
-  // 고객보호비밀번호 변경
+  /**
+   * @function
+   * @desc 고객보호비밀번호 변경
+   */
   _onMovedChangePwd: function () {
     this._historyService.goLoad('/myt-join/custpassword');
   },
-  // 부가 상품
+  /**
+   * @function
+   * @desc 부가 상품
+   */
   _onMovedAddProduct: function () {
     this._historyService.goLoad('/myt-join/additions');
   },
-  // 결합 상품
+  /**
+   * @function
+   * @desc 결합 상품
+   */
   _onMovedComProduct: function () {
     this._historyService.goLoad('/myt-join/combinations');
   },
-  // 약정 할인
+  /**
+   * @function
+   * @desc 약정 할인
+   */
   _onMovedInstallement: function () {
     this._historyService.goLoad('/myt-join/myplancombine/infodiscount');
   },
-  // 무약정플랜
+  /**
+   * @function
+   * @desc 무약정플랜
+   */
   _onMovedContractPlan: function () {
     var url = '/myt-join/myplancombine/noagreement';
     if ( this.data.myContractPlan.muPointYn === 'N' ) {
@@ -251,7 +310,10 @@ Tw.MyTJoinSubMain.prototype = {
     }
     this._historyService.goLoad(url);
   },
-  // 모바일 일시정지/해제
+  /**
+   * @function
+   * @desc 모바일 일시정지/해제
+   */
   _onMovedMobilePause: function () {
     if ( (this.data.myPausedState && this.data.myPausedState.state) ||
       (this.data.myLongPausedState && this.data.myLongPausedState.state) ) {
@@ -263,15 +325,25 @@ Tw.MyTJoinSubMain.prototype = {
       this._historyService.goLoad('/myt-join/submain/suspend#temporary');
     }
   },
-  // 인터넷/IPTV/집전화 신청 내역 및 조회
+  /**
+   * @function
+   * @desc 인터넷/IPTV/집전화 신청 내역 및 조회
+   */
   _onMovedWireInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire');
   },
-  // B끼리 무료통화 대상자 조회
+  /**
+   * @function
+   * @desc B끼리 무료통화 대상자 조회
+   */
   _onMovedBInquire: function () {
     this._historyService.goLoad('/myt-join/submain/wire/freecallcheck');
   },
-  // 유선기타서비스
+  /**
+   * @function
+   * @desc 유선기타서비스
+   * @param {Object} event
+   */
   _onMovedWireOtherSvc: function (event) {
     var $target = $(event.target);
     switch ( $target.attr('data-id') ) {
@@ -301,8 +373,11 @@ Tw.MyTJoinSubMain.prototype = {
         break;
     }
   },
-
-  // 다른회선조회
+  /**
+   * @function
+   * @desc 다른회선조회
+   * @param {Object} event
+   */
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
@@ -321,15 +396,20 @@ Tw.MyTJoinSubMain.prototype = {
         $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
     }
   },
-
-  // 다른 회선 팝업에서 변경하기 눌렀을 경우
+  /**
+   * @function
+   * @desc 다른 회선 팝업에서 변경하기 눌렀을 경우
+   */
   _onChangeLineConfirmed: function () {
     this._popupService.close();
     var lineService = new Tw.LineComponent();
     lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },
-
-  // 회선 변경 후 처리
+  /**
+   * @function
+   * @desc 회선 변경 후 처리
+   * @param {JSON} resp
+   */
   _onChangeSessionSuccess: function (resp) {
     if (resp.code !== Tw.CALLBACK_CODE.SUCCESS) {
       return;
@@ -341,8 +421,10 @@ Tw.MyTJoinSubMain.prototype = {
       this._historyService.replaceURL('/myt-join/submain');
     }, this), 500);
   },
-
-  // 다른 회선 더보기
+  /**
+   * @function
+   * @desc 다른 회선 더보기
+   */
   _onOtherLinesMore: function () {
     var index = this.$otherLines.find('li').length;
     var totalCount = this.data.otherLines.length - index;
@@ -361,8 +443,10 @@ Tw.MyTJoinSubMain.prototype = {
     }
 
   },
-
-  // 공인인증센터
+  /**
+   * @function
+   * @desc 공인인증센터
+   */
   _onOpenCertifyPopup: function () {
     Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
   }

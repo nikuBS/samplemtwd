@@ -10,9 +10,11 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { ETC_CENTER } from '../../../../types/string.type';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
-// import { of } from 'rxjs/observable/of';
-// import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
+/**
+ * @class 
+ * @desc 고객센터 > 설문조사
+ */
 export default class CustomerResearches extends TwViewController {
   constructor() {
     super();
@@ -20,7 +22,7 @@ export default class CustomerResearches extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (req.query.id) {
-      this.getResearch(req.query.id).subscribe(research => {
+      this._getResearch(req.query.id).subscribe(research => {
         if (research.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
@@ -32,7 +34,7 @@ export default class CustomerResearches extends TwViewController {
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
     } else {
-      this.getResearches(req.query.quiz).subscribe(researches => {
+      this.__getResearches(req.query.quiz).subscribe(researches => {
         if (researches.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
@@ -46,7 +48,12 @@ export default class CustomerResearches extends TwViewController {
     }
   }
 
-  private getResearches = quizId => {
+  /**
+   * @desc 설문조사 가져오기 요청
+   * @param {string} quizId 고객센터 서브메인에서 접근한 경우, 해당 설문 id가 리스트 기본 노출 범위(20개) 이후에 있을 경우, 해당 설문조사까지 자동으로 노출되도록 하기 위함(기획 요청)
+   * @private
+   */
+  private __getResearches = quizId => {
     // return of(Researches).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -101,7 +108,12 @@ export default class CustomerResearches extends TwViewController {
     });
   }
 
-  private getResearch = id => {
+  /**
+   * @desc 설문조사 가져오기 요청
+   * @param {string} id 설문조사 id
+   * @private
+   */
+  private _getResearch = id => {
     // return of(StepResearch).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0038, { qstnId: id }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

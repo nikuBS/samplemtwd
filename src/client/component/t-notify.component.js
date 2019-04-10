@@ -57,7 +57,8 @@ Tw.TNotifyComponent.prototype = {
   _getPushDate: function (userId) {
     this._apiService.request(Tw.API_CMD.BFF_04_0004, {
       tid: userId
-    }).done($.proxy(this._successPushData, this));
+    }).done($.proxy(this._successPushData, this))
+      .fail($.proxy(this._failPushData, this));
   },
   _successPushData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -65,6 +66,10 @@ Tw.TNotifyComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failPushData: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _parseList: function (list) {
     return _.map(list, $.proxy(function (target, index) {

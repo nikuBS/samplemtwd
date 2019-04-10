@@ -28,7 +28,8 @@ Tw.QuickMenuComponent.prototype = {
   },
   _getAllMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
-      .done($.proxy(this._successMenu, this));
+      .done($.proxy(this._successMenu, this))
+      .fail($.proxy(this._failMenu, this));
   },
   _successMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -43,9 +44,14 @@ Tw.QuickMenuComponent.prototype = {
       }
     }
   },
+  _failMenu: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _getQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
-      .done($.proxy(this._successQuickMenu, this));
+      .done($.proxy(this._successQuickMenu, this))
+      .fail($.proxy(this._failQuickMenu, this));
   },
   _successQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -59,20 +65,25 @@ Tw.QuickMenuComponent.prototype = {
       }
     }
   },
-
+  _failQuickMenu: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _onClickAddQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
-      .done($.proxy(this._addQuickMenu, this));
+      .done($.proxy(this._addQuickMenu, this))
+      .fail($.proxy(this._failQuickMenu));
   },
   _onClickRemoveQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
-      .done($.proxy(this._removeQuickMenu, this));
+      .done($.proxy(this._removeQuickMenu, this))
+      .fail($.proxy(this._failQuickMenu));
   },
   _addQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
 
-      if(menuIdStr.indexOf(this._menuId) !== -1) {
+      if ( menuIdStr.indexOf(this._menuId) !== -1 ) {
         return;
       }
 
@@ -83,7 +94,8 @@ Tw.QuickMenuComponent.prototype = {
         this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
       } else {
         this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
-          .done($.proxy(this._successAddQuickMenu, this));
+          .done($.proxy(this._successAddQuickMenu, this))
+          .fail($.proxy(this._failAddQuickMenu, this));
       }
     }
   },
@@ -97,7 +109,8 @@ Tw.QuickMenuComponent.prototype = {
         }, this)).join(',');
       }
       this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
-        .done($.proxy(this._successRemoveQuickMenu, this, menuId));
+        .done($.proxy(this._successRemoveQuickMenu, this, menuId))
+        .fail($.proxy(this._failRemoveQuickMenu, this));
     }
 
   },
@@ -109,6 +122,10 @@ Tw.QuickMenuComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failAddQuickMenu: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _successRemoveQuickMenu: function (menuId, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -122,6 +139,10 @@ Tw.QuickMenuComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failRemoveQuickMenu: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _showAddBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {

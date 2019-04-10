@@ -2,10 +2,16 @@
  * @file membership-info.layer.component.js
  * @author Kim InHwan (skt.P132150@partner.sk.com)
  * Editor: 양정규 (skt.P130715@partner.sk.com)
- * @since 2018.10.29
+ * @since 2018-10-29
  *
  */
 
+/**
+ * @class
+ * @desc T멤버십 > T멤버십 안내 > T멤버십 카드/등급 안내
+ * @param {Obejct} $element - dom 객체
+ * @param {JSON} svcInfo
+ */
 Tw.MembershipInfoLayerPopup = function ($element, svcInfo) {
   this.$container = $element;
   this._svcInfo = svcInfo;
@@ -17,6 +23,11 @@ Tw.MembershipInfoLayerPopup = function ($element, svcInfo) {
 };
 
 Tw.MembershipInfoLayerPopup.prototype = {
+  /**
+   * @function
+   * @desc 팝업 생성
+   * @param hbs
+   */
   open: function (hbs) {
     // BE_04_01_L01, BE_04_01_L02, BE_04_01_L03
     this._popupService.open({
@@ -25,7 +36,10 @@ Tw.MembershipInfoLayerPopup.prototype = {
     }, null, $.proxy(this._closeCallback, this), hbs);
   },
 
-  // 가입 가능여부 조회 요청
+  /**
+   * @function
+   * @desc 가입 가능여부 조회 요청
+   */
   reqPossibleJoin : function(){
     if ( !Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
       return;
@@ -37,6 +51,11 @@ Tw.MembershipInfoLayerPopup.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * @function
+   * @desc reqPossibleJoin() 성공 콜백
+   * @param {JSON} resp
+   */
   _onSuccess : function (resp) {
     if ( resp.code !== Tw.API_CODE.CODE_00  || !resp.result) {
       this._onFail(resp);
@@ -50,12 +69,17 @@ Tw.MembershipInfoLayerPopup.prototype = {
     this._isJoinOk = (Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
     this.onClickJoinBtn();
   },
-
+  /**
+   * @function
+   * @desc 팝업 닫기
+   */
   _closeCallback: function () {
     this._popupService.close();
   },
-
-  // T멤버십 가입불가 팝업
+  /**
+   * @function
+   * @desc T멤버십 가입불가 팝업
+   */
   _onPopupNoJoin : function () {
     var param = Tw.ALERT_MSG_MEMBERSHIP.NO_JOIN;
     this._popupService.open({
@@ -92,8 +116,10 @@ Tw.MembershipInfoLayerPopup.prototype = {
       }, this)
     );
   },
-
-  // 가입하기 버튼 클릭
+  /**
+   * @function
+   * @desc 가입하기 버튼 클릭
+   */
   onClickJoinBtn: function () {
     // 로그인 유형이 간편 로그인이 아닌경우
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
@@ -129,8 +155,11 @@ Tw.MembershipInfoLayerPopup.prototype = {
       );
     }
   },
-
-  // API Fail
+  /**
+   * @function
+   * @desc API Fail
+   * @param {JSON} err
+   */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }

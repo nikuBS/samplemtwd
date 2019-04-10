@@ -12,17 +12,31 @@ import { Observable } from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
 
-export default class ProductAppsDetail extends TwViewController {
-  private BANNER_POSITION = {
-    T: 'top',
-    C: 'center',
-    B: 'bottom'
-  };
+const BANNER_POSITION = { // admin에서 내려오는 배너 포지션 상수
+  T: 'top',
+  C: 'center',
+  B: 'bottom'
+};
 
+/**
+ * @class
+ * @desc 상품 > T 앱 > 앱 상세보기
+ */
+export default class ProductAppsDetail extends TwViewController {
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const appId = req.query.appId;
 
-    Observable.combineLatest(this.getAppDetail(appId), this.getProductInfo(appId), this.getRecommendedApps(appId)).subscribe(
+    Observable.combineLatest(this._getAppDetail(appId), this._getProductInfo(appId), this._getRecommendedApps(appId)).subscribe(
       ([app, prodInfo, apps]) => {
         const error = {
           code: app.code || apps.code,
@@ -42,7 +56,12 @@ export default class ProductAppsDetail extends TwViewController {
     );
   }
 
-  private getAppDetail = appId => {
+  /**
+   * @desc 앱 상세보기 정보 요청
+   * @param {string} appId 앱 상품 id
+   * @private
+   */
+  private _getAppDetail = appId => {
     return this.apiService.request(API_CMD.BFF_10_0097, { prodExpsTypCd: 'P' }, {}, [appId]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -64,7 +83,12 @@ export default class ProductAppsDetail extends TwViewController {
     });
   };
 
-  private getRecommendedApps = appId => {
+  /**
+   * @desc 추천 앱 가져오기 요청
+   * @param {string} appId 앱 상품 id
+   * @private
+   */
+  private _getRecommendedApps = appId => {
     return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [appId]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -79,7 +103,12 @@ export default class ProductAppsDetail extends TwViewController {
     });
   };
 
-  private getProductInfo = appId => {
+  /**
+   * @desc admin 상품 정보 가져오기 요청
+   * @param {string} appId 앱 상품 id
+   * @private
+   */
+  private _getProductInfo = appId => {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + appId).map(resp => {
       if (!resp.result) {
         return resp.result;
@@ -88,7 +117,7 @@ export default class ProductAppsDetail extends TwViewController {
       return {
         ...resp.result,
         banners: resp.result.banner.reduce((banners, banner) => {
-          const position = this.BANNER_POSITION[banner.bnnrLocCd];
+          const position = BANNER_POSITION[banner.bnnrLocCd];
 
           if (position) {
             banners[position] = {

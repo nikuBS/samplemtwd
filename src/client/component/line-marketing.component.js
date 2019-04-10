@@ -65,12 +65,13 @@ Tw.LineMarketingComponent.prototype = {
       agr203Yn: this._agr203Yn
     };
     this._apiService.request(Tw.API_CMD.BFF_03_0015, params, {}, [this._svcMgmtNum])
-      .done($.proxy(this._successAgreeMarketing, this));
+      .done($.proxy(this._successAgreeMarketing, this))
+      .fail($.proxy(this._failAgreeMarketing, this));
   },
   _onClickDisagree: function () {
     this._popupService.close();
   },
-  _onClickTerms: function(serNum) {
+  _onClickTerms: function (serNum) {
     Tw.CommonHelper.openTermLayer(serNum);
   },
   _closeOpenMarketingOfferPopup: function () {
@@ -89,6 +90,10 @@ Tw.LineMarketingComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failAgreeMarketing: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _enableBtns: function () {
     var selectedLength = this.$childChecks.filter(':checked').length;

@@ -15,11 +15,25 @@ interface ITimeInfo {
   availHours: string[]; // '상담가능시간' - ['1600', '1700']
 }
 
+/**
+ * @class
+ * @desc 고객센터 > 전화상담 예약
+ */
 export default class CustomerHelpline extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_08_0001, {}).subscribe((resp: { code: string; msg: string; result: ITimeInfo }) => {
       if (resp.code !== API_CODE.CODE_00) {
