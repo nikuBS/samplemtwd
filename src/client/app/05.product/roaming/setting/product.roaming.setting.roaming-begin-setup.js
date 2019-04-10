@@ -64,7 +64,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
    */
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
-    this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
+    this.$container.on('click','.bt-fixed-area #do_setting',_.debounce($.proxy(this._changeInformationSetting, this),500));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   /**
