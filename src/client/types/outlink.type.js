@@ -31,5 +31,11 @@ Tw.OUTLINK = {
     EU_PASS: 'BPCP:0000105163',
     GIFT_CARD: 'BPCP:0000105153',
     TING_SILVER: 'BPCP:0000105145'
+  },
+  DIRECTSHOP_GUIDE_LINK: {
+    common: 'https://m.shop.tworld.co.kr/shopguide',
+    discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
+    buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
+    delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
   }
 };
