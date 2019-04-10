@@ -139,8 +139,11 @@ Tw.ProductList.prototype = {
     item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
 
     if (this.CODE === 'F01100') {
-      item.filters = _.filter(item.filters, function(filter) {
-        return /^F011[2|3|6]/.test(filter.prodFltId);
+      item.filters = _.filter(item.filters, function(filter, idx, filters) {
+        // 기기, 데이터, 대상 필터 1개씩만 노출
+        return _.findIndex(filters, function(item) {
+            return item.supProdFltId === filter.supProdFltId;
+          }) === idx && /^F011[2|3|6]0$/.test(filter.supProdFltId);
       });
     }
 
