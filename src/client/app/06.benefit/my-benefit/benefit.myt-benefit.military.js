@@ -1,8 +1,13 @@
 /**
  * @file benefit.myt-benefit.military.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 1.
- * 혜택 > 나의 혜택/할인 > 지켜줘서 고마원 현역플랜 포인트(BS_01_01_05)
+ * @author Hyeryoun Lee
+ * @since 2018-11-1
+ */
+/**
+ * @class
+ * @desc 혜택 > 나의 혜택/할인 > 지켜줘서 고마원 현역플랜 포인트(BS_01_01_05)을 위한 class
+ * @param {Object} rootEl 최상위 element Object
+ * @returns {void}
  */
 Tw.BenefitMyBenefitMilitary = function (rootEl) {
   this.NUM_OF_ITEMS = 20;
@@ -18,8 +23,9 @@ Tw.BenefitMyBenefitMilitary = function (rootEl) {
 
 Tw.BenefitMyBenefitMilitary.prototype = {
   /**
-   * Cache elements for binding events.
-   * @private
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
    */
   _cachedElement: function () {
     this.$list = this.$container.find('#fe-list');
@@ -27,15 +33,15 @@ Tw.BenefitMyBenefitMilitary.prototype = {
     this.$noItem = this.$container.find('#fe-no-item');
   },
   /**
-   * Bind events to elements.
-   * @private
+   * @function
+   * @desc Bind events to elements.
    */
   _bindEvent: function () {
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
   },
   /**
-   * Request the military point list.
-   * @private
+   * @function
+   * @desc Request the military point list.
    */
   _requestPoints: function () {
     this._apiService
@@ -44,16 +50,16 @@ Tw.BenefitMyBenefitMilitary.prototype = {
       .fail($.proxy(this._onError, this));
   },
   /**
-   * Event listener for the button click on #fe-bt-more(더보기)
-   * @private
+   * @function
+   * @desc Event listener for the button click on #fe-bt-more(더보기)
    */
   _onClickMore: function () {
     this._renderItems();
   },
   /**
-   * Success callback for _requestPoints.
+   * @function
+   * @desc Success callback for _requestPoints.
    * @param resp
-   * @private
    */
   _onReceivedData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -79,9 +85,9 @@ Tw.BenefitMyBenefitMilitary.prototype = {
     }
   },
   /**
-   * Render the point list.
+   * @function
+   * @desc Render the point list.
    * @param items
-   * @private
    */
   _renderItems: function () {
     var items = this._items.slice(this._idxLastItem, this._idxLastItem + this.NUM_OF_ITEMS);
@@ -102,8 +108,7 @@ Tw.BenefitMyBenefitMilitary.prototype = {
   },
   /**
    * Error callback for _requestPoints.
-   * @param resp
-   * @private
+   * @param resp response
    */
   _onError: function (resp) {
     Tw.Error(resp.code, resp.msg).page();

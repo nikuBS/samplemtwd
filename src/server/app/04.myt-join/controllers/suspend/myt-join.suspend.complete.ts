@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.complete.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2019. 1. 29.
+ * [나의 가입정보 - 장기/일시정지] 완료 화면 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2019-1-29
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,7 +9,11 @@ import { MYT_SUSPEND_COMPLETE_MSG } from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-
+/**
+ * [나의 가입정보 - 장기/일시정지] 완료 화면 렌더링
+ * @author Hyeryoun Lee
+ * @since 2019-1-29
+ */
 class MyTJoinSuspendComplete extends TwViewController {
   constructor() {
     super();
