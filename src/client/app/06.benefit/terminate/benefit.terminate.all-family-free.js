@@ -76,7 +76,7 @@ Tw.BenefitTerminateAllFamilyFree.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
+        btList: [{ link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,
