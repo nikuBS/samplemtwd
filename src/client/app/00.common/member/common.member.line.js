@@ -98,7 +98,8 @@ Tw.CommonMemberLine.prototype = {
       pageNo: this._pageNo,
       pageSize: this._defaultCnt,
       svcCtg: category
-    }).done($.proxy(this._successMoreData, this, category, $target));
+    }).done($.proxy(this._successMoreData, this, category, $target))
+      .fail($.proxy(this._failMoreData, this));
   },
 
   /**
@@ -119,6 +120,17 @@ Tw.CommonMemberLine.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 더보기 실패 처리
+   * @param error
+   * @private
+   */
+  _failMoreData: function(error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -244,6 +256,7 @@ Tw.CommonMemberLine.prototype = {
    * @private
    */
   _failRegisterLineList: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

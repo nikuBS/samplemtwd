@@ -228,7 +228,8 @@ Tw.CommonMemberLineEdit.prototype = {
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: this._category, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successRegisterLineList, this, svcNumList, $target));
+    }).done($.proxy(this._successRegisterLineList, this, svcNumList, $target))
+      .fail($.proxy(this._failRegisterLineList, this));
   },
 
   /**
@@ -247,6 +248,17 @@ Tw.CommonMemberLineEdit.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 회선편집 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failRegisterLineList: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -329,6 +341,7 @@ Tw.CommonMemberLineEdit.prototype = {
    * @private
    */
   _failGetMarketingOffer: function () {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -362,7 +375,8 @@ Tw.CommonMemberLineEdit.prototype = {
       pageNo: this._pageNoExposable,
       pageSize: Tw.DEFAULT_LIST_COUNT,
       svcCtg: this._category
-    }).done($.proxy(this._successMoreExposable, this, $target));
+    }).done($.proxy(this._successMoreExposable, this, $target))
+      .fail($.proxy(this._failMoreExposable, this));
   },
 
   /**
@@ -399,6 +413,17 @@ Tw.CommonMemberLineEdit.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 비노출 회선 더보기 실패 처리
+   * @param error
+   * @private
+   */
+  _failMoreExposable: function(error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**

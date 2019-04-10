@@ -90,7 +90,7 @@ Tw.CertificationSkFull.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
+    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
@@ -170,7 +170,8 @@ Tw.CertificationSkFull.prototype = {
   },
   _requestCert: function () {
     this._apiService.request(Tw.NODE_CMD.GET_URL_META, {})
-      .done($.proxy(this._successGetUrlMeta, this));
+      .done($.proxy(this._successGetUrlMeta, this))
+      .fail($.proxy(this._failGetUrlMeta, this));
   },
   _successGetUrlMeta: function (resp) {
     this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
@@ -183,6 +184,10 @@ Tw.CertificationSkFull.prototype = {
     }
     this._sendCert();
   },
+  _failGetUrlMeta: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _sendCert: function (reCert) {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.READY_SMS, {}, $.proxy(this._onReadSms, this, reCert));
@@ -193,7 +198,7 @@ Tw.CertificationSkFull.prototype = {
   _onReadSms: function (reCert, resp) {
     this._sendCertApi(reCert);
   },
-  _sendCertApi: function(reCert) {
+  _sendCertApi: function (reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -204,12 +209,14 @@ Tw.CertificationSkFull.prototype = {
         sex: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_01_0028, params)
-        .done($.proxy(this._successRequestCert, this, reCert));
+        .done($.proxy(this._successRequestCert, this, reCert))
+        .fail($.proxy(this._failRequestCert, this));
     }
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
-      .done($.proxy(this._successRequestCertAdd, this));
+      .done($.proxy(this._successRequestCertAdd, this))
+      .fail($.proxy(this._failRequestCertAdd, this));
   },
   _successRequestCert: function (reCert, resp) {
     this._clearCertError();
@@ -232,6 +239,10 @@ Tw.CertificationSkFull.prototype = {
       this._checkCertError(resp.code, resp.msg);
     }
   },
+  _failRequestCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _getCertNum: function () {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(this._onCertNum, this));
@@ -253,7 +264,7 @@ Tw.CertificationSkFull.prototype = {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else if ( errorCode === this.SMS_ERROR.ATH8007 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertStop);
-    } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162) {
+    } else if ( errorCode === this.SMS_ERROR.ICAS3101 || errorCode === this.SMS_ERROR.ICAS3162 ) {
       this._showError(this.$inputboxMdn, this.$inputMdn, this.$errorCertBlock);
     } else {
       Tw.Error(errorCode, errorMsg).pop();
@@ -288,6 +299,10 @@ Tw.CertificationSkFull.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _failRequestCertAdd: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _onClickConfirm: function () {
     var inputCert = this.$inputCert.val();
     var params = {
@@ -303,7 +318,8 @@ Tw.CertificationSkFull.prototype = {
   },
   _requestConfirm: function (params) {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, params)
-      .done($.proxy(this._successRequestConfirm, this));
+      .done($.proxy(this._successRequestConfirm, this))
+      .fail($.proxy(this._failRequestConfirm, this));
   },
   _successRequestConfirm: function (resp) {
     this._clearConfirmError();
@@ -327,7 +343,10 @@ Tw.CertificationSkFull.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
-
+  },
+  _failRequestConfirm: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _checkCertValidation: function () {
     var inputName = this.$inputName.val();

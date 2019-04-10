@@ -136,7 +136,8 @@ Tw.CommonMemberLineRegister.prototype = {
     $event.stopPropagation();
 
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._successAllSvc, this, $target));
+      .done($.proxy(this._successAllSvc, this, $target))
+      .fail($.proxy(this._failAllSvc, this));
   },
 
   /**
@@ -157,6 +158,17 @@ Tw.CommonMemberLineRegister.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 전체 회선정보 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failAllSvc: function(error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -192,7 +204,8 @@ Tw.CommonMemberLineRegister.prototype = {
       svcCtg: Tw.LINE_NAME.All,
       pageSize: Tw.DEFAULT_LIST_COUNT,
       pageNo: this._pageNo
-    }).done($.proxy(this._successMoreExposable, this, $target));
+    }).done($.proxy(this._successMoreExposable, this, $target))
+      .fail($.proxy(this._failMoreExposable, this));
   },
 
   /**
@@ -212,6 +225,17 @@ Tw.CommonMemberLineRegister.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop(null, $target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 더보기 회선 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failMoreExposable: function(error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -318,6 +342,7 @@ Tw.CommonMemberLineRegister.prototype = {
    * @private
    */
   _failRegisterLineList: function ($target, error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -393,7 +418,8 @@ Tw.CommonMemberLineRegister.prototype = {
    * @desc 마케팅 동의 여부 요청 실패 처리
    * @private
    */
-  _failGetMarketingOffer: function () {
+  _failGetMarketingOffer: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 

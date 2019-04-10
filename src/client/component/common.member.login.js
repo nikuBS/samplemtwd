@@ -55,7 +55,7 @@ Tw.CommonMemberLogin.prototype = {
       this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.replaceURL('/common/member/login/exceed-fail');
-    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236) {
+    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236 ) {
       this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
@@ -70,14 +70,19 @@ Tw.CommonMemberLogin.prototype = {
   },
   _generateSession: function (target, loginType) {
     this._apiService.request(Tw.NODE_CMD.SESSION, {})
-      .done($.proxy(this._onSuccessSession, this, target, loginType));
+      .done($.proxy(this._successSession, this, target, loginType))
+      .fail($.proxy(this._failSession, this));
   },
-  _onSuccessSession: function (target, loginType, resp) {
+  _successSession: function (target, loginType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession('');
       this._nativeService.send(Tw.NTV_CMD.LOGIN, {
         type: loginType
       }, $.proxy(this._onNativeLogin, this, target));
     }
+  },
+  _failSession: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

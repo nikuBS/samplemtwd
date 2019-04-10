@@ -18,10 +18,14 @@ Tw.Init = function () {
 Tw.Init.prototype = {
   _initService: function () {
     Tw.Logger = {
-      log: function() {},
-      info: function() {},
-      warn: function() {},
-      error: function() {}
+      log: function () {
+      },
+      info: function () {
+      },
+      warn: function () {
+      },
+      error: function () {
+      }
     };
     Tw.Ui = new Tw.UIService();
     Tw.Popup = new Tw.PopupService();
@@ -44,7 +48,8 @@ Tw.Init.prototype = {
 
   _getEnvironment: function () {
     this._apiService.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
-      .done($.proxy(this._logVersion, this));
+      .done($.proxy(this._logVersion, this))
+      .fail($.proxy(this._failEnvironment, this));
   },
 
   _logVersion: function (resp) {
@@ -71,6 +76,11 @@ Tw.Init.prototype = {
     }
   },
 
+  _failEnvironment: function (error) {
+    Tw.Logger.error(error);
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
   _initXtvId: function () {
     if ( !Tw.BrowserHelper.isApp() ) {
       return;
@@ -78,7 +88,7 @@ Tw.Init.prototype = {
 
     this._nativeService.send(Tw.NTV_CMD.LOAD, {
       key: Tw.NTV_STORAGE.XTVID
-    }, $.proxy(function(res) {
+    }, $.proxy(function (res) {
       if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
         return Tw.CommonHelper.setCookie('XTVID', res.params.value);
       }
@@ -94,7 +104,7 @@ Tw.Init.prototype = {
     }, this));
   },
 
-  _sendXtvId: function(xtvId) {
+  _sendXtvId: function (xtvId) {
     var isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
     if ( !Tw.FormatHelper.isEmpty(isLog) ) {
       return;
@@ -116,17 +126,17 @@ Tw.Init.prototype = {
 
   _sendXtractorLoginDummy: function () {
     var cookie = Tw.CommonHelper.getCookie('XT_LOGIN_LOG');
-    if (!Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp()) {
+    if ( !Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
       return;
     }
 
     this._apiService.request(Tw.NODE_CMD.GET_XTINFO, {})
-      .done($.proxy(function(res) {
-        if (Tw.FormatHelper.isEmpty(res.result)) {
+      .done($.proxy(function (res) {
+        if ( Tw.FormatHelper.isEmpty(res.result) ) {
           return;
         }
 
-        if (!Tw.BrowserHelper.isApp()) {
+        if ( !Tw.BrowserHelper.isApp() ) {
           Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
           window.XtractorScript.xtrLoginDummy($.param({
             V_ID: Tw.CommonHelper.getCookie('XTVID'),
@@ -137,7 +147,7 @@ Tw.Init.prototype = {
           return;
         }
 
-        if (res.result.XTLOGINTYPE !== 'Z') {
+        if ( res.result.XTLOGINTYPE !== 'Z' ) {
           Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
           Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
             xtLid: res.result.XTLID,
@@ -160,40 +170,40 @@ Tw.Init.prototype = {
     }
   },
 
-  _initTrackerApi: function() {
-    if (!Tw.BrowserHelper.isApp()) {  // App 환경에서만 동작
+  _initTrackerApi: function () {
+    if ( !Tw.BrowserHelper.isApp() ) {  // App 환경에서만 동작
       return;
     }
 
     this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._sendTrackerApi, this));
   },
 
-  _sendTrackerApi: function(res) {
+  _sendTrackerApi: function (res) {
     if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
       return;
     }
 
-    var url = Tw.Environment.environment !== 'prd' ? Tw.TRACKER_API.targetUrl.development : Tw.TRACKER_API.targetUrl.production,
-      params = {
-        site: Tw.TRACKER_API.siteId,
-        platform: 1,
-        ua: navigator.userAgent,
-        page: location.href
-      };
+    var url    = Tw.Environment.environment !== 'prd' ? Tw.TRACKER_API.targetUrl.development : Tw.TRACKER_API.targetUrl.production,
+        params = {
+          site: Tw.TRACKER_API.siteId,
+          platform: 1,
+          ua: navigator.userAgent,
+          page: location.href
+        };
 
-    if (location.referrer && !Tw.FormatHelper.isEmpty(location.referrer)) {
+    if ( location.referrer && !Tw.FormatHelper.isEmpty(location.referrer) ) {
       params.referer = location.referrer;
     }
 
-    if (screen && screen.width && screen.height) {
+    if ( screen && screen.width && screen.height ) {
       params.res = screen.width + 'x' + screen.height;
     }
 
-    if (Tw.BrowserHelper.isAndroid()) {
+    if ( Tw.BrowserHelper.isAndroid() ) {
       params.adid = res.params.adid;
     }
 
-    if (Tw.BrowserHelper.isIos()) {
+    if ( Tw.BrowserHelper.isIos() ) {
       params.idfa = res.params.adid;
     }
 

@@ -36,13 +36,18 @@ Tw.CertificationNice.prototype = {
   },
   _openCertBrowser: function (path) {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
-      .done($.proxy(this._successGetDomain, this, path));
+      .done($.proxy(this._successGetDomain, this, path))
+      .fail($.proxy(this._failGetDomain, this));
   },
   _successGetDomain: function (path, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.openUrlInApp(resp.result.domain + path, 'status=1,toolbar=1');
       // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
+  },
+  _failGetDomain: function(error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onPopupCallback: function () {
     this._callback({ code: Tw.API_CODE.CODE_00 });

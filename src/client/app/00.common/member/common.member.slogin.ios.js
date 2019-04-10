@@ -112,7 +112,8 @@ Tw.CommonMemberSloginIos.prototype = {
    */
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
-      .done($.proxy(this._successGetAuthMethodBlock, this));
+      .done($.proxy(this._successGetAuthMethodBlock, this))
+      .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
 
   /**
@@ -129,6 +130,17 @@ Tw.CommonMemberSloginIos.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_ADMIN_BLOCK.TITLE,
         null, $.proxy(this._onCloseBlockPopup, this));
     }
+  },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 실패 처리
+   * @param error
+   * @private
+   */
+  _failGetAuthMethodBlock: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -205,7 +217,8 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
+    this.$btLogin.click(_.debounce($.proxy(this._onClickLogin, this), 500));
+
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
@@ -387,6 +400,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @private
    */
   _failRequestCert: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -465,6 +479,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @private
    */
   _failRequestCertAdd: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -542,6 +557,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @private
    */
   _failRequestLogin: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 

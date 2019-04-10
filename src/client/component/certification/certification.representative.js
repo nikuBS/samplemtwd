@@ -54,7 +54,8 @@ Tw.CertificationRepresentative.prototype = {
   },
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
-      .done($.proxy(this._successGetAuthMethodBlock, this));
+      .done($.proxy(this._successGetAuthMethodBlock, this))
+      .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -66,6 +67,10 @@ Tw.CertificationRepresentative.prototype = {
     } else {
       this._openPopup();
     }
+  },
+  _failGetAuthMethodBlock: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _parseAuthBlock: function (list) {
     var block = {};
@@ -125,7 +130,7 @@ Tw.CertificationRepresentative.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
+    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
     this.$list.on('click', $.proxy(this._onClickList, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
@@ -158,7 +163,8 @@ Tw.CertificationRepresentative.prototype = {
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
-      .done($.proxy(this._successCertAdd, this));
+      .done($.proxy(this._successCertAdd, this))
+      .fail($.proxy(this._failCertAdd, this));
   },
   _successCertAdd: function (resp) {
     this._clearConfirmError();
@@ -175,6 +181,10 @@ Tw.CertificationRepresentative.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _failCertAdd: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _onClickConfirm: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0015, {
       jobCode: this._jobCode,
@@ -183,7 +193,8 @@ Tw.CertificationRepresentative.prototype = {
       receiverNum: this._receiverNum,
       authKind: Tw.AUTH_CERTIFICATION_KIND.R,
       prodAuthKey: this._certInfo.prodAuthKey
-    }).done($.proxy(this._completeCert, this));
+    }).done($.proxy(this._successConfirm, this))
+      .fail($.proxy(this._failConfirm, this));
   },
   _sendCert: function (reCert) {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
@@ -206,9 +217,10 @@ Tw.CertificationRepresentative.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0058, {
       receiverNum: this._receiverNum,
       jobCode: this._jobCode
-    }).done($.proxy(this._onSuccessCert, this, reCert));
+    }).done($.proxy(this._successCert, this, reCert))
+      .fail($.proxy(this._failCert, this));
   },
-  _onSuccessCert: function (reCert, resp) {
+  _successCert: function (reCert, resp) {
     this._clearCertError();
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -234,6 +246,10 @@ Tw.CertificationRepresentative.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _getCertNum: function () {
     if ( Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
@@ -265,7 +281,7 @@ Tw.CertificationRepresentative.prototype = {
       this.$btConfirm.attr('disabled', true);
     }
   },
-  _completeCert: function (resp) {
+  _successConfirm: function (resp) {
     this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callbackParam = resp;
@@ -287,6 +303,10 @@ Tw.CertificationRepresentative.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failConfirm: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _showError: function (inputBox, input, error) {
     inputBox.addClass('error');
