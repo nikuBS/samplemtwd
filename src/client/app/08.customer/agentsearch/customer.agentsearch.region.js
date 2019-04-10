@@ -1,9 +1,17 @@
 /**
- * @file customer.agentsearch.region.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * @file 나와 가까운 지점 검색에서 위치변경 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-29
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ * @param  {String} currentDo - 현재 보여지고 있는 도 이름
+ * @param  {String} currentGu - 현재 보여지고 있는 구 이름
+ * @param  {Object} regions - tmap으로 부터 검색된 지역명 및 코드 담고 있는 객체
+ * @param  {Function} callback - 위치변경 완료 후 호출할 callback
+ */
 Tw.CustomerAgentsearchRegion = function (rootEl, currentDo, currentGu, regions, callback) {
   this.$container = rootEl;
 
@@ -22,6 +30,11 @@ Tw.CustomerAgentsearchRegion = function (rootEl, currentDo, currentGu, regions, 
 };
 
 Tw.CustomerAgentsearchRegion.prototype = {
+
+  /**
+   * @function
+   * @desc tmap으로 부터 regions 정보가 이전에 검색된 적이 있으면 caching된 데이터 활용, 그렇지 않은 경우 tmap으로 조회 요청
+   */
   _init: function () {
     if (!Tw.FormatHelper.isEmpty(this._regions)) {
       this._onRegionsDone();
@@ -51,6 +64,11 @@ Tw.CustomerAgentsearchRegion.prototype = {
     this.$btDropdown.on('click', $.proxy(this._onDropDownClicked, this));
     this.$container.on('click', '.bt-red1', $.proxy(this._onComplete, this));
   },
+
+  /**
+   * @function
+   * @desc 사용자가 선택할 수 있는 지역들을 리스팅
+   */
   _onRegionsDone: function () {
     var districtName = '';
     var largeCd = '';
@@ -90,6 +108,11 @@ Tw.CustomerAgentsearchRegion.prototype = {
     this.$btDropdown.val(largeCd);
     this._onLargeAreaChanged(largeCd, middleCd);
   },
+
+  /**
+   * @function
+   * @desc 드랍다운 버튼 클릭 시 actionsheet 에 선택할 수 있는 최상위 지역명 노출
+   */
   _onDropDownClicked: function () {
     var currentLargeCd = this.$btDropdown.val();
     var regionList = _.map(_.filter(this._regions, function (region) {
@@ -123,6 +146,13 @@ Tw.CustomerAgentsearchRegion.prototype = {
       }, this));
     }, this), null, 'region');
   },
+
+  /**
+   * @function
+   * @desc 최상위 지역명이 바뀐 경우 바뀐 지역에 해당하는 하위 지역들을 리스팅
+   * @param  {String} largeCode - 선택된 최상위 지역 코드
+   * @param  {String} middleCode - 비어 있을 경우 1번 지역을 선택된 상태로
+   */
   _onLargeAreaChanged: function (largeCode, middleCode) {
     this.$areaList.empty();
 
@@ -152,6 +182,11 @@ Tw.CustomerAgentsearchRegion.prototype = {
       this.$areaList.find('input[value="' + middleCode + '"]').click();
     }
   },
+
+  /**
+   * @function
+   * @desc 지역변경 화면 하단 submit 클릭 시 바뀐 정보와 함께 callback 호출
+   */
   _onComplete: function () {
     var middleName = this.$areaList.find('li[aria-checked="true"]').text();
     this._completeCallback(this.$btDropdown.val(), middleName, this._regions);

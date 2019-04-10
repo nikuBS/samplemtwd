@@ -41,15 +41,20 @@ Tw.TidLandingComponent.prototype = {
   },
   _generateSession: function (target, loginType) {
     this._apiService.request(Tw.NODE_CMD.SESSION, {})
-      .done($.proxy(this._onSuccessSession, this, target, loginType));
+      .done($.proxy(this._successSession, this, target, loginType))
+      .fail($.proxy(this._failSession, this));
   },
-  _onSuccessSession: function (target, loginType, resp) {
+  _successSession: function (target, loginType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession('');
       this._nativeService.send(Tw.NTV_CMD.LOGIN, {
         type: loginType
       }, $.proxy(this._onNativeLogin, this, target));
     }
+  },
+  _failSession: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onClickLogin: function (target) {
     this.goLogin(target);
@@ -101,7 +106,12 @@ Tw.TidLandingComponent.prototype = {
   },
   logout: function (callback) {
     this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
-      .done(callback);
+      .done(callback)
+      .fail($.proxy(this._failLogout, this));
+  },
+  _failLogout: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onClickBtnAuthLine: function () {
     this._historyService.goLoad('/common/member/line');
@@ -155,7 +165,8 @@ Tw.TidLandingComponent.prototype = {
   _onNativeSignup: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this));
+        .done($.proxy(this._successLogin, this))
+        .fail($.proxy(this._failLogin, this));
     }
   },
   _successLogin: function (target, resp) {
@@ -175,6 +186,10 @@ Tw.TidLandingComponent.prototype = {
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code);
     }
+  },
+  _failLogin: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onNativeLogout: function (resp) {
     Tw.Logger.info('[Logout TID Resp]', resp, Tw.CommonHelper.getCookie('TWM'));

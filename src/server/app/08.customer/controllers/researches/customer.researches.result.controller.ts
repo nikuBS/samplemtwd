@@ -8,16 +8,29 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-// import { of } from 'rxjs/observable/of';
-// import { ResearchResult } from '../../../../mock/server/customer.researches.mock';
 
+
+/**
+ * @class
+ * @desc 고객센터 > 설문조사 > 결과보기
+ */
 export default class CustomerResearchesResult extends TwViewController {
   constructor() {
     super();
   }
-
+  
+  /**
+   * @desc 화면 랜더링
+   * @param  {Request} req
+   * @param  {Response} res
+   * @param  {NextFunction} _next
+   * @param  {any} svcInfo
+   * @param  {any} _allSvc
+   * @param  {any} _childInfo
+   * @param  {any} pageInfo
+   */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    this.getResult(req.query.id).subscribe(result => {
+    this._getResult(req.query.id).subscribe(result => {
       if (result.code) {
         return this.error.render(res, {
           svcInfo,
@@ -30,7 +43,12 @@ export default class CustomerResearchesResult extends TwViewController {
     });
   }
 
-  private getResult = id => {
+  /**
+   * @desc 설문조사 결과보기 데이터 요청
+   * @param {string} id 설문조사 id
+   * @private
+   */
+  private _getResult = id => {
     // return of(ResearchResult).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0024, { bnnrRsrchId: id }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {

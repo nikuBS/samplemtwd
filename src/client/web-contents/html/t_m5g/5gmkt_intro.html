@@ -126,7 +126,7 @@
 						</li>
 						<li class="og-5mktp-intro-bannr">
 							<a href="5gmkt_life_2.html?tab=2&anchor=5" class="text-wrap arrow-type2">
-								<strong class="tit">컬처홀릭</strong>
+								<strong class="tit">컬쳐홀릭</strong><!-- //190405 수정 -->
 								<span class="txt">하루만에 VR로 세계 일주하고,<br> 내방에서 파리 유명 미술관에도<br> 가보고!</span>
 							</a>
 							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_05.png" alt=""></span>
@@ -141,12 +141,13 @@
 						
 					</ul>
 				</div>
-	
+				<!-- 190409 수정 -->
 				<div class="og-5mktp-btm-banner-wrap">
 					<div class="og-5mktp-btm-banner og-fixed">
-						<a href="https://m.shop.tworld.co.kr/shop/main" class="og-5mktp-banner banrimg" target="_blank" title="다이렉트샵으로 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
+						<a href="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010014&productGrpId=000003532&subscriptionId=NA00006404&subcommDcMthd=10&addServiceId=&utm_source=tworld&utm_medium=p_5gx&utm_campaign=s10_5g&utm_content=buynow" class="og-5mktp-banner banrimg" target="_blank" title="다이렉트샵으로 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
 					</div>
 				</div>
+				<!-- //190409 수정 -->
 			</div>
         </div>
 		<!-- //190401 수정 -->
@@ -170,9 +171,17 @@
 
 	<script type="text/javascript">
         $(document).ready(function () {
+            // 190404_수정 START
+            $('.og-5mktp-intro-cover').on('touchstart touchmove', function (e) {
+                e.preventDefault();
+			});
+
             setTimeout(function () {
-                $('.og-5mktp-intro-cover').fadeOut();
+                $('.og-5mktp-intro-cover').fadeOut(400, function () {
+                    $(window).scrollTop(0);
+				});
             }, 2000);
+            // 190404_수정 END
 
 			//하단 배너 플로팅
 			var $win = $(window),

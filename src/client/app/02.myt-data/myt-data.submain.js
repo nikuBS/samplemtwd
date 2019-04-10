@@ -471,8 +471,8 @@ Tw.MyTDataSubMain.prototype = {
           }
           else if ( item.sdata.length > 0 ) {
             data = {
-              data: item.sdata[0].showRemained.data,
-              unit: item.sdata[0].showRemained.unit
+              data: item.sdata[0].showRemained ? item.sdata[0].showRemained.data : item.sdata[0].remained,
+              unit: item.sdata[0].showRemained ? item.sdata[0].showRemained.unit : ''
             };
           }
           else if ( item.voice.length > 0 ) {

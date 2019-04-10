@@ -1,11 +1,14 @@
 /**
- * MenuName: 상품 > 결합상품 개별페이지 > 요금절약 예시보기
  * @file benefit.submain.combination-preview.info.js
  * @author 이정민 (skt.p130713@partner.sk.com)
- * @since 2018.11.23
- * Summary: 요금절약 예시보기
+ * @since 2018-11-23
  */
 
+/**
+ * @class
+ * @desc 상품 > 결합상품 개별페이지 > 요금절약 예시보기
+ * @param {Object} rootEl
+ */
 Tw.BenefitSubmainCombinationPreviewInfo = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -35,9 +38,9 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
   },
 
   /**
-   * 탭 버튼 클릭 시 호출
-   * @param e
-   * @private
+   * @function
+   * @desc 탭 버튼 클릭 시 호출
+   * @param {Object} e
    */
   _onClickTabHeader: function(e) {
     e.preventDefault();
@@ -46,9 +49,9 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
   },
 
   /**
-   * hash 변경 시 호출
-   * @param hash
-   * @private
+   * @function
+   * @desc hash 변경 시 호출
+   * @param {JSON} hash
    */
   _onHashChange: function (hash) {
     var tabId = 'tab1';
@@ -59,8 +62,8 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
   },
 
   /**
-   * 진입시 hash에 해당하는 탭 노출
-   * @private
+   * @function
+   * @desc 진입시 hash에 해당하는 탭 노출
    */
   _initTab: function() {
     var hash = this._historyService.getHash();
@@ -72,9 +75,9 @@ Tw.BenefitSubmainCombinationPreviewInfo.prototype = {
   },
 
   /**
-   * tabId에 따른 탭 노출
-   * @param tabId
-   * @private
+   * @function
+   * @desc tabId에 따른 탭 노출
+   * @param {String} tabId
    */
   _showTab: function(tabId) {
     this._$tabHeaders.attr('aria-selected', 'false');

@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.info.bill-tax.send-email.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2019. 2. 1
+ * @file [나의요금-세금계산서_이메일재발행하기] 관련 처리
+ * @author Lee Kirim
+ * @since 2019-02-01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -11,10 +11,17 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
 
+/**
+ * 이메일재발행을 위한 데이터 조회 렌더링
+ * query값으로 date 필요
+ */
 class MytFareInfoBillTaxSendEmail extends TwViewController {
     public render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
         const date: string = req.query.date;
         
+        /**
+         * @if date 없으면 페이지 없음 처리
+         */
         if (FormatHelper.isEmpty(date)) {
             return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
         }

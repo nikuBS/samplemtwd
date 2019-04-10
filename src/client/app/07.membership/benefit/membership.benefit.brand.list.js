@@ -1,7 +1,7 @@
 /**
  * MenuName: T멤버십 > 제휴브랜드 > 전체보기
  * @file membership.benefit.brand.list.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
+ * @author 이규광
  * @since 2018.11.06
  * Summary: 가맹점 지역별 조회
  * Description:

@@ -1,9 +1,13 @@
 /**
- * @file main.menu.settings.term-type-cde.js
+ * @file 약관 세부화면 관련 처리
  * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.27
+ * @since 2018-11-27
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ */
 Tw.MainMenuSettingsTermTypeCDE = function (rootEl) {
   this.$container = rootEl;
 
@@ -29,6 +33,12 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
     this.$container.on('click', '#fe-btn-action', $.proxy(this._onAction, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
+
+  /**
+   * @function
+   * @desc 약관 보기 클릭 시 BFF로 약관내용 조회하여 화면으로 출력
+   * @param  {Object} e - click event
+   */
   _onViewClicked: function (e) {
     var viewId = e.currentTarget.value;
     this._apiService.request(Tw.API_CMD.BFF_08_0059, {
@@ -48,6 +58,12 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
       Tw.Error(err.code, err.msg).pop();
     });
   },
+
+  /**
+   * @function
+   * @desc - action sheet 열기
+   * @param  {Object} e - click event
+   */
   _onAction: function (e) {
     var id = e.currentTarget.value;
     var searchId = this._termGroup[id];
@@ -66,6 +82,12 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onActionSheetOpened, this));
   },
+
+  /**
+   * @function
+   * @desc Action sheet 관련 화면 처리, 이벤트 바인딩 등
+   * @param  {Object} root - action sheet 최상위 elem
+   */
   _onActionSheetOpened: function (root) {
     root.on('click', 'input[type=radio]', $.proxy(function (e) {
       this._popupService.close();
@@ -86,6 +108,11 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
       this._popupService.close();
     }, this));
   },
+  /**
+   * @function
+   * @desc 링크 외브 브라우저로 열기
+   * @param  {Object} e - click event
+   */
   _onExternalLink: function (e) {
     var url = $(e.currentTarget).attr('href');
     Tw.CommonHelper.openUrlExternal(url);

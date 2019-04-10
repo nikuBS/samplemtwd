@@ -41,13 +41,18 @@ Tw.CertificationPassword.prototype = {
   },
   _openCertBrowser: function () {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
-      .done($.proxy(this._successGetDomain, this));
+      .done($.proxy(this._successGetDomain, this))
+      .fail($.proxy(this._failGetDomain));
   },
   _successGetDomain: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.openUrlInApp(resp.result.domain + '/common/tid/cert-pw', 'status=1,toolbar=1');
       // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
+  },
+  _failGetDomain: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   _onCertResult: function (resp) {
@@ -65,10 +70,15 @@ Tw.CertificationPassword.prototype = {
       authUrl: this._authUrl,
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : ''
-    }).done($.proxy(this._successConfirmPasswordCert, this));
+    }).done($.proxy(this._successConfirmPasswordCert, this))
+      .fail($.proxy(this._failConfirmPasswordCert, this));
   },
   _successConfirmPasswordCert: function (resp) {
     this._callback(resp);
+  },
+  _failConfirmPasswordCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onPopupCallback: function () {
     this._confirmPasswordCert();

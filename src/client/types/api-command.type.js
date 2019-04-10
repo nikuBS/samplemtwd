@@ -456,6 +456,10 @@ Tw.API_CMD = {
   BFF_10_0099: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.POST },
   BFF_10_0100: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_0109: { path: '/core-product/:version/services/wire/addition/:args0', method: Tw.API_METHOD.GET },
+  BFF_10_0113: {
+    path: '/core-product/:version/services/combinations/:args0/terminations/prechecks',
+    method: Tw.API_METHOD.GET
+  },
   BFF_10_0119: { path: '/core-product/:version/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
   BFF_10_0137: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0138: { path: '/core-product/:version/wire/additions/:args0/joins/reservations', method: Tw.API_METHOD.DELETE },

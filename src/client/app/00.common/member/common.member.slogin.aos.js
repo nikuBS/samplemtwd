@@ -4,6 +4,14 @@
  * @since 2018.07.26
  */
 
+/**
+ * @class
+ * @desc 공통 > 로그인/로그아웃 > AOS 간편로그인
+ * @param rootEl
+ * @param existMdn
+ * @param target
+ * @constructor
+ */
 Tw.CommonMemberSloginAos = function (rootEl, existMdn, target) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -23,10 +31,23 @@ Tw.CommonMemberSloginAos = function (rootEl, existMdn, target) {
 };
 
 Tw.CommonMemberSloginAos.prototype = {
+  /**
+   * @member {object}
+   * @desc AOS 간편로그인 오류 코드
+   * @readonly
+   * @prop {string} ATH1005 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
+   * @prop {string} ATH1004 휴대폰번호 입력오류
+   */
   ERROR_CODE: {
-    ATH1004: 'ATH1004',   // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
-    ATH1005: 'ATH1005'    // 휴대폰번호 입력오류
+    ATH1004: 'ATH1004',
+    ATH1005: 'ATH1005'
   },
+
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function () {
     this.$btnLogin = this.$container.find('#fe-easy-login');
     this.$inputBirth = this.$container.find('#fe-input-birth');
@@ -40,6 +61,12 @@ Tw.CommonMemberSloginAos.prototype = {
 
     this._svcNum = this.$mdn.data('mdn');
   },
+
+  /**
+   * @function
+   * @desc 간편로그인 버튼 클릭 처리
+   * @private
+   */
   _onClickEasyLogin: function () {
     var params = {
       svcNum: this._svcNum,
@@ -47,6 +74,12 @@ Tw.CommonMemberSloginAos.prototype = {
     };
     this._requestLogin(params);
   },
+
+  /**
+   * @function
+   * @desc 생년월일 input event 처리
+   * @private
+   */
   _onInputBirth: function () {
     var inputBirth = this.$inputBirth.val();
     if ( inputBirth.length >= Tw.BIRTH_LEN && !Tw.FormatHelper.isEmpty(this._svcNum) ) {
@@ -56,10 +89,25 @@ Tw.CommonMemberSloginAos.prototype = {
       this.$btnLogin.attr('disabled', true);
     }
   },
+
+  /**
+   * @function
+   * @desc AOS 간편로그인 API 요청
+   * @param params
+   * @private
+   */
   _requestLogin: function (params) {
     this._apiService.request(Tw.NODE_CMD.EASY_LOGIN_AOS, params)
-      .done($.proxy(this._successLogin, this));
+      .done($.proxy(this._successLogin, this))
+      .fail($.proxy(this._failLogin, this));
   },
+
+  /**
+   * @function
+   * @desc 간편로그인 API 응답 처리
+   * @param resp
+   * @private
+   */
   _successLogin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.FormatHelper.isEmpty(this._target) || this._target === 'undefined' ) {
@@ -75,9 +123,33 @@ Tw.CommonMemberSloginAos.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 간편로그인 API 실패 처리
+   * @param error
+   * @private
+   */
+  _failLogin: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
+   * @desc Native MDN 요청
+   * @private
+   */
   _getMdn: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));
   },
+
+  /**
+   * @function
+   * @desc Native MDN 응답 처리
+   * @param resp
+   * @private
+   */
   _onMdn: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._svcNum = resp.params.mdn;

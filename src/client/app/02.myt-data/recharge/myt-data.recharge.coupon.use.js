@@ -1,9 +1,14 @@
 /**
- * @file myt-data.recharge.coupon.use.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.09.19
+ * @file 쿠폰 사용하기 화면관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-09-19
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ * @param  {String} couponNo - 선택된 쿠폰 번호
+ */
 Tw.MyTDataRechargeCouponUse = function (rootEl, couponNo) {
   this.$container = rootEl;
 
@@ -39,6 +44,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('click', 'button.fe-replace-url', $.proxy(this._onReplaceUrl, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
+
+  /**
+   * @function
+   * @desc myt-data submain에서 진입 후 뒤로가기 시 submain으로 이동시키기 위한 처리
+   */
   _init: function () {
     if (!Tw.BrowserHelper.isApp()) {
       this.$container.find('.fe-cancel-btn-box').addClass('none');
@@ -51,6 +61,12 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this.$container.find('#fe-btn-contacts').hide();
     }
   },
+
+  /**
+   * @function
+   * @desc 탭 변경에 따른 UI처리
+   * @param  {String} hash - 현재 선택된 tab의 hash 값
+   */
   _onTabChanged: function (hash) {
     if (hash.raw === 'refill') {
       this._onOptionSelected();
@@ -64,6 +80,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.find('.fe-tab').attr('aria-selected', 'false');
     this.$container.find('#fe-tab-' + this._currentTab).attr('aria-selected', 'true');
   },
+
+  /**
+   * @function
+   * @desc 리필하기 음성/데이터 옵션 선택에 따른 처리
+   */
   _onOptionSelected: function () {
     var checked = this.$container.find('input[type=radio]:checked');
     if (checked.length === 0) {
@@ -72,6 +93,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this.$btnUse.attr('disabled', false);
     }
   },
+
+  /**
+   * @function
+   * @desc 선물하기 받는사람 번호 변경에 따른 처리
+   */
   _onNumberChanged: function () {
     var number = this.$numberInput.val().trim();
     this.$numberInput.val(number.replace(/[^0-9]/gi, '').trim());
@@ -103,10 +129,20 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this.$btnUse.attr('disabled', false);
     }
   },
+
+  /**
+   * @function
+   * @desc 받는사람 번호 input에 x버튼 선택시의 동작
+   */
   _onNumberCancel: function () {
     // this.$errorSpan.addClass('none');
     this.$btnUse.attr('disabled', true);
   },
+
+  /**
+   * @function
+   * @desc 주소록 버튼 클릭시 native로 주소록 화면 요청
+   */
   _onClickContacts: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(function (res) {
       if (res.resultCode === Tw.NTV_CODE.CODE_00) {
@@ -118,6 +154,12 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       }
     }, this));
   },
+
+
+  /**
+   * @function
+   * @desc submit 버튼 클릭시 선물하기/리필하기 각각에 따른 처리
+   */
   _onSubmitClicked: function () {
     var confirmed = false;
     switch (this._currentTab) {
@@ -162,6 +204,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _onReplaceUrl: function () {
     this._historyService.goLoad('/myt-data/recharge/coupon');
   },
+
+  /**
+   * @function
+   * @desc 리필하기에 대한 BFF 요청
+   */
   _refill: function () {
     var desc = this.$container.find('input[type=radio]:checked')[0].value;
     var reqData = {
@@ -175,6 +222,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       .done($.proxy(this._success, this, type))
       .fail($.proxy(this._fail, this));
   },
+
+  /**
+   * @function
+   * @desc 선물하기에 대한 BFF 요청
+   */
   _gift: function () {
     this._popupService.close();
     var reqData = {
@@ -186,6 +238,13 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
   },
+
+  /**
+   * @function
+   * @desc BFF요청(선물하기/리필하기) 완료 후 처리
+   * @param  {String} type - 선물하기/리필하기 타입 정의
+   * @param  {Object} res - BFF로 부터 받은 response json 객체
+   */
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
       if (type === 'gift') {
@@ -230,6 +289,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       return;
     }
 
+    // submain에서 진입한 경우 뒤로가기 동작에서 submain으로 보내주기 위함
     Tw.CommonHelper.setLocalStorage('recharge', 'done');
     switch (type) {
       case 'data':

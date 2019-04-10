@@ -54,7 +54,7 @@ Tw.CommonAutoSmsCert.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
+    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
     this.$inputType.on('click', $.proxy(this._onClickType, this));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputBirthY.on('input', $.proxy(this._onInputBirthY, this));
@@ -171,12 +171,14 @@ Tw.CommonAutoSmsCert.prototype = {
       this._getParameter(params, type);
 
       this._apiService.request(Tw.API_CMD.BFF_08_0075, params)
-        .done($.proxy(this._successRequestCert, this, reCert));
+        .done($.proxy(this._successRequestCert, this, reCert))
+        .fail($.proxy(this._failRequestCert, this));
     }
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
-      .done($.proxy(this._successRequestCertAdd, this));
+      .done($.proxy(this._successRequestCertAdd, this))
+      .fail($.proxy(this._failRequestCertAdd, this));
   },
   _getParameter: function (params, type) {
     if ( type === '1' ) {
@@ -233,6 +235,10 @@ Tw.CommonAutoSmsCert.prototype = {
       this._checkCertError(resp.code, resp.msg);
     }
   },
+  _failRequestCert: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _checkCertError: function (errorCode, errorMsg) {
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
       this._showError(null, null, this.$errorCertTime);
@@ -268,6 +274,9 @@ Tw.CommonAutoSmsCert.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+  _failRequestCertAdd: function (error) {
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
   _onClickConfirm: function () {
     var type = this.$inputType.filter(':checked').val();
     // type = '1';
@@ -284,7 +293,8 @@ Tw.CommonAutoSmsCert.prototype = {
   },
   _requestConfirm: function (params) {
     this._apiService.request(Tw.API_CMD.BFF_08_0076, params)
-      .done($.proxy(this._successRequestConfirm, this));
+      .done($.proxy(this._successRequestConfirm, this))
+      .fail($.proxy(this._failRequestConfirm, this));
   },
   _successRequestConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -301,6 +311,10 @@ Tw.CommonAutoSmsCert.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failRequestConfirm: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _showError: function (inputBox, input, error) {
     // inputBox.addClass('error');

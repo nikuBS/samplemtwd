@@ -11,7 +11,7 @@ Tw.TestHome = function (rootEl, smartCard) {
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
   this._historyService = new Tw.HistoryService();
-  this._lineRegisterLayer = new Tw.LineRegisterComponent();
+  // this._lineRegisterLayer = new Tw.LineRegisterComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
 
@@ -197,7 +197,7 @@ Tw.TestHome.prototype = {
       .fail($.proxy(this._failMicroPayData, this));
   },
   _successMicroPayData: function (element, resp) {
-    console.log('successMicroPay', resp)
+    console.log('successMicroPay', resp);
     var result = {
       showMicro: false,
       invMonth: Tw.DateHelper.getCurrentMonth()
@@ -317,7 +317,7 @@ Tw.TestHome.prototype = {
 
   },
   _successRechargeData: function (element, resp) {
-    console.log('successRechargeData', resp)
+    console.log('successRechargeData', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var refillCoupons = resp.result.length;
       var $rechargeTemp = $('#fe-smart-recharge');

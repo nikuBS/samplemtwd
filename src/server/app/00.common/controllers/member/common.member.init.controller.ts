@@ -8,11 +8,24 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import BrowserHelper from '../../../../utils/browser.helper';
 
+/**
+ * @desc 공통 - Native Session 전달
+ */
 class CommonMemberInit extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Native Session 전달 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));

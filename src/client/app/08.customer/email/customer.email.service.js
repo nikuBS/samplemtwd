@@ -34,10 +34,10 @@ Tw.CustomerEmailService.prototype = {
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
     this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
-    this.$container.on('click', '.fe-service-register', $.proxy(this._request, this));
+    this.$container.on('click', '.fe-service-register', _.debounce($.proxy(this._request, this), 500));
   },
 
-  _request: function (e) {    
+  _request: function (e) {
 
     if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
@@ -98,6 +98,7 @@ Tw.CustomerEmailService.prototype = {
 
   _requestCall: function ($target) {
     var serviceCategory = this.$service_depth1.data('service-depth1');
+    $target.prop('disabled', true);
     switch ( serviceCategory ) {
       case 'CELL':
         this._requestCell($target);
@@ -210,7 +211,7 @@ Tw.CustomerEmailService.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._history.replaceURL('/customer/emailconsult/complete?email=' + $('.fe-service_email').val());
     } else {
-      Tw.Error(res.code, res.msg).pop(null, $target);
+      Tw.Error(res.code, res.msg).pop($.proxy(this._handleButtonAbled, this, $target), $target);
     }
   },
 
@@ -258,6 +259,11 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _apiError: function ($target, res) {
-    Tw.Error(res.code, res.msg).pop(null, $target);
-  }
+    Tw.Error(res.code, res.msg).pop($.proxy(this._handleButtonAbled, this, $target), $target);
+  },
+
+  // 요청 버튼 클릭가능하도록 처리
+  _handleButtonAbled: function ($target) {
+    $target.prop('disabled', false);
+  },
 };

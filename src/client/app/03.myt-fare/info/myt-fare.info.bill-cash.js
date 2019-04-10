@@ -1,7 +1,14 @@
 /**
- * @file myt-fare.info.bill.history.js
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018. 9. 17
+ * @file [나의요금-현금영수증발급내역_리스트] 관련 처리
+ * @author Lee Kirim 
+ * @since 2018-09-17
+ */
+
+/**
+ * @class 
+ * @desc 현금영수증발급내역 리스트를 위한 class
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {JSON} data - myt-fare.info.bill-cash.controlloer.ts 로 부터 전달되어 온 현금영수증내역 정보
  */
 Tw.MyTFareInfoBillCash = function (rootEl, data) {
   this.$container = rootEl;
@@ -15,21 +22,25 @@ Tw.MyTFareInfoBillCash = function (rootEl, data) {
   this._cachedElement();
   this._init();
   this._bindEvent();
-  
-
 };
 
 Tw.MyTFareInfoBillCash.prototype = {
   
+  /**
+   * @function
+   * @member 
+   * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
+   * @return {void}
+   */
   _init: function () {
     var initedListTemplate;
-    var totalDataCounter = this.data.list.length;
-    this.renderListData = {};
+    var totalDataCounter = this.data.list.length; // 리스트 총 갯수
+    this.renderListData = {}; // 렌더할 리스트 갯수
 
     if (!totalDataCounter) {
       initedListTemplate = this.$template.$emptyList();
     } else {
-      this.listRenderPerPage = 20; // 한번에 노출할 리스트갯수
+      this.listRenderPerPage = Tw.DEFAULT_LIST_COUNT; // 한번에 노출할 리스트갯수 20
 
       this.listLastIndex = this.listRenderPerPage;
       this.listViewMoreHide = (this.listLastIndex < totalDataCounter);
@@ -65,6 +76,12 @@ Tw.MyTFareInfoBillCash.prototype = {
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
   },
 
+  /**
+   * @function
+   * @member
+   * @desc 생성자 생성시 템플릿 엘리먼트 설정
+   * - myt-fare.info.history.html 참고
+   */
   _cachedElement: function () {
     this.$template = {
       $domCashListWrapper: this.$container.find('#fe-cash-list-wrapper'),
@@ -82,14 +99,28 @@ Tw.MyTFareInfoBillCash.prototype = {
     Handlebars.registerPartial('year', $('#fe-template-cash-year').html());
 
   },
+
+  /**
+   * @function
+   * @member
+   * @desc 생성시 이벤트 바인드
+   */
   _bindEvent: function () {
 
   },
+
+  /**
+   * @function
+   * @member
+   * @desc 더보기 실행
+   * @param {event} e 더보기 버튼 클릭 이벤트 발생 시킨 엘리먼트
+   * @returns {void}
+   */
   _updateCashList: function (e) {
     this._updateCashListData();
 
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.list.length ? 'none' : ''});
-    this._updateViewMoreBtnRestCounter($(e.currentTarget));
+    // this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
     var insertCompareData = this.data.list[this.listLastIndex - this.listRenderPerPage - 1],
         $domAppendTarget  = this.$appendListTarget;
@@ -115,6 +146,13 @@ Tw.MyTFareInfoBillCash.prototype = {
 
     }, this));
   },
+
+  /**
+   * @function
+   * @member
+   * @desc 리스트
+   * @returns {void}
+   */
   _updateCashListData: function () {
     this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
     this.renderableListData = this.data.list.slice(this.listLastIndex, this.listNextIndex);
@@ -123,6 +161,14 @@ Tw.MyTFareInfoBillCash.prototype = {
     this.listLastIndex = this.listNextIndex >= this.data.list.length ?
         this.data.list.length : this.listNextIndex;
   },
+
+  /**
+   * @function
+   * @member
+   * @param {event} e
+   * @returns {void}
+   * @desc 더보기 클릭시 남은 리스트 갯수 표현하는 것이었으나 현재 사용되지는 않음
+   */
   _updateViewMoreBtnRestCounter: function (e) {
     e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
   }

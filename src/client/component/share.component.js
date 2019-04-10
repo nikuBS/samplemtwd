@@ -23,7 +23,8 @@ Tw.ShareComponent.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_01_0065, {
       trgtUrl: location.pathname + location.search,
       menuId: this._menuId
-    }).done($.proxy(this._successScutUrl, this));
+    }).done($.proxy(this._successScutUrl, this))
+      .fail($.proxy(this._failScutUrl, this));
 
   },
   _successScutUrl: function (resp) {
@@ -34,5 +35,9 @@ Tw.ShareComponent.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _failScutUrl: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };

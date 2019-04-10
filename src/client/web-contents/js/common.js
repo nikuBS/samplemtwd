@@ -1030,7 +1030,7 @@ skt_landing.action = {
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
       } else { // 19.04.08 수정
-        $(".wrap, html").css({"height":"", "overflowY":""});
+        $(".wrap, html, .container-wrap, .container").css({"height":"", "overflowY":""});
         skt_landing.action.auto_scroll();
         skt_landing.action.checkScroll.unLockScroll();
       }

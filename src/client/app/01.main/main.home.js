@@ -284,7 +284,8 @@ Tw.MainHome.prototype = {
       var mbrGr = this.$barcodeGr.data('mbrgr');
       var showCardNum = this.$elBarcode.data('showcard');
       this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum, $target));
+        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum, $target))
+        .fail($.proxy(this._failMembership, this));
     }
 
   },
@@ -317,6 +318,17 @@ Tw.MainHome.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+
+  /**
+   * @function
+   * @desc 멤버십 에러 처리
+   * @param error
+   * @private
+   */
+  _failMembership: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -400,7 +412,8 @@ Tw.MainHome.prototype = {
     var $target = $($event.currentTarget);
     var isTplanProd = $target.data('tplanprod');
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-      .done($.proxy(this._successGiftSender, this, isTplanProd, $target));
+      .done($.proxy(this._successGiftSender, this, isTplanProd, $target))
+      .fail($.proxy(this._failGiftSender, this));
   },
 
   /**
@@ -419,6 +432,17 @@ Tw.MainHome.prototype = {
       enableGift: resp.code === Tw.API_CODE.CODE_00,
       tplanProd: isTplanProd
     }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this, $target), 'data-link', $target);
+  },
+
+  /**
+   * @function
+   * @desc 충전/선물 레이어 선물하기 제공자 조회 에러 처리
+   * @param error
+   * @private
+   */
+  _failGiftSender: function (error) {
+    Tw.Logger.error(error);
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -526,6 +550,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _failTplan: function (error) {
+    Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
@@ -552,7 +577,8 @@ Tw.MainHome.prototype = {
    */
   _getHomeNotice: function (isLogin) {
     this._apiService.request(Tw.NODE_CMD.GET_HOME_NOTICE, {})
-      .done($.proxy(this._successHomeNotice, this, isLogin));
+      .done($.proxy(this._successHomeNotice, this, isLogin))
+      .fail($.proxy(this._failHomeNotice, this));
   },
 
   /**
@@ -567,6 +593,18 @@ Tw.MainHome.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openEmrNotice(resp.result.emrNotice, isLogin);
     }
+  },
+
+  /**
+   * @function
+   * @desc 홈화면 긴급공지사항 redis 데이터 실패 처리
+   * @param error
+   * @private
+   */
+  _failHomeNotice: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -786,6 +824,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _failBillData: function (error) {
+    Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -900,6 +939,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _failMicroContentsData: function (error) {
+    Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -973,7 +1013,7 @@ Tw.MainHome.prototype = {
       //     blockUsage: true
       //   }, resp);
       // } else {
-        this._drawGiftData(element, this._parseGiftData(resp.result), resp);
+      this._drawGiftData(element, this._parseGiftData(resp.result), resp);
       // }
     } else {
       this._drawGiftData(element, {
@@ -988,7 +1028,8 @@ Tw.MainHome.prototype = {
    * @desc 선물하기 카드 데이터 요청 실패 처리
    * @private
    */
-  _failGiftData: function () {
+  _failGiftData: function (error) {
+    Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -1056,7 +1097,8 @@ Tw.MainHome.prototype = {
   _getGiftBalance: function (reqCnt, element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
     setTimeout($.proxy(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: reqCnt })
-        .done($.proxy(this._successGiftRemain, this, element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
+        .done($.proxy(this._successGiftRemain, this, element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance))
+        .fail($.proxy(this._failGiftRemain, this));
     }, this), 3000);
 
   },
@@ -1105,6 +1147,18 @@ Tw.MainHome.prototype = {
       $loading.parent().addClass('none');
       $textErrorBalance.removeClass('none');
     }
+  },
+
+  /**
+   * @function
+   * @desc 선물하기 카드 잔여량 실패 처리
+   * @param error
+   * @private
+   */
+  _failGiftRemain: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -1198,7 +1252,8 @@ Tw.MainHome.prototype = {
    * @desc 충천하기 카드 데이터 요청 실패 처리
    * @private
    */
-  _failRechargeData: function () {
+  _failRechargeData: function (error) {
+    Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -1376,7 +1431,8 @@ Tw.MainHome.prototype = {
    */
   _getWelcomeMsg: function () {
     this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
-      .done($.proxy(this._successWelcomeMsg, this));
+      .done($.proxy(this._successWelcomeMsg, this))
+      .fail($.proxy(this._failWelcomeMsg, this));
   },
 
   /**
@@ -1396,6 +1452,18 @@ Tw.MainHome.prototype = {
         this._handleDrawNoti(resp.result.welcomeMsgList, nonShow);
       }
     }
+  },
+
+  /**
+   * @function
+   * @desc 홈화면 welcome message 실패 처리
+   * @param error
+   * @private
+   */
+  _failWelcomeMsg: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -1538,7 +1606,8 @@ Tw.MainHome.prototype = {
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
-    ]).done($.proxy(this._successTosAppBanner, this));
+    ]).done($.proxy(this._successTosAppBanner, this))
+      .fail($.proxy(this._failTosAppBanner, this));
   },
 
   /**
@@ -1548,12 +1617,13 @@ Tw.MainHome.prototype = {
    */
   _getTosWebBanner: function () {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0005' })
-      .done($.proxy(this._successTosWebBanner, this));
+      .done($.proxy(this._successTosWebBanner, this))
+      .fail($.proxy(this._failTosWebBanner, this));
   },
 
   /**
    * @function
-   * @dect 토스 배너 처리 (앱)
+   * @desc 토스 배너 처리 (앱)
    * @param banner1
    * @param banner2
    * @param banner3
@@ -1570,12 +1640,36 @@ Tw.MainHome.prototype = {
 
   /**
    * @function
+   * @desc 토스 배너 실패 처리 (앱)
+   * @param error
+   * @private
+   */
+  _failTosAppBanner: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
    * @desc 토스 배너 처리 (웹)
    * @param resp
    * @private
    */
   _successTosWebBanner: function (resp) {
     this._drawBanner([{ target: '5', banner: resp }]);
+  },
+
+  /**
+   * @function
+   * @desc 토스 배너 실패 처리 (웹)
+   * @param error
+   * @private
+   */
+  _failTosWebBanner: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**
@@ -1640,7 +1734,8 @@ Tw.MainHome.prototype = {
    */
   _getAdminBanner: function (adminList) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
-      .done($.proxy(this._successBanner, this, adminList));
+      .done($.proxy(this._successBanner, this, adminList))
+      .fail($.proxy(this._failBanner, this));
   },
 
   /**
@@ -1655,7 +1750,7 @@ Tw.MainHome.prototype = {
       _.map(adminList, $.proxy(function (target) {
         var banner = _.filter(resp.result.banners, function (banner) {
           return banner.bnnrLocCd === target.target;
-        }).map(function(target) {
+        }).map(function (target) {
           target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
           return target;
         });
@@ -1678,6 +1773,18 @@ Tw.MainHome.prototype = {
 
   /**
    * @function
+   * @desc 어드민 배너 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failBanner: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+  },
+
+  /**
+   * @function
    * @desc 배너 렌더링 성공 callback
    * @private
    */
@@ -1693,7 +1800,8 @@ Tw.MainHome.prototype = {
    */
   _getQuickMenu: function (isLogin) {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
-      .done($.proxy(this._successQuickMenu, this, isLogin));
+      .done($.proxy(this._successQuickMenu, this, isLogin))
+      .fail($.proxy(this._failQuickMenu, this));
   },
 
   /**
@@ -1707,6 +1815,18 @@ Tw.MainHome.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._drawQuickMenu(resp.result, isLogin);
     }
+  },
+
+  /**
+   * @function
+   * @desc 바로가기 메뉴 요청 실패 처리
+   * @param error
+   * @private
+   */
+  _failQuickMenu: function (error) {
+    Tw.Logger.error(error);
+    // 홈화면에서 alert 제거
+    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
   /**

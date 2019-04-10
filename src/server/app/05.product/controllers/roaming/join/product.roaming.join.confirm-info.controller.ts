@@ -1,4 +1,5 @@
 /**
+ * 로밍 가입 정보확인 페이지
  * @file product.roaming.setting.roaming-setup.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.04
