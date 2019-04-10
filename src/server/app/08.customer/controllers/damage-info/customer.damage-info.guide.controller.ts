@@ -64,6 +64,16 @@ class CustomerDamagenfoGuide extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const category = req.query.category || 'video', // 카테고리 값 셋팅. 없으면 기본값 동영상으로 보는 피해예방법
       listMaxSize = 20, // 목록 1페이지당 20개

@@ -1,26 +1,30 @@
 /**
  * 상품 가입 - T+B결합상품
- * @file benefit.join.tb-combination.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.11
+ * @since 2019-02-11
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import {API_CMD, API_CODE} from '../../../types/api-command.type';
+import { API_CMD } from '../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../types/string.type';
 import { REDIS_KEY } from '../../../types/redis.type';
+import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
-import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ */
 class BenefitJoinTbCombination extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근 허용 상품코드 */
   private readonly _allowedProdIds = ['TW00000062', 'TW00000063'];
 
   /**
+   * PLM상품코드 TW상품코드로 변환
    * @param prodId
    * @private
    */
@@ -36,6 +40,16 @@ class BenefitJoinTbCombination extends TwViewController {
     return prodId;
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = this._getReplacedProdId(req.query.prod_id) || null,
       renderCommonInfo = {
