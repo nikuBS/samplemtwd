@@ -785,7 +785,7 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
     }
 
-    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'Y' && this._joinTermCd === '03') {
+    if (this._prodTypCd === 'F' && resp.result.termPsblYn !== 'Y' && this._joinTermCd === '03') {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_TERM_PRODUCT).pop();
     }
 
