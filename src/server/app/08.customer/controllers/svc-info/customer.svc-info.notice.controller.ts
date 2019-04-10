@@ -110,6 +110,16 @@ class CustomerSvcInfoNotice extends TwViewController {
     return 'M';
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const page = req.query.page || 1, // 페이지
       ntcId = req.query.ntcId || null,  // 게시물 키

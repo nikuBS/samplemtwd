@@ -16,6 +16,16 @@ class CustomerDamageInfoRelated extends TwViewController {
     super();
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     res.render('damage-info/customer.damage-info.related.html', {
       svcInfo: svcInfo, // 사용자 정보

@@ -26,13 +26,37 @@ Tw.BenefitTerminateAllFamilyFree.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', _.debounce($.proxy(this._onTerminate, this), 500));
+    this.$btnTerminate.on('click', _.debounce($.proxy(this._openConfirmAlert, this), 500));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
-  _onTerminate: function(e) {
-    var $btn = $(e.currentTarget),
-      svcCd = Tw.FormatHelper.isEmpty($btn.data('svc_cd')) ? '' : $btn.data('svc_cd');
+  _openConfirmAlert: function(e) {
+    this._isTerminate = false;
+    var $btn = $(e.currentTarget);
+
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
+      null, $.proxy(this._onCloseConfirmAlert, this, $btn), 'is_term', $btn);
+  },
+
+  _bindConfirmAlert: function($popupContainer) {
+    $popupContainer.find('.tw-popup-confirm>button').on('click', $.proxy(this._setConfirmAlertApply, this));
+  },
+
+  _setConfirmAlertApply: function() {
+    this._isTerminate = true;
+
+    if (this._isPopup) {
+      this._popupService.close();
+    }
+  },
+
+  _onCloseConfirmAlert: function($btn) {
+    if (!this._isTerminate) {
+      return;
+    }
+
+    var svcCd = Tw.FormatHelper.isEmpty($btn.data('svc_cd')) ? '' : $btn.data('svc_cd');
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 

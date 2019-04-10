@@ -37,12 +37,6 @@ Tw.BenefitTerminateAllFamily.prototype = {
       isLeader = $btn.data('leader') === 'Y',
       confirmAlert = this._getConfirmAlert(isLeader);
 
-    if (confirmAlert === null) {
-      this._isTerminate = true;
-      this._onCloseConfirmAlert();
-      return;
-    }
-
     this._popupService.openModalTypeATwoButton(confirmAlert.TITLE, confirmAlert.MSG,
       confirmAlert.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this), 'is_term', $btn);
@@ -61,7 +55,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
       return Tw.ALERT_MSG_PRODUCT.ALERT_3_A63;
     }
 
-    return null;
+    return Tw.ALERT_MSG_PRODUCT.ALERT_3_A4;
   },
 
   _bindConfirmAlert: function($popupContainer) {

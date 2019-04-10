@@ -111,7 +111,7 @@ class BenefitTerminateAllFamily extends TwViewController {
 
   /**
    * 결합 정보 변환
-   * @param combinationGroup
+   * @param combinationGroup - 결합 정보
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
@@ -161,7 +161,7 @@ class BenefitTerminateAllFamily extends TwViewController {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
         termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === termInfo.result.combinationGroup.svcMgmtNum
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
       }));
     });
   }

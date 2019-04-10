@@ -88,9 +88,9 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 무선 결합정보 변환
+   * @param wireLessInfo - 무선회선 정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWirelessInfo(wireLessInfo: any, currentSvcMgmtNum: any): any {
     const familyType: any = this._getFamilyType(wireLessInfo, currentSvcMgmtNum);
@@ -104,9 +104,9 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 가족 유형 산출
+   * @param wireLessInfo - 무선 결합정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _getFamilyType(wireLessInfo: any, currentSvcMgmtNum: any): any {
     return {
@@ -122,9 +122,9 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param wireInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 유선 결합정보 변환
+   * @param wireInfo - 유선 결합정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWireInfo(wireInfo: any, currentSvcMgmtNum: any): any {
     return Object.assign(wireInfo, {
@@ -136,8 +136,8 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param combinationGroup
-   * @private
+   * 결합 정보 변환
+   * @param combinationGroup - 결합 정보
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
