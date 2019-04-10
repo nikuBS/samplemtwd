@@ -1514,6 +1514,9 @@ body.hidden {
 .popup-page .container-wrap .container {
   padding: 0; }
 
+.popup-page .container-wrap.no-x-scroll {
+  overflow-x: hidden; }
+
 .popup-page.no-btn {
   padding-bottom: 0; }
 
