@@ -49,13 +49,14 @@
                     <% var longStateCd = data.myLongPausedState.opStateCd; %>
                     <span class="tit">일시정지 현황
                         <span class="sub">
-                            <% if (longStateCd === 'R') { %>
-                            일시정지 중 /
-                            <% } %>
                             <%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
                         </span>
                     </span>
                     <span class="text">
+                        <!--DV001-19840 일시정지중 & 장기일시정지 2가지 포함 case인경우. "일시정지 중" 텍스트 항시 노출-->
+                        <%if(['21', '22'].indexOf(data.myPausedState.svcChgRsnCd) === -1){%>
+                            일시정지 중<br/>
+                        <%}%>
                         <% if(longStateCd) { %>
                             장기일시정지 <%= data.myLongPausedState.opState %>
                         <% } else { %>
