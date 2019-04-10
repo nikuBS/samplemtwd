@@ -1,8 +1,7 @@
 /**
  * 유선 부가서비스 > 가입 (가입정보 입력)
- * @file product.wireplan.join.basic-info.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.14
+ * @since 2019-02-14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -13,17 +12,21 @@ import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductWireplanJoinBasicInfo extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NI00000342', 'NI00000266', 'NI00000333', 'NI00000264',
     'NI00000435', 'NI00000437', 'NI00000436'];
 
   /**
+   * 버튼 목록 데이터 변환
    * @param currentAdditionsInfo
-   * @private
    */
   private _getBtnData(currentAdditionsInfo: any): any {
     if (FormatHelper.isEmpty(currentAdditionsInfo.btnData)) {
@@ -33,6 +36,16 @@ class ProductWireplanJoinBasicInfo extends TwViewController {
     return currentAdditionsInfo.btnData;
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

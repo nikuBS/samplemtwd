@@ -30,7 +30,7 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
   },
 
   _bindEvent: function () {
-    this.$okBtn.on('click', $.proxy(this._onClickOkBtn, this));
+    this.$okBtn.on('click', _.debounce($.proxy(this._onClickOkBtn, this), 500));
     this.$radioBox.on('change', $.proxy(this._onChangeRadioBox, this));
   },
 

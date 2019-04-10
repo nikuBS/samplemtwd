@@ -39,7 +39,7 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * API 응답 값 변환
-   * @param resultData
+   * @param resultData - API 응답 값
    */
   private _convertData(resultData): any {
     return {
@@ -49,7 +49,7 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * 공지사항 게시물 값 변환
-   * @param content
+   * @param content - 게시물 데이터
    */
   private _convertListItem(content) {
     return content.map(item => {

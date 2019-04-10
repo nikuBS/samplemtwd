@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 내폰끼리 결합 설정
- * @file product.mobileplan-add.setting.combine-line.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.13
+ * @since 2018-11-13
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -12,17 +11,21 @@ import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddSettingCombineLine extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00004778'];
 
   /**
-   * @param combineLIneInfo
-   * @param allSvc
-   * @private
+   * 결합 회선 목록 변환
+   * @param combineLIneInfo - API 응답 값
+   * @param allSvc - 사용자 전체 회선 정보
    */
   private _convCombineLineInfo(combineLIneInfo: any, allSvc: any): any {
     return Object.assign(combineLIneInfo, {
@@ -32,9 +35,9 @@ class ProductMobileplanAddSettingCombineLine extends TwViewController {
   }
 
   /**
-   * @param combinationLineList
-   * @param allSvc
-   * @private
+   * 회선 목록 변환
+   * @param combinationLineList - 결합 회선 목록
+   * @param allSvc - 사용자 전체 회선 정보
    */
   private _convertLineList(combinationLineList: any, allSvc: any): any {
     const nickNameList: any = {};
@@ -53,6 +56,16 @@ class ProductMobileplanAddSettingCombineLine extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

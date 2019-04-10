@@ -26,7 +26,7 @@ Tw.BenefitTerminateAllFamilyFree.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._onTerminate, this));
+    this.$btnTerminate.on('click', _.debounce($.proxy(this._onTerminate, this), 500));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
@@ -76,7 +76,7 @@ Tw.BenefitTerminateAllFamilyFree.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
+        btList: [{ link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,

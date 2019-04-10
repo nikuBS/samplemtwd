@@ -26,7 +26,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnTerminate.on('click', $.proxy(this._openConfirmAlert, this));
+    this.$btnTerminate.on('click', _.debounce($.proxy(this._openConfirmAlert, this), 500));
     this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
@@ -44,7 +44,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
     }
 
     this._popupService.openModalTypeATwoButton(confirmAlert.TITLE, confirmAlert.MSG,
-      Tw.BUTTON_LABEL.CONFIRM, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
+      confirmAlert.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this), 'is_term', $btn);
   },
 
@@ -57,7 +57,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
       return Tw.ALERT_MSG_PRODUCT.ALERT_3_A62;
     }
 
-    if (this.$list.find('li').length > 2) {
+    if (this.$list.find('li').length > 1) {
       return Tw.ALERT_MSG_PRODUCT.ALERT_3_A63;
     }
 
@@ -122,7 +122,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
+        btList: [{ link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,

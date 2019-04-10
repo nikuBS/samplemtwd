@@ -1,10 +1,7 @@
 /**
- * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
- * @file product.setting.target-discount.controller.ts
+ * 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
  * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.11.13
- * Page ID: MP_02_02_03_08
- * Summary: 할인지역,지정번호 입력/변경
+ * @since 2018-11-13
  */
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
@@ -14,13 +11,27 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
 import StringHelper from '../../../../../utils/string.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingLocation extends TwViewController {
-  private readonly _allowedProdIdList = ['NA00000008', 'NA00002563', 'NA00002585'];
-
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
+  private readonly _allowedProdIdList = ['NA00000008', 'NA00002563', 'NA00002585'];
+
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

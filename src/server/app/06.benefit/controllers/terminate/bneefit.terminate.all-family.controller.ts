@@ -1,8 +1,7 @@
 /**
  * 상품 해지 - T끼리 온가족할인
- * @file benefit.terminate.all-family.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.04.01
+ * @since 2019-04-01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -14,17 +13,21 @@ import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ */
 class BenefitTerminateAllFamily extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근 허용 상품코드 */
   private _allowedProdIds = ['NA00002040', 'TW20000010'];
 
   /**
-   * @param termInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 해지 정보 변환
+   * @param termInfo - 해지 정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertTermInfo(termInfo: any, currentSvcMgmtNum: any): any {
     return Object.assign(termInfo, {
@@ -35,9 +38,9 @@ class BenefitTerminateAllFamily extends TwViewController {
   }
 
   /**
-   * @param wireLessMemberList
-   * @param currentSvcMgmtNum
-   * @private
+   * 무선 결합회선 목록 변환
+   * @param wireLessMemberList - 무선회선 목록 변환
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWirelessMemberList(wireLessMemberList: any, currentSvcMgmtNum: any): any {
     const wireMemberList: any = wireLessMemberList.map((item) => {
@@ -48,8 +51,8 @@ class BenefitTerminateAllFamily extends TwViewController {
   }
 
   /**
-   * @param list
-   * @private
+   * 결합 목록 정렬
+   * @param list - 결합 회선 목록
    */
   private _sortCombinationList(list: any): any {
     const myLine: any = [],
@@ -74,9 +77,9 @@ class BenefitTerminateAllFamily extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 무선 결합 정보 변환
+   * @param wireLessInfo - 무선 결합 정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWirelessInfo(wireLessInfo: any, currentSvcMgmtNum: any): any {
     const familyType: any = this._getFamilyType(wireLessInfo, currentSvcMgmtNum);
@@ -89,9 +92,9 @@ class BenefitTerminateAllFamily extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 무선결합회선 관계값 산출
+   * @param wireLessInfo - 무선 결합 정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _getFamilyType(wireLessInfo: any, currentSvcMgmtNum: any): any {
     return {
@@ -107,8 +110,8 @@ class BenefitTerminateAllFamily extends TwViewController {
   }
 
   /**
+   * 결합 정보 변환
    * @param combinationGroup
-   * @private
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
@@ -116,6 +119,16 @@ class BenefitTerminateAllFamily extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '',
@@ -148,7 +161,7 @@ class BenefitTerminateAllFamily extends TwViewController {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
         termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === termInfo.result.combinationGroup.svcMgmtNum
       }));
     });
   }

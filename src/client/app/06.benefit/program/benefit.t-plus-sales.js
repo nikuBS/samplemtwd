@@ -28,7 +28,7 @@ Tw.BenefitTPlusSales.prototype = {
   _bindEvent: function () {
     this.$longDiscount.on('click', $.proxy(this._onLongDiscountClicked, this));
     this.$plusExample.on('click', $.proxy(this._onPlusExampleClicked, this));
-    this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
+    this.$okBtn.on('click', _.debounce($.proxy(this._onOkBtnClicked, this), 500));
   },
 
   _onLongDiscountClicked: function () {

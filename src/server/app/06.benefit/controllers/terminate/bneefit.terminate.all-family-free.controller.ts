@@ -1,14 +1,13 @@
 /**
  * 상품 해지 - TB끼리 온가족 프리
- * @file benefit.terminate.all-family-free.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.04.01
+ * @since 2019-04-01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import {PRODUCT_COMBINE_FAMILY_TYPE, PRODUCT_TYPE_NM} from '../../../../types/string.type';
+import { PRODUCT_COMBINE_FAMILY_TYPE, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { SVC_CD } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import { REDIS_KEY } from '../../../../types/redis.type';
@@ -20,12 +19,13 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
     super();
   }
 
+  /* 접근 허용 상품코드 */
   private _allowedProdIds = ['NH00000084', 'TW20000008'];
 
   /**
-   * @param termInfo
-   * @param currentSvcMgmtNum
-   * @private
+   * 해지 정보 변환
+   * @param termInfo - 해지 정보
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertTermInfo(termInfo: any, currentSvcMgmtNum: any): any {
     const wirelessMemberList: any = FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? [] :
@@ -40,8 +40,8 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param list
-   * @private
+   * 결합 목록 정렬
+   * @param list - 결합 회선 목록
    */
   private _sortCombinationList(list: any): any {
     const myLine: any = [],
@@ -66,9 +66,9 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param wireLessMemberList
-   * @param currentSvcMgmtNum
-   * @private
+   * 무선 결합회선 목록 변환
+   * @param wireLessMemberList - 무선회선 목록 변환
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWirelessMemberList(wireLessMemberList: any, currentSvcMgmtNum: any): any {
     return wireLessMemberList.map((item) => {
@@ -77,9 +77,9 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
   }
 
   /**
-   * @param wireMemberList
-   * @param currentSvcMgmtNum
-   * @private
+   * 유선 결합회선 목록 변환
+   * @param wireMemberList - 유선회선 목록 변환
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertWireMemberList(wireMemberList: any, currentSvcMgmtNum: any): any {
     return wireMemberList.map((item) => {
@@ -145,6 +145,16 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '',
@@ -177,7 +187,7 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
         termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === termInfo.result.combinationGroup.svcMgmtNum
       }));
     });
   }
