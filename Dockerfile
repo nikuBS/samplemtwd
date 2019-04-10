@@ -9,10 +9,10 @@ WORKDIR /tworld
 COPY package*.json ./
 
 # set npm proxy & registry
-RUN npm config set proxy http://devops.sktelecom.com:80
-RUN npm config set https-proxy http://devops.sktelecom.com:80
-RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/npm-group/
-RUN npm config set strict-ssl false
+# RUN npm config set proxy http://devops.sktelecom.com:80
+# RUN npm config set https-proxy http://devops.sktelecom.com:80
+# RUN npm config set registry http://devops.sktelecom.com/myrepo/content/groups/npm-group/
+# RUN npm config set strict-ssl false
 
 # npm & pm2 install
 RUN npm --verbose install
