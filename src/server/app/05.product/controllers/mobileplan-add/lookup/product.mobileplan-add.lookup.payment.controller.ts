@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 휴대폰결제안심인증
- * @file product.mobileplan-add.lookup.payment.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.12.03
+ * @since 2018-12-03
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,6 +10,9 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddLookupPayment extends TwViewController {
   constructor() {
     super();
@@ -30,6 +32,16 @@ class ProductMobileplanAddLookupPayment extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

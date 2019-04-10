@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 결제안심통보
- * @file product.mobileplan-add.join.payment.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.21
+ * @since 2018-11-21
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -14,13 +13,27 @@ import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddJoinPayment extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005872'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

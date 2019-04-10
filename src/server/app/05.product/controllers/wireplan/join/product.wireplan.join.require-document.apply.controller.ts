@@ -1,8 +1,7 @@
 /**
  * 인터넷/전화/TV > 구비서류 제출 조회
- * @file product.wireplan.join.require-document.apply.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.08
+ * @since 2018-11-08
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -18,11 +17,15 @@ import FormatHelper from '../../../../../utils/format.helper';
 import DateHelper from '../../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ */
 class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   constructor() {
     super();
   }
 
+  /* NH/NA 상품코드를 TW상품코드로 변환 */
   private _convertProdIds = {
     NH00000103: 'TW00000009',
     NA00005055: 'TW20000012',
@@ -30,9 +33,9 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   };
 
   /**
-   * @param reqDocInfo
-   * @param isJoined
-   * @private
+   * 심사내역 조회 데이터 변환
+   * @param reqDocInfo - API 응답값
+   * @param isJoined - 가입여부
    */
   private _converRequireDocumentInfo(reqDocInfo: any, isJoined: boolean): any {
     return Object.assign(reqDocInfo, {
@@ -43,9 +46,9 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   }
 
   /**
-   * @param reqDocInfo
-   * @param isJoined
-   * @private
+   * 상태 텍스트 값 산출
+   * @param reqDocInfo - 심사내역 정보 데이터
+   * @param isJoined - 가입여부
    */
   private _getResultText(reqDocInfo: any, isJoined: boolean): any {
     if (FormatHelper.isEmpty(reqDocInfo.ciaInsptRslt) ||
@@ -97,9 +100,9 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   }
 
   /**
-   * @param rsnCdList
-   * @param nextSchdDt
-   * @private
+   * 미비사유 목록 변환
+   * @param rsnCdList - 미비사유
+   * @param nextSchdDt - 제출마감일
    */
   private _getRsnCdList(rsnCdList: any, nextSchdDt: any): any {
     const resultText: any = [];
@@ -121,6 +124,16 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
     return resultText;
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       reqParams: any = {},

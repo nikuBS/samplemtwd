@@ -1,26 +1,38 @@
 /**
  * 모바일 부가서비스 > T가족모아데이터
- * @file product.mobileplan-add.join.t-family.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.12
+ * @since 2019-02-12
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
+import { API_CMD } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
-import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddJoinTFamily extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00006031'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

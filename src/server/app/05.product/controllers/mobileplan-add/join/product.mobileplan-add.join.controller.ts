@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 가입 공통 (옵션입력 없음)
- * @file product.mobileplan-add.join.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.11
+ * @since 2018-09-11
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -13,11 +12,24 @@ import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddJoin extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

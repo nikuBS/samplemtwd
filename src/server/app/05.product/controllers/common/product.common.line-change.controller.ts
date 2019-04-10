@@ -19,13 +19,13 @@ class ProductCommonLineChange extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @param pageMode
-   * @param targetProdId
-   * @param allSvc
-   * @param currentSvcMgmtNum
-   * @param svcAttrCd
-   * @private
+   * 허용 회선 목록 산출
+   * @param prodTypCd - 상품 유형코드
+   * @param pageMode - 페이지 유형 (변경/선택)
+   * @param targetProdId - 이동할 상품코드
+   * @param allSvc - 전체 회선목록
+   * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
+   * @param svcAttrCd - 현재 회선 카테고리
    */
   private _getAllowedLineList(prodTypCd: any, pageMode: any, targetProdId: any, allSvc: any, currentSvcMgmtNum: any, svcAttrCd: any): any {
     const allowedSvcAttrInfo: any = this._getAllowedSvcAttrCd(prodTypCd),
@@ -53,8 +53,8 @@ class ProductCommonLineChange extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @private
+   * 상품 유형코드별 허용된 회선 카테고리 값 산출
+   * @param prodTypCd - 상품 유형코드
    */
   private _getAllowedSvcAttrCd(prodTypCd: any): any {
     if (['AB', 'C', 'H_P', 'H_A', 'F', 'G'].indexOf(prodTypCd) !== -1) {
@@ -92,8 +92,8 @@ class ProductCommonLineChange extends TwViewController {
   }
 
   /**
-   * @param svcInfo
-   * @private
+   * 현재 회선 정보 변환
+   * @param svcInfo - 현재 회선 사용자 세션
    */
   private _convertCurrentLine(svcInfo: any): any {
     return {
@@ -108,6 +108,16 @@ class ProductCommonLineChange extends TwViewController {
     };
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const targetProdId = req.query.t_prod_id || null,
       targetUrl = req.query.t_url || null,

@@ -1,8 +1,7 @@
 /**
  * 상품 해지 - T+B결합상품
- * @file benefit.terminate.tb-combination.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.23
+ * @since 2018-11-23
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -61,8 +60,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param combinationGroup
-   * @private
+   * 결합 정보 변환
+   * @param combinationGroup - 결합 정보
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
@@ -70,6 +69,16 @@ class BenefitTerminateTbCombination extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
