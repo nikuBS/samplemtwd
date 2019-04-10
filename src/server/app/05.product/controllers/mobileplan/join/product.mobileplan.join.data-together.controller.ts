@@ -27,7 +27,7 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
     NA00003558: 'MP_02_02_03_05_tip_01',
     NA00003958: 'MP_02_02_03_05_tip_02',
     NA00006547: 'TC000007',
-    NA00006548: 'TC000007'
+    NA00006548: 'TC000009'
   };
 
   /**
