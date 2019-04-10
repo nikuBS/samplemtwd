@@ -20,12 +20,14 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
     super();
   }
 
-  private readonly _allowedProdIdList = ['NA00003556', 'NA00003557', 'NA00003558', 'NA00003958'];
+  private readonly _allowedProdIdList = ['NA00003556', 'NA00003557', 'NA00003558', 'NA00003958', 'NA00006547', 'NA00006548'];
   private readonly _tipIds = {
     NA00003556: 'MP_02_02_03_05_tip_01',
     NA00003557: 'MP_02_02_03_05_tip_01',
     NA00003558: 'MP_02_02_03_05_tip_01',
-    NA00003958: 'MP_02_02_03_05_tip_02'
+    NA00003958: 'MP_02_02_03_05_tip_02',
+    NA00006547: 'TC000007',
+    NA00006548: 'TC000009'
   };
 
   /**
@@ -82,7 +84,8 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
         joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
           sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt
-        })
+        }),
+        is5g: ['NA00006547', 'NA00006548'].indexOf(prodId) >= 0
       }));
     });
   }
