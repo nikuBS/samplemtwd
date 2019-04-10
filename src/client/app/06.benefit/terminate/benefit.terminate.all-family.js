@@ -57,7 +57,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
       return Tw.ALERT_MSG_PRODUCT.ALERT_3_A62;
     }
 
-    if (this.$list.find('li').length > 2) {
+    if (this.$list.find('li').length > 1) {
       return Tw.ALERT_MSG_PRODUCT.ALERT_3_A63;
     }
 
