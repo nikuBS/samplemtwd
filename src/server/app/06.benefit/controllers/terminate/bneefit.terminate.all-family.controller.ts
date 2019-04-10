@@ -148,7 +148,7 @@ class BenefitTerminateAllFamily extends TwViewController {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
         termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === termInfo.result.combinationGroup.svcMgmtNum
       }));
     });
   }
