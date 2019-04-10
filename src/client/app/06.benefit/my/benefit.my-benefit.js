@@ -1,8 +1,16 @@
 /**
  * @file benefit.my-benefit.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 31.
- * 혜택 > 나의 할인/혜택 화면(BS_01)
+ * @author Hyeryoun Lee
+ * @since 2018-10-31
+ */
+/**
+ * @class
+ * @desc 혜택 > 나의 할인/혜택 화면(BS_01)을 위한 class
+ * @param {Object} rootEl 최상위 element Object
+ * @param {Object} okCash OK 캐쉬백 point
+ * @param {Object} t T멤버십 point
+ * @param {Object} rainbow Rainbow point
+ * @returns {void}
  */
 Tw.BenefitMyBenefit = function (rootEl, okCash, t, rainbow) {
   this._children = null;
@@ -23,13 +31,18 @@ Tw.BenefitMyBenefit = function (rootEl, okCash, t, rainbow) {
 
 Tw.BenefitMyBenefit.prototype = {
   /**
-   * Cache elements for binding events.
-   * @private
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
    */
   _cachedElement: function () {
     this.$payBtn = this.$container.find('#fe-pay');
   },
 
+  /**
+   * @function
+   * @desc Bind events to elements.
+   */
   _bindEvent: function () {
     this.$payBtn.on('click', $.proxy(this._onClickPay, this));
     // BETA 버젼에서 임시로 외부링크로 이동
@@ -37,9 +50,9 @@ Tw.BenefitMyBenefit.prototype = {
   },
 
   /**
-   * Event listener for the button click on #fe-pay(포인트 요금납부)
+   * @function
+   * @desc Event listener for the button click on #fe-pay(포인트 요금납부)
    * @param event
-   * @private
    */
   _onClickPay: function (event) {
     // 포인트 요금납부 actionsheet open
@@ -67,17 +80,17 @@ Tw.BenefitMyBenefit.prototype = {
   },
 
   /**
-   * 포인트 요금납부 actionsheet event 설정
+   * @function
+   * @desc 포인트 요금납부 actionsheet event 설정
    * @param $layer
-   * @private
    */
   _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._setEvent, this));
   },
   /**
-   * 포인트 요금납부 클릭 시 다음 주소 저장
+   * @function
+   * @desc 포인트 요금납부 클릭 시 다음 주소 저장
    * @param e
-   * @private
    */
   _setEvent: function (e) {
     this.$uri = $(e.currentTarget).attr('data-url');
@@ -85,16 +98,4 @@ Tw.BenefitMyBenefit.prototype = {
       this._historyService.replaceURL(this.$uri);
     }
   }
-
-  /**
-   * BETA 버젼에서 임시로 외부링크로 이동
-   * @param e
-   * @private
-   */
-  /*
-  _onClickMembership: function () {
-    // TODO Grand 버젼에서 삭제 필요
-    Tw.CommonHelper.openUrlExternal('http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp');
-  }
-  */
 };
