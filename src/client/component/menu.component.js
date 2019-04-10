@@ -707,11 +707,22 @@ Tw.MenuComponent.prototype = {
     }
 
     if ( !Tw.FormatHelper.isEmpty(info.voice[0]) ) {
+      var voiceRemained = info.voice[0];
+      if (info.voice.length > 1) {
+        voiceRemained = _.find(info.voice, function (item) {
+          return +item.remained > 0 || (Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1);
+        });
+
+        if (!voiceRemained) {
+          voiceRemained = info.voice[0];
+        }
+      }
+
       ret += '/';
-      if ( Tw.UNLIMIT_CODE.indexOf(info.voice[0].unlimit) !== -1 ) {
+      if ( Tw.UNLIMIT_CODE.indexOf(voiceRemained.unlimit) !== -1 ) {
         ret += Tw.COMMON_STRING.UNLIMIT;
       } else {
-        var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(info.voice[0].remained, 10));
+        var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(voiceRemained.remained, 10));
         var min = voiceObj.hours * 60 + voiceObj.min;
         if ( min === 0 && voiceObj.sec !== 0 ) {
           ret += voiceObj.sec + Tw.VOICE_UNIT.SEC;
