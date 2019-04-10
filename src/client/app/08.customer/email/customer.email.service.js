@@ -97,7 +97,7 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestCall: function ($target) {
-    var serviceCategory = this.$service_depth1.data('service-depth1');
+    var serviceCategory = this.$service_depth2.data('service-depth1');
     $target.prop('disabled', true);
     switch ( serviceCategory ) {
       case 'CELL':
