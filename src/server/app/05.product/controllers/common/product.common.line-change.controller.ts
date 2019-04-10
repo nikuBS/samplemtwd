@@ -1,8 +1,7 @@
 /**
  * 상품 가입시 회선 변경 Process
- * @file product.common.line-change.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.01.17
+ * @since 2019-01-17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,8 +9,10 @@ import { Request, Response, NextFunction } from 'express';
 import { MYT_JOIN_WIRE_SVCATTRCD, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ */
 class ProductCommonLineChange extends TwViewController {
   constructor() {
     super();

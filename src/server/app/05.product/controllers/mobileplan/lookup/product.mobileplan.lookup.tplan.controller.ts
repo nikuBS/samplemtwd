@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > Data 인피니티 혜택내역 조회
- * @file product.mobileplan.lookup.tplan.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.01
+ * @since 2018-10-01
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -17,11 +16,15 @@ import {
 } from '../../../../../types/string.type';
 import DateHelper from '../../../../../utils/date.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanLookupTplan extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 상품코드별 API 응답 값 내 목록 필드명 분기처리 */
   private readonly _prodIdList = {
     NA00006114: 'infiTravel',
     NA00006115: 'infiMovieList',
@@ -30,10 +33,10 @@ class ProductMobileplanLookupTplan extends TwViewController {
   };
 
   /**
-   * @param result
-   * @param printProdId
-   * @param tabId
-   * @private
+   * 혜택 목록 변환
+   * @param result - API 응답 값
+   * @param printProdId - 혜택 상품코드
+   * @param tabId - 탭 ID
    */
   private _parseBenefitList(result: any, printProdId: any, tabId?: any): any {
     let resultList: any = {};
@@ -94,8 +97,8 @@ class ProductMobileplanLookupTplan extends TwViewController {
   }
 
   /**
-   * @param list
-   * @private
+   * 여행/영화 목록 변환
+   * @param list - 목록 배열
    */
   private _convertTravelAndMovieList(list: any): any {
     const resultList: any = {};

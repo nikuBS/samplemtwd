@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > Data 인피니티 설정
- * @file product.mobileplan.setting.tplan.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.13
+ * @since 2018-11-13
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,11 +10,15 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingTplan extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005959'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

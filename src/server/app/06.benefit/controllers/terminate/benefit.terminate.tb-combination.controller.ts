@@ -15,16 +15,20 @@ import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ */
 class BenefitTerminateTbCombination extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근 허용 상품코드 */
   private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041', 'TW00000062', 'TW00000063'];
 
   /**
-   * @param termInfo
-   * @private
+   * 해지 정보확인 데이터 컨버팅
+   * @param termInfo - 해지 정보확인 API 응답값
    */
   private _convertTermInfo(termInfo: any): any {
     return Object.assign(termInfo, {
@@ -37,8 +41,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @private
+   * 무선 결합정보 변환
+   * @param wireLessInfo - 무선 결합정보
    */
   private _convertWirelessInfo(wireLessInfo: any): any {
     return Object.assign(wireLessInfo, {
@@ -47,8 +51,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param wireInfo
-   * @private
+   * 유선 결합정보 변환
+   * @param wireInfo - 유선 결합정보
    */
   private _convertWireInfo(wireInfo: any): any {
     return Object.assign(wireInfo, {

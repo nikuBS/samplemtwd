@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > Data 인피니티
- * @file product.mobileplan.join.tplan.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * @since 2018-11-14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,21 +10,23 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
-import ProductHelper from '../../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../../types/redis.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanJoinTplan extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005959'];
 
   /**
    * 요금제 비교하기 Redis 정보 호출
-   * @param svcInfoProdId
-   * @param prodId
-   * @private
+   * @param svcInfoProdId - 사용자 세션 상품코드 (현재 요금제)
+   * @param prodId - 페이지 진입한 상품코드 (변경할 요금제)
    */
   private _getMobilePlanCompareInfo(svcInfoProdId: any, prodId: any): Observable<any> {
     if (FormatHelper.isEmpty(svcInfoProdId)) {

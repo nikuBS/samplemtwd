@@ -1,8 +1,7 @@
 /**
- * MenuName: 모바일 요금제 > Band YT 요금제
- * @file product.mobileplan.setting.bandYT.controller.ts
+ * 모바일 요금제 > Band YT 요금제
  * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.11.20
+ * @since 2018-11-20
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,11 +10,15 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingBandYT extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005012', 'NA00005013', 'NA00005014', 'NA00005016', 'NA00005017'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
