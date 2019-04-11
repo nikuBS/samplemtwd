@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.contents.monthly.controller.ts
- * @author Lee kirim (kirim@sk.com)
- * @since 2018. 11. 29
+ * @file [콘텐츠결제-월별내역]
+ * @author Lee kirim
+ * @since 2018-11-29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,13 +10,26 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * @interface
+ * @desc API 호출시 파라미터 정의
+ */
 interface Query {
-  gubun: string;
-  requestCnt: number;
+  gubun: string; // 한도 조회 구분 Done: 한도조회 결과
+  requestCnt: number; // 재시도 횟수 Done의 경우 1, 2
 }
+
+/**
+ * @interface
+ * @desc API 결과값 형태 정의
+ */
 interface Result {
   [key: string]: string;
 }
+
+/**
+ * 콘텐츠결제 월별내역 구현
+ */
 class MyTFareBillContentsMonthly extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
@@ -38,11 +51,14 @@ class MyTFareBillContentsMonthly extends TwViewController {
 
       const data: Result | any = resp.result;
       if (data) {
-        data.useAmt = FormatHelper.addComma(data.tmthUseAmt);
-        data.limiitAmt = FormatHelper.addComma(data.useContentsLimitAmt);
-        data.remainAmt = FormatHelper.addComma(data.remainUseLimit);
-        data.payAmt = FormatHelper.addComma(data.tmthChrgAmt);
-        data.ableAmt = FormatHelper.addComma(data.tmthChrgPsblAmt);
+        /**
+         * 금액 number 값을 쉼표를 붙인 문자형태로 데이터 추가
+         */
+        data.useAmt = FormatHelper.addComma(data.tmthUseAmt); // 당월 사용금액 
+        data.limiitAmt = FormatHelper.addComma(data.useContentsLimitAmt); // 고객이 설정한 이용한도 조회 (월한도) 
+        data.remainAmt = FormatHelper.addComma(data.remainUseLimit); // 잔여한도
+        data.payAmt = FormatHelper.addComma(data.tmthChrgAmt); // 당월 선결제 금액 
+        data.ableAmt = FormatHelper.addComma(data.tmthChrgPsblAmt); // 선결제 가능금액 
       }
       
       res.render('billcontents/myt-fare.bill.contents.monthly.html', {
