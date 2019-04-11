@@ -94,9 +94,10 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         Tw.DateHelper.convDateFormat(this._prodBffInfo.startdtm),
         'days');
     }
-
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         if(requestType === 'remove'){
           var $target = $(targetEvt.currentTarget);
@@ -114,6 +115,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         return false;
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,targetEvt);
       return false;
     }, this));

@@ -260,8 +260,10 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE,null,null,null,$(targetEvt.currentTarget));
       return;
     }
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         this._showCompletePopup(this._prodBffInfo,targetEvt);
       }else{
@@ -269,6 +271,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       }
     }, this)).
     fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },

@@ -327,6 +327,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
    * @returns {void}
    */
   _doJoin : function(data,apiService,historyService,containerData,targetEvt){
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     var completePopupData = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
@@ -342,6 +343,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     //가입 API 요청
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         containerData._popupService.open({
             hbs: 'complete_product_roaming',
@@ -356,6 +358,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },

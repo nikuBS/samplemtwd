@@ -403,8 +403,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    */
   _doJoin : function(data,apiService,historyService,containerData,targetEvt){
     //가입 API 호출
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
           prodNm : data.prodNm,
@@ -428,6 +430,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       }
     }, this)).fail($.proxy(function (err) {
       //에러 노티 출력
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },
