@@ -1,6 +1,6 @@
 /**
  * @file common.login.customer-pwd.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Hakjoon Sim
  * @since 2018.12.04
  */
 

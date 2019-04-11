@@ -1,20 +1,35 @@
 /**
  * @file myt-fare.bill.sms.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.18
- * Description: 요금납부 시 입금전용계좌 SMS 신청
+ * @desc 요금납부 시 입금전용계좌 SMS 신청 page
  */
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import DateHelper from '../../../../utils/date.helper';
-import {MYT_FARE_PAYMENT_TITLE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, SVC_CD} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD, API_CODE, API_UNPAID_ERROR} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ * @desc 요금납부 시 입금전용계좌 SMS 신청
+ */
 class MyTFareBillSms extends TwViewController {
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getUnpaidList(), // 미납요금 대상자 조회
@@ -42,14 +57,22 @@ class MyTFareBillSms extends TwViewController {
     });
   }
 
-  /* 미납요금 대상자 조회 */
+  /**
+   * @function
+   * @desc 미납요금 대상자 조회
+   * @returns {Observable<any>}
+   */
   private getUnpaidList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0021, {}).map((res) => {
       return res;
     });
   }
 
-  /* 입금전용계좌 정보 조회 */
+  /**
+   * @function
+   * @desc 입금전용계좌 정보 조회
+   * @returns {Observable<any>}
+   */
   private getAccountList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0026, {}).map((res) => {
       let accountList = [];
@@ -62,7 +85,14 @@ class MyTFareBillSms extends TwViewController {
     });
   }
 
-  /* 데이터 정보 가공 */
+  /**
+   * @function
+   * @desc parsing data
+   * @param result
+   * @param svcInfo
+   * @param allSvc
+   * @returns {any}
+   */
   private parseData(result: any, svcInfo: any, allSvc: any): any {
     const list = result.settleUnPaidList; // 미납리스트
     if (!FormatHelper.isEmpty(list)) {
@@ -89,7 +119,12 @@ class MyTFareBillSms extends TwViewController {
     return list;
   }
 
-  /* 금액정보에서 앞자리 0 제거하는 method */
+  /**
+   * @function
+   * @desc 금액정보에서 앞자리 0 제거하는 method
+   * @param {string} input
+   * @returns {string}
+   */
   private removeZero(input: string): string {
     let isNotZero = false;
     for (let i = 0; i < input.length; i++) {
@@ -103,6 +138,12 @@ class MyTFareBillSms extends TwViewController {
     return input;
   }
 
+  /**
+   * @function
+   * @desc get svc info (session info)
+   * @param svcInfo
+   * @returns {any}
+   */
   private getSvcInfo(svcInfo: any): any {
     if (svcInfo) {
       svcInfo.svcNumber = svcInfo.svcAttrCd === 'M1' ? FormatHelper.conTelFormatWithDash(svcInfo.svcNum) :
@@ -111,6 +152,13 @@ class MyTFareBillSms extends TwViewController {
     return svcInfo;
   }
 
+  /**
+   * @function
+   * @desc get address
+   * @param svcMgmtNum
+   * @param allSvc
+   * @returns {any}
+   */
   private getAddr(svcMgmtNum: any, allSvc: any): any {
     const serviceArray = allSvc.s; // 인터넷 회선
     let addr = '';

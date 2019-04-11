@@ -1,23 +1,37 @@
 /**
  * @file myt-fare.bill.option.register.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.02
- * Description: 자동납부 신청 및 변경
+ * @desc 자동납부 신청 및 변경 page
  */
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * @class
+ * @desc 자동납부 신청 및 변경
+ */
 class MyTFareBillOptionRegister extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (BrowserHelper.isApp(req)) { // 앱일 경우에만 진입 가능
       this.getPaymentOption().subscribe((paymentOption) => {
@@ -44,14 +58,23 @@ class MyTFareBillOptionRegister extends TwViewController {
     }
   }
 
-  /* 납부방법 조회 */
+  /**
+   * @function
+   * @desc 납부방법 조회
+   * @returns {any}
+   */
   private getPaymentOption(): any {
     return this.apiService.request(API_CMD.BFF_07_0060, {}).map((res) => {
       return res;
     });
   }
 
-  /* 데이터 가공 */
+  /**
+   * @function
+   * @desc parsing data
+   * @param result
+   * @returns {any}
+   */
   private parseData(result): any {
     result.payCode = '1'; // default setting
     result.payDate = '11'; // default setting
@@ -79,7 +102,12 @@ class MyTFareBillOptionRegister extends TwViewController {
     return result;
   }
 
-  /* 납부 가능한 은행 리스트 조회 */
+  /**
+   * @function
+   * @desc 납부 가능한 은행 리스트 조회
+   * @param {any[]} bankArray
+   * @returns {any}
+   */
   private getBankList(bankArray: any[]): any {
     const bankList: any = [];
     if (!FormatHelper.isEmpty(bankArray)) {

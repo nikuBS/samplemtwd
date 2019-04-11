@@ -1,24 +1,37 @@
 /**
  * @file myt-fare.bill.small.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.04
- * Description: 소액결제 메인화면
+ * @desc 소액결제 메인화면
  */
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
-import {MYT_FARE_MICRO_NAME, MYT_FARE_PREPAY_AUTO_CHARGE_CODE} from '../../../../types/bff.type';
-import {PREPAY_ERR_MSG} from '../../../../types/string.type';
+import {MYT_FARE_MICRO_NAME} from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 소액결제 메인
+ */
 class MyTFareBillSmall extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getHistory(),
@@ -36,12 +49,21 @@ class MyTFareBillSmall extends TwViewController {
     });
   }
 
-  /* 소액결제 사용여부 및 비밀번호 서비스 사용여부 조회 */
+  /**
+   * @function
+   * @desc 소액결제 사용여부 및 비밀번호 서비스 사용여부 조회
+   * @returns {Observable<any>}
+   */
   private getHistory(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0079, {});
   }
 
-  /* getHistory 결과 가공 */
+  /**
+   * @function
+   * @desc parsing getHistory result
+   * @param historyInfo
+   * @returns {any}
+   */
   private getHistoryInfo(historyInfo: any): any {
     const usedValueList = ['0', '2', '6']; // 소액결제 제한 없음/사용 코드값
     const usedYn = {
@@ -63,12 +85,21 @@ class MyTFareBillSmall extends TwViewController {
     return usedYn;
   }
 
-  /* 비밀번호 상태 조회 */
+  /**
+   * @function
+   * @desc 비밀번호 상태 조회
+   * @returns {Observable<any>}
+   */
   private getPasswordStatus(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0085, {});
   }
 
-  /* getPasswordStatus 가공 */
+  /**
+   * @function
+   * @desc parsing getPasswordStatus result
+   * @param passwordStatus
+   * @returns {any}
+   */
   private getPasswordInfo(passwordStatus: any): any {
     if (passwordStatus.code === API_CODE.CODE_00) {
       const passwordResult = passwordStatus.result;
@@ -86,10 +117,24 @@ class MyTFareBillSmall extends TwViewController {
     return passwordStatus;
   }
 
+  /**
+   * @function
+   * @desc 현재월 조회
+   * @returns {any}
+   */
   private getCurrentMonth(): any {
-    return DateHelper.getCurrentMonth(); // 현재월 조회
+    return DateHelper.getCurrentMonth();
   }
 
+  /**
+   * @function
+   * @desc error render
+   * @param res
+   * @param resp
+   * @param svcInfo
+   * @param pageInfo
+   * @returns {any}
+   */
   private errorRender(res, resp, svcInfo, pageInfo): any {
     this.error.render(res, {
       code: resp.code,
