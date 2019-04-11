@@ -145,8 +145,8 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       return;
     }
 
-    if (!this._isOverPayReq || this._isSetOverPayReq) {
-      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
+    if (this._overpayRetryCnt > 2) {
+      this._confirmOptions = $.extend(this._confirmOptions, {isOverPayError: true});
       return this._procConfirm();
     }
 
@@ -201,6 +201,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
 
     this._confirmOptions = $.extend(this._confirmOptions, {
       isOverpayResult: overpayResults.isOverpayResult,
+      isOverPayError: !overpayResults.isOverpayResult && this._overpayRetryCnt > 2,
       overpay: overpayResults
     });
 
