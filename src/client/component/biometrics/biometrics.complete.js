@@ -4,8 +4,7 @@
  * @since 2018.11.30
  */
 
-Tw.BiometricsComplete = function (target) {
-  this._target = target;
+Tw.BiometricsComplete = function () {
   this._callback = null;
 
   this._popupService = Tw.Popup;
@@ -18,10 +17,7 @@ Tw.BiometricsComplete.prototype = {
 
     this._popupService.open({
       hbs: 'MA_03_01_02_01_04',
-      layer: true,
-      data: {
-        isFinger: this._target === Tw.FIDO_TYPE.FINGER
-      }
+      layer: true
     }, $.proxy(this._onOpenBioComplete, this), $.proxy(this._onCloseBioCert, this), 'complete');
   },
   _onOpenBioComplete: function ($popupContainer) {

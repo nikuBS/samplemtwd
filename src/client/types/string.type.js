@@ -133,6 +133,7 @@ Tw.POPUP_CONTENTS = {
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
   NO_WIFI: '3G/LTE망 사용 시 데이터 요금이 발생됩니다.',
   DONATION: '미환급금을 기부하시겠습니까?',
+  BIO_DEREGISTER: '생체인증 해지 후 다시 사용하시려면 생체정보를 재등록 하셔야 합니다.<br />생체인증을 해지하시겠습니까?',
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
   BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
   COUPON_RECEIVER_LIMIT:
@@ -1071,6 +1072,8 @@ Tw.SETTINGS_MENU = {
 };
 
 Tw.NTV_FIDO_REGISTER_TXT = {
+  FIDO_ON: '등록된 생체인증이 있습니다.',
+  FIDO_OFF: '등록된 생체인증이 없습니다.',
   FINGER_ON: '등록된 지문이 있습니다.',
   FINGER_OFF: '등록된 지문이 없습니다.',
   FACE_ON: 'Face ID가 등록되었습니다.',

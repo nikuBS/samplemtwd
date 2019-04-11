@@ -3,11 +3,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                {{#if data.isFinger}}
-                    <h1>지문 등록/재등록</h1>
-                {{else}}
-                    <h1>Face ID 등록/재등록</h1>
-                {{/if}}
+                <h1>생체인증 등록/재등록</h1>
             </div>
         </div>
     </div>
@@ -16,17 +12,16 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            {{#if data.isFinger}}
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <!-- .widget -->
                     <div class="widget">
                         <div class="widget-box step">
-                            <h3 class="step-ti"><em>STEP 03</em>지문등록</h3>
+                            <h3 class="step-ti"><em>STEP 03</em>생체정보 등록</h3>
                             <ul class="step-list">
                                 <li>1<span class="blind">약관동의</span></li>
                                 <li>2<span class="blind">본인확인</span></li>
-                                <li class="on">3<span class="blind">지문등록</span></li>
+                                <li class="on">3<span class="blind">생체정보 등록</span></li>
                             </ul>
                         </div>
                     </div>
@@ -41,7 +36,7 @@
                             <span class="ico fingerprint"></span>
                             <ul class="bt-slice">
                                 <li class="bt-white2">
-                                    <button>지문인증 등록</button>
+                                    <button>생체정보 등록</button>
                                 </li>
                             </ul>
                         </div>
@@ -49,47 +44,9 @@
                 </div>
                 <!--// .cont-box -->
                 <div class="box-btm-txt">
-                    <p class="tx type1 fe-info-ing">지문인식 창이 뜨면 지문센서에<br />손가락을 올려주세요.</p>
-                    <p class="tx type1 fe-info-click none">지문을 등록하시려면<br />상단의 지문인증 버튼을 눌러 주세요.</p>
+                    <p class="tx type1 fe-info-ing">생체인증 창이 뜨면<br />생체정보를 등록해 주세요.</p>
+                    <p class="tx type1 fe-info-click none">생체인증을 등록하시려면<br />상단의 생체인증 버튼을 눌러 주세요.</p>
                 </div>
-            {{else}}
-
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box step">
-                            <h3 class="step-ti"><em>STEP 03</em>Face ID 등록</h3>
-                            <ul class="step-list">
-                                <li>1<span class="blind">약관동의</span></li>
-                                <li>2<span class="blind">본인확인</span></li>
-                                <li class="on">3<span class="blind">Face ID 등록/재등록</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- //.widget -->
-                </div>
-                <!--// .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- .cont-box -->
-                <div id="fe-bt-register-face" class="cont-box noborder">
-                    <div class="box-certifi-register type01">
-                        <div class="register-area">
-                            <span class="ico faceid"></span>
-                            <ul class="bt-slice">
-                                <li class="bt-white2">
-                                    <button>Face ID 등록</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-                <div class="box-btm-txt">
-                    <p class="tx type1 fe-info-ing">얼굴인식 안내창이 뜨면<br />카메라에 얼굴을 비춰주세요.</p>
-                    <p class="tx type1 fe-info-click none">Face ID를 등록하시려면<br />상단의 얼굴 아이콘을 눌러 주세요.</p>
-                </div>
-            {{/if}}
         </div>
         <!-- .popup-closeBtn -->
         <button id="fe-cancel" class="prev-step">취소</button>
