@@ -191,7 +191,7 @@ Tw.CommonPostcodeLast.prototype = {
     return {
       postType: this._postType,
       bldCd: this.$mainAddress.attr('data-bld-cd'),
-      baseAddress: encodeURI(this.$mainAddress.attr('data-origin')),
+      baseAddress: encodeURI(this.$mainAddress.attr('data-origin') + ' ' + this.$number.text()),
       detailAddress: encodeURI($.trim(this.$detailAddress.val())),
       ldongCd: this.$mainAddress.attr('data-ldong-cd')
     };

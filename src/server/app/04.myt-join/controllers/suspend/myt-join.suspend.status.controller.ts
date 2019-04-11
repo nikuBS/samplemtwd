@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.status.controller.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 12.
+ * [나의 가입정보 - 장기/일시정지 현황] 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2018-11-12
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -12,7 +12,11 @@ import StringHelper from '../../../../utils/string.helper';
 import { MYT_SUSPEND_ERROR_MSG, MYT_SUSPEND_REASON, MYT_SUSPEND_STATE_EXCLUDE } from '../../../../types/string.type';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
-
+/**
+ * [나의 가입정보 - 장기/일시정지 현황]  API호출 및 렌더링
+ * @author Hyeryoun Lee
+ * @since 2018-11-12
+ */
 class MyTJoinSuspendStatus extends TwViewController {
   constructor() {
     super();
@@ -146,8 +150,7 @@ class MyTJoinSuspendStatus extends TwViewController {
   /**
    * 장기일시정지(군입대)자의 일시정지 해제 체크
    * @param suspendStatus
-   * @returns {boolean}
-   * @private
+   * @returns {boolean} 장기일시정지(군입대)자의 일시정지 해제 시 true
    */
   _militaryAC(suspendStatus: any): boolean {
     // 사용중(AC)이지만 armyDt 값으로 체크

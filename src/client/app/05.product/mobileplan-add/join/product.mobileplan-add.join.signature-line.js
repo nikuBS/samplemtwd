@@ -51,7 +51,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
 
     if (Tw.BrowserHelper.isIos()) {
       $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);

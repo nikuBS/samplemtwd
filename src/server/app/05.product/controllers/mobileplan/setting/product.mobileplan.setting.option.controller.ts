@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 사용량 변경 옵션 설정
- * @file product.mobileplan.setting.option.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.13
+ * @since 2018-11-13
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -12,17 +11,21 @@ import { PROD_TTAB_BASIC_DATA_PLUS } from '../../../../../types/bff.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingOption extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00005058', 'NA00005059', 'NA00005060', 'NA00005069', 'NA00005070', 'NA00005071'];
 
   /**
-   * @param prodId
-   * @param optionInfo
-   * @private
+   * 설정 정보 데이터 변환
+   * @param prodId - 상품코드
+   * @param optionInfo - API 응답값
    */
   private _convOptionInfo(prodId, optionInfo: any): any {
     return Object.assign(optionInfo, {
@@ -30,6 +33,16 @@ class ProductMobileplanSettingOption extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

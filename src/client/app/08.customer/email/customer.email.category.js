@@ -177,7 +177,7 @@ Tw.CustomerEmailCategory.prototype = {
       // initialize depth2 category
       this.$select_service_depth2.removeClass('tx-bold');
       this.$select_service_depth2.text(Tw.CUSTOMER_EMAIL.SELECT_QUESTION);
-      this.$select_service_depth2.data('service-depth2', null);
+      // this.$select_service_depth2.data('service-depth2', null);
       this.service.depth2 = '';
     }
 
@@ -193,6 +193,7 @@ Tw.CustomerEmailCategory.prototype = {
     var sDepth2Text = $(e.currentTarget).parents('li').find('.txt').text();    
     this.$select_service_depth2.addClass('tx-bold');
     this.$select_service_depth2.text(sDepth2Text);
+    this.$select_service_depth2.data('service-depth1', this.$select_service_depth1.data('service-depth1'));
     this.$select_service_depth2.data('service-depth2', sDepth2Value);
     this.service.depth2 = sDepth2Value;
 

@@ -1,23 +1,35 @@
 /**
  * 상품 해지 - 모바일 부가상품
- * @file product.mobileplan-add.terminate.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.13
+ * @since 2018-10-13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD } from '../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
-import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddTerminate extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

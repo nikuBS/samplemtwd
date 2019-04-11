@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 5GX 워치tab할인_모
- * @file product.mobileplan-add.join.5gx-watchtab.controller.ts
  * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * @since 2019-04-05
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -10,18 +9,34 @@ import {NextFunction, Request, Response} from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
 import {MOBILEPLAN_ADD_ERROR_MSG, PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import {API_CMD} from '../../../../../types/api-command.type';
-import {Observable} from 'rxjs/Observable';
-import {REDIS_KEY} from '../../../../../types/redis.type';
+import { API_CMD } from '../../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
+import { REDIS_KEY } from '../../../../../types/redis.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _prodIdList = ['NA00006484'];
+
+  /* 접근이 허용되는 모바일 요금제 상품코드 */
   private readonly _mobileplanIdList = ['NA00006404', 'NA00006405'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

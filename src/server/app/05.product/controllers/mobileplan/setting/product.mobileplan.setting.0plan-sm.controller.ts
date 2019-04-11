@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 0플랜 스몰/미디엄 설정
- * @file product.mobileplan.setting.0plan-sm.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.01.10
+ * @since 2019-01-10
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,13 +10,27 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSetting0planSm extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00006155', 'NA00006156'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

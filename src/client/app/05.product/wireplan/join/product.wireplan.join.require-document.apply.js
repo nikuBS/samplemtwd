@@ -44,7 +44,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
 
     this.$btnOpenHistoryDetail.on('click', $.proxy(this._openHistoryDetailPop, this));
     this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
-    this.$btnApply.on('click', $.proxy(this._procApply, this));
+    this.$btnApply.on('click', _.debounce($.proxy(this._procApply, this), 500));
   },
 
   _onChangeExplainFile: function(e) {

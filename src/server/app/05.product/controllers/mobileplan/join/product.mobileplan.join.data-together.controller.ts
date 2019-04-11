@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 데이터 함께쓰기
- * @file product.mobileplan.join.data-together.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * @since 2018-11-14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -15,24 +14,31 @@ import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
 import { REDIS_KEY } from '../../../../../types/redis.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanJoinDataTogether extends TwViewController {
   constructor() {
     super();
   }
 
-  private readonly _allowedProdIdList = ['NA00003556', 'NA00003557', 'NA00003558', 'NA00003958'];
+  /* 접근이 허용되는 상품코드 */
+  private readonly _allowedProdIdList = ['NA00003556', 'NA00003557', 'NA00003558', 'NA00003958', 'NA00006547', 'NA00006548'];
+
+  /* 상품별 툴팁 분기처리 */
   private readonly _tipIds = {
     NA00003556: 'MP_02_02_03_05_tip_01',
     NA00003557: 'MP_02_02_03_05_tip_01',
     NA00003558: 'MP_02_02_03_05_tip_01',
-    NA00003958: 'MP_02_02_03_05_tip_02'
+    NA00003958: 'MP_02_02_03_05_tip_02',
+    NA00006547: 'TC000007',
+    NA00006548: 'TC000009'
   };
 
   /**
    * 요금제 비교하기 Redis 정보 호출
-   * @param svcInfoProdId
-   * @param prodId
-   * @private
+   * @param svcInfoProdId - 사용자 세션 상품코드 (현재 요금제)
+   * @param prodId - 페이지 진입한 상품코드 (변경할 요금제)
    */
   private _getMobilePlanCompareInfo(svcInfoProdId: any, prodId: any): Observable<any> {
     if (FormatHelper.isEmpty(svcInfoProdId)) {
@@ -42,6 +48,16 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
     return this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
@@ -82,7 +98,8 @@ class ProductMobileplanJoinDataTogether extends TwViewController {
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
         joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
           sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' : prodRedisInfo.result.summary.sktProdBenfCtt
-        })
+        }),
+        is5g: ['NA00006547', 'NA00006548'].indexOf(prodId) >= 0
       }));
     });
   }

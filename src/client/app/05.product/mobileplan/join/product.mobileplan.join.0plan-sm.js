@@ -43,7 +43,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
   _bindEvent: function() {
     this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
-    this.$btnSetupOk.on('click', $.proxy(this._reqOverpay, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._reqOverpay, this), 500));
     this.$btnTimeSelect.on('click', $.proxy(this._openTimeSelectPop, this));
   },
 

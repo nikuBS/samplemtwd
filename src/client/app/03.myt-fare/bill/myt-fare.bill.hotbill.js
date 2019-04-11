@@ -1,8 +1,17 @@
 /**
  * @file myt-fare.bill.hotbill
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 9. 20.
+ * @author Hyeryoun Lee
+ * @since 2018-9-20
  */
+
+/**
+ * @class
+ * @desc [실시간 사용요금] 처리를 위한 class
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {Object} params - 회선 정보 등 서버에서 전달하는 값
+ * @returns {void}
+ */
+
 Tw.MyTFareHotBill = function (rootEl, params) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -18,8 +27,8 @@ Tw.MyTFareHotBill = function (rootEl, params) {
 
 Tw.MyTFareHotBill.prototype = {
   /**
-   * Initialize this page.
-   * @private
+   * @function
+   * @desc Initialize this page.
    */
   _init: function () {
     this._idxLastItem = 0;
@@ -40,8 +49,9 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Cache elements for binding events.
-   * @private
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
    */
   _cachedElement: function () {
     this.$amount = this.$container.find('#fe-total');
@@ -51,8 +61,8 @@ Tw.MyTFareHotBill.prototype = {
     this.$lineList = this.$container.find('#fe-line-info');
   },
   /**
-   * Bind events to elements.
-   * @private
+   * @function
+   * @desc Bind events to elements.
    */
   _bindEvent: function () {
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
@@ -68,7 +78,8 @@ Tw.MyTFareHotBill.prototype = {
       .fail($.proxy(this._failSvcInfo, this));
   },
   /**
-   * Success callback for _getSvcInfo
+   * @function
+   * @desc Success callback for _getSvcInfo
    * @param resp
    * @private
    */
@@ -78,7 +89,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Error callback for _getSvcInfo
+   * @function
+   * @desc Error callback for _getSvcInfo
    * @param resp
    * @private
    */
@@ -86,7 +98,8 @@ Tw.MyTFareHotBill.prototype = {
     Tw.Error(resp.code, resp.msg).pop();
   },
   /**
-   * Success callback for _sendBillRequest.
+   * @function
+   * @desc Success callback for _sendBillRequest.
    * 실시간 이용요금 생성 요청 후 자료를 다시 조회한다.(대기시간 필요: 전월 5초, 당월 2.5초)
    * @param childSvcMgmtNum
    * @param resp
@@ -112,7 +125,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Request to create the hot-bill data.
+   * @function
+   * @desc Request to create the hot-bill data.
    * @param child 자녀 svcInfo(Service Information): 자녀 실시간 요금 조회 시
    * @private
    */
@@ -134,7 +148,8 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   /**
-   * Success callback for _getBillResponse
+   * @function
+   * @desc Success callback for _getBillResponse
    * @param child
    * @param resp
    * @private
@@ -179,7 +194,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * 요금 정보를 아코디언 메뉴에 표시한다.
+   * @function
+   * @desc 요금 정보를 아코디언 메뉴에 표시한다.
    * @param group the bill data grouped by categories.
    * @param child
    * @param wrapper the element which to append the accordion menu.
@@ -197,7 +213,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Error callback for API requests(_onErrorReceivedBillData, _onReceivedBillData)
+   * @function
+   * @desc Error callback for API requests(_onErrorReceivedBillData, _onReceivedBillData)
    * @param resp
    * @private
    */
@@ -213,14 +230,16 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Go to the previous page on Error.
+   * @function
+   * @desc Go to the previous page on Error.
    * @private
    */
   _goBackOnError: function () {
     this._historyService.goBack();
   },
   /**
-   * Render other(child) lines.
+   * @function
+   * @desc Render other(child) lines.
    * @private
    */
   _renderLines: function () {
@@ -244,7 +263,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Request to create the hot-bill data for other(child) lines.
+   * @function
+   * @desc Request to create the hot-bill data for other(child) lines.
    * @param line
    * @private
    */
@@ -261,7 +281,8 @@ Tw.MyTFareHotBill.prototype = {
       .fail($.proxy(this._onErrorOtherLine, this));
   },
   /**
-   * Success callback for _sendBillRequestOtherLine
+   * @function
+   * @desc Success callback for _sendBillRequestOtherLine
    * @param line
    * @param resp
    * @private
@@ -282,7 +303,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Success callback for _getBillResponseOtherLine
+   * @function
+   * @desc Success callback for _getBillResponseOtherLine
    * @param line
    * @param resp
    * @private
@@ -303,7 +325,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Error callback for _getBillResponseOtherLine
+   * @function
+   * @desc Error callback for _getBillResponseOtherLine
    * @param line
    * @param resp
    * @private
@@ -319,7 +342,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Event listener for the button click on [data-id="fe-other-line"](다른회선 요금).
+   * @function
+   * @desc Event listener for the button click on [data-id="fe-other-line"](다른회선 요금).
    * 다른 회선: 선택회선 변경
    * 자녀회선: 자녀 실시간 이용요금 페이지로 이동
    * @param e
@@ -335,7 +359,8 @@ Tw.MyTFareHotBill.prototype = {
     }
   },
   /**
-   * Event listener for the button click on $preBill(전월요금보기)
+   * @function
+   * @desc Event listener for the button click on $preBill(전월요금보기)
    * @private
    */
   _onClickPreBill: function () {
@@ -343,7 +368,8 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   /**
-   * 자녀회선 클릭 시 자녀 실시간 이용요금으로 이동.
+   * @function
+   * @desc 자녀회선 클릭 시 자녀 실시간 이용요금으로 이동.
    * @param target
    * @private
    */
@@ -351,7 +377,8 @@ Tw.MyTFareHotBill.prototype = {
     this._historyService.goLoad('/myt-fare/bill/hotbill/child?child=' + target.svcMgmtNum);
   },
   /**
-   * 다른 회선 클릭 시 회선변경 확인.
+   * @function
+   * @desc 다른 회선 클릭 시 회선변경 확인.
    * @param target the selected line
    * @private
    */
@@ -360,7 +387,8 @@ Tw.MyTFareHotBill.prototype = {
       $.proxy(this._requestSwitchLine, this, target), null, null, null, $(event.currentTarget) );
   },
   /**
-   * Request to switch the current line.
+   * @function
+   * @desc Request to switch the current line.
    * @param target
    * @private
    */
@@ -371,7 +399,8 @@ Tw.MyTFareHotBill.prototype = {
     lineComponent.changeLine(target.svcMgmtNum, target.svcNum, $.proxy(this._onChangeSessionSuccess, this));
   },
   /**
-   * Success callback for _requestSwitchLine.
+   * @function
+   * @desc Success callback for _requestSwitchLine.
    * @private
    */
   _onChangeSessionSuccess: function () {
@@ -383,13 +412,15 @@ Tw.MyTFareHotBill.prototype = {
 };
 
 /**
- * 서버 요금 데이터 중 제외 항목 정의.
+ * @function
+ * @desc 서버 요금 데이터 중 제외 항목 정의.
  * @type {string[]}
  */
 Tw.MyTFareHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
 
 /**
- * Bill 정보 생성 없이 조회 시 애러코드
+ * @function
+ * @desc Bill 정보 생성 없이 조회 시 애러코드
  * @type {{ERROR: {NO_BILL_REQUEST_EXIST: string}}}
  */
 Tw.MyTFareHotBill.CODE = {
@@ -400,7 +431,8 @@ Tw.MyTFareHotBill.CODE = {
   }
 };
 /**
- * Create a grouped data by the bill category.
+ * @function
+ * @desc Create a grouped data by the bill category.
  * @param data the array of bill data
  * @param fieldInfo
  * @return a grouped bill data

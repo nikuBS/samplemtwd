@@ -1,8 +1,7 @@
 /**
  * 상품 해지 - T+B결합상품
- * @file benefit.terminate.tb-combination.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.23
+ * @since 2018-11-23
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -15,16 +14,20 @@ import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ */
 class BenefitTerminateTbCombination extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근 허용 상품코드 */
   private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041', 'TW00000062', 'TW00000063'];
 
   /**
-   * @param termInfo
-   * @private
+   * 해지 정보확인 데이터 컨버팅
+   * @param termInfo - 해지 정보확인 API 응답값
    */
   private _convertTermInfo(termInfo: any): any {
     return Object.assign(termInfo, {
@@ -37,8 +40,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param wireLessInfo
-   * @private
+   * 무선 결합정보 변환
+   * @param wireLessInfo - 무선 결합정보
    */
   private _convertWirelessInfo(wireLessInfo: any): any {
     return Object.assign(wireLessInfo, {
@@ -47,8 +50,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param wireInfo
-   * @private
+   * 유선 결합정보 변환
+   * @param wireInfo - 유선 결합정보
    */
   private _convertWireInfo(wireInfo: any): any {
     return Object.assign(wireInfo, {
@@ -57,8 +60,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   }
 
   /**
-   * @param combinationGroup
-   * @private
+   * 결합 정보 변환
+   * @param combinationGroup - 결합 정보
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
@@ -66,6 +69,16 @@ class BenefitTerminateTbCombination extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

@@ -61,8 +61,8 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
   _bindEvent: function() {
     this.$btnFamilyType.on('click', $.proxy(this._openFamilyTypePop, this));
-    this.$btnExplainApply.on('click', $.proxy(this._doCallback, this));
-    this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
+    this.$btnExplainApply.on('click', _.debounce($.proxy(this._doCallback, this), 500));
+    this.$btnFamilyAdd.on('click', _.debounce($.proxy(this._addFamily, this), 500));
 
     this.$familyAddWrap.on('keyup input', 'input[type=text],input[type=tel]', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));

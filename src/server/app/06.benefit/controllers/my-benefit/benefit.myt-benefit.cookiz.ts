@@ -1,8 +1,7 @@
 /**
- * @file benefit.myt-benefit.cookiz.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 5.
- * 혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트
+ * [혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트] 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2018-11-5
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,6 +9,11 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { MY_BENEFIT } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * [혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트] API호출 및 렌더링
+ * @author Hyeryoun Lee
+ * @since 2018-11-5
+ */
 class BenefitCookiz extends TwViewController {
 
   constructor() {

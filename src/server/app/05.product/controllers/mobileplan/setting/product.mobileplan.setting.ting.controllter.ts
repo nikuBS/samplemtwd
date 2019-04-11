@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 데이터 상한금액 설정
- * @file product.mobileplan.setting.ting.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * @since 2018-11-14
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -11,17 +10,21 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingTing extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00003160', 'NA00003161', 'NA00002591', 'NA00002592', 'NA00002593', 'NA00002594', 'NA00003011',
     'NA00003048', 'NA00003146', 'NA00003405', 'NA00003406', 'NA00003407', 'NA00003408'];
 
   /**
-   * @param tingInfo
-   * @private
+   * 설정 정보 데이터 변환
+   * @param tingInfo - API 응답 값
    */
   private _convertTingInfo(tingInfo: any): any {
     return Object.assign(tingInfo, {
@@ -29,6 +32,16 @@ class ProductMobileplanSettingTing extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
         renderCommonInfo = {

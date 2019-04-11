@@ -1,8 +1,7 @@
 /**
- * @file benefit.myt-benefit.controller.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 30.
- * 혜택 > 나의 혜택/할인
+ *[혜택 > 나의 혜택/할인] 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2018-10-30
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -11,6 +10,11 @@ import { Observable } from 'rxjs/Observable';
 import { MY_BENEFIT } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * [혜택 > 나의 혜택/할인] API호출 및 렌더링
+ * @author Hyeryoun Lee
+ * @since 2018-10-30
+ */
 class BenefitMyBenefit extends TwViewController {
   private _total: number = 0;
 
@@ -20,7 +24,8 @@ class BenefitMyBenefit extends TwViewController {
 
   /**
    * 서버 데이터 처리.
-   * @param point
+   * 포인트를 합산하고 해당 포인트 comma 포맷 변경
+   * @param point 문자열
    * @private
    */
   _dataPreprocess(point: any): any {
@@ -28,16 +33,6 @@ class BenefitMyBenefit extends TwViewController {
     return FormatHelper.addComma(point);
   }
 
-  /**
-   * Render this page.
-   * @param req
-   * @param res
-   * @param next
-   * @param svcInfo
-   * @param allSvc
-   * @param childInfo
-   * @param pageInfo
-   */
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0001, {}), // membership: MBR0001, MBR0002

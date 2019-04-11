@@ -136,7 +136,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     var $popupLayer = $(popupObj);
     this._$allAgreeElement = this._$popupContainer.find('.all.checkbox>input'); //약관 전체동의 요소 찾기
     this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input'); //약관 동의 개별 요소
-    $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));  //가입 완료
+    $popupLayer.on('click','#do_join',_.debounce($.proxy(this._doJoin,this),500));  //가입 완료
     $popupLayer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
     $popupLayer.on('click','.tip-view-btn.bff',$.proxy(this._showBffToolTip,this));
     if(this._popupData.agreeCnt<=0){  //약관 없을 경우 가입완료 버튼 활성화

@@ -25,7 +25,7 @@ Tw.BenefitSelectContract.prototype = {
 
   _bindEvent: function () {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
-    this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
+    this.$okBtn.on('click', _.debounce($.proxy(this._onOkBtnClicked, this), 500));
   },
 
   _initialize: function () {

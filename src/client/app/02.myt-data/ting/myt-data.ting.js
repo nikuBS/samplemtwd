@@ -31,7 +31,7 @@ Tw.MyTDataTing.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
+    this.$btn_send_gift.click(_.debounce($.proxy(this._getReceiveUserInfo, this), 500));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('input change', $.proxy(this._onInputChangeTingGiftNumber, this));
     this.$wrap_amount_select_list.on('click', $.proxy(this._checkValidateSendingButton, this));

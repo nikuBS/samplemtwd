@@ -1,8 +1,13 @@
 /**
  * @file benefit.myt-benefit.cookiz
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 5.
- * 혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트(BS_01_01_06)
+ * @author Hyeryoun Lee
+ * @since 2018-11-5
+ */
+/**
+ * @class
+ * @desc 혜택 > 나의 혜택/할인 > 쿠키즈 팅포인트(BS_01_01_06)을 위한 class
+ * @param {Object} rootEl 최상위 element Object
+ * @returns {void}
  */
 Tw.BenefitMyBenefitCookiz = function (rootEl) {
   this.$container = rootEl;
@@ -22,8 +27,9 @@ Tw.BenefitMyBenefitCookiz = function (rootEl) {
 
 Tw.BenefitMyBenefitCookiz.prototype = {
   /**
-   * Cache elements for binding events.
-   * @private
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
    */
   _cachedElement: function () {
     this.$list = this.$container.find('#fe-list');
@@ -31,16 +37,16 @@ Tw.BenefitMyBenefitCookiz.prototype = {
     this.$noItem = this.$container.find('#fe-no-item');
   },
   /**
-   * Bind events to elements.
-   * @private
+   * @function
+   * @desc Bind events to elements.
    */
   _bindEvent: function () {
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
   },
 
   /**
-   * Request the cookiz point list.
-   * @private
+   * @function
+   * @desc Request the cookiz point list.
    */
   _requestPoints: function () {
     this._apiService
@@ -50,16 +56,16 @@ Tw.BenefitMyBenefitCookiz.prototype = {
   },
 
   /**
-   * Event listener for the button click on #fe-bt-more(더보기)
-   * @private
+   * @function
+   * @desc Event listener for the button click on #fe-bt-more(더보기)
    */
   _onClickMore: function () {
     this._requestPoints();
   },
   /**
-   * Success callback for _requestPoints.
+   * @function
+   * @desc Success callback for _requestPoints.
    * @param resp
-   * @private
    */
   _onReceivedData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -88,9 +94,9 @@ Tw.BenefitMyBenefitCookiz.prototype = {
     }
   },
   /**
-   * Render the point list.
+   * @function
+   * @desc Render the point list.
    * @param items
-   * @private
    */
   _renderItems: function (items) {
     var source = $('#fe-list-template').html();
@@ -110,9 +116,9 @@ Tw.BenefitMyBenefitCookiz.prototype = {
     }
   },
   /**
-   * Error callback for _requestPoints.
+   * @function
+   * @desc Error callback for _requestPoints.
    * @param resp
-   * @private
    */
   _onError: function (resp) {
     Tw.Error(resp.code, resp.msg).page();

@@ -53,7 +53,7 @@ Tw.ProductRoamingTerminate.prototype = {
     this._$allAgreeElement = this.$rootContainer.find('.all.checkbox>input');
     this._$individualAgreeElement = this.$rootContainer.find('.individual.checkbox>input');
     this.$rootContainer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
-    this.$rootContainer.on('click','#do_confirm',$.proxy(this._doJoin,this));
+    this.$rootContainer.on('click','#do_confirm',_.debounce($.proxy(this._doJoin,this),500));
     this.$rootContainer.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._doCancel,this));
     this.$rootContainer.on('click','.tip-view-btn',$.proxy(this._showBffToolTip,this));
     if(this._prodBffInfo.agreeCnt<=0){

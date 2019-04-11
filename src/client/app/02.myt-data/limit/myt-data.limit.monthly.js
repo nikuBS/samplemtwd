@@ -30,7 +30,7 @@ Tw.MyTDataLimitMonthly.prototype = {
 
   _bindEvent: function () {
     this.$input_block_monthly.on('change', $.proxy(this._onToggleBlockMonthly, this));
-    this.$btn_monthly_recharge.on('click', $.proxy(this._requestLimitRechargeMonthly, this));
+    this.$btn_monthly_recharge.click(_.debounce($.proxy(this._requestLimitRechargeMonthly, this), 500));
     this.$btn_cancel_monthly_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
   },
 

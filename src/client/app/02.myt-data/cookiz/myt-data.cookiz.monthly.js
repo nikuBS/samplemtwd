@@ -27,7 +27,7 @@ Tw.MyTDataCookizMonthly.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btn_recharge_monthly.on('click', $.proxy(this._rechargeMonthly, this));
+    this.$btn_recharge_monthly.click(_.debounce($.proxy(this._rechargeMonthly, this), 500));
     this.$btn_cancel_auto_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
     this.$wrap_monthly_select_list.on('click', $.proxy(this._onSelectMonthlyAmount, this));
   },

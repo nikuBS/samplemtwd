@@ -76,7 +76,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.on('click', $.proxy(this._clearCheckInput, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnCheckJoin.on('click', $.proxy(this._procCheckJoinReq, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
 
     this.$container.on('click', '.fe-btn_delete', $.proxy(this._onDeleteLineItem, this));
     this.$container.on('click', '.fe-line_check', $.proxy(this._onLineCheck, this));

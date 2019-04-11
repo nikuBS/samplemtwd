@@ -1,7 +1,14 @@
 /**
  * @file myt-join.suspend.temporary
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 18.
+ * @author Hyeryoun Lee
+ * @since 2018-10-18
+ */
+/**
+ * @class
+ * @desc [장기/일시정지] 처리를 위한 class
+ * @param {Object} tabEl - tab content wrapper
+ * @param {Object} params - 서버에서 전달하는 값
+ * @returns {void}
  */
 Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this.$container = tabEl;
@@ -19,6 +26,11 @@ Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
 };
 
 Tw.MyTJoinSuspendTemporary.prototype = {
+  /**
+   * @function
+   * @desc Cache elements for binding events.
+   * @returns {void}
+   */
   _cachedElement: function () {
     this.$optionSuspendAll = this.$container.find('[data-role="fe-suspend-all"]');
     this.$optionReceiveCall = this.$container.find('[data-role="fe-accept-call-beforehand"]');
@@ -33,7 +45,10 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$inputTel = this.$container.find('[data-id="fe-input-tel"]');
     this.$btSuspend = this.$container.find('[data-id="fe-bt-suspend"]');
   },
-
+  /**
+   * @function
+   * @desc Bind events to elements.
+   */
   _bindEvent: function () {
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$radioResetNotification.on('change', $.proxy(this._onClickResetNotification, this));
@@ -44,12 +59,19 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$inputEmail.on('change', $.proxy(this._checkSuspendable, this, true));
     this.$inputTel.on('change', $.proxy(this._checkSuspendable, this, true));
   },
-
+  /**
+   * @function
+   * @desc Event listener for the button click on .fe-btn_native_contact(주소록)
+   */
   _onClickBtnAddr: function (e) {
     e.stopPropagation();
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
-
+  /**
+   * @function
+   * @desc Success call back for Tw.NTV_CMD.GET_CONTACT
+   * @param response
+   */
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
@@ -61,9 +83,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
   },
 
   /**
-   * 일시정지 종료일 알림(이메일, 문자) 설정 option event handler
+   * @function
+   * @desc 일시정지 종료일 알림(이메일, 문자) 설정 option event handler
    * @param e
-   * @private
    */
   _onClickResetNotification: function (e) {
     if ( e.currentTarget.getAttribute('data-noti') === 'true' ) {
@@ -84,6 +106,12 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     }
 
   },
+  /**
+   * @function
+   * @desc Event listener for the button click on [data-noti-method="email"](일시정지 유형 변경)
+   * @param e
+   * @private
+   */
   _onNotiMethodChanged: function (e) {
     if ( e.currentTarget.checked ) {
       $(e.currentTarget).parent().find('.comp-list-layout input,button').removeAttr('disabled');
@@ -92,11 +120,10 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     }
     this._checkSuspendable(true);
   },
-
   /**
-   * 일시정지 신청하기 버튼 활성화 여부 체크
-   * @param notice
-   * @private
+   * @function
+   * @desc 일시정지 신청하기 버튼 활성화 여부 체크
+   * @param notice 버튼 활성화 체크 여부
    */
   _checkSuspendable: function (notice) {
     if ( !notice ) {
@@ -113,7 +140,12 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       this.$btSuspend.removeAttr('disabled');
     }
   },
-
+  /**
+   * @function
+   * @desc Event listener for the button click on [data-id="fe-bt-suspend"](신청하기)
+   * @param e
+   * @private
+   */
   _onClickBtnSuspend: function () {
     // validation check
     // 일시정지 종료일 안내 타입별 입력값 확인
@@ -146,7 +178,10 @@ Tw.MyTJoinSuspendTemporary.prototype = {
 
     this._requestSuspend();
   },
-
+  /**
+   * @function
+   * @desc 장기일시정지 요청
+   */
   _requestSuspend: function () {
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -169,7 +204,11 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       .done($.proxy(this._onSuccessRequestSuspend, this, params))
       .fail($.proxy(this._onError, this));
   },
-
+  /**
+   * @function
+   * @desc Success call back for _requestSuspend
+   * @param res
+   */
   _onSuccessRequestSuspend: function (params, res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -184,12 +223,20 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       Tw.Error(res.code, res.msg).pop();
     }
   },
-
+  /**
+   * @function
+   * @desc Error call back
+   * @param res
+   */
   _onError: function (res) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(res.status, res.statusText).pop();
   },
-
+  /**
+   * @function
+   * @desc 사용자 입력 내용 여부 체크
+   * @returns {boolean}
+   */
   hasChanged: function () {
     var changed =
       !this.$optionSuspendAll.attr('checked') ||

@@ -1,8 +1,8 @@
 /**
  * 어드민 전용 상품원장 미리보기
- * @file product.common.callplan.preview.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.12.05
+ * @since 2018-12-05
+ * @see product.common.callplan.controller.ts 에 주석이 있으므로 별도 추가 주석을 하지 않음
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -21,6 +21,9 @@ import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
 
+/**
+ * @class
+ */
 class ProductCommonCallplanPreview extends TwViewController {
   constructor() {
     super();

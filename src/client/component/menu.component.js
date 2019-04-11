@@ -1,3 +1,13 @@
+/**
+ * @file 전체메뉴 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-12-02
+ */
+
+/**
+ * @constructor
+ * @param  {Boolean} notAboutMenu - 전체메뉴가 아닌 다른 목적으로 객체 생성 시
+ */
 Tw.MenuComponent = function (notAboutMenu) {
   if ( notAboutMenu ) {
     return;
@@ -48,14 +58,14 @@ Tw.MenuComponent = function (notAboutMenu) {
   }, this));
 };
 
-Tw.MenuComponent.prototype = {
+Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목들 hard coding
   TOP_PADDING_MENU: {
     M001778: 'M001778',  // 이용안내
     M000537: 'M000537',  // T Apps
     M000812: 'M000812'   // Direct shop
   },
 
-  REAL_TIME_ITEM: {
+  REAL_TIME_ITEM: { // 실시간 정보가 필요한 메뉴들 정의 (요금, 실시간 데애터 잔여량, 멤버쉽 정보 등)
     M000194: 'data',
     M000233: 'bill',
     M000301: 'svcCnt',
@@ -137,10 +147,14 @@ Tw.MenuComponent.prototype = {
     M000119: 'CMMA_A11_B3-79'
   },
 
+  /**
+   * @function
+   * @desc back 버튼 등으로 인한 hash값 변경시 메뉴 닫도록...
+   */
   _init: function () {
     $(window).on('hashchange', $.proxy(this._checkAndClose, this));
     this._nativeService.setGNB(this);
-    var template = $('#fe-tpl-menu');
+    var template = $('#fe-tpl-menu'); // 각각의 메뉴 추가를 위한 handlebar template
     this._menuTpl = Handlebars.compile(template.html());
 
     // Cache elements
@@ -172,8 +186,14 @@ Tw.MenuComponent.prototype = {
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
   },
+
+  /**
+   * @function
+   * @desc 읽지 않은 t알림 있을 경우 아이콘에 빨간 점 추가
+   */
   _checkNewTNoti: function () { // 읽지 않은 신규 noti 있는지 확인하고 있을 경우 아이콘에 빨간 점 추가
     var showNotiIfNeeded = function (latestSeq, self) {
+      // native에 가장 최근 읽은 t알림의 seq넘버를 조회하여 가장 최근 받은 t알림 seq넘버와 비교하여 빨간점 추가 여부 결정
       self._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ },
         $.proxy(function (res) {
           if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -192,6 +212,7 @@ Tw.MenuComponent.prototype = {
       );
     };
 
+    // native에 가장 최근 받은 t알림의 seq 넘버를 조회
     this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ },
       $.proxy(function (res) {
         if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -201,12 +222,27 @@ Tw.MenuComponent.prototype = {
     );
   },
 
+  /**
+   * @function
+   * @desc login 클릭 시 처리
+   */
   _onClickLogin: function () {
     this._tidLanding.goLogin(location.pathname + location.search);
   },
+
+  /**
+   * @function
+   * @desc logout 클릭 시 처리
+   */
   _onClickLogout: function () {
     this._tidLanding.goLogout();
   },
+
+  /**
+   * @function
+   * @desc 회원가입 관련 처리
+   * @param  {Object} e - click event
+   */
   _onSignUp: function (e) {
     if (Tw.BrowserHelper.isApp()) {
       this._tidLanding.goSignup(location.pathname + location.search);
@@ -215,6 +251,11 @@ Tw.MenuComponent.prototype = {
       this._goOrReplace(url);
     }
   },
+
+  /**
+   * @function
+   * @desc 헤더영역에 햄버거 메뉴 클릭시 동작 정의
+   */
   _onGnbBtnClicked: function () {
     if (this.$container.find('.fe-menu-section').hasClass('none')) {
       this.$container.find('.fe-menu-section').removeClass('none');
@@ -224,9 +265,9 @@ Tw.MenuComponent.prototype = {
     this.$container.attr('aria-hidden', 'false');
 
     this._isOpened = true;
-    if ( !this._isMenuSet ) {
+    if ( !this._isMenuSet ) { // redis에서 메뉴구성정보 조회는 해당 url에서 최초 한번만 조회함
       // retrieve redis
-      this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
+      this._apiService.request(Tw.NODE_CMD.GET_MENU, {}) // redis에서 메뉴트리 구성 조회
         .then($.proxy(function (res) {
           this._menuRedisErrorCount = 0;
           if ( res.code === Tw.API_CODE.CODE_00 ) {
@@ -261,6 +302,12 @@ Tw.MenuComponent.prototype = {
 
     this.$container.find('#fe-close').focus();  // 웹 접근성, 포커스 메뉴 div로 이동
   },
+
+  /**
+   * @function
+   * @desc t알림 클릭시 알림 리스트 화면 노출, 클릭한 경우 t알림 모두 확인한 것으로 간주하고 빨간점 제거
+   * @param  {} e
+   */
   _onTNoti: function (e) { // T-noti 클릭하여 진입 시 아이콘에 빨간 점 제거
     if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
@@ -272,6 +319,12 @@ Tw.MenuComponent.prototype = {
 
     $('.h-menu').removeClass('on');
   },
+
+  /**
+   * @function
+   * @desc 사용자 정보 영역 클릭 시 동작 정의, 등록된 회선이 2개 이상인 경우에만 회선관리 actionsheet 노출
+   * @param  {} $event
+   */
   _onUserInfo: function ($event) {
     var $target = $($event.currentTarget);
     if ( this._isMultiLine ) {
@@ -282,10 +335,20 @@ Tw.MenuComponent.prototype = {
       this._lineComponent.onClickLine(this._svcMgmtNum, $target);
     }
   },
+
+  /**
+   * @function
+   * @desc 등록된 회선이 없는 경우 회선등록 화면으로 이동
+   */
   _onRegisterLine: function () {
     this._historyService.replaceURL('/common/member/line/register?type=02');
     return false;
   },
+
+  /**
+   * @function
+   * @desc 메뉴를 닫을 경우 url 에 남아 있는 hash 처리
+   */
   _onClose: function () {
     this._isOpened = false;
     this.$container.attr('aria-hidden', 'true');
@@ -294,6 +357,11 @@ Tw.MenuComponent.prototype = {
     }
     $('.h-menu a').focus();
   },
+
+  /**
+   * @function
+   * @desc hash값 변경이 감지될 경우 menu close
+   */
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
       if (this.$container.find('.fe-menu-section').hasClass('none') && this._menuSearchComponent) {
@@ -305,13 +373,30 @@ Tw.MenuComponent.prototype = {
       this.$container.addClass('user-type');
     }
   },
+
+  /**
+   * @function
+   * @desc 간편 로그인 처리
+   */
   _onSimpleLogin: function () {
     this._tidLanding.goSLogin();
   },
+
+  /**
+   * @function
+   * @desc 외부링크 클릭시 외브 브라우저로 이동
+   * @param  {Object} e - click event
+   */
   _onOutLink: function (e) {
     var url = e.currentTarget.value;
     Tw.CommonHelper.openUrlExternal(url);
   },
+
+  /**
+   * @function
+   * @desc 각가의 메뉴 클릭시 해당 화면으로 이동
+   * @param  {Object} e - click event
+   */
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
     if ( url.indexOf('http') !== -1 ) {
@@ -320,6 +405,11 @@ Tw.MenuComponent.prototype = {
       this._goOrReplace(url);
     }
   },
+
+  /**
+   * @function
+   * @desc 무료문자 클릭시 native 로 무료문자 호출, 회원정보, 선불폰 사용여부에 따른 alert 처리
+   */
   _onFreeSMS: function () {
     if (this._memberType === 1) {
       this._popupService.openAlert(
@@ -345,8 +435,14 @@ Tw.MenuComponent.prototype = {
     Tw.CommonHelper.openFreeSms();
     return false;
   },
+
+  /**
+   * @function
+   * @desc 미환급급 조회 선택시 해당 화면으로 이동
+   * @param  {Object} e - click event
+   */
   _onRefund: function (e) {
-    if ( !this._isLogin ) { // If it's not logged in
+    if ( !this._isLogin ) { // 비로그인 상태일 경우 인증 먼저 필요함
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function (res) {
@@ -359,6 +455,13 @@ Tw.MenuComponent.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 가공된 정보를 바탕으로 실제 메뉴를 그려 주는 부분, 로그인/회원정보 등을 바탕으로 보여줄 부분과 숨길 부분들을 처리
+   * @param  {Boolean} isLogin - 현재 로그인 여부
+   * @param  {Boolean} userInfo - 현재 사용자 정보
+   * @param  {Object} menu - 계층으로 표현된 메뉴트리 정보
+   */
   _modifyMenu: function (isLogin, userInfo, menu) {
     var isApp = Tw.BrowserHelper.isApp();
 
@@ -439,7 +542,7 @@ Tw.MenuComponent.prototype = {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
-          case 'svcCnt':
+          case 'svcCnt':  // 현재 회선의 요금제 정보 출력
             if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum) || Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
               $(elem).remove();
             } else {
@@ -447,7 +550,7 @@ Tw.MenuComponent.prototype = {
               $(elem).closest('.bt-depth1').addClass('txt-long');
             }
             break;
-          case 'bill':
+          case 'bill': // 이용요금 출력
             if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
               $(elem).remove();
               break;
@@ -476,7 +579,7 @@ Tw.MenuComponent.prototype = {
               this._showBillInfo(elem, storeBill.data, false);
             }
             break;
-          case 'data':
+          case 'data': // 데이터/음성 잔여량 표시
             if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
               $(elem).remove();
               break;
@@ -498,7 +601,7 @@ Tw.MenuComponent.prototype = {
                 $(elem).remove();
               });
             break;
-          case 'membership':
+          case 'membership': // 멤버쉽 정보 출력
             if (Tw.FormatHelper.isEmpty(userInfo.svcMgmtNum)) {
               $(elem).remove();
               break;
@@ -552,6 +655,13 @@ Tw.MenuComponent.prototype = {
     }, this));
   },
 
+  /**
+   * @function
+   * @desc 이용요금 표시
+   * @param  {Obejct} elem - 이용요금 표기할 elem
+   * @param  {Object} resp - BFF 조회 후 받은 response
+   * @param  {Boolean} needToStore - true일 경우 해당 정보 local storage 에 cache
+   */
   _showBillInfo: function(elem, resp, needToStore) {
     var info = resp.result;
     var total = info.amt;
@@ -574,7 +684,14 @@ Tw.MenuComponent.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 메뉴는 계층적으로 표현되어야 하나 redis에서 들어오는 정보가 flat한 array로 들어와 이를 계층정보로 변환하기 위한 함수
+   * @param  {Array} menuInfo - redis에서 조회된 표기할 메뉴 정보
+   * @param  {Object} userInfo - 현재 사용자의 정보
+   */
   tideUpMenuInfo: function (menuInfo, userInfo) {
+    // expsSeq에 따라 한번 정렬해줌
     var sorted = [];
     sorted = _.chain(menuInfo)
       .filter(function (item) {
@@ -590,6 +707,7 @@ Tw.MenuComponent.prototype = {
         return parseInt(item.expsSeq, 10);
       }).value();
 
+    // array 형태를 json 객체 형태로 변환
     var category = [];
     category = _.reduce(sorted, function (memo, item) {
       item.children = [];
@@ -597,6 +715,7 @@ Tw.MenuComponent.prototype = {
       return memo;
     }, {});
 
+    // depth가 최상위인 항목만 남기고 그 아래에 각각의 children들을 push
     var len = sorted.length;
     for ( var i = 0; i < len; i += 1 ) {
       if ( sorted[i].frontMenuDpth !== '1' ) {
@@ -611,6 +730,7 @@ Tw.MenuComponent.prototype = {
       }
     }
 
+    // handle bar 에서 control이 용이하도록 각종 정보들 추가
     var loginType = Tw.FormatHelper.isEmpty(userInfo) ? 'N' : userInfo.loginType;
     category = _.chain(category)
       .filter($.proxy(function (item) {
@@ -678,6 +798,11 @@ Tw.MenuComponent.prototype = {
     return category;
   },
 
+  /**
+   * @function
+   * @desc 데이터/음성 잔여량을 format대로 가공하여 return ex) 33GB/130분
+   * @param  {Object} info - BFF로 부터 받은 response
+   */
   _parseUsage: function (info) {
     if ( info.gnrlData.length === 0 ) {
       return undefined;
@@ -707,11 +832,22 @@ Tw.MenuComponent.prototype = {
     }
 
     if ( !Tw.FormatHelper.isEmpty(info.voice[0]) ) {
+      var voiceRemained = info.voice[0];
+      if (info.voice.length > 1) {
+        voiceRemained = _.find(info.voice, function (item) {
+          return +item.remained > 0 || (Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1);
+        });
+
+        if (!voiceRemained) {
+          voiceRemained = info.voice[0];
+        }
+      }
+
       ret += '/';
-      if ( Tw.UNLIMIT_CODE.indexOf(info.voice[0].unlimit) !== -1 ) {
+      if ( Tw.UNLIMIT_CODE.indexOf(voiceRemained.unlimit) !== -1 ) {
         ret += Tw.COMMON_STRING.UNLIMIT;
       } else {
-        var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(info.voice[0].remained, 10));
+        var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(voiceRemained.remained, 10));
         var min = voiceObj.hours * 60 + voiceObj.min;
         if ( min === 0 && voiceObj.sec !== 0 ) {
           ret += voiceObj.sec + Tw.VOICE_UNIT.SEC;
@@ -723,6 +859,12 @@ Tw.MenuComponent.prototype = {
 
     return ret;
   },
+
+  /**
+   * @function
+   * @desc menu에서 다른 화면으로 이동시 replace url이 기본
+   * @param  {String} url - 이동할 url
+   */
   _goOrReplace: function (url) {  // History가 1인 경우 replaceURL 하지 말고 goLoad
     if (history && history.length === 1) {
       this._historyService.goLoad(url);
@@ -731,14 +873,27 @@ Tw.MenuComponent.prototype = {
     }
   },
 
+
+  /**
+   * @function
+   * @desc 현재 메뉴 open 여부를 return
+   */
   isOpened: function () {
     return this._isOpened;
   },
+
+  /**
+   * @function
+   * @desc close menu
+   */
   close: function () {
     this.$closeBtn.click();
   },
 
-  // 검색창 포커스 인/아웃 처리
+  /**
+   * @function
+   * @desc 검색창 영역 포커스 관련 처리
+   */
   _searchFocus: function () {
     this.$container.find(':focus').blur();
     this.$container.find('.fe-menu-section').addClass('none');
@@ -756,6 +911,12 @@ Tw.MenuComponent.prototype = {
 
     // this._menuSearchComponent.focus();
   },
+
+  /**
+   * @function
+   * @desc 웹 접근성 관련 처리로 하위메뉴가 열린 경우 관련된 aria-* 속성들 처리
+   * @param  {Object} e - click event
+   */
   _onDepthOpened: function (e) {  // 웹접근성 aria-pressed 적용
     var $btn = $(e.currentTarget);
     var pressed = $btn.attr('aria-pressed');
@@ -765,9 +926,21 @@ Tw.MenuComponent.prototype = {
       $btn.attr('aria-pressed', true);
     }
   },
+
+  /**
+   * @function
+   * @desc url 이동 처리
+   * @param  {Object} e - click event
+   */
   _onClickUrlButton: function(e) {
     location.href = e.currentTarget.dataset.url;
   },
+
+  /**
+   * @function
+   * @desc iOS 에서 전화번호 더블클릭시 문제 완화시키기 위한 처리
+   * @param  {Object} e - click event
+   */
   _onTelClicked: function (e) { // iOS double click 문제 해결하기 위함
     var href = e.currentTarget.href;
     if (href.indexOf('tel:') === 0) {
