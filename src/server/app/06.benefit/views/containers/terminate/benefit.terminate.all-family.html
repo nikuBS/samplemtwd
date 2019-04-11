@@ -34,7 +34,7 @@
                             <ul>
                                 <li>
                                     <span class="title">신청일</span>
-                                    <span class="tx-cont"><%= termInfo.combinationGroup.combStaDt %></span>
+                                    <span class="tx-cont"><%= termInfo.combinationWirelessMemberList[0].auditDtm %></span>
                                 </li>
                                 <li>
                                     <span class="title">결합회선</span>
@@ -90,7 +90,7 @@
                                                         <dl>
                                                             <dt>관계</dt>
                                                             <dd><%= termInfo.combinationWirelessMemberList[i].relClNm %><% if (termInfo.combinationWirelessMemberList[i].fam.me) { %>(내번호)<% } %>
-                                                                <% if (isRepSvc) { %>
+                                                                <% if (termInfo.combinationWirelessMemberList[i].isRepSvc) { %>
                                                                 <br /><button class="bt-link-tx underline red fe-btn_terminate" data-leader="<%= termInfo.combinationWirelessMemberList[i].isFamilyLeaderYn %>">해지</button>
                                                                 <% } %>
                                                             </dd>

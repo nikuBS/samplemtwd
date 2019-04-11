@@ -1,14 +1,32 @@
-import {DATA_UNIT, PREMTERM_MSG} from '../types/string.type';
-import {PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT} from '../types/bff.type';
+/**
+ * 상품 Helper
+ * @author Ji Hun Yang (jihun202@sk.com)
+ * @since 2018-11-06
+ */
+
+import { DATA_UNIT, PREMTERM_MSG } from '../types/string.type';
+import { PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT } from '../types/bff.type';
 import FormatHelper from './format.helper';
 import EnvHelper from './env.helper';
 
+/**
+ * @class
+ */
 class ProductHelper {
+  /**
+   * 약관 데이터 변환
+   * @param stipulation - 약관 데이터
+   * @param isInstallAgreement - 지원금 차액 정산금 동의
+   */
   static convStipulation(stipulation: any, isInstallAgreement = false): any {
     if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
 
+    /**
+     * 약관 노출 가능 개수 산출
+     * @param yNarray - 약관 동의 YN 배열
+     */
     function _getStipulationCnt(yNarray) {
       let count = 0;
 
@@ -21,6 +39,11 @@ class ProductHelper {
       return count;
     }
 
+    /**
+     * 약관 상세내용 HTML제거
+     * @param isAgree - 사용여부
+     * @param htmlContext - 약관 상세내용
+     */
     function _getAgreementSummary(isAgree, htmlContext) {
       if (!isAgree) {
         return '';
@@ -29,6 +52,12 @@ class ProductHelper {
       return FormatHelper.stripTags(htmlContext);
     }
 
+    /**
+     * 약관 사용가능 여부
+     * @param agreeYn - 약관 사용 여부
+     * @param title - 제목
+     * @param htmlCtt - 내용
+     */
     function _isAgree(agreeYn: any, title: any, htmlCtt: any): boolean {
       return agreeYn === 'Y' && !FormatHelper.isEmpty(title) && !FormatHelper.isEmpty(htmlCtt);
     }
@@ -52,21 +81,30 @@ class ProductHelper {
     }
 
     return Object.assign(stipulation, {
-      isScrbStplAgree: isScrbStplAgree,
-      isPsnlInfoCnsgAgree: isPsnlInfoCnsgAgree,
-      isPsnlInfoOfrAgree: isPsnlInfoOfrAgree,
-      isAdInfoOfrAgree: isAdInfoOfrAgree,
-      isTermStplAgree: isTermStplAgree,
-      isAllAgree: existsCount > 1,
+      isScrbStplAgree: isScrbStplAgree, // 가입약관동의
+      isPsnlInfoCnsgAgree: isPsnlInfoCnsgAgree, // 개인정보위탁동의
+      isPsnlInfoOfrAgree: isPsnlInfoOfrAgree, // 개인정보제공동의
+      isAdInfoOfrAgree: isAdInfoOfrAgree, // 광고정보제공동의
+      isTermStplAgree: isTermStplAgree, // 해지약관동의
+      isAllAgree: existsCount > 1,  // 모두동의 노출 여부 (약관 2개이상)
       scrbStplAgreeCttSummary: _getAgreementSummary(isScrbStplAgree, stipulation.scrbStplAgreeHtmlCtt),
       psnlInfoCnsgCttSummary: _getAgreementSummary(isPsnlInfoCnsgAgree, stipulation.psnlInfoCnsgHtmlCtt),
       psnlInfoOfrCttSummary: _getAgreementSummary(isPsnlInfoOfrAgree, stipulation.psnlInfoOfrHtmlCtt),
       adInfoOfrCttSummary: _getAgreementSummary(isAdInfoOfrAgree, stipulation.adInfoOfrHtmlCtt),
       termStplAgreeCttSummary: _getAgreementSummary(isTermStplAgree, stipulation.termStplAgreeHtmlCtt),
-      existsCount: existsCount
+      existsCount: existsCount  // 노출가능 약관 개수
     });
   }
 
+  /**
+   * 상품 명세 데이터 변환
+   * @param basFeeInfo - 가격 (Optional)
+   * @param basOfrDataQtyCtt - 데이터 (Optional)
+   * @param basOfrVcallTmsCtt - 음성 (Optional)
+   * @param basOfrCharCntCtt - 문자 (Optional)
+   * @param basDataUnit - 데이터 단위
+   * @param isVcallFormat - 음성 단위 사용여부
+   */
   static convProductSpecifications(
     basFeeInfo?: any,
     basOfrDataQtyCtt?: any,
@@ -75,6 +113,10 @@ class ProductHelper {
     basDataUnit = DATA_UNIT.MB,
     isVcallFormat = true
   ): any {
+    /**
+     * 데이터 검증
+     * @param value - 인자 값
+     */
     const isValid = value => {
       return !(FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
     };
@@ -87,6 +129,10 @@ class ProductHelper {
     };
   }
 
+  /**
+   * 가격 변환
+   * @param basFeeInfo - 가격 값
+   */
   static convProductBasfeeInfo(basFeeInfo): any {
     const isNaNbasFeeInfo = isNaN(Number(basFeeInfo));
 
@@ -96,6 +142,11 @@ class ProductHelper {
     };
   }
 
+  /**
+   * 데이터 값 변환
+   * @param basOfrDataQtyCtt - 데이터 값
+   * @param dataUnit - 데이터 단위
+   */
   static convProductBasOfrDataQtyCtt(basOfrDataQtyCtt, dataUnit = DATA_UNIT.MB): any {
     const isNaNbasOfrDataQtyCtt = isNaN(Number(basOfrDataQtyCtt));
 
@@ -105,6 +156,11 @@ class ProductHelper {
     };
   }
 
+  /**
+   * 음성 값 변환
+   * @param basOfrVcallTmsCtt - 음성 값
+   * @param isVcallFormat - 음성 단위 사용 여부
+   */
   static convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt, isVcallFormat = true): any {
     const isNaNbasOfrVcallTmsCtt = isNaN(Number(basOfrVcallTmsCtt));
     let replacedResult: any = null;
@@ -131,6 +187,10 @@ class ProductHelper {
     };
   }
 
+  /**
+   * 문자 값 변환
+   * @param basOfrCharCntCtt - 문자 값
+   */
   static convProductBasOfrCharCntCtt(basOfrCharCntCtt): any {
     const isNaNbasOfrCharCntCtt = isNaN(Number(basOfrCharCntCtt));
     let replacedResult: any = null;
@@ -158,6 +218,10 @@ class ProductHelper {
     };
   }
 
+  /**
+   * 요금제 가입/해지 정보 변환
+   * @param _joinTermInfo - 가입/해지 정보확인 API 응답 값
+   */
   static convPlansJoinTermInfo(_joinTermInfo): any {
     const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo)),
       convInstallAgreement = ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement);
@@ -169,6 +233,10 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 요금제 가입/해지 기본정보 변환
+   * @param preInfo - 가입/해지 기본정보
+   */
   static convPlanPreInfo(preInfo): any {
     return Object.assign(preInfo, {
       frProdInfo: Object.assign(
@@ -194,6 +262,10 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 지원금 차액 정산금 동의 변환
+   * @param installmentAgreement - 지원금 차액 정산금 동의 데이터
+   */
   static convInstallmentAgreement(installmentAgreement): any {
     const isNumberPenAmt = !isNaN(Number(installmentAgreement.penAmt)),
       isNumberFrDcAmt = !isNaN(Number(installmentAgreement.frDcAmt)),
@@ -202,20 +274,24 @@ class ProductHelper {
       isPremTerm = installmentAgreement.premTermYn === 'Y';
 
     return Object.assign(installmentAgreement, {
-      isInstallAgreement: installmentAgreement.gapDcAmt > 0,
+      isInstallAgreement: installmentAgreement.gapDcAmt > 0,  // 지원금 차액 정산금 동의 노출 여부
       isNumberPenAmt: isNumberPenAmt,
-      penAmt: isNumberPenAmt ? FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,
+      penAmt: isNumberPenAmt ? FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,  // 위약금 (실지원금액)
       isNumberFrDcAmt: isNumberFrDcAmt,
-      frDcAmt: isNumberFrDcAmt ? FormatHelper.addComma(installmentAgreement.frDcAmt) + UNIT['110'] : installmentAgreement.frDcAmt,
+      frDcAmt: isNumberFrDcAmt ? FormatHelper.addComma(installmentAgreement.frDcAmt) + UNIT['110'] : installmentAgreement.frDcAmt,  // 변경전 지원금액
       isNumberToDcAmt: isNumberToDcAmt,
-      toDcAmt: isNumberToDcAmt ? FormatHelper.addComma(installmentAgreement.toDcAmt) + UNIT['110'] : installmentAgreement.toDcAmt,
+      toDcAmt: isNumberToDcAmt ? FormatHelper.addComma(installmentAgreement.toDcAmt) + UNIT['110'] : installmentAgreement.toDcAmt,  // 변경후 지원금액
       isNumberGapDcAmt: isNumberGapDcAmt,
-      gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,
-      isPremTerm: isPremTerm,
-      premTermMsg: isPremTerm ? ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null
+      gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,  // 지원금 차액
+      isPremTerm: isPremTerm, // 프리미엄패스 해지여부
+      premTermMsg: isPremTerm ? ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null // 프리미엄패스 해지시 안내문구
     });
   }
 
+  /**
+   * 프리미엄패스 해지시 안내문구 산출 (약정사용일수에 따라 다름)
+   * @param agrmtUseCnt - 약정사용일수
+   */
   static getPremTermMsg(agrmtUseCnt: any): any {
     if (agrmtUseCnt < 181) {
       return PREMTERM_MSG.LESS_180;
@@ -224,6 +300,10 @@ class ProductHelper {
     }
   }
 
+  /**
+   * 부가서비스 가입/해지 정보확인 변환
+   * @param _joinTermInfo - 가입/해지 정보확인 값
+   */
   static convAdditionsJoinTermInfo(_joinTermInfo): any {
     const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
 
@@ -233,6 +313,10 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 부가서비스 가입/해지 기본 정보 변환
+   * @param preInfo - 기본 정보
+   */
   static convAdditionsPreInfo(preInfo): any {
     const isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
 
@@ -246,6 +330,10 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 자동 가입/해지 목록 그룹화
+   * @param autoList - 자동 가입/해지 목록
+   */
   static convAutoJoinTermList(autoList): any {
     const autoListConvertResult: any = {};
     if (FormatHelper.isEmpty(autoList)) {
@@ -266,6 +354,11 @@ class ProductHelper {
     return Object.keys(autoListConvertResult).map(key => autoListConvertResult[key]);
   }
 
+  /**
+   * 유선 부가서비스 가입/해지 정보 변환
+   * @param _joinTermInfo - 가입해지 정보
+   * @param isJoin - 가입 여부
+   */
   static convWireplanJoinTermInfo(_joinTermInfo, isJoin): any {
     const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
 
@@ -275,6 +368,11 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 유선 부가서비스 가입/해지 기본 정보 변환
+   * @param preInfo - 기본 정보
+   * @param isJoin - 가입 여부
+   */
   static convWireplanPreInfo(preInfo, isJoin): any {
     const isNumberBasFeeInfo = !isNaN(Number(preInfo.reqProdInfo.basFeeInfo));
 
@@ -286,6 +384,10 @@ class ProductHelper {
     });
   }
 
+  /**
+   * 리소스 앞 CDN url 추가
+   * @param url - 주소 값
+   */
   static getImageUrlWithCdn(url: string): string {
     const CDN = EnvHelper.getEnvironment('CDN');
     if (url.includes('http')) {
