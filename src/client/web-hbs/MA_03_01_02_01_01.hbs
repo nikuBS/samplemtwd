@@ -4,11 +4,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                {{#if data.isFinger}}
-                <h1>지문 등록/재등록</h1>
-                {{else}}
-                <h1>Face ID 등록/재등록</h1>
-                {{/if}}
+                <h1>생체인증 등록/재등록</h1>
             </div>
         </div>
     </div>
@@ -25,12 +21,7 @@
                         <ul class="step-list">
                             <li class="on">1<span class="blind">약관동의</span></li>
                             <li>2<span class="blind">본인확인</span></li>
-                            {{#if data.isFinger}}
-                            <li>3<span class="blind">지문등록</span></li>
-                            {{else}}
-                            <li>3<span class="blind">Face ID 등록</span></li>
-                            {{/if}}
-
+                            <li>3<span class="blind">생체정보 등록</span></li>
                         </ul>
                     </div>
                 </div>
