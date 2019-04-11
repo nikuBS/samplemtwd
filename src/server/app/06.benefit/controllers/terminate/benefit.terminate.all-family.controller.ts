@@ -85,6 +85,8 @@ class BenefitTerminateAllFamily extends TwViewController {
     const familyType: any = this._getFamilyType(wireLessInfo, currentSvcMgmtNum);
 
     return Object.assign(wireLessInfo, {
+      isRepSvc: currentSvcMgmtNum === wireLessInfo.svcMgmtNum,
+      auditDtm: DateHelper.getShortDateWithFormat(wireLessInfo.auditDtm, 'YYYY.M.D.'),
       svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum),
       isFamilyLeaderYn: familyType.leader ? 'Y' : 'N',
       fam: familyType
