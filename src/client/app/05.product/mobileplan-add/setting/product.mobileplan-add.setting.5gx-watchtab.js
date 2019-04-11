@@ -4,7 +4,7 @@
  * @since 2019.04.11
  */
 
-Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId) {
+Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId, mobileplanId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -14,9 +14,11 @@ Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId,
   this._prodId = prodId;
   this._displayId = displayId;
   this._svcProdGrpId = svcProdGrpId;
+  this._maxLine = mobileplanId === 'NA00006405' ? 2 : 1;
 
   this._cachedElement();
   this._bindEvent();
+  this._showAndHideAddButton();
 };
 
 Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
@@ -28,6 +30,7 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     this.$lineList = this.$container.find('.fe-line_list');
     this.$lineWrap = this.$container.find('.fe-line_wrap');
     this.$inputNumber = this.$container.find('.fe-num_input');
+    this.$divInput = this.$container.find('.fe-div_input');
   },
 
   _bindEvent: function () {
@@ -181,5 +184,13 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
       serviceNumber2: number.substr(3, 4),
       serviceNumber3: number.substr(7, 4)
     };
+  },
+
+  _showAndHideAddButton: function () {
+    if (this._maxLine === this.$lineList.find('li').length) {
+      this.$divInput.hide();
+    } else {
+      this.$divInput.show();
+    }
   }
 };
