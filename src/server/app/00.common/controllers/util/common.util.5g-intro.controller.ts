@@ -1,7 +1,7 @@
 /**
- * @file common.util.5g-intro.controller.ts
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * 5g 소개페이지
+ * @author anklebreaker
+ * @since 2019-04-05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,6 +13,7 @@ class CommonUtil5gIntro extends TwViewController {
     super();
   }
 
+  /* 접근이 허용되는 세컨뎁스 pathname */
   private readonly _allowed2ndDepth = ['safe-life', 'amazing-life', 'enjoy-life', '5gx-plan'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
@@ -32,6 +33,11 @@ class CommonUtil5gIntro extends TwViewController {
   }
 
 
+  /**
+   * 허용된 page 인지 체크
+   * @param page 세컨뎁스 pathname
+   * @return true|false
+   */
   _isAllow(page) {
     return this._allowed2ndDepth.indexOf(page) >= 0;
   }
