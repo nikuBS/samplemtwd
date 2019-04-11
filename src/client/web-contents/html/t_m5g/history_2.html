@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">T 5G 시간 이용내역</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<div class="og-mydata-search">
+						<div class="widget">
+							<div class="widget-box radio">
+								<ul class="select-list" role="radiogroup">
+									<li class="radiobox og-btn-radio checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-1" checked /><!-- 체크상태일 경우 checked="checked" -->
+										<span id="aria-comp-radio1-1" class="btn-round2 btn-style3">3일</span>
+									</li>
+									<li class="radiobox og-btn-radio" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-2" />
+										<span id="aria-comp-radio1-2" class="btn-round2 btn-style3">1주일</span>
+									</li>
+									<li class="radiobox og-btn-radio" role="radio" aria-checked="false">
+										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-3" />
+										<span id="aria-comp-radio1-3" class="btn-round2 btn-style3">1개월</span>
+									</li>
+									<li class="radiobox og-btn-radio" role="radio" aria-checked="false">
+										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-4" />
+										<span id="aria-comp-radio1-4" class="btn-round2 btn-style3">기간선택</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- 기간선택 클릭시 조건입력영역(날짜선택) 노출 -->
+						<div class="og-calWrap" style="display: none;"><!-- 기간선택 클릭시 style="display:block;" -->
+							<div class="inputbox date-selcet">
+								<span class="date-type"><input type="date" value="2019-01-21" min="" max="" title="시작일 선택"/></span>
+								<span class="bar">~</span>
+								<span class="date-type"><input type="date" value="2019-05-21" min="" max="" title="종료일 선택"/></span>
+							</div>
+							<button type="button" class="btn-round3 btn-style4">조회</button>
+						</div>
+						<!-- //기간선택 클릭시 조건입력영역(날짜선택) 노출 -->
+					</div>
+					<p class="og-mydata-search-txt">2019.01.21.~ 01.30.</p>
+				</div>
+				<!-- //.cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box og-my-wrap">
+					<div class="og-mydata-result og-nodata"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
+						<p>총 이용시간 <span class="og-time"><span class="">0</span>분</span></p>
+						<p>총 차감 데이터 <span class="og-data"><span class="">0GB</span></span></p>
+					</div>
+
+					<!-- 조회기간에 내역이 없을 경우 -->
+					<div class="result-none">T 5G 시간 이용내역이 없습니다.</div>
+					<!-- //조회기간에 내역이 없을 경우 -->
+
+				</div>
+				<!-- //.cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            var $radio = $('input[name=inpSrchRad]'),
+                $content = $('.og-timeline');
+
+            $radio.on('change', function () {
+                $('.og-calWrap').toggle($radio.index($(this)) === 3);
+            });
+
+            $content.on('click', '.og-item > a.og-item-head', function (e) {
+                e.preventDefault();
+                var $target = $(this).parent();
+
+                $(this).attr('title', $target.hasClass('on') ? '상세내용 열기' : '상세내용 닫기');
+                $(this).parent().toggleClass('on');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">나의 데이터/통화</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps-hoz">
+                    <ul class="date-graph-list">
+						<li>
+							<!-- 2019.02.10 링크 영역 확대 -->
+							<a class="r-btn" href="" aria-labelledby="aria-comp-bt2">
+								<div class="left">
+									<!-- .donut-chart.small -->
+									<div class="donut-chart small">
+										<div class="donut-chart-area">
+											<!-- loop -->
+											<div class="c100 p80"><!-- .p+(0~100) // -->
+												<div class="green"><!-- red, yellow, green, blue, comet // -->
+													<div class="slice">
+														<div class="bar"></div>
+														<div class="fill"></div>
+													</div>
+												</div>
+											</div>
+											<!-- // loop -->
+										</div>
+									</div>
+									<!-- // .donut-chart.small -->
+								</div>
+								<!--접근성 수정-->
+								<div class="cont">
+									<span class="txt1" id="aria-comp-bt2">SK텔레콤 고객 간 음성</span>
+									<div class="date">
+										<span class="remain"><strong>3시간 24분</strong> 남음</span>
+									</div>
+								</div>
+							</a>
+							<!-- //접근성 수정-->
+						</li>
+						<li>
+							<!-- 2019.02.10 링크 영역 확대 -->
+							<a class="r-btn" href="" aria-labelledby="aria-comp-bt3">
+								<div class="left">
+									<!-- .donut-chart.small -->
+									<div class="donut-chart small">
+										<div class="donut-chart-area">
+											<!-- loop -->
+											<div class="c100 p70"><!-- .p+(0~100) // -->
+												<div class="yellow"><!-- red, yellow, green, blue, comet // -->
+													<div class="slice">
+														<div class="bar"></div>
+														<div class="fill"></div>
+													</div>
+												</div>
+											</div>
+											<!-- // loop -->
+										</div>
+									</div>
+									<!-- // .donut-chart.small -->
+								</div>
+								<!--접근성 수정-->
+								<div class="cont">
+									<span class="txt1" id="aria-comp-bt3">SMS/MMS/ⓜ메신저 기본제공</span>
+									<div class="date">
+										<span class="remain"><strong>56건</strong> 남음</span>
+									</div>
+								</div>
+							</a>
+							<!-- //접근성 수정-->
+						</li>
+					</ul>
+                </div>
+				<!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true" />
+                
+                <!-- .cont-box -->
+                <div class="cont-box noborder nogaps-btm b-line1">
+					<div class="ti-caption-type01 pb0">
+						<h2 class="tit">다른 회선의 실시간 잔여량</h2>
+						<!--접근성 수정-->
+						<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">다른 회선의 실시간 잔여량 tip</span></i></button>
+						<!-- //접근성 수정-->
+					</div>
+                    <div class="my-line-info-wrap">
+						<ul class="my-line-info">
+							<li>
+								<button>
+									<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>
+									<span class="cont">
+										<span class="info-title">갤럭시 노트8<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>
+										<span class="info-sub">010-46**-10**</span>
+										<span class="price">536MB</span>
+									</span>
+								</button>
+							</li>
+							<li>
+								<button>
+									<span class="ico-wrap"><i class="icon-tablet-80"><span class="blind">tablet</span></i></span>
+									<span class="cont">
+										<span class="info-title">갤럭시 탭 S4</span>
+										<span class="info-sub">010-46**-10**</span>
+										<span class="price">4시간 50분</span>
+									</span>
+								</button>
+							</li>
+							<li>
+								<button>
+									<span class="ico-wrap"><i class="icon-pc-80"><span class="blind">pc</span></i></span>
+									<span class="cont">
+										<span class="info-title">갤럭시 노트8</span>
+										<span class="info-sub">010-46**-10**</span>
+										<span class="price">4.43GB</span>
+									</span>
+								</button>
+							</li>
+						</ul>
+					</div>
+                    <div class="btn-more">
+                        <button>더 보기</button>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+					<!--접근성 수정-->
+					<ul class="pg-link-list">
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 요금제
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 부가서비스 
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의  요금 &gt; 요금안내서
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 실시간 이용요금
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-roaming-40"><span class="blind"></span></i>T로밍 &gt; 나의 로밍 이용현황
+                            </button>
+                        </li>
+					</ul>
+					<!--// 접근성 수정-->
+                </div>
+
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+	
+</body>
+
+</html>
