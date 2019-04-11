@@ -310,9 +310,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
    */
   _doJoin : function(data,apiService,historyService,containerData,target){
 
-
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
           prodNm : data.prodNm,
@@ -334,6 +335,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         containerData._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,target);
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       containerData._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,target);
     }, this));
   },

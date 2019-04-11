@@ -254,6 +254,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
    * @returns {void}
    */
   _excuteJoin : function (evt) {
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     var userJoinInfo = {
       'svcStartDt' : '{}',
       'svcEndDt' : '{}',
@@ -266,6 +267,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
           prodNm : this._popupData.preinfo.reqProdInfo.prodNm,
@@ -294,6 +296,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         );
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(
           err.msg,
           Tw.POPUP_TITLE.NOTIFY,null,
