@@ -2,7 +2,7 @@
  * @file myt-data.prepaid.alarm.controller.ts
  * @author 박지만 (jiman.park@sk.com)
  * @since 2018.11.14
- * Description: 선불폰 충전 알람 설정 페이지
+ * @desc 선불폰 충전 알람 설정 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -13,11 +13,26 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {PREPAID_ALARM_AMT, PREPAID_ALARM_TYPE} from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 선불폰 충전 알람 설정
+ */
 class MyTDataPrepaidAlarm extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const responseData = {
       svcInfo: svcInfo, // 회선 정보 (필수)
@@ -36,7 +51,11 @@ class MyTDataPrepaidAlarm extends TwViewController {
     });
   }
 
-  // 설정된 알람 정보 조회
+  /**
+   * @function
+   * @desc 설정된 알람 정보 조회
+   * @returns {Observable<any>}
+   */
   public getAlarmInfo = () => this.apiService.request(API_CMD.BFF_06_0075, {})
     .map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
@@ -46,6 +65,12 @@ class MyTDataPrepaidAlarm extends TwViewController {
       }
     })
 
+  /**
+   * @function
+   * @desc data parsing
+   * @param result
+   * @returns {any}
+   */
   public parseInfo = (result) => {
     if (result.term) {
       result.termText = PREPAID_ALARM_TYPE[result.term]; // 기간 문구

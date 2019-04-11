@@ -1,7 +1,13 @@
 /**
- * @file product.common.callplan.controller.ts
+ * 상품 > 원장(상세)
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.11
+ * @since 2018-09-11
+ *
+ * @see prodStCd 상품운영상태코드 (G1000: 퇴출, F1000: 가입중단, E1000: 운영)
+ * @see prodTypCd 상품유형코드 (AB: 무선 요금제, C: 무선 부가서비스, D_I/D_P/D_T: 유선 요금제(인터넷/전화/TV),
+ *  E_I/E_P/E_T: 유선 부가서비스(인터넷/전화/TV), H_P/H_A: 로밍 요금제/부가서비스, F: 결합상품, G: 할인프로그램
+ * @see grpProdScrnConsCd 그룹상품화면구성코드 (RRRL: 원장의 내용 포함, RRN : 대표 소개만 제공, SRRL : 대표원장과 동일, SRSL : 대표소개와 종속원장 포함, SRN : 원장노출 없음)
+ * @see vslLedStylCd 원장스타일코드 (LA:원장전체, LE: 원장개요별, R: 대표,*PLM 정보일 경우(vslYn이 'N') 값이 존재하지 않습니다.))
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -21,22 +27,25 @@ import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
 
+/**
+ * @class
+ */
 class ProductCommonCallplan extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 결합/혜택 리디렉션 대상 상품코드 */
   private readonly _benefitRedirectProdList = ['TW20000014', 'TW20000018', 'TW20000019'];
 
   /**
    * 요금제 비교하기 Redis 정보 호출
-   * @param prodTypCd
-   * @param svcInfoProdId
-   * @param prodId
-   * @private
+   * @param prodTypCd - 상품 유형코드
+   * @param svcInfoProdId - 사용자 세션데이터의 상품코드
+   * @param prodId - 상품원장 상품코드
    */
   private _getMobilePlanCompareInfo(prodTypCd: any, svcInfoProdId: any, prodId: any): Observable<any> {
-    if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {
+    if (prodTypCd !== 'AB' || FormatHelper.isEmpty(svcInfoProdId)) {  // 모바일 요금제만 비교하기 Redis 확인
       return Observable.of({ code: null });
     }
 
@@ -45,44 +54,46 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * 가입여부 확인
-   * @param svcInfo
-   * @param prodTypCd
-   * @param prodId
-   * @param plmProdList
-   * @private
+   * @param svcInfo - 사용자 세션데이터
+   * @param prodTypCd - 상품 유형코드
+   * @param prodId - 상품원장 상품코드
+   * @param plmProdList - 10_0001의 연결된 상품코드 배열
    */
   private _getIsJoined(svcInfo: any, prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
     if (FormatHelper.isEmpty(svcInfo)) {
       return Observable.of({});
     }
 
-    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {  // 무선 요금제, 유선 요금제는 별도 API 호출로 가입여부를 판단하지 않으므로
       return Observable.of({ code: '00' });
     }
 
+    // 연결된 상품코드 배열값을 같이 넘겨주어 가입여부 판단시 사용하도록 한다.
     const reqParams = FormatHelper.isEmpty(plmProdList) ? {} : { mappProdIds: (plmProdList.map((item) => {
         return item.plmProdId;
       })).join(',') };
 
+    // 모바일 부가서비스, 로밍 요금제/부가서비스
     if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_05_0040, reqParams, {}, [prodId]);
     }
 
+    // 유선 부가서비스
     if (['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_10_0109, reqParams, {}, [prodId]);
     }
 
+    // 결합상품, 할인프로그램
     return this.apiService.request(API_CMD.BFF_10_0119, {}, {}, [prodId]);
   }
 
   /**
    * 모바일 부가서비스 카테고리 필터 리스트 Redis 호출
-   * @param prodTypCd
-   * @param prodId
-   * @private
+   * @param prodTypCd - 상품 유형코드
+   * @param prodId - 상품원장 상품코드
    */
   private _getAdditionsFilterListByRedis(prodTypCd: any, prodId: any): Observable<any> {
-    if (prodTypCd !== 'C') {
+    if (prodTypCd !== 'C') {  // 모바일 부가서비스만 사용
       return Observable.of({ code: null });
     }
 
@@ -91,30 +102,29 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * 인터넷/TV/전화, 결합상품 구비서류 심사내역 조회
-   * @param prodTypCd
-   * @param prodId
-   * @private
+   * @param prodTypCd - 상품 유형코드
+   * @param prodId - 상품원장 상품코드
    */
   private _getCombineRequireDocumentStatus(prodTypCd: any, prodId: any): Observable<any> {
-    if (['D_I', 'D_P', 'D_T', 'F'].indexOf(prodTypCd) === -1) {
+    if (['D_I', 'D_P', 'D_T', 'F'].indexOf(prodTypCd) === -1) { // 유선 요금제, 결합상품만 사용
       return Observable.of({});
     }
 
     const reqParams: any = {};
     if (FormatHelper.isEmpty(prodId)) {
-      reqParams.svcProdCd = prodId === 'NH00000083' ? 'NH00000084' : prodId;
+      reqParams.svcProdCd = prodId === 'NH00000083' ? 'NH00000084' : prodId;  // 특정 상품코드의 경우 조회용 코드가 서로 상이함.
     }
 
     return this.apiService.request(API_CMD.BFF_10_0078, reqParams);
   }
 
   /**
-   * @param grpProdScrnConsCd
-   * @param prodId
-   * @private
+   * 상품 콘텐츠 조회 (self)
+   * @param grpProdScrnConsCd - 콘텐츠 그룹 유형
+   * @param prodId - 상품원장 상품코드
    */
   private _getMyContentsData(grpProdScrnConsCd: any, prodId: any): any {
-    if (grpProdScrnConsCd === 'SRRL') {
+    if (grpProdScrnConsCd === 'SRRL') { // 대표 원장과 동일하므로 별도 redis 가져올 필요 없음
       return Observable.of({});
     }
 
@@ -122,13 +132,13 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodGrpYn
-   * @param repProdId
-   * @param prodGrpRepYn
-   * @private
+   * 상품 콘텐츠 조회 (parent)
+   * @param prodGrpYn - 콘텐츠 그룹 여부
+   * @param repProdId - 대표 상품 상품코드
+   * @param prodGrpRepYn - 콘텐츠 그룹의 대표 원장 여부
    */
   private _getExtendContentsData(prodGrpYn: any, repProdId: any, prodGrpRepYn: any): any {
-    if (prodGrpYn !== 'Y' || prodGrpRepYn === 'Y') {
+    if (prodGrpYn !== 'Y' || prodGrpRepYn === 'Y') {  // 그룹원장이 아니거나 그룹의 대표 원장일 경우 이미 갖고오는 부분이 있으므로
       return Observable.of({});
     }
 
@@ -136,8 +146,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param basicInfo
-   * @private
+   * BFFNo. 10_0001 기본 정보 데이터 변환
+   * @param basicInfo - 기본정보 API 응답 값
    */
   private _convertBasicInfo (basicInfo): any {
     const joinBtnList: any = [],
@@ -146,31 +156,32 @@ class ProductCommonCallplan extends TwViewController {
 
     let isJoinReservation: any = false;
 
+    // 버튼 정리
     basicInfo.linkBtnList.forEach((item) => {
-      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') { // 설정 버튼 & 설정가능 상태가 아닐때
         return true;
       }
 
-      if (item.linkTypCd === 'SC') {
+      if (item.linkTypCd === 'SC') {  // 가입
         joinBtnList.push(item);
         return true;
       }
 
-      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn === 'Y') {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn === 'Y') { // 설정 버튼 & 설정가능
         settingBtnList.push(item);
         return true;
       }
 
-      if (item.linkTypCd === 'CT') {
+      if (item.linkTypCd === 'CT') {  // 가입상담예약
         isJoinReservation = true;
         return true;
       }
 
-      termBtnList.push(item);
+      termBtnList.push(item); // 해지버튼
     });
 
     return Object.assign(basicInfo, {
-      prodTypListPath: PRODUCT_TYP_CD_LIST[basicInfo.prodTypCd],
+      prodTypListPath: PRODUCT_TYP_CD_LIST[basicInfo.prodTypCd],  // 상품별 인덱스 리스트가 다르므로
       linkBtnList: {
         join: joinBtnList,
         setting: settingBtnList,
@@ -181,35 +192,38 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodStCd
-   * @param prodRedisInfo
-   * @private
+   * 상품 기본정보 레디스 데이터 변환
+   * @param prodStCd - 상품운영상태코드; 이 값에 따라 분기처리를 함
+   * @param prodRedisInfo - 상품 기본정보 레디스 데이터
    */
   private _convertRedisInfo (prodStCd, prodRedisInfo): any {
     if (FormatHelper.isEmpty(prodRedisInfo)) {
       return {};
     }
 
-    const basDataGbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrGbDataQtyCtt),
-      basDataMbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrMbDataQtyCtt),
-      basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
+    const basDataGbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrGbDataQtyCtt), // GB 단위값
+      basDataMbTxt = FormatHelper.getValidVars(prodRedisInfo.summary.basOfrMbDataQtyCtt), // MB 단위값
+      basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt); // 있는 값을 쓰자 (GB 우선)
 
     return Object.assign(prodRedisInfo, {
+      // 상품 요약데이터
       summary: [prodRedisInfo.summary,
         ProductHelper.convProductSpecifications(prodRedisInfo.summary.basFeeInfo, basDataTxt.txt,
           prodRedisInfo.summary.basOfrVcallTmsCtt, prodRedisInfo.summary.basOfrCharCntCtt, basDataTxt.unit, false),
         { smryHtmlCtt: EnvHelper.replaceCdnUrl(this._removePcImgs(prodRedisInfo.summary.smryHtmlCtt)) }].reduce((a, b) => {
         return Object.assign(a, b);
       }),
+      // 상품 요약 데이터 분기처리
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
+      // 상품원장 내 배너 데이터
       banner: this._convertBanners(prodRedisInfo.banner)
     });
   }
 
   /**
-   * @param basDataGbTxt
-   * @param basDataMbTxt
-   * @private
+   * 두개의 데이터값 필드 중 GB 값을 우선하여 출력
+   * @param basDataGbTxt - GB 단위
+   * @param basDataMbTxt - MB 단위
    */
   private _getBasDataTxt(basDataGbTxt: any, basDataMbTxt: any): any {
     if (!FormatHelper.isEmpty(basDataGbTxt)) {
@@ -233,29 +247,29 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param summaryInfo
-   * @private
+   * 상품 요약데이터 분기처리용 케이스 처리
+   * @param summaryInfo - 상품 요약정보(Redis)
    */
   private _getSummaryCase(summaryInfo): any {
-    if (!FormatHelper.isEmpty(summaryInfo.smryHtmlCtt)) {
+    if (!FormatHelper.isEmpty(summaryInfo.smryHtmlCtt)) { // 요약 시각화 Html 이 있으면 3
       return '3';
     }
 
-    if (!FormatHelper.isEmpty(summaryInfo.sktProdBenfCtt)) {
+    if (!FormatHelper.isEmpty(summaryInfo.sktProdBenfCtt)) {  // 그 다음에 SKT혜택이 있으면 2
       return '2';
     }
 
-    return '1';
+    return '1'; // 그외 1
   }
 
   /**
-   * @param data
-   * @private
-   * @see prodGrpYn 그룹형 상품 여부
-   * @see repProdId 대표상품 ID
-   * @see repVslAplyYn 대표소개 페이지 설정 여부
-   * @see prodGrpRepYn 대표상품 여부
-   * @see grpProdScrnConsCd 그룹상품화면구성코드
+   * 콘텐츠 데이터 그룹 처리
+   * @param data - 콘텐츠 데이터
+   * @see prodGrpYn - 그룹형 상품 여부
+   * @see repProdId - 대표상품 ID
+   * @see repVslAplyYn - 대표소개 페이지 설정 여부
+   * @see prodGrpRepYn - 대표상품 여부
+   * @see grpProdScrnConsCd - 그룹상품화면구성코드 (최상단 see 참조)
    */
   private _convertContentsInfo (data): any {
     let contentsResult: any = {
@@ -322,21 +336,21 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodStCd
-   * @param contentsInfo
-   * @private
+   * 콘텐츠 데이터 변환
+   * @param prodStCd - 상품운영상태코드; 이 값에 따라 분기처리함
+   * @param contentsInfo - 콘텐츠 데이터
    */
   private _convertContents (prodStCd, contentsInfo): any {
     const isOpen = prodStCd === 'E1000',
       contentsResult: any = {
-      LIST: [],
-      LA: null,
-      R: null,
-      FIRST: null
+      LIST: [], // 콘텐츠 목록
+      LA: null, // 원장 전체
+      R: null,  // 대표
+      FIRST: null // 첫번째 노출 콘텐츠
     };
 
     contentsInfo.forEach((item) => {
-      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
+      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {  // 미오픈 상태일때는 시각화 원장을 사용하지 않으므로 skip
         return true;
       }
 
@@ -374,8 +388,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param contents
-   * @private
+   * 콘텐츠 마크업 보정
+   * @param contents - 콘텐츠 마크업
    */
   private _convertContentsHtml(contents: any): any {
     if (FormatHelper.isEmpty(contents)) {
@@ -385,16 +399,12 @@ class ProductCommonCallplan extends TwViewController {
     contents = this._removePcImgs(contents);
     contents = EnvHelper.replaceCdnUrl(contents);
 
-    if (contents.indexOf('||') === -1) {
-      return contents;
-    }
-
     return contents;
   }
 
   /**
-   * @param bannerInfo
-   * @private
+   * 배너 데이터 변환
+   * @param bannerInfo - 배너 데이터
    */
   private _convertBanners (bannerInfo): any {
     const bannerResult: any = {};
@@ -412,8 +422,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param relateTags
-   * @private
+   * 연관태그 빈값 예외 처리
+   * @param relateTags - 연관태그 데이터
    */
   private _convertRelateTags (relateTags: any): any {
     if (FormatHelper.isEmpty(relateTags.prodTagList)) {
@@ -424,11 +434,11 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @param plmProdList
-   * @param isJoinedInfo
-   * @param svcProdId
-   * @private
+   * 가입여부 API 응답값 상품유형코드별 처리
+   * @param prodTypCd - 상품유형코드
+   * @param plmProdList - 10_0001 연결된 상품코드배열
+   * @param isJoinedInfo - API 응답값
+   * @param svcProdId - 사용자 세션데이터 내 상품코드
    */
   private _isJoined (prodTypCd, plmProdList, isJoinedInfo, svcProdId): boolean {
     if (FormatHelper.isEmpty(isJoinedInfo) || isJoinedInfo.code !== API_CODE.CODE_00) {
@@ -451,9 +461,9 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param apiInfo
-   * @param isSeries
-   * @private
+   * 시리즈/추천 상품 데이터 변환
+   * @param apiInfo - API 응답 값
+   * @param isSeries - 시리즈 상품 여부
    */
   private _convertSeriesAndRecommendInfo (apiInfo, isSeries): any {
     if (FormatHelper.isEmpty(apiInfo)) {
@@ -479,10 +489,10 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @param isSeeContents
-   * @param convResult
-   * @private
+   * 시리즈/추천 상품 데이터별 노출 유형 처리
+   * @param prodTypCd - 상품유형코드
+   * @param isSeeContents - 가격 값이 "상세참조" 일 경우
+   * @param convResult - 상품 데이터
    */
   private _getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult): any {
     if (prodTypCd !== 'AB') {
@@ -497,9 +507,9 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @param similarProductInfo
-   * @private
+   * 유사한 상품 데이터 변환
+   * @param prodTypCd - 상품유형코드
+   * @param similarProductInfo - 유사한 상품 API 응답 값
    */
   private _convertSimilarProduct (prodTypCd: any, similarProductInfo: any) {
     if (similarProductInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(similarProductInfo.result)) {
@@ -547,8 +557,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param requireDocumentInfo
-   * @private
+   * 상담예약 서류제출여부 값 처리
+   * @param requireDocumentInfo - 심사내역 조회 응답 값
    */
   private _convertRequireDocument (requireDocumentInfo: any) {
     if (requireDocumentInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(requireDocumentInfo.result.necessaryDocumentInspectInfoList)) {
@@ -591,8 +601,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @private
+   * 상품유형코드별 boolean 처리
+   * @param prodTypCd - 상품유형코드
    */
   private _getIsCategory (prodTypCd: any): any {
     return {
@@ -608,8 +618,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param context
-   * @private
+   * 상품시각화 원장 내 온T 이미지 제거
+   * @param context - 시각화 원장 마크업
    */
   private _removePcImgs (context: any): any {
     if (FormatHelper.isEmpty(context)) {
@@ -620,8 +630,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param typeCd
-   * @private
+   * 가입상담예약 상품유형코드별 카테고리 값 산출
+   * @param typeCd - 상품유형코드
    */
   private _getReservationTypeCd(typeCd: any): any {
     if (['D_I', 'E_I'].indexOf(typeCd) !== -1) {
@@ -644,14 +654,15 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @param allSvc
-   * @param svcAttrCd
-   * @private
-   * A: 현재회선으로 가입 가능 && 기준회선 외 다른회선 선택 가능
-   * B: 현재회선으로 가입 가능 && 가입가능 회선이 1개
-   * C: 현재회선으로 가입 불가능 && 가입가능한 다른 회선 선택 가능
-   * D: 현재회선으로 가입 불가능 && 가입불가
+   * 요금제변경/가입시 회선변경 Process 진입유형 계산
+   * @param prodTypCd - 상품유형코드
+   * @param allSvc - 사용자 회선 데이터
+   * @param svcAttrCd - 현재 회선의 유형 값
+   * @return 회선변경 Process Case
+   * @see A: 현재회선으로 가입 가능 && 기준회선 외 다른회선 선택 가능
+   * @see B: 현재회선으로 가입 가능 && 가입가능 회선이 1개
+   * @see C: 현재회선으로 가입 불가능 && 가입가능한 다른 회선 선택 가능
+   * @see D: 현재회선으로 가입 불가능 && 가입불가
    */
   private _getLineProcessCase(prodTypCd: any, allSvc?: any, svcAttrCd?: any): any {
     if (FormatHelper.isEmpty(allSvc) || FormatHelper.isEmpty(svcAttrCd)) {
@@ -683,9 +694,9 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param svcAttrCds
-   * @param svcGroupList
-   * @private
+   * 접근가능 회선 개수 계산
+   * @param svcAttrCds - 사용자의 회선 유형 배열
+   * @param svcGroupList - 접근 가능 회선 유형 코드 배열
    */
   private _getAllowedLineLength(svcAttrCds: any, svcGroupList: any): any {
     let length: any = 0;
@@ -700,8 +711,8 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
-   * @private
+   * 접근가능 회선 유형 계산
+   * @param prodTypCd - 상품 유형
    */
   private _getAllowedSvcAttrCd(prodTypCd: any): any {
     if (['AB', 'C', 'H_P', 'H_A', 'F', 'G'].indexOf(prodTypCd) !== -1) {
@@ -740,8 +751,7 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * basicInfo 10_0001의 plmProdList value중 plmProdId 들을 배열로 만들기
-   * @param plmProdList
-   * @private
+   * @param plmProdList - 연결된 상품코드 배열
    */
   private _getPlmProdIdsByList(plmProdList: any): any {
     if (FormatHelper.isEmpty(plmProdList)) {
@@ -753,6 +763,16 @@ class ProductCommonCallplan extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,

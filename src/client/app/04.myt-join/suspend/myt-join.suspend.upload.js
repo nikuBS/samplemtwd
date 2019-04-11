@@ -1,13 +1,25 @@
 /**
  * @file myt-join.suspend.upload.js
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 11. 15.
- * 일시정지신청/현황에서 사용하는 File Upload Dialog
+ * @author Hyeryoun Lee
+ * @since 2018-11-15
+ */
+/**
+ * @class
+ * @desc 일시정지신청/현황에서 사용하는 File Upload Dialog
+ * @returns {void}
  */
 Tw.MytJoinSuspendUpload = function () {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
 };
+/**
+ * @member {Object}
+ * @desc Default file attributes
+ * @enum {Object}
+ * @const
+ * @readonly
+ */
+
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp"' };
 Tw.MytJoinSuspendUpload.prototype = {
   show: function (callback, fileCount, oldFiles, fileInfo, tooltip, $focusEl) {
@@ -26,10 +38,10 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
   },
   /**
-   * 파일 업로드 Dialog 전 툴팁
-   * @param tooltip
-   * @param $focusEl
-   * @private
+   * @function
+   * @desc 파일 업로드 Dialog 전 툴팁 안내
+   * @param tooltip 툴팁 정보(타이틀 , 내용)
+   * @param $focusEl 팝업 trigger element(접근성 처리)
    */
   _showUploadTip: function (tooltip, $focusEl) {
     this._popupService.open({
@@ -44,8 +56,8 @@ Tw.MytJoinSuspendUpload.prototype = {
     }, null, $.proxy(this._showUploadPopup, this), tooltip.hash, $focusEl);
   },
   /**
-   * 파일 업로드 Dialog
-   * @private
+   * @function
+   * @desc 파일 업로드 Dialog
    */
   _showUploadPopup: function () {
     // 모바일웹 4.4 버젼은 파일 업로드 미지원
@@ -66,7 +78,11 @@ Tw.MytJoinSuspendUpload.prototype = {
     }, $.proxy(this._openUploadFile, this), $.proxy(this._reset, this), 'upload');
 
   },
-
+  /**
+   * @function
+   * @desc Callback for popup open
+   * @param $popupContainer
+   */
   _openUploadFile: function ($popupContainer) {
     this.$btUpload = $popupContainer.find('#fe-upload-ok');
     this.$inputFile = $popupContainer.find('input.file');
@@ -84,8 +100,6 @@ Tw.MytJoinSuspendUpload.prototype = {
   },
 
   _openCustomFileChooser: function ($target) {
-    // var $target = $(e.currentTarget);
-
     if ( this._isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: 'suspend',
@@ -95,6 +109,12 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 안드로이드 저사양 버젼에서 native file upload 호
+   * @param $target
+   * @param response
+   */
   _nativeFileChooser: function ($target, response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
@@ -124,7 +144,11 @@ Tw.MytJoinSuspendUpload.prototype = {
     // tooltip popup이 남아있는 경우가 있음
     this._popupService.close();
   },
-
+  /**
+   * @function
+   * @desc Event listener for change on input.file
+   * @param event
+   */
   _onChangeFile: function (event) {
     var currentFile = event.currentTarget;
     var file = currentFile.files;
@@ -138,6 +162,12 @@ Tw.MytJoinSuspendUpload.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @desc 사용자 선택 파일 valication check
+   * @param file
+   * @returns {boolean}
+   */
   _validateFile: function (file) {
     if ( file.size > Tw.MAX_FILE_SIZE ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
@@ -150,6 +180,10 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
     return true;
   },
+  /**
+   * @function
+   * @desc Event listener for the button click on #fe-upload-ok(파일업로드)
+   */
   _onClickOk: function () {
     if ( this._callback ) {
 
@@ -167,13 +201,17 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
     this._popupService.close();
   },
-
+  /**
+   * @function
+   * @desc Event listener for the button click on .fe-file-button(파일찾기/삭제)
+   * @param e
+   * @private
+   */
   _onClickFileButton: function (e) {
     var $btFile = $(e.target);
     var $inputBox = $btFile.parents('.inputbox');
     if ( $inputBox.find('input.file').attr('disabled') ) {// 파일삭제
       // 파일삭제시 input 처리
-      //TOOD 파일 삭제
       this._setFileButton($inputBox, true);
 
     } else {
@@ -182,12 +220,22 @@ Tw.MytJoinSuspendUpload.prototype = {
       }
     }
   },
-
+  /**
+   * @function
+   * @desc  파일 업로드 지원 가능 버젼(4.4 이상) 체크
+   * @returns {*|boolean}
+   */
   _isLowerVersionAndroid: function () {
     var androidVersion = Tw.BrowserHelper.getAndroidVersion();
     return androidVersion && androidVersion.indexOf('4.4') !== -1;
   },
-
+  /**
+   * @function
+   * @desc 파일 버튼 타이틀 설정(파일 선택시: 파일삭제)
+   * @param $inputBox input element
+   * @param addable 파일 선택 여부
+   * @private
+   */
   _setFileButton: function ($inputBox, addable) {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
@@ -201,7 +249,10 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
     this._checkEnableConfirm();
   },
-
+  /**
+   * @function
+   * @desc 완료 조건 체크(파일 업로드 갯수 체크)
+   */
   _checkEnableConfirm: function () {
     var self = this;
     var disable = this.$inputFile.filter('[disabled]').length === this._fileCount ? false : true;

@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+	
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>리필쿠폰 사용</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+                <div class="container">
+					<hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+						<div class="coupon-resel">
+							<ul class="coupon-list-wrap type1">
+								<li>
+									<span class="icon"><i class="icon-80px-coupon-refill"><span class="blind">refill</span></i></span>
+									<div class="cont">
+										<h2 class="tit">장기가입 쿠폰</h2>
+										<span class="txt1">유효기간: 2018.7.1.~12.31.</span>
+									</div>
+									<span class="btn-r">
+										<button type="button" class="btn-round2 btn-style3">다시선택</button>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new"><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab2"><a href="">가족에게 선물하기</a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+
+												<div class="cont-box nogaps-hoz bb0">
+													
+													<div class="list-input-type1">
+														<ul class="input-middle01">
+															<li class="type01">
+																<span class="form"><input type="radio" name="sradio1" id="sradio1" class="formradio-small"><label for="sradio1">라디오박스</label></span>
+																<div class="cont"><!-- 190124 label 중복 삭제 -->
+																	<span class="stit">데이터 리필</span>
+																	<p class="stxt1">최대 15GB</p>
+																	<span class="stext02">T플랜 라지는 최대 15GB, 패밀리/0플랜 라지/5GX 75 는 최대 20GB, 5GX 95는 최대 30GB, 5GX 125는 50GB 까지 리필 되며, Data 인피니티는 데이터 무제한으로 데이터 리필 할 수 없습니다.</span><!-- 190322 수정_01 -->
+																</div>
+															</li>
+															<li>
+																<span class="form"><input type="radio" name="sradio1" id="sradio2" class="formradio-small type2"><label for="sradio2">라디오박스</label></span>
+																<div class="cont"><!-- 190124 label 중복 삭제, type2 추가 -->
+																	<span class="stit">음성 20% 리필</span>
+																	<!-- <p class="stxt1">37분</p> -->
+																</div>
+															</li>
+														</ul>
+													</div>
+													
+												</div>
+
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+												<div class="cont-box">
+													가족에게 선물하기 내용입니다.
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
+					<!--// .cont-box -->
+
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button class="btn-tip">가족 간 선물하기 이용 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+							<li><button class="btn-tip">이용가능한 요금제<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
+
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>사용하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
+	</div>
+</body>
+</html>

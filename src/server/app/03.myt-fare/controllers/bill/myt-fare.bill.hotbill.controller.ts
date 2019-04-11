@@ -1,7 +1,7 @@
 /**
- * @file myt-fare.bill.hotbill.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 9. 20.
+ * [실시간 사용요금] 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2018-9-20
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -16,6 +16,11 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * [실시간 사용요금] API호출 및 렌더링
+ * @author Hyeryoun Lee
+ * @since 2018-9-20
+ */
 class MyTFareBillHotbill extends TwViewController {
   _svcInfo: any;
   _preBillAvailable: boolean = true;

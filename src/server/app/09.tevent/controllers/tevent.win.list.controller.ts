@@ -1,7 +1,8 @@
 /**
  * @file tevent.win.list.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.21
+ * @desc 당첨자발표 리스트 조회 화면
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
@@ -12,11 +13,26 @@ import { PROMOTION_TYPE } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 
+/**
+ * @class
+ * @desc 당첨자발표 리스트 조회
+ */
 class TeventWinList extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     this.apiService.request(API_CMD.BFF_09_0004, {
       svcDvcClCd: 'M',
@@ -45,6 +61,12 @@ class TeventWinList extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param content
+   * @returns {any}
+   */
   private parseData(content: any): any {
     if (!FormatHelper.isEmpty(content)) {
       content.map((data) => {

@@ -1,8 +1,7 @@
 /**
  * 인터넷/전화/TV > 가입 상담/예약
- * @file product.wireplan.join-reservation.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.30
+ * @since 2018-10-30
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -16,6 +15,9 @@ import {
 import FormatHelper from '../../../../../utils/format.helper';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 
+/**
+ * @class
+ */
 class ProductWireplanJoinReservation extends TwViewController {
   constructor() {
     super();
@@ -23,8 +25,7 @@ class ProductWireplanJoinReservation extends TwViewController {
 
   /**
    * 상품 카테고리별 회선 보유 여부 확인
-   * @param allSvc
-   * @private
+   * @param allSvc - 전체 회선 목록
    */
   private _convertIsProductInfo (allSvc: any): any {
     const svcAttrCdM = FormatHelper.isEmpty(allSvc.m) ? [] : allSvc.m,  // 무선 회선 목록
@@ -41,8 +42,7 @@ class ProductWireplanJoinReservation extends TwViewController {
 
   /**
    * 회선 목록에서 회선 카테고리 값 추출
-   * @param svcList
-   * @private
+   * @param svcList - 회선 목록
    */
   private _getSvcAttrList (svcList: any): any {
     return svcList.map((item) => {
@@ -52,8 +52,7 @@ class ProductWireplanJoinReservation extends TwViewController {
 
   /**
    * 예약상담 심사내역 조회하여 화면 상단 제출/조회 영역 노출 하기 위한 처리
-   * @param requireDocumentInfo
-   * @private
+   * @param requireDocumentInfo - 심사내역 API 응답 값
    */
   private _convertRequireDocument (requireDocumentInfo: any) {
     // API 응답 코드가 정상이 아니거나 심사내역이 빈값일 경우 null 리턴
@@ -101,6 +100,16 @@ class ProductWireplanJoinReservation extends TwViewController {
     };
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const typeCd = req.query.type_cd || 'internet', // 상품 카테고리
       prodId = req.query.prod_id || null, // 상품코드

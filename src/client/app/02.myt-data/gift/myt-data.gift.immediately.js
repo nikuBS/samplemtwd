@@ -45,7 +45,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     this.$container.on('click', '[data-opdtm]', $.proxy(this._onSelectRecentContact, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
-    this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
+    this.$btnRequestSendingData.click(_.debounce($.proxy(this._getReceiveUserInfo, this), 500));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('input', $.proxy(this._onInputImmediatelyGiftNumber, this));
     this.$inputImmediatelyGift.on('blur', $.proxy(this._onBlurImmediatelyGiftNumber, this));

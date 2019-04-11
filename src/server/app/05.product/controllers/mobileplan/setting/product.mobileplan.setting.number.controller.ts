@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 지정번호 할인 설정
- * @file product.mobileplan.setting.number.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.15
+ * @since 2018-11-15
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -12,16 +11,20 @@ import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 
+/**
+ * @class
+ */
 class ProductMobileplanSettingNumber extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00000711', 'NA00000712'];
 
   /**
-   * @param numberInfo
-   * @private
+   * 지정번호 목록 변환
+   * @param numberInfo - API 응답 값
    */
   private _convNumberInfo(numberInfo: any): any {
     return Object.assign(numberInfo, {
@@ -30,8 +33,8 @@ class ProductMobileplanSettingNumber extends TwViewController {
   }
 
   /**
-   * @param snumSetInfoList
-   * @private
+   * 지정번호 데이터 변환
+   * @param snumSetInfoList - 지정번호 목록
    */
   private _convertSnumSetInfoList(snumSetInfoList): any {
     return snumSetInfoList.map((item) => {
@@ -43,6 +46,16 @@ class ProductMobileplanSettingNumber extends TwViewController {
     });
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

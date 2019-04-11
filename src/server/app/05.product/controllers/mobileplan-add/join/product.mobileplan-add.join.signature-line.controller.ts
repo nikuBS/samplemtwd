@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 시그니처 워치
- * @file product.mobileplan-add.join.signature-line.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
- * @since 2018.11.15
+ * @author Jihun Yang
+ * @since 2018-11-15
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -14,13 +13,27 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanAddJoinSignatureLine extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private _prodIdList = ['NA00005381'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

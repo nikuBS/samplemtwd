@@ -1,9 +1,14 @@
 /**
- * @file customer.agentsearch.search.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.16
+ * @file 지점/대리점 검색 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-16
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ * @param  {String} params - query params
+ */
 Tw.CustomerAgentsearch = function (rootEl, params) {
   this.$container = rootEl;
 
@@ -40,6 +45,12 @@ Tw.CustomerAgentsearch = function (rootEl, params) {
 };
 
 Tw.CustomerAgentsearch.prototype = {
+
+  /**
+   * @function
+   * @desc 현재 탭이 지하철역 일 경우 선택된 노선 및 역 화면표시 기능
+   * @param  {String} params
+   */
   _init: function (params) {
     var hash = window.location.hash;
     this._prevTab = hash;
@@ -89,6 +100,7 @@ Tw.CustomerAgentsearch.prototype = {
       this._isSearched = true;
     }
 
+    // endsWith polyfill
     if (!String.prototype.endsWith) {
       String.prototype.endsWith = function (searchString, position) {
         var subjectString = this.toString();
@@ -132,6 +144,12 @@ Tw.CustomerAgentsearch.prototype = {
     this.$container.on('click', '#fe-select-area', $.proxy(this._onTubeArea, this));
     this.$container.on('click', '#fe-select-line', $.proxy(this._onTubeLine, this));
   },
+
+  /**
+   * @function
+   * @desc tab 변경에 땨른 화면 처리
+   * @param  {Object} e - click event
+   */
   _onTabChanged: function (e) {
     if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
       this.$inputName.val('');
@@ -151,6 +169,12 @@ Tw.CustomerAgentsearch.prototype = {
     this.$container.find('.fe-tab a').attr('aria-selected', 'false');
     $(e.currentTarget).attr('aria-selected', 'true');
   },
+
+  /**
+   * @function
+   * @desc 검색어 입력에 따른 이벤트 처리(각각의 버튼 활성/비활성 처리)
+   * @param  {Object} e - keyup event
+   */
   _onInput: function (e) {
     var text = e.currentTarget.value.trim();
     var enable = Tw.FormatHelper.isEmpty(text) ? false : true;
@@ -182,6 +206,12 @@ Tw.CustomerAgentsearch.prototype = {
         break;
     }
   },
+
+  /**
+   * @function
+   * @desc 옵션 선택한 경우 레이어 팝업으로 옵션화면 노출
+   * @param  {Object} e - click event
+   */
   _onOptionsClicked: function (e) {
     this._popupService.open({
         hbs: 'CS_02_01_01'
@@ -194,6 +224,12 @@ Tw.CustomerAgentsearch.prototype = {
       'options', e
     );
   },
+
+  /**
+   * @function
+   * @desc 변경된 옵션에 따라 BFF로 요청할 data를 만들어줌
+   * @param  {Object} options - 변경된 옵션 값
+   */
   _onOptionsChanged: function (options) {
     if (!!options) {
       this._options = options;
@@ -243,6 +279,11 @@ Tw.CustomerAgentsearch.prototype = {
       this.$btnOptions.text(text);
     }
   },
+
+  /**
+   * @function
+   * @desc 지하철 탭에서 지역선택 시 actionsheet로 옵션 표기해줌
+   */
   _onTubeArea: function () {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
     if (this._selectedTubeAreaCode) { // 선택된 항목에 checked 추가
@@ -273,6 +314,11 @@ Tw.CustomerAgentsearch.prototype = {
       }, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 지하철 탭에서 노선 선택 시 actionsheet 로 선택 가능한 노선 표시
+   */
   _onTubeLine: function () {
     if (!this._selectedTubeAreaCode) {
       this._popupService.openAlert('지역을 선택해 주세요.');
@@ -306,6 +352,12 @@ Tw.CustomerAgentsearch.prototype = {
       }, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 검색 버튼 클릭 시 검색결과 요청
+   * @param  {Object} e - click event
+   */
   _onSearchRequested: function (e) {
     if (e && e.currentTarget.id.indexOf('tube') !== -1) {
       if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
@@ -313,8 +365,15 @@ Tw.CustomerAgentsearch.prototype = {
         return;
       }
     }
+    // query param으로 필요한 정보를 보내면 검색관련 작업은 server rendering으로 이루어짐
     this._historyService.replaceURL(this._getSearchUrl(e, true));
   },
+
+  /**
+   * @function
+   * @desc 하단 page navigation 선택에 따른 처리
+   * @param  {Object} e - click event
+   */
   _onPaging: function (e) {
     var $target = $(e.currentTarget);
     if ($target.hasClass('active') || $target.hasClass('disabled')) {
@@ -328,6 +387,14 @@ Tw.CustomerAgentsearch.prototype = {
 
     this._historyService.goLoad(this._getSearchUrl(null, false, page));
   },
+
+  /**
+   * @function
+   * @desc 검색결과 server rendering 을 위한 query param 생성
+   * @param  {Object} e - click event
+   * @param  {Boolean} bySearchBtn - 검색 버튼을 통한 검색인지, pagination을 통한 검색인지
+   * @param  {Number} page - bySearchBtn true 인 경우 targeting 할 page 번호
+   */
   _getSearchUrl: function (e, bySearchBtn, page) {  // bySearchBtn: true - 처음검색, false - page 검색
     var url = '/customer/agentsearch/search?type=';
     var hash = '#name';
@@ -423,6 +490,12 @@ Tw.CustomerAgentsearch.prototype = {
     }
   },
   */
+
+  /**
+   * @function
+   * @desc 지점 선택시 해당 지점 상세화면으로 이동
+   * @param  {Object} e - click event
+   */
   _onBranchDetail: function (e) {
     if (e.target.nodeName.toLowerCase() === 'a') {
       return;
@@ -432,6 +505,12 @@ Tw.CustomerAgentsearch.prototype = {
 
     this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
   },
+
+  /**
+   * @function
+   * @desc 필요한 경우 호출하여 과금 팝업 발생, 동의 시 콜백 실행
+   * @param  {Function} onConfirm - 동의 시 실행할 callback
+   */
   _showDataChargePopup: function (onConfirm) {
     this._popupService.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
@@ -442,6 +521,12 @@ Tw.CustomerAgentsearch.prototype = {
       }, this)
     );
   },
+
+  /**
+   * @function
+   * @desc 검색필드에 x버튼으로 입력 내용 삭제 시 필요한 처리
+   * @param  {Object} e - click event
+   */
   _onCancelInput: function (e) {
     var $target = $(e.currentTarget);
     if ($target.attr('id').indexOf('name') !== -1) {

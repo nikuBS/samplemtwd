@@ -1,8 +1,7 @@
 /**
  * 예약 취소 - 유선 부가서비스
- * @file product.wireplan.reservation-cancel.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.12
+ * @since 2019-02-12
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -12,11 +11,24 @@ import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 
+/**
+ * @class
+ */
 class ProductWireplanReservationCancel extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null, // 상품코드
       renderCommonInfo = {

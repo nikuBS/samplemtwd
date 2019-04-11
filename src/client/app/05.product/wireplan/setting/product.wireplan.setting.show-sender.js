@@ -39,7 +39,7 @@ Tw.ProductWireplanSettingShowSender.prototype = {
 
   _bindEvent: function() {
     this.$inputRadio.on('change', $.proxy(this._checkSetupButton, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
   },
 
   _checkSetupButton: function() {

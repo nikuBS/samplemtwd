@@ -1,8 +1,7 @@
 /**
  * 모바일 요금제 > 가입 공통 (옵션 입력 없음)
- * @file product.mobileplan.join.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.09.11
+ * @since 2018-09-11
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -14,6 +13,9 @@ import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 import { REDIS_KEY } from '../../../../../types/redis.type';
 
+/**
+ * @class
+ */
 class ProductMobileplanJoin extends TwViewController {
   constructor() {
     super();
@@ -21,9 +23,8 @@ class ProductMobileplanJoin extends TwViewController {
 
   /**
    * 요금제 비교하기 Redis 정보 호출
-   * @param svcInfoProdId
-   * @param prodId
-   * @private
+   * @param svcInfoProdId - 사용자 세션 상품코드 (현재 요금제)
+   * @param prodId - 페이지 진입한 상품코드 (변경할 요금제)
    */
   private _getMobilePlanCompareInfo(svcInfoProdId: any, prodId: any): Observable<any> {
     if (FormatHelper.isEmpty(svcInfoProdId)) {
@@ -33,6 +34,16 @@ class ProductMobileplanJoin extends TwViewController {
     return this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,

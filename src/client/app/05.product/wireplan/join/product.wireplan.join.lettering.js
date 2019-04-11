@@ -39,7 +39,7 @@ Tw.ProductWireplanJoinLettering.prototype = {
     this.$inputText.on('keyup input', $.proxy(this._detectInputText, this));
 
     this.$btnClear.on('click', $.proxy(this._clear, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
   },
 
   _detectInputText: function() {

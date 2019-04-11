@@ -11,7 +11,6 @@ import MyTFareBillGuideRoaming from './controllers/billguide/myt-fare.bill.guide
 import MyTFareBillGuideDonation from './controllers/billguide/myt-fare.bill.guide.donation.controllers';
 import MyTFareSubMainNonBill from './controllers/submain/myt-fare.submain.non-paymt';
 import MyTFareBillSmallHistory from './controllers/billsmall/myt-fare.bill.small.history.controller';
-import MyTFareBillSmallHistoryDetail from './controllers/billsmall/myt-fare.bill.small.history.detail.controller';
 import MyTFareBillSmallMonthly from './controllers/billsmall/myt-fare.bill.small.monthly.controller';
 import MyTFareBillSmallBlock from './controllers/billsmall/myt-fare.bill.small.block.controller';
 import MyTFareBillContentsHistory from './controllers/billcontents/myt-fare.bill.contents.history.controller';
@@ -91,7 +90,6 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/small/history', controller: MyTFareBillSmallHistory });
     this.controllers.push({ url: '/bill/small/monthly', controller: MyTFareBillSmallMonthly });
     this.controllers.push({ url: '/bill/small/block', controller: MyTFareBillSmallBlock });
-    this.controllers.push({ url: '/bill/small/history/detail', controller: MyTFareBillSmallHistoryDetail });
 
     this.controllers.push({ url: '/bill/contents/history', controller: MyTFareBillContentsHistory });
     this.controllers.push({ url: '/bill/contents/monthly', controller: MyTFareBillContentsMonthly });

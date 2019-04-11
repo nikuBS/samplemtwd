@@ -1,8 +1,8 @@
 /**
  * @file myt-fare.bill.tpoint.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.7
- * Description: T포인트 요금납부 1회 예약 및 자동납부 관리
+ * @desc T포인트 요금납부 1회 예약 및 자동납부 관리 page
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -13,10 +13,24 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TITLE} from '../../../../types/bff.type';
 import {SELECT_POINT} from '../../../../types/string.type';
-import StringHelper from '../../../../utils/string.helper';
 
+/**
+ * @class
+ * @desc T포인트 요금납부 1회 예약 및 자동납부 관리
+ */
 class MyTFareBillTPoint extends TwViewController {
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
       this.getTPoint(), // T포인트 정보 조회
@@ -41,17 +55,30 @@ class MyTFareBillTPoint extends TwViewController {
     });
   }
 
-  /* T포인트 정보 조회 */
+  /**
+   * @function
+   * @desc T포인트 정보 조회
+   * @returns {Observable<any>}
+   */
   private getTPoint(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0041, {});
   }
 
-  /* T포인트 자동납부 예약 정보 조회 */
+  /**
+   * @function
+   * @desc T포인트 자동납부 예약 정보 조회
+   * @returns {Observable<any>}
+   */
   private getAutoTPoint(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0051, { ptClCd: 'TPT' });
   }
 
-  /* 데이터 가공 */
+  /**
+   * @function
+   * @desc parsing data
+   * @param data
+   * @returns {any}
+   */
   private parseData(data: any): any {
     data.point = FormatHelper.addComma(data.availTPt); // 사용 가능한 T포인트에 콤마(,) 추가
     data.endDate = DateHelper.getNextYearShortDate(); // 자동납부 종료일을 포맷에 맞게 변경
@@ -59,6 +86,12 @@ class MyTFareBillTPoint extends TwViewController {
     return data;
   }
 
+  /**
+   * @function
+   * @desc get auto data
+   * @param autoInfo
+   * @returns {any}
+   */
   private getAutoData(autoInfo: any): any {
     if (autoInfo.code === API_CODE.CODE_00) {
       return {

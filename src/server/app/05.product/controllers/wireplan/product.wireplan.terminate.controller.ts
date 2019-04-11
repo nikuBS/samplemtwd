@@ -1,8 +1,7 @@
 /**
  * 상품 해지 - 유선 부가서비스
- * @file product.wireplan.terminate.controller.ts
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.10.13
+ * @since 2018-10-13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,14 +12,17 @@ import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 
+/**
+ * @class
+ */
 class ProductWireplanTerminate extends TwViewController {
   constructor() {
     super();
   }
 
   /**
-   * @param currentAdditionsInfo
-   * @private
+   * 버튼 목록 예외처리
+   * @param currentAdditionsInfo - API 응답 값
    */
   private _getBtnData(currentAdditionsInfo: any): any {
     if (FormatHelper.isEmpty(currentAdditionsInfo.btnData)) {
@@ -30,6 +32,16 @@ class ProductWireplanTerminate extends TwViewController {
     return currentAdditionsInfo.btnData;
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {

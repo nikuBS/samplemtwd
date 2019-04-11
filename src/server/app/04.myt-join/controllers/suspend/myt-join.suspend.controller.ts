@@ -1,7 +1,7 @@
 /**
- * @file myt-join.suspend.controller.ts
- * @author Hyeryoun Lee (skt.P130712@partner.sk.com)
- * @since 2018. 10. 15.
+ * [나의 가입정보 - 장기/일시정지] 관련 처리
+ * @author Hyeryoun Lee
+ * @since 2018-10-15
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
@@ -12,7 +12,11 @@ import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import StringHelper from '../../../../utils/string.helper';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { MYT_SUSPEND_STATE_EXCLUDE } from '../../../../types/string.type';
-
+/**
+ * [나의 가입정보 - 장기/일시정지] API호출 및 렌더링
+ * @author Hyeryoun Lee
+ * @since 2018-10-15
+ */
 class MyTJoinSuspend extends TwViewController {
   constructor() {
     super();
@@ -31,14 +35,6 @@ class MyTJoinSuspend extends TwViewController {
       };
 
       if ( suspendState.code === API_CODE.CODE_00 ) {
-
-        // 메인메뉴에서 진입 시 redirect 처리 필요 -> 2019.01.29 기획에서 임시 원복 요구
-        /*
-        if ( this._checkRedirect(suspendState.result) ) {
-          res.redirect('/myt-join/submain/suspend/status');
-        }
-        */
-
         const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
         const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
         const after24Months = DateHelper.getShortDateWithFormatAddByUnit(today, 24, 'months', 'YYYY-MM-DD');
@@ -70,21 +66,5 @@ class MyTJoinSuspend extends TwViewController {
       res.render('suspend/myt-join.suspend.html', options);
     });
   }
-
-  private _checkRedirect(suspendState: any) {
-    if ( suspendState['svcStCd'] === 'SP' ) { // 장기일시정지 경우 redirect
-      if ( ['21', '22'].indexOf(suspendState.svcChgRsnCd) > -1 ) {
-        return true;
-      }
-    } else {
-      if ( suspendState.armyDt !== ''
-        && DateHelper.getCurrentShortDate() < suspendState.toDt
-        && suspendState.armyDt < suspendState.toDt ) { // 장기일시정지 일시해제 redirect
-        return true;
-      }
-    }
-    return false;
-  }
-
 }
 export default MyTJoinSuspend;

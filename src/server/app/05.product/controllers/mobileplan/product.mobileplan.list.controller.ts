@@ -89,11 +89,8 @@ export default class ProductPlans extends TwViewController {
               ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this._isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter((filter, idx, filters) => {
-              return filter.supProdFltId ?
-                // 기기, 데이터, 대상 필터 1개씩만 노출
-                filters.findIndex(item => item.supProdFltId === filter.supProdFltId) === idx && /^F011[2|3|6]0$/.test(filter.supProdFltId) :
-                // BFF 에서 상위 필터 안내려줄 경우에 대한 방어 코드
-                'F01713' === filter.prodFltId || /^F011[2|3|6]/.test(filter.prodFltId);
+              // 기기, 데이터, 대상 필터 1개씩만 노출
+              return filters.findIndex(item => item.supProdFltId === filter.supProdFltId) === idx && /^F011[2|3|6]0$/.test(filter.supProdFltId);
             })
           };
         })

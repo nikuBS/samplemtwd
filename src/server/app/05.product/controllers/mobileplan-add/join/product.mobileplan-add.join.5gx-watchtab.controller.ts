@@ -1,8 +1,7 @@
 /**
  * 모바일 부가서비스 > 5GX 워치tab할인_모
- * @file product.mobileplan-add.join.5gx-watchtab.controller.ts
  * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * @since 2019-04-05
  */
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
@@ -14,18 +13,34 @@ import {API_CMD} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 import {REDIS_KEY} from '../../../../../types/redis.type';
 
-class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
+/**
+ * @class
+ */
+class ProductMobileplanAddJoin5gxWatchtab extends TwViewController {
   constructor() {
     super();
   }
 
+  /* 접근이 허용되는 상품코드 */
   private readonly _prodIdList = ['NA00006484'];
+
+  /* 접근이 허용되는 모바일 요금제 상품코드 */
   private readonly _mobileplanIdList = ['NA00006404', 'NA00006405'];
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
-        pageInfo: {...pageInfo},
+        pageInfo: pageInfo,
         svcInfo: Object.assign(svcInfo, {svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)}),
         title: PRODUCT_TYPE_NM.JOIN
       };
@@ -62,4 +77,4 @@ class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   }
 }
 
-export default ProductMobileplanAddJoin5gxWatchTab;
+export default ProductMobileplanAddJoin5gxWatchtab;

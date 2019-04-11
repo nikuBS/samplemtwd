@@ -36,7 +36,7 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _bindEvent: function() {
     this.$btnSelectCombineLine.on('click', $.proxy(this._getMobileSvcInfo, this));
-    this.$btnSetupOk.on('click', $.proxy(this._procConfirmReq, this));
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirmReq, this), 500));
 
     this.$lineList.on('change', 'input[type=radio]:not(:disabled)', $.proxy(this._setWireSvcMgmtNum, this));
   },

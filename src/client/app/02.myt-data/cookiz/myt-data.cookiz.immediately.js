@@ -26,7 +26,7 @@ Tw.MyTDataCookizImmediately.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btn_recharge_immediately.on('click', $.proxy(this._rechargeImmediately, this));
+    this.$btn_recharge_immediately.click(_.debounce($.proxy(this._rechargeImmediately, this), 500));
     this.$wrap_immediately_select_list.on('click', $.proxy(this._onSelectImmediatelyAmount, this));
   },
 

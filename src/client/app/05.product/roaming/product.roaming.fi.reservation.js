@@ -34,7 +34,7 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnRegister.on('click', $.proxy(this._searchCountryCode, this));
+    this.$btnRegister.click(_.debounce($.proxy(this._searchCountryCode, this), 500));
     this.$btnCountryLink.on('click', $.proxy(this._addVisitCountry, this));
     this.$container.on('click', '#visitList .bt-alone', $.proxy(this._removeVisitCountry, this));
     this.$container.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));

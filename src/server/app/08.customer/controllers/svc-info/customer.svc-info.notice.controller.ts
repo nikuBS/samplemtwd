@@ -39,7 +39,7 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * API 응답 값 변환
-   * @param resultData
+   * @param resultData - API 응답 값
    */
   private _convertData(resultData): any {
     return {
@@ -49,7 +49,7 @@ class CustomerSvcInfoNotice extends TwViewController {
 
   /**
    * 공지사항 게시물 값 변환
-   * @param content
+   * @param content - 게시물 데이터
    */
   private _convertListItem(content) {
     return content.map(item => {
@@ -110,6 +110,16 @@ class CustomerSvcInfoNotice extends TwViewController {
     return 'M';
   }
 
+  /**
+   * @desc 화면 렌더링
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const page = req.query.page || 1, // 페이지
       ntcId = req.query.ntcId || null,  // 게시물 키
