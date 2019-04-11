@@ -45,6 +45,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._reqOverpay, this), 500));
+
+    if (Tw.BrowserHelper.isIos()) {
+      $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
+    }
   },
 
   _openAppAddressBook: function() {
