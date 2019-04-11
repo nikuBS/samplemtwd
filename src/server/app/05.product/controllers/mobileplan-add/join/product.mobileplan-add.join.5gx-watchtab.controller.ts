@@ -9,14 +9,14 @@ import {NextFunction, Request, Response} from 'express';
 import FormatHelper from '../../../../../utils/format.helper';
 import {MOBILEPLAN_ADD_ERROR_MSG, PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
-import { API_CMD } from '../../../../../types/api-command.type';
-import { Observable } from 'rxjs/Observable';
-import { REDIS_KEY } from '../../../../../types/redis.type';
+import {API_CMD} from '../../../../../types/api-command.type';
+import {Observable} from 'rxjs/Observable';
+import {REDIS_KEY} from '../../../../../types/redis.type';
 
 /**
  * @class
  */
-class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
+class ProductMobileplanAddJoin5gxWatchtab extends TwViewController {
   constructor() {
     super();
   }
@@ -40,7 +40,7 @@ class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
-        pageInfo: {...pageInfo},
+        pageInfo: pageInfo,
         svcInfo: Object.assign(svcInfo, {svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)}),
         title: PRODUCT_TYPE_NM.JOIN
       };
@@ -77,4 +77,4 @@ class ProductMobileplanAddJoin5gxWatchTab extends TwViewController {
   }
 }
 
-export default ProductMobileplanAddJoin5gxWatchTab;
+export default ProductMobileplanAddJoin5gxWatchtab;

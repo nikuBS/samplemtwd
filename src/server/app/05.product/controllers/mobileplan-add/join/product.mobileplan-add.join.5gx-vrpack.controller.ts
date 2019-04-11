@@ -37,7 +37,7 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
-        pageInfo: {...pageInfo},
+        pageInfo: pageInfo,
         svcInfo: Object.assign(svcInfo, {svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)}),
         title: PRODUCT_TYPE_NM.JOIN
       };
