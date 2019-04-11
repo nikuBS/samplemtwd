@@ -1,8 +1,8 @@
 /**
  * @file myt-fare.bill.contents.auto.change.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.08
- * Description: 콘텐츠이용료 자동선결제 변경
+ * @desc 콘텐츠이용료 자동선결제 변경 page
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -12,11 +12,26 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import BrowserHelper from '../../../../utils/browser.helper';
 
+/**
+ * @class
+ * @desc 콘텐츠이용료 자동선결제 변경
+ */
 class MyTFareBillContentsAutoChange extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (BrowserHelper.isApp(req)) { // 앱인 경우에만 진입 가능
       this.getAutoPrepayInfo().subscribe((resp) => {
@@ -42,11 +57,21 @@ class MyTFareBillContentsAutoChange extends TwViewController {
     }
   }
 
-  /* 콘텐츠이용료 자동선결제 정보 조회 */
+  /**
+   * @function
+   * @desc 콘텐츠이용료 자동선결제 정보 조회
+   * @returns {Observable<any>}
+   */
   private getAutoPrepayInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0085, {});
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param result
+   * @returns {any}
+   */
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
       result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000; // 기준금액 만원단위로 표시

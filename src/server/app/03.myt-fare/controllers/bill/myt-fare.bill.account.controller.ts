@@ -1,8 +1,8 @@
 /**
  * @file myt-fare.bill.account.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.09.18
- * Description: 계좌이체 요금납부
+ * @desc 계좌이체 요금납부 page
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -15,11 +15,26 @@ import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_CD} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 
+/**
+ * @class
+ * @desc 계좌이체 요금납부
+ */
 class MyTFareBillAccount extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const data = {
       title: MYT_FARE_PAYMENT_TITLE.ACCOUNT,
@@ -51,17 +66,32 @@ class MyTFareBillAccount extends TwViewController {
     }
   }
 
-  /* 미납요금 대상자 조회 */
+  /**
+   * @function
+   * @desc 미납요금 대상자 조회
+   * @returns {Observable<any>}
+   */
   private getUnpaidList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0021, {});
   }
 
-  /* 자동납부 정보 조회 */
+  /**
+   * @function
+   * @desc 자동납부 정보 조회
+   * @returns {Observable<any>}
+   */
   private getAutoInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
-  /* 데이터 정보 가공 */
+  /**
+   * @function
+   * @desc 데이터 정보 가공
+   * @param result
+   * @param svcInfo
+   * @param allSvc
+   * @returns {any}
+   */
   private parseData(result: any, svcInfo: any, allSvc: any): any {
     const list = result.settleUnPaidList; // 미납리스트
     if (!FormatHelper.isEmpty(list)) {
@@ -88,7 +118,12 @@ class MyTFareBillAccount extends TwViewController {
     return list;
   }
 
-  /* 금액정보에서 앞자리 0 제거하는 method */
+  /**
+   * @function
+   * @desc 금액정보에서 앞자리 0 제거하는 method
+   * @param {string} input
+   * @returns {string}
+   */
   private removeZero(input: string): string {
     let isNotZero = false;
     for (let i = 0; i < input.length; i++) {
@@ -102,6 +137,12 @@ class MyTFareBillAccount extends TwViewController {
     return input;
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param autoInfo
+   * @returns {any}
+   */
   private parseInfo(autoInfo: any): any {
     if (autoInfo.code === API_CODE.CODE_00) {
       const result = autoInfo.result;
@@ -118,6 +159,13 @@ class MyTFareBillAccount extends TwViewController {
     return null;
   }
 
+  /**
+   * @function
+   * @desc get address
+   * @param svcMgmtNum
+   * @param allSvc
+   * @returns {any}
+   */
   private getAddr(svcMgmtNum: any, allSvc: any): any {
     const serviceArray = allSvc.s; // 인터넷 회선
     let addr = '';

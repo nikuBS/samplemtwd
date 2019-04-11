@@ -2,7 +2,7 @@
  * @file myt-data.prepaid.voice-auto.controller.ts
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.11.28
- * Description: 선불폰 음성 자동 충전
+ * @desc 선불폰 음성 자동 충전 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -13,11 +13,26 @@ import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {PREPAID_AMT_CD} from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 선불폰 음성 자동 충전
+ */
 class MyTDataPrepaidVoiceAuto extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( BrowserHelper.isApp(req) ) { // 앱인 경우에만 진입 가능
       this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
@@ -28,7 +43,16 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     }
   }
 
-  /* 자동 충전 정보 조회 */
+  /**
+   * @function
+   * @desc 자동 충전 정보 조회
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param pageInfo
+   * @returns {Subscription}
+   */
   public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
     this.getAutoPPSInfo().subscribe((AutoInfo) => {
       res.render('prepaid/myt-data.prepaid.voice-auto.html', {
@@ -40,8 +64,19 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
       });
   })
 
-  public getAutoPPSInfo = () => this.apiService.request(API_CMD.BFF_06_0055, {}); // PPS 정보 조회
+  /**
+   * @function
+   * @desc PPS 정보 조회
+   * @returns {Observable<any>}
+   */
+  public getAutoPPSInfo = () => this.apiService.request(API_CMD.BFF_06_0055, {});
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param AutoInfo
+   * @returns {any}
+   */
   private parseAuto(AutoInfo: any): any {
     let result: any;
 
@@ -56,8 +91,20 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     return result;
   }
 
+  /**
+   * @function
+   * @desc convert format from YYYYMMDD to YYYY.M.D.
+   * @param sDate
+   * @returns {string}
+   */
   public convertDashDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
 
+  /**
+   * @function
+   * @desc convert format from 00000 to 00,000
+   * @param sAmount
+   * @returns {string}
+   */
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
 

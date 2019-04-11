@@ -1,7 +1,8 @@
 /**
  * @file tevent.ing.list.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.21
+ * @desc 진행중 이벤트 리스트 조회 페이지
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
@@ -12,11 +13,26 @@ import { PROMOTION_TYPE } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 
+/**
+ * @class
+ * @desc 진행중 이벤트 리스트 조회
+ */
 class TeventIngList extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     this.apiService.request(API_CMD.BFF_09_0001, {
       svcDvcClCd: 'M',
@@ -45,6 +61,12 @@ class TeventIngList extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param content
+   * @returns {any}
+   */
   private parseData(content: any): any {
     if (!FormatHelper.isEmpty(content)) {
       content.map((data) => {

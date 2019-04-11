@@ -1,8 +1,8 @@
 /**
  * @file myt-data.prepaid.data-complete.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.28
- * Description: 선불폰 데이터 충전 완료 페이지
+ * @desc 선불폰 데이터 충전 완료 페이지
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -11,16 +11,38 @@ import {DATA_UNIT, MYT_DATA_COMPLETE_MSG} from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
 import {RECHARGE_DATA_CODE} from '../../../../types/bff.type';
 
+/**
+ * @class
+ * @desc 선불폰 데이터 충전 완료
+ */
 class MyTDataPrepaidDataComplete extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject = ParamsHelper.getQueryParams(req.url);
     res.render('prepaid/myt-data.prepaid.data-complete.html', Object.assign(this._getData(queryObject), { pageInfo }));
   }
 
+  /**
+   * @function
+   * @desc get data
+   * @param queryObject
+   * @returns {any}
+   * @private
+   */
   private _getData(queryObject: any): any {
     const type = queryObject.type;
     return {
@@ -34,6 +56,13 @@ class MyTDataPrepaidDataComplete extends TwViewController {
     };
   }
 
+  /**
+   * @function
+   * @desc get main title
+   * @param {string} type
+   * @returns {string}
+   * @private
+   */
   private _getMainTitle(type: string): string {
     let mainTitle = MYT_DATA_COMPLETE_MSG.DATA_RECHARGE; // 1회 충전
     if (type === 'auto') {
@@ -46,6 +75,14 @@ class MyTDataPrepaidDataComplete extends TwViewController {
     return mainTitle;
   }
 
+  /**
+   * @function
+   * @desc get data info
+   * @param queryObject
+   * @param {string} type
+   * @returns {string}
+   * @private
+   */
   private _getDataInfo(queryObject: any, type: string): string {
     let data = queryObject.data;
     if (data !== undefined) {

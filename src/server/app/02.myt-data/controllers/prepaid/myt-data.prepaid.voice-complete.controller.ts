@@ -2,7 +2,7 @@
  * @file myt-data.prepaid.voice-complete.controller.ts
  * @author Jiman Park (jiman.park@sk.com)
  * @since 2018.11.28
- * Description: 선불폰 음성 충전 완료 페이지
+ * @desc 선불폰 음성 충전 완료 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -12,11 +12,26 @@ import ParamsHelper from '../../../../utils/params.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+/**
+ * @class
+ * @desc 선불폰 음성 충전 완료
+ */
 class MyTDataPrepaidVoiceComplete extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject: any = ParamsHelper.getQueryParams(req.url);
     const response = Object.assign(
@@ -32,6 +47,12 @@ class MyTDataPrepaidVoiceComplete extends TwViewController {
     res.render('prepaid/myt-data.prepaid.voice-complete.html', response);
   }
 
+  /**
+   * @function
+   * @desc make response params
+   * @param queryObject
+   * @returns {{mainTitle: string; centerName: string; centerUrl: string; confirmUrl: string}}
+   */
   private makeResponseParams = (queryObject) => {
     let mainTitle = MYT_DATA_COMPLETE_MSG.VOICE_RECHARGE; // 음성 1회 충전
 
@@ -55,8 +76,20 @@ class MyTDataPrepaidVoiceComplete extends TwViewController {
     };
   }
 
+  /**
+   * @function
+   * @desc convert format from YYYYMMDD to YYYY.M.D.
+   * @param sDate
+   * @returns {string}
+   */
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
 
+  /**
+   * @function
+   * @desc convert format from 00000 to 00,000
+   * @param sAmount
+   * @returns {string}
+   */
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
 

@@ -1,25 +1,37 @@
 /**
  * @file myt-fare.bill.point-complete.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.28
- * Description: 포인트 요금납부 완료
+ * @desc 포인트 요금납부 완료 page
  */
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import DateHelper from '../../../../utils/date.helper';
-import {MYT_FARE_COMPLETE_MSG, MYT_FARE_PAYMENT_NAME, MYT_FARE_POINT_MSG} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, RAINBOW_FARE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
+import {MYT_FARE_COMPLETE_MSG, MYT_FARE_POINT_MSG} from '../../../../types/string.type';
+import {RAINBOW_FARE} from '../../../../types/bff.type';
 import ParamsHelper from '../../../../utils/params.helper';
 
+/**
+ * @class
+ * @desc 포인트 요금납부 완료
+ */
 class MyTFareBillPointComplete extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject = ParamsHelper.getQueryParams(req.url);
     const title = !!queryObject && queryObject['title'];
@@ -40,7 +52,14 @@ class MyTFareBillPointComplete extends TwViewController {
     });
   }
 
-  /* 포인트 종류 (제목) 조회 */
+  /**
+   * @function
+   * @desc 포인트 종류 (제목) 조회
+   * @param {string} title
+   * @param {string} type
+   * @returns {string}
+   * @private
+   */
   private _getTitle(title: string, type: string): string {
     let mainTitle = '';
 
@@ -66,6 +85,14 @@ class MyTFareBillPointComplete extends TwViewController {
     return mainTitle;
   }
 
+  /**
+   * @function
+   * @desc get sub title
+   * @param {string} title
+   * @param {string} type
+   * @returns {string}
+   * @private
+   */
   private _getSubTitle(title: string, type: string): string {
     let subTitle = '';
 
@@ -79,6 +106,15 @@ class MyTFareBillPointComplete extends TwViewController {
     return subTitle;
   }
 
+  /**
+   * @function
+   * @desc get description
+   * @param {string} title
+   * @param {string} type
+   * @param {string} add
+   * @returns {string}
+   * @private
+   */
   private _getDescription(title: string, type: string, add: string): string {
     let description = '';
     if (!FormatHelper.isEmpty(add)) {
@@ -91,6 +127,13 @@ class MyTFareBillPointComplete extends TwViewController {
     return description;
   }
 
+  /**
+   * @function
+   * @desc get point
+   * @param {string} point
+   * @returns {string}
+   * @private
+   */
   private _getPoint(point: string): string {
     let pointTxt = '';
     if (!FormatHelper.isEmpty(point)) {
