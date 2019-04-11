@@ -11,7 +11,7 @@ class CommonUtilIntro extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     res.render('util/common.util.intro.html', {pageInfo, isApp: BrowserHelper.isApp(req)});
   }
