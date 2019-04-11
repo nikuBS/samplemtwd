@@ -73,7 +73,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
 
-    this._toggleSetupButton(this.$inputNumber.val().length > 0);
+    this._toggleSetupButton(this.$inputNumber.val().length > 10);
     this._toggleClearBtn();
   },
 
