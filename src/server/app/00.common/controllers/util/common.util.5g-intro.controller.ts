@@ -15,7 +15,7 @@ class CommonUtil5gIntro extends TwViewController {
 
   private readonly _allowed2ndDepth = ['safe-life', 'amazing-life', 'enjoy-life', '5gx-plan'];
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const page = req.params.page;
 
     if (!page) {

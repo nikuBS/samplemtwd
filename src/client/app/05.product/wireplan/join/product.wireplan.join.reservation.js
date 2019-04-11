@@ -324,11 +324,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').prop('checked', false).removeAttr('checked')
         .attr('disabled', 'disabled').prop('disabled', true);
       this.$combineExplain.attr('aria-disabled', true).addClass('disabled');
-      this.$combineExplainCheckboxWrap.hide().attr('aria-hidden', 'true');
+      // this.$combineExplainCheckboxWrap.hide().attr('aria-hidden', 'true');
     } else {
       this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
       this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
-      this.$combineExplainCheckboxWrap.show().attr('aria-hidden', 'false');
+      // this.$combineExplainCheckboxWrap.show().attr('aria-hidden', 'false');
     }
   },
 
