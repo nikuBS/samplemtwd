@@ -1,6 +1,6 @@
 /**
  * 모바일 부가서비스 > 5GX VR 팩 카드보드 & 기어
- * @author ankle breaker (byunma@sk.com)
+ * @author anklebreaker
  * @since 2019-04-05
  */
 

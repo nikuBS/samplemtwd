@@ -1,10 +1,19 @@
 /**
- * @file product.mobileplan-add.setting.5gx-watchtab.js
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.11
+ * @file 부가서비스 5gx 워치tab 설정변경
+ * @author anklebreaker
+ * @since 2019-04-11
  */
 
-Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId, mobileplanId) {
+/**
+ * @class
+ * @constructor
+ * @desc 초기화를 위한 class
+ * @param {HTMLDivElement} rootEl 최상위 element
+ * @oaram {String} prodId 상품ID
+ * @param {String} displayId 화면ID
+ * @param {String} svcProdGrpId 서비스상품그룹ID
+ */
+  Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId, mobileplanId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -23,6 +32,10 @@ Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId,
 
 Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
 
+  /**
+   * @function
+   * @desc dom caching
+   */
   _cachedElement: function () {
     this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
     this.$btnAddNum = this.$container.find('.fe-btn_add_num');
@@ -33,6 +46,10 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     this.$divInput = this.$container.find('.fe-div_input');
   },
 
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
@@ -47,10 +64,19 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 주소록 버튼 클릭
+   */
   _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
   },
 
+  /**
+   * @function
+   * @desc 주소록 callback
+   * @param res
+   */
   _onContact: function (res) {
     if (res.resultCode !== Tw.NTV_CODE.CODE_00) {
       return;

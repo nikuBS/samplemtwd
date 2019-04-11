@@ -1,9 +1,18 @@
 /**
- * @file product.mobileplan-add.join.5gx-watchtab.js
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * @file 부가서비스 5gx 워치tab
+ * @author anklebreaker
+ * @since 2019-04-05
  */
 
+/**
+ * @class
+ * @constructor
+ * @desc 초기화를 위한 class
+ * @param {HTMLDivElement} rootEl 최상위 element
+ * @oaram {String} prodId 상품ID
+ * @param {String} displayId 화면ID
+ * @param {String} mobileplanId 요금제ID
+ */
 Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mobileplanId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
@@ -16,6 +25,9 @@ Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mo
   this._displayId = displayId;
   this._confirmOptions = {};
 
+  /**
+   * @desc 요금제에 따른 분기처리
+   */
   if (mobileplanId === 'NA00006404') {
     this._maxLine = 0;
     this._overMaxlineAlert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A91;
@@ -29,10 +41,18 @@ Tw.ProductMobileplanAddJoin5gxWatchtab = function (rootEl, prodId, displayId, mo
 
 Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
 
+  /**
+   * @member (Object)
+   * @prop {Array} addlist 추가된 연락처 list
+   */
   _data: {
     addList: []
   },
 
+  /**
+   * @function
+   * @desc dom caching
+   */
   _cachedElement: function () {
     this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
     this.$btnAddNum = this.$container.find('.fe-btn_add_num');
@@ -45,6 +65,10 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
     this._combinationTemplate = Handlebars.compile($('#fe-templ-line_item').html());
   },
 
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
@@ -61,10 +85,19 @@ Tw.ProductMobileplanAddJoin5gxWatchtab.prototype = {
   },
 
 
+  /**
+   * @function
+   * @desc 주소록 버튼 클릭
+   */
   _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, this._onContact.bind(this));
   },
 
+  /**
+   * @function
+   * @desc 주소록 callback
+   * @param res
+   */
   _onContact: function (res) {
     if (res.resultCode !== Tw.NTV_CODE.CODE_00) {
       return;

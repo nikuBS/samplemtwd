@@ -1,5 +1,7 @@
 /**
- * @file common.util.intro.controller.ts
+ * 소개페이지
+ * @author anklebreaker
+ * @since 2019-04-05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

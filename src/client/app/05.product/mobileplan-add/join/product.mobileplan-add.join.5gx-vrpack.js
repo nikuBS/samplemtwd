@@ -1,9 +1,18 @@
 /**
- * @file product.mobileplan-add.join.5gx-vrpack.js
- * @author ankle breaker (byunma@sk.com)
- * @since 2019.04.05
+ * @file 부가서비스 5gx vr pack
+ * @author anklebreaker
+ * @since 2019-04-05
  */
 
+/**
+ * @class
+ * @constructor
+ * @desc 초기화를 위한 class
+ * @param {HTMLDivElement} rootEl 최상위 element
+ * @oaram {String} prodId 상품ID
+ * @param {String} displayId 화면ID
+ * @param {Object} confirmOptions 옵션
+ */
 Tw.ProductMobileplanAddJoin5gxVRpack = function (rootEl, prodId, displayId, confirmOptions) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -22,8 +31,15 @@ Tw.ProductMobileplanAddJoin5gxVRpack = function (rootEl, prodId, displayId, conf
 
 Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
 
+  /**
+   * @member (String) 통합주소ID
+   */
   _addressId: null,
 
+  /**
+   * @function
+   * @desc dom caching
+   */
   _cachedElement: function () {
     this.$inputDisabled = this.$container.find('.fe-input-disabled');
     this.$inputAddressZipcode = this.$container.find('.fe-address-zipcode');
@@ -34,6 +50,10 @@ Tw.ProductMobileplanAddJoin5gxVRpack.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc event binding
+   */
   _bindEvent: function () {
     this.$btnSearchZipcode.on('click', $.proxy(this._onClickSearchZipcode, this));
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
