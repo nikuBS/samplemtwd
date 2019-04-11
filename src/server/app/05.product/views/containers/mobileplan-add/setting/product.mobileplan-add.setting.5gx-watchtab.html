@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- .cont-box -->
-                <div class="cont-box">
+                <div class="cont-box fe-div_input">
                     <div class="input-number-wrap">
                         <h3 class="tit">결합할 회선</h3>
                         <!-- 2019.01.22 id값 삭제  sblee -->
@@ -97,7 +97,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddSetting5gxWatchtab($('.wrap'), '<%= prodId %>', 'nApp_7467_02', '<%= combineLineInfo.svcProdGrpId %>');
+    new Tw.ProductMobileplanAddSetting5gxWatchtab($('.wrap'), '<%= prodId %>', 'nApp_7467_02', '<%= combineLineInfo.svcProdGrpId %>', '<%= svcInfo.prodId %>');
   });
 </script>
 </body>
