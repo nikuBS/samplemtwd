@@ -25,7 +25,7 @@ class CommonShareOldLanding extends TwViewController {
       url = decodeURIComponent(url);
       const findMapping = mapping.find((urlInfo) => urlInfo.old === url);
 
-      if ( !FormatHelper.isEmpty(findMapping) ) {
+      if ( !FormatHelper.isEmpty(findMapping) && !FormatHelper.isEmpty(findMapping.menuId) ) {
         const menuId = findMapping.menuId;
         if ( menuId.indexOf('/product/callplan?prod_id=') !== -1 ) {
           res.redirect(menuId);
