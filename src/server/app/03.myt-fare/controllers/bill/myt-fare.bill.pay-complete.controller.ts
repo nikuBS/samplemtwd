@@ -1,8 +1,8 @@
 /**
  * @file myt-fare.bill.pay-complete.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.27
- * Description: 요금납부 및 선결제 완료 화면
+ * @desc 요금납부 및 선결제 완료 화면
  */
 
 import {NextFunction, Request, Response} from 'express';
@@ -11,16 +11,38 @@ import FormatHelper from '../../../../utils/format.helper';
 import {MYT_FARE_COMPLETE_MSG} from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
 
+/**
+ * @class
+ * @desc 요금납부 및 선결제 완료
+ */
 class MyTFareBillPayComplete extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject = ParamsHelper.getQueryParams(req.url);
     res.render('bill/myt-fare.bill.pay-complete.html', Object.assign(this._getData(queryObject), { pageInfo }));
   }
 
+  /**
+   * @function
+   * @desc get data
+   * @param queryObject
+   * @returns {any}
+   * @private
+   */
   private _getData(queryObject: any): any {
     let data = {
       mainTitle: MYT_FARE_COMPLETE_MSG.PAYMENT, // 메인 타이틀
@@ -47,7 +69,14 @@ class MyTFareBillPayComplete extends TwViewController {
     return data;
   }
 
-  /* SMS 전송완료 화면일 경우 추가 정보 */
+  /**
+   * @function
+   * @desc SMS 전송완료 화면일 경우 추가 정보
+   * @param queryObject
+   * @param data
+   * @returns {any}
+   * @private
+   */
   private _getSmsData(queryObject: any, data: any): any {
     const svcNum = queryObject['svcNum']; // 전송된 휴대폰 번호
     data.mainTitle = MYT_FARE_COMPLETE_MSG.SMS;
@@ -58,6 +87,14 @@ class MyTFareBillPayComplete extends TwViewController {
     return data;
   }
 
+  /**
+   * @function
+   * @desc get prepay data (선결제)
+   * @param data
+   * @param type
+   * @returns {any}
+   * @private
+   */
   private _getPrepayData(data: any, type: any): any {
     data.mainTitle = MYT_FARE_COMPLETE_MSG.PREPAY;
     data.centerName = MYT_FARE_COMPLETE_MSG.PREPAY_HISTORY; // 요금납부내역 조회
@@ -71,6 +108,15 @@ class MyTFareBillPayComplete extends TwViewController {
     return data;
   }
 
+  /**
+   * @function
+   * @desc get auto prepay data (자동선결제)
+   * @param data
+   * @param type
+   * @param subType
+   * @returns {any}
+   * @private
+   */
   private _getAutoPrepayData(data: any, type: any, subType: any): any {
     if (subType === 'auto') {
       data.mainTitle = MYT_FARE_COMPLETE_MSG.REGISTER; // 자동선결제

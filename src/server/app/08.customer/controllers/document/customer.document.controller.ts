@@ -1,25 +1,38 @@
 /**
  * @file customer.document.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.10.16
+ * @desc 필요서류 안내 페이지
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import {DEFAULT_LIST_COUNT} from '../../../../types/config.type';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {HEAD_TITLE} from '../../../../types/title.type';
-import DateHelper from '../../../../utils/date.helper';
-import {PROMOTION_TYPE} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import {combineLatest} from 'rxjs/observable/combineLatest';
 
+/**
+ * @class
+ * @desc 필요서류 안내
+ */
 class CustomerDocument extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @function
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     combineLatest(
       this.getMobileService(),
@@ -46,14 +59,30 @@ class CustomerDocument extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc 모바일 서비스 조회
+   * @returns {Observable<any>}
+   */
   private getMobileService() {
     return this.apiService.request(API_CMD.BFF_08_0054, { sysCd: 'EST_SW' });
   }
 
+  /**
+   * @function
+   * @desc 인터넷/전화/TV 서비스 조회
+   * @returns {Observable<any>}
+   */
   private getEtcService() {
     return this.apiService.request(API_CMD.BFF_08_0054, { sysCd: 'EST_W' });
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param list
+   * @returns {any}
+   */
   private parseData(list: any): any {
     if (!FormatHelper.isEmpty(list)) {
       list.map((data) => {

@@ -1,8 +1,8 @@
 /**
  * @file myt-data.prepaid.data-auto.controller.ts
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jayoon Kong
  * @since 2018.11.29
- * Description: 선불폰 데이터 자동 충전
+ * @desc 선불폰 데이터 자동 충전 페이지
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -12,13 +12,27 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {MYT_DATA_RECHARGE_MSG} from '../../../../types/string.type';
 import {RECHARGE_DATA_CODE} from '../../../../types/bff.type';
-import {Observable} from 'rxjs/Observable';
 
+/**
+ * @class
+ * @desc 선불폰 데이터 자동 충전
+ */
 class MyTDataPrepaidDataAuto extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * @class
+   * @desc render
+   * @param {e.Request} req
+   * @param {e.Response} res
+   * @param {e.NextFunction} next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (BrowserHelper.isApp(req)) { // 앱일 경우에만 진입 가능
       this.getAutoInfo().subscribe((autoInfo) => {
@@ -46,11 +60,21 @@ class MyTDataPrepaidDataAuto extends TwViewController {
     }
   }
 
-  /* 선불폰 데이터 자동 충전 내역 조회 */
+  /**
+   * @function
+   * @desc 선불폰 데이터 자동 충전 내역 조회
+   * @returns {any}
+   */
   private getAutoInfo(): any {
     return this.apiService.request(API_CMD.BFF_06_0060, {});
   }
 
+  /**
+   * @function
+   * @desc parsing data
+   * @param result
+   * @returns {any}
+   */
   private parseAuto(result: any): any {
     if (FormatHelper.isEmpty(result.amtCd)) { // 정보가 존재하지 않으면 default setting
       result.txt = MYT_DATA_RECHARGE_MSG.SELECT_DATA;

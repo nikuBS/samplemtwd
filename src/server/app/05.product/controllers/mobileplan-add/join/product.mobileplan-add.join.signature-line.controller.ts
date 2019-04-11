@@ -1,6 +1,6 @@
 /**
  * 모바일 부가서비스 > 시그니처 워치
- * @author Jayoon Kong (jayoon.kong@sk.com)
+ * @author Jihun Yang
  * @since 2018-11-15
  */
 
