@@ -79,8 +79,8 @@ class MyTFareSubmainController extends TwViewController {
             // 청구요금
             if ( claim && claim.invDt.length > 0 ) {
               data.claim = claim;
-              data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
-              data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
+              data.claimFirstDay = DateHelper.getShortFirstDate(claim.invDt);
+              data.claimLastDay = DateHelper.getShortLastDate(claim.invDt);
               // 사용요금
               // const usedAmt = parseInt(claim.useAmtTot, 10);
               // data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
@@ -240,8 +240,8 @@ class MyTFareSubmainController extends TwViewController {
         // 사용요금
         if ( usage ) {
           data.usage = usage;
-          data.usageFirstDay = DateHelper.getMonthFirstDay(usage.invDt);
-          data.usageLastDay = DateHelper.getMonthLastDay(usage.invDt);
+          data.usageFirstDay = DateHelper.getShortFirstDate(usage.invDt);
+          data.usageLastDay = DateHelper.getShortLastDate(usage.invDt);
           // 사용요금
           // const usedAmt = parseInt(usage.useAmtTot, 10);
           // data.useAmtTot = FormatHelper.addComma(usedAmt.toString() || '0');

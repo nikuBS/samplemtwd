@@ -18,71 +18,82 @@ class DateHelper {
     return date;
   }
 
-  static getCurrentDate(): any {
+
+  /**
+   * @function
+   * @desc Get current date
+   * @returns {Date}
+   * @public
+   */
+  static getCurrentDate(): Date {
     return new Date();
   }
 
+  /**
+   * @function
+   * @desc Convert to date object
+   * @param {string or Date} date 
+   * @param {string} format 
+   * @public
+   */
   static convDateCustomFormat(date: any, format: string): Date {
     return moment(date, format).toDate();
   }
 
-  static getNextMonth(): any {
+  /**
+   * @function
+   * @desc get first date of next month 
+   * @returns {Date}
+   * @public
+   */
+  static getNextMonth(): Date {
     const next = new Date();
     next.setDate(1);
     next.setMonth(next.getMonth() + 1);
     return next;
   }
-
-  static getRemainDate(): number {
-    const current = DateHelper.getCurrentDate();
-    const next = DateHelper.getNextMonth();
-    const remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
-    return remain;
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns Unix timestamp
-   */
-  static getUnixTimeStamp(date: any) {
-    return moment(date).unix();
-  }
   
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get month before given months
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {number} before months
    * @returns {string} : 6
+   * @public
    */
   static getFromCurrentPrevMonth(date: any, before: number ): string {
     return moment(this.convDateFormat(date)).add(-before, 'months').format('M');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get year before given months
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {number} before months
    * @returns {string} : 6
+   * @public
    */
   static getFromCurrentPrevYear(date: any, before: number ): string {
     return moment(this.convDateFormat(date)).add(-before, 'months').format('YYYY');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get formatted date
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 20180601
+   * @public
    */
   static getCurrentShortDate(date?: any): string {
     return moment(this.convDateFormat(date)).format('YYYYMMDD');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 201806
-   */
-  static getYearMonth(date) {
-    return moment(this.convDateFormat(date)).format('YYYYM');
-  }
-
-  /**
-   *  @param data {Date} or {string} : YYYYMMDDhhmmss
-   *  @return {string} : 2018.6.
+   * @function
+   * @desc get first date of next month 
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @return {string} : 2018.6.
+   * @public
    */
   static getYearNextMonthFromDate(date: Date | string): string {
     const next = this.convDateFormat(date);
@@ -92,8 +103,11 @@ class DateHelper {
   }
 
   /**
-   *  @param data {Date} or {string} : YYYYMMDDhhmmss
-   *  @return {string} : 2018.6
+   * @function
+   * @desc get first date of next month without last dot
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @return {string} : 2018.6
+   * @public
    */
   static getYearNextNoDotMonthFromDate(date: Date | string): string {
     const next = this.convDateFormat(date);
@@ -103,15 +117,20 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @function
+   * @desc get formatted date
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 12:00:00
+   * @public
    */
   static getCurrentDateTime = function (format) {
     return moment().format(format || 'YYYY.M.DD hh:mm:ss');
   };
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss or none
+   * @function
+   * @desc get month from date
+   * @param {Date or string} date YYYYMMDDhhmmss or none
    * @returns {string} : 12
    */
   static getCurrentMonth(date?: any): string {
@@ -119,203 +138,177 @@ class DateHelper {
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss or none
+   * @function
+   * @desc get year from date
+   * @param {Date or string} date YYYYMMDDhhmmss or none
    * @returns {string} : 2018
+   * @public
    */
   static getCurrentYear(date?: any): string {
     return moment(this.convDateFormat(date)).format('YYYY');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @function
+   * @desc get a date before 1 year
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime - 1 year
+   * @public
    */
   static getPastYearShortDate = function () {
     return moment().subtract(1, 'years').format('YYYYMMDD');
   };
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @function
+   * @desc get a date before 6 months
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime - 6 months
+   * @public
    */
   static getPast6MonthsShortDate = function () {
     return moment().subtract(6, 'months').format('YYYYMMDD');
   };
 
   /**
-   * @param date {Date} or {string} : YYYYMMDD
+   * @function
+   * @desc get a date after 1 year
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : currentDateTime + 1 year
+   * @public
    */
   static getNextYearShortDate = function () {
     return moment().add(1, 'years').format('YYYY.M.D.');
   };
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get a date in korean
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018년 12월 31일
+   * @public
    */
   static getKoreanDate(date: any): string {
     return moment(this.convDateFormat(date)).format('LL');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 18년 12월 31일
-   */
-  static getShortKoreanDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('YY년 M월 DD일');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2919년 3월 5일
-   */
-  static getFullKoreanDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('YYYY년 M월 D일');
-  }
-
-  /**
-   * @input 11월
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get month in korean
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 12월
-   */
-  static getShortKoreanAfterMonth(date: any): string {
-    return moment(this.convDateFormat(date)).add(1, 'months').format('M월');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 12월
+   * @public
    */
   static getShortKoreanMonth(date: any): string {
     return moment(this.convDateFormat(date)).format('M월');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @param {string} : 10월 9일 화요일
-   */
-  static getKoreanDateWithDay(date: any): string {
-    return moment(this.convDateFormat(date)).format('MMM Do dddd');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @param {string} : 오전 10시 9분
-   */
-  static getKoreanTime(date: any): string {
-    return moment(this.convDateFormat(date)).format('a h시 m분');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {number} : 30
-   */
-  static getNewRemainDate(date: any): number {
-    return moment(this.convDateFormat(date)).diff(new Date(), 'day') + 2;
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get formatted date
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1.
+   * @public
    */
   static getShortDate(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY.M.D.');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get formatted date without last dot
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
+   * @public
    */
   static getShortDateNoDot(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY.M.D');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get formatted date
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
+   * @public
    */
   static getDashShortDateNoDot(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY-MM-DD');
   }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.6.1 (first date of this month)
-   */
-  static getShortFirstDateNoDot(date: any): string {
-    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D');
-  }
   
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.6.1 (first date of this month)
+   * @function
+   * @desc get first day of the month from given date
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1
+   * @public
    */
   static getShortFirstDate(date: any): string {
     return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
   }
 
   /**
+   * @function
+   * @desc get last day of the month from given date
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. (last date of this month)
+   * @public
    */
   static getShortLastDate(date: any) {
-    return moment(this.convDateFormat(date)).add('months', 1).date(0).format('YYYY.M.D.');
-  }
-
-   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.05
-   */
-  static getShortDateNoDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('YYYY.M');
+    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.D.');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 06.01
-   */
-  static getShortDateNoYear(date: any): string {
-    return moment(this.convDateFormat(date)).format('M.DD');
-  }
-
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get date and time
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00
+   * @public
    */
   static getShortDateAndTime(date) {
     return moment(this.convDateFormat(date)).format('YYYY.M.D. hh:mm');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get date and time with 24 hour format
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00
+   * @public
    */
   static getShortDateAnd24Time(date) {
     return moment(this.convDateFormat(date)).format('YYYY.M.D. HH:mm');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get date and time
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 12:00:00
+   * @public
    */
   static getFullDateAndTime(date) {
     return moment(this.convDateFormat(date)).format('YYYY.M.D. hh:mm:ss');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDHHmmss
+   * @function
+   * @desc get date and time with 24 hour format
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 12:00:00
+   * @public
    */
   static getFullDateAnd24Time(date) {
     return moment(this.convDateFormat(date)).format('YYYY.M.D. HH:mm:ss');
   }
 
   /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @desc get next day
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2018-06-02 11:59
+   * @public
    */
   static getAddDay(date, format = 'YYYY.M.DD hh:mm') {
     return moment(this.convDateFormat(date))
@@ -325,49 +318,40 @@ class DateHelper {
   }
 
   /**
-   * Return Date width Format parameter
+   * @function
+   * @desc get formatted date
    * @param {date} date || {string} date, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   * @public
    */
   static getShortDateWithFormat(date: any, format: string, currentFormat?: any): any {
     return moment(this.convDateFormat(date), currentFormat).format(format);
   }
 
   /**
-   * Convert Date Format (BFF string to Date)
+   * @function
+   * @desc get day after given days
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   * @public
    */
   static getShortDateWithFormatAddByUnit(date: any, amount: any, unit: any, format: string): string {
     return moment(date).add(amount, unit).format(format);
   }
 
-  static getEndOfMonth(date: any, format: string, currentFormat?: string): string {
-    const days = moment(date, currentFormat).daysInMonth();
-    return moment(date.slice(0, 6) + days, currentFormat).format(format);
-  }
-
   /**
-   * Convert Date Format (BFF string to Date)
+   * @function
+   * @desc get difference between two days
    * @param {date} date || {string} date, {number} amount, {string} unit, {string} format
    * @returns {Date} : YYMMDD, YYYYMMDD, YY.MM.DD
+   * @public
    */
   static getDifference(endDate: string, startDate?: string): number {
     return moment(endDate).diff(startDate || new Date());
   }
 
   /**
-   * Return duration difference
-   * @param {Moment} : moment
-   * @returns {Moment} : moment
-   */
-  static getDiffDuration(endDate: any): any {
-    const diff = moment(endDate).diff(new Date());
-    return moment.duration(diff);
-  }
-
-  /**
-    * @param {any} date, {string} subStr, {string} format
+    * @param {string} date, {string} subStr, {string} format
     * @returns {Date}
   */
   static getStartOfMonSubtractDate( date: any, subStr: string, format: string ): any {
@@ -379,50 +363,55 @@ class DateHelper {
   }
 
   /**
+   * @function
+   * @desc get first day of given date with format
    * @param {any} date, {string} format
    * @returns {Date}
+   * @public
    */
   static getStartOfMonDate( date: any, format: string ): any {
     return moment(this.convDateFormat(date)).startOf('month').format(format);
   }
 
+  /**
+   * @function
+   * @desc get last day of given date with format
+   * @param {any} date, {string} format
+   * @returns {Date}
+   * @public
+   */
   static getEndOfMonDate( date: any, format: string ): any {
     return moment(this.convDateFormat(date)).endOf('month').format(format);
   }
 
   /**
-   * Return difference by unit
+   * @function 
+   * @desc get difference between two days
    * @param {string} endDate, {string} startDate, {any} unit
-   * @returns {Moment} : moment
+   * @returns {number} 
+   * @public
    */
   static getDiffByUnit(endDate: string, startDate: string, unit: any): number {
     return moment(endDate).diff(startDate, unit);
   }
 
   /**
-   * @param {any} date
-   * @returns {string} : yyyy-mm-01
-   */
-  static getMonthFirstDay( date: any): any {
-    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
-  }
-
-  /**
-   * @param {any} date
-   * @returns {string} : yyyy-mm-30 or 31
-   */
-  static getMonthLastDay( date: any): any {
-    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.D.');
-  }
-
-  /**
-   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @function
+   * @dest get d-day
+   * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {number} : 30
+   * @public
    */
   static getDday(date: any): number {
     return moment(date).diff(this.getCurrentShortDate(new Date()), 'day');
   }
 
+  /**
+   * @function
+   * @desc get date and time after 5 minutes
+   * @param {string or Date} date 
+   * @public
+   */
   static add5min(date: any): any {
     return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
   }
