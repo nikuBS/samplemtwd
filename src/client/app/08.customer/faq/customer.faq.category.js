@@ -1,9 +1,17 @@
 /**
- * @file customer.faq.category.js
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.12.02
+ * @file 자주하는 질문 카테고리 형식 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-12-02
  */
 
+/**
+ * @constructor
+ * @param  {Object} rootEl - 최상위 elem
+ * @param  {String} title - 상단 표시할 title
+ * @param  {String} rootCat - 최상위 카테고리 코드
+ * @param  {String} depth1 - depth 1 의 정보
+ * @param  {String} depth2 - depth 2 의 정보
+ */
 Tw.CustomerFaqCategory = function (rootEl, title, rootCat, depth1, depth2) {
   this.$container = rootEl;
 
@@ -44,6 +52,12 @@ Tw.CustomerFaqCategory.prototype = {
     this.$btnMore.on('click', $.proxy(this._loadList, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
+
+  /**
+   * @function
+   * @desc depth 1 or depth2 카테고리 버튼 선택 시 선택가능한 목록을 보여주는 actionsheet 노출
+   * @param  {Number} depth - 선택된 depth 1 or 2
+   */
   _onDropDownClicked: function (depth) {
     var data = depth === 1 ? this._depth1obj : this._depth2obj;
     if (depth === 2) {
@@ -100,6 +114,14 @@ Tw.CustomerFaqCategory.prototype = {
       }, this));
     }, this));
   },
+
+  /**
+   * @function
+   * @desc 카테고리 정보가 바뀐 경우 화면에 이를 update
+   * @param  {Number} depth - 변경된 카테고리가 depth1 인지 depth2 인지
+   * @param  {String} title - 상단 변경해 줄 title
+   * @param  {String} value - 선택된 category 값
+   */
   _onCategoryChanged: function (depth, title, value) {
     this._popupService.close();
     switch (depth) {
@@ -133,6 +155,11 @@ Tw.CustomerFaqCategory.prototype = {
         break;
     }
   },
+
+  /**
+   * @function
+   * @desc 변경된 카테고리에 맞는 FAQ목록을 BFF로 조회
+   */
   _loadList: function () {
     var code, depth;
 
@@ -177,6 +204,12 @@ Tw.CustomerFaqCategory.prototype = {
       Tw.Error(err.code, err.msg).pop();
     });
   },
+
+  /**
+   * @function
+   * @desc BFF로 부터 받은 FAQ목록으로 화면 update
+   * @param  {Object} result - BFF로 부터 받은 FAQ목록 response
+   */
   _onDataReceived: function (result) {
     if (result.last) {
       this.$btnMore.addClass('none');
@@ -192,6 +225,12 @@ Tw.CustomerFaqCategory.prototype = {
       list: result.content
     }));
   },
+
+  /**
+   * @function
+   * @desc 링크를 외부 브라우저로 연결
+   * @param  {Object} e - click event
+   */
   _onExternalLink: function (e) {
     var url = $(e.currentTarget).attr('href');
     Tw.CommonHelper.openUrlExternal(url);

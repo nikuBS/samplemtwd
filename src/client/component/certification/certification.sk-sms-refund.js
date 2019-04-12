@@ -1,7 +1,7 @@
 /**
- * @file certification.sk-sms-refund.js
- * @author Hakjoon. sim (hakjoon.sim@sk.com)
- * @since 2018.11.29
+ * @file 비로그인 미환급금 조회 시 sk sms 인증 선택한 경우에 대한 화면 처리
+ * @author Hakjoon. sim
+ * @since 2018-11-29
  */
 
 Tw.CertificationSkSmsRefund = function () {
@@ -21,7 +21,7 @@ Tw.CertificationSkSmsRefund = function () {
 };
 
 Tw.CertificationSkSmsRefund.prototype = {
-  SMS_CERT_ERROR: {
+  SMS_CERT_ERROR: { // validation 문구 출력을 위한 error code 정의
     ATH2003: 'ATH2003', // 재전송 제한시간이 지난 후에 이용
     ATH2006: 'ATH2006', // 제한시간 내 인증번호를 보낼 수 있는 횟수 초과
     ATH2007: 'ATH2007', // 인증번호 불일치
@@ -30,6 +30,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     ATH2014: 'ATH2014'
   },
 
+  /**
+   * @function
+   * @desc layer popup으로 해당 인증 화면을 노출
+   * @param  {Function} callback - 인증 완료 후 호출할 callback
+   */
   openSmsPopup: function (callback) {
     this._callback = callback;
 
@@ -37,6 +42,12 @@ Tw.CertificationSkSmsRefund.prototype = {
       hbs: 'MN_01_04_04'
     }, $.proxy(this._onOpenSmsPopup, this));
   },
+
+  /**
+   * @function
+   * @desc 레이어팝업 발생 후 해당 화면의 각종 이벤트 바인딩
+   * @param  {Object} $popupContainer - 해당 레이어 팝업의 최상위 elem
+   */
   _onOpenSmsPopup: function ($popupContainer) {
     this.$container = $popupContainer;
     this.$inputName = $popupContainer.find('#fe-input-name');
@@ -67,19 +78,40 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     new Tw.InputFocusService($popupContainer, this.$btConfirm);
   },
+
+  /**
+   * @function
+   * @desc BFF로 captcha 이미지 요청
+   */
   _requestCaptchaImg: function () {
     this.$captchaImage.attr('src',
       '/bypass' + Tw.API_CMD.BFF_01_0053.path.replace(':version', 'v1') + '?rnd=' + Math.random());
   },
+
+  /**
+   * @function
+   * @desc BFF로 captcha 사운드 요청
+   */
   _requestCaptchaSound: function () {
     new Audio('/bypass' + Tw.API_CMD.BFF_01_0054.path.replace(':version', 'v1')).play();
   },
+
+  /**
+   * @function
+   * @desc 성별 선택 변경될 경우 처리
+   * @param  {Object} e - change event
+   */
   _onGenderChanged: function (e) {
     this._gender = e.currentTarget.value;
     this._enableConfirmIfPossible();
   },
+
+  /**
+   * @function
+   * @desc 인증번호 요청 시 관련 처리
+   */
   _onCert: function () {
-    if (!this._validate()) {
+    if (!this._validate()) { // 인증번호 요청 전 필수 입력되어야 할 필드들이 모두 입력되었는 지 확인
       return;
     }
 
@@ -91,6 +123,7 @@ Tw.CertificationSkSmsRefund.prototype = {
         svcNum: this.$inputNumber.val().trim()
       };
 
+      // BFF로 인증번효 요청
       this._apiService.request(Tw.API_CMD.BFF_01_0051, data)
         .done($.proxy(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
@@ -131,6 +164,11 @@ Tw.CertificationSkSmsRefund.prototype = {
       onReadyCert.call(this);
     }
   },
+
+  /**
+   * @function
+   * @desc 시간 연장하기 요청 시 관련 화면 처리 후 BFF로 신간 연장 요청
+   */
   _onTimeExpandRequested: function () {
     if (!this._canTimeExpand) {
       this.$container.find('.fe-exp-txt').addClass('none');
@@ -140,6 +178,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this._seqNo })
       .done($.proxy(this._showTimeExpandSuccess, this));
   },
+
+  /**
+   * @function
+   * @desc 필수 입력 항목들 유효성 체크 후 필요 시 validation msg 노출
+   */
   _validate: function () {
     this.$container.find('.error-txt').addClass('none');
     var ret = true;
@@ -174,6 +217,12 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     return ret;
   },
+
+  /**
+   * @function
+   * @desc 인증번호 요청 버튼의 활성화 여부 확인 후 처리
+   * @param  {Object} e - keyup event
+   */
   _enableCertBtnIfPossible: function (e) {
     if (!Tw.FormatHelper.isEmpty(e)) {
       Tw.InputHelper.inputNumberOnly(e.target);
@@ -186,6 +235,12 @@ Tw.CertificationSkSmsRefund.prototype = {
     }
     this.$btCert.attr('disabled', 'disabled');
   },
+
+  /**
+   * @function
+   * @desc 인증하기 버튼 활성화 여부 확인 후 처리
+   * @param  {Object} e - keyup event
+   */
   _enableConfirmIfPossible: function (e) {
     if (e.currentTarget.id !== 'fe-input-name' && !Tw.FormatHelper.isEmpty(e)) {
       Tw.InputHelper.inputNumberOnly(e.target);
@@ -211,6 +266,12 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     this.$btConfirm.removeAttr('disabled');
   },
+
+  /**
+   * @function
+   * @desc 입력한 captcha 번호 유효성 체크 BFF로 요청
+   * @param  {Function} callback - captcha 인증 성공 시 호출할 callback
+   */
   _requestCaptchaConfirm: function (callback) {
     this.$captchaError.addClass('none');
 
@@ -232,6 +293,11 @@ Tw.CertificationSkSmsRefund.prototype = {
         Tw.Error(err.code, err.msg).pop();
       });
   },
+
+  /**
+   * @function
+   * @desc 입력한 인증번호 유효성 여부 체크 BFF로 요청, 실패시 케이스에 따른 validation msg 노출
+   */
   _requestCertConfirm: function () {
     var data = {
       name: this.$inputName.val().trim(),
@@ -263,6 +329,11 @@ Tw.CertificationSkSmsRefund.prototype = {
         Tw.Error(err.code, err.msg).pop();
       }, this));
   },
+
+  /**
+   * @function
+   * @desc 인증번호 받기 성공 시 관련 화면 처리 및 타이머 동작 시작
+   */
   _showCertSuccess: function () {
     this.$container.find('.fe-cert-txt').addClass('none');
     this.$container.find('#4-v8').removeClass('none');
@@ -273,6 +344,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     this._startTime = new Date(); // 인증번호 받기 성공시간
     this._timer = setInterval($.proxy(this._tickTimer, this), 1000);
   },
+
+  /**
+   * @function
+   * @desc timer 1초마다 업데이트하고, 시간 만료 시 처리
+   */
   _tickTimer: function () {
     var remained = Tw.DateHelper.getRemainedSec(this._startTime);
     this.$timer.val(Tw.DateHelper.convertMinSecFormat(remained));
@@ -283,6 +359,12 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     this.$btnExpTime.removeAttr('disabled');  // 시간 연장하기 버튼 제공
   },
+
+  /**
+   * @function
+   * @desc 시간 연장하기 BFF 요청 성공 시 timer 재설정 및 관련 화면 처리
+   * @param  {} resp
+   */
   _showTimeExpandSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       clearTimeout(this._timer);
@@ -294,14 +376,31 @@ Tw.CertificationSkSmsRefund.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 인증번호 받기 실패 시 관련 validation msg 노출
+   * @param  {String} code - 에러코드
+   */
   _showCertError: function (code) {
     this.$container.find('.fe-cert-txt').addClass('none');
     this.$container.find('.fe-cert-txt.' + code).removeClass('none');
   },
+
+  /**
+   * @function
+   * @desc 인증번호 입력 후 유효성 확인 실패 시 관련 validation msg 노출
+   * @param  {String} code - 에러코드
+   */
   _showCertNumberError: function (code) {
     this.$container.find('.fe-exp-txt').addClass('none');
     this.$container.find('.fe-exp-txt.' + code).removeClass('none');
   },
+
+  /**
+   * @function
+   * @desc native로 부터 문자의 인증번호 전달 받음
+   */
   _getCertNumFromNative: function () {
     if (Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid()) {
       this._nativeService.send(Tw.NTV_CMD.GET_CERT_NUMBER, {}, $.proxy(function (res) {

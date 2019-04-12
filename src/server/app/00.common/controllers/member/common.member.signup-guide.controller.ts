@@ -1,7 +1,7 @@
 /**
- * @file common.signup.guide.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.07.02
+ * @file 가입안내 화면 전송
+ * @author Hakjoon Sim
+ * @since 2018-07-02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
