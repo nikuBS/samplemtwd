@@ -1,7 +1,7 @@
 /*
  * @file myt-join.submain.ts
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.05
+ * @author Kim InHwan
+ * @since 2018-10-05
  *
  */
 
@@ -260,6 +260,10 @@ class MyTJoinSubmainController extends TwViewController {
     });
   }
 
+  /**
+   * 현재 회선 타입을 세팅한다.
+   * @param {JSON} svcInfo
+   */
   __setType(svcInfo) {
     switch ( svcInfo.svcAttrCd ) {
       case 'M1':

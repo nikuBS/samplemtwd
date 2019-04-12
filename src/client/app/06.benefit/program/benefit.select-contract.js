@@ -1,10 +1,15 @@
 /**
  * @file product.join.sel-contract.js
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.10.22
+ * @author Kim InHwan
+ * @since 2018-10-22
  *
  */
 
+/**
+ * @class
+ * @desc 혜택할인 > 상품상세 > 선택약정 가입
+ * @param {JSON} params
+ */
 Tw.BenefitSelectContract = function (params) {
   this.$container = params.$element;
   this.data = params.data;
@@ -17,17 +22,26 @@ Tw.BenefitSelectContract = function (params) {
 };
 
 Tw.BenefitSelectContract.prototype = {
-
+  /**
+   * @function
+   * @desc 초기설정
+   */
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');
     this.$okBtn = this.$container.find('[data-id=btn-ok]');
   },
-
+  /**
+   * @function
+   * @desc 바인드 이벤트
+   */
   _bindEvent: function () {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
     this.$okBtn.on('click', _.debounce($.proxy(this._onOkBtnClicked, this), 500));
   },
-
+  /**
+   * @function
+   * @desc 초기설정
+   */
   _initialize: function () {
     this.joinInfoTerm = $.extend(this.data.joinInfoTerm, {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this.data.joinInfoTerm.preinfo.svcNumMask),
@@ -43,6 +57,11 @@ Tw.BenefitSelectContract.prototype = {
     }, this), 100);
   },
 
+  /**
+   * @function
+   * @desc [선택약정 할인기간] 라디오 버튼 클릭
+   * @param evt
+   */
   _onRadioGroupClicked: function (evt) {
     // 아이템 선택 시 버튼 enable 처리
     var $target = $(evt.currentTarget);
@@ -55,7 +74,10 @@ Tw.BenefitSelectContract.prototype = {
       }
     }
   },
-
+  /**
+   * @function
+   * @cesc [설정완료] 버튼 클릭
+   */
   _onOkBtnClicked: function () {
     this._historyService.goLoad('/benefit/submain/detail/dis-pgm/input?prod_id=' + this.data.prodId + '&sel_type=' + this.selType);
   }
