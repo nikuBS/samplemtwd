@@ -988,17 +988,6 @@ Tw.PHONE_NUMS = [
   }
 ];
 
-Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
-  title: '가려진 정보',
-  options:[{
-    list:[
-      { value: '고객님의 정보를 가리는 이유', attr: 'value="A"', option:'A' },
-      { value: '가려진 정보를 보는 방법', attr: 'value="B"', option:'B'}
-    ]
-  }]
-};
-
-
 Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE = {
   data:{
     list: [

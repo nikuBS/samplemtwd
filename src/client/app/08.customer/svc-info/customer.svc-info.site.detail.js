@@ -1,7 +1,14 @@
 /**
- * @file customer.useguide.common.js
- * @author Lee Sanghyoung (silion@sk.com)
- * @since 2018. 10. 18
+ * @file [이용안내-사이트_이용방법-상세페이지]
+ * @author Lee Kirim
+ * @since 2018-10-18
+ */
+
+/**
+ * @class 
+ * @desc 이용안내 사이트 이용방법 class
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {JSON} data - customer.svc-info.site.detail.controlloer.ts 로 부터 전달되어 온 정보
  */
 Tw.CustomerSvcInfoSiteDetail = function (rootEl, data) {
   this.$container = rootEl;
@@ -9,7 +16,6 @@ Tw.CustomerSvcInfoSiteDetail = function (rootEl, data) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService(rootEl);
-  this._hash = Tw.Hash;
 
   this._init();
 
@@ -19,17 +25,31 @@ Tw.CustomerSvcInfoSiteDetail = function (rootEl, data) {
 };
 
 Tw.CustomerSvcInfoSiteDetail.prototype = {
+  /**
+   * @function
+   * @member 
+   * @desc 객체가 생성될 때 처음 처리
+   * @return {void}
+   */
   _init : function() {
     this._addExternalTitle(); // 새창열림 타이틀 넣기
   },
+
+  /**
+   * @function
+   * @member
+   * @desc 생성자 생성시 템플릿 엘리먼트 설정
+   * - customer.svc-info.site.detail.html 참고
+   */
   _cachedElement: function () {
-    this.$InfoBtn = this.$container.find('#ti-select-btn');
 
   },
+  /**
+   * @function
+   * @member
+   * @desc 생성시 이벤트 바인드
+   */
   _bindEvent: function () {
-    this.$InfoBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
-    this.$InfoBtn.text(Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE.options[0].list[0].value).attr('value', 'A'); 
-
     // 링크이동
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
     this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
@@ -39,6 +59,12 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     this._bindUIEvent(this.$container);
   },
 
+  /**
+   * @method
+   * @return {void}
+   * @desc [웹접근성] 관련
+   * 어드민에서 받아온 html 콘텐츠에서 외부링크 존재 시 title 속성이 없으면 "새창열림" title 삽입
+   */
   _addExternalTitle: function () {
     this.$container.find('.fe-link-external:not([href^="#"])').each(function(_ind, target){
       if(!$(target).attr('title')) {
@@ -47,6 +73,10 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     });
   },
 
+  /**
+   * @desc 외부이동링크 
+   * @param {event} e 
+   */
   _openExternalUrl: function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -55,6 +85,10 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @desc 내부이동링크
+   * @param {event} e 
+   */
   _openInternalUrl: function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -62,6 +96,10 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @desc 인앱이동 링크
+   * @param {event} e 
+   */
   _openInApp: function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -69,48 +107,15 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
   },
 
-  // 타입 A 일 경우에만 실행되게 됨 : 셀렉트박스 실행 start
-  _typeActionSheetOpen: function () {
-    this._popupService.open({
-      hbs: 'actionsheet_select_a_type', // hbs의 파일명
-      layer: true,
-      title: Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE.title,
-      data: Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE.options
-    }, $.proxy(this._callBackAction, this), $.proxy(function(){
-      this._popupService.close();
-    }, this));
-  },
-
-  _callBackAction: function (root) {
-    this.$selectList = root.find('.chk-link-list');
-    this.$selectList.on('click', 'button', $.proxy(this._moveToTab, this));
-    // 선택
-    this._checkValue(this.$InfoBtn.attr('value'));
-  },
-  
-  _moveToTab: function (e) {
-    var selectedValue = $(e.currentTarget).val();
-
-    this._checkValue(selectedValue, $(e.currentTarget).find('.info-value').text());
-    this._popupService.close();
-
-    this.$container.find('#siteFaqCont' + (selectedValue === 'A' ? '1' : '2')).show();
-    this.$container.find('#siteFaqCont' + (selectedValue === 'A' ? '2' : '1')).hide();
-  },
-
-  _checkValue: function (value, text) {
-    this.$selectList.find('button').removeClass('checked');
-    this.$selectList.find('button').filter(function(){
-      return $(this).val() === value;
-    }).addClass('checked');
-
-    // 선택된 텍스트
-    this.$InfoBtn.attr('value', value);
-    if(text) this.$InfoBtn.text(text); 
-  },
-  // 타입 A 일 경우에만 실행되게 됨 : 셀렉트박스 실행 end
-
+  /**
+   * @function 
+   * @desc 어드민 등록 콘텐츠에서 필요한 액션 정의 from idpt
+   * @param {element} $container 최상위 객체
+   */
   _bindUIEvent: function ($container) {
+    /**
+     * @desc 탭버튼 클릭시 활성화 클래스
+     */
     $('.idpt-tab', $container).each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
@@ -120,7 +125,10 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       });
     });
   
-    // popup
+    /**
+     * @desc 팝업 동작 해당 액션 사용하지 않음 (혹시 필요할 수 있어 남겨 둠)
+     * 팝업은 히스토리 관리가 필요해 공통팝업으로 교체하도록 처리함
+     */
     $('.idpt-popup-open', $container).click(function(){
       var popId = $(this).attr('href');
       $('.idpt-popup-wrap').removeClass('show');
@@ -131,6 +139,9 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       $('.idpt-popup', $container).hide();
     });
   
+    /**
+     * 라디오 버튼 클릭이벤트 사용하지 않음 (혹시 필요할 수 있어 남겨 둠)
+     */
     $('input[type=radio][name=call]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=call]:checked', $container).val();
       if (chkValue === '1') {
@@ -142,6 +153,9 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       }
     });
   
+    /**
+     * 라디오 버튼 클릭이벤트 사용하지 않음 (혹시 필요할 수 있어 남겨 둠)
+     */
     $('input[type=radio][name=center]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=center]:checked', $container).val();
       if (chkValue === '1') {
@@ -153,7 +167,7 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       }
     });
 
-    //tooltip
+    //tooltip 사용하지 않음 (혹시 필요할 수 있어 남겨 둠)
     $('.btn-tooltip-open', $container).click(function(){
       var toolpopId = $(this).attr('href');
       $('.popup-info', $container).removeClass('show');
@@ -164,7 +178,9 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       $('.tooltip-popup', $container).hide();
     });
   
-    //accordian
+     /**
+     * 아코디언 형식 리스트 사용
+     */
     $('.idpt-accordian > li > a', $container).on('click', function(e){
       e.preventDefault();
       $('.idpt-accordian > li > a', $container).removeClass('open');
@@ -175,7 +191,9 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
       }
     });
   
-    //toggle (FAQ)
+    /**
+     * FAQ 콘텐츠에서 사용되는 메서드
+     */
     $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
