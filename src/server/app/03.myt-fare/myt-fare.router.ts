@@ -14,7 +14,6 @@ import MyTFareBillSmallHistory from './controllers/billsmall/myt-fare.bill.small
 import MyTFareBillSmallMonthly from './controllers/billsmall/myt-fare.bill.small.monthly.controller';
 import MyTFareBillSmallBlock from './controllers/billsmall/myt-fare.bill.small.block.controller';
 import MyTFareBillContentsHistory from './controllers/billcontents/myt-fare.bill.contents.history.controller';
-import MyTFareBillContentsHistoryDetail from './controllers/billcontents/myt-fare.bill.contents.history.detail.controller';
 import MyTFareBillContentsMonthly from './controllers/billcontents/myt-fare.bill.contents.monthly.controller';
 import MyTFareInfoHistory from './controllers/info/myt-fare.info.history.controller';
 import MyTFareInfoHistoryDetail from './controllers/info/myt-fare.info.history.detail.controller';
@@ -93,7 +92,6 @@ class MytFareRouter extends TwRouter {
 
     this.controllers.push({ url: '/bill/contents/history', controller: MyTFareBillContentsHistory });
     this.controllers.push({ url: '/bill/contents/monthly', controller: MyTFareBillContentsMonthly });
-    this.controllers.push({ url: '/bill/contents/history/detail', controller: MyTFareBillContentsHistoryDetail });
 
     // 납부내역
     this.controllers.push({ url: '/info/history', controller: MyTFareInfoHistory });

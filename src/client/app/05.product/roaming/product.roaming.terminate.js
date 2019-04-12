@@ -155,10 +155,10 @@ Tw.ProductRoamingTerminate.prototype = {
    */
   _confirmInfo : function (evt) {
     this._popupService.close();
-
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},[this._prodId]).
     done($.proxy(function (res) {
-
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
           prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
@@ -181,6 +181,7 @@ Tw.ProductRoamingTerminate.prototype = {
             $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,
           $.proxy(this._resetAriaHidden,this),null,$(evt.currentTarget));
     }, this));

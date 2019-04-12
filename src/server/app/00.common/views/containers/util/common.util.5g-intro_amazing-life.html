@@ -4,7 +4,7 @@
 * @since 2019.04.05
 %>
 
-<%- include('../components/start.component.html'); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="og-5mktp-wrap"><!-- 배경이 흰색일 경우 .bg-white -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -642,6 +642,7 @@
         </div>
     </div>
     <!-- //190402 수정 -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     <!--// #contents -->
 </div>
 

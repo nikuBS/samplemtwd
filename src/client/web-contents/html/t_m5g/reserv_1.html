@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>무제한 5G 이용 예약</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+					<div class="og-style-gradient-1">
+						<!-- .cont-box -->
+						<div class="cont-box og-box-round og-time-start">
+							<div class="og-today-info">
+								<span class="today-day">오늘</span>
+								<span class="today-date">2월 26일 (화)</span>
+							</div>
+							<div class="og-start-time">
+								<h3 class="comp-tit">시작시간</h3>
+								<div class="widget">
+									<div class="widget-box radio">
+										<ul class="select-list" role="radiogroup">
+											<li class="radiobox og-btn-radio disabled" role="radio" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+												<input type="radio" name="og-noon" value="0" aria-labelledby="aria-comp-radio1-1" disabled /><!-- 비활성화상태일 경우 disabled="disabled" -->
+												<span id="aria-comp-radio1-1" class="btn-round2 btn-style3">오전</span>
+											</li>
+											<li class="radiobox og-btn-radio checked" role="radio" aria-checked="true"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+												<input type="radio" name="og-noon" value="1" aria-labelledby="aria-comp-radio1-2" checked /><!-- 체크상태일 경우 checked="false" -->
+												<span id="aria-comp-radio1-2" class="btn-round2 btn-style3">오후</span>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="og-time-set">
+									<!-- 기본적으로 현재 시간에서 10분 지난 시간이 input value값으로 보여져야 합니다. -->
+									<input type="number" class="og-inp-number" value="05" pattern="[0-9]*" min="0" inputmode="numeric" title="시간" maxlength="2">
+									<span class="og-time-dv"></span>
+									<input type="number" class="og-inp-number" value="10" pattern="[0-9]*" min="0" inputmode="numeric" title="분" maxlength="2">
+									<!-- number 타입에서는 maxlength가 적용 안되는 문제 있음. -->
+								</div>
+							</div>
+						</div>
+						<!--// .cont-box -->
+					</div>
+
+                    <!-- .cont-box -->
+					<div class="cont-box og-box-round og-use-while">
+						<h3 class="comp-tit">이용시간</h3>
+						<p class="og-time-display"><span class="ti-me" data-hour="0">00</span>시간 <span class="mi-n" data-minute="0">00</span>분</p>
+						<div class="og-mod-btns">
+							<button type="button" class="btn-round2 btn-style3" data-add-type="hour" data-add-time="-1">-60분</button>
+							<button type="button" class="btn-round2 btn-style3" data-add-type="minute" data-add-time="-10">-10분</button>
+							<button type="button" class="btn-round2 btn-style3" data-add-type="minute" data-add-time="10">+10분</button>
+							<button type="button" class="btn-round2 btn-style3" data-add-type="hour" data-add-time="1">+60분</button>
+							<!-- button type="button" class="btn-round2 btn-style3" data-add-type="hour" data-add-time="1" disabled>+60분</button -->
+						</div>
+						<p class="og-end-display">종료예정시각 <span class="ti-me"><strong>오후 4시 30분</strong> 까지</span></p>
+						<div class="og-mydata-stat">
+							<p class="og-data-info your-data">
+								<span class="tit-le">현재 잔여 데이터</span> <strong class="">8GB</strong>
+							</p>
+							<p class="og-data-info used-data">
+								<span class="tit-le">선차감 데이터</span> <strong class="og-ui-used-data" data-used-data="1600">1.5GB</strong>
+							</p>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+                    <!-- .cont-box -->
+					<div class="cont-box og-box-round pt0 pb0 og-push-5min">
+						<ul class="on-off-list new">
+							<li>
+								<h3 class="comp-tit">5분 전 알림 받기</h3>
+								<p>예약시간 5분 전에 알림을 받습니다.</p>
+								<span class="widget">
+									<span class="widget-box switch">
+										<span class="btn-switch type1 on"><!-- checked일 경우 class="on" 추가 -->
+											<span class="switch-style" role="checkbox" aria-checked="true"><!-- checked일 경우 aria-checked="true", 아닐경우 aria-checked="false" -->
+												<span class="off-tx">꺼짐</span>
+												<input type="checkbox" title="5분 전 알림 받기" checked />
+												<span class="on-tx">켜짐</span>
+											</span>
+										</span>
+									</span>
+								</span>
+							</li>
+						</ul>
+					</div>
+					<!--// .cont-box -->
+
+					<!-- .cont-box -->
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button type="button" class="btn-tip" aria-haspopup="true">T가족모아데이터 공유 설정 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+							<li><button type="button" class="btn-tip" aria-haspopup="true">작성예정<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
+					<!-- //.cont-box -->
+
+					<div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>예약</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            var $input = $('.og-time-set > input'),
+                $hour = $('.og-time-display > .ti-me'),
+                $minute = $('.og-time-display > .mi-n'),
+                $btn = $('.og-mod-btns > button'),
+                hour, minute, type, DATA_HOUR = 1024, DATA_MINUTE = 17, count = 0;
+
+            function addZero(n) {
+                return (String(n).length < 2) ? '0' + n : n;
+            }
+            // 종료예정시각 계산 함수
+            function calTime() {
+                var apm = $('input[name=og-noon]:checked').val(),
+                    thisHour = $input.eq(0).val() === '' ? 0 : parseInt($input.eq(0).val()),
+                    thisMinute = $input.eq(1).val() === '' ? 0 : parseInt($input.eq(1).val()),
+                    addHour = parseInt($hour.data('hour')),
+                    addMinute = parseInt($minute.data('minute')),
+                    apmTxt, calHour, calMinute;
+
+                // 시작 시간과 이용 시간 더하기
+                calHour = thisHour + addHour;
+                calMinute = thisMinute + addMinute;
+
+                // 60분 초과시 시간 추가 및 60분 감소
+                if (calMinute >= 60) {
+                    calHour = calHour + Math.floor(calMinute / 60);
+                    calMinute = calMinute - 60;
+                }
+
+                // 12시간 초과시 12시간 삭제후 오전/오후 변경
+                if (calHour > 11) {
+                    calHour = calHour - 12;
+                    apm = (apm === '0') ? '1' : '0';
+                }
+
+                apmTxt = ((apm % 2) === 0) ? '오전 ': '오후 ';
+                $('.og-end-display > .ti-me > strong').html(apmTxt + addZero(calHour) + '시 ' + addZero(calMinute) + '분');
+
+                calData();
+            }
+
+            // 잔여 데이터 계산 함수
+            function calData() {
+                var $usedData = $('.used-data > .og-ui-used-data'),
+                    usedHour = $hour.data('hour'),
+                    usedMinute = $minute.data('minute'),
+					usedData;
+
+                // 시작 시간과 이용 시간 더하기
+                usedData = ((usedHour * DATA_HOUR) + (usedMinute * DATA_MINUTE)) / 1024;
+                $usedData.html(usedData.toFixed(2) + 'GB');
+            }
+
+            $('input[name=og-noon]').on('change', function () {
+                calTime();
+            });
+
+            $input.on('input', function () {
+                if ($(this).val().length > $(this).attr('maxLength')){
+                    $(this).val($(this).val().slice(0, $(this).attr('maxLength')));
+                }
+
+                $btn.prop('disabled', true);
+
+                if ($input.eq(0).val() !== '' && $input.eq(1).val() !== '') {
+                    $btn.prop('disabled', false);
+                    calTime();
+                }
+            }).on('focusout', function () {
+                $(this).val(addZero($(this).val()));
+            });
+
+            $btn.on('click', function (e) {
+                e.preventDefault();
+
+                hour = $hour.data('hour');
+                minute = $minute.data('minute');
+                type = $(this).data('addType');
+
+                if (type === 'hour') {
+                    hour = parseInt(hour) + parseInt($(this).data('addTime'));
+                    if (hour < 0) {
+                        hour = 0;
+                        minute = 0;
+                    } else if (hour >= 12) {
+                        hour = 12;
+                        minute = 0;
+                    }
+                } else {
+                    minute = parseInt(minute) + parseInt($(this).data('addTime'));
+                    if (minute < 0) {
+                        minute = hour - 1 < 0 ? 0 : 50;
+                        hour = hour - 1 < 0 ? 0 : hour - 1;
+                    } else if (minute >= 60) {
+                        hour = hour + 1 < 12 ? hour + 1 : 12;
+                        minute = 0;
+                    } else if (hour === 12 && minute > 0) {
+                        minute = 0;
+                    }
+                }
+
+                $hour.data('hour', hour).html(addZero(hour));
+                $minute.data('minute', minute).html(addZero(minute));
+                setTimeout(function () {
+                    if (hour === 12 && minute === 0) {
+                        count > 0 && alert('1회 최대 12시간 까지\n선택 가능합니다.');
+                        count++;
+                    } else {
+                        count = 0;
+                    }
+				}, 0);
+                calTime();
+            });
+
+            calTime();
+        });
+    </script>
+</body>
+</html>

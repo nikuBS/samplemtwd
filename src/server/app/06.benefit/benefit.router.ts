@@ -16,8 +16,8 @@ import BenefitSubmainCombinationPreview from './controllers/submain/benefit.subm
 import BenefitSubmainFareInfo from './controllers/submain/benefit.submain.fare.info.controller';
 import BenefitJoinTbCombination from './controllers/benefit.join.tb-combination.controller';
 import BenefitTerminateTbCombination from './controllers/terminate/benefit.terminate.tb-combination.controller';
-import BenefitTerminateAllFamily from './controllers/terminate/bneefit.terminate.all-family.controller';
-import BenefitTerminateAllFamilyFree from './controllers/terminate/bneefit.terminate.all-family-free.controller';
+import BenefitTerminateAllFamily from './controllers/terminate/benefit.terminate.all-family.controller';
+import BenefitTerminateAllFamilyFree from './controllers/terminate/benefit.terminate.all-family-free.controller';
 
 class BenefitRouter extends TwRouter {
   constructor() {

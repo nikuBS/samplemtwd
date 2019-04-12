@@ -4,8 +4,7 @@
  * @since 2018.10.10
  */
 
-Tw.BiometricsRegister = function (target, userId) {
-  this._target = target;
+Tw.BiometricsRegister = function (userId) {
   this._userId = userId;
   this._callback = null;
 
@@ -28,10 +27,7 @@ Tw.BiometricsRegister.prototype = {
     this._closeCallback = closeCallback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_03',
-      layer: true,
-      data: {
-        isFinger: this._target === Tw.FIDO_TYPE.FINGER
-      }
+      layer: true
     }, $.proxy(this._onOpenBioRegister, this), $.proxy(this._onCloseBioRegister, this), 'register');
   },
   _onOpenBioRegister: function ($popupContainer) {

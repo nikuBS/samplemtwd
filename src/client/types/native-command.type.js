@@ -47,7 +47,8 @@ Tw.NTV_CMD = {
   CAN_GO_HISTORY: 'canGoHistory',
   SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled',
   READY_SMS: 'readySMS',
-  GET_ADID: 'getAdId'
+  GET_ADID: 'getAdId',
+  TPLACE_TERMS: 'tplaceTerms'
 };
 
 Tw.NTV_CODE = {

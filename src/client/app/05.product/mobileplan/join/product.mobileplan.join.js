@@ -27,8 +27,8 @@ Tw.ProductMobileplanJoin = function(rootEl, prodId, confirmOptions, isOverPayReq
 Tw.ProductMobileplanJoin.prototype = {
 
   _reqOverpay: function() {
-    if (!this._isOverPayReq || this._isSetOverPayReq) {
-      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
+    if (this._overpayRetryCnt > 2) {
+      this._confirmOptions = $.extend(this._confirmOptions, {isOverPayError: true});
       return this._getJoinConfirmContext();
     }
 
@@ -78,6 +78,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
     this._confirmOptions = $.extend(this._confirmOptions, {
       isOverpayResult: overpayResults.isOverpayResult,
+      isOverPayError: !overpayResults.isOverpayResult && this._overpayRetryCnt > 2,
       overpay: overpayResults
     });
 

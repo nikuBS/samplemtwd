@@ -381,9 +381,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       return;
     }
 
-
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){ //성공시 완료 팝업 출력
         this._showCompletePopup(this._prodBffInfo,targetEvt);
       }else{  //실패시 얼럿 출력
@@ -391,6 +392,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       }
     }, this)).
     fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(targetEvt.currentTarget));
     }, this));
   },

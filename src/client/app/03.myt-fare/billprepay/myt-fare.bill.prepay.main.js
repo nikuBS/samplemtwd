@@ -11,12 +11,14 @@
  * @param rootEl - dom 객체
  * @param title - 소액결제/콘텐츠이용료
  */
-Tw.MyTFareBillPrepayMain = function (rootEl, title) {
+Tw.MyTFareBillPrepayMain = function (rootEl, title, className, callback) {
   this.$container = rootEl;
   this.$title = title;
+  this.$isPrepay = className === '.popup-page';
+  this.$className = className || '.container';
+  this.$callback = callback;
   this._apiName = title === 'small' ? Tw.API_CMD.BFF_07_0073 : Tw.API_CMD.BFF_07_0081;
-  this._gubun = 'Request';
-  this._requestCnt = 0;
+  this._prepayAmount = 0;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -24,7 +26,9 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title) {
 
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._init();
+  if (!this.$isPrepay) {
+    this._init();
+  }
 };
 
 Tw.MyTFareBillPrepayMain.prototype = {
@@ -43,7 +47,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     }
 
     this._initVariables();
-    this._getRemainLimit();
+    this.getRemainLimit();
     this._setButtonVisibility();
     this._bindEvent();
   },
@@ -65,7 +69,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @function
    * @desc 잔여한도 조회 API 호출
    */
-  _getRemainLimit: function () {
+  getRemainLimit: function () {
     /*
     오래걸리는 API라 JS에서 호출 - 최초 1회 시 gubun: Request, requestCnt: 0으로 호출
     그 이후 즉시 gubun: Done, request: 1로 호출
@@ -87,15 +91,19 @@ Tw.MyTFareBillPrepayMain.prototype = {
         this._gubun = 'Done';
         this._requestCnt++; // 최초 호출 이후 gubun과 requestCnt 변경
 
-        this._getRemainLimit(); // 다시 호출
+        this.getRemainLimit(); // 다시 호출
       } else {
         if (res.result.gubun === 'Done') {
-          Tw.CommonHelper.endLoading('.container');
-          this._setData(res); // 성공하면 데이터 셋팅 (잔여한도 등)
+          Tw.CommonHelper.endLoading(this.$className);
+          if (this.$isPrepay) {
+            this.$callback(res); // 선결제 팝업에서 호출 시
+          } else {
+            this._setData(res); // 성공하면 데이터 셋팅 (잔여한도 등)
+          }
         } else { // 실패하면 다시 호출
           if (this._requestCnt < 3) {
             this._requestCnt++; // requestCnt 증가 (+1)
-            setTimeout($.proxy(this._getRemainLimit, this), 3000); // 3초 delay 후 재호출
+            setTimeout($.proxy(this.getRemainLimit, this), 3000); // 3초 delay 후 재호출
           } else {
             this._remainFail({ code: 'ERROR', msg: Tw.ALERT_MSG_MYT_FARE.PREPAY_REMAIN_ERROR }); // 3번째 시도에도 실패 시 에러 처리
           }
@@ -111,7 +119,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param err
    */
   _remainFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    this.initRequestParam();
+    Tw.CommonHelper.endLoading(this.$className);
     Tw.Error(err.code, err.msg).replacePage();
   },
   /**
@@ -133,6 +142,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
       this.$remainAmount.attr('id', result.remainUseLimit).text(Tw.FormatHelper.addComma(result.remainUseLimit)); // 잔여한도에 콤마(,) 추가
       this.$prepayAmount.attr('id', result.tmthChrgPsblAmt).text(Tw.FormatHelper.addComma(result.tmthChrgPsblAmt)); // 선결제 가능금액에 콤마(,) 추가
 
+      this.initRequestParam();
       this._bindEventAfterData();
     }
   },
@@ -141,6 +151,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @desc initialize variables
    */
   _initVariables: function () {
+    this.initRequestParam();
     this._isAndroid = Tw.BrowserHelper.isAndroid();
 
     this._monthAmountList = [];
@@ -153,6 +164,14 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this.$setPasswordBtn = this.$container.find('.fe-set-password');
 
     this._name = this.$container.find('.fe-name').text();
+  },
+  /**
+   * @function
+   * @desc 요청 파라미터 초기화
+   */
+  initRequestParam: function () {
+    this._gubun = 'Request';
+    this._requestCnt = 0;
   },
   /**
    * @function
@@ -250,10 +269,10 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @returns {boolean}
    */
   _isPrepayAble: function () {
-    if (this.$prepayAmount.text() === '0') {
-      return false;
+    if (this._prepayAmount > 0) {
+      return true;
     }
-    return true;
+    return false;
   },
   /**
    * @function
@@ -285,7 +304,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param $layer
    */
   _goPrepay: function ($layer) {
-    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._prepayAmount, this._name);
+    new Tw.MyTFareBillPrepayPay($layer, this.$title, this._name);
   },
   /**
    * @function

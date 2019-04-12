@@ -4,12 +4,11 @@
  * @since 2018.11.30
  */
 
-Tw.BiometricsDeregister = function (target, userId) {
+Tw.BiometricsDeregister = function (userId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = Tw.HistoryService();
 
-  this._target = target;
   this._userId = userId;
   this._cancelFido = false;
   this._goRegister = false;
@@ -23,8 +22,7 @@ Tw.BiometricsDeregister.prototype = {
   },
   openPopup: function (callback) {
     this._callback = callback;
-    var content = this._target === Tw.FIDO_TYPE.FINGER ? Tw.POPUP_CONTENTS.BIO_FINGER_DEREGISTER : Tw.POPUP_CONTENTS.BIO_FACE_DEREGISTER;
-    this._popupService.openConfirmButton(content, null, $.proxy(this._onConfirmCancelFido, this), $.proxy(this._onCloseCancelFido, this),
+    this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_DEREGISTER, null, $.proxy(this._onConfirmCancelFido, this), $.proxy(this._onCloseCancelFido, this),
       Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
   _onConfirmCancelFido: function () {
@@ -57,14 +55,11 @@ Tw.BiometricsDeregister.prototype = {
     }
     this._popupService.open({
       hbs: 'MA_03_01_02_01_05',
-      layer: true,
-      data: {
-        isFinger: this._target === Tw.FIDO_TYPE.FINGER
-      }
+      layer: true
     }, $.proxy(this._onOpenBioDeRegister, this), $.proxy(this._onCloseBioDeRegister, this), 'deregister');
   },
   _onOpenBioDeRegister: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-go-register-' + this._target, $.proxy(this._onClickRegisterFido, this));
+    $popupContainer.on('click', '#fe-bt-go-register-fido', $.proxy(this._onClickRegisterFido, this));
   },
   _onClickRegisterFido: function () {
     this._goRegister = true;
@@ -72,7 +67,7 @@ Tw.BiometricsDeregister.prototype = {
   },
   _onCloseBioDeRegister: function () {
     if ( this._goRegister ) {
-      this._biometricsTerm = new Tw.BiometricsTerms(this._target, this._userId);
+      this._biometricsTerm = new Tw.BiometricsTerms(this._userId);
       this._biometricsTerm.open(this._callback);
     }
   }
