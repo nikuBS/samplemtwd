@@ -13,7 +13,7 @@
  * @param {String} displayId 화면ID
  * @param {String} svcProdGrpId 서비스상품그룹ID
  */
-  Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId, mobileplanId) {
+Tw.ProductMobileplanAddSetting5gxWatchtab = function (rootEl, prodId, displayId, svcProdGrpId, mobileplanId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
