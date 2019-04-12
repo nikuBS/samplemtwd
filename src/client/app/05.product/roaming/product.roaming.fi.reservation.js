@@ -101,6 +101,7 @@ Tw.ProductRoamingFiReservation.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     //국가코드 조회 API 호출
     this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''})
       .done($.proxy(this._handleSuccessSearchCountry, this))
@@ -189,6 +190,8 @@ Tw.ProductRoamingFiReservation.prototype = {
    * @private
    */
   _handleSuccessFiReservation: function(res){
+    Tw.CommonHelper.endLoading('.container');
+
     if(res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/product/roaming/fi/reservation-complete?selectIdx=' + this.selectIdx);
     }else{
@@ -431,6 +434,7 @@ Tw.ProductRoamingFiReservation.prototype = {
 
   // API Fail
   _onFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).pop();
   }
 };

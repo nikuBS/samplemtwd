@@ -4,7 +4,7 @@
 * @since 2019.04.05
 %>
 
-<%- include('../components/start.component.html'); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body class="og-5mktp-intro"><!-- 배경이 흰색일 경우 .bg-white -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -29,7 +29,7 @@
                         <a href="/common/util/5g-intro/safe-life">
                             <span class="text-wrap">
                                 <span class="subtx">초[超]격차 네트워크로 안심이 되는 생활</span>
-                                <span class="tit">가장 빠르고, 가장 넓고,<br> 가장 안전한 네트워크</span>
+                                <span class="tit">빠르고, 넓고, <br />안전한 네트워크</span>
                             </span>
                         </a>
                     </li>
@@ -77,7 +77,7 @@
                     <li class="og-5mktp-intro-bannr tr">
                         <a href="/common/util/5g-intro/amazing-life?tab=2&anchor=2" class="text-wrap">
                             <strong class="tit">자기관리 끝판왕</strong>
-                            <span class="txt">출근할 때는 '비즈니스 영어',<br> 퇴근할 때는 '생활 영어'!<br> 골라 즐기는 다양한 테마별<br> VR 영어 학습</span>
+                            <span class="txt">출근할 때는 '비즈니스 영어',<br> 퇴근할 때는 '피트니스'!<br> 골라 즐기는 다양한 테마별<br> VR 자기계발</span>
                         </a>
                         <span class="img"><img src="<%= CDN %>/img/t_m5g/og_5mktp_intro_img_04.png" alt=""></span>
                     </li>
@@ -103,6 +103,7 @@
         </div>
     </div>
     <!-- //190401 수정 -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     <!--// #contents -->
 </div>
 

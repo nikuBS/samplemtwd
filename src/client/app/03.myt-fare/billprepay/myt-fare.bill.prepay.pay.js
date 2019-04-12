@@ -13,11 +13,11 @@
  * @param amount - 선결제 가능 금액
  * @param name - 회원명
  */
-Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
+Tw.MyTFareBillPrepayPay = function (rootEl, title, name) {
   this.$container = rootEl;
   this.$title = title;
-  this._maxAmount = amount;
   this._name = name;
+  this._amount = '0';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -35,6 +35,12 @@ Tw.MyTFareBillPrepayPay.prototype = {
    * @desc init
    */
   _init: function () {
+    var prepayMain = new Tw.MyTFareBillPrepayMain(this.$container, this.$title, '.popup-page', $.proxy(this._setAvailableAmount, this));
+    prepayMain.initRequestParam();
+
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
+    prepayMain.getRemainLimit();
+
     this._setInitValue();
     this._initVariables();
     this._bindEvent();
@@ -42,10 +48,20 @@ Tw.MyTFareBillPrepayPay.prototype = {
   /**
    * @function
    * @desc 선결제 가능금액 셋팅
+   * @param res
+   */
+  _setAvailableAmount: function (res) {
+    Tw.CommonHelper.endLoading('.popup-page', 'grey');
+
+    this._amount = res.result.tmthChrgPsblAmt;
+    this.$container.find('.fe-max-amount').attr('id', this._amount).text(Tw.FormatHelper.addComma(this._amount));
+  },
+  /**
+   * @function
+   * @desc set name
    */
   _setInitValue: function () {
     this.$container.find('.fe-name').val(this._name);
-    this.$container.find('.fe-max-amount').attr('id', this._maxAmount).text(Tw.FormatHelper.addComma(this._maxAmount.toString()));
   },
   /**
    * @function
@@ -241,7 +257,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
    */
   _makeRequestData: function ($layer) {
     var reqData = {
-      tmthChrgPsblAmt: this._maxAmount.toString(), // 선결제 가능금액
+      tmthChrgPsblAmt: this._amount, // 선결제 가능금액
       checkAuto: 'N',
       requestSum: $.trim(this.$prepayAmount.val().toString()),
       cardNumVal: $layer.find('.fe-payment-option-number').text(),

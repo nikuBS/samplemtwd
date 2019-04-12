@@ -6,29 +6,15 @@
             <div class="complete-wrap">
                 <div class="title-box">
                     <i class="icon-warning-120"><span class="blind">complete</span></i>
-                    {{#if data.isFinger}}
-                        <p class="tx-tit"><span class="tx-highlight">지문인증 해지 완료</span></p>
-                    {{else}}
-                        <p class="tx-tit"><span class="tx-highlight">Face ID 해지 완료</span></p>
-                    {{/if}}
+                    <p class="tx-tit"><span class="tx-highlight">생체인증 해지 완료</span></p>
                 </div>
-                {{#if data.isFinger}}
-                    <div class="tx-contents">
-                        <p class="basic-txt">지문인증 서비스를 이용하시려면 아래의 ‘지문 등록/재등록’ 버튼을 눌러 지문정보를 다시 등록해 주셔야 합니다.</p>
+                <div class="tx-contents">
+                    <p class="basic-txt">생체인증 서비스를 이용하시려면 아래의 ‘생체정보 등록/재등록’ 버튼을 눌러 생체정보를 다시 등록해 주셔야 합니다.</p>
 
-                        <ul class="bt-slice item-one">
-                            <li><button id="fe-bt-go-register-finger" type="button" class="btn-round2 btn-style3">지문 등록/재등록</button></li>
-                        </ul>
-                    </div>
-                {{else}}
-                    <div class="tx-contents">
-                        <p class="basic-txt">Face ID 인증 서비스를 이용하시려면 아래의 ‘Face ID 등록/재등록’ 버튼을 눌러 얼굴정보를 다시 등록해 주셔야 합니다.</p>
-
-                        <ul class="bt-slice item-one">
-                            <li><button id="fe-bt-go-register-face" type="button" class="btn-round2 btn-style3">Face ID 등록/재등록</button></li>
-                        </ul>
-                    </div>
-                {{/if}}
+                    <ul class="bt-slice item-one">
+                        <li><button id="fe-bt-go-register-fido" type="button" class="btn-round2 btn-style3">생체정보 등록/재등록</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

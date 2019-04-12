@@ -52,7 +52,7 @@ Tw.CertificationBio.prototype = {
     }
   },
   _goBioRegister: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcInfo.userId);
+    var biometricsTerm = new Tw.BiometricsTerms(this._svcInfo.userId);
     biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
   _fidoAuth: function () {

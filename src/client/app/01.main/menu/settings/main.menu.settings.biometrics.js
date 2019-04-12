@@ -6,7 +6,7 @@
 
 Tw.MainMenuSettingsBiometrics = function (rootEl, target, userId) {
   this.$container = rootEl;
-  this._target = target;
+  // this._target = target;
   this._userId = userId;
 
   this._nativeService = Tw.Native;
@@ -21,39 +21,41 @@ Tw.MainMenuSettingsBiometrics = function (rootEl, target, userId) {
 
 Tw.MainMenuSettingsBiometrics.prototype = {
   _bindEvent: function () {
-    this.$txtFido = this.$container.find('#fe-txt-' + this._target);
-    this.$btCancel = this.$container.find('#fe-bt-cancel-' + this._target);
-    this.$inputFido = this.$container.find('#fe-input-set-' + this._target);
+    this.$txtFido = this.$container.find('#fe-txt-fido');
+    this.$btCancel = this.$container.find('#fe-bt-cancel-fido');
+    this.$inputFido = this.$container.find('#fe-input-set-fido');
 
     this.$btCancel.on('click', $.proxy(this._onClickCancelFido, this));
     this.$inputFido.on('change', $.proxy(this._onChangeFidoUse, this));
-    this.$container.on('click', '#fe-bt-register-' + this._target, $.proxy(this._onClickRegisterFido, this));
+    this.$container.on('click', '#fe-bt-register-fido', $.proxy(this._onClickRegisterFido, this));
   },
   _checkFido: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._userId }, $.proxy(this._onFidoCheck, this));
   },
   _onClickRegisterFido: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._userId);
+    var biometricsTerm = new Tw.BiometricsTerms(this._userId);
     biometricsTerm.open($.proxy(this._updateFidoInfo, this));
   },
   _onClickCancelFido: function () {
-    var biometricsDeregister = new Tw.BiometricsDeregister(this._target, this._userId);
+    var biometricsDeregister = new Tw.BiometricsDeregister(this._userId);
     biometricsDeregister.openPopup($.proxy(this._updateFidoInfo, this));
   },
   _onFidoCheck: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      if ( this._target === Tw.FIDO_TYPE.FINGER ) {
-        this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_ON);
-      } else {
-        this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_ON);
-      }
+      // if ( this._target === Tw.FIDO_TYPE.FINGER ) {
+      //   this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_ON);
+      // } else {
+      //   this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_ON);
+      // }
+      this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FIDO_ON);
       this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId }, $.proxy(this._onFidoUse, this));
     } else {
-      if ( this._target === Tw.FIDO_TYPE.FINGER ) {
-        this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_OFF);
-      } else {
-        this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_OFF);
-      }
+      // if ( this._target === Tw.FIDO_TYPE.FINGER ) {
+      //   this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_OFF);
+      // } else {
+      //   this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_OFF);
+      // }
+      this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FIDO_OFF);
     }
   },
   _onFidoUse: function (resp) {

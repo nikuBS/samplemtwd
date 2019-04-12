@@ -129,14 +129,17 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     var requestValue = {
       'svcNumList' : [phoneObj]
     };
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();  //전화번호 추가시 새로고침
       }else{
         this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt); //실패시 얼럿
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },
@@ -270,8 +273,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     var requestValue = {
       'svcNumList' : [this._addedList[selectedIndex]]
     };
+    Tw.CommonHelper.startLoading('.popup-page', 'white');
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
+      Tw.CommonHelper.endLoading('.popup-page');
       if(res.code===Tw.API_CODE.CODE_00){
         this._addedList.splice(selectedIndex,1);
         $target.parents('li').remove();
@@ -279,6 +284,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,evt); //요청 실패시 얼럿
       }
     }, this)).fail($.proxy(function (err) {
+      Tw.CommonHelper.endLoading('.popup-page');
       this._openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,evt);
     }, this));
   },

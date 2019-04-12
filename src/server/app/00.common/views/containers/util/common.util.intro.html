@@ -18,8 +18,8 @@
     <meta property="og:site_name" content="SKT" />
     <meta property="og:image" content="<%= CDN %>/image/common/skt_facebook.jpg" />
     <meta property="og:description" content="SKT framework" />
-    <title>SKT</title>
-    <% include ../components/stylesheet.component.html %>
+    <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
+    <% include ../../components/stylesheet.component.html %>
     <style>
         /* 새로워진 Tworld */
         html, body{font-size:16px;}

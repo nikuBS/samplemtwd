@@ -4,8 +4,7 @@
  * @since 2018.10.13
  */
 
-Tw.BiometricsTerms = function (target, userId) {
-  this._target = target;
+Tw.BiometricsTerms = function (userId) {
   this._callback = null;
   this._userId = userId;
 
@@ -21,10 +20,7 @@ Tw.BiometricsTerms.prototype = {
     this._callback = callback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_01',
-      layer: true,
-      data: {
-        isFinger: this._target === Tw.FIDO_TYPE.FINGER
-      }
+      layer: true
     }, $.proxy(this._onOpenBioTerms, this), $.proxy(this._onCloseBioTerms, this), 'terms');
   },
   _onOpenBioTerms: function ($popupContainer) {
@@ -41,7 +37,7 @@ Tw.BiometricsTerms.prototype = {
   _onCloseBioTerms: function () {
     if ( this._closeCode === this.RESULT.COMPLETE ) {
       setTimeout($.proxy(function () {
-        var biometricsComplete = new Tw.BiometricsComplete(this._target);
+        var biometricsComplete = new Tw.BiometricsComplete();
         biometricsComplete.open(this._callback);
       }, this), 100);
     }
@@ -60,7 +56,7 @@ Tw.BiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    var biometiricsCert = new Tw.BiometricsCert(this._target, this._userId);
+    var biometiricsCert = new Tw.BiometricsCert(this._userId);
     biometiricsCert.open(this._callback, $.proxy(this._onCloseCallback, this));
   },
   _checkElement: function ($element) {

@@ -47,7 +47,7 @@ export default class MembershipMyUpdate extends TwViewController {
     if ( myInfoData.mbr_rcv_agree_ymd === '' ) { // 개인정보 수집이용 동의 날짜 값이 없는 경우 안내 문구 미노출 처리
       myInfoData.showMbrAgreeDate = '';
     } else {
-      myInfoData.showMbrAgreeDate = DateHelper.getFullKoreanDate(myInfoData.mbr_rcv_agree_ymd);
+      myInfoData.showMbrAgreeDate = DateHelper.getKoreanDate(myInfoData.mbr_rcv_agree_ymd);
       if ( myInfoData.showMbrAgreeDate === 'Invalid date' ) { // 날짜 포맷 변경 값이 유효하지 않은 값인 경우 안내 문구 미노출 처리
         myInfoData.showMbrAgreeDate = '';
       }

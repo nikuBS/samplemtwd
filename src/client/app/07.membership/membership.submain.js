@@ -50,6 +50,7 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));   // 나의 멤버십
     this.$container.on('click', '.fe-membership-location', $.proxy(this._selectLocationAgreement, this)); // 사용자 위치
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));  // T day
+    this.$container.on('click', '.fe-movie-culture', $.proxy(this._selectMovieCulture, this));  // 무비/컬처
   },
   /**
    * @function
@@ -119,6 +120,19 @@ Tw.MembershipSubmain.prototype = {
         longitude: '126.9858500'
       });
     }
+  },
+  /**
+   * @function
+   * @desc 혜택바로가기 > 무비/컬처
+   * @param e
+   * @private
+   */
+  _selectMovieCulture: function (e) {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A70.TITLE,
+      $.proxy(this._goMovieCulture, this),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this), Tw.BUTTON_LABEL.CLOSE, Tw.BUTTON_LABEL.CONFIRM, $(e.currentTarget));
   },
   /**
    * @function
@@ -568,5 +582,15 @@ Tw.MembershipSubmain.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._membershipPopupBanner) ) {
       new Tw.BannerService($popupContainer, this._membershipPopupBanner.type, this._membershipPopupBanner.list, '7');
     }
-  }
+  },
+  /**
+   * @function
+   * @desc 무비/컬처 링크 이동
+   * @private
+   */
+  _goMovieCulture: function () {
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.MOVIE,'');
+  },
+  
 };

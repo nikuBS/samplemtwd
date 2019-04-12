@@ -41,30 +41,6 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @desc Get first day of next month
-   * @returns {Date}
-   * @public
-   */
-  var getNextMonth = function () {
-    var next = new Date();
-    next.setDate(1);
-    next.setMonth(next.getMonth() + 1);
-    return next;
-  };
-
-  /**
-   * @desc Get remain days to last day of this month
-   * @returns {Date}
-   * @public
-   */
-  var getRemainDate = function () {
-    var current = getDate();
-    var next = getNextMonth();
-    var remain = Math.floor((next.getTime() - current.getTime()) / 1000 / 60 / 60 / 24);
-    return remain;
-  };
-
-  /**
    * @desc Get remain days to the given date
    * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {number} : 30
@@ -81,15 +57,6 @@ Tw.DateHelper = (function () {
    */
   var getCurrentShortDate = function (date) {
     return moment(this.convDateFormat(date)).format('YYYYMMDD');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDDhhmmss
-   * @returns {string} : 201806
-   * @public
-   */
-  var getYearMonth = function (date) {
-    return moment(this.convDateFormat(date)).format('YYYYM');
   };
 
   /**
@@ -129,51 +96,6 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDD
-   * @returns {string} : currentDateTime - 6 months
-   * @public
-   */
-  var getPast6MonthsShortDate = function () {
-    return moment().subtract(6, 'months').format('YYYYMMDD');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDD
-   * @returns {string} : currentDateTime + 1 year
-   * @public
-   */
-  var getNextYearShortDate = function () {
-    return moment().add(1, 'years').format('YYYY.M.D.');
-  };
-
-  /**
-   * @param period {period}
-   * @returns {string} : currentDateTime - {period}
-   * @public
-   */
-  var getPastShortDate = function (period) {
-    var matches = period.replace(/\s/g, '').match(/(\d*)(.*)/);
-
-    if ( matches.length !== 3 )
-      return null;
-
-    var unit = '';
-    switch ( matches[2] ) {
-      case Tw.DATE_UNIT.YEAR:
-        unit = 'years';
-        break;
-      case Tw.DATE_UNIT.MONTH:
-        unit = 'months';
-        break;
-      default:
-        unit = 'months';
-        break;
-    }
-
-    return moment().subtract(matches[1], unit).format('YYYYMMDD');
-  };
-
-  /**
    * @param {Date or string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1.
    * @public
@@ -207,33 +129,6 @@ Tw.DateHelper = (function () {
    */
   var getShortFirstDate = function (date) {
     return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDDhhmmss
-   * @returns {string} : 2018.6.1. (last date of this month)
-   * @public
-   */
-  var getShortLastDate = function (date) {
-    return moment(this.convDateFormat(date)).add('months', 1).date(0).format('YYYY.M.D.');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDDhhmmss
-   * @returns {string} : 2018.05
-   * @public
-   */
-  var getShortDateNoDate = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDDhhmmss
-   * @returns {string} : 06.01
-   * @public
-   */
-  var getShortDateNoYear = function (date) {
-    return moment(convDateFormat(date)).format('M.DD');
   };
 
   /**
@@ -306,15 +201,6 @@ Tw.DateHelper = (function () {
    */
   var getFullKoreanDate = function (date) {
     return moment(convDateFormat(date)).format('YYYY년 M월 DD일');
-  };
-
-  /**
-   * @param {Date or string} date YYYYMMDDhhmmss
-   * @returns {string} : 18년 12월 31일
-   * @public
-   */
-  var getShortKoreanDate = function (date) {
-    return moment(convDateFormat(date)).format('YY년 M월 DD일');
   };
 
   /**
@@ -493,15 +379,11 @@ Tw.DateHelper = (function () {
 
 
   return {
-    getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
     getShortDate: getShortDate,
     getShortFirstDate: getShortFirstDate,
     getShortDateNoDot: getShortDateNoDot,
     getShortFirstDateNoDot: getShortFirstDateNoDot,
-    getShortLastDate: getShortLastDate,
-    getShortDateNoDate: getShortDateNoDate,
-    getShortDateNoYear: getShortDateNoYear,
     getShortDateAndTime: getShortDateAndTime,
     getFullDateAndTime: getFullDateAndTime,
     getFullDateAnd24Time: getFullDateAnd24Time,
@@ -509,21 +391,16 @@ Tw.DateHelper = (function () {
     convDateFormat: convDateFormat,
     convDateCustomFormat: convDateCustomFormat,
     getCurrentShortDate: getCurrentShortDate,
-    getYearMonth: getYearMonth,
     getCurrentDateTime: getCurrentDateTime,
     getCurrentMonth: getCurrentMonth,
     getCurrentYear: getCurrentYear,
     getPastYearShortDate: getPastYearShortDate,
-    getPast6MonthsShortDate: getPast6MonthsShortDate,
-    getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,
-    getPastShortDate: getPastShortDate,
     getShortDateWithFormat: getShortDateWithFormat,
     getShortDateWithFormatAddByUnit: getShortDateWithFormatAddByUnit,
     getDayOfWeek: getDayOfWeek,
     getDiffByUnit: getDiffByUnit,
     getFullKoreanDate: getFullKoreanDate,
-    getShortKoreanDate: getShortKoreanDate,
     getShortKoreanAfterMonth: getShortKoreanAfterMonth,
     getShortKoreanMonth: getShortKoreanMonth,
     getKoreanDateWithDay: getKoreanDateWithDay,

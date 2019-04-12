@@ -133,6 +133,7 @@ Tw.POPUP_CONTENTS = {
   RESEND_CONTENTS_EMAIL: '등록된 이메일로 재발행 되었습니다.',
   NO_WIFI: '3G/LTE망 사용 시 데이터 요금이 발생됩니다.',
   DONATION: '미환급금을 기부하시겠습니까?',
+  BIO_DEREGISTER: '생체인증 해지 후 다시 사용하시려면 생체정보를 재등록 하셔야 합니다.<br />생체인증을 해지하시겠습니까?',
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
   BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
   COUPON_RECEIVER_LIMIT:
@@ -1071,6 +1072,8 @@ Tw.SETTINGS_MENU = {
 };
 
 Tw.NTV_FIDO_REGISTER_TXT = {
+  FIDO_ON: '등록된 생체인증이 있습니다.',
+  FIDO_OFF: '등록된 생체인증이 없습니다.',
   FINGER_ON: '등록된 지문이 있습니다.',
   FINGER_OFF: '등록된 지문이 없습니다.',
   FACE_ON: 'Face ID가 등록되었습니다.',
@@ -1552,7 +1555,8 @@ Tw.MEMBERSHIP_GRADE = {
 
 Tw.MEMBERSHIP_URL = {
   TDAY: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144',
-  CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165'
+  CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165',
+  MOVIE: 'http://www.sktmembership.co.kr:90/benefit/pick/pickMain.do'
 };
 
 Tw.BENEFIT = {
@@ -1961,3 +1965,8 @@ Tw.PRODUCT_AUTH_ALERT_STR = {
 };
 
 Tw.MYT_HOTBILL_FAIL = '조회 불가';
+
+Tw.ALERT_MSG_5G_END = {
+  title: 'VR기기 재고 소진으로 인해 <br />‘5GX VR 팩 기어’ 가입이 <br />4월 13일(토) 이후 종료됩니다.',
+  msg: '* 4월 13일(토)까지 5GX 플랜 가입 고객님은 4월 20일(토)까지 SK텔레콤 대리점에서 5GX VR 팩 기어 부가서비스 가입 가능<br />* ‘5GX VR 팩 카드보드’는 재고 소진까지 지속운영 예정'
+};

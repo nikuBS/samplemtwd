@@ -30,32 +30,17 @@
                 <div class="cont-box nogaps">
                     <ul class="on-off-list in-link new">
                         <li><!-- 비활성화 class .disabled 추가 -->
-                            <% if (target === 'finger') { %>
-                            <button id="fe-bt-register-finger"><!-- 비활성화 attr disabled 추가 -->
-                                지문 등록/재등록<br/>
-                                <span id="fe-txt-finger" class="sub-tx"></span>
+                            <button id="fe-bt-register-fido"><!-- 비활성화 attr disabled 추가 -->
+                                생체인증 등록/재등록<br/>
+                                <span id="fe-txt-fido" class="sub-tx"></span>
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
-                            <% } else { %>
-                            <button id="fe-bt-register-face"><!-- 비활성화 attr disabled 추가 -->
-                                Face ID 등록/재등록<br/>
-                                <span id="fe-txt-face" class="sub-tx"></span>
-                                <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
-                            </button>
-                            <% } %>
                         </li>
                         <li class="fe-cancel">
-                            <% if (target === 'finger') { %>
-                            <button id="fe-bt-cancel-finger">
-                                지문인증 해지
+                            <button id="fe-bt-cancel-fido">
+                                생체인증 해지
                                 <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                             </button>
-                            <% } else { %>
-                            <button id="fe-bt-cancel-face">
-                                Face ID 인증 해지
-                                <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
-                            </button>
-                            <% } %>
                         </li>
                         <li class="fe-setting"><!-- 비활성화 class .disabled 추가 -->
                             생체인증 사용 설정
@@ -64,11 +49,7 @@
                                     <span class="btn-switch type1 fe-switch"><!-- 비활성화 class .disabled 추가 -->
                                         <span class="switch-style fe-checkbox" role="checkbox" aria-checked="false"><!-- 비활성화 aria-disabled="true" 추가 -->
                                             <span class="off-tx">꺼짐</span>
-                                            <% if (target === 'finger') { %>
-                                            <input id="fe-input-set-finger" type="checkbox" title="생체인증 사용 설정"  /><!-- 비활성화 attr disabled 추가 -->
-                                            <% } else { %>
-                                            <input id="fe-input-set-face" type="checkbox" title="생체인증 사용 설정"  /><!-- 비활성화 attr disabled 추가 -->
-                                            <% } %>
+                                            <input id="fe-input-set-fido" type="checkbox" title="생체인증 사용 설정"  /><!-- 비활성화 attr disabled 추가 -->
                                             <span class="on-tx">켜짐</span>
                                         </span>
                                     </span>

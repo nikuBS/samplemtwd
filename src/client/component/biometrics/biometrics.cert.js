@@ -4,8 +4,7 @@
  * @since 2018.10.13
  */
 
-Tw.BiometricsCert = function (target, userId) {
-  this._target = target;
+Tw.BiometricsCert = function (userId) {
   this._userId = userId;
   this._callback = null;
 
@@ -88,8 +87,7 @@ Tw.BiometricsCert.prototype = {
       hbs: 'MA_03_01_02_01_02',
       layer: true,
       data: {
-        methods: methods,
-        isFinger: this._target === Tw.FIDO_TYPE.FINGER
+        methods: methods
       }
     }, $.proxy(this._onOpenBioCert, this), $.proxy(this._onCloseBioCert, this), 'cert');
   },
@@ -152,7 +150,7 @@ Tw.BiometricsCert.prototype = {
   },
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var biometricsRegister = new Tw.BiometricsRegister(this._target, this._userId);
+      var biometricsRegister = new Tw.BiometricsRegister(this._userId);
       biometricsRegister.open(this._callback, $.proxy(this._onCloseCallback, this));
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
