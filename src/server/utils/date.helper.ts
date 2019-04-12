@@ -25,7 +25,7 @@ class DateHelper {
    * @returns {Date}
    * @public
    */
-  static getCurrentDate(): Date {
+  static getCurrentDate(): any {
     return new Date();
   }
 
