@@ -1556,7 +1556,7 @@ Tw.MEMBERSHIP_GRADE = {
 Tw.MEMBERSHIP_URL = {
   TDAY: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144',
   CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165',
-  MOVIE: 'http://www.sktmembership.co.kr:90/benefit/pick/pickMain.do'
+  MOVIE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/pick/pickMain.do'
 };
 
 Tw.BENEFIT = {
