@@ -28,6 +28,7 @@ export default class MainMenuSettingsNotifications extends TwViewController {
           pageInfo,
           isServiceOn: respNoti.tnotiInfoRcvAgreeYn === 'Y' ? true : false,
           isRecommendOn: respNoti.tnotiMrktRcvAgreeYn === 'Y' ? true : false,
+          isTplaceOn: false,
           isAdOn: respTworld.twdAdRcvAgreeYn === 'Y' ? true : false,
           isPrivateInfoOn: respTworld.twdInfoRcvAgreeYn === 'Y' ? true : false,
           isLocationOn: respTworld.twdLocUseAgreeYn === 'Y' ? true : false
