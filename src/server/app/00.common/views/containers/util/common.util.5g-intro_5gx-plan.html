@@ -430,12 +430,15 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     <!-- //190402_수정 -->
 </div>
 
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
+    // popup 
+    var popupService = Tw.Popup;
     //탭 공통 스크립트
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -456,6 +459,14 @@
 
     $tablinker.find('ul > li > a').on('click', function (e) {
       e.preventDefault();
+      
+      var idx = $(e.currentTarget).parent().index();
+      if (idx === 1) {
+          popupService.openAlert(
+            Tw.ALERT_MSG_5G_END.msg, 
+            Tw.ALERT_MSG_5G_END.title
+        );
+      }
       if ($win.scrollTop() > tablinkerTop - headerHeight) {
         $win.scrollTop(tablinkerTop - headerHeight);
       }
