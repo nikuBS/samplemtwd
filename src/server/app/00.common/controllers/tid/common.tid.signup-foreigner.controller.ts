@@ -1,7 +1,7 @@
 /**
- * @file common.tid.signup-foreigner.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.07.09
+ * @file 외국인 가입시 TID 외국인 가입안내로 이동
+ * @author Hakjoon Sim
+ * @since 2018-07-09
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -17,6 +17,7 @@ class CommonTidSignUpForeigner extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // TID 연동 key 조회
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -30,7 +31,7 @@ class CommonTidSignUpForeigner extends TwViewController {
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE,
-          frgnr_yn: 'Y'
+          frgnr_yn: 'Y' // 외국인 표기를 query param에 추가
         };
         const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.info(this, '[redirect]', url);
