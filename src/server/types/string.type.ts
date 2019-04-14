@@ -742,49 +742,65 @@ export const MEMBERSHIP_DELIVERY_CODE = {
   '9': '반송'
 };
 
-// 고객센터 > 사이트 이용안내 온리안 T world 제목과 컨텐츠 아이디 번호
-export const CUSTOMER_STIE_OPTION_TYPE = [
+/**
+ * @author Lee Kirim
+ * @since 2018-12-13
+ * @desc 고객센터 > 사이트 이용방법 온리안 T world 제목과 컨텐츠 아이디 번호
+ * @prop {string} cat 카테고리 이름
+ * @prop {string} title 제목
+ * @prop {string} code 상세조회 API 에서 사용될 코드 값
+ * @prop {string} className 클래스이름 css 로 아이콘 모양(카테고리 종류에 따라 달라짐)
+ * @prop {number} listIndex 리스트 순서
+ */
+export const CUSTOMER_SITE_OPTION_TYPE = [
   {
     cat: '기타',
     title: '가려진 정보 확인 방법',
     code: 'D00007',
-    className: 'ico-etc'
+    className: 'ico-etc',
+    listIndex: 0
   },
   {
     cat: 'myT',
     title: '소액결제 현명하게 관리하기',
     code: 'D00002',
-    className: 'ico-myt'
+    className: 'ico-myt',
+    listIndex: 1
   },
   {
     cat: '회선',
     title: '다회선 설정하기',
     code: 'D00001',
-    className: 'ico-member'
+    className: 'ico-member',
+    listIndex: 2
   },
   {
     cat: '회선',
     title: 'T world에 등록된 법인명의 휴대폰번호 삭제 방법',
     code: 'D00006',
-    className: 'ico-member'
+    className: 'ico-member',
+    listIndex: 3
   },
   {
     cat: '회선',
     title: '[법인명의 태블릿] 다회선 등록하기',
     code: 'D00005',
-    className: 'ico-member'
+    className: 'ico-member',
+    listIndex: 4
   },
   {
     cat: '기타',
     title: '모두에게 평등한 T world의 웹접근성 안내',
     code: 'D00008',
-    className: 'ico-etc'
+    className: 'ico-etc',
+    listIndex: 5
   },
   {
     cat: '기타',
     title: 'T world의 모든 메뉴 꼼꼼히 살펴보기',
     code: 'D00009',
-    className: 'ico-etc'
+    className: 'ico-etc',
+    listIndex: 6
   }
 ];
 
@@ -795,6 +811,25 @@ export const DIRECTSHOP_LINK = {
   delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
 };
 
+/**
+ * @author Lee Kirim
+ * @since 2018-12-18
+ * @desc [이용안내-서비스_이용안내] 리스트에서 사용되는 목록
+ * @prop {string} title 카테고리 이름
+ * @prop {string} unitedTitle? 다른 카테고리와 합쳐져 노출되야 하는 경우 사용되는 이름
+ * @prop {string} united? 다른 카테고리와 합쳐져 노출되야 하는 경우 합쳐질 카테고리 (해당 이름이 같은 것끼리 합친다)
+ * @prop {string} text? 다른 카테고리와 합쳐져 노출되야 하는 경우 설명글 필요
+ * @prop {boolean} upperCat sub_list 의 내용을 dep_list 로 변경해 노출해야 할지 여부
+ * @prop {array} sub_list 카테고리내 하위 목록
+ *  *@prop {string} sub_title 하위 카테고리 제목
+ *  *@prop {string} sub_text 하위카테고리 설명
+ *  *@prop {string} type? dep_list가 없을 때는 해당 셀렉트 박스 없이 클릭시 이동되도록 하기위해 dep_list의 하위 항목과 같은 형태가 있음 상세 콘텐츠 타입
+ *  *@prop {string} code? dep_list가 없을 때 상세조회에서 사용될 코드 상세 API 조회가 아니고 url 이동일 경우 string에 url: 을 붙임
+ *  *@prop {array} dep_list? 카테고리의 하위 카테고리 (해당 리스트는 front에서 셀렉트 박스로 선택하는 목록이 됨)
+ *    *@prop {string} dep_title 옵션제목
+ *    *@prop {string} type 상세페이지 타입
+ *    *@prop {string} code 상세페이지 코드 url 이동일 경우 string에 url: 을 붙임
+ */
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     title: '휴대폰 가입/변경 안내',

@@ -1,7 +1,7 @@
 /**
- * @file customer.svc-info.site.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.13
+ * @file [이용안내-사이트_이용방법-상세페이지]
+ * @author Lee Kirim
+ * @since 2018-12-13
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,30 +10,27 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 
 import FormatHelper from '../../../../utils/format.helper';
 import EnvHelper from '../../../../utils/env.helper';
-import { CUSTOMER_STIE_OPTION_TYPE } from '../../../../types/string.type';
+import { CUSTOMER_SITE_OPTION_TYPE } from '../../../../types/string.type';
 
-interface Query {
-  current: string;
-  isQueryEmpty: boolean;
-}
-
-interface Content {
+/**
+ * @interface
+ */
+interface IContent {
   cat: string;
   title: string;
   code: string;
 }
 
+/**
+ * @desc 전달된 code 값을 파라미터로 콘텐츠 조회 API 호출 해 반환값을 렌더링
+ */
 class CustomerSvcInfoSite extends TwViewController {
 
   constructor() {
     super();
   }  
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
-    const query: Query = {
-      isQueryEmpty: FormatHelper.isEmpty(req.query),
-      current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
-    };
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
     const {code} = req.query; 
     const curContent = this.findCurContent(code);
 
@@ -54,17 +51,21 @@ class CustomerSvcInfoSite extends TwViewController {
       res.render('svc-info/customer.svc-info.site.detail.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
-        contentHTML: this.modifyHTML(resp.result.icntsCtt),
+        contentHTML: this.modifyHTML(resp.result.icntsCtt), // 코드로 조회된 콘텐츠
         data: {
-          // type: code === 'D00007' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
-          title: curContent.title
+          title: curContent.title // 상세내용 제목
         }
       });
     });
   }
 
-  private findCurContent = (code: string): Content | any => {
-    return CUSTOMER_STIE_OPTION_TYPE.reduce((prev, cur) => {
+  /**
+   * @function
+   * @return {IContent | {}} 
+   * @desc 쿼리로 전달될 code값과 CUSTOMER_SITE_OPTION_TYPE 리스트 내 code 값이 일치하는 객체를 반환
+   */
+  private findCurContent = (code: string): IContent | any => {
+    return CUSTOMER_SITE_OPTION_TYPE.reduce((prev, cur) => {
       if (cur.code === code) {
         return cur;
       } else {
@@ -73,7 +74,12 @@ class CustomerSvcInfoSite extends TwViewController {
     }, {});
   }
 
-  // 전송된 html 수정 변경
+  /**
+   * @function
+   * @desc 문자열로 전달된 html 문자중 주석 제거, {{cdn}} 을 이미지 경로로 교체
+   * @param {string} html 
+   * @return {string} 
+   */
   private modifyHTML = (html: string): string => {
       // 대문자 엘리먼트 소문자로
       // html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
