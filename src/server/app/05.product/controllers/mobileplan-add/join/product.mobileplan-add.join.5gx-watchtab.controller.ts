@@ -1,6 +1,6 @@
 /**
- * 모바일 부가서비스 > 5GX 워치tab할인_모
- * @author ankle breaker (byunma@sk.com)
+ * 모바일 부가서비스 > 5GX 워치tab할인
+ * @author anklebreaker
  * @since 2019-04-05
  */
 
