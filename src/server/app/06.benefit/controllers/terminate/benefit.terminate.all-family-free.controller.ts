@@ -35,7 +35,8 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
 
     return Object.assign(termInfo, {
       combinationGroup: this._convCombinationGroup(termInfo.combinationGroup),
-      combinationList: this._sortCombinationList([...wirelessMemberList, ...wireMemberList])
+      combinationList: this._sortCombinationList([...wirelessMemberList, ...wireMemberList]),
+      leaderSvcMgmtNum: this._getLeaderSvcMgmtNum(wirelessMemberList)
     });
   }
 
@@ -145,6 +146,18 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
     });
   }
 
+  private _getLeaderSvcMgmtNum(wirelessMemberList: any): any {
+    let leaderSvcMgmtNum: any = null;
+
+    wirelessMemberList.forEach((item) => {
+      if (item.relClCd === '00') {
+        leaderSvcMgmtNum = item.svcMgmtNum;
+      }
+    });
+
+    return leaderSvcMgmtNum;
+  }
+
   /**
    * @desc 화면 렌더링
    * @param req
@@ -183,11 +196,13 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
         }));
       }
 
+      const convertedTermInfo: any = this._convertTermInfo(termInfo.result, svcMgmtNum);
+
       res.render('terminate/benefit.terminate.all-family-free.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
-        termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === termInfo.result.combinationGroup.svcMgmtNum
+        termInfo: convertedTermInfo,
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y' && svcMgmtNum === convertedTermInfo.leaderSvcMgmtNum
       }));
     });
   }
