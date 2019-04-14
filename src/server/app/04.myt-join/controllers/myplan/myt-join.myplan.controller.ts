@@ -247,7 +247,7 @@ class MyTJoinMyplan extends TwViewController {
    * @param prodSetYn - 해당 상품의 설정 허용 여부
    */
   private _convertBtnList(btnList: any, prodSetYn: any): any {
-    if (FormatHelper.isEmpty(btnList)) {
+    if (FormatHelper.isEmpty(btnList) || prodSetYn !== 'Y') {
       return [];
     }
 
