@@ -2,17 +2,31 @@
  * @file common.share.landing.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.11.05
+ * @desc Common > Util > App 안내 화면 > 랜딩
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import ParamsHelper from '../../../../utils/params.helper';
 
+/**
+ * @desc App 랜딩 초기화를 위한 class
+ */
 class CommonShareLanding extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > Util > App 안내 화면 > 랜딩 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const url = decodeURIComponent(req.query.url);
 

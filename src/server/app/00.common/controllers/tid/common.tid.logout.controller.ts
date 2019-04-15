@@ -2,6 +2,7 @@
  * @file commmon.tid.logout.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.07.03
+ * @desc Common > TID > 로그아웃
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -15,11 +16,24 @@ import 'rxjs/add/observable/combineLatest';
 import { TID_LOGOUT } from '../../../../types/common.type';
 import { TID_MSG } from '../../../../types/string.type';
 
+/**
+ * @desc TID 로그아웃 페이지 요청
+ */
 class CommonTidLogout extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > TID > 로그아웃 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const type = +req.query.type || TID_LOGOUT.DEFAULT;
     const errorCode = req.query.errorCode || '';

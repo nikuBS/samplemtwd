@@ -4,6 +4,13 @@
  * @since 2018.03.14
  */
 
+/**
+ * @class
+ * @desc Common > 스윙자동문자발송 > SMS인증
+ * @param rootEl - dom 객체
+ * @param encParam
+ * @constructor
+ */
 Tw.CommonAutoSmsCert = function (rootEl, encParam) {
   this.$container = rootEl;
   this._encParamStr = encParam;
@@ -19,14 +26,31 @@ Tw.CommonAutoSmsCert = function (rootEl, encParam) {
 };
 
 Tw.CommonAutoSmsCert.prototype = {
+  /**
+   * @member {object}
+   * @desc SMS 인증 오류 코드
+   * @readonly
+   * @prop {string} ATH2003 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
+   * @prop {string} ATH2006 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
+   * @prop {string} ATH2007 입력하신 인증번호가 맞지 않습니다.
+   * @prop {string} ATH2008 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+   * @prop {string} ZNGME0098 입력하신 정보가 확인되지 않습니다.
+   * @prop {string} ZORDE6044 법인 등록번호를 다시 확인해 주세요.
+   */
   SMS_ERROR: {
-    ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
-    ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
-    ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
-    ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH2003: 'ATH2003',
+    ATH2006: 'ATH2006',
+    ATH2007: 'ATH2007',
+    ATH2008: 'ATH2008',
     ZNGME0098: 'ZNGME0098',
     ZORDE6044: 'ZORDE6044'
   },
+
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function () {
     this.$inputType = this.$container.find('.fe-radio-type');
     this.$inputBirthY = this.$container.find('#fe-input-birth-y');
@@ -74,6 +98,13 @@ Tw.CommonAutoSmsCert.prototype = {
 
     new Tw.InputFocusService(this.$container, this.$btConfirm);
   },
+
+  /**
+   * @function
+   * @desc 휴대폰 번호 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputMdn: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var mdnLength = this.$inputMdn.val().length;
@@ -88,6 +119,13 @@ Tw.CommonAutoSmsCert.prototype = {
     }
     this._checkEnableConfirmButton();
   },
+
+  /**
+   * @function
+   * @desc 생년월일 - 연도 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputBirthY: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirthY.val();
@@ -95,6 +133,13 @@ Tw.CommonAutoSmsCert.prototype = {
       this.$inputBirthY.val(inputBirth.slice(0, Tw.BIRTH_Y_LEN));
     }
   },
+
+  /**
+   * @function
+   * @desc 생년월일 - 월 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputBirthM: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirthM.val();
@@ -102,6 +147,13 @@ Tw.CommonAutoSmsCert.prototype = {
       this.$inputBirthM.val(inputBirth.slice(0, Tw.BIRTH_MD_LEN));
     }
   },
+
+  /**
+   * @function
+   * @desc 생년월일 - 일 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputBirthD: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputBirth = this.$inputBirthD.val();
@@ -109,9 +161,23 @@ Tw.CommonAutoSmsCert.prototype = {
       this.$inputBirthD.val(inputBirth.slice(0, Tw.BIRTH_MD_LEN));
     }
   },
+
+  /**
+   * @function
+   * @desc 법인번호 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputBiz: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 input event 처리
+   * @param $event
+   * @private
+   */
   _onInputCert: function ($event) {
     Tw.InputHelper.inputNumberOnly($event.target);
     var inputCert = this.$inputCert.val();
@@ -120,6 +186,13 @@ Tw.CommonAutoSmsCert.prototype = {
     }
     this._checkEnableConfirmButton();
   },
+
+  /**
+   * @function
+   * @desc 일반 / 법인 click event 처리
+   * @param $event
+   * @private
+   */
   _onClickType: function ($event) {
     var $currentTarget = $($event.currentTarget);
     this.$inputType.prop('checked', false);
@@ -141,6 +214,12 @@ Tw.CommonAutoSmsCert.prototype = {
     }
 
   },
+
+  /**
+   * @function
+   * @desc 확인 버튼 enable/disable 판단
+   * @private
+   */
   _checkEnableConfirmButton: function () {
     var inputCert = this.$inputCert.val();
     var inputMdn = this.$inputMdn.val();
@@ -151,12 +230,31 @@ Tw.CommonAutoSmsCert.prototype = {
       this.$btConfirm.attr('disabled', true);
     }
   },
+
+  /**
+   * @function
+   * @desc 인증번호 전송 버튼 클릭 처리
+   * @private
+   */
   _onClickCert: function () {
     this._sendCert(false);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 재전송 버튼 클릭 처리
+   * @private
+   */
   _onClickReCert: function () {
     this._sendCert(true);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청
+   * @param reCert
+   * @private
+   */
   _sendCert: function (reCert) {
     var type = this.$inputType.filter(':checked').val();
     // type = '1';
@@ -175,11 +273,25 @@ Tw.CommonAutoSmsCert.prototype = {
         .fail($.proxy(this._failRequestCert, this));
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 버튼 클릭 처리
+   * @private
+   */
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
       .done($.proxy(this._successRequestCertAdd, this))
       .fail($.proxy(this._failRequestCertAdd, this));
   },
+
+  /**
+   * @function
+   * @desc 일반 / 법인 parameter 추가
+   * @param params
+   * @param type
+   * @private
+   */
   _getParameter: function (params, type) {
     if ( type === '1' ) {
       $.extend(params, {
@@ -193,6 +305,14 @@ Tw.CommonAutoSmsCert.prototype = {
       });
     }
   },
+
+  /**
+   * @function
+   * @desc input field validation 체크
+   * @param type
+   * @returns {boolean}
+   * @private
+   */
   _checkCertValidation: function (type) {
     this._clearAllError();
     if ( type === '1' ) {
@@ -213,6 +333,14 @@ Tw.CommonAutoSmsCert.prototype = {
       return true;
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 응답 처리
+   * @param reCert
+   * @param resp
+   * @private
+   */
   _successRequestCert: function (reCert, resp) {
     this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -235,10 +363,25 @@ Tw.CommonAutoSmsCert.prototype = {
       this._checkCertError(resp.code, resp.msg);
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failRequestCert: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 요청 에러 처
+   * @param errorCode
+   * @param errorMsg
+   * @private
+   */
   _checkCertError: function (errorCode, errorMsg) {
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
       this._showError(null, null, this.$errorCertTime);
@@ -248,6 +391,12 @@ Tw.CommonAutoSmsCert.prototype = {
       Tw.Error(errorCode, errorMsg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증번호 타이머 설정
+   * @param startTime
+   */
   _showTimer: function (startTime) {
     var remainedSec = Tw.DateHelper.getRemainedSec(startTime);
     var remainedText = Tw.SMS_VALIDATION.REMAINED_TIME.replace('${value}', Tw.DateHelper.convertMinSecFormat(remainedSec));
@@ -256,6 +405,13 @@ Tw.CommonAutoSmsCert.prototype = {
       clearInterval(this._addTimer);
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 응답 처리
+   * @param resp
+   * @private
+   */
   _successRequestCertAdd: function (resp) {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
@@ -274,9 +430,22 @@ Tw.CommonAutoSmsCert.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 시간연장하기 실패 처리
+   * @param error
+   * @private
+   */
   _failRequestCertAdd: function (error) {
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증(확인) 클릭 이벤트 처리
+   * @private
+   */
   _onClickConfirm: function () {
     var type = this.$inputType.filter(':checked').val();
     // type = '1';
@@ -291,11 +460,25 @@ Tw.CommonAutoSmsCert.prototype = {
     this._getParameter(params, type);
     this._requestConfirm(params);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 (확인) API 요청
+   * @param params
+   * @private
+   */
   _requestConfirm: function (params) {
     this._apiService.request(Tw.API_CMD.BFF_08_0076, params)
       .done($.proxy(this._successRequestConfirm, this))
       .fail($.proxy(this._failRequestConfirm, this));
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 API 응답 처리
+   * @param resp
+   * @private
+   */
   _successRequestConfirm: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.goLoad('/common/auto-sms/result');
@@ -311,25 +494,62 @@ Tw.CommonAutoSmsCert.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 API 실패 처리
+   * @param error
+   * @private
+   */
   _failRequestConfirm: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc inputbox 에러 메시지 표기
+   * @param inputBox
+   * @param input
+   * @param error
+   * @private
+   */
   _showError: function (inputBox, input, error) {
     // inputBox.addClass('error');
     // input.attr('aria-describedby', error.attr('id'));
     error.removeClass('none');
     // error.attr('aria-hidden', false);
   },
+
+  /**
+   * @function
+   * @desc inputbox 에러 메시지 삭제
+   * @param inputBox
+   * @param input
+   * @param error
+   * @private
+   */
   _clearError: function (inputBox, input, error) {
     // inputBox.removeClass('error');
     // input.attr('aria-describedby', '');
     error.addClass('none');
     // error.attr('aria-hidden', true);
   },
+
+  /**
+   * @function
+   * @desc input 에러 삭제
+   * @private
+   */
   _clearAllError: function () {
     this._clearError(null, null, this.$errorBirth);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 요청 에러 삭제
+   * @private
+   */
   _clearCertError: function () {
     this._clearError(null, null, this.$validCert);
     this._clearError(null, null, this.$validRecert);
@@ -338,10 +558,22 @@ Tw.CommonAutoSmsCert.prototype = {
     this._clearError(null, null, this.$errorCertCount);
     this._clearError(null, null, this.$errorCertAddTime);
   },
+
+  /**
+   * @function
+   * @desc 인증번호 에러 팝업 close 콜백
+   * @private
+   */
   _onCloseCertError: function () {
     this.$inputCert.val('');
     this.$inputCert.focus();
   },
+
+  /**
+   * @function
+   * @desc 인증번호 입력시간 에러 팝업 close 콜백
+   * @private
+   */
   _onCloseInputError: function () {
     this.$inputList = this.$container.find('input');
     this.$inputList.val('');

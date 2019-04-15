@@ -395,7 +395,7 @@ Tw.CommonMemberSloginIos.prototype = {
 
   /**
    * @function
-   * @desc SMS 인증번호 요청 실패 처
+   * @desc SMS 인증번호 요청 실패 처라
    * @param error
    * @private
    */
@@ -485,7 +485,7 @@ Tw.CommonMemberSloginIos.prototype = {
 
   /**
    * @function
-   * @desc 로그인하기 클릭 이벤트 처
+   * @desc 로그인하기 클릭 이벤트 처리
    * @param $event
    * @private
    */

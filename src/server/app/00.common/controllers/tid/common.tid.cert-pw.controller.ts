@@ -2,6 +2,7 @@
  * @file common.tid.cert-pw.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.11.29
+ * @desc Common > TID > 비밀번호 인증
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -12,11 +13,24 @@ import EnvHelper from '../../../../utils/env.helper';
 import { TID, TID_SVC_TYPE } from '../../../../types/tid.type';
 import { AUTH_CERTIFICATION_METHOD } from '../../../../types/bff.type';
 
+/**
+ * @desc TID 비밀번호 인증 요청
+ */
 class CommonTidCertPw extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > TID > 비밀번호 인증 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {

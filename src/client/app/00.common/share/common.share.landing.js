@@ -4,6 +4,14 @@
  * @since 2018.11.20
  */
 
+/**
+ * @class
+ * @desc Common > Util > App 안내 화면 > 랜딩
+ * @param target
+ * @param targetLoginType
+ * @param loginType
+ * @constructor
+ */
 Tw.CommonShareLanding = function (target, targetLoginType, loginType) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
@@ -16,6 +24,11 @@ Tw.CommonShareLanding = function (target, targetLoginType, loginType) {
 };
 
 Tw.CommonShareLanding.prototype = {
+  /**
+   * @function
+   * @desc 로그인 필요 여부 확인 및 랜딩 처리
+   * @private
+   */
   _init: function () {
     if ( this._loginType === Tw.AUTH_LOGIN_TYPE.TID ) {
       this._historyService.replaceURL(this._target);

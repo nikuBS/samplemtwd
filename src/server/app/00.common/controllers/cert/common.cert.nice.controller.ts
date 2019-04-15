@@ -2,6 +2,7 @@
  * @file common.cert.nice.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.08.23
+ * @desc Common > 인증 > NICE
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,11 +10,24 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import EnvHelper from '../../../../utils/env.helper';
 
+/**
+ * @desc Nice 인증 초기화를 위한 class
+ */
 class CommonCertNice extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > 인증 > NICE 인증 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const mobileco = req.query.niceKind;
     const authUrl = decodeURIComponent(req.query.authUrl);
