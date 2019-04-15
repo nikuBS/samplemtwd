@@ -134,9 +134,9 @@ $.extend(Tw.CommonSearchNotFound.prototype,
   },
   _requestKeyword : function (evt) {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
+    this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, null, null, null, { jsonp : false }).
     done($.proxy(function (res) {
-      this._claimCallback(res,52);
+      this._claimCallback(res,52, evt);
     }, this))
       .fail($.proxy(function (err) {
         this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
