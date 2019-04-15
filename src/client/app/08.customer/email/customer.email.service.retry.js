@@ -49,7 +49,7 @@ Tw.CustomerEmailServiceRetry.prototype = {
   },
 
   _retry_inquiry: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0012, this._makeParams())
+    this._apiService.request(Tw.API_CMD.BFF_08_0012, this._makeParams(), null, null, null, { jsonp : false })
       .done($.proxy(this._request_inquiry, this));
   },
 
