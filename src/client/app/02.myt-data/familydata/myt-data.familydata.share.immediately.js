@@ -1,5 +1,5 @@
 /**
- * @file myt-data.familydata.share.immediately.js
+ * @file 바로 공유 < T가족모아데이터 공유설정 < T가족모아 데이터 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
  * @since 2018.10.04
  */

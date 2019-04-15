@@ -1,5 +1,5 @@
 /**
- * @file customer.helpline.js
+ * @file 전화상담 예약 < 이용안내
  * @author Jiyoung Jo
  * @since 2018.10.18
  */
@@ -228,6 +228,10 @@ Tw.CustomerHelpline.prototype = {
    */
   _openSelectTimePopup: function() {  
     var selectedTime = this._reservationTime;
+    if (!this._availableTimes.length) {
+      return;
+    }
+
     var times = _.chain(this._availableTimes)
       .map(function(time) { // 현재 선택된 시간 checked 추가
         if (time === selectedTime) {

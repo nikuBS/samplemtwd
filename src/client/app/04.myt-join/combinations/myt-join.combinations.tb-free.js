@@ -1,5 +1,5 @@
 /**
- * @file myt-join.product.combinations.tb-free.js
+ * @file TB끼리 온가족프리 < 나의 결합상품 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
  * @since 2018.11.01
  */

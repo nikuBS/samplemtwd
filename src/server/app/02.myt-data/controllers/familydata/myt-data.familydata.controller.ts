@@ -1,5 +1,5 @@
 /**
- * @file myt-data.familydata.controller.ts
+ * @file T가족모아 데이터 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
  * @since 2018.10.01
  */

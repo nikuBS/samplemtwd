@@ -1,5 +1,5 @@
 /**
- * @file customer.praise.controller.ts
+ * @file 칭찬합니다 < 고객의견 < 이용안내
  * @author Jiyoung Jo
  * @since 2018.10.22
  */

@@ -1,5 +1,5 @@
 /**
- * @file customer.researches.result.controller.ts
+ * @file 결과보기 < 설문조사 < 고객의견 < 이용안내
  * @author Jiyoung Jo
  * @since 2019.01.04
  */

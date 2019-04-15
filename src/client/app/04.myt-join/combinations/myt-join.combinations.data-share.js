@@ -1,5 +1,5 @@
 /**
- * @file myt.join.product.combinations.data-share.js
+ * @file 데이터 나눠쓰기 < 나의 결합상품 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
  * @since 2018.10.30
  */

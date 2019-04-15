@@ -1,3 +1,8 @@
+/**
+ * @file 배너
+ * @author Jiyoung Jo
+ * @since 2019.04.10
+ */
 
   /**
    * @class

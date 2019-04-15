@@ -54,7 +54,7 @@
                                             </span>
                                             <span class="select">
                                                 <span class="small-tt">시간</span>
-                                                <button id="fe-time" class="bt-dropdown big" title=" 시간 선택" aria-haspopup="true"><%= timeInfo.availHours[0] %>:00<span class="ico"></span></button>
+                                                <button id="fe-time" class="bt-dropdown big" title=" 시간 선택" aria-haspopup="true"><%= timeInfo.availHours[0] ? `${timeInfo.availHours[0]}:00` : '' %><span class="ico"></span></button>
                                             </span>
                                         </span>
                                     </div>

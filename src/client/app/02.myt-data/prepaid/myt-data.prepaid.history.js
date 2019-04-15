@@ -1,5 +1,5 @@
 /**
- * @file myt-data.prepaid.history.js
+ * @file 선불폰 충전 내역 < 선불폰 충전 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
  * @since 2019.03.15
  */

@@ -1,5 +1,5 @@
 /**
- * @file myt-join.myplanadd.controller.ts
+ * @file 나의 부가서비스 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
  * @since 2018.09.19
  */
