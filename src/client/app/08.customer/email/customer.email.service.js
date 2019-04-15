@@ -223,7 +223,7 @@ Tw.CustomerEmailService.prototype = {
         arrValid.push($(item).prop('checked'));
       }
 
-      if ( $(item).prop('type') === 'number' ) {
+      if ( $(item).prop('type') === 'number' || $(item).prop('type') === 'tel' ) {
         var isValidNumber = $(item).val().length !== 0 ? true : false;
         arrValid.push(isValidNumber);
       }
