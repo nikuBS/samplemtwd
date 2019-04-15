@@ -205,6 +205,10 @@ class ApiService {
             this.loginService.setSvcInfo(this.req, this.res, {
               mbrNm: resp.result.mbrNm,
               // noticeType: resp.result.noticeTypCd,
+              twdAdRcvAgreeYn: resp.result.twdAdRcvAgreeYn,
+              twdInfoRcvAgreeYn: resp.result.twdInfoRcvAgreeYn,
+              twdLocUseAgreeYn: resp.result.twdLocUseAgreeYn,
+              tplaceUseAgreeYn: resp.result.tplaceUseAgreeYn,
               loginType: type
             }),
             this.loginService.setNoticeType(this.req, resp.result.noticeTypCd)
@@ -270,6 +274,10 @@ class ApiService {
             this.loginService.setSvcInfo(this.req, this.res, {
               mbrNm: resp.result.mbrNm,
               // noticeType: resp.result.noticeTypCd,
+              twdAdRcvAgreeYn: resp.result.twdAdRcvAgreeYn,
+              twdInfoRcvAgreeYn: resp.result.twdInfoRcvAgreeYn,
+              twdLocUseAgreeYn: resp.result.twdLocUseAgreeYn,
+              tplaceUseAgreeYn: resp.result.tplaceUseAgreeYn,
               loginType: type
             }),
             this.loginService.setNoticeType(this.req, resp.result.noticeTypCd)
@@ -429,6 +437,10 @@ class ApiService {
           const newSvc = new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
             // noticeType: svcInfo.noticeType,
+            twdAdRcvAgreeYn: svcInfo.twdAdRcvAgreeYn,
+            twdInfoRcvAgreeYn: svcInfo.twdInfoRcvAgreeYn,
+            twdLocUseAgreeYn: svcInfo.twdLocUseAgreeYn,
+            tplaceUseAgreeYn: svcInfo.tplaceUseAgreeYn,
             loginType: svcInfo.loginType
           });
           return this.loginService.setSvcInfo(this.req, this.res, newSvc);
@@ -457,6 +469,10 @@ class ApiService {
           return this.loginService.setSvcInfo(this.req, this.res, new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
             // noticeType: svcInfo.noticeType,
+            twdAdRcvAgreeYn: svcInfo.twdAdRcvAgreeYn,
+            twdInfoRcvAgreeYn: svcInfo.twdInfoRcvAgreeYn,
+            twdLocUseAgreeYn: svcInfo.twdLocUseAgreeYn,
+            tplaceUseAgreeYn: svcInfo.tplaceUseAgreeYn,
             loginType: svcInfo.loginType
           }));
         } else {

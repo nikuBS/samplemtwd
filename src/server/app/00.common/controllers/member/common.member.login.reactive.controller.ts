@@ -1,7 +1,7 @@
 /**
- * @file common.login.dormancy.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.07.05
+ * @file 휴먼계정에 대한 처리
+ * @author Hakjoon Sim
+ * @since 2018-07-05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

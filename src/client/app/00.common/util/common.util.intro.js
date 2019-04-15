@@ -1,9 +1,20 @@
 /**
- * @file common.util.intro.js
+ * @file 소개페이지
+ * @author anklebreaker
+ * @since 2019-04-05
  */
 
+/**
+ * @class
+ * @desc 초기화를 위한 class
+ * @param {HTMLDivElement} rootEl 최상위 element
+ */
 Tw.CommonUtilIntro = function (rootEl) {
   this.$container = rootEl;
+  /**
+   * @member {Object}
+   * @desc 동영상 관리자
+   */
   this.videoManager = (function () {
     var $videos = rootEl.find('video');
     var currentVideos = [];
@@ -20,6 +31,12 @@ Tw.CommonUtilIntro = function (rootEl) {
       };
     }();
 
+    /**
+     * @function
+     * @desc 현재 재생중인 video
+     * @param {Number} top 현재 스크롤 y
+     * @returns {Array} 재생중 비디오 element array
+     */
     function _getCurrentVideos(top) {
       var bottom = top + $(window).height();
       return $videos.filter(function () {
@@ -27,11 +44,22 @@ Tw.CommonUtilIntro = function (rootEl) {
       });
     }
 
+    /**
+     * @function
+     * @desc 현재 화면에서 비디오 재생 가능여부 체크
+     * @returns {Boolean}
+     */
     function _canPlay() {
       currentVideos = _getCurrentVideos(window.scrollY);
       return currentVideos.length > 0;
     }
 
+    /**
+     * @function
+     * @desc 현재 재생중인 비디오인지 체크
+     * @param {HTMLVideoElement} video 비디오 element
+     * @returns {Boolean}
+     */
     function _isCurrentVideo(video) {
       for (var i = 0, len = currentVideos.length; i < len; i++) {
         if (currentVideos[i] === video) {
@@ -41,6 +69,10 @@ Tw.CommonUtilIntro = function (rootEl) {
       return false;
     }
 
+    /**
+     * @function
+     * @desc 재생 중 비디오 정지
+     */
     function _pause() {
       $videos.filter(function () {
         return !_isCurrentVideo(this) && !this.paused;
@@ -50,6 +82,10 @@ Tw.CommonUtilIntro = function (rootEl) {
       });
     }
 
+    /**
+     * @function
+     * @desc 현재 화면에 보이는 비디오 재
+     */
     function _play() {
       _pause();
       for (var i = 0, len = currentVideos.length; i < len; i++) {
@@ -59,7 +95,9 @@ Tw.CommonUtilIntro = function (rootEl) {
       }
     }
 
-    // calculate video offest
+    /**
+     * @desc 각 비디오의 offset 계산
+     */
     $videos.each(function () {
       var offset = _calculateOffset(this);
       this.dataset.top = offset.top;
@@ -73,7 +111,9 @@ Tw.CommonUtilIntro = function (rootEl) {
     };
   })();
 
-  // event binding
+  /**
+   * @desc event binding
+   */
   if (!Tw.BrowserHelper.isApp()) {
     this.$container.on('click', '.bt-down', function () {
       var offsetAppDownload = $(document).height();

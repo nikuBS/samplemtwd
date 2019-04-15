@@ -71,6 +71,8 @@ abstract class TwViewController {
       } else {
         if ( this.existId(tokenId, userId) ) {
           this.login(req, res, next, path, tokenId, userId);
+        } else if ( this.checkSSOLogin(req, path) ) {
+          res.redirect('/common/tid/login');
         } else {
           this.sessionCheck(req, res, next, path);
         }
@@ -78,12 +80,20 @@ abstract class TwViewController {
     });
   }
 
+  private checkLogin(req): boolean {
+    return this._loginService.isLogin(req);
+  }
+
   private existId(tokenId: string, userId: string) {
     return !(FormatHelper.isEmpty(tokenId) && FormatHelper.isEmpty(userId));
   }
 
-  private checkLogin(req): boolean {
-    return this._loginService.isLogin(req);
+  private checkSSOLogin(req, path): boolean {
+    const ssoCookie = req.cookies[COOKIE_KEY.TID_SSO];
+    return !BrowserHelper.isApp(req) && !FormatHelper.isEmpty(ssoCookie) &&
+      !/\/common\/tid/i.test(path) && !/\/common\/member\/login/i.test(path) && !/\/common\/member\/signup/i.test(path) &&
+      !/\/common\/member\/logout/i.test(path) && !/\/common\/member\/slogin/i.test(path) &&
+      !/\/common\/member\/withdrawal-complete/i.test(path) && !/\/common\/member\/init/i.test(path);
   }
 
   private login(req, res, next, path, tokenId, userId) {
