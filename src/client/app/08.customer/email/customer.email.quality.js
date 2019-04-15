@@ -160,7 +160,7 @@ Tw.CustomerEmailQuality.prototype = {
       htParams = $.extend(htParams, { selSvcNum: selSvcNum });
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target))
       .fail($.proxy(this._apiError, this, $target));
   },
@@ -187,7 +187,7 @@ Tw.CustomerEmailQuality.prototype = {
       htParams = $.extend(htParams, { selSvcNum: selSvcNum });
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target))
       .fail($.proxy(this._apiError, this, $target));
   },

@@ -40,7 +40,7 @@
                             <% if ( inquiry.supInqId !== '' ) { %>
                             <em class="again">재문의</em>
                             <% } %>
-                            <strong class="tit"><%-inquiry.title%></strong>
+                            <strong class="tit"><%=inquiry.title%></strong>
                             <span class="date-state">
                                 <em class="date"><%-convertDate(inquiry.rgstDt)%></em>
                                 <% if ( inquiry.answYn == 'Y' ) { %>
