@@ -163,10 +163,10 @@ Tw.PopupService.prototype = {
     history.pushState(this._popupObj, hashName, hashName);
   },
   _bindEvent: function ($container) {
-    $container.find('.popup-blind').click(_.debounce($.proxy(this._onClickBlind, this, $container), 500));
-    $container.find('.popup-closeBtn').click(_.debounce($.proxy(this.close, this), 500));
-    $container.find('.tw-popup-closeBtn').click(_.debounce($.proxy(this.close, this), 500));
-    $container.find('.tw-popup-confirm').click(_.debounce($.proxy(this._confirm, this), 500));
+    $container.on('click', '.popup-blind', _.debounce($.proxy(this._onClickBlind, this, $container), 500));
+    $container.on('click', '.popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
+    $container.on('click', '.tw-popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
+    $container.on('click', '.tw-popup-confirm', _.debounce($.proxy(this._confirm, this), 500));
   },
   _onClickBlind: function ($container) {
     if ( $container.find('.fe-no-blind-close').length === 0 ) {

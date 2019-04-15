@@ -81,7 +81,7 @@ Tw.LineComponent.prototype = {
     this.$btMore = $popupContainer.find('#fe-bt-more');
 
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
-    $popupContainer.find('.fe-radio-line').click(_.debounce($.proxy(this._onSelectLine, this), 500));
+    $popupContainer.on('click', '.fe-radio-line', _.debounce($.proxy(this._onSelectLine, this), 500));
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
   },
 

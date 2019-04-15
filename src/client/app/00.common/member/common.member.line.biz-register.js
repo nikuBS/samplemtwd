@@ -128,7 +128,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-nickname', $.proxy(this._onClickNickname, this));
 
-    this.$btConfirm.click(_.debounce($.proxy(this._onClickRegister, this), 500));
+    this.$btConfirm.on('click', _.debounce($.proxy(this._onClickRegister, this), 500));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputCop.on('input', $.proxy(this._onInputCop, this));
     this.$inputCopNum.on('input', $.proxy(this._onInputCopNum, this));

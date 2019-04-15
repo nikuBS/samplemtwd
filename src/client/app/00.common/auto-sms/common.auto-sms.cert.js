@@ -54,7 +54,7 @@ Tw.CommonAutoSmsCert.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
+    this.$btConfirm.on('click', _.debounce($.proxy(this._onClickConfirm, this), 500));
     this.$inputType.on('click', $.proxy(this._onClickType, this));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputBirthY.on('input', $.proxy(this._onInputBirthY, this));
