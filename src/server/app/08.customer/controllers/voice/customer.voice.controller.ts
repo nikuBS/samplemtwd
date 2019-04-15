@@ -1,7 +1,7 @@
 /**
- * @file customer.voice.controller.ts
- * @author Jiman Park (jiman.park@sk.com)
- * @since 2018.10.24
+ * @file [목소리인증하기]
+ * @author Lee Kirim
+ * @since 2018-10-24
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -14,8 +14,9 @@ class CustomerVoice extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
-    const page = req.params.page;
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, _childInfo: any, pageInfo: any): void {
+    const page = req.params.page; // query string 으로 정보 받음
+    // 렌더링에 사용할 데이터 
     const responseData = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
@@ -39,14 +40,16 @@ class CustomerVoice extends TwViewController {
           ));
         break;
       default:
-        // Observable.combineLatest(
-        // ).subscribe(([subscriptions]) => {
-        //
-        // });
         res.render('voice/customer.voice.html', responseData);
     }
   }
 
+  /**
+   * @function
+   * @desc 전화번호 형식으로 변경
+   * @param {string | number} sPhoneNumber
+   * @returns {string} nnn-nnn-nnnn
+   */
   public convertTelFormat = (sPhoneNumber: string | number): string => FormatHelper.conTelFormatWithDash(sPhoneNumber);
 }
 
