@@ -1,15 +1,29 @@
 /**
- * @file product.mobileplan.join.data-together.js
+ * @file 상품 > 가입 > 모바일요금제 > 데이터 함께쓰기
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * @since 2018-11-14
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param displayId - 화면ID
+ * @param confirmOptions - 정보확인 데이터
+ * @param isOverPayReqYn - 초과 사용량 요청 가능 여부
+ * @param isComparePlanYn - 비교하기 요금제 해당 여부
+ */
 Tw.ProductMobileplanJoinDataTogether = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
+  // 컨테이너 레이어 선언
+  this.$container = rootEl;
+
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  // 공통 변수 선언
   this._prodId = prodId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
@@ -18,18 +32,27 @@ Tw.ProductMobileplanJoinDataTogether = function(rootEl, prodId, displayId, confi
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
 
-  this.$container = rootEl;
+  // Element 캐싱
   this._cachedElement();
+
+  // 이벤트 바인딩
   this._bindEvent();
+
+  // 정보확인 데이터 변환
   this._convConfirmOptions();
 };
 
 Tw.ProductMobileplanJoinDataTogether.prototype = {
 
+  /* 함께하기 회선 목록 */
   _data: {
     addList: []
   },
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$inputNumber = this.$container.find('.fe-num_input');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
@@ -37,6 +60,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
@@ -46,15 +73,25 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._reqOverpay, this), 500));
 
+    // 숫자키패드 IOS 에서 안닫힘 현상 대응
     if (Tw.BrowserHelper.isIos()) {
       $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
     }
   },
 
+  /**
+   * @function
+   * @desc 주소록 열기 (App Only)
+   */
   _openAppAddressBook: function() {
     this._nativeService.send('getContact', {}, $.proxy(this._setAppAddressBook, this));
   },
 
+  /**
+   * @function
+   * @desc 주소록열기 후 동작 처리
+   * @param res - App 콜백 값
+   */
   _setAppAddressBook: function(res) {
     if (Tw.FormatHelper.isEmpty(res.params.phoneNumber)) {
       return;
@@ -66,6 +103,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._blurInputNumber();
   },
 
+  /**
+   * @function
+   * @desc 번호 입력시 입력 값에 따른 동작
+   */
   _detectInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
@@ -77,6 +118,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._toggleClearBtn();
   },
 
+  /**
+   * @function
+   * @desc 설정 완료 버튼 토글
+   * @param isEnable - 활성화 여부
+   */
   _toggleSetupButton: function(isEnable) {
     if (isEnable) {
       this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
@@ -85,20 +131,36 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 번호 입력 란 blur 시, 회선 번호에 대쉬 처리
+   */
   _blurInputNumber: function() {
     this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
+  /**
+   * @function
+   * @desc 번호 입력 란 focus 시, 회선 번호에 대쉬 제거
+   */
   _focusInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
+  /**
+   * @function
+   * @desc 삭제 버튼 클릭 시 동작 정의
+   */
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleSetupButton(false);
   },
 
+  /**
+   * @function
+   * @desc 삭제 버튼 display none|block 토글
+   */
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
       this.$btnClearNum.show().attr('aria-hidden', 'false');
@@ -107,6 +169,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 정보확인 데이터 변환
+   */
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
@@ -128,6 +194,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc DG방어 메세지 처리
+   * @returns {null|{isHtml: boolean, guidMsgCtt: *}}
+   */
   _getDowngrade: function() {
     if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
       return null;
@@ -139,6 +210,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 초과 사용량 조회 요청
+   * @returns {*}
+   */
   _reqOverpay: function() {
     if (this._overpayRetryCnt > 2) {
       this._confirmOptions = $.extend(this._confirmOptions, {isOverPayError: true});
@@ -154,6 +230,12 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 초과 사용량 조회 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _resOverpay: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -203,6 +285,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._procConfirm();
   },
 
+  /**
+   * @function
+   * @desc 공통 정보확인 실행
+   * @returns {*|void}
+   */
   _procConfirm: function() {
     if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val())) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
@@ -224,6 +311,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     }), $.proxy(this._prodConfirmOk, this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 콜백 처리 & 가입하기 API 요청
+   */
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -235,6 +326,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 가입하기 API 응답 처리
+   * @param resp - API 응답 값 확인 및 가입유도팝업 조회 API 요청
+   */
   _procJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -248,6 +344,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     }, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
+  /**
+   * @function
+   * @param resp - 가입유도팝업 API 응답 값 처리
+   * @returns {*}
+   */
   _isVasTerm: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       this._isResultPop = true;
@@ -257,6 +358,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._openVasTermPopup(resp.result);
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     if (!this._isResultPop) {
       return;
@@ -281,10 +386,20 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, {});
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 컨테이너 레이어
+   */
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 A 하이퍼링크 이벤트 핸들링
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -292,6 +407,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc 가입유도팝업 실행
+   * @param respResult - 가입유도팝업 API 조회 응답 값
+   */
   _openVasTermPopup: function(respResult) {
     var popupOptions = {
       hbs: 'MV_01_02_02_01',
@@ -320,16 +440,29 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
+  /**
+   * @function
+   * @desc 가입유도팝업 이벤트 바인딩
+   * @param $popupContainer - 가입유도팝업 컨테이너 레이어
+   */
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 가입유도팝업 닫기 버튼 이벤트 바인딩
+   */
   _closeAndOpenResultPopup: function() {
     this._isResultPop = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 닫기시 동작
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

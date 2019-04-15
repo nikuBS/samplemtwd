@@ -1,20 +1,30 @@
 /**
- * @file product.join.common-confirm.js
+ * @file 상품 가입/해지 정보확인 공통
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018.11.09
  */
 
+/**
+ * @class
+ * @param isPopup - 팝업 레이어 여부
+ * @param rootEl - 컨테이너 레이어 (팝업 레이어 아닐 시)
+ * @param data - 정보확인 API 응답 값 (변환된 데이터)
+ * @param applyCallback - 가입/해지 콜백 func
+ */
 Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
 
+  // 공통 변수 선언
   this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
   this._applyCallback = applyCallback;
+  this._isLock = false;
 
   if (isPopup) {
     this._openPop();
@@ -26,6 +36,10 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
 
 Tw.ProductCommonConfirm.prototype = {
 
+  /**
+   * @function
+   * @desc - Element 캐싱
+   */
   _cachedElement: function() {
     this.$btnApply = this.$container.find('.fe-btn_apply');
     this.$btnCancelJoin = this.$container.find('.fe-btn_cancel_join');
@@ -49,10 +63,14 @@ Tw.ProductCommonConfirm.prototype = {
     this._bindEvent();
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnApply.on('click', _.debounce($.proxy(this._openConfirmAlert, this), 500));
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
-    this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
+    this.$btnCancelJoin.on('click', _.debounce($.proxy(this._joinCancel, this), 500));
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$btnTipView.on('click', $.proxy(this._openTipView, this));
@@ -308,6 +326,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openConfirmAlert: function(e) {
+    if (this._isLock) {
+      return;
+    }
+
     this._isApplyConfirm = false;
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
       Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this),
@@ -324,6 +346,7 @@ Tw.ProductCommonConfirm.prototype = {
       return;
     }
 
+    this._isLock = true;
     this._doCallback();
   },
 

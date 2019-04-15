@@ -6,10 +6,10 @@
 
 /**
  * @class
- * @param rootEl
- * @param category
- * @param ntcId
- * @param tworldChannel
+ * @param rootEl - 컨테이너 레이어
+ * @param category - 카테고리 값 (Query String | Optional)
+ * @param ntcId - 게시물 ID (Query String | Optional)
+ * @param tworldChannel - T월드 공지사항 접속 채널 (Optional)
  */
 Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {
   // 컨테이너 레이어 설정
