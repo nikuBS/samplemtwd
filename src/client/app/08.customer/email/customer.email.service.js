@@ -151,7 +151,7 @@ Tw.CustomerEmailService.prototype = {
       htParams = $.extend(htParams, { selSvcNum: selSvcNum });
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
@@ -174,7 +174,7 @@ Tw.CustomerEmailService.prototype = {
       htParams = $.extend(htParams, { selSvcNum: selSvcNum });
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
@@ -194,7 +194,7 @@ Tw.CustomerEmailService.prototype = {
       });
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0020, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0020, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
@@ -203,7 +203,7 @@ Tw.CustomerEmailService.prototype = {
       category: this.$service_depth2.data('serviceDepth2')
     });
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams)
+    this._apiService.request(Tw.API_CMD.BFF_08_0021, htParams, null, null, null, { jsonp : false })
       .done($.proxy(this._onSuccessRequest, this, $target)).fail($.proxy(this._apiError, this, $target));
   },
 
