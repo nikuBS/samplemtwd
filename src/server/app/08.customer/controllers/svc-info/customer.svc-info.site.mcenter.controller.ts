@@ -1,7 +1,7 @@
 /**
- * @file customer.svc-info.site.mcenter.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.18
+ * @file [이용안내-사이트이용방법-m고객센터]
+ * @author Lee Kirim
+ * @since 2018-12-18
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -17,7 +17,7 @@ class CustomerSvcInfoMcenter extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any)  {
     this.apiService.request(API_CMD.BFF_08_0064, {}, {}, ['D00004'] ).subscribe(resp => {
       if ( resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
@@ -39,7 +39,12 @@ class CustomerSvcInfoMcenter extends TwViewController {
     });
   }
 
-  // 전송된 html 수정 변경
+  /**
+   * @function
+   * @desc 문자열로 전달된 html 문자중 주석 제거, {{cdn}} 을 이미지 경로로 교체
+   * @param {string} html 
+   * @return {string} 
+   */
   private modifyHTML = (html: string): string => {
     // 주석제거
     html = html.replace(/<!--(.*?)-->/gmi, '')

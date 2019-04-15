@@ -1,11 +1,15 @@
 /**
  * @file
- * @author Kim InHwan (skt.P132150@partner.sk.com)
- * @since 2018.09.17
- *
+ * @author Kim InHwan
+ * @since 2018-09-17
  */
-var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
+var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+/**
+ * @class
+ * @desc MyT > 나의 데이터/통화
+ * @param {JSON} params
+ */
 Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
   this._apiService = Tw.Api;
@@ -27,6 +31,10 @@ Tw.MyTDataSubMain = function (params) {
 
 Tw.MyTDataSubMain.prototype = {
   _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트
+  /**
+   * @function
+   * @desc 초기값 설정
+   */
   _rendered: function () {
     if ( !Tw.BrowserHelper.isApp() && this._historyService.isBack() ) {
       // this._historyService.reload();
@@ -73,7 +81,10 @@ Tw.MyTDataSubMain.prototype = {
       this._initBpcp();
     }
   },
-
+  /**
+   * @function
+   * @desc 바인드 이벤트
+   */
   _bindEvent: function () {
     // this.$remnantBtn.on('click', $.proxy(this._onRemnantDetail, this));
     if ( this.data.immCharge ) {
@@ -106,19 +117,28 @@ Tw.MyTDataSubMain.prototype = {
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
   },
-
+  /**
+   * @function
+   * @desc 초기설정
+   */
   _initialize: function () {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
   },
-
+  /**
+   * @function
+   * @desc banner tos api 호출
+   */
   _initBanners: function () {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
       .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
       .fail($.proxy(this._errorRequest, this));
   },
-
+  /**
+   * @function
+   * @desc _initBanners() 성공 콜백
+   */
   _successBanner: function (type, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
@@ -138,25 +158,38 @@ Tw.MyTDataSubMain.prototype = {
       this.$container.find('[data-id=banners]').hide();
     }
   },
-
+  /**
+   * @function
+   * @desc 배너 설정유무
+   * @returns {boolean}
+   */
   _checkBanner: function (result) {
     return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
-
+  /**
+   * @function
+   * @desc 컨테이너 높이 조정
+   */
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.resetHeight(this.$bannerList[0]);
     }
   },
-
+  /**
+   * @function
+   * @desc this._checkScroll() 실행
+   */
   _initScroll: function () {
     this._checkScroll();
     $(window).scroll($.proxy(function () {
       this._checkScroll();
     }, this));
   },
-
+  /**
+   * @function
+   * @desc _initOtherLinesInfo() 실행
+   */
   _checkScroll: function () {
     if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
       this._requestPattern();
@@ -170,24 +203,47 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
   },
-
+  /**
+   * @function
+   * @desc 파라미터로 넘긴 element 가 이동했는지
+   * @param {Object} element
+   * @returns {boolean}
+   */
   _elementScrolled: function (element) {
     var docViewTop = $(window).scrollTop();
     var docViewBottom = docViewTop + $(window).height();
     var elemTop = element.offset().top;
     return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
   },
-
+  /**
+   * @function
+   * @desc 데이터 사이즈 변환
+   * @param {int} value
+   * @returns {number}
+   */
   __convertData: function (value) {
     return parseFloat((value / 1024 / 1024).toFixed(2));
   },
-
+  /**
+   * @function
+   * @desc 음성 사이즈 변환
+   * @param {int} value
+   * @returns {number}
+   */
   __convertVoice: function (value) {
     var min = parseInt((value % 3600) / 60, 10);
     var sec = value % 60;
     return min + ':' + sec;
   },
-
+  /**
+   * @function
+   * @desc 포맷팅
+   * @param {int} tmoaremained
+   * @param {int} tmoatotal
+   * @param {int} etcremained
+   * @param {int} etctotal
+   * @returns {JSON} result
+   */
   __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal) {
     var result = {};
     var total = tmoatotal + etctotal;
@@ -201,7 +257,11 @@ Tw.MyTDataSubMain.prototype = {
     result.totalRemainedRatio = Math.round(totalRemained / total * 100);
     return result;
   },
-
+  /**
+   * @function
+   * @desc 포맷팅
+   * @param {JSON} data
+   */
   __convShowData: function (data) {
     data.isUnlimit = !_.isFinite(data.total);
     data.remainedRatio = 100;
@@ -212,7 +272,13 @@ Tw.MyTDataSubMain.prototype = {
       data.remainedRatio = Math.round((data.remained / data.total) * 100);
     }
   },
-
+  /**
+   * @function
+   * @desc 해당 유형에 맞는 단위로 표현
+   * @param {String} data
+   * @param {String} unit
+   * @returns {JSON} - ex {data:'1,000', unit:'원'}
+   */
   __convFormat: function (data, unit) {
     switch ( unit ) {
       case Tw.UNIT_E.FEE:
@@ -228,7 +294,12 @@ Tw.MyTDataSubMain.prototype = {
     }
     return '';
   },
-
+  /**
+   * @function
+   * @desc 데이터 파싱
+   * @param {JSON} remnant
+   * @returns {JSON}
+   */
   __parseRemnantData: function (remnant) {
     var GDATA = remnant.gnrlData || [];
     var SDATA = remnant.spclData || [];
@@ -304,7 +375,12 @@ Tw.MyTDataSubMain.prototype = {
     }
     return result;
   },
-
+  /**
+   * @function
+   * @desc 다른회선 정보반환
+   * @param {String} number - svcMgmtNum
+   * @returns {JSON}
+   */
   __selectOtherLine: function (number) {
     var select = _.find(this.data.otherLines, function (item) {
       if ( item.svcMgmtNum === number ) {
@@ -313,7 +389,12 @@ Tw.MyTDataSubMain.prototype = {
     });
     return select;
   },
-
+  /**
+   * @function
+   * @desc 파라미터의 서비스 유형 반환
+   * @param {String} attrCd
+   * @returns {String}
+   */
   __selectSvcType: function (attrCd) {
     var clsNm = 'cellphone';
     if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
@@ -322,14 +403,20 @@ Tw.MyTDataSubMain.prototype = {
     return clsNm;
   },
 
-  // chart create
+  /**
+   * @function
+   * @desc chart create
+   */
   _requestPattern: function () {
     this._isRequestPattern = true;
     this._apiService.request(Tw.API_CMD.BFF_05_0091, {})
       .done($.proxy(this._successPattern, this))
       .fail($.proxy(this._errorRequestPattern, this));
   },
-
+  /**
+   * @function
+   * @desc 차트생성
+   */
   _initPatternChart: function () {
     if ( (this.data.pattern.data && this.data.pattern.data.length > 0) ||
       (this.data.pattern.voice && this.data.pattern.voice.length > 0) ) {
@@ -423,7 +510,12 @@ Tw.MyTDataSubMain.prototype = {
       this.$container.find('[data-id=pattern_empty]').hide();
     }
   },
-
+  /**
+   * @function
+   * @desc 다른회선 정보
+   * @param {int} from
+   * @param {int} end
+   */
   _initOtherLinesInfo: function (from, end) {
     this._isRequestOtherLinesInfo = true;
     var requestCommand = [];
@@ -454,7 +546,10 @@ Tw.MyTDataSubMain.prototype = {
       this.$otherLines.hide();
     }
   },
-
+  /**
+   * @function
+   * @desc _initOtherLinesInfo() 의 실시간 사용량 조회 성공 콜백
+   */
   _responseOtherLine: function () {
     var list = [];
     if ( arguments.length > 0 ) {
@@ -512,7 +607,11 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initOtherLineList(list);
   },
-
+  /**
+   * @function
+   * @desc 다른회선 리스트
+   * @param {Arraylist} list
+   */
   _initOtherLineList: function (list) {
     if ( list.length > 0 ) {
       for ( var i = 0; i < list.length; i++ ) {
@@ -523,13 +622,21 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // 최근데이터사용량 월표시 (당해년 제외 년월로 표시)
+  /**
+   * @function
+   * @desc 최근데이터사용량 월표시 (당해년 제외 년월로 표시)
+   * @param {String} date
+   * @returns {string}
+   */
   _recentChartDate: function (date) {
     var curYear = new Date().getFullYear();
     var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
     return Tw.DateHelper.getShortKoreanMonth(date, (curYear !== inputYear));
   },
-
+  /**
+   * @function
+   * @desc 즉시충전 상세보기
+   */
   _onImmChargeDetail: function () {
     switch ( this.data.svcInfo.svcAttrCd ) {
       case 'M2':
@@ -549,7 +656,10 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // pps 인 경우 자동알람서비스 그 외 데이터선물하기
+  /**
+   * @function
+   * @desc pps 인 경우 자동알람서비스 그 외 데이터선물하기
+   */
   _onTPresentDetail: function () {
     if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
       // PPS 인 경우 자동알람서비스 - 190128 SB 기준 변경됨
@@ -566,19 +676,26 @@ Tw.MyTDataSubMain.prototype = {
       this._historyService.goLoad('/myt-data/giftdata');
     }
   },
-
-  // T가족모아
+  /**
+   * @function
+   * @desc T가족모아
+   */
   _onFamilyMoaDetail: function () {
     // 공유 버튼
     this._historyService.goLoad('/myt-data/familydata/share');
   },
-
-  // 데이터 혜텍
+  /**
+   * @function
+   * @desc 데이터 혜텍
+   */
   _onDataBenefitDetail: function () {
     this._bpcpService.open(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
   },
-
-  // 데이터 조르기
+  /**
+   * @function
+   * @desc 데이터 조르기
+   * @param {Object} e
+   */
   _onDataPesterDetail: function (e) {
     if ( Tw.BrowserHelper.isApp() ) {
       //  2_A17 Alert 호출
@@ -598,7 +715,11 @@ Tw.MyTDataSubMain.prototype = {
       this._goAppInfo(e);
     }
   },
-
+  /**
+   * @function
+   * @desc 서비스 이용안내 팝업
+   * @param {Object} e
+   */
   _goAppInfo: function (e) {
     var isAndroid = Tw.BrowserHelper.isAndroid();
     this._popupService.open({
@@ -607,11 +728,18 @@ Tw.MyTDataSubMain.prototype = {
       'cdn': Tw.Environment.cdn
     }, $.proxy(this._onOpenTworld, this), null, null, $(e.currentTarget));
   },
-
+  /**
+   * @function
+   * @desc T월드 설치 페이지
+   * @param $layer
+   */
   _onOpenTworld: function ($layer) {
     new Tw.CommonShareAppInstallInfo($layer);
   },
-
+  /**
+   * @function
+   * @desc excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
+   */
   _pesterDetailConfirm: function () {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
@@ -620,7 +748,10 @@ Tw.MyTDataSubMain.prototype = {
     Tw.CommonHelper.share(content);
   },
 
-  // 리필쿠폰
+  /**
+   * @function
+   * @desc 리필쿠폰
+   */
   _onRefillDetail: function () {
     this._historyService.goLoad('/myt-data/recharge/coupon?from=submain');
   },
@@ -630,7 +761,11 @@ Tw.MyTDataSubMain.prototype = {
   //   this._historyService.goLoad('/myt-data/history');
   // },
 
-  // 다른 회선 잔여량 상세
+  /**
+   * @function
+   * @desc 다른 회선 잔여량 상세
+   * @param {Object} event
+   */
   _onOtherLinesItemDetail: function (event) {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
       mgmtNum = $target.attr('data-svc-mgmt-num'),
@@ -651,8 +786,10 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
   },
-
-  // 다른 회선 더보기
+  /**
+   * @function
+   * @desc 다른 회선 더보기
+   */
   _onOtherLinesMore: function () {
     var renderedListCnt = this.$otherLines.find('.my-line-info li').length;
     var gapCnt = this.data.otherLines.length - renderedListCnt;
@@ -677,15 +814,20 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // 다른 회선 팝업에서 변경하기 눌렀을 경우
+  /**
+   * @function
+   * @desc 다른 회선 팝업에서 변경하기 눌렀을 경우
+   */
   _onChangeLineConfirmed: function () {
     // 회선변경 API 호출
     this._popupService.close();
     var lineService = new Tw.LineComponent();
     lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },
-
-  // 회선 변경 후 처리
+  /**
+   * @function
+   * @desc 회선 변경 후 처리
+   */
   _onChangeSessionSuccess: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
@@ -694,13 +836,21 @@ Tw.MyTDataSubMain.prototype = {
       this._historyService.reload();
     }, this), 500);
   },
-
+  /**
+   * @function
+   * @desc url 이동
+   * @param {Object} event
+   */
   _onOtherPages: function (event) {
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
   },
-
+  /**
+   * @function
+   * @desc 선불쿠폰 이동
+   * @param {Object} event
+   */
   _onPrepayCoupon: function (event) {
     var $target = $(event.currentTarget);
     var type = $target.attr('data-type');
@@ -724,7 +874,12 @@ Tw.MyTDataSubMain.prototype = {
     }
     this._bpcpService.open(url);
   },
-
+  /**
+   * @function
+   * @desc _initPatternChart() 실행
+   * @param resp
+   * @private
+   */
   _successPattern: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var curDate = new Date().getDate();
@@ -742,13 +897,23 @@ Tw.MyTDataSubMain.prototype = {
       this._isRequestPattern = false;
     }
   },
-
+  /**
+   * @function
+   * @desc _requestPattern() error 콜백
+   * @param resp
+   * @private
+   */
   _errorRequestPattern: function (resp) {
     this.$patternChart.hide();
     this.$container.find('[data-id=pattern_empty]').hide();
     this._errorRequest(resp);
   },
-
+  /**
+   * @function
+   * @desc 에러 팝업
+   * @param resp
+   * @private
+   */
   _errorRequest: function (resp) {
     if ( !resp ) {
       resp = {
@@ -758,7 +923,11 @@ Tw.MyTDataSubMain.prototype = {
     }
     Tw.Error(resp.code, resp.msg).pop();
   },
-
+  /**
+   * @function
+   * @desc BPCP 초기화
+   * @private
+   */
   _initBpcp: function() {
     this._bpcpService.open(this._bpcpServiceId);
     history.replaceState(null, document.title, location.origin + '/myt-data/submain');

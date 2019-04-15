@@ -19,7 +19,7 @@
         </div>
         <div class="inquiryform-wrap">
             <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
-            <% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
+            <!--<% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
             <div class="info-form-box">
                 <button class="bt-dropdown big tx-bold fe-select-line fe-quality-line" title="문의하실 회선정보 선택" aria-haspopup="true"
                         data-svcMgmtNum="<%-allSvc.m[0].svcMgmtNum%>"><%-convertTelFormat(allSvc.m[0].svcNum)%><span class="ico"></span>
@@ -39,7 +39,13 @@
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <% } %>
+            <% } %>-->
+            <div class="inputbox">
+                <div class="input">
+                    <input type="tel" class="fe-quality-line fe-numeric fe-phone" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="13">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
             <div class="info-form-box">
                 <button class="bt-dropdown big fe-occurrence" title="사용자번호" aria-haspopup="true" required>현상선택 (필수)<span class="ico"></span></button>
             </div>
@@ -73,7 +79,7 @@
             <p class="title">발생 지역 주소와 발생시기를 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
-                    <input type="text" class="fe-zip" placeholder="우편번호 조회" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled>
+                    <input type="text" class="fe-zip" placeholder="우편번호 조회 (필수)" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
                 <span class="bt-box">
@@ -211,7 +217,7 @@
             </div>
         </div>
         <div class="inquiryform-wrap">
-            <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
+            <!--<% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
             %>
             <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
@@ -237,7 +243,31 @@
                     <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
-            </div>-->
+            </div>
+            <!--<p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
+            <div class="inputbox bt-add inp-btn">
+                <span class="input">
+                    <input type="text" class="fe-zip" placeholder="우편번호 조회" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
+                <span class="bt-box">
+                    <button type="button" class="fe-search-post">우편번호 조회</button>
+                </span>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" value="" class="fe-main-address"  title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="" disabled>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-detail-address" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="" disabled>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <% } %>-->  <!--2019.04.15 VOC 대응 무조건 주소입력-->
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
@@ -261,7 +291,6 @@
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <% } %>
             <!--<div class="inputbox bt-add">-->
                 <!--<span class="input">-->
                     <!--<input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" disabled aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">-->
@@ -325,7 +354,7 @@
         </div>
         <div class="inquiryform-wrap">
             <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
-            <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'U'}).length >= 2 ) {
+            <!--<% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'U'}).length >= 2 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'U'});
             %>
             <div class="info-form-box">
@@ -350,7 +379,13 @@
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <% } %>
+            <% } %>--> <!--VOC 대응 무조건 회선번호 입력 2019.04.15-->
+            <div class="inputbox">
+                <div class="input">
+                    <input type="tel" class="fe-quality-line fe-numeric fe-phone _phone" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="13">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
             <!--<p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>-->
             <!--<div class="inputbox bt-add">-->
                 <!--<span class="input">-->
