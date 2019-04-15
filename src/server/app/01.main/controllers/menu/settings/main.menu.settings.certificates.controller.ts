@@ -1,7 +1,7 @@
 /**
  * @file main.menu.settings.certificates.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.05
+ * @author Hakjoon Sim
+ * @since 2018-10-05
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

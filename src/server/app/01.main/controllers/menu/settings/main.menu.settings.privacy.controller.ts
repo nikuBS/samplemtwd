@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.privacy.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.04
+ * @file 개인정보 처리방침 화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-04
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
