@@ -103,8 +103,8 @@
                                                                 <% } else { %>
                                                                 - <% if (termInfo.combinationList[i].isMe) { %>(내번호)<% } %>
                                                                 <% } %>
-                                                                <% if (isRepSvc) { %>
-                                                                <br /><button class="bt-link-tx underline red fe-btn_terminate" data-svc_cd="<%= termInfo.combinationList[i].svcCd %>" data-leader="<%= termInfo.combinationList[i].isFamilyLeaderYn %>">해지</button>
+                                                                <% if (isRepSvc && termInfo.combinationList[i].isFamilyLeader) { %>
+                                                                <br /><button class="bt-link-tx underline red fe-btn_terminate" data-svc_cd="<%= termInfo.combinationList[i].svcCd %>">해지</button>
                                                                 <% } %>
                                                             </dd>
                                                         </dl>
