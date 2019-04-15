@@ -22,7 +22,7 @@ Tw.MyTDataUsageCancelTshare.prototype = {
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.btn-cancel-tshare', $.proxy(this._onClickBtnCancelTshare, this));
+    this.$container.on('click', '.btn-cancel-tshare', _.debounce($.proxy(this._onClickBtnCancelTshare, this),500));
   },
 
   /**
