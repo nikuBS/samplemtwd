@@ -643,6 +643,7 @@ Tw.API_CODE = {
   NODE_1001: '1001',  // login 필요
   NODE_1002: '1002',  // 인증 오류
   NODE_1003: '1003',  // 처리 완료
+  NODE_1004: '1004',  // 세션 만료
 
   NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
   RECEIVER_LIMIT: 'ZNGME0000', // 쿠폰 받는 사람 횟수 초과
