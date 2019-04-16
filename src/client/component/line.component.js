@@ -142,6 +142,7 @@ Tw.LineComponent.prototype = {
     this._callback = callback;
     this._svcMgmtNum = svcMgmtNum;
     this._mdn = mdn;
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
       .done($.proxy(this._successChangeLine, this))
       .fail($.proxy(this._failChangeLine, this));
@@ -150,6 +151,7 @@ Tw.LineComponent.prototype = {
     this._historyService.replaceURL('/common/member/line');
   },
   _successChangeLine: function (resp) {
+    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._changeLine = true;
       if ( this._openLineList ) {
@@ -180,6 +182,7 @@ Tw.LineComponent.prototype = {
   },
   _failChangeLine: function (error) {
     Tw.Logger.error(error);
+    Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
   _onClickMore: function () {
