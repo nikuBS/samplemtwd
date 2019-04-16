@@ -681,6 +681,9 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _bindSettingBtnListEvent: function($layer) {
     $layer.find('[data-url]').on('click', $.proxy(this._setSettingGoUrl, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($layer);
   },
 
   /**
