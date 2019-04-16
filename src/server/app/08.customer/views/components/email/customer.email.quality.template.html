@@ -42,7 +42,7 @@
             <% } %>-->
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-quality-line fe-numeric fe-phone" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="13">
+                    <input type="tel" class="fe-quality-line fe-numeric fe-phone" placeholder="회선정보 입력 (필수)" title="회선정보 입력 (필수)" value="" maxlength="13" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
@@ -271,7 +271,7 @@
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
-                    <input type="text" class="fe-zip" placeholder="우편번호 조회" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled>
+                    <input type="text" class="fe-zip" placeholder="우편번호 조회 (필수)" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
                 <span class="bt-box">
@@ -280,14 +280,14 @@
             </div>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" value="" class="fe-main-address"  title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="" disabled>
+                    <input type="text" value="" class="fe-main-address"  title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="" disabled required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
             <div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-detail-address" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
-                           readonly="" disabled>
+                           readonly="" disabled required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
@@ -382,7 +382,7 @@
             <% } %>--> <!--VOC 대응 무조건 회선번호 입력 2019.04.15-->
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-quality-line fe-numeric fe-phone _phone" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="13" required >
+                    <input type="tel" class="fe-quality-line fe-numeric fe-phone _phone" pattern="[0-9]*" placeholder="회선정보 입력 (필수)" title="회선정보 입력 (필수)" value="" maxlength="13" required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
