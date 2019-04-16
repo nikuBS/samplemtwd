@@ -33,7 +33,7 @@ Tw.CustomerEmailService.prototype = {
 
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
-    this.$container.on('change', '[required]', $.proxy(this._validateForm, this));
+    this.$container.on('change, keyup', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-service-register', _.debounce($.proxy(this._request, this), 500));
   },
 
@@ -223,9 +223,14 @@ Tw.CustomerEmailService.prototype = {
         arrValid.push($(item).prop('checked'));
       }
 
-      if ( $(item).prop('type') === 'number' || $(item).prop('type') === 'tel' ) {
+      if ( $(item).prop('type') === 'number') {
         var isValidNumber = $(item).val().length !== 0 ? true : false;
         arrValid.push(isValidNumber);
+      }
+
+      if ( $(item).prop('type') === 'tel' ) {
+        var isPhoneNumber = (Tw.ValidationHelper.isCellPhone($(item).val()) || Tw.ValidationHelper.isTelephone($(item).val()));
+        arrValid.push(isPhoneNumber);
       }
 
       if ( $(item).prop('type') === 'text' ) {
