@@ -1014,4 +1014,4 @@ Tw.LINE_RESITTER_TMPL =
   '{{/each}}';
 
 
-Tw.BANNER_DOT_TMPL = '<span class="blind">{{index}} 선택됨</span>'
+Tw.BANNER_DOT_TMPL = '{{index}} 선택됨'
