@@ -355,7 +355,7 @@ Tw.MyTFareHotBill.prototype = {
     if ( targetSvc.child ) {
       this._onClickChild(targetSvc);
     } else {
-      this._confirmSwitchLine(targetSvc, $(e.currentTarget));
+      this._confirmSwitchLine(targetSvc, e);
     }
   },
   /**
