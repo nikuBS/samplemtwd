@@ -182,18 +182,32 @@ Tw.MyTFareBillCard.prototype = {
    * @param e
    */
   _checkPay: function (e) {
-    if (this._validationService.isAllValid()) {
-      this._popupService.open({
-          'hbs': 'MF_01_01_01',
-          'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
-          'unit': Tw.CURRENCY_UNIT.WON
-        },
-        $.proxy(this._openCheckPay, this), // open callback
-        $.proxy(this._afterPaySuccess, this), // close callback
-        'check-pay',
-        $(e.currentTarget)
-      );
+    if (this._isAvailable()) {
+      if (this._validationService.isAllValid()) {
+        this._popupService.open({
+            'hbs': 'MF_01_01_01',
+            'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
+            'unit': Tw.CURRENCY_UNIT.WON
+          },
+          $.proxy(this._openCheckPay, this), // open callback
+          $.proxy(this._afterPaySuccess, this), // close callback
+          'check-pay',
+          $(e.currentTarget)
+        );
+      }
     }
+  },
+  /**
+   * @function
+   * @desc 납부할 요금이 50,000원 미만일 경우 일시불만 가능
+   */
+  _isAvailable: function () {
+    var amount = this._paymentCommon.getAmount();
+    if (amount < 50000 && this.$container.find('.fe-select-card-type').attr('id') !== '00') {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_CARD_TYPE);
+      return false;
+    }
+    return true;
   },
   /**
    * @function
