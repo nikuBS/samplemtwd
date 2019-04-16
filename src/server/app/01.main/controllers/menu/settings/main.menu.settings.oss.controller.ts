@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.oss.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2019.1.25
+ * @file 오픈소스 라이센스 표기 화면 처리
+ * @author Hakjoon Sim
+ * @since 2019-01-25
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

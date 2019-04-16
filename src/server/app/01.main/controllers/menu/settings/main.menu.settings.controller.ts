@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.02
+ * @file 전체메뉴 -> 설정 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-02
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
@@ -23,6 +23,12 @@ export default class MainMenuSettings extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc 현재 사용자가 app/mweb 여부를 판단하여 return
+   * @param  {any} svcInfo - 사용자 정보
+   * @returns boolean - true: app, false: mweb
+   */
   private isLogin(svcInfo: any): boolean {
     if (FormatHelper.isEmpty(svcInfo)) {
       return false;

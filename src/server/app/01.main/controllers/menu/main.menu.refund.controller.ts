@@ -1,7 +1,7 @@
 /**
- * @file main.menu.refund.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.14
+ * @file 미환급금 화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -54,18 +54,18 @@ class MainMenuRefund extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
          childInfo: any, pageInfo: any) {
 
-    this.getRefundInfo(res, svcInfo, pageInfo).subscribe(
+    this.getRefundInfo(res, svcInfo, pageInfo).subscribe( // 미환급금 정보 BFF 조회
       (data: RefundInfo) => {
         if (FormatHelper.isEmpty(data)) {
           return;
         }
 
-        if (data.totalCount === 0 || data.totalAmount === '0') {
+        if (data.totalCount === 0 || data.totalAmount === '0') { // 미환급금 없는 경우
           res.render('menu/main.menu.refund-empty.html', { pageInfo });
           return;
         }
 
-        res.render('menu/main.menu.refund.html', {
+        res.render('menu/main.menu.refund.html', { // 미환급금 있는 경우
           svcInfo,
           pageInfo,
           data
@@ -82,6 +82,14 @@ class MainMenuRefund extends TwViewController {
     );
   }
 
+  /**
+   * @function
+   * @desc BFF로 해당 사용자의 미환급금 정보를 조회
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 해당 페이지 정보
+   * @returns Observable - 미환급금 정보 Observable 로 return
+   */
   private getRefundInfo(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_01_0042, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -105,6 +113,12 @@ class MainMenuRefund extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc BFF로 부터 받은 미환급금 정보를 ejs 에서 rendering 하기 위해 data 가공
+   * @param  {any} data - BFF 로 부터 받은 미환급증 정보
+   * @returns RefundInfo
+   */
   private purifyRefundInfo(data: any): RefundInfo {
     const purified = {
       name: data.custNm,
@@ -173,6 +187,7 @@ class MainMenuRefund extends TwViewController {
       canDonate: false
     };
 
+    // 미환급금 total 금액 계산
     purified.totalAmount = FormatHelper.convNumFormat(
       purified.refundArr.reduce((memo: number, item: RefundItem) => {
         return (memo += parseInt(item.svcBamt, 10));
