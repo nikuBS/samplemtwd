@@ -1896,9 +1896,10 @@ Tw.MainHome.prototype = {
    * @param list
    * @private
    */
-  _onClickQuickEdit: function (list) {
+  _onClickQuickEdit: function (list, $event) {
     var quickEdit = new Tw.QuickMenuEditComponent();
-    quickEdit.open(list, $.proxy(this._onChangeQuickMenu, this));
+    var $target = $($event.currentTarget);
+    quickEdit.open(list, $.proxy(this._onChangeQuickMenu, this), $target);
   },
 
   /**

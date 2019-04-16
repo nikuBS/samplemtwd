@@ -58,9 +58,11 @@ Tw.QuickMenuComponent.prototype = {
       var menuIdStr = resp.result.menuIdStr.trim();
       if ( menuIdStr.indexOf(this._menuId) !== -1 ) {
         this.$btQuickDisable.addClass('none');
+        this.$btQuickDisable.attr('aria-hidden', true);
         this._showAddBadge();
       } else {
         this.$btQuickDisable.addClass('none');
+        this.$btQuickDisable.attr('aria-hidden', true);
         this._showRemoveBadge();
       }
     }
@@ -147,29 +149,37 @@ Tw.QuickMenuComponent.prototype = {
   _showAddBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickAdd.removeClass('none');
+      this.$btQuickAdd.attr('aria-hidden', false);
     } else {
       this.$btQuickAdd.parent().removeClass('none');
+      this.$btQuickAdd.parent().attr('aria-hidden', false);
     }
   },
   _showRemoveBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickRemove.removeClass('none');
+      this.$btQuickRemove.attr('aria-hidden', false);
     } else {
       this.$btQuickRemove.parent().removeClass('none');
+      this.$btQuickRemove.parent().attr('aria-hidden', false);
     }
   },
   _hideAddBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickAdd.addClass('none');
+      this.$btQuickAdd.attr('aria-hidden', true);
     } else {
       this.$btQuickAdd.parent().addClass('none');
+      this.$btQuickAdd.parent().attr('aria-hidden', true);
     }
   },
   _hideRemoveBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickRemove.addClass('none');
+      this.$btQuickRemove.attr('aria-hidden', true);
     } else {
       this.$btQuickRemove.parent().addClass('none');
+      this.$btQuickRemove.parent().attr('aria-hidden', true);
     }
   }
 
