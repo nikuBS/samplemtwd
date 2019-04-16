@@ -1,9 +1,9 @@
 
 
 /**
- * @file customer.svc-info.service.detail.controller.ts
- * @author Lee Kirim (kirim@sk.com)
- * @since 2018.12.20
+ * @file [이용안내-서비스_이용안내-상세페이지]
+ * @author Lee Kirim
+ * @since 2018-12-20
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -19,14 +19,15 @@ class CustomerUseguideService extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
+  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any): void {
     const { listIndex, subIndex, code } = {
       code: req.query.code,
       listIndex: this.findIndex(req.query.code, 'listIndex'),
       subIndex: this.findIndex(req.query.code, 'subIndex')
     };
+    
     if (FormatHelper.isEmpty(code) || FormatHelper.isEmpty(listIndex) || 
-    FormatHelper.isEmpty(subIndex)) {
+    FormatHelper.isEmpty(subIndex) || !listIndex || !subIndex) {
       // 페이지가 존재하지 않으면
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
@@ -41,12 +42,12 @@ class CustomerUseguideService extends TwViewController {
       }
 
       // 셀렉트 박스에 쓰일 리스트
-      const list = CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].sub_list[subIndex as any].dep_list || [];
+      const list = CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].dep_list || [];
       
       // 제목 구하기
       const result = Object.assign(resp.result, {
-        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].unitedTitle || CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].title,
-        sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].sub_list[subIndex as any].sub_title,
+        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].unitedTitle || CUSTOMER_SERVICE_OPTION_TYPE[listIndex].title,
+        sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].sub_title,
         dep_title: this.getCurTitleFromDeps(list, code)
       });
 
@@ -67,11 +68,18 @@ class CustomerUseguideService extends TwViewController {
     });
   }
 
-  private findIndex = (code: string, returnKey: string): string | null => {
+  /**
+   * @function
+   * @desc 주어진 code가 있는 객체의 index 를 반환 listIndex or subIndex
+   * @param {string} code 찾을 코드이름
+   * @param {string} returnKey 반환할 종류 listIndex or subIndex
+   * @return {string} code에 해당하는 객체를 찾을 수 없으면 '' 반환
+   */
+  private findIndex = (code: string, returnKey: string): string => {
     if (FormatHelper.isEmpty(code)) {
-      return null;
+      return '';
     }
-    let result = {listIndex: '', subIndex: ''};
+    let result = {listIndex: '', subIndex: ''}; // 결과값 저장
     CUSTOMER_SERVICE_OPTION_TYPE.map((list, listIndex) => {
       list.sub_list.map((sub_list, subIndex) => {
         if (sub_list.code && sub_list.code === code) {
@@ -95,8 +103,14 @@ class CustomerUseguideService extends TwViewController {
     return result[returnKey].toString();
   }
 
-  // 해당 리스트에서 같은 코드 찾기
-  private getCurTitleFromDeps = (list, code: string) => {
+  /**
+   * @function
+   * @desc 주어진 리스트 내 code property 와 주어진 code 가 같은 값을 찾음
+   * @param {array} list
+   * @param {string} code
+   * @returns {string} title
+   */
+  private getCurTitleFromDeps = (list: any[], code: string): string => {
     const content = list.reduce((prev, next) => {
       return (FormatHelper.isEmpty(prev) && 
         next.code === code) ? next : prev;
@@ -109,7 +123,12 @@ class CustomerUseguideService extends TwViewController {
     return Object.assign(obj, {icntsCtt: ''});
   }
 
-  // 전송된 html 수정 변경
+  /**
+   * @function
+   * @desc 문자열로 전달된 html 문자중 주석 제거, {{cdn}} 을 이미지 경로로 교체
+   * @param {string} html 
+   * @return {string} 
+   */
   private modifyHTML = (html: string): string => {
       // 대문자 엘리먼트 소문자로
       // html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
