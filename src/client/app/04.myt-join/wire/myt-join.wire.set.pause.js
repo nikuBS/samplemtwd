@@ -54,7 +54,7 @@ Tw.MytJoinWireSetPause.prototype = {
 
     // this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     // this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
-    this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
+    this.$container.on('click', '.fe-btn-submit', _.debounce($.proxy(this._onClickBtnSubmit, this),500));
     // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
@@ -230,7 +230,7 @@ Tw.MytJoinWireSetPause.prototype = {
         params = {};
         break;
     }
-    this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
+    this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined, _.debounce($.proxy(this._reqWireSetPause, this, apiCmd, params),500));
   },
 
   /**

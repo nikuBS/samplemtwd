@@ -104,8 +104,8 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
 
   _bindEvent: function () {
     this._$btnSelectPeriod.on('click', $.proxy(this._onClickBtnSelectPeriod, this));
-    this._$btnRequest.on('click', $.proxy(this._onClickBtnRequest, this));
-    this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
+    this._$btnRequest.on('click', _.debounce($.proxy(this._onClickBtnRequest, this),500));
+    this._$btnSubmit.on('click', _.debounce($.proxy(this._onClickBtnSubmit, this),500));
     this._$fePhone1.on('click', $.proxy(this._onClickPhone1, this));
     this._$fePhone2.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$fePhone3.on('input', $.proxy(this._onKeyupInputPhone, this));

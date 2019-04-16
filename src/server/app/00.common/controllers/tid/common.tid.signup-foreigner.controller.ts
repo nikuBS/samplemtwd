@@ -2,6 +2,7 @@
  * @file 외국인 가입시 TID 외국인 가입안내로 이동
  * @author Hakjoon Sim
  * @since 2018-07-09
+ * @desc Common > TID > 외국인회원가입
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -11,11 +12,24 @@ import ParamsHelper from '../../../../utils/params.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { TID, TID_SVC_TYPE } from '../../../../types/tid.type';
 
+/**
+ * @desc TID 외국인회원가입 페이지 요청
+ */
 class CommonTidSignUpForeigner extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > TID > 외국인회원가입 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     // TID 연동 key 조회
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {

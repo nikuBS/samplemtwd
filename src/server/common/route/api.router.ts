@@ -115,7 +115,11 @@ class ApiRouter {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('expires', '0');
       res.set('pragma', 'no-cache');
-      cmd.target.call(this, req, res, next);
+
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -124,7 +128,10 @@ class ApiRouter {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('expires', '0');
       res.set('pragma', 'no-cache');
-      cmd.target.call(this, req, res, next);
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -133,7 +140,10 @@ class ApiRouter {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('expires', '0');
       res.set('pragma', 'no-cache');
-      cmd.target.call(this, req, res, next);
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
   }
 
@@ -142,8 +152,25 @@ class ApiRouter {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('expires', '0');
       res.set('pragma', 'no-cache');
-      cmd.target.call(this, req, res, next);
+
+      if ( this.sessionCheck(req, res, next) ) {
+        cmd.target.call(this, req, res, next);
+      }
     });
+  }
+
+  private sessionCheck(req, res, next) {
+    const loginService = new LoginService();
+    const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+    if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+      res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+      res.json({
+        code: API_CODE.NODE_1004,
+        msg: NODE_API_ERROR[API_CODE.NODE_1004]
+      });
+      return false;
+    }
+    return true;
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -260,10 +287,10 @@ class ApiRouter {
             resp.result.userInfo.pps = svcInfo.svcGr === 'P';
             // resp.result.userInfo.pps = false;
             // resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
-              // if ( elem.svcAttrCd.includes('M2') ) {
-                // return true;
-              // }
-              // return memo;
+            // if ( elem.svcAttrCd.includes('M2') ) {
+            // return true;
+            // }
+            // return memo;
             // }, false);
             if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
               resp.result.userInfo.canSendFreeSMS = true;

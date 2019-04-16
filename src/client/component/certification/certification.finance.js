@@ -93,11 +93,11 @@ Tw.CertificationFinance.prototype = {
     }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this), 'finance');
   },
   _onOpenFinancePopup: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
-    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
-    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
-    $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
+    $popupContainer.on('click', '#fe-bt-sk', _.debounce($.proxy(this._onClickSkSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-kt', _.debounce($.proxy(this._onClickKtSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-lg', _.debounce($.proxy(this._onClickLgSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-ipin', _.debounce($.proxy(this._onClickIpin, this), 500));
+    $popupContainer.on('click', '#fe-bt-bio', _.debounce($.proxy(this._onClickBio, this), 500));
   },
   _onCloseFinancePopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._result) ) {
@@ -158,7 +158,7 @@ Tw.CertificationFinance.prototype = {
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
 
     this.$privacyCheck.on('change', $.proxy(this._onChangePrivacy, this));
-    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
+    this.$btConfirm.on('click', _.debounce($.proxy(this._onClickConfirm, this), 500));
 
     $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
   },

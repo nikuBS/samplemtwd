@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.family-sites.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.11.26
+ * @file 패밀리 사이트 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-26
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

@@ -6,7 +6,7 @@
 
 /**
  * @class
- * @param rootEl
+ * @param rootEl - 컨테이너 레이어
  */
 Tw.CustomerSvcInfoNoticeView = function(rootEl) {
   // 컨테이너 레이어 설정

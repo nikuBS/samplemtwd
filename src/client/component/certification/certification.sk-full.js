@@ -90,7 +90,7 @@ Tw.CertificationSkFull.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
+    this.$btConfirm.on('click', _.debounce($.proxy(this._onClickConfirm, this), 500));
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));

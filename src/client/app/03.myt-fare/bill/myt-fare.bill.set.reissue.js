@@ -51,7 +51,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
    * @desc 이벤트 설정
    */
   _bindEvent: function () {
-    this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
+    this.$container.on('click', '.fe-btn-submit', _.debounce($.proxy(this._onClickBtnSubmit, this), 500));
     // this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
   },
 

@@ -58,7 +58,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.on('change', 'input[name="together"]', $.proxy(this._onChangeTogetherBill, this));
     this._btnAddr.on('click', $.proxy(this._onClickBtnAddr, this));
     this._inputHpNum.on('keyup input', _.debounce( $.proxy(this._onFormatHpNum, this), 150));
-    this._submit.on('click', $.proxy(this._onSubmit, this));
+    this._submit.on('click', _.debounce($.proxy(this._onSubmit, this),500));
     this.$container.on('change', 'input[name="ccurNotiYn"]', $.proxy(this._onChangeCcurNotiYn, this)); // 옵션 설정 > 법정대리인
     this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onCheckedInput, this));
     this._scurMailYn.on('change', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정

@@ -2,6 +2,7 @@
  * @file common.cert.nice.refund.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.11.29
+ * @desc Common > 미환급금 > NICE 인증
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,11 +10,22 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import EnvHelper from '../../../../utils/env.helper';
 
+/**
+ * @desc 미환급금 NICE 인증 초기화를 위한 class
+ */
 class CommonCertNiceRefund extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > 미환급금 > Nice 인증 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const mobileco = req.query.niceKind;
     const authKind = req.query.authKind;

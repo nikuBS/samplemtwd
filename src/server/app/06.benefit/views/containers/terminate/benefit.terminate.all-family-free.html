@@ -13,7 +13,7 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page nobg tw-popup"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
+    <div class="popup-page nobg tw-popup no-btn"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -103,8 +103,8 @@
                                                                 <% } else { %>
                                                                 - <% if (termInfo.combinationList[i].isMe) { %>(내번호)<% } %>
                                                                 <% } %>
-                                                                <% if (isRepSvc) { %>
-                                                                <br /><button class="bt-link-tx underline red fe-btn_terminate" data-svc_cd="<%= termInfo.combinationList[i].svcCd %>" data-leader="<%= termInfo.combinationList[i].isFamilyLeaderYn %>">해지</button>
+                                                                <% if (isRepSvc && termInfo.combinationList[i].isFamilyLeader) { %>
+                                                                <br /><button class="bt-link-tx underline red fe-btn_terminate" data-svc_cd="<%= termInfo.combinationList[i].svcCd %>">해지</button>
                                                                 <% } %>
                                                             </dd>
                                                         </dl>

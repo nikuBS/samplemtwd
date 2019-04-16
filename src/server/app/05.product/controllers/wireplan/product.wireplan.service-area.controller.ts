@@ -1,5 +1,5 @@
 /**
- * @file product.wireplan.service-area.controller.ts
+ * @file 서비스가능지역 조회 < 인터넷/집전화/IPTV < 상품
  * @author Jiyoung Jo (jiyoungjo@sk.com)
  * @since 2019.04.04
  */

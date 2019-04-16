@@ -53,6 +53,7 @@ Tw.MainMenuSettings.prototype = {
   _bindEvents: function () {
     this.$container.on('click', '#fe-go-certificates', $.proxy(this._onCertificates, this));
     this.$container.on('click', '#fe-btn-update', $.proxy(this._onUpdate, this));
+    this.$container.on('click', '#fe-widget', $.proxy(this._onWidgetSettingClicked, this));
   },
 
   /**
@@ -91,6 +92,27 @@ Tw.MainMenuSettings.prototype = {
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
       }
+
+      if (this._isWidgetNotSupported(currentOsType)) { // 위젓 설정 지원하지 않는 app버전일 경우 해당 메뉴 숨김
+        this.$container.find('#fe-widget').parent().addClass('none');
+      }
+    }
+  },
+
+  /**
+   * @function
+   * @desc osType에 따라 widget 설정 지원여부 판단하여 return
+   * @param  {String} osType - 'A': android, 'I': iOS
+   * @returns true - 위젯 설정 지원하지 않음, false - 위젯 설정 지원함
+   */
+  _isWidgetNotSupported: function (osType) {
+    switch (osType) {
+      case 'A':
+        return this._currentVersion < '5.0.4';
+      case 'I':
+        return this._currentVersion < '5.0.5';
+      default:
+        return true;
     }
   },
 
@@ -121,5 +143,8 @@ Tw.MainMenuSettings.prototype = {
   _onCertificates: function () {
     this._nativeService.send(Tw.NTV_CMD.GO_CERT, {});
     return false;
+  },
+  _onWidgetSettingClicked: function () {
+    this._nativeService.send(Tw.NTV_CMD.WIDGET_SETTING, { type: 0 });
   }
 };
