@@ -19,7 +19,7 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: 'T가족모아데이터', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
-    <% const INFINITY = 'NA00005959'; %>
+    <% const INFINITY_PLANS = ['NA00005959', 'NA00006404', 'NA00006405']; %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -73,7 +73,7 @@
                 <div class="use-state-wrap">
                     <ul>
                         <% familyInfo.mbrList.map(member => { 
-                            const isInfinity = member.prodId === INFINITY, isMine = member.svcMgmtNum === familyInfo.mine.svcMgmtNum; %>
+                            const isInfinity = INFINITY_PLANS.indexOf(member.prodId) >= 0, isMine = member.svcMgmtNum === familyInfo.mine.svcMgmtNum; %>
                             <li data-member="<%= JSON.stringify({ name: member.custNm, svcNum: member.svcNum, isRepresentation: member.repYn === 'Y', mgmtNum: member.svcMgmtNum }) %>">
                                 <span class="icon"><i class="icon-cellphone-48"></i></span>
                                 <div class="info">
