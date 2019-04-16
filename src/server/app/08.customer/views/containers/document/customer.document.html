@@ -29,11 +29,19 @@
                             <div class="tab-linker">
                                 <ul role="tablist">
                                     <% if (isEtc) { %>
-                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a aria-selected="false">휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a aria-selected="true">인터넷/집전화/IPTV</a></li>
+                                    <li role="presentation" aria-selected="false" aria-controls="tab1-tab" id="tab1">
+                                        <a role="tab">휴대폰</a>
+                                    </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="presentation" aria-selected="true" aria-controls="tab2-tab" id="tab2">
+                                        <a role="tab">인터넷/집전화/IPTV</a>
+                                    </li>
                                     <% } else { %>
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a aria-selected="true">휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a aria-selected="false">인터넷/집전화/IPTV</a></li>
+                                    <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                        <a role="tab">휴대폰</a>
+                                    </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                        <a role="tab">인터넷/집전화/IPTV</a>
+                                    </li>
                                     <% } %>
                                 </ul>
                             </div>
