@@ -61,6 +61,10 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
+    if(resp.code === Tw.API_CODE.NODE_1004) {
+      this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
+    }
+
     var requestInfo = {
       command: command,
       params: params,

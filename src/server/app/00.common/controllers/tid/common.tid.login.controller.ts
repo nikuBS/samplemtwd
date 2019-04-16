@@ -2,6 +2,7 @@
  * @file common.login.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.07.02
+ * @desc Common > TID > 로그인
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -11,11 +12,24 @@ import ParamsHelper from '../../../../utils/params.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { TID, TID_SVC_TYPE } from '../../../../types/tid.type';
 
+/**
+ * @desc TID 로그인 페이지 요청
+ */
 class CommonTidLogin extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > TID > 로그인 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     let target = req.query.target || '/main/home';
     const type = req.query.type || 'back';

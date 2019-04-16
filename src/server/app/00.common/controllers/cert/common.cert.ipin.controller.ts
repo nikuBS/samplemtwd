@@ -2,6 +2,7 @@
  * @file common.cert.ipin.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.08.23
+ * @desc Common > 인증 > IPIN
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -10,11 +11,24 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import EnvHelper from '../../../../utils/env.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * @desc IPIN 인증 초기화를 위한 class
+ */
 class CommonCertIpin extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > 인증 > IPIN 인증 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const authUrl = decodeURIComponent(req.query.authUrl);
     const authKind = req.query.authKind;
@@ -22,7 +36,6 @@ class CommonCertIpin extends TwViewController {
     const params = {
       authUrl,
       resultUrl: 'https://' + this.loginService.getDns(req) + '/common/cert/result?type=ipin&kind=' + authKind,
-      // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + authKind,
       authKind,
       prodAuthKey
     };

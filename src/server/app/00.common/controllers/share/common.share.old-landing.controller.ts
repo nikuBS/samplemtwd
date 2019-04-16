@@ -2,6 +2,7 @@
  * @file common.share.old-landing.controller.ts
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2019.03.21
+ * @desc Common > Util > as-is App 안내 화면 > 랜딩
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
@@ -12,11 +13,24 @@ import BrowserHelper from '../../../../utils/browser.helper';
 
 const mapping = require('../../mtwapp_op.json');
 
+/**
+ * @desc as-is App 랜딩 초기화를 위한 class
+ */
 class CommonShareOldLanding extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > Util > as-is App 안내 화면 > 랜딩 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     let url = req.query.url;
     const appUrl = req.query.app_url;
@@ -50,6 +64,12 @@ class CommonShareOldLanding extends TwViewController {
     }
   }
 
+  /**
+   * App 코드 별 분기 처리
+   * @param req
+   * @param res
+   * @param appUrl
+   */
   private landingAppUrl(req, res, appUrl: string) {
     switch ( appUrl ) {
       case 'A001':

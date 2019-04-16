@@ -17,7 +17,7 @@ Tw.MaskingComponent.prototype = {
     this.$btMasking = $('.fe-bt-masking');
     // this._url = this.$btMasking.data('menuurl');
     this._url = 'GET|/v1/dummy/auth';
-    this.$btMasking.click(_.debounce($.proxy(this._onClickMasking, this), 500));
+    this.$btMasking.on('click', _.debounce($.proxy(this._onClickMasking, this), 500));
   },
   _onClickMasking: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0064, {})

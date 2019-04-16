@@ -38,7 +38,7 @@ Tw.CommonMemberLine.prototype = {
     this.$container.on('click', '.fe-bt-nickname', $.proxy(this._openNickname, this));
     this.$container.on('click', '.fe-bt-detail', $.proxy(this._openDetail, this));
     this.$container.on('click', '.fe-bt-more', $.proxy(this._onClickMore, this));
-    this.$container.find('.fe-change-first').click(_.debounce($.proxy(this._onChangeFirst, this), 500));
+    this.$container.on('click', '.fe-change-first', _.debounce($.proxy(this._onChangeFirst, this), 500));
     this.$container.on('click', '.fe-input-nickname', $.proxy(this._openNickname, this));
   },
 

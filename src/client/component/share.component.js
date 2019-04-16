@@ -17,7 +17,7 @@ Tw.ShareComponent.prototype = {
     this.$btShare = $('#fe-bt-share');
     this._url = this.$btShare.data('menuurl');
     this._menuId = this.$btShare.data('menuid');
-    this.$btShare.click(_.debounce($.proxy(this._onClickShare, this), 500));
+    this.$btShare.on('click', _.debounce($.proxy(this._onClickShare, this), 500));
   },
   _onClickShare: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0065, {
