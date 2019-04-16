@@ -58,9 +58,9 @@
                             <% if (available !== 'NONE') { %>
                             <div class="btn-wrap <%= list[i].isGift ? '' : 'two' %>">
                                 <% if (!list[i].isGift) { %>
-                                <button class="btn fe-btn-gift" id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::N">선물하기</button>
+                                <button class="btn fe-btn-gift" data-id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::N">선물하기</button>
                                 <% } %>
-                                <button class="btn fe-btn-refill" id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::<%= list[i].isGift ? 'Y' : 'N' %>">리필하기</button>
+                                <button class="btn fe-btn-refill" data-id="<%= list[i].copnIsueNum %>" value="<%= list[i].copnNm%>::<%= list[i].usePsblStaDt %>~<%= list[i].usePsblEndDt %>::<%= list[i].isGift ? 'Y' : 'N' %>">리필하기</button>
                             </div>
                             <% } %>
                         </li>
