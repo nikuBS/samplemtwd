@@ -57,19 +57,19 @@
                     <div id="01" class="cont-box fe-wrap fe-bank-wrap">
                         <ul class="form-data-list">
                             <li>
-                                <label class="tit" for="flab02">예금주명</label>
+                                <label class="tit" for="flab01">예금주명</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab02" type="text" value="<%= svcInfo.mbrNm %>" readonly />
+                                        <input id="flab01" type="text" value="<%= svcInfo.mbrNm %>" readonly />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                             </li>
                             <li>
-                                <label class="tit" for="flab04">휴대폰번호</label>
+                                <label class="tit" for="flab02">휴대폰번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab04" class="fe-phone-number required-input-field fe-only-number"
+                                        <input id="flab02" class="fe-phone-number required-input-field fe-only-number"
                                                type="tel" minlength="10" maxlength="11" inputmode="numeric" min="0" pattern="[0-9]*"
                                                title="휴대폰번호(숫자만 입력)" placeholder="숫자만 입력" data-valid-label="phone" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
@@ -78,7 +78,7 @@
                                 </span>
                             </li>
                             <li class="fe-bank-wrap">
-                                <label class="tit" for="flab07">계좌정보
+                                <label class="tit" for="flab06">계좌정보
                                     <button id="MF_05_01_01_tip_02" title="계좌정보 tip" aria-haspopup="true" class="tip-view" type="button">TIP</button>
                                 </label>
                                 <button class="bt-dropdown big fe-select-bank fe-required-select" title="은행 선택" aria-haspopup="true" type="button">
@@ -88,9 +88,9 @@
                                 <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
                                 <span class="inputbox mt6">
                                     <span class="input">
-                                        <input id="flab07" class="fe-account-number required-input-field fe-only-number"
+                                        <input id="flab06" class="fe-account-number required-input-field fe-only-number"
                                                type="tel" maxlength="20" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               title="계좌번호(숫자만 입력)" placeholder="계좌번호(숫자만 입력)" data-valid-label="account" />
+                                               title="계좌번호(숫자만 입력)" placeholder="숫자만 입력" data-valid-label="account" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
@@ -102,10 +102,10 @@
                     <div id="02" class="cont-box fe-wrap fe-card-wrap" style="display:none;">
                         <ul class="form-data-list">
                             <li>
-                                <label class="tit" for="flab01">휴대폰번호</label>
+                                <label class="tit" for="flab03">휴대폰번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" class="fe-phone-number required-input-field fe-only-number"
+                                        <input id="flab03" class="fe-phone-number required-input-field fe-only-number"
                                                type="tel" minlength="10" maxlength="11" inputmode="numeric" min="0" pattern="[0-9]*"
                                                title="휴대폰번호(숫자만 입력)" placeholder="숫자만 입력" data-valid-label="phone" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
@@ -114,10 +114,12 @@
                                 </span>
                             </li>
                             <li>
-                                <label class="tit" for="flab02">카드번호 <button id="MF_05_01_01_tip_02" class="tip-view" type="button">TIP</button></label>
+                                <label class="tit" for="flab04">카드번호
+                                    <button id="MF_05_01_01_tip_02" title="카드정보 tip" class="tip-view" type="button">TIP</button>
+                                </label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab02" class="fe-card-number required-input-field fe-only-number"
+                                        <input id="flab04" class="fe-card-number required-input-field fe-only-number"
                                                type="tel" minlength="15" maxlength="16" data-valid-label="card"
                                                inputmode="numeric" min="0" pattern="[0-9]*" title="카드번호(숫자만 입력)" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
@@ -126,11 +128,11 @@
                                 </span>
                             </li>
                             <li>
-                                <label class="tit" for="flab03">유효기간</label>
+                                <label class="tit" for="flab05">유효기간</label>
                                 <div class="input-wrap-half">
                                     <span class="inputbox fe-exp-wrap">
                                         <span class="input">
-                                            <input id="flab03" class="fe-card-y required-input-field fe-only-number" type="tel"
+                                            <input id="flab05" class="fe-card-y required-input-field fe-only-number" type="tel"
                                                    inputmode="numeric" min="0" pattern="[0-9]*" placeholder="YYYY"
                                                    title="유효 년 YYYY" minlength="4" maxlength="4" data-valid-label="expiration">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
