@@ -48,7 +48,8 @@ Tw.NTV_CMD = {
   SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled',
   READY_SMS: 'readySMS',
   GET_ADID: 'getAdId',
-  TPLACE_TERMS: 'tplaceTerms'
+  TPLACE_TERMS: 'tplaceTerms',
+  WIDGET_SETTING: 'widgetSettings'
 };
 
 Tw.NTV_CODE = {
