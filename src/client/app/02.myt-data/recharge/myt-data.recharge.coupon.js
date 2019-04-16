@@ -60,7 +60,7 @@ Tw.MyTDataRechargeCoupon.prototype = {
    * @param  {Object} evt - click event
    */
   _onSubmit: function (evt) {
-    var no = evt.currentTarget.id;
+    var no = $(evt.currentTarget).data('id');
     var name = evt.currentTarget.value.split('::')[0];
     var period = evt.currentTarget.value.split('::')[1];
     var gift = evt.currentTarget.value.split('::')[2];
