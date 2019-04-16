@@ -15,32 +15,33 @@ const imgCaseClass = basicInfo.bgimgUrl ? 'img-case' : '';
         <% } %>
     </h3>
     <% if ( basicInfo.prodStCd === 'E1000' ) { %>
-    <% if ( prodRedisInfo.summary.smryHtmlCtt && prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
-    <%- prodRedisInfo.summary.smryHtmlCtt %>
-    <% } %>
-
-    <% console.log(prodRedisInfo.summaryCase) %>
-
-    <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming || isCombine ) &&
-    ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt ) && prodRedisInfo.summaryCase !== '3') { %>
-    <p class="productdetails-text02 <%= imgCaseClass %>">
-        <% if ( prodRedisInfo.summary.prodSmryDesc ) { %>
-        <%= prodRedisInfo.summary.prodSmryDesc %>
+        <% if ( prodRedisInfo.summary.smryHtmlCtt && prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
+        <%- prodRedisInfo.summary.smryHtmlCtt %>
         <% } %>
-        <% if (( isWireplan || isRoaming ) && prodRedisInfo.summary.prodBasBenfCtt && !isCombine) { %>
-        <% if ( prodRedisInfo.summary.prodSmryDesc ) { %><br><% } %>
-        <%= prodRedisInfo.summary.prodBasBenfCtt %>
+
+        <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming || isCombine ) &&
+        ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt ) && prodRedisInfo.summaryCase !== '3') { %>
+        <p class="productdetails-text02 <%= imgCaseClass %>">
+            <% if ( prodRedisInfo.summary.prodSmryDesc ) { %>
+            <%= prodRedisInfo.summary.prodSmryDesc %>
+            <% } %>
+            <% if (( isWireplan || isRoaming ) && prodRedisInfo.summary.prodBasBenfCtt && !isCombine) { %>
+            <% if ( prodRedisInfo.summary.prodSmryDesc ) { %><br><% } %>
+            <%= prodRedisInfo.summary.prodBasBenfCtt %>
+            <% } %>
+        </p>
         <% } %>
-    </p>
-    <% } %>
 
-    <% if (isDiscount && prodRedisInfo.summary.prodSmryDesc && prodRedisInfo.summaryCase !== '3') { %>
-    <p class="productdetails-text02 <%= imgCaseClass %>"><%= prodRedisInfo.summary.prodSmryDesc %></p>
-    <% } %>
+        <% if (isDiscount && prodRedisInfo.summary.prodSmryDesc && prodRedisInfo.summaryCase !== '3') { %>
+        <p class="productdetails-text02 <%= imgCaseClass %>"><%= prodRedisInfo.summary.prodSmryDesc %></p>
+        <% } %>
 
-    <% if (( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
+        <% if (( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
+        <p class="productdetails-text02 <%= imgCaseClass %>"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
+        <% } %>
+    <% } %>
+    <% if ( basicInfo.prodStCd === 'F1000' && prodRedisInfo.summary.sktProdBenfCtt ) { %>
     <p class="productdetails-text02 <%= imgCaseClass %>"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
-    <% } %>
     <% } %>
     <% if ( basicInfo.svcOfrCoNm ) { %>
     <p class="productdetails-text03">서비스 제공 : <%= basicInfo.svcOfrCoNm %></p>
