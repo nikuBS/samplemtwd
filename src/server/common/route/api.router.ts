@@ -380,8 +380,8 @@ class ApiRouter {
           if ( targetSerial === '' ) {
             return Observable.of(resp);
           } else {
-            const start = DateHelper.convDateCustomFormat(resp.result.cmpgnStaDt + resp.result.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
-            const end = DateHelper.convDateCustomFormat(resp.result.cmpgnEndDt + resp.result.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+            const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+            const end = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnEndDt + resp.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
             const today = new Date().getTime();
             if ( start < today && end > today ) {
               targetSerial = '';
@@ -412,8 +412,8 @@ class ApiRouter {
           if ( targetSerial === '' ) {
             return Observable.of(resp);
           } else {
-            const start = DateHelper.convDateCustomFormat(resp.result.cmpgnStaDt + resp.result.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
-            const end = DateHelper.convDateCustomFormat(resp.result.cmpgnEndDt + resp.result.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+            const start = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnStaDt + resp.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+            const end = DateHelper.convDateCustomFormat(resp.result.summary.cmpgnEndDt + resp.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
             const today = new Date().getTime();
             if ( start < today && end > today ) {
               return Observable.of(resp);
