@@ -41,7 +41,15 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _onClickSearchPost: function (e) {
-    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget));
+    new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._setAddress, this));
+  },
+
+  _setAddress: function (address) {
+    this.$container.find('.fe-zip').val(address.zip);
+    this.$container.find('.fe-main-address').val(address.main);
+    this.$container.find('.fe-detail-address').val(address.detail);
+
+    this.$container.trigger('validateForm');
   },
 
   // 품질상담 > 인터넷/집전화/IPTV > 회선변경
