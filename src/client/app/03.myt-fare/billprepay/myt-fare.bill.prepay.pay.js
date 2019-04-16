@@ -10,7 +10,6 @@
  * @desc 소액결제/콘텐츠이용료 선결제 namespace
  * @param rootEl - dom 객체
  * @param title - 소액결제/콘텐츠이용료
- * @param amount - 선결제 가능 금액
  * @param name - 회원명
  */
 Tw.MyTFareBillPrepayPay = function (rootEl, title, name) {
@@ -151,9 +150,23 @@ Tw.MyTFareBillPrepayPay.prototype = {
    * @param e
    */
   _checkPay: function (e) {
-    if (this._validationService.isAllValid()) {
-      this._goCheck(e);
+    if (this._isAvailable()) {
+      if (this._validationService.isAllValid()) {
+        this._goCheck(e);
+      }
     }
+  },
+  /**
+   * @function
+   * @desc 납부할 요금이 50,000원 미만일 경우 일시불만 가능
+   */
+  _isAvailable: function () {
+    var amount = this.$prepayAmount.val();
+    if (amount < 50000 && this.$container.find('.fe-select-card-type').attr('id') !== '00') {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_CARD_TYPE);
+      return false;
+    }
+    return true;
   },
   /**
    * @function

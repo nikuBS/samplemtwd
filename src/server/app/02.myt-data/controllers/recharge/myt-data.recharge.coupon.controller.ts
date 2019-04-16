@@ -1,7 +1,7 @@
 /**
- * @file myt-data.recharge.coupon.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.09.17
+ * @file 쿠폰 리스트 화면 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-09-17
  */
 
 import { NextFunction, Request, Response } from 'express';
@@ -64,10 +64,18 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc 현재 사용자가 쿠폰을 사용할 수 있는 옵션을 BFF로 부터 조회 (불가능, 음성만 가능, 데이터만 가능, 둘 다 가능)
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @returns Observable
+   */
   private getAvailability(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0009, {}).map(resp => {
       if (resp.code === API_CODE.CODE_00) {
-        if (FormatHelper.isEmpty(resp.result.option)) {
+        if (FormatHelper.isEmpty(resp.result.option)) { // 쿠폰 사용 불가능
           return 'NONE';
         }
 
@@ -95,6 +103,12 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc BFF로 조회된 쿠폰 리스트를 ejs 렌더링이 용이하도록 정제
+   * @param  {Array<Coupon>} data - 쿠폰 리스트
+   * @returns Array - 정제된 쿠폰 리스트
+   */
   private purifyCouponData(data: Array<Coupon>): Array<Coupon> {
     return data.map((item) => {
       item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
@@ -105,7 +119,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
-
+  // 쿠폰 완료 화면이 별도의 url로 따져 더이상 사용하지 않는 함수, 히스토리 관리를 위해 남겨 둠
   private renderCouponComplete(req: Request, res: Response, svcInfo: any, pageInfo: any, category: string): void {
     switch (category) {
       case 'data':

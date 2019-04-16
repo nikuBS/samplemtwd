@@ -99,7 +99,7 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
     return Object.assign(wireLessInfo, {
       isWireless: true,
       svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum),
-      isFamilyLeaderYn: familyType.leader ? 'Y' : 'N',
+      isFamilyLeader: familyType.leader,
       fam: familyType
     });
   }

@@ -72,7 +72,7 @@ abstract class TwViewController {
         if ( this.existId(tokenId, userId) ) {
           this.login(req, res, next, path, tokenId, userId);
         } else if ( this.checkSSOLogin(req, path) ) {
-          res.redirect('/common/tid/login');
+          res.redirect('/common/tid/login?target=' + this.getTargetUrl(path, req.query));
         } else {
           this.sessionCheck(req, res, next, path);
         }
@@ -131,7 +131,7 @@ abstract class TwViewController {
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       this._logger.info(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-      res.redirect('/common/member/logout/expire?target=' + req.baseUrl + req.url);
+      res.redirect('/common/member/logout/expire?target=' + this.getTargetUrl(path, req.query));
     } else {
       this._logger.info(this, '[Session empty]');
       this.renderPage(req, res, next, path);

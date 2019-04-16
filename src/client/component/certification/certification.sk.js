@@ -203,7 +203,7 @@ Tw.CertificationSk.prototype = {
     this.$inputboxMdn = $popupContainer.find('#fe-inputbox-mdn');
     this.$inputboxCert = $popupContainer.find('#fe-inputbox-cert');
 
-    $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
+    $popupContainer.on('click', '#fe-other-cert', _.debounce($.proxy(this._onClickOtherCert, this), 500));
     $popupContainer.on('click', '.fe-bt-mdn-delete', $.proxy(this._onInputMdn, this));
     $popupContainer.on('click', '.fe-bt-cert-delete', $.proxy(this._onInputCert, this));
 
@@ -213,7 +213,7 @@ Tw.CertificationSk.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btConfirm.click(_.debounce($.proxy(this._onClickConfirm, this), 500));
+    this.$btConfirm.on('click', _.debounce($.proxy(this._onClickConfirm, this), 500));
 
     if ( this._defaultKeyin ) {
       this.$checkKeyin.trigger('click');

@@ -334,8 +334,10 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     $('.fe-main-address', this.$container).val(resp.main);
     $('.fe-detail-address', this.$container).val(resp.detail);
     // this.addressFormData.zip     = resp.zip;    // 주의!! API에 없는 필드를 넣으면 오류남!!
-    this.addressFormData.basAddr = resp.main;
+    this.addressFormData.basAddr = resp.zip + " " + resp.main;
     this.addressFormData.dtlAddr = resp.detail;
+    
+    this._formValidateionChk();
   },
   //--------------------------------------------------------------------------[Validation]
   /*
@@ -376,7 +378,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
         }
 
-        if( key === 'basAddr' && item !== $('.fe-main-address', this.$container).val()){
+        if( key === 'basAddr' && item !== $('.fe-zip', this.$container).val() + " " + $('.fe-main-address', this.$container).val()){
           throw new Error('break');
         }
 

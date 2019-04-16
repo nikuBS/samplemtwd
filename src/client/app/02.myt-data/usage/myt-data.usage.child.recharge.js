@@ -42,7 +42,7 @@ Tw.MyTDataUsageChildRecharge.prototype = {
   },
   _bindEvent: function () {
     this._$btnMore.on('click', $.proxy(this._onClickBtnMore, this));
-    this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
+    this._$btnSubmit.on('click', _.debounce($.proxy(this._onClickBtnSubmit, this),500));
   },
 
   _init: function () {

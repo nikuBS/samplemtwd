@@ -2,17 +2,31 @@
  * @file common.tid.route.controller.ts
  * @author Ara Jo(araara.jo@sk.com)
  * @since 2018.07.18
+ * @desc Common > TID > 라우팅 처리
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 
+/**
+ * @desc TID 라우터 페이지
+ */
 class CommonTidRoute extends TwViewController {
   constructor() {
     super();
   }
 
+  /**
+   * Common > TID > 라우팅 처리 렌더 함수
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
     const target = req.query.target;

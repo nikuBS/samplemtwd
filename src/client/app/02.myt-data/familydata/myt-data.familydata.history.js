@@ -1,5 +1,5 @@
 /**
- * @file myt-data.familydata.history.js
+ * @file 이번 달 공유내역 < T가족모아 데이터 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
  * @since 2019.01.21
  */

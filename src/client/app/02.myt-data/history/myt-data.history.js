@@ -1,5 +1,5 @@
 /**
- * @file myt-data.datainfo.js
+ * @file 최근 충전/선물 내역 < 나의 데이터/통화 < MyT
  * @author Jiyoung Jo
  * @since 2018.09.21
  */

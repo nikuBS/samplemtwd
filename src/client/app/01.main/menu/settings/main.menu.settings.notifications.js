@@ -207,6 +207,11 @@ Tw.MainMenuSettingsNotifications.prototype = {
     this._popupService.close();
 
     if (Tw.FormatHelper.isEmpty(terms)) {
+      if (!!this._isTplaceSwitchedToOn) {
+        this._sendTplaceTermsToNative(true, true);
+      }
+      delete this._isTplaceSwitchedToOn;
+      delete this._isTermsClosedByConfirmed;
       return;
     }
 
@@ -242,15 +247,13 @@ Tw.MainMenuSettingsNotifications.prototype = {
       this._termsAgreed[key] = terms[key];
     }
 
-    if (!!this._isTplaceSwitchedToOn ||
-        terms.twdInfoRcvAgreeYn !== undefined || terms.twdLocUseAgreeYn !== undefined) {
-
+    if (terms.twdInfoRcvAgreeYn !== undefined || terms.twdLocUseAgreeYn !== undefined) {
       var tplaceOn = !!this.$container.find('#fe-chk-tplace').attr('checked');
       var tplaceSwitchedToOn = !!this._isTplaceSwitchedToOn;
       this._sendTplaceTermsToNative(tplaceOn, tplaceSwitchedToOn);
     }
-
     delete this._isTplaceSwitchedToOn;
+    delete this._isTermsClosedByConfirmed;
   },
 
   /**

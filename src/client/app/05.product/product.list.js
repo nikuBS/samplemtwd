@@ -1,5 +1,5 @@
 /**
- * @file product.plans.js
+ * @file 요금제, 부가서비스 리스트 < 상품
  * @author Jiyoung Jo
  * @since 2018.10.09
  */

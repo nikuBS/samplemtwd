@@ -1,5 +1,5 @@
 /**
- * @file product.mobileplan-add.list.controller.ts
+ * @file 부가서비스 리스트 < 부가서비스 < 상품
  * @author Jiyoung Jo
  * @since 2018.10.09
  */

@@ -92,12 +92,12 @@ Tw.BiometricsCert.prototype = {
     }, $.proxy(this._onOpenBioCert, this), $.proxy(this._onCloseBioCert, this), 'cert');
   },
   _onOpenBioCert: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
-    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
-    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
-    $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickPublic, this));
-    $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
+    $popupContainer.on('click', '#fe-bt-sk', _.debounce($.proxy(this._onClickSkSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-kt', _.debounce($.proxy(this._onClickKtSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-lg', _.debounce($.proxy(this._onClickLgSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-ipin', _.debounce($.proxy(this._onClickIpin, this), 500));
+    $popupContainer.on('click', '#fe-bt-public', _.debounce($.proxy(this._onClickPublic, this), 500));
+    $popupContainer.on('click', '#fe-cancel', _.debounce($.proxy(this._onClickCancel, this), 500));
   },
   _onCloseBioCert: function () {
     if ( this._allClose && !Tw.FormatHelper.isEmpty(this._closeCallback) ) {

@@ -1,3 +1,9 @@
+/**
+ * @file 설문조사 < 고객의견 < 이용안내
+ * @author Jiyoung Jo
+ * @since 2019.04.10
+ */
+
 Tw.CustomerResearches = function(rootEl, researches) {
   this.$container = rootEl;
 

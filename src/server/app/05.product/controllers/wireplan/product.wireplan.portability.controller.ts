@@ -1,5 +1,5 @@
 /**
- * @file product.wireplan.portability.controller.ts
+ * @file 전화_번호이동안내 < 인터넷/집전화/IPTV < 상품
  * @author Jiyoung Jo (jiyoungjo@sk.com)
  * @since 2019.04.04
  */

@@ -41,7 +41,7 @@ Tw.CertificationPublic.prototype = {
   },
   _onOpenTerms: function ($popupContainer) {
     this.$termsConfirm = $popupContainer.find('#fe-bt-confirm');
-    this.$termsConfirm.on('click', $.proxy(this._onClickTermsConfirm, this));
+    this.$termsConfirm.on('click', _.debounce($.proxy(this._onClickTermsConfirm, this), 500));
     $popupContainer.on('change', '#fe-check-terms', $.proxy(this._onCheckTerms, this));
   },
   _onCloseTerms: function () {

@@ -1,16 +1,31 @@
 /**
- * @file product.mobileplan.join.0plan-sm.js
+ * @file 상품 > 가입 > 모바일요금제 > 0플랜 스몰/미디엄
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.01.10
+ * @since 2019-01-10
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품 코드
+ * @param displayId - 화면 ID
+ * @param sktProdBenfCtt - SKT만의 혜택
+ * @param isOverPayReqYn - 초과 사용량 요청 API 성공 여부
+ * @param useOptionProdId - 현재 사용중인 상품 코드 (Optional)
+ * @param isComparePlanYn - 비교하기 데이터 존재 여부
+ */
 Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBenfCtt, isOverPayReqYn, useOptionProdId, isComparePlanYn) {
+  // 컨테이너 레이어 선언
+  this.$container = rootEl;
+
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
+  // 공통 변수 선언
   this._prodId = prodId;
   this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
@@ -22,32 +37,56 @@ Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBen
   this._startTime = null;
   this._confirmOptions = {};
 
-  this.$container = rootEl;
+  // Element 캐싱
   this._cachedElement();
+  // 이벤트 바인딩
   this._bindEvent();
-
-  if (this._historyService.isBack()) {
-    this._historyService.goBack();
-  }
+  // 최초 동작
+  this._init();
 };
 
 Tw.ProductMobileplanJoin0planSm.prototype = {
 
+  /**
+   * @function
+   * @desc 최초 동작
+   */
+  _init: function() {
+    // history back 으로 진입시에는 이전 페이지로 한번 더 bypass
+    if (this._historyService.isBack()) {
+      this._historyService.goBack();
+    }
+  },
+
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
-    this.$inputRadioInWidgetbox = this.$container.find('.widget-box.radio input[type="radio"]');
-    this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
-    this.$btnTimeSelect = this.$container.find('.fe-btn_time_select');
-    this.$msg = this.$container.find('.fe-msg');
-    this.$hour = this.$container.find('.fe-hour');
+    this.$inputRadioInWidgetbox = this.$container.find('.widget-box.radio input[type="radio"]');  // 옵션 선택 Radio
+    this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');  // 설정 완료 버튼
+    this.$btnTimeSelect = this.$container.find('.fe-btn_time_select');  // 시간 설정 버튼
+    this.$msg = this.$container.find('.fe-msg');  // 알림 메세지 영역
+    this.$hour = this.$container.find('.fe-hour');  // 시간 노출 영역
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
-    this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
-    this.$btnSetupOk.on('click', _.debounce($.proxy(this._reqOverpay, this), 500));
-    this.$btnTimeSelect.on('click', $.proxy(this._openTimeSelectPop, this));
+    this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this)); // 옵션 선택 Radio 선택 시
+    this.$btnSetupOk.on('click', _.debounce($.proxy(this._reqOverpay, this), 500)); // 설정 완료 버튼 클릭 시
+    this.$btnTimeSelect.on('click', $.proxy(this._openTimeSelectPop, this));  // 시간 설정 버튼 클릭 시
   },
 
+  /**
+   * @function
+   * @desc - 설정완료 버튼 활성화 처리
+   * @param e - 옵션 선택 Radio change 이벤트
+   */
   _enableSetupButton: function(e) {
+    // 매일3시간 선택 시, 영역 노출
     if ($(e.currentTarget).val() === 'NA00006163') {
       this.$btnTimeSelect.prop('disabled', false).removeAttr('disabled');
       this.$msg.removeClass('disabled');
@@ -56,6 +95,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       this.$msg.addClass('disabled');
     }
 
+    // 매일3시간 & 시간설정 미선택 상태
     if ($(e.currentTarget).val() === 'NA00006163' && Tw.FormatHelper.isEmpty(this._startTime)) {
       this.$btnSetupOk.prop('disabled', true).attr('disabled');
       return;
@@ -64,6 +104,12 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
   },
 
+  /**
+   * @function
+   * @desc - 가입 정보확인 데이터 변환
+   * @param result - 가입 정보확인 API 응답 값
+   * @returns {any}
+   */
   _convConfirmOptions: function(result) {
     this._confirmOptions = Tw.ProductHelper.convPlansJoinTermInfo(result);
 
@@ -100,6 +146,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     return this._confirmOptions;
   },
 
+  /**
+   * @function
+   * @desc DG 방어 메세지 처리
+   * @returns {null|{isHtml: boolean, guidMsgCtt: *}}
+   */
   _getDowngrade: function() {
     if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
       return null;
@@ -111,6 +162,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 매일 3시간 시간설정 팝업 실행
+   */
   _openTimeSelectPop: function() {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -124,6 +179,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     }, $.proxy(this._bindTimePopup, this), null, 'select_time_select', this.$btnTimeSelect);
   },
 
+  /**
+   * @function
+   * @desc 시간 목록 생성
+   * @returns {Array}
+   */
   _getTimeList: function() {
     var resultList = [];
 
@@ -139,10 +199,20 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     return resultList;
   },
 
+  /**
+   * @function
+   * @desc - 시간 설정 팝업 이벤트 바인딩
+   * @param $popupContainer - 팝업 컨테이너 레이어
+   */
   _bindTimePopup: function($popupContainer) {
     $popupContainer.on('click', '[data-time]', $.proxy(this._setTime, this));
   },
 
+  /**
+   * @function
+   * @desc - 시간 설정
+   * @param e - 시간 설정 팝업 내 버튼 클릭 이벤트
+   */
   _setTime: function(e) {
     var time = $(e.currentTarget).data('time').toString(),
       endTime = parseInt(time, 10) + 3;
@@ -158,6 +228,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc - 초과 사용량 조회 API
+   * @returns {*|void}
+   */
   _reqOverpay: function() {
     if (this._overpayRetryCnt > 2) {
       this._confirmOptions = $.extend(this._confirmOptions, {isOverPayError: true});
@@ -173,10 +248,17 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 초과사용량 조회 API 응답
+   * @param resp - API 응답 값
+   * @returns {*|*|void}
+   */
   _resOverpay: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
-    if (['ZEQPN0002', 'ZORDN3598'].indexOf(resp.code) !== -1 && this._overpayRetryCnt < 3) { // 최대 3회까지 재조회 시도
+    // 최대 3회까지 재시도 후 오류시 정보확인 레이어에서 대체 레이어를 노출한다.
+    if (['ZEQPN0002', 'ZORDN3598'].indexOf(resp.code) !== -1 && this._overpayRetryCnt < 3) {
       this._isSetOverPayReq = false;
       return this._reqOverpay();
     }
@@ -222,6 +304,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._procConfirm();
   },
 
+  /**
+   * @function
+   * @desc 정보확인 API 호출
+   */
   _procConfirm: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -234,6 +320,12 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 API 응답 값 처리, 공통 정보확인 팝업 호출
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procConfirmRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -244,6 +336,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     new Tw.ProductCommonConfirm(true, null, this._convConfirmOptions(resp.result), $.proxy(this._prodConfirmOk, this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 팝업 Callback 처리 (가입처리 요청)
+   */
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -259,6 +355,12 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 가입처리 API 응답 값 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -272,6 +374,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     }, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
+  /**
+   * @function
+   * @desc 옵션 설정 값별 텍스트
+   * @returns {string}
+   */
   _getBasicText: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked'),
       txt = $checked.parent().find('.mtext').text() + '<br>';
@@ -285,7 +392,14 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     return txt;
   },
 
+  /**
+   * @function
+   * @desc - 가입유도팝업 조회 응답 값 처리
+   * @param resp - 가입유도팝업 API 응답 값
+   * @returns {*}
+   */
   _isVasTerm: function(resp) {
+    // 값이 없을 경우 완료 팝업 바로 실행
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       this._isResultPop = true;
       return this._openSuccessPop();
@@ -294,6 +408,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._openVasTermPopup(resp.result);
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     if (!this._isResultPop) {
       return;
@@ -319,10 +437,20 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, {});
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 컨테이너 레이어
+   */
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc - 완료 팝업 내 A 하이퍼링크 클릭 시
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -330,6 +458,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc - 가입유도팝업 실행
+   * @param respResult - 가입유도팝업 API 응답 값
+   */
   _openVasTermPopup: function(respResult) {
     var popupOptions = {
       hbs: 'MV_01_02_02_01',
@@ -358,16 +491,30 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
 
+  /**
+   * @function
+   * @desc - 가입유도팝업 이벤트 바인딩
+   * @param $popupContainer
+   * @private
+   */
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 가입유도팝업 종료시
+   */
   _closeAndOpenResultPopup: function() {
     this._isResultPop = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료시
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

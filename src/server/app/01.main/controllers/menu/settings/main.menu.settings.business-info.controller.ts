@@ -1,7 +1,7 @@
 /**
- * @file main.menu.settings.business-info.controller.ts
- * @author Hakjoon Sim (hakjoon.sim@sk.com)
- * @since 2018.10.05
+ * @file 사업자 정보 관련 처리
+ * @author Hakjoon Sim
+ * @since 2018-10-05
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';

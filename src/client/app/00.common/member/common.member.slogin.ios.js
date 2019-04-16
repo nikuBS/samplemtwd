@@ -217,7 +217,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
-    this.$btLogin.click(_.debounce($.proxy(this._onClickLogin, this), 500));
+    this.$btLogin.on('click', _.debounce($.proxy(this._onClickLogin, this), 500));
 
     this.$inputMdn.on('input', $.proxy(this._onInputMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
@@ -395,7 +395,7 @@ Tw.CommonMemberSloginIos.prototype = {
 
   /**
    * @function
-   * @desc SMS 인증번호 요청 실패 처
+   * @desc SMS 인증번호 요청 실패 처라
    * @param error
    * @private
    */
@@ -485,7 +485,7 @@ Tw.CommonMemberSloginIos.prototype = {
 
   /**
    * @function
-   * @desc 로그인하기 클릭 이벤트 처
+   * @desc 로그인하기 클릭 이벤트 처리
    * @param $event
    * @private
    */

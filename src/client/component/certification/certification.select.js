@@ -353,20 +353,20 @@ Tw.CertificationSelect.prototype = {
   },
   _onOpenSelectPopup: function ($popupContainer) {
     this._onSelectPopup = true;
-    $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
-    $popupContainer.on('click', '#fe-bt-kt', $.proxy(this._onClickKtSms, this));
-    $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
-    $popupContainer.on('click', '#fe-bt-save', $.proxy(this._onClickSaveSms, this));
-    $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
-    $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
-    $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickSkPublic, this));
+    $popupContainer.on('click', '#fe-bt-sk', _.debounce($.proxy(this._onClickSkSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-kt', _.debounce($.proxy(this._onClickKtSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-lg', _.debounce($.proxy(this._onClickLgSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-save', _.debounce($.proxy(this._onClickSaveSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-ipin', _.debounce($.proxy(this._onClickIpin, this), 500));
+    $popupContainer.on('click', '#fe-bt-bio', _.debounce($.proxy(this._onClickBio, this), 500));
+    $popupContainer.on('click', '#fe-bt-public', _.debounce($.proxy(this._onClickSkPublic, this), 500));
   },
   _opOpenRefundSelectPopup: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-sk-refund', $.proxy(this._onClickSkSmsRefund, this));
-    $popupContainer.on('click', '#fe-bt-kt-refund', $.proxy(this._onClickKtSms, this));
-    $popupContainer.on('click', '#fe-bt-lg-refund', $.proxy(this._onClickLgSms, this));
-    $popupContainer.on('click', '#fe-bt-save-refund', $.proxy(this._onClickSaveSms, this));
-    $popupContainer.on('click', '#fe-bt-ipin-refund', $.proxy(this._onClickIpin, this));
+    $popupContainer.on('click', '#fe-bt-sk-refund', _.debounce($.proxy(this._onClickSkSmsRefund, this), 500));
+    $popupContainer.on('click', '#fe-bt-kt-refund', _.debounce($.proxy(this._onClickKtSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-lg-refund', _.debounce($.proxy(this._onClickLgSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-save-refund', _.debounce($.proxy(this._onClickSaveSms, this), 500));
+    $popupContainer.on('click', '#fe-bt-ipin-refund', _.debounce($.proxy(this._onClickIpin, this), 500));
   },
   _onCloseSelectPopup: function () {
     this._onSelectPopup = false;
