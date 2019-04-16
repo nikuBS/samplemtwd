@@ -146,6 +146,10 @@ class BenefitTerminateAllFamilyFree extends TwViewController {
     });
   }
 
+  /**
+   * 대표 회선 산출
+   * @param wirelessMemberList - 무선 회선 리스트
+   */
   private _getLeaderSvcMgmtNum(wirelessMemberList: any): any {
     let leaderSvcMgmtNum: any = null;
 

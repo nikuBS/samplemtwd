@@ -30,10 +30,13 @@ class BenefitTerminateAllFamily extends TwViewController {
    * @param currentSvcMgmtNum - 현재 회선 서비스관리번호
    */
   private _convertTermInfo(termInfo: any, currentSvcMgmtNum: any): any {
+    const wirelessMemberList: any = FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
+      this._convertWirelessMemberList(termInfo.combinationWirelessMemberList, currentSvcMgmtNum);
+
     return Object.assign(termInfo, {
       combinationGroup: this._convCombinationGroup(termInfo.combinationGroup),
-      combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
-        this._convertWirelessMemberList(termInfo.combinationWirelessMemberList, currentSvcMgmtNum)
+      combinationWirelessMember: wirelessMemberList,
+      leaderSvcMgmtNum: this._getLeaderSvcMgmtNum(wirelessMemberList)
     });
   }
 
@@ -48,6 +51,22 @@ class BenefitTerminateAllFamily extends TwViewController {
     });
 
     return this._sortCombinationList(wireMemberList);
+  }
+
+  /**
+   * 대표 회선 산출
+   * @param wirelessMemberList - 무선 회선 리스트
+   */
+  private _getLeaderSvcMgmtNum(wirelessMemberList: any): any {
+    let leaderSvcMgmtNum: any = null;
+
+    wirelessMemberList.forEach((item) => {
+      if (item.relClCd === '00') {
+        leaderSvcMgmtNum = item.svcMgmtNum;
+      }
+    });
+
+    return leaderSvcMgmtNum;
   }
 
   /**
@@ -159,11 +178,14 @@ class BenefitTerminateAllFamily extends TwViewController {
         }));
       }
 
+      const convertedTermInfo: any = this._convertTermInfo(termInfo.result, svcMgmtNum);
+
       res.render('terminate/benefit.terminate.all-family.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
         prodNm: prodInfo.result.summary.prodNm,
-        termInfo: this._convertTermInfo(termInfo.result, svcMgmtNum),
-        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y'
+        termInfo: convertedTermInfo,
+        isRepSvc: svcInfo && svcInfo.repSvcYn === 'Y',
+        isLeaderSvcYn: svcMgmtNum === convertedTermInfo.leaderSvcMgmtNum ? 'Y' : 'N'
       }));
     });
   }
