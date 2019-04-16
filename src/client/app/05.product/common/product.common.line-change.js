@@ -1,5 +1,5 @@
 /**
- * @file 회선변경 프로세스
+ * @file 상품 > 공통 > 회선변경 프로세스
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2019-01-17
  */

@@ -1,26 +1,44 @@
 /**
- * @file product.mobileplan.setting.number-friend.js
+ * @file 상품 > 모바일요금제 > 설정 > 지정번호 변경 (절친)
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.15
+ * @since 2018-11-15
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param displayId - 화면ID
+ * @param frBestAsgnNum - 현재 절친번호
+ */
 Tw.ProductMobileplanSettingNumberFriend = function(rootEl, prodId, displayId, frBestAsgnNum) {
+  // 컨테이너 레이어
+  this.$container = rootEl;
+
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
 
+  // 공통 변수 선언
   this._prodId = prodId;
   this._displayId = displayId;
   this._frBestAsgnNum = frBestAsgnNum;
 
-  this.$container = rootEl;
+  // Element 캐싱
   this._cachedElement();
+
+  // 이벤트 바인딩
   this._bindEvent();
 };
 
 Tw.ProductMobileplanSettingNumberFriend.prototype = {
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$lineList = this.$container.find('.fe-line_list');
     this.$lineWrap = this.$container.find('.fe-line_wrap');
@@ -34,6 +52,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this.$btnToggleFriend = this.$container.find('.fe-btn_toggle_friend');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnAddNum.on('click', _.debounce($.proxy(this._addNum, this), 500));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
@@ -51,10 +73,19 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 주소록 열기 (Only App)
+   */
   _openAppAddressBook: function() {
     this._nativeService.send('getContact', {}, $.proxy(this._setAppAddressBook, this));
   },
 
+  /**
+   * @function
+   * @desc 주소록 열기 후 콜백 응답 처리
+   * @param res - App 콜백 응답 값
+   */
   _setAppAddressBook: function(res) {
     if (Tw.FormatHelper.isEmpty(res.params.phoneNumber)) {
       return;
@@ -66,6 +97,11 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this._blurInputNumber();
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 추가
+   * @returns {*|void}
+   */
   _addNum: function() {
     if (this.$btnAddNum.attr('disabled') === 'disabled') {
       return;
@@ -90,6 +126,12 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 회선 추가/삭제시 응답 값 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _addDelNumRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -100,6 +142,12 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this._historyService.reload();
   },
 
+  /**
+   * @function
+   * @desc 회선번호 삭제
+   * @param e - 삭제 버튼 클릭 이벤트
+   * @returns {*|void}
+   */
   _delNum: function(e) {
     var $elem = $(e.currentTarget).parents('li');
 
@@ -116,6 +164,12 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
 
+  /**
+   * @function
+   * @desc 삭제 API 요청
+   * @param number - 삭제 회선번호
+   * @param auditDtm - 신청일
+   */
   _delNumReq: function(number, auditDtm) {
     this._popupService.close();
 
@@ -128,6 +182,12 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 회선번호 입력란 keyup|input Event
+   * @param e - keyup|input Event
+   * @returns {*|void}
+   */
   _detectInputNumber: function(e) {
     if (Tw.InputHelper.isEnter(e)) {
       this.$btnAddNum.trigger('click');
@@ -140,14 +200,15 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 12));
     }
 
-    if (this.$lineWrap.length < 1) {
-      return this._toggleSetupButton(this.$inputNumber.val().length > 0);
-    }
-
     this._toggleClearBtn();
     this._toggleNumAddBtn();
   },
 
+  /**
+   * @function
+   * @desc 절친 버튼 클릭 시
+   * @param e - 절친 버튼 클릭 이벤트
+   */
   _toggleFriend: function(e) {
     if ($(e.currentTarget).hasClass('on')) {
       return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44.TITLE);
@@ -162,11 +223,20 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A43.BUTTON);
   },
 
+  /**
+   * @function
+   * @desc 절친 변경 확인 팝업에서 확인 시
+   */
   _setToggleFriendFlag: function() {
     this._isChangeFriend = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 절친 변경 확인 팝업 종료 시
+   * @param number - 변경할 절친 번호
+   */
   _onCloseToggleFriendConfirm: function(number) {
     if (!this._isChangeFriend) {
       return;
@@ -175,6 +245,11 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this._toggleFriendReq(number);
   },
 
+  /**
+   * @function
+   * @desc 절친변경 API 요청
+   * @param number - 변경할 절친 번호
+   */
   _toggleFriendReq: function(number) {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -186,6 +261,13 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 절친변경 API 응답 처리
+   * @param number - 변경한 절친 번호
+   * @param resp - 절친 변경 처리 API 응답 값
+   * @returns {*}
+   */
   _toggleFriendRes: function(number, resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -198,6 +280,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this.$lineList.find('li[data-number="' + number + '"] .fe-btn_toggle_friend').addClass('on');
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 추가 버튼 토글
+   */
   _toggleNumAddBtn: function() {
     if (this.$inputNumber.val().length > 8) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
@@ -208,28 +294,36 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }
   },
 
-  _toggleSetupButton: function(isEnable) {
-    if (isEnable) {
-      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
-    } else {
-      this.$btnSetupOk.attr('disabled', 'disabled').prop('disabled', true);
-    }
-  },
-
+  /**
+   * @function
+   * @desc 회선 번호 입력 란 blur 시
+   */
   _blurInputNumber: function() {
     this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 입력 란 focus 시
+   */
   _focusInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 입력 란 삭제 버튼 클릭 시
+   */
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 입력 란 삭제 버튼 display none|block 토글
+   */
   _toggleClearBtn: function() {
     if (this.$inputNumber.val().length > 0) {
       this.$btnClearNum.show().attr('aria-hidden', 'false');
@@ -238,32 +332,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }
   },
 
-  _getServiceNumberFormat: function(number) {
-    if (number.length === 10) {
-      return {
-        serviceNumber1: number.substr(0, 3),
-        serviceNumber2: number.substr(3, 3),
-        serviceNumber3: number.substr(6, 4)
-      };
-    }
-
-    return {
-      serviceNumber1: number.substr(0, 3),
-      serviceNumber2: number.substr(3, 4),
-      serviceNumber3: number.substr(7, 4)
-    };
-  },
-
-  _getSvcNumList: function() {
-    var resultList = [];
-
-    this.$lineList.find('li').each(function(index, item) {
-      resultList.push(this._getServiceNumberFormat($(item).data('num')));
-    }.bind(this));
-
-    return resultList;
-  },
-
+  /**
+   * @function
+   * @desc 마스킹 해제 안내 팝업 실행
+   */
   _openMaskingAlert: function() {
     this._popupService.openConfirmButton(
       Tw.PRODUCT_AUTH_ALERT_STR.MSG,
@@ -274,6 +346,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
       Tw.BUTTON_LABEL.CONFIRM);
   },
 
+  /**
+   * @function
+   * @desc 마스킹 해제 공통 버튼 클릭 트리거
+   */
   _showAuth : function () {
     this._popupService.close();
     $('.fe-bt-masking').trigger('click');

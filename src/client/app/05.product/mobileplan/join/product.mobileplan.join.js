@@ -1,5 +1,5 @@
 /**
- * 상품 가입 - 모바일 요금제 (공통/정보입력 없는 Case)
+ * @file 상품 > 모바일요금제 > 가입 (공통/정보입력 없는 Case)
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018-10-01
  */

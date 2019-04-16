@@ -1,9 +1,15 @@
 /**
- * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_09)(hbs)
- * @file product.mobileplan.setting.location-search.js
+ * @file 상품 > 모바일요금제 > 설정 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_09)(hbs) 할인지역 검색
  * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.11.13
- * Desctiption: 할인지역 검색
+ * @since 2018-11-13
+ */
+
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param keyword - 검색어
+ * @param applyCallback - 콜백 처리
+ * @param tmplt - 템플릿
  */
 Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallback, tmplt) {
   this.$container = rootEl;
@@ -21,8 +27,8 @@ Tw.ProductMobileplanSettingLocationSearch = function(rootEl, keyword, applyCallb
 Tw.ProductMobileplanSettingLocationSearch.prototype = {
 
   /**
-   * search
-   * @private
+   * @function
+   * @desc search
    */
   init: function() {
     // if( keyword ){
@@ -33,8 +39,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * event binding
-   * @private
+   * @function
+   * @desc event binding
    */
   _bindEvent: function() {
     this.$container.on('click', 'button.search', $.proxy(this._listFilter, this));
@@ -44,8 +50,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * 지역 목록 필터 후 출력
-   * @private
+   * @function
+   * @desc 지역 목록 필터 후 출력
    */
   _listFilter: function(){
     // Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -65,8 +71,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * 지역 찾기(처음부터 모두 가져옴 그렇게 해달라고 함..)
-   * @private
+   * @function
+   * @desc 지역 찾기(처음부터 모두 가져옴 그렇게 해달라고 함..)
    */
   _search: function(){
     // this.$selectList.html('');
@@ -99,9 +105,9 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * 장소 li 추가 (장소li템플릿은 html파일에 있음)
-   * @param list
-   * @private
+   * @function
+   * @desc 장소 li 추가 (장소li템플릿은 html파일에 있음)
+   * @param list - 장소 목록
    */
   _appendLocationLi: function(list){
 
@@ -130,8 +136,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * radio의 상태가 변경 되었을 때 - 추가버튼 enable or disabled
-   * @private
+   * @function
+   * @desc radio의 상태가 변경 되었을 때 - 추가버튼 enable or disabled
    */
   _onchangeUiCondition: function(){
     // 체크된 것이 없으면 disabled
@@ -140,8 +146,8 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
   },
 
   /**
-   * 지역 추가 버튼 클릭시
-   * @private
+   * @function
+   * @desc 지역 추가 버튼 클릭시
    */
   _addLocation: function(){
     Tw.Popup.close();

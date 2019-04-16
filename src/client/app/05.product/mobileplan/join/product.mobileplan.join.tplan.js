@@ -1,5 +1,5 @@
 /**
- * @file 상품 > 가입 > 모바일요금제 > Data 인피니티
+ * @file 상품 > 모바일요금제 > 가입 > Data 인피니티
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018-11-09
  */

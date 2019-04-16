@@ -1,5 +1,5 @@
 /**
- * @file 상품 > 가입 > 모바일요금제 > 0플랜 스몰/미디엄
+ * @file 상품 > 모바일요금제 > 가입 > 0플랜 스몰/미디엄
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2019-01-10
  */
@@ -206,6 +206,9 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
    */
   _bindTimePopup: function($popupContainer) {
     $popupContainer.on('click', '[data-time]', $.proxy(this._setTime, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
   /**
