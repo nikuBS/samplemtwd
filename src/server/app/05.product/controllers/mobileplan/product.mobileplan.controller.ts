@@ -1,5 +1,5 @@
 /**
- * @file product.mobileplan.controller.ts
+ * @file 요금제 < 상품
  * @author Jiyoung Jo
  * @since 2018.09.06
  */

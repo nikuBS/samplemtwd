@@ -1,5 +1,5 @@
 /**
- * @desc 충전 선물 내역
+ * @desc 최근 충전/선물 내역 < 나의 데이터/통화 < MyT
  * @file myt-data.datainfo.controller.ts
  * @author Jiyoung Jo
  * @since 2018.09.20

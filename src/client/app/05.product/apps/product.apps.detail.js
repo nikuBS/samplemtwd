@@ -1,3 +1,9 @@
+/**
+ * @file 상품 상세 < T앱
+ * @author Jiyoung Jo
+ * @since 2018-12-04
+ */
+
 Tw.ProductAppsDetail = function(rootEl, app) {
   this.$container = rootEl;
   this._apiService = Tw.Api;

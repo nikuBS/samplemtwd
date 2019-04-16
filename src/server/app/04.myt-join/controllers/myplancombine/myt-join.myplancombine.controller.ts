@@ -1,5 +1,5 @@
 /**
- * @file myt-join.myplancombine.controller.ts
+ * @file 나의 결합상품 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
  * @since 2018.09.19
  */

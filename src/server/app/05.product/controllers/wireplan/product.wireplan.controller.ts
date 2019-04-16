@@ -1,5 +1,5 @@
 /**
- * @file product.wire.controller.ts
+ * @file 인터넷/집전화/IPTV < 상품
  * @author Jiyoung Jo
  * @since 2018.11.05
  */

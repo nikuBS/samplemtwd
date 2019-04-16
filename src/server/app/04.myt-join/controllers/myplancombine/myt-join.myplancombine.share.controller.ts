@@ -1,5 +1,5 @@
 /**
- * @file myt-join.myplancombine.share.controller.ts
+ * @file 데이터 나눠쓰기 < 나의 결합상품 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
  * @since 2019.02.07
  */

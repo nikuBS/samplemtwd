@@ -1,5 +1,5 @@
 /**
- * @file customer.helpline.controller.ts
+ * @file 전화상담 예약 < 이용안내
  * @author Jiyoung Jo
  * @since 2018.10.18
  */
@@ -47,7 +47,7 @@ export default class CustomerHelpline extends TwViewController {
 
       const timeInfo = {
         curDate: DateHelper.getKoreanDate(resp.result.curDate),
-        availHours: resp.result.availHours.map(time => time.slice(0, -2))
+        availHours: (resp.result.availHours || []).map(time => time.slice(0, -2))
       };
 
       res.render('helpline/customer.helpline.html', { svcInfo, timeInfo, isApp: BrowserHelper.isApp(req), pageInfo });

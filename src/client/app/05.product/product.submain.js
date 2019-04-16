@@ -1,5 +1,5 @@
 /**
- * @file product.submain.js
+ * @file 요금제, 부가서비스, 인터넷/전화/IPTV 서브메인 < 상품
  * @author Jiyoung Jo
  * @since 2018.12.07
  */

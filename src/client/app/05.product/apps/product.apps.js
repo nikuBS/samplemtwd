@@ -1,5 +1,5 @@
 /**
- * @file product.apps.js
+ * @file T앱
  * @author Jiyoung Jo
  * @since 2018.11.14
  */
