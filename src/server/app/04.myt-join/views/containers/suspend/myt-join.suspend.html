@@ -27,11 +27,11 @@
                             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
-                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                            <button href="#temporary" role="tab" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
+                                            <button href="#temporary" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
                                         </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                            <button href="#long-term" role="tab" >장기일시정지</button>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                            <button href="#long-term"  >장기일시정지</button>
                                         </li>
                                     </ul>
                                 </div>
