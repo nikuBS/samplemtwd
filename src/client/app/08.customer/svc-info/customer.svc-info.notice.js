@@ -166,8 +166,9 @@ Tw.CustomerSvcInfoNotice.prototype = {
   /**
    * @function
    * @desc 카테고리 설정 팝업 오픈
+   * @param e - 카테고리 선택 버튼 클릭 이벤트
    */
-  _openCategorySelectPopup: function() {
+  _openCategorySelectPopup: function(e) {
     this._isCategoryMove = false;
     this._popupService.open({
       hbs:'actionsheet01',
@@ -187,7 +188,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
         }
       ],
       btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
-    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category', this.$btnCategory);
+    }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category', e);
   },
 
   /**
@@ -209,6 +210,9 @@ Tw.CustomerSvcInfoNotice.prototype = {
    */
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($layer);
   },
 
   /**

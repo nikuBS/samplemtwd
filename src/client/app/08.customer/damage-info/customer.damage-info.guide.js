@@ -88,6 +88,9 @@ Tw.CustomerDamageInfoGuide.prototype = {
    */
   _categoryPopupBindEvent: function($layer) {
     $layer.on('click', '[data-category]', $.proxy(this._applyCategory, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($layer);
   },
 
   /**

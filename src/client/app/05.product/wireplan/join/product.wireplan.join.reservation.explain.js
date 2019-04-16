@@ -175,6 +175,9 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
   _bindFamilyTypePop: function($popupContainer) {
     $popupContainer.on('click', '[data-family_type]', $.proxy(this._setFamilyType, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
   _setFamilyType: function(e) {

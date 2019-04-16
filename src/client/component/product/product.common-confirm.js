@@ -247,6 +247,9 @@ Tw.ProductCommonConfirm.prototype = {
 
   _bindSelectTerminateCause: function($popupContainer) {
     $popupContainer.on('click', '[data-term_rsn_cd]', $.proxy(this._setTermRsnCd, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
   _setTermRsnCd: function(e) {

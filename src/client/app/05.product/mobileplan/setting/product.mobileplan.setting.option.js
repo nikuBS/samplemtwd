@@ -1,33 +1,53 @@
 /**
- * @file product.mobileplan.setting.option.js
+ * @file 상품 > 모바일요금제 > 설정 > 데이터 옵션
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.13
+ * @since 2018-11-13
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param displayId - 화면ID
+ * @param currentOptionProdId - 현재 옵션 상품코드
+ */
 Tw.ProductMobileplanSettingOption = function(rootEl, prodId, displayId, currentOptionProdId) {
+  // 컨테이너 레이어 선언
+  this.$container = rootEl;
+
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
+  // 공통 변수 선언
   this._prodId = prodId;
   this._displayId = displayId;
   this._currentOptionProdId = currentOptionProdId;
 
-  this.$container = rootEl;
+  // Element 캐싱
   this._cachedElement();
-  this._bindEvent();
-  this._init();
 
-  if (this._historyService.isBack()) {
-    this._historyService.goBack();
-  }
+  // 이벤트 바인딩
+  this._bindEvent();
+
+  // 최초 동작
+  this._init();
 };
 
 Tw.ProductMobileplanSettingOption.prototype = {
 
+  /**
+   * @function
+   * @desc 최초 동작
+   */
   _init: function() {
+    if (this._historyService.isBack()) {
+      this._historyService.goBack();
+    }
+
     if (Tw.FormatHelper.isEmpty(this._currentOptionProdId)) {
       return;
     }
@@ -35,20 +55,37 @@ Tw.ProductMobileplanSettingOption.prototype = {
     this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
   },
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$inputRadioInWidgetbox = this.$container.find('.widget-box.radio input[type="radio"]');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procSetupOk, this), 500));
   },
 
+  /**
+   * @function
+   * @desc 설정 완료 버튼 활성화
+   */
   _enableSetupButton: function() {
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
   },
 
+  /**
+   * @function
+   * @desc 설정완료 버튼 클릭 시 & 설정변경 API 요청
+   * @returns {*|void}
+   */
   _procSetupOk: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
 
@@ -62,6 +99,12 @@ Tw.ProductMobileplanSettingOption.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 설정변경 API 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procSetupOkRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -78,11 +121,21 @@ Tw.ProductMobileplanSettingOption.prototype = {
     }, $.proxy(this._bindSuccessPopup, this), $.proxy(this._onClosePop, this), 'save_setting_success');
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 컨테이너 레이어
+   */
   _bindSuccessPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 A 하이퍼링크 핸들링
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -90,10 +143,18 @@ Tw.ProductMobileplanSettingOption.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 닫기 버튼 클릭 시
+   */
   _closePop: function() {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료 시
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

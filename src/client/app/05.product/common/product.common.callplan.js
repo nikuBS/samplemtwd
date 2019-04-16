@@ -1,5 +1,5 @@
 /**
- * @file 상품 > 원장(상세)
+ * @file 상품 > 공통 > 원장(상세)
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018-09-11
  */
@@ -681,6 +681,9 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _bindSettingBtnListEvent: function($layer) {
     $layer.find('[data-url]').on('click', $.proxy(this._setSettingGoUrl, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($layer);
   },
 
   /**
