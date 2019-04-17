@@ -60,13 +60,31 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       this.$container.on('click','#fe_request_gift',$.proxy(this._requestGiftData,this));
       this.$container.on('keyup','.fe-selected-number.fe-input-number',$.proxy(this._checkGiftNum,this));
       this.$giftNumberInput = this.$container.find('.fe-selected-number');
+      /*
+      { 'label-attr': 'for=ra'+i, 'txt': dateArr[i],
+      'radio-attr':'id="ra'+i+'" value="' + dateArr[i] + '" ' + (nowValue===dateArr[i] ? 'checked ' : '') }
+        */
+      // this._numberHeadArr = [
+      //   {option : '' , value : '010' , attr : 'data-number=010'},
+      //   {option : '' , value : '011' , attr : 'data-number=011'},
+      //   {option : '' , value : '017' , attr : 'data-number=017'},
+      //   {option : '' , value : '016' , attr : 'data-number=016'},
+      //   {option : '' , value : '018' , attr : 'data-number=018'},
+      //   {option : '' , value : '019' , attr : 'data-number=019'}
+      // ];
       this._numberHeadArr = [
-        {option : '' , value : '010' , attr : 'data-number=010'},
-        {option : '' , value : '011' , attr : 'data-number=011'},
-        {option : '' , value : '017' , attr : 'data-number=017'},
-        {option : '' , value : '016' , attr : 'data-number=016'},
-        {option : '' , value : '018' , attr : 'data-number=018'},
-        {option : '' , value : '019' , attr : 'data-number=019'}
+        { 'label-attr': 'for="ra1"', 'txt': '010',
+          'radio-attr':'id="ra1" name="phoneHead" value="010" '},
+        { 'label-attr': 'for="ra2"', 'txt': '011',
+          'radio-attr':'id="ra2" name="phoneHead" value="011" '},
+        { 'label-attr': 'for=ra3', 'txt': '017',
+          'radio-attr':'id="ra3" name="phoneHead" value="017" '},
+        { 'label-attr': 'for=ra4', 'txt': '016',
+          'radio-attr':'id="ra4" name="phoneHead" value="016" '},
+        { 'label-attr': 'for=ra5', 'txt': '018',
+          'radio-attr':'id="ra5" name="phoneHead" value="018" '},
+        { 'label-attr': 'for=ra6', 'txt': '019',
+          'radio-attr':'id="ra6" name="phoneHead" value="019" '}
       ];
     }
   },
@@ -99,7 +117,9 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   _convertDateArrForActionSheet : function(dateArr,attr,nowValue){
     var returnArr = [];
     for(var i=0;i<dateArr.length;i++){
-      returnArr.push({'value':dateArr[i],'option':nowValue===dateArr[i]?'checked':'','attr':attr});
+      //returnArr.push({'value':dateArr[i],'option':nowValue===dateArr[i]?'checked':'','attr':attr});
+      returnArr.push({ 'label-attr': 'for=ra'+i, 'txt': dateArr[i],
+        'radio-attr':'id="ra'+i+'" value="' + dateArr[i] + '" ' + (nowValue===dateArr[i] ? 'checked ' : '') + attr +' name="selectDate"'});
     }
     return returnArr;
   },
@@ -139,7 +159,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @member
    * @desc 날짜 선택 액션시트 출력
    * @param {Object} eventObj - 이벤트 각체
-   * @returns {Array}
+   * @returns {void}
    */
   _btnDateEvent : function(eventObj){
     if(this._historyService.getHash()==='#select_date_P'){
@@ -152,9 +172,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+nowTargetId+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
-      actionSheetData[0].list[0].option = 'checked';
+      //actionSheetData[0].list[0].option = 'checked';
+      actionSheetData[0].list[0]['radio-attr'] += 'checked';
     }
-    actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
+    actionSheetData[0].list[0].txt+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
     if(this._isPromotion&&this._phoneInputState){ //키패드 출력 상태일 경우 딜레이 500
       setTimeout($.proxy(function () {
         this._openSelectDatePop(actionSheetData,'',eventObj);
@@ -194,7 +215,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @returns {void}
    */
   _bindActionSheetElementEvt : function($layer){
-    $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
+    Tw.CommonHelper.focusOnActionSheet($layer);
+    $layer.on('click', '.cont-actionsheet input', $.proxy(this._actionSheetElementEvt, this));
     //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
   },
   /**
@@ -205,8 +227,6 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @returns {void}
    */
   _actionSheetElementEvt : function(eventObj){
-    $(eventObj.delegateTarget).find('button').removeClass('checked');
-    $(eventObj.currentTarget).addClass('checked');
     this._actionSheetCloseEvt(eventObj);
   },
   /**
@@ -217,8 +237,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @returns {void}
    */
   _actionSheetCloseEvt : function(eventObj){
-    var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,13);
+    var $selectedTarget = $(eventObj.currentTarget);
+    var dateValue = $selectedTarget.val().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
     var changeTarget;
     //changeTarget = this.$container.find('#'+dateAttr);
@@ -230,7 +250,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
     changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
-    changeTarget.attr('data-idx',$selectedTarget.parent().index());
+    changeTarget.attr('data-idx',$selectedTarget.parents('li').index());
     this._validateDateValue(changeTarget.attr('id'));
     this._popupService.close();
   },
@@ -379,10 +399,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    */
   _openSelectDatePop: function (data,title,targetEvt) {
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',// hbs의 파일명
+        hbs: 'actionsheet01',// hbs의 파일명
         layer: true,
-        title: title,
-        data: data
+        data: data,
+        btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
       },
       $.proxy(this._bindActionSheetElementEvt, this),
       $.proxy(function () {
@@ -635,16 +655,15 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     var $target = $(targetEvt.currentTarget);
     var nowValue = $target.text();
     for(var idx in this._numberHeadArr){
-      if(this._numberHeadArr[idx].value===nowValue){
-        this._numberHeadArr[idx].option = 'checked';
-      }else{
-        this._numberHeadArr[idx].option = '';
+      if(this._numberHeadArr[idx].txt===nowValue){
+        this._numberHeadArr[idx]['radio-attr'] += 'checked';
       }
     }
     this._popupService.open({
-          hbs: 'actionsheet_select_a_type',// hbs의 파일명
+          hbs: 'actionsheet01',// hbs의 파일명
           layer: true,
-          data: [{list : this._numberHeadArr}]
+          data: [{list : this._numberHeadArr}],
+          btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
         },
         $.proxy(this._bindNumberSelectorEvt,this),
         $.proxy(function () {
@@ -660,8 +679,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @returns {void}
    */
   _bindNumberSelectorEvt : function (targetEvt) {
-    $(targetEvt).on('click', '.chk-link-list button', $.proxy(function (evt) {
-      this.$container.find('.fe-selected-number.head').text($(evt.currentTarget).data('number'));
+    console.log(targetEvt);
+    Tw.CommonHelper.focusOnActionSheet(targetEvt);
+    $(targetEvt).on('click', '.cont-actionsheet input', $.proxy(function (evt) {
+      this.$container.find('.fe-selected-number.head').text($(evt.currentTarget).val());
       this._validatedGiftPhoneNum = this._getGiftNum();
       this._popupService.close();
     }, this));

@@ -96,7 +96,9 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _convertDateArrForActionSheet : function(dateArr,attr,nowValue){
     var returnArr = [];
     for(var i=0;i<dateArr.length;i++){
-      returnArr.push({'value':dateArr[i],'option':nowValue===dateArr[i]?'checked':'','attr':attr});
+      //returnArr.push({'value':dateArr[i],'option':nowValue===dateArr[i]?'checked':'','attr':attr});
+      returnArr.push({ 'label-attr': 'for=ra'+i, 'txt': dateArr[i],
+        'radio-attr':'id="ra'+i+'" value="' + dateArr[i] + '" ' + (nowValue===dateArr[i] ? 'checked ' : '') + attr +' name="selectDate"'});
     }
     return returnArr;
   },
@@ -131,9 +133,10 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
-      actionSheetData[0].list[0].option = 'checked';
+      //actionSheetData[0].list[0].option = 'checked';
+      actionSheetData[0].list[0]['radio-attr'] += 'checked';
     }
-    actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
+    actionSheetData[0].list[0].txt+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
     this._openSelectDatePop(actionSheetData,'',eventObj);
   },
 
@@ -145,7 +148,8 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
    * @returns {void}
    */
   _bindActionSheetElementEvt : function($layer){
-    $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
+    Tw.CommonHelper.focusOnActionSheet($layer);
+    $layer.on('click', '.cont-actionsheet input', $.proxy(this._actionSheetElementEvt, this));
     //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
   },
   /**
@@ -156,8 +160,8 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
    * @returns {void}
    */
   _actionSheetElementEvt : function(eventObj){
-    $(eventObj.delegateTarget).find('button').removeClass('checked');
-    $(eventObj.currentTarget).addClass('checked');
+    // $(eventObj.delegateTarget).find('button').removeClass('checked');
+    // $(eventObj.currentTarget).addClass('checked');
     this._actionSheetCloseEvt(eventObj);
   },
   /**
@@ -168,14 +172,14 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
    * @returns {void}
    */
   _actionSheetCloseEvt : function(eventObj){
-    var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,13);
+    var $selectedTarget = $(eventObj.currentTarget);
+    var dateValue = $selectedTarget.val().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
     var changeTarget = this.$container.find('#'+dateAttr);
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
     changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
-    changeTarget.attr('data-idx',$selectedTarget.parent().index());
+    changeTarget.attr('data-idx',$selectedTarget.parents('li').index());
     this._validateDateValue();
     this._popupService.close();
   },
@@ -230,10 +234,11 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
    */
   _openSelectDatePop: function (data,title,evt) {
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',// hbs의 파일명
+        hbs: 'actionsheet01',// hbs의 파일명
         layer: true,
         title: title,
-        data: data
+        data: data,
+        btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
       },
       $.proxy(this._bindActionSheetElementEvt, this),
       $.proxy(function (){
