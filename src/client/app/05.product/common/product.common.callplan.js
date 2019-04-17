@@ -613,7 +613,10 @@ Tw.ProductCommonCallplan.prototype = {
       $scrollContainer.scrollTop($target.offset().top - $('.page-header').height());
     }
 
-    $target.focus();
+    setTimeout(function() {
+      $target.focus();
+    }, 500);
+
     Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 

@@ -32,8 +32,8 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                             <div class="horizontal-slide slide-nopd">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for (var i in series.list) { %>
-                                                    <li data-prod_id="<%= series.list[i].prodId %>" class="fe-go_prod">
-                                                        <div class="product-info">
+                                                    <li>
+                                                        <a class="product-info fe-go_prod" href="javascript:void(0)" data-prod_id="<%= series.list[i].prodId %>">
                                                             <h5 class="title"><%= series.list[i].prodNm %></h5>
                                                             <% if (!series.list[i].isDiscount && !series.list[i].isCombine) { %>
                                                             <p class="info">
@@ -81,7 +81,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                                                 <%= series.list[i].prodSmryDesc %>
                                                             </div>
                                                             <% } %>
-                                                        </div>
+                                                        </a>
                                                     </li>
                                                     <% } %>
                                                 </ul>
@@ -103,8 +103,8 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                             <div class="horizontal-slide slide-nopd">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for ( var i in recommends ) { %>
-                                                    <li data-prod_id="<%= recommends[i].prodId %>" class="fe-go_prod">
-                                                        <div class="product-info">
+                                                    <li>
+                                                        <a class="product-info fe-go_prod" href="javascript:void(0)" data-prod_id="<%= recommends[i].prodId %>">
                                                             <h5 class="title"><%= recommends[i].prodNm %></h5>
                                                             <% if (!recommends[i].isDiscount && !recommends[i].isCombine) { %>
                                                             <p class="info">
@@ -152,7 +152,7 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
                                                                 <%= recommends[i].prodSmryDesc %>
                                                             </div>
                                                             <% } %>
-                                                        </div>
+                                                        </a>
                                                     </li>
                                                     <% } %>
                                                 </ul>
