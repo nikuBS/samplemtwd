@@ -158,7 +158,9 @@
             </div>
             <% } %>
             <!-- 사용량 -->
-            <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
+            <% if (data.isWireLess) { %>
+                <%- include('../components/submain/myt-data.submain.usage-pattern.html', data) %>
+            <% } %>
             <!-- .cont-box -->
             <% if(data.isBenefit) { %>
             <hr class="cont-sp type1" aria-hidden="true" />

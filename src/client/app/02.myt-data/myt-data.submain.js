@@ -114,7 +114,7 @@ Tw.MyTDataSubMain.prototype = {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
       }
     }
-    this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+    this.$otherPages.find('button').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
   },
   /**
@@ -191,7 +191,7 @@ Tw.MyTDataSubMain.prototype = {
    * @desc _initOtherLinesInfo() 실행
    */
   _checkScroll: function () {
-    if ( !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
+    if (this.$patternChart.length > 0 && !this._isRequestPattern && this._elementScrolled(this.$patternChart) ) {
       this._requestPattern();
     }
 
@@ -286,6 +286,7 @@ Tw.MyTDataSubMain.prototype = {
       case Tw.UNIT_E.DATA:
         return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.VOICE:
+      case Tw.UNIT_E.VOICE_2:
         return Tw.FormatHelper.convVoiceFormat(data);
       case Tw.UNIT_E.SMS:
       case Tw.UNIT_E.SMS_2:
@@ -557,7 +558,19 @@ Tw.MyTDataSubMain.prototype = {
         var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
         var data = {};
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
-          var item = this.__parseRemnantData(arguments[idx].result);
+          var result = arguments[idx].result;
+          // 집전화 정액제 상품
+          if (result.balance) {
+            if (result.balance[0]) {
+              result.voice = [];
+              result.voice.push(result.balance[0]);
+            }
+            if (result.balance[1]) {
+              result.sms = [];
+              result.sms.push(result.balance[1]);
+            }
+          }
+          var item = this.__parseRemnantData(result);
           if ( item.total ) {
             data = {
               data: item.totalLimit ? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
