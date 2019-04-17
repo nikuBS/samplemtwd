@@ -1,10 +1,10 @@
 # Node.js app Docker file
 ARG DOCKER_REGISTRY
 # Linux dependencies
-FROM ${DOCKER_REGISTRY}/infra/nodejs8-centos:0.1
+FROM ${DOCKER_REGISTRY}/infra/nodejs8-utf8:1.0.1
 #FROM node:carbon
 
-WORKDIR /tworld
+WORKDIR /home/appadmin
 
 COPY package*.json ./
 
@@ -19,6 +19,8 @@ RUN npm --verbose install
 RUN npm --verbose install -g pm2
 RUN npm --verbose install -g gulp
 RUN pm2 install typescript
+
+USER appadmin
 
 COPY . .
 RUN gulp build
