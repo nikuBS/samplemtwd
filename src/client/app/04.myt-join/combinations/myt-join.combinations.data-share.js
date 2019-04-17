@@ -61,6 +61,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @private
    */
   _handleSubmitShare: function() {  
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     if (!this._subject) { // 대상 설정 안되어 있는 경우
       var $subject = this.$container.find('.list-comp-input li.checked'); // 대상 리스트에서 checked된 대상 찾기
       this._subject = {
@@ -79,7 +80,8 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
         reqQty: String(this._selected),
         remainPt: String(this._remain - this._selected)
       })
-      .done($.proxy(this._successSubmit, this));
+      .done($.proxy(this._successSubmit, this))
+      .fail($.proxy(this._fail, this));
   },
 
   /**
@@ -87,6 +89,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    * @param {object} resp BFF 응답
    */
   _successSubmit: function(resp) {
+    Tw.CommonHelper.endLoading('.popup-page');
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     } else {  // 성공시 완료 화면 띄움
@@ -111,5 +114,14 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
    */
   _closeCompletePopup: function() { // 데이터 나눠쓰기 완료화면 close
     history.back();
+  },
+
+  /**
+   * @desc 서버 요청 timeout 발생 시
+   * @private
+   */
+  _fail: function() {
+    Tw.CommonHelper.endLoading('.popup-page');
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };
