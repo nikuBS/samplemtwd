@@ -305,7 +305,6 @@ Tw.ProductRoamingTerminate.prototype = {
   _showBffToolTip : function (evt) {
     var $target = $(evt.currentTarget);
     var tooltipData = $target.data();
-    console.log(tooltipData.txt);
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
