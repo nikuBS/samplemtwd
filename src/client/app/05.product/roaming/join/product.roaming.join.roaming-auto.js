@@ -208,7 +208,6 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
     changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
-    console.log($selectedTarget.parents('li').index());
     changeTarget.attr('data-idx',$selectedTarget.parents('li').index());
     this._validateDateValue();
     this._popupService.close();

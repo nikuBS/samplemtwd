@@ -679,7 +679,6 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
    * @returns {void}
    */
   _bindNumberSelectorEvt : function (targetEvt) {
-    console.log(targetEvt);
     Tw.CommonHelper.focusOnActionSheet(targetEvt);
     $(targetEvt).on('click', '.cont-actionsheet input', $.proxy(function (evt) {
       this.$container.find('.fe-selected-number.head').text($(evt.currentTarget).val());
