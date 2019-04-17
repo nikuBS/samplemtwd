@@ -17,9 +17,9 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
             {{/unless}}
             <!-- .cont-box -->
-            <div class="cont-box nogaps" data-anchor="contents_{{@index}}">
-                <div class="ti-caption-gray" tabindex="{{@index}}">
-                    <span class="tit">{{title}}</span>
+            <div class="cont-box nogaps">
+                <div class="ti-caption-gray">
+                    <span class="tit" data-anchor="contents_{{@index}}" tabindex="0">{{title}}</span>
                 </div>
                 <div class="cont-box {{contentsClass}}">
                     {{{contents}}}
