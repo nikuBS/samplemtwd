@@ -226,6 +226,7 @@ Tw.CommonMemberLineEdit.prototype = {
   _onConfirmRegisterPopup: function (svcNumList, $target) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: this._category, svcMgmtNumArr: lineList }
     }).done($.proxy(this._successRegisterLineList, this, svcNumList, $target))
@@ -241,6 +242,7 @@ Tw.CommonMemberLineEdit.prototype = {
    * @private
    */
   _successRegisterLineList: function (svcNumList, $target, resp) {
+    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
       // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
@@ -258,6 +260,7 @@ Tw.CommonMemberLineEdit.prototype = {
    */
   _failRegisterLineList: function (error) {
     Tw.Logger.error(error);
+    Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 

@@ -152,8 +152,9 @@ Tw.CommonMemberLineBizRegister.prototype = {
    * @desc 닉네임 변경 클릭 처리
    * @private
    */
-  _onClickNickname: function () {
-    this._nicknamePopup.openNickname('', null, $.proxy(this._onCloseNickname, this));
+  _onClickNickname: function ($event) {
+    var $target = $($event.currentTarget);
+    this._nicknamePopup.openNickname('', null, $.proxy(this._onCloseNickname, this), $target);
   },
 
   /**

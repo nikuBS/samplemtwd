@@ -21,7 +21,7 @@
                     {{#each data}}
                     <li class="depth1-type1">
                         <label for="{{menuId}}" class="bt fe-label-menu" aria-checked="{{#if quickAdded}}true{{else}}false{{/if}}"><!-- 체크 상태일 경우 aria-checked="true" -->
-                            <span class="ico"><img src="{{../cdn}}{{iconImgFilePathNm}}" alt="샘플아이콘"></span> {{menuNm}}
+                            <span class="ico"><img src="{{../cdn}}{{iconImgFilePathNm}}" alt=""></span> {{menuNm}}
                             <span class="custom-form"><input class="fe-input-menu" type="checkbox" id="{{menuId}}" {{#if quickAdded}}checked="checked"{{/if}} data-menuid="{{menuId}}"><span class="c-type1"></span></span><!-- 체크상태일 경우 checked="checked" -->
                         </label>
                         {{#if hasChildren}}
@@ -59,7 +59,7 @@
 
             <div class="menu-guide-img">
                 <img src="{{cdn}}/img/dummy/menu-guide1.png" alt="이렇게 이용하세요 원하는 메뉴를 체크 후 저장하면, 바로가기 버튼이 추가됩니다. 체크 해제 시에는 버튼이 삭제됩니다."/>
-                <img src="{{cdn}}/img/dummy/menu-guide2.png" alt="원하는 메뉴가 안보이나요? 화면 하단의 아이콘을 선택하면, 바로가기 버튼이 추가됩니다."/>
+                <img src="{{cdn}}/img/dummy/menu-guide2.png" alt="각 화면에서도 추가할 수 있어요. 화면 하단의 아이콘을 선택하면, 바로가기 버튼이 추가됩니다."/>
             </div>
         </div>
         <div class="bt-fixed-area">

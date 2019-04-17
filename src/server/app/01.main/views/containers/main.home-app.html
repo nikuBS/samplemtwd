@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
-    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home-T" data-xt_eid="CMMA_A2_B6-35" data-xt_csid="NO" data-xt_action="BC"><span class="blind">홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
+    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home-T" data-xt_eid="CMMA_A2_B6-35" data-xt_csid="NO" data-xt_action="BC"><span class="blind">T월드 홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -24,9 +24,9 @@
             <!-- .home-tab -->
             <div class="home-tab">
                 <div class="home-tab-belt">
-                    <ul>
-                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                    <ul role="tablist">
+                        <li class="tab" role="presentation"><div><a href="/main/home" role="tab" class="icon-home-tab-my on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab" role="presentation"><div><a href="/main/store" role="tab" class="icon-home-tab-store fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -460,7 +460,7 @@
                                 <p class="tx">로그인 후<br>고객님의 정보를 확인하세요.</p>
                                 <div class="btn-area">
                                     <button type="button" class="btn-round1 btn-style4 fe-bt-home-slogin" data-xt_eid="CMMA_A2_B6-39" data-xt_csid="NO" data-xt_action="BC">간편 로그인하기</button>
-                                    <button type="button" class="btn-round1 btn-style1 fe-bt-home-login" data-xt_eid="CMMA_A2_B6-40" data-xt_csid="NO" data-xt_action="BC">로그인하기</button>
+                                    <button type="button" class="btn-round1 btn-style1 fe-bt-home-login" title="로그인 하기 새창" data-xt_eid="CMMA_A2_B6-40" data-xt_csid="NO" data-xt_action="BC">로그인하기</button>
                                 </div>
                                 <p class="desc2">아직 T world 회원이 아니시라면 <button class="bt fe-bt-signup" data-xt_eid="CMMA_A2_B6-41" data-xt_csid="NO" data-xt_action="BC">회원가입</button> 후 이용해 주세요</p>
                             </div>
@@ -483,8 +483,8 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
                         <div class="section-box nogaps">
-                            <div class="main-membershop-box fe-bt-home-login">
-                                <div class="membership-cont">
+                            <div class="main-membershop-box">
+                                <div class="membership-cont fe-bt-home-login">
                                     <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
                                     <span class="msg">T멤버십은 간편로그인 상태에서 조회할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
                                 </div>
@@ -520,8 +520,8 @@
                         <% } else if (homeData.membershipData.code === 'MBR0002') { %>
                         <!-- 미발급 -->
                         <div class="section-box nogaps">
-                            <div id="fe-membership-go" class="main-membershop-box">
-                                <div class="membership-cont">
+                            <div class="main-membershop-box">
+                                <div id="fe-membership-go" class="membership-cont">
                                     <p class="ti-tx">
                                         <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
                                         <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>

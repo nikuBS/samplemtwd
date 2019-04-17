@@ -1230,5 +1230,9 @@
   {
     "old": "http://m2.tworld.co.kr/normal.do?serviceId=S_BILL1183&viewId=V_CENT2000&domainVer=m2&menuId=2,7,2",
     "menuId": "M000268"
+  },
+  {
+    "old": "http://m2.tworld.co.kr/normal.do?serviceId=S_BILL1213&viewId=V_CENT1147&menuId=2,3,3",
+    "menuId": "M000194"
   }
 ]
