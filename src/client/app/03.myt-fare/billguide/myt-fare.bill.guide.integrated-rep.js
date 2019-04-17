@@ -259,7 +259,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
    * 조건변경 팝업 오픈
    * @private
    */
-  _conditionChangeEvt: function () {
+  _conditionChangeEvt: function ($event) {
+    var $target = $($event.currentTarget);
     var hbsName = 'MF_02_01_01';
     var data = [{
       dateList: this.resData.commDataInfo.conditionChangeDtList,
@@ -277,13 +278,15 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       },
       $.proxy(this._conditionChangeEvtInit, this),
       $.proxy(this._conditionChangeEvtClose, this),
-      hashName);
+      hashName, $target);
   },
   /**
    * 조건변경 팝업 ui초기화
    * @private
    */
-  _conditionChangeEvtInit: function () {
+  _conditionChangeEvtInit: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     this._cachedElement();
 
     // Tw.Logger.info('[팝업 오픈 : MF_02_01_01]');
