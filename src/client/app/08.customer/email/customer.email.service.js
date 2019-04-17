@@ -33,7 +33,7 @@ Tw.CustomerEmailService.prototype = {
 
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
-    this.$container.on('change, keyup', '[required]', $.proxy(this._validateForm, this));
+    this.$container.on('change keyup', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-service-register', _.debounce($.proxy(this._request, this), 500));
   },
 

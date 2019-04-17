@@ -32,7 +32,7 @@ Tw.CustomerEmailQuality.prototype = {
 
   _bindEvent: function () {
     this.$container.on('validateForm', $.proxy(this._validateForm, this));
-    this.$container.on('change, keyup', '[required]', $.proxy(this._validateForm, this));
+    this.$container.on('change keyup', '[required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-quality-register', _.debounce($.proxy(this._request, this), 500));
   },
 
