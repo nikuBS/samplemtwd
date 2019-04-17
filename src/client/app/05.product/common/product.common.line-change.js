@@ -118,7 +118,6 @@ Tw.ProductCommonLineChange.prototype = {
     this._svcMgmtNum = $checked.val();
     this._svcNum = $checked.data('svc_num');
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     if (this._svcMgmtNum !== this._currentSvcMgmtNum) {
       return this._procLineChange();
     }
@@ -171,6 +170,8 @@ Tw.ProductCommonLineChange.prototype = {
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
       return this._procPreCheckRes({ code: '00' });
     }
+
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(preCheckApi, {}, null, [this._targetProdId])
       .done($.proxy(this._procPreCheckRes, this))
