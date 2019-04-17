@@ -57,7 +57,7 @@ Tw.MembershipBenefitBrand.prototype = {
     V: 'V',
     M: 'M'
   },
-  _ACTION_SHEET_HBS: 'actionsheet_select_a_type',
+  _ACTION_SHEET_HBS: 'actionsheet01',
   _reqOptions: {
     pageSize: 20,
     pageNo: 1,
@@ -68,8 +68,18 @@ Tw.MembershipBenefitBrand.prototype = {
   _gradeCd: [
     {
       list: [
-        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.A, attr: 'class="focus-elem" sub-tab-cd="A"', subTabCd: 'A', option: 'checked' },
-        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.V, attr: 'sub-tab-cd="V"', subTabCd: 'V' }
+        {
+          txt: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.A,
+          'radio-attr': 'class="focus-elem" sub-tab-cd="A" checked',
+          'label-attr': ' ',
+          subTabCd: 'A'
+        },
+        {
+          txt: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.V,
+          'radio-attr': 'class="focus-elem" sub-tab-cd="V"',
+          'label-attr': ' ',
+          subTabCd: 'V'
+        }
       ]
     }
   ],
@@ -119,7 +129,10 @@ Tw.MembershipBenefitBrand.prototype = {
     // 로그인 && 멤버십있는 경우 "내 등급" 추가
     if ( this._isLogin && !this._noMembership) {
       this._gradeCd[0].list.push({
-        value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.M, attr: 'sub-tab-cd="M"', subTabCd: 'M'
+        txt: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.M,
+        'radio-attr': 'class="focus-elem" sub-tab-cd="M"',
+        'label-attr': ' ',
+        subTabCd: 'M'
       });
     }
     this._gradeList = this._gradeCd[0].list;
@@ -184,12 +197,12 @@ Tw.MembershipBenefitBrand.prototype = {
     var self = this;
     if ( this._reqOptions.cateCd === this._CATE_CD.ALL ) {
       _.each(this._gradeList, function (item) {
-        item.option = item.subTabCd === self._reqOptions.subTabCd ? 'checked' : '';
+        item['radio-attr'] = 'class="focus-elem" sub-tab-cd="'+item.subTabCd+'"' + (item.subTabCd === self._reqOptions.subTabCd ? 'checked' : '');
       });
       var selectedSubTab = _.find(this._gradeList, {
         subTabCd: self._reqOptions.subTabCd
       });
-      var subTabValue = selectedSubTab ? selectedSubTab.value : this._gradeList[0].value;
+      var subTabValue = selectedSubTab ? selectedSubTab.txt : this._gradeList[0].txt;
       this.$grade.find('button').text(subTabValue);
       if ( this.$inputCoPtnrNm.val() ) {
         this.$grade.hide();
@@ -431,9 +444,7 @@ Tw.MembershipBenefitBrand.prototype = {
    * @param {Object} $container
    */
   _onOpenGradeActionSheet: function ($container) {
-    $container.find('li').attr('aria-selected', 'false');
-    $container.find('li input:checked').closest('li').attr('aria-selected', 'true');
-    $container.find('li button').click($.proxy(function (event) {
+    $container.find('li input').change($.proxy(function (event) {
       var subTabCd = $(event.currentTarget).attr('sub-tab-cd');
       var options = {
         pageNo: 1,
@@ -445,6 +456,9 @@ Tw.MembershipBenefitBrand.prototype = {
       this._reqBrandList(options);
       this._popupService.close();
     }, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($container);
   },
 
   /**
@@ -488,6 +502,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this._popupService.open({
       hbs: this._ACTION_SHEET_HBS,
       layer: true,
+      btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
       data: this._gradeCd
     }, $.proxy(this._onOpenGradeActionSheet, this), null, 'select-grade', this.$grade.find('button'));
   },
