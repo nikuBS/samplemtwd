@@ -84,6 +84,7 @@ Tw.CustomerEmailServiceOption.prototype = {
   // 서비스문의 > 회선변경 선택시
   _handleSelectLineChange: function ($layer) {
     $layer.on('change', 'li input', $.proxy(this._selectLineCallback, this));
+    this._onWebAccessPopup($layer);
   },
 
   // 서비스문의 > 회선변경 처리
@@ -287,6 +288,7 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '[data-brandcd]', $.proxy(this._setSelectedBrand, this, $target));
+    this._onWebAccessPopup($layer);
   },
 
   _selectDevicePopupCallback: function ($target, $layer) {
@@ -298,6 +300,7 @@ Tw.CustomerEmailServiceOption.prototype = {
     }
 
     $layer.on('click', '[data-phoneid]', $.proxy(this._setSelectedDevice, this, $target));
+    this._onWebAccessPopup($layer);
   },
 
   _onShowMoreDevice: function ($layer) {
@@ -330,5 +333,26 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _error: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  }
+  },
+  
+  /**
+   * @function [웹접근성]
+   * @param {element} $layer 팝업액션시트 dom객체
+   */
+  _onWebAccessPopup: function ($layer) {
+    $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
+    this._onCommonFocus($layer);
+  },
+
+  _onCommonFocus: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); 
+  },
+
+  _onCommonClickService: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    $(e.currentTarget).siblings().find('input').prop('checked', false);
+    $(e.currentTarget).find('input').prop('checked', true).trigger('change');
+  },
+  // end 웹접근성
 };
