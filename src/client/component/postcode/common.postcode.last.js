@@ -80,8 +80,8 @@ Tw.CommonPostcodeLast.prototype = {
    */
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
-    $selectedTarget.attr('aria-selected', 'true');
-    $selectedTarget.siblings().addClass('none').attr('aria-selected', 'false');
+    $selectedTarget.attr({ 'aria-selected': 'true', 'aria-hidden': 'false' }); // 웹접근성
+    $selectedTarget.siblings().addClass('none').attr({ 'aria-selected': 'false', 'aria-hidden': 'true' }); // 웹접근성
   },
   /**
    * @function

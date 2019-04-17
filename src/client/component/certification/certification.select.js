@@ -352,6 +352,8 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _onOpenSelectPopup: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     this._onSelectPopup = true;
     $popupContainer.on('click', '#fe-bt-sk', _.debounce($.proxy(this._onClickSkSms, this), 500));
     $popupContainer.on('click', '#fe-bt-kt', _.debounce($.proxy(this._onClickKtSms, this), 500));
@@ -362,6 +364,8 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-public', _.debounce($.proxy(this._onClickSkPublic, this), 500));
   },
   _opOpenRefundSelectPopup: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     $popupContainer.on('click', '#fe-bt-sk-refund', _.debounce($.proxy(this._onClickSkSmsRefund, this), 500));
     $popupContainer.on('click', '#fe-bt-kt-refund', _.debounce($.proxy(this._onClickKtSms, this), 500));
     $popupContainer.on('click', '#fe-bt-lg-refund', _.debounce($.proxy(this._onClickLgSms, this), 500));

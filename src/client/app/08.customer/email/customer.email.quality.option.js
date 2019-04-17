@@ -27,10 +27,7 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_quality.on('click', '.fe-select-line', $.proxy(this._onSelectLine, this));
-    // this.$wrap_tpl_quality.on('click', '.fe-select-addr-line', $.proxy(this._onSelectAddrLine, this)); // 주소
     this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
-    // this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
-    // this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
     this.$container.on('click', '.fe-occurrence_detail', $.proxy(this._showOptionSheet, this, 'Q_TYPE02'));
     this.$container.on('click', '.fe-place', $.proxy(this._showOptionSheet, this, 'Q_TYPE03'));
@@ -104,6 +101,7 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _handleQualityPhoneLine: function ($target, $layer) {
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this, $target));
+    this._onWebAccessPopup($layer);
   },
 
   // 품질상담 > 휴대폰 > 회선변경 
@@ -140,6 +138,7 @@ Tw.CustomerEmailQualityOption.prototype = {
   // 품질상담 > 회선변경 선택시
   _handleOpenSelectType: function ($target, $layer) {
     $layer.on('change', 'li.type1 input', $.proxy(this._handleSelectType, this, $target));
+    this._onWebAccessPopup($layer);
   },
 
   // 품질상담 > 회선변경 처리
@@ -156,30 +155,6 @@ Tw.CustomerEmailQualityOption.prototype = {
 
     this._popupService.close();
   },
-
-
-  // _showLineSheet: function (sType, e) {
-  //   var $elButton = $(e.currentTarget);
-  //   var lineList = sType === 'CELL' ? this.allSvc.M : this.allSvc.S;
-  //
-  //   var fnSelectLine = function (item) {
-  //     return {
-  //       value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
-  //       option: false,
-  //       attr: 'data-svcMgmtNum=' + item.svcMgmtNum
-  //     };
-  //   };
-  //
-  //   this._popupService.open({
-  //       hbs: 'actionsheet_select_a_type',
-  //       layer: true,
-  //       title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_LINE,
-  //       data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
-  //     },
-  //     $.proxy(this._selectLinePopupCallback, this, $elButton),
-  //     null
-  //   );
-  // },
 
   _showOptionSheet: function (sType, e) {
     var $elButton = $(e.currentTarget);
@@ -212,12 +187,37 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('change', 'li input', $.proxy(this._setSelectedValue, this, $target));
+    this._onWebAccessPopup($layer);
   },
 
   _setSelectedValue: function ($target, el) {
-    $target.text($(el.currentTarget).parents('li').find('.txt').text().trim());
+    var value = $(el.currentTarget).parents('li').find('.txt').text().trim();
+    $target.text(value);
+    $target.data('value', value);
     this._popupService.close();
-  }
+    this.$container.trigger('validateForm');
+  },
+
+  /**
+   * @function [웹접근성]
+   * @param {element} $layer 팝업액션시트 dom객체
+   */
+  _onWebAccessPopup: function ($layer) {
+    $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
+    this._onCommonFocus($layer);
+  },
+
+  _onCommonFocus: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); 
+  },
+
+  _onCommonClickService: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    $(e.currentTarget).siblings().find('input').prop('checked', false);
+    $(e.currentTarget).find('input').prop('checked', true).trigger('change');
+  },
+  // end 웹접근성
 
   // _setSelectedLineValue: function ($target, el) {
   //   this._popupService.close();

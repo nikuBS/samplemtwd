@@ -204,6 +204,11 @@ Tw.CustomerEmailQuality.prototype = {
     var arrValid = [];
 
     this.$wrap_tpl_quality.find('[required]').each(function (nIndex, item) {
+      // button case (select menu를 보여주는 button)
+      if ( $(item).is('button')) {
+        arrValid.push(!Tw.FormatHelper.isEmpty($(item).data('value')));
+      }
+
       if ( $(item).prop('type') === 'checkbox' ) {
         arrValid.push($(item).prop('checked'));
       }

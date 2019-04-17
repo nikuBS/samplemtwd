@@ -77,6 +77,8 @@ Tw.LineComponent.prototype = {
     }, $.proxy(this._onOpenListPopup, this), $.proxy(this._onCloseListPopup, this), 'line', $target);
   },
   _onOpenListPopup: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     this.$list = $popupContainer.find('.fe-item');
     this.$btMore = $popupContainer.find('#fe-bt-more');
 

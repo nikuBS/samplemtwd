@@ -105,6 +105,7 @@ Tw.CustomerPraise.prototype = {
    * @private
    */
   _handleOpenSelectType: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 
@@ -234,6 +235,7 @@ Tw.CustomerPraise.prototype = {
    * @private
    */
   _handleOpenSelectArea: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectArea, this));
   },
 

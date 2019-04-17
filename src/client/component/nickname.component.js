@@ -33,6 +33,8 @@ Tw.NicknameComponent.prototype = {
 
   },
   _onOpenNickname: function (nickname, $popup) {
+    Tw.CommonHelper.focusOnActionSheet($popup);
+
     this.$nicknameInput = $popup.find('#fe-input-nickname');
     this.$nicknameConfirm = $popup.find('#fe-bt-confirm');
     this.$nicknameError = $popup.find('#aria-exp-desc1');

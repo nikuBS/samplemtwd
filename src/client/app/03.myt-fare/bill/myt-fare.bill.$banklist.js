@@ -52,6 +52,8 @@ Tw.MyTFareBillBankList.prototype = {
    * @param $layer
    */
   _onOpenList: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     var $id = this.$currentTarget.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input#' + $id).attr('checked', 'checked');

@@ -96,6 +96,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
    * @param {$object} $layer 
    */
   _handleOpenChangeTypes: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 

@@ -32,7 +32,7 @@
             <div class="popup-contents ">
                 <div class="inner-contents">
                     <p class="tl">
-                        <%= error.contents %>
+                        <%- error.contents.replace(/\n/gi, '<br />') %>
                     </p>
                 </div>
             </div>

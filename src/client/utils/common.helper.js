@@ -227,8 +227,12 @@ Tw.CommonHelper = (function () {
 
   var replaceExternalLinkTarget = function($container) {
     _.each($container.find('.fe-link-external,[target=_blank]'), function(elem) {
-      $(elem).attr('target', 'blank')
+      $(elem).attr('target', '_blank')
         .addClass('fe-link-external');
+
+      if (Tw.FormatHelper.isEmpty($(elem).attr('title'))) {
+        $(elem).attr('title', Tw.WEB_ACCESSBILITY.NEW_WINDOW);
+      }
     });
   };
 

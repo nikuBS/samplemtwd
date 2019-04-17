@@ -105,6 +105,8 @@ Tw.CertificationRepresentative.prototype = {
     }, this));
   },
   _onOpenCert: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     this.$list = $popupContainer.find('.fe-radio-list');
     this.$btCert = $popupContainer.find('#fe-bt-cert');
     this.$btReCert = $popupContainer.find('#fe-bt-recert');

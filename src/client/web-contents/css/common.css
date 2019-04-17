@@ -6317,7 +6317,7 @@ a.ui-button:active,
   height: 0.31rem;
   border: 1px solid #fff; }
 
-.membership-event-box .slider-box .slick-dots li span {
+.membership-event-box .slider-box .slick-dots li span, .membership-event-box .slider-box .slick-dots li button {
   width: 0.25rem;
   height: 0.25rem;
   background: none; }
