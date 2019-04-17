@@ -101,6 +101,8 @@ Tw.MyTFareBillOption.prototype = {
    * @param $layer
    */
   _selectDatePopupCallback: function ($target, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input[data-value="' + $id + '"]').attr('checked', 'checked');

@@ -236,6 +236,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param $layer
    */
   _selectPopupCallback: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
     $layer.on('click', '.ac-list', $.proxy(this._goMicroHistory, this)); // 소액결제 내역조회
   },
   /**
