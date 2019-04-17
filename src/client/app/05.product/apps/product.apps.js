@@ -206,6 +206,7 @@ Tw.ProductApps.prototype = {
    * @private
    */
   _handleOpenOrderPopup: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectOrder, this));
   },
 
