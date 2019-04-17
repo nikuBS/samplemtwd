@@ -236,19 +236,21 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _onSuccessDirectBrand: function ($elButton, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var fnSelectBrand = function (item) {
+      var fnSelectBrand = function (item, index) {
         return {
-          value: item.brandNm,
-          option: $elButton.text() === item.brandNm ? 'checked' : '',
-          attr: 'data-brandCd=' + item.brandCd
+          txt: item.brandNm, 
+          'radio-attr': 'data-index="' + index + '" data-brandCd="'+ item.brandCd +'"' + 
+                      ($elButton.text() === item.brandNm ? ' checked' : ''),
+          'label-attr': ' '
         };
       };
 
       this._popupService.open({
-          hbs: 'actionsheet_select_a_type',
+          hbs: 'actionsheet01',
           layer: true,
-          title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_BRAND,
-          data: [{ list: res.result.map($.proxy(fnSelectBrand, this)) }]
+          // title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_BRAND,
+          data: [{ list: res.result.map($.proxy(fnSelectBrand, this)) }],
+          btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
         },
         $.proxy(this._selectPopupCallback, this, $elButton),
         null,
@@ -263,19 +265,23 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _onSuccessDirectDevice: function ($elButton, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var fnSelectDevice = function (item) {
+      var resultList = res.result || [];
+      var fnSelectDevice = function (item, index) {
         return {
-          value: item.modelNickName,
-          option: $elButton.text() === item.modelNickName ? 'checked' : '',
-          attr: 'data-phoneid=' + item.phoneId
+          txt: item.modelNickName, 
+          'radio-attr': 'data-index="' + index + '" data-phoneid="'+ item.phoneId +'"' + 
+                      ($elButton.text() === item.modelNickName ? ' checked' : ''),
+          'label-attr': ' '
         };
       };
 
       this._popupService.open({
-          hbs: 'actionsheet_select_a_type',
+          hbs: 'actionsheet01',
           layer: true,
-          title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_BRAND,
-          data: [{ list: res.result.map($.proxy(fnSelectDevice, this)) }]
+          // title: Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_BRAND,
+          btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+          data: [{ list: resultList.map($.proxy(fnSelectDevice, this)) }],
+          btnmore: (resultList.length > Tw.DEFAULT_LIST_COUNT) ? { attr: 'class="fe-btn-more"', txt: Tw.BUTTON_LABEL.MORE } : false
         },
         $.proxy(this._selectDevicePopupCallback, this, $elButton),
         null, null, 
@@ -287,25 +293,26 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-brandcd]', $.proxy(this._setSelectedBrand, this, $target));
+    $layer.on('change', 'li input', $.proxy(this._setSelectedBrand, this, $target));
     this._onWebAccessPopup($layer);
   },
 
   _selectDevicePopupCallback: function ($target, $layer) {
-    var nMaxList = 20;
+    // 더보기 케이스 고려
+    var nMaxList = Tw.DEFAULT_LIST_COUNT;
     if ( $layer.find('li').size() > nMaxList ) {
       $layer.find('li').slice(nMaxList).hide();
-      $layer.find('.btn-more').show();
-      $layer.on('click', '.btn-more', $.proxy(this._onShowMoreDevice, this, $layer));
+      $layer.on('click', '.fe-btn-more', $.proxy(this._onShowMoreDevice, this, $layer));
     }
 
-    $layer.on('click', '[data-phoneid]', $.proxy(this._setSelectedDevice, this, $target));
+    // 체인지 이벤트
+    $layer.on('change', 'li input', $.proxy(this._setSelectedDevice, this, $target));
     this._onWebAccessPopup($layer);
   },
 
   _onShowMoreDevice: function ($layer) {
     if ( $layer.find('li').not(':visible').size() !== 0 ) {
-      $layer.find('li').not(':visible').slice(0, 20).show();
+      $layer.find('li').not(':visible').slice(0, Tw.DEFAULT_LIST_COUNT).show();
     }
 
     if ( $layer.find('li').not(':visible').size() === 0 ) {
@@ -314,11 +321,12 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _setSelectedBrand: function ($target, el) {
+    var $el = $(el.currentTarget);
     var prev_txt = $target.text();
     this._popupService.close();
 
-    $target.text($(el.currentTarget).text().trim());
-    $target.data('brandcd', $(el.currentTarget).data('brandcd'));
+    $target.text($el.parents('li').find('.txt').text().trim());
+    $target.data('brandcd', $el.data('brandcd'));
 
     if (prev_txt !== $target.text()) {
       this.$container.find('.fe-select-device').removeData('phoneid').text(Tw.CUSTOMER_EMAIL.ACTION_TYPE.SELECT_DEVICE);
@@ -326,9 +334,10 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _setSelectedDevice: function ($target, el) {
+    var $el = $(el.currentTarget);
+    $target.data('phoneid', $el.data('phoneid'));
+    $target.text($el.parents('li').find('.txt').text().trim());
     this._popupService.close();
-    $target.data('phoneid', $(el.currentTarget).data('phoneid'));
-    $target.text($(el.currentTarget).text().trim());
   },
 
   _error: function (err) {
