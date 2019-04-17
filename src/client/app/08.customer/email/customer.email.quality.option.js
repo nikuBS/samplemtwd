@@ -215,8 +215,11 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _setSelectedValue: function ($target, el) {
-    $target.text($(el.currentTarget).parents('li').find('.txt').text().trim());
+    var value = $(el.currentTarget).parents('li').find('.txt').text().trim();
+    $target.text(value);
+    $target.data('value', value);
     this._popupService.close();
+    this.$container.trigger('validateForm');
   }
 
   // _setSelectedLineValue: function ($target, el) {
