@@ -1,5 +1,5 @@
 /**
- * @file 상품 > 조회 > Data 인피니티 혜택 조회
+ * @file 상품 > 모바일요금제 > 조회 > Data 인피니티 혜택 조회
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018-10-01
  */
@@ -111,6 +111,9 @@ Tw.ProductMobileplanLookupTplan.prototype = {
    */
   _bindPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '[data-prod_id]', $.proxy(this._setGoCategory, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
   /**

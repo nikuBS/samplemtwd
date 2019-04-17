@@ -64,13 +64,7 @@ Tw.CommonPostcodeDetail.prototype = {
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId); // 첫 번째 팝업에서 선택된 정보 (도로명 or 지번)
     $selectedTarget.attr('aria-selected', 'true'); // 웹접근성
-
-    // 지번주소인 경우 margin 조절
-    if ($addressObject.tabId === 'tab2') {
-      $selectedTarget.css('marginLeft', '0');
-    }
-    $selectedTarget.siblings().attr('aria-selected', 'false'); // 웹접근성
-    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none'); // 선택되지 않은 탭 hidden 처리
+    $selectedTarget.siblings().addClass('none').attr('aria-selected', 'false'); // 웹접근성
   },
   /**
    * @function

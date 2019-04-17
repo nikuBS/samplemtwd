@@ -10,13 +10,13 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
 <div id="mainStore" class="wrap" data-menuid="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home-T" data-xt_eid="CMMA_A2_B6-35" data-xt_csid="NO" data-xt_action="BC"><span class="blind">홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
+    <%- include('../components/header.component.html', { title: '<div class="h-logo"><button data-url="/main/home" class="icon-gnb-home-T" data-xt_eid="CMMA_A2_B6-35" data-xt_csid="NO" data-xt_action="BC"><span class="blind">T월드 홈으로</span></button></div>', svcInfo: svcInfo, home: 'app' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -24,9 +24,9 @@
             <!-- .home-tab -->
             <div class="home-tab">
                 <div class="home-tab-belt">
-                    <ul>
-                        <li class="tab"><div><a href="/main/home" class="icon-home-tab-my fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="/main/store" class="icon-home-tab-store on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                    <ul role="tablist">
+                        <li class="tab" role="presentation"><div><a href="/main/home" role="tab" class="icon-home-tab-my fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab" role="presentation"><div><a href="/main/store" role="tab" class="icon-home-tab-store on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                             <!-- MY 바로가기 -->
                             <ul class="quick-menu-list">
                                 <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B66-1" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
-                                <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B66-2" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</a></li>
+                                <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B66-2" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
                                 <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B66-3" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B66-4" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
                                 <li><a href="/common/util/5g-intro" class="bt new" data-xt_eid="CMMA_A2_B66-65" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</a></li>
@@ -351,7 +351,7 @@
                                                         <% help.map((target) => { %>
                                                         <li>
                                                             <a data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B66-39" data-xt_csid="NO" data-xt_action="BC">
-                                                                <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
+                                                                <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt=""></span>
                                                                 <%- target.mainExpsTitNm %>
                                                             </a>
                                                         </li>
@@ -382,10 +382,10 @@
                                     <div class="slider-box">
                                         <ul class="slider">
                                             <li>
-                                                <button data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B66-44" data-xt_csid="NO" data-xt_action="BC">
+                                                <a data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B66-44" data-xt_csid="NO" data-xt_action="BC">
                                                     <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
                                                     <span class="ico"></span>
-                                                </button>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>

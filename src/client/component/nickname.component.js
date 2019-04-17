@@ -19,7 +19,7 @@ Tw.NicknameComponent = function () {
 };
 
 Tw.NicknameComponent.prototype = {
-  openNickname: function (nickname, svcMgmtNum, closeCallback) {
+  openNickname: function (nickname, svcMgmtNum, closeCallback, $target) {
     this._closeCallback = closeCallback;
     this._svcMgmtNum = svcMgmtNum;
     this._popupService.open({
@@ -29,7 +29,7 @@ Tw.NicknameComponent.prototype = {
         nickname: nickname,
         nicknameLen: nickname.length
       }
-    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this), 'nickname');
+    }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this), 'nickname', $target);
 
   },
   _onOpenNickname: function (nickname, $popup) {

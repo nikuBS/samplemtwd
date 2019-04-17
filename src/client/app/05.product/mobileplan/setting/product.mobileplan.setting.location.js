@@ -1,19 +1,25 @@
 /**
- * MenuName: 상품 > 가입설정해지 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
- * @file product.mobileplan.setting.location.js
+ * @file 상품 > 모바일요금제 > 설정 > 010캠퍼스요금제,TTL지역할인요금제,TTL캠퍼스10요금제 (MP_02_02_03_08)
  * @author Lee Gyu-gwang (skt.P134910@partner.sk.com)
- * @since 2018.11.13
- * Page ID: MP_02_02_03_08
- * Summary: 할인지역,지정번호 입력/변경
+ * @since 2018-11-13
+ */
+
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param options - 옵션 값
+ * @param showNumberSetting - 번호 설정 값
  */
 Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSetting) {
   this.$container = rootEl;
-  this._options = options;
-  this.showNumberSetting = showNumberSetting;
+
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+
+  this._options = options;
+  this.showNumberSetting = showNumberSetting;
   this._maskingComp = null;
 
   this._init();
@@ -23,14 +29,13 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSettin
   this._appendNumberLi(this._options.snumSetInfoList);
 
   setTimeout($.proxy(this._onHashChange, this), 0);
-  // this._onHashChange();
 };
 
 Tw.ProductMobileplanSettingLocation.prototype = {
 
   /**
-   * event binding
-   * @private
+   * @function
+   * @desc event binding
    */
   _bindEvent: function() {
     $(window).on('hashchange', $.proxy(this._onHashChange, this));
@@ -58,9 +63,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * hash change handler
-   * @param event
-   * @private
+   * @function
+   * @desc hash change handler
    */
   _onHashChange: function(){
     if(!this._historyService.getHash() || this._historyService.getHash() === '#tabpanel1'){
@@ -74,8 +78,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
 
   /**
-   * 지정번호 텝 선택시
-   * @private
+   * @function
+   * @desc 지정번호 텝 선택시
    */
   _setNumTab: function(){
     if(!this._maskingComp){
@@ -90,8 +94,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * hbs 헬퍼 등록
-   * @private
+   * @function
+   * @desc hbs 헬퍼 등록
    */
   _registHelder: function(){
     Handlebars.registerHelper('hp', Tw.FormatHelper.conTelFormatWithDash);
@@ -102,8 +106,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * initialize js app
-   * @private
+   * @function
+   * @desc initialize js app
    */
   _init: function() {
     // 지역 item 템플릿
@@ -117,45 +121,45 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 닫기 버튼 클릭 시
+   */
   _onclickBtnClose: function(){
     this._historyService.goLoad('/myt-join/myplan');
   },
 
+  /**
+   * @function
+   * @desc 숫자 입력 란 focus 시
+   * @param event - focus Event
+   */
   _onfocusNumInput: function(event){
     $(event.target).val($(event.target).val().replace(/-/g, ''));
   },
 
+  /**
+   * @function
+   * @desc 숫자 입력 란 blur 시
+   * @param event - blur Event
+   */
   _onblurNumInput: function(event){
-    //$(event.target).val(Tw.FormatHelper.getDashedCellPhoneNumber($(event.target).val()));
-    // var num = Tw.FormatHelper.getDashedPhoneNumber($(event.target).val());
-    // if ( this._isCellPhone2(num) ) {    // 013번호
-    //   num = Tw.FormatHelper.getDashedCellPhoneNumber(num.replace(/-/g,''));
-    // }
-    // $(event.target).val(num);
     var $inputNumber = $(event.target);
-
     $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
-
-    /*if ($inputNumber.length > 8) {
-      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
-    } else {
-      $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
-    }*/
   },
 
   /**
-   * input 키 입력시
-   * @param event
-   * @private
+   * @function
+   * @desc input 키 입력시
    */
   _oninputTelNumber: function () {
     this._checkAddNumberBtn();
   },
 
   /**
-   * input 키 입력시 - 숫자이외의 문자만 막음
-   * @param event
-   * @private
+   * @function
+   * @desc input 키 입력시 - 숫자이외의 문자만 막음
+   * @param event - 입력 이벤트
    */
   _onKeyUp: function (event) {
 
@@ -171,41 +175,9 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     }
   },
 
-
-  // /**
-  //  * input 키 입력시 - 전화번호 형식으로 변경
-  //  * @param event
-  //  * @private
-  //  */
-  // _onKeyUp: function (event) {
-  //
-  //   // 숫자 외 다른 문자를 입력한 경우
-  //   var $input = $(event.target);
-  //   var value = $input.val();
-  //   var reg = /[^0-9-]/g;
-  //
-  //   if( reg.test(value) ){
-  //     event.stopPropagation();
-  //     event.preventDefault();
-  //     $input.val(value.replace(reg, ''));
-  //   }
-  //
-  //   this._resetPhoneNum($input);
-  //
-  //   // 전화번호 체크
-  //   if ( this._isPhoneNum($input.val()) ) {
-  //     $('#num-inputbox').removeClass('error');
-  //
-  //   } else {
-  //     if( !$('#num-inputbox').hasClass('error') ){
-  //       $('#num-inputbox').addClass('error');
-  //     }
-  //   }
-  // },
-
   /**
-   * 지정번호 번호입력 우측 x(삭제)버튼 클릭시
-   * @private
+   * @function
+   * @desc 지정번호 번호입력 우측 x(삭제)버튼 클릭시
    */
   _onclickInputDel: function(/*event*/){
     $('#btnNumAdd').prop('disabled', true);
@@ -214,60 +186,18 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지정번호 추가버튼 disabled
-   * @private
+   * @function
+   * @desc 지정번호 추가버튼 disabled
    */
   _checkAddNumberBtn: function(){
     var disabled = $('#num-input').val().replace(/-/g,'').length < 9;
     $('#btnNumAdd').prop('disabled', disabled);
   },
 
-  // 미사용
-  _isPhoneNum: function(val){
-    var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
-    return phoneReg.test(val);
-  },
-
-  // 미사용
-  _resetPhoneNum: function($input){
-    // var value = $input.val();
-    // if(value.length === 3 && value.indexOf('-') === -1){
-    //   $input.val(value + '-');
-    // }
-    // if(value.length === 8 && value.lastIndexOf('-') === 3){
-    //   $input.val(value + '-');
-    // }
-    // if(value.length >= 9){
-    //   value = value.replace(/-/g, '');
-    //   value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
-    //   $('input').val(value);
-    // }
-
-    var _$this = $input;
-    var data = _$this.val().replace(/-/g, '');
-    var returnVal;
-
-    //숫자,대시를 제외한 값이 들어 같을 경우
-    if ( Tw.ValidationHelper.regExpTest(/[^\d-]/g, data) ) {
-      returnVal = data.replace(/[^\d-]/g, ''); // 숫자가 아닌 문자 제거
-      Tw.Logger.info('[returnVal 1]', returnVal);
-      _$this.val(returnVal);
-      return returnVal;
-
-    } else {
-      var rexTypeA = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
-      returnVal = data.replace(rexTypeA, '$1-$2-$3');
-      Tw.Logger.info('[returnVal 2]', returnVal);
-      _$this.val(returnVal);
-      return returnVal;
-    }
-
-  },
-
   /**
-   * 장소 li 추가
-   * @param list
-   * @private
+   * @function
+   * @desc 장소 li 추가
+   * @param list - 장소 목록
    */
   _appendLocationLi: function(list){
 
@@ -282,11 +212,10 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('.discount-location').append(html);
   },
 
-
   /**
-   * 할인지역 장소 검색 팝업 오픈전 메세지 출력
-   * @param event
-   * @private
+   * @function
+   * @desc 할인지역 장소 검색 팝업 오픈전 메세지 출력
+   * @param event - 팝업 오픈 클릭 이벤트
    */
   _onclickLocSchPopup: function(event){
     if($(event.target).attr('id') === 'loc-search-input'){
@@ -330,7 +259,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지역찾기 팝업
+   * @function
+   * @desc 지역찾기 팝업
    */
   _openLocSearchPopup: function(){
 
@@ -353,8 +283,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 할인지역 추가
-   * @private
+   * @function
+   * @desc 할인지역 추가
    */
   _addLocation: function(dcArea) {
 
@@ -369,8 +299,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 할인지역 삭제
-   * @private
+   * @function
+   * @desc 할인지역 삭제
    */
   _removeLocation: function(event){
     if ($('.discount-location li').length === 1) {
@@ -399,25 +329,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       Tw.BUTTON_LABEL.CLOSE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON
     );
-
-    // this._popupService.openModalTypeA(
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.TITLE,
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.MSG,
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A6.BUTTON, null,
-    //   $.proxy(function(){
-    //     this._popupService.close();
-    //     this._settingTargetLocation(
-    //       '3',
-    //       {num: dcAreaNum, name: dcAreaNm, auditDtm: auditDtm},
-    //       function(){
-    //         $('.discount-location li').filter('[data-dcareanum='+dcAreaNum+']').remove();
-    //       });
-    //   }, this));
   },
 
   /**
-   * 지역 추가/삭제 api 호출
-   * @private
+   * @function
+   * @desc 지역 추가/삭제 api 호출
    */
   _settingTargetLocation: function(chgCd, dcArea, callback){
     var params = {
@@ -448,10 +364,9 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
   },
 
-
   /**
-   * reload 할인지역 목록
-   * @private
+   * @function
+   * @desc reload 할인지역 목록
    */
   _reloadLocList: function(){
 
@@ -478,9 +393,9 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지정번호 li 추가
-   * @param list
-   * @private
+   * @function
+   * @desc 지정번호 li 추가
+   * @param list - 지정번호 목록
    */
   _appendNumberLi: function(list){
 
@@ -495,20 +410,17 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지정번호 추가하기 버튼 클릭시
-   * @private
+   * @function
+   * @desc 지정번호 추가하기 버튼 클릭시
    */
   _addNumber: function(){
-
     // 3개 이상인 경우
-    //3_A8
     if($('.discount-number li').length >= 3){
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A8.TITLE);
       return;
     }
     var num = $('#num-input').val();
     if (!Tw.ValidationHelper.isCellPhone(num) && !Tw.ValidationHelper.isTelephone(num)) {
-      //if (!Tw.ValidationHelper.isCellPhone(num) ) {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
@@ -518,8 +430,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
 
   /**
-   * 지정번호 해지하기 버튼 클릭시
-   * @private
+   * @function
+   * @desc 지정번호 해지하기 버튼 클릭시
    */
   _removeNumber: function(event){
 
@@ -544,23 +456,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       Tw.BUTTON_LABEL.CLOSE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON
     );
-
-    // this._popupService.openModalTypeA(
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
-    //   Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
-    //   $.proxy(function(){
-    //     this._popupService.close();
-    //     this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
-    //       $('.discount-number li').filter('[data-svcnum='+svcnum+']').remove();
-    //     });
-    //   }, this));
-
   },
 
   /**
-   * 지정번호 해지시 마스킹이 걸려있는 경우 alert
-   * @private
+   * @function
+   * @desc 지정번호 해지시 마스킹이 걸려있는 경우 alert
    */
   _openMaskingAlert: function() {
 
@@ -579,8 +479,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 마스킹 해제 인증창 띄우기
-   * @private
+   * @function
+   * @desc 마스킹 해제 인증창 띄우기
    */
   _showAuth : function () {
     this._popupService.close();
@@ -588,8 +488,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지정번호 추가/삭제 api 호출
-   * @private
+   * @function
+   * @desc 지정번호 추가/삭제 api 호출
    */
   _settingTargetNumber: function(opClCd, asgnNum, callback){
     if( !opClCd || !asgnNum || !asgnNum.svcnum){
@@ -643,19 +543,19 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
 
   /**
-   * native 주소록 호출
-   * @param e
-   * @private
+   * @function
+   * @desc native 주소록 호출
+   * @param e - 주소록 버튼 클릭 이벤트
    */
   _onClickBtnAddr: function (e) {
     Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, e));
   },
 
   /**
-   * native 주소록 호출 결과
-   * @param e
-   * @param resp
-   * @private
+   * @function
+   * @desc native 주소록 호출 결과
+   * @param e - 주소록 버튼 클릭 이벤트
+   * @param resp - App 콜백 값
    */
   _onContact: function (e, resp) {
     if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
@@ -668,8 +568,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
-   * 지정번호 목록 조회
-   * @private
+   * @function
+   * @desc 지정번호 목록 조회
    */
   _reloadNumList: function(){
 

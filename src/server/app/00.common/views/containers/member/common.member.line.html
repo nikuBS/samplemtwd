@@ -34,8 +34,8 @@
                         <h3 class="tit-a">
                             <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.mCnt %></span></button>
                         </h3>
-                        <div class="acco-cover toggle fe-line-cover <%= showParam.m %>"><!-- toggle : 한개만 열기 -->
-                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                        <div class="acco-cover toggle fe-line-cover <% if(showParam.m) { %> on <% } %>"><!-- toggle : 한개만 열기 -->
+                            <div class="bt-whole"><button role="button" aria-pressed="<%= showParam.m %>"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/common/member/line/edit?category=m" class="edit">편집</a></div>
                             <div class="acco-style">
                                 <ul id="fe-list-m" class="acco-list fe-line-list">
@@ -111,8 +111,8 @@
                         <h3 class="tit-a">
                             <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.sCnt %></span></button>
                         </h3>
-                        <div class="acco-cover toggle fe-line-cover <%= showParam.s %>"><!-- toggle : 한개만 열기 -->
-                            <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                        <div class="acco-cover toggle fe-line-cover <% if(showParam.s) { %> on <% } %>"><!-- toggle : 한개만 열기 -->
+                            <div class="bt-whole"><button role="button" aria-pressed="<%= showParam.s %>"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/common/member/line/edit?category=s" class="edit">편집</a></div>
                             <div class="acco-style">
                                 <ul id="fe-list-s" class="acco-list">

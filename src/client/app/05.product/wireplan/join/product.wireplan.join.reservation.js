@@ -200,6 +200,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _typeCdPopupBindEvent: function($popupContainer) {
     $popupContainer.on('click', '[data-type_cd]', $.proxy(this._setTypeCd, this));
+
+    // 웹접근성 대응
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
   _setTypeCd: function(e) {

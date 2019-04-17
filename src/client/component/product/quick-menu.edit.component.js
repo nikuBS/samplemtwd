@@ -16,17 +16,17 @@ Tw.QuickMenuEditComponent = function () {
 };
 
 Tw.QuickMenuEditComponent.prototype = {
-  open: function (list, callback) {
+  open: function (list, callback, $target) {
     this._quickList = list;
     this._callback = callback;
-    this._init();
+    this._init($target);
   },
-  _openLayer: function (menuList) {
+  _openLayer: function (menuList, $target) {
     this._popupService.open({
       hbs: 'HO_01_01_01',
       layer: true,
       data: this._mergeList(menuList, this._quickList)
-    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this));
+    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this), 'quick-edit', $target);
   },
   _onOpenQuickEdit: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-input-menu');
@@ -123,21 +123,21 @@ Tw.QuickMenuEditComponent.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _init: function () {
+  _init: function ($target) {
     if ( Tw.FormatHelper.isEmpty(this._menu) ) {
-      this._getMenu();
+      this._getMenu($target);
     } else {
-      this._openLayer(this._menu);
+      this._openLayer(this._menu, $target);
     }
   },
-  _getMenu: function () {
+  _getMenu: function ($target) {
     this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
-      .done($.proxy(this._successMenu, this));
+      .done($.proxy(this._successMenu, this, $target));
   },
-  _successMenu: function (resp) {
+  _successMenu: function ($target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._menu = this._parseMenu(resp.result);
-      this._openLayer(this._menu);
+      this._openLayer(this._menu, $target);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
