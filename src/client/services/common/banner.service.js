@@ -82,11 +82,11 @@ Tw.BannerService.prototype = {
       beforeChange: function(e, slick, before, after) { // for accessibiltiy (set selected indicator)
         var dots = slick.$dots.find('li');
         $(dots[before])
-          .find('> span')
+          .find('> button')
           .text(before + 1);
         slick.$slides[before].setAttribute('tabindex', -1);
         $(dots[after])
-          .find('> span')
+          .find('> button')
           .text(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
         slick.$slides[after].setAttribute('tabindex', 0);
       },
@@ -117,9 +117,9 @@ Tw.BannerService.prototype = {
             accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
               } else {
-                return $('<span role="button" />').text(i + 1);
+                return $('<button />').text(i + 1);
               }
             }
           });
@@ -133,9 +133,9 @@ Tw.BannerService.prototype = {
             accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
               } else {
-                return $('<span role="button" />').text(i + 1);
+                return $('<button />').text(i + 1);
               }
             }
           });
@@ -246,12 +246,11 @@ Tw.BannerService.prototype = {
         .sort(function(a, b) {  
           return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
         })
-        .map(function(banner, idx) {
+        .map(function(banner) {
           return {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
             bnnrFilePathNm: banner.bnnrFileNm,
-            idx: idx,
             imgLinkTrgtClCd: banner.tosImgLinkTrgtClCd,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl
@@ -274,7 +273,6 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            idx: nBanners.length
           };
 
           nBanners.push($.extend(banner, temp));
