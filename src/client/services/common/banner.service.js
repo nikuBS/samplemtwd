@@ -84,9 +84,14 @@ Tw.BannerService.prototype = {
         $(dots[before])
           .find('> span')
           .text(before + 1);
+        slick.$slides[before].setAttribute('tabindex', -1);
         $(dots[after])
           .find('> span')
           .text(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+        slick.$slides[after].setAttribute('tabindex', 0);
+      },
+      afterChange: function(e, slick, index) {
+        slick.$slides[index].focus();
       }
     });
 
