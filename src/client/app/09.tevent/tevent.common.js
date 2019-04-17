@@ -76,6 +76,8 @@ Tw.TeventCommon.prototype = {
    * @param $layer
    */
   _onOpenPopup: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     $layer.find('input#' + this._uri).attr('checked', 'checked');
     $layer.on('change', '.ac-list', $.proxy(this._goLoad, this));
   },
