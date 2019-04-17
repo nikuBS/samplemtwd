@@ -186,6 +186,7 @@ Tw.ProductList.prototype = {
    * @private
    */
   _handleOpenOrderPopup: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectOrder, this));
   },
 
