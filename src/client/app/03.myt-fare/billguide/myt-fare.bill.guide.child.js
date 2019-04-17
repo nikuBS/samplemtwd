@@ -186,9 +186,11 @@ Tw.MyTFareBillGuideChild.prototype = {
       },
       $.proxy(this._conditionChangeEvtInit, this, $target),
       $.proxy(this._conditionChangeEvtClose, this, $target),
-      hashName);
+      hashName, $target);
   },
   _conditionChangeEvtInit: function ($target, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
+
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
     // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },
