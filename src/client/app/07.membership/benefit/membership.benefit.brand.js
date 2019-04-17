@@ -159,7 +159,7 @@ Tw.MembershipBenefitBrand.prototype = {
     if ( open ) {
       this.$contLayer.show();
       this.$btnShowCategories.attr('aria-pressed', 'true');
-      this.$btnCloseCategories.attr('aria-pressed', 'false');
+      this.$btnCloseCategories.attr('aria-pressed', 'true');
       this._setAreaHiddenAttr('hidden');
       window.setTimeout($.proxy(function() {
         this.$contLayer.find('.fe-btn-close-categories').focus();
@@ -171,7 +171,7 @@ Tw.MembershipBenefitBrand.prototype = {
       window.setTimeout($.proxy(function() {
         this.$btnShowCategories.attr('aria-pressed', 'false');
         this.$btnShowCategories.focus();
-        this.$btnCloseCategories.attr('aria-pressed', 'true');
+        this.$btnCloseCategories.attr('aria-pressed', 'false');
       }, this), 300);
     }
   },
@@ -431,6 +431,8 @@ Tw.MembershipBenefitBrand.prototype = {
    * @param {Object} $container
    */
   _onOpenGradeActionSheet: function ($container) {
+    $container.find('li').attr('aria-selected', 'false');
+    $container.find('li input:checked').closest('li').attr('aria-selected', 'true');
     $container.find('li button').click($.proxy(function (event) {
       var subTabCd = $(event.currentTarget).attr('sub-tab-cd');
       var options = {
