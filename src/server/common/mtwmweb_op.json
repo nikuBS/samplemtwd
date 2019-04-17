@@ -1,9 +1,5 @@
 [
   {
-    "old": "/mpoc/html/main/mMa.html",
-    "new": "/main/home"
-  },
-  {
     "old": "/mmbrs.do?serviceId=S_MBRS0088&viewId=M_MBRS0311",
     "new": "/membership/my/cancel"
   },
@@ -94,5 +90,13 @@
   {
     "old": "/tglink.jsp?urlname=mna_001",
     "new": "/product/callplan?prod_id=NI00000567"
+  },
+  {
+    "old": "/mpoc/html/main/mMa.html",
+    "new": "/main/home"
+  },
+  {
+    "old": "/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=NA00004136",
+    "new": "/product/callplan?prod_id=NA00004136"
   }
 ]
