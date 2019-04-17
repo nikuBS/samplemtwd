@@ -265,6 +265,7 @@ Tw.CustomerHelpline.prototype = {
    * @private
    */
   _handleOpenSelectTypePopup: function($layer) {  
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
   },
 
@@ -274,6 +275,7 @@ Tw.CustomerHelpline.prototype = {
    * @private
    */
   _handleOpenSelectAreaPopup: function($layer) {  
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectArea, this));
   },
 
@@ -283,6 +285,7 @@ Tw.CustomerHelpline.prototype = {
    * @private
    */
   _handleOpenSelectTimePopup: function($layer) {  
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', 'li.type1', $.proxy(this._handlSelectTime, this));
   },
 
