@@ -117,19 +117,19 @@ class CommonMemberLine extends TwViewController {
    */
   private setShowList(list, totalCount): any {
     const showParam = {
-      m: '',
-      s: '',
-      o: '',
+      m: false,
+      s: false,
+      o: false,
       defaultCnt: DEFAULT_LIST_COUNT
     };
 
     list.map((category, index) => {
       if ( index === 0 ) {
-        showParam[category] = 'on';
+        showParam[category] = true;
       } else {
         showParam.defaultCnt = 10;
         if ( totalCount <= DEFAULT_LIST_COUNT ) {
-          showParam[category] = 'on';
+          showParam[category] = true;
         }
       }
     });

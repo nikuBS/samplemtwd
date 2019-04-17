@@ -1,16 +1,29 @@
 /**
- * @file product.mobileplan.setting.tplan.js
+ * @file 상품 > 모바일요금제 > 설정 > Data 인피니티
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.14
+ * @since 2018-11-14
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param displayId - 화면ID
+ * @param currentBenefitProdId - 현재 사용중인 옵션 상품코드
+ * @param watchInfo - 결합된 스마트워치 정보
+ */
 Tw.ProductMobileplanSettingTplan = function(rootEl, prodId, displayId, currentBenefitProdId, watchInfo) {
+  // 컨테이너 레이어 선언
+  this.$container = rootEl;
+
+  // 공통 모듈 선언
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
 
+  // 공통 변수 선언
   this._prodId = prodId;
   this._displayId = displayId;
   this._currentBenefitProdId = currentBenefitProdId;
@@ -18,18 +31,24 @@ Tw.ProductMobileplanSettingTplan = function(rootEl, prodId, displayId, currentBe
   this._smartWatchLine = null;
   this._smartWatchLineNumber = null;
 
-  this.$container = rootEl;
+  // Element 캐싱
   this._cachedElement();
-  this._bindEvent();
 
-  if (this._historyService.isBack()) {
-    this._historyService.goBack();
-  }
+  // 이벤트 바인딩
+  this._bindEvent();
 };
 
 Tw.ProductMobileplanSettingTplan.prototype = {
 
+  /**
+   * @function
+   * @desc 최초 동작
+   */
   _init: function() {
+    if (this._historyService.isBack()) {
+      this._historyService.goBack();
+    }
+
     if (Tw.FormatHelper.isEmpty(this._currentBenefitProdId)) {
       return;
     }
@@ -37,11 +56,19 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this.$container.find('input[value="' + this._currentBenefitProdId + '"]').trigger('click');
   },
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$inputRadioInWidgetbox = this.$container.find('.widget-box.radio input[type="radio"]');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procSetupOk, this), 500));
@@ -49,6 +76,12 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this));
   },
 
+  /**
+   * @function
+   * @desc 설정 완료 버튼 활성화
+   * @param e - 옵션 Radio change Event
+   * @returns {*|*|boolean}
+   */
   _enableSetupButton: function(e) {
     if ($(e.currentTarget).val() === 'NA00006116' && this._currentBenefitProdId !== 'NA00006116') {
       return this._selectSmartWatchItem();
@@ -59,6 +92,11 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
   },
 
+  /**
+   * @function
+   * @desc 스마트워치 옵션 선택 시
+   * @returns {boolean|*|void}
+   */
   _selectSmartWatchItem: function() {
     this._isDisableSmartWatchLineInfo = false;
     this._smartWatchLine = null;
@@ -80,14 +118,23 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
     this._smartWatchLineNumber = Tw.FormatHelper.conTelFormatWithDash(this._watchInfo.watchSvcList[0].watchSvcNumMask);
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
+
     return true;
   },
 
+  /**
+   * @function
+   * @desc 결합가능한 스마트워치 회선이 없어도 해당 옵션을 선택하고자 할 때
+   */
   _enableSmartWatchLineInfo: function() {
     this._isDisableSmartWatchLineInfo = true;
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 옵션 선택 값을 초기화 (결합 가능한 스마트워치 회선이 없어 옵션 선택을 취소 할 떄)
+   */
   _procClearSmartWatchLineInfo: function() {
     if (this._isDisableSmartWatchLineInfo) {
       this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
@@ -97,6 +144,10 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this._clearSelectItem();
   },
 
+  /**
+   * @function
+   * @desc 스마트워치 회선 선택 팝업 실행
+   */
   _openSmartWatchLineSelectPopup: function() {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -111,6 +162,13 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     }, $.proxy(this._bindSmartWatchLineSelectPopup, this), null, 'select_smart_watch_line_pop');
   },
 
+  /**
+   * @function
+   * @desc 스마트워치 회선 목록 변환
+   * @param item - 스마트워치 회선
+   * @param idx - 인덱스 키
+   * @returns {{txt: string | *, "radio-attr": string, "label-attr": string}}
+   */
   _getSmartWatchLineList: function(item, idx) {
     return {
       'label-attr': 'id="ra' + idx + '"',
@@ -120,16 +178,32 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 스마트워치 회선 선택 팝업 이벤트 바인딩
+   * @param $popupContainer - 팝업 컨테이너 레이어
+   */
   _bindSmartWatchLineSelectPopup: function($popupContainer) {
     $popupContainer.on('click', '[data-num]', $.proxy(this._setSmartWatchLine, this));
+
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
+  /**
+   * @function
+   * @desc 스마트워치 회선 선택 시
+   * @param e - 회선 선택 클릭 이벤트
+   */
   _setSmartWatchLine: function(e) {
     this._smartWatchLine = $(e.currentTarget).data('num');
     this._smartWatchLineNumber = $(e.currentTarget).data('svcnum');
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 옵션 선택 값 초기화
+   */
   _clearSelectItem: function() {
     var $elem = this.$container.find('.widget-box.radio input[type="radio"]:checked');
 
@@ -140,6 +214,11 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this.$btnSetupOk.prop('disabled', true);
   },
 
+  /**
+   * @function
+   * @desc 설정 완료 버튼 클릭 시 & 설정 변경 API 요청
+   * @returns {*|void}
+   */
   _procSetupOk: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
 
@@ -168,6 +247,11 @@ Tw.ProductMobileplanSettingTplan.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 설정 변경 API 응답 처리
+   * @param resp - API 응답 값
+   */
   _procSetupOkRes: function(resp) {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
     Tw.CommonHelper.endLoading('.container');
@@ -196,11 +280,21 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     }, $.proxy(this._bindSuccessPopup, this), $.proxy(this._onClosePop, this), 'save_setting_success');
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 컨테이너 레이어
+   */
   _bindSuccessPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 A 하이퍼링크 핸들링
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -208,10 +302,18 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 닫기 클릭 시
+   */
   _closePop: function() {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료 시
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

@@ -49,20 +49,20 @@
     <%if (locals.pageInfo && pageInfo.isApp) { %>
     <div class="g-wrap">
         <ul class="g-list g-coach-box">
-            <li><a href="/main/home" type="button" data-xt_eid="CMMA_A11_B5-1" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-bi-n"><span class="blind">bi</span></i></a></li>
+            <li><a href="/main/home" type="button" data-xt_eid="CMMA_A11_B5-1" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-bi-n"><span class="blind">T월드 홈</span></i></a></li>
             <li id="fe-back-disable" class="none"><button type="button"><i class="icon-gnb-back-d"><span class="blind">back disabled</span></i></button></li>
-            <li id="fe-back-enable"><button type="button" class="fe-common-back" data-xt_eid="CMMA_A11_B5-2" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-back-n"><span class="blind">back</span></i></button></li>
+            <li id="fe-back-enable"><button type="button" class="fe-common-back" data-xt_eid="CMMA_A11_B5-2" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-back-n"><span class="blind">이전</span></i></button></li>
             <li id="fe-forward-disable" class="none"><button type="button"><i class="icon-gnb-next-d"><span class="blind">next disabled</span></i></button></li>
-            <li id="fe-forward-enable"><button type="button" class="fe-common-forward" data-xt_eid="CMMA_A11_B5-3" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-next-n"><span class="blind">next</span></i></button></li>
+            <li id="fe-forward-enable"><button type="button" class="fe-common-forward" data-xt_eid="CMMA_A11_B5-3" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-next-n"><span class="blind">다음</span></i></button></li>
             <li class="mark-lock on">
                 <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskRlseYn === 'Y') { %>
                 <% if (!pageInfo.masking) { %>
-                <button class="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>" data-xt_eid="CMMA_A11_B5-4" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button>
+                <button class="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>" data-xt_eid="CMMA_A11_B5-4" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-lock-n"><span class="blind">마스킹 해제</span></i></button>
                 <% } else { %>
-                <button type="button"><i class="icon-gnb-lock-s"><span class="blind">lock selected</span></i></button>
+                <button type="button"><i class="icon-gnb-lock-s"><span class="blind">마스킹 해제완료</span></i></button>
                 <% } %>
                 <% } else { %>
-                <button type="button"><i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i></button>
+                <button type="button"><i class="icon-gnb-lock-d"><span class="blind">마스킹 해제불가</span></i></button>
                 <% } %>
                 <% if (svcInfo) { %>
                 <div id="fe-coach-masking" class="coach-mark none">
@@ -74,14 +74,14 @@
             <li class="mark-pin on">
                 <% if (svcInfo && locals.pageInfo) { %>
                 <% if (svcInfo.svcMgmtNum === '') { %>
-                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button>
+                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
                 <% } else { %>
-                <button class="fe-bt-quick-disable" type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button>
-                <button class="fe-bt-quick-add none" type="button" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-s"><span class="blind">pin selected</span></i></button>
-                <button class="fe-bt-quick-remove none" type="button" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button>
+                <button class="fe-bt-quick-disable" type="button" aria-hidden="false"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
+                <button class="fe-bt-quick-add none" type="button" aria-hidden="true" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-s"><span class="blind">바로가기 삭제</span></i></button>
+                <button class="fe-bt-quick-remove none" type="button" aria-hidden="true" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-n"><span class="blind">바로가기 추가</span></i></button>
                 <% } %>
                 <% } else { %>
-                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button>
+                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
                 <% } %>
                 <% if (svcInfo) { %>
                 <!--<div id="fe-coach-quick" class="coach-mark none">-->
@@ -91,9 +91,9 @@
                 <% } %>
             </li>
             <% if (locals.pageInfo && pageInfo.menuShrYn === 'Y') { %>
-            <li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>" data-xt_eid="CMMA_A11_B5-6" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
+            <li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>" data-xt_eid="CMMA_A11_B5-6" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-share-n"><span class="blind">공유하기</span></i></button></li>
             <% } else { %>
-            <li><button type="button <%= pageInfo.menuShrYn %>"><i class="icon-gnb-share-d"><span class="blind">share disabled</span></i></button></li>
+            <li><button type="button <%= pageInfo.menuShrYn %>"><i class="icon-gnb-share-d"><span class="blind">공유하기 사용불가</span></i></button></li>
             <% } %>
         </ul>
     </div>
@@ -103,19 +103,19 @@
             <% if (svcInfo && locals.pageInfo) { %>
 
             <% if (svcInfo.svcMgmtNum !== '') { %>
-            <li class="none"><button class="fe-bt-quick-add" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-fab-pin-s-80"><span class="blind">pin selected</span></i></button></li>
-            <li class="none"><button class="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-fab-pin-n-80"><span class="blind">pin</span></i></button></li>
+            <li class="none" aria-hidden="true"><button class="fe-bt-quick-add" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-fab-pin-s-80"><span class="blind">바로가기 삭제</span></i></button></li>
+            <li class="none" aria-hidden="true"><button class="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-fab-pin-n-80"><span class="blind">바로가기 추가</span></i></button></li>
             <% } %>
 
             <% } %>
             <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskRlseYn === 'Y') { %>
             <% if (!pageInfo.masking) { %>
-            <li><button class="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-fab-lock-n-80"><span class="blind">lock</span></i></button></li>
+            <li><button class="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-fab-lock-n-80"><span class="blind">마스킹 해제</span></i></button></li>
             <% } else { %>
-            <li><button type="button"><i class="icon-fab-lock-s-80"><span class="blind">lock selected</span></i></button></li>
+            <li><button type="button"><i class="icon-fab-lock-s-80"><span class="blind">마스킹 해제완료</span></i></button></li>
             <% } %>
             <% } %>
-            <li><a href="/main/home" type="button"><i class="icon-fab-bi-n-80"><span class="blind">bi</span></i></a></li>
+            <li><a href="/main/home" type="button"><i class="icon-fab-bi-n-80"><span class="blind">T월드 홈</span></i></a></li>
         </ul>
     </div>
     <% } %>

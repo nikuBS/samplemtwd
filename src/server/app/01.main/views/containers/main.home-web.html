@@ -459,7 +459,7 @@
                                             <% help.map((target) => { %>
                                             <li>
                                                 <button data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-174" data-xt_csid="NO" data-xt_action="BC">
-                                                    <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
+                                                    <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt=""></span>
                                                     <%- target.mainExpsTitNm %>
                                                 </button>
                                             </li>
@@ -491,10 +491,10 @@
                         <div class="slider-box">
                             <ul class="slider">
                                 <li>
-                                    <button data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-173" data-xt_csid="NO" data-xt_action="BC">
+                                    <a data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B6-173" data-xt_csid="NO" data-xt_action="BC">
                                         <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
                                         <span class="ico"></span>
-                                    </button>
+                                    </a>
                                 </li>
                             </ul>
                         </div>

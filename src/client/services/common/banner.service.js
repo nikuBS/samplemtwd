@@ -79,28 +79,19 @@ Tw.BannerService.prototype = {
     this._bannerTmpl = Handlebars.compile(hbs);
 
     this.$banners.on({
-      init: function(e, slick) {  // for accessibiltiy (set selected indicator)
-        slick.$dots && slick.$dots.find('li:first-child span').html(Tw.BANNER_DOT_TMPL.replace('{{index}}', 1));
-      },
       beforeChange: function(e, slick, before, after) { // for accessibiltiy (set selected indicator)
         var dots = slick.$dots.find('li');
         $(dots[before])
           .find('> span')
           .text(before + 1);
+        slick.$slides[before].setAttribute('tabindex', -1);
         $(dots[after])
           .find('> span')
-          .html(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+          .text(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+        slick.$slides[after].setAttribute('tabindex', 0);
       },
-      afterChange: function(e, slick) { // for accessibility (focus to current banner)
-        // if (slick.$slider.find('*:focus').length > 0) {
-        slick.$slider.find('.slick-current').focus();
-        // }
-      },
-      setPosition: function(e, slickSlider) { // for accessibility (set focus to current banner)
-        var currentSlide = slickSlider.currentSlide;
-        $(slickSlider.$dots).find('span').each(function (i, target) {
-          target.setAttribute('aria-selected', currentSlide === i);
-        });
+      afterChange: function(e, slick, index) {
+        slick.$slides[index].focus();
       }
     });
 
@@ -123,9 +114,13 @@ Tw.BannerService.prototype = {
             pauseOnFocus: true,
             pauseOnHover: true,
             pauseOnDotsHover: true,
-            accessibility: true,
+            accessibility: false,
             customPaging: function(slider, i) {
-              return $('<span role="button" />').text(i + 1);
+              if (i === 0) {
+                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+              } else {
+                return $('<span role="button" />').text(i + 1);
+              }
             }
           });
         } else {
@@ -135,9 +130,13 @@ Tw.BannerService.prototype = {
             speed: 300,
             lazyLoad: 'progressive',
             touchMove: false,
-            accessibility: true,
+            accessibility: false,
             customPaging: function(slider, i) {
-              return $('<span role="button" />').text(i + 1);
+              if (i === 0) {
+                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+              } else {
+                return $('<span role="button" />').text(i + 1);
+              }
             }
           });
         }

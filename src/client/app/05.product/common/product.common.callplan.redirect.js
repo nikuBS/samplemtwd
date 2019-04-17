@@ -1,5 +1,5 @@
 /**
- * @file 상품 > 원장(상세) 리디렉션 지원 스크립트
+ * @file 상품 > 공통 > 원장(상세) 리디렉션 지원 스크립트
  * @author Ji Hun Yang (jihun202@sk.com)
  * @since 2018-12-04
  */

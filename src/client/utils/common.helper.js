@@ -236,6 +236,18 @@ Tw.CommonHelper = (function () {
     document.createElement('img').setAttribute('src', url);
   };
 
+  var focusOnActionSheet = function($popupLayer) {
+    if (!Tw.FormatHelper.isEmpty($popupLayer.find('span.txt:eq(0)'))) {
+      setTimeout(function () {
+        $popupLayer.find('span.txt:eq(0)').focus();
+      }, 300);
+    } else {
+      setTimeout(function () {
+        $popupLayer.find('input:eq(0)').focus();
+      }, 300);
+    }
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -260,6 +272,7 @@ Tw.CommonHelper = (function () {
     replaceCdnUrl: replaceCdnUrl,
     isLowerVersionAndroid: isLowerVersionAndroid,
     replaceExternalLinkTarget: replaceExternalLinkTarget,
-    sendRequestImg: sendRequestImg
+    sendRequestImg: sendRequestImg,
+    focusOnActionSheet: focusOnActionSheet
   };
 })();

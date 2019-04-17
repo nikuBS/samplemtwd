@@ -4,7 +4,7 @@
  * @since 2019.04.01
  */
 
-Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm) {
+Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm, isLeaderSvcYn) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -12,6 +12,7 @@ Tw.BenefitTerminateAllFamily = function(rootEl, prodId, prodNm) {
   this.$container = rootEl;
   this._prodId = prodId;
   this._prodNm = prodNm;
+  this._isLeaderSvc = isLeaderSvcYn === 'Y';
 
   this._cachedElement();
   this._bindEvent();
@@ -76,7 +77,7 @@ Tw.BenefitTerminateAllFamily.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: '' }, {}, [this._prodId])
+    this._apiService.request(this._isLeaderSvc ? Tw.API_CMD.BFF_05_0144 : Tw.API_CMD.BFF_05_0207, { svcCd: '' }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },

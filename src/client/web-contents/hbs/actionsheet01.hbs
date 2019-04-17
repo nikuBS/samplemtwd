@@ -38,7 +38,7 @@
                             {{#if title}}<div class="ac-tit">{{title}}</div>{{/if}}
                             <ul class="ac-list">
                                 {{#each list}}
-                                    <li class="type1 focus-elem">
+                                     <li class="type1 focus-elem" aria-selected="{{aria-select}}">
                                         {{#if button-attr}}<button {{{button-attr}}}>{{/if}}
                                         {{#if a-attr}}<a {{{a-attr}}}>{{/if}}
                                         {{#if label-attr}}<label {{{label-attr}}}>{{/if}}

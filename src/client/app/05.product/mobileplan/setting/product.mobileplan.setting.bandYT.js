@@ -1,7 +1,6 @@
 /**
- * MenuName: 모바일 요금제 > Band YT 요금제
- * @file product.mobileplan.setting.bandYT.js
- * @author Kim InHwan
+ * @file 상품 > 모바일요금제 > 설정 > Band YT 요금제
+ * @author Kim In Hwan
  * @since 2018-11-14
  */
 

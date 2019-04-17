@@ -878,8 +878,8 @@
   background: url(/img/main/tit_membership.png) no-repeat;
   background-size: 100%;
   color: transparent;
-  font-size: 0;
-  line-height: 0; }
+  /*font-size: 0;
+  line-height: 0;*/ }
 
 .main-membershop-box .membership-cont .rating {
   display: block;
@@ -888,8 +888,8 @@
   background-size: auto 100%;
   background-repeat: no-repeat;
   color: transparent;
-  font-size: 0;
-  line-height: 0; }
+  /*font-size: 0;
+  line-height: 0;*/ }
 
 .main-membershop-box .membership-cont .rating.silver {
   width: 3.75rem;
@@ -3924,6 +3924,8 @@ body.apphome .main-membershop-box {
 
 .main-banner-box .slider-box .slick-list {
   overflow: hidden; }
+
+.full-img{width:100%;}
 
 .main-direct-box .stit {
   color: #666666;

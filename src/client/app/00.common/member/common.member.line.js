@@ -55,7 +55,7 @@ Tw.CommonMemberLine.prototype = {
 
     this.$inputNickname = $currentLine.find('.fe-input-nickname');
     this.$showNickname = $currentLine.find('.fe-show-name');
-    this._nicknamePopup.openNickname(this.$inputNickname.val(), svcMgntNum, $.proxy(this._onCloseNickname, this));
+    this._nicknamePopup.openNickname(this.$inputNickname.val(), svcMgntNum, $.proxy(this._onCloseNickname, this), $btNickname);
   },
 
   /**

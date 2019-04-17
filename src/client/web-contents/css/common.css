@@ -1636,11 +1636,10 @@ hr {
 .blind {
   display: inline-block;
   position: absolute !important;
-  top: 0;
-  left: 0;
   overflow: hidden;
   color: transparent;
-  line-height: -20px; }
+  z-index: -1;
+}
 
 .blind-height0 {
   display: inline-block;

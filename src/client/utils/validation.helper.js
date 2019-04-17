@@ -46,7 +46,7 @@ Tw.ValidationHelper = (function () {
   function isStraightPassword(str, max) {
     if(!max) max = 6;
     var i, j, x, y;
-    var buff = ['0123456789'];
+    var buff = ['0123456789', '9876543210'];
     var src, src2, ptn = '';
 
     for(i = 0; i < buff.length; i++){
@@ -59,6 +59,7 @@ Tw.ValidationHelper = (function () {
         ptn += y + '|';
       }
     }
+
     ptn = new RegExp(ptn.replace(/.$/, '')); // 맨마지막의 글자를 하나 없애고 정규식으로 만든다.
 
     if (ptn.test(str)) {

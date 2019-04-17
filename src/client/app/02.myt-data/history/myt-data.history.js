@@ -117,6 +117,7 @@ Tw.MyTDataHistory.prototype = {
    * @param {$object} $layer 
    */
   _handleOpenType: function($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 

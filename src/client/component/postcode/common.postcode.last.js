@@ -81,12 +81,7 @@ Tw.CommonPostcodeLast.prototype = {
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId);
     $selectedTarget.attr('aria-selected', 'true');
-
-    if ($addressObject.tabId === 'tab2') {
-      $selectedTarget.css('marginLeft', '0');
-    }
-    $selectedTarget.siblings().attr('aria-selected', 'false');
-    $selectedTarget.siblings().find('a').addClass('disabled').addClass('none');
+    $selectedTarget.siblings().addClass('none').attr('aria-selected', 'false');
   },
   /**
    * @function

@@ -214,6 +214,7 @@ Tw.API_CMD = {
   BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: Tw.API_METHOD.GET },
   BFF_05_0205: { path: '/core-bill/:version/use-contents/auth/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: Tw.API_METHOD.POST },
+  BFF_05_0207: { path: '/core-product/:version/services/combinations/personally/:args0/personally-terminations', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
