@@ -238,7 +238,9 @@ Tw.MyTFareBillPoint.prototype = {
     var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
-    if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+    if (!this._validation.checkIsMore(this._paymentCommon.getAmount(), parseInt(this.$point.val(), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.LESS_THAN_BILL_AMOUNT); // 청구금액 미만으로 입력
+    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
         parseInt(this.$pointBox.find(className).attr('id'), 10))) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27); // 보유 포인트 이상 입력
     } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
