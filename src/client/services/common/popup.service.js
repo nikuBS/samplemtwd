@@ -527,7 +527,7 @@ Tw.PopupService.prototype = {
       }
     }
   },
-  closeAll: function () {
+  closeAll: function ($container, $focusTarget) {
     var hashLength = this._prevHashList.length;
     if ( hashLength > 0 ) {
       _.map(this._prevHashList, $.proxy(function (prevHash) {
@@ -540,6 +540,14 @@ Tw.PopupService.prototype = {
       this._prevHashList = [];
       skt_landing.action.popup.allClose();
       history.go(-hashLength);
+
+      if ($container) {
+        $container.find('.popup-page').attr('aria-hidden', 'false');
+      }
+
+      if ($focusTarget) {
+        $focusTarget.focus();
+      }
     }
   },
   closeAllAndGo: function (targetUrl) {
