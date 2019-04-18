@@ -317,7 +317,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$container.find('#fe-empty-t-noti').attr('aria-hidden', 'false');
     this.$container.find('#fe-new-t-noti').attr('aria-hidden', 'true');
 
-    $('.h-menu').removeClass('on');
+    this.$container.attr('aria-hidden', 'true');
   },
 
   /**
