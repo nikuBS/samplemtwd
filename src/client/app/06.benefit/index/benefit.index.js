@@ -515,6 +515,7 @@ Tw.BenefitIndex.prototype = {
     // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
     this.$showDiscountBtn.addClass('none');
     this.$clearBtn.removeClass('none').attr('aria-pressed', true);
+    this.$clearBtn.focus();
     var _data = resp.result;
     // 데이터가 없을때
     if (Tw.FormatHelper.isEmpty(_data)) {
@@ -546,7 +547,7 @@ Tw.BenefitIndex.prototype = {
       .find('[name="btvUseYn"]').prop('checked', false);
 
     // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
-    this.$showDiscountBtn.removeClass('none');
+    this.$showDiscountBtn.removeClass('none').attr('aria-pressed', true);
     this.$clearBtn.addClass('none');
 
     this._onCheckDisabled();

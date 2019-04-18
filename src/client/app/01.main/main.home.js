@@ -862,7 +862,7 @@ Tw.MainHome.prototype = {
    */
   _onClickPayment: function ($event) {
     var svcAttrCd = $($event.currentTarget).data('svcattrcd');
-    new Tw.MyTFareBill(this.$container, svcAttrCd);
+    new Tw.MyTFareBill(this.$container, svcAttrCd, $($event.currentTarget));
   },
 
   /**
@@ -1290,7 +1290,8 @@ Tw.MainHome.prototype = {
   _onClickBtRecharge: function ($event) {
     $event.stopPropagation();
     new Tw.ImmediatelyRechargeLayer(this.$container, {
-      pathUrl: '/main/home'
+      pathUrl: '/main/home',
+      targetBtn: $($event.currentTarget)
     });
   },
 

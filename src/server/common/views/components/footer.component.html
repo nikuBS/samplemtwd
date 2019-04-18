@@ -74,14 +74,14 @@
             <li class="mark-pin on">
                 <% if (svcInfo && locals.pageInfo) { %>
                 <% if (svcInfo.svcMgmtNum === '') { %>
-                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
+                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">MY 바로가기 사용불가</span></i></button>
                 <% } else { %>
-                <button class="fe-bt-quick-disable fe-coach-quick-target" type="button" aria-hidden="false"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
+                <button class="fe-bt-quick-disable fe-coach-quick-target" type="button" aria-hidden="false"><i class="icon-gnb-pin-d"><span class="blind">MY 바로가기 사용불가</span></i></button>
                 <button class="fe-bt-quick-add fe-coach-quick-target none" type="button" aria-hidden="true" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-s"><span class="blind">MY 바로가기 삭제</span></i></button>
                 <button class="fe-bt-quick-remove fe-coach-quick-target none" type="button" aria-hidden="true" data-menuid="<%= pageInfo.menuId %>" data-xt_eid="CMMA_A11_B5-5" data-xt_csid="NO" data-xt_action="BC"><i class="icon-gnb-pin-n"><span class="blind">MY 바로가기 추가</span></i></button>
                 <% } %>
                 <% } else { %>
-                <button class="fe-coach-quick-target" type="button"><i class="icon-gnb-pin-d"><span class="blind">바로가기 사용불가</span></i></button>
+                <button class="fe-coach-quick-target" type="button"><i class="icon-gnb-pin-d"><span class="blind">MY 바로가기 사용불가</span></i></button>
                 <% } %>
                 <% if (svcInfo) { %>
                 <!--<div id="fe-coach-quick" class="coach-mark none">-->

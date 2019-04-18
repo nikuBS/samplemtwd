@@ -72,6 +72,14 @@ Tw.CommonPostcodeLast.prototype = {
         this.$container.find('.fe-detail-address').val(this.$saveAddress.detail);
       }
     }
+    this._setFocus();
+  },
+  /**
+   * @function
+   * @desc popup close 시 원래 페이지로 focus 이동
+   */
+  _setFocus: function () {
+    this.$target.focus();
   },
   /**
    * @function

@@ -6,13 +6,6 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation // data-menuId는 tooltip 오픈 시 사용됨 -->
     <div id="myt-fare-bill-account" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!--// #contents -->
         <div class="popup-page tw-popup nobg fixed-bottom">
@@ -21,7 +14,8 @@
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">
-                <div id="contents" class="container">
+                <h2 id="contents" class="blind">내용</h2>
+                <div class="container">
                     <hr class="cont-sp type1" aria-hidden="true"/>
 
                     <!-- .cont-box -->

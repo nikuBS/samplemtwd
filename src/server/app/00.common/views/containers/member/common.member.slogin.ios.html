@@ -7,13 +7,6 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -25,7 +18,6 @@
         <!-- .container-wrap -->
         <div id="commonLoginEasyIos" class="container-wrap">
             <div class="container">
-
                 <!-- .cont-box -->
                 <div class="cont-box noborder">
                     <div class="pg-member"> <!-- 2019.03.13 pb40 클래스 삭제-->
