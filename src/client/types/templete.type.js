@@ -876,34 +876,20 @@ Tw.MYT_PREPAID_ALARM = {
 };
 
 Tw.PRODUCT_APPS_ORDER = [
-  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"' },
-  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"' },
-  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"' }
+  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"', 'label-attr': ' ' },
+  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"', 'label-attr': ' ' },
+  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"', 'label-attr': ' ' }
 ];
 
 Tw.SUSPEND_RELATION = {
-  title: '추가연락처',
   list: [
-    { 'option': '', 'attr': 'data-value="부모님"', value: '부모님' },
-    { 'option': '', 'attr': 'data-value="형제/자매"', value: '형제/자매' },
-    { 'option': '', 'attr': 'data-value="자녀"', value: '자녀' },
-    { 'option': '', 'attr': 'data-value="친구"', value: '친구' },
-    { 'option': '', 'attr': 'data-value="배우자"', value: '배우자' },
-    { 'option': '', 'attr': 'data-value="동료"', value: '동료' },
-    { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
-  ]
-};
-
-Tw.SUSPEND_RELATION = {
-  title: '추가연락처',
-  list: [
-    { 'option': '', 'attr': 'data-value="부모님"', value: '부모님' },
-    { 'option': '', 'attr': 'data-value="형제/자매"', value: '형제/자매' },
-    { 'option': '', 'attr': 'data-value="자녀"', value: '자녀' },
-    { 'option': '', 'attr': 'data-value="친구"', value: '친구' },
-    { 'option': '', 'attr': 'data-value="배우자"', value: '배우자' },
-    { 'option': '', 'attr': 'data-value="동료"', value: '동료' },
-    { 'option': '', 'attr': 'data-value="기타"', value: '기타' }
+    { txt: '부모님', 'radio-attr': 'data-value="부모님"', 'label-attr': 'id="ra0"' },
+    { txt: '형제/자매', 'radio-attr': 'data-value="형제/자매"', 'label-attr': 'id="ra1"' },
+    { txt: '자녀', 'radio-attr': 'data-value="자녀"', 'label-attr': 'id="ra2"' },
+    { txt: '친구', 'radio-attr': 'data-value="친구"', 'label-attr': 'id="ra3"' },
+    { txt: '배우자', 'radio-attr': 'data-value="배우자"', 'label-attr': 'id="ra4"' },
+    { txt: '동료', 'radio-attr': 'data-value="동료"', 'label-attr': 'id="ra5"' },
+    { txt: '기타', 'radio-attr': 'data-value="기타"', 'label-attr': 'id="ra6"' }
   ]
 };
 

@@ -34,7 +34,7 @@ Tw.MyTJoinSuspend.prototype = {
    * @returns {void}
    */
   _cachedElement: function () {
-    this.$tabLinker = this.$container.find('.tab-linker button');
+    this.$tabLinker = this.$container.find('.tab-linker a');
     this.$tabTemp = this.$container.find('[data-id="fe-tab-temporary"]');
     this.$tabLong = this.$container.find('[data-id="fe-tab-long-term"]');
   },
@@ -89,6 +89,8 @@ Tw.MyTJoinSuspend.prototype = {
    */
   _setActiveTab: function (type) {
     type = type.toLowerCase();
+    this.$tabLinker.attr('aria-selected', false);
+    this.$tabLinker.filter('[href="'+type+'"]').attr('aria-selected', true);
     switch ( type ) {
       case this.TYPE.TEMPORARY:
         if ( !this._temp ) {

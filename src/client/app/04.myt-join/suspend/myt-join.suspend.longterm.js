@@ -249,17 +249,15 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onClickRelation: function () {
     var options = $.extend(true, [], Tw.SUSPEND_RELATION.list);
-    var selected = _.find(options, { value: this.$btRelation.val() });
+    var selected = _.find(options, { 'radio-attr' : 'data-value="'+this.$btRelation.val()+ '"' });
     if ( selected ) {
-      selected.option = 'checked';
+      selected['radio-attr'] += ' checked';
     }
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.SUSPEND_RELATION.title,
-      data: [
-        { list: _.assign(options, selected) }
-      ]
+      btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
+      data:  [ {list :  _.assign(options, selected)}]
     }, $.proxy(this._selectRelationCallback, this), null, null,  $(event.currentTarget));
   },
   /**
@@ -268,6 +266,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @param $layer popup layer element
    */
   _selectRelationCallback: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedRelation, this));
   },
   /**
