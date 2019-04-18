@@ -46,11 +46,9 @@ class MyTDataGift extends TwViewController {
         break;
       case 'complete':
         Observable.combineLatest(
-          this.getSenderInfo(),
-          this.getRemainInfo()
-        ).subscribe(([senderInfo, remainInfo]) => {
+          this.getSenderInfo()
+        ).subscribe(([senderInfo]) => {
           const respComplete = Object.assign({
-            remainInfo: remainInfo,
             senderInfo: senderInfo,
             params: ParamsHelper.getQueryParams(req.url)
           }, responseData);
@@ -70,17 +68,6 @@ class MyTDataGift extends TwViewController {
           res.render('gift/myt-data.gift.html', respDefault);
         });
     }
-  }
-
-  private getRemainInfo() {
-    return this.apiService.request(API_CMD.BFF_06_0014, {})
-      .map((res) => {
-        if ( res.code === API_CODE.CODE_00 ) {
-          return res.result;
-        } else {
-          return null;
-        }
-      });
   }
 
   private getSenderInfo() {
