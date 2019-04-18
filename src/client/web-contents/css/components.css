@@ -10835,7 +10835,7 @@ a.bt-link-tx.underline.small {
 .main-slide-banner .slider-box .slick-dots li + li {
   margin: 0 0 0 0.5rem; }
 
-.main-slide-banner .slider-box .slick-dots li span {
+.main-slide-banner .slider-box .slick-dots li span, .main-slide-banner .slider-box .slick-dots li button {
   display: block;
   margin: 0.06rem auto;
   width: 0.38rem;
@@ -10851,7 +10851,7 @@ a.bt-link-tx.underline.small {
   height: 0.38rem;
   background: #fff; }
 
-.main-slide-banner .slider-box .slick-dots li.slick-active span {
+.main-slide-banner .slider-box .slick-dots li.slick-active span, .main-slide-banner .slider-box .slick-dots li.slick-active button {
   width: 0.38rem;
   height: 0.38rem;
   background-color: transparent; }
@@ -10886,17 +10886,17 @@ a.bt-link-tx.underline.small {
 .main-slide-banner.ta-02 .slick-dots li {
   border: 1px solid transparent; }
 
-.main-slide-banner.ta-02 .slick-dots li span {
-  width: 0.38rem;
-  height: 0.38rem;
+.main-slide-banner.ta-02 .slick-dots li span, .main-slide-banner.ta-02 .slick-dots li button {
+  width: 0.44rem;
+  height: 0.44rem;
   margin: 0;
   opacity: 1;
   border: 1px solid #000;
   background: #fff; }
 
 .main-slide-banner.ta-02 .slick-dots li.slick-active {
-  width: 0.38rem;
-  height: 0.38rem;
+  width: 0.44rem;
+  height: 0.44rem;
   border: 1px solid #000;
   background: #000; }
 
@@ -11211,7 +11211,7 @@ a.bt-link-tx.underline.small {
   height: 0.5rem;
   margin: 0 0.44rem 0 0; }
 
-.coupon-genre-box .slick-dots li span {
+.coupon-genre-box .slick-dots li span, .coupon-genre-box .slick-dots li button {
   font-size: 0;
   line-height: 0;
   display: block;
@@ -14991,7 +14991,7 @@ a.bt-link-tx.underline.small {
 .slide-pagingtype .slider-box .slick-dots li {
   background: none; }
 
-.slide-pagingtype .slider-box .slick-dots li span {
+.slide-pagingtype .slider-box .slick-dots li span, .slide-pagingtype .slider-box .slick-dots li button {
   margin: 0;
   background: none;
   border: 1px solid #fff;
@@ -15001,7 +15001,7 @@ a.bt-link-tx.underline.small {
 .slide-pagingtype .slider-box .slick-dots li.slick-active {
   background: #ffffff; }
 
-.slide-pagingtype .slider-box .slick-dots li.slick-active span {
+.slide-pagingtype .slider-box .slick-dots li.slick-active span, .slide-pagingtype .slider-box .slick-dots li.slick-active button {
   background: #fff; }
 
 .slide-pagingtype .linkclick {
@@ -21523,7 +21523,7 @@ a.bt-link-tx.underline.small {
 .slide-show .slick-dots li + li {
   margin: 0 0 0 0.5rem; }
 
-.slide-show .slick-dots li span {
+.slide-show .slick-dots li span, .slide-show .slick-dots li button {
   display: block;
   margin: 0.06rem auto;
   width: 0.38rem;
@@ -21539,7 +21539,7 @@ a.bt-link-tx.underline.small {
   height: 0.38rem;
   background: #000; }
 
-.slide-show .slick-dots li.slick-active span {
+.slide-show .slick-dots li.slick-active span, .slide-show .slick-dots li.slick-active button {
   width: 0.38rem;
   height: 0.38rem;
   background-color: transparent; }
@@ -21584,7 +21584,7 @@ a.bt-link-tx.underline.small {
   margin: 0 0 0 0.5rem;
   vertical-align: top; }
 
-.operation-guide-box .slick-dots li span {
+.operation-guide-box .slick-dots li span, .operation-guide-box .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -21594,7 +21594,7 @@ a.bt-link-tx.underline.small {
   line-height: 0;
   cursor: pointer; }
 
-.operation-guide-box .slick-dots li.slick-active span {
+.operation-guide-box .slick-dots li.slick-active span, .operation-guide-box .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   margin-top: -0.06rem;
@@ -21840,7 +21840,7 @@ a.bt-link-tx.underline.small {
   margin: 0 0.44rem 0 0;
   vertical-align: middle; }
 
-.survey-box .slick-dots li span {
+.survey-box .slick-dots li span, .survey-box .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -21850,7 +21850,7 @@ a.bt-link-tx.underline.small {
   line-height: 0;
   cursor: pointer; }
 
-.survey-box .slick-dots li.slick-active span {
+.survey-box .slick-dots li.slick-active span, .survey-box .slick-dots li.slick-active button {
   margin: -0.06rem 0 0 0;
   width: 0.5rem;
   height: 0.5rem;
@@ -23928,7 +23928,7 @@ a.bt-link-tx.underline.small {
   margin: 0 0.44rem 0 0;
   vertical-align: middle; }
 
-.popularity-brand .slick-dots li span {
+.popularity-brand .slick-dots li span, .popularity-brand .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -23938,7 +23938,7 @@ a.bt-link-tx.underline.small {
   line-height: 0;
   cursor: pointer; }
 
-.popularity-brand .slick-dots li.slick-active span {
+.popularity-brand .slick-dots li.slick-active span, .popularity-brand .slick-dots li.slick-active button {
   margin: -0.06rem 0 0 0;
   width: 0.5rem;
   height: 0.5rem;
@@ -24085,7 +24085,7 @@ a.bt-link-tx.underline.small {
   margin: 0 0.44rem 0 0;
   vertical-align: middle; }
 
-.national-brand .slick-dots li span {
+.national-brand .slick-dots li span, .national-brand .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -24095,7 +24095,7 @@ a.bt-link-tx.underline.small {
   line-height: 0;
   cursor: pointer; }
 
-.national-brand .slick-dots li.slick-active span {
+.national-brand .slick-dots li.slick-active span, .national-brand .slick-dots li.slick-active button {
   margin: -0.06rem 0 0 0;
   width: 0.5rem;
   height: 0.5rem;
@@ -28934,7 +28934,7 @@ input[type="radio"].formradio-small.type2 + label {
   padding: 0.25rem;
   margin: 0; }
 
-.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li span {
+.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li span, .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li button {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 0.44rem;
@@ -28947,7 +28947,7 @@ input[type="radio"].formradio-small.type2 + label {
 .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active {
   background: none; }
 
-.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active span {
+.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active span, .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active button {
   width: 0.5rem;
   height: 0.5rem;
   margin: 0;
@@ -31120,7 +31120,7 @@ input[type="radio"].formradio-small.type2 + label {
   margin: 0 0 0 0.56rem;
   color: transparent; }
 
-.section-swiper-box .slider-box .slick-dots li span {
+.section-swiper-box .slider-box .slick-dots li span, .section-swiper-box .slider-box .slick-dots li button {
   display: block;
   width: 0.44rem;
   height: 0.44rem;
@@ -31139,7 +31139,7 @@ input[type="radio"].formradio-small.type2 + label {
   height: 0.5rem;
   margin-top: -0.06rem; }
 
-.section-swiper-box .slider-box .slick-dots li.slick-active span {
+.section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {
   width: 0.5rem;
   height: 0.5rem;
   background: #000000; }
@@ -31174,11 +31174,11 @@ input[type="radio"].formradio-small.type2 + label {
 .main-charge-box .slider-box .slick-dots {
   top: -1.19rem; }
 
-.main-charge-box .slider-box .slick-dots li span {
+.main-charge-box .slider-box .slick-dots li span, .main-charge-box .slider-box .slick-dots li button {
   border: 1px solid #fff;
   background: none; }
 
-.main-charge-box .slider-box .slick-dots li.slick-active span {
+.main-charge-box .slider-box .slick-dots li.slick-active span, .main-charge-box .slider-box .slick-dots li.slick-active button {
   background: #fff; }
 
 .main-charge-box .main-box-cont {
@@ -31292,10 +31292,10 @@ input[type="radio"].formradio-small.type2 + label {
   background: #fff;
   color: inherit; }
 
-.main-charge-box.roaming .slider-box .slick-dots li span {
+.main-charge-box.roaming .slider-box .slick-dots li span, .main-charge-box.roaming .slider-box .slick-dots li button {
   border-color: #000; }
 
-.main-charge-box.roaming .slider-box .slick-dots li.slick-active span {
+.main-charge-box.roaming .slider-box .slick-dots li.slick-active span, .main-charge-box.roaming .slider-box .slick-dots li.slick-active button {
   background: #000; }
 
 .main-charge-box.roaming .main-box-cont {
@@ -31687,7 +31687,7 @@ body.apphome .section-box {
   margin: 0 0 0 0.5rem;
   vertical-align: top; }
 
-.survey-box2 .slick-dots li span {
+.survey-box2 .slick-dots li span, .survey-box2 .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -31697,7 +31697,7 @@ body.apphome .section-box {
   line-height: 0;
   cursor: pointer; }
 
-.survey-box2 .slick-dots li.slick-active span {
+.survey-box2 .slick-dots li.slick-active span, .survey-box2 .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   margin-top: -0.06rem;
@@ -31733,7 +31733,7 @@ body.apphome .section-box {
   margin: 0 0 0 0.5rem;
   vertical-align: top; }
 
-.survey-box3 .slick-dots li span {
+.survey-box3 .slick-dots li span, .survey-box3 .slick-dots li button {
   display: block;
   width: 0.31rem;
   height: 0.31rem;
@@ -31743,7 +31743,7 @@ body.apphome .section-box {
   line-height: 0;
   cursor: pointer; }
 
-.survey-box3 .slick-dots li.slick-active span {
+.survey-box3 .slick-dots li.slick-active span, .survey-box3 .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   margin-top: -0.06rem;

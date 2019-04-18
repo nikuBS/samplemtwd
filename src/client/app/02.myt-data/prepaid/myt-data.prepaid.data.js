@@ -166,6 +166,8 @@ Tw.MyTDataPrepaidData.prototype = {
    * @param $layer
    */
   _selectPopupCallback: function ($target, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // 접근성
+
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
       $layer.find('input#' + $id).attr('checked', 'checked');

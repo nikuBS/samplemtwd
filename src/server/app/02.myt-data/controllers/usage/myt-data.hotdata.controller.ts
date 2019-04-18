@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import DateHelper from '../../../../utils/date.helper';
 import MyTHelper from '../../../../utils/myt.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
-import { SVC_ATTR_E} from '../../../../types/bff.type';
+import { S_FLAT_RATE_PROD_ID, SVC_ATTR_E, SVC_CDGROUP } from '../../../../types/bff.type';
 
 const VIEW = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
@@ -30,23 +30,34 @@ class MyTDataHotdata extends TwViewController {
     Observable.combineLatest(this.reqBalances()).subscribe(([_usageDataResp]) => {
       const usageDataResp = JSON.parse(JSON.stringify(_usageDataResp));
       if ( usageDataResp.code === API_CODE.CODE_00 ) {
-        let extraDataReq;
-        switch ( svcInfo.svcAttrCd ) {
-          case SVC_ATTR_E.MOBILE_PHONE :
-            extraDataReq = this.reqBalanceAddOns(); // 부가 서비스
-            break;
-          case SVC_ATTR_E.PPS :
-            extraDataReq = this.reqPpsCard(); // PPS 정보
-            break;
-        }
-        if ( extraDataReq ) {
-          Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
-            this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
-          }, (resp) => {
+        if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1) {
+          let extraDataReq;
+          switch ( svcInfo.svcAttrCd ) {
+            case SVC_ATTR_E.MOBILE_PHONE :
+              extraDataReq = this.reqBalanceAddOns(); // 부가 서비스
+              break;
+            case SVC_ATTR_E.PPS :
+              extraDataReq = this.reqPpsCard(); // PPS 정보
+              break;
+          }
+          if ( extraDataReq ) {
+            Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
+              this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
+            }, (resp) => {
+              this._render(res, svcInfo, pageInfo, usageDataResp);
+            });
+          } else {
             this._render(res, svcInfo, pageInfo, usageDataResp);
-          });
+          }
         } else {
-          this._render(res, svcInfo, pageInfo, usageDataResp);
+          // 집전화 정액제 상품을 제외하고 에러처리
+          if (svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) !== -1) {
+            this._render(res, svcInfo, pageInfo, usageDataResp);
+          } else {
+            this._renderError(res, svcInfo, pageInfo, {
+              code: 'BLN0004'
+            });
+          }
         }
       } else {
         this._renderError(res, svcInfo, pageInfo, usageDataResp);
@@ -76,7 +87,8 @@ class MyTDataHotdata extends TwViewController {
       pageInfo,
       usageData: {},
       balanceAddOns: {},
-      ppsInfo: {}
+      ppsInfo: {},
+      isWireLess: false
     };
 
     switch ( svcInfo.svcAttrCd ) {
@@ -98,10 +110,31 @@ class MyTDataHotdata extends TwViewController {
           option['ppsInfo'] = extraData;
         }
         break;
+      // 유선 집전화
+      case SVC_ATTR_E.TELEPHONE :
+        const result = usageDataResp.result;
+        if (result.balance) {
+          if (result.balance[0]) {
+            result.voice = [];
+            result.voice.push(result.balance[0]);
+          }
+          if (result.balance[1]) {
+            result.sms = [];
+            result.sms.push(result.balance[1]);
+          }
+        }
+        option['usageData'] = MyTHelper.parseUsageData(result);
+        view = VIEW.CIRCLE;
+        break;
       default:
         option['usageData'] = MyTHelper.parseUsageData(usageDataResp.result);
         break;
     }
+
+    if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
+      option['isWireLess'] = true;
+    }
+
     res.render(view, option);
   }
 
@@ -118,6 +151,10 @@ class MyTDataHotdata extends TwViewController {
     error.code = resp.code;
     if ( error.code !== 'BLN0001' ) {
       error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
+    }
+    // 유선인 경우
+    if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1 && (error.code === 'BLN0004' || error.code === 'BLN0007')) {
+      error.contents = MYT_DATA_USAGE.ERROR['BLN0004_S'].contents;
     }
     res.render(VIEW.ERROR, {
       svcInfo,

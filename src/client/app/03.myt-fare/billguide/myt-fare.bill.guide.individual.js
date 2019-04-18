@@ -164,9 +164,9 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this._history.goLoad(url);
   },
   // 요금납부 호출
-  _feePayBtnEvt: function () {
+  _feePayBtnEvt: function (event) {
     // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
-    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd, $(event.currentTarget));
   },
   // 납부내역화면으로 이동
   _payListBtnEvt: function () {
@@ -229,9 +229,11 @@ Tw.MyTFareBillGuideIndividual.prototype = {
       },
       $.proxy(this._conditionChangeEvtInit, this, $target),
       $.proxy(this._conditionChangeEvtClose, this, $target),
-      hashName);
+      hashName, $target);
   },
   _conditionChangeEvtInit: function ($target, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
+
     $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
     // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },

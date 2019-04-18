@@ -1638,7 +1638,7 @@ hr {
   position: absolute !important;
   overflow: hidden;
   color: transparent;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .blind-height0 {
@@ -5894,11 +5894,12 @@ a.ui-button:active,
   display: block;
   width: 20px;
   height: 20px;
-  padding: 5px;
+  /*padding: 5px;*/
   cursor: pointer;
   color: transparent;
   border: 0;
   outline: none;
+  text-indent: -625rem;
   background: transparent; }
 
 .slick-dots li button:hover,
@@ -6317,7 +6318,7 @@ a.ui-button:active,
   height: 0.31rem;
   border: 1px solid #fff; }
 
-.membership-event-box .slider-box .slick-dots li span {
+.membership-event-box .slider-box .slick-dots li span, .membership-event-box .slider-box .slick-dots li button {
   width: 0.25rem;
   height: 0.25rem;
   background: none; }

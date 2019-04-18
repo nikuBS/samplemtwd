@@ -72,9 +72,10 @@ Tw.MainMenuSettingsNotifications.prototype = {
       data.tNotiInfoRcvAgreeYn = checked ? 'Y' : 'N';
     } else if (id.indexOf('recommend') !== -1) {
       data.tNotiMrktRcvAgreeYn = checked ? 'Y' : 'N';
+    } else if (id.indexOf('tplace') !== -1) {
+      data.tplaceUseAgreeYn = checked ? 'Y' : 'N';
     }
 
-    if (id.indexOf('tplace') === -1) { // remove it!
     this._apiService.request(Tw.API_CMD.BFF_03_0024, data)
       .done($.proxy(function (res) {
         if (res.code !== Tw.API_CODE.CODE_00) {
@@ -85,9 +86,6 @@ Tw.MainMenuSettingsNotifications.prototype = {
       }, this))
       .fail($.proxy(this._onFailChangingNoti, this, id)
     );
-    } else {
-      this._onNotiChangedSucceed(id, checked); // remove it!
-    }
   },
 
   /**
@@ -281,8 +279,8 @@ Tw.MainMenuSettingsNotifications.prototype = {
     });
   },
 
-  // To remove
-  _onKidding: function () {
+   // To remove
+   _onKidding: function () {
     if (!this._kiddingCount || this._kiddingCount === 0) {
       this._kiddingCount = 1;
     }

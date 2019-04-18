@@ -16,12 +16,12 @@ Tw.ProductWireServiceArea = function(rootEl) {
 Tw.ProductWireServiceArea.prototype = {
   _bindEvent: function() {
     this.$submitBtn.on('click', $.proxy(this._handleSearchArea, this));
-    this.$container.on('click', '#fe-post', $.proxy(this._openPostcode, this));
+    this.$container.on('click', '#fe-post-btn', $.proxy(this._openPostcode, this));
   },
 
   _cachedElement: function() {
     this.$submitBtn = this.$container.find('#fe-submit');
-    this.$zipBtn = this.$container.find('#fe-post');
+    this.$zipBtn = this.$container.find('#fe-post-btn');
   },
 
   _openPostcode: function() {

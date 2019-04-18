@@ -1,6 +1,6 @@
 Tw.BANNER_LINK_TYPE = {
-  CHANNEL_APP: '1',
-  OTHER_WEB: '2'
+  INTERNAL: '1',
+  EXTERNAL: '2'
 };
 
 Tw.NOTI_POPUP_TYPE = {

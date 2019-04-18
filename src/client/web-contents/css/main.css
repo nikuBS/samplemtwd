@@ -43,7 +43,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.06rem;
-  height: 2.13rem; }
+  height: 2.00rem; }
 
 .quick-menu-list li .bt i {
   position: relative;
@@ -124,7 +124,7 @@
   padding: 5px;
   color: transparent; }
 
-.section-swiper-box .slider-box .slick-dots li span {
+.section-swiper-box .slider-box .slick-dots li span, .section-swiper-box .slider-box .slick-dots li button {
   display: block;
   width: 0.44rem;
   height: 0.44rem;
@@ -142,7 +142,7 @@
   width: 0.5rem;
   height: 0.5rem; }
 
-.section-swiper-box .slider-box .slick-dots li.slick-active span {
+.section-swiper-box .slider-box .slick-dots li.slick-active span, .section-swiper-box .slider-box .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   background: #000000; }
@@ -389,6 +389,7 @@
   font-weight: 300; }
 
 .main-breakdown-box .desc .btn-tip {
+  display: inline-block;
   width: 1.5rem;
   height: 0.88rem;
   margin: -0.19rem 0 0 0.19rem;
@@ -1984,7 +1985,7 @@ body.apphome .main-membershop-box {
 .main-slide-banner .slider-box .slick-dots li + li {
   margin: 0 0 0 0.5rem; }
 
-.main-slide-banner .slider-box .slick-dots li span {
+.main-slide-banner .slider-box .slick-dots li span, .main-slide-banner .slider-box .slick-dots li button {
   display: block;
   margin: 0.06rem auto;
   width: 0.44rem;
@@ -2000,7 +2001,7 @@ body.apphome .main-membershop-box {
   height: 0.44rem;
   background: #fff; }
 
-.main-slide-banner .slider-box .slick-dots li.slick-active span {
+.main-slide-banner .slider-box .slick-dots li.slick-active span, .main-slide-banner .slider-box .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   background-color: transparent; }
@@ -2035,7 +2036,7 @@ body.apphome .main-membershop-box {
 .main-slide-banner.ta-02 .slick-dots li {
   border: 1px solid transparent; }
 
-.main-slide-banner.ta-02 .slick-dots li span {
+.main-slide-banner.ta-02 .slick-dots li span, .main-slide-banner.ta-02 .slick-dots li button {
   width: 0.44rem;
   height: 0.44rem;
   margin: 0;
@@ -2044,8 +2045,8 @@ body.apphome .main-membershop-box {
   background: #fff; }
 
 .main-slide-banner.ta-02 .slick-dots li.slick-active {
-  width: 0.38rem;
-  height: 0.38rem;
+  width: 0.44rem;
+  height: 0.44rem;
   border: 1px solid #000;
   background: #000; }
 
@@ -2062,7 +2063,7 @@ body.apphome .main-membershop-box {
   padding: 0.25rem;
   margin: 0; }
 
-.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li span {
+.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li span, .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li button {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 0.44rem;
@@ -2075,7 +2076,7 @@ body.apphome .main-membershop-box {
 .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active {
   background: none; }
 
-.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active span {
+.main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active span, .main-slide-banner.slide-pagingtype.pg-rtop .slider-box .slick-dots li.slick-active button {
   width: 0.5rem;
   height: 0.5rem;
   margin: 0;
@@ -3411,11 +3412,11 @@ body.apphome .main-membershop-box {
 .main-charge-box .slider-box .slick-dots {
   top: -1.19rem; }
 
-.main-charge-box .slider-box .slick-dots li span {
+.main-charge-box .slider-box .slick-dots li span, .main-charge-box .slider-box .slick-dots li button {
   border: 1px solid #fff;
   background: none; }
 
-.main-charge-box .slider-box .slick-dots li.slick-active span {
+.main-charge-box .slider-box .slick-dots li.slick-active span, .main-charge-box .slider-box .slick-dots li.slick-active button {
   background: #fff; }
 
 .main-charge-box.bg-white {
@@ -3560,10 +3561,10 @@ body.apphome .main-membershop-box {
   background: #fff;
   color: inherit; }
 
-.main-charge-box.roaming .slider-box .slick-dots li span {
+.main-charge-box.roaming .slider-box .slick-dots li span, .main-charge-box.roaming .slider-box .slick-dots li button {
   border-color: #000; }
 
-.main-charge-box.roaming .slider-box .slick-dots li.slick-active span {
+.main-charge-box.roaming .slider-box .slick-dots li.slick-active span, .main-charge-box.roaming .slider-box .slick-dots li.slick-active button {
   background: #000; }
 
 .main-charge-box.roaming .main-box-cont {
@@ -3898,7 +3899,7 @@ body.apphome .main-membershop-box {
 .main-banner-box .slider-box .slick-dots li + li {
   margin: 0 0 0 0; }
 
-.main-banner-box .slider-box .slick-dots li span {
+.main-banner-box .slider-box .slick-dots li span, .main-banner-box .slider-box .slick-dots li button {
   display: block;
   margin: 0.06rem auto;
   width: 0.44rem;
@@ -3916,7 +3917,7 @@ body.apphome .main-membershop-box {
   margin: 0.36rem 0.31rem 0 0.31rem;
   padding: 0; }
 
-.main-banner-box .slider-box .slick-dots li.slick-active span {
+.main-banner-box .slider-box .slick-dots li.slick-active span, .main-banner-box .slider-box .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   border: none;
@@ -4312,7 +4313,7 @@ body.apphome .main-membershop-box {
 .accessories-box .slider-box .slick-dots li + li {
   margin: 0 0 0 0; }
 
-.accessories-box .slider-box .slick-dots li span {
+.accessories-box .slider-box .slick-dots li span, .accessories-box .slider-box .slick-dots li button {
   display: block;
   margin: 0.06rem auto;
   width: 0.5rem;
@@ -4330,7 +4331,7 @@ body.apphome .main-membershop-box {
   margin: 0.35rem 0.31rem 0 0.31rem;
   padding: 0; }
 
-.accessories-box .slider-box .slick-dots li.slick-active span {
+.accessories-box .slider-box .slick-dots li.slick-active span, .accessories-box .slider-box .slick-dots li.slick-active button {
   width: 0.44rem;
   height: 0.44rem;
   border: none;

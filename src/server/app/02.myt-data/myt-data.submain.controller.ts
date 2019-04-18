@@ -30,7 +30,7 @@ import {
   UNIT_E,
   UNLIMIT_CODE,
   TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
-  TPLAN_PROD_ID //  T가족모아 가입 가능 요금제
+  TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E //  T가족모아 가입 가능 요금제
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -66,7 +66,7 @@ class MytDataSubmainController extends TwViewController {
 
     this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
-      this._getRemnantData(),
+      this._getRemnantData(data.svcInfo),
       this._getDataPresent(),
       this._getRefillCoupon(),
       this._reqRefillGiftHistory(),
@@ -82,7 +82,7 @@ class MytDataSubmainController extends TwViewController {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
-        data.remnantData = this.parseRemnantData(remnant);
+        data.remnantData = this.parseRemnantData(remnant, data.svcInfo);
         if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
           data.isDataShow = true;
         }
@@ -161,6 +161,10 @@ class MytDataSubmainController extends TwViewController {
       if ( refill && refill.length > 0 ) {
         // 리필쿠폰
         data.refill = refill;
+      }
+
+      if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
+        data.isWireLess = true;
       }
 
       const reqBkdArr = new Array();
@@ -400,6 +404,7 @@ class MytDataSubmainController extends TwViewController {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);
       case UNIT_E.VOICE:
+      case UNIT_E.VOICE_2:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.FEE:
       case UNIT_E.SMS:
@@ -410,7 +415,7 @@ class MytDataSubmainController extends TwViewController {
     return '';
   }
 
-  parseRemnantData(remnant: any): any {
+  parseRemnantData(remnant: any, svcInfo: any): any {
     // 실시간잔여량 데이터 parse
     const GDATA = remnant['gnrlData'] || [];
     const SDATA = remnant['spclData'] || [];
@@ -429,6 +434,19 @@ class MytDataSubmainController extends TwViewController {
       totalLimit: false,
       total: null
     };
+    if (svcInfo.svcAttrCd === SVC_ATTR_E.TELEPHONE && remnant.balance) {
+      const voice = remnant.balance[0];
+      if ( voice ) {
+        this.convShowData(voice);
+        result['voice'].push(voice);
+      }
+      const sms = remnant.balance[1];
+      if ( sms ) {
+        this.convShowData(sms);
+        result['sms'].push(sms);
+      }
+      return result;
+    }
     if ( GDATA.length > 0 ) {
       GDATA.filter((item) => {
         if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
@@ -509,15 +527,27 @@ class MytDataSubmainController extends TwViewController {
 
   convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
-    const MOBILE = (items && items['m']) || [];
+    let lines = [];
+    const m = (items && items['m']) || [];
+    let s = (items && items['s']) || [];
+    s = s.filter((_data) => {
+      return _data.svcAttrCd === SVC_ATTR_E.TELEPHONE && S_FLAT_RATE_PROD_ID.indexOf(_data.prodId) !== -1;
+    });
+
     const list: any = [];
     // 간편로그인인 경우는 다른 회선 정보 노출 하지않도록 처리
     if ( target.loginType === LOGIN_TYPE.EASY ) {
       return list;
     }
-    MOBILE.sort(this.compare);
-    if ( MOBILE.length > 0 ) {
-      const nOthers: any = Object.assign([], MOBILE);
+    if (m.length > 0) {
+      lines = lines.concat(m);
+    }
+    if (s.length > 0) {
+      lines = lines.concat(s);
+    }
+    lines.sort(this.compare);
+    if ( lines.length > 0 ) {
+      const nOthers: any = Object.assign([], lines);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
@@ -544,11 +574,23 @@ class MytDataSubmainController extends TwViewController {
   }
 
   // 실시간잔여량
-  _getRemnantData(): Observable<any> {
+  _getRemnantData(svcInfo: any): Observable<any> {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
       const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
+          return resp.result;
+        }
+        // 집전화 정액제 상품을 제외하고 에러처리
+        if (svcInfo.svcAttrCd === SVC_ATTR_E.TELEPHONE && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) !== -1) {
+          return resp.result;
+        } else {
+          return {
+            info: {
+              code: 'BLN0004'
+            }
+          };
+        }
       } else {
         // error
         return {

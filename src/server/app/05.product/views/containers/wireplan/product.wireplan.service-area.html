@@ -8,7 +8,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
+    <div id="skipNav" class="skip_navi" aria-hidden="true">
         <ul>
             <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
@@ -37,7 +37,7 @@
                         <div class="pt30">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button id="fe-post">우편번호 조회</button>
+                                    <button id="fe-post-btn">우편번호 조회</button>
                                 </li>
                             </ul>
                         </div>

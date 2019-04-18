@@ -20,7 +20,7 @@ Tw.MytJoinSuspendUpload = function () {
  * @readonly
  */
 
-Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp"' };
+Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp, .png"' };
 Tw.MytJoinSuspendUpload.prototype = {
   show: function (callback, fileCount, oldFiles, fileInfo, tooltip, $focusEl) {
     this._callback = callback;
@@ -174,7 +174,7 @@ Tw.MytJoinSuspendUpload.prototype = {
       return false;
     }
     // file suffix validation.
-    if ( !/(.gif|.bmp|.jpg|.jpeg|.doc|.pdf|.hwp|.docx)$/ig.test(file.name) ) {
+    if ( !/(.gif|.bmp|.jpg|.jpeg|.doc|.pdf|.hwp|.docx|.png)$/ig.test(file.name) ) {
       this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }

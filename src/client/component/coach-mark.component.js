@@ -4,10 +4,11 @@
  * @since 2019.02.11
  */
 
-Tw.CoachMark = function ($container, targetId, nativeCmd) {
+Tw.CoachMark = function ($container, targetId, focusId, nativeCmd) {
   this._nativeService = Tw.Native;
 
   this.$coachView = $container.find(targetId);
+  this.$focusTarget = $container.find(focusId);
   this._nativeCmd = nativeCmd;
   $container.on('click', targetId + ' > button', $.proxy(this._onClickCoachClose, this));
 
@@ -31,6 +32,7 @@ Tw.CoachMark.prototype = {
   },
   _onClickCoachClose: function () {
     this.$coachView.addClass('none');
+    this.$focusTarget.focus();
     this._nativeService.send(Tw.NTV_CMD.SAVE, { key: this._nativeCmd, value: 'Y' });
   }
 };

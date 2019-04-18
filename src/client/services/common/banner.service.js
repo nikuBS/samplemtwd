@@ -82,16 +82,16 @@ Tw.BannerService.prototype = {
       beforeChange: function(e, slick, before, after) { // for accessibiltiy (set selected indicator)
         var dots = slick.$dots.find('li');
         $(dots[before])
-          .find('> span')
+          .find('> button')
           .text(before + 1);
-        slick.$slides[before].setAttribute('tabindex', -1);
+        $(slick.$slides[before]).find('a').attr('tabindex', -1);
+        $(slick.$slides[after]).find('a').attr('tabindex', 0);
         $(dots[after])
-          .find('> span')
+          .find('> button')
           .text(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
-        slick.$slides[after].setAttribute('tabindex', 0);
       },
       afterChange: function(e, slick, index) {
-        slick.$slides[index].focus();
+        $(slick.$slides[index]).find('a').focus();
       }
     });
 
@@ -117,9 +117,9 @@ Tw.BannerService.prototype = {
             accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
               } else {
-                return $('<span role="button" />').text(i + 1);
+                return $('<button />').text(i + 1);
               }
             }
           });
@@ -133,9 +133,9 @@ Tw.BannerService.prototype = {
             accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<span role="button" />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
               } else {
-                return $('<span role="button" />').text(i + 1);
+                return $('<button />').text(i + 1);
               }
             }
           });
@@ -198,21 +198,15 @@ Tw.BannerService.prototype = {
     var link = banner.imgLinkUrl;
 
     if (link) {
-      switch (banner.imgLinkTrgtClCd) { 
-        case Tw.BANNER_LINK_TYPE.CHANNEL_APP: { // internal link
-          window.location.href = link;
-          break;
-        }
-        // case Tw.BANNER_LINK_TYPE.OTHER_WEB:
-        default: {  // external link
-          if (Tw.BrowserHelper.isApp() && banner.isBill) {
-            Tw.CommonHelper.showDataCharge(function() {
-              Tw.CommonHelper.openUrlExternal(link);
-            });
-          } else {
+      if (banner.isInternalLink) {
+        window.location.href = link;
+      } else {
+        if (Tw.BrowserHelper.isApp() && banner.isBill) {
+          Tw.CommonHelper.showDataCharge(function() {
             Tw.CommonHelper.openUrlExternal(link);
-          }
-          break;
+          });
+        } else {
+          Tw.CommonHelper.openUrlExternal(link);
         }
       }
     }
@@ -246,15 +240,14 @@ Tw.BannerService.prototype = {
         .sort(function(a, b) {  
           return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
         })
-        .map(function(banner, idx) {
+        .map(function(banner) {
           return {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
             bnnrFilePathNm: banner.bnnrFileNm,
-            idx: idx,
-            imgLinkTrgtClCd: banner.tosImgLinkTrgtClCd,
             bnnrImgAltCtt: banner.imgAltCtt,
-            imgLinkUrl: banner.imgLinkUrl
+            imgLinkUrl: banner.imgLinkUrl,
+            isInternalLink: banner.tosImgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
           };
         })
         .value();
@@ -274,7 +267,7 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            idx: nBanners.length
+            isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
           };
 
           nBanners.push($.extend(banner, temp));

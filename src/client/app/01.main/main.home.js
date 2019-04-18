@@ -453,6 +453,8 @@ Tw.MainHome.prototype = {
    * @private
    */
   _onOpenDataLink: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     $popupContainer.on('click', '#fe-bt-recharge-link', $.proxy(this._onClickRechargeLink, this));
     $popupContainer.on('click', '#fe-bt-gift-link', $.proxy(this._onClickGiftLink, this));
     $popupContainer.on('click', '#fe-bt-family-link', $.proxy(this._onClickFamilyLink, this));
@@ -860,7 +862,7 @@ Tw.MainHome.prototype = {
    */
   _onClickPayment: function ($event) {
     var svcAttrCd = $($event.currentTarget).data('svcattrcd');
-    new Tw.MyTFareBill(this.$container, svcAttrCd);
+    new Tw.MyTFareBill(this.$container, svcAttrCd, $($event.currentTarget));
   },
 
   /**
@@ -1288,7 +1290,8 @@ Tw.MainHome.prototype = {
   _onClickBtRecharge: function ($event) {
     $event.stopPropagation();
     new Tw.ImmediatelyRechargeLayer(this.$container, {
-      pathUrl: '/main/home'
+      pathUrl: '/main/home',
+      targetBtn: $($event.currentTarget)
     });
   },
 
@@ -1917,8 +1920,8 @@ Tw.MainHome.prototype = {
    * @private
    */
   _setCoachMark: function () {
-    new Tw.CoachMark(this.$container, '.fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
-    new Tw.CoachMark(this.$container, '#fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
+    new Tw.CoachMark(this.$container, '.fe-coach-line', '.fe-coach-line-target', Tw.NTV_STORAGE.COACH_LINE);
+    new Tw.CoachMark(this.$container, '#fe-coach-data', '.fe-coach-data-target', Tw.NTV_STORAGE.COACH_DATA);
   },
 
   /**

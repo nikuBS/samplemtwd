@@ -53,6 +53,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._bindEvent();
   // 최초 동작
   this._init();
+  // 웹접근성 보완 처리
+  this._coverWebAccessBility();
 };
 
 Tw.ProductCommonCallplan.prototype = {
@@ -592,9 +594,7 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: 'MP_02_02_06',
       layer: true,
       list: this._contentsDetailList
-    }, $.proxy(this._focusContentsDetail, this, contentsIndex), function() {
-      $item.focus();
-    }, 'contents_detail');
+    }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail', e);
   },
 
   /**
@@ -613,7 +613,10 @@ Tw.ProductCommonCallplan.prototype = {
       $scrollContainer.scrollTop($target.offset().top - $('.page-header').height());
     }
 
-    $target.focus();
+    setTimeout(function() {
+      $target.focus();
+    }, 500);
+
     Tw.CommonHelper.replaceExternalLinkTarget($popupContainer);
   },
 
@@ -1088,6 +1091,20 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     return joinedInfoResp.combiProdScrbYn === 'Y';
+  },
+
+  _coverWebAccessBility: function() {
+    this.$container.on('click', '.fe-tab > li', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $(this).find('a').trigger('click');
+    });
+
+    this.$container.on('click', '.fe-tab > li > a', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
   }
 
 };

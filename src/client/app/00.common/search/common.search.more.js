@@ -100,21 +100,27 @@ $.extend(Tw.CommonSearchMore.prototype,
   },
   _showSelectFilter : function (evt) {
     var listData = [
-      {value : Tw.SEARCH_FILTER_STR.ACCURACY , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
-      {value : Tw.SEARCH_FILTER_STR.NEW , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
-      {value : Tw.SEARCH_FILTER_STR.LOW , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'},
-      {value : Tw.SEARCH_FILTER_STR.HIGH , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'}
+      { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
+        'radio-attr':'id="ra0" data-type="R" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.ACCURACY+'" '+(this._searchInfo.search[0].direct.sort==='R'?'checked':'' )},
+      { 'label-attr': 'for=ra1', 'txt': Tw.SEARCH_FILTER_STR.NEW,
+        'radio-attr':'id="ra1" data-type="D" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.NEW+'" '+(this._searchInfo.search[0].direct.sort==='D'?'checked':'' )},
+      { 'label-attr': 'for=ra2', 'txt': Tw.SEARCH_FILTER_STR.LOW,
+        'radio-attr':'id="ra2" data-type="L" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.LOW+'" '+(this._searchInfo.search[0].direct.sort==='L'?'checked':'' )},
+      { 'label-attr': 'for=ra3', 'txt': Tw.SEARCH_FILTER_STR.HIGH,
+        'radio-attr':'id="ra3" data-type="H" name="selectFilter" value="'+Tw.SEARCH_FILTER_STR.HIGH+'" '+(this._searchInfo.search[0].direct.sort==='H'?'checked':'' )}
     ];
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        data : [{list : listData}]
+        data : [{list : listData}],
+        btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
       },$.proxy(this._bindPopupElementEvt,this),
       null,
       'select_filter',$(evt.currentTarget));
   },
-  _bindPopupElementEvt : function(popupElement){
-    $(popupElement).on('click','.chk-link-list button',$.proxy(this._filterSelectEvent,this));
+  _bindPopupElementEvt : function($popupElement){
+    Tw.CommonHelper.focusOnActionSheet($popupElement);
+    $popupElement.on('click','.cont-actionsheet input',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
     var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+
@@ -132,9 +138,10 @@ $.extend(Tw.CommonSearchMore.prototype,
     var data = this._makePageSelectorData(totalPageNum , this._pageNum);
 
     this._popupService.open({
-          hbs: 'actionsheet_select_a_type',// hbs의 파일명
+          hbs: 'actionsheet01',// hbs의 파일명
           layer: true,
-          data: [{list : data}]
+          data: [{list : data}],
+          btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
         },
         $.proxy(this._bindPageSelectorEvt,this),
         null,
@@ -142,18 +149,22 @@ $.extend(Tw.CommonSearchMore.prototype,
   },
   _makePageSelectorData : function (pageLimit , nowPage) {
     var _returnData = [];
-
     for(var i=1;i<=pageLimit;i++){
       if(nowPage===i){
-        _returnData.push({option : 'checked' , value : i , attr : 'data-idx='+i});
+        //_returnData.push({option : 'checked' , value : i , attr : 'data-idx='+i});
+        _returnData.push({ 'label-attr': 'for=ra'+i, 'txt': i,
+          'radio-attr':'id="ra'+i+'" data-idx="'+i+'" name="selectPage" value="'+i+'" checked'});
       }else{
-        _returnData.push({option : '' , value : i , attr : 'data-idx='+i});
+        //_returnData.push({option : '' , value : i , attr : 'data-idx='+i});
+        _returnData.push({ 'label-attr': 'for=ra'+i, 'txt': i,
+          'radio-attr':'id="ra'+i+'" data-idx="'+i+'" name="selectPage" value="'+i+'" '});
       }
     }
     return _returnData;
   },
-  _bindPageSelectorEvt : function (evt) {
-    $(evt).on('click', '.chk-link-list button', $.proxy(this._changePageNum, this));
+  _bindPageSelectorEvt : function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
+    $layer.on('click', '.cont-actionsheet input', $.proxy(this._changePageNum, this));
   },
   _changePageNum : function (evt) {
     var selectedPageNum = $(evt.currentTarget).data('idx');

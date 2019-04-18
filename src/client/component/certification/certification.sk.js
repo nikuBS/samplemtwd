@@ -181,6 +181,8 @@ Tw.CertificationSk.prototype = {
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
   _onOpenSmsOnly: function ($popupContainer) {
+    Tw.CommonHelper.focusOnActionSheet($popupContainer);
+
     this.$checkKeyin = $popupContainer.find('#fe-check-keyin');
     this.$inputMdn = $popupContainer.find('#fe-input-mdn');
     this.$inputCert = $popupContainer.find('#fe-input-cert');

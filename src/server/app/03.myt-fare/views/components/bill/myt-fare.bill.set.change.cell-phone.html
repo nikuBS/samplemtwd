@@ -9,8 +9,16 @@
     <span class="input">
         <%
             let placeholder = name === 'ccurNotiSvcNum' ? '법정대리인 휴대폰번호':'숫자만 입력';
+            let titleValue = ' 숫자만 입력';
+            if (name === 'cntcNum1') {
+                titleValue = '연락처' + titleValue;
+            } else if (name === 'ccurNotiSvcNum') {
+                titleValue = '법정대리인 휴대폰번호' + titleValue;
+            } else {
+                titleValue = '휴대폰번호' + titleValue;
+            }
         %>
-        <input class="fe-hp-num" type="tel" name="<%=name%>" title="휴대폰번호 숫자만 입력" value="<%=value%>"
+        <input class="fe-hp-num" type="tel" name="<%=name%>" title="<%=titleValue%>" value="<%=value%>"
                placeholder="<%=placeholder%>" maxlength="13" data-inactive-target data-valid-type="hp" data-state="true"/>
         <button class="cancel"><span class="blind">삭제</span></button>
     </span>

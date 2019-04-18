@@ -37,7 +37,7 @@ Tw.CommonPostcodeDetail.prototype = {
       hbs: 'CO_UT_05_04_02'
     },
       $.proxy(this._onDetailSearchEvent, this, $addressObject),
-      null,
+      $.proxy(this._setFocus, this),
       'post0002',
       this.$target
     );
@@ -58,13 +58,20 @@ Tw.CommonPostcodeDetail.prototype = {
   },
   /**
    * @function
+   * @desc popup close 시 원래 페이지로 focus 이동
+   */
+  _setFocus: function () {
+    this.$target.focus();
+  },
+  /**
+   * @function
    * @desc tab 처리
    * @param $addressObject - 1페이지에서 넘어온 데이터
    */
   _setInitTab: function ($addressObject) {
     var $selectedTarget = this.$layer.find('#' + $addressObject.tabId); // 첫 번째 팝업에서 선택된 정보 (도로명 or 지번)
-    $selectedTarget.attr('aria-selected', 'true'); // 웹접근성
-    $selectedTarget.siblings().addClass('none').attr('aria-selected', 'false'); // 웹접근성
+    $selectedTarget.attr({ 'aria-selected': 'true', 'aria-hidden': 'false' }); // 웹접근성
+    $selectedTarget.siblings().addClass('none').attr({ 'aria-selected': 'false', 'aria-hidden': 'true' }); // 웹접근성
   },
   /**
    * @function

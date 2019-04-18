@@ -6,13 +6,6 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
     <div id="myt-fare-bill-option-register" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
@@ -20,8 +13,8 @@
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">
-                <h2 class="blind">내용</h2>
-                <div id="contents" class="container">
+                <h2 id="contents" class="blind">내용</h2>
+                <div class="container">
                     <div class="cont-box nogaps">
                         <div class="form-data-tit-wrap ml16">
                             <strong class="tit">자동납부 방법</strong>
@@ -78,8 +71,8 @@
                                 </span>
                             </li>
                             <li class="fe-bank-wrap">
-                                <label class="tit" for="flab06">계좌정보
-                                    <button id="MF_05_01_01_tip_02" title="계좌정보 tip" aria-haspopup="true" class="tip-view" type="button">TIP</button>
+                                <label class="tit">계좌정보
+                                    <button id="MF_05_01_01_tip_02" aria-haspopup="true" title="계좌정보" class="tip-view" type="button">TIP</button>
                                 </label>
                                 <button class="bt-dropdown big fe-select-bank fe-required-select" title="은행 선택" aria-haspopup="true" type="button">
                                     은행 선택<span class="ico"></span>
@@ -114,8 +107,8 @@
                                 </span>
                             </li>
                             <li>
-                                <label class="tit" for="flab04">카드번호
-                                    <button id="MF_05_01_01_tip_02" title="카드정보 tip" class="tip-view" type="button">TIP</button>
+                                <label class="tit">카드번호
+                                    <button id="MF_05_01_01_tip_02" aria-haspopup="true" title="카드번호" class="tip-view" type="button">TIP</button>
                                 </label>
                                 <span class="inputbox">
                                     <span class="input">

@@ -458,6 +458,37 @@ Tw.MyTFareInfoHistory.prototype = {
     $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).find('input').prop('checked', true);
     this.$typeSelectActionsheetButtons.on('click', $.proxy(this._clickPaymentType, this));
     $container.on('change', 'input', $.proxy(this._moveByPaymentType, this));
+    this._onWebAccessPopup($container);
+  },
+
+  /**
+   * @function [웹접근성]
+   * @param {element} $layer 팝업액션시트 dom객체
+   */
+  _onWebAccessPopup: function ($layer) {
+    $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
+    this._onCommonFocus($layer);
+  },
+
+  /**
+   * @function [웹접근성]
+   * @desc 라디오 선택 팝업 IOS 초점이동 되지 않아 초점가도록 처리
+   * @param {element} $layer 팝업액션시트 dom객체
+   */
+  _onCommonFocus: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); 
+  },
+
+  /**
+   * @function [웹접근성]
+   * @desc 클릭시 라디오버튼 변경되어 이벤트 변경이벤트 호출되도록 (_moveByPaymentType)
+   * @param {event} e 
+   */
+  _onCommonClickService: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    $(e.currentTarget).siblings().find('input').prop('checked', false);
+    $(e.currentTarget).find('input').prop('checked', true).trigger('change');
   },
 
   /**
@@ -483,6 +514,8 @@ Tw.MyTFareInfoHistory.prototype = {
    * @returns {void}
    */
   _moveByPaymentType: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
     var target    = $(e.currentTarget),
         targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
     

@@ -55,6 +55,7 @@ Tw.TNotifyComponent.prototype = {
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
   },
   _onCloseTNotify: function () {
+    $('#common-menu').attr('aria-hidden', 'false'); // 웹접근성, menu 부분 aria-hidden을 false로 변경해 줌
     if ( this._goSetting ) {
       this._historyService.goLoad('/main/menu/settings/notification');
     }
@@ -83,6 +84,7 @@ Tw.TNotifyComponent.prototype = {
       target.showTime = Tw.DateHelper.getKoreanTime(target.regDate);
       target.isShow = index < Tw.DEFAULT_LIST_COUNT;
       target.hasUrl = !Tw.FormatHelper.isEmpty(target.imgLinkUrl);
+      target.isExternal = target.imgLinkUseCl === this.LANDING_TYPE.EXTERNAL || target.imgLinkUseCl === this.LANDING_TYPE.CHARGE;
       return target;
     }, this));
   },

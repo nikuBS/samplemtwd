@@ -140,14 +140,32 @@ Tw.CustomerEmailCategory.prototype = {
 
   _handleServiceChange1Depth: function ($layer) {
     $layer.on('change', 'li input', $.proxy(this._onSelectService1Depth, this));
+    this._onWebAccessPopup($layer);
   },
   _handleServiceChange2Depth: function ($layer) {
     $layer.on('change', 'li input', $.proxy(this._onSelectService2Depth, this));
+    this._onWebAccessPopup($layer);
   },
   _handleQualityChange1Depth: function ($layer) {
     $layer.on('change', 'li input', $.proxy(this._onSelectQuality1Depth, this));
+    this._onWebAccessPopup($layer);
   },
 
+  _onWebAccessPopup: function ($layer) {
+    $layer.on('click', 'li', $.proxy(this._onCommonClickService, this));
+    this._onCommonFocus($layer);
+  },
+
+  _onCommonFocus: function ($layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); 
+  },
+
+  _onCommonClickService: function(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    $(e.currentTarget).siblings().find('input').prop('checked', false);
+    $(e.currentTarget).find('input').prop('checked', true).trigger('change');
+  },
 
   _onSelectService1Depth: function (e) {
     e.stopPropagation();
