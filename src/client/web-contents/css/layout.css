@@ -1568,6 +1568,10 @@ body.hidden {
   background: url(/img/svg/icon_gnb_lock_n.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.popup-page .header-wrap .page-header .header-mask .btn-mask .blind{
+  height: 0;
+}
+
 .popup-page .header-wrap .page-header .header-mask .btn-mask.seleted {
   background: url(/img/svg/icon_gnb_lock_s.svg) no-repeat 0 0;
   background-size: 100% 100%; }
