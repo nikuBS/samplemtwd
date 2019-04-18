@@ -5,6 +5,7 @@ export enum REDIS_KEY {
 
   PRODUCT_INFO = 'ProductLedger:',
   PRODUCT_CONTETNS = 'ProductLedgerContents:',
+  PRODUCT_PLM_CONTENTS = 'ProductPLMLedgerContents:',
   PRODUCT_FILTER = 'ProductFilter:',
   PRODUCT_COMPARISON = 'ProductComparison:',
 
