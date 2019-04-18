@@ -15,10 +15,9 @@
   <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../common/views/components/header.component.html', { title: '공지사항', svcInfo: svcInfo }); %>
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
-      <h2 class="blind">내용</h2>
+    <div class="container-wrap">
+      <h2 id="contents" tabindex="-1"><span class="blind">내용</span></h2>
       <div class="container">
-
         <!-- .cont-box -->
         <div class="cont-box nogaps noborder topborder">
           <div class="ti-caption-gray">
