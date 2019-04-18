@@ -1638,7 +1638,7 @@ hr {
   position: absolute !important;
   overflow: hidden;
   color: transparent;
-  z-index: -1;
+  /* z-index: -1; */
 }
 
 .blind-height0 {

@@ -1,7 +1,21 @@
 $(document).on('ready', function () {
   skt_landing.widgets.widget_init();
 });
+/** 
+ * 차트 관련 jQuery 확장 펑션
+ * @class
+ */
 skt_landing.widgets = {
+  /**
+   * @summary 페이지 랜딩시 dom Attribute에 설정되어 요소에 대한 이벤트 function을 실행
+   * @description
+   * - 페이지 랜딩시 자동 활성화 처리됨
+   * - skt_landing.widgets.widget_init()
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * .widget>widget_+"string"으로 정의되어 있는 함수자동 실행
+  */
   widget_init: function(ta){ // string : selector
     /* 위젯 구간 */
     widget_list = {};
@@ -36,6 +50,15 @@ skt_landing.widgets = {
       }
     }
   },
+  /**
+   * @summary ..widget-box.tube 의 ( radio, checkebox.. )등의 커스텀된 디자인 적용
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/widget_tube.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_tube();
+  */
   widget_tube: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.tube') : $('.widget-box.tube');
     $(widget).each(function(){
@@ -91,6 +114,7 @@ skt_landing.widgets = {
         $(this).find('input').trigger('change');
       });
     });
+
     function setRadioState(target){
       var target = $(target),
           label = target.closest('li').not('.disabled');
@@ -102,6 +126,15 @@ skt_landing.widgets = {
       target.attr('checked',true).prop('checked',true);
     }
   },
+  /**
+   * @summary input value값 활성화시 'x'버튼에 대한 기능 정의
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/component_list.html}
+   * - {@link http://127.0.0.1:5500/html/templete/form.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_deltype();
+  */
   widget_deltype: function(){
     $('.input').each(function(){
       if($(this).data('event') == undefined){
@@ -158,6 +191,14 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary .step-list li 요소의 on 클래스 여부에 따라 aria 상태 설정
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/widget_step.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_step();
+  */
   widget_step: function () {
     $('.step-list li').each(function(){
       if($(this).data('event') == undefined){
@@ -170,6 +211,17 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary .radiobox :radio요소에 대한 이벤트 바인딩
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/widget_radio.html}
+   * - {@link http://127.0.0.1:5500/html/templete/component_list.html}
+   * - {@link http://127.0.0.1:5500/html/templete/input.html}
+   * @function
+   * @param {object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_radio();
+  */  
   widget_radio: function (ta) {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
@@ -211,6 +263,17 @@ skt_landing.widgets = {
       });
     });
   },
+  /**
+   * @summary .checkbox :checkbox요소 대한 이벤트 바인딩
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/widget_checkbox.html}
+   * - {@link http://127.0.0.1:5500/html/templete/component_list.html}
+   * - {@link http://127.0.0.1:5500/html/templete/input.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_check();
+  */
   widget_check: function (ta) {
     var input = ta ? $(ta).find('.checkbox :checkbox') : $('.checkbox :checkbox');
     input.each(function () {
@@ -241,7 +304,14 @@ skt_landing.widgets = {
       });
     });
   },
-  //autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+  /**
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * - http://127.0.0.1:5500/html/templete/slider01.html
+   * @function
+   * @example
+   * skt_landing.widgets.widget_slider();
+  */
   widget_slider: function () {
     /*$('.slider').each(function (idx) {
       var swiper,
@@ -254,8 +324,15 @@ skt_landing.widgets = {
       });
     });*/
   },
-  //autosms/js/widget.js파일에서 복사했으나 중복으로 인한 삭제 ( widget_slider2 ) @190320 - 함수복사
-  //autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+  /**
+   * @summary .slider3 클래스에 대한 slick.js 적용 함수
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * - http://127.0.0.1:5500/html/templete/slider01.html
+   * @function
+   * @example
+   * skt_landing.widgets.widget_slider3();
+  */
   widget_slider3: function () {
     var widget = '.slider3';
     $(widget).each(function(){
@@ -271,7 +348,17 @@ skt_landing.widgets = {
       })
     });
   },
-  //autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+  
+  /**
+   * @summary .slider4 클래스에 대한 slick.js 적용 함수
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * - slick.init, slick.beforeChange 이벤트 바인딩 되어 있슴
+   * - {@link http://127.0.0.1:5500/html/templete/slider01.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_slider4();
+  */
   widget_slider4: function () {
     var widget = '.slider4';
     $(widget).each(function(){
@@ -324,7 +411,16 @@ skt_landing.widgets = {
       });
     });*/
   },
-  //autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+  /**
+   * @summary .slider5 클래스에 대한 slick.js 적용 함수
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * - slick.init, slick.beforeChange 이벤트 바인딩 되어 있슴
+   * - {@link http://127.0.0.1:5500/html/templete/slider01.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_slider5();
+  */
   widget_slider5: function () {
     var widget = '.slider5';
     $(widget).each(function(){
@@ -369,7 +465,14 @@ skt_landing.widgets = {
       });
     });
   },
-  //autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+  /**
+   * @summary .draglist 클래스에 대한 함수
+   * @description
+   * - autosms/js/widget.js파일에서 복사해옴 @190320 - 함수복사
+   * @function
+   * @example
+   * skt_landing.widgets.widget_draglist();
+  */
   widget_draglist : function(){
     $('.draglist').each(function(){
       var _this = $(this);
@@ -499,6 +602,16 @@ skt_landing.widgets = {
       return arr;
     }
   },
+  /**
+   * @summary 파일 찾기
+   * @description
+   * - .widget-box.file 클래스에 대한 함수
+   * - {@link http://127.0.0.1:5500/html/templete/form.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_file();
+  */
   widget_file: function(ta){
     var input = ta ? $(ta).find('.widget-box.file') : $('.widget-box.file');
     input.each(function(){
@@ -516,6 +629,16 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary - 제목과 내용이 같이있는 텍스트폼 (focus시 디자인 적용)
+   * @description
+   * - .txfield-combined 클래스에 대한 이벤트 함수
+   * - {@link http://127.0.0.1:5500/html/templete/form.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_tfCombined();
+  */
   widget_tfCombined: function (ta) {
     var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
    
@@ -547,6 +670,15 @@ skt_landing.widgets = {
       });
 */
   },
+  /**
+   * @summary slick.afterChange, slick.setPosition 이벤트 활성화시 aria 속성 적용 ( slick 관련 )
+   * @description
+   * - global
+   * @function
+   * @param {Object} $slick - slick Object
+   * @example
+   * skt_landing.widgets.widget_accessability();
+  */
   widget_accessability: function ($slick) {
     var _this = $slick;
     _this.on('afterChange', function (e, _slick) {
@@ -577,6 +709,17 @@ skt_landing.widgets = {
       });
     });
   },
+  /**
+   * @summary .slider1 클래스에 대한 slick, slick.beforeChange 이벤트 바인딩
+   * @description
+   * - .slider1-auto 클래스: 자동배너 추가 활성화
+   * - {@link http://127.0.0.1:5500/html/templete/slider01.html}
+   * - span > a 태그 변경시 slider01.html 내의 주석 참조 - @190417 접근성 대비 테스트
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_slider1();
+  */
   widget_slider1: function (ta) {
     var widget = ta ? $(ta).find('.slider1') : $('.slider1');
     $(widget).each(function(){
@@ -609,8 +752,8 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span/>').text(i + 1);//@190315 - 접근성
-          },
+            return $('<button/>').text(i + 1);//@190418 - 접근성
+          }
         });
       }else{
         _this.slick({
@@ -627,8 +770,8 @@ skt_landing.widgets = {
           focusOnSelect: false,
           touchMove : true,
           customPaging: function(slider, i) {
-            return $('<span/>').text(i + 1);//@190315 - 접근성
-          },
+            return $('<button/>').text(i + 1);//@190418 - 접근성
+          }
         });
       }
       if(_this.find('.slick-slide').length == 1){
@@ -652,6 +795,16 @@ skt_landing.widgets = {
       skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
+  /**
+   * @summary 세로 슬라이더
+   * @description
+   * - 기존 바인딩 되어 있는 slick 요소를 destroy 후 재바인딩
+   * - {@link http://127.0.0.1:5500/html/sprint/HO_01_01.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_slider2();
+  */
   widget_slider2: function (ta) {
     var widget = ta ? $(ta).find('.slider2') : $('.slider2');
     $(widget).each(function(){
@@ -697,6 +850,16 @@ skt_landing.widgets = {
       //skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
+  /**
+   * @summary 아코디언
+   * @description
+   * - .widget-box.accordion 클래스에 대한 이벤트 바인딩 함수
+   * - {@link http://127.0.0.1:5500/html/templete/accordion.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_accordion();
+  */
   widget_accordion: function (ta) {
     var widget = ta ? $(ta).find('.widget-box.accordion') : $('.widget-box.accordion');
     $(widget).each(function(){
@@ -750,8 +913,20 @@ skt_landing.widgets = {
           $(this).attr('aria-pressed', 'false');
         };
       });
+      //_this.find('.acco-cover.on .bt-whole button, .acco-box.on button').attr('aria-pressed', true);  //@0417 웹접근성 수정 ( 개발자체 소스 적용중 )
     })
   },
+  /**
+   * @summary - 아코디언 ( 컨텐츠 )
+   * @description
+   * - .widget-box.accordion2 클래스에 대한 이벤트 바인딩 함수
+   * - 아코디언 type2
+   * - {@link http://127.0.0.1:5500/html/templete/accordion2.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_accordion2();
+  */
   widget_accordion2: function(ta){
     var widget = ta ? $(ta).find('.widget-box.accordion2') : $('.widget-box.accordion2');
     $(widget).each(function(){
@@ -787,8 +962,19 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary - 스위치 ( checkbox )
+   * @description
+   * - .switch .btn-switch input 클래스에 대한 이벤트 바인딩 함수
+   * - {@link http://127.0.0.1:5500/html/templete/component_etc.html} 
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_switch();
+  */
   widget_switch: function (ta) {
     var widget = ta ? $(ta).find('.switch .btn-switch input') : $('.switch .btn-switch input');
+    console.log(widget)
     $(widget).each(function () {
       if($(this).data('event') == undefined){
         $(this).data('event', 'bind')
@@ -831,6 +1017,17 @@ skt_landing.widgets = {
 
     }
   },
+  /**
+   * @summary - 스위치 ( radio )
+   * @description
+   * - .switch2 .btn-switch input 클래스에 대한 이벤트 바인딩 함수
+   * - GB/MB 부분
+   * - {@link http://127.0.0.1:5500/html/templete/component_etc.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_switch2();
+  */
   widget_switch2: function (ta) {
     var widget = ta ? $(ta).find('.switch2 .btn-switch input') : $('.switch2 .btn-switch input');
     $(widget).each(function () {
@@ -861,6 +1058,16 @@ skt_landing.widgets = {
       });
     });
   },
+  /**
+   * @summary - 토글
+   * @description
+   * - .bt-toggle 클래스에 대한 이벤트 바인딩 함수
+   * - {@link http://127.0.0.1:5500/html/templete/toggle.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_toggle();
+  */
   widget_toggle: function(ta){
     var widget = ta ? $(ta).find('.bt-toggle') : $('.bt-toggle');
     widget.each(function(){
@@ -884,6 +1091,16 @@ skt_landing.widgets = {
       })
     })
   },
+  /**
+   * @summary 탭 기능
+   * @description
+   * - .tabs .tab-area 클래스에 대한 이벤트 바인딩 함수
+   * - {@link http://127.0.0.1:5500/html/templete/component_tabs.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.component_tabs();
+  */
   component_tabs: function (ta) {
     var tabArr = ta ? $(ta).find('.tabs .tab-area') : $('.tabs .tab-area');
     tabArr.each(function () {
@@ -927,6 +1144,15 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary .toggle01 클래스에 대한 이벤트 바인딩 함수
+   * @description
+   * - {@link 127.0.0.1:5500/html/templete/toggle02.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_toggle01();
+  */
   widget_toggle01: function(ta) {
     var widget = ta ? $(ta).find('.toggle01') : $('.toggle01');
     $(widget).each(function(){
@@ -948,6 +1174,15 @@ skt_landing.widgets = {
       });
     });
   },
+  /**
+   * @summary .toggle02 클래스에 대한 이벤트 바인딩 함수
+   * @description
+   * - {@link 127.0.0.1:5500/html/templete/toggle01.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_toggle02();
+  */
   widget_toggle02: function(ta) {
     var widget = ta ? $(ta).find('.toggle02') : $('.toggle02');
     $(widget).each(function(){
@@ -977,6 +1212,16 @@ skt_landing.widgets = {
       }
     });
   },
+  /**
+   * @summary 가로 스크롤 생성
+   * @description
+   * - .horizontal 클래스에 대한 이벤트 바인딩 함수
+   * - {@link http://127.0.0.1:5500/html/templete/widget_horizontal.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_horizontal();
+  */
   widget_horizontal: function(ta){
     var widget = $(ta).find('.horizontal');
     $(widget).each(function(){
@@ -1002,6 +1247,16 @@ skt_landing.widgets = {
       */
     });
   },
+  /**
+   * @summary .widget-box.donutchart 클래스에 대한 이벤트 바인딩 함수
+   * @description
+   * - {@link http://127.0.0.1:5500/html/templete/widget_donutchart.html}
+   * - {@link http://127.0.0.1:5500/html/templete/chart-js.html}
+   * @function
+   * @param {Object} ta - selector
+   * @example
+   * skt_landing.widgets.widget_donutchart();
+  */
   widget_donutchart: function(ta){
     var widget = ta ? $(ta).find('.widget-box.donutchart') : $('.widget-box.donutchart');
     $(widget).each(function(){

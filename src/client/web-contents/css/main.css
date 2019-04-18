@@ -43,7 +43,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   line-height: 1.06rem;
-  height: 2.13rem; }
+  height: 2.00rem; }
 
 .quick-menu-list li .bt i {
   position: relative;
@@ -2045,8 +2045,8 @@ body.apphome .main-membershop-box {
   background: #fff; }
 
 .main-slide-banner.ta-02 .slick-dots li.slick-active {
-  width: 0.38rem;
-  height: 0.38rem;
+  width: 0.44rem;
+  height: 0.44rem;
   border: 1px solid #000;
   background: #000; }
 

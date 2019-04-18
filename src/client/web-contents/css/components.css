@@ -10887,16 +10887,16 @@ a.bt-link-tx.underline.small {
   border: 1px solid transparent; }
 
 .main-slide-banner.ta-02 .slick-dots li span, .main-slide-banner.ta-02 .slick-dots li button {
-  width: 0.38rem;
-  height: 0.38rem;
+  width: 0.44rem;
+  height: 0.44rem;
   margin: 0;
   opacity: 1;
   border: 1px solid #000;
   background: #fff; }
 
 .main-slide-banner.ta-02 .slick-dots li.slick-active {
-  width: 0.38rem;
-  height: 0.38rem;
+  width: 0.44rem;
+  height: 0.44rem;
   border: 1px solid #000;
   background: #000; }
 
