@@ -56,6 +56,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
     this.$container.on(
       'click', '#fe-service-terms, #fe-recommend-terms, #fe-tplace-terms', $.proxy(this._onTermsClicked, this));
     this.$container.on('click', '#fe-go-device-noti', $.proxy(this._onDeviceNotiClicked, this));
+    this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
   },
 
   /**
@@ -277,4 +278,25 @@ Tw.MainMenuSettingsNotifications.prototype = {
       isTplaceOn: isTplaceSwitchedToOn
     });
   },
+
+   // To remove
+   _onKidding: function () {
+    if (!this._kiddingCount || this._kiddingCount === 0) {
+      this._kiddingCount = 1;
+    }
+
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
+
+    this._kiddingCount += 1;
+    if (this._kiddingCount === 10) {
+      this.$container.find('#fe-tplace-div').removeClass('none');
+      return;
+    }
+
+    this._timer = setTimeout($.proxy(function () {
+      this._kiddingCount = 0;
+    }, this), 500);
+  }
 };
