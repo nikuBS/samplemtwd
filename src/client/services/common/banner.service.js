@@ -247,7 +247,7 @@ Tw.BannerService.prototype = {
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
-            isInternalLink: banner.tosImgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.CHANNEL_APP
+            isInternalLink: banner.tosImgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
           };
         })
         .value();
@@ -267,7 +267,7 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.CHANNEL_APP
+            isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
           };
 
           nBanners.push($.extend(banner, temp));
