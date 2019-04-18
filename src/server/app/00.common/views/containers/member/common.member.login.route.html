@@ -11,7 +11,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLoginRoute('<%= params.target %>', '<%= params.type %>', '<%= svcInfo !== null %>');
+    new Tw.CommonMemberLoginRoute('<%= params.target %>', '<%= params.type %>', '<%= svcInfo !== null %>', '<%= params.state %>');
   });
 </script>
 <% include ../../components/end.component.html %>
