@@ -70,7 +70,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
    */
   _checkSelectedEndDate : function (endDate) {
     if(this._currentDate>=endDate){
-      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('.bt-dropdown').attr('disabled','disabled').removeAttr('aria-haspopup');
       this.$container.find('#do_change').attr('disabled','disabled');
     }
   },
@@ -305,7 +305,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       if(prdTime>currentTime){
         returnValue = true;
       }else{
-        this.$container.find('.bt-dropdown').attr('disabled','disabled');
+        this.$container.find('.bt-dropdown').attr('disabled','disabled').removeAttr('aria-haspopup');
         this.$container.find('#do_change').attr('disabled','disabled');
         this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
         this.$container.find('.error-txt.start').removeClass('none');
