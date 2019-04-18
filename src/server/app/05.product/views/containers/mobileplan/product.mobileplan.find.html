@@ -6,10 +6,8 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
