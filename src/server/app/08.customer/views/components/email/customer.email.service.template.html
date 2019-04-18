@@ -26,7 +26,7 @@
             <% } %>
             <div class="inputbox">
                 <div class="input">
-                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
+                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required title="제목 입력"></textarea>
                     <!--<input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"-->
                            <!--aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
@@ -39,9 +39,10 @@
                         <textarea class="input-focus inner-tx fe-text_content"
                                   cols="20" rows="6"
                                   placeholder="{{{placeHolder}}}"
+                                  title="{{{placeHolder}}}"
                                   maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required>{{#if isDefaultValue}}{{else}}{{{placeHolder}}}{{/if}}</textarea>
-                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
                     <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
                 </div>
@@ -97,7 +98,7 @@
             <% } %>
             <div class="inputbox">
                 <div class="input">
-                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
+                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" title="제목 입력" maxlength="20" required></textarea>
                     <!--<input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"-->
                            <!--aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
@@ -107,7 +108,7 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" title="내용 입력" maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
@@ -134,7 +135,7 @@
             <p class="title">주문번호 확인 후 문의하실 내용을 작성해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
-                    <input type="text" class="fe-text_order" placeholder="주문번호 조회" title="input" value="" aria-labelledby="aria-exp-label1"
+                    <input type="text" class="fe-text_order" placeholder="주문번호 조회" title="주문번호 조회" value="" aria-labelledby="aria-exp-label1"
                            aria-describedby="aria-exp-desc1" required disabled>
                     <!--<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>-->
                 </span>
@@ -145,7 +146,7 @@
             <p class="tip-text">* 주문번호 확인 후 배송, 교환/반품 관련 문의를 하시면 보다 정확한 <br />답변을 드릴 수 있습니다.</p>
             <div class="inputbox">
                 <div class="input">
-                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
+                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" title="제목 입력" maxlength="20" required></textarea>
                     <!--<input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"-->
                            <!--aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
@@ -155,7 +156,7 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" title="내용 입력" maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
@@ -199,7 +200,7 @@
             </div>
             <div class="inputbox">
                 <div class="input">
-                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
+                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" title="제목 입력" maxlength="20" required></textarea>
                     <!--<input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"-->
                            <!--aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
@@ -209,9 +210,9 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" title="내용 입력" maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required></textarea>
-                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
                     <span class="byte"><span class="byte-current">0</span> / <span class="byte-total">12,000</span>자(최대)</span>
                 </div>
@@ -247,7 +248,7 @@
             <p class="title">내용을 작성해주세요.</p>
             <div class="inputbox">
                 <div class="input">
-                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" maxlength="20" required></textarea>
+                    <textarea class="text-auto-expand fe-text_title" rows="1" placeholder="제목 입력" title="제목 입력" maxlength="20" required></textarea>
                     <!--<input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"-->
                            <!--aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" required>-->
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
