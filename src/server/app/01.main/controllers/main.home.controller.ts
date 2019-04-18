@@ -379,7 +379,12 @@ class MainHome extends TwViewController {
       } else if ( resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0007 ) {
         usageData['fromDate'] = DateHelper.getShortDateAnd24Time(resp.result.fromDtm);
         usageData['toDate'] = DateHelper.getShortDateAnd24Time(resp.result.toDtm);
+      } else if (resp.code === API_CODE.BFF_0011 ) {
+        usageData['fallbackClCd'] = resp.result.fallbackClCd;
+        usageData['fallbackUrl'] = resp.result.fallbackUrl;
+        usageData['fallbackMsg'] = resp.result.fallbackMsg;
       }
+
       usageData.code = resp.code;
       usageData.msg = resp.msg;
 

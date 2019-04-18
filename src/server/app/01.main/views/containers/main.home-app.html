@@ -341,6 +341,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <% } else if (homeData.usageData.code === 'BFF0011' ) { %>
+                            <div class="main-chart-box">
+                                <em class="line">
+                                    <button class="bt fe-bt-line fe-coach-line-target" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
+                                <div class="cont-box nogaps b-line-none">
+                                    <div class="notice-point">
+                                        <p class="t-np1">서비스 점검 중 입니다.</p>
+                                        <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
+                                    </div>
+                                </div>
+                            </div>
                             <% } else { %>
                             <div class="main-chart-box">
                                 <em class="line">
@@ -499,7 +514,7 @@
                             <div class="main-membershop-box">
                                 <button id="fe-membership-extend" class="membership-cont" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC">
                                     <strong class="ti">Tmembership</strong>
-                                    <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
+                                    <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>" data-mbrst="<%= homeData.membershipData.mbrStCd %>"><%= homeData.membershipData.mbrGrStr %></span>
                                     <!-- <span class="rating gold">gold</span>
                                     <span class="rating vip">vip</span> -->
                                     <% if (homeData.membershipData.mbrStCd === 'SP') { %>
@@ -526,6 +541,24 @@
                                         <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
                                         <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
                                     </p>
+                                </button>
+                                <div class="btn-area">
+                                    <a href="/membership/submain" class="bt" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</a>
+                                    <a href="/membership/benefit/brand" class="bt" data-xt_eid="CMMA_A2_B6-25" data-xt_csid="NO" data-xt_action="BC">제휴 브랜드</a>
+                                </div>
+                            </div>
+                        </div>
+                        <% } else if (homeData.membershipData.code === 'BFF0011') { %>
+                        <div class="section-box nogaps">
+                            <div class="main-membershop-box">
+                                <button id="fe-membership-extend" class="membership-cont fe-bff0011" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC">
+                                    <strong class="ti">Tmembership</strong>
+                                    <span id="fe-membership-gr" class="rating"></span>
+                                    <span id="fe-membership-stop" class="tx none" aria-disabled="true">고객님의 멤버십 카드가<br><strong class="t-point">이용정지</strong> 상태입니다.</span>
+                                    <span id="fe-membership-barcode-wrap" class="bar-code">
+                                        <img id="fe-membership-barcode" alt="bar code"/>
+                                        <p id="fe-membership-cardnum" class="bar-code-num"></p>
+                                    </span>
                                 </button>
                                 <div class="btn-area">
                                     <a href="/membership/submain" class="bt" data-xt_eid="CMMA_A2_B6-24" data-xt_csid="NO" data-xt_action="BC">T멤버십</a>
