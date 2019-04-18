@@ -54,9 +54,9 @@ class MyTDataHotdata extends TwViewController {
           if (svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) !== -1) {
             this._render(res, svcInfo, pageInfo, usageDataResp);
           } else {
-            this._renderError({
+            this._renderError(res, svcInfo, pageInfo, {
               code: 'BLN0004'
-            }, svcInfo, pageInfo, usageDataResp);
+            });
           }
         }
       } else {
@@ -87,7 +87,8 @@ class MyTDataHotdata extends TwViewController {
       pageInfo,
       usageData: {},
       balanceAddOns: {},
-      ppsInfo: {}
+      ppsInfo: {},
+      isWireLess: false
     };
 
     switch ( svcInfo.svcAttrCd ) {
@@ -129,6 +130,11 @@ class MyTDataHotdata extends TwViewController {
         option['usageData'] = MyTHelper.parseUsageData(usageDataResp.result);
         break;
     }
+
+    if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
+      option['isWireLess'] = true;
+    }
+
     res.render(view, option);
   }
 
@@ -141,14 +147,14 @@ class MyTDataHotdata extends TwViewController {
    * @private
    */
   private _renderError(res: any, svcInfo: any, pageInfo: any, resp: any) {
-    let error = MYT_DATA_USAGE.ERROR[resp.code] || {};
-    // 유선인 경우
-    if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1) {
-      error = MYT_DATA_USAGE.ERROR['BLN0004_S'];
-    }
+    const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
     error.code = resp.code;
     if ( error.code !== 'BLN0001' ) {
       error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
+    }
+    // 유선인 경우
+    if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1 && (error.code === 'BLN0004' || error.code === 'BLN0007')) {
+      error.contents = MYT_DATA_USAGE.ERROR['BLN0004_S'].contents;
     }
     res.render(VIEW.ERROR, {
       svcInfo,
