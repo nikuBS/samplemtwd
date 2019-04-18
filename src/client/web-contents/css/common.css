@@ -5894,7 +5894,7 @@ a.ui-button:active,
   display: block;
   width: 20px;
   height: 20px;
-  padding: 5px;
+  /*padding: 5px;*/
   cursor: pointer;
   color: transparent;
   border: 0;
