@@ -342,7 +342,9 @@ Tw.ProductRoamingPlanAdd.prototype = {
               data: [{ list: this.orderList }]
           },
           $.proxy(this._handleOpenAddOrderPopup, this),
-          undefined,
+          $.proxy(function () {
+              this.$container.find('.fe-rmadd-order').focus();
+          },this),
           'order'
       );
   },
@@ -355,6 +357,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
     // $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectRmAddOrder, this));
     // var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
     // $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
+    Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
   },
