@@ -164,9 +164,9 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this._history.goLoad(url);
   },
   // 요금납부 호출
-  _feePayBtnEvt: function () {
+  _feePayBtnEvt: function (event) {
     // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
-    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd, $(event.currentTarget));
   },
   // 납부내역화면으로 이동
   _payListBtnEvt: function () {

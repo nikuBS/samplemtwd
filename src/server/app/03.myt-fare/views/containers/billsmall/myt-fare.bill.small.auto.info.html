@@ -6,13 +6,6 @@
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
     <div id="myt-fare-bill-small-auto-info" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup h60 nobg">
             <!-- #header -->
@@ -20,8 +13,8 @@
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">
-                <h2 class="blind">내용</h2>
-                <div id="contents" class="container">
+                <h2 id="contents" class="blind">내용</h2>
+                <div class="container">
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="cont-tit-wrap">

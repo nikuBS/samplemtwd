@@ -37,7 +37,7 @@ Tw.CommonPostcodeDetail.prototype = {
       hbs: 'CO_UT_05_04_02'
     },
       $.proxy(this._onDetailSearchEvent, this, $addressObject),
-      null,
+      $.proxy(this._setFocus, this),
       'post0002',
       this.$target
     );
@@ -55,6 +55,13 @@ Tw.CommonPostcodeDetail.prototype = {
     this._initVariables($addressObject.tabId);
     this._initData($addressObject);
     this._bindEvent();
+  },
+  /**
+   * @function
+   * @desc popup close 시 원래 페이지로 focus 이동
+   */
+  _setFocus: function () {
+    this.$target.focus();
   },
   /**
    * @function
