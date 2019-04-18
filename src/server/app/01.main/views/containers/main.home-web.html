@@ -64,7 +64,7 @@
                 <% if (homeData.usageData) { %>
                 <% if (homeData.usageData.code === '00') { %>
                 <div class="member-info-box">
-                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-155" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-155" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <a href="/myt-join/myplan" class="name"><%= svcInfo.prodNm %><i class="icon-arrowmore-32"><span class="blind">more</span></i></a>
 
@@ -235,9 +235,9 @@
                     <!-- 브로드밴드 가입회선 -->
                     <div class="member-info-box">
                         <% if(svcInfo.svcAttrCd === 'S3') { %>
-                        <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
+                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
                         <% } else { %>
-                        <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                         <% } %>
                         <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                         <div class="t-none">SK브로드밴드에서 가입한<br>회선입니다.</div>
@@ -245,7 +245,7 @@
                     </div>
                     <% } else { %>
                     <div class="member-info-box">
-                        <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                         <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
 
                         <button id="fe-bt-link-billguide" class="price">
@@ -270,9 +270,9 @@
                 <!-- 요금안내서가 없는경우 -->
                 <div class="member-info-box">
                     <% if(svcInfo.svcAttrCd === 'S3') { %>
-                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
                     <% } else { %>
-                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <% } %>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <div class="t-none">발행된 요금안내서가 없습니다.</div>

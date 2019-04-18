@@ -83,6 +83,7 @@ Tw.TNotifyComponent.prototype = {
       target.showTime = Tw.DateHelper.getKoreanTime(target.regDate);
       target.isShow = index < Tw.DEFAULT_LIST_COUNT;
       target.hasUrl = !Tw.FormatHelper.isEmpty(target.imgLinkUrl);
+      target.isExternal = target.imgLinkUseCl === this.LANDING_TYPE.EXTERNAL || target.imgLinkUseCl === this.LANDING_TYPE.CHARGE;
       return target;
     }, this));
   },

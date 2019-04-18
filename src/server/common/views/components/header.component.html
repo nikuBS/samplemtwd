@@ -8,9 +8,9 @@
         <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskRlseYn === 'Y') { %>
         <div class="header-mask">
             <% if (!pageInfo.masking) { %>
-            <button type="button" class="btn-mask fe-bt-masking"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+            <button type="button" class="btn-mask fe-bt-masking"><span class="blind">개인정보 보호모드 마스킹 해제하기</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
             <% } else { %>
-            <button type="button" class="btn-mask disabled"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+            <button type="button" class="btn-mask disabled"><span class="blind">개인정보 보호모드 마스킹 사용불가</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
             <% } %>
         </div>
         <% } %>
