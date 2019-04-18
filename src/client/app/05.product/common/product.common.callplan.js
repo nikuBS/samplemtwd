@@ -53,6 +53,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._bindEvent();
   // 최초 동작
   this._init();
+  // 웹접근성 보완 처리
+  this._coverWebAccessBility();
 };
 
 Tw.ProductCommonCallplan.prototype = {
@@ -1091,6 +1093,20 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     return joinedInfoResp.combiProdScrbYn === 'Y';
+  },
+
+  _coverWebAccessBility: function() {
+    this.$container.on('click', '.fe-tab > li', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $(this).find('a').trigger('click');
+    });
+
+    this.$container.on('click', '.fe-tab > li > a', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    });
   }
 
 };
