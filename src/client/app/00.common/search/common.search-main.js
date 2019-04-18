@@ -4,6 +4,15 @@
  * @since 2018.12.18
  */
 
+/**
+ * @class
+ * @desc 검색 메인 페이지 (최초 진입)
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {String} cdn - cdn 서버 주소
+ * @param {String} step – 검색 진입점 까지의 페이지 이동 횟수
+ * @returns {void}
+ */
 Tw.CommonSearchMain = function (rootEl,cdn,step) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -16,6 +25,12 @@ Tw.CommonSearchMain = function (rootEl,cdn,step) {
 };
 
 Tw.CommonSearchMain.prototype = {
+  /**
+   * @function
+   * @member
+   * @desc 초기화
+   * @returns {void}
+   */
   _init : function () {
     this._autoCompleteRegExObj = {
       fontColorOpen : new RegExp('<font style=\'color:#CC6633\'>','g'),
@@ -34,6 +49,12 @@ Tw.CommonSearchMain.prototype = {
     new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색창 input 이벤트
+   * @returns {void}
+   */
   _keyInputEvt : function (inputEvtObj) {
     if(Tw.InputHelper.isEnter(inputEvtObj)){
       this._searchByInputValue();
@@ -47,6 +68,12 @@ Tw.CommonSearchMain.prototype = {
       }
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 이벤트 바인딩
+   * @returns {void}
+   */
   _bindEvent : function () {
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
@@ -54,6 +81,13 @@ Tw.CommonSearchMain.prototype = {
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 자동완성 변환
+   * @param {String} listStr
+   * @returns {Object}
+   */
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
@@ -63,9 +97,22 @@ Tw.CommonSearchMain.prototype = {
     returnObj.linkStr = Tw.FormatHelper.stripTags(returnObj.showStr);
     return returnObj;
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 입력창 포커스 이벤트
+   * @returns {Object}
+   */
   _inputFocusEvt : function () {
     this._openKeywordListBase();
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 입력창 포커스 이벤트
+   * @param {Object} args 이벤트 객체
+   * @returns {Object}
+   */
   _removeRecentlyKeywordList : function (args) {
     var removeIdx = $(args.currentTarget).data('index');
     if(removeIdx==='all'){
@@ -76,6 +123,13 @@ Tw.CommonSearchMain.prototype = {
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어 추가
+   * @param {String} keyword  - 검색어
+   * @returns {void}
+   */
   _addRecentlyKeywordList : function (keyword) {
     for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
       if(this._recentlyKeywordListData[this._nowUser][i].keyword === keyword){
@@ -95,6 +149,12 @@ Tw.CommonSearchMain.prototype = {
     }
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어 가져오기
+   * @returns {Object}
+   */
   _getRecentlyKeywordList : function () {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD));
     var removeIdx = [];
@@ -119,6 +179,12 @@ Tw.CommonSearchMain.prototype = {
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
     return recentlyKeywordData;
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색창에 입력한 검색어로 검색 실행하기
+   * @returns {void}
+   */
   _searchByInputValue : function () {
     var searchKeyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
@@ -126,6 +192,13 @@ Tw.CommonSearchMain.prototype = {
     }
     this._doSearch(searchKeyword);
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어, 검색어 자동완성 등 키워드 클릭하여 검색 실행
+   * @param {Object} linkEvt - 이벤트 객체
+   * @returns {Object}
+   */
   _searchByElement : function(linkEvt){
     linkEvt.preventDefault();
     var $target = $(linkEvt.currentTarget);
@@ -145,6 +218,13 @@ Tw.CommonSearchMain.prototype = {
       this._doSearch($target.data('param'));
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 페이지로 이동
+   * @param {String} searchKeyword - 키워드
+   * @returns {void}
+   */
   _doSearch : function (searchKeyword) {
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
       this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,null,'search_keyword_err',$(event.currentTarget));
@@ -158,12 +238,25 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goLoad('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(this._step+1));
     },this),100);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 취소 (검색 메인 진입시점 이전 페이지로 이동)
+   * @returns {void}
+   */
   _closeSearch : function () {
     if(this._historyService.getHash()==='#input_P'){
       ++this._step;
     }
     this._historyService.go(this._step*-1);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색창의 키워드가 포함되어있는 최근검색어 가져오기
+   * @param {String} keyword - 키워드
+   * @returns {Array}
+   */
   _getRecentKeywordListBySearch : function (keyword) {
     var returnData = [];
     for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
@@ -186,6 +279,12 @@ Tw.CommonSearchMain.prototype = {
     }
     return returnData;
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어, 검색어 자동완성 화면 출력
+   * @returns {void}
+   */
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
       if(this.$inputElement.val().trim().length>0){
@@ -206,6 +305,12 @@ Tw.CommonSearchMain.prototype = {
         'input');
     },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어, 검색어 자동완성 화면 비활성화
+   * @returns {void}
+   */
   _closeKeywordListBase  : function () {
     setTimeout($.proxy(function () {
       this._popupService.close();
@@ -215,10 +320,22 @@ Tw.CommonSearchMain.prototype = {
       skt_landing.action.checkScroll.unLockScroll();
     },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 자동완성 , 최근검색어 화면 닫기 콜백
+   * @returns {void}
+   */
   _keywordListBaseClassCallback : function () {
     this._closeKeywordListBase();
     this.$inputElement.blur();
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어 화면으로 전환
+   * @returns {void}
+   */
   _showRecentKeyworList : function () {
     if(this._historyService.getHash()==='#input_P'){
       this.$keywordListBase.find('#recently_keyword_layer').removeClass('none');
@@ -232,6 +349,12 @@ Tw.CommonSearchMain.prototype = {
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 자동완성 요청
+   * @returns {void}
+   */
   _getAutoCompleteKeyword : function () {
     var keyword = this.$inputElement.val();
     if(this._historyService.getHash()!=='#input_P'||keyword.trim().length<=0){
@@ -241,7 +364,7 @@ Tw.CommonSearchMain.prototype = {
     if(!this.$keywordListBase.find('#recently_keyword_layer').hasClass('none')){
       this.$keywordListBase.find('#recently_keyword_layer').addClass('none');
     }
-    var requestParam = { query : encodeURI(keyword) };
+    var requestParam = { query : encodeURIComponent(keyword) };
     this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         if(res.code===0){
@@ -250,6 +373,14 @@ Tw.CommonSearchMain.prototype = {
         }
       },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어와 자동완성 키워드 리스트 병합 , 중복제거
+   * @param {Array} recentKeywordList - 키워드
+   * @param {Array} autoCompleteList - 키워드
+   * @returns {Array}
+   */
   _mergeList : function (recentKeywordList,autoCompleteList) {
     _.each(autoCompleteList,$.proxy(function (data) {
       recentKeywordList.push(this._convertAutoKeywordData(data.hkeyword));
@@ -257,6 +388,13 @@ Tw.CommonSearchMain.prototype = {
     recentKeywordList = Tw.FormatHelper.removeDuplicateElement(recentKeywordList);
     return recentKeywordList;
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 자동완성 화면 출력
+   * @param {Array} autoCompleteList - 키워드
+   * @returns {Array}
+   */
   _showAutoCompleteKeyword : function (autoCompleteList) {
     this.$keywordListBase.find('#auto_complete_list').empty();
     _.each(autoCompleteList,$.proxy(function (data,idx) {
@@ -266,6 +404,13 @@ Tw.CommonSearchMain.prototype = {
       this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1, encodeParam: encodeURIComponent(data.linkStr)}));
     },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 키워드 자동완성 , 최근검색어 화면 이벤트 바인딩
+   * @param {Object} layer - 화면 이벤트 객체
+   * @returns {void}
+   */
   _bindKeyworListBaseEvent : function (layer) {
     this.$keywordListBase = $(layer);
     if(this.$inputElement.val().trim().length>0){
@@ -283,6 +428,13 @@ Tw.CommonSearchMain.prototype = {
       this.$inputElement.blur();
     },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 과금팝업 출력
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _showRequirePayPopup : function (evt) {
     var $target = $(evt.currentTarget);
     this._popupService.openConfirm(null,Tw.POPUP_CONTENTS.NO_WIFI,
@@ -293,6 +445,12 @@ Tw.CommonSearchMain.prototype = {
       $.proxy(this._popupService.close,this._popupService),$target
     );
   },
+  /**
+   * @function
+   * @member
+   * @desc svcInfo 요청
+   * @returns {void}
+   */
   _svcInfoInit : function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
         .done($.proxy(function(res){

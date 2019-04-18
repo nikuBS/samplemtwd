@@ -1,4 +1,5 @@
 /**
+ * 검색 메인 화면
  * @file common.search.in-result.controller.ts
  * @author Hyunkuk Lee (max5500@pineone.com)
  * @since 2018.12.11

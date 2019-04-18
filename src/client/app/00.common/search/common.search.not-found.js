@@ -4,6 +4,17 @@
  * @since 2018.12.31
  */
 
+/**
+ * @class
+ * @desc 검색 결과 없음 페이지
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {Object} surveyList - 검색의견 설문조사를 위한 객체
+ * @param {String} step – 최초 검색 진입점으로 부터 페이지 이동 횟수
+ * @param {String} from – 검색 접근 위치
+ * @param {String} keyword – 검색어
+ * @returns {void}
+ */
 Tw.CommonSearchNotFound = function (rootEl,surveyList,step,from,keyword) {
   //this._cdn = cdn;
   this.$container = rootEl;
@@ -26,6 +37,12 @@ Tw.CommonSearchNotFound.prototype = new Tw.CommonSearch();
 Tw.CommonSearchNotFound.prototype.constructor = Tw.CommonSearchNotFound;
 $.extend(Tw.CommonSearchNotFound.prototype,
 {
+  /**
+   * @function
+   * @member
+   * @desc 실제 초기화
+   * @returns {void}
+   */
   _nextInit : function () {
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
@@ -50,6 +67,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
     new Tw.XtractorService(this.$container);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색의견 설문조사 팝업 출력
+   * @param {Object} btnEvt - 이벤트 객체
+   * @returns {void}
+   */
   _showClaimPopup : function(btnEvt){
     //var $selectedClaim = $(btnEvt.currentTarget);
     //$selectedClaim.parents('.opinion-selectbox').addClass('selected');
@@ -59,12 +83,28 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._showSelectClaim(btnEvt);
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 얼럿 출력 함수
+   * @param {Object} alertObj - 얼럿 메세지 객체
+   * @param {function} doRequest - 요청 함수
+   * @param {Object} event - 이벤트 객체
+   * @returns {void}
+   */
   _openAlert : function (alertObj,doRequest,event){
     this._popupService.openModalTypeATwoButton(alertObj.TITLE, null, null, alertObj.BUTTON,
       null,
       $.proxy(doRequest,this,event),
       null,null,$(event.currentTarget));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 설문조사 주관식 팝업 출력 함수
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _showRequestKeyword : function (evt) {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_01',
@@ -74,6 +114,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       //$.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
       $.proxy(this._removeInputDisabled,this), 'requestKeyword',$(evt.currentTarget));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 설문조사 객관식 팝업 출력 함수
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _showSelectClaim : function (evt) {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_02',
@@ -83,6 +130,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
       $.proxy(this._removeInputDisabled,this), 'selectClaim',$(evt.currentTarget));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 설문조사 주관식 팝업 이벤트 바인딩
+   * @param {Object} popupObj - 팝업 layer 객체
+   * @returns {void}
+   */
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
     //this._showAndHidePopKeywordList();
@@ -93,6 +147,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$requestKeywordPopup.on('click','.cancel',$.proxy(this._activateRequestKeywordBtn,this));
     this._changeAriaHidden('open');
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 설문조사 객관식 팝업 이벤트 바인딩
+   * @param {Object} popupObj - 팝업 layer 객체
+   * @returns {void}
+   */
   _bindEventForSelectClaim : function(popupObj){
     //claim select
     //this._showAndHidePopKeywordList();
@@ -102,10 +163,23 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
     this._changeAriaHidden('open');
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 입력창 활성화 함수 / 팝업 출력시 입력창 중복으로 인한 웹접근성 이슈
+   * @returns {void}
+   */
   _removeInputDisabled : function(){
     this.$inputElement.removeAttr('disabled');
     this._changeAriaHidden('close');
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 설문조사 작성 완료 버튼 활성화 함수
+   * @param {Object} inputEvt - 이벤트 객체
+   * @returns {void}
+   */
   _activateRequestKeywordBtn : function(inputEvt){
     var $inputEvt = $(inputEvt.currentTarget);
     var inputLength = $inputEvt.val().length;
@@ -117,6 +191,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
     this._validateMaxLength($inputEvt);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 주관식 내용 길이 검증 함수
+   * @param {Object} $inputEvt - 입력 요소 jquery 객체
+   * @returns {void}
+   */
   _validateMaxLength : function ($inputEvt) {
     var maxLength = $inputEvt.attr('maxlength');
     var nowTargetVal = $inputEvt.val();
@@ -129,9 +210,22 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
     this.$requestKeywordPopup.find('.byte-current').text($inputEvt.val().length);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 객관식 설문 내용 입력 완료 버튼 활성화 함수
+   * @returns {void}
+   */
   _activateSelectClaimBtn : function(){
     this.$selectClaimPopup.find('.request_claim').removeAttr('disabled');
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 주관식 설문 내용 입력 완료 함수
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _requestKeyword : function (evt) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, null, null, null, { jsonp : false }).
@@ -142,6 +236,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
         this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
       }, this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 객관식 설문 내용 입력 완료 함수
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _selectClaim : function (evt) {
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0072, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
@@ -152,6 +253,15 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
     }, this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 설문조사 요청 콜백
+   * @param {Object} res - 응답 객체
+   * @param {Object} srchId - 설문 타입 code
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _claimCallback : function (res,srchId, evt) {
     if(res.code===Tw.API_CODE.CODE_00){
       var $selectedEl = this.$container.find('.opinion-selectbox');
@@ -167,6 +277,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.NOTIFY,null,null,null,$(evt.currentTarget));
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색어 입력창 keyup 이벤트
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _inputKeyupEvt : function (evt) {
     if(Tw.InputHelper.isEnter(evt)){
       this.$container.find('.icon-gnb-search').trigger('click');
@@ -180,6 +297,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
       }
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 실행 함수
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _doSearch : function (evt) {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.trim().length<=0){
@@ -190,13 +314,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._addRecentlyKeyword(searchKeyword);
     this._moveUrl('/common/search?keyword='+(encodeURIComponent(searchKeyword))+'&step='+(Number(this._step)+1));
   },
-  _showAndHidePopKeywordList : function () {
-    if(this.$popKeywordElement.hasClass('none')){
-      this.$popKeywordElement.removeClass('none');
-    }else{
-      this.$popKeywordElement.addClass('none');
-    }
-  },
+  /**
+   * @function
+   * @member
+   * @desc 최근검색어,검색어 자동완성 클릭 검색
+   * @param {Object} targetEvt - 이벤트 객체
+   * @returns {void}
+   */
   _keywordSearch : function (targetEvt) {
     targetEvt.preventDefault();
     var $currentTarget = $(targetEvt.currentTarget);
@@ -205,15 +329,13 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     }
     this._moveUrl($currentTarget.attr('href'));
   },
-  _recognizeLastChar : function (keyword){
-    if(Tw.FormatHelper.isEmpty(keyword)){
-      return;
-    }
-    var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
-    if(endCharIdx>0){
-      this.$container.find('#suggest_comment').text('으'+this.$container.find('#suggest_comment').text());
-    }
-  },
+  /**
+   * @function
+   * @member
+   * @desc 접근성 관련 요소 숨김,보임 처리
+   * @param {String} type - 팝업 열기,닫기 타입
+   * @returns {void}
+   */
   _changeAriaHidden : function (type) {
     if(type==='open'){
       this.$ariaHiddenEl.attr('aria-hidden',true);
