@@ -114,7 +114,7 @@ Tw.BannerService.prototype = {
             pauseOnFocus: true,
             pauseOnHover: true,
             pauseOnDotsHover: true,
-            accessibility: false,
+            accessibility: true,
             customPaging: function(slider, i) {
               if (i === 0) {
                 return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
@@ -130,7 +130,7 @@ Tw.BannerService.prototype = {
             speed: 300,
             lazyLoad: 'progressive',
             touchMove: false,
-            accessibility: false,
+            accessibility: true,
             customPaging: function(slider, i) {
               if (i === 0) {
                 return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
