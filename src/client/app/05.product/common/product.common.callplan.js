@@ -594,9 +594,7 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: 'MP_02_02_06',
       layer: true,
       list: this._contentsDetailList
-    }, $.proxy(this._focusContentsDetail, this, contentsIndex), function() {
-      $item.focus();
-    }, 'contents_detail');
+    }, $.proxy(this._focusContentsDetail, this, contentsIndex), null, 'contents_detail', e);
   },
 
   /**
