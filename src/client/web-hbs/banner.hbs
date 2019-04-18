@@ -6,7 +6,7 @@
             </a>
         {{else}}
             <a href="javascript:void(0)" tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}}>
-                <img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="https://cdnm-stg.tworld.co.kr{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">
+                <img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">
             </a>
         {{/if}}
     </li>
