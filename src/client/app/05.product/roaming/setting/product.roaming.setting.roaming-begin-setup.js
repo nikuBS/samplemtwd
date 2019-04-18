@@ -46,11 +46,11 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
     if(this._currentDate>endDate){
-      this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
+      this.$container.find('.bt-fixed-area button').attr('disabled','disabled').removeAttr('aria-haspopup');
       this.$container.find('#start_date').attr('disabled','disabled');
     }
     if(Number(this._currentDate)>=Number(this._prodBffInfo.svcStartDt)){
-      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('.bt-dropdown').attr('disabled','disabled').removeAttr('aria-haspopup');
       this.$container.find('.error-txt.start').removeClass('none');
       this.$container.find('#do_setting').attr('disabled','disabled');
       this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
@@ -197,7 +197,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     if(!isNaN(startDate)){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
     }else{
-      this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
+      this.$container.find('.bt-fixed-area button').attr('disabled','disabled').removeAttr('aria-haspopup');
     }
 
   },
