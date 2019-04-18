@@ -12,6 +12,7 @@ Tw.ImmediatelyRechargeLayer = function ($element, options) {
   this._options = options || {};
   // this._prodId = this._options.prodId;
   var pathUrl = this._options.pathUrl || '/myt-data/submain';
+  this._$targetBtn = this._options.targetBtn || this.$container.find('[data-id=immCharge] button');
   this._bpcpService = Tw.Bpcp;
   this._bpcpService.setData(this.$container, pathUrl);
   this._historyService = new Tw.HistoryService(this.$container);
@@ -181,7 +182,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         layer: true,
         data: data
       }, $.proxy(this._onImmediatelyPopupOpened, this),
-      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04', this.$container.find('[data-id=immCharge] button'));
+      $.proxy(this._onImmediatelyPopupClosed, this), 'DC_04', this._$targetBtn);
   },
 
   // DC_O4 팝업 호출 후
