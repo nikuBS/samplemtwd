@@ -82,7 +82,11 @@ Tw.CommonPostcodeMain.prototype = {
    * @param event
    */
   _changeTab: function (event) {
-    var $targetId = $(event.currentTarget).attr('id');
+    var $target = $(event.currentTarget);
+    var $targetId = $target.attr('id');
+    $target.find('a').attr('aria-selected', 'true');
+    $target.siblings().find('a').attr('aria-selected', 'false');
+
     this._initVariables($targetId); // 변수 재초기화
   },
   /**
