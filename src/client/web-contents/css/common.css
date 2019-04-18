@@ -5886,7 +5886,6 @@ a.ui-button:active,
   height: 20px;
   margin: 0 5px;
   padding: 0;
-  text-indent: -625rem;
   cursor: pointer; }
 
 .slick-dots li button {
@@ -5900,6 +5899,7 @@ a.ui-button:active,
   color: transparent;
   border: 0;
   outline: none;
+  text-indent: -625rem;
   background: transparent; }
 
 .slick-dots li button:hover,
