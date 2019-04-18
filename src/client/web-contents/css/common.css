@@ -5899,6 +5899,7 @@ a.ui-button:active,
   color: transparent;
   border: 0;
   outline: none;
+  text-indent: -625rem;
   background: transparent; }
 
 .slick-dots li button:hover,

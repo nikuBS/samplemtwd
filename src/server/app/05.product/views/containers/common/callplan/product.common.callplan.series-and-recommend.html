@@ -9,14 +9,14 @@ const tabStyleClass = series && series.list.length > 0 && recommends && recommen
         <div class="component-box tabs">
             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                 <div class="tab-linker">
-                    <ul role="tablist" class="tab-style01 <%= tabStyleClass %>" style="width: 100%;">
+                    <ul role="tablist" class="tab-style01 fe-tab <%= tabStyleClass %>" style="width: 100%;">
                         <% if ( series && series.list.length > 0 ) { %>
-                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12" title="<%= series.prodGrpNm %>"><button aria-hidden="true"><%= series.prodGrpNm %></button></li>
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><a><%= series.prodGrpNm %></a></li>
                         <% } %>
                         <% if ( recommends && recommends.length > 0 ) {
                         const selected = !series || series.list.length < 1 ? 'true' : 'false';
                         %>
-                        <li role="tab" aria-selected="<%= selected %>" aria-controls="tab2-tab2" id="tab22" title="함께하면 유용한 상품"><button aria-hidden="true">함께하면 유용한 상품</button></li>
+                        <li role="tab" aria-selected="<%= selected %>" aria-controls="tab2-tab2" id="tab22"><a>함께하면 유용한 상품</a></li>
                         <% } %>
                     </ul>
                 </div>

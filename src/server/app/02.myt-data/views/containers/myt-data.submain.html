@@ -224,6 +224,7 @@
                 <!-- .cont-box -->
             <% } %>
 
+            <% if (data.isWireLess) { %>
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                 <ul class="pg-link-list" data-id="other-pages">
@@ -256,6 +257,29 @@
                     </li>
                 </ul>
             </div>
+            <% } else { %>
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                <ul class="pg-link-list" data-id="other-pages">
+                    <li>
+                        <button data-href="/myt-join/myplan">
+                            <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 요금제
+                        </button>
+                    </li>
+                    <li>
+                        <button data-href="/myt-join/additions">
+                            <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 부가서비스
+                        </button>
+                    </li>
+                    <li>
+                        <button data-href="/myt-fare/billguide/guide">
+                            <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 요금안내서
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <% } %>
+
             <!-- //.cont-box -->
         </div>
     </div>
