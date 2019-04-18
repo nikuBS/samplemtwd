@@ -11,8 +11,9 @@
  * @param rootEl - dom 객체
  * @param svcAttrCd
  */
-Tw.MyTFareBill = function (rootEl, svcAttrCd) {
+Tw.MyTFareBill = function (rootEl, svcAttrCd, target) {
   this.$container = rootEl;
+  this.$target = target;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -132,7 +133,8 @@ Tw.MyTFareBill.prototype = {
     },
       $.proxy(this._onOpenPopup, this), 
       null,
-      'paymentselect');
+      'paymentselect',
+      this.$target);
   },
   /**
    * @function

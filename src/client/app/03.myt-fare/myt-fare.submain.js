@@ -638,8 +638,8 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   // 요금납부 이동
-  _onClickedBillPym: function (/*event*/) {
-    new Tw.MyTFareBill(this.$container, this.data.svcInfo.svcAttrCd);
+  _onClickedBillPym: function (event) {
+    new Tw.MyTFareBill(this.$container, this.data.svcInfo.svcAttrCd, $(event.currentTarget));
   },
 
   // 실시간요금 이동
