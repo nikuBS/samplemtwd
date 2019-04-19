@@ -125,7 +125,7 @@ class ProductCommonCallplan extends TwViewController {
    * @param prodId - 상품원장 상품코드
    */
   private _getMyContentsData(prodStCd: any, grpProdScrnConsCd: any, prodId: any): any {
-    if (grpProdScrnConsCd === 'SRRL') { // 대표 원장과 동일하므로 별도 redis 가져올 필요 없음
+    if (grpProdScrnConsCd === 'SRRL' && prodStCd === 'E1000') { // 대표 원장과 동일하므로 별도 redis 가져올 필요 없음
       return Observable.of({});
     }
 
@@ -141,7 +141,7 @@ class ProductCommonCallplan extends TwViewController {
    * @param prodGrpRepYn - 콘텐츠 그룹의 대표 원장 여부
    */
   private _getExtendContentsData(prodStCd: any, prodGrpYn: any, repProdId: any, prodGrpRepYn: any): any {
-    if (prodGrpYn !== 'Y' || prodGrpRepYn === 'Y') {  // 그룹원장이 아니거나 그룹의 대표 원장일 경우 이미 갖고오는 부분이 있으므로
+    if ((prodGrpYn !== 'Y' || prodGrpRepYn === 'Y') && prodStCd === 'E1000' || prodStCd !== 'E1000') {  // 그룹원장이 아니거나 그룹의 대표 원장일 경우 이미 갖고오는 부분이 있으므로
       return Observable.of({});
     }
 
@@ -268,6 +268,7 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * 콘텐츠 데이터 그룹 처리
+   * @param prodStCd - 상품운영상태코드
    * @param data - 콘텐츠 데이터
    * @see prodGrpYn - 그룹형 상품 여부
    * @see repProdId - 대표상품 ID
@@ -275,7 +276,7 @@ class ProductCommonCallplan extends TwViewController {
    * @see prodGrpRepYn - 대표상품 여부
    * @see grpProdScrnConsCd - 그룹상품화면구성코드 (최상단 see 참조)
    */
-  private _convertContentsInfo (data): any {
+  private _convertContentsInfo (prodStCd, data): any {
     let contentsResult: any = {
         LIST: [],
         LA: null,
@@ -285,7 +286,7 @@ class ProductCommonCallplan extends TwViewController {
 
     // 그룹형 상품 아닐때 case0
     if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y' ||
-      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents)) {
+      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents) || prodStCd !== 'E1000') {
       return data.convContents;
     }
 
@@ -865,7 +866,7 @@ class ProductCommonCallplan extends TwViewController {
             convRepContents = FormatHelper.isEmpty(prodRedisExtendContentsInfo.result)
             || FormatHelper.isEmpty(prodRedisExtendContentsInfo.result.contents) ? null :
               this._convertContents(basicInfo.result.prodStCd, prodRedisExtendContentsInfo.result.contents),
-            contentsResult = this._convertContentsInfo({
+            contentsResult = this._convertContentsInfo(basicInfo.result.prodStCd, {
               convContents,
               convRepContents,
               prodGrpYn: basicInfo.result.prodGrpYn,
