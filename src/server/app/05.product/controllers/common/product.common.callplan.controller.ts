@@ -358,7 +358,7 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (isOpen && (!item.vslYn || item.vslYn && item.vslYn === 'N' || item.vslLedStylCd === null)) {  // 오픈 상태일때는 비시각화 원장 미사용 처리
+      if (isOpen && (!item.vslYn || item.vslYn && item.vslYn === 'N' && item.vslLedStylCd === null)) {  // 오픈 상태일때는 비시각화 원장 미사용 처리
         return true;
       }
 
