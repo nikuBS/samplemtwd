@@ -5,13 +5,6 @@
 %>
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
 <div class="wrap">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup fixed-bottom"><!-- .fixed-bottom 하단에 고정된 버튼이 있는 경우 -->
@@ -40,14 +33,14 @@
                         <ul>
                             <% if (isAndroid) { %>
                             <li><a><button class="fe-link" data-link="https://play.google.com/store/apps/details?id=Com.sktelecom.minit">
-                                <img src="<%= CDN %>/img/common/icon-app-play-store.png" alt="google play store" /></button></a>
+                                <img src="<%= CDN %>/img/common/icon-app-play-store.png" alt="google play store" title="새창" /></button></a>
                             </li>
                             <li><a><button class="fe-link" data-link="https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000032819">
-                                <img src="<%= CDN %>/img/common/icon-app-one-store.png" alt="One Store" /></button></a>
+                                <img src="<%= CDN %>/img/common/icon-app-one-store.png" alt="One Store" title="새창" /></button></a>
                             </li>
                             <% } else { %>
                             <li><button class="fe-link" data-link="https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8">
-                                <img src="<%= CDN %>/img/common/icon-app-ios.png" alt="ios" /></button>
+                                <img src="<%= CDN %>/img/common/icon-app-ios.png" alt="App store" title="새창" /></button>
                             </li>
                             <% } %>
                         </ul>
