@@ -166,15 +166,15 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
+   * @param prodStCd 상품운영상태코드
    * @param data
-   * @private
    * @see prodGrpYn 그룹형 상품 여부
    * @see repProdId 대표상품 ID
    * @see repVslAplyYn 대표소개 페이지 설정 여부
    * @see prodGrpRepYn 대표상품 여부
    * @see grpProdScrnConsCd 그룹상품화면구성코드
    */
-  private _convertContentsInfo (data): any {
+  private _convertContentsInfo (prodStCd, data): any {
     let contentsResult: any = {
       LIST: [],
       LA: null,
@@ -184,7 +184,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     // 그룹형 상품 아닐때 case0
     if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y' ||
-      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents)) {
+      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents) || prodStCd !== 'E1000') {
       return data.convContents;
     }
 
@@ -503,7 +503,7 @@ class ProductCommonCallplanPreview extends TwViewController {
             this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsList),
           convRepContents = FormatHelper.isEmpty(prodInfo.result.contentsRepList) ? null :
             this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsRepList),
-          contentsResult = this._convertContentsInfo({
+          contentsResult = this._convertContentsInfo(prodInfo.result.baseInfo.prodStCd, {
             convContents,
             convRepContents,
             prodGrpYn: prodInfo.result.baseInfo.prodGrpYn,
