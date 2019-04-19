@@ -198,7 +198,7 @@ Tw.CommonPostcodeDetail.prototype = {
    * @desc 우편번호 조회 all close
    */
   _close: function () {
-    this._popupService.closeAll();
+    this._popupService.closeAll(this.$container, this.$target);
   },
   /**
    * @function

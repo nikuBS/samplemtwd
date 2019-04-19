@@ -1,7 +1,19 @@
+/**
+ * @file init.common.js
+ * @author Ara Jo (araara.jo@sk.com)
+ * @since 2018.05
+ */
+
 Tw.Environment = {
   init: false,
   cdn: ''
 };
+
+/**
+ * @class
+ * @desc 초기화
+ * @constructor
+ */
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
@@ -11,11 +23,14 @@ Tw.Init = function () {
   this._initXtvId();
   this._getEnvironment();
   this._sendXtractorLoginDummy();
-  // this._setGesture();
-  // this._setNodeCookie();
 };
 
 Tw.Init.prototype = {
+  /**
+   * @function
+   * @desc 서비스 초기화
+   * @private
+   */
   _initService: function () {
     Tw.Logger = {
       log: function () {
@@ -39,6 +54,11 @@ Tw.Init.prototype = {
     this._nativeService = Tw.Native;
   },
 
+  /**
+   * @function
+   * @desc componnet 초기화
+   * @private
+   */
   _initComponent: function () {
     new Tw.MenuComponent();
     new Tw.FooterComponent();
@@ -46,12 +66,23 @@ Tw.Init.prototype = {
     new Tw.MaskingComponent();
   },
 
+  /**
+   * @function
+   * @desc Node 환경변수 요청
+   * @private
+   */
   _getEnvironment: function () {
     this._apiService.request(Tw.NODE_CMD.GET_ENVIRONMENT, {})
       .done($.proxy(this._logVersion, this))
       .fail($.proxy(this._failEnvironment, this));
   },
 
+  /**
+   * @function
+   * @desc Node 환경변수 요청 응답 처리
+   * @param resp
+   * @private
+   */
   _logVersion: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
@@ -69,18 +100,29 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.36.1');
+        Tw.Popup.toast('QA_v5.36.2');
       }
 
       this._initTrackerApi();
     }
   },
 
+  /**
+   * @function
+   * @desc Node 환경변수 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failEnvironment: function (error) {
     Tw.Logger.error(error);
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
 
+  /**
+   * @function
+   * @desc Xtractor 초기화
+   * @private
+   */
   _initXtvId: function () {
     if ( !Tw.BrowserHelper.isApp() ) {
       return;
@@ -104,6 +146,12 @@ Tw.Init.prototype = {
     }, this));
   },
 
+  /**
+   * @function
+   * @desc Xtractor 쿠키 설정
+   * @param xtvId
+   * @private
+   */
   _sendXtvId: function (xtvId) {
     var isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
     if ( !Tw.FormatHelper.isEmpty(isLog) ) {
@@ -114,16 +162,11 @@ Tw.Init.prototype = {
     Tw.CommonHelper.setCookie('XTVID_LOG', 'Y');
   },
 
-  _setNodeCookie: function () {
-    var cookie = Tw.CommonHelper.getCookie('TWM');
-    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
-      this._nativeService.send(Tw.NTV_CMD.SESSION, {
-        serverSession: cookie,
-        expired: Tw.SESSION_EXPIRE_TIME
-      });
-    }
-  },
-
+  /**
+   * @function
+   * @desc
+   * @private
+   */
   _sendXtractorLoginDummy: function () {
     var cookie = Tw.CommonHelper.getCookie('XT_LOGIN_LOG');
     if ( !Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
@@ -158,18 +201,11 @@ Tw.Init.prototype = {
       }, this));
   },
 
-  _setGesture: function () {
-    if ( /\/home/.test(location.href) ) {
-      this._nativeService.send(Tw.NTV_CMD.SET_SWIPE_GESTURE_ENABLED, {
-        isEnabled: false
-      });
-    } else {
-      this._nativeService.send(Tw.NTV_CMD.SET_SWIPE_GESTURE_ENABLED, {
-        isEnabled: true
-      });
-    }
-  },
-
+  /**
+   * @function
+   * @desc
+   * @private
+   */
   _initTrackerApi: function () {
     if ( !Tw.BrowserHelper.isApp() ) {  // App 환경에서만 동작
       return;
@@ -178,6 +214,12 @@ Tw.Init.prototype = {
     this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._sendTrackerApi, this));
   },
 
+  /**
+   * @function
+   * @desc
+   * @param res
+   * @private
+   */
   _sendTrackerApi: function (res) {
     if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
       return;

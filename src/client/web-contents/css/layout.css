@@ -6,6 +6,9 @@ body.bg-white {
 body.bg-white .container-wrap {
   overflow-y: auto;
   overflow-x: hidden; }
+body.bg-white .container-wrap h2{
+  display: block;
+}  
 
 body.bg-white .container-wrap .container {
   overflow-y: auto;

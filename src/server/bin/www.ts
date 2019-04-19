@@ -1,5 +1,4 @@
 import process from 'process';
-import https from 'https';
 import fs from 'fs';
 import { Application } from 'express';
 import App from '../app';
@@ -12,9 +11,5 @@ const certOptions = {
   cert: fs.readFileSync(process.cwd() + '/src/server/config/cert/cert.pem')
 };
 
-// https options
-// https.createServer(certOptions, app).listen(port, () => {
-//   console.log('Https server listening on port ' + port);
-// });
 app.listen(port, () => console.log(`Express server listening at ${port}`));
 app.on('error', err => console.error(err));

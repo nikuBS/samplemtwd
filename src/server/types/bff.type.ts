@@ -77,6 +77,7 @@ export enum UNIT_E {
   DATA = '140',
   VOICE = '240',
   VOICE_2 = '910',
+  VOICE_3 = '210',
   SMS = '310',
   SMS_2 = '320'
 }

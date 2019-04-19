@@ -405,6 +405,7 @@ class MytDataSubmainController extends TwViewController {
         return FormatHelper.convDataFormat(data, UNIT[unit]);
       case UNIT_E.VOICE:
       case UNIT_E.VOICE_2:
+      case UNIT_E.VOICE_3:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.FEE:
       case UNIT_E.SMS:

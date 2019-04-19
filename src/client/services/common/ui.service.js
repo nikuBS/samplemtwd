@@ -7,6 +7,10 @@ Tw.UIService = function () {
 };
 
 Tw.UIService.prototype = {
+  /**
+   * @desc fe-common-back 클래스 가진 모든 element에 click event 바인딩(뒤로 가기)
+   * @private
+   */
   setBack: function () {
     /* 뒤로가기 추가 */
     $('.fe-common-back').on('click', function ($event) {
@@ -19,6 +23,10 @@ Tw.UIService.prototype = {
       }
     });
   },
+  /**
+   * @desc fe-common-forward 클래스 가진 모든 element에 click event 바인딩(앞으로 가기)
+   * @private
+   */
   setForward: function () {
     $('.fe-common-forward').on('click', function () {
       Tw.Logger.info('[Common Forward]');
@@ -26,6 +34,10 @@ Tw.UIService.prototype = {
     });
   },
 
+  /**
+   * @desc fe-replace-history 클래스 가진 모든 element에 click event 바인딩(replace history)
+   * @private
+   */
   setReplace: function () {
     $('.fe-replace-history').on('click', function ($event) {
       Tw.Logger.info('[Replace History]');
@@ -34,6 +46,10 @@ Tw.UIService.prototype = {
     });
   },
 
+  /**
+   * @desc back 버튼으로 페이지 로딩 시
+   * @private
+   */
   setBackRefresh: function () {
     $(window).bind('pageshow', function ($event) {
       if ( $event.originalEvent.persisted || window.performance && window.performance.navigation.type === 2 ) {
@@ -56,10 +72,18 @@ Tw.UIService.prototype = {
     });
   },
 
+  /**
+   * @desc 인풋에 max length 입력 불가하도록 이벤트 바인딩
+   * @private
+   */
   setInputEvent: function () {
     $('input').on('input', $.proxy(this.setMaxValue, this));
   },
 
+    /**
+   * @desc 사용자가 인풋에 max length 이상 입력 시 지움
+   * @private
+   */
   setMaxValue: function (event) {
     var $target = $(event.currentTarget);
     var maxLength = $target.attr('maxLength');
