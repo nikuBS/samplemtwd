@@ -384,10 +384,6 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (!item || item.vslYn === 'N') {
-        item.ledItmDesc = FormatHelper.isEmpty(item.ledItmDesc) ? '' : item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
-      }
-
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
         ledItmDesc: this._convertContentsHtml(item.ledItmDesc)
