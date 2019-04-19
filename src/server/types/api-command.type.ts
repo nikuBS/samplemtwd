@@ -28,6 +28,7 @@ export const API_CMD = {
 
   BFF_INFO: { path: '/actuator/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_VERSION: { path: '/actuator/version/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_LOGIN_ERROR: { path: '/core-auth/v1/login-histories', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true},
 
   // SPRINT #3
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
