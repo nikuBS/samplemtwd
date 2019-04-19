@@ -238,6 +238,7 @@ class MyTHelper {
         return FormatHelper.convDataFormat(data, UNIT[unit]);
       case UNIT_E.VOICE:
       case UNIT_E.VOICE_2:
+      case UNIT_E.VOICE_3:
         return FormatHelper.convVoiceFormat(data);
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:
@@ -256,6 +257,7 @@ class MyTHelper {
         return [FormatHelper.convDataFormat(data, UNIT[unit])];
       case UNIT_E.VOICE:
       case UNIT_E.VOICE_2:
+      case UNIT_E.VOICE_3:
         return FormatHelper.convVoiceFormatWithUnit(data);
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:
