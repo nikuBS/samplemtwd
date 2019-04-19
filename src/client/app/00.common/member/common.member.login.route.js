@@ -46,7 +46,7 @@ Tw.CommonMemberLoginRoute.prototype = {
       hash = '#' + target.split('#')[1];
     }
 
-    var tidResp = Tw.ParamsHelper.getQueryParams('?' + token);
+    var tidResp = Tw.UrlHelper.getQueryParams('?' + token);
     if ( tidResp.state === state ) {
       console.log('[TID STATE SUCCESS]', tidResp.state, state);
       state = tidResp.state;

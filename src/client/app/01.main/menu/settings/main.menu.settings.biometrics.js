@@ -55,7 +55,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
       // } else {
       //   this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_OFF);
       // }
-      this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FIDO_OFF);
+      this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FIDO_OFF);
     }
   },
   _onFidoUse: function (resp) {
