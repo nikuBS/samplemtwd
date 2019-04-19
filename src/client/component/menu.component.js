@@ -653,6 +653,11 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         this._checkNewTNoti();
       }
     }, this));
+
+    // 웹접근성 (단독 라인일 경우 userinfo 영역에 안내 메세지 추가)
+    if (this._isLogin && !this._isMultiLine) {
+      this.$container.find('.fe-userinfo').attr('title', '다회선일 경우에만 사용 가능합니다.');
+    }
   },
 
   /**
