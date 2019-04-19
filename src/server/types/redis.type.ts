@@ -30,7 +30,8 @@ export enum REDIS_KEY {
 export enum REDIS_TOS_KEY {
   SMART_CARD = 'SmartCardSorting:',
   SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999',
-  BANNER_TOS_KEY = 'BannerTosKey:'
+  BANNER_TOS_KEY = 'BannerTosKey:',
+  QUICK_MENU = 'UserQuickMenuByUser:'
 }
 
 export enum CHANNEL_CODE {
