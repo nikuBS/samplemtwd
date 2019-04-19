@@ -284,7 +284,7 @@ class ProductCommonCallplan extends TwViewController {
       };
 
     // 그룹형 상품 아닐때 case0
-    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y') {
+    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y' || FormatHelper.isEmpty(data.convContents)) {
       return data.convContents;
     }
 
