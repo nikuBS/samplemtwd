@@ -52,6 +52,16 @@ Tw.CommonMemberLoginRoute.prototype = {
       state = tidResp.state;
     } else {
       console.log('[TID STATE ERROR]', tidResp.state, state);
+      this._apiService.request(Tw.API_CMD.BFF_LOGIN_ERROR, {
+        token: tidResp.id_token,
+        rsltMsg: 'TID state error : ' + state + ' : ' + tidResp.state
+      })
+        .done($.proxy(function (resp) {
+          console.log('[TID ERROR LOG Success]', resp);
+        }, this))
+        .fail($.proxy(function (error) {
+          console.log('[TID ERROR LOG Fail]', error);
+        }, this));
     }
 
     if ( isLogin ) {
