@@ -49,13 +49,13 @@ class CommonTidLogin extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
           redirect_uri: this.loginService.getProtocol(req) + this.loginService.getDns(req) +
-            '/common/member/login/route?target=' + target + '_type_' + type,
+            '/common/member/login/route?target=' + target + '_type_' + type + '_state_' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
         };
         const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
-        this.logger.info(this, '[redirect]', url);
+        this.logger.error(this, '[TID redirect]', url);
         res.redirect(url);
       } else {
         res.redirect('/common/member/login/fail?errorCode=' + resp.code);

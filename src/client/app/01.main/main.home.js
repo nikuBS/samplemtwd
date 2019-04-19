@@ -126,6 +126,7 @@ Tw.MainHome.prototype = {
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
+    this.$elMembership = this.$container.find('#fe-membership-extend');
     this._svcMgmtNum = this.$container.find('.fe-bt-line').data('svcmgmtnum') &&
       this.$container.find('.fe-bt-line').data('svcmgmtnum').toString();
 
@@ -140,7 +141,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _bindEvent: function () {
-    this.$container.on('click', '#fe-membership-extend', _.debounce($.proxy(this._onClickBarcode, this), 500));
+    this.$elMembership.on('click', _.debounce($.proxy(this._onClickBarcode, this), 500));
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     // this.$container.find('.fe-bt-go-recharge').click(_.debounce($.proxy(this._onClickBtRecharge, this),500));
     this.$container.on('click', '.fe-bt-line', _.debounce($.proxy(this._onClickLine, this), 500));
@@ -261,13 +262,40 @@ Tw.MainHome.prototype = {
    * @private
    */
   _makeBarcode: function () {
-    var cardNum = this.$elBarcode.data('cardnum');
+    var cardNum = '';
+    if ( this.$elMembership.hasClass('fe-bff0011') ) {
+      var membershipData = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.MEMBERSHIP_INFO));
+      this.$barcodeGr.addClass(membershipData.mbrGr);
+      if ( membershipData.mbrSt === 'SP' ) {
+        this.$elMembership.find('#fe-membership-barcode-wrap').addClass('none').attr('aria-disabled', true);
+        this.$elMembership.find('#fe-membership-stop').removeClass('none').attr('aria-disabled', false);
+      } else {
+        cardNum = membershipData.cardNum;
+        this.$elMembership.find('#fe-membership-cardnum').text(membershipData.showCardNum);
+        this.$elBarcode.attr('data-cardnum', cardNum);
+        this.$elBarcode.attr('data-showcard', membershipData.showCardNum);
+        this.$barcodeGr.attr('data-mbrgr', membershipData.mbrGr);
+        this.$barcodeGr.attr('data-mbrst', membershipData.mbrSt);
+      }
+    } else {
+      cardNum = this.$elBarcode.data('cardnum');
+      var showCardNum = this.$elBarcode.data('showcard');
+      var mbrGr = this.$barcodeGr.data('mbrgr');
+      var mbrSt = this.$barcodeGr.data('mbrst');
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.MEMBERSHIP_INFO, JSON.stringify({
+        cardNum: cardNum,
+        showCardNum: showCardNum,
+        mbrGr: mbrGr,
+        mbrSt: mbrSt
+      }));
+    }
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       this.$elBarcode.JsBarcode(cardNum, {
         background: 'rgba(255, 255, 255, 0)',
         displayValue: false
       });
     }
+
   },
 
   /**
@@ -283,11 +311,20 @@ Tw.MainHome.prototype = {
       var cardNum = this.$elBarcode.data('cardnum');
       var mbrGr = this.$barcodeGr.data('mbrgr');
       var showCardNum = this.$elBarcode.data('showcard');
-      this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum, $target))
-        .fail($.proxy(this._failMembership, this));
-    }
 
+      if ( this.$elMembership.hasClass('fe-bff0011') ) {
+        this._openBarcodePopup(mbrGr, cardNum, showCardNum, '- ', $target);
+
+      } else {
+        if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
+          this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
+            .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum, $target))
+            .fail($.proxy(this._failMembership, this));
+        }
+      }
+
+
+    }
   },
 
   /**

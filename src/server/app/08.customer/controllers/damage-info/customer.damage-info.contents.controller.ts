@@ -7,6 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { CUSTOMER_DAMAGEINFO_CONTENTS_TITLE } from '../../../../types/string.type';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 /**
  * @class
@@ -44,7 +45,8 @@ class CustomerDamageInfoContents extends TwViewController {
     }
 
     res.render('damage-info/contents/customer.damage-info.contents.html', Object.assign(renderCommonInfo, {
-      pageTitle: CUSTOMER_DAMAGEINFO_CONTENTS_TITLE[pageNo] // 페이지 번호에 맞는 타이틀 값 연결
+      pageTitle: CUSTOMER_DAMAGEINFO_CONTENTS_TITLE[pageNo], // 페이지 번호에 맞는 타이틀 값 연결
+      isApp: BrowserHelper.isApp(req)
     }));
   }
 }

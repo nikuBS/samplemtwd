@@ -30,6 +30,7 @@ class CommonMemberLoginRoute extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
     const params = this.getParams(req.query.target);
+    this.logger.error('[TID login param]', params);
 
     if ( !FormatHelper.isEmpty(query.error) ) {
       if ( query.error === '3541' || query.error === '3602' || query.error === '4503' ) {
@@ -48,15 +49,23 @@ class CommonMemberLoginRoute extends TwViewController {
    * @param params
    */
   private getParams(params): any {
+    let state = '';
+    if ( params.indexOf('_state_') !== -1 ) {
+      state = params.split('_state_')[1];
+      params = params.split('_state_')[0];
+    }
+
     if ( params.indexOf('_type_') !== -1 ) {
       return {
         target: params.split('_type_')[0],
-        type: params.split('_type_')[1]
+        type: params.split('_type_')[1],
+        state: state
       };
     } else {
       return {
         target: params,
-        type: null
+        type: null,
+        state: state
       };
     }
   }

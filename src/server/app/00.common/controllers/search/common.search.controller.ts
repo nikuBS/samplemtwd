@@ -1,4 +1,5 @@
 /**
+ * 검색 결과 화면
  * @file common.search.controller.ts
  * @author Hyunkuk Lee ( max5500@pineone.com )
  * @since 2018.12.11
@@ -24,6 +25,13 @@ class CommonSearch extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
     let requestObj, researchCd, researchQuery, searchApi ;
+    /**
+     * 검색 결과 출력
+     * @param searchResult 검색 결과
+     * @param relatedKeyword 연관 검색어
+     * @param thisObj 해당 객체
+     * @returns void
+     */
     function showSearchResult(searchResult, relatedKeyword , thisObj) {
       if ( searchResult.result.totalcount === 0 || from === 'empty' ) {
         Observable.combineLatest(
@@ -64,6 +72,11 @@ class CommonSearch extends TwViewController {
         });
       }
     }
+    /**
+     * 즉답검색 결과 제거
+     * @param searchResult 검색 결과
+     * @returns {Object} 검색 결과
+     */
     function removeImmediateData(searchResult) {
       searchResult.result.search[0].immediate.data = [];
       searchResult.result.search[0].immediate.count = 0;
@@ -165,7 +178,10 @@ class CommonSearch extends TwViewController {
     });
 
   }
-
+  /**
+   * 잔여한도 조회 콜백
+   * @returns {Object} 잔여한도
+   */
   private _getMicroRemain(): Observable<any> {
     return this._getRemainLimit('Request', '0') // 최초 시도 시 Request, 0으로 호출
         .switchMap((resp) => {
@@ -197,7 +213,10 @@ class CommonSearch extends TwViewController {
         });
   }
 
-  /* 잔여한도 조회 */
+  /**
+   * 잔여한도 조회
+   * @returns {Object} 잔여한도
+   */
   private _getRemainLimit(gubun: string, requestCnt: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0073, { gubun: gubun, requestCnt: requestCnt });
   }

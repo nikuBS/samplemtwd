@@ -120,29 +120,33 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * 상품 콘텐츠 조회 (self)
+   * @param prodStCd - 상품 상태코드
    * @param grpProdScrnConsCd - 콘텐츠 그룹 유형
    * @param prodId - 상품원장 상품코드
    */
-  private _getMyContentsData(grpProdScrnConsCd: any, prodId: any): any {
+  private _getMyContentsData(prodStCd: any, grpProdScrnConsCd: any, prodId: any): any {
     if (grpProdScrnConsCd === 'SRRL') { // 대표 원장과 동일하므로 별도 redis 가져올 필요 없음
       return Observable.of({});
     }
 
-    return this.redisService.getData(REDIS_KEY.PRODUCT_CONTETNS + prodId);
+    const contentsRedisKey: any = prodStCd === 'E1000' ? REDIS_KEY.PRODUCT_CONTETNS : REDIS_KEY.PRODUCT_PLM_CONTENTS;
+    return this.redisService.getData(contentsRedisKey + prodId);
   }
 
   /**
    * 상품 콘텐츠 조회 (parent)
+   * @param prodStCd - 상품 상태코드
    * @param prodGrpYn - 콘텐츠 그룹 여부
    * @param repProdId - 대표 상품 상품코드
    * @param prodGrpRepYn - 콘텐츠 그룹의 대표 원장 여부
    */
-  private _getExtendContentsData(prodGrpYn: any, repProdId: any, prodGrpRepYn: any): any {
+  private _getExtendContentsData(prodStCd: any, prodGrpYn: any, repProdId: any, prodGrpRepYn: any): any {
     if (prodGrpYn !== 'Y' || prodGrpRepYn === 'Y') {  // 그룹원장이 아니거나 그룹의 대표 원장일 경우 이미 갖고오는 부분이 있으므로
       return Observable.of({});
     }
 
-    return this.redisService.getData(REDIS_KEY.PRODUCT_CONTETNS + repProdId);
+    const contentsRedisKey: any = prodStCd === 'E1000' ? REDIS_KEY.PRODUCT_CONTETNS : REDIS_KEY.PRODUCT_PLM_CONTENTS;
+    return this.redisService.getData(contentsRedisKey + repProdId);
   }
 
   /**
@@ -280,7 +284,8 @@ class ProductCommonCallplan extends TwViewController {
       };
 
     // 그룹형 상품 아닐때 case0
-    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y') {
+    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y' ||
+      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents)) {
       return data.convContents;
     }
 
@@ -351,6 +356,10 @@ class ProductCommonCallplan extends TwViewController {
 
     contentsInfo.forEach((item) => {
       if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {  // 미오픈 상태일때는 시각화 원장을 사용하지 않으므로 skip
+        return true;
+      }
+
+      if (isOpen && (!item.vslYn || item.vslYn && item.vslYn === 'N' && item.vslLedStylCd === null)) {  // 오픈 상태일때는 비시각화 원장 미사용 처리
         return true;
       }
 
@@ -817,8 +826,9 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [prodId]),
           this.apiService.request(API_CMD.BFF_10_0112, {}, {}, [prodId]),
           this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
-          this._getMyContentsData(basicInfo.result.grpProdScrnConsCd, prodId),
-          this._getExtendContentsData(basicInfo.result.prodGrpYn, basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),
+          this._getMyContentsData(basicInfo.result.prodStCd, basicInfo.result.grpProdScrnConsCd, prodId),
+          this._getExtendContentsData(basicInfo.result.prodStCd, basicInfo.result.prodGrpYn,
+            basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
           this._getIsJoined(svcInfo, basicInfo.result.prodTypCd, prodId, basicInfo.result.plmProdList),
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),

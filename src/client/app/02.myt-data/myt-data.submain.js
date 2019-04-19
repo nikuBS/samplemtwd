@@ -287,6 +287,7 @@ Tw.MyTDataSubMain.prototype = {
         return Tw.FormatHelper.convDataFormat(data, Tw.UNIT[unit]);
       case Tw.UNIT_E.VOICE:
       case Tw.UNIT_E.VOICE_2:
+      case Tw.UNIT_E.VOICE_3:
         return Tw.FormatHelper.convVoiceFormat(data);
       case Tw.UNIT_E.SMS:
       case Tw.UNIT_E.SMS_2:

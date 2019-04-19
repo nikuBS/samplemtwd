@@ -121,6 +121,8 @@ Tw.ProductRoamingInfoCenter.prototype = {
    * @private
    */
   _onActionSheetOpened: function (currentCenter, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer); // IOS에서 포커스 이동이 되지 않아 강제로 포커스 이동(웹접근성)
+
     $('li.type1').each(function(){
       if($(this).find('label').text().trim() === currentCenter){
         $(this).find('input[type=radio]').prop('checked', true);
@@ -150,6 +152,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
     }
 
     this._popupService.close();
+    this.$btnDropdown.focus(); // 액션시트 선택 후 강제 포커스(웹접근성)
   }
 
 };

@@ -26,7 +26,7 @@ class CustomerDamageInfoWarning extends TwViewController {
   private _convertList(list): any {
     return list.map(item => {
       return Object.assign(item, {
-        date: DateHelper.getShortDateWithFormat(item.auditDt, 'YYYY.M.D.')  // 날짜 포맷
+        date: DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.D.')  // 날짜 포맷
       });
     });
   }

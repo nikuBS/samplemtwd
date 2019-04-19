@@ -183,7 +183,8 @@ class ProductCommonCallplanPreview extends TwViewController {
     };
 
     // 그룹형 상품 아닐때 case0
-    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y') {
+    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y' ||
+      FormatHelper.isEmpty(data.convContents) && FormatHelper.isEmpty(data.convRepContents)) {
       return data.convContents;
     }
 
@@ -253,7 +254,11 @@ class ProductCommonCallplanPreview extends TwViewController {
       };
 
     contentsInfo.forEach((item) => {
-      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
+      if (!isOpen && (item.vslYn && item.vslYn === 'Y')) { // 미오픈 상태일때는 시각화 원장을 사용하지 않으므로 skip
+        return true;
+      }
+
+      if (isOpen && (!item.vslYn || item.vslYn && item.vslYn === 'N' && item.vslLedStylCd === null)) {  // 오픈 상태일때는 비시각화 원장 미사용 처리
         return true;
       }
 

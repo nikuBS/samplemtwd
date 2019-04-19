@@ -12,7 +12,7 @@
     <div id="skipNav" class="skip_navi">
         <ul>
             <!-- Grand open 접근성 수정 -->
-            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
             <!--  //Grand open 접근성 수정 -->
         </ul>
     </div>
@@ -23,6 +23,7 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container noscroll">
                 <% const TYPE_NAMES = ['T끼리 데이터 선물', '데이터 한도 요금', '팅 쿠키즈 안심요금', '팅 요금 선물', '데이터 음성 리필', '전체']; 
                 const list = filterIdx === 5 ? chargeData.all : chargeData.display, DEFALUT_LIST_COUNT = 20; %>

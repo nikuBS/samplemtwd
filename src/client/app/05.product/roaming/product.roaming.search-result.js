@@ -17,6 +17,7 @@ Tw.ProductRoamingSearchResult = function (rootEl, svcInfo, srchInfo, rateInfo) {
   this._svcInfo = svcInfo;
   this._srchInfo = srchInfo;
   this._rateInfo = rateInfo;
+  this._rentYn = false; // 임대로밍 선택여부
 
   this._roamingSearchInit();
   this._bindEvents();
@@ -158,8 +159,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         // 임대 로밍 서비스가 가능한 경우
         if(this._rateInfo.rent > 0){
             this.reqParams.showDailyPrice = 'Y';
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
         }else {
             this.reqParams.showDailyPrice = 'N';
             // if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
@@ -308,8 +309,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         var _result = resp.result;
         Tw.Logger.info('rate result _result : ' + JSON.stringify(_result));
 
-        if(this.reqParams.showDailyPrice === 'Y'){
-            this.reqParams.manageType = '';
+        if( this._rentYn === true ){ // 임대로밍을 선택한 경우 manageType 값 ''
+          this.reqParams.manageType = '';
         }
         var typeIndex = null;
         for(var idx in this.manageType) {
@@ -553,9 +554,11 @@ Tw.ProductRoamingSearchResult.prototype = {
             // 로밍 서비스 방식이 빈값인 경우는 임대로밍이므로 manageType:G, showDailyPrice:Y로 변경함.
             this.reqParams.manageType = rmType;
             if(this.reqParams.manageType === ''){
+                this._rentYn = true;
                 this.reqParams.manageType = 'G';
                 this.reqParams.showDailyPrice = 'Y';
             }else {
+                this._rentYn = false;
                 this.reqParams.showDailyPrice = 'N';
             }
             this._popupService.close();

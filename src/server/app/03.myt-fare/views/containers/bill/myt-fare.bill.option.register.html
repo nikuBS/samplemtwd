@@ -12,8 +12,8 @@
             <%- include('../components/header.component.html', { title: paymentOption.title, type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- #contents -->
-            <div class="container-wrap">
-                <h2 id="contents" class="blind">내용</h2>
+            <div id="contents" class="container-wrap">
+                <h2 class="blind">내용</h2>
                 <div class="container">
                     <div class="cont-box nogaps">
                         <div class="form-data-tit-wrap ml16">
@@ -165,21 +165,21 @@
                         <ul class="noti-list02">
                             <% if (paymentOption.type === 'change') { %>
                             <li>
-                                <button id="MF_05_01_01_tip_01" class="tip-view-btn" title="자동납부 신청/변경/해지 시" aria-haspopup="true" type="button">
+                                <button id="MF_05_01_01_tip_01" class="tip-view-btn" aria-haspopup="true" type="button">
                                     자동납부 신청/변경/해지 시<span class="tip-view">TIP</span>
                                 </button>
                             </li>
                             <li>
-                                <button id="MF_05_01_01_tip_03" class="tip-view-btn" title="은행 자동납부 신청 안내" aria-haspopup="true" type="button">
+                                <button id="MF_05_01_01_tip_03" class="tip-view-btn" aria-haspopup="true" type="button">
                                     은행 자동납부 신청 안내<span class="tip-view">TIP</span></button>
                             </li>
                             <% } %>
                             <li>
-                                <button id="MF_05_01_tip_03" class="tip-view-btn" title="이용시간 안내" aria-haspopup="true" type="button">
+                                <button id="MF_05_01_tip_03" class="tip-view-btn" aria-haspopup="true" type="button">
                                     이용시간 안내<span class="tip-view">TIP</span></button>
                             </li>
                             <li>
-                                <button id="MF_05_01_tip_04" class="tip-view-btn" title="추가문의 안내" aria-haspopup="true" type="button">
+                                <button id="MF_05_01_tip_04" class="tip-view-btn" aria-haspopup="true" type="button">
                                     추가문의 안내<span class="tip-view">TIP</span></button>
                             </li>
                         </ul>

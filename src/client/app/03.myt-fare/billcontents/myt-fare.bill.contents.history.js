@@ -270,10 +270,11 @@ Tw.MyTFareBillContentsHitstory.prototype = {
      * @desc 라디오 선택 콤보박스 형태
      */
     return this._popupService.open({
-      hbs: 'actionsheet_select_a_type',// hbs의 파일명
+      hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
       title: Tw.POPUP_TITLE.SELECT,
-      data: this._setMonthActionSheetData()
+      data: this._setMonthActionSheetData(),
+      btnfloating: { 'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, 
       $.proxy(this._openMonthSelectHandler, this), // 액션시트 열린 후 콜백 
       null, 
@@ -294,12 +295,17 @@ Tw.MyTFareBillContentsHitstory.prototype = {
   _openMonthSelectHandler: function ($sheet) {
     // 해당 년 월 선택
     var year = parseFloat(this.selectedYear), month = parseFloat(this.selectedMonth);
-    $sheet.find('button').filter(function(){
-      return parseFloat($(this).data('year')) === year && parseFloat($(this).data('month')) === month;
-    }).find('input').prop('checked', true);
+
+    // 선택된 목록에 체크표기
+    $sheet.find('li').filter(function(){
+        var $input = $(this).find('input');
+        return parseFloat($input.data('year')) === year && parseFloat($input.data('month')) === month;
+      })
+      .attr('aria-selected', true).find('input').prop('checked', true)
+      .end().siblings().attr('aria-selected', false);
 
     // 클릭 이벤트 바인드
-    $sheet.find('.chk-link-list button').on('click', $.proxy(this._updateContentsPayList, this));
+    $sheet.find('li').on('click', $.proxy(this._updateContentsPayList, this));
   },
 
   /**
@@ -310,10 +316,10 @@ Tw.MyTFareBillContentsHitstory.prototype = {
    * @returns {void}
    */
   _updateContentsPayList: function (e) {
-    var year = $(e.currentTarget).data('year') || this.data.curYear;
-    var month = $(e.currentTarget).data('month') || this.data.curMonth; 
+    var year = $(e.currentTarget).find('input').data('year') || this.data.curYear;
+    var month = $(e.currentTarget).find('input').data('month') || this.data.curMonth; 
     //선택표기
-    $(e.currentTarget).addClass('checked').parent().siblings().find('button').removeClass('checked');
+    $(e.currentTarget).attr('aria-selected', true).siblings().attr('aria-selected', false);
     $(e.currentTarget).find('input[type=radio]').prop('checked', true);
     // 선택 text
     this.$selectMonth.text(month + Tw.PERIOD_UNIT.MONTH);
@@ -442,8 +448,9 @@ Tw.MyTFareBillContentsHitstory.prototype = {
         month -= month_limit;
       }
       tempArr.push({
-        value:year + Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
-        attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\''
+        txt: year + Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
+        'radio-attr': 'data-index="' + (i - 1) + '"' + 
+                      'data-year = \''+ year + '\' data-month=\''+ month + '\'' 
       });
       keyArr.push(this._getStrYearMonth(year, month));
     }

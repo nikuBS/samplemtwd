@@ -7,28 +7,186 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
-    <div id="fe-membership-benefit-brand" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html', { title: '제휴브랜드', svcInfo: svcInfo }); %>
-        <!--// #header -->
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <div class="container">
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="category-box-wrap tab-type01">
-                        <div class="content-wrap">
-                        <h2 class="blind">내용</h2>
-                            <h3 class="link-long type01">
-                                <button title="전체 카테고리 보기" class="fe-btn-show-categories" aria-pressed="false">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="fe-membership-benefit-brand" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../../common/views/components/header.component.html', { title: '제휴브랜드', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="category-box-wrap tab-type01">
+                    <div class="content-wrap">
+                    <h2 class="blind">내용</h2>
+                        <h3 class="link-long type01">
+                            <button title="전체 카테고리 보기" class="fe-btn-show-categories" aria-pressed="false">
+                                <span class="tx-sub">
+                                    <span class="ico"></span>
+                                </span>
+                            </button>
+                        </h3>
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide fe-category-list">
+                                    <ul class="horizontal-list brand_link" role="tablist">
+                                        <% for (var i = 0; i < cateList.length; i++) { %>
+                                        <li role="presentation">
+                                            <button type="button" role="tab" class="unit fe-btn-category <%= selectedCateCd === cateList[i].cateCd ? 'on': '' %>" cate-cd="<%= cateList[i].cateCd %>" aria-selected="<%= selectedCateCd === cateList[i].cateCd ? 'true': 'false' %>" ><%= cateList[i].cateName %></button>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .widget -->
+                        <div class="cont-box inborder">
+                            <span class="inputbox brand-search-warap">
+                                <span class="input">
+                                    <input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요" class="fe-input-co-ptnr-nm" maxlength="20">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                    <button class="bt-search fe-btn-search">검색</button>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="cont-box nogaps">
+                            <div class="add-prd-top-wrap add-top-type">
+                                <span class="counts type-r fe-grade"><button title="등급 선택">전체 등급</button></span>
+                                <!--<span class="select type-r fe-orders">-->
+                                    <!--<button class="on" ord-col="L">좋아요 순</button>-->
+                                    <!--<button ord-col="R">최신순</button>-->
+                                <!--</span>-->
+                            </div>
+                            <!-- .cont-box -->
+                            <div class="cont-box nogaps">
+                                <script id="fe-brand-item-tmpl" type="text/x-handlebars-template">
+                                    <li>
+                                        <a href="/membership/benefit/brand-benefit?cateCd={{ cateCd }}&brandCd={{ brandCd }}" class="brand-inner" style="margin-right: 0;">
+                                            <span class="inner">
+                                                <span class="logo">
+                                                    <img src="{{ appIcoImgUrl }}" alt="">
+                                                </span>
+                                                <span class="intro">
+                                                    <span class="category">{{ cateName }}</span>
+                                                    <strong class="brand-name">{{ coPtnrNm }}</strong>
+                                                    {{#if showIcoGrdChk1}}
+                                                        <span class="section">
+                                                        {{#each showIcoGrdChk1}}
+                                                            <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont1 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk2}}
+                                                        <span class="section">
+                                                        {{#each showIcoGrdChk2}}
+                                                            <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont2 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk3}}
+                                                        <span class="section">
+                                                        {{#each showIcoGrdChk3}}
+                                                            <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont3 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk4}}
+                                                        <span class="section">
+                                                        {{#each showIcoGrdChk4}}
+                                                            <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont4 }}
+                                                        </span>
+                                                    {{/if}}
+                                                </span>
+                                            </span>
+                                        </a>
+                                        <!--<button class="bt-like on">{{!&#45;&#45; showTotLikeCount &#45;&#45;}}</button>-->
+                                    </li>
+                                </script>
+                                <ul class="coalition-brand-list type-like fe-brand-list">
+                                    <% for (var i = 0; i < brandList.length; i++) { %>
+                                    <li>
+                                        <a href="/membership/benefit/brand-benefit?cateCd=<%= brandList[i].cateCd %>&brandCd=<%= brandList[i].brandCd %>" class="brand-inner" style="margin-right: 0;">
+                                            <span class="inner">
+                                                <span class="logo">
+                                                    <img src="<%= brandList[i].appIcoImgUrl %>" alt="">
+                                                </span>
+                                                <span class="intro">
+                                                    <span class="category"><%= brandList[i].cateName %></span>
+                                                    <strong class="brand-name"><%= brandList[i].coPtnrNm %></strong>
+                                                    <% if (brandList[i].showIcoGrdChk1.length > 0) { %>
+                                                        <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk1.length; j++) { %>
+                                                        <em class="ico-s <%= brandList[i].showIcoGrdChk1[j] %>-tag"><%= brandList[i].showIcoGrdChk1[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont1 %>
+                                                        </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk2.length > 0) { %>
+                                                        <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk2.length; j++) { %>
+                                                        <em class="ico-s <%= brandList[i].showIcoGrdChk2[j] %>-tag"><%= brandList[i].showIcoGrdChk2[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont2 %>
+                                                        </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk3.length > 0) { %>
+                                                        <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk3.length; j++) { %>
+                                                        <em class="ico-s <%= brandList[i].showIcoGrdChk3[j] %>-tag"><%= brandList[i].showIcoGrdChk3[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont3 %>
+                                                        </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk4.length > 0) { %>
+                                                        <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk4.length; j++) { %>
+                                                        <em class="ico-s <%= brandList[i].showIcoGrdChk4[j] %>-tag"><%= brandList[i].showIcoGrdChk4[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont4 %>
+                                                        </span>
+                                                    <% } %>
+                                                </span>
+                                            </span>
+                                        </a>
+                                        <!--<button class="bt-like on"><%#= brandList[i].showTotLikeCount %></button>-->
+                                    </li>
+                                    <% } %>
+                                </ul>
+                                <div class="contents-empty type-search fe-contents-empty" style="display: none;">
+                                    <span class="ico type1"></span>
+                                    <p class="desc">
+                                        <strong class="t-point"></strong>에 해당하는<br>
+                                        검색결과가 없습니다.
+                                    </p>
+                                    <p class="desc-s">* 제휴 브랜드명의 철자가 맞는지 다시 확인 후 검색해 주세요.</p>
+                                </div>
+                                <% if (hasMore) { %>
+                                <div class="bt-more">
+                                    <button class="fe-btn-more">더 보기</button>
+                                </div>
+                                <% } %>
+                            </div>
+                            <!--// .cont-box -->
+                        </div>
+                    </div>
+                    <div class="cont-layer fe-cont-layer" style="display:none;"><!-- 전체 카테고리 영역 -->
+                        <div class="cont-layer-info">
+                            <h3 class="link-long">
+                                <button class="fe-btn-close-categories" aria-pressed="false">전체 카테고리
                                     <span class="tx-sub">
                                         <span class="ico"></span>
                                     </span>
@@ -36,193 +194,34 @@
                             </h3>
                             <!-- .widget -->
                             <div class="widget">
-                                <div class="widget-box horizontal">
-                                    <div class="horizontal-slide fe-category-list">
-                                        <ul class="horizontal-list brand_link" role="tablist">
-                                            <% for (var i = 0; i < cateList.length; i++) { %>
-                                            <li role="presentation">
-                                                <button type="button" role="tab" class="unit fe-btn-category <%= selectedCateCd === cateList[i].cateCd ? 'on': '' %>" cate-cd="<%= cateList[i].cateCd %>" aria-selected="<%= selectedCateCd === cateList[i].cateCd ? 'true': 'false' %>" ><%= cateList[i].cateName %></button>
+                                <div class="widget-box radio fe-category-list-in-layer">
+                                    <ul class="select-list horizontal-list" role="tablist">
+                                        <% for (var i = 0; i < cateList.length; i++) { %>
+                                            <li class="radiobox type05" role="presentation">
+                                                <button aria-selected="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>" cate-cd="<%= cateList[i].cateCd %>" role="tab" style="<%= (selectedCateCd === cateList[i].cateCd) ? 'color: #178BCE; font-weight: 700': 'color: #3c3c3c' %>">
+                                                    <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="" />
+                                                    <%= cateList[i].cateName %>
+                                                </button>
+                                                <!--<input type="radio" name="radio01" title="<%= cateList[i].cateName %>" value="<%= cateList[i].cateCd %>" <%= (selectedCateCd === cateList[i].cateCd) ? 'checked="checked"': '' %>  aria-labelledby="aria-comp-radio<%= i+1 %>">-->
                                             </li>
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- .widget -->
-                            <div class="cont-box inborder">
-                                <span class="inputbox brand-search-warap">
-                                    <span class="input">
-                                        <input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요" class="fe-input-co-ptnr-nm" maxlength="20">
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                        <button class="bt-search fe-btn-search">검색</button>
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="cont-box nogaps">
-                                <div class="add-prd-top-wrap add-top-type">
-                                    <span class="counts type-r fe-grade"><button title="등급 선택">전체 등급</button></span>
-                                    <!--<span class="select type-r fe-orders">-->
-                                        <!--<button class="on" ord-col="L">좋아요 순</button>-->
-                                        <!--<button ord-col="R">최신순</button>-->
-                                    <!--</span>-->
-                                </div>
-                                <!-- .cont-box -->
-                                <div class="cont-box nogaps">
-                                    <script id="fe-brand-item-tmpl" type="text/x-handlebars-template">
-                                        <li>
-                                            <a href="/membership/benefit/brand-benefit?cateCd={{ cateCd }}&brandCd={{ brandCd }}" class="brand-inner" style="margin-right: 0;">
-                                                <span class="inner">
-                                                    <span class="logo">
-                                                        <img src="{{ appIcoImgUrl }}" alt="">
-                                                    </span>
-                                                    <span class="intro">
-                                                        <span class="category">{{ cateName }}</span>
-                                                        <strong class="brand-name">{{ coPtnrNm }}</strong>
-                                                        {{#if showIcoGrdChk1}}
-                                                            <span class="section">
-                                                            {{#each showIcoGrdChk1}}
-                                                                <em class="ico-s {{this}}-tag">{{this}}</em>
-                                                            {{/each}}
-                                                            {{ icoCont1 }}
-                                                            </span>
-                                                        {{/if}}
-                                                        {{#if showIcoGrdChk2}}
-                                                            <span class="section">
-                                                            {{#each showIcoGrdChk2}}
-                                                                <em class="ico-s {{this}}-tag">{{this}}</em>
-                                                            {{/each}}
-                                                            {{ icoCont2 }}
-                                                            </span>
-                                                        {{/if}}
-                                                        {{#if showIcoGrdChk3}}
-                                                            <span class="section">
-                                                            {{#each showIcoGrdChk3}}
-                                                                <em class="ico-s {{this}}-tag">{{this}}</em>
-                                                            {{/each}}
-                                                            {{ icoCont3 }}
-                                                            </span>
-                                                        {{/if}}
-                                                        {{#if showIcoGrdChk4}}
-                                                            <span class="section">
-                                                            {{#each showIcoGrdChk4}}
-                                                                <em class="ico-s {{this}}-tag">{{this}}</em>
-                                                            {{/each}}
-                                                            {{ icoCont4 }}
-                                                            </span>
-                                                        {{/if}}
-                                                    </span>
-                                                </span>
-                                            </a>
-                                            <!--<button class="bt-like on">{{!&#45;&#45; showTotLikeCount &#45;&#45;}}</button>-->
-                                        </li>
-                                    </script>
-                                    <ul class="coalition-brand-list type-like fe-brand-list">
-                                        <% for (var i = 0; i < brandList.length; i++) { %>
-                                        <li>
-                                            <a href="/membership/benefit/brand-benefit?cateCd=<%= brandList[i].cateCd %>&brandCd=<%= brandList[i].brandCd %>" class="brand-inner" style="margin-right: 0;">
-                                                <span class="inner">
-                                                    <span class="logo">
-                                                        <img src="<%= brandList[i].appIcoImgUrl %>" alt="">
-                                                    </span>
-                                                    <span class="intro">
-                                                        <span class="category"><%= brandList[i].cateName %></span>
-                                                        <strong class="brand-name"><%= brandList[i].coPtnrNm %></strong>
-                                                        <% if (brandList[i].showIcoGrdChk1.length > 0) { %>
-                                                            <span class="section">
-                                                            <% for (var j = 0; j < brandList[i].showIcoGrdChk1.length; j++) { %>
-                                                            <em class="ico-s <%= brandList[i].showIcoGrdChk1[j] %>-tag"><%= brandList[i].showIcoGrdChk1[j] %></em>
-                                                            <% } %>
-                                                            <%= brandList[i].icoCont1 %>
-                                                            </span>
-                                                        <% } %>
-                                                        <% if (brandList[i].showIcoGrdChk2.length > 0) { %>
-                                                            <span class="section">
-                                                            <% for (var j = 0; j < brandList[i].showIcoGrdChk2.length; j++) { %>
-                                                            <em class="ico-s <%= brandList[i].showIcoGrdChk2[j] %>-tag"><%= brandList[i].showIcoGrdChk2[j] %></em>
-                                                            <% } %>
-                                                            <%= brandList[i].icoCont2 %>
-                                                            </span>
-                                                        <% } %>
-                                                        <% if (brandList[i].showIcoGrdChk3.length > 0) { %>
-                                                            <span class="section">
-                                                            <% for (var j = 0; j < brandList[i].showIcoGrdChk3.length; j++) { %>
-                                                            <em class="ico-s <%= brandList[i].showIcoGrdChk3[j] %>-tag"><%= brandList[i].showIcoGrdChk3[j] %></em>
-                                                            <% } %>
-                                                            <%= brandList[i].icoCont3 %>
-                                                            </span>
-                                                        <% } %>
-                                                        <% if (brandList[i].showIcoGrdChk4.length > 0) { %>
-                                                            <span class="section">
-                                                            <% for (var j = 0; j < brandList[i].showIcoGrdChk4.length; j++) { %>
-                                                            <em class="ico-s <%= brandList[i].showIcoGrdChk4[j] %>-tag"><%= brandList[i].showIcoGrdChk4[j] %></em>
-                                                            <% } %>
-                                                            <%= brandList[i].icoCont4 %>
-                                                            </span>
-                                                        <% } %>
-                                                    </span>
-                                                </span>
-                                            </a>
-                                            <!--<button class="bt-like on"><%#= brandList[i].showTotLikeCount %></button>-->
-                                        </li>
                                         <% } %>
                                     </ul>
-                                    <div class="contents-empty type-search fe-contents-empty" style="display: none;">
-                                        <span class="ico type1"></span>
-                                        <p class="desc">
-                                            <strong class="t-point"></strong>에 해당하는<br>
-                                            검색결과가 없습니다.
-                                        </p>
-                                        <p class="desc-s">* 제휴 브랜드명의 철자가 맞는지 다시 확인 후 검색해 주세요.</p>
-                                    </div>
-                                    <% if (hasMore) { %>
-                                    <div class="bt-more">
-                                        <button class="fe-btn-more">더 보기</button>
-                                    </div>
-                                    <% } %>
                                 </div>
-                                <!--// .cont-box -->
                             </div>
+                            <!--// .widget -->
                         </div>
-                        <div class="cont-layer fe-cont-layer" style="display:none;"><!-- 전체 카테고리 영역 -->
-                            <div class="cont-layer-info">
-                                <h3 class="link-long">
-                                    <button class="fe-btn-close-categories" aria-pressed="false">전체 카테고리
-                                        <span class="tx-sub">
-                                            <span class="ico"></span>
-                                        </span>
-                                    </button>
-                                </h3>
-                                <!-- .widget -->
-                                <div class="widget">
-                                    <div class="widget-box radio fe-category-list-in-layer">
-                                        <ul class="select-list horizontal-list" role="tablist">
-                                            <% for (var i = 0; i < cateList.length; i++) { %>
-                                                <li class="radiobox type05" role="presentation">
-                                                    <button aria-selected="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>" cate-cd="<%= cateList[i].cateCd %>" role="tab" style="<%= (selectedCateCd === cateList[i].cateCd) ? 'color: #178BCE; font-weight: 700': 'color: #3c3c3c' %>">
-                                                        <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="" />
-                                                        <%= cateList[i].cateName %>
-                                                    </button>
-                                                    <!--<input type="radio" name="radio01" title="<%= cateList[i].cateName %>" value="<%= cateList[i].cateCd %>" <%= (selectedCateCd === cateList[i].cateCd) ? 'checked="checked"': '' %>  aria-labelledby="aria-comp-radio<%= i+1 %>">-->
-                                                </li>
-                                            <% } %>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--// .widget -->
-                            </div>
-                            <div class="cont-layer-blind"></div>
-                        </div>
+                        <div class="cont-layer-blind"></div>
                     </div>
                 </div>
-                <!--// .cont-box -->
             </div>
+            <!--// .cont-box -->
         </div>
-        <!--// #contents -->
-        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
+    <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
 
 
-</body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {

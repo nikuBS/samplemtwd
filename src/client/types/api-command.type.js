@@ -11,6 +11,7 @@ Tw.API_VERSION = {
 };
 
 Tw.API_CMD = {
+  BFF_LOGIN_ERROR: { path: '/core-auth/v1/login-histories', method: Tw.API_METHOD.POST},
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: Tw.API_METHOD.GET },
   BFF_03_0004_C: { path: '/change-svc', method: Tw.API_METHOD.POST },
   BFF_03_0005_C: { path: '/selected-svc', method: Tw.API_METHOD.GET },
@@ -214,7 +215,7 @@ Tw.API_CMD = {
   BFF_05_0202: { path: '/core-balance/:version/troaming-like-home', method: Tw.API_METHOD.GET },
   BFF_05_0205: { path: '/core-bill/:version/use-contents/auth/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: Tw.API_METHOD.POST },
-  BFF_05_0207: { path: '/core-product/:version/services/combinations/personally/:args0/personally-terminations', method: Tw.API_METHOD.PUT },
+  BFF_05_0207: { path: '/core-product/:version/services/combinations/:args0/personally-terminations', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },

@@ -265,6 +265,6 @@ Tw.CommonPostcodeLast.prototype = {
    * @desc 우편번호 전체 종료
    */
   _close: function () {
-    this._popupService.closeAll();
+    this._popupService.closeAll(this.$container, this.$target);
   }
 };
