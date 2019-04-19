@@ -12,10 +12,10 @@
  * @param isLogin
  * @constructor
  */
-Tw.CommonMemberLoginRoute = function (target, type, isLogin) {
+Tw.CommonMemberLoginRoute = function (target, type, isLogin, state) {
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._init(target, type, isLogin === 'true');
+  this._init(target, type, isLogin === 'true', state);
 };
 
 Tw.CommonMemberLoginRoute.prototype = {
@@ -27,7 +27,7 @@ Tw.CommonMemberLoginRoute.prototype = {
    * @param isLogin
    * @private
    */
-  _init: function (target, type, isLogin) {
+  _init: function (target, type, isLogin, state) {
     if ( type === 'cancel' ) {
       this._historyService.replaceURL(target);
       return;
@@ -47,13 +47,19 @@ Tw.CommonMemberLoginRoute.prototype = {
     }
 
     var tidResp = Tw.ParamsHelper.getQueryParams('?' + token);
+    if ( tidResp.state === state ) {
+      console.log('[TID STATE SUCCESS]', tidResp.state, state);
+      state = tidResp.state;
+    } else {
+      console.log('[TID STATE ERROR]', tidResp.state, state);
+    }
 
     if ( isLogin ) {
       this._historyService.goBack();
     } else {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {
         tokenId: tidResp.id_token,
-        state: tidResp.state
+        state: state
       }).done($.proxy(this._successLogin, this, url + hash, type))
         .fail($.proxy(this._failLogin, this));
     }

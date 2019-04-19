@@ -4,6 +4,20 @@
  * @since 2018.12.11
  */
 
+/**
+ * @class
+ * @desc 검색 결과 카테고리별 더보기
+ *
+ * @param {Object} rootEl - 최상위 element Object
+ * @param {Object} searchInfo - 검색 결과
+ * @param {String} cdn – cdn 서버 주소
+ * @param {String} accessQuery – 검색어
+ * @param {String} step – 검색 진입으로 부터의 페이지 이동 횟수
+ * @param {Object} paramObj – 파라미터 객체
+ * @param {Number} pageNum – 더보기 결과 페이지
+ * @param {String} nowUrl – 현재 url
+ * @returns {void}
+ */
 Tw.CommonSearchMore = function (rootEl,searchInfo,cdn,accessQuery,step,paramObj,pageNum,nowUrl) {
   this.$container = rootEl;
   //this._category = category;
@@ -28,6 +42,12 @@ Tw.CommonSearchMore.prototype = new Tw.CommonSearch();
 Tw.CommonSearchMore.prototype.constructor = Tw.CommonSearchMain;
 $.extend(Tw.CommonSearchMore.prototype,
 {
+  /**
+   * @function
+   * @member
+   * @desc 실제 초기화
+   * @returns {void}
+   */
   _nextInit : function () {
     this._bpcpService.setData(this.$container, this._nowUrl);
     this._recentKeywordDateFormat = 'YY.M.D.';
@@ -63,6 +83,12 @@ $.extend(Tw.CommonSearchMore.prototype,
     new Tw.XtractorService(this.$container);
   },
 
+  /**
+   * @function
+   * @member
+   * @desc 실제 초기화
+   * @returns {void}
+   */
   _showShortcutList : function (data,template,$parent,cdn) {
     var shortcutTemplate = template.html();
     var templateData = Handlebars.compile(shortcutTemplate);
@@ -79,10 +105,24 @@ $.extend(Tw.CommonSearchMore.prototype,
       $parent.append(templateData({listData : listData , CDN : cdn}));
     },this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 결과 페이지 변경
+   * @param {Object} eventObj - 이벤트 객체
+   * @returns {void}
+   */
   _pageChange : function (eventObj) {
     //this._historyService.goLoad(eventObj.currentTarget.value);
     this._moveUrl(eventObj.currentTarget.value);
   },
+  /**
+   * @function
+   * @member
+   * @desc 검색 실행
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _doSearch : function (evt) {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)||keyword.trim().length<=0){
@@ -98,6 +138,13 @@ $.extend(Tw.CommonSearchMore.prototype,
     this._addRecentlyKeyword(keyword);
     this._moveUrl(requestUrl);
   },
+  /**
+   * @function
+   * @member
+   * @desc 다이렉트샵 검색 정렬 기준 필터 액션시트 출력
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _showSelectFilter : function (evt) {
     var listData = [
       { 'label-attr': 'for=ra0', 'txt': Tw.SEARCH_FILTER_STR.ACCURACY,
@@ -118,10 +165,24 @@ $.extend(Tw.CommonSearchMore.prototype,
       null,
       'select_filter',$(evt.currentTarget));
   },
+  /**
+   * @function
+   * @member
+   * @desc 다이렉트샵 검색 정렬 기준 필터 액션시트 이벤트 바인딩
+   * @param {Object} popupElement - 팝업 레이어 객체
+   * @returns {void}
+   */
   _bindPopupElementEvt : function($popupElement){
     Tw.CommonHelper.focusOnActionSheet($popupElement);
     $popupElement.on('click','.cont-actionsheet input',$.proxy(this._filterSelectEvent,this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 다이렉트샵 검색 정렬 기준 필터 액션시트 옵션 선택 이벤트
+   * @param {Object} btnEvt - 이벤트 객체
+   * @returns {void}
+   */
   _filterSelectEvent : function (btnEvt) {
     var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+
       '&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
@@ -133,6 +194,13 @@ $.extend(Tw.CommonSearchMore.prototype,
     this._popupService.close();
     this._moveUrl(changeFilterUrl);
   },
+  /**
+   * @function
+   * @member
+   * @desc 페이지 이동을 위한 액션시트 출력
+   * @param {Object} targetEvt - 이벤트 객체
+   * @returns {void}
+   */
   _openPageSelector : function (targetEvt) {
     var totalPageNum = parseInt(((this._searchInfo.totalcount/20)+(this._searchInfo.totalcount%20>0?1:0)),10);
     var data = this._makePageSelectorData(totalPageNum , this._pageNum);
@@ -147,6 +215,14 @@ $.extend(Tw.CommonSearchMore.prototype,
         null,
         null,$(targetEvt.currentTarget));
   },
+  /**
+   * @function
+   * @member
+   * @desc 페이지 이동을 위한 액션시트 데이터 생성
+   * @param {Number} pageLimit - 마지막 페이지 번호
+   * @param {Number} nowPage - 현재 페이지 번호
+   * @returns {Array}
+   */
   _makePageSelectorData : function (pageLimit , nowPage) {
     var _returnData = [];
     for(var i=1;i<=pageLimit;i++){
@@ -162,10 +238,24 @@ $.extend(Tw.CommonSearchMore.prototype,
     }
     return _returnData;
   },
+  /**
+   * @function
+   * @member
+   * @desc 페이지 이동을 위한 액션시트 이벤트 바인딩
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _bindPageSelectorEvt : function ($layer) {
     Tw.CommonHelper.focusOnActionSheet($layer);
     $layer.on('click', '.cont-actionsheet input', $.proxy(this._changePageNum, this));
   },
+  /**
+   * @function
+   * @member
+   * @desc 페이지 이동을 위한 액션시트 페이지 선택 이벤트
+   * @param {Object} evt - 이벤트 객체
+   * @returns {void}
+   */
   _changePageNum : function (evt) {
     var selectedPageNum = $(evt.currentTarget).data('idx');
     this._popupService.close();
@@ -176,6 +266,13 @@ $.extend(Tw.CommonSearchMore.prototype,
       this._moveUrl(this._makeUrl(this._paramObj));
     }
   },
+  /**
+   * @function
+   * @member
+   * @desc 페이지 이동을 위한 url 생성 함수
+   * @param {Object} paramObj - 현재 페이지 파라미터 객체
+   * @returns {String}
+   */
   _makeUrl : function (paramObj) {
     var targetUrl = this._nowUrl.split('?')[0]+'?';
     for( var key in paramObj ){

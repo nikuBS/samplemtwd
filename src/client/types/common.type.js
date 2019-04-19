@@ -5,7 +5,8 @@ Tw.LSTORE_KEY = {
   HOME_MICRO_CONTENTS: 'homeMicroContents',
   CHANGE_LOGIN_STATUS: 'changeLoginStatus',
   RECENT_SEARCH_KEYWORD : 'recentSearchKeyword',
-  PRODUCT_JOIN_RESERVATION: 'productJoinReservation'
+  PRODUCT_JOIN_RESERVATION: 'productJoinReservation',
+  MEMBERSHIP_INFO: 'membershipInfo'
 };
 
 Tw.FIDO_TYPE = {

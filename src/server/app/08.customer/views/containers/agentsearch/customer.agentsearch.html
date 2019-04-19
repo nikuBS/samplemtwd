@@ -16,10 +16,9 @@
     <div class="wrap">
         <%- include('../../../../common/views/components/header.component.html', { title: '지점/대리점 찾기', svcInfo: svcInfo }); %>
         <!-- #contents -->
-        <div id="contents" class="container-wrap">
+        <div class="container-wrap">
+            <h2 id="contents" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
-                <!-- .cont-box -->
-                <h2 class="blind">내용</h2>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <!-- .component -->
@@ -196,7 +195,7 @@
                                             <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
                                                 <dt><%= result.regionInfoList[i].storeName %></dt>
                                                 <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
-                                                    <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>" alt="매장으로 전화하기"><span class="blind">매장으로 전화하기</span></a>
+                                                    <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span class="blind">매장으로 전화하기</span></a>
                                                 </dd>
                                             </dl>
                                         </li>

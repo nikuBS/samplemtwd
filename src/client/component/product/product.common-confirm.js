@@ -373,6 +373,7 @@ Tw.ProductCommonConfirm.prototype = {
     }
 
     this._applyCallback(callbackParams);
+    this._isLock = false;
   }
 
 };
