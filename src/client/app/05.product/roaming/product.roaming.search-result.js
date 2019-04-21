@@ -262,7 +262,7 @@ Tw.ProductRoamingSearchResult.prototype = {
    * @desc 휴대폰 모델 리스트 선택.
    * @private
    */
-  _onSelectModel: function () {
+  _onSelectModel: function (e) {
         if(this.cdValue === undefined || this.cdValue === ''){
             return;
         }else {
@@ -277,11 +277,12 @@ Tw.ProductRoamingSearchResult.prototype = {
                     data: data
                 },
                 $.proxy(this._selectModelCallback, this),
-                $.proxy(this._closeActionPopup, this)
+                $.proxy(this._closeActionPopup, this), null, $(e.currentTarget)
             );
         }
     },
     _selectModelCallback: function ($layer) {
+        Tw.CommonHelper.focusOnActionSheet($layer); // IOS에서 포커스 이동이 되지 않아 강제로 포커스 이동(웹접근성)
         $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
@@ -419,17 +420,18 @@ Tw.ProductRoamingSearchResult.prototype = {
     _handleFailSearch:function () {
 
     },
-    _onHpSearch: function () {
+    _onHpSearch: function (e) {
         this._popupService.open({
                 hbs: 'actionsheet01',
                 layer: true,
                 btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
                 data: [{ list: Tw.ROAMING_MFACTCD_LIST.list }]
             },
-            $.proxy(this._selectMfactCdCallback, this)
+            $.proxy(this._selectMfactCdCallback, this), null, null, $(e.currentTarget)
         );
     },
     _selectMfactCdCallback: function ($layer) {
+        Tw.CommonHelper.focusOnActionSheet($layer); // IOS에서 포커스 이동이 되지 않아 강제로 포커스 이동(웹접근성)
         $layer.find('[data-mfact-name="' + this.cdName + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
@@ -441,15 +443,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._popupService.close();
         this.$container.find('.fe-roaming-mfactCd').text(this.cdName);
 
-        this._onSearchModel(this.cdValue);
+        this._onSearchModel(this.cdValue, e);
     },
-    _onSearchModel: function (val) {
+    _onSearchModel: function (val, e) {
         this._apiService.request(Tw.API_CMD.BFF_10_0059, { mfactCd:val })
         // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
-            .done($.proxy(this._handleSuccessSearchModelResult, this))
+            .done($.proxy(this._handleSuccessSearchModelResult, this, e))
             .fail($.proxy(this._handleFailModelSearch, this));
     },
-    _handleSuccessSearchModelResult : function (resp) {
+    _handleSuccessSearchModelResult : function (e, resp) {
         var _result = resp.result;
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
             if(_result.length > 0){
@@ -467,7 +469,7 @@ Tw.ProductRoamingSearchResult.prototype = {
                 });
             } else {
                 var ALERT = Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A71;
-                this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closeAlertPopup, this));
+                this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closeAlertPopup, this), null, $(e.currentTarget));
             }
         } else {
             this.$container.find('.fe-roaming-mfactCd').text(Tw.ROAMING_DESC.MFACTCD_DESC);
@@ -519,7 +521,7 @@ Tw.ProductRoamingSearchResult.prototype = {
    * @desc 이용가능한 로밍 서비스 방식 액션시트 노출.
    * @private
    */
-  _openMangeType: function (){
+  _openMangeType: function (e){
         this._popupService.open(
             {
                 hbs: 'actionsheet01',
@@ -528,11 +530,12 @@ Tw.ProductRoamingSearchResult.prototype = {
                 data: [{ list: this.manageType }]
             },
             $.proxy(this._handleOpenTypePopup, this),
-            undefined
+            undefined, undefined, $(e.currentTarget)
         );
     },
     _handleOpenTypePopup: function ($layer) {
         // $layer.on('click', 'ul.chk-link-list > li > button', $.proxy(this._handleSelectRoamingType, this));
+        Tw.CommonHelper.focusOnActionSheet($layer); // IOS에서 포커스 이동이 되지 않아 강제로 포커스 이동(웹접근성) d
         $layer.find('[data-manage-type="' + this.reqParams.manageType + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._handleSelectRoamingType, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
@@ -566,6 +569,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
     },
     _selectPopupCallback:function ($layer) {
+        Tw.CommonHelper.focusOnActionSheet($layer); // IOS에서 포커스 이동이 되지 않아 강제로 포커스 이동(웹접근성)
         $layer.find('[name="r2"]').on('click', $.proxy(this._goLoadSearchResult, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     },
@@ -609,7 +613,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         }else {
             this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
-                .done($.proxy(this._handleSuccessSearchResult, this))
+                .done($.proxy(this._handleSuccessSearchResult, this, e))
                 .fail($.proxy(this._handleFailSearchResult, this));
         }
     },
@@ -619,12 +623,13 @@ Tw.ProductRoamingSearchResult.prototype = {
      * @param resp
      * @private
      */
-    _handleSuccessSearchResult : function (resp) {
+    _handleSuccessSearchResult : function (e, resp) {
         var _result = resp.result;
 
         var alertMsg = this.keyword + Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.MSG;
         if(_result.length === 0) {
-            this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE);
+            this._popupService.openAlert(alertMsg, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A22.TITLE,
+              null, null, null, $(e.currentTarget));
             this.$inputContrySearch.val('');
             return;
         }
@@ -651,7 +656,7 @@ Tw.ProductRoamingSearchResult.prototype = {
                     btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
                     data: data
                 },
-                $.proxy(this._selectPopupCallback, this)
+                $.proxy(this._selectPopupCallback, this), null, null, $(e.currentTarget)
             );
 
         }else {
