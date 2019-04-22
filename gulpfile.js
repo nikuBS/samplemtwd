@@ -262,7 +262,10 @@ gulp.task('css-vendor', function () {
 
 gulp.task('js-rb', function () {
   return gulp.src([
-    'src/client/web-contents/js/**/*.js', '!src/client/web-contents/js/**/*.min.js'
+    'src/client/web-contents/js/$vars.js',
+    'src/client/web-contents/js/chart.js',
+    'src/client/web-contents/js/common.js',
+    'src/client/web-contents/js/widgets.js'
   ])
     // .pipe(plumber())
     .pipe(sort())
