@@ -6656,3 +6656,37 @@ body.og-5mktp-intro > .wrap, body.og-5mktp-intro .container-wrap {
 
 /* 190403 수정 */
 /* //190325 추가 - 마케팅페이지 */
+
+/* 190419 추가 - DG방어 */
+.dwg-popup{}
+.dwg-hd-area{padding:0.9375rem 1.25rem; background: #fff;}
+.dwg-hd-area .h2-tit{font-size: 1.5rem; line-height: 2rem;}
+
+.dwg-type-area{margin:1.563rem 0.75rem 0;}
+.dwg-type-area .item{margin-bottom: 0.625rem; text-align: center;}
+.dwg-type-area .item:first-child{padding-top:0;}
+.dwg-type:after{content:'';display:block;clear:both}
+.dwg-type-link{display:inline-block;}
+.dwg-type-link .img-wrap > img{width:100%; vertical-align:top;}
+
+.dwg-typeImg-area{padding-bottom: 6rem;}
+.dwg-typeImg-area .img-wrap > img {width:100%; vertical-align:top;}
+
+.dwg-dialog-area{width:100%; background-color: #fff;}
+.dwg-dialog-area .txt{font-size: 0.813rem; text-align:center; height:2.5rem; line-height:2.5rem;}
+.dwg-dialog-btns{width: 100%;}
+.dwg-dialog-btns:after{content:''; display:block; clear:both;}
+.dwg-dialog-btns .col{float:left; width:50%; height:3.5rem;}
+.dwg-dialog-btns button[class^="btn-dialog"],
+.dwg-dialog-btns a[class^="btn-dialog"]{display:block; width:100%; height:100%; font-size:1.0625rem;  line-height:1; padding: 1.25rem 0; text-align:center; box-sizing:border-box;}
+.dwg-dialog-btns .btn-dialog-1{color:#f76252; border-top:1px solid #e5e5e5;}
+.dwg-dialog-btns .btn-dialog-2{color:#fff; border-top:1px solid #f76252; background-color:#f76252;}
+
+.dwg-frm-area.cont-box{border-bottom:0;}
+.dwg-frm-area > fieldset{position: relative;}
+.dwg-frm-area > fieldset > label{display:block; font-size:0.8125rem; margin-bottom: 0.625rem;}
+.dwg-frm-area .sp-txt{position:absolute; right:0.75rem; bottom:0.8125rem; font-size:0.6875rem; color:#858585;}
+.dwg-frm-area .sp-txt:before{content:'※'; display:inline-block; font-size:0.75rem; vertical-align:middle; margin-right:0.25rem;}
+.dwg-frm-area .frm-textarea{ height:7.8125rem; color:#000}
+.dwg-frm-area .frm-textarea::placeholder {font-weight:normal}
+/* //190419 추가 - DG방어 */
