@@ -97,9 +97,8 @@ Tw.BannerService.prototype = {
           });
       },
       afterChange: function(e, slick, index) {
-        setTimeout(function() {
-          $(slick.$slides[index]).find('button').focus();
-        }, 100);
+        slick.$slider.find('.slick-current > button').focus();
+        // $(slick.$slides[index]).find('button').focus();
       }
     });
 
