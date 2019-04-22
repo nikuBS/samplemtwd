@@ -138,7 +138,7 @@ Tw.POPUP_CONTENTS = {
   BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
   COUPON_RECEIVER_LIMIT:
     ' 선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.',
-  BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?',
+  BIO_REGISTER: '생체정보로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?',
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',

@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { MYT_JOIN_WIRE } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 class MyTJoinWireHistory extends TwViewController {
@@ -309,21 +310,24 @@ class MyTJoinWireHistory extends TwViewController {
    * @private
    */
   private _resultHandler( resp: any, apiType: String ): boolean {
-    const list: any = resp.result;
+    let list: any = resp.result;
 
     if ( resp.code === API_CODE.CODE_00 && list ) {
 
       if ( Array.isArray(list) ) {
 
-        for ( let i = list.length; i >= 0; i-- ) {
-          if ( !list[i] || Object.keys(list[i]).length === 0 ) {
-            // 빈값 삭제
-            list.splice(i, 1);
-          } else {
-            list[i]['atype'] = apiType;
-            list[i]['detailkey'] = MyTJoinWireHistory.getDetailKey(list[i], apiType);
+        list = list.reduce((prev, cur) => {
+          // 빈값을 제외하고 
+          if (!FormatHelper.isEmpty(cur) && Object.keys(cur).length !== 0) {
+            // 객체에 추가해 리턴
+            prev.push({
+              ...cur,
+              atype: apiType,
+              detailkey: MyTJoinWireHistory.getDetailKey(cur, apiType)
+            });
           }
-        }
+          return prev;
+        }, []);
 
       } else if ( typeof(list) === 'object' ) {
 

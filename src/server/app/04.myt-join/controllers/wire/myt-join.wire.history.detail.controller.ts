@@ -56,7 +56,7 @@ class MyTJoinWireHistoryDetail extends TwViewController {
       .subscribe((resp) => {
 
         const list: any = resp.result;
-        let data  = null;
+        let data: any  = null;
 
         if ( resp.code === API_CODE.CODE_00 && list ) {
 

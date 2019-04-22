@@ -104,6 +104,10 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad('/common/tid/logout');
     }
   },
+  goSLogout: function () {
+    this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
+      .done($.proxy(this._successLogout, this));
+  },
   logout: function (callback) {
     this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
       .done(callback)

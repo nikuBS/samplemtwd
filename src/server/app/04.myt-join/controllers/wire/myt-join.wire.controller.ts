@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { MYT_JOIN_WIRE } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 class MyTJoinWire extends TwViewController {
@@ -242,15 +243,15 @@ class MyTJoinWire extends TwViewController {
           ]
         };*/
 
-        let newAndChgCnt = this._getResultCnt(r0167newJoin);
-        newAndChgCnt += this._getResultCnt(r0162chgAddr);
-        newAndChgCnt += this._getResultCnt(r0168prodChg);
-        newAndChgCnt += this._getResultCnt(r0143periChg);
-        newAndChgCnt += this._getResultCnt(r0153prodChg);
+        let newAndChgCnt = this._getResultCnt(r0167newJoin); // 신규가입상세내역
+        newAndChgCnt += this._getResultCnt(r0162chgAddr); // 설치장소변경상세
+        newAndChgCnt += this._getResultCnt(r0168prodChg); // 가입상품변경 상세내역
+        newAndChgCnt += this._getResultCnt(r0143periChg); // 유선 약정기간 상세내역
+        newAndChgCnt += this._getResultCnt(r0153prodChg); // 요금상품변경 상세내역
 
         let asCnt: any = 0;
         if ( r0156as.code === API_CODE.CODE_00 && r0156as.result ) {
-          asCnt = r0156as.result.totalCnt;
+          asCnt = r0156as.result.totalCnt; // 장애/AS 신청내역
         }
 
         const infoData = {
@@ -275,20 +276,24 @@ class MyTJoinWire extends TwViewController {
 
   }
 
+  /**
+   * @function
+   * @desc result 중 비어있는 값 제외한 갯수 반환
+   * @param {JSON} resp 
+   * @returns {number} 갯수
+   */
   private _getResultCnt( resp: any ): number {
 
     const list: any = resp.result;
 
     if ( resp.code === API_CODE.CODE_00 && list ) {
       if ( Array.isArray(list) ) {
-        for ( let i = list.length; i >= 0; i-- ) {
-          if ( !list[i] || Object.keys(list[i]).length === 0) {
-            // 빈값 삭제
-            list.splice(i, 1);
+        return list.reduce( (num, cur) => {
+          if (!FormatHelper.isEmpty(cur) && Object.keys(cur).length !== 0) {
+            num++;
           }
-        }
-        return list.length;
-
+          return num;
+        }, 0);
       } else if ( typeof(list) === 'object' ) {
         if ( Object.keys(list).length === 0 ) {
           return 0;
