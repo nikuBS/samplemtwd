@@ -28,12 +28,12 @@ Tw.MembershipInfoLayerPopup.prototype = {
    * @desc 팝업 생성
    * @param hbs
    */
-  open: function (hbs) {
+  open: function (hbs, e) {
     // BE_04_01_L01, BE_04_01_L02, BE_04_01_L03
     this._popupService.open({
       hbs: hbs,// hbs의 파일명
       layer: true
-    }, null, $.proxy(this._closeCallback, this), hbs);
+    }, null, $.proxy(this._closeCallback, this), hbs, e);
   },
 
   /**
