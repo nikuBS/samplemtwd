@@ -1969,14 +1969,19 @@ Tw.PRODUCT_AUTH_ALERT_STR = {
 
 Tw.MYT_HOTBILL_FAIL = '조회 불가';
 
-Tw.ALERT_MSG_5G_END = {
-  title: 'VR기기 재고 소진으로 인해<br> ‘5GX VR 팩 기어’ 가입이 4월 13일(토) 이후 종료됩니다.',
-  msg: '* 4월 13일(토)까지 5GX 플랜 가입 고객님은 4월 20일(토)까지 SK텔레콤 대리점에서 5GX VR 팩 기어 부가서비스 가입 가능<br> * ‘5GX VR 팩 카드보드’는 재고 소진까지 ‘지속운영’ 예정'
-};
-
-Tw.ALERT_MSG_5G_VRPACK_END = {
-  title: 'VR기기 재고 소진으로<br> 5GX VR 팩 기어 부가서비스 가입이 종료되었습니다.',
-  msg: ''
+Tw.ALERT_MSG_5G = {
+  END_NOTI: {
+    TITLE: 'VR기기 재고 소진으로 인해<br> ‘5GX VR 팩 카드보드’ 가입이 4월 23일(화) 이후 종료됩니다.',
+    MSG: ''
+  },
+  VRPACK_END: {
+    TITLE: 'VR기기 재고 소진으로<br> 5GX VR 팩 기어 부가서비스 가입이 종료되었습니다.',
+    MSG: ''
+  },
+  CARDBOARD_END: {
+    TITLE: 'VR기기 재고 소진으로<br> 5GX VR 팩 카드보드 부가서비스 가입이 종료되었습니다.',
+    MSG: ''
+  }
 };
 
 Tw.WEB_ACCESSBILITY = {
