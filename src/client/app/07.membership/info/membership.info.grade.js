@@ -29,7 +29,7 @@ Tw.MembershipInfoGrade.prototype = {
 
   // 팝업 오픈
   _openPopup : function (e) {
-    this._membershipLayerPopup.open($(e.currentTarget).data('popupId'));
+    this._membershipLayerPopup.open($(e.currentTarget).data('popupId'), e);
   },
 
   // 외부 URL 이동

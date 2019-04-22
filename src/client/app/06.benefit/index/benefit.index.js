@@ -549,8 +549,9 @@ Tw.BenefitIndex.prototype = {
     // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
     this.$showDiscountBtn.removeClass('none').attr('aria-pressed', true);
     this.$clearBtn.addClass('none');
-
     this._onCheckDisabled();
+    // 접근성 이슈(disable button에 focus 안 됨) -> 결합할인 타이틀로 focus
+    this.$container.find('#fe-combination-title').eq(0).focus();
   },
 
   /**
