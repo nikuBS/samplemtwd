@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>요금제 변경안내</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+   
+    <!-- 5g용 CSS/JS 추가 / 190419_dg방어 CSS 추가 -->
+    <link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+    <!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+    <!-- //5g용 CSS/JS 추가 / 190419_dg방어 CSS 추가-->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+		<div class="popup-page nobg tw-popup dwg-popup"><!--  하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+            <!-- #header -->
+         	<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>요금제 변경안내</h1>
+                    </div>
+               </div>
+            </div>
+        	<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+				<div class="container">
+                    <!-- title -->
+                    <div class="dwg-hd-area">
+                        <h2 class="h2-tit">
+                            <span class="user-name">홍*동님</span>,<br>요금제 변경을 결정하신 이유는<br> 무엇인가요?
+                        </h2>
+                    </div>
+                    <!-- //title -->
+                    <!-- 요금제 변경 type list -->
+                    <!-- admin 영역: 타이틀 이미지 등록 <span class="img-wrap"> ~ </span> -->
+                    <div class="dwg-type-area">
+                        <h2 class="blind">요금제 변경 이유</h2>
+                        <ul class="list">
+                            <li class="item">
+                                <a href="javascript:void(0)" data-dg_contents="A" class="dwg-type-link">
+                                    <span class="img-wrap"><img src="/img/t_dwg/dg_tit_type_01.png" alt="비용을 줄이기 위해서"></span>
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" data-dg_contents="B" class="dwg-type-link">
+                                    <span class="img-wrap"><img src="/img/t_dwg/dg_tit_type_02.png" alt="혜택이 마음에 들지 않아서"></span>
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" data-dg_contents="C" class="dwg-type-link">
+                                    <span class="img-wrap"><img src="/img/t_dwg/dg_tit_type_03.png" alt="데이터 사용량이 적어서"></span>
+                                </a>
+                            </li>
+                            <li class="item">
+                                <a href="javascript:void(0)" data-dg_contents="D" class="dwg-type-link">
+                                    <span class="img-wrap"><img src="/img/t_dwg/dg_tit_type_04.png" alt="기타이유"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //admin 영역 -->
+                    <!-- .//요금제 변경 type list -->
+				</div>
+			</div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs : : DG popup -->
+    </div>
+</body>
+</html>

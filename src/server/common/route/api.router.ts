@@ -478,10 +478,9 @@ class ApiRouter {
           return res.json(resp);
         });
     } else {
-
       const svcMgmtNum = svcInfo.svcMgmtNum;
       const svcGr = svcInfo.svcGr;
-      this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
+      this.redisService.getDataTos(REDIS_TOS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
           if ( resp.code === API_CODE.REDIS_SUCCESS ) {
             resp.result.enableEdit = 'Y';

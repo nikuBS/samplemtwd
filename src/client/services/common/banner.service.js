@@ -83,15 +83,22 @@ Tw.BannerService.prototype = {
         var dots = slick.$dots.find('li');
         $(dots[before])
           .find('> button')
-          .text(before + 1);
-        $(slick.$slides[before]).find('a').attr('tabindex', -1);
-        $(slick.$slides[after]).find('a').attr('tabindex', 0);
+          .attr({
+            text: before + 1,
+            'aria-label': before + 1
+          });
+        $(slick.$slides[before]).find('button').attr('tabindex', -1);
+        $(slick.$slides[after]).find('button').attr('tabindex', 0);
         $(dots[after])
           .find('> button')
-          .text(Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1));
+          .attr({
+            text: Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1),
+            'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1)
+          });
       },
       afterChange: function(e, slick, index) {
-        $(slick.$slides[index]).find('a').focus();
+        slick.$slider.find('.slick-current > button').focus();
+        // $(slick.$slides[index]).find('button').focus();
       }
     });
 
@@ -114,12 +121,20 @@ Tw.BannerService.prototype = {
             pauseOnFocus: true,
             pauseOnHover: true,
             pauseOnDotsHover: true,
-            accessibility: true,
+            accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').attr(
+                  { 
+                    text: Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1),
+                    'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1)
+                  }
+                );
               } else {
-                return $('<button />').text(i + 1);
+                return $('<button />').attr({
+                  text: i + 1,
+                  'aria-label': i + 1,
+                });
               }
             }
           });
@@ -130,12 +145,20 @@ Tw.BannerService.prototype = {
             speed: 300,
             lazyLoad: 'progressive',
             touchMove: false,
-            accessibility: true,
+            accessibility: false,
             customPaging: function(slider, i) {
               if (i === 0) {
-                return $('<button />').text(Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1));
+                return $('<button />').attr(
+                  { 
+                    text: Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1),
+                    'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', i + 1)
+                  }
+                );
               } else {
-                return $('<button />').text(i + 1);
+                return $('<button />').attr({
+                  text: i + 1,
+                  'aria-label': i + 1
+                });
               }
             }
           });

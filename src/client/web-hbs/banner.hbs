@@ -1,13 +1,13 @@
 {{#each banners}}
     <li data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO">
         {{#if isHTML}}
-            <a href="javascript:void(0)" style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">
+            <button style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">
                 {{{bnnrHtmlCtt}}}
-            </a>
+            </button>
         {{else}}
-            <a href="javascript:void(0)" tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}}  role="link">
+            <button tabindex="{{#if @index}}-1{{else}}0{{/if}}" {{#unless isInternalLink}}title="새 창"{{/unless}}  role="link">
                 <img class="fe-banner slick-loading" style="width:100%" data-idx="{{@index}}" {{#if bnnrFilePathNm}}data-lazy="{{../CDN}}{{bnnrFilePathNm}}"{{/if}} alt="{{bnnrImgAltCtt}}">
-            </a>
+            </button>
         {{/if}}
     </li>
 {{/each}}

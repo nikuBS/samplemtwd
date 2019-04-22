@@ -235,6 +235,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @desc logout 클릭 시 처리
    */
   _onClickLogout: function () {
+    if (this._isSimpleLogin) {
+      this._tidLanding.goSLogout();
+      return;
+    }
     this._tidLanding.goLogout();
   },
 
@@ -277,6 +281,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttrCd;
               this._tid = res.result.userInfo.userId;
+              this._isSimpleLogin = res.result.userInfo.loginType !== 'T';
             }
             this._modifyMenu(
               res.result.isLogin,

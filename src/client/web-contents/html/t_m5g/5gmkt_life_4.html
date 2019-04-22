@@ -433,7 +433,7 @@
 															<p class="og-5mktp-titS21 mt30">5GX VR 팩 카드보드에 가입하고 싶다면</p><!-- 190411 수정_06 -->
 															<ul class="bt-slice mt12">
 																<li class="bt-red1">
-																	<a href="https://m.tworld.co.kr/product/callplan?prod_id=NA00006518" target="_blank" title="새창">부가서비스 가입 바로가기</a>
+																	<a href="#" class="ui_bobo_alert">부가서비스 가입 바로가기</a><!-- 190422 수정_01 -->
 																</li>
 															</ul>
 															<div class="og-vrpack-refer-wrap mt0">
@@ -602,7 +602,7 @@
                 anchorCode = parseInt(getParameterByName('anchor') === '' ? 0 : getParameterByName('anchor'), 10) - 1,
                 target;
 
-            $tablinker.find('ul > li > a').on('click', function (e) {
+            $tablinker.find('> ul > li > a').on('click', function (e) {
 		        e.preventDefault();
 		        if ($win.scrollTop() > tablinkerTop - headerHeight) {
                     $win.scrollTop(tablinkerTop - headerHeight);
@@ -658,16 +658,18 @@
             });
 
 
-			//190411 추가 - 5GX VR팩 진입 시 얼럿 노출
-            $tablinker.find('ul > li').on('click', function () {
+			//190419 수정 - 5GX VR팩 진입 시 얼럿 노출
+            $tablinker.find('> ul > li').on('click', function (e) {
+                e.preventDefault();
+
                 if ($(this).index()) {
 					skt_landing.action.popup.open({
                      	url:'/hbs/',
                      	hbs:'popup',
-                     	'title': 'VR기기 재고 소진으로 인해<br> ‘5GX VR 팩 기어’ 가입이 4월 13일(토) 이후 종료됩니다.',
+                     	'title': 'VR기기 재고 소진으로 인해<br> ‘5GX VR 팩 카드보드’ 가입이 4월 23일(화) 이후 종료됩니다.',
                     	'title_type': 'sub',
                      	'cont_align':'tl tl font-only-gray',
-                     	'contents': '* 4월 13일(토)까지 5GX 플랜 가입 고객님은 4월 20일(토)까지 SK텔레콤 대리점에서 5GX VR 팩 기어 부가서비스 가입 가능<br> * ‘5GX VR 팩 카드보드’는 재고 소진까지 ‘지속운영’ 예정',
+                     	//'contents': '',
                      	'bt_b': [{
                      		style_class: 'bt-red1 pos-right',
                      		txt: '확인'
@@ -680,10 +682,9 @@
 				}
             });
 
-
-            //190412 추가 - 부가서비스 가입 버튼 클릭시 얼럿 노출
-            $('.ui_gear_alert').on('click', function (e) {
-                e.preventDefault();
+			//190412 추가 - 부가서비스 가입 버튼 클릭시 얼럿 노출
+			$('.ui_gear_alert').on('click', function (e) {
+			    e.preventDefault();
 
                 skt_landing.action.popup.open({
                     url:'/hbs/',
@@ -699,8 +700,27 @@
                 $(document).off('click.layerClose').on('click.layerClose', '.bt-red1.pos-right > button', function () {
                     skt_landing.action.popup.close();
                 });
-            });
-			
+			});
+
+			//190422 추가 - VR 팩 카드보드 부가서비스 가입 버튼 클릭시 얼럿 노출
+			$('.ui_bobo_alert').on('click', function (e) {
+			    e.preventDefault();
+
+                skt_landing.action.popup.open({
+                    url:'/hbs/',
+                    hbs:'popup',
+                    'title': 'VR기기 재고 소진으로<br> 5GX VR 팩 카드보드 부가서비스 가입이 종료되었습니다.',
+                    'title_type': 'sub',
+                    'bt_b': [{
+                        style_class: 'bt-red1 pos-right',
+                        txt: '확인'
+                    }]
+                });
+
+                $(document).off('click.layerClose').on('click.layerClose', '.bt-red1.pos-right > button', function () {
+                    skt_landing.action.popup.close();
+                });
+			});
 		});
 	</script>
 </body>

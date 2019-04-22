@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <% } %>
-                        <% if (isApp && isRegularMember) { %>
+                        <% if (isApp && isRegularMember && isTidLogin) { %>
                         <% if (String(process.env.NODE_ENV) !== 'prd') { %>
                         <li id="fe-bio">
                             <a id="fe-bio-link" href="">

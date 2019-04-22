@@ -247,6 +247,7 @@ Tw.MembershipMy.prototype = {
    * @private
    */
   _onActionSheetOpened: function(currentSheet, $layer) {
+    Tw.CommonHelper.focusOnActionSheet($layer);
     // 선택된 값 체크
     $('li.type1').each(function(){
       if($(this).find('label').attr('value') === $('#'+currentSheet).text()){
