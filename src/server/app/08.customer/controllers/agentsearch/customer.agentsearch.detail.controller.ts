@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.detail.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * @file 지점/대리점 상세정보 페이지 처리
+ * @author Hakjoon sim
+ * @since 2018-10-29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -61,6 +61,15 @@ class CustomerAgentsearchDetail extends TwViewController {
     );
   }
 
+  /**
+   * @function
+   * @desc 해당 지점의 상세 정보를 BFF로 조회
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @param  {string} code - 조회하고자 하는 지점의 code
+   * @returns Observable
+   */
   private getBranchDetailInfo(res: Response, svcInfo: any, pageInfo: any, code: string): Observable<BranchDetail | undefined> {
     return this.apiService.request(API_CMD.BFF_08_0007, { locCode: code }).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -78,6 +87,12 @@ class CustomerAgentsearchDetail extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc BFF로부터 조회된 data를 ejs바인딩 위해 정제처리
+   * @param  {BranchDetail} detail - BFF로 부터 받은 response
+   * @returns BranchDetail - 정제된 data 정보
+   */
   private purifyDetailInfo(detail: BranchDetail): BranchDetail {
     const purified: BranchDetail = { ...detail };
 
@@ -95,6 +110,7 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateAvg += '.0';
     }
 
+    // 별점이 0점이거나 평가된 이력이 없으면 별점정보 노출하지 않음
     if (purified.agnYn === 'Y' || purified.star.includes('NaN') || purified.custRateAvg === '0.0') {
       purified.custRateCnt = '0';
     }
