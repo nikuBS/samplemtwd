@@ -77,7 +77,7 @@
                             const group = groups[i]; %>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info">
-                                    <h4 class="title"><%= group.prodGrpNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>"><% } %></h4>
+                                    <h4 class="title"><%= group.prodGrpNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>" alt="<%= group.prodGrpId === 'T000000076' ? '5G폰' : 'LTE폰' %>"><% } %></h4>
                                     <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt=""><% } %></div><% } %>
                                     <p class="text"><%= group.prodGrpDesc %></p>
                                 </button>
