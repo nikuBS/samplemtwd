@@ -1,9 +1,23 @@
 Tw.FormatHelper = (function () {
+  /**
+   * @desc add leading zeros
+   * @param  {number} number
+   * @param  {number} length
+   * @returns {string} 
+   * @public
+   */
   var leadingZeros = function (number, length) {
     var result = number + '';
     return result.length > length ? result : new Array(length - result.length + 1).join('0') + result;
   };
 
+  
+  /**
+   * @desc whether value is empty or not
+   * @param  {any} values
+   * @returns {boolean}
+   * @public
+   */
   var isEmpty = function (value) {
     if ( value === '' || value == null || value === undefined ||
       (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
@@ -12,27 +26,53 @@ Tw.FormatHelper = (function () {
     return false;
   };
 
+  
+  /**
+   * @desc whether value is object or not 
+   * @param  {any} value
+   * @returns {boolean}
+   * @public
+   */
   var isObject = function (value) {
     return (!!value) && (value.varructor === Object);
   };
 
+  /**
+   * @desc whether value is array
+   * @param  {any} value
+   * @returns {boolean}
+   * @public
+   */
   var isArray = function (value) {
     return (!!value) && (value.varructor === Array);
   };
 
+  /**
+   * @desc whether value is string
+   * @param {any} value 
+   * @returns {boolean}
+   * @public
+   */
   var isString = function (value) {
     return typeof (value) === 'string';
   };
 
+  /**
+   * @desc add comma to numbers every three digits
+   * @param {number} value
+   * @returns {string}
+   * @public
+   */
   var addComma = function (value) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
     return value.toString().replace(regexp, ',');
   };
 
-  var normalizeNumber = function (num) {
-    return num.replace(/(^0+)/, '');
-  };
-
+  /**
+   * @desc return fixed point number
+   * @returns {number}
+   * @public
+   */
   var setDecimalPlace = function (value, point) {
     return parseFloat(value.toFixed(point));
   };
@@ -63,6 +103,14 @@ Tw.FormatHelper = (function () {
     return val.slice(0, 2) + ':' + val.slice(2);
   };
 
+  /**
+   * @desc Convert data unit to target unit
+   * @param  {number | string} data
+   * @param  {Tw.DATA_UNIT} curUnit
+   * @param  {Tw.DATA_UNIT} targetUnit
+   * @returns {object} { data, unit }
+   * @public
+   */
   var customDataFormat = function (data, curUnit, targetUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB];
     var curUnitIdx = _.findIndex(units, function (value) {
@@ -91,7 +139,7 @@ Tw.FormatHelper = (function () {
       unit: targetUnit
     };
   };
-
+  
   var convSpDataFormat = function (fee, curUnit) {
     // 데이터 단위가 '원' 인 경우가 있음
     fee = +fee;
@@ -112,6 +160,13 @@ Tw.FormatHelper = (function () {
     };
   };
 
+  /**
+   * @desc convert data unit
+   * @param  {number | string} data data
+   * @param  {Tw.DATA_UNIT} curUnit current unit
+   * @return {object} { data, unit }
+   * @public
+   */
   var convDataFormat = function (data, curUnit) {
     var units = [Tw.DATA_UNIT.KB, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB, Tw.DATA_UNIT.TB], maxIdx = units.length - 1;
     var unitIdx = _.findIndex(units, function (value) {
@@ -137,6 +192,12 @@ Tw.FormatHelper = (function () {
     };
   };
 
+  /**
+   * @desc convert milliseconds to hours
+   * @param  {number | string} data milliseconds
+   * @return {object} { hours, min, sec }
+   * @public
+   */
   var convVoiceFormat = function (data) {
     data = +data;
     var hours = Math.floor(data / 3600);
@@ -152,11 +213,22 @@ Tw.FormatHelper = (function () {
 
     return (hours > 0 ? hours + Tw.VOICE_UNIT.HOURS : '') + min + Tw.VOICE_UNIT.MIN;
   };
-
+  /**
+   * @desc get price of sms
+   * @param  {number} smsCount
+   * @returns {number}
+   * @public
+   */
   var convSmsPrice = function (smsCount) {
     return smsCount * 310;
   };
 
+  /**
+   * @desc add dash to phone number
+   * @param {string} v phone number
+   * @returns {string}
+   * @public
+   */
   var conTelFormatWithDash = function (v) {
     if ( Tw.FormatHelper.isEmpty(v) ) {
       return v;
@@ -192,26 +264,58 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
+  /**
+   * @desc add dot to date
+   * @param {string} date 
+   * @returns {string}
+   * @public
+   */
   var conDateFormatWithDash = function (date) {
     return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
   };
 
+  /**
+   * @desc sort descending
+   * @param  {object[]} array
+   * @param  {string} key
+   * @returns {object[]}
+   * @public
+   */
   var sortObjArrDesc = function (array, key) {
     return array.sort(function (a, b) {
       return (parseInt(b[key], 10) - parseInt(a[key], 10));
     });
   };
-
+  
+  /**
+   * @desc sort ascending
+   * @param  {object[]} array
+   * @param  {string} key
+   * @returns {object[]}
+   * @public
+   */
   var sortObjArrAsc = function (array, key) {
     return array.sort(function (a, b) {
       return (parseInt(a[key], 10) - parseInt(b[key], 10));
     });
   };
 
+  /**
+   * @desc get formatted date
+   * @param  {string} cardYm
+   * @returns {string}
+   * @public
+   */
   var makeCardYymm = function (cardYm) {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   };
 
+  /**
+   * @desc add dash to cell phone number
+   * @param {string} phoneNumber phone number
+   * @returns {string}
+   * @public
+   */
   var getDashedCellPhoneNumber = function (phoneNumber) {
     var str = '';
     phoneNumber = phoneNumber.replace(/\-/gi, '');
@@ -238,9 +342,9 @@ Tw.FormatHelper = (function () {
       str += phoneNumber.substr(7);
       return str.substr(0, 13);
     }
-    return phoneNumber;
   };
 
+  
   var _getDashedTelephoneNumber = function (phoneNumber) {
     var str = '';
     var centerIdx = -1;
@@ -273,6 +377,12 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
+  /**
+   * @desc add dash to phone number
+   * @param {string} phoneNumber phone number
+   * @returns {string}
+   * @private
+   */
   var _getDashedRepresentPhoneNumber = function (phoneNumber) {
     var str = '';
     str += phoneNumber.substring(0, 4);
@@ -281,6 +391,12 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
+  /**
+   * @desc add dash to phone number
+   * @param {string} phoneNumber phone number
+   * @returns {string}
+   * @public
+   */
   var getFormattedPhoneNumber = function (phoneNumber) {
     var getMaskingPhoneNumber = function (mpn) {
       var tmpArr = mpn.split('-');
@@ -292,6 +408,12 @@ Tw.FormatHelper = (function () {
     return getMaskingPhoneNumber(getDashedCellPhoneNumber(phoneNumber));
   };
 
+  /**
+   * @desc add dash to phone number
+   * @param {string} phoneNumber phone number
+   * @returns {string}
+   * @public
+   */
   var getDashedPhoneNumber = function (phoneNumber) {
     if ( Tw.ValidationHelper.isTelephone(phoneNumber) ) {
       return _getDashedTelephoneNumber(phoneNumber);
@@ -304,22 +426,14 @@ Tw.FormatHelper = (function () {
     return phoneNumber;
   };
 
+  /**
+   * @desc remove comma
+   * @param {string} str 
+   * @returns {string}
+   * @public
+   */
   var removeComma = function (str) {
     return str.replace(/,/g, '');
-  };
-
-  var is6digitPassSameNumber = function (str) {
-    var regex = /(\d)\1\1\1\1\1/;
-    return regex.test(str);
-  };
-
-  var removeElement = function (arrayList, element) {
-    var index = arrayList.findIndex(function (item) {
-      return item === element;
-    });
-    if ( index !== -1 ) {
-      arrayList.splice(index, 1);
-    }
   };
 
   var lpad = function (str, length, padStr) {
@@ -328,15 +442,11 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
-  var appendDataUnit = function (data) {
-    if ( /^\d{1,3}\.?\d*$/.test(data) ) {
-      return data + Tw.DATA_UNIT.MB;
-    } else if ( /^\d{4,}\.?\d*$/.test(data) ) {
-      return data + Tw.DATA_UNIT.GB;
-    }
-    return data;
-  };
-
+  /**
+   * @desc append voice unit
+   * @param  {string} amount
+   * @public
+   */
   var appendVoiceUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.PERIOD_UNIT.MINUTES;
@@ -344,6 +454,11 @@ Tw.FormatHelper = (function () {
     return amount;
   };
 
+  /**
+   * @desc append sms unit
+   * @param  {string} amount
+   * @public
+   */
   var appendSMSUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.SMS_UNIT;
@@ -351,12 +466,24 @@ Tw.FormatHelper = (function () {
     return amount;
   };
 
+  /**
+   * @desc replace template string
+   * @param  {string} template
+   * @param  { key: string } 
+   * @public
+   */
   var getTemplateString = function (template, values) {
     return template.replace(/{\w+}/g, function (x) {
       return values[x.slice(1, x.length - 1)];
     });
   };
 
+  /**
+   * @desc whether is cellphone number or not
+   * @param {string} sNumber 
+   * @returns {boolean}
+   * @public
+   */
   var isCellPhone = function (sNumber) {
 
     // It's not working with mask number
@@ -366,6 +493,11 @@ Tw.FormatHelper = (function () {
     return regPhone.test(sNumber);
   };
 
+  
+  /**
+   * @param  {object[]} rawData
+   * @public
+   */
   var purifyPlansData = function (rawData) {
     var data = rawData.sort(function (a, b) {
       var ia = a.initial;
@@ -405,14 +537,14 @@ Tw.FormatHelper = (function () {
     return data;
   };
 
+  /**
+   * @desc remove all tags
+   * @param {string} context 
+   * @returns {string}
+   * @public
+   */
   var stripTags = function (context) {
     return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
-  };
-
-  var addCardDash = function (value) {
-    var regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
-
-    return value.replace(regexp, '-');
   };
 
   var addLineCommonPhoneNumberFormat = function (str) {
@@ -426,26 +558,32 @@ Tw.FormatHelper = (function () {
     return returnStr;
   };
 
+  /**
+   * @desc whether is phone number or not
+   * @param  {string} str
+   * @returns {boolean}
+   * @public
+   */
   var isPhoneNum = function (str) {
     var phoneRegExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     return phoneRegExp.test(str);
   };
 
-  function dataURLtoFile(dataurl, filename) {
-    var arr = dataurl.split(',');
-    var mime                                        = arr[0].match(/:(.*?);/)[1],
-        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    while ( n-- ) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-  }
-
+  /**
+   * @desc whether value is number or not
+   * @param  {string} number
+   * @returns {boolean}
+   * @public
+   */
   function isNumber(number) {
     var regNumber = /^[0-9]*$/;
     return regNumber.test(number);
   }
 
+  /**
+   * @desc filter same object
+   * @param  {object[]} targetArr
+   */
   function removeDuplicateElement(targetArr) {
     var returnArr = [];
     targetArr.forEach(function(itm) {
@@ -487,19 +625,13 @@ Tw.FormatHelper = (function () {
     convNumFormat: convNumFormat,
     insertColonForTime: insertColonForTime,
     setDecimalPlace: setDecimalPlace,
-    is6digitPassSameNumber: is6digitPassSameNumber,
-    normalizeNumber: normalizeNumber,
-    removeElement: removeElement,
     lpad: lpad,
-    appendDataUnit: appendDataUnit,
     appendVoiceUnit: appendVoiceUnit,
     appendSMSUnit: appendSMSUnit,
     getTemplateString: getTemplateString,
     isCellPhone: isCellPhone,
     purifyPlansData: purifyPlansData,
     stripTags: stripTags,
-    addCardDash: addCardDash,
-    dataURLtoFile: dataURLtoFile,
     isNumber: isNumber,
     addLineCommonPhoneNumberFormat : addLineCommonPhoneNumberFormat,
     isPhoneNum : isPhoneNum,
