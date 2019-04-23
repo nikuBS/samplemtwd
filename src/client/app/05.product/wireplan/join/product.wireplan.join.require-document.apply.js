@@ -1,9 +1,14 @@
 /**
- * @file product.wireplan.join.require-document.apply.js
+ * @file 상품 > 가입상담예약 > 서류제출
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.08
+ * @since 2018-11-08
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param historyList - 서류제출 심사내역
+ */
 Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl, historyList) {
   this.$container = rootEl;
 
@@ -26,6 +31,10 @@ Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl, historyList) {
 
 Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$fileWrap = this.$container.find('.fe-file_wrap');
     this.$fileList = this.$container.find('.fe-file_list');
@@ -37,6 +46,10 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this.$btnApply = this.$container.find('.fe-btn_apply');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$container.on('change', '.fe-explain_file', $.proxy(this._onChangeExplainFile, this));
@@ -47,6 +60,12 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this.$btnApply.on('click', _.debounce($.proxy(this._procApply, this), 500));
   },
 
+  /**
+   * @function
+   * @desc 파일 첨부 input change Event
+   * @param e - change Event
+   * @returns {*|void}
+   */
   _onChangeExplainFile: function(e) {
     if (this._fileList.length > 4) {
       return this._toggleBtn(this.$btnExplainFileAdd, false);
@@ -55,6 +74,11 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._toggleBtn(this.$btnExplainFileAdd, !Tw.FormatHelper.isEmpty(e.currentTarget.files));
   },
 
+  /**
+   * @function
+   * @desc 저버전 AOS 지원 처리 (App 에서 업로드 실행)
+   * @param e - input file 클릭 이벤트
+   */
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
 
@@ -67,6 +91,13 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc AOS 저버전에서 업로드할 경우 응답 값 처리
+   * @param $target - input file
+   * @param response - AOS 업로드 값
+   * @returns {*|void}
+   */
   _nativeFileChooser: function ($target, response) {
     if (response.resultCode === -1) {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
@@ -95,6 +126,11 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 실행
+   * @returns {*|void}
+   */
   _uploadExplainFile: function() {
     var fileInfo = this.$container.find('.fe-explain_file').get(0).files[0];
 
@@ -120,6 +156,11 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
       .fail($.proxy(this._failUploadFile, this));
   },
 
+  /**
+   * @function
+   * @desc 업로드 된 파일 삭제
+   * @param e - 삭제 버튼 클릭 이벤트
+   */
   _delExplainFile: function(e) {
     var $item = $(e.currentTarget).parents('li');
 
@@ -136,6 +177,12 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 완료 시
+   * @param resp - API 응답 값
+   * @returns {*|void}
+   */
   _successUploadFile: function(resp) {
     Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -150,17 +197,31 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 실패 시
+   */
   _failUploadFile: function() {
     Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 영역 초기화
+   */
   _clearExplainFile: function() {
     this.$container.find('.fe-explain_file_view').parents('.file-wrap').html(this.$explainFileViewClone);
     this._toggleBtn(this.$btnExplainFileAdd, false);
     skt_landing.widgets.widget_init('.file-wrap');
   },
 
+  /**
+   * @function
+   * @desc 버튼 토글
+   * @param $btn - 버튼 Element
+   * @param isEnable - 활성화 여부
+   */
   _toggleBtn: function($btn, isEnable) {
     if (isEnable) {
       $btn.removeAttr('disabled').prop('disabled', false);
@@ -171,6 +232,11 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신청하기 버튼 활성화 여부 산출
+   * @returns {*|void}
+   */
   _procEnableApplyBtn: function() {
     if (this._fileList.length < 1) {
       return this._toggleBtn(this.$btnApply, false);
@@ -179,6 +245,10 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._toggleBtn(this.$btnApply, true);
   },
 
+  /**
+   * @function
+   * @desc 신청하기 처리 (USCAN)
+   */
   _procApply: function() {
     var convFileList0 = [],
       convFileList1 = [];
@@ -219,6 +289,13 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
       .done($.proxy(this._resApply, this));
   },
 
+  /**
+   * @function
+   * @desc USCAN 처리 결과
+   * @param uscan0 - 첫번째 USCAN 응답 값
+   * @param uscan1 - 두번쨰 USCAN 응답 값
+   * @returns {*}
+   */
   _resApply: function(uscan0, uscan1) {
     if (uscan0.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(uscan0.code, uscan0.msg).pop();
@@ -231,6 +308,10 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this._openSuccessPop();
   },
 
+  /**
+   * @function
+   * @desc 심사내역 목록 조회
+   */
   _openHistoryDetailPop: function() {
     this._popupService.open({
       'pop_name': 'type_tx_scroll',
@@ -247,6 +328,10 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }, null);
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     this._popupService.open({
       hbs: 'complete_subtexts',
@@ -257,14 +342,28 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }, $.proxy(this._bindSuccessPop, this), $.proxy(this._backToParentPage, this), 'require_document_success');
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 컨테이너 레이어
+   */
   _bindSuccessPop: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closeSuccessPop, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 닫기 버튼 클릭 시
+   */
   _closeSuccessPop: function() {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료 시 페이지 이전 페이지로 이동 처리
+   * @returns {*|void}
+   */
   _backToParentPage: function() {
     if (this._isCombineInfo) {
       return this._historyService.go(-2);
