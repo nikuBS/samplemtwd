@@ -285,9 +285,13 @@
 .og-5mktp-imgslide-wrap .widget-box.slider1 {width:100%;}
 .og-5mktp-imgslide-wrap .slick-slider.slick-dotted {padding-top:2.125rem;}
 .og-5mktp-imgslide-wrap .slick-dots {position:absolute; bottom:auto; top:0; text-align:left;}
+/* 190423 수정 */
 .og-5mktp-imgslide-wrap .slick-dots li {position:relative; width:0.875rem; height:1.438rem; padding:0 0.75rem 0 0; margin:0; text-align:center; font-size:0.75rem; line-height:1.438rem; color:#999; font-weight:bold;}
-.og-5mktp-imgslide-wrap .slick-dots li.slick-active {color:#000;}
+.og-5mktp-imgslide-wrap .slick-dots li button {width:0.875rem; height:1.438rem; padding:0; margin:0; text-align:center; font-size:0.75rem; line-height:1.438rem; color:#999; font-weight:bold; text-indent:0; background:none;}
 .og-5mktp-imgslide-wrap .slick-dots li.slick-active:before {content:''; position:absolute; top:0; left:0; width:0.875rem; border-top:1px solid;}
+.og-5mktp-imgslide-wrap .slick-dots li.slick-active, .og-5mktp-imgslide-wrap .slick-dots li.slick-active button {color:#000;}
+.og-5mktp-imgslide-wrap .slick-dots li button:before {content:none;}
+/* //190423 수정 */
 .og-5mktp-imgslide-wrap .slick-arrow {position:absolute; z-index:2; top:50%; margin-top:-0.8125rem; width:3.625rem; height:3.625rem; background:url('/img/t_m5g/og_sp_slide_arrow.png') no-repeat 0 0; background-size:auto 3.625rem; color:transparent;}
 .og-5mktp-imgslide-wrap .slick-arrow.slick-prev {left:0.75rem; background-position:0 0;}
 .og-5mktp-imgslide-wrap .slick-arrow.slick-next {right:0.75rem; background-position:-3.938rem 0;}
