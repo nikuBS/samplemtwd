@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.near.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.10.29
+ * @file 나와 가까운 매장 페이지 처리
+ * @author Hakjoon sim
+ * @since 2018-10-29
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
