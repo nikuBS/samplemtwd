@@ -17,11 +17,11 @@
     }
 
     function svg_arc_path (x, y, radius, range) {
-        var end_xy, start_xy, longs;
+        var end_xy, start_xy, long;
         start_xy = polar_to_cartesian(x, y, radius, range[1]);
         end_xy = polar_to_cartesian(x, y, radius, range[0]);
-        longs = range[1] - range[0] >= 180 ? 1 : 0;
-        return "M " + start_xy[0] + " " + start_xy[1] + " A " + radius + " " + radius + " 0 " + longs + " 0 " + end_xy[0] + " " + end_xy[1];
+        long = range[1] - range[0] >= 180 ? 1 : 0;
+        return "M " + start_xy[0] + " " + start_xy[1] + " A " + radius + " " + radius + " 0 " + long + " 0 " + end_xy[0] + " " + end_xy[1];
     }
 
     function angle_from_point (width, height, x, y) {
