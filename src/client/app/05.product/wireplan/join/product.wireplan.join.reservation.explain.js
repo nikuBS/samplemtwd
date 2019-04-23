@@ -1,9 +1,14 @@
 /**
- * @file product.wireplan.join.reservation.explain.js
+ * @file 상품 > 가입상담예약 > 서류제출
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2018.11.05
+ * @since 2018-11-05
  */
 
+/**
+ * @class
+ * @param familyList - 결합가족목록
+ * @param callback - 콜백 함수
+ */
 Tw.ProductWireplanJoinReservationExplain = function(familyList, callback) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
@@ -30,6 +35,11 @@ Tw.ProductWireplanJoinReservationExplain = function(familyList, callback) {
 
 Tw.ProductWireplanJoinReservationExplain.prototype = {
 
+  /**
+   * @function
+   * @desc 최초 실행
+   * @param $popupContainer - 서류제출 팝업
+   */
   _init: function($popupContainer) {
     this.$container = $popupContainer;
     this._cachedElement();
@@ -42,6 +52,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$familyWrap = this.$container.find('.fe-family_wrap');
     this.$familyAddWrap = this.$container.find('.fe-family_add_wrap');
@@ -59,6 +73,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$btnExplainApply = this.$container.find('.fe-btn_explain_apply');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnFamilyType.on('click', $.proxy(this._openFamilyTypePop, this));
     this.$btnExplainApply.on('click', _.debounce($.proxy(this._doCallback, this), 500));
@@ -76,6 +94,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
   },
 
+  /**
+   * @function
+   * @desc 결합가족 추가시 가족 선택
+   */
   _openFamilyTypePop: function() {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -104,6 +126,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     }, $.proxy(this._bindFamilyTypePop, this), null, 'select_family_type');
   },
 
+  /**
+   * @function
+   * @desc 가족 추가 버튼 활성화
+   * @returns {*|void}
+   */
   _procEnableAddFamilyBtn: function() {
     if (Tw.FormatHelper.isEmpty(this._familyType) || $.trim(this.$familyAddWrap.find('.fe-input_name').val()).length < 1 ||
       $.trim(this.$familyAddWrap.find('.fe-input_phone_number').val()).length < 1 || this._familyList.length > 4) {
@@ -113,6 +140,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._toggleBtn(this.$btnFamilyAdd, true);
   },
 
+  /**
+   * @function
+   * @desc 가족 추가
+   * @returns {*|void}
+   */
   _addFamily: function() {
     if (this.$btnFamilyAdd.attr('disabled') === 'disabled') {
       return;
@@ -147,6 +179,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$familyWrap.find('h3').focus();
   },
 
+  /**
+   * @function
+   * @desc 가족 삭제
+   * @param e - 삭제 버튼 클릭 이벤트
+   */
   _delFamily: function(e) {
     var $item = $(e.currentTarget).parents('li'),
       delNo = $item.data('no'),
@@ -173,6 +210,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 가족 선택 팝업 이벤트 바인딩
+   * @param $popupContainer - 가족 선택 팝업 컨테이너 레이어
+   */
   _bindFamilyTypePop: function($popupContainer) {
     $popupContainer.on('click', '[data-family_type]', $.proxy(this._setFamilyType, this));
 
@@ -180,6 +222,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
   },
 
+  /**
+   * @function
+   * @desc 가족 유형 선택 시
+   * @param e - 선택 클릭 이벤트
+   */
   _setFamilyType: function(e) {
     this._familyType = $(e.currentTarget).data('family_type');
     this._procEnableAddFamilyBtn();
@@ -188,6 +235,12 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 가족 아이콘 처리
+   * @param familyList - 가족 목록
+   * @returns {*}
+   */
   _setFamilyTypeText: function(familyList) {
     return familyList.map(function(item) {
       var familyTypeText = [];
@@ -207,6 +260,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc 가족 추가 영역 초기화 처리
+   */
   _clearFamilyAddWrap: function() {
     this._familyType = null;
     this.$btnFamilyType.html(Tw.FAMILY_TYPE.DEFAULT + $('<div\>').append(this.$btnFamilyType.find('.ico')).html());
@@ -214,6 +271,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$familyAddWrap.find('.fe-btn_cancel').removeClass('block');
   },
 
+  /**
+   * @function
+   * @desc 파일 삭제 시
+   * @param e - 파일 삭제 버튼 클릭 이벤트
+   */
   _delExplainFile: function(e) {
     var $item = $(e.currentTarget).parents('li');
 
@@ -230,6 +292,12 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 첨부 영역 input file change 시
+   * @param e - input file change Event
+   * @returns {*|void}
+   */
   _onChangeExplainFile: function(e) {
     if (this._fileList.length > 4) {
       return this._toggleBtn(this.$btnExplainFileAdd, false);
@@ -238,6 +306,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._toggleBtn(this.$btnExplainFileAdd, !Tw.FormatHelper.isEmpty(e.currentTarget.files));
   },
 
+  /**
+   * @function
+   * @desc 가족 추가 버튼 활성화 처리
+   * @returns {*|void}
+   */
   _procEnableApplyBtn: function() {
     if (this.$familyList.find('input[type=checkbox]:checked').length < 1 || this._fileList.length < 1) {
       return this._toggleBtn(this.$btnExplainApply, false);
@@ -246,6 +319,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._toggleBtn(this.$btnExplainApply, true);
   },
 
+  /**
+   * @function
+   * @desc 저버전 안드로이드 업로드 실행
+   * @param e - input file 클릭 시
+   */
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
 
@@ -258,6 +336,13 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc AOS 업로드 결과 처리
+   * @param $target - input file Element
+   * @param response - AOS App 업로드 결과
+   * @returns {*|void}
+   */
   _nativeFileChooser: function ($target, response) {
     if (response.resultCode === -1) {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
@@ -286,6 +371,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 처리
+   * @returns {*|void}
+   */
   _uploadExplainFile: function() {
     var fileInfo = this.$container.find('.fe-explain_file').get(0).files[0];
 
@@ -311,6 +401,12 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       .fail($.proxy(this._failUploadFile, this));
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 처리 결과
+   * @param resp - 결과 값
+   * @returns {*|void}
+   */
   _successUploadFile: function(resp) {
     Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -325,17 +421,31 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this._procEnableApplyBtn();
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 실패 시
+   */
   _failUploadFile: function() {
     Tw.CommonHelper.endLoading('.container');
     this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
   },
 
+  /**
+   * @function
+   * @desc 파일 업로드 영역 초기화
+   */
   _clearExplainFile: function() {
     this.$container.find('.fe-explain_file_view').parents('.file-wrap').html(this.$explainFileViewClone);
     this._toggleBtn(this.$btnExplainFileAdd, false);
     skt_landing.widgets.widget_init('.file-wrap');
   },
 
+  /**
+   * @function
+   * @desc 버튼 토글 처리
+   * @param $btn - 버튼 Element
+   * @param isEnable - 활성화 여부
+   */
   _toggleBtn: function($btn, isEnable) {
     var toggleClass = $btn.hasClass('fe-btn_explain_apply') ? 'bt-red1' : 'bt-blue1';
     if (isEnable) {
@@ -347,6 +457,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 신청하기 버튼 클릭시 콜백 실행
+   */
   _doCallback: function() {
     this._callback({
       combGrpNewYn: (this._familyListOriginalLength === 0 && this._familyList.length > 0) ? 'Y' : 'N',
