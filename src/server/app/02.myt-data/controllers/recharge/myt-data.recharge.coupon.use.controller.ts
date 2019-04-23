@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, TIME_UNIT, MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
-import { REDIS_KEY } from '../../../../types/redis.type';
 import DateHelper from '../../../../utils/date.helper';
 
 interface Option {
@@ -119,7 +118,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
                           period: string, tab: string, isGift: boolean, isAuto: boolean) {
     Observable.combineLatest(
       this.getCouponUsageOptions(res, svcInfo, pageInfo),
-      this.getRedisProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
+      this.getProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
       ([couponUsage, productSummary]) => {
         if (!FormatHelper.isEmpty(couponUsage) && !FormatHelper.isEmpty(productSummary)) {
@@ -151,10 +150,10 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     });
   }
 
-  private getRedisProductInfo(res: Response, svcInfo: any, pageInfo: any, prodId: any): Observable<any> {
-    return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId).map(resp => {
+  private getProductInfo(res: Response, svcInfo: any, pageInfo: any, prodId: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0002, {}, {}, [prodId]).map(resp => {
       if (!FormatHelper.isEmpty(resp.result)) {
-        return resp.result.summary;
+        return resp.result;
       }
 
       this.error.render(res, { code: resp.code, msg: resp.msg, pageInfo, svcInfo });
