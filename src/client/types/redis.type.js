@@ -3,6 +3,10 @@ Tw.BANNER_LINK_TYPE = {
   EXTERNAL: '2'
 };
 
+Tw.TOS_BANNER_LINK_TYPE = {
+  INTERNAL: '01'
+};
+
 Tw.NOTI_POPUP_TYPE = {
   NONE: '0',
   DAY: '7',
