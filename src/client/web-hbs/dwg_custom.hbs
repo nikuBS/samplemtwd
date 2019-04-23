@@ -1,0 +1,52 @@
+<div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>기타 이유</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- 기타이유 -->
+            <div class="dwg-frm-area cont-box">
+                <fieldset>
+                    <legend>기타 사유 입력 폼</legend>
+                    <label>이유를 알려주시면 더 좋은 서비스로 보답하겠습니다.</label>
+                    <textarea name="frm-text" class="frm-textarea" placeholder="요금제 변경 이유를 적어주세요."></textarea>
+                    <span class="sp-txt">5자 이상 입력해주시기 바랍니다.</span>
+                </fieldset>
+            </div>
+            <!-- // 기타이유 -->
+        </div>
+        <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+        <!-- button fixed -->
+        <div class="bt-fixed-area fe-dwg_apply_button_wrap">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button type="button" class="fe-btn_apply" disabled="disabled">입력</button>
+                </li>
+            </ul>
+        </div>
+        <div class="bt-fixed-area dwg-dialog-area fe-dwg_button_wrap" style="display:none;">
+            <p class="txt">정말 요금제를 변경하시겠어요?</p>
+            <div class="dwg-dialog-btns">
+                <div class="col">
+                    <button class="btn-dialog-1 fe-btn_change" data-is_custom="Y"><span>지금 변경할래요.</span></button>
+                </div>
+                <div class="col">
+                    <button class="btn-dialog-2 fe-btn_close"><span>다음에 할게요.</span></button>
+                </div>
+            </div>
+        </div>
+        <!-- //button fixed -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
