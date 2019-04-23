@@ -270,7 +270,7 @@ Tw.BannerService.prototype = {
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
-            isInternalLink: banner.tosImgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
+            isInternalLink: banner.tosImgLinkClCd === Tw.BANNER_LINK_TYPE.INTERNAL
           };
         })
         .value();
