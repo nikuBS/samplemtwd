@@ -54,7 +54,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
 
   this._initEmrNotice(emrNotice, isLogin === 'true');
   this._getQuickMenu(isLogin === 'true');
-  this._startLazyRendering();
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
@@ -63,8 +62,14 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
     this._initScroll();
     this._setCoachMark();
   }
-  new Tw.XtractorService(this.$container);
+  // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
+
+  if( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._startLazyRendering, this));
+  } else {
+    this._startLazyRendering();
+  }
 
   // Still Don't know why. temporal fix for link issue.
   $('.help-list li a').on('click', $.proxy(this._onClickInternal, this));
@@ -1727,6 +1732,8 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    var adminList = [{ target: '1' }, { target: '2' }, { target: '3' }, { target: '7' }, { target: 'e' }, { target: 'f' }, { target: 'g' }];
+    this._getAdminBanner(adminList);
   },
 
   /**
@@ -1749,6 +1756,8 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    var adminList = [{ target: '5' }, { target: 'e' }, { target: 'f' }, { target: 'g' }];
+    this._getAdminBanner(adminList);
   },
 
   /**
@@ -1758,7 +1767,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _drawBanner: function (banners) {
-    var adminList = [];
+    var adminList = [{ target: 'e' }, { target: 'f' }, { target: 'g' }];
     _.map(banners, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
         if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
@@ -1847,7 +1856,22 @@ Tw.MainHome.prototype = {
           this._resetHeight();
         }
       }, this));
+
+      var directBanner = _.filter(resp.result.banners, function(banner) {
+        return banner.bnnrLocCd === 'S';
+      }).map(function (target) {
+        target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+        return target;
+      });
+
+      if ( directBanner.length > 0 ) {
+        var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
+        this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
+      } else {
+        this.$container.find('#fe-direct-banner').addClass('none');
+      }
     }
+    new Tw.XtractorService(this.$container);
   },
 
   /**
@@ -1860,6 +1884,7 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    new Tw.XtractorService(this.$container);
   },
 
   /**
