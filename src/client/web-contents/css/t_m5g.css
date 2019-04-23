@@ -561,17 +561,60 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 
 /* //190325 추가 - 마케팅페이지 */
 
-/* 190419 추가 - DG방어 */
+/* 190419 추가 - 190422 수정 - DG방어 */
 .dwg-popup{}
-.dwg-hd-area{padding:0.9375rem 1.25rem; background: #fff;}
-.dwg-hd-area .h2-tit{font-size: 1.5rem; line-height: 2rem;}
+.popup-page.dwg-popup{padding-top: 0!important;}
+.dwg-popup.fixed-bottom{padding-bottom: 0!important;}
+.dwg-popup.fixed-btn{padding-bottom: 0!important;}
 
-.dwg-type-area{margin:1.563rem 0.75rem 0;}
-.dwg-type-area .item{margin-bottom: 0.625rem; text-align: center;}
-.dwg-type-area .item:first-child{padding-top:0;}
+.dwg-popup.no-header .header-wrap{ display: none; }
+.dwg-popup.no-btn .dwg-dialog-area{display: none;}
+
+.dwg-popup.color-type-list{ background:#f76252;}
+.dwg-popup.color-type-a{background-color:#58637f;}
+.dwg-popup.color-type-b{background-color:#3584e3;}
+.dwg-popup.color-type-c{background-color:#674fa5;}
+.dwg-popup.color-type-d{background-color:#198d5b;}
+
+.dwg-hd-area{ position: relative; min-height: 15.1875rem;}
+.dwg-hd-area .img {display:block; position: absolute; top: 0; right: 0; min-height: 243px; text-align: right;}
+.dwg-hd-area .img > img{width: 60%; vertical-align: top;}
+@media all and (max-width:500px){
+   .dwg-hd-area .img > img{width: 100%; vertical-align: top;}
+}
+
+.dwg-hd-area .h2-tit{ position: absolute; top: 0; left: 0; padding: 3.5rem 1.25rem 1.25rem; color: #fff; max-width: 17.0625rem; letter-spacing: -0.06875rem}
+.dwg-hd-area .user-name{font-size: 1.625rem; line-height: 2rem;}
+.dwg-hd-area .p-desc{font-size: 2.125rem; line-height: 2.625rem; letter-spacing: -0.09375rem;}
+
+.dwg-case-box{}
+.dwg-type-area{text-align: left; vertical-align: top;}
+.dwg-type-area .list{padding:0 1rem 0;}
+.dwg-type-area .item{margin-top: 0.625rem; font-size: 0; text-align: left;}
 .dwg-type:after{content:'';display:block;clear:both}
-.dwg-type-link{display:inline-block;}
-.dwg-type-link .img-wrap > img{width:100%; vertical-align:top;}
+.dwg-type-link{position:relative; display:inline-block; padding: 0.75rem 0.9375rem; background:#fff; 
+    border: 1px solid #e5e6e8; border-radius:0.25rem; box-sizing:border-box; text-align: left;}
+.dwg-type-link:after{
+    content: '';
+    display: inline-block;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-top: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+    transform: rotate(45deg);
+    vertical-align: middle;
+    margin-left: 1.25rem;
+ }   
+.dwg-type-link .ico-img{display: inline-block; width: 2.5rem; height:2.5rem;}
+.dwg-type-link .ico-img > img{width:100%; vertical-align:middle;}
+.dwg-type-link .tit-txt{display:inline-block; margin-left:0.625rem; font-size:0.9375rem; vertical-align: middle;}
+.dwg-type-link .tit-txt strong{color: #f76252; font-weight:normal;}
+
+.dwg-bd-img{width: 100%; text-align: right;}
+.dwg-bd-img img{width: 60%; vertical-align: top;}
+@media all and (max-width:500px){
+   .dwg-bd-img img{width: 100%; }
+}
 
 .dwg-typeImg-area{padding-bottom: 6rem;}
 .dwg-typeImg-area .img-wrap > img {width:100%; vertical-align:top;}
@@ -593,4 +636,4 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .dwg-frm-area .sp-txt:before{content:'※'; display:inline-block; font-size:0.75rem; vertical-align:middle; margin-right:0.25rem;}
 .dwg-frm-area .frm-textarea{ height:7.8125rem; color:#000}
 .dwg-frm-area .frm-textarea::placeholder {font-weight:normal}
-/* //190419 추가 - DG방어 */
+/* //190419 추가 - 190422 수정 - DG방어 */
