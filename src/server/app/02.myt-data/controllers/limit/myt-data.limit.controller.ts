@@ -52,7 +52,7 @@ class MyTDataLimit extends TwViewController {
         {},
         resp.result,
         {
-          regularTopUpAmt: resp.result.regularTopUpAmt ? FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) : ''
+          regularTopUpAmt: resp.result.regularTopUpAmt ? FormatHelper.addComma('' + resp.result.regularTopUpAmt) : ''
         });
 
       return response;

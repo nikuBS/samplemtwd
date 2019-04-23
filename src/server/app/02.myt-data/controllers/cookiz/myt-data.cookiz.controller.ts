@@ -63,7 +63,7 @@ class MyTDataCookiz extends TwViewController {
     return this.apiService.request(API_CMD.BFF_06_0028, { childSvcMgmtNum: '' })
       .map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return Object.assign(resp.result, { regularTopUpAmt: FormatHelper.numberWithCommas(resp.result.regularTopUpAmt) });
+          return Object.assign(resp.result, { regularTopUpAmt: FormatHelper.addComma('' + resp.result.regularTopUpAmt) });
         } else {
           return null;
         }
