@@ -29,6 +29,10 @@ Tw.ProductMobilePlanDowngradeProtect = function (rootEl, downGradeInfo, currentP
 
 Tw.ProductMobilePlanDowngradeProtect.prototype = {
 
+  /**
+   * @function
+   * @desc 최초 동작
+   */
   _init: function() {
     this._popupService.open({
       hbs: 'dwg_guide_list',
@@ -36,21 +40,36 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
       titleNm: this._downGradeInfo.titleNm,
       titleClass: Tw.FormatHelper.isEmpty(this._downGradeInfo.titleNm) ? 'no-header color-type-list' : '',
       dwgHtml: this._replaceData(this._downGradeInfo.guidMsgCtt),
-      isBtnWrap: this._downGradeInfo.type === 'D2',
       layer: true
     }, $.proxy(this._bindEventListPopup, this), null, 'dg_1depth_list', this._openEvent);
   },
 
+  /**
+   * @function
+   * @desc 팝업 내 Context 에 데이터 replace
+   * @param context - hbs Context
+   * @returns {*}
+   */
   _replaceData: function(context) {
     context = context.replace(/{{name}}/gi, this._mbrNm);
     return context;
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   * @param $popupContainer - 팝업 레이어
+   */
   _bindEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
     $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩 - 1뎁스; 가이드 목록
+   * @param $popupContainer - 팝업 레이어
+   */
   _bindEventListPopup: function($popupContainer) {
     $popupContainer.on('click', '[data-dg_contents]', $.proxy(this._onDgContents, this));
 
@@ -59,6 +78,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     new Tw.XtractorService($popupContainer);
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩 - 2뎁스; 콘텐츠 페이지
+   * @param $popupContainer - 팝업 레이어
+   */
   _bindEventContentsPopup: function($popupContainer) {
     $popupContainer.on('click', '.popup-closeBtn,.fe-btn_close', $.proxy(this._setAllClose, this));
 
@@ -67,6 +91,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     new Tw.XtractorService($popupContainer);
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩 - 2뎁스; 기타 이유
+   * @param $popupContainer - 팝업 레이어
+   */
   _bindEventCustomPopup: function($popupContainer) {
     $popupContainer.on('click', '.popup-closeBtn,.fe-btn_close', $.proxy(this._setAllClose, this));
     $popupContainer.on('keyup input', 'textarea', $.proxy(this._onCustomTextarea, this));
@@ -78,6 +107,12 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     new Tw.XtractorService($popupContainer);
   },
 
+  /**
+   * @function
+   * @desc 1뎁스 페이지에서 메뉴 선택시
+   * @param e - 메뉴 클릭 이벤트
+   * @returns {*|void}
+   */
   _onDgContents: function(e) {
     var $elem = $(e.currentTarget),
       contents = $elem.data('dg_contents');
@@ -93,6 +128,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     }, {}).done($.proxy(this._resDgContents, this, contents, e));
   },
 
+  /**
+   * @function
+   * @desc 기타 이유 팝업 실행
+   * @param e - 기타 이유 클릭 이벤트
+   */
   _onCustomDgContents: function(e) {
     this._popupService.open({
       hbs: 'dwg_custom',
@@ -100,6 +140,11 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     }, $.proxy(this._bindEventCustomPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_custom', e);
   },
 
+  /**
+   * @function
+   * @desc 기타 이유 버튼 영역 토글
+   * @param e - 기타 이유 입력란 change|input Event
+   */
   _onCustomTextarea: function(e) {
     var $elem = $(e.currentTarget);
 
@@ -113,16 +158,32 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 기타 이유 입력란 클릭 시
+   */
   _onClickCustomTextarea: function() {
     this.$customPopup.find('.fe-dwg_apply_button_wrap').show();
     this.$customPopup.find('.fe-dwg_button_wrap').hide();
   },
 
+  /**
+   * @function
+   * @desc 기타 이유 입력 버튼 클릭 시
+   */
   _onApplyCustom: function() {
     this.$customPopup.find('.fe-dwg_apply_button_wrap').hide();
     this.$customPopup.find('.fe-dwg_button_wrap').show();
   },
 
+  /**
+   * @function
+   * @desc DG방어 콘텐츠 조회 응답시 처리
+   * @param contents - 콘텐츠 TYPE 값
+   * @param e - 콘텐츠 클릭 이벤트
+   * @param resp - 콘텐츠 조회 응답 값
+   * @returns {*}
+   */
   _resDgContents: function(contents, e, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -137,10 +198,19 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', e);
   },
 
+  /**
+   * @function
+   * @desc DG방어 프로세스 종료 선택 시
+   */
   _setAllClose: function() {
     this._isAllClose = true;
   },
 
+  /**
+   * @function
+   * @desc 변경 할게요 선택 시
+   * @param e - 변경 할게요 버튼 클릭 이벤트
+   */
   _onChange: function(e) {
     var isCustom = $(e.currentTarget).data('is_custom');
 
@@ -157,10 +227,18 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 다음에 할게요. 클릭 시
+   */
   _onClose: function() {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 2뎁스 팝업에서 종료 시
+   */
   _onContentsClose: function() {
     if (!this._isAllClose) {
       return;
