@@ -8,6 +8,8 @@ export enum REDIS_KEY {
   PRODUCT_PLM_CONTENTS = 'ProductPLMLedgerContents:',
   PRODUCT_FILTER = 'ProductFilter:',
   PRODUCT_COMPARISON = 'ProductComparison:',
+  PRODUCT_DOWNGRADE = 'ProductDownGrade:',
+  PRODUCT_DOWNGRADE_TYPE = 'ProductDownGradeType:',
 
   SC_URL = 'ScuturlApi:',
   QUICK_MENU = 'UserQuickMenuByUser:',

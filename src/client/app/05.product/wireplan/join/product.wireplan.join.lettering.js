@@ -1,10 +1,21 @@
 /**
- * @file product.wireplan.join.lettering.js
+ * @file 상품 > 유선 부가서비스 > 가입 > 레터링
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.14
+ * @since 2019-02-14
+ * @todo 개발은 완료 되었으나 Spec-out 되어 미사용 중
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param displayId - 화면ID
+ * @param confirmOptions - 정보확인 데이터
+ * @param btnData - 버튼 데이터
+ */
 Tw.ProductWireplanJoinLettering = function(rootEl, prodId, displayId, confirmOptions, btnData) {
+  this.$container = rootEl;
+
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -16,7 +27,6 @@ Tw.ProductWireplanJoinLettering = function(rootEl, prodId, displayId, confirmOpt
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
   this._btnData = JSON.parse(window.unescape(btnData));
 
-  this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
@@ -28,6 +38,10 @@ Tw.ProductWireplanJoinLettering = function(rootEl, prodId, displayId, confirmOpt
 
 Tw.ProductWireplanJoinLettering.prototype = {
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$inputText = this.$container.find('.fe-input_text');
 
@@ -35,6 +49,10 @@ Tw.ProductWireplanJoinLettering.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$inputText.on('keyup input', $.proxy(this._detectInputText, this));
 
@@ -42,6 +60,10 @@ Tw.ProductWireplanJoinLettering.prototype = {
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
   },
 
+  /**
+   * @function
+   * @desc 회선 입력란 keyup|input Event
+   */
   _detectInputText: function() {
     if (this.$inputText.val().length > 16) {
       this.$inputText.val(this.$inputText.val().substr(0, 16));
@@ -51,6 +73,11 @@ Tw.ProductWireplanJoinLettering.prototype = {
     this._toggleClearBtn();
   },
 
+  /**
+   * @function
+   * @desc 설정완료 버튼 토글
+   * @param isEnable - 활성화 여부
+   */
   _toggleSetupButton: function(isEnable) {
     if (isEnable) {
       this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
@@ -59,12 +86,20 @@ Tw.ProductWireplanJoinLettering.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 입력란 삭제 버튼 클릭 시
+   */
   _clear: function() {
     this.$inputText.val('');
     this.$btnClear.hide().attr('aria-hidden', 'true');
     this._toggleSetupButton(false);
   },
 
+  /**
+   * @function
+   * @desc 입력란 삭제 버튼 display none|block
+   */
   _toggleClearBtn: function() {
     if (this.$inputText.val().length > 0) {
       this.$btnClear.show().attr('aria-hidden', 'false');
@@ -73,6 +108,10 @@ Tw.ProductWireplanJoinLettering.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 정보확인 데이터 변환
+   */
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
       pageId: 'M000433',
@@ -102,6 +141,11 @@ Tw.ProductWireplanJoinLettering.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc 정보확인 팝업 아이콘 분기 처리
+   * @returns {string}
+   */
   _getIcon: function() {
     if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
       return 'ico-type2';
@@ -110,6 +154,10 @@ Tw.ProductWireplanJoinLettering.prototype = {
     return 'ico-type1';
   },
 
+  /**
+   * @function
+   * @desc 정보확인 hbs 실행
+   */
   _procConfirm: function() {
     this._popupService.open($.extend(this._confirmOptions, {
       hbs: 'product_wireplan_confirm',
@@ -117,10 +165,19 @@ Tw.ProductWireplanJoinLettering.prototype = {
     }), $.proxy(this._bindConfirm, this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 공통 컴포넌트 실행
+   * @param $popupContainer - 정보확인 hbs Context
+   */
   _bindConfirm: function($popupContainer) {
     new Tw.ProductCommonConfirm(false, $popupContainer, this._confirmOptions, $.proxy(this._prodConfirmOk, this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 콜백 시
+   */
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -135,6 +192,12 @@ Tw.ProductWireplanJoinLettering.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 가입 요청 API 응답 시
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -146,6 +209,10 @@ Tw.ProductWireplanJoinLettering.prototype = {
     setTimeout($.proxy(this._openSuccessPop, this), 100);
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     this._popupService.open({
       hbs: 'complete_product',
@@ -163,11 +230,21 @@ Tw.ProductWireplanJoinLettering.prototype = {
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료 팝업 레이어
+   */
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 A 하이퍼링크 핸들링
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -175,10 +252,18 @@ Tw.ProductWireplanJoinLettering.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 닫기 버튼 클릭 시
+   */
   _closePop: function() {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료 시
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

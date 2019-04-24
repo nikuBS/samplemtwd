@@ -18,6 +18,7 @@ import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+import EnvHelper from '../../utils/env.helper';
 
 const os = require('os');
 
@@ -66,6 +67,7 @@ class ApiRouter {
     GET_SPLASH: { path: '/splash', method: API_METHOD.GET, target: this.getSplash },
     GET_APP_NOTICE: { path: '/app-notice', method: API_METHOD.GET, target: this.getAppNotice },
     GET_XTINFO: { path: '/xtractor-info', method: API_METHOD.GET, target: this.getXtInfo },
+    GET_DOWNGRADE: { path: '/downgrade', method: API_METHOD.GET, target: this.getDowngrade },
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
@@ -246,6 +248,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * xTractor 세션 값 전달
+   * @param req
+   * @param res
+   * @param next
+   */
   private getXtInfo(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService(),
       svcInfo = loginService.getSvcInfo(req);
@@ -256,6 +264,34 @@ class ApiRouter {
         XTLOGINTYPE: svcInfo.loginType === 'S' ? 'Z' : 'A'
       })
     });
+  }
+
+  /**
+   * DG방어 레디스 조회
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getDowngrade(req: Request, res: Response, next: NextFunction) {
+    const value: any = req.query.value || null,
+      typeYn: any = req.query.type_yn || 'N';
+
+    if (FormatHelper.isEmpty(value)) {
+      return res.json({ code: '01' });
+    }
+
+    this.redisService.getData((typeYn === 'Y' ? REDIS_KEY.PRODUCT_DOWNGRADE_TYPE : REDIS_KEY.PRODUCT_DOWNGRADE) + value)
+      .subscribe((resp) => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return res.json(resp);
+        }
+
+        res.json(Object.assign(resp, {
+          result: Object.assign(resp.result, {
+            guidMsgCtt: EnvHelper.replaceCdnUrl(resp.result.guidMsgCtt)
+          })
+        }));
+      });
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {

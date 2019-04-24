@@ -132,7 +132,8 @@ Tw.ProductList.prototype = {
         item.basOfrDataQtyCtt = data + Tw.DATA_UNIT.GB;
       }
     } else if (!this._isEmptyAmount(item.basOfrMbDataQtyCtt)) {
-      item.basOfrDataQtyCtt = Tw.FormatHelper.appendDataUnit(item.basOfrMbDataQtyCtt);
+      var data = Tw.FormatHelper.convDataFormat(item.basOfrMbDataQtyCtt, Tw.DATA_UNIT.MB);
+      item.basOfrDataQtyCtt = data.data + data.unit;
     }
 
     item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);

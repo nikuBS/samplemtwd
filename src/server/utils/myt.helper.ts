@@ -232,7 +232,7 @@ class MyTHelper {
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
   }
 
-  static convFormat(data: string, unit: string): string {
+  static convFormat(data: string, unit: string): any {
     switch ( unit ) {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);

@@ -3,11 +3,24 @@ import { VOICE_UNIT } from '../types/bff.type';
 import StringHelper from './string.helper';
 
 class FormatHelper {
+  /**
+   * @desc add leading zeros
+   * @param  {number} number
+   * @param  {number} length
+   * @returns {string} 
+   * @static
+   */
   static leadingZeros(number: number, length: number): string {
     const result = number + '';
     return result.length > length ? result : new Array(length - result.length + 1).join('0') + result;
   }
 
+  /**
+   * @desc whether value is empty or not
+   * @param  {any} values
+   * @returns {boolean}
+   * @static
+   */
   static isEmpty(value: any): boolean {
     if ( value === '' || value == null || value === undefined ||
       (value != null && typeof value === 'object' && !Object.keys(value).length) ) {
@@ -16,14 +29,32 @@ class FormatHelper {
     return false;
   }
 
+  /**
+   * @desc whether value is object or not 
+   * @param  {any} value
+   * @returns {boolean}
+   * @static
+   */
   static isObject(value: any): boolean {
     return (!!value) && (value.constructor === Object);
   }
 
+  /**
+   * @desc whether value is array
+   * @param  {any} value
+   * @returns {boolean}
+   * @static
+   */
   static isArray(value: any): boolean {
     return (!!value) && (value.constructor === Array);
   }
 
+  /**
+   * @desc whether value is string
+   * @param {any} value 
+   * @returns {boolean}
+   * @static
+   */
   static isString(value: any): boolean {
     return typeof (value) === 'string';
   }
@@ -32,10 +63,25 @@ class FormatHelper {
     return FormatHelper.isEmpty(value) ? emptyValue : value;
   }
 
+
+  /**
+   * @desc remove all tags
+   * @param {string} context 
+   * @returns {string}
+   * @static
+   */
   static stripTags(context: any): any {
     return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   }
 
+  /**
+   * @desc Convert data unit to target unit
+   * @param  {number | string} data
+   * @param  {DATA_UNIT} curUnit
+   * @param  {DATA_UNIT} targetUnit
+   * @returns {object} { data, unit }
+   * @static
+   */
   static customDataFormat(data: any, curUnit: string, targetUnit: string): any {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB];
     const curUnitIdx = units.findIndex(value => value === curUnit);
@@ -59,6 +105,13 @@ class FormatHelper {
     };
   }
 
+  /**
+   * @desc convert data unit
+   * @param  {number | string} data data
+   * @param  {DATA_UNIT} curUnit current unit
+   * @return {object} { data, unit }
+   * @static
+   */
   static convDataFormat(data: any, curUnit: string): any {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB, DATA_UNIT.TB], maxIdx = units.length - 1;
     let unitIdx = units.findIndex(value => value === curUnit);
@@ -99,6 +152,12 @@ class FormatHelper {
     return number.toString();
   }
 
+  /**
+   * @desc remove leading zeros
+   * @param  {string} value
+   * @returns string
+   * @static
+   */
   static removeZero(value: string): string {
     if ( value.indexOf('.') !== -1 ) {
       return value.replace(/(0+$)/, '');
@@ -107,10 +166,12 @@ class FormatHelper {
     return value;
   }
 
-  static normalizeNumber(num: string): string {
-    return num.replace(/(^0+)/, '');
-  }
-
+  /**
+   * @desc add comma to numbers every three digits
+   * @param {number} value
+   * @returns {string}
+   * @static
+   */
   static addComma(value: string): string {
     if ( FormatHelper.isEmpty(value) ) {
       return '';
@@ -119,6 +180,11 @@ class FormatHelper {
     return value.replace(regexp, ',');
   }
 
+  /**
+   * @desc convert milliseconds to hours
+   * @param  {number | string} data milliseconds
+   * @return {object} { hours, min, sec }
+   */
   static convVoiceFormat(data: any): any {
     data = +data;
     const hours = Math.floor(data / 3600);
@@ -156,17 +222,12 @@ class FormatHelper {
     return formatted;
   }
 
-  static convMinToDay(min: any): any {
-    min = +min;
-    const day = Math.floor(min / 1440);
-    const hours = Math.floor((min - (day * 1440)) / 60);
-    return { day, hours };
-  }
-
-  static removeNumber(value: any): any {
-    return value.replace(/[0-9]/g, '');
-  }
-
+  /**
+   * @desc add dash to phone number
+   * @param {string} tel phone number
+   * @returns {string}
+   * @static
+   */
   static conTelFormatWithDash(tel: any): any {
     if ( this.isEmpty(tel) ) {
       return tel;
@@ -201,22 +262,53 @@ class FormatHelper {
     return str;
   }
 
+  /**
+   * @desc add dot to date
+   * @param {string} date 
+   * @returns {string}
+   * @static
+   */
   static conDateFormatWithDash(date: any): any {
     return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
   }
 
-  static sortObjArrDesc(array: any, key: string): any {
+  /**
+   * @desc sort descending
+   * @param  {object[]} array
+   * @param  {string} key
+   * @returns {object[]}
+   * @static
+   */
+  static sortObjArrDesc(array: any[], key: string): any {
     return array.sort((a, b) => parseInt(b[key], 10) - parseInt(a[key], 10));
   }
 
-  static sortObjArrAsc(array: any, key: string): any {
+  /**
+   * @desc sort ascending
+   * @param  {object[]} array
+   * @param  {string} key
+   * @returns {object[]}
+   * @static
+   */
+  static sortObjArrAsc(array: any[], key: string): any {
     return array.sort((a, b) => parseInt(a[key], 10) - parseInt(b[key], 10));
   }
 
+  /**
+   * @desc get formatted date
+   * @param  {string} cardYm
+   * @returns {string}
+   * @static
+   */
   static makeCardYymm(cardYm: string): string {
     return cardYm.substr(0, 4) + '/' + cardYm.substr(4, 2);
   }
 
+  /**
+   * @desc return fixed point number
+   * @returns {number}
+   * @static
+   */
   static setDecimalPlace(value: number, point: number): number {
     return parseFloat(value.toFixed(point));
   }
@@ -228,14 +320,6 @@ class FormatHelper {
    */
   static insertColonForTime(val: string): string {
     return val.slice(0, 2) + ':' + val.slice(2);
-  }
-
-  static numberWithCommas(num: number): string {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-
-  static zip(arr, ...arrs): any {
-    return arr.map((val, i) => arrs.reduce((a, _arr) => [...a, _arr[i]], [val]));
   }
 
   /**
@@ -255,38 +339,6 @@ class FormatHelper {
   }
 
   /**
-   *  group by Array
-   *  @param {Array} arr
-   *  @param {String} key
-   *  @return return the object.
-   */
-  static groupByArray(arr, key): any {
-    const mapped = {};
-    arr.forEach(item => {
-      const actualKey = item[key];
-      if ( !mapped.hasOwnProperty(actualKey) ) {
-        mapped[actualKey] = [];
-      }
-      mapped[actualKey].push(item);
-    });
-    return mapped;
-  }
-
-  static mergeArray(arr1, arr2): any {
-    const array = arr1.concat(arr2);
-    const items = array.concat();
-    for ( let i = 0; i < items.length; ++i ) {
-      for ( let j = i + 1; j < items.length; ++j ) {
-        if ( items[i] === items[j] ) {
-          items.splice(j--, 1);
-        }
-      }
-    }
-
-    return items;
-  }
-
-  /**
    *  format fee contents
    *  @param {String | number} value
    *  @return {String} : if value contains only number, return value added comma
@@ -301,31 +353,22 @@ class FormatHelper {
     return sValue;
   }
 
-  static lpad(str, length, padStr): string {
-
-    while ( str.length < length ) {
-      str = padStr + str;
-    }
-    return str;
-  }
-
   /**
-   * It's not working with mask number
-   * @param sNumber
-   * @returns {boolean}
+   * @desc whether value is number or not
+   * @param  {} number
+   * @returns boolean
+   * @static
    */
-  static isCellPhone(sNumber) {
-    sNumber = sNumber.split('-').join('');
-    const regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
-
-    return regPhone.test(sNumber);
-  }
-
   static isNumber(number): boolean {
     const regNumber = /^[0-9]*$/;
     return regNumber.test(number);
   }
 
+  /**
+   * @desc add dash to card number
+   * @param value 
+   * @static
+   */
   static addCardDash(value: string): string {
     if ( FormatHelper.isEmpty(value) ) {
       return '';
@@ -334,6 +377,11 @@ class FormatHelper {
     return value.replace(regexp, '-');
   }
 
+  /**
+   * @desc add white space to card number
+   * @param value 
+   * @static
+   */
   static addCardSpace(value: string): string {
     if ( FormatHelper.isEmpty(value) ) {
       return '';

@@ -1,9 +1,15 @@
 /**
- * @file benefit.join.tb-combination.js
+ * @file 혜택/할인 > 가입 / TB 결합상품
  * @author Ji Hun Yang (jihun202@sk.com)
- * @since 2019.02.11
+ * @since 2019-02-11
  */
 
+/**
+ * @class
+ * @param rootEl - 컨테이너 레이어
+ * @param prodId - 상품코드
+ * @param prodNm - 상품명
+ */
 Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -23,6 +29,10 @@ Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {
 
 Tw.BenefitJoinTbCombination.prototype = {
 
+  /**
+   * @function
+   * @desc Element 캐싱
+   */
   _cachedElement: function() {
     this.$btnSelectCombineLine = this.$container.find('.fe-btn_select_combine_line');
     this.$msg = this.$container.find('.fe-msg_valid,.fe-msg_unvalid');
@@ -34,6 +44,10 @@ Tw.BenefitJoinTbCombination.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   */
   _bindEvent: function() {
     this.$btnSelectCombineLine.on('click', $.proxy(this._getMobileSvcInfo, this));
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirmReq, this), 500));
@@ -41,11 +55,21 @@ Tw.BenefitJoinTbCombination.prototype = {
     this.$lineList.on('change', 'input[type=radio]:not(:disabled)', $.proxy(this._setWireSvcMgmtNum, this));
   },
 
+  /**
+   * @function
+   * @desc 전체 회선 조회
+   */
   _getMobileSvcInfo: function() {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
       .done($.proxy(this._openSelectLine, this));
   },
 
+  /**
+   * @function
+   * @desc 회선 선택 팝업 실행
+   * @param resp - 전체 회선 목록
+   * @returns {*}
+   */
   _openSelectLine: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
@@ -63,6 +87,13 @@ Tw.BenefitJoinTbCombination.prototype = {
     }, $.proxy(this._bindSelectLinePop, this), $.proxy(this._onSelectLine, this), 'select_line');
   },
 
+  /**
+   * @function
+   * @desc 회선 목록 변환하여 산출
+   * @param lineInfo - 회선 정보
+   * @param idx - 인덱스 키
+   * @returns {{txt: string | *, "radio-attr": string, "label-attr": string}}
+   */
   _getConvertListItem: function(lineInfo, idx) {
     return {
       'label-attr': 'id="ra' + idx + '"',
@@ -72,10 +103,20 @@ Tw.BenefitJoinTbCombination.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 회선 선택 팝업 이벤트 바인딩
+   * @param $popupContainer - 회선 선택 팝업 컨테이너 레이어
+   */
   _bindSelectLinePop: function($popupContainer) {
     $popupContainer.on('click', '[data-svc_mgmt_num]', $.proxy(this._setSvcMgmtNum, this));
   },
 
+  /**
+   * @function
+   * @desc 회선 선택 정보 설정
+   * @param e - 회선 선택 이벤트
+   */
   _setSvcMgmtNum: function(e) {
     this.$btnSelectCombineLine.html($(e.currentTarget).data('num') +
       $('<div\>').append(this.$btnSelectCombineLine.find('.ico')).html());
@@ -83,6 +124,10 @@ Tw.BenefitJoinTbCombination.prototype = {
     this._popupService.close();
   },
 
+  /**
+   * @function
+   * @desc 회선 선택 시
+   */
   _onSelectLine: function() {
     if (Tw.FormatHelper.isEmpty(this._svcMgmtNum)) {
       return;
@@ -92,6 +137,13 @@ Tw.BenefitJoinTbCombination.prototype = {
       .done($.proxy(this._setUseList, this));
   },
 
+  /**
+   * @function
+   * @desc
+   * @param resp
+   * @returns {*}
+   * @private
+   */
   _setUseList: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

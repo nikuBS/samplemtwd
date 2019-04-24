@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.rentphone.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2019.2.14
+ * @file 앰대폰 매장 리스트 화면 처리
+ * @author Hakjoon sim
+ * @since 2019-02-14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -48,6 +48,14 @@ class CustomerAgentsearchRentPhone extends TwViewController {
     );
   }
 
+  /**
+   * @function
+   * @desc 임대포 매장 리스트를 BFF에서 조회
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @returns Observable - BFF 조회 결과를 Observable 로 리턴
+   */
   private getRentPhoneStores(res: Response, svcInfo: any, pageInfo: any): Observable<Array<Store> | null> {
     return this.apiService.request(API_CMD.BFF_08_0067, {}).map(((resp) => {
       if (resp.code === API_CODE.CODE_00) {
