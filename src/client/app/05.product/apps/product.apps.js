@@ -237,7 +237,6 @@ Tw.ProductApps.prototype = {
     if (!this.$switchBtn.attr('checked')) {
       this._toggleShowInstalled(false);
     }
-    this._popupService.close();
   },
 
   /**
