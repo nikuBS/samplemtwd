@@ -97,7 +97,7 @@ class MyTHelper {
     ];
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
-    let dataArr = new Array();
+    let dataArr = [];
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
@@ -232,7 +232,7 @@ class MyTHelper {
     data.isVisibleDayBtn = this.isVisibleDayBtn(data.skipId);
   }
 
-  static convFormat(data: string, unit: string): string {
+  static convFormat(data: string, unit: string): any {
     switch ( unit ) {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);
