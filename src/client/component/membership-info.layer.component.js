@@ -62,9 +62,8 @@ Tw.MembershipInfoLayerPopup.prototype = {
       return false;
     }
 
-    // DV001-17710, DV001-21440 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E','R')는 가능
-    // 정책서에는 svcGr값이 C이고, 시스템 상에는 R이므로 svcGr이 R인경우에 체크
-    if((resp.result.ownNameYn && this._svcInfo.svcGr === 'E') || (resp.result.ownNameYn && this._svcInfo.svcGr === 'R')){
+    // DV001-17710 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E')는 가능
+    if(resp.result.ownNameYn && this._svcInfo.svcGr === 'E'){
       resp.result.ownNameYn = 'Y';
     }
     this._isJoinOk = (Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
