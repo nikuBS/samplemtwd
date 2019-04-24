@@ -167,7 +167,7 @@ class MytDataSubmainController extends TwViewController {
         data.isWireLess = true;
       }
 
-      const reqBkdArr = [];
+      const reqBkdArr = new Array();
 
       if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());
