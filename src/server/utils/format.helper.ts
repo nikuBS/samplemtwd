@@ -112,7 +112,7 @@ class FormatHelper {
    * @return {object} { data, unit }
    * @static
    */
-  static convDataFormat(data: any, curUnit: string): { data: string, unit: string } {
+  static convDataFormat(data: any, curUnit: string): any {
     const units = [DATA_UNIT.KB, DATA_UNIT.MB, DATA_UNIT.GB, DATA_UNIT.TB], maxIdx = units.length - 1;
     let unitIdx = units.findIndex(value => value === curUnit);
 
