@@ -167,7 +167,7 @@ class MytDataSubmainController extends TwViewController {
         data.isWireLess = true;
       }
 
-      const reqBkdArr = new Array();
+      const reqBkdArr = [];
 
       if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());
@@ -398,7 +398,7 @@ class MytDataSubmainController extends TwViewController {
     return result;
   }
 
-  convFormat(data: string, unit: string): string {
+  convFormat(data: string, unit: string): any {
     // 실시간데이터 잔여량 데이터 포맷 설정
     switch ( unit ) {
       case UNIT_E.DATA:
