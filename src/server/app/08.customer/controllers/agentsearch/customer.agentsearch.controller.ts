@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.search.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.10.16
+ * @file 지점/대리점 검색 화면 처리
+ * @author Hakjoon sim
+ * @since 2018-10-16
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -13,9 +13,9 @@ import { BRANCH_SEARCH_OPTIONS } from '../../../../types/string.type';
 import { NextFunction } from 'connect';
 
 enum SearchType {
-  NAME = 'name',
-  ADDR = 'addr',
-  TUBE = 'tube'
+  NAME = 'name',  // 이름 검색
+  ADDR = 'addr',  // 주소 검색
+  TUBE = 'tube'   // 지하철역 검색
 }
 
 class CustomerAgentsearch extends TwViewController {
@@ -67,6 +67,21 @@ class CustomerAgentsearch extends TwViewController {
     }
   }
 
+  /**
+   * @function
+   * @desc 이름, 주소, 지하철역 중 하나로 검색 API 조회하고 결과 return
+   * @param  {string} type - 이름, 주소, 지하철역 중
+   * @param  {string} storeType - 전체/지점/대리점 중
+   * @param  {string} keyword - 검색 keyword
+   * @param  {string|undefined} area - 지하철역 검색인 경우 지역(수도권, 부산, 대구 등)
+   * @param  {string|undefined} line - 지하철 line 정보(1호선, 2호선 등)
+   * @param  {string} options - 검색 옵션 (TPremiumStore, apple 취급점 등)
+   * @param  {number} page - 몇번째 page인지
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @returns Observable
+   */
   private getQueryResult(type: string, storeType: string, keyword: string, area: string | undefined,
                          line: string | undefined, options: string, page: number, res: Response,
                          svcInfo: any, pageInfo: any): Observable<any> {
@@ -118,6 +133,13 @@ class CustomerAgentsearch extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc 전체/지점/대리점 그리고 TPremiumStore, Apple 취급점 등의 option선택에 대해 화면에 표시해 줄 string 생성
+   * @param  {string} storeType - 전체/지점/대리점
+   * @param  {string} options - 선택된 옵션들(TPremiumStore, Apple취급점 등)
+   * @returns string
+   */
   private makeOptionsText(storeType: string, options: string): string {
     let text = BRANCH_SEARCH_OPTIONS[storeType];
     let optionToShow = '';

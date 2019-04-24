@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.repair-manufacturer.controller.ts (CS_03_03)
- * @author Hakjoon Sim(hakjoon.sim@sk.com)
- * @since 2018.11.01
+ * @file 제조사 A/S 정보 화면 처리
+ * @author Hakjoon Sim
+ * @since 2018-11-01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';

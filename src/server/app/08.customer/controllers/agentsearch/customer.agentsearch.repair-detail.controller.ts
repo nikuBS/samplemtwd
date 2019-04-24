@@ -1,7 +1,7 @@
 /**
- * @file customer.agentsearch.repair-detail.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.11.01
+ * @file A/S 센터 상세정보 화면 처리
+ * @author Hakjoon sim
+ * @since 2018-11-01
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -42,6 +42,15 @@ class CustomerAgentsearchRepairDetail extends TwViewController {
     );
   }
 
+  /**
+   * @function
+   * @desc A/S센터 상세 정보를 BFF로 조회
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @param  {string} code - 조회하고자 하는 A/S센터 코드
+   * @returns Observable - 조회한 Response
+   */
   private getDetailInfo(res: Response, svcInfo: any, pageInfo: any, code: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0055, { locCode: code })
       .map((resp) => {

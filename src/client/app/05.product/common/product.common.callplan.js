@@ -44,6 +44,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._eParam = eParam;
   this._templateBtn = Handlebars.compile($('#fe-templ-btn').html());  // 버튼 영역 Handlebars
   this._templateSetting = Handlebars.compile($('#fe-templ-setting').html()); // 설정 정보 영역 Handlebars
+  this._event = null;
 
   // 설정 버튼 목록 컨버팅
   this._convertSettingBtnList();
@@ -454,6 +455,8 @@ Tw.ProductCommonCallplan.prototype = {
 
     // 사용자 로그인 여부 검사
     Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+    this._event = e;
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url))
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
@@ -518,8 +521,72 @@ Tw.ProductCommonCallplan.prototype = {
       return this._openCombineNeedWireError();
     }
 
+    // 해지에 해당될 경우 즉시 사전체크 호출
+    if (joinTermCd !== '01') {
+      return this._procPreCheck(joinTermCd, url);
+    }
+
+    // DG방어 프로세스 진입
+    this._reqDownGrade(joinTermCd, url, resp.result.prodId, resp.result.mbrNm);
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param mbrNm - 고객명
+   */
+  _reqDownGrade: function(joinTermCd, url, currentProdId, mbrNm) {
+    this._apiService.request(Tw.NODE_CMD.GET_DOWNGRADE, {
+      type_yn: 'N',
+      value: currentProdId + '/' + this._prodId
+    }).done($.proxy(this._resDownGrade, this, joinTermCd, url, currentProdId, mbrNm));
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회 응답 처리
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param resp - DG방어 1뎁스 Redis 조회 값
+   * @param mbrNm - 고객명
+   * @returns {*}
+   */
+  _resDownGrade: function(joinTermCd, url, currentProdId, mbrNm, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._onLineProcess(joinTermCd, url);
+    }
+
+    this._openDownGrade(joinTermCd, url, currentProdId, mbrNm, resp.result);
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 프로세스 실행
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param mbrNm - 고객명
+   * @param downGradeInfo - DG방어 응답 값
+   */
+  _openDownGrade: function(joinTermCd, url, currentProdId, mbrNm, downGradeInfo) {
+    new Tw.ProductMobilePlanDowngradeProtect(this.$container, downGradeInfo, currentProdId, mbrNm,
+      this._prodId, this._event, $.proxy(this._onLineProcess, this, joinTermCd, url));
+  },
+
+  /**
+   * @function
+   * @desc 회선 변경 프로세스 실행
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @returns {*}
+   */
+  _onLineProcess: function(joinTermCd, url) {
     // 해지 및 회선변경 프로세스 case 2, 4 에 해당되면 즉시 사전체크 호출
-    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') || joinTermCd !== '01') {
+    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D')) {
       return this._procPreCheck(joinTermCd, url);
     }
 
