@@ -4,6 +4,10 @@
  * @since 2018.08.20
  */
 
+/**
+ * @class
+ * @desc 공통 > 인증 > 인증 선택
+ */
 Tw.CertificationSelect = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -40,10 +44,27 @@ Tw.CertificationSelect = function () {
 
 
 Tw.CertificationSelect.prototype = {
+  /**
+   * @member {object}
+   * @desc 생체인증타입
+   * @readonly
+   * @prop {string} 0 지문인증
+   * @prop {string} 1 얼굴인
+   */
   FIDO_TYPE: {
     '0': Tw.FIDO_TYPE.FINGER,
     '1': Tw.FIDO_TYPE.FACE
   },
+
+  /**
+   * @function
+   * @desc 인증 선택 요청
+   * @param certInfo
+   * @param authUrl
+   * @param command
+   * @param deferred
+   * @param callback
+   */
   open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
     this._command = command;
@@ -53,36 +74,83 @@ Tw.CertificationSelect.prototype = {
 
     this._getSvcInfo();
   },
+
+  /**
+   * @function
+   * @desc svcInfo API 요청
+   * @private
+   */
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successGetSvcInfo, this))
       .fail($.proxy(this._failGetSvcInfo, this));
   },
+
+  /**
+   * @function
+   * @desc svcInfo API 응답 처리
+   * @param resp
+   * @private
+   */
   _successGetSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = resp.result;
       this._getMethodBlock();
     }
   },
+
+  /**
+   * @function
+   * @desc svcInfo API 실패 처리
+   * @param error
+   * @private
+   */
   _failGetSvcInfo: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 확인
+   * @private
+   */
   _getMethodBlock: function () {
     this._apiService.request(Tw.NODE_CMD.GET_AUTH_METHOD_BLOCK, {})
       .done($.proxy(this._successGetAuthMethodBlock, this))
       .fail($.proxy(this._failGetAuthMethodBlock, this));
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 처리
+   * @param resp
+   * @private
+   */
   _successGetAuthMethodBlock: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._authBlock = this._parseAuthBlock(resp.result);
     }
     this._selectKind();
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 실패 처리
+   * @param error
+   * @private
+   */
   _failGetAuthMethodBlock: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc SMS 인증 점검 여부 파싱
+   * @param list
+   * @private
+   */
   _parseAuthBlock: function (list) {
     var block = {};
     var today = new Date().getTime();
@@ -97,6 +165,12 @@ Tw.CertificationSelect.prototype = {
     }, this));
     return block;
   },
+
+  /**
+   * @function
+   * @desc 인증 종류에 따른 처리
+   * @private
+   */
   _selectKind: function () {
     this._authKind = this._certInfo.authClCd;
 
@@ -119,9 +193,22 @@ Tw.CertificationSelect.prototype = {
         break;
     }
   },
+
+  /**
+   * @function
+   * @desc 생체인증 사용가능 여부 요청
+   * @private
+   */
   _fidoType: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(this._onFidoType, this));
   },
+
+  /**
+   * @function
+   * @desc 생체인증 사용가능 여부 처리
+   * @param resp
+   * @private
+   */
   _onFidoType: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === Tw.NTV_CODE.CODE_01 ) {
       this._enableFido = true;
@@ -131,9 +218,22 @@ Tw.CertificationSelect.prototype = {
       this._checkSmsPri();
     }
   },
+
+  /**
+   * @function
+   * @desc 생체인증 등록 여부 요청
+   * @private
+   */
   _checkFido: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.userId }, $.proxy(this._onCheckFido, this));
   },
+
+  /**
+   * @function
+   * @desc 생체인증 등록 여부 처리
+   * @param resp
+   * @private
+   */
   _onCheckFido: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._registerFido = true;
@@ -142,9 +242,22 @@ Tw.CertificationSelect.prototype = {
       this._checkSmsPri();
     }
   },
+
+  /**
+   * @function
+   * @desc 생체인증 사용 여부 요청
+   * @private
+   */
   _checkFidoUse: function () {
     this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.userId }, $.proxy(this._onCheckFidoUse, this));
   },
+
+  /**
+   * @function
+   * @desc 생체인증 사용 여부 처리
+   * @param resp
+   * @private
+   */
   _onCheckFidoUse: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( resp.params.value === 'Y' ) {
@@ -157,6 +270,12 @@ Tw.CertificationSelect.prototype = {
       this._checkSmsPri();
     }
   },
+
+  /**
+   * @function
+   * @desc SMS 우선 사용 인증인지 확인
+   * @private
+   */
   _checkSmsPri: function () {
     if ( this._includeSkSms() && this._authBlock[Tw.AUTH_CERTIFICATION_METHOD.SK_SMS] !== 'Y' ) {
       this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS);
@@ -164,6 +283,12 @@ Tw.CertificationSelect.prototype = {
       this._openSelectPopup(true);
     }
   },
+
+  /**
+   * @function
+   * @desc 최초 인증 화면 분기
+   * @private
+   */
   _openOpCert: function () {
     if ( this._opMethods.indexOf(',') !== -1 ) {
       this._methodCnt = this._opMethods.split(',').length;
@@ -184,19 +309,45 @@ Tw.CertificationSelect.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 인증 수단에 FIDO가 있는지 확인
+   * @returns {boolean}
+   * @private
+   */
   _includeFido: function () {
     return this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1;
   },
+
+  /**
+   * @function
+   * @desc 인증 수단에 SK SMS가 있는지 확인
+   * @returns {boolean}
+   * @private
+   */
   _includeSkSms: function () {
     return this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
       this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1;
   },
+
+  /**
+   * @function
+   * @desc 마스킹 해제 인증 요청
+   * @private
+   */
   _openMaskingCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
     this._opMethods = methods.opAuthMethods;
     this._optMethods = methods.optAuthMethods || '';
     this._openOpCert();
   },
+
+  /**
+   * @function
+   * @desc 업무 인증 요청
+   * @private
+   */
   _openBusinessCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
     if ( !Tw.FormatHelper.isEmpty(this._authKind) ) {
@@ -208,6 +359,12 @@ Tw.CertificationSelect.prototype = {
     }
     this._openOpCert();
   },
+
+  /**
+   * @function
+   * @desc 상품 인증 요청
+   * @private
+   */
   _openProductCert: function () {
     this._prodAuthKey = this._certInfo.prodAuthKey;
     this._opMethods = this._certInfo.opAuthMethods;
@@ -218,6 +375,12 @@ Tw.CertificationSelect.prototype = {
     }
     this._openOpCert();
   },
+
+  /**
+   * @function
+   * @desc 미환급금 인증 요청
+   * @private
+   */
   _openRefundCert: function () {
     var methods = {
       skSms: {
@@ -242,6 +405,13 @@ Tw.CertificationSelect.prototype = {
     }, $.proxy(this._opOpenRefundSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
 
+  /**
+   * @function
+   * @desc 인증 선택 팝업 요청
+   * @param isWelcome
+   * @param before
+   * @private
+   */
   _openSelectPopup: function (isWelcome, before) {
     var methods = {
       skSms: {
@@ -304,6 +474,13 @@ Tw.CertificationSelect.prototype = {
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
+
+  /**
+   * @function
+   * @desc 인증 수단별 인증 요청
+   * @param methods
+   * @private
+   */
   _openCertPopup: function (methods) {
     var isWelcome = false;
     if ( !Tw.FormatHelper.isEmpty(methods) ) {
@@ -351,6 +528,13 @@ Tw.CertificationSelect.prototype = {
 
     }
   },
+
+  /**
+   * @function
+   * @desc 인증 선택 팝업 오픈 콜백 (이벤트 바인딩)
+   * @param $popupContainer
+   * @private
+   */
   _onOpenSelectPopup: function ($popupContainer) {
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
 
@@ -363,6 +547,13 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-bio', _.debounce($.proxy(this._onClickBio, this), 500));
     $popupContainer.on('click', '#fe-bt-public', _.debounce($.proxy(this._onClickSkPublic, this), 500));
   },
+
+  /**
+   * @function
+   * @desc 미환급금 인증 선택 팝업 오픈 콜백 (이벤트 바인딩)
+   * @param $popupContainer
+   * @private
+   */
   _opOpenRefundSelectPopup: function ($popupContainer) {
     Tw.CommonHelper.focusOnActionSheet($popupContainer);
 
@@ -372,6 +563,12 @@ Tw.CertificationSelect.prototype = {
     $popupContainer.on('click', '#fe-bt-save-refund', _.debounce($.proxy(this._onClickSaveSms, this), 500));
     $popupContainer.on('click', '#fe-bt-ipin-refund', _.debounce($.proxy(this._onClickIpin, this), 500));
   },
+
+  /**
+   * @function
+   * @desc 인증 선택 팝업 클로즈 콜백
+   * @private
+   */
   _onCloseSelectPopup: function () {
     this._onSelectPopup = false;
     if ( this._openCert ) {
@@ -383,12 +580,24 @@ Tw.CertificationSelect.prototype = {
       this._callback({ code: Tw.API_CODE.CERT_CANCEL });
     }
   },
+
+  /**
+   * @function
+   * @desc SK SMS 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickSkSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
     this._openCert = true;
     this._userSmsOpen = true;
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc KT 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickKtSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.KT;
@@ -396,6 +605,12 @@ Tw.CertificationSelect.prototype = {
     // this._popupService.close();
     this._openCertPopup();
   },
+
+  /**
+   * @function
+   * @desc LG 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickLgSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.LG;
@@ -403,6 +618,12 @@ Tw.CertificationSelect.prototype = {
     // this._popupService.close();
     this._openCertPopup();
   },
+
+  /**
+   * @function
+   * @desc 알뜰폰 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickSaveSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS;
     this._niceKind = Tw.AUTH_CERTIFICATION_NICE.SAVE;
@@ -410,27 +631,58 @@ Tw.CertificationSelect.prototype = {
     // this._popupService.close();
     this._openCertPopup();
   },
+
+  /**
+   * @function
+   * @desc 아이핀 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickIpin: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.IPIN;
     // this._openCert = true;
     // this._popupService.close();
     this._openCertPopup();
   },
+
+  /**
+   * @function
+   * @desc 생체 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickBio: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.BIO;
     this._openCert = true;
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc 공인인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickSkPublic: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH;
     this._openCert = true;
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc 미환급금 SMS 인증 버튼 클릭 이벤트 처리
+   * @private
+   */
   _onClickSkSmsRefund: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.SMS_REFUND;
     this._openCert = true;
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc 인증 완료 처리
+   * @param resp
+   * @private
+   */
   _completeCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
@@ -469,10 +721,25 @@ Tw.CertificationSelect.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc SK SMS 인증 가능여부 확인 요청
+   * @param target
+   * @private
+   */
   _checkSmsEnable: function (target) {
     this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt,
       $.proxy(this._completeCheckSmsEnable, this, target));
   },
+
+  /**
+   * @function
+   * @desc SK SMS 인증 가능여부 응답 처리
+   * @param target
+   * @param resp
+   * @private
+   */
   _completeCheckSmsEnable: function (target, resp) {
     if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
