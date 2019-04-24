@@ -97,7 +97,7 @@ class MyTHelper {
     ];
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
-    let dataArr = [];
+    let dataArr = new Array();
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
