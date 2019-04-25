@@ -897,6 +897,7 @@ class ProductCommonCallplan extends TwViewController {
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
             isProductCallplan: true,
             isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s),
+            loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
             bpcpServiceId,
             eParam
           }].reduce((a, b) => {
