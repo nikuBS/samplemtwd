@@ -362,7 +362,8 @@ class LoginService {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {
       const baseUrl = request.baseUrl;
-      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 || baseUrl.indexOf('native') !== -1 ) {
+      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||
+        baseUrl.indexOf('native') !== -1 || baseUrl.indexOf('store') !== -1 ) {
         return this.getReferer(request);
       } else {
         return baseUrl + request.url;

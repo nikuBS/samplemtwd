@@ -61,8 +61,42 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
-    if(resp.code === Tw.API_CODE.NODE_1004) {
+    if ( resp.code === Tw.API_CODE.NODE_1004 ) {
+      Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, '');
       this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
+      return;
+    }
+
+    if ( resp.code === Tw.API_CODE.BFF_0003 ) {
+      var loginCookie = Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.TWM_LOGIN);
+      if ( !Tw.FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+        Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, '');
+        this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
+      } else {
+        var tidLanding = new Tw.TidLandingComponent();
+        tidLanding.goLogin(location.pathname + location.search);
+      }
+      return resp;
+    }
+
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
+      var path = location.pathname;
+      if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+        return resp;
+      } else {
+        resp.result.fromDtm = '20190425000000';
+        resp.result.toDtm = '20190425235959';
+        console.log('check block');
+        var today = new Date().getTime();
+        var startTime = Tw.DateHelper.convDateFormat(resp.result.fromDtm).getTime();
+        var endTime = Tw.DateHelper.convDateFormat(resp.result.toDtm).getTime();
+        if ( today > startTime && today < endTime ) {
+          var blockUrl = '/common/util/service-block';
+          this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
+        } else {
+          return resp;
+        }
+      }
     }
 
     var requestInfo = {
