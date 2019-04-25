@@ -11,7 +11,9 @@
     <i class="icon-warning-120"><span class="blind">warning</span></i>
     <p class="tit">시스템 점검 중입니다</p>
     <p class="txt">이용에 불편을 드려 죄송합니다.<br />더욱 편리하고 안정된 서비스를 제공하기 위해<br />T world 시스템을 점검하고 있습니다.</p>
+    <% if (hideTime) { %>
     <p class="subTxt"><%= fromDtm %> ~ <%= toDtm %></p>
+    <% } %>
 </div>
 <div class="checking_btn">
     <button type="button" class="fe-common-back">닫기</button>

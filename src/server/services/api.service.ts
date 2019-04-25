@@ -143,17 +143,11 @@ class ApiService {
               }
               return;
 
-            } else if ( respData.code === API_CODE.BFF_0006 ) {
+            } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0011 ) {
               this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
               const path = this.loginService.getFullPath(req);
               if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
                 this.checkServiceBlock(resp.result);
-              }
-            } else if ( respData.code === API_CODE.BFF_0011 ) {
-              this.logger.error(this, '[API RESP] BFF Auto Block', resp.code, resp.msg);
-              const path = this.loginService.getFullPath(req);
-              if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
-                this.checkAutoServiceBlock(resp.result);
               }
             }
           }
@@ -191,17 +185,11 @@ class ApiService {
                 }
                 return;
 
-              } else if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0006 ) {
+              } else if ( !FormatHelper.isEmpty(error.code) && (error.code === API_CODE.BFF_0006 || error.code === API_CODE.BFF_0011) ) {
                 this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
                 const path = this.loginService.getFullPath(req);
                 if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
                   this.checkServiceBlock(resp.result);
-                }
-              } else if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0011 ) {
-                this.logger.error(this, '[API RESP] BFF Auto Block', resp.code, resp.msg);
-                const path = this.loginService.getFullPath(req);
-                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
-                  this.checkAutoServiceBlock(resp.result);
                 }
               }
             }
@@ -575,17 +563,6 @@ class ApiService {
   }
 
   private checkServiceBlock(block) {
-    const today = new Date().getTime();
-    const startTime = DateHelper.convDateFormat(block.fromDtm).getTime();
-    const endTime = DateHelper.convDateFormat(block.toDtm).getTime();
-    if ( today > startTime && today < endTime ) {
-      const blockUrl = block.fallbackUrl || '/common/util/service-block';
-      this.res.redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
-      return;
-    }
-  }
-
-  private checkAutoServiceBlock(block) {
     const blockUrl = block.fallbackUrl || '/common/util/service-block';
     this.res.redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
     return;

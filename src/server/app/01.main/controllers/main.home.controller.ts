@@ -376,9 +376,12 @@ class MainHome extends TwViewController {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
-      } else if ( resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0007 ) {
+      } else if ( resp.code === API_CODE.BFF_0006 ) {
         usageData['fromDate'] = DateHelper.getShortDateAnd24Time(resp.result.fromDtm);
         usageData['toDate'] = DateHelper.getShortDateAnd24Time(resp.result.toDtm);
+        usageData['fallbackClCd'] = resp.result.fallbackClCd;
+        usageData['fallbackUrl'] = resp.result.fallbackUrl;
+        usageData['fallbackMsg'] = resp.result.fallbackMsg;
       } else if (resp.code === API_CODE.BFF_0011 ) {
         usageData['fallbackClCd'] = resp.result.fallbackClCd;
         usageData['fallbackUrl'] = resp.result.fallbackUrl;
