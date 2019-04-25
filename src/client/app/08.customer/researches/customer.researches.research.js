@@ -106,7 +106,7 @@ Tw.CustomerResearch.prototype = {
    */
   _getNextQuestion: function($selected) { // 다음 문항 index 가져오기
     if ($selected.hasClass('radiobox')) {
-      var next_type = $selected.data('next-question') || 0;
+      var next_type = $selected.find('input').data('next-question') || 0;
       switch (next_type) {
         case Tw.CUSTOMER_RESEARCH_NEXT_TYPE.END: {
           return this._questionCount;
@@ -147,7 +147,7 @@ Tw.CustomerResearch.prototype = {
    */
   _goNext: function(e) { 
     var next = this._currentIdx + 1;
-
+    
     if (this._nextIdx) {
       next = this._nextIdx;
     }
