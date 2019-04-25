@@ -62,8 +62,9 @@ Tw.MembershipInfoLayerPopup.prototype = {
       return false;
     }
 
-    // DV001-17710 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E')는 가능
-    if(resp.result.ownNameYn && this._svcInfo.svcGr === 'E'){
+    // DV001-17710, DV001-21440 법인의 동의를 얻은 실사용자(ownNameYn만 'N' 일 때 svcGr이 'E','R')는 가능
+    // 회선등급 C의 경우 정책서 상에는 svcGr 값이 C이고 시스템 상에는 svcGr 값이 R
+    if(resp.result.ownNameYn && (this._svcInfo.svcGr === 'E' || this._svcInfo.svcGr === 'R')){
       resp.result.ownNameYn = 'Y';
     }
     this._isJoinOk = (Object.values(resp.result).indexOf('N') < 0)  ? 'Y' : 'N';
