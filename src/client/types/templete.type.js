@@ -876,9 +876,9 @@ Tw.MYT_PREPAID_ALARM = {
 };
 
 Tw.PRODUCT_APPS_ORDER = [
-  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"', 'label-attr': ' ' },
-  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"', 'label-attr': ' ' },
-  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"', 'label-attr': ' ' }
+  { txt: '최신순', 'radio-attr': 'data-prop="storRgstDtm"' },
+  { txt: '추천순', 'radio-attr': 'data-prop="idxExpsSeq"' },
+  { txt: '가나다순', 'radio-attr': 'data-prop="prodNm"' }
 ];
 
 Tw.SUSPEND_RELATION = {

@@ -1,3 +1,7 @@
+/**
+ * @class
+ * @desc input helper
+ */
 Tw.InputHelper = (function () {
   function inputNumberOnly(input) {
     var $input = $(input);
@@ -30,9 +34,12 @@ Tw.InputHelper = (function () {
 
     $input.val(sValue);
   }
-
+  /**
+   * @desc keydown event handler to type only number
+   * @param  {Event} event
+   * @public
+   */
   function inputNumKeyDown(event) {
-    // input keydown event (only input number)
     var key = event.which;
     if ( key === 0 || key === 8 || key === 46 || key === 9 ) {
       if ( typeof event.stopPropagation !== 'undefined' ) {
@@ -53,19 +60,12 @@ Tw.InputHelper = (function () {
     }
   }
 
-  function inputNumKeyUp(event) {
-    // input keyup event (only input number)
-    var key = event.which;
-    if ( key === 8 || key === 46 || key === 37 || key === 39 ) {
-      return;
-    }
-    else {
-      event.target.value = event.target.value.replace(/[^0-9]/g, '');
-    }
-  }
-
+  /**
+   * @desc whether key is delete or not
+   * @param  {Event} event
+   * @public
+   */
   function isDeleteKey(event) {
-    // input keyup event (only input number)
     var key = event.which;
     if ( key === 8 || key === 46 ) {
       return true;
@@ -73,21 +73,31 @@ Tw.InputHelper = (function () {
     return false;
   }
 
+  /**
+   * @desc check that a value contains only number
+   * @param  {string} number
+   * @public
+   */
   function validateNumber(number) {
     var reg = /[^0-9]/g;
     return reg.test(number);
   }
 
-  function validateEmail(email) {
-    var re = /[a-z0-9_+.-]+@([a-z0-9-]+\.)+[a-z0-9]{2,4}/gi;
-    return re.test(email);
-  }
-
+  /**
+   * @desc get byte count for str
+   * @param  {string} str
+   * @public
+   */
   function getByteCount(str) {
     var b = str.match(/[^\x00-\xff]/g);
     return (str.length + (!b ? 0 : b.length));
   }
 
+  /**
+   * @desc add dash to input for phone number
+   * @param {Element} input 
+   * @public
+   */
   function insertDashCellPhone(input) {
     var $input = $(input);
     var tel = $input.val().replace(/[^0-9]/g, '');
@@ -95,8 +105,12 @@ Tw.InputHelper = (function () {
     $input.trigger('change');
   }
 
+  /**
+   * @desc whether key is enter or not
+   * @param  {Event} event
+   * @public
+   */
   function isEnter(event) {
-    // input keyup event (only input number)
     var key = event.which;
     if ( key === 13 ) {
       return true;
@@ -121,9 +135,7 @@ Tw.InputHelper = (function () {
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
     inputNumberAndDashOnly: inputNumberAndDashOnly,
     inputNumberAndAlphabet: inputNumberAndAlphabet,
-    validateEmail: validateEmail,
     validateNumber: validateNumber,
-    inputNumKeyUp: inputNumKeyUp,
     inputNumKeyDown: inputNumKeyDown,
     isDeleteKey: isDeleteKey,
     getByteCount: getByteCount,
