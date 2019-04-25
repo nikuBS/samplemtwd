@@ -55,6 +55,9 @@ Tw.ApiService.prototype = {
   _checkAuth: function (command, params, headers, pathParams, version, resp) {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
+    var path = '';
+    var blockUrl = '';
+    var hash = '';
 
     if ( !Tw.FormatHelper.isEmpty(resp.loginType) ) {
       this.sendNativeSession(resp.loginType);
@@ -79,20 +82,31 @@ Tw.ApiService.prototype = {
       return resp;
     }
 
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      var path = location.pathname;
-      if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+    if ( resp.code === Tw.API_CODE.BFF_0006 ) {
+      path = location.pathname;
+      hash = location.hash;
+      if ( /\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path) || /menu/.test(hash) ) {
         return resp;
       } else {
         var today = new Date().getTime();
         var startTime = Tw.DateHelper.convDateFormat(resp.result.fromDtm).getTime();
         var endTime = Tw.DateHelper.convDateFormat(resp.result.toDtm).getTime();
         if ( today > startTime && today < endTime ) {
-          var blockUrl = '/common/util/service-block';
+          blockUrl = resp.result.fallbackUrl || '/common/util/service-block';
           this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
         } else {
           return resp;
         }
+      }
+    }
+
+    if ( resp.code === Tw.API_CODE.BFF_0011 ) {
+      path = location.pathname;
+      if ( /\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path) || /menu/.test(hash) ) {
+        return resp;
+      } else {
+        blockUrl = resp.result.fallbackUrl || '/common/util/service-block';
+        this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
       }
     }
 
