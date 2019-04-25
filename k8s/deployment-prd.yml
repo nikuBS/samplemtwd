@@ -72,7 +72,7 @@ spec:
             cpu: 4000m
             memory: 3072Mi
         volumeMounts:
-        - mountPath: /tworld/uploads
+        - mountPath: /home/appadmin/uploads
           name: upload-volume
       volumes:
       - name: upload-volume
