@@ -139,7 +139,6 @@ Tw.ProductList.prototype = {
       } else {
         data = Tw.FormatHelper.convDataFormat(item.basOfrMbDataQtyCtt, Tw.DATA_UNIT.MB);
         item.basOfrDataQtyCtt = data.data + data.unit;
-        item.basOfrDataQtyCtt = data + Tw.DATA_UNIT.GB;
       }
 
       
