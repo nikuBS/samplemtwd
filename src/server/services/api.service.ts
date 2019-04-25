@@ -130,16 +130,25 @@ class ApiService {
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers, req, res).subscribe(() => {
         if ( contentType.includes('json') ) {
-          if ( respData.code === API_CODE.BFF_0003 ) {
-            this.logger.error(this, '[API RESP] Session Expired', respData.code, respData.msg, this.loginService.getFullPath(req));
-            this.res.redirect('/common/member/logout/expire?target=' + this.loginService.getFullPath(req));
-            return;
+          if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
+            if ( respData.code === API_CODE.BFF_0003 ) {
+              const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+              this.logger.error(this, '[API RESP] Need Login', respData.code, respData.msg, this.loginService.getFullPath(req));
+              if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+                this.logger.info(this, '[Session expired]');
+                res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+                res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
+              } else {
+                res.render('error.login-block.html', { target: this.loginService.getPath(req) });
+              }
+              return;
 
-          } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0007 ) {
-            this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
-            const path = this.loginService.getFullPath(req);
-            if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
-              this.checkServiceBlock(resp.result);
+            } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0007 ) {
+              this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+              const path = this.loginService.getFullPath(req);
+              if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+                this.checkServiceBlock(resp.result);
+              }
             }
           }
         }
@@ -157,10 +166,35 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
       const headers = err.response.headers;
-      this.logger.error(this, '[API ERROR]', command.path, error);
+      this.logger.error(this, '[API ERROR]', command.path, error, req.baseUrl);
 
       if ( command.server === API_SERVER.BFF ) {
+        const contentType = headers['content-type'];
         this.setServerSession(headers, req, res).subscribe((resp) => {
+          if ( contentType.includes('json') ) {
+            if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
+              if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0003 ) {
+                const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+                this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
+                if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+                  this.logger.info(this, '[Session expired]');
+                  res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+                  res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
+                } else {
+                  res.render('error.login-block.html', { target: this.loginService.getPath(req) });
+                }
+                return;
+
+              } else if ( !FormatHelper.isEmpty(error.code) && (error.code === API_CODE.BFF_0006 || error.code === API_CODE.BFF_0007) ) {
+                this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+                const path = this.loginService.getFullPath(req);
+                if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
+                  this.checkServiceBlock(resp.result);
+                }
+              }
+            }
+          }
+
           observer.next(error);
           observer.complete();
         });

@@ -1,10 +1,19 @@
+/**
+ * @class
+ * @desc for using hash
+ */
 Tw.HashService = function () {
   this._callbackList = [];
   this._currentHashNav = undefined;
 };
 
 Tw.HashService.prototype = {
-  initHashNav: function (callback) {  // bind onchangehash event
+  /**
+   * @desc bind onchangehash event
+   * @param {function} callback 
+   * @public
+   */
+  initHashNav: function (callback) {  
     if ( !callback || typeof callback !== 'function' ) {
       return false;
     }
@@ -20,7 +29,12 @@ Tw.HashService.prototype = {
     this._checkHash(callback);
     return this._currentHashNav;
   },
-  _checkHash: function () { // check whether change hash or not
+
+  /**
+   * @desc check whether change hash or not
+   * @private
+   */
+  _checkHash: function () { 
     var hash = window.location.hash.replace(/^#/i, '');
     if ( hash !== this._currentHashNav ) {
       var newHash = hash;
@@ -34,8 +48,12 @@ Tw.HashService.prototype = {
     }
   },
 
+  /** 
+   * @desc Do something with the new hash
+   * @returns {object}
+   * @private
+   */
   _chopHash: function (hash) {
-    // Do something with the new hash
     hash = {
       raw: hash,
       base: decodeURIComponent(hash),
@@ -57,7 +75,12 @@ Tw.HashService.prototype = {
     return hash;
 
   },
-  _parametersFromString: function (paramString) { // get query parameters from url
+
+  /**
+   * @desc get query parameters from url
+   * @param {string} paramString 
+   */
+  _parametersFromString: function (paramString) { 
     if ( !paramString.length ) return null;
     var paramPairs = paramString.split('&');
     if ( !paramPairs.length ) return null;
@@ -76,7 +99,11 @@ Tw.HashService.prototype = {
     return null;
   },
 
-  detectIsReload: function () { // when click reload button on browser
+  /**
+   * @desc when click reload button on browser
+   * @public
+   */
+  detectIsReload: function () { 
     if ( window.performance ) {
       if ( performance.navigation.type === 1 ) {
         location.hash = '';

@@ -126,7 +126,7 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   /**
    * @function
-   * @desc 회선 선택 시
+   * @desc 회선 선택 시 & 결합상품 목록 조회
    */
   _onSelectLine: function() {
     if (Tw.FormatHelper.isEmpty(this._svcMgmtNum)) {
@@ -139,10 +139,8 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   /**
    * @function
-   * @desc
-   * @param resp
-   * @returns {*}
-   * @private
+   * @desc 결합상품 목록 조회 API 응답 처리
+   * @param resp - 결합상품 목록 조회 API 응답 값
    */
   _setUseList: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -168,6 +166,10 @@ Tw.BenefitJoinTbCombination.prototype = {
     this._toggleSetupButton(false);
   },
 
+  /**
+   * @function
+   * @desc 결합 회선 목록 disabled 처리
+   */
   _setDisabledUseList: function() {
     _.each(this.$lineList.find('li'), function(item) {
       var $item = $(item);
@@ -181,6 +183,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc 검증 처리
+   * @param isError - 오류 여부
+   * @param statusText - 결과 메세지
+   */
   _setValidation: function(isError, statusText) {
     this.$msg.hide().attr('aria-hidden', 'true');
 
@@ -188,6 +196,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     $msgElem.text(statusText).show().attr('aria-hidden', 'false');
   },
 
+  /**
+   * @function
+   * @desc 현재 사용중인 회선 정보 산출
+   * @param joinInfo - 가입 정보
+   * @returns {Array}
+   */
   _getCurrentUseLineInfo: function(joinInfo) {
     if (Tw.FormatHelper.isEmpty(joinInfo.useLineList)) {
       return [];
@@ -205,6 +219,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     return useLineInfo;
   },
 
+  /**
+   * @function
+   * @desc 결합 회선 가족 목록 변환
+   * @param useLineInfo - 결합가족 목록
+   * @returns {{list: Array}|{list: *}}
+   */
   _getConvertCombiWireProductList: function(useLineInfo) {
     if (Tw.FormatHelper.isEmpty(useLineInfo.combiWireProductList)) {
       return {
@@ -224,6 +244,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 결합 처리 결과 메세지 변환
+   * @param useLineInfo - 회선 정보
+   * @returns {*|void}
+   */
   _setResultText: function(useLineInfo) {
     var isAllowedCombineLength = this.$lineList.find('li input[type=radio]:not(:disabled)').length;
 
@@ -240,6 +266,11 @@ Tw.BenefitJoinTbCombination.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 설정 버튼 토글
+   * @param isEnable - 활성화 여부
+   */
   _toggleSetupButton: function(isEnable) {
     if (isEnable) {
       this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
@@ -248,11 +279,20 @@ Tw.BenefitJoinTbCombination.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 유선 서비스관리번호 설정
+   * @param e - change Event
+   */
   _setWireSvcMgmtNum: function(e) {
     this._wireSvcMgmtNum = $(e.currentTarget).data('svc_mgmt_num');
     this._toggleSetupButton(true);
   },
 
+  /**
+   * @function
+   * @desc 가입 처리 API 요청
+   */
   _procConfirmReq: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -263,6 +303,12 @@ Tw.BenefitJoinTbCombination.prototype = {
       .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 데이터 변환
+   * @param confirmInfo - 정보확인 데이터
+   * @returns {this & {isAgreement: *, wireMember: *, prodStpl: ((this&{isScrbStplAgree: *, isPsnlInfoCnsgAgree: *, scrbStplAgreeCttSummary: string, termStplAgreeCttSummary: string, isPsnlInfoOfrAgree: *, psnlInfoCnsgCttSummary: string, existsCount: number, isAdInfoOfrAgree: *, isTermStplAgree: *, psnlInfoOfrCttSummary: string, adInfoOfrCttSummary: string, isAllAgree: boolean})|(this&{isScrbStplAgree: *, isPsnlInfoCnsgAgree: *, scrbStplAgreeCttSummary: string, termStplAgreeCttSummary: string, isPsnlInfoOfrAgree: *, psnlInfoCnsgCttSummary: string, existsCount: number, isAdInfoOfrAgree: *, isTermStplAgree: *, psnlInfoOfrCttSummary: string, adInfoOfrCttSummary: string, isAllAgree: boolean})), wirelessMember: *}}
+   */
   _convertData: function(confirmInfo) {
     this._isAgreement = confirmInfo.agreeOpNeedYn === 'Y';
     return $.extend(confirmInfo, {
@@ -273,6 +319,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc 무선 회선 정보 변환
+   * @param wireless - 무선 회선 정보
+   * @returns {this & {isFamlUse: boolean, svcNum: (string|*)}}
+   */
   _convertWirelessMember: function(wireless) {
     return $.extend(wireless, {
       svcNum: Tw.FormatHelper.conTelFormatWithDash(wireless.svcNum),
@@ -280,6 +332,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc 유선 회선 정보 변환
+   * @param wire - 유선 회선 정보
+   * @returns {this & {svcNm: *, svcNum: (string|*)}}
+   */
   _convertWireMember: function(wire) {
     return $.extend(wire, {
       svcNum: wire.svcCd === 'P' ? Tw.FormatHelper.conTelFormatWithDash(wire.svcNum) : wire.svcNum,
@@ -287,6 +345,12 @@ Tw.BenefitJoinTbCombination.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc TB상품 정보확인 팝업 실행
+   * @param resp - 정보확인 API 응답 값
+   * @returns {*}
+   */
   _openConfirm: function(resp) {
     Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -299,12 +363,21 @@ Tw.BenefitJoinTbCombination.prototype = {
     }, this._convertData(resp.result)), $.proxy(this._openBindConfirmPop, this));
   },
 
+  /**
+   * @function
+   * @desc 정보확인 팝업 이벤트 바인딩
+   * @param $popupContainer - 팝업 컨테이너
+   */
   _openBindConfirmPop: function($popupContainer) {
     new Tw.ProductCommonConfirm(false, $popupContainer, {
       isWidgetInit: true
     }, $.proxy(this._procApply, this));
   },
 
+  /**
+   * @function
+   * @desc 가입 처리 API 요청
+   */
   _procApply: function() {
     var reqData = {
       choiceSvcMgmtNum: this._svcMgmtNum,
@@ -319,6 +392,12 @@ Tw.BenefitJoinTbCombination.prototype = {
       {}, [this._prodId]).done($.proxy(this._procApplyRes, this));
   },
 
+  /**
+   * @function
+   * @desc 가입 처리 API 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procApplyRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -329,6 +408,10 @@ Tw.BenefitJoinTbCombination.prototype = {
     setTimeout($.proxy(this._openSuccessPop, this), 100);
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     var successData = {
       prodNm: this._prodNm,
@@ -348,10 +431,20 @@ Tw.BenefitJoinTbCombination.prototype = {
     }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 팝업 레이어
+   */
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 내 A 하이퍼링크 핸들링
+   * @param e - 완료 팝업 내 A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -359,6 +452,10 @@ Tw.BenefitJoinTbCombination.prototype = {
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
+  /**
+   * @function
+   * @desc 완료 팝업 종료 시
+   */
   _onClosePop: function() {
     this._historyService.goBack();
   }

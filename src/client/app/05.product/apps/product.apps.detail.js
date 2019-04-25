@@ -12,7 +12,7 @@ Tw.ProductAppsDetail = function(rootEl, app) {
 
   this._cachedElement();
   this._bindEvent();
-  this._init(app);
+  this._init(JSON.parse(window.unescape(app)));
 };
 
 Tw.ProductAppsDetail.prototype = {

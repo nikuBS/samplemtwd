@@ -180,7 +180,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
     this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
 
-    this.$container.on('click', '#fe-search-input', $.proxy(this._searchFocus, this));
+    this.$container.on('click focus', '#fe-search-input', $.proxy(this._searchFocus, this));
     this.$container.on('click', 'button.more', $.proxy(this._onDepthOpened, this));
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
@@ -640,7 +640,7 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     // Check if there is unread T-Notifications
     this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.T_NOTI }, $.proxy(function (res) {
       // Only if an App is fresh executed
-      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value === 'Y' ) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value === 'Y' && isLogin ) {
         this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
           .then($.proxy(function (res) {
             if ( res.code === Tw.API_CODE.CODE_00 && res.result.length ) {

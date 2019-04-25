@@ -31,7 +31,7 @@ class CommonTidChangePw extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const target = req.query.target || '/main/home';
+    const target = req.query.target || '/common/member/tid-pwd';
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
