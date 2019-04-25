@@ -84,9 +84,6 @@ Tw.ApiService.prototype = {
       if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
         return resp;
       } else {
-        resp.result.fromDtm = '20190425000000';
-        resp.result.toDtm = '20190425235959';
-        console.log('check block');
         var today = new Date().getTime();
         var startTime = Tw.DateHelper.convDateFormat(resp.result.fromDtm).getTime();
         var endTime = Tw.DateHelper.convDateFormat(resp.result.toDtm).getTime();
