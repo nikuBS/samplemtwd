@@ -19,7 +19,7 @@ export default class MainMenuSettings extends TwViewController {
       pageInfo,
       isApp: BrowserHelper.isApp(req),
       isLogin: this.isLogin(svcInfo),
-      isRegularMember: !!svcInfo && parseInt(svcInfo.expsSvcCnt, 10) > 0,
+      // isRegularMember: !!svcInfo && parseInt(svcInfo.expsSvcCnt, 10) > 0,
       isTidLogin: !!svcInfo && svcInfo.loginType === 'T'
     });
   }
