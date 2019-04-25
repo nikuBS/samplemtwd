@@ -32,6 +32,8 @@ Tw.BenefitDisPgmInput.prototype = {
       };
       data.monthCode = { 'M0012': '12', 'M0024': '24' };
       $.extend(this._confirmOptions, data);
+    } else {
+      $(window).on('hashchange', $.proxy(this._onHashChange, this));
     }
     this._convConfirmOptions();
     this._bindEvent();
@@ -139,7 +141,6 @@ Tw.BenefitDisPgmInput.prototype = {
 
   },
 
-
   _closeAndGo: function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -150,6 +151,18 @@ Tw.BenefitDisPgmInput.prototype = {
   _closePop: function () {
     this._historyService.replaceURL('/product/callplan?prod_id='+this._prodId);
     this._popupService.closeAllAndGo('/product/callplan?prod_id='+this._prodId);
+  },
+
+  /**
+   * @function
+   * @desc hash 변경 시 호출
+   * @param {JSON} hash
+   */
+  _onHashChange: function () {
+    // join_confirm 팝업에서 back key로 이동시 강제로 back
+    if(location.hash === ''){
+      this._historyService.goBack();
+    }
   }
 };
 
