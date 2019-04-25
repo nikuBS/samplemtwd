@@ -36,6 +36,15 @@ class CommonMemberLoginRoute extends TwViewController {
       if ( query.error === '3541' || query.error === '3602' || query.error === '4503' ) {
         params.type = 'cancel';
         res.render('member/common.member.login.route.html', { params, svcInfo, pageInfo });
+      } else if ( query.error === '3111' ) {
+        // ID 찾기 클릭
+        res.redirect('/common/tid/find-id?target=' + params.target);
+      } else if ( query.error === '3112' ) {
+        // 비밀번호 찾기 클릭
+        res.redirect('/common/tid/change-pw?target=' + params.target);
+      } else if ( query.error === '3113' ) {
+        // 회원가입 클릭
+        res.redirect('/common/member/signup-guide');
       } else {
         res.redirect('/common/member/login/fail?errorCode=' + query.error_description);
       }

@@ -52,7 +52,8 @@ class CommonTidLogin extends TwViewController {
             '/common/member/login/route?target=' + target + '_type_' + type + '_state_' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
-          response_type: TID.RESP_TYPE
+          response_type: TID.RESP_TYPE,
+          internal_proc_yn: 'N'
         };
         const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
         this.logger.error(this, '[TID redirect]', url);
