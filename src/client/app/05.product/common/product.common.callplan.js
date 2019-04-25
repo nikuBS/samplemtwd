@@ -18,7 +18,7 @@
  * @param eParam - BPCP eParam
  */
 Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
-  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam) {
+  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam, loggedYn) {
   // 컨테이너 레이어 선언
   this.$container = rootEl;
 
@@ -45,6 +45,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._templateBtn = Handlebars.compile($('#fe-templ-btn').html());  // 버튼 영역 Handlebars
   this._templateSetting = Handlebars.compile($('#fe-templ-setting').html()); // 설정 정보 영역 Handlebars
   this._event = null;
+  this._loggedYn = loggedYn;
 
   // 설정 버튼 목록 컨버팅
   this._convertSettingBtnList();
@@ -943,6 +944,10 @@ Tw.ProductCommonCallplan.prototype = {
    * @desc 페이지 Back 으로 진입시 가입 여부를 체크한다.
    */
   _procJoinedCheck: function() {
+    if (this._loggedYn === 'N') {
+      return;
+    }
+
     var apiList = [
       {
         command: Tw.NODE_CMD.UPDATE_SVC,  // 세션 리로드

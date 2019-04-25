@@ -537,6 +537,7 @@ class ProductCommonCallplanPreview extends TwViewController {
           isProductCallplan: true,
           lineProcessCase: null,
           isAllowJoinCombine: false,
+          loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
           bpcpServiceId: '',
           eParam: ''
         }].reduce((a, b) => {
