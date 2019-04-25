@@ -189,9 +189,9 @@ Tw.ProductApps.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01', // hbs의 파일명
+        layer: true,
         btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
-        data: [{ list: list }],
-        layer: true
+        data: [{ list: list }]
       },
       $.proxy(this._handleOpenOrderPopup, this),
       undefined,
@@ -237,6 +237,7 @@ Tw.ProductApps.prototype = {
     if (!this.$switchBtn.attr('checked')) {
       this._toggleShowInstalled(false);
     }
+    this._popupService.close();
   },
 
   /**
