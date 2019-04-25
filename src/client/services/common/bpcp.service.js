@@ -20,9 +20,9 @@ Tw.BpcpService.prototype = {
    */
   _responseBPCP: function(resp) {
     // 로그인 필요 BFF0003
-    if (resp.code === 'BFF0003') {
-      return this._tidLanding.goLogin(this._pathUrl + (this._pathUrl.indexOf('?') === -1 ? '?' : '&') + 'bpcpServiceId=' + this._bpcpServiceId);
-    }
+    // if (resp.code === 'BFF0003') {
+    //   return this._tidLanding.goLogin(this._pathUrl + (this._pathUrl.indexOf('?') === -1 ? '?' : '&') + 'bpcpServiceId=' + this._bpcpServiceId);
+    // }
 
     // BPCP 차단 BFF0504
     if (resp.code === 'BFF0504') {
