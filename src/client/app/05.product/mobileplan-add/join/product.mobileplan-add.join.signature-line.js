@@ -54,15 +54,9 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
    * @desc Element 캐싱
    */
   _cachedElement: function() {
-    this.$lineList = this.$container.find('.fe-line_list');
-    this.$lineWrap = this.$container.find('.fe-line_wrap');
     this.$inputNumber = this.$container.find('.fe-num_input');
-
-    this.$btnAddNum = this.$container.find('.fe-btn_add_num');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
-
-    this._combinationTemplate = Handlebars.compile($('#fe-templ-line_item').html());
   },
 
   /**
@@ -70,67 +64,14 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
    * @desc 이벤트 바인딩
    */
   _bindEvent: function() {
-    this.$btnAddNum.on('click', $.proxy(this._addNum, this));
-    this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
-
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
 
     if (Tw.BrowserHelper.isIos()) {
       $(window).on('touchstart', Tw.InputHelper.iosBlurCheck);
-    }
-  },
-
-  /**
-   * @function
-   * @desc 회선번호 추가
-   * @returns {*|void}
-   */
-  _addNum: function() {
-    if (this.$inputNumber.val().length < 10) {
-      return;
-    }
-
-    var number = this.$inputNumber.val().replace(/-/gi, '');
-
-    if (this.$lineList.find('li').length > 3) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
-    }
-
-    if (!Tw.ValidationHelper.isCellPhone(number) || this._data.addList.indexOf(number) !== -1) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
-    }
-
-    this._data.addList.push(number);
-    this.$lineList.append(this._combinationTemplate({
-      number: number,
-      numMask: Tw.FormatHelper.conTelFormatWithDash(number)
-    }));
-
-    this._clearNum();
-    this._toggleSetupButton(true);
-    this.$lineWrap.show().attr('aria-hidden', 'false');
-  },
-
-  /**
-   * @function
-   * @desc 회선번호 삭제
-   * @param e - 삭제 버튼 클릭 이벤트
-   */
-  _delNum: function(e) {
-    var $item = $(e.currentTarget).parents('li');
-
-    this._data.addList.splice(this._data.addList.indexOf($item.data('num')), 1);
-
-    $item.remove();
-    if (this.$lineList.find('li').length < 1) {
-      this.$lineWrap.hide().attr('aria-hidden', 'true');
-      this._toggleSetupButton(false);
     }
   },
 
@@ -152,26 +93,8 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
 
-    if (this.$lineWrap.length < 1) {
-      return this._toggleSetupButton(this.$inputNumber.val().length > 0);
-    }
-
     this._toggleClearBtn();
-    this._toggleNumAddBtn();
-  },
-
-  /**
-   * @function
-   * @desc 회선번호 추가 버튼 토글
-   */
-  _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 9) {
-      this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
-      this.$btnAddNum.parent().removeClass('bt-gray1').addClass('bt-blue1');
-    } else {
-      this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
-      this.$btnAddNum.parent().removeClass('bt-blue1').addClass('bt-gray1');
-    }
+    this._toggleSetupButton(Tw.ValidationHelper.isCellPhone(this.$inputNumber.val()));
   },
 
   /**
@@ -210,7 +133,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide().attr('aria-hidden', 'true');
-    this._toggleNumAddBtn();
+    this._toggleSetupButton(false);
   },
 
   /**
@@ -253,13 +176,9 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
    * @returns {Array}
    */
   _getSvcNumList: function() {
-    var resultList = [];
-
-    this.$lineList.find('li').each(function(index, item) {
-      resultList.push(this._getServiceNumberFormat($(item).data('num')));
-    }.bind(this));
-
-    return resultList;
+    return [
+      this._getServiceNumberFormat(this.$inputNumber.val().replace(/-/gi, ''))
+    ];
   },
 
   /**
@@ -292,7 +211,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' 1' + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
       }]
     }), $.proxy(this._prodConfirmOk, this));
   },
