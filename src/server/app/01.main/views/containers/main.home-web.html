@@ -39,10 +39,10 @@
             <!-- //메인 배너 -->
 
             <!-- 로그인 정보 영역 -->
-            <div class="section-box">
-                <% if (svcType.login) { %>
-                <% if (svcInfo.totalSvcCnt === '0') { %>
+            <% if (svcType.login) { %>
+            <% if (svcInfo.totalSvcCnt === '0') { %>
                 <!-- 미가임 -->
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 가입하신 회선이 없습니다.</strong>
                     <p class="tx">SK텔레콤의 가족이 되어 다양하고 편리한 서비스를 이용해 보세요.</p>
@@ -50,8 +50,10 @@
                         <button type="button" class="btn-round1 btn-style4 fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/list">휴대폰 보러가기</button>
                     </div>
                 </div>
-                <% } else if ( svcInfo.expsSvcCnt === '0') { %>
+            </div>
+            <% } else if ( svcInfo.expsSvcCnt === '0') { %>
                 <!-- 미등록 -->
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 회선 등록이 필요합니다.</strong>
                     <p class="tx">아직 등록되지 않은 회선이 <%= svcInfo.totalSvcCnt %>개 있습니다.<br>원활한 서비스 이용을 위해서 적어도 1개의 회선은 등록하셔야 합니다.</p>
@@ -59,10 +61,12 @@
                         <a href="/common/member/line" type="button" class="btn-round1 btn-style1">회선 등록하기</a>
                     </div>
                 </div>
-                <% } else { %>
-                <% if (svcType.svcCategory === 'm') { %>
-                <% if (homeData.usageData) { %>
-                <% if (homeData.usageData.code === '00') { %>
+            </div>
+            <% } else { %>
+            <% if (svcType.svcCategory === 'm') { %>
+            <% if (homeData.usageData) { %>
+            <% if (homeData.usageData.code === '00') { %>
+            <div class="section-box">
                 <div class="member-info-box">
                     <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-155" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
@@ -178,96 +182,127 @@
                     </div>
                     <% } %>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0001') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0001') { %>
                 <!-- 조회횟수 제한 -->
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잠시 후 다시 이용해 주세요</strong>
                     <p class="tx">안정적으로 실시간 조회를 하실 수 있도록 조회 횟수를 제한하고 있습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0002') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0002') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">당월 혹은 전월에 기존 요금제로 재 변경한 이력이 있습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0003') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0003') { %>
                 <!-- 정지이력 -->
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0004') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0004') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0005') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0005') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">본인이 법정대리인으로 등록된 자녀 회선이 아닙니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0006') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0006') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">잔여량 조회에 실패하였습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BLN0007') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BLN0007') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                 </div>
-                <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0004') { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 서비스 점검 중 입니다.</strong>
-                    <p class="tx">잠시 후 다시 이용해 주세요</p>
+                    <p class="tx"><%= homeData.usageData.fallbackMsg %></p>
                     <p class="desc"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
                 </div>
-                <% } else { %>
+            </div>
+            <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0004') { %>
+            <div class="section-box">
+                <div class="member-non-box">
+                    <strong class="ti"><i class="icon-warning-120"></i> 서비스 점검 중 입니다.</strong>
+                    <p class="tx"><%= homeData.usageData.fallbackMsg %></p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="section-box">
                 <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
                 </div>
-                <% } %>
-                <% } %>
-                <% } %>
-                <% if (svcType.login && svcType.svcCategory === 's' ) { %>
-                <% if (homeData.billData && homeData.billData.showBill) { %>
-                    <% if(homeData.billData.isBroadband) { %>
-                    <!-- 브로드밴드 가입회선 -->
-                    <div class="member-info-box">
-                        <% if(svcInfo.svcAttrCd === 'S3') { %>
-                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
-                        <% } else { %>
-                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
-                        <% } %>
-                        <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
-                        <div class="t-none">SK브로드밴드에서 가입한<br>회선입니다.</div>
-                        <p class="desc">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
-                    </div>
+            </div>
+            <% } %>
+            <% } %>
+            <% } %>
+            <% if (svcType.login && svcType.svcCategory === 's' ) { %>
+            <% if (homeData.billData && homeData.billData.showBill) { %>
+            <% if(homeData.billData.isBroadband) { %>
+            <!-- 브로드밴드 가입회선 -->
+            <div class="section-box">
+                <div class="member-info-box">
+                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
                     <% } else { %>
-                    <div class="member-info-box">
-                        <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
-                        <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
-
-                        <button id="fe-bt-link-billguide" class="price">
-                            <% if (homeData.billData.type2) { %>
-                            <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금</strong>
-                            <% } else if (homeData.billData.type1) { %>
-                            <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
-                            <% } else { %>
-                            <strong class="ti"><%= homeData.billData.invMonth %>월 이용요금</strong>
-                            <% } %>
-
-                            <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
-                            <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
-                            <i class="icon-arrowmore-32"><span class="blind">more</span></i>
-                        </button>
-                        <% if (homeData.billData.type3) { %>
-                        <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
-                        <% } %>
-                    </div>
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <% } %>
-                <% } else { %>
-                <!-- 요금안내서가 없는경우 -->
+                    <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
+                    <div class="t-none">SK브로드밴드에서 가입한<br>회선입니다.</div>
+                    <p class="desc">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="section-box">
+                <div class="member-info-box">
+                    <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                    <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
+
+                    <button id="fe-bt-link-billguide" class="price">
+                        <% if (homeData.billData.type2) { %>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금</strong>
+                        <% } else if (homeData.billData.type1) { %>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
+                        <% } else { %>
+                        <strong class="ti"><%= homeData.billData.invMonth %>월 이용요금</strong>
+                        <% } %>
+
+                        <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
+                        <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
+                        <i class="icon-arrowmore-32"><span class="blind">more</span></i>
+                    </button>
+                    <% if (homeData.billData.type3) { %>
+                    <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+            <% } else { %>
+            <!-- 요금안내서가 없는경우 -->
+            <div class="section-box">
                 <div class="member-info-box">
                     <% if(svcInfo.svcAttrCd === 'S3') { %>
                     <button class="num fe-bt-line" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
@@ -277,10 +312,12 @@
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <div class="t-none">발행된 요금안내서가 없습니다.</div>
                 </div>
-                <% } %>
-                <% } %>
-                <% } %>
-                <% } else { %>
+            </div>
+            <% } %>
+            <% } %>
+            <% } %>
+            <% } else { %>
+            <div class="section-box">
                 <div class="member-info-box">
                     <strong class="ti">반갑습니다. 고객님</strong>
                     <span class="tx">로그인 후 고객님의 정보를 확인하세요.</span>
@@ -290,8 +327,8 @@
                     </div>
                     <p class="desc">아직 T world 회원이 아니시라면 <button class="bt fe-bt-signup" data-xt_eid="CMMA_A2_B6-146" data-xt_csid="NO" data-xt_action="BC">회원가입</button> 후 이용해 주세요</p>
                 </div>
-                <% } %>
             </div>
+            <% } %>
             <!-- //로그인 정보 영역 -->
 
             <div class="section-box nogaps-ver">

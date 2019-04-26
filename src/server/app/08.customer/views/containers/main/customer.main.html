@@ -184,7 +184,9 @@
                                         <li><button class="fe-survey-btn banner-bt" data-link="/customer/svc-info/researches?quiz=<%-item.bnnrRsrchId%>#research<%-item.bnnrRsrchId%>">설문 참여하기</button></li>
                                     <% } %>
                                     </ul>
+                                    <% if (item.custCntrSubmImgflPathNm) { %>
                                     <img src="<%=CDN%><%=item.custCntrSubmImgflPathNm%>" alt="<%=item.bnnrRsrchTitleNm%>" /> 
+                                    <% } %>
                                 </div>
                             </li>
                         <% }) %>

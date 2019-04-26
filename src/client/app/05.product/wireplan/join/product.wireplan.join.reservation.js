@@ -609,7 +609,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
    * @desc 기 결합 상품(가족) 목록 조회 API 요청
    */
   _getCurrentCombineList: function() {
-    if (this._isLoadCombineList) {
+    if (this._isLoadCombineList || !this._logged) {
       return;
     }
 

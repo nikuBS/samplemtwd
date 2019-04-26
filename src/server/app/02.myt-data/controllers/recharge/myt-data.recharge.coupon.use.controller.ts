@@ -107,7 +107,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       name = req.query.name;
       period = req.query.period;
       tab = req.query.tab;
-      isGift = req.query.gift === 'Y' ? true : false;
+      isGift = req.query.gift === 'Y';
     }
 
     this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
@@ -121,11 +121,13 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       this.getProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
       ([couponUsage, productSummary]) => {
-        if (!FormatHelper.isEmpty(couponUsage) && !FormatHelper.isEmpty(productSummary)) {
+        if (!FormatHelper.isEmpty(productSummary)) {
           const options = this.purifyCouponOptions(couponUsage, productSummary, svcInfo.prodId);
           res.render('recharge/myt-data.recharge.coupon-use.html', {
             no, name, period, tab, options, isGift, isAuto, pageInfo
           });
+        } else {
+          this.error.render(res, { svcInfo, pageInfo });
         }
       },
       (err) => {
@@ -146,6 +148,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         pageInfo: pageInfo,
         svcInfo
       });
+
       return null;
     });
   }

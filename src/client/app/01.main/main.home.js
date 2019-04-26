@@ -919,8 +919,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _parseBillData: function (billData) {
-    if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0007 ) {
-      return null;
+    if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0011 ) {
+      if ( billData.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        return null;
+      } else {
+        return null;
+      }
     } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
       return {
         showData: true,
@@ -1008,14 +1013,24 @@ Tw.MainHome.prototype = {
       invEndDt: Tw.DateHelper.getShortDate(new Date()),
       invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
-    if ( microResp.code === Tw.API_CODE.BFF_0006 || microResp.code === Tw.API_CODE.BFF_0007 ) {
-      apiBlock = true;
+    if ( microResp.code === Tw.API_CODE.BFF_0006 || microResp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( microResp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        apiBlock = true;
+      } else {
+        apiBlock = true;
+      }
     } else if ( microResp.code === Tw.API_CODE.CODE_00 ) {
       result.micro = Tw.FormatHelper.addComma(microResp.result.totalSumPrice);
     }
 
-    if ( contentsResp.code === Tw.API_CODE.BFF_0006 || contentsResp.code === Tw.API_CODE.BFF_0007 ) {
-      apiBlock = true;
+    if ( contentsResp.code === Tw.API_CODE.BFF_0006 || contentsResp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( contentsResp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        apiBlock = true;
+      } else {
+        apiBlock = true;
+      }
     } else if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
       result.contents = Tw.FormatHelper.addComma(contentsResp.result.invDtTotalAmtCharge);
     }
@@ -1053,8 +1068,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successGiftData: function (element, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
       //   this._drawGiftData(element, {
@@ -1165,8 +1185,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successGiftRemain: function (element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
       this._resetHeight();
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.giftRequestAgainYn === 'N' ) {
@@ -1264,7 +1289,7 @@ Tw.MainHome.prototype = {
     var $rechargeTemp = $('#fe-smart-recharge');
     var usageCode = $rechargeTemp.data('usagecode');
 
-    if ( usageCode === Tw.API_CODE.BFF_0006 || usageCode === Tw.API_CODE.BFF_0007 ) {
+    if ( usageCode === Tw.API_CODE.BFF_0006 || usageCode === Tw.API_CODE.BFF_0011 ) {
       element.hide();
       this._resetHeight();
     } else {
@@ -1283,8 +1308,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successRechargeData: function ($rechargeTemp, element, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
     } else {
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard(this._parseRechargeData(resp)));

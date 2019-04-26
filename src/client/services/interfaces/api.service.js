@@ -88,15 +88,8 @@ Tw.ApiService.prototype = {
       if ( /\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path) || /menu/.test(hash) ) {
         return resp;
       } else {
-        var today = new Date().getTime();
-        var startTime = Tw.DateHelper.convDateFormat(resp.result.fromDtm).getTime();
-        var endTime = Tw.DateHelper.convDateFormat(resp.result.toDtm).getTime();
-        if ( today > startTime && today < endTime ) {
-          blockUrl = resp.result.fallbackUrl || '/common/util/service-block';
-          this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
-        } else {
-          return resp;
-        }
+        blockUrl = resp.result.fallbackUrl || '/common/util/service-block';
+        this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
       }
     }
 
