@@ -905,9 +905,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
    * @desc 검색창 영역 포커스 관련 처리
    */
   _searchFocus: function () {
-    this.$container.find(':focus').blur();
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
+
     var $menu = $('#common-menu');
     if ($menu.hasClass('user-type')) {
       $menu.removeClass('user-type');
@@ -917,9 +917,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
 
     if (!this._menuSearchComponent) {
       this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container, $menu);
+    } else {
+      this._menuSearchComponent.focus();
     }
-
-    // this._menuSearchComponent.focus();
   },
 
   /**

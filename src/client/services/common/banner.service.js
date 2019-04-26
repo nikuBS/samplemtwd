@@ -122,7 +122,6 @@ Tw.BannerService.prototype = {
             pauseOnHover: true,
             pauseOnDotsHover: true,
             accessibility: false,
-            arrows: false,
             customPaging: function(slider, i) {
               if (i === 0) {
                 return $('<button />').attr(
@@ -147,7 +146,6 @@ Tw.BannerService.prototype = {
             lazyLoad: 'progressive',
             touchMove: false,
             accessibility: false,
-            arrows: false,
             customPaging: function(slider, i) {
               if (i === 0) {
                 return $('<button />').attr(

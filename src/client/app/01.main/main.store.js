@@ -18,12 +18,9 @@ Tw.MainStore = function (rootEl, menuId) {
   this._menuId = menuId;
 
   this._bindEventLanding();
+  this._setBanner();
 
-  if ( !Tw.Environment.init ) {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._setBanner, this));
-  } else {
-    this._setBanner();
-  }
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.MainStore.prototype = {
@@ -82,8 +79,7 @@ Tw.MainStore.prototype = {
    */
   _getTosStoreBanner: function () {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0004' })
-      .done($.proxy(this._successTosStoreBanner, this))
-      .fail($.proxy(this._failTosStoreBanner, this));
+      .done($.proxy(this._successTosStoreBanner, this));
   },
 
   /**
@@ -98,26 +94,12 @@ Tw.MainStore.prototype = {
 
   /**
    * @function
-   * @desc 토스 배너 응답 실패 처리
-   * @param error
-   * @private
-   */
-  _failTosStoreBanner: function (error) {
-    Tw.Logger.error(error);
-    // 홈화면에서 alert 제거
-    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
-    var adminList = [{ target: '4' }, { target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
-    this._getAdminBanner(adminList);
-  },
-
-  /**
-   * @function
    * @desc 토스 배너 렌더링
    * @param banners
    * @private
    */
   _drawBanner: function (banners) {
-    var adminList = [{ target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
+    var adminList = [];
     _.map(banners, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
         if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
@@ -172,8 +154,7 @@ Tw.MainStore.prototype = {
    */
   _getAdminBanner: function (adminList) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
-      .done($.proxy(this._successBanner, this, adminList))
-      .fail($.proxy(this._failBanner, this));
+      .done($.proxy(this._successBanner, this, adminList));
   },
 
   /**
@@ -203,35 +184,7 @@ Tw.MainStore.prototype = {
           // this._resetHeight();
         }
       }, this));
-
-      var directBanner = _.filter(resp.result.banners, function (banner) {
-        return banner.bnnrLocCd === 'S';
-      }).map(function (target) {
-        target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-        return target;
-      });
-
-      if ( directBanner.length > 0 ) {
-        var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
-        this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
-      } else {
-        this.$container.find('#fe-direct-banner').addClass('none');
-      }
     }
-    new Tw.XtractorService(this.$container);
-  },
-
-  /**
-   * @function
-   * @desc 어드민 배너 요청 실패 처리
-   * @param error
-   * @private
-   */
-  _failBanner: function (error) {
-    Tw.Logger.error(error);
-    // 홈화면에서 alert 제거
-    // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
-    new Tw.XtractorService(this.$container);
   },
 
   /**
