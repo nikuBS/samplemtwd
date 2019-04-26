@@ -122,7 +122,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       'serviceNumber3' : tempPhoneNum[2]
     };
     //정상적인 전화번호 아닐경우 얼럿 출력
-    if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+    if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)||parseInt(phoneObj.serviceNumber2.substring(0,phoneObj.serviceNumber2.length-2),10)===0){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE,evt);
       return;
     }
