@@ -176,6 +176,7 @@ Tw.BenefitDisPgmInput.prototype = {
    * @param e - A 하이퍼링크 클릭 이벤트
    */
   _closeAndGo: function (e) {
+    $(window).off('hashchange', $.proxy(this._onHashChange, this));
     e.preventDefault();
     e.stopPropagation();
 
@@ -194,9 +195,12 @@ Tw.BenefitDisPgmInput.prototype = {
    * @desc hash 변경 시 호출
    * @param {JSON} hash
    */
-  _onHashChange: function () {
+  _onHashChange: function (e) {
     // join_confirm 팝업에서 back key로 이동시 강제로 back
-    if(location.hash === ''){
+    if ( e.originalEvent.oldURL.endsWith('join_success_P') ) {
+      this._historyService.goBack();
+    }
+    else if ( location.hash === '') {
       this._historyService.goBack();
     }
   }
