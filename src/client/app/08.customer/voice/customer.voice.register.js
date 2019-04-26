@@ -49,7 +49,7 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$btn_register.on('click', $.proxy(this._onClickRegister, this)); // 신청하기 버튼 클릭 이벤트
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this)); // 이용동의 체크 박스 클릭 이벤트
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this)); // 회선정보 클릭이벤트
-    this.$container.on('click touchstart touchend', '[data-service-number]', $.proxy(this._onChoiceNumber, this)); // 회선정보 선택 액션시트 열렸을 때 이벤트 바인드 root 에 이벤트를 걸어 액션시트 열렸을 때 따로 콜백 함수에 이벤트 바인드를 하지 않음
+    this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this)); // 회선정보 선택 액션시트 열렸을 때 이벤트 바인드 root 에 이벤트를 걸어 액션시트 열렸을 때 따로 콜백 함수에 이벤트 바인드를 하지 않음
   },
 
   /**
