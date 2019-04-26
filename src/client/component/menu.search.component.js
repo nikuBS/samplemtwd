@@ -37,6 +37,7 @@ Tw.MenuSearchComponent.prototype = {
    * @desc 추천업무 리스트를 redis로 부터 조회
    */
   _init: function () {
+    this.$searchInput.focus();
     this._apiService.request(Tw.NODE_CMD.GET_MENU_RCMD, {})
       .then($.proxy(this._onMenuRcmd, this));
   },
