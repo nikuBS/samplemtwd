@@ -326,7 +326,7 @@
                                     <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                                 </div>
                             </div>
-                            <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
+                            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0004') { %>
                             <div class="main-chart-box">
                                 <em class="line">
                                     <button class="bt fe-bt-line fe-coach-line-target" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
@@ -337,12 +337,12 @@
                                 <div class="cont-box nogaps b-line-none">
                                     <div class="notice-point">
                                         <p class="t-np1">서비스 점검 중 입니다.</p>
-                                        <p class="t-np2">잠시 후 다시 이용해 주세요.</p>
+                                        <p class="t-np2"><%= homeData.usageData.fallbackMsg %></p>
                                         <p class="t-np3"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
                                     </div>
                                 </div>
                             </div>
-                            <% } else if (homeData.usageData.code === 'BFF0011' ) { %>
+                            <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0004' ) { %>
                             <div class="main-chart-box">
                                 <em class="line">
                                     <button class="bt fe-bt-line fe-coach-line-target" title="다회선일 경우에만 사용 가능합니다" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
@@ -357,6 +357,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <% } else if (homeData.usageData.code === 'BFF0006' && homeData.usageData.fallbackClCd === 'F0001') { %>
+                            <% } else if (homeData.usageData.code === 'BFF0011' && homeData.usageData.fallbackClCd === 'F0001') { %>
                             <% } else { %>
                             <div class="main-chart-box">
                                 <em class="line">
@@ -549,7 +551,7 @@
                                 </div>
                             </div>
                         </div>
-                        <% } else if (homeData.membershipData.code === 'BFF0011') { %>
+                        <% } else if (homeData.membershipData.code === 'BFF0006' || homeData.membershipData.code === 'BFF0011') { %>
                         <div class="section-box nogaps">
                             <div class="main-membershop-box">
                                 <button id="fe-membership-extend" class="membership-cont fe-bff0011" data-xt_eid="CMMA_A2_B6-7" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC">

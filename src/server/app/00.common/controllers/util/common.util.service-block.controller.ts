@@ -8,6 +8,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
 import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 /**
  * @desc 화면 차단 초기화를 위한 class
@@ -26,9 +27,10 @@ class CommonUtilServiceBlock extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+    const hideTime = FormatHelper.isEmpty(req.query.fromDtm) || req.query.fromDtm === 'undefined';
     const fromDtm = DateHelper.getShortDateAnd24Time(req.query.fromDtm);
     const toDtm = DateHelper.getShortDateAnd24Time(req.query.toDtm);
-    res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo });
+    res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo, hideTime });
 
   }
 }

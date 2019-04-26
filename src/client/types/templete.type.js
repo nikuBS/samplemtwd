@@ -1000,4 +1000,14 @@ Tw.LINE_RESITTER_TMPL =
   '{{/each}}';
 
 
-Tw.BANNER_DOT_TMPL = '{{index}} 선택됨'
+Tw.BANNER_DOT_TMPL = '{{index}} 선택됨';
+
+Tw.HOME_DIRECT_BANNER =
+  '{{#each list}}' +
+  '<li>' +
+  '<button class="bt fe-home-external" data-url="{{imgLinkUrl}}" title="새창" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+  '<span class="img"><img src="{{../cdn}}{{bnnrFilePathNm}}" alt=""></span>' +
+  '<strong class="ti">{{bnnrImgAltCtt}}</strong>' +
+  '</button>' +
+  '</li>' +
+  '{{/each}}';

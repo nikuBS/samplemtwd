@@ -54,7 +54,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
 
   this._initEmrNotice(emrNotice, isLogin === 'true');
   this._getQuickMenu(isLogin === 'true');
-  this._startLazyRendering();
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
@@ -63,8 +62,14 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
     this._initScroll();
     this._setCoachMark();
   }
-  new Tw.XtractorService(this.$container);
+  // new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
+
+  if( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._startLazyRendering, this));
+  } else {
+    this._startLazyRendering();
+  }
 
   // Still Don't know why. temporal fix for link issue.
   $('.help-list li a').on('click', $.proxy(this._onClickInternal, this));
@@ -919,8 +924,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _parseBillData: function (billData) {
-    if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0007 ) {
-      return null;
+    if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0011 ) {
+      if ( billData.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        return null;
+      } else {
+        return null;
+      }
     } else if ( billData.code === Tw.API_CODE.CODE_00 ) {
       return {
         showData: true,
@@ -1008,14 +1018,24 @@ Tw.MainHome.prototype = {
       invEndDt: Tw.DateHelper.getShortDate(new Date()),
       invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
-    if ( microResp.code === Tw.API_CODE.BFF_0006 || microResp.code === Tw.API_CODE.BFF_0007 ) {
-      apiBlock = true;
+    if ( microResp.code === Tw.API_CODE.BFF_0006 || microResp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( microResp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        apiBlock = true;
+      } else {
+        apiBlock = true;
+      }
     } else if ( microResp.code === Tw.API_CODE.CODE_00 ) {
       result.micro = Tw.FormatHelper.addComma(microResp.result.totalSumPrice);
     }
 
-    if ( contentsResp.code === Tw.API_CODE.BFF_0006 || contentsResp.code === Tw.API_CODE.BFF_0007 ) {
-      apiBlock = true;
+    if ( contentsResp.code === Tw.API_CODE.BFF_0006 || contentsResp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( contentsResp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        apiBlock = true;
+      } else {
+        apiBlock = true;
+      }
     } else if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
       result.contents = Tw.FormatHelper.addComma(contentsResp.result.invDtTotalAmtCharge);
     }
@@ -1053,8 +1073,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successGiftData: function (element, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
       // if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
       //   this._drawGiftData(element, {
@@ -1165,8 +1190,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successGiftRemain: function (element, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
       this._resetHeight();
     } else if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.giftRequestAgainYn === 'N' ) {
@@ -1264,7 +1294,7 @@ Tw.MainHome.prototype = {
     var $rechargeTemp = $('#fe-smart-recharge');
     var usageCode = $rechargeTemp.data('usagecode');
 
-    if ( usageCode === Tw.API_CODE.BFF_0006 || usageCode === Tw.API_CODE.BFF_0007 ) {
+    if ( usageCode === Tw.API_CODE.BFF_0006 || usageCode === Tw.API_CODE.BFF_0011 ) {
       element.hide();
       this._resetHeight();
     } else {
@@ -1283,8 +1313,13 @@ Tw.MainHome.prototype = {
    * @private
    */
   _successRechargeData: function ($rechargeTemp, element, resp) {
-    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0007 ) {
-      element.hide();
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
+      if ( resp.result.fallbackClCd === 'F0004' ) {
+        // 대체문구 추후적용
+        element.hide();
+      } else {
+        element.hide();
+      }
     } else {
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard(this._parseRechargeData(resp)));
@@ -1697,6 +1732,8 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    var adminList = [{ target: '1' }, { target: '2' }, { target: '3' }, { target: '7' }, { target: 'e' }, { target: 'f' }, { target: 'g' }];
+    this._getAdminBanner(adminList);
   },
 
   /**
@@ -1719,6 +1756,8 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    var adminList = [{ target: '5' }, { target: 'e' }, { target: 'f' }, { target: 'g' }];
+    this._getAdminBanner(adminList);
   },
 
   /**
@@ -1728,7 +1767,7 @@ Tw.MainHome.prototype = {
    * @private
    */
   _drawBanner: function (banners) {
-    var adminList = [];
+    var adminList = [{ target: 'e' }, { target: 'f' }, { target: 'g' }];
     _.map(banners, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
         if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
@@ -1817,7 +1856,22 @@ Tw.MainHome.prototype = {
           this._resetHeight();
         }
       }, this));
+
+      var directBanner = _.filter(resp.result.banners, function(banner) {
+        return banner.bnnrLocCd === 'S';
+      }).map(function (target) {
+        target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+        return target;
+      });
+
+      if ( directBanner.length > 0 ) {
+        var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
+        this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
+      } else {
+        this.$container.find('#fe-direct-banner').addClass('none');
+      }
     }
+    new Tw.XtractorService(this.$container);
   },
 
   /**
@@ -1830,6 +1884,7 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
+    new Tw.XtractorService(this.$container);
   },
 
   /**
