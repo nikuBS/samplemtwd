@@ -67,9 +67,11 @@
                                 <div class="tab-area new"><!-- 타입별 탭형태 변환 -->
                                     <div class="tab-linker">
                                         <ul role="tablist">
+                                            <% if (options && options.length > 0) { %>
                                             <li role="presentation" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1">
                                                 <a role="tab" href="#refill" class="fe-replace-history fe-tab" id="fe-tab-refill" aria-selected="<%= tab === 'refill' ? true : false %>">나에게 리필하기</a>
                                             </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <% } %>
                                             <% if (!isGift) { %>
                                             <li role="presentation" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
                                                 <a role="tab" href="#gift" class="fe-replace-history fe-tab" id="fe-tab-gift" aria-selected="<%= tab === 'gift' ? true : false %>">가족에게 선물하기</a>
@@ -80,6 +82,7 @@
                                     </div>
                                     <div class="tab-contents">
                                         <ul>
+                                            <% if (options && options.length > 0) { %>
                                             <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
                                                 <div class="cont-box nogaps">
                                                     <div class="list-comp-input">
@@ -109,6 +112,7 @@
                                                     </div>
                                                 </div>
                                             </li>
+                                            <% } %>
                                             <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                                 <div class="cont-box">
                                                     <p class="tabcon-title0 type01">받는 분 번호</p>
