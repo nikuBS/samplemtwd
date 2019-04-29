@@ -594,8 +594,26 @@ class MytDataSubmainController extends TwViewController {
         }
       } else {
         // error
+        const info = resp;
+        info['isBlock'] = 'N';
+        if ( resp.code === API_CODE.BFF_0006 ) {
+          if (resp.result.fromDtm) {
+            info['fromDate'] = DateHelper.getShortDateAnd24Time(resp.result.fromDtm);
+          }
+          if (resp.result.toDtm) {
+            info['toDate'] = DateHelper.getShortDateAnd24Time(resp.result.toDtm);
+          }
+        }
+        if (resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0011) {
+          info['fallbackClCd'] = resp.result.fallbackClCd;
+          info['fallbackUrl'] = resp.result.fallbackUrl;
+          info['fallbackMsg'] = resp.result.fallbackMsg;
+          if (info['fallbackClCd'] === 'F0001') {
+            info['isBlock'] = 'Y';
+          }
+        }
         return {
-          info: resp
+          info: info
         };
       }
     });
