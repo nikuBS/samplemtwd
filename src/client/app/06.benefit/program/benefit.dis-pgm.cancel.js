@@ -20,7 +20,10 @@ Tw.BenefitDisPgmCancel = function(rootEl, prodId, confirmOptions) {
 };
 
 Tw.BenefitDisPgmCancel.prototype = {
-
+  /**
+   * @function
+   * @desc 초기설정
+   */
   _init: function() {
     // NA00002079 (2년이상), NA00002082(3년이상), NA00002080(5년이상), NA00002081(10년이상), NA00002246(2년미만)
     switch ( this._prodId ) {
@@ -33,17 +36,28 @@ Tw.BenefitDisPgmCancel.prototype = {
         this._isTPlus = true;
         break;
     }
+    $(window).on('hashchange', $.proxy(this._onHashChange, this));
   },
-
+  /**
+   * @function
+   * @desc 바인드 이벤트
+   */
   _bindEvent: function() {
     // window 'env' 이벤트 발생시 페이지를 팝업으로 호출 - 상품 쪽과 동일
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
   },
-
+  /**
+   * @function
+   * @desc 정보확인 hbs GET
+   */
   _getJoinConfirmContext: function() {
     $.get(Tw.Environment.cdn + '/hbs/product_common_confirm.hbs', $.proxy(this._setConfirmBodyIntoContainer, this));
   },
-
+  /**
+   * @function
+   * @desc 공통 정보확인 hbs 데이터 컴파일
+   * @param context - hbs Context
+   */
   _setConfirmBodyIntoContainer: function(context) {
     var tmpl = Handlebars.compile(context),
         html = tmpl(this._confirmOptions);
@@ -51,7 +65,10 @@ Tw.BenefitDisPgmCancel.prototype = {
     this.$container.html(html);
     this._callConfirmCommonJs();
   },
-
+  /**
+   * @function
+   * @desc 정보확인 데이터 변환
+   */
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
       title: Tw.PRODUCT_TYPE_NM.TERMINATE,
@@ -70,7 +87,10 @@ Tw.BenefitDisPgmCancel.prototype = {
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1
     });
   },
-
+  /**
+   * @function
+   * @desc 공통 정보확인 컴포넌트 호출 (isPopup false)
+   */
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(
       false,
@@ -84,7 +104,10 @@ Tw.BenefitDisPgmCancel.prototype = {
       $.proxy(this._prodConfirmOk, this)
     );
   },
-
+  /**
+   * @function
+   * @desc 정보확인 콜백 시
+   */
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     if(this._isTPlus) {
@@ -96,7 +119,12 @@ Tw.BenefitDisPgmCancel.prototype = {
         .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
     }
   },
-
+  /**
+   * @function
+   * @desc 해지 API 응답 처리
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _procTerminateRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -106,7 +134,12 @@ Tw.BenefitDisPgmCancel.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
-
+  /**
+   * @function
+   * @desc 가입유도팝업 조회 API 응답 값
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
   _isVasTerm: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       this._isResultPop = true;
@@ -115,7 +148,10 @@ Tw.BenefitDisPgmCancel.prototype = {
 
     this._openVasTermPopup(resp.result);
   },
-
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
   _openSuccessPop: function() {
     if (!this._isResultPop) {
       return;
@@ -141,19 +177,32 @@ Tw.BenefitDisPgmCancel.prototype = {
       'terminate_success'
     );
   },
-
+  /**
+   * @function
+   * @desc 완료 팝업 이벤트 바인딩
+   * @param $popupContainer - 완료팝업 레이어
+   */
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.btn-floating.tw-popup-closeBtn', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
-
+  /**
+   * @function
+   * @desc 완료 팝업 내 A 하이퍼링크 핸들링
+   * @param e - A 하이퍼링크 클릭 이벤트
+   */
   _closeAndGo: function (e) {
     e.preventDefault();
     e.stopPropagation();
+    $(window).off('hashchange', $.proxy(this._onHashChange, this));
 
     this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
-
+  /**
+   * @function
+   * @desc 가입유도팝업 실행
+   * @param respResult - 가입유도팝업 API 응답 값
+   */
   _openVasTermPopup: function(respResult) {
     var popupOptions = {
       hbs: 'MV_01_02_02_01',
@@ -181,19 +230,40 @@ Tw.BenefitDisPgmCancel.prototype = {
     this._isResultPop = true;
     this._popupService.open(popupOptions, $.proxy(this._bindVasTermPopupEvent, this), $.proxy(this._openSuccessPop, this), 'vasterm_pop');
   },
-
+  /**
+   * @function
+   * @desc 가입유도팝업 이벤트 바인딩
+   * @param $popupContainer - 가입유도팝업 컨테이너 레이어
+   */
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
-
+  /**
+   * @function
+   * @desc 가입유도팝업 닫기 버튼 클릭 시
+   */
   _closeAndOpenResultPopup: function() {
     this._isResultPop = true;
     this._popupService.close();
   },
-
+  /**
+   * @function
+   * @desc 완료 팝업 내 닫기 버튼 클릭 시
+   */
   _closePop: function() {
     this._historyService.replaceURL('/product/callplan?prod_id='+this._prodId);
     this._popupService.closeAllAndGo('/product/callplan?prod_id='+this._prodId);
+  },
+  /**
+   * @function
+   * @desc hash 변경 시 호출
+   * @param {JSON} hash
+   */
+  _onHashChange: function (e) {
+    // join_confirm 팝업에서 back key로 이동시 강제로 back
+    if ( e.originalEvent.oldURL.endsWith('terminate_success_P') ) {
+      this._historyService.goBack();
+    }
   }
 };
