@@ -47,7 +47,7 @@ Tw.CommonMemberLineRegister.prototype = {
     this.$btMore = this.$container.find('#fe-bt-more');
     this.$lineList = this.$container.find('#fe-list-line');
 
-    this.$btnRegister.on('click', $.proxy(this._onClickRegister, this));
+    this.$btnRegister.on('click', _.debounce($.proxy(this._onClickRegister, this), 500));
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
     this.$allCheck.on('change', $.proxy(this._onClickAllCheck, this));
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
@@ -309,6 +309,7 @@ Tw.CommonMemberLineRegister.prototype = {
    * @private
    */
   _registerLineList: function (lineList, length, $target) {
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList }
     }).done($.proxy(this._successRegisterLineList, this, length, $target))
@@ -324,6 +325,7 @@ Tw.CommonMemberLineRegister.prototype = {
    * @private
    */
   _successRegisterLineList: function (registerLength, $target, resp) {
+    Tw.CommonHelper.endLoading('.popup-page');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
       this._marketingSvc = resp.result.offerSvcMgmtNum;
@@ -342,6 +344,7 @@ Tw.CommonMemberLineRegister.prototype = {
    * @private
    */
   _failRegisterLineList: function ($target, error) {
+    Tw.CommonHelper.endLoading('.popup-page');
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
