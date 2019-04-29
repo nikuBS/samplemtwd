@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div id="brand-benefit" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../common/views/components/header.component.html', { title: '혜택보기', svcInfo }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -31,7 +31,7 @@
                     <!--<button class="bt-like on" data-mylikecount="<%= data.aaaa %>"><%= data.totLikeCount %></button>-->
                     <h3 class="stit type01">혜택 정보</h3>
                     <h4 class="sstit">혜택</h4>
-                    <div class="benefit-list" style="display: none;"><%- data.coBenefitDtl %></div>
+                    <div class="benefit-list fe-brand-info" style="display: none;"><%- data.coBenefitDtl %></div>
                     <!--<ul class="benefit-list">-->
                     <!--<li>-->
                     <!--VIP고객-->
@@ -43,7 +43,7 @@
                     <!--</li>-->
                     <!--</ul>-->
                     <h4 class="sstit">유의사항</h4>
-                    <div class="benefit-list"><%- data.appCoUseInfo %></div>
+                    <div class="benefit-list fe-brand-info"><%- data.appCoUseInfo %></div>
                     <!--<ul class="benefit-list">-->
                     <!--<li>1일 1회 사용가능</li>-->
                     <!--<li>최소 구매금액 1천원 이상 시 할인 가능</li>-->
@@ -255,7 +255,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitBrandBenefit($('.container'), <%- JSON.stringify(data) %>);
+    new Tw.MembershipBenefitBrandBenefit($('#brand-benefit'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

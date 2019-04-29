@@ -85,6 +85,7 @@ class LoginService {
     res.clearCookie(COOKIE_KEY.XTLOGINID);
     res.clearCookie(COOKIE_KEY.XTLOGINTYPE);
     res.clearCookie(COOKIE_KEY.XTSVCGR);
+    res.clearCookie(COOKIE_KEY.XT_LOGIN_LOG);
   }
 
   private setXtractorCookie(req, res, svcInfo: any): any {
