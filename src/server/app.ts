@@ -40,8 +40,6 @@ import VERSION from './config/version.config';
 import Axios from 'axios';
 import { timer } from '../../node_modules/rxjs/observable/timer';
 
-module.exports = require('../../nodejs-exporter');
-
 const manifest = require('./manifest.json');
 
 class App {
