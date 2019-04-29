@@ -6,7 +6,7 @@ metadata:
     app: bff-nodejs-mobile
     version: '0.11'
 spec:
-  replicas: 22
+  replicas: 40
   strategy:
     type: RollingUpdate
     rollingUpdate:
