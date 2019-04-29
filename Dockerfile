@@ -21,6 +21,8 @@ RUN npm --verbose install -g gulp
 RUN pm2 install typescript
 
 COPY . .
+COPY nodejs-exporter.js ./
+COPY nodejs-exporter.js /home/appadmin
 RUN gulp build
 
 USER appadmin
