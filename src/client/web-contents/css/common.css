@@ -1573,8 +1573,6 @@ button {
   outline: 0;
   cursor: pointer; }
 
-button:focus {
-  outline: -webkit-focus-ring-color auto 5px; }
 
 button span,
 button:active span,
