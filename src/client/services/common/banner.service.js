@@ -221,7 +221,7 @@ Tw.BannerService.prototype = {
     var link = banner.imgLinkUrl;
 
     if (link) {
-      if (banner.isInternalLink) {
+      if (banner.isInternalLink || banner.openInCurrentTab) {
         window.location.href = link;
       } else {
         if (Tw.BrowserHelper.isApp() && banner.isBill) {
@@ -270,7 +270,8 @@ Tw.BannerService.prototype = {
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
-            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL
+            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
+            openInCurrentTab: banner.tosImgLinkTrgtClCd === Tw.TOS_BANNER_LINK_TARGET.CURRENT_TAB
           };
         })
         .value();
@@ -290,7 +291,8 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL
+            isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
+            openInCurrentTab: banner.linkTypCd === Tw.BANNER_LINK_TARGET.CURRENT_TAB
           };
 
           nBanners.push($.extend(banner, temp));

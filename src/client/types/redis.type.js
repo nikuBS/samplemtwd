@@ -7,6 +7,16 @@ Tw.TOS_BANNER_LINK_TYPE = {
   INTERNAL: '01'
 };
 
+Tw.BANNER_LINK_TARGET = {
+  CURRENT_TAB: 'S',
+  NEW_TAB: 'B'
+}
+
+Tw.TOS_BANNER_LINK_TARGET = {
+  CURRENT_TAB: '1',
+  NEW_TAB: '2'
+}
+
 Tw.NOTI_POPUP_TYPE = {
   NONE: '0',
   DAY: '7',
