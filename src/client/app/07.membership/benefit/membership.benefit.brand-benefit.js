@@ -224,9 +224,11 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     var $target = $(e.currentTarget);
     var url = $target.attr('href');
 
-    if (this._brandCd === '2012000026') {
+    if (this._brandCd === '2012000026' || this._brandCd === '2012003084') {
       // [DV001-21674] T membership Car life 내 out link 지원 기능 개발
-      Tw.CommonHelper.openUrlExternal(url);
+      Tw.CommonHelper.showDataCharge($.proxy(function(){
+        Tw.CommonHelper.openUrlExternal(url);
+      },this));
     } else {
       // [DV001-14557] 컨텐츠 내 url이 T맴버십의 url이라 T맴버십 앱(url)으로 이동 하도록 링크를 변경
       Tw.Popup.openModalTypeATwoButton(
