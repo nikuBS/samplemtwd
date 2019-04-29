@@ -43,7 +43,7 @@ class ProductMobileplanSetting5gxStandardPromotion extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0177, {}, {})
+    this.apiService.request(API_CMD.BFF_10_0177, {}, {}, [prodId])
       .subscribe((settingInfo) => {
         if (settingInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
