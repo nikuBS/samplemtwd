@@ -23,17 +23,13 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
     $('.benefit-list').eq(0).show();
   }*/
 
-  // DV001-14557 이슈로
-  // 컨텐츠 내 url이 T맴버십의 url이라 T맴버십 앱(url)으로 이동 하도록 링크를 변경
-  $('.benefit-list').eq(0).find('a').each(this._goTmbrshpApp);
-  $('.benefit-list').eq(1).find('a').each(this._goTmbrshpApp);
-
   this.$container = rootEl;
   this._options = options;
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._brandCd = Tw.UrlHelper.getQueryParams().brandCd;
 
   this._registHbsHelper();
   this._cacheElements();
@@ -67,6 +63,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this.$container.on('click', '.brand-logo-list .bt-logo', $.proxy(this._goBrandView, this));
     this.$container.on('click', '#frchs-bt-all', $.proxy(this._goFrchAllView, this));
     this.$container.on('click', '.fe-btn-location', $.proxy(this._onclickGpsBtn, this));
+    this.$container.on('click', '.fe-brand-info a', $.proxy(this._onClickBrandInfoLink, this));
   },
 
   _registHbsHelper: function(){
@@ -219,28 +216,31 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   },
 
   /**
-   * T맴버십 앱(url)으로 이동 하도록 링크를 변경
-   * @private
+   * @function
+   * @desc 제휴브랜드 혜택 정보 링크 선택
+   * @param {Object} e - 이벤트 객체
    */
-  _goTmbrshpApp: function(){
-    var url = $(this).attr('href');
-    $(this).attr('target', '_blank');
-    $(this).on('click', function(){
+  _onClickBrandInfoLink: function(e){
+    var $target = $(e.currentTarget);
+    var url = $target.attr('href');
 
+    if (this._brandCd === '2012000026') {
+      // [DV001-21674] T membership Car life 내 out link 지원 기능 개발
+      Tw.CommonHelper.openUrlExternal(url);
+    } else {
+      // [DV001-14557] 컨텐츠 내 url이 T맴버십의 url이라 T맴버십 앱(url)으로 이동 하도록 링크를 변경
       Tw.Popup.openModalTypeATwoButton(
         Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_TIT,
         Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_MSG,
         Tw.BUTTON_LABEL.CONFIRM,
         Tw.BUTTON_LABEL.CANCEL,
-        undefined,
-        function(){
-          Tw.Popup.close();
-          Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_URL + url);
-        }
+        null,
+        $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_URL + url),
+        null, null, $target
       );
+    }
 
-      return false;
-    });
+    return false;
   },
 
 
