@@ -4,48 +4,78 @@
  * @since 2018.10.11
  */
 
+ /**
+  * @class
+  * @desc 나의 부가서비스
+  */
 Tw.MyTJoinMyPlanAdd = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._bpcpService = Tw.Bpcp;
   this._bpcpService.setData(this.$container, '/myt-join/additions');
 
-  this.cachedElement();
-  this.bindEvent();
-  this.init();
+  this._cachedElement();
+  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTJoinMyPlanAdd.prototype = {
-  init: function() {  
+  /**
+   * @desc 초기화
+   * @private
+   */
+  _init: function() {  
     this._totalCount = Number(this.$container.find('span.counts > em').text()); // 가입 부가서비스 총 갯수 저장
     this._getSvcInfo();
   },
 
-  bindEvent: function() {
+  /**
+   * @desc 이벤트 바인딩
+   * @private
+   */
+  _bindEvent: function() {
     this.$all.on('click', $.proxy(this._handleShowAllAdditions, this));  // 전체 보기 버튼 클릭 시
     this.$pay.on('click', $.proxy(this._handleShowPayAdditions, this));  // 유료만 보기 버튼 클릭 시
     this.$container.on('click', '.fe-btn-link',  $.proxy(this._handleClickLink, this));  // 부가서비스 버튼 클릭시
   },
 
-  cachedElement: function() { // jquery 객체 저장
+  /**
+   * @desc jquery element 저장
+   * @private
+   */
+  _cachedElement: function() { // jquery 객체 저장
     this.$list = this.$container.find('ul.list-comp-lineinfo');
     this.$empty = this.$container.find('.contents-empty');
     this.$all = this.$container.find('#fe-all-btn');
     this.$pay = this.$container.find('#fe-pay-btn');
   },
 
+  /**
+   * @desc node로 부터 service info 가져옴
+   * @private
+   */
   _getSvcInfo: function() {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successGetSvcInfo, this));
   },
 
+  /**
+   * @desc service info 저장
+   * @param {object} resp 
+   * @private
+   */
   _successGetSvcInfo: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       this._svcInfo = resp.result;
     }
   },
 
-  _handleShowAllAdditions: function(e) {  // 전체 보기 버튼 클릭 시
+  /**
+   * @desc 전체 보기 버튼 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
+  _handleShowAllAdditions: function(e) {  
     if (this._totalCount === 0 || this.$all.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
       return;
     }
@@ -63,7 +93,12 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     this.$container.find('span.counts > em').text(this._totalCount);  // 가입 부가 서비스 카운트 변경
   },
 
-  _handleShowPayAdditions: function(e) {  // 유료만 보기 버튼 클릭 시
+  /**
+   * @desc 유료만 보기 버튼 클릭 시
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
+  _handleShowPayAdditions: function(e) {  
     if (this._totalCount === 0 || this.$pay.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
       return;
     }
@@ -84,6 +119,11 @@ Tw.MyTJoinMyPlanAdd.prototype = {
     this.$container.find('span.counts > em').text(this._totalCount - additions.length); // 가입된 유료 부가서비스 갯수 표시
   },
 
+  /**
+   * @desc 링크 클릭시
+   * @param {Event} e 클릭 이벤트 객체
+   * @private
+   */
   _handleClickLink: function(e) {
     var link = e.currentTarget.getAttribute('data-url'), 
       prodId = e.currentTarget.getAttribute('data-prod-id');

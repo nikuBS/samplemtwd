@@ -8,56 +8,74 @@
 
 <% if (data.svcInfo.svcAttrCd === 'M1') { %>
 <!-- Phone -->
-    <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
-    <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant && data.remnant.info) { %>
-            <% if (data.remnant.info.code === 'BLN0001') { %>
-            <div class="notice-point">
-                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
-                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0002') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0003') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0005') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0006') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2"><%= data.remnant.info.code %></p>
-                <p class="t-np3"><%= data.remnant.info.msg %></p>
-            </div>
+    <% if (data.remnant && data.remnant.info) { %>
+        <% if (data.remnant.info.code === 'BFF0006' || data.remnant.info.code === 'BFF0011') { %>
+            <% if (data.remnant.info.isBlock === 'N') {
+                var msg = (data.remnant.info.fallbackClCd === 'F0004') ? data.remnant.info.fallbackMsg : data.remnant.info.msg;
+            %>
+                <div class="cont-box pt0">
+                    <div class="notice-point">
+                        <p class="t-np1">서비스 점검 중 입니다.</p>
+                        <p class="t-np2"><%= msg %></p>
+                        <% if (data.remnant.info.fromDate && data.remnant.info.toDate) { %>
+                        <p class="t-np3"><%= data.remnant.info.fromDate %> ~ <%= data.remnant.info.toDate %></p>
+                        <% } %>
+                    </div>
+                </div>
             <% } %>
         <% } else { %>
-            <% if (data.isDataShow) { %>
-            <% var totalData = data.remnantData.total; %>
+            <div class="cont-box pt0">
+                <% if (data.remnant.info.code === 'BLN0001') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                    <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                    <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0002') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0003') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0005') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0006') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2"><%= data.remnant.info.code %></p>
+                    <p class="t-np3"><%= data.remnant.info.msg %></p>
+                </div>
+                <% } %>
+            </div>
+        <% } %>
+    <% } else { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <div class="cont-box pt0" data-id="remnant-container">
+        <% if (data.isDataShow) { %>
+        <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
                 <li>
                     <!-- 2019.02.10 링크 영역 확대 -->
@@ -106,98 +124,98 @@
                     <!-- //접근성 수정-->
                 </li>
             </ul>
-            <% } else if (data.isVoiceShow || data.isSmsShow) { %>
+        <% } else if (data.isVoiceShow || data.isSmsShow) { %>
             <ul class="date-graph-list">
-                    <% if (data.isVoiceShow) { %>
-                    <% var rvoice = data.remnantData.voice[0]; %>
-                    <li>
-                        <!-- 2019.02.10 링크 영역 확대 -->
-                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2">
-                        <div class="left">
-                            <!-- .donut-chart.small -->
-                            <div class="donut-chart small">
-                                <div class="donut-chart-area">
-                                    <!-- loop -->
-                                    <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                                        <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                            <div class="slice">
-                                                <div class="bar"></div>
-                                                <div class="fill"></div>
-                                            </div>
+                <% if (data.isVoiceShow) { %>
+                <% var rvoice = data.remnantData.voice[0]; %>
+                <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2">
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
                                         </div>
                                     </div>
-                                    <!-- // loop -->
                                 </div>
-                            </div>
-                            <!-- // .donut-chart.small -->
-                        </div>
-                        <div class="cont">
-                            <span class="txt1" id="aria-comp-bt2"><%= rvoice.skipNm %></span>
-                            <div class="date">
-                            <span class="remain">
-                                <strong>
-                                    <% if (rvoice.isUnlimit) { %>
-                                        무제한 </strong>
-                                    <% } else { %>
-                                        <% if (rvoice.showRemained.hours > 0 ) { %>
-                                        <%= rvoice.showRemained.hours %>시간
-                                        <% } %>
-                                        <%= rvoice.showRemained.min %>분</strong>남음
-                                    <% } %>
-                            </span>
+                                <!-- // loop -->
                             </div>
                         </div>
-                        </a>
-                        <!-- //접근성 수정-->
-                    </li>
-                    <% } %>
-                    <% if (data.isSmsShow) { %>
-                    <% var rsms = data.remnantData.sms[0]; %>
-                    <li>
-                        <!-- 2019.02.10 링크 영역 확대 -->
-                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3">
-                        <div class="left">
-                            <!-- .donut-chart.small -->
-                            <div class="donut-chart small">
-                                <div class="donut-chart-area">
-                                    <!-- loop -->
-                                    <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                                        <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                            <div class="slice">
-                                                <div class="bar"></div>
-                                                <div class="fill"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- // loop -->
-                                </div>
-                            </div>
-                            <!-- // .donut-chart.small -->
-                        </div>
-                        <div class="cont">
-                            <span class="txt1" id="aria-comp-bt3"><%= rsms.skipNm %></span>
-                            <div class="date">
-                            <span class="remain">
-                                <strong>
-                                <% if (rsms.isUnlimit) { %>
-                                    <% if(rsms.total === '기본제공') { %>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1" id="aria-comp-bt2"><%= rvoice.skipNm %></span>
+                        <div class="date">
+                        <span class="remain">
+                            <strong>
+                                <% if (rvoice.isUnlimit) { %>
                                     무제한 </strong>
-                                    <% } else { %>
-                                    <%= rsms.total %>건 </strong>남음
-                                    <% } %>
                                 <% } else { %>
-                                    <%= rsms.showRemained %>건 </strong> 남음
+                                    <% if (rvoice.showRemained.hours > 0 ) { %>
+                                    <%= rvoice.showRemained.hours %>시간
+                                    <% } %>
+                                    <%= rvoice.showRemained.min %>분</strong>남음
                                 <% } %>
-                            </span>
+                        </span>
+                        </div>
+                    </div>
+                    </a>
+                    <!-- //접근성 수정-->
+                </li>
+                <% } %>
+                <% if (data.isSmsShow) { %>
+                <% var rsms = data.remnantData.sms[0]; %>
+                <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3">
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- // loop -->
                             </div>
                         </div>
-                        </a>
-                        <!-- //접근성 수정-->
-                    </li>
-                    <% } %>
-                </ul>
-            <% } else if (data.isSpDataShow) { %>
-            <% var sdata = data.remnantData.sdata[0]; %>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1" id="aria-comp-bt3"><%= rsms.skipNm %></span>
+                        <div class="date">
+                        <span class="remain">
+                            <strong>
+                            <% if (rsms.isUnlimit) { %>
+                                <% if(rsms.total === '기본제공') { %>
+                                무제한 </strong>
+                                <% } else { %>
+                                <%= rsms.total %>건 </strong>남음
+                                <% } %>
+                            <% } else { %>
+                                <%= rsms.showRemained %>건 </strong> 남음
+                            <% } %>
+                        </span>
+                        </div>
+                    </div>
+                    </a>
+                    <!-- //접근성 수정-->
+                </li>
+                <% } %>
+            </ul>
+        <% } else if (data.isSpDataShow) { %>
+        <% var sdata = data.remnantData.sdata[0]; %>
             <ul class="date-graph-list b-line">
                 <li>
                     <!-- 2019.02.10 링크 영역 확대 -->
@@ -242,7 +260,7 @@
                     <!-- //접근성 수정-->
                 </li>
             </ul>
-            <% } %>
+        <% } %>
             <div class="user-month-bill mt16">
                 <div class="detail-bill type1">
                     <ul>
@@ -287,169 +305,188 @@
                     </ul>
                 </div>
             </div>
-        <% } %>
-        <% var twoItem = data.immCharge && data.present; %>
-        <% if(data.immCharge || data.present) { %>
-        <ul class="bt-slice <%= twoItem? 'item-two': 'solid' %> mt20">
-            <% if(data.immCharge) { %>
-            <li data-id="immCharge">
-                <button class="btn-round1 btn-style1">즉시 충전</button>
-            </li>
-            <% } %>
-            <% if(data.present) { %>
-            <li data-id="present">
-                <button class="btn-round1 btn-style1">T끼리 데이터 선물</button>
-            </li>
-            <% } %>
-        </ul>
-        <% } %>
-    </div>
-    <% if (data.isDataShow) { %>
-        <% if (data.isVoiceShow || data.isSmsShow) { %>
-        <hr class="cont-sp type1" aria-hidden="true"/>
-        <div class="cont-box nogaps-hoz">
-            <ul class="date-graph-list">
-                <% if (data.isVoiceShow && data.voiceItemToShow) { %>
-                <% var rvoice = data.voiceItemToShow; %>
-                <li>
-                    <!-- 2019.02.10 링크 영역 확대 -->
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
-                    <div class="left">
-                        <!-- .donut-chart.small -->
-                        <div class="donut-chart small">
-                            <div class="donut-chart-area">
-                                <!-- loop -->
-                                <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // loop -->
-                            </div>
-                        </div>
-                        <!-- // .donut-chart.small -->
-                    </div>
-                    <div class="cont">
-                        <span class="txt1" id="aria-comp-bt4"><%= rvoice.skipNm %></span>
-                        <div class="date">
-                            <span class="remain">
-                                <strong>
-                                    <% if (rvoice.isUnlimit) { %>
-                                        무제한 </strong>
-                                    <% } else { %>
-                                        <% if (rvoice.showRemained.hours > 0 ) { %>
-                                        <%= rvoice.showRemained.hours %>시간
-                                        <% } %>
-                                        <%= rvoice.showRemained.min %>분</strong>남음
-                                    <% } %>
-                            </span>
-                        </div>
-                    </div>
-                    </a>
-                    <!-- //접근성 수정-->
+
+            <% var twoItem = data.immCharge && data.present; %>
+            <% if(data.immCharge || data.present) { %>
+            <ul class="bt-slice <%= twoItem? 'item-two': 'solid' %> pt20">
+                <% if(data.immCharge) { %>
+                <li data-id="immCharge">
+                    <button class="btn-round1 btn-style1">즉시 충전</button>
                 </li>
                 <% } %>
-                <% if (data.isSmsShow) { %>
-                <% var rsms = data.remnantData.sms[0]; %>
-                <li>
-                    <!-- 2019.02.10 링크 영역 확대 -->
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt5">
-                    <div class="left">
-                        <!-- .donut-chart.small -->
-                        <div class="donut-chart small">
-                            <div class="donut-chart-area">
-                                <!-- loop -->
-                                <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                                    <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // loop -->
-                            </div>
-                        </div>
-                        <!-- // .donut-chart.small -->
-                    </div>
-                    <div class="cont">
-                        <span class="txt1" id="aria-comp-bt5"><%= rsms.skipNm %></span>
-                        <div class="date">
-                            <span class="remain">
-                                <strong>
-                                <% if (rsms.isUnlimit) { %>
-                                    <% if(rsms.total === '기본제공') { %>
-                                    무제한 </strong>
-                                    <% } else { %>
-                                    <%= rsms.total %>건 </strong>남음
-                                    <% } %>
-                                <% } else { %>
-                                    <%= rsms.showRemained %>건 </strong>남음
-                                <% } %>
-                            </span>
-                        </div>
-                    </div>
-                    </a>
-                    <!-- //접근성 수정-->
+                <% if(data.present) { %>
+                <li data-id="present">
+                    <button class="btn-round1 btn-style1">T끼리 데이터 선물</button>
                 </li>
                 <% } %>
             </ul>
+            <% } %>
         </div>
+        <% if (data.isDataShow) { %>
+            <% if (data.isVoiceShow || data.isSmsShow) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-hoz">
+                <ul class="date-graph-list">
+                    <% if (data.isVoiceShow && data.voiceItemToShow) { %>
+                    <% var rvoice = data.voiceItemToShow; %>
+                    <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
+                        </div>
+                        <div class="cont">
+                            <span class="txt1" id="aria-comp-bt4"><%= rvoice.skipNm %></span>
+                            <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                        <% if (rvoice.isUnlimit) { %>
+                                            무제한 </strong>
+                                        <% } else { %>
+                                            <% if (rvoice.showRemained.hours > 0 ) { %>
+                                            <%= rvoice.showRemained.hours %>시간
+                                            <% } %>
+                                            <%= rvoice.showRemained.min %>분</strong>남음
+                                        <% } %>
+                                </span>
+                            </div>
+                        </div>
+                        </a>
+                        <!-- //접근성 수정-->
+                    </li>
+                    <% } %>
+                    <% if (data.isSmsShow) { %>
+                    <% var rsms = data.remnantData.sms[0]; %>
+                    <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt5">
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
+                        </div>
+                        <div class="cont">
+                            <span class="txt1" id="aria-comp-bt5"><%= rsms.skipNm %></span>
+                            <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                    <% if (rsms.isUnlimit) { %>
+                                        <% if(rsms.total === '기본제공') { %>
+                                        무제한 </strong>
+                                        <% } else { %>
+                                        <%= rsms.total %>건 </strong>남음
+                                        <% } %>
+                                    <% } else { %>
+                                        <%= rsms.showRemained %>건 </strong>남음
+                                    <% } %>
+                                </span>
+                            </div>
+                        </div>
+                        </a>
+                        <!-- //접근성 수정-->
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <% } %>
         <% } %>
     <% } %>
 <!-- Phone -->
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
-    <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- PPS -->
-    <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant && data.remnant.info) { %>
-            <% if (data.remnant.info.code === 'BLN0001') { %>
-            <div class="notice-point">
-                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
-                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0002') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0003') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0005') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0006') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
-                <p class="t-np3"></p>
-            </div>
-            <% } else { %>
-            <div class="notice-point">
-                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-                <p class="t-np2"><%= data.remnant.info.code %></p>
-                <p class="t-np3"><%= data.remnant.info.msg %></p>
+    <% if (data.remnant && data.remnant.info) { %>
+        <% if (data.remnant.info.code === 'BFF0006' || data.remnant.info.code === 'BFF0011') { %>
+            <% if (data.remnant.info.isBlock === 'N') {
+                var msg = (data.remnant.info.fallbackClCd === 'F0004') ? data.remnant.info.fallbackMsg : data.remnant.info.msg;
+            %>
+            <div class="cont-box pt0">
+                <div class="notice-point">
+                    <p class="t-np1">서비스 점검 중 입니다.</p>
+                    <p class="t-np2"><%= msg %></p>
+                    <% if (data.remnant.info.fromDate && data.remnant.info.toDate) { %>
+                    <p class="t-np3"><%= data.remnant.info.fromDate %> ~ <%= data.remnant.info.toDate %></p>
+                    <% } %>
+                </div>
             </div>
             <% } %>
         <% } else { %>
+            <div class="cont-box pt0">
+                <% if (data.remnant.info.code === 'BLN0001') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                    <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                    <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0002') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0003') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0005') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0006') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
+                    <p class="t-np3"></p>
+                </div>
+                <% } else { %>
+                <div class="notice-point">
+                    <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                    <p class="t-np2"><%= data.remnant.info.code %></p>
+                    <p class="t-np3"><%= data.remnant.info.msg %></p>
+                </div>
+                <% } %>
+            </div>
+        <% } %>
+    <% } else { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <div class="cont-box pt0" data-id="remnant-container">
             <% if (data.isDataShow) { %>
             <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
@@ -657,115 +694,129 @@
                 </div>
             </div>
             <% } %>
-        <% } %>
-        <ul class="bt-slice solid mt20">
-            <li data-id="immCharge">
-                <button class="btn-round1 btn-style1">선불폰 충전</button>
-            </li>
-        </ul>
-    </div>
-<% if (data.isDataShow) { %>
-    <% if (data.isVoiceShow || data.isSmsShow) { %>
-    <hr class="cont-sp type1" aria-hidden="true"/>
-    <div class="cont-box nogaps-hoz">
-        <ul class="date-graph-list">
-            <% if (data.isVoiceShow) { %>
-            <% var rvoice = data.remnantData.voice[0]; %>
-            <li>
-                <!-- 2019.02.10 링크 영역 확대 -->
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt10">
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+            <ul class="bt-slice solid mt20">
+                <li data-id="immCharge">
+                    <button class="btn-round1 btn-style1">선불폰 충전</button>
+                </li>
+            </ul>
+        </div>
+        <% if (data.isDataShow) { %>
+            <% if (data.isVoiceShow || data.isSmsShow) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-hoz">
+                <ul class="date-graph-list">
+                    <% if (data.isVoiceShow) { %>
+                    <% var rvoice = data.remnantData.voice[0]; %>
+                    <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt10">
+                            <div class="left">
+                                <!-- .donut-chart.small -->
+                                <div class="donut-chart small">
+                                    <div class="donut-chart-area">
+                                        <!-- loop -->
+                                        <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                            <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
                                     </div>
                                 </div>
+                                <!-- // .donut-chart.small -->
                             </div>
-                            <!-- // loop -->
-                        </div>
-                    </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1" id="aria-comp-bt10"><%= rvoice.skipNm %></span>
-                    <div class="date">
-                        <span class="remain">
-                            <strong>
-                                <% if (rvoice.isUnlimit) { %>
-                                    무제한 </strong>
-                                <% } else { %>
-                                    <% if (rvoice.showRemained.hours > 0 ) { %>
-                                    <%= rvoice.showRemained.hours %>시간
-                                    <% } %>
-                                    <%= rvoice.showRemained.min %>분</strong>남음
-                                <% } %>
-                        </span>
-                    </div>
-                </div>
-                </a>
-                <!-- //접근성 수정-->
-            </li>
-            <% } %>
-            <% if (data.isSmsShow) { %>
-            <% var rsms = data.remnantData.sms[0]; %>
-            <li>
-                <!-- 2019.02.10 링크 영역 확대 -->
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt11">
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
-                                    </div>
+                            <div class="cont">
+                                <span class="txt1" id="aria-comp-bt10"><%= rvoice.skipNm %></span>
+                                <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                        <% if (rvoice.isUnlimit) { %>
+                                            무제한 </strong>
+                                        <% } else { %>
+                                            <% if (rvoice.showRemained.hours > 0 ) { %>
+                                            <%= rvoice.showRemained.hours %>시간
+                                            <% } %>
+                                            <%= rvoice.showRemained.min %>분</strong>남음
+                                        <% } %>
+                                </span>
                                 </div>
                             </div>
-                            <!-- // loop -->
-                        </div>
-                    </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1" id="aria-comp-bt11"><%= rsms.skipNm %></span>
-                    <div class="date">
-                        <span class="remain">
-                            <strong>
-                            <% if (rsms.isUnlimit) { %>
-                                <% if(rsms.total === '기본제공') { %>
-                                    무제한 </strong>
+                        </a>
+                        <!-- //접근성 수정-->
+                    </li>
+                    <% } %>
+                    <% if (data.isSmsShow) { %>
+                    <% var rsms = data.remnantData.sms[0]; %>
+                    <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt11">
+                            <div class="left">
+                                <!-- .donut-chart.small -->
+                                <div class="donut-chart small">
+                                    <div class="donut-chart-area">
+                                        <!-- loop -->
+                                        <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                            <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                                <div class="slice">
+                                                    <div class="bar"></div>
+                                                    <div class="fill"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- // loop -->
+                                    </div>
+                                </div>
+                                <!-- // .donut-chart.small -->
+                            </div>
+                            <div class="cont">
+                                <span class="txt1" id="aria-comp-bt11"><%= rsms.skipNm %></span>
+                                <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                    <% if (rsms.isUnlimit) { %>
+                                        <% if(rsms.total === '기본제공') { %>
+                                            무제한 </strong>
+                                            <% } else { %>
+                                            <%= rsms.total %>건 </strong>남음
+                                            <% } %>
                                     <% } else { %>
-                                    <%= rsms.total %>건 </strong>남음
+                                        <%= rsms.showRemained %>건 </strong>남음
                                     <% } %>
-                            <% } else { %>
-                                <%= rsms.showRemained %>건 </strong>남음
-                            <% } %>
-                        </span>
-                    </div>
-                </div>
-                </a>
-                <!-- //접근성 수정-->
-            </li>
+                                </span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- //접근성 수정-->
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
             <% } %>
-        </ul>
-    </div>
+        <% } %>
     <% } %>
-<% } %>
 <!-- PPS -->
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
-    <hr class="cont-sp type1" aria-hidden="true"/>
     <!-- T-PocketFi & T-Login -->
-    <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant && data.remnant.info) { %>
+    <% if (data.remnant && data.remnant.info) { %>
+        <% if (data.remnant.info.code === 'BFF0006' || data.remnant.info.code === 'BFF0011') { %>
+            <% if (data.remnant.info.isBlock === 'N') {
+                var msg = (data.remnant.info.fallbackClCd === 'F0004') ? data.remnant.info.fallbackMsg : data.remnant.info.msg;
+            %>
+            <div class="cont-box pt0">
+                <div class="notice-point">
+                    <p class="t-np1">서비스 점검 중 입니다.</p>
+                    <p class="t-np2"><%= msg %></p>
+                    <% if (data.remnant.info.fromDate && data.remnant.info.toDate) { %>
+                    <p class="t-np3"><%= data.remnant.info.fromDate %> ~ <%= data.remnant.info.toDate %></p>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
+        <% } else { %>
+        <div class="cont-box pt0">
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="notice-point">
                 <p class="t-np1">잠시 후 다시 이용해 주세요</p>
@@ -809,7 +860,11 @@
                 <p class="t-np3"><%= data.remnant.info.msg %></p>
             </div>
             <% } %>
-        <% } else { %>
+        </div>
+        <% } %>
+    <% } else { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <div class="cont-box pt0" data-id="remnant-container">
             <% if (data.isDataShow) { %>
             <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
@@ -875,152 +930,171 @@
                     </ul>
                 </div>
             </div>
-        <% } %>
-        <ul class="bt-slice solid mt20">
-            <li data-id="immCharge">
-                <button type="button" title="즉시 충전" class="btn-round1 btn-style1">즉시 충전</button>
-            </li>
-        </ul>
-    </div>
+            <ul class="bt-slice solid mt20">
+                <li data-id="immCharge">
+                    <button type="button" title="즉시 충전" class="btn-round1 btn-style1">즉시 충전</button>
+                </li>
+            </ul>
+        </div>
+    <% } %>
 <% } else { %>
     <!-- 유선(인터넷, 집전화, IPTV) -->
-    <div class="cont-box nogaps-hoz">
-        <% if (data.remnant && data.remnant.info) { %>
-        <% if (data.remnant.info.code === 'BLN0001') { %>
-        <div class="notice-point">
-            <p class="t-np1">잠시 후 다시 이용해 주세요</p>
-            <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-            <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
-        </div>
-        <% } else if (data.remnant.info.code === 'BLN0002') { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-            <p class="t-np3"></p>
-        </div>
-        <% } else if (data.remnant.info.code === 'BLN0003') { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
-            <p class="t-np3"></p>
-        </div>
-        <% } else if (data.remnant.info.code === 'BLN0005') { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-            <p class="t-np3"></p>
-        </div>
-        <% } else if (data.remnant.info.code === 'BLN0006') { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
-            <p class="t-np3"></p>
-        </div>
-        <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2">잔여량 조회 가능 항목이 없습니다.<br>전화/인터넷전화의 정액요금제 고객님만 조회 가능합니다.</p>
-            <p class="t-np3"></p>
-        </div>
+    <% if (data.remnant && data.remnant.info) { %>
+        <% if (data.remnant.info.code === 'BFF0006' || data.remnant.info.code === 'BFF0011') { %>
+            <% if (data.remnant.info.isBlock === 'N') {
+                var msg = (data.remnant.info.fallbackClCd === 'F0004') ? data.remnant.info.fallbackMsg : data.remnant.info.msg;
+            %>
+            <div class="cont-box pt0">
+                <div class="notice-point">
+                    <p class="t-np1">서비스 점검 중 입니다.</p>
+                    <p class="t-np2"><%= msg %></p>
+                    <% if (data.remnant.info.fromDate && data.remnant.info.toDate) { %>
+                    <p class="t-np3"><%= data.remnant.info.fromDate %> ~ <%= data.remnant.info.toDate %></p>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
         <% } else { %>
-        <div class="notice-point">
-            <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
-            <p class="t-np2"><%= data.remnant.info.code %></p>
-            <p class="t-np3"><%= data.remnant.info.msg %></p>
+        <div class="cont-box pt0">
+            <% if (data.remnant.info.code === 'BLN0001') { %>
+            <div class="notice-point">
+                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0002') { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                <p class="t-np3"></p>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0003') { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                <p class="t-np3"></p>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0005') { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                <p class="t-np3"></p>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0006') { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                <p class="t-np3"></p>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.<br>전화/인터넷전화의 정액요금제 고객님만 조회 가능합니다.</p>
+                <p class="t-np3"></p>
+            </div>
+            <% } else { %>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2"><%= data.remnant.info.code %></p>
+                <p class="t-np3"><%= data.remnant.info.msg %></p>
+            </div>
+            <% } %>
         </div>
         <% } %>
-        <% } else { %>
+    <% } else { %>
+        <hr class="cont-sp type1" aria-hidden="true"/>
+        <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.isVoiceShow || data.isSmsShow) { %>
-        <ul class="date-graph-list">
-            <% if (data.isVoiceShow) { %>
-            <% var rvoice = data.remnantData.voice[0]; %>
-            <li>
-                <!-- 2019.02.10 링크 영역 확대 -->
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2">
-                    <div class="left">
-                        <!-- .donut-chart.small -->
-                        <div class="donut-chart small">
-                            <div class="donut-chart-area">
-                                <!-- loop -->
-                                <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
+            <ul class="date-graph-list">
+                <% if (data.isVoiceShow) { %>
+                <% var rvoice = data.remnantData.voice[0]; %>
+                <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2">
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- // loop -->
                                 </div>
-                                <!-- // loop -->
                             </div>
+                            <!-- // .donut-chart.small -->
                         </div>
-                        <!-- // .donut-chart.small -->
-                    </div>
-                    <div class="cont">
-                        <span class="txt1" id="aria-comp-bt2"><%= rvoice.skipNm %></span>
-                        <div class="date">
-                                    <span class="remain">
-                                        <strong>
-                                            <% if (rvoice.isUnlimit) { %>
-                                                무제한 </strong>
-                                            <% } else { %>
-                                                <% if (rvoice.showRemained.hours > 0 ) { %>
-                                                <%= rvoice.showRemained.hours %>시간
+                        <div class="cont">
+                            <span class="txt1" id="aria-comp-bt2"><%= rvoice.skipNm %></span>
+                            <div class="date">
+                                        <span class="remain">
+                                            <strong>
+                                                <% if (rvoice.isUnlimit) { %>
+                                                    무제한 </strong>
+                                                <% } else { %>
+                                                    <% if (rvoice.showRemained.hours > 0 ) { %>
+                                                    <%= rvoice.showRemained.hours %>시간
+                                                    <% } %>
+                                                    <%= rvoice.showRemained.min %>분</strong>남음
                                                 <% } %>
-                                                <%= rvoice.showRemained.min %>분</strong>남음
-                                            <% } %>
-                                    </span>
-                        </div>
-                    </div>
-                </a>
-                <!-- //접근성 수정-->
-            </li>
-            <% } %>
-            <% if (data.isSmsShow) { %>
-            <% var rsms = data.remnantData.sms[0]; %>
-            <li>
-                <!-- 2019.02.10 링크 영역 확대 -->
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3">
-                    <div class="left">
-                        <!-- .donut-chart.small -->
-                        <div class="donut-chart small">
-                            <div class="donut-chart-area">
-                                <!-- loop -->
-                                <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                                    <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                        <div class="slice">
-                                            <div class="bar"></div>
-                                            <div class="fill"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // loop -->
+                                        </span>
                             </div>
                         </div>
-                        <!-- // .donut-chart.small -->
-                    </div>
-                    <div class="cont">
-                        <span class="txt1" id="aria-comp-bt3"><%= rsms.skipNm %></span>
-                        <div class="date">
-                                    <span class="remain">
-                                        <strong>
-                                        <% if (rsms.isUnlimit) { %>
-                                            <% if(rsms.total === '기본제공') { %>
-                                            무제한 </strong>
-                                            <% } else { %>
-                                            <%= rsms.total %>건 </strong>남음
-                                            <% } %>
-                                        <% } else { %>
-                                            <%= rsms.showRemained %>건 </strong> 남음
-                                        <% } %>
-                                    </span>
+                    </a>
+                    <!-- //접근성 수정-->
+                </li>
+                <% } %>
+                <% if (data.isSmsShow) { %>
+                <% var rsms = data.remnantData.sms[0]; %>
+                <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3">
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
                         </div>
-                    </div>
-                </a>
-                <!-- //접근성 수정-->
-            </li>
-            <% } %>
-        </ul>
+                        <div class="cont">
+                            <span class="txt1" id="aria-comp-bt3"><%= rsms.skipNm %></span>
+                            <div class="date">
+                                        <span class="remain">
+                                            <strong>
+                                            <% if (rsms.isUnlimit) { %>
+                                                <% if(rsms.total === '기본제공') { %>
+                                                무제한 </strong>
+                                                <% } else { %>
+                                                <%= rsms.total %>건 </strong>남음
+                                                <% } %>
+                                            <% } else { %>
+                                                <%= rsms.showRemained %>건 </strong> 남음
+                                            <% } %>
+                                        </span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- //접근성 수정-->
+                </li>
+                <% } %>
+            </ul>
         <% } %>
-        <% } %>
-    </div>
+        </div>
+    <% } %>
 <% } %>

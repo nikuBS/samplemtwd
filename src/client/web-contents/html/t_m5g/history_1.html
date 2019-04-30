@@ -53,55 +53,22 @@
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
                 </div>
-            </div>
+			</div>			
         </div>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <div class="container">
-				<hr class="cont-sp type1" aria-hidden="true" />
-				<!-- .cont-box -->
-				<div class="cont-box">
-					<div class="og-mydata-search">
-						<div class="widget">
-							<div class="widget-box radio">
-								<ul class="select-list" role="radiogroup">
-									<li class="radiobox og-btn-radio checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-1" checked /><!-- 체크상태일 경우 checked="checked" -->
-										<span id="aria-comp-radio1-1" class="btn-round2 btn-style3">3일</span>
-									</li>
-									<li class="radiobox og-btn-radio" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-2" />
-										<span id="aria-comp-radio1-2" class="btn-round2 btn-style3">1주일</span>
-									</li>
-									<li class="radiobox og-btn-radio" role="radio" aria-checked="false">
-										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-3" />
-										<span id="aria-comp-radio1-3" class="btn-round2 btn-style3">1개월</span>
-									</li>
-									<li class="radiobox og-btn-radio" role="radio" aria-checked="false">
-										<input type="radio" name="inpSrchRad" value="" aria-labelledby="aria-comp-radio1-4" />
-										<span id="aria-comp-radio1-4" class="btn-round2 btn-style3">기간선택</span>
-									</li>
-								</ul>
-							</div>
+				<!-- 190429 추가_01-->
+				<div class="cont-box nogaps">
+					<div class="ti-caption-blue">
+						<div class="num">
+							총 <em>32</em>건
 						</div>
-
-						<!-- 기간선택 클릭시 조건입력영역(날짜선택) 노출 -->
-						<div class="og-calWrap" style="display: none;"><!-- 기간선택 클릭시 style="display:block;" -->
-							<div class="inputbox date-selcet">
-								<span class="date-type"><input type="date" value="2019-01-21" min="" max="" title="시작일 선택"/></span>
-								<span class="bar">~</span>
-								<span class="date-type"><input type="date" value="2019-05-21" min="" max="" title="종료일 선택"/></span>
-							</div>
-							<button type="button" class="btn-round3 btn-style4">조회</button>
-						</div>
-						<!-- //기간선택 클릭시 조건입력영역(날짜선택) 노출 -->
+						<button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true">2019년 2월</button>
 					</div>
-					<p class="og-mydata-search-txt">2019.01.21.~ 01.30. <b>8건</b></p>
-				</div>
-				<!-- //.cont-box -->
-
-				<hr class="cont-sp type1" aria-hidden="true" />
+				</div>				
+				<!-- //190429 추가_01 -->
 				<!-- .cont-box -->
 				<div class="cont-box og-my-wrap">
 					<div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
@@ -234,6 +201,7 @@
         </div>
         <!--// #contents -->
     </div>
+	
 
 	<script type="text/javascript">
         $(document).ready(function () {

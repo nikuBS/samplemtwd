@@ -84,7 +84,7 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
    * @param $popupContainer - 팝업 레이어
    */
   _bindEventContentsPopup: function($popupContainer) {
-    $popupContainer.on('click', '.popup-closeBtn,.fe-btn_close', $.proxy(this._setAllClose, this));
+    $popupContainer.on('click', '.popup-closeBtn', $.proxy(this._setAllClose, this));
 
     this.$contentsPopup = $popupContainer;
     this._bindEvent($popupContainer);
@@ -97,7 +97,7 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
    * @param $popupContainer - 팝업 레이어
    */
   _bindEventCustomPopup: function($popupContainer) {
-    $popupContainer.on('click', '.popup-closeBtn,.fe-btn_close', $.proxy(this._setAllClose, this));
+    $popupContainer.on('click', '.popup-closeBtn', $.proxy(this._setAllClose, this));
     $popupContainer.on('keyup input', 'textarea', $.proxy(this._onCustomTextarea, this));
     $popupContainer.on('click', 'textarea', $.proxy(this._onClickCustomTextarea, this));
     $popupContainer.on('click', '.fe-btn_apply', $.proxy(this._onApplyCustom, this));
@@ -229,10 +229,13 @@ Tw.ProductMobilePlanDowngradeProtect.prototype = {
 
   /**
    * @function
-   * @desc 다음에 할게요. 클릭 시
+   * @desc 다음에 할게요. 클릭 시 요금제 리스트로 이동
    */
   _onClose: function() {
-    this._popupService.close();
+    this._popupService.closeAll();
+    setTimeout($.proxy(function() {
+      this._historyService.goLoad('/product/mobileplan');
+    }, this));
   },
 
   /**

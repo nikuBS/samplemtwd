@@ -82,19 +82,9 @@ Tw.ApiService.prototype = {
       return resp;
     }
 
-    if ( resp.code === Tw.API_CODE.BFF_0006 ) {
+    if ( resp.code === Tw.API_CODE.BFF_0006 || resp.code === Tw.API_CODE.BFF_0011 ) {
       path = location.pathname;
       hash = location.hash;
-      if ( /\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path) || /menu/.test(hash) ) {
-        return resp;
-      } else {
-        blockUrl = resp.result.fallbackUrl || '/common/util/service-block';
-        this._historyService.replaceURL(blockUrl + '?fromDtm=' + resp.result.fromDtm + '&toDtm=' + resp.result.toDtm);
-      }
-    }
-
-    if ( resp.code === Tw.API_CODE.BFF_0011 ) {
-      path = location.pathname;
       if ( /\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path) || /menu/.test(hash) ) {
         return resp;
       } else {

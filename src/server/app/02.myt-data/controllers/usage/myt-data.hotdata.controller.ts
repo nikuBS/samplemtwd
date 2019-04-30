@@ -147,7 +147,10 @@ class MyTDataHotdata extends TwViewController {
    * @private
    */
   private _renderError(res: any, svcInfo: any, pageInfo: any, resp: any) {
-    const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
+    const error = MYT_DATA_USAGE.ERROR[resp.code] || {
+      title: '',
+      contents: ''
+    };
     error.code = resp.code;
     if ( error.code !== 'BLN0001' ) {
       error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
