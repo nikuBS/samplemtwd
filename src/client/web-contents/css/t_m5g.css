@@ -565,59 +565,48 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 
 /* //190325 추가 - 마케팅페이지 */
 
-/* 190419 추가 - 190422 수정 - DG방어 */
+/* [DV001-20897] 190419 추가 - 190422 수정 - 190429 수정 - DG방어 */
 .dwg-popup{}
 .popup-page.dwg-popup{padding-top: 0!important;}
 .dwg-popup.fixed-bottom{padding-bottom: 0!important;}
 .dwg-popup.fixed-btn{padding-bottom: 0!important;}
 
-.dwg-popup.no-header .header-wrap{ display: none; }
+.dwg-popup.no-header .header-wrap{display: none;}
 .dwg-popup.no-btn .dwg-dialog-area{display: none;}
 
-.dwg-popup.color-type-list{ background:#f76252;}
+.dwg-popup.color-type-list{background:#f76252 url(/img/t_dwg/dg_bg_btm.png) no-repeat right bottom;background-size: auto 11.2rem;} /*11.5rem = 184px*/
 .dwg-popup.color-type-a{background-color:#58637f;}
 .dwg-popup.color-type-b{background-color:#3584e3;}
-.dwg-popup.color-type-c{background-color:#674fa5;}
+.dwg-popup.color-type-c{background-color:#57637f;}
 .dwg-popup.color-type-d{background-color:#198d5b;}
 
-.dwg-hd-area{ position: relative; min-height: 15.1875rem;}
-.dwg-hd-area .img {display:block; position: absolute; top: 0; right: 0; min-height: 243px; text-align: right;}
-.dwg-hd-area .img > img{width: 60%; vertical-align: top;}
-@media all and (max-width:500px){
-   .dwg-hd-area .img > img{width: 100%; vertical-align: top;}
-}
-
-.dwg-hd-area .h2-tit{ position: absolute; top: 0; left: 0; padding: 3.5rem 1.25rem 1.25rem; color: #fff; max-width: 17.0625rem; letter-spacing: -0.06875rem}
-.dwg-hd-area .user-name{font-size: 1.625rem; line-height: 2rem;}
+.dwg-hd-area{ position: relative; min-height:14.75rem; padding-bottom: 1.09rem;}
+.dwg-hd-area .h2-tit{position: absolute; top: 0; left: 0; padding: 4.125rem 1.25rem 0; color: #fff; letter-spacing: -0.06875rem}
+.dwg-hd-area .user-name{display: block; font-size:1.8rem; padding-bottom: 0.5rem}
 .dwg-hd-area .p-desc{font-size: 2.125rem; line-height: 2.625rem; letter-spacing: -0.09375rem;}
 
 .dwg-case-box{}
 .dwg-type-area{text-align: left; vertical-align: top;}
+@media all and (min-width:500px){
+   .dwg-type-area{padding-bottom: 3.5rem;}
+}
 .dwg-type-area .list{padding:0 1rem 0;}
-.dwg-type-area .item{margin-top: 0.625rem; font-size: 0; text-align: left;}
+.dwg-type-area .item{margin-top: 0.75rem; font-size: 0; text-align: left;}
+.dwg-type-area .item:first-child{padding-top: 0;}
 .dwg-type:after{content:'';display:block;clear:both}
-.dwg-type-link{position:relative; display:inline-block; padding: 0.75rem 0.9375rem; background:#fff; 
-    border: 1px solid #e5e6e8; border-radius:0.25rem; box-sizing:border-box; text-align: left;}
+.dwg-type-link{position:relative; display:inline-block; padding:0.76rem 0.938rem; background:#fff; border: 1px solid #e5e6e8; border-radius:0.25rem; box-sizing:border-box; text-align: left;}
 .dwg-type-link:after{
-    content: '';
-    display: inline-block;
-    width: 0.625rem;
-    height: 0.625rem;
-    border-top: 1px solid #e6e6e6;
-    border-right: 1px solid #e6e6e6;
-    transform: rotate(45deg);
-    vertical-align: middle;
-    margin-left: 1.25rem;
- }   
+    content: ''; display:inline-block; position:absolute; right: 15px; top: 50%;
+    width: 0.45rem;height: 0.45rem;
+    border-top: 2px solid #e2e2e2;border-right: 2px solid #e2e2e2;
+    transform: rotate(45deg) translateY(-50%);
+}
 .dwg-type-link .ico-img{display: inline-block; width: 2.5rem; height:2.5rem;}
 .dwg-type-link .ico-img > img{width:100%; vertical-align:middle;}
-.dwg-type-link .tit-txt{display:inline-block; margin-left:0.625rem; font-size:0.9375rem; vertical-align: middle;}
-.dwg-type-link .tit-txt strong{color: #f76252; font-weight:normal;}
-
-.dwg-bd-img{width: 100%; text-align: right;}
-.dwg-bd-img img{width: 60%; vertical-align: top;}
-@media all and (max-width:500px){
-   .dwg-bd-img img{width: 100%; }
+.dwg-type-link .tit-txt{display: inline-block; padding-left:0.625rem; padding-right:1.563rem; font-size: 1.125rem; line-height:1rem; vertical-align: middle;margin-top: .3rem;}
+.dwg-type-link .tit-txt strong{color: #f76252;}
+@media all and (max-width:320px){
+   .dwg-type-link .tit-txt{font-size: 1rem; padding-right: 1rem;}
 }
 
 .dwg-typeImg-area{padding-bottom: 6rem;}
@@ -633,6 +622,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .dwg-dialog-btns .btn-dialog-1{color:#f76252; border-top:1px solid #e5e5e5;}
 .dwg-dialog-btns .btn-dialog-2{color:#fff; border-top:1px solid #f76252; background-color:#f76252;}
 
+/* 기타 이유 - 추후 변경된다고 함. */
 .dwg-frm-area.cont-box{border-bottom:0;}
 .dwg-frm-area > fieldset{position: relative;}
 .dwg-frm-area > fieldset > label{display:block; font-size:0.8125rem; margin-bottom: 0.625rem;}
@@ -640,7 +630,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .dwg-frm-area .sp-txt:before{content:'※'; display:inline-block; font-size:0.75rem; vertical-align:middle; margin-right:0.25rem;}
 .dwg-frm-area .frm-textarea{ height:7.8125rem; color:#000}
 .dwg-frm-area .frm-textarea::placeholder {font-weight:normal}
-/* //190419 추가 - 190422 수정 - DG방어 */
+/* //[DV001-20897] 190419 추가 - 190422 수정 - 190429 수정 - DG방어 */
 
 /* 190424 5GX 스탠다드 */
 .production-benefit-wrap .ico.ico-5g-membership-vip{background-image:url(../img/ico/ico-5g-membership-vip.png);background-size: 3.75rem}

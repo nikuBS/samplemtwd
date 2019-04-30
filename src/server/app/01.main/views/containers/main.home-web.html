@@ -393,17 +393,17 @@
             <!-- 2019.02.22 수정 - 클릭영역 변경 -->
             <!-- 2019.02.27 수정 - 타이틀 2줄 케이스 main-charge-box클래스에 ti-line2 추가 -->
             <div class="section-box nogaps">
-                <div class="main-charge-box membership ti-line2">
-                    <a href="/membership/submain" data-xt_eid="CMMA_A2_B6-163" data-xt_csid="NO" data-xt_action="BC">
-                        <div class="stit">T멤버십</div>
-                        <div class="main-box-cont main-box-cont-link">
-                            <div class="link-full">
-                                <strong class="ti">다양한 제휴 브랜드와<br>SK텔레콤만의 특별 혜택</strong>
-                                <span class="tx">모든 등급 회원에게 무한 제공되는 멤버십 한도로<br>다양한 혜택 누리기</span>
-                                <p class="bt">자세히 보기</p>
+                <div class="main-charge-box benefit section-swiper-box main-banner-img">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box">
+                            <div class="slider-box">
+                                <ul class="slider" data-location="e">
+                                </ul>
                             </div>
                         </div>
-                    </a>
+                    </div>
+                    <!--// .widget -->
                 </div>
             </div>
             <!-- //T멤버십 -->
@@ -411,17 +411,17 @@
             <!-- 모바일 요금제 -->
             <!-- 2019.02.22 수정 - 클릭영역 변경 -->
             <div class="section-box nogaps">
-                <div class="main-charge-box bg-blue">
-                    <a href="/product/callplan?prod_id=NA00005959" data-xt_eid="CMMA_A2_B6-164" data-xt_csid="NO" data-xt_action="BC">
-                        <div class="stit">모바일 요금제</div>
-                        <div class="main-box-cont main-box-cont-link">
-                            <div class="link-full">
-                                <strong class="ti">Data 인피니티</strong>
-                                <span class="tx">완전 무제한 데이터에<br>프리미엄 VIP혜택까지</span>
-                                <p class="bt">자세히 보기</p>
+                <div class="main-charge-box benefit section-swiper-box main-banner-img"><!-- 19.03.12 수정 bg-blue 추가 --><!-- 19.04.16 수정 -->
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box">
+                            <div class="slider-box">
+                                <ul class="slider" data-location="f">
+                                </ul>
                             </div>
                         </div>
-                    </a>
+                    </div>
+                    <!--// .widget -->
                 </div>
             </div>
             <!-- //모바일 요금제 -->
@@ -429,31 +429,13 @@
 
             <!-- 다이렉트샵 -->
             <!-- 2019.02.20 수정 - 타이틀 클릭영역 -->
-            <div class="section-box pdtb-main-box">
+            <div id="fe-direct-banner" class="section-box pdtb-main-box">
                 <div class="main-direct-box">
                     <button class="fe-home-external" title="새창" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-165" data-xt_csid="NO" data-xt_action="BC">
                         <strong class="ti"><span>다이렉트샵</span></strong>
                         <span class="tx">다이렉트샵에서 엄선한 프리미엄 스마트폰</span>
                     </button>
                     <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
-                        <li>
-                            <button class="bt fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010014&productGrpId=000003532&utm_source=tworld&utm_medium=app_device&utm_campaign=s10_5G" data-xt_eid="CMMA_A2_B6-166" data-xt_csid="NO" data-xt_action="BC">
-                                <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
-                                <strong class="ti">갤럭시 S10 5G</strong>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="bt fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=app_device&utm_campaign=iphoneXS" data-xt_eid="CMMA_A2_B6-167" data-xt_csid="NO" data-xt_action="BC">
-                                <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
-                                <strong class="ti">아이폰 XS</strong>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="bt fe-home-external" title="새창" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003533&utm_source=tworld&utm_medium=app_device&utm_campaign=G8" data-xt_eid="CMMA_A2_B6-168" data-xt_csid="NO" data-xt_action="BC">
-                                <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
-                                <strong class="ti">엘지 G8 ThinQ</strong>
-                            </button>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -461,21 +443,17 @@
 
             <!-- 인터넷 / 집전화 / IPTV -->
             <div class="section-box nogaps">
-                <!-- <div class="main-banner-img">
-                    <button><img src="/img/main/img-main-banner08.png" alt="인터넷 / 전화 / IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
-                </div> -->
-                <!-- 2019.02.22 수정 - 타이틀 변경 -->
-                <div class="main-charge-box combination">
-                    <a href="/product/callplan?prod_id=TW20000013" data-xt_eid="CMMA_A2_B6-169" data-xt_csid="NO" data-xt_action="BC">
-                        <div class="stit">인터넷/집전화/IPTV</div>
-                        <div class="main-box-cont main-box-cont-link">
-                            <div class="link-full">
-                                <strong class="ti">온가족 플랜</strong>
-                                <span class="tx">휴대폰과 인터넷을 결합하면 <br> 최대 38,610원 할인</span>
-                                <p class="bt">자세히 보기</p>
+                <div class="main-charge-box benefit section-swiper-box main-banner-img"><!-- 19.04.16 수정 -->
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box">
+                            <div class="slider-box">
+                                <ul class="slider" data-location="g">
+                                </ul>
                             </div>
                         </div>
-                    </a>
+                    </div>
+                    <!--// .widget -->
                 </div>
             </div>
             <!-- //인터넷 / 집전화 / IPTV -->

@@ -669,10 +669,66 @@
                             </div>
                         </div>
                         <!-- // 프로모션 배터 3 -->
-                        <div class="fe-div-home-do-like-this">
+                        <% if(redisData.help && redisData.help.length > 0) { %>
+                        <!-- 이럴 땐 이렇게 하세요 -->
+                        <div class="section-box nogaps">
+                            <div class="main-tip-box box-type section-swiper-box">
+                                <a href="/customer/faq" type="button" class="stit tit" data-xt_eid="CMMA_A2_B66-38" data-xt_csid="NO" data-xt_action="BC">이럴 땐<br>이렇게 하세요</a>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <% redisData.help.map((help) => { %>
+                                                <li>
+                                                    <ul class="help-list">
+                                                        <% help.map((target) => { %>
+                                                        <li>
+                                                            <a data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B66-39" data-xt_csid="NO" data-xt_action="BC">
+                                                                <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt=""></span>
+                                                                <%- target.mainExpsTitNm %>
+                                                            </a>
+                                                        </li>
+                                                        <% }) %>
+                                                    </ul>
+                                                </li>
+                                                <% }) %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                                <div class="btn-area">
+                                    <a href="/customer/agentsearch" class="bt" data-xt_eid="CMMA_A2_B66-42" data-xt_csid="NO" data-xt_action="BC">매장 찾기</a>
+                                    <a href="/customer/agentsearch/repair" class="bt" data-xt_eid="CMMA_A2_B66-43" data-xt_csid="NO" data-xt_action="BC">A/S센터 찾기</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="fe-div-home-notice">
+                        <!-- //이럴 땐 이렇게 하세요 -->
+                        <% } %>
+                        <% if(redisData.mainNotice && redisData.mainNotice.length > 0) { %>
+                        <!-- 공지사항 -->
+                        <div class="notice-slide-type">
+                            <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <a data-url="/customer/svc-info/notice/view?ntcId=<%= redisData.mainNotice[0].ntcId %>" class="fe-home-internal" data-xt_eid="CMMA_A2_B66-44" data-xt_csid="NO" data-xt_action="BC">
+                                                    <span class="notice-list-ti"><%= redisData.mainNotice[0].ntcTitNm %></span>
+                                                    <span class="ico"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
                         </div>
+                        <!-- //공지사항 -->
+                        <% } %>
                     </div>
                     <!-- // .home-slider-my -->
                     </div>
@@ -693,9 +749,6 @@
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
-<%- include('../components/home/home.store.component.html', { redisData: redisData }); %>
-<%- include('../components/home/home.do-like-this.component.html', { redisData: redisData }); %>
-<%- include('../components/home/home.notice.component.html', { redisData: redisData }); %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>');

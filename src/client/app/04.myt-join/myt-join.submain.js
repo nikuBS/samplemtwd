@@ -153,7 +153,7 @@ Tw.MyTJoinSubMain.prototype = {
    * @desc Redis 배너 TOS 조회
    */
   _initBanners: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0010' })
       .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
       .fail($.proxy(this._errorRequest, this));
   },

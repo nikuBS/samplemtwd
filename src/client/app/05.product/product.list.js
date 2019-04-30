@@ -140,8 +140,6 @@ Tw.ProductList.prototype = {
         data = Tw.FormatHelper.convDataFormat(item.basOfrMbDataQtyCtt, Tw.DATA_UNIT.MB);
         item.basOfrDataQtyCtt = data.data + data.unit;
       }
-
-      
     }
 
     item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);

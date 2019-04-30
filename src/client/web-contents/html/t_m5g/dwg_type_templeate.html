@@ -51,71 +51,72 @@
         <!-- colortype : 
               .color-type-list (#f76252) - 요금제 변경 케이스 
               .color-type-a (#58637f) - 비용 
-              .color-type-b (#3584e3) - 혜택  
-              .color-type-c (#674fa5) - 데이터   
-              .color-type-d (##198d5b) - 기타  
+              .color-type-b (#3584e3) - 혜택
+              .color-type-c (#57637f) - 데이터  
+              .color-type-d (#198d5b) - 기타  
          -->
 <!-- 20190422 수정 -->          
-        <div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup no-header color-type-list">
+        <div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup color-type-list">
             <!-- #header -->
-           <div class="header-wrap">
+            <!--
+            <div class="header-wrap">
 				<div class="page-header">
 					<div class="header-ti">
                         <h1>헤더가 있는 경우 타이틀</h1>
                     </div>
                </div>
             </div>
+            -->
+
          	<!--// #header -->
 			<!-- .container-wrap -->
 			<div class="container-wrap">
+ <!-- #################### 어드민 영역  #################### -->                
 				<div class="container">
                     <!-- 요금제 변경 이유 리스트 -->
                     <div class="dwg-case-box">
-                        <!-- 어드민 영역 -->
                         <div class="dwg-hd-area">
-                            <div class="img"><img src="/img/t_dwg/dg_header_v1.png" alt=""></div>
                             <h2 class="h2-tit">
-                                <span class="user-name">홍*동님</span>
-                                <p class="p-desc">요금제를 <br>  변경하신 이유는 무엇인가요?</p>
+                                <span class="user-name tx-medium">홍*동님</span>
+                                <span class="p-desc tx-normal">요금제를<br> 변경하신 이유는<br> 무엇인가요?</span>
                             </h2>
                         </div>
                         <div class="dwg-type-area">
-                            <h2 class="blind">요금제 변경 이유</h2>
+                            <h2 class="blind">요금제 변경 이유 목록</h2>
                             <ul class="list">
                                 <li class="item">
                                     <a href="javascript:void(0)" data-dg_contents="A" class="dwg-type-link">
                                         <i class="ico-img"><img src="/img/t_dwg/ico_dg_01.png" alt=""></i>
-                                        <span class="tit-txt"><strong>비용</strong>을 줄이기 위해서</span>
+                                        <span class="tit-txt"><strong class="tx-regular">비용</strong>을 줄이기 위해서</span>
                                     </a>
                                 </li>
                                 <li class="item">
                                     <a href="javascript:void(0)" data-dg_contents="B" class="dwg-type-link">
                                         <i class="ico-img"><img src="/img/t_dwg/ico_dg_02.png" alt=""></i>
-                                        <span class="tit-txt"><strong>혜택</strong>이 마음에 들지 않아서</span>
+                                        <span class="tit-txt"><strong class="tx-regular">혜택</strong>이 마음에 들지 않아서</span>
                                     </a>
                                 </li>
                                 <li class="item">
                                     <a href="javascript:void(0)" data-dg_contents="C" class="dwg-type-link">
                                         <i class="ico-img"><img src="/img/t_dwg/ico_dg_03.png" alt=""></i>
-                                        <span class="tit-txt"><strong>데이터</strong>사용량이 적어서</span>
+                                        <span class="tit-txt"><strong class="tx-regular">데이터</strong>사용량이 적어서</span>
                                     </a>
                                 </li>
+                                <!--
                                 <li class="item">
-                                    <a href="javascript:void(0)" data-dg_contents="C" class="dwg-type-link">
-                                        <i class="ico-img"><img src="/img/t_dwg/ico_dg_04.png" alt=""></i>
+                                    <a href="javascript:void(0)" data-dg_contents="CUSTOM" class="dwg-type-link">
+                                        <i class="ico-img"><img src="/img/t_dwg/ico_dg_03.png" alt=""></i>
                                         <span class="tit-txt">기타이유</span>
                                     </a>
                                 </li>
+                                -->
                             </ul>
                         </div>
-                        <div class="dwg-bd-img">
-                            <img src="/img/t_dwg/dg_list_btm.png" alt="">
-                        </div>
-                        <!-- //어드민 영역 -->
                     </div>
                     <!-- 요금제 변경 이유 리스트 -->
                    
                     <!-- 비용/혜택/데이터:-->
+                    <h2 class="blind">요금제 변경안내 내용</h2>
                     <div class="dwg-typeImg-area">
                         <!-- 어드민 영역 -->
                         <div class="img-wrap">
@@ -131,14 +132,15 @@
                      <p class="txt">정말 요금제를 변경하시겠어요?</p>
                     <div class="dwg-dialog-btns">
                         <div class="col">
-                            <button class="btn-dialog-1"><span>지금 변경할래요.</span></button>
+                            <button class="btn-dialog-1 fe-btn_change" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>지금 변경할래요.</span></button>
                         </div>
                         <div class="col">
-                            <button class="btn-dialog-2"><span>다음에 할게요.</span></button>
+                            <button class="btn-dialog-2 fe-btn_close" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>다음에 할게요.</span></button>
                         </div> 
                     </div>
                 </div>
-                 <!-- //button fixed -->
+                <!-- //button fixed -->
+<!-- #################### //어드민 영역 #################### -->                 
 			</div>
             <!--// .container-wrap -->
             <!-- .popup-closeBtn -->

@@ -1,4 +1,10 @@
 Tw.UrlHelper = (function () {
+  /**
+   * @desc get query params from url
+   * @param  {string|undefined} url
+   * @returns {[key: string]: string} 
+   * @public
+   */
   var getQueryParams = function (url) {
     var qs = url || document.location.search;
     if ( qs.indexOf('#') !== -1 ) {
@@ -19,11 +25,24 @@ Tw.UrlHelper = (function () {
     return params;
   };
 
+  /**
+   * @desc get latest uri
+   * @returns {string}
+   * @public 
+   */
   var getLastPath = function () {
     var seg = document.location.pathname.substr(document.location.pathname.lastIndexOf('/') + 1);
     return seg;
   };
 
+  /**
+   * @desc chage value of query parameter
+   * @param  {string} key
+   * @param  {string} value
+   * @param  {string|undefined} url
+   * @returns {string}
+   * @public
+   */
   var replaceQueryParam = function (key, value, url) {
     var current = url || location.href;
 

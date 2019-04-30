@@ -16,7 +16,7 @@
     <meta property="og:site_name" content="SKT" />
     <meta property="og:image" content="/image/common/skt_facebook.jpg" />
     <meta property="og:description" content="SKT framework" />
-    <title>요금제 변경안내 > 데이타 사용량이 적어서</title>
+    <title>요금제 변경안내 > 혜택이 마음에 들지 않아서</title>
     <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
@@ -43,50 +43,68 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+        <!-- .popup hbs : DG popup   -->
+        <!-- dg 방어 : templeat 설명 -->
+        <!-- .dwg-popup -->
+        <!-- .no-btn : 버튼 숨기기 -->
+        <!-- .no-header : header 숨김 -->
+        <!-- colortype : 
+              .color-type-list (#f76252) - 요금제 변경 케이스 
+              .color-type-a (#58637f) - 비용 
+              .color-type-b (#3584e3) - 혜택
+              .color-type-c (#57637f) - 데이터  
+              .color-type-d (#198d5b) - 기타 
+         -->
+<!-- 20190422 수정 -->          
+        <div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup color-type-c">
             <!-- #header -->
-         	<div class="header-wrap">
+            <!--
+            <div class="header-wrap">
 				<div class="page-header">
 					<div class="header-ti">
-                        <h1>데이터 사용량이 적어서</h1>
+                        <h1>헤더가 있는 경우 타이틀</h1>
                     </div>
                </div>
             </div>
-        	<!--// #header -->
+            -->
+
+         	<!--// #header -->
 			<!-- .container-wrap -->
 			<div class="container-wrap">
+ <!-- ####################### 어드민 영역 ####################### -->
 				<div class="container">
-                    <hr class="cont-sp type1" aria-hidden="true">
-                    <!-- amdin 영역 -->
+                    <!-- 데이터 -->
+                    <h2 class="blind">요금제 변경안내 내용</h2>
                     <div class="dwg-typeImg-area">
                         <div class="img-wrap">
-                            <img src="/img/t_dwg/dg_type_c.png" alt="이미지 설명 들어가요.">
+                            <img src="/img/t_dwg/img_dg_type_c.png" alt="이미지 설명 들어가요">
                         </div>
                     </div>
-                    <!-- //amdin 영역 -->
+                    <!-- 데이터 -->
                 </div>
-                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
                 <!-- button fixed -->
                 <div class="bt-fixed-area dwg-dialog-area">
-                     <p class="txt">정말 요금제를 변경하시겠어요?</p>
+                    <p class="txt">정말 요금제를 변경하시겠어요?</p>
                     <div class="dwg-dialog-btns">
                         <div class="col">
-                            <button class="btn-dialog-1"><span>지금 변경할래요.</span></button>
+                            <button class="btn-dialog-1 fe-btn_change" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>지금 변경할래요.</span></button>
                         </div>
                         <div class="col">
-                            <button class="btn-dialog-2"><span>다음에 할게요.</span></button>
+                            <button class="btn-dialog-2 fe-btn_close" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>다음에 할게요.</span></button>
                         </div> 
                     </div>
                 </div>
-                 <!-- //button fixed -->
-			</div>
+                <!-- //button fixed -->
+<!-- ####################### //어드민 영역 ####################### -->
+            </div>
             <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
             <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
             <!--// .popup-closeBtn -->
 		</div>
-		<!--// .popup hbs : : DG popup -->
+		<!--// .popup hbs: DG popup -->
+<!-- //20190422 수정 --> 
     </div>
+
 </body>
 </html>
