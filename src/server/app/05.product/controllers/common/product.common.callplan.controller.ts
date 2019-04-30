@@ -379,8 +379,7 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm) || FormatHelper.isEmpty(item.ledItmDesc) ||
-        item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
+      if (FormatHelper.isEmpty(item.titleNm) || FormatHelper.isEmpty(item.ledItmDesc)) {
         return true;
       }
 
