@@ -268,7 +268,7 @@ Tw.BannerService.prototype = {
         .map(function(banner) {
           return {
             isHTML: banner.bnnrTypCd === 'H',
-            isBill: banner.billYn === 'Y',
+            isBill: true,
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
