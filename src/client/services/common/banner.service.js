@@ -223,9 +223,7 @@ Tw.BannerService.prototype = {
     var link = banner.imgLinkUrl;
 
     if (link) {
-      if (banner.isInternalLink || banner.openInCurrentTab) {
-        window.location.href = link;
-      } else {
+      if (!banner.openInCurrentTab || !banner.isInternalLink) {
         if (Tw.BrowserHelper.isApp() && banner.isBill) {
           Tw.CommonHelper.showDataCharge(function() {
             Tw.CommonHelper.openUrlExternal(link);
@@ -233,6 +231,8 @@ Tw.BannerService.prototype = {
         } else {
           Tw.CommonHelper.openUrlExternal(link);
         }
+      } else {
+        window.location.href = link;
       }
     }
   },
