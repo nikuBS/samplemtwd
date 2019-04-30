@@ -1,0 +1,50 @@
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>시간 선택</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <strong class="og-comp-tit-s">시간 선택</strong>
+                <div class="og-settime-btns">
+                    <button type="button" data-add-type="hour" data-add-time="-1"><span><b>-60</b>분</span></button>
+                    <button type="button" data-add-type="minute" data-add-time="-10"><span><b>-10</b>분</span></button>
+                    <button type="button" data-add-type="minute" data-add-time="10"><span><b>+10</b>분</span></button>
+                    <button type="button" data-add-type="hour" data-add-time="1"><span><b>+60</b>분</span></button>
+                </div>
+                <div class="og-settime-val og-color2"><span class="og-ui-hour">{{data.hour}}</span>시간 <span class="og-ui-minute">{{data.min}}</span>분</div>
+            </div>
+            <!-- //.cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <strong class="og-comp-tit-s">데이터 차감</strong>
+                <div class="og-settime-val og-color1"><span class="og-ui-used-data">0GB</span></div>
+            </div>
+            <!-- //.cont-box -->
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button>선택 완료</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

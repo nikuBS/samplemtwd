@@ -2040,7 +2040,41 @@ Tw.ALERT_MSG_5G = {
   CARDBOARD_END: {
     TITLE: 'VR기기 재고 소진으로<br> 5GX VR 팩 카드보드 부가서비스 가입이 종료되었습니다.',
     MSG: ''
-  }
+  },
+  ALERT_A1: {TITLE: '데이터가 부족합니다. 시간을 다시 선택해주세요.', MSG: ''},
+  ALERT_A2: {TITLE: '시작일이 종료일보다 클 수 없습니다.', MSG: ''},
+  ALERT_A3: {TITLE: '과거 시간은 선택할 수 없습니다.', MSG: ''},
+  ALERT_A4: {TITLE: '이번 달 예약가능한 데이터가 모두 소진되었습니다. (충전 후 이용 가능)', MSG: ''},
+  ALERT_A5: {TITLE: '현재 이용중이신 무제한 5G 시작/종료시간과 겹칩니다.', MSG: ''},
+  ALERT_A6: {TITLE: '변경된 항목이 없습니다.', MSG: ''},
+  ALERT_A7: {TITLE: '이미 종료된 예약건입니다.', MSG: ''},
+  ALERT_A8: {TITLE: '최근 6개월 / 최대 1개월씩 조회 가능합니다.', MSG: ''},
+  ALERT_A9: {TITLE: '종료예정시각이 오늘을 넘길 수 없습니다. (당일 예약만 가능)', MSG: ''},
+  ALERT_A10: {TITLE: '시작시간은 현재시각 기준으로 10분 이후부터 설정이 가능합니다.', MSG: ''},
+  ALERT_A11: {TITLE: '이전 예약건 삭제시점부터 1분 후 재예약이 가능합니다.', MSG: ''},
+  ALERT_A12: {TITLE: '시작시간을 다시 확인해주세요.', MSG: ''},
+  ALERT_A13: {TITLE: '원하시는 조회날짜를 선택해주세요.', MSG: ''},
+  ALERT_A14: {TITLE: '예약되어 있는 무제한 5G 시작/종료시간과 겹칩니다.', MSG: ''},
+  CONFIRM_RESERVATION: {
+    TITLE: '예약을 진행하시겠습니까?',
+    MSG: '예약과 동시에 데이터가 차감됩니다.<br>(차감데이터 : ${data})<br><br>설정한 시간보다 50% 적게 이용 시 일부 데이터는 반환됩니다.',
+    BUTTON: '예약'
+  },
+  CONFIRM_RESERVATION_DELETE: {
+    TITLE: '예약을 삭제하시겠습니까?',
+    MSG: '반환 데이터 : ${data} <br>(즉시 반환되며, 1분 뒤 재예약 가능합니다.)',
+    BUTTON: '삭제'
+  },
+  CONFIRM_START: {
+    TITLE: '지금부터 무제한 5G를 시작하시겠습니까?',
+    MSG: '${time}까지 ${data}GB 데이터가 차감됩니다.<br>설정한 시간보다 50% 적게 이용 시<br>일부 데이터는 반환됩니다.'
+  },
+  CONFIRM_TERMINATE: {
+    TITLE: '무제한 5G를 종료하시겠습니까?',
+    MSG: '설정한 시간보다 50% 적게 이용 시 일부 데이터는 반환됩니다.',
+    BUTTON: '종료'
+  },
+  TOAST_RESERVATION: '예약시간에 무제한 5G가 시작됩니다.'
 };
 
 Tw.WEB_ACCESSBILITY = {

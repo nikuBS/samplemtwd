@@ -1,0 +1,20 @@
+<%#
+* @file myt-data.5g-setting.reservation.html
+* @author anklebreaker
+* @since 2019-04-15
+%>
+
+<div class="og-fullLink reserv-auto">
+    <span class="tit-le">예약</span>
+    <% if(reservationInfo.startTime) { %>
+    <button type="button" class="halpbtn arr-right fe-btn_reservation-detail"><span class="og-color1"><%= reservationInfo.startTime %> ~ <%= reservationInfo.endTime %></span></button>
+    <p class="og-resrv-calendar">
+        <button type="button" class="bt-link-tx underline fe-btn_export-calendar">캘린더 내보내기</button>
+        <span class="expl">예약시간에 무제한 5G가 자동으로 켜집니다.</span>
+    </p>
+    <% } else if(dataInfo.dataRemQty < 170) { %>
+    <button type="button" class="fullbtn"><span>기본제공 데이터가 소진되었습니다. (다음 달 이용 가능)</span></button>
+    <% } else { %>
+    <button type="button" class="fullbtn arr-right fe-btn_reservation"><span>예약시간 자동켜짐을 이용해보세요</span></button>
+    <% } %>
+</div>

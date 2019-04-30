@@ -1,0 +1,60 @@
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>무제한 5G 이용 예약확인</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <p class="og-data-deducted">
+                    <span class="tit-le">선차감 데이터</span>
+                    <span class="val-ue fe-data">{{data.convData}}</span>
+                </p>
+                <ul class="og-deducted-list">
+                    <li>
+                        <span class="tit-le">이용날짜</span>
+                        <span class="val-ue"><img src="{{cdn}}/img/t_m5g/og_today.png" class="og-ic-today" alt="오늘">{{data.date}}</span>
+                    </li>
+                    <li>
+                        <span class="tit-le">이용시간</span>
+                        <span class="val-ue bo-ld">{{data.startTime}} ~ {{data.endTime}}</span>
+                    </li>
+                </ul>
+                <p class="og-p-dot mt10">예약시간 5분 전에 알림을 받습니다.</p>
+            </div>
+            <!-- //.cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <p class="og-p-indt">※ 예약변경을 원하실 경우 <span class="tx-bold">삭제 후 재예약</span> 해주시기 바랍니다.<br>
+                    (삭제 시점부터 1분 후 재예약 가능)</p>
+            </div>
+            <!-- //.cont-box -->
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice item-two full">
+                    <li>
+                        <button class="btn-floating btn-style2 fe-btn_delete">삭제</button>
+                    </li>
+                    <li>
+                        <button class="btn-floating btn-style1 fe-btn_ok">확인</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
