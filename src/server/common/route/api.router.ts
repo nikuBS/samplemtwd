@@ -405,6 +405,8 @@ class ApiRouter {
           targetSerial = serialNums;
           if ( serialNums.indexOf('R') !== -1 ) {
             targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[0] : serialNums;
+          } else if (serialNums.indexOf('|') !== -1) {
+            targetSerial = serialNums.split('|')[0];
           }
           return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
         } else {
