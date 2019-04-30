@@ -458,8 +458,7 @@ export const PRODUCT_TYP_CD_LIST = {
 
 export const PRODUCT_CALLPLAN = {
   CIA_INSPT_RSLT: '비정상',
-  SEE_CONTENTS: '상세참조',
-  JOIN_TERMINATE_CHANNEL: '가입해지채널'
+  SEE_CONTENTS: '상세참조'
 };
 
 export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
