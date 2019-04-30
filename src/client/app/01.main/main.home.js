@@ -66,9 +66,9 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 
   if( !Tw.Environment.init ) {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._startLazyRendering, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._setBanner, this));
   } else {
-    this._startLazyRendering();
+    this._setBanner();
   }
 
   // Still Don't know why. temporal fix for link issue.
@@ -2038,30 +2038,5 @@ Tw.MainHome.prototype = {
     } else {
       this._historyService.replaceURL('#store');
     }
-  },
-
-  /**
-   * @function
-   * @desc 홈화면 lazy rendering 처리
-   * @private
-   */
-  _startLazyRendering: function () {
-    // var $homeStore = $('#fe-home-store');
-    // if ( $homeStore.length > 0 ) {
-    //   var tplHomeStore = Handlebars.compile($homeStore.html());
-    //   this.$container.find('#fe-div-home-store').html(tplHomeStore());
-    // }
-    var $doLikeThis = $('#fe-home-do-like-this');
-    if ( $doLikeThis.length > 0 ) {
-      var tplDoLikeThis = Handlebars.compile($doLikeThis.html());
-      this.$container.find('.fe-div-home-do-like-this').html(tplDoLikeThis());
-    }
-    var $notice = $('#fe-home-notice');
-    if ( $notice.length > 0 ) {
-      var tplNotice = Handlebars.compile($notice.html());
-      this.$container.find('.fe-div-home-notice').html(tplNotice());
-    }
-
-    this._setBanner();
   }
 };
