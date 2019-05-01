@@ -380,6 +380,10 @@ class ProductCommonCallplanPreview extends TwViewController {
       titleNm = PRODUCT_SIMILAR_PRODUCT.ADDITIONS;
     }
 
+    if (FormatHelper.isEmpty(similarProductInfo)) {
+      return null;
+    }
+
     let prodIdsLength: any = 0;
     if (['G', 'F'].indexOf(prodTypCd) !== -1 && similarProductInfo.similarsList) {
       let prodIds: any = [];
