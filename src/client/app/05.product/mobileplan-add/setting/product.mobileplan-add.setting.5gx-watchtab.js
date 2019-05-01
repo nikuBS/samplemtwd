@@ -87,6 +87,11 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     this._blurInputNumber();
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 추가 팝업
+   * @returns {*|void}
+   */
   _addNum: function () {
     if (this.$inputNumber.val().length < 10) {
       return;
@@ -104,6 +109,11 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
       $.proxy(this._addNumReq, this, number));
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 추가 api 요청
+   * @returns {*|void}
+   */
   _addNumReq: function (number) {
     this._popupService.close();
 
@@ -121,6 +131,11 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 추가 response
+   * @returns {*|void}
+   */
   _addDelNumRes: function (resp) {
     Tw.CommonHelper.endLoading('.container');
 
@@ -131,12 +146,23 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
   },
 
+  /**
+   * @function
+   * @desc 회선 삭제 클릭 시
+   * @param e - 삭제 클릭 이벤트
+   * @returns {*|void}
+   */
   _delNum: function (e) {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A94.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A94.MSG,
       Tw.BUTTON_LABEL.CONFIRM, Tw.BUTTON_LABEL.CANCEL, null,
       $.proxy(this._delNumReq, this, $(e.currentTarget).data('svc_mgmt_num')));
   },
 
+  /**
+   * @function
+   * @desc 회선 삭제 API 요청
+   * @param svcMgmtNum - 서비스관리번호
+   */
   _delNumReq: function (svcMgmtNum) {
     this._popupService.close();
 
@@ -148,6 +174,11 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
+  /**
+   * @function
+   * @desc 회선 입력란 keyup|input Event 시
+   * @param e - keyup|input Event
+   */
   _detectInputNumber: function (e) {
     if (Tw.InputHelper.isEnter(e)) {
       this.$btnAddNum.trigger('click');
@@ -164,6 +195,10 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     this._toggleNumAddBtn();
   },
 
+  /**
+   * @function
+   * @desc 회선 추가 버튼 토글
+   */
   _toggleNumAddBtn: function () {
     if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
@@ -174,20 +209,39 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 회선 입력란 blur Event
+   * @param e - blur Event
+   */
   _blurInputNumber: function () {
     this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
+  /**
+   * @function
+   * @desc 회선 입력란 focus Event
+   * @param e - focus Event
+   */
   _focusInputNumber: function () {
     this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
+  /**
+   * @function
+   * @desc 삭제 버튼 클릭 시 동작 정의
+   */
   _clearNum: function () {
     this.$inputNumber.val('');
     this.$btnClearNum.hide().attr('aria-hidden', 'true');
     this._toggleNumAddBtn();
   },
 
+  /**
+   * @function
+   * @desc 회선 번호 입력 란 삭제 버튼 display none|block 처리
+   * @param $elem - 삭제 버튼
+   */
   _toggleClearBtn: function () {
     if (this.$inputNumber.val().length > 0) {
       this.$btnClearNum.show().attr('aria-hidden', 'false');
@@ -196,6 +250,12 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc 가입처리에 필요한 회선번호 포맷 산출
+   * @param number - 회선번호
+   * @returns {{serviceNumber1: string, serviceNumber3: string, serviceNumber2: string}}
+   */
   _getServiceNumberFormat: function (number) {
     if (number.length === 10) {
       return {
@@ -212,6 +272,12 @@ Tw.ProductMobileplanAddSetting5gxWatchtab.prototype = {
     };
   },
 
+  /**
+   * @function
+   * @desc 가입처리에 필요한 회선번호 포맷 산출
+   * @param number - 회선번호
+   * @returns {{serviceNumber1: string, serviceNumber3: string, serviceNumber2: string}}
+   */
   _showAndHideAddButton: function () {
     if (this._maxLine === this.$lineList.find('li').length) {
       this.$divInput.hide();
