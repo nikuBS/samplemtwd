@@ -223,17 +223,34 @@ Tw.BannerService.prototype = {
     var link = banner.imgLinkUrl;
 
     if (link) {
-      if (!banner.openInCurrentTab || !banner.isInternalLink) {
-        if (Tw.BrowserHelper.isApp() && banner.isBill) {
-          Tw.CommonHelper.showDataCharge(function() {
-            Tw.CommonHelper.openUrlExternal(link);
-          });
-        } else {
-          Tw.CommonHelper.openUrlExternal(link);
+      switch (banner.linkType) {
+        case Tw.TOS_BANNER_LINK_TARGET.NEW_TAB: {
+          this._openExternalLink(link, banner.isBill);
+          break;
         }
-      } else {
-        window.location.href = link;
+        case Tw.TOS_BANNER_LINK_TARGET.NONE: {
+          break;
+        }
+        case Tw.TOS_BANNER_LINK_TARGET.CURRENT_TAB:
+        default: {
+          if (banner.isInternalLink) {
+            window.location.href = link;
+          } else {
+            this._openExternalLink(link, banner.isBill);
+          }
+          break;
+        }
       }
+    }
+  },
+
+  _openExternalLink: function(link, isBill) {
+    if (Tw.BrowserHelper.isApp() && isBill) {
+      Tw.CommonHelper.showDataCharge(function() {
+        Tw.CommonHelper.openUrlExternal(link);
+      });
+    } else {
+      Tw.CommonHelper.openUrlExternal(link);
     }
   },
 
@@ -273,7 +290,7 @@ Tw.BannerService.prototype = {
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
             isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
-            openInCurrentTab: banner.tosImgLinkTrgtClCd === Tw.TOS_BANNER_LINK_TARGET.CURRENT_TAB
+            linkType: banner.tosImgLinkTrgtClCd
           };
         })
         .value();
@@ -294,7 +311,7 @@ Tw.BannerService.prototype = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
             isInternalLink: banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
-            openInCurrentTab: banner.linkTypCd === Tw.BANNER_LINK_TARGET.CURRENT_TAB
+            linkType: Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
           };
 
           nBanners.push($.extend(banner, temp));
