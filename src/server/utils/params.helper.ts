@@ -1,6 +1,12 @@
 import FormatHelper from './format.helper';
 
 class ParamsHelper {
+  /**
+   * @desc set value of query parameter
+   * @param  {object} params
+   * @returns {string}
+   * @public
+   */
   static setQueryParams(params: any) {
     if ( FormatHelper.isEmpty(params) ) {
       return '';
@@ -13,6 +19,12 @@ class ParamsHelper {
     return result;
   }
 
+  /**
+   * @desc get query params from url
+   * @param  {string} url
+   * @returns {[key: string]: string} 
+   * @public
+   */
   static getQueryParams = (url: string) => {
     if (url.includes('?')) {
       const queryString = url.split('?')[1].split('#')[0];
