@@ -9,10 +9,12 @@ Tw.TOS_BANNER_LINK_TYPE = {
 
 Tw.BANNER_LINK_TARGET = {
   CURRENT_TAB: 'S',
-  NEW_TAB: 'B'
+  NEW_TAB: 'B',
+  NONE: 'N'
 }
 
 Tw.TOS_BANNER_LINK_TARGET = {
+  NONE: '0',
   CURRENT_TAB: '1',
   NEW_TAB: '2'
 }
