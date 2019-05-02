@@ -347,8 +347,8 @@ Tw.CommonMemberSloginIos.prototype = {
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
       this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, [this.mdn])
-        .done($.proxy(this._successRequestCert, this, reCert, $target))
-        .fail($.proxy(this._failRequestCert, this));
+        .done($.proxy(this._successCert, this, reCert, $target))
+        .fail($.proxy(this._failCert, this));
     }
   },
 
@@ -360,8 +360,8 @@ Tw.CommonMemberSloginIos.prototype = {
   _onClickCertAdd: function ($event) {
     var $target = $($event.currentTarget);
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
-      .done($.proxy(this._successRequestCertAdd, this, $target))
-      .fail($.proxy(this._failRequestCertAdd, this));
+      .done($.proxy(this._successCertAdd, this, $target))
+      .fail($.proxy(this._failCertAdd, this));
   },
 
   /**
@@ -372,7 +372,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @param resp
    * @private
    */
-  _successRequestCert: function (reCert, $target, resp) {
+  _successCert: function (reCert, $target, resp) {
     this._clearCertError();
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -399,7 +399,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @param error
    * @private
    */
-  _failRequestCert: function (error) {
+  _failCert: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -452,7 +452,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @param resp
    * @private
    */
-  _successRequestCertAdd: function ($target, resp) {
+  _successCertAdd: function ($target, resp) {
     if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
       clearTimeout(this._addTimer);
     }
@@ -478,7 +478,7 @@ Tw.CommonMemberSloginIos.prototype = {
    * @param error
    * @private
    */
-  _failRequestCertAdd: function (error) {
+  _failCertAdd: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
@@ -619,18 +619,6 @@ Tw.CommonMemberSloginIos.prototype = {
     error.addClass('none');
     error.attr('aria-hidden', true);
   },
-  // _onRefreshCallback: function () {
-  //   if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
-  //     var interval = new Date().getTime() - this._addTime;
-  //
-  //     clearTimeout(this._addTimer);
-  //     if ( interval > Tw.SMS_CERT_TIME ) {
-  //       this._expireAddTime();
-  //     } else {
-  //       this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME - interval);
-  //     }
-  //   }
-  // },
 
   /**
    * @function
@@ -685,10 +673,4 @@ Tw.CommonMemberSloginIos.prototype = {
     }
     return true;
   }
-  // _onClickCopBtn: function () {
-  //   this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-  //     type: Tw.NTV_BROWSER.EXTERNAL,
-  //     href: Tw.URL_PATH.COP_SERVICE
-  //   });
-  // }
 };
