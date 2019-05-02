@@ -1,9 +1,25 @@
+/**
+ * @class
+ * @desc API 요청을 위한 service
+ * @constructor
+ */
 Tw.ApiService = function () {
   this._historyService = new Tw.HistoryService();
   this._nativeService = Tw.Native;
 };
 
 Tw.ApiService.prototype = {
+  /**
+   * @function
+   * @desc API 요청
+   * @param command
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   * @param option
+   * @returns {*}
+   */
   request: function (command, params, headers, pathParams, version, option) {
     // var pathVariables = this._getPathVariables(arguments);
     pathParams = pathParams || [];
@@ -21,12 +37,25 @@ Tw.ApiService.prototype = {
       });
   },
 
+  /**
+   * @function
+   * @desc 여러개의 API 요청
+   * @param requests
+   * @returns {*}
+   */
   requestArray: function (requests) {
     return $.when.apply($, _.map(requests, $.proxy(function (request) {
       return this.request(request.command, request.params, request.headers, request.pathParams, request.version);
     }, this)));
   },
 
+  /**
+   * @function
+   * @desc 외부서버 API 요청
+   * @param command
+   * @param data
+   * @returns {*|{readyState, getResponseHeader, getAllResponseHeaders, setRequestHeader, overrideMimeType, statusCode, abort}}
+   */
   requestAjax: function (command, data) {
     Tw.Logger.info('[API REQ ajax]', command, data);
 
@@ -38,6 +67,13 @@ Tw.ApiService.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc File 업로드 요청
+   * @param command
+   * @param data
+   * @returns {*|{readyState, getResponseHeader, getAllResponseHeaders, setRequestHeader, overrideMimeType, statusCode, abort}}
+   */
   requestForm: function (command, data) {
     Tw.Logger.info('[API REQ Form]', command, data);
 
@@ -52,6 +88,18 @@ Tw.ApiService.prototype = {
     });
   },
 
+  /**
+   * @function
+   * @desc API 응답 예외처리 확인 (차단, 인증 등)
+   * @param command
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   * @param resp
+   * @returns {*}
+   * @private
+   */
   _checkAuth: function (command, params, headers, pathParams, version, resp) {
     Tw.Logger.info('[API RESP]', resp);
     var deferred = $.Deferred();
@@ -123,6 +171,15 @@ Tw.ApiService.prototype = {
       return resp;
     }
   },
+
+  /**
+   * @function
+   * @desc 인증 완료
+   * @param resp
+   * @param deferred
+   * @param requestInfo
+   * @private
+   */
   _completeCert: function (resp, deferred, requestInfo) {
     Tw.Logger.info('[Complete Cert]', resp);
     if ( !Tw.FormatHelper.isEmpty(resp) && resp.code === Tw.API_CODE.CODE_00 ) {
@@ -140,11 +197,31 @@ Tw.ApiService.prototype = {
       deferred.resolve(resp);
     }
   },
+
+  /**
+   * @function
+   * @desc 인증 완료후 API 응답 처리
+   * @param deferred
+   * @param resp
+   * @private
+   */
   _successRequestAfterCert: function (deferred, resp) {
     Tw.Logger.info('[API Resp Cert]', resp);
     deferred.resolve(resp);
   },
 
+  /**
+   * @function
+   * @desc API 요청 option 구성
+   * @param command
+   * @param params
+   * @param headers
+   * @param pathVariables
+   * @param version
+   * @param option
+   * @returns {{method: *, url: *, timeout: number, dataType: string, headers: *, data: string}}
+   * @private
+   */
   _makeOptions: function (command, params, headers, pathVariables, version, option) {
     var prefix = this._setPrefix(command);
     var path = command.path;
@@ -165,6 +242,15 @@ Tw.ApiService.prototype = {
     return result;
   },
 
+  /**
+   * @function
+   * @desc API 요청 URL 구성
+   * @param path
+   * @param pathVariables
+   * @param version
+   * @returns {*}
+   * @private
+   */
   _makePath: function (path, pathVariables, version) {
     version = version || Tw.API_VERSION.V1;
     if ( pathVariables.length > 0 ) {
@@ -176,6 +262,13 @@ Tw.ApiService.prototype = {
     return path;
   },
 
+  /**
+   * @function
+   * @desc API 요청 header 구성
+   * @param command
+   * @param headers
+   * @private
+   */
   _makeHeaders: function (command, headers) {
     var contentType = 'application/json; charset=UTF-8';
     if ( !Tw.FormatHelper.isEmpty(command.contentType) ) {
@@ -184,6 +277,13 @@ Tw.ApiService.prototype = {
     return $.extend(headers, { 'content-type': contentType });
   },
 
+  /**
+   * @function
+   * @desc command에 따른 URL prefix 구성
+   * @param command
+   * @returns {string}
+   * @private
+   */
   _setPrefix: function (command) {
     if ( !Tw.FormatHelper.isEmpty(_.findKey(Tw.API_CMD, command)) ) {
       return '/bypass';
@@ -196,6 +296,13 @@ Tw.ApiService.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc API 요청 path variable 구성
+   * @param args
+   * @returns {*}
+   * @private
+   */
   _getPathVariables: function (args) {
     var arrArgs = Array.prototype.slice.call(args);
     var argsLen = arrArgs.length;
@@ -205,6 +312,12 @@ Tw.ApiService.prototype = {
     return [];
   },
 
+  /**
+   * @function
+   * @desc Native에 세션 전달
+   * @param loginType
+   * @param callback
+   */
   sendNativeSession: function (loginType, callback) {
     this._nativeService.send(Tw.NTV_CMD.SESSION, {
       serverSession: Tw.CommonHelper.getCookie('TWM'),

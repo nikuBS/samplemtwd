@@ -5,6 +5,11 @@ Tw.LOG = {
   DEBUG: 'DEBUG'
 };
 
+/**
+ * @class
+ * @param environment
+ * @constructor
+ */
 Tw.LoggerService = function (environment) {
   this._level = environment === 'prd' ? Tw.LOG.ERROR : Tw.LOG.DEBUG;
   this.log = function() {};
@@ -15,6 +20,10 @@ Tw.LoggerService = function (environment) {
   this.setLogFunc();
 };
 Tw.LoggerService.prototype = {
+  /**
+   * @function
+   * @desc 로그 레벨에 따른 함수 설정
+   */
   setLogFunc: function() {
     switch (this._level) {
       case Tw.LOG.DEBUG:
