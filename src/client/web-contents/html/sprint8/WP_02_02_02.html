@@ -32,15 +32,17 @@
 
 
 <body>
+    <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
-    </div>
+    </div>-->
     <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
      <div class="wrap">
          <!-- .popup hbs -->
          <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
@@ -134,12 +136,16 @@
                                     <div class="widget-box check">
                                         <ul class="select-list" role="group">
                                             <li>
-                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <!-- Grand open 접근성 수정 role="checkbox" 삭제 -->
+                                                <div class="checkbox type01" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <!-- // Grand open 접근성 수정 -->   
                                                     <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
                                                     <!-- 2019.01.23 title값 삭제 -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox1">
                                                         <p class="layout-text">
-                                                            <span class="mtext">서비스 이용약관 및 개인정보<br>수집 동의(필수)</span>
+                                                             <!-- Grand open 접근성 수정 -->
+                                                            <span id="aria-comp-checkbox1" class="mtext">서비스 이용약관 및 개인정보<br>수집 동의(필수)</span>
+                                                             <!-- // Grand open 접근성 수정 -->
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
                                                                     약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.

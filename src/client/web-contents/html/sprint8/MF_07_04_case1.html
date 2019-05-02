@@ -29,6 +29,7 @@
 </head>
 <body>
     <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -36,6 +37,7 @@
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
+    -->
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
@@ -111,7 +113,7 @@
                                     <span id="id-helper2">
                                         <span class="error-txt">카드번호가 올바르지 않습니다.</span>
                                         <span class="error-txt">해당 카드사가 등록되어 있지 않습니다.</span>
-                                    </span>    
+                                    </span>
                                 </span>
                             </li>
                             <li>
@@ -155,11 +157,13 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                        <!--Grand open 접근성-->
                         <ul class="noti-list">
                             <li>텍스트가 1줄인 Case입니다.</li>
-                            <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
-                            <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                            <li>텍스트가 1줄인 Case입니다. <button title="새창열기" type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                            <li>텍스트가 2줄이상인<br>Case입니다. <button title="새창열기" type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
                         </ul>
+                        <!-- //Grand open 접근성-->
                     </div>
                     <!--// .cont-box -->
                     <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->

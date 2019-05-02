@@ -27,7 +27,7 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
+
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
@@ -52,8 +52,8 @@
                         <button type="button" class="icon-gnb-bi"><span class="blind">홈으로</span></button>
                     </div>
                     <div class="h-home-tit">
-                        <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
-                        <button type="button" class="directshop">Shop</button> <!-- 활성화시 .on // -->
+                        <button type="button" class="twrold on" aria-selected="true">T world</button> <!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
+                        <button type="button" class="directshop" aria-selected="false">Shop</button> <!-- 활성화시 .on // --><!-- 접근성-선택되었을때 'true' 변경 Grand open 접근성-->
                     </div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
@@ -200,8 +200,8 @@
                 <!-- 2019.02.22 수정 - 클릭영역 변경 -->
                 <!-- 2019.02.27 수정 - 타이틀 2줄 케이스 main-charge-box클래스에 ti-line2 추가 -->
 
-                <!-- 2019.04.01 배너 영역 제거-김태희매니져님요청사항(DV001-19350) 
-                    
+                <!-- 2019.04.01 배너 영역 제거-김태희매니져님요청사항(DV001-19350)
+
                 <div class="section-box nogaps">
                     <div class="main-charge-box bg-white tfamily ti-line2">
                         <button>
@@ -214,7 +214,7 @@
                                 </div>
                             </div>
                         </button>
-                    </div>  
+                    </div>
                 </div>
 
                 //2019.04.01 배너 영역 제거-김태희매니져님요청사항(DV001-19350) -->
@@ -230,7 +230,7 @@
                         <button>
                             <img class="full-img" src="/img/main/membership_img.png" alt="T멤버십 다양한 제휴 브랜드와 SK텔레콤만의 특별 혜택 모든 등급 회원에게 무한 제공되는 멤버십 한도로 다양한 혜택 누리기 자세히 보기">
                         </button>
-                    </div>  
+                    </div>
                 </div>
                 <!-- //T멤버십 -->
 
@@ -241,7 +241,7 @@
                         <button>
                             <img class="full-img" src="/img/main/mobile_img.png" alt="모바일 요금제 Data 완전 무제한 데이터에 프리미엄 VIP혜택까지 인피니티 자세히 보기">
                         </button>
-                    </div>  
+                    </div>
                 </div>
                 <!-- //모바일 요금제 -->
 
@@ -279,19 +279,19 @@
                                             <ul class="help-list">
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span><!--Grand open 접근성-->
                                                         데이터가<br>부족할 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span><!--Grand open 접근성-->
                                                         휴대폰을<br>분실했을 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span><!--Grand open 접근성-->
                                                         우리 아이<br>스마트폰 관리
                                                     </button>
                                                 </li>
@@ -301,19 +301,19 @@
                                             <ul class="help-list">
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span><!--Grand open 접근성-->
                                                         데이터가<br>부족할 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span><!--Grand open 접근성-->
                                                         휴대폰을<br>분실했을 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span><!--Grand open 접근성-->
                                                         우리 아이<br>스마트폰 관리
                                                     </button>
                                                 </li>
@@ -323,19 +323,19 @@
                                             <ul class="help-list">
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span><!--Grand open 접근성-->
                                                         데이터가<br>부족할 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span><!--Grand open 접근성-->
                                                         휴대폰을<br>분실했을 때
                                                     </button>
                                                 </li>
                                                 <li>
                                                     <button class="bt">
-                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span><!--Grand open 접근성-->
                                                         우리 아이<br>스마트폰 관리
                                                     </button>
                                                 </li>

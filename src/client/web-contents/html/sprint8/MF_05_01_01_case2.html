@@ -29,6 +29,7 @@
 </head>
 <body>
     <!-- #skip_navigation -->
+     <!-- Grand open 접근성 수정
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -36,6 +37,7 @@
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
+    -->
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
@@ -110,11 +112,11 @@
 									<span id="id-helper1">
 										<span class="error-txt">휴대폰 번호가 올바르지 않습니다.</span>
 										<span class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span>
-									</span>                         
+									</span>
 								</span>
 							</li>
 							<li>
-								<label class="tit" for="flab07">계좌정보 <button class="tip-view" title="계좌정보" aria-haspopup="true">TIP</button></label>
+								<label class="tit" for="flab07">계좌정보 <button class="tip-view" title="계좌정보 tip" aria-haspopup="true">TIP</button></label> <!-- Grand open 접근성 -->
 								<button class="bt-dropdown big" title="은행선택" aria-haspopup="true">은행선택<span class="ico"></span></button>
 								<span class="inputbox mt6">
 									<span class="input">
@@ -124,7 +126,7 @@
 									<span id="id-helper2">
 										<span class="error-txt">계좌번호가 올바르지 않습니다.</span>
 										<span class="error-txt">은행정보가 올바르지 않습니다.</span>
-									</span> 
+									</span>
 								</span>
 							</li>
 							<!-- //접근성 수정-->
@@ -135,11 +137,13 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해주세요!</h3>
+						<!-- Grand open 접근성 수정 -->
 						<ul class="noti-list">
 							<li>텍스트가 1줄인 Case입니다.</li>
-							<li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
-							<li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+							<li>텍스트가 1줄인 Case입니다. <button title="~~정보보기" type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+							<li>텍스트가 2줄이상인<br>Case입니다. <button title="~~정보보기" type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
 						</ul>
+						<!--  //Grand open 접근성 수정 -->
 					</div>
 					<!--// .cont-box -->
 					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
