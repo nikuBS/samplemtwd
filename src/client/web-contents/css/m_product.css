@@ -139,7 +139,6 @@
 .prCont-txt a:link,
 .prCont-txt a:visited { color:black!important; text-decoration:none!important; }
 
-
 /* 시각화 원장 */
 .clearfix::after { display:block; content:''; clear:both; }
 .idpt-pc { display:none!important; }
@@ -1053,4 +1052,24 @@
 .idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li img {height:auto}
 .idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li.display-flex .sub-title {font-size:1.5rem; letter-spacing:-0.125rem;}
 .idpt-benefit.idpt-benefit-ogtype .idpt-bg-list > li.display-flex .sub-txt {font-size:0.8125rem}
+/* 190426 추가 [#7589/DV001-21536] */
+.idpt-benefit .benefit-txt-big-t {margin-bottom:0.9375rem; font-size:0.875rem; color:#666;}
+.idpt-benefit .benefit-txt-big-t > span {color:#000;}
+.idpt-benefit span.txt-color-red {color:#ee3a2f;}
+.idpt-benefit span.txt-w-bold {font-weight:600;}
+.idpt-benefit .benefit-data > li .idpt-bl-or {position:absolute; display:block; width:1.75rem; height:1.75rem; top:0.75rem; right:-0.875rem; background:url('/img/product/bg-or-circle_m.png') no-repeat; background-size:100%; color:transparent;}
+.idpt-benefit .benefit-data.list02 > li .idpt-bl-or {right:-1.625rem;}
+.idpt-benefit .benefit-data.list03 > li .idpt-bl-or {right:-0.625rem;}
+.idpt-benefit .idpt-bg-list > li div > p.idpt-bg-list-txt.margin-type2 {margin-top:0.375rem;}
+.idpt-benefit .idpt-data-info {margin:2rem 0 0; text-align:center;}
+.idpt-benefit .idpt-data-info > img {margin:0 0 0.75rem; height:3.625rem; vertical-align:top;}
+.idpt-benefit .idpt-data-info p {font-size:0.9375rem; color:#000;}
+.idpt-benefit .idpt-data-info p + p {margin-top:0.25rem;}
+.idpt-benefit .idpt-voisms-info {margin:2.1875rem 0 0; padding-bottom:0.625rem; text-align:center;}
+.idpt-benefit .idpt-voisms-info .voisms-icos {margin-bottom:1.25rem;}
+.idpt-benefit .idpt-voisms-info .voisms-icos > img {width:3rem; margin:0 0.1875rem;}
+.idpt-benefit .idpt-voisms-info p {font-size:1.4375rem; margin:0.25rem 0; color:#252525; font-weight:600; letter-spacing:-0.0625rem;}
+.idpt-benefit.benefit-promotion-ban {padding:0 !important;}
+.idpt-benefit.benefit-promotion-ban img {vertical-align:top;}
 /* //TWD 추가 */
+

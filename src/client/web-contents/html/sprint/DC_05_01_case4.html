@@ -22,8 +22,8 @@
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
 
-	
-    
+
+
 
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
@@ -35,11 +35,13 @@
 </head>
 <body>
     <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#contents">본문 바로가기</a></li>
         </ul>
     </div>
+    -->
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
@@ -72,7 +74,9 @@
 						<div class="coupon-resel">
 							<ul class="coupon-list-wrap type1">
 								<li>
-									<span class="icon"><i class="icon-80px-coupon-refill"><span class="blind">refill</span></i></span>
+									<!-- Grand open 접근성 수정 -->
+									<span class="icon"><i class="icon-80px-coupon-refill"><span class="blind"></span></i></span>
+                                    <!-- Grand open 접근성 수정 -->
 									<div class="cont">
 										<h2 class="tit">장기가입 쿠폰</h2>
 										<span class="txt1">유효기간: 2018.7.1.~12.31.</span>
@@ -105,7 +109,7 @@
 											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
 												<!-- .cont-box -->
 												<div class="cont-box nogaps">
-													
+
 													<div class="list-comp-input">
 														<div class="widget">
 															<div class="widget-box radio">
@@ -132,7 +136,7 @@
 															</div>
 														</div>
 													</div>
-													
+
 												</div>
 												<!--// .cont-box -->
 											</li>
@@ -143,7 +147,9 @@
                                                         <!-- 2019-01-17 inp-btn 추가 -->
 														<div class="inputbox bt-add inp-btn">
                                                             <span class="input new">
-                                                                <input type="text" placeholder="숫자만 입력" title="받는 분 번호" value="010-12" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                                                <!-- Grand open 접근성 수정 -->
+                                                                <input type="text" placeholder="숫자만 입력" title="받는 분 번호 숫자만 입력해 주세요" value="010-12" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                                                <!-- Grand open 접근성 수정 -->
                                                                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn">

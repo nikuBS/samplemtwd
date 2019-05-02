@@ -29,6 +29,7 @@
 </head>
 <body>
     <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정 
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -36,6 +37,7 @@
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
+    -->
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
@@ -200,12 +202,18 @@
                                                             <div class="widget-box check">
                                                                 <ul class="select-list" role="group">
                                                                     <li>
-                                                                        <div class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                        <!-- Grand open 접근성 수정 role="checkbox" 삭제 -->
+                                                                        <div class="checkbox type01 checked" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                            <!-- // Grand open 접근성 수정 -->   
                                                                             <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" checked/><!-- 체크상태일 경우 checked="checked" -->
-                                                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                                            <!-- Grand open 접근성 수정 id삭제-->
+                                                                            <div class="comp-list-layout">
+                                                                            <!-- // Grand open 접근성 수정 -->
                                                                                 <div class="layout-text">
                                                                                     <div class="form-type">
-                                                                                        <span class="title">이메일로 안내</span>
+                                                                                        <!-- Grand open 접근성 수정 id추가-->
+                                                                                        <span class="title" id="aria-comp-checkbox1">이메일로 안내</span>
+                                                                                        <!-- // Grand open 접근성 수정 -->
                                                                                         <div class="input-wrap mt10">
                                                                                             <span class="tit">이메일 주소</span>
                                                                                             <div class="form-box">
@@ -223,12 +231,18 @@
                                                                         </div>
                                                                     </li>
                                                                     <li>
-                                                                        <div class="checkbox type01 checked" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                        <!-- Grand open 접근성 수정 role="checkbox" 삭제 -->
+                                                                        <div class="checkbox type01 checked" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                            <!-- // Grand open 접근성 수정 -->
                                                                             <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox2" checked/><!-- 체크상태일 경우 checked="checked" -->
-                                                                            <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                                            <!-- Grand open 접근성 수정 id삭제 -->
+                                                                            <div class="comp-list-layout">
+                                                                            <!-- // Grand open 접근성 수정 -->
                                                                                 <div class="layout-text">
                                                                                     <div class="form-type">
-                                                                                        <span class="title">문자로 안내</span>
+                                                                                        <!-- Grand open 접근성 수정 id추가-->
+                                                                                        <span class="title" id="aria-comp-checkbox2">문자로 안내</span>
+                                                                                        <!-- // Grand open 접근성 수정 -->
                                                                                         <div class="input-wrap mt10">
                                                                                             <span class="tit">휴대폰번호</span>
                                                                                             <div class="form-box">
@@ -262,9 +276,11 @@
 												<div class="cont-box nogaps-btm">
                                                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                                                     <ul class="noti-list">
-                                                        <li><button type="button" class="tip-view-btn" title="일시정지 신청안내 TIP보기" aria-haspopup="true">일시정지 신청안내 <span class="tip-view">TIP</span></button></li>
-                                                        <li><button type="button" class="tip-view-btn" title="일시정지 기간안내 TIP보기" aria-haspopup="true">일시정지 기간안내 <span class="tip-view">TIP</span></button></li>
-                                                        <li><button type="button" class="tip-view-btn" title="일시정지 요금안내 TIP보기" aria-haspopup="true">일시정지 요금안내 <span class="tip-view">TIP</span></button></li>
+                                                        <!-- Grand open 접근성 수정 -->
+                                                        <li><button type="button" class="tip-view-btn" aria-haspopup="true">일시정지 신청안내 <span class="tip-view">TIP</span></button></li>
+                                                        <li><button type="button" class="tip-view-btn" aria-haspopup="true">일시정지 기간안내 <span class="tip-view">TIP</span></button></li>
+                                                        <li><button type="button" class="tip-view-btn" aria-haspopup="true">일시정지 요금안내 <span class="tip-view">TIP</span></button></li>
+                                                        <!-- // Grand open 접근성 수정 -->
                                                     </ul>
 												</div>
 												<!--// .cont-box -->
