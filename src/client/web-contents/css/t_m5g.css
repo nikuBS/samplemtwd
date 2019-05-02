@@ -552,6 +552,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-pack-list .og-plan-pack-item:first-child{margin-left:0}
 .og-plan-price-list .og-share .og-share-box{ padding:1.56rem 0.9rem; background:#fff url('/img/t_m5g/og_share_img.png') no-repeat right 50%; background-size:7.65rem; min-height:5.62rem; box-sizing:border-box }
 .og-plan-price-list .og-share .og-share-box .og-share-txt{width:65%; font-size:0.84rem}
+.og-plan-price-list .og-share .og-share-box_2{ padding:1.56rem 0.9rem; background:#fff url('/img/t_m5g/og_share_img_2.png') no-repeat right 50%; background-size:9.65rem; min-height:5.62rem; box-sizing:border-box } /* 190430 [#7617]_추가 */
 
 .og-5mktp-wrap .og-vr-price-box{margin:0 -1.5rem; background:#f7f7f7}
 .og-5mktp-wrap .og-vr-price-box .og-vr-price-list{width:100%}
@@ -632,6 +633,6 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .dwg-frm-area .frm-textarea::placeholder {font-weight:normal}
 /* //[DV001-20897] 190419 추가 - 190422 수정 - 190429 수정 - DG방어 */
 
-/* 190424 5GX 스탠다드 */
+/* 190424 [DV001-21491] 5GX 스탠다드 */
 .production-benefit-wrap .ico.ico-5g-membership-vip{background-image:url(../img/ico/ico-5g-membership-vip.png);background-size: 3.75rem}
 .production-benefit-wrap .ico.ico-5g-insurance-off{background-image:url(../img/ico/ico-5g-insurance-off.png);background-size: 3.75rem}

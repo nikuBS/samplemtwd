@@ -28,7 +28,7 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body>
-    <!-- #skip_navigation -->
+    <!-- #skip_navigation 팝업페이지 바로가기 삭제 Grand open 접근성
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -36,7 +36,7 @@
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
-    <!--// #skip_navigation -->
+    // #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup fixed-bottom"><!-- 2019.03.18 수정 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -60,19 +60,19 @@
                         <div class="input-list">
                             <ul>
                                 <li>
-                                    <span class="custom-form"><input type="radio" id="ok1" name="r1"><span class="r-type1"></span></span>
+                                    <span class="custom-form"><input type="radio" id="ok1" name="r1"><span class="r-type1" aria-checked="false"></span></span><!--선택되었을때 aria-checked="true" Grand open 접근성-->
                                     <label for="ok1">검색정보의 다양성이 부족하다.</label>
                                 </li>
                                 <li>
-                                    <span class="custom-form"><input type="radio" id="ok2" name="r1"><span class="r-type1"></span></span>
+                                    <span class="custom-form"><input type="radio" id="ok2" name="r1"><span class="r-type1" aria-checked="false"></span></span><!--선택되었을때 aria-checked="true" Grand open 접근성-->
                                     <label for="ok2">검색기능이 편리하지 않다.</label>
                                 </li>
                                 <li>
-                                    <span class="custom-form"><input type="radio" id="ok3" name="r1"><span class="r-type1"></span></span>
+                                    <span class="custom-form"><input type="radio" id="ok3" name="r1"><span class="r-type1" aria-checked="false"></span></span><!--선택되었을때 aria-checked="true" Grand open 접근성-->
                                     <label for="ok3">검색결과가 정확하지 않다.</label>
                                 </li>
                                 <li>
-                                    <span class="custom-form"><input type="radio" id="ok4" name="r1"><span class="r-type1"></span></span>
+                                    <span class="custom-form"><input type="radio" id="ok4" name="r1"><span class="r-type1" aria-checked="false"></span></span><!--선택되었을때 aria-checked="true" Grand open 접근성-->
                                     <label for="ok4">검색응답시간이 느리다.</label>
                                 </li>
                             </ul>

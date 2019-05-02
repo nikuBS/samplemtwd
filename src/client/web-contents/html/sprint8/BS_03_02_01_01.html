@@ -28,15 +28,17 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body>
+    <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
-    </div>
+    </div>-->
     <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
     <div class="wrap">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -75,22 +77,24 @@
                         <hr class="cont-sp type1" aria-hidden="true">
                         <!-- .cont-box -->
 					    <div class="cont-box nogaps-hoz">
-                            <div class="separate-link-list nogaps-m-top">
-                                <ul>
-                                    <li>
-                                        <div class="txt-area" id="aria-separate-list0">
-                                            <span class="tit">T가족모아데이터</span>        
-                                        </div>
-                                        <a href="" aria-labelledby="aria-separate-list0" class="btn">상세보기</a>
-                                    </li>
-                                    <li>
-                                        <div class="txt-area" id="aria-separate-list1">
-                                            <span class="tit">T가족모아데이터</span>        
-                                        </div>
-                                        <a href="" aria-labelledby="aria-separate-list1" class="btn">상세보기</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <ul class="link-list type2">
+                                <li>
+                                    <dl>
+                                        <dt>T끼리 Plus 할인 적용 예시</dt>
+                                        <dd>
+                                            <button>T끼리 Plus 할인 적용 예시 팝업</button>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>장기가입 할인 확인하기</dt>
+                                        <dd>
+                                            <button>장기가입 할인 확인하기 팝업</button>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
                         </div>
                         <!--// .cont-box -->
                         
@@ -102,9 +106,11 @@
                     <!-- .cont-box --><!-- 2018-11-02 수정 -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <!-- Grand open 접근성 수정 -->
                         <ul class="noti-list02">
-                            <li><button type="button" class="tip-view-btn" title="서비스 이용안내 TIP보기" aria-haspopup="true">서비스 이용안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+                            <li><button type="button" class="tip-view-btn" aria-haspopup="true">서비스 이용안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
                         </ul>
+                        <!--// Grand open 접근성 수정 -->
                     </div>
                     <!--// .cont-box -->
 
