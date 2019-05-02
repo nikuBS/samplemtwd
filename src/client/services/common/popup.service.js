@@ -1,3 +1,7 @@
+/**
+ * @class
+ * @desc popup service
+ */
 Tw.PopupService = function () {
   this.$document = $(document);
   this.$window = $(window);
@@ -15,10 +19,18 @@ Tw.PopupService = function () {
 };
 
 Tw.PopupService.prototype = {
+  /**
+   * @desc initialize service
+   * @private
+   */
   _init: function () {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
     window.onpopstate = $.proxy(this._onPopState, this);
   },
+  /**
+   * @desc bind handler for hash change
+   * @private
+   */
   _onHashChange: function (hash) {
     Tw.Logger.log('[Popup] Hash Change', hash, '', this._firePop);
     if ( !this._firePop ) {
@@ -29,7 +41,11 @@ Tw.PopupService.prototype = {
     }
     this._firePop = false;
   },
-  _onPopState: function ($event) {
+  /**
+   * @desc bind handler for pop state
+   * @private
+   */
+  _onPopState: function () {
     this._firePop = true;
     this._historyBack = false;
     var hash = location.hash || '#';
@@ -55,6 +71,11 @@ Tw.PopupService.prototype = {
       this._blockEmptyHash();
     }
   },
+
+  /**
+   * @desc go back, when last hash is empty
+   * @private
+   */
   _blockEmptyHash: function () {
     if ( Tw.BrowserHelper.isSamsung() ) {
       if ( window.performance && performance.navigation.type === 1 ) {
@@ -66,6 +87,12 @@ Tw.PopupService.prototype = {
       this._goBack();
     }
   },
+  
+  /**
+   * @desc  callback for opening popup
+   * @param  {$object} evt jquery object for event target
+   * @private
+   */
   _onOpenPopup: function (evt) {
     var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
@@ -111,6 +138,12 @@ Tw.PopupService.prototype = {
     // 포커스 영역 저장 후 포커스 이동 end
 
   },
+
+  /**
+   * @desc  callback for failure to open popup
+   * @param  {object} retryParams parameters
+   * @private
+   */
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
       var lastHash = this._prevHashList[this._prevHashList.length - 1];
@@ -127,6 +160,12 @@ Tw.PopupService.prototype = {
       }, this), 100);
     }
   },
+
+  /**
+   * @desc  callback for retrying to open popup
+   * @param  {object} retryParams parameters
+   * @private
+   */
   _onRetry: function (retryParams) {
     setTimeout($.proxy(function () {
       this._setOpenCallback(retryParams.openCallback);
@@ -135,6 +174,12 @@ Tw.PopupService.prototype = {
       this._open(retryParams.option, retryParams.evt);
     }, this), 200);
   },
+
+  /**
+   * @desc  callback for retry to open popup
+   * @param  {object} retryParams parameters
+   * @private
+   */
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
     if ( !Tw.FormatHelper.isEmpty(closeCallback) ) {
@@ -145,6 +190,13 @@ Tw.PopupService.prototype = {
     var $lastPopup = $('.tw-popup').last();
     $lastPopup.attr('aria-hidden', 'false');
   },
+
+  /**
+   * @desc push hash to list with callback fuction
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @private
+   */
   _addHash: function (closeCallback, hashName) {
     var curHash = location.hash || '#';
     // Tw.Logger.log('[Popup] Add Hash', curHash);
@@ -162,17 +214,34 @@ Tw.PopupService.prototype = {
     // location.hash = hashName;
     history.pushState(this._popupObj, hashName, hashName);
   },
+
+  /**
+   * @desc bind events
+   * @param  {$object} $container jquery object for container
+   * @private
+   */
   _bindEvent: function ($container) {
     $container.on('click', '.popup-blind', _.debounce($.proxy(this._onClickBlind, this, $container), 500));
     $container.on('click', '.popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
     $container.on('click', '.tw-popup-closeBtn', _.debounce($.proxy(this.close, this), 500));
     $container.on('click', '.tw-popup-confirm', _.debounce($.proxy(this._confirm, this), 500));
   },
+
+  /**
+   * @desc when click background on popup
+   * @param  {$object} $container jquery object for container
+   * @private
+   */
   _onClickBlind: function ($container) {
     if ( $container.find('.fe-no-blind-close').length === 0 ) {
       this.close();
     }
   },
+
+  /**
+   * @desc handler for click confirm button
+   * @private
+   */
   _confirm: function () {
     if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
       this._sendConfirmCallback();
@@ -180,23 +249,50 @@ Tw.PopupService.prototype = {
       this.close();
     }
   },
+
+  /**
+   * @desc set callback for click confirm button
+   * @private
+   */
   _setConfirmCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
       this._confirmCallback = callback;
     }
   },
+
+  /**
+   * @desc set callback for opening confirm button
+   * @private
+   */
   _setOpenCallback: function (callback) {
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
       this._openCallback = callback;
     }
   },
+
+  /**
+   * @desc execute callback for click confirm button
+   * @private
+   */
   _sendConfirmCallback: function () {
     this._confirmCallback();
   },
+
+  /**
+   * @desc execute callback for opening confirm button
+   * @private
+   */
   _sendOpenCallback: function ($container) {
     this._openCallback($container);
     this._openCallback = null;
   },
+
+  /**
+   * @desc open popup
+   * @param  {object} option popup options
+   * @param  {$object} evt jquery object for event target
+   * @private
+   */
   _open: function (option, evt) {
     // CDN Url 셋팅 안된 채로 open 시도시 200ms 지연 후 재시도
     if ( Tw.FormatHelper.isEmpty(Tw.Environment.cdn) ) {
@@ -218,11 +314,32 @@ Tw.PopupService.prototype = {
       evt: evt
     }));
   },
+  
+  /**
+   * @desc open popup
+   * @param  {object} option popup options
+   * @param  {Function} openCallback
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @param  {$object} evt jquery object for event target
+   * @public
+   */
   open: function (option, openCallback, closeCallback, hashName, evt) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
     this._open(option, evt);
   },
+
+  /**
+   * @desc open alert
+   * @param  {string} contents
+   * @param  {string} title
+   * @param  {string} btName
+   * @param  {Function} closeCallback
+   * @param  {string} hash
+   * @param  {$object} evt
+   * @public
+   */
   openAlert: function (contents, title, btName, closeCallback, hash, evt) {
     var option = {
       title: title,
@@ -237,6 +354,16 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hash);
     this._open(option, evt);
   },
+  
+  /**
+   * @desc open confirm popup
+   * @param  {string} contents
+   * @param  {string} title
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {$object} evt
+   * @public
+   */
   openConfirm: function (contents, title, confirmCallback, closeCallback, evt) {
     var option = {
       title: title,
@@ -255,6 +382,18 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option, evt);
   },
+
+  /**
+   * @desc open custom confirm popup
+   * @param  {string} contents
+   * @param  {string} title
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} cancelButton
+   * @param  {string} confirmButton
+   * @param  {$object} evt
+   * @public
+   */
   openConfirmButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton, evt) {
     var option = {
       title: title,
@@ -273,21 +412,17 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option, evt);
   },
-  openChoice: function (title, list, type, openCallback, closeCallback, evt) {
-    var option = {
-      hbs: 'choice',
-      title: title,
-      close_bt: true,
-      list_type: type || 'type1',
-      list: list
-    };
-    this._setOpenCallback(openCallback);
-    this._addHash(closeCallback);
-    this._open(option, evt);
-  },
-  openSelect: function () {
-
-  },
+  
+  /**
+   * @desc open alert
+   * @param  {string} title
+   * @param  {string} contents
+   * @param  {string} icoType
+   * @param  {Function} openCallback
+   * @param  {Function} closeCallback
+   * @param  {$object} evt
+   * @public
+   */
   openTypeA: function (title, contents, icoType, openCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type2',
@@ -302,6 +437,18 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option, evt);
   },
+  
+  /**
+   * @desc open alert
+   * @param  {string} title
+   * @param  {string} contents
+   * @param  {Array} linkList
+   * @param  {string} icoType
+   * @param  {Function} openCallback
+   * @param  {Function} closeCallback
+   * @param  {$object} evt
+   * @public
+   */
   openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback, evt) {
     var option = {
       ico: icoType || 'type3',
@@ -317,57 +464,20 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option, evt);
   },
-  openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback, evt) {
-    var option = {
-      ico: icoType || 'type3',
-      title: title,
-      contents: contents,
-      link_list: linkList,
-      bt: [{
-        style_class: 'bt-blue1 tw-popup-confirm',
-        txt: btName || Tw.BUTTON_LABEL.CONFIRM
-      }, {
-        style_class: 'bt-white2 tw-popup-closeBtn',
-        txt: Tw.BUTTON_LABEL.CLOSE
-      }]
-    };
-    this._setOpenCallback(openCallback);
-    this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
-    this._open(option, evt);
-  },
-  openTypeC: function (title, noticeList, icoType, openCallback, closeCallback, evt) {
-    var option = {
-      ico: icoType || 'type4',
-      title: title,
-      title_type: 'sub-c',
-      notice_has: 'notice_has',
-      notice_list: noticeList,
-      bt: [{
-        style_class: 'bt-white2 tw-popup-closeBtn',
-        txt: Tw.BUTTON_LABEL.CLOSE
-      }]
-    };
-    this._setOpenCallback(openCallback);
-    this._addHash(closeCallback);
-    this._open(option, evt);
-  },
-  openTypeD: function (title, contents, btName, icoType, openCallback, confirmCallback, closeCallback, evt) {
-    var option = {
-      url: Tw.Environment.cdn + '/hbs/',
-      ico: icoType || 'type2',
-      title: title,
-      contents: contents,
-      bt: [{
-        style_class: 'bt-red1 tw-popup-confirm',
-        txt: btName || Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
-    this._setOpenCallback(openCallback);
-    this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
-    this._open(option, evt);
-  },
+
+  /**
+   * @desc open confirm popup
+   * @param  {string} title
+   * @param  {string} contents
+   * @param  {string} btName
+   * @param  {Function} openCallback
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @param  {string} align
+   * @param  {$object} evt
+   * @public
+   */
   openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
     var option = {
       title: title,
@@ -387,6 +497,20 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option, evt);
   },
+
+  /**
+   * @desc open poppup for change line
+   * @param  {object} from service info
+   * @param  {object} target current line 
+   * @param  {string} btName
+   * @param  {Function} openCallback
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @param  {string} align
+   * @param  {$object} evt
+   * @public
+   */
   openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align, evt) {
 
     // 회선 정보
@@ -440,6 +564,20 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option, evt);
   },
+
+  /**
+   * @desc open modal poup had two buttons
+   * @param  {string} title
+   * @param  {string} contents
+   * @param  {string} btName
+   * @param  {string} closeBtName
+   * @param  {Function} openCallback
+   * @param  {Function} confirmCallback
+   * @param  {Function} closeCallback
+   * @param  {string} hashName
+   * @param  {$object} evt
+   * @public
+   */
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName, evt) {
     var option = {
       title: title,
@@ -459,25 +597,12 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option, evt);
   },
-  openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback, evt) {
-    var option = {
-      title: title,
-      title_type: 'sub',
-      cont_align: 'tl',
-      contents: contents,
-      bt_b: [{
-        style_class: 'pos-left tw-popup-closeBtn',
-        txt: Tw.BUTTON_LABEL.CANCEL
-      }, {
-        style_class: 'bt-red1 pos-right tw-popup-confirm',
-        txt: btName || Tw.BUTTON_LABEL.CONFIRM
-      }]
-    };
-    this._setOpenCallback(openCallback);
-    this._setConfirmCallback(confirmCallback);
-    this._addHash(closeCallback);
-    this._open(option, evt);
-  },
+
+  /**
+   * @desc open toast
+   * @param {string} message 
+   * @public
+   */
   toast: function (message) {
     skt_landing.action.popup.toast({
       url: Tw.Environment.cdn + '/hbs/',
@@ -485,6 +610,11 @@ Tw.PopupService.prototype = {
       second: 5
     });
   },
+
+  /**
+   * @desc close popup
+   * @public
+   */
   close: function () {
     Tw.Logger.log('[Popup] Call Close', location.hash);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
@@ -527,6 +657,11 @@ Tw.PopupService.prototype = {
       }
     }
   },
+
+  /**
+   * @desc close all popup
+   * @public
+   */
   closeAll: function ($container, $focusTarget) {
     var hashLength = this._prevHashList.length;
     if ( hashLength > 0 ) {
@@ -550,6 +685,12 @@ Tw.PopupService.prototype = {
       }
     }
   },
+
+  /**
+   * @desc go to link after close all popup
+   * @param {string} targetUrl
+   * @public
+   */
   closeAllAndGo: function (targetUrl) {
     var hashLength = this._prevHashList.length;
     this._prevHashList = [];
@@ -560,6 +701,11 @@ Tw.PopupService.prototype = {
       location.replace(targetUrl);
     }, 0);
   },
+
+  /**
+   * @desc whether current page is popup or not
+   * @public
+   */
   isPopup: function () {
     var $popups = $('.tw-popup');
     var $currentPopup = $($popups[$popups.length - 1]);
@@ -569,6 +715,16 @@ Tw.PopupService.prototype = {
     }
     return null;
   },
+
+  /**
+   * @desc open complete popup
+   * @param  {string} historyUrl
+   * @param  {string} mainUrl
+   * @param  {string} linkText
+   * @param  {string} text
+   * @param  {string} subText
+   * @public
+   */
   afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
         hbs: 'complete',
@@ -582,10 +738,24 @@ Tw.PopupService.prototype = {
       'complete'
     );
   },
+  
+  /**
+   * @desc bind event to complete popup
+   * @param  {string} historyUrl
+   * @param  {string} mainUrl
+   * @param  {$object} $layer
+   * @private
+   */
   _onComplete: function (historyUrl, mainUrl, $layer) {
     $layer.on('click', '.fe-payment-history', $.proxy(this._goLink, this, historyUrl));
     $layer.on('click', '.fe-submain', $.proxy(this._goLink, this, mainUrl));
   },
+
+  /**
+   * @desc go link
+   * @param  {string} url
+   * @private
+   */
   _goLink: function (url) {
     if ( typeof(url) === 'object' ) {
       this.open({
@@ -595,9 +765,19 @@ Tw.PopupService.prototype = {
       location.href = url;
     }
   },
+
+  /**
+   * @desc go back
+   * @private
+   */
   _goBack: function () {
     history.back();
   },
+
+  /**
+   * @desc remove hash
+   * @private
+   */
   _emptyHash: function () {
     history.replaceState(this._popupObj, '#', '#');
   },
