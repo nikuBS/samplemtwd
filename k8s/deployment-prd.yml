@@ -36,7 +36,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: bff-nodejs-mobile
-        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.48.0
+        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.48.1
         env:
         - name: REDIS_PWD_KEY
           valueFrom:
