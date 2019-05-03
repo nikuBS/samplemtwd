@@ -5,7 +5,9 @@ import ApiService from '../../services/api.service';
 import FormatHelper from '../../utils/format.helper';
 import LoginService from '../../services/login.service';
 
-
+/**
+ * BFF bypass API 라우터
+ */
 class BypassRouter {
   public router: Router;
 

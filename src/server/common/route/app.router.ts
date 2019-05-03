@@ -7,6 +7,9 @@ export interface IRouterMap {
   post?: boolean;
 }
 
+/**
+ * @desc 페이지 라우터
+ */
 class AppRouter {
   public router: Router;
 
