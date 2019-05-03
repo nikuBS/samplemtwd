@@ -4,7 +4,9 @@ import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import ApiService from '../../services/api.service';
 
-
+/**
+ * Native 에서 사용하는 bypass API 라우터
+ */
 class NativeRouter {
   public router: Router;
 

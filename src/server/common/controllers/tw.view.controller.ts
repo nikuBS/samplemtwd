@@ -15,6 +15,9 @@ import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import ParamsHelper from '../../utils/params.helper';
 
+/**
+ * @desc controller 상위 class
+ */
 abstract class TwViewController {
   private readonly _apiService: ApiService;
   private readonly _loginService: LoginService;
@@ -53,6 +56,12 @@ abstract class TwViewController {
     return this._error;
   }
 
+  /**
+   * controller 초기화
+   * @param req
+   * @param res
+   * @param next
+   */
   public initPage(req: any, res: any, next: any): void {
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
     const tokenId = req.query.id_token;
@@ -80,14 +89,28 @@ abstract class TwViewController {
     });
   }
 
+  /**
+   * 로그인 확인
+   * @param req
+   */
   private checkLogin(req): boolean {
     return this._loginService.isLogin(req);
   }
 
+  /**
+   * query parameter에 ID존재하는지 확인
+   * @param tokenId
+   * @param userId
+   */
   private existId(tokenId: string, userId: string) {
     return !(FormatHelper.isEmpty(tokenId) && FormatHelper.isEmpty(userId));
   }
 
+  /**
+   * SSO 로그인 쿠키 확인
+   * @param req
+   * @param path
+   */
   private checkSSOLogin(req, path): boolean {
     const ssoCookie = req.cookies[COOKIE_KEY.TID_SSO];
     return !BrowserHelper.isApp(req) && !FormatHelper.isEmpty(ssoCookie) &&
@@ -96,6 +119,15 @@ abstract class TwViewController {
       !/\/common\/member\/withdrawal-complete/i.test(path) && !/\/common\/member\/init/i.test(path);
   }
 
+  /**
+   * 로그인 요청
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   * @param tokenId
+   * @param userId
+   */
   private login(req, res, next, path, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
       const state = req.query.stateVal || req.query.state;
@@ -121,11 +153,25 @@ abstract class TwViewController {
     }
   }
 
+  /**
+   * 세션 정보를 통한 로그인 처리
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   */
   private sessionLogin(req, res, next, path) {
     this._logger.info(this, '[Session Login]');
     this.renderPage(req, res, next, path);
   }
 
+  /**
+   * 세션 쿠키를 통한 로그인 확인
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   */
   private sessionCheck(req, res, next, path) {
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
@@ -138,12 +184,27 @@ abstract class TwViewController {
     }
   }
 
+  /**
+   * 채널 정보 쿠키 저장
+   * @param req
+   * @param res
+   */
   private setChannel(req, res): Observable<any> {
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
     this.logger.info(this, '[set cookie]', channel);
     return this._loginService.setChannel(req, channel);
   }
 
+  /**
+   * 화면 권한 처리
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   */
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
@@ -228,14 +289,33 @@ abstract class TwViewController {
     });
   }
 
+  /**
+   * 화면 권한 오류 페이지
+   * @param req
+   * @param res
+   * @param next
+   */
   private errorAuth(req, res, next) {
     res.render('error.no-auth.html');
   }
 
+  /**
+   * 회선 없음 오류 페이지
+   * @param req
+   * @param res
+   * @param next
+   */
   private errorNoRegister(req, res, next) {
     res.render('error.no-register.html');
   }
 
+  /**
+   * 페이지 렌더링을 위한 처리 시작
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   */
   private renderPage(req, res, next, path) {
     const svcInfo = this._loginService.getSvcInfo(req);
     const allSvc = this._loginService.getAllSvcInfo(req);
@@ -243,6 +323,14 @@ abstract class TwViewController {
     this.getAuth(req, res, next, path, svcInfo, allSvc, childInfo);
   }
 
+  /**
+   * 로그인 실패 처리
+   * @param req
+   * @param res
+   * @param next
+   * @param path
+   * @param errorCode
+   */
   private failLogin(req, res, next, path, errorCode) {
     const target = this.getTargetUrl(path, req.query);
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
@@ -258,6 +346,11 @@ abstract class TwViewController {
     }
   }
 
+  /**
+   * 로그인 후 이동 URL 구성
+   * @param url
+   * @param query
+   */
   private getTargetUrl(url, query) {
     delete query.id_token;
     delete query.stateVal;
@@ -268,6 +361,12 @@ abstract class TwViewController {
     return url + ParamsHelper.setQueryParams(query);
   }
 
+  /**
+   * 차단 정보 확인
+   * @param urlMeta
+   * @param svcInfo
+   * @param res
+   */
   private checkServiceBlock(urlMeta: any, svcInfo: any, res): Observable<boolean> {
     if ( !FormatHelper.isEmpty(urlMeta.block) && urlMeta.block.length > 0 ) {
       const blockList = urlMeta.block;

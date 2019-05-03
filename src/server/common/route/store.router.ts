@@ -6,6 +6,9 @@ import FormatHelper from '../../utils/format.helper';
 import LoginService from '../../services/login.service';
 
 
+/**
+ * 세션에 저장된 API 라우터
+ */
 class StoreRouter {
   public router: Router;
 
