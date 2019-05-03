@@ -13,6 +13,9 @@ import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 import { SvcInfoModel } from '../models/svc-info.model';
 import DateHelper from '../utils/date.helper';
 
+/**
+ * @desc API 요청을 위한 service
+ */
 class ApiService {
   static instance;
   private loginService: LoginService = new LoginService();
@@ -23,12 +26,25 @@ class ApiService {
   constructor() {
   }
 
+  /**
+   * request, response 저장
+   * @param req
+   * @param res
+   */
   public setCurrentReq(req, res) {
     this.req = req;
     this.res = res;
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
   }
 
+  /**
+   * API 요청
+   * @param command
+   * @param params
+   * @param header
+   * @param pathParams
+   * @param version
+   */
   public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
     const req = this.req;
     const res = this.res;
@@ -46,11 +62,26 @@ class ApiService {
     });
   }
 
+  /**
+   * command 별 server 주소 조회
+   * @param command
+   * @param req
+   */
   public getServerUri(command: any, req: any): string {
     const buildType = (command.server === API_SERVER.BFF && this.loginService.isGreen(req) === BUILD_TYPE.GREEN) ? '_G' : '';
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
+  /**
+   * API 요청 option 구성
+   * @param command
+   * @param apiUrl
+   * @param params
+   * @param header
+   * @param args
+   * @param version
+   * @param req
+   */
   private getOption(command: any, apiUrl: any, params: any, header: any, args: any[], version, req: any): any {
     let option = {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
@@ -67,6 +98,13 @@ class ApiService {
     return option;
   }
 
+  /**
+   * API 요청 header 구성
+   * @param command
+   * @param header
+   * @param params
+   * @param req
+   */
   private makeHeader(command: any, header: any, params, req): any {
     if ( FormatHelper.isEmpty(header) ) {
       header = {};
@@ -97,16 +135,33 @@ class ApiService {
     }
   }
 
+  /**
+   * API 요청 cookie 구성
+   * @param req
+   */
   private makeCookie(req): string {
     return COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession(req) + ';' +
       COOKIE_KEY.CHANNEL + '=' + this.loginService.getChannel(req) + ';' +
       COOKIE_KEY.DEVICE + '=' + this.loginService.getDevice(req);
   }
 
+  /**
+   * Native 에서 보내는 API cookie 구성
+   * @param cookie
+   * @param req
+   */
   private makeNativeCookie(cookie, req): string {
     return cookie + ';' + COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession(req) + ';';
   }
 
+  /**
+   * API 요청 URL 구성
+   * @param path
+   * @param method
+   * @param params
+   * @param args
+   * @param version
+   */
   private makePath(path: string, method: API_METHOD, params: any, args: any[], version): string {
     version = version || API_VERSION.V1;
     if ( args.length > 0 ) {
@@ -121,6 +176,15 @@ class ApiService {
     return path;
   }
 
+  /**
+   * API response 파싱
+   * @param observer
+   * @param command
+   * @param req
+   * @param res
+   * @param startTime
+   * @param resp
+   */
   private apiCallback(observer, command, req, res, startTime, resp) {
     const contentType = resp.headers['content-type'];
 
@@ -162,6 +226,14 @@ class ApiService {
     }
   }
 
+  /**
+   * API Error response 파싱
+   * @param observer
+   * @param command
+   * @param req
+   * @param res
+   * @param err
+   */
   private handleError(observer, command, req, res, err) {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
@@ -209,6 +281,12 @@ class ApiService {
     }
   }
 
+  /**
+   * 서버세션저장
+   * @param headers
+   * @param req
+   * @param res
+   */
   private setServerSession(headers, req, res): Observable<any> {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
@@ -224,6 +302,10 @@ class ApiService {
     }
   }
 
+  /**
+   * 서버세션 쿠키 파싱
+   * @param cookie
+   */
   private parseSessionCookie(cookie: string): string {
     if ( cookie.indexOf(COOKIE_KEY.SESSION) !== -1 ) {
       return cookie.split(';')[0].split('=')[1];
@@ -231,6 +313,12 @@ class ApiService {
     return '';
   }
 
+  /**
+   * 로그인 요청
+   * @param command
+   * @param params
+   * @param type
+   */
   private requestLogin(command, params, type): Observable<any> {
     return this.request(command, params)
       .switchMap((resp) => {
@@ -300,6 +388,12 @@ class ApiService {
       });
   }
 
+  /**
+   * 간편로그인 요청
+   * @param command
+   * @param params
+   * @param type
+   */
   private requestSLogin(command, params, type): Observable<any> {
     return this.request(command, params)
       .switchMap((resp) => {
@@ -355,6 +449,10 @@ class ApiService {
       });
   }
 
+  /**
+   * 성능테스트용 로그인 요청
+   * @param userId
+   */
   public requestLoginLoadTest(userId: string): Observable<any> {
     let result = null;
     return this.request(API_CMD.BFF_03_0000_TEST, { mbrChlId: userId })
@@ -408,30 +506,60 @@ class ApiService {
       });
   }
 
+  /**
+   * 개발용 로그인 요청
+   * @param userId
+   */
   public requestLoginTest(userId: string): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0000, { id: userId }, LOGIN_TYPE.TID);
   }
 
+  /**
+   * TID 토큰을 이용한 로그인 요청
+   * @param token
+   * @param state
+   */
   public requestLoginTid(token: string, state: string): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
   }
 
+  /**
+   * 고객보호비밀번호 로그인 요청
+   * @param params
+   */
   public requestLoginSvcPassword(params: any): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0009, params, LOGIN_TYPE.TID);
   }
 
+  /**
+   * 휴면해제 요
+   * @param params
+   */
   public requestUserLocks(params: any): Observable<any> {
     return this.requestLogin(API_CMD.BFF_03_0010, params, LOGIN_TYPE.TID);
   }
 
+  /**
+   * 안드로이드 간편로그인 요청
+   * @param params
+   */
   public requestEasyLoginAos(params): Observable<any> {
     return this.requestSLogin(API_CMD.BFF_03_0017, params, LOGIN_TYPE.EASY);
   }
 
+  /**
+   * IOS 간편로그인 요청
+   * @param params
+   */
   public requestEasyLoginIos(params): Observable<any> {
     return this.requestSLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
+  /**
+   * 세션정보 업데이트를 위한 API 요청
+   * @param command
+   * @param params
+   */
   public requestUpdateSvcInfo(command, params): Observable<any> {
     let result = null;
     return this.request(command, params)
@@ -453,14 +581,30 @@ class ApiService {
       });
   }
 
+  /**
+   * 고객보호비밀번호 설정 요청
+   * @param params
+   */
   public requestChangeSvcPassword(params: any): Observable<any> {
     return this.requestUpdateSvcInfo(API_CMD.BFF_03_0016, params);
   }
 
+  /**
+   * 세션정보 업데이트 요청
+   * @param params
+   */
   public requestChangeSession(params: any): Observable<any> {
     return this.requestUpdateSvcInfo(API_CMD.BFF_01_0003, params);
   }
 
+  /**
+   * 전체회선 업데이트 API 요청
+   * @param command
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   */
   public requestUpdateAllSvcInfo(command, params, headers?, pathParams?, version?): Observable<any> {
     let result = null;
     return this.request(command, params, headers, pathParams, version)
@@ -485,14 +629,32 @@ class ApiService {
       .switchMap((resp) => this.updateSvcInfo(result));
   }
 
+  /**
+   * 회선변경 요청
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   */
   public requestChangeLine(params: any, headers?: any, pathParams?: any, version?: any): Observable<any> {
     return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params, headers, pathParams, version);
   }
 
+  /**
+   * 닉네임 변경 요청
+   * @param params
+   * @param headers
+   * @param pathParams
+   * @param version
+   */
   public requestChangeNickname(params: any, headers?: any, pathParams?: any, version?: any): Observable<any> {
     return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0006, params, headers, pathParams, version);
   }
 
+  /**
+   * 회선 정보 세션 업데이트
+   * @param result
+   */
   public updateSvcInfo(result): Observable<any> {
     return this.request(API_CMD.BFF_01_0005, {})
       .switchMap((resp) => {
@@ -544,6 +706,14 @@ class ApiService {
       });
   }
 
+  /**
+   * 세션 캐싱을 위한 API 요청
+   * @param command
+   * @param params
+   * @param header
+   * @param pathParams
+   * @param version
+   */
   public requestStore(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
     const svcInfo = this.loginService.getSvcInfo(this.req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
@@ -562,6 +732,10 @@ class ApiService {
     }
   }
 
+  /**
+   * API 차단시 redirect 요청
+   * @param block
+   */
   private checkServiceBlock(block) {
     const blockUrl = block.fallbackUrl || '/common/util/service-block';
     this.res.redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);

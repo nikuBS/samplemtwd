@@ -3,6 +3,12 @@
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.07.12
  */
+
+/**
+ * @class
+ * @desc 공통 > 회선 > 닉네임 변경
+ * @constructor
+ */
 Tw.NicknameComponent = function () {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
@@ -19,6 +25,14 @@ Tw.NicknameComponent = function () {
 };
 
 Tw.NicknameComponent.prototype = {
+  /**
+   * @function
+   * @desc 닉네임 변경 팝업 요청
+   * @param nickname
+   * @param svcMgmtNum
+   * @param closeCallback
+   * @param $target
+   */
   openNickname: function (nickname, svcMgmtNum, closeCallback, $target) {
     this._closeCallback = closeCallback;
     this._svcMgmtNum = svcMgmtNum;
@@ -32,6 +46,14 @@ Tw.NicknameComponent.prototype = {
     }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this), 'nickname', $target);
 
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 팝업 오픈 콜백 (이벤트 바인딩)
+   * @param nickname
+   * @param $popup
+   * @private
+   */
   _onOpenNickname: function (nickname, $popup) {
     Tw.CommonHelper.focusOnActionSheet($popup);
 
@@ -47,6 +69,12 @@ Tw.NicknameComponent.prototype = {
 
     $popup.on('click', '.fe-bt-nickname-delete', $.proxy(this._onInputNickname, this));
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 팝업 클로즈 콜백
+   * @private
+   */
   _onCloseNickname: function () {
     if ( this._isChanged ) {
       this._closeCallback(this.$nicknameInput.val());
@@ -55,6 +83,13 @@ Tw.NicknameComponent.prototype = {
     }
 
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 버튼 click event 처리
+   * @param $event
+   * @private
+   */
   _onClickConfirmNickname: function ($event) {
     $event.stopPropagation();
     var inputValue = this.$nicknameInput.val();
@@ -68,6 +103,12 @@ Tw.NicknameComponent.prototype = {
       this._changeNickname(inputValue);
     }
   },
+
+  /**
+   * @function
+   * @desc 닉네임 input event 처리
+   * @private
+   */
   _onInputNickname: function () {
     var textNickname = this.$nicknameInput.val();
     var textLength = textNickname.length;
@@ -77,6 +118,13 @@ Tw.NicknameComponent.prototype = {
     }
     this._checkEnableConfirm(textLength);
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경하기 버튼 enable/disable 판단
+   * @param textLength
+   * @private
+   */
   _checkEnableConfirm: function (textLength) {
     if ( textLength > 0 ) {
       this.$nicknameConfirm.attr('disabled', false);
@@ -84,6 +132,13 @@ Tw.NicknameComponent.prototype = {
       this.$nicknameConfirm.attr('disabled', true);
     }
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 요청
+   * @param nickname
+   * @private
+   */
   _changeNickname: function (nickname) {
     if ( !Tw.FormatHelper.isEmpty(this._svcMgmtNum) ) {
       var params = {
@@ -100,6 +155,14 @@ Tw.NicknameComponent.prototype = {
       this._popupService.close();
     }
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 응답 처리
+   * @param nickname
+   * @param resp
+   * @private
+   */
   _successChangeNickname: function (nickname, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._isChanged = true;
@@ -109,6 +172,13 @@ Tw.NicknameComponent.prototype = {
       this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_ERROR);
     }
   },
+
+  /**
+   * @function
+   * @desc 닉네임 변경 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failChangeNickname: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);

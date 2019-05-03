@@ -1,6 +1,9 @@
 import winston from 'winston';
 import fs from 'fs';
 
+/**
+ * Node 로그 기록을 위한 service
+ */
 class LoggerService {
   static instance;
   private logger;
@@ -42,6 +45,9 @@ class LoggerService {
     }
   }
 
+  /**
+   * 초기화
+   */
   private initLogger() {
     this.logger = new (winston.Logger)({
       transports: [
@@ -51,6 +57,9 @@ class LoggerService {
     });
   }
 
+  /**
+   * console 로그 초기화
+   */
   private getConsoleTransport() {
     const level = String(process.env.NODE_ENV) === 'prd' ? 'error' : 'debug';
     const option = {
@@ -63,6 +72,9 @@ class LoggerService {
     return new (winston.transports.Console)(option);
   }
 
+  /**
+   * file 로그 초기화
+   */
   private getFileTransport() {
     const option = {
       level: 'error',
@@ -75,6 +87,9 @@ class LoggerService {
   }
 
 
+  /**
+   * 시간 포맷 설정
+   */
   private tsFormat() {
     return new Date().toLocaleTimeString();
   }

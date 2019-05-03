@@ -1,5 +1,8 @@
 import { IRouterMap } from './app.router';
 
+/**
+ * 라우터 상위 클래스
+ */
 class TwRouter {
   private static _instance: TwRouter;
   private _controllers: Array<IRouterMap> = [];
