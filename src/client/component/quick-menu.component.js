@@ -3,6 +3,12 @@
  * @author Ara Jo (araara.jo@sk.com)
  * @since 2018.10.25
  */
+
+/**
+ * @class
+ * @desc 공통 > 바로가기
+ * @constructor
+ */
 Tw.QuickMenuComponent = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -11,6 +17,11 @@ Tw.QuickMenuComponent = function () {
   this._bindEvent();
 };
 Tw.QuickMenuComponent.prototype = {
+  /**
+   * @function
+   * @desc 이벤트 바인딩
+   * @private
+   */
   _bindEvent: function () {
     this.$btQuickAdd = $('.fe-bt-quick-add');
     this.$btQuickRemove = $('.fe-bt-quick-remove');
@@ -22,15 +33,33 @@ Tw.QuickMenuComponent.prototype = {
       this._init();
     }
   },
+
+  /**
+   * @function
+   * @desc 초기화
+   * @private
+   */
   _init: function () {
-    // this._getQuickMenu();
     this._getAllMenu();
   },
+
+  /**
+   * @function
+   * @desc 전체 메뉴 요청
+   * @private
+   */
   _getAllMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
       .done($.proxy(this._successMenu, this))
       .fail($.proxy(this._failMenu, this));
   },
+
+  /**
+   * @function
+   * @desc 전체 메뉴 응답 처리
+   * @param resp
+   * @private
+   */
   _successMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuList = resp.result.frontMenus;
@@ -44,15 +73,35 @@ Tw.QuickMenuComponent.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 전체 메뉴 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failMenu: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc 등록된 바로가기 메뉴 요청
+   * @private
+   */
   _getQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
       .done($.proxy(this._successQuickMenu, this))
       .fail($.proxy(this._failQuickMenu, this));
   },
+
+  /**
+   * @function
+   * @desc 바로가기 메뉴 응답 처리
+   * @param resp
+   * @private
+   */
   _successQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
@@ -67,20 +116,46 @@ Tw.QuickMenuComponent.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 메뉴 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failQuickMenu: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc 바로가기 추가 버튼 click event 처리
+   * @private
+   */
   _onClickAddQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
       .done($.proxy(this._addQuickMenu, this))
       .fail($.proxy(this._failQuickMenu));
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 버튼 click event 처리
+   * @private
+   */
   _onClickRemoveQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
       .done($.proxy(this._removeQuickMenu, this))
       .fail($.proxy(this._failQuickMenu));
   },
+
+  /**
+   * @function
+   * @desc 바로가기 추가 요청
+   * @param resp
+   * @private
+   */
   _addQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
@@ -101,6 +176,13 @@ Tw.QuickMenuComponent.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 요청
+   * @param resp
+   * @private
+   */
   _removeQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
@@ -116,6 +198,13 @@ Tw.QuickMenuComponent.prototype = {
     }
 
   },
+
+  /**
+   * @function
+   * @desc 바로가기 추가 응답 처리
+   * @param resp
+   * @private
+   */
   _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
@@ -125,10 +214,25 @@ Tw.QuickMenuComponent.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 추가 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failAddQuickMenu: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 응답 처리
+   * @param menuId
+   * @param resp
+   * @private
+   */
   _successRemoveQuickMenu: function (menuId, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.FormatHelper.isEmpty(menuId) ) {
@@ -142,10 +246,23 @@ Tw.QuickMenuComponent.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failRemoveQuickMenu: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc 바로라기 추가 아이콘 나타냄
+   * @private
+   */
   _showAddBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickAdd.removeClass('none');
@@ -155,6 +272,12 @@ Tw.QuickMenuComponent.prototype = {
       this.$btQuickAdd.parent().attr('aria-hidden', false);
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 아이콘 나타냄
+   * @private
+   */
   _showRemoveBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickRemove.removeClass('none');
@@ -164,6 +287,12 @@ Tw.QuickMenuComponent.prototype = {
       this.$btQuickRemove.parent().attr('aria-hidden', false);
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 추가 아이콘 숨김
+   * @private
+   */
   _hideAddBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickAdd.addClass('none');
@@ -173,6 +302,12 @@ Tw.QuickMenuComponent.prototype = {
       this.$btQuickAdd.parent().attr('aria-hidden', true);
     }
   },
+
+  /**
+   * @function
+   * @desc 바로가기 제거 아이콘 숨김
+   * @private
+   */
   _hideRemoveBadge: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this.$btQuickRemove.addClass('none');

@@ -9,6 +9,9 @@ import CryptoHelper from '../utils/crypto.helper';
 import BrowserHelper from '../utils/browser.helper';
 import DateHelper from '../utils/date.helper';
 
+/**
+ * 세션정보를 다루는 service
+ */
 class LoginService {
   static instance;
   private logger = new LoggerService();
@@ -16,6 +19,10 @@ class LoginService {
   constructor() {
   }
 
+  /**
+   * 신규 세션 생성
+   * @param req
+   */
   public sessionGenerate(req): Observable<any> {
     return Observable.create((observer) => {
       req.session.regenerate((error) => {
@@ -26,10 +33,18 @@ class LoginService {
     });
   }
 
+  /**
+   * 세션 아이디 조회
+   * @param req
+   */
   public getSessionId(req) {
     return req.session.id;
   }
 
+  /**
+   * 로그인 여부 조회
+   * @param req
+   */
   public isLogin(req): boolean {
     if ( !FormatHelper.isEmpty(req.session) ) {
       return !FormatHelper.isEmpty(req.session.svcInfo) && !FormatHelper.isEmpty(req.session.serverSession);
@@ -37,15 +52,30 @@ class LoginService {
     return false;
   }
 
+  /**
+   * 쿠키 저장
+   * @param res
+   * @param key
+   * @param value
+   */
   public setCookie(res, key: string, value: string) {
     res.cookie(key, value);
   }
 
+  /**
+   * 쿠키 조회
+   * @param req
+   * @param key
+   */
   public getCookie(req, key: string) {
     return req.cookies[key];
   }
 
 
+  /**
+   * 선택회선 정보 조회
+   * @param req
+   */
   public getSvcInfo(req): any {
     const request = req; // || this.request;
     // this.logger.debug(this, '[getSvcInfo]', request.session);
@@ -62,6 +92,12 @@ class LoginService {
     return null;
   }
 
+  /**
+   * 선택회선 업데이트
+   * @param req
+   * @param res
+   * @param svcInfo
+   */
   public setSvcInfo(req, res, svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
@@ -80,6 +116,10 @@ class LoginService {
     });
   }
 
+  /**
+   *
+   * @param res
+   */
   public clearXtCookie(res): any {
     res.clearCookie(COOKIE_KEY.XTLID);
     res.clearCookie(COOKIE_KEY.XTLOGINID);
@@ -88,6 +128,12 @@ class LoginService {
     res.clearCookie(COOKIE_KEY.XT_LOGIN_LOG);
   }
 
+  /**
+   *
+   * @param req
+   * @param res
+   * @param svcInfo
+   */
   private setXtractorCookie(req, res, svcInfo: any): any {
     if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
       return;
@@ -118,6 +164,10 @@ class LoginService {
     req.session.svcInfo.xtInfo = xtInfo;
   }
 
+  /**
+   * 전체회선 정보 조회
+   * @param req
+   */
   public getAllSvcInfo(req): any {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.allSvcInfo) ) {
@@ -133,6 +183,12 @@ class LoginService {
     return null;
   }
 
+  /**
+   * 전체회선 업데이트
+   * @param req
+   * @param res
+   * @param allSvcInfo
+   */
   public setAllSvcInfo(req, res, allSvcInfo: any): Observable<any> {
     return Observable.create((observer) => {
       req.session.allSvcInfo = allSvcInfo;
@@ -144,6 +200,10 @@ class LoginService {
     });
   }
 
+  /**
+   * 자녀회선 정보 조회
+   * @param req
+   */
   public getChildInfo(req): any {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.childInfo) ) {
@@ -159,6 +219,12 @@ class LoginService {
     return null;
   }
 
+  /**
+   * 자녀회선 업데이트
+   * @param req
+   * @param res
+   * @param childInfo
+   */
   public setChildInfo(req, res, childInfo: any): Observable<any> {
     return Observable.create((observer) => {
       req.session.childInfo = childInfo;
@@ -170,6 +236,10 @@ class LoginService {
     });
   }
 
+  /**
+   * BFF 서버 세션 조회
+   * @param req
+   */
   public getServerSession(req): string {
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.serverSession) ) {
       this.logger.debug(this, '[getServerSession]', req.cookies[COOKIE_KEY.TWM], req.session.serverSession);
@@ -178,6 +248,12 @@ class LoginService {
     return '';
   }
 
+  /**
+   * BFF 서버 세션 업데이트
+   * @param req
+   * @param res
+   * @param serverSession
+   */
   public setServerSession(req, res, serverSession: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
@@ -191,6 +267,11 @@ class LoginService {
     });
   }
 
+  /**
+   * 채널 정보 업데이트
+   * @param req
+   * @param channel
+   */
   public setChannel(req, channel: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
@@ -204,6 +285,10 @@ class LoginService {
     });
   }
 
+  /**
+   * 채널 정보 조회
+   * @param req
+   */
   public getChannel(req): string {
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.channel) ) {
       return req.session.channel;
@@ -211,6 +296,11 @@ class LoginService {
     return req.cookies[COOKIE_KEY.CHANNEL];
   }
 
+  /**
+   * 마스킹 해제 여부 업데이트
+   * @param req
+   * @param svcMgmtNum
+   */
   public setMaskingCert(req, svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) ) {
@@ -227,6 +317,11 @@ class LoginService {
     });
   }
 
+  /**
+   * 마스킹 해제 정보 조회
+   * @param req
+   * @param svcMgmtNum
+   */
   public getMaskingCert(req, svcMgmtNum: string): boolean {
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.masking) ) {
       return req.session.masking.indexOf(svcMgmtNum) !== -1;
@@ -234,6 +329,11 @@ class LoginService {
     return false;
   }
 
+  /**
+   * NoticeType 업데이트
+   * @param req
+   * @param noticeType
+   */
   public setNoticeType(req, noticeType: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) ) {
@@ -250,6 +350,10 @@ class LoginService {
     });
   }
 
+  /**
+   * NoticeType 정보 조회
+   * @param req
+   */
   public getNoticeType(req): string {
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.noticeType) ) {
       return req.session.noticeType;
@@ -257,6 +361,13 @@ class LoginService {
     return '';
   }
 
+  /**
+   * 세션 캐싱 API 업데이트
+   * @param req
+   * @param command
+   * @param svcMgmtNum
+   * @param result
+   */
   public setSessionStore(req, command: string, svcMgmtNum: string, result: any): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) ) {
@@ -282,6 +393,11 @@ class LoginService {
     });
   }
 
+  /**
+   * 세션 캐싱 API 삭제
+   * @param req
+   * @param svcMgmtNum
+   */
   public clearSessionStore(req, svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) ) {
@@ -303,6 +419,12 @@ class LoginService {
     });
   }
 
+  /**
+   * 세션 캐싱 API 조회
+   * @param req
+   * @param command
+   * @param svcMgmtNum
+   */
   public getSessionStore(req, command: string, svcMgmtNum: string): any {
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.store) &&
       !FormatHelper.isEmpty(req.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(req.session.store[svcMgmtNum][command]) ) {
@@ -318,6 +440,11 @@ class LoginService {
     return null;
   }
 
+  /**
+   * 세션 로그아웃
+   * @param req
+   * @param res
+   */
   public logoutSession(req, res): Observable<any> {
     return Observable.create((observer) => {
       req.session.destroy((error) => {
@@ -330,6 +457,10 @@ class LoginService {
     });
   }
 
+  /**
+   * 디바이스 정보 조회
+   * @param req
+   */
   public getDevice(req): string {
     const userAgent = this.getUserAgent(req);
     if ( /TWM_DEVICE/.test(userAgent) ) {
@@ -338,6 +469,10 @@ class LoginService {
     return '';
   }
 
+  /**
+   * IP 조회
+   * @param req
+   */
   public getNodeIp(req): string {
     const request = req;
     if ( !FormatHelper.isEmpty(request) ) {
@@ -350,6 +485,10 @@ class LoginService {
     return '';
   }
 
+  /**
+   * URL 조회
+   * @param req
+   */
   public getPath(req: any): string {
     const request = req; // || this.request;
     let path = this.getFullPath(request);
@@ -359,6 +498,10 @@ class LoginService {
     return path;
   }
 
+  /**
+   * Full URL 조회
+   * @param req
+   */
   public getFullPath(req: any): string {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {
@@ -373,6 +516,10 @@ class LoginService {
     return '';
   }
 
+  /**
+   * referer 조회
+   * @param req
+   */
   public getReferer(req: any): string {
     const request = req; // || this.request;
     const referer = request.headers.referer;
@@ -384,6 +531,10 @@ class LoginService {
     }
   }
 
+  /**
+   * DNS 조회
+   * @param req
+   */
   public getDns(req: any): string {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {
@@ -392,6 +543,10 @@ class LoginService {
     return '';
   }
 
+  /**
+   * protocol 조회
+   * @param req
+   */
   public getProtocol(req: any): string {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {
@@ -400,6 +555,10 @@ class LoginService {
     return 'https://';
   }
 
+  /**
+   * green 모드 확인
+   * @param req
+   */
   public isGreen(req): string {
     const dns = this.getDns(req);
 
@@ -409,6 +568,10 @@ class LoginService {
     return '';
   }
 
+  /**
+   * user agent 조회
+   * @param req
+   */
   public getUserAgent(req): string {
     const request = req; // || this.request;
     if ( !FormatHelper.isEmpty(request) ) {

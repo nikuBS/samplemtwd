@@ -1,3 +1,8 @@
+/**
+ * @class
+ * @desc Native 통신을 위한 service
+ * @constructor
+ */
 Tw.NativeService = function () {
   this._bridge = null;
   this._callbackList = [];
@@ -10,19 +15,35 @@ Tw.NativeService = function () {
 };
 
 Tw.NativeService.prototype = {
+  /**
+   * @function
+   * @desc Native command 전달
+   * @param command
+   * @param params
+   * @param callback
+   */
   send: function (command, params, callback) {
     Tw.Logger.info('[Native send]', command, params, this._bridge);
     if ( this._bridge ) {
       var parameter = this._setParameter(command, params, callback);
       this._bridge.postMessage(parameter);
-      // if ( Tw.BrowserHelper.isIos() ) {
-      //   this._callByIframe(Tw.IOS_URL + command + '?p=' + encodeURIComponent(JSON.stringify(parameter)));
-      // }
     }
   },
+  /**
+   * @function
+   * @desc
+   * @param gnb
+   */
   setGNB: function (gnb) {
     this._gnb = gnb;
   },
+  /**
+   * @function
+   * @desc 초기화시 세션 전달
+   * @param command
+   * @param params
+   * @param callback
+   */
   // only using common.member.init
   sendInitSession: function (command, params, callback) {
     if ( this._bridge ) {
@@ -30,6 +51,12 @@ Tw.NativeService.prototype = {
       this._bridge.postMessage(parameter);
     }
   },
+
+  /**
+   * @function
+   * @desc 서비스 초기화
+   * @private
+   */
   _init: function () {
     this._bridge = null;
     if ( Tw.BrowserHelper.isApp() ) {
@@ -37,11 +64,19 @@ Tw.NativeService.prototype = {
     }
     window.onNativeCallback = $.proxy(this._onNativeCallback, this);
     window.onBack = $.proxy(this._onBack, this);
-    window.onInit = $.proxy(this._onInitApp, this);
     window.onEasyLogin = $.proxy(this._onEasyLogin, this);
     window.onSessionExpired = $.proxy(this._onSessionExpired, this);
   },
 
+  /**
+   * @function
+   * @desc Native로 전달할 parameter 구성
+   * @param command
+   * @param params
+   * @param callback
+   * @returns {{command: *, params: *}}
+   * @private
+   */
   _setParameter: function (command, params, callback) {
     var parameter = {
       command: command,
@@ -59,21 +94,22 @@ Tw.NativeService.prototype = {
     return parameter;
   },
 
-  _callByIframe: function (url) {
-    var iframe = document.createElement('iframe');
-    iframe.src = url;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-    setTimeout(function () {
-      document.body.removeChild(iframe);
-    }, 100);
-  },
-
+  /**
+   * @function
+   * @desc callback 맵핑 random code 구성
+   * @returns {string}
+   * @private
+   */
   _getRandomCode: function () {
     this._randomCode++;
     return Tw.FormatHelper.leadingZeros(this._randomCode, 6);
   },
 
+  /**
+   * @function
+   * @desc 뒤로가기 버튼 callback
+   * @private
+   */
   _onBack: function () {
     Tw.Logger.info('[onBack]');
     var $popupContainer = this._popupService.isPopup();
@@ -101,6 +137,12 @@ Tw.NativeService.prototype = {
     }
   },
 
+  /**
+   * @function
+   * @desc Native command 요청에 대한 callback
+   * @param _resp
+   * @private
+   */
   _onNativeCallback: function (_resp) {
     Tw.Logger.info('[onNativeCallBack]', JSON.stringify(_resp));
     var resp = (typeof _resp === 'string') ? JSON.parse(_resp) : _resp;
@@ -115,10 +157,12 @@ Tw.NativeService.prototype = {
     }
   },
 
-  _onInitApp: function () {
-    Tw.Logger.info('[Init]');
-  },
-
+  /**
+   * @function
+   * @desc 간편로그인 요청 들어옴
+   * @param resp
+   * @private
+   */
   _onEasyLogin: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isAndroid() ) {
@@ -130,11 +174,26 @@ Tw.NativeService.prototype = {
       // error
     }
   },
+
+  /**
+   * @function
+   * @desc 세션만료 들어옴
+   * @param resp
+   * @private
+   */
   _onSessionExpired: function (resp) {
     Tw.Logger.info('[onSessionExpired]', resp);
     this._tidLanding = new Tw.TidLandingComponent();
     this._tidLanding.logout($.proxy(this._completeLogout, this, resp));
   },
+
+  /**
+   * @function
+   * @desc 로그아웃 완료 callback
+   * @param isAutoLogin
+   * @param resp
+   * @private
+   */
   _completeLogout: function (isAutoLogin, resp) {
     Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
     if ( resp.code !== Tw.API_CODE.NODE_1003 ) {
@@ -148,6 +207,12 @@ Tw.NativeService.prototype = {
     }
 
   },
+
+  /**
+   * @function
+   * @desc 앱 종료 요청
+   * @private
+   */
   _exitApp: function () {
     this.send(Tw.NTV_CMD.EXIT, {});
   }

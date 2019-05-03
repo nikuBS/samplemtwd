@@ -10,6 +10,9 @@ import FormatHelper from '../../utils/format.helper';
 
 const mapping = require('../mtwmweb_op.json');
 
+/**
+ * 정의되지 않은 URL 접근시 라우터
+ */
 class ShortcutRouter {
   public router: Router;
   private redisService: RedisService = RedisService.getInstance();
@@ -59,6 +62,13 @@ class ShortcutRouter {
     });
   }
 
+  /**
+   * 단축 URL 정보 파싱 및 redirect
+   * @param req
+   * @param res
+   * @param next
+   * @param target
+   */
   private redirectTarget(req, res, next, target) {
     const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
     const curDate = new Date().getTime();
@@ -72,6 +82,10 @@ class ShortcutRouter {
     }
   }
 
+  /**
+   * As-is mweb 주소 json table 확인
+   * @param path
+   */
   private checkMapTable(path): string {
     const findMapping = mapping.find((urlInfo) => urlInfo.old === path);
 

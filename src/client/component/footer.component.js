@@ -4,6 +4,11 @@
  * @since 2019.01.25
  */
 
+/**
+ * @class
+ * @desc 공통 > 하단 Footer
+ * @constructor
+ */
 Tw.FooterComponent = function () {
   this.$footer = $('#gnb');
   new Tw.ShareComponent();
@@ -17,6 +22,11 @@ Tw.FooterComponent = function () {
 };
 
 Tw.FooterComponent.prototype = {
+  /**
+   * @function
+   * @desc Footer 이벤트 바인딩
+   * @private
+   */
   _init: function () {
     this.$backDisable = this.$footer.find('#fe-back-disable');
     this.$backEnable = this.$footer.find('#fe-back-enable');
@@ -25,6 +35,13 @@ Tw.FooterComponent.prototype = {
 
     this._nativeSrevice.send(Tw.NTV_CMD.CAN_GO_HISTORY, {}, $.proxy(this._onCanGoHistory, this));
   },
+
+  /**
+   * @function
+   * @desc 뒤로가기/앞으로가기 여부 확인 응답 처리
+   * @param resp
+   * @private
+   */
   _onCanGoHistory: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( resp.params.back === 'N' ) {
@@ -39,6 +56,12 @@ Tw.FooterComponent.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc Footer 코치마크 설정
+   * @private
+   */
   _setCoachMark: function () {
     new Tw.CoachMark(this.$footer, '#fe-coach-masking', '.fe-coach-masking-target', Tw.NTV_STORAGE.COACH_MASKING);
     new Tw.CoachMark(this.$footer, '#fe-coach-quick', '.fe-coach-quick-target', Tw.NTV_STORAGE.COACH_QUICK);

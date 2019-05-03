@@ -10,6 +10,9 @@ import { API_CODE } from '../types/api-command.type';
 import LoggerService from './logger.service';
 import CryptoHelper from '../utils/crypto.helper';
 
+/**
+ * redis 세션정보 저장 및 redis store 이용을 위한 service
+ */
 class RedisService {
   private static instance: RedisService;
   private envRedis;
@@ -77,6 +80,9 @@ class RedisService {
     this.tosClient = new Redis(redisTosConf);
   }
 
+  /**
+   * redis instance 조회
+   */
   static getInstance() {
     if ( !RedisService.instance ) {
       RedisService.instance = new RedisService();
@@ -84,6 +90,9 @@ class RedisService {
     return RedisService.instance;
   }
 
+  /**
+   * redis 설정 조회
+   */
   public getMiddleWare() {
     this.middleWare = session({
       key: COOKIE_KEY.TWM,
@@ -97,30 +106,61 @@ class RedisService {
     return this.middleWare;
   }
 
+  /**
+   * 데이터 저장
+   * @param key
+   * @param value
+   */
   public setData(key, value) {
     this.client.set(key, value);
   }
 
+  /**
+   * tos redis 에 데이터 저장
+   * @param key
+   * @param value
+   */
   public setDataTos(key, value) {
     this.tosClient.set(key, value);
   }
 
+  /**
+   * redis string data 조회
+   * @param key
+   */
   public getString(key): Observable<any> {
     return this.getRedisString(key, this.client);
   }
 
+  /**
+   * redis json data 조회
+   * @param key
+   */
   public getData(key): Observable<any> {
     return this.getRedisData(key, this.client);
   }
 
+  /**
+   * tos redis string data 조회
+   * @param key
+   */
   public getStringTos(key): Observable<any> {
     return this.getRedisString(key, this.tosClient);
   }
 
+  /**
+   * tos redis json data 조회
+   * @param key
+   */
   public getDataTos(key): Observable<any> {
     return this.getRedisData(key, this.tosClient);
   }
 
+  /**
+   * string data 조회
+   * @param key
+   * @param client
+   */
   private getRedisString(key, client): Observable<any> {
     this.logger.info(this, '[Get String]', key);
     return Observable.create((observer) => {
@@ -145,6 +185,11 @@ class RedisService {
     });
   }
 
+  /**
+   * json data 조회
+   * @param key
+   * @param client
+   */
   private getRedisData(key, client): Observable<any> {
     this.logger.info(this, '[Get Data]', key);
     return Observable.create((observer) => {

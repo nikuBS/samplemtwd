@@ -22,6 +22,9 @@ import EnvHelper from '../../utils/env.helper';
 
 const os = require('os');
 
+/**
+ * @desc NODE API 구성 (JIRA 명세 확인)
+ */
 class ApiRouter {
   public router: Router;
   private logger: LoggerService = new LoggerService();
@@ -89,9 +92,12 @@ class ApiRouter {
     },
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
-    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethosBlock },
+    GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
   };
 
+  /**
+   * method에 따른 API router 구성
+   */
   private setApi() {
     Object.keys(this.NODE_CMD).map((key) => {
       const cmd = this.NODE_CMD[key];
@@ -112,12 +118,15 @@ class ApiRouter {
     });
   }
 
+  /**
+   * get API 처리
+   * @param cmd
+   */
   private setGetApi(cmd) {
     this.router.get(cmd.path, (req, res, next) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
       res.set('expires', '0');
       res.set('pragma', 'no-cache');
-
 
       if ( this.sessionCheck(req, res, next) ) {
         cmd.target.call(this, req, res, next);
@@ -125,6 +134,10 @@ class ApiRouter {
     });
   }
 
+  /**
+   * post API 처리
+   * @param cmd
+   */
   private setPostApi(cmd) {
     this.router.post(cmd.path, (req, res, next) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -137,6 +150,10 @@ class ApiRouter {
     });
   }
 
+  /**
+   * put API 처리
+   * @param cmd
+   */
   private setPutApi(cmd) {
     this.router.put(cmd.path, (req, res, next) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -149,6 +166,10 @@ class ApiRouter {
     });
   }
 
+  /**
+   * delete API 처리
+   * @param cmd
+   */
   private setDeleteApi(cmd) {
     this.router.delete(cmd.path, (req, res, next) => {
       res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
@@ -161,6 +182,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 세션만료시 처리
+   * @param req
+   * @param res
+   * @param next
+   */
   private sessionCheck(req, res, next) {
     const loginService = new LoginService();
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
@@ -175,6 +202,12 @@ class ApiRouter {
     return true;
   }
 
+  /**
+   * NODE 정상여부 확인 API
+   * @param req
+   * @param res
+   * @param next
+   */
   private checkHealth(req: Request, res: Response, next: NextFunction) {
     res.json({
       description: 'NODE Health Check',
@@ -182,6 +215,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 환경변수 제공
+   * @param req
+   * @param res
+   * @param next
+   */
   private getEnvironment(req: Request, res: Response, next: NextFunction) {
     const env = String(process.env.NODE_ENV);
     const resp = {
@@ -198,6 +237,12 @@ class ApiRouter {
     res.json(resp);
   }
 
+  /**
+   * 도메인 주소 제공
+   * @param req
+   * @param res
+   * @param next
+   */
   private getDomain(req: Request, res: Response, next: NextFunction) {
     const resp = {
       code: API_CODE.CODE_00,
@@ -209,6 +254,12 @@ class ApiRouter {
     res.json(resp);
   }
 
+  /**
+   * 버전 제공
+   * @param req
+   * @param res
+   * @param next
+   */
   private getVersion(req: Request, res: Response, next: NextFunction) {
     const env = String(process.env.NODE_ENV);
     this.redisService.getData(REDIS_KEY.APP_VERSION)
@@ -226,6 +277,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * App Splash 정보 제공
+   * @param req
+   * @param res
+   * @param next
+   */
   private getSplash(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
@@ -237,6 +294,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * App Notice 제공
+   * @param req
+   * @param res
+   * @param next
+   */
   private getAppNotice(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
@@ -294,6 +357,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 화면 URL Meta 정보 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const url = loginService.getPath(req);
@@ -304,6 +373,12 @@ class ApiRouter {
 
   }
 
+  /**
+   * Menu List 조
+   * @param req
+   * @param res
+   * @param next
+   */
   private getMenu(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
@@ -345,6 +420,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 메뉴 추천 정보 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getMenuRecommendation(req: Request, res: Response, next: NextFunction) {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
     this.redisService.getData(REDIS_KEY.RCM_MENU + code)
@@ -355,6 +436,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * Admin 배너 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_KEY.BANNER_ADMIN + menuId)
@@ -363,6 +450,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * TOS 배너 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getBannerTos(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const code = req.query.code;
@@ -473,6 +566,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * Welcome Message 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getHomeWelcome(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.HOME_NOTI)
       .subscribe((resp) => {
@@ -480,6 +579,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 홈화면 공지사항 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getHomeNotice(req: Request, res: Response, next: NextFunction) {
     const code = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
@@ -489,6 +594,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 홈화면 이럴땐 이렇게 하세요 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getHomeHelp(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.HOME_HELP)
       .subscribe((resp) => {
@@ -496,6 +607,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 페이지별 Tooltip 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getTooltip(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_KEY.TOOLTIP + menuId)
@@ -504,6 +621,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 등록된 바로가기 메뉴 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const svcInfo = loginService.getSvcInfo(req);
@@ -534,6 +657,12 @@ class ApiRouter {
     }
   }
 
+  /**
+   * 바로가기 Default 값 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getDefaultQuickMenu(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const apiService = new ApiService();
@@ -552,6 +681,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 요금제 비교하기 컨텐츠 조
+   * @param req
+   * @param res
+   * @param next
+   */
   private getProductComparison(req: Request, res: Response, next: NextFunction) {
     const beforeId = req.query.beforeId;
     const afterId = req.query.afterId;
@@ -561,6 +696,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 상품 메타정보 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getProductInfo(req: Request, res: Response, next: NextFunction) {
     const prodId = req.query.prodId;
     this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId)
@@ -569,13 +710,25 @@ class ApiRouter {
       });
   }
 
-  private getAuthMethosBlock(req: Request, res: Response, next: NextFunction) {
+  /**
+   * 인증 수단 점검내역 조회
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getAuthMethodsBlock(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.AUTH_METHOD_BLOCK)
       .subscribe((resp) => {
         res.json(resp);
       });
   }
 
+  /**
+   * 마스킹 인증 수단 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
     this.redisService.getData(REDIS_KEY.MASKING_METHOD)
       .subscribe((resp) => {
@@ -583,6 +736,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 마스킹 인증 완료 설정
+   * @param req
+   * @param res
+   * @param next
+   */
   private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const apiService = new ApiService();
@@ -607,6 +766,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 세션에 저장된 API 정보 삭제
+   * @param req
+   * @param res
+   * @param next
+   */
   private deleteSessionStore(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const apiService = new ApiService();
@@ -628,6 +793,9 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 파일 업로드
+   */
   private upload() {
     const storage = multer.diskStorage({
       destination: (req, file, cb) => {
@@ -658,6 +826,12 @@ class ApiRouter {
     return multer({ storage: storage }).array('file');
   }
 
+  /**
+   * 파일 업로드 API
+   * @param req
+   * @param res
+   * @param next
+   */
   private uploadFile(req: Request, res: Response, next: NextFunction) {
     this.upload()(req, res, (err) => {
       if ( err ) {
@@ -685,6 +859,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 현재 회선 정보 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getSvcInfo(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     this.logger.info(this, '[get svcInfo]', req.cookies[COOKIE_KEY.TWM], loginService.getSessionId(req));
@@ -694,6 +874,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 전체 회선 정보 조회
+   * @param req
+   * @param res
+   * @param next
+   */
   private getAllSvcInfo(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     this.logger.info(this, '[get allSvcInfo]');
@@ -703,6 +889,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 자녀 회선 정보 조
+   * @param req
+   * @param res
+   * @param next
+   */
   private getChildInfo(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     this.logger.info(this, '[get childInfo]');
@@ -712,6 +904,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * NoticeType 변경
+   * @param req
+   * @param res
+   * @param next
+   */
   private updateNoticeType(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     this.logger.info(this, '[update noticeType]');
@@ -720,6 +918,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 선택 회선 변경
+   * @param req
+   * @param res
+   * @param next
+   */
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -733,6 +937,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 고객비밀번호 로그인
+   * @param req
+   * @param res
+   * @param next
+   */
   private loginSvcPassword(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -744,6 +954,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 로그인 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   private loginTid(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -756,6 +972,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 로그아웃 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   private logoutTid(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     const apiService = new ApiService();
@@ -779,6 +1001,12 @@ class ApiRouter {
       });
   }
 
+  /**
+   * 신규 세션 생
+   * @param req
+   * @param res
+   * @param next
+   */
   private generateSession(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
     loginService.sessionGenerate(req).subscribe(() => {
@@ -787,6 +1015,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 휴면 해제 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -798,6 +1032,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 안드로이드 간편 로그인 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   private easyLoginAos(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -809,6 +1049,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * IOS 간편 로그인 요
+   * @param req
+   * @param res
+   * @param next
+   */
   private easyLoginIos(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -820,6 +1066,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 고객보호비밀번호 설정 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   private changeSvcPassword(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body;
@@ -831,6 +1083,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 회선변경 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   public changeLine(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body.params || {};
@@ -846,6 +1104,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 닉네임 변경 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   public changeNickname(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     const params = req.body.params || {};
@@ -861,6 +1125,12 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 회선정보 업데이트 요청
+   * @param req
+   * @param res
+   * @param next
+   */
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();
     apiService.setCurrentReq(req, res);

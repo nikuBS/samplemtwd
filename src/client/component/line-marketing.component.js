@@ -4,6 +4,11 @@
  * @since 2018.07.16
  */
 
+/**
+ * @class
+ * @desc 공통 > 회선 > 마케팅 동의
+ * @constructor
+ */
 Tw.LineMarketingComponent = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -20,6 +25,16 @@ Tw.LineMarketingComponent = function () {
 };
 
 Tw.LineMarketingComponent.prototype = {
+  /**
+   * @function
+   * @desc 마케팅 동의 팝업 요청
+   * @param svcMgmtNum
+   * @param showName
+   * @param svcNum
+   * @param agr201Yn
+   * @param agr203Yn
+   * @param callback
+   */
   openMarketingOffer: function (svcMgmtNum, showName, svcNum, agr201Yn, agr203Yn, callback) {
     this._svcMgmtNum = svcMgmtNum;
     this._agr201Yn = agr201Yn;
@@ -28,6 +43,15 @@ Tw.LineMarketingComponent.prototype = {
     this._openMarketingOfferPopup(showName, svcNum, agr201Yn, agr203Yn);
   },
 
+  /**
+   * @function
+   * @desc 마케팅 동의 팝업 오픈
+   * @param showName
+   * @param svcNum
+   * @param agr201Yn
+   * @param agr203Yn
+   * @private
+   */
   _openMarketingOfferPopup: function (showName, svcNum, agr201Yn, agr203Yn) {
     this._popupService.open({
       hbs: 'CO_01_05_02_06',
@@ -41,6 +65,13 @@ Tw.LineMarketingComponent.prototype = {
       }
     }, $.proxy(this._onOpenMarketingOfferPopup, this), $.proxy(this._closeOpenMarketingOfferPopup, this), 'marketing');
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 팝업 오픈 콜백 (이벤트 바인딩)
+   * @param $layer
+   * @private
+   */
   _onOpenMarketingOfferPopup: function ($layer) {
     this.$childChecks = $layer.find('.fe-check-child');
     this.$btnAgree = $layer.find('#fe-bt-complete');
@@ -53,9 +84,22 @@ Tw.LineMarketingComponent.prototype = {
 
     this._enableBtns();
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 체크박스 click event 처리
+   * @private
+   */
   _onClickChildCheck: function () {
     this._enableBtns();
   },
+
+  /**
+   * @function
+   * @desc 다음 버튼 click event 처리
+   * @param $event
+   * @private
+   */
   _onClickAgree: function ($event) {
     $event.stopPropagation();
     this._agr201Yn = $(this.$childChecks[0]).is(':checked') ? 'Y' : 'N';
@@ -68,12 +112,31 @@ Tw.LineMarketingComponent.prototype = {
       .done($.proxy(this._successAgreeMarketing, this))
       .fail($.proxy(this._failAgreeMarketing, this));
   },
+
+  /**
+   * @function
+   * @desc 닫기 버튼 click event 처리
+   * @private
+   */
   _onClickDisagree: function () {
     this._popupService.close();
   },
+
+  /**
+   * @function
+   * @desc 약관 click event 처리
+   * @param serNum
+   * @private
+   */
   _onClickTerms: function (serNum) {
     Tw.CommonHelper.openTermLayer(serNum);
   },
+
+  /**
+   * @function
+   * @desc 마케팅 팝업 클로즈 콜백
+   * @private
+   */
   _closeOpenMarketingOfferPopup: function () {
     if ( this._complete ) {
       this._openCompleteMarketingPopup();
@@ -83,6 +146,13 @@ Tw.LineMarketingComponent.prototype = {
       }
     }
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 요청 응답 처리
+   * @param resp
+   * @private
+   */
   _successAgreeMarketing: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._complete = true;
@@ -91,10 +161,23 @@ Tw.LineMarketingComponent.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 요청 실패 처리
+   * @param error
+   * @private
+   */
   _failAgreeMarketing: function (error) {
     Tw.Logger.error(error);
     this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   },
+
+  /**
+   * @function
+   * @desc 다음 버튼 enable/disable 처리
+   * @private
+   */
   _enableBtns: function () {
     var selectedLength = this.$childChecks.filter(':checked').length;
     if ( selectedLength === 0 ) {
@@ -103,6 +186,12 @@ Tw.LineMarketingComponent.prototype = {
       this.$btnAgree.attr('disabled', false);
     }
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 완료 팝업 오픈
+   * @private
+   */
   _openCompleteMarketingPopup: function () {
     this._popupService.open({
       hbs: 'CO_01_05_02_07',
@@ -113,6 +202,12 @@ Tw.LineMarketingComponent.prototype = {
       }
     }, null, $.proxy(this._onCloseCompleteMarketingPopup, this), 'marketing-complete');
   },
+
+  /**
+   * @function
+   * @desc 마케팅 동의 완료 팝업 클로즈 콜백
+   * @private
+   */
   _onCloseCompleteMarketingPopup: function () {
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
       this._callback();
