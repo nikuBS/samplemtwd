@@ -1,11 +1,11 @@
 /**
  * @file [나의요금-요금납부조회-리스트] 관련 처리
- * @author Lee Kirim 
+ * @author Lee Kirim
  * @since 2018-09-17
  */
 
 /**
- * @class 
+ * @class
  * @desc 요금납부조회 리스트를 위한 class
  * @param {Object} rootEl - 최상위 element Object
  * @param {JSON} data - myt-fare.info.history.controlloer.ts 로 부터 전달되어 온 납부내역 정보
@@ -16,7 +16,7 @@ Tw.MyTFareInfoHistory = function (rootEl, data) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(rootEl);  
+  this._historyService = new Tw.HistoryService(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -27,23 +27,23 @@ Tw.MyTFareInfoHistory.prototype = {
 
   /**
    * @function
-   * @member 
+   * @member
    * @desc 객체가 생성될 때 동작에 필요한 내부 변수를 정의 한다.
    * - rootPathName 현재 주소
    * - queryParams 쿼리로 받아온 객체
    * - currentActionsheetIndex 선택된 카테고리 인덱스, 카테고리 액션시트 호출 시 선택됨 표기를 위해 설정
-   * - renderListData 리스트 데이터 
+   * - renderListData 리스트 데이터
    * - initPaymentList @function
    * @return {void}
    */
   _init: function () {
 
     this.rootPathName = this._historyService.pathname; // URL
-    this.queryParams = Tw.UrlHelper.getQueryParams(); // 분류코드 
+    this.queryParams = Tw.UrlHelper.getQueryParams(); // 분류코드
     this.renderListData = {}; // 리스트 데이터
 
     if(!Tw.FormatHelper.isEmpty(this.data)){
-      // 현재 선택된 카테고리 
+      // 현재 선택된 카테고리
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
         if (this.data.current === cur) {
           prev = index;
@@ -59,7 +59,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @member
    * @desc 리스트 출력
-   * - 리스트를 this.renderListData 객체에 저장함 
+   * - 리스트를 this.renderListData 객체에 저장함
    * - 템플릿에 render 및 붙이기
    * - 더보기 관련 변수 함께 설정
    * - 렌더 후 afterList 호출
@@ -73,7 +73,7 @@ Tw.MyTFareInfoHistory.prototype = {
     if (!totalDataCounter) {
       // 리스트 없으면 빈 화면 렌더링
       initedListTemplate = this.$template.$emptyList();
-    } 
+    }
     else {
       this.listRenderPerPage = Tw.DEFAULT_LIST_COUNT; // 한번에 보여질 리스트 개수 -> 더보기로 20개씩 추가로 노출
 
@@ -95,7 +95,7 @@ Tw.MyTFareInfoHistory.prototype = {
     }
     this.$domListWrapper.append(initedListTemplate);
     this._afterList();
-    
+
   },
 
 
@@ -139,7 +139,7 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$openAutoPaymentLayerTrigger.on('click', $.proxy(this._openAutoPaymentLayer, this));
     // 환불 처리 내역
     this.$moveRefundListTrigger.on('click', $.proxy(this._moveRefundList, this));
-    // 과납내역 환불받기 
+    // 과납내역 환불받기
     this.$addRefundAccountTrigger.on('click', $.proxy(this._moveRefundAccount, this));
   },
 
@@ -147,7 +147,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @member
    * @desc 리스트 렌더링 후 호출 이벤트 바인드
-   * - this.$btnListViewMorewrapper 더 보기 버튼 
+   * - this.$btnListViewMorewrapper 더 보기 버튼
    */
   _afterList: function() {
     this.$btnListViewMorewrapper = this.$domListWrapper.find('.fe-btn-more'); // 더 보기 버튼
@@ -167,7 +167,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @member
    * @desc 상세보기 이동
-   * - myt-fare/info/history/detail? 
+   * - myt-fare/info/history/detail?
    * @param {string} type - 카테고리타입 상세페이지에서 어떤 API 를 호출할 지 기준이 됨
    * @param {number>string} innerIndex - 리스트내 인덱스 존재 할 경우 / 상세보기 페이지에서도 같은 API 를 호출하고 id 값이 존재하지 않아 innerIndex 값을 저장해서 파라미터로 넘겨 해당 데이터를 찾을 수 있도록 함
    * @param {date>string} opDt, payOpTm- 즉시납부 코드일 경우 (=== DI ) 파라미터 전송 해당 파라미터로 상세페이지에서 검색
@@ -175,7 +175,7 @@ Tw.MyTFareInfoHistory.prototype = {
   _listViewDetailHandler: function(e) {
     // 링크가 없다면 return ;
     if(!$(e.currentTarget).data('listId') &&
-        $(e.currentTarget).data('listId') !== 0 && 
+        $(e.currentTarget).data('listId') !== 0 &&
         $(e.currentTarget).data('listId') !== '0'
       ) return ;
 
@@ -207,7 +207,7 @@ Tw.MyTFareInfoHistory.prototype = {
 
     if(alertCode){
       alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
-    } 
+    }
 
     if(alertType){
       /**
@@ -225,12 +225,12 @@ Tw.MyTFareInfoHistory.prototype = {
         $.proxy(this._popupService.close,this),
         $(e.currentTarget)
       );
-    } 
-    
+    }
+
   },
 
   /**
-   * @function 
+   * @function
    * @member
    * @desc 포인트 1회 납부예약 취소 실행
    * @param {Object} $target  처음 이벤트 발생시켰던 버튼 엘리먼트
@@ -241,16 +241,17 @@ Tw.MyTFareInfoHistory.prototype = {
     var apiCode, apiBody={};
 
     //apiCode,apiBody 설정
-    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0||this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0){ 
+    if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0||this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.OK)>=0){
       apiCode='BFF_07_0047';
       apiBody={
         ptClCd:this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.T)>=0?'TPT':'CPT',
         opDt:this.reserveCancelData.opDt,
         payOpTm:this.reserveCancelData.opTm,//.substring(8),
-        rbpSerNum:this.reserveCancelData.rbpSerNum
+        rbpSerNum:this.reserveCancelData.rbpSerNum,
+        point: this.reserveCancelData.point
       };
     }
-    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){ 
+    else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){
       apiCode='BFF_07_0050';
       apiBody={
         rbpSerNum:this.reserveCancelData.rbpSerNum
@@ -266,7 +267,7 @@ Tw.MyTFareInfoHistory.prototype = {
 
 
   /**
-   * @function 
+   * @function
    * @member
    * @desc 포인트 1회 납부예약 취소 결과값 반환 후 처리
    * @param {Object} $target 처음 이벤트 발생시켰던 버튼 엘리먼트
@@ -293,8 +294,8 @@ Tw.MyTFareInfoHistory.prototype = {
        * @param {Object} $target 창 닫힌 후 포커스 될 타겟 element
        */
       this._popupService.openAlert(
-        alertType.MSG, 
-        alertType.TITLE, 
+        alertType.MSG,
+        alertType.TITLE,
         Tw.BUTTON_LABEL.CONFIRM,
         $.proxy(this._reLoading, this)
         // 예약취소 확인 후 리로딩 되므로 되돌아갈 타켓 지정 필요없음
@@ -302,9 +303,9 @@ Tw.MyTFareInfoHistory.prototype = {
     } else {
       // 실패시
       this._popupService.openAlert(
-        res.msg, 
-        Tw.POPUP_TITLE.NOTIFY, 
-        Tw.BUTTON_LABEL.CONFIRM, 
+        res.msg,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM,
         $.proxy(function() {
           this._popupService.close();
         }, this),
@@ -327,7 +328,7 @@ Tw.MyTFareInfoHistory.prototype = {
   },
 
   // 포인트 예약 취소 end
-  
+
   /**
    * @function
    * @member
@@ -346,19 +347,19 @@ Tw.MyTFareInfoHistory.prototype = {
 
     this.renderableListData.map($.proxy(function(o) {
       var renderedHTML;
-      
+
       renderedHTML = this.$template.$templateItemDay({records:[{items:[o], date:o.listDt, yearHeader:o.yearHeader}]});
-      
+
       $domAppendTarget.append(renderedHTML);
 
     }, this));
   },
 
   /**
-   * @function 
+   * @function
    * @member
    * @returns {void}
-   * @desc 리스트 
+   * @desc 리스트
    */
   _updatePaymentListData: function() {
     this.listNextIndex = this.listLastIndex + this.listRenderPerPage;
@@ -391,16 +392,16 @@ Tw.MyTFareInfoHistory.prototype = {
   _openAutoPaymentLayer: function () {
     this._historyService.goLoad('/myt-fare/info/cancel-draw');
   },
-  
+
   /**
    * @function
    * @member
-   * @param {event} evt 
+   * @param {event} evt
    * @desc 분류선택 액션시트 호출
    */
   _typeActionSheetOpen: function (evt) {
     /**
-     * @function 
+     * @function
      * @param {Object} {hbs: hbs 의 파일명, layer: 레이어 여부, title: 액션시트 제목, data: 데이터 리스트, btnfloating: {txt: 닫기버튼 문구, attr: 닫기버튼 attribute, class: 닫기버튼 클래스}}
      * @param {function} function_open_call_back 액션시트 연 후 호출 할 function
      * @param {function} function_close_call_back 액션시트 닫힌 후 호출할 function
@@ -418,8 +419,8 @@ Tw.MyTFareInfoHistory.prototype = {
         attr: 'type="button"',
         'class': 'tw-popup-closeBtn'
       }
-    }, 
-    $.proxy(this._openTypeSelectHandler, this), 
+    },
+    $.proxy(this._openTypeSelectHandler, this),
     $.proxy(this._closeTypeSelect, this),
     null, $(evt.currentTarget)
     );
@@ -428,7 +429,7 @@ Tw.MyTFareInfoHistory.prototype = {
   /**
    * @function
    * @member
-   * @param {Array} arr 
+   * @param {Array} arr
    * @desc 회원 회선번호가 유무선 여부에 따라 셀렉트 타입 결정 (유선 회원일 경우(인터넷 가입회원 등) 소액결제 등의 선택상자는 나오지 않도록 처리)
    * @returns {Array}
    */
@@ -437,7 +438,7 @@ Tw.MyTFareInfoHistory.prototype = {
     return [{list: _.reduce(types, $.proxy(function(prev, type){
       if (this.data.isMobile || type.onlyType !== 'M') {
         prev.push(type);
-      } 
+      }
       return prev;
     }, this), [])}];
   },
@@ -476,13 +477,13 @@ Tw.MyTFareInfoHistory.prototype = {
    * @param {element} $layer 팝업액션시트 dom객체
    */
   _onCommonFocus: function ($layer) {
-    Tw.CommonHelper.focusOnActionSheet($layer); 
+    Tw.CommonHelper.focusOnActionSheet($layer);
   },
 
   /**
    * @function [웹접근성]
    * @desc 클릭시 라디오버튼 변경되어 이벤트 변경이벤트 호출되도록 (_moveByPaymentType)
-   * @param {event} e 
+   * @param {event} e
    */
   _onCommonClickService: function(e) {
     e.stopPropagation();
@@ -495,7 +496,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @member
    * @desc 라디오 액션 시트 내 리스트 클릭 이벤트, 해당 리스트 내 라디오 버튼 체인지 이벤트를 발생시킴
-   * @param {event} e 
+   * @param {event} e
    * @returns {void}
    */
   _clickPaymentType: function (e) {
@@ -510,7 +511,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @member
    * @desc 라디오 액션시트 체인지 이벤트 발생 시 실행 , 해당 카테고리 파라미터를 붙여 이동함 (sortType)
-   * @param {event} e 
+   * @param {event} e
    * @returns {void}
    */
   _moveByPaymentType: function (e) {
@@ -518,13 +519,13 @@ Tw.MyTFareInfoHistory.prototype = {
     e.stopPropagation();
     var target    = $(e.currentTarget),
         targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-    
+
     if (Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] !== this.queryParams.sortType) {
       targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] ?
           targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()];
 
       this._popupService.closeAllAndGo(targetURL);
-      
+
     } else {
       this._popupService.close();
     }
@@ -562,7 +563,7 @@ Tw.MyTFareInfoHistory.prototype = {
    * @function
    * @desc API 호출 후 에러 반환시 에러 서비스 호출
    * @param {Oject} $target API 호출시 이벤트 발생 시킨 엘리먼트
-   * @param {JSON} err API 반환 코드 
+   * @param {JSON} err API 반환 코드
    * @returns {boolean} false
    */
   _apiError: function ($target, err) {
