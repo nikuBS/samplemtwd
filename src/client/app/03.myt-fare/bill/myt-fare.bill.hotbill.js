@@ -332,7 +332,7 @@ Tw.MyTFareHotBill.prototype = {
    * @private
    */
   _onErrorOtherLine: function (line, resp) {
-    if ( line.count === 1 ) {
+    if ( line.count < 4 ) {
       // 2번 시도 필요
       this._getBillResponseOtherLine(line, resp);
     } else {
