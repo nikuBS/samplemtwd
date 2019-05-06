@@ -1,7 +1,7 @@
 /**
  * @file customer.faq.search.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.12.02
+ * @author Hakjoon sim
+ * @since 2018-12-02
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -64,6 +64,15 @@ class CustomerFaqCategory extends TwViewController {
       );
   }
 
+  /**
+   * @function
+   * @desc FAQ category 정보를 BFF에서 조회
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @param  {string} id - 조회할 category의 root id
+   * @returns Observable - 조회 결과
+   */
   private getCategoryList(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0051, { ifaqGrpCd: id }).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -81,6 +90,16 @@ class CustomerFaqCategory extends TwViewController {
     });
   }
 
+  /**
+   * @function
+   * @desc 특정 카테고리와 depth의 faq list 조회 (BFF_08_0052 명세 참고)
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @param  {string} group - 조회할 FAQ list의 group id
+   * @param  {number} depth - 조회할 FAQ list의 depth 정보
+   * @returns Observable
+   */
   private getFaqList(res: Response, svcInfo: any, pageInfo: any, group: string, depth: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0052, {
       faqDepthGrpCd: group,
