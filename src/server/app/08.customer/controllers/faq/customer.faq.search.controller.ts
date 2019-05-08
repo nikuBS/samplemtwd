@@ -1,7 +1,7 @@
 /**
  * @file customer.faq.search.controller.ts
- * @author Hakjoon sim (hakjoon.sim@sk.com)
- * @since 2018.11.05
+ * @author Hakjoon sim
+ * @since 2018-11-05
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -36,6 +36,15 @@ class CustomerFaqSearch extends TwViewController {
     );
   }
 
+  /**
+   * @function
+   * @desc FAQ 검색 API 조회
+   * @param  {string} keyword - 검색할 keyword
+   * @param  {Response} res - Response
+   * @param  {any} svcInfo - 사용자 정보
+   * @param  {any} pageInfo - 페이지 정보
+   * @returns Observable - 검색결과
+   */
   private getSearchResult(keyword: string, res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0050, {
       srchKey: encodeURIComponent(keyword),
