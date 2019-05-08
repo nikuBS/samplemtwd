@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>무제한 5G 이용 예약확인</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+					<hr class="cont-sp type1" aria-hidden="true" />
+					<!-- .cont-box -->
+                    <div class="cont-box">
+						<p class="og-data-deducted">
+							<span class="tit-le">선차감 데이터</span>
+							<span class="val-ue">1.5GB</span>
+						</p>
+						<ul class="og-deducted-list">
+							<li>
+								<span class="tit-le">이용날짜</span>
+								<span class="val-ue"><img src="/img/t_m5g/og_today.png" class="og-ic-today" alt="오늘">1월 26일 (토)</span>
+							</li>
+							<li>
+								<span class="tit-le">이용시간</span>
+								<span class="val-ue bo-ld">오후 2시 ~ 오후 2시 30분</span>
+							</li>
+						</ul>
+						<p class="og-p-dot mt10">예약시간 5분 전에 알림을 받습니다.</p>
+					</div>
+					<!-- //.cont-box -->
+					
+					<hr class="cont-sp type1" aria-hidden="true" />
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<p class="og-p-indt">※ 예약변경을 원하실 경우 <span class="tx-bold">삭제 후 재예약</span> 해주시기 바랍니다.<br>
+						(삭제 시점부터 1분 후 재예약 가능)</p>
+					</div>
+					<!-- //.cont-box -->
+
+					<div class="bt-fixed-area">
+                        <ul class="bt-slice item-two full">
+                            <li>
+                                <button class="btn-floating btn-style2">삭제</button>
+                            </li>
+							<li>
+                                <button class="btn-floating btn-style1">확인</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
