@@ -1,9 +1,11 @@
 /**
  * @class
  * @param $container - 컨테이너 레이어
+ * @param isTosBanner - TOS 배너 여부
  */
-Tw.XtractorService = function($container) {
+Tw.XtractorService = function($container, isTosBanner) {
   this.$container = $container;
+  this._isTosBanner = isTosBanner || false;
 
   // Log
   Tw.Logger.info('[Xtractor] init container', this.$container);
@@ -21,7 +23,8 @@ Tw.XtractorService.prototype = {
    */
   _init: function() {
     this._loggedList = [];
-    this._isScript = window.XtractorScript && window.XtractorScript.xtrCSDummy;
+    this._isScript = window.XtractorScript &&
+      (this._isTosBanner && window.XtractorScript.xtrEvent || !this._isTosBanner && window.XtractorScript.xtrCSDummy);
 
     this._bindBC();
     this._onLoadBV();
@@ -32,7 +35,11 @@ Tw.XtractorService.prototype = {
    * @desc 노출 처리
    */
   _onLoadBV: function() {
-    _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+    if (this._isTosBanner) {
+      _.each(this.$container.find('[data-xt_action="BN"]'), $.proxy(this._sendBV, this));
+    } else {
+      _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+    }
   },
 
   /**
@@ -40,7 +47,11 @@ Tw.XtractorService.prototype = {
    * @desc 클릭 이벤트 바인딩
    */
   _bindBC: function() {
-    this.$container.on('mousedown', '[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
+    if (this._isTosBanner) {
+      this.$container.on('mousedown', '[data-xt_action="BN"]', $.proxy(this._sendBC, this));
+    } else {
+      this.$container.on('mousedown', '[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
+    }
   },
 
   /**
@@ -54,12 +65,26 @@ Tw.XtractorService.prototype = {
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
 
-    if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
-      Tw.Logger.warn('[Xtractor] E_ID and CS_ID is required.', { E_ID: E_ID, CS_ID: CS_ID });
-      return false;
+    if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
+      this.logView(E_ID, CS_ID);
     }
 
-    this.logView(E_ID, CS_ID);
+    /* TOS Banner */
+    var BannerArgs = {
+      CMPGN_NUM: $elem.data('xt_cmpgn_num'),
+      EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
+      CELL_NUM: $elem.data('xt_cell_num'),
+      MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
+      ACTION: 'Exp'
+    };
+
+    if (this._isTosBanner &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
+      this._sendXtrEvent($.param(BannerArgs));
+    }
   },
 
   /**
@@ -73,12 +98,26 @@ Tw.XtractorService.prototype = {
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
 
-    if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
-      Tw.Logger.warn('[Xtractor] E_ID and CS_ID is required.', { E_ID: E_ID, CS_ID: CS_ID });
-      return false;
+    if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
+      this.logClick(E_ID, CS_ID);
     }
 
-    this.logClick(E_ID, CS_ID);
+    /* TOS Banner */
+    var BannerArgs = {
+      CMPGN_NUM: $elem.data('xt_cmpgn_num'),
+      EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
+      CELL_NUM: $elem.data('xt_cell_num'),
+      MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
+      ACTION: 'Clk'
+    };
+
+    if (this._isTosBanner &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
+      !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
+      this._sendXtrEvent($.param(BannerArgs));
+    }
   },
 
   /**
@@ -136,6 +175,30 @@ Tw.XtractorService.prototype = {
     try {
       window.XtractorScript.xtrCSDummy(E_ID, CS_ID, ACTION);
       this._loggedList.push(key);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  /**
+   * @function
+   * @desc Xtractor Event
+   * @returns {boolean}
+   */
+  _sendXtrEvent: function(param) {
+    if (!this._isScript) {
+      Tw.Logger.warn('[Xtractor] Logger is failed. Xtractor script is not found.');
+      return false;
+    }
+
+    if (this._loggedList.indexOf(param) !== -1) {
+      Tw.Logger.info('[Xtractor] this param already logged.');
+      return false;
+    }
+
+    try {
+      window.XtractorScript.xtrEvent(param);
+      this._loggedList.push(param);
     } catch (e) {
       console.log(e);
     }
