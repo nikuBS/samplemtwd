@@ -623,3 +623,9 @@ export const PRODUCT_WIRE_PLAN_CATEGORIES = {
   TV: 'F01323'
 };
 
+export const MYT_SUSPEND_REASON_CODE = {
+  MILITARY: '21', // 군입대(현역)
+  OVERSEAS: '22', // 해외체류
+  SEMI_MILITARY: '27' // 군입대(현역외)
+};
+

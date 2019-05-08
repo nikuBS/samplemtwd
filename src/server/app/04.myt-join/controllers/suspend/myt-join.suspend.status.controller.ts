@@ -9,6 +9,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
+import { MYT_SUSPEND_REASON_CODE } from '../../../../types/bff.type';
 import { MYT_SUSPEND_ERROR_MSG, MYT_SUSPEND_REASON, MYT_SUSPEND_STATE_EXCLUDE } from '../../../../types/string.type';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -54,20 +55,17 @@ class MyTJoinSuspendStatus extends TwViewController {
         status['resuspend'] = null; // 재신청중인 사용자 -> 재신청취소 버튼 노출
         status['resuspendDt'] = null; // 재신청일자
         status['resetable'] = true;
-        status['resuspendable'] = false; // 장기일시정지(군입대) 일시해제 경우 재싱청 버튼 노출
+        status['resuspendable'] = false; // 장기일시정지(군입대) 일시해제 경우 재신청 버튼 노출
         status['militaryAC'] = false;
-        if ( suspendStatus.result.svcChgRsnCd === '21'
-          || suspendStatus.result.svcChgRsnCd === '22' ) { // 장기일시정지(case 6)
+        if ( suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+          || suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+          || suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY ) { // 장기일시정지(case 6)
           status['type'] = 'long-term';
           // status['resuspendable'] = true;
           if ( suspendStatus.result.reFormDt ) { // 장기일시정지(case 7)
             status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.M.D.');
-          } else if ( suspendStatus.result.svcChgRsnCd === '21' ) {
-            const months = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), suspendStatus.result.fromDt, 'months');
-            if ( months >= 23 ) {
-              status['resuspendable'] = false;
-            }
           }
+
           if ( suspendStatus.result.cntcNum ) {
             suspendStatus.result.cntcNum = StringHelper.phoneStringToDash(suspendStatus.result.cntcNum);
           }
@@ -89,6 +87,14 @@ class MyTJoinSuspendStatus extends TwViewController {
           status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.M.D.');
         } else {
           status['resuspendable'] = true;
+          // DV001-21787 현역과 현역외의 장기일시정지의 일시해제가 동시 적용하는 경우에 대한 처리
+          status['invaild_resuspend'] = false;
+          if ( (suspendStatus.armyDt && suspendStatus.armyDt !== '')
+            && (suspendStatus.armyExtDt && suspendStatus.armyExtDt !== '') ) {
+            if ( suspendStatus.armyDt === suspendStatus.armyExtDt ) {
+              status['invaild_resuspend'] = true;
+            }
+          }
         }
         options['status'] = status;
       } else {
@@ -107,6 +113,7 @@ class MyTJoinSuspendStatus extends TwViewController {
           // DV001-18322 스윙 문구 고객언어 반영
           _progress.state = _progress.opState.replace( MYT_SUSPEND_STATE_EXCLUDE, ''); // MYT_SUSPEND_STATE[_progress.opStateCd];
           _progress.fromDt = DateHelper.getShortDateWithFormat(_progress.fromDt, 'YYYY.M.D.');
+          // AC상태에서는 군입대 21, 해외체류 22 상태 정보가 세팅 안됨. receiveCd 참조 필요
           _progress.progressReason = MYT_SUSPEND_REASON[_progress.receiveCd];
           if ( _progress.toDt ) {
             _progress.toDt = DateHelper.getShortDateWithFormat(_progress.toDt, 'YYYY.M.D.');
@@ -154,11 +161,14 @@ class MyTJoinSuspendStatus extends TwViewController {
    */
   _militaryAC(suspendStatus: any): boolean {
     // 사용중(AC)이지만 armyDt 값으로 체크
-    if ( suspendStatus.svcStCd === 'AC' && suspendStatus.armyDt && suspendStatus.armyDt !== '' ) {
-      // 최초 장기일시정지 신청 기간 경과 체크
-      const days = DateHelper.getDiffByUnit(suspendStatus.toDt, DateHelper.getCurrentDate(), 'days');
-      if ( days > 0 ) {
-        return true;
+    if ( suspendStatus.svcStCd === 'AC' ) {
+      if ( (suspendStatus.armyDt && suspendStatus.armyDt !== '')
+        || (suspendStatus.armyExtDt && suspendStatus.armyExtDt !== '') ) {
+        // 최초 장기일시정지 신청 기간 경과 체크
+        const days = DateHelper.getDiffByUnit(suspendStatus.toDt, DateHelper.getCurrentDate(), 'days');
+        if ( days > 0 ) {
+          return true;
+        }
       }
     }
     return false;

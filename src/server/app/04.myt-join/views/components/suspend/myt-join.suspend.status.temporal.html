@@ -54,15 +54,21 @@
     <% } else { %>
     <ul class="bt-slice mt20 mb20 item-two">
     <% } %>
+        <% if(type === 'temporary' ){ %>
         <li class="bt-white2">
-            <% if(type === 'temporary' ){ %>
-            <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
-            <% } else { %>
-                 <% if(resuspendable){ %>
-                 <button data-id="bt-resuspend" >재신청하기</button>
-                 <% } %>
-            <% } %>
+          <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
         </li>
+        <% } else { %>
+             <% if(resuspendable){ %>
+                <li class="bt-white2">
+                 <% if(invaild_resuspend){ %>
+                    <button data-id="bt-resuspend" disabled >재신청하기</button>
+                 <% } else { %>
+                    <button data-id="bt-resuspend" >재신청하기</button>
+                 <% } %>
+                </li>
+             <% } %>
+        <% } %>
         <% if(resetable){ %>
         <li class="bt-white2">
             <button data-id="bt-reset">해제하기</button>

@@ -283,9 +283,15 @@ Tw.MYT_DATA_FAMILYDATA_CHANGE_DATA_CODE = {
   RCG0068: 'NOT_MINE',  // 내 공유 내역 아님
   RCG0069: 'NOT_SAME_PLAN' , // 공유 당시와 동일한 요금제가 아님
   RCG0070: 'GREATER_THAN_CHANGABLE' // 변경하려는 데이터 양이 공유 데이터 양보다 큼 
-}
+};
 
 Tw.MYT_DATA_FAMILYDATA_SHARE_DATA_CODE = {
   TIMEOUT: 'ZORDC1020',
   IS_ZERO: 'RCG0042'
-}
+};
+
+Tw.MYT_SUSPEND_REASON_CODE = {
+  MILITARY: '21', // 군입대(현역)
+  OVERSEAS: '22', // 해외체류
+  SEMI_MILITARY_: '27' // 군입대(현역외)
+};
