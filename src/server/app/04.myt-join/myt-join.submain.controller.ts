@@ -204,8 +204,9 @@ class MyTJoinSubmainController extends TwViewController {
             toDt: data.myPausedState.toDt
           };
         }
-      } else if ( data.myPausedState && data.myPausedState.armyDt ) {
+      } else if ( data.myPausedState && (data.myPausedState.armyDt || (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '')) ) {
         data.myLongPausedState = { state: true };
+        data.myPausedState.armyDt = data.myPausedState.armyExtDt;
       }
 
       if ( data.myLongPausedState ) {
