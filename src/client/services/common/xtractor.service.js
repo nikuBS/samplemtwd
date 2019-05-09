@@ -23,8 +23,7 @@ Tw.XtractorService.prototype = {
    */
   _init: function() {
     this._loggedList = [];
-    this._isScript = window.XtractorScript &&
-      (this._isTosBanner && window.XtractorScript.xtrEvent || !this._isTosBanner && window.XtractorScript.xtrCSDummy);
+    this._isScript = this._isTosBanner && (window.XtractorEvent && window.XtractorEvent.xtrEvent) || !this._isTosBanner && (window.XtractorScript && window.XtractorScript.xtrCSDummy);
 
     this._bindBC();
     this._onLoadBV();
@@ -197,7 +196,7 @@ Tw.XtractorService.prototype = {
     }
 
     try {
-      window.XtractorScript.xtrEvent(param);
+      window.XtractorEvent.xtrEvent(param);
       this._loggedList.push(param);
     } catch (e) {
       console.log(e);
