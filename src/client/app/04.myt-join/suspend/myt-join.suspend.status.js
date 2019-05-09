@@ -92,7 +92,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       params.command = 'resuspend';
       params.svcNum = this._svcInfo.svcNum;
-      params.toDt = this._params.status.period.to.replace(/\./g, '');
+      params.toDt = this._params.status.period.to;
       this._popupService.closeAllAndGo('/myt-join/submain/suspend/complete?' + $.param(params));
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
