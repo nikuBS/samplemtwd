@@ -241,7 +241,7 @@ Tw.MembershipSubmain.prototype = {
               list: bnr.banner.result.imgList
             };
           } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, bnr.banner.result.imgList, 'S');
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, Tw.CommonHelper.setBannerForStatistics(bnr.banner.result.imgList, bnr.banner.result.summary), 'S');
           }
         }
       } else {

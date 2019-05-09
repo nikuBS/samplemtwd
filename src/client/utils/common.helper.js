@@ -380,6 +380,12 @@ Tw.CommonHelper = (function () {
     }
   };
 
+  var setBannerForStatistics = function(banners, summary) {
+    return _.map(banners, function(banner) {
+      return $.extend(summary, banner);
+    });
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -405,6 +411,7 @@ Tw.CommonHelper = (function () {
     isLowerVersionAndroid: isLowerVersionAndroid,
     replaceExternalLinkTarget: replaceExternalLinkTarget,
     sendRequestImg: sendRequestImg,
-    focusOnActionSheet: focusOnActionSheet
+    focusOnActionSheet: focusOnActionSheet,
+    setBannerForStatistics: setBannerForStatistics
   };
 })();

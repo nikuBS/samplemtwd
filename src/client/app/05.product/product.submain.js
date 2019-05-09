@@ -42,7 +42,7 @@ Tw.ProductSubmain.prototype = {
   _successTosBanner: function(resp) {
     if (this._checkTosBanner(resp)) {
       if (!Tw.FormatHelper.isEmpty(resp.result.summary)) {
-        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, resp.result.imgList, 'T');
+        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, Tw.CommonHelper.setBannerForStatistics(resp.result.imgList, resp.result.summary), 'T');
       } else {
         this.$container.find('#fe-header-t').remove();
         this.$container.find('#fe-banner-t').remove();
