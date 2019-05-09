@@ -1266,5 +1266,9 @@
   {
     "old": "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00004350",
     "menuId": "/product/callplan?prod_id=NA00004350"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?viewId=V_MYTW1009&serviceId=S_MYTW0034&prod_id=Z&menuId=3,4",
+    "menuId" :"M000244"
   }
 ]
