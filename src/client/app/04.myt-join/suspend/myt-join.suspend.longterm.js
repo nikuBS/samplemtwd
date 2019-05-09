@@ -47,6 +47,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btSuspend = this.$container.find('[data-id="fe-bt-suspend"]');
     this.$inputEmail = this.$container.find('[data-id="fe-input-email"]');
     this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
+    this.$militaryType = this.$container.find('[data-id="fe-military-type"]');
   },
   /**
    * @function
@@ -111,6 +112,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this.$container.find('.fe-military').attr('aria-hidden', true);
       this.$container.find('.fe-abroad').show();
       this.$container.find('.fe-abroad').attr('aria-hidden', false);
+      this.$militaryType.prop('checked', false);
     }
     this.$btSuspend.prop('disabled', true);
   },
@@ -132,6 +134,9 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     setTimeout($.proxy(function () {
       this.$optionType.filter('[value!="' + type + '"]').parent().addClass('checked');
       this.$optionType.filter('[value="' + type + '"]').parent().removeClass('checked');
+      if( type === 'military' ){
+        this.$militaryType.prop('checked', false);
+      }
     }, this), 100);
   },
   /**
@@ -306,7 +311,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
           null, null, null, null,  $(event.currentTarget));
         return;
       }
-      option.svcChgRsnCd = '21';
+      option.svcChgRsnCd = this.$militaryType.prop('checked') ?
+        Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_: Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
       option.fromDt = from;
       option.toDt = to;
     } else { // 해외체류
@@ -324,7 +330,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
           null, null, null, null,  $(event.currentTarget));
         return;
       }
-      option.svcChgRsnCd = '22';
+      option.svcChgRsnCd = Tw.MYT_SUSPEND_REASON_CODE.OVERSEAS;
       option.fromDt = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val().replace(/-/g, '');
     }
     option.icallPhbYn = this.$optionSuspendAll.attr('checked') ? 'Y' : 'N';

@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG, MYT_SUSPEND_STATE_EXCLUDE } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { SVC_ATTR_NAME } from '../../types/bff.type';
+import { SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 
@@ -194,7 +194,9 @@ class MyTJoinSubmainController extends TwViewController {
         data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
         data.myPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myPausedState.state = true;
-        if ( data.myPausedState.svcChgRsnCd === '21' || data.myPausedState.svcChgRsnCd === '22' ) {
+        if ( data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+          || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
+          || data.myPausedState.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY) {
           data.myLongPausedState = {
             state: true,
             opState: data.myPausedState.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , ''),
@@ -202,8 +204,10 @@ class MyTJoinSubmainController extends TwViewController {
             toDt: data.myPausedState.toDt
           };
         }
-      } else if ( data.myPausedState && data.myPausedState.armyDt ) {
+      } else if ( data.myPausedState && ((data.myPausedState.armyDt && data.myPausedState.armyDt !== '') ||
+        (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '')) ) {
         data.myLongPausedState = { state: true };
+        data.myPausedState.armyDt = data.myPausedState.armyDt || data.myPausedState.armyExtDt;
       }
 
       if ( data.myLongPausedState ) {
@@ -213,12 +217,15 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
-        if ( data.myPausedState.svcStCd === 'AC' && data.myPausedState.armyDt && data.myPausedState.armyDt !== '' ) {
-          const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
-          if ( days < 0 ) {
-            data.myPausedState.state = false;
-            data.myLongPausedState.state = false;
-            delete data.myPausedState.armyDt;
+        if ( data.myPausedState.svcStCd === 'AC' ) {
+          if ( ( data.myPausedState.armyDt && data.myPausedState.armyDt !== '' )
+            || ( data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '' ) ) {
+            const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+            if ( days < 0 ) {
+              data.myPausedState.state = false;
+              data.myLongPausedState.state = false;
+              delete data.myPausedState.armyDt;
+            }
           }
         }
 

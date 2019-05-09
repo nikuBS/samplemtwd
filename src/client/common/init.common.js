@@ -100,7 +100,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.45.0');
+        Tw.Popup.toast('QA_v5.46.0');
       }
 
       this._initTrackerApi();
@@ -246,7 +246,7 @@ Tw.Init.prototype = {
     }
 
     if ( Tw.BrowserHelper.isIos() ) {
-      params.idfa = res.params.adid;
+      params.idfa = res.params.idfa;
     }
 
     Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));

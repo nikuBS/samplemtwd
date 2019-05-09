@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>요금제 변경안내 > 혜택이 마음에 들지 않아서</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+   
+    <!-- 5g용 CSS/JS 추가 / 190419_dg방어 CSS 추가 -->
+    <link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+    <!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+    <!-- //5g용 CSS/JS 추가 / 190419_dg방어 CSS 추가-->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs : DG popup   -->
+        <!-- dg 방어 : templeat 설명 -->
+        <!-- .dwg-popup -->
+        <!-- .no-btn : 버튼 숨기기 -->
+        <!-- .no-header : header 숨김 -->
+        <!-- colortype : 
+              .color-type-list (#f76252) - 요금제 변경 케이스 
+              .color-type-a (#58637f) - 비용 
+              .color-type-b (#3584e3) - 혜택
+              .color-type-c (#57637f) - 데이터  
+              .color-type-d (#198d5b) - 기타 
+         -->
+<!-- 20190422 수정 -->          
+        <div class="popup-page tw-popup fixed-btn fixed-bottom dwg-popup color-type-c">
+            <!-- #header -->
+            <!--
+            <div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>헤더가 있는 경우 타이틀</h1>
+                    </div>
+               </div>
+            </div>
+            -->
+
+         	<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+ <!-- ####################### 어드민 영역 ####################### -->
+				<div class="container">
+                    <!-- 데이터 -->
+                    <h2 class="blind">요금제 변경안내 내용</h2>
+                    <div class="dwg-typeImg-area">
+                        <div class="img-wrap">
+                            <img src="/img/t_dwg/img_dg_type_c.png" alt="이미지 설명 들어가요">
+                        </div>
+                    </div>
+                    <!-- 데이터 -->
+                </div>
+                <!-- button fixed -->
+                <div class="bt-fixed-area dwg-dialog-area">
+                    <p class="txt">정말 요금제를 변경하시겠어요?</p>
+                    <div class="dwg-dialog-btns">
+                        <div class="col">
+                            <button class="btn-dialog-1 fe-btn_change" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>지금 변경할래요.</span></button>
+                        </div>
+                        <div class="col">
+                            <button class="btn-dialog-2 fe-btn_close" data-xt_eid="E_ID" data-xt_csid="CS_ID" data-xt_action="BC"><span>다음에 할게요.</span></button>
+                        </div> 
+                    </div>
+                </div>
+                <!-- //button fixed -->
+<!-- ####################### //어드민 영역 ####################### -->
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs: DG popup -->
+<!-- //20190422 수정 --> 
+    </div>
+
+</body>
+</html>
