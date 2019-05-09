@@ -127,7 +127,7 @@ Tw.MainStore.prototype = {
               list: bnr.banner.result.imgList
             };
           } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, Tw.CommonHelper.setBannerForStatistics(bnr.banner.result.imgList, bnr.banner.result.summary), bnr.target, $.proxy(this._successDrawBanner, this));
           }
         }
       } else {

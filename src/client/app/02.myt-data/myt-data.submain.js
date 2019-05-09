@@ -144,7 +144,7 @@ Tw.MyTDataSubMain.prototype = {
       var result = resp.result;
       var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
       if ( isCheckBanner ) {
-        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : result.imgList;
+        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : Tw.CommonHelper.setBannerForStatistics(result.imgList, result.summary);
         new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {

@@ -246,7 +246,7 @@ Tw.Init.prototype = {
     }
 
     if ( Tw.BrowserHelper.isIos() ) {
-      params.idfa = res.params.adid;
+      params.idfa = res.params.idfa;
     }
 
     Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));

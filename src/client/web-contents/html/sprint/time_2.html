@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>시간 선택</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+					<hr class="cont-sp type1" aria-hidden="true" />
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<strong class="og-comp-tit-s">시간 선택</strong>
+						<div class="og-settime-btns">
+							<button type="button" data-add-type="hour" data-add-time="-1"><span><b>-60</b>분</span></button>
+							<button type="button" data-add-type="minute" data-add-time="-10"><span><b>-10</b>분</span></button>
+							<button type="button" data-add-type="minute" data-add-time="10"><span><b>+10</b>분</span></button>
+							<button type="button" data-add-type="hour" data-add-time="1"><span><b>+60</b>분</span></button>
+						</div>
+						<div class="og-settime-val og-color2"><span class="og-ui-hour">1</span>시간 <span class="og-ui-minute">30</span>분</div>
+					</div>
+					<!-- //.cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true" />
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<strong class="og-comp-tit-s">데이터 차감</strong>
+						<div class="og-settime-val og-color1"><span class="og-ui-used-data">1.30GB</span></div>
+					</div>
+					<!-- //.cont-box -->
+
+					<div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>선택 완료</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+
+	<script type="text/javascript">
+        $(function(){
+            var $openDoc = $(opener.document),
+                DATA_HOUR = 1024,
+                DATA_MINUTE = 17,
+                pi = $openDoc.find('#circle_pi').val(),
+                hour = Math.floor(pi / 6),
+                minute = Math.floor(pi % 6) * 10,
+                usedData = ((hour * DATA_HOUR) + (minute * DATA_MINUTE))  / 1024,
+                $btn = $('.og-settime-btns > button'),
+                $hour = $('.og-ui-hour'),
+                $minute = $('.og-ui-minute'),
+                $data = $('.og-ui-used-data'),
+                gradation = 4.9315,
+                type, count = 0;
+
+            function addZero(n) {
+                return (String(n).length < 2) ? '0' + n : n;
+            }
+
+            $hour.data('hour', hour).html(addZero(hour));
+            $minute.data('minute', minute).html(addZero(minute));
+            $data.html(usedData.toFixed(2) + 'GB');
+
+            $btn.on('click', function (e) {
+                e.preventDefault();
+
+                hour = $hour.data('hour');
+                minute = $minute.data('minute');
+                type = $(this).data('addType');
+
+                if (type === 'hour') {
+                    hour = parseInt(hour) + parseInt($(this).data('addTime'));
+                    if (hour < 0) {
+                        hour = 0;
+                        minute = 0;
+                    } else if (hour >= 12) {
+                        hour = 12;
+                        minute = 0;
+                    }
+                } else {
+                    minute = parseInt(minute) + parseInt($(this).data('addTime'));
+                    if (minute < 0) {
+                        minute = hour - 1 < 0 ? 0 : 50;
+                        hour = hour - 1 < 0 ? 0 : hour - 1;
+                    } else if (minute >= 60) {
+                        hour = hour + 1 < 12 ? hour + 1 : 12;
+                        minute = 0;
+                    } else if (hour === 12 && minute > 0) {
+                        minute = 0;
+                    }
+                }
+
+                $hour.data('hour', hour).html(addZero(hour));
+                $minute.data('minute', minute).html(addZero(minute));
+                usedData = ((hour * DATA_HOUR) + (minute * DATA_MINUTE))  / 1024;
+                $data.html(usedData.toFixed(2) + 'GB');
+
+                setTimeout(function () {
+                    if (hour === 12 && minute === 0) {
+                        count > 0 && alert('1회 최대 12시간 까지\n선택 가능합니다.');
+                        count++;
+                    } else {
+                        count = 0;
+                    }
+                }, 0);
+            });
+
+            $('.bt-fixed-area .bt-red1 > button').on('click', function () {
+                hour = $hour.data('hour');
+                minute = $minute.data('minute');
+                pi = (hour * 6 * gradation) + (minute / 10 * gradation);
+                window.opener.pickerRedraw(pi);
+                self.close();
+            });
+        });
+    </script>
+</body>
+</html>

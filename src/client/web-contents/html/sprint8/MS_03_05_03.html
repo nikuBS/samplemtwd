@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+<head> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" /><!-- 190503_추가_01 [#7633/DV001-21789]-->
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -104,6 +105,12 @@
                                                                         <div class="comp-list-layout" id="aria-comp-radio7">
                                                                             <p class="layout-text">
                                                                                 <span class="mtext">군입대</span>
+                                                                                <!-- 190503_추가_02 [#7633/DV001-21789]-->
+                                                                                <span class="simple-form type1 tod-side-chbox">
+                                                                                    (<span class="custom-form"><input type="checkbox" name="soldier_ch" value="" id="soldier-active"><span class="c-type1"></span></span>
+                                                                                    <label for="soldier-active">현역 외</label>)
+                                                                                </span>
+                                                                                <!-- //190503_추가_02 [#7633/DV001-21789] -->
                                                                             </p>
                                                                         </div>
                                                                     </li>

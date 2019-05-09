@@ -42,7 +42,7 @@ Tw.BannerService.prototype = {
     this._type = type;
     this._banners = this._getProperBanners(type, banners);
 
-    this._renderBanners(target, callback);
+    this._renderBanners(type, target, callback);
   },
 
   /**
@@ -59,12 +59,12 @@ Tw.BannerService.prototype = {
    * @param {function} callback excutable code after load banners
    * @private
    */
-  _renderBanners: function(target, callback) {  
+  _renderBanners: function(type, target, callback) {  
     var CDN = Tw.Environment.cdn;
 
     $.ajax(CDN + '/hbs/banner.hbs', {})
-      .done($.proxy(this._handleSuccessBanners, this, target, callback))
-      .fail($.proxy(this._renderBanners, this));
+      .done($.proxy(this._handleSuccessBanners, this, type, target, callback))
+      .fail($.proxy(this._renderBanners, this, type, target, callback));
   },
 
   /**
@@ -74,7 +74,7 @@ Tw.BannerService.prototype = {
    * @param {string} hbs 
    * @private
    */
-  _handleSuccessBanners: function(target, callback, hbs) {  
+  _handleSuccessBanners: function(type, target, callback, hbs) {  
     var CDN = Tw.Environment.cdn;
     this._bannerTmpl = Handlebars.compile(hbs);
 
@@ -96,7 +96,7 @@ Tw.BannerService.prototype = {
             'aria-label': Tw.BANNER_DOT_TMPL.replace('{{index}}', after + 1)
           });
       },
-      afterChange: function(e, slick, index) {
+      afterChange: function(e, slick) {
         slick.$slider.find('.slick-current > button').focus();
         // $(slick.$slides[index]).find('button').focus();
       }
@@ -107,6 +107,10 @@ Tw.BannerService.prototype = {
         this.$banners.parents('div.nogaps').addClass('none');
       } else {
         this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN })); // render banners
+
+        if (type === Tw.REDIS_BANNER_TYPE.TOS) {
+          new Tw.XtractorService(this.$banners, true);
+        }
 
         // set slick
         if (this.$banners.hasClass('fe-banner-auto')) { // auto scrolling
@@ -283,15 +287,16 @@ Tw.BannerService.prototype = {
           return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
         })
         .map(function(banner) {
-          return {
+          return $.extend(banner, {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: true,
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
             isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
-            linkType: banner.tosImgLinkTrgtClCd
-          };
+            linkType: banner.tosImgLinkTrgtClCd,
+            isTos: true
+          });
         })
         .value();
     } else {

@@ -1,5 +1,11 @@
 {{#each banners}}
-    <li data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO">
+    <li 
+        {{#if isTos}}
+            data-xt_action="BN" data-xt_cmpgn_num="{{tosCmpgnNum}}" data-xt_schd_num="{{tosExecSchNum}}" data-xt_cell_num="{{tosCellNum}}" data-xt_msg_ser_num="{{tosMsgSerNum}}"
+        {{else}}
+            data-xt_eid="{{oferStcCd}}" data-xt_action="BV" data-xt_action2="BC" data-xt_csid="NO"
+        {{/if}}
+    >
         {{#if isHTML}}
             <button style="width:100%" tabindex="{{#if @index}}-1{{else}}0{{/if}}">
                 {{{bnnrHtmlCtt}}}

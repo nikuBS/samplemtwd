@@ -54,7 +54,7 @@
                     </span>
                     <span class="text">
                         <!--DV001-19840 일시정지중 & 장기일시정지 2가지 포함 case인경우. "일시정지 중" 텍스트 항시 노출-->
-                        <%if(['21', '22'].indexOf(data.myPausedState.svcChgRsnCd) === -1){%>
+                        <%if(['21', '22', '27'].indexOf(data.myPausedState.svcChgRsnCd) === -1){%>
                             일시정지 중<br/>
                         <%}%>
                         <% if(longStateCd) { %>
