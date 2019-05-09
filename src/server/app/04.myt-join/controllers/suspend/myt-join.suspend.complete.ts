@@ -54,8 +54,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.RESUSPEND;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' + params.toDt;
         data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
           .replace('{SVC_NUMBER}', FormatHelper.conTelFormatWithDash(params.svcNum));
         break;
