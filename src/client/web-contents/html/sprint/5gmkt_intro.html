@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body class="og-5mktp-intro"><!-- 배경이 흰색일 경우 .bg-white -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #contents -->
+		<!-- #header -->
+		<div id="header" class="header-wrap">
+            <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">초[超]시대 생활이되다</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+
+		<!-- 190401 수정 -->
+        <div id="contents" class="container-wrap">
+			<div class="container">
+				<div class="og-5mktp-intro-headwrap">
+					<div class="og-5mktp-intro-logo">
+						<img src="/img/t_m5g/og_5mktp_intro_logo01.png" alt="SKT 5GX">
+						<span class="txt-r">초[超]시대 생활이되다</span>
+					</div>
+					<ul class="intro-menus">
+						<li>
+							<a href="5gmkt_life_1.html">
+								<span class="text-wrap">
+									<span class="subtx">초[超]격차 네트워크로 안심이 되는 생활</span>
+									<span class="tit">빠르고, 넓고,<br> 안전한 네트워크</span><!-- 190411 수정_01 -->
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="5gmkt_life_2.html">
+								<span class="text-wrap">
+									<span class="subtx">초[超]시대의 놀라운 생활</span>
+									<span class="tit">5GX가 선보이는<br> 상품 &amp; 서비스</span>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="5gmkt_life_3.html">
+								<span class="text-wrap">
+									<span class="subtx">초[超]시대의 마음껏 누리는 생활 </span>
+									<span class="tit">오직 SK 텔레콤에서만<br> 제공하는 혜택</span>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="og-5mktp-intro-body">
+					<ul>
+						<li class="og-5mktp-intro-bannr">
+							<a href="5gmkt_life_4.html" class="text-wrap">
+								<strong class="tit">5GX 플랜</strong>
+								<span class="txt">초고속 고용량 5G 콘텐츠와 서비스를<br> 자유롭게 쓰는 초[超]시대의 요금제</span>
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_01.png" alt=""></span>
+						</li>
+						<li class="og-5mktp-intro-bannr tr mt0">
+							<a href="5gmkt_life_2.html?tab=1" class="text-wrap">
+								<strong class="tit">프로직관러</strong>
+								<span class="txt">직접 가지 않아도, 친구와 만나지 않아도<br> VR 야구중계로 경기장의 생생함을 느낄 수 있어요</span>
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_02.png" alt=""></span>
+						</li>
+						<li class="og-5mktp-intro-bannr">
+							<a href="5gmkt_life_2.html?tab=2&anchor=1" class="text-wrap">
+								<strong class="tit">아이돌 덕후</strong>
+								<span class="txt">땀방울도 놓치지 않고 초 고화질 VR으로<br> 좋아하는 아이돌을 코앞에서 볼 수 있어요</span>
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_03.png" alt=""></span>
+						</li>
+						<li class="og-5mktp-intro-bannr tr">
+							<a href="5gmkt_life_2.html?tab=2&anchor=2" class="text-wrap">
+								<strong class="tit">자기관리 끝판왕</strong>
+								<span class="txt">출근할 때는 '비즈니스 영어',<br> 퇴근할 때는 '피트니스'!<br> 골라 즐기는 다양한 테마별<br> VR 자기계발</span><!-- 190411 수정_02 -->
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_04.png" alt=""></span>
+						</li>
+						<li class="og-5mktp-intro-bannr">
+							<a href="5gmkt_life_2.html?tab=2&anchor=5" class="text-wrap arrow-type2">
+								<strong class="tit">컬쳐홀릭</strong><!-- //190405 수정 -->
+								<span class="txt">하루만에 VR로 세계 일주하고,<br> 내방에서 파리 유명 미술관에도<br> 가보고!</span>
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_05.png" alt=""></span>
+						</li>
+						<li class="og-5mktp-intro-bannr">
+							<a href="5gmkt_life_2.html?tab=4" class="text-wrap">
+								<strong class="tit">게임만렙자</strong>
+								<span class="txt">우주에서 적을 물리치는 VR 게임 건잭부터<br> 바다 속 탐험이 가능한 오션리프트 까지</span>
+							</a>
+							<span class="img"><img src="/img/t_m5g/og_5mktp_intro_img_06.png" alt=""></span>
+						</li>
+						
+					</ul>
+				</div>
+				<!-- 190409 수정 -->
+				<div class="og-5mktp-btm-banner-wrap">
+					<div class="og-5mktp-btm-banner og-fixed">
+						<a href="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010014&productGrpId=000003532&subscriptionId=NA00006404&subcommDcMthd=10&addServiceId=&utm_source=tworld&utm_medium=p_5gx&utm_campaign=s10_5g&utm_content=buynow" class="og-5mktp-banner banrimg" target="_blank" title="다이렉트샵으로 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
+					</div>
+				</div>
+				<!-- //190409 수정 -->
+			</div>
+        </div>
+		<!-- //190401 수정 -->
+        <!--// #contents -->
+
+		<!-- 190411 추가_01 -->
+		<!-- #footer -->
+		<footer id="fe-all-menu">
+			<div id="gnb" class="gnb-wrap on">
+				<!-- web -->
+				<div class="q-wrap">
+					<ul class="q-list">
+						<li><a href="/main/home" type="button"><i class="icon-fab-bi-n-80"><span class="blind">bi</span></i></a></li>
+					</ul>
+				</div>
+				<!-- //web -->
+				<!-- app -->
+				<div class="g-wrap">
+					<ul class="g-list g-coach-box"><!-- .g-coach-box : coach mark사용시 추가 -->
+						<li><button type="button"><i class="icon-gnb-bi-n"><span class="blind">bi</span></i></button></li>
+						<li><button type="button"><i class="icon-gnb-back-n"><span class="blind">back</span></i></button></li>
+						<li><button type="button"><i class="icon-gnb-next-n"><span class="blind">next</span></i></button></li>
+						<li class="mark-lock"><!-- .on이 있어야 보임 -->
+							<button type="button"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button>
+							<div class="coach-mark">
+								<strong class="coach-txt"><span class="point">개인정보<br>보호모드(*)</span> 해제</strong>
+								<button type="button" class="close">닫기</button>
+							</div>
+						</li>
+						<li class="mark-pin">
+							<button type="button"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button>
+							<div class="coach-mark">
+								<strong class="coach-txt"><span class="point">MY 바로가기</span><br>추가</strong>
+								<button type="button" class="close">닫기</button>
+							</div>
+						</li>
+						<li><button type="button"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
+					</ul>
+				</div>
+				<!-- //app -->
+			</div>
+		</footer>
+		<!--// #footer -->
+		<!-- //190411 추가_01 -->
+    </div>
+
+	<!-- 인트로 커버 (페이지 진입시 잠깐 보였다 사라짐) -->
+	<!-- 190401 수정_02 -->
+	<div class="og-5mktp-intro-cover">
+		<div class="og-5mktp-intro-logo">
+			<img src="/img/t_m5g/og_5mktp_intro_logo02.png" alt="SKT 5GX">
+			<span class="txt-r"><span style="color:#cd0e2c;">초</span><span class="tx-normal" style="color:#cd0e2c;">[超]</span><span style="color:#ed7522;">시대</span> 생활이되다</span>
+		</div>
+		<div class="cover-cont">
+			<strong><img src="/img/t_m5g/og_5mktp_intro_cover_txt.png" alt="초 시대, 생활이 되다"></strong>
+			<p>SKT 5GX가 만드는 초시대적 세상,<br> 이제 우리의 생활이 됩니다.</p>
+		</div> 
+	</div>
+	<!-- //190401 수정_02 -->
+	<!-- //인트로 커버 (페이지 진입시 잠깐 보였다 사라짐) -->
+
+	<script type="text/javascript">
+        $(document).ready(function () {
+            // 190404_수정 START
+            $('.og-5mktp-intro-cover').on('touchstart touchmove', function (e) {
+                e.preventDefault();
+			});
+
+            setTimeout(function () {
+                $('.og-5mktp-intro-cover').fadeOut(400, function () {
+                    $(window).scrollTop(0);
+				});
+            }, 2000);
+            // 190404_수정 END
+
+			//하단 배너 플로팅
+			var $win = $(window),
+                $banner = $('.og-5mktp-btm-banner'),
+                $bannerWrap = $('.og-5mktp-btm-banner-wrap'),
+                timer;
+
+            $bannerWrap.toggleClass('app', !!$('.g-wrap').length);	//App 일 경우 .app class 추가 (하단 플로팅배너 위치값)
+            $win.on('touchstart touchend', function (e) {
+                if (e.type === 'touchstart') {
+                    clearTimeout(timer);
+                    $banner.stop(true, true).slideUp();
+                } else {
+                    timer = setTimeout(function () {
+                        $banner.stop(true, true).slideDown();
+                    }, 500);
+                }
+            });
+        });
+	</script>
+</body>
+</html>

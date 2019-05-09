@@ -6,6 +6,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { MYT_SUSPEND_COMPLETE_MSG } from '../../../../types/string.type';
+import { MYT_SUSPEND_REASON_CODE} from '../../../../types/bff.type';
 import ParamsHelper from '../../../../utils/params.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -34,7 +35,8 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
 
-        if ( params.svcChgRsnCd === '21' ) {
+        if ( params.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+        || params.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY ) {
           duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
             DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
           data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_MILITARY
@@ -52,8 +54,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.RESUSPEND;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' + params.toDt;
         data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
           .replace('{SVC_NUMBER}', FormatHelper.conTelFormatWithDash(params.svcNum));
         break;

@@ -1,0 +1,750 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<!-- <script type="text/javascript" src="/js/t_m5g.js"></script> -->
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body class="og-5mktp-wrap"><!-- 배경이 흰색일 경우 .bg-white -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+            <div class="h-belt"><!-- 하단에 border가 없을 경우 .noborder -->
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">5GX 플랜</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!--// #header -->
+		<!-- 190402_수정 -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<!-- keyVisual -->
+				<div class="og-5mktp-keyvisual">
+					<div class="text-wrap">
+						<h2 class="tit">5GX 플랜 <strong>자유롭게 쓰는<br> <span class="em">초[超]시대의<br> 요금제</span></strong></h2>
+					</div>
+					<div class="img"><img src="/img/t_m5g/og_5mktp_keyvisual_img_04.png" alt=""></div>
+				</div>
+				<!-- //keyVisual -->
+
+				<!-- tabWrap -->
+				<div class="component">
+					<div class="component-box tabs">
+						<div class="tab-area og-5mktp-tab"><!-- JS: 탭영역 상단 fixed시 class="fixed" 추가 -->
+							<div class="tab-linker">
+								<ul role="tablist">
+									<li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#"><span>5GX 플랜</span></a></li>
+									<li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#"><span>5GX VR 팩</span></a></li><!-- 190411 수정_01 -->
+								</ul>
+							</div>
+							<div class="tab-contents">
+								<ul>
+									<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+										<div class="cont-box nogaps">
+											<div class="og-5mktp-contwrap pb0">
+												<p class="og-5mktp-titS24">5GX 플랜만의 차별화된<br>혜택을 확인하세요.</p><!-- 190411 수정_07 -->
+											</div>
+											<!-- og-plan-box -->
+											<div class="og-plan-box">
+												<div class="og-plan-txt-wrap">
+													<p class="og-5mktp-titS22"><span class="og-5mktp-em">하나.</span>&nbsp;데이터</p>
+													<p class="og-5mktp-titS27 mt14">
+														초고속, 고용량<br>
+														5GX 콘텐츠와 서비스를<br>
+														자유롭게 누릴 수 있는<br>
+														<strong>넉넉한 데이터</strong>
+													</p>
+												</div>
+											</div><!-- //og-plan-box -->
+											<!-- og-plan-box -->
+											<div class="og-plan-box">
+												<div class="og-plan-txt-wrap pos_ab">
+													<p class="og-5mktp-titS22"><span class="og-5mktp-em">둘.</span>&nbsp;콘텐츠</p>
+													<p class="og-5mktp-titS27 mt14">
+														<span class="og-txt-img"><img src="/img/t_m5g/og_plan_flo.png" alt="지금 당신의 음악 flo"></span>음악, <span class="og-txt-img"><img src="/img/t_m5g/og_plan_pooq.png" alt="POOQ"></span>콘텐츠를 <strong>마음껏 즐기는 혜택</strong>
+													</p>
+												</div>
+												<div class="og-plan-imgwrap">
+													<div class="img"><img src="/img/t_m5g/og_plan02.png" alt="" ></div>
+												</div>
+												<div class="og-5mktp-contwrap pt30">
+													<ul class="og-vr-bnf-list">
+														<li class="og-vr-bnf-item">
+															<span class="og-vr-bnf-num">1.</span>
+															<dl>
+																<dt class="og-vr-bnf-tit">
+																	초 고화질, VR콘텐츠를 데이터 걱정없이 경험하는 혜택
+																</dt>
+																<dd class="og-vr-bnf-txt">
+																	oksusu(SKT 5GX관)의 영상시청 데이터 무료
+																	<span class="og-vr-bnf-subtxt">(5GX 플래티넘/프라임은 속도제한이 없으며, 5GX 스탠다드는 최대 10Mbps 속도로 이용 가능합니다. 2019년 6월까지 제공)</span> <!-- 190415 수정_01 -->
+																</dd>
+															</dl>
+														</li>
+														<li class="og-vr-bnf-item">
+															<span class="og-vr-bnf-num">2.</span>
+															<dl>
+																<dt class="og-vr-bnf-tit">
+																	<span class="og-5mktp-txtS15">아이템 구매, 데이터 걱정없는 게임 플레이</span><br>
+																	5GX 게임팩 무료 제공 
+																</dt>
+																<dd class="og-vr-bnf-txt">
+																	매달 유명 모바일게임 아이템 2종 무료 제공 + 게임 데이터 무료
+																</dd>
+															</dl>
+														</li>
+													</ul>
+													<div class="og-have-btn">
+														<ul class="bt-slice">
+															<li class="bt-white3">
+																<a href="http://www.sktgameclan.com/" target="_blank" title="새창">5GX 게임팩 바로가기</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div><!-- //og-plan-box -->
+											<div class="og-plan-price_wrap">
+												<dl class="og-plan-price-list">
+													<dt class="og-plan-price-heading"><span class="og-5mktp-em">셋.</span>&nbsp;요금제</dt>
+													<dd>
+														<!-- .accordion -->
+														<div class="widget">
+															<div class="widget-box accordion2">
+																<div class="acco-style"><!-- 스타일별 클래스 추가 -->
+																	<ul class="acco-box">
+																		<li class="acco-list"><!-- on , off -->
+																			<div class="acco-title">
+																				<button role="button" aria-pressed="">
+																					<span class="og-plan-price-tit">5GX 플래티넘</span>
+																					<span class="og-plan-price-ex">완전 무제한<br><span class="og-5mktp-txtype2">(2019년 6월까지 가입 시 24개월동안 제공<br> 이후 기본제공 데이터 300GB+10Mbps)</span></span><!-- //190405 수정 -->
+																				</button>
+																			</div>
+																			<div class="acco-content">
+																				 <ul class="og-plan-gift-list">
+																					<li class="og-plan-gift-item og-plan-vip">
+																						<div class="og-plan-gift-tit">T멤버십 <strong>VIP 혜택</strong></div>
+																						<div class="og-plan-gift-box">
+																							<img src="/img/t_m5g/og_plan_vip.png" alt="VIP 멤버십 혜택 제공">
+																						</div>
+																					</li>
+																					<li class="og-plan-gift-item og-plan-pack">
+																						<div class="og-plan-gift-tit">FLO 앤 데이터, POOQ콘텐츠팩(PLUS) <strong>모두 무료</strong></div> <!-- 190415 수정_02 -->
+																						<div class="og-plan-gift-box">
+																							<ul class="og-plan-pack-list">
+																								<li class="og-plan-pack-item">
+																									<img src="/img/t_m5g/og_plan_price_flo.png" alt="지금, 당신의 음악 FLO">
+																								</li>
+																								<li class="og-plan-pack-item">
+																									<img src="/img/t_m5g/og_plan_price_pooq.png" alt="POOQ">
+																								</li>
+																							</ul>
+																						</div>
+																						<p class="og-stxt og-color5 mt8">* FLO 앤 데이터(4/15 이후 출시예정), POOQ콘텐츠팩(PLUS) 가입 시 무료제공</p><!-- //190405 추가 --> <!-- 190415 수정_03 -->
+																					</li>
+																					<li class="og-plan-gift-item og-plan-device">
+																						<div class="og-plan-gift-tit">스마트 워치, 태블릿 이용료 <strong>2회선까지 무료</strong></div>
+																						<div class="og-plan-gift-box">
+																							<img src="/img/t_m5g/og_plan_device1.png" alt="쿠키즈워치+워치+태블릿PC">
+																						</div>
+																					</li>
+																					<li class="og-plan-gift-item og-share">
+																						<div class="og-plan-gift-tit">T가족모아 데이터로 가족에게 <strong>데이터 공유도 마음껏</strong></div>
+																						<div class="og-share-box og-plan-gift-box">
+																							<p class="og-share-txt">T가족모아 데이터 가입 및 가족에게 데이터 공유 <strong>최대 50GB</strong>까지 가능</p>				
+																						</div>
+																					</li>
+																					<!-- 190430 추가_01-->
+																					<li class="og-plan-gift-item og-share">
+																						<div class="og-plan-gift-tit">T All케어100(단독형)<strong> 이용료 100% 할인</strong></div>
+																						<div class="og-share-box_2 og-plan-gift-box">
+																							<p class="og-share-txt">2019년 6월까지 가입 시<br> 24개월 동안 제공 <br>별도 보험 상품 가입 필요,<br><strong>최대 3,800원 할인</strong></p>
+																						</div>
+																					</li>
+																					<!-- //190430 추가_01-->
+																				 </ul>
+																			</div>
+																		</li>
+																		<li class="acco-list"><!-- on , off -->
+																			<div class="acco-title">
+																				<button role="button" aria-pressed="">
+																					<span class="og-plan-price-tit">5GX 프라임</span>
+																					<span class="og-plan-price-ex">완전 무제한<br><span class="og-5mktp-txtype2">(2019년 6월까지 가입 시 24개월동안 제공<br> 이후 기본제공 데이터 200GB+10Mbps)</span></span><!-- //190405 수정 -->
+																				</button>
+																			</div>
+																			<div class="acco-content">
+																				<ul class="og-plan-gift-list">
+																					<li class="og-plan-gift-item og-plan-vip">
+																						<div class="og-plan-gift-tit">T멤버십 <strong>VIP 혜택</strong></div>
+																						<div class="og-plan-gift-box">
+																							<img src="/img/t_m5g/og_plan_vip.png" alt="VIP 멤버십 혜택 제공">
+																						</div>
+																					</li>
+																					<li class="og-plan-gift-item og-plan-pack">
+																						<div class="og-plan-gift-tit">FLO 앤 데이터, POOQ콘텐츠팩 중 <strong>1개 무료</strong></div> <!-- 190415 수정_04 -->
+																						<div class="og-plan-gift-box ">
+																							<ul class="og-plan-pack-list og-choice">
+																								<li class="og-plan-pack-item">
+																									<img src="/img/t_m5g/og_plan_price_flo.png" alt="지금, 당신의 음악 FLO">
+																								</li>
+																								<li class="og-plan-pack-item">
+																									<img src="/img/t_m5g/og_plan_price_pooq.png" alt="POOQ">
+																								</li>
+																							</ul>
+																						</div>
+																						<!-- 190409 수정_01-->
+																						<p class="og-stxt og-color5 mt8">* FLO 앤 데이터(4/15 이후 출시예정), POOQ콘텐츠팩 가입 시 무료제공</p><!-- //190405 추가 --> <!-- 190415 수정_05 -->
+																						<!-- //190409 수정_01-->
+																					</li>
+																					<li class="og-plan-gift-item og-plan-device">
+																						<div class="og-plan-gift-tit">스마트 워치, 태블릿 이용료 <strong>1회선 무료</strong></div>
+																						<div class="og-plan-gift-box">
+																							<img src="/img/t_m5g/og_plan_device2.png" alt="쿠키즈워치+워치">
+																						</div>
+																					</li>
+																					<li class="og-plan-gift-item og-share">
+																						<div class="og-plan-gift-tit">T가족모아 데이터로 가족에게 <strong>데이터 공유도 마음껏</strong></div>
+																						<div class="og-share-box og-plan-gift-box">
+																							<p class="og-share-txt">T가족모아 데이터 가입 및 가족에게 데이터 공유 <strong>최대 30GB</strong>까지 가능</p>
+																						</div>
+																					</li>
+																					<!-- 190430 추가_02-->
+																					<li class="og-plan-gift-item og-share">
+																						<div class="og-plan-gift-tit">T All케어100(단독형)<strong> 이용료 100% 할인</strong></div>
+																						<div class="og-share-box_2 og-plan-gift-box">
+																							<p class="og-share-txt">2019년 6월까지 가입 시<br> 24개월 동안 제공 <br>별도 보험 상품 가입 필요,<br><strong>최대 3,800원 할인</strong></p>
+																						</div>
+																					</li>
+																					<!-- //190430 추가_02-->
+																				 </ul>
+																			</div>
+																		</li>
+																		<li class="acco-list"><!-- on , off -->
+																			<div class="acco-title">
+																				<button role="button" disabled="disabled">
+																					<span class="og-plan-price-tit">5GX 스탠다드</span>
+																					<span class="og-plan-price-ex">200GB+5Mbps<br>
+																						<span class="og-5mktp-txtype2">(2019년 6월까지 가입 시 24개월동안 제공<br>이후 기본제공 데이터 150GB+5Mbps)</span></span><!-- 190502 수정_01-->
+																				</button>
+																			</div>
+																			<div class="acco-content" style="display:none"></div>
+																		</li>
+																		<li class="acco-list"><!-- on , off -->
+																			<div class="acco-title">
+																				<button role="button" disabled="disabled">
+																					<span class="og-plan-price-tit">슬림</span>
+																					<span class="og-plan-price-ex">9GB+1Mbps<br>
+																						<span class="og-5mktp-txtype2">(2019년 6월까지 가입 시 24개월 동안 제공<br> 
+																							이후 기본제공 데이터 8GB+1Mbps)</span></span><!-- 190502 수정_02-->
+																				</button>
+																			</div>
+																			<div class="acco-content" style="display:none"></div>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</div><!--// .accordion -->
+													</dd>
+												</dl>
+											</div>
+										</div>
+									</li>
+									<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+										<div class="cont-box nogaps">
+											<div class="og-5mktp-contwrap">
+												<!-- 190411 수정_02 -->
+												<p class="og-5mktp-titS22">5GX VR 팩에 가입하고,<br>VR기기와 콘텐츠를 마음껏 즐겨보세요 </p>
+												<p class="og-5mktp-titype2 mt10">5GX 플랜 가입 요금제에 따라 <span class="og-5mktp-em">최대 100% 할인</span></p>
+												<!-- //190411 수정_02 -->
+												<p class="og-5mktp-txtype2 mt10 og-color3">(요금제별로 할인율이 다름)</p>
+												<!-- bookmarkArea1 -->
+												<div id="bookmarkArea1" class="mt40">
+													<div class="og-tab-linker">
+														<ul>
+															<!-- 190411 수정_03 -->
+															<li class="on"><a href="#bookmarkArea1">5GX VR 팩 기어<span class="blind">선택됨</span></a></li>
+															<li><a href="#bookmarkArea2">5GX VR 팩 카드보드</a></li>
+															<!-- //190411 수정_03 -->
+														</ul>
+													</div>
+													<div class="og-5mktp-imgwrap-type1">
+														<div class="og-vrpack-box">
+															 <!-- 190430 수정_03-->
+															<p class="og-5mktp-titS21">
+																총 19만원 상당의 혜택을<br> <strong>5GX 플래티넘 이용 고객님께 무료 제공</strong>
+															</p>
+															<div class="mt16 og-vr-price-box">
+																<img src="/img/t_m5g/og_vr_price09_10.png" alt="5GX 프라임 25,000원 할인, 25,000원 일시납 및 8,330원씩 3개월 분할납부/ 5GX 스탠다드 15,000원 할인, 총 35,000원 일시납 및 11,660원씩 3개월 분할납부" style="width:100%;vertical-align:top;">
+															</div>
+															<!-- //190430 수정_03-->
+															<dl class="og-vrbnf_list mt12">
+																<dt class="vrbnf_define">
+																	<div class="vrbnf-img">
+																		<img src="/img/t_m5g/vrpack_bnf1_01.png" alt="Gear VR에 게임/교육 쿠폰까지 총 19만원 혜택!">
+																	</div>
+																	<p class="og-vrbnf-txt og-have-pdr">가상 공간에서 최고의 몰입감을 경험할 수 있는 엄선된 게임 5종과 교육 콘텐츠 혜택을 함께</p>
+																</dt>
+																<dd>
+																	<ul class="og-vrbnf_detail">
+																		<li class="item">
+																			<span class="bnf-num">01</span>
+																			<div class="vrbnf-img">
+																				<img src="/img/t_m5g/vrpack_bnf1_02.png" alt="Gear VR 150,000원 상당">
+																			</div>
+																			<div class="vrbnf-detail">
+																				<div class="tit"><span class="og-refer">※ 삼성 스마트폰만 호환 가능</span></div>
+																			</div>
+																		</li>
+																		<li class="item">
+																			<span class="bnf-num">02</span>
+																			<div class="vrbnf-img">
+																				<img src="/img/t_m5g/vrpack_bnf1_03.png" alt="VR GAME Coupon 37,000원 상당">
+																			</div>
+																			<div class="vrbnf-detail">
+																				<div class="tit">VR 게임 쿠폰 5종</div>
+																			</div>
+																		</li>
+																		<li class="item">
+																			<span class="bnf-num">03</span>
+																			<div class="vrbnf-img">
+																				<img src="/img/t_m5g/vrpack_bnf1_04.png" alt="Coupon 7,000원 상당">
+																			</div>
+																			<div class="vrbnf-detail">
+																				<div class="tit">교육 콘텐츠 쿠폰 1종</div>
+																			</div>
+																		</li>
+																	</ul>
+																</dd>
+															</dl>
+															<p class="og-5mktp-titS21 mt30">5GX VR 팩 기어에 가입하고 싶다면</p><!-- 190411 수정_04 -->
+															<!-- <ul class="bt-slice mt12">
+																<li class="bt-red1">
+																	<a href="#" class="ui_gear_alert">부가서비스 가입 바로가기</a>
+																</li>
+															</ul> --> <!-- 190430 삭제_01-->
+															<div class="og-vrpack-refer-wrap mt0">
+																<!-- 190430 수정_04-->
+																<ul>
+																	<li class="og-vrpack-refer-item">SK텔레콤 공식인증 대리점에서 가입이 가능합니다.</li>
+																	<li class="og-vrpack-refer-item">5GX VR팩은 VR기기의 재고상황에 따라 조기 종료될 수 있습니다.</li>
+																</ul>
+																<!-- //190430 수정_04-->
+															</div>
+															<div class="og-5mktp-join-box">
+																<p class="og-5mktp-titype1">
+																	이미 가입하셨다면
+																	<span class="og-5mktp-txtype2 og-5mktp-block og-color3 mt10">쿠폰과 배송 정보도 확인해보세요! </span>
+																</p>
+																
+																<ul class="bt-slice item-two mt18">
+																	<li class="bt-white3">
+																		<a href="https://www.5gxvr.com/web/index" target="_blank" title="새창">쿠폰 발급받기</a>
+																	</li>
+																	<li class="bt-white3">
+																		<a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창">배송 조회하기</a>
+																	</li>
+																</ul>
+															</div>
+															<div class="og-5mktp-youtube-box">
+																<div class="og-5mktp-imgwrap-type1">
+																	<!-- 190403 수정 -->
+																	<p class="og-5mktp-titype1">
+																		이용방법을 자세히 알고 싶다면
+																		<span class="og-5mktp-txtype2 og-5mktp-block og-color3 mt10">쉽고 빠른 재미를 위해 SKT 5GX VR 첫 사용을 도와드릴게요</span>
+																	</p>
+																	<!-- //190403 수정 -->
+																	<div class="og-5mktp-youtube-wrap">
+																		<div class="img"><img src="/img/t_m5g/og_vr_video_img01.png" alt="삼성 기어 VR 시작하기"></div>
+																		<a href="https://youtu.be/APw-ZFPFvpM" class="og-youtube-play" target="_blank" title="삼성 기어 VR 이용방법 동영상 보기(새창)"><img src="/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div><!-- //bookmarkArea1 -->
+												<!-- bookmarkArea2 -->
+												<div id="bookmarkArea2" class="mt40">
+													<div class="og-tab-linker">
+														<ul>
+															<!-- 190411 수정_05 -->
+															<li><a href="#bookmarkArea1">5GX VR 팩 기어</a></li>
+															<li class="on"><a href="#bookmarkArea2">5GX VR 팩 카드보드<span class="blind">선택됨</span></a></li>
+															<!-- //190411 수정_05 -->
+														</ul>
+													</div>
+													<div class="og-5mktp-imgwrap-type1">
+														<div class="og-vrpack-box">
+															<!-- 190430 수정 _05-->
+															<p class="og-5mktp-titS21">
+																총 6만원 상당의 혜택을<br> <strong>5GX 플래티넘 이용 고객님께 무료 제공</strong>
+															</p>
+															<div class="mt16 og-vr-price-box">
+																<img src="/img/t_m5g/og_vr_price09_09.png" alt="5GX 프라임 75,000원 할인, 총 75,000원 일시납 및 25,000원씩 3개월 분할납부/5GX 스탠다드 45,000원 할인, 총 105,000원 일시납 및 35,000원씩 3개월 분할납부" style="width:100%;vertical-align:top;">
+															</div>
+															<!-- //190430 수정_05-->
+															<dl class="og-vrbnf_list mt12">
+																<dt class="vrbnf_define">
+																	<div class="vrbnf-img">
+																		<img src="/img/t_m5g/vrpack_bnf2_01.png" alt="oksusu 1만 포인트는 덤 총 6만원 상당의 혜택">
+																	</div>
+																	<p class="og-vrbnf-txt og-have-pdr">360도 VR영상을 시청할 수 있는<br>고품질 카드보드 VR 및 oksusu 포인트 혜택</p>
+																</dt>
+																<dd>
+																	<ul class="og-vrbnf_detail">
+																		<li class="item">
+																			<span class="bnf-num">01</span>
+																			<div class="vrbnf-img">
+																				<img src="/img/t_m5g/vrpack_bnf2_02.png" alt="카드보드 VR 50,000원 상당">
+																			</div>
+																		</li>
+																		<li class="item">
+																			<span class="bnf-num">02</span>
+																			<div class="vrbnf-img">
+																				<img src="/img/t_m5g/vrpack_bnf2_03.png" alt="oksusu 5GX 10,000원">
+																			</div>
+																			<div class="vrbnf-detail">
+																				<div class="tit">oksusu 포인트 1만원</div>
+																			</div>
+																		</li>
+																	</ul>
+																</dd>
+															</dl>
+															<p class="og-5mktp-titS21 mt30">5GX VR 팩 카드보드에 가입하고 싶다면</p><!-- 190411 수정_06 -->
+
+															<!-- <ul class="bt-slice mt12">
+																<li class="bt-red1">
+																	<a href="#" class="ui_bobo_alert">부가서비스 가입 바로가기</a>
+																</li>
+															</ul> --> <!-- //190430 삭제_02-->
+															<div class="og-vrpack-refer-wrap mt0">
+																<!-- 190430 수정_06-->
+																<ul>
+																	<li class="og-vrpack-refer-item">SK텔레콤 공식인증 대리점에서 가입이 가능합니다.</li>
+																	<li class="og-vrpack-refer-item">5GX VR팩은 VR기기의 재고상황에 따라 조기 종료될 수 있습니다.</li>
+																</ul>
+																<!-- //190430 수정_06-->
+															</div>
+															<div class="og-5mktp-join-box">
+																<p class="og-5mktp-titype1">
+																	이미 가입하셨다면
+																	<span class="og-5mktp-txtype2 og-5mktp-block og-color3 mt10">쿠폰과 배송 정보도 확인해보세요! </span>
+																</p>
+																<ul class="bt-slice item-two mt18">
+																	<li class="bt-white3">
+																		<a href="https://www.5gxvr.com/web/index" target="_blank" title="새창">쿠폰 발급받기</a>
+																	</li>
+																	<li class="bt-white3">
+																		<a href="https://www.5gxvr.com/web/index?type=dlvy" target="_blank" title="새창">배송 조회하기</a>
+																	</li>
+																</ul>
+															</div>
+															<div class="og-5mktp-youtube-box">
+																<div class="og-5mktp-imgwrap-type1">
+																	<!-- 190403 수정 -->
+																	<p class="og-5mktp-titype1">
+																		이용방법을 자세히 알고 싶다면
+																		<span class="og-5mktp-txtype2 og-5mktp-block og-color3 mt10">쉽고 빠른 재미를 위해 SKT 5GX VR 첫 사용을 도와드릴게요</span>
+																	</p>
+																	<!-- //190403 수정 -->
+																	<div class="og-5mktp-youtube-wrap">
+																		<div class="img"><img src="/img/t_m5g/og_vr_video_img02.png" alt="BOBO VR 시작하기"></div>
+																		<a href="https://youtu.be/C3gLg1Fawbk" class="og-youtube-play" target="_blank" title="BOBO VR 이용방법 동영상 보기(새창)"><img src="/img/t_m5g/og_youtube_btn.png" alt="동영상 보기"></a>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div><!-- //bookmarkArea2 -->
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //tabWrap -->
+
+				<!-- og-5mktp-benefit-wrap -->
+				<div class="og-5mktp-benefit-wrap">
+					<div class="cont-box nogaps-btm bgnone">
+						<div class="headingbox-wrap">
+							<div class="title">다른 5GX 안내 보러가기</div>
+						</div>
+						<div class="productinfoscroll-box block-type slide-nopd">
+							<!-- .widget -->
+							<div class="widget"> 
+								<div class="widget-box horizontal">
+									<div class="horizontal-slide slide-nopd">
+										<ul class="horizontal-list">
+											<li>
+												<a href="5gmkt_intro.html" class="product-info og-bnf-have-arr">
+													<div class="title">초[超]시대,<br>생활이 되다<br>SKT 5GX</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_1.html" class="product-info og-bnf-have-arr">
+													<div class="title">가장 빠르고<br> 안전한 네트워크</div>
+												</a>t
+											</li>
+											<li>
+												<a href="5gmkt_life_2.html" class="product-info og-bnf-have-arr">
+													<div class="title">5G가 선사하는<br> 상품&서비스</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_3.html" class="product-info og-bnf-have-arr">
+													<div class="title">SK텔레콤에서만<br> 제공하는 혜택</div>
+												</a>
+											</li>
+											<li>
+												<a href="5gmkt_life_4.html" class="product-info og-bnf-have-arr">
+													<div class="title">자유롭게 쓰는<br> 초시대 요금제</div>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- .widget -->
+						</div>
+					</div>
+				</div><!-- //og-5mktp-benefit-wrap -->
+				
+				<div class="og-5mktp-btm-banner-wrap">
+					<!-- 190409 수정_02 -->
+					<div class="og-5mktp-btm-banner og-fixed">
+						<a href="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010014&productGrpId=000003532&subscriptionId=NA00006404&subcommDcMthd=10&addServiceId=&utm_source=tworld&utm_medium=p_5gx&utm_campaign=s10_5g&utm_content=buynow" class="og-5mktp-banner banrimg" target="_blank" title="다이렉트샵으로 이동(새창)"><span class="blind">지금 바로 갤럭시 S10 5G를 내 손에!</span></a>
+					</div>
+					<!-- //190409 수정_02-->
+				</div>
+			</div>
+        </div>
+		<!--// #contents -->
+		<!-- //190402_수정 -->
+
+		<!-- 190411 추가_01 -->
+		<!-- #footer -->
+		<footer id="fe-all-menu">
+			<div id="gnb" class="gnb-wrap on">
+				<!-- web -->
+				<div class="q-wrap">
+					<ul class="q-list">
+						<li><a href="/main/home" type="button"><i class="icon-fab-bi-n-80"><span class="blind">bi</span></i></a></li>
+					</ul>
+				</div>
+				<!-- //web -->
+				<!-- app -->
+				<div class="g-wrap">
+					<ul class="g-list g-coach-box"><!-- .g-coach-box : coach mark사용시 추가 -->
+						<li><button type="button"><i class="icon-gnb-bi-n"><span class="blind">bi</span></i></button></li>
+						<li><button type="button"><i class="icon-gnb-back-n"><span class="blind">back</span></i></button></li>
+						<li><button type="button"><i class="icon-gnb-next-n"><span class="blind">next</span></i></button></li>
+						<li class="mark-lock"><!-- .on이 있어야 보임 -->
+							<button type="button"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button>
+							<div class="coach-mark">
+								<strong class="coach-txt"><span class="point">개인정보<br>보호모드(*)</span> 해제</strong>
+								<button type="button" class="close">닫기</button>
+							</div>
+						</li>
+						<li class="mark-pin">
+							<button type="button"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button>
+							<div class="coach-mark">
+								<strong class="coach-txt"><span class="point">MY 바로가기</span><br>추가</strong>
+								<button type="button" class="close">닫기</button>
+							</div>
+						</li>
+						<li><button type="button"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
+					</ul>
+				</div>
+				<!-- //app -->
+			</div>
+		</footer>
+		<!--// #footer -->
+		<!-- //190411 추가_01 -->
+    </div>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+            //탭 공통 스크립트
+			function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.href);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+
+            var $tablinker = $('.tab-linker'),
+				$anchor = $('.og-tab-linker > ul > li > a'),
+                tablinkerTop = $tablinker.offset().top,
+				headerHeight = $('#header').outerHeight(),
+                tablinkerHeight = $tablinker.outerHeight(),
+                $win = $(window),
+                tabCode = parseInt(getParameterByName('tab') === '' ? 0 : getParameterByName('tab'), 10) - 1,
+                anchorCode = parseInt(getParameterByName('anchor') === '' ? 0 : getParameterByName('anchor'), 10) - 1,
+                target;
+
+            $tablinker.find('> ul > li > a').on('click', function (e) {
+		        e.preventDefault();
+		        if ($win.scrollTop() > tablinkerTop - headerHeight) {
+                    $win.scrollTop(tablinkerTop - headerHeight);
+				}
+				setTimeout(function () {
+                    $('.slider1').find('.slider').slick('refresh');
+				}, 300);
+			});
+
+            $anchor.on('click', function (e) {
+                e.preventDefault();
+                target = $(this).attr('href');
+                if ($(target).length) {
+                    $('html, body').animate({
+                        'scrollTop': $(target).offset().top - headerHeight - tablinkerHeight
+                    }, 300, function () {
+                        $(target).find('.og-tab-linker > ul > li.on > a').focus();
+                    });
+                }
+            });
+
+            $win.on('scroll', function () {
+	            $('.og-5mktp-tab').toggleClass('fixed', $win.scrollTop() + headerHeight >= tablinkerTop);
+			});
+
+            if (tabCode > 0) {
+                $tablinker.find('> ul > li').attr('aria-selected', false).eq(tabCode).attr('aria-selected', true);
+                if (anchorCode >= 0) {
+                    setTimeout(function () {
+                        $('html, body').animate({
+							'scrollTop': $('.og-5mktp-contwrap:visible > div').eq(anchorCode).offset().top - headerHeight - tablinkerHeight
+						}, 500);
+                    }, 1500);
+                }
+			}
+
+			//하단 배너 플로팅
+			var $win = $(window),
+                $banner = $('.og-5mktp-btm-banner'),
+                $bannerWrap = $('.og-5mktp-btm-banner-wrap'),
+                timer;
+
+            $bannerWrap.toggleClass('app', !!$('.g-wrap').length);	//App 일 경우 .app class 추가 (하단 플로팅배너 위치값)
+            $win.on('touchstart touchend', function (e) {
+                if (e.type === 'touchstart') {
+                    clearTimeout(timer);
+                    $banner.stop(true, true).slideUp();
+                } else {
+                    timer = setTimeout(function () {
+                        $banner.stop(true, true).slideDown();
+                    }, 500);
+                }
+            });
+			
+			//190430 삭제_03 - 5GX VR팩 진입 시 얼럿 노출 삭제
+           /* $tablinker.find('> ul > li').on('click', function (e) {
+                e.preventDefault();
+
+                if ($(this).index()) {
+					skt_landing.action.popup.open({
+                     	url:'/hbs/',
+                     	hbs:'popup',
+                     	'title': 'VR기기 재고 소진으로 인해<br> ‘5GX VR 팩 카드보드’ 가입이 4월 23일(화) 이후 종료됩니다.',
+                    	'title_type': 'sub',
+                     	'cont_align':'tl tl font-only-gray',
+                     	//'contents': '',
+                     	'bt_b': [{
+                     		style_class: 'bt-red1 pos-right',
+                     		txt: '확인'
+                     	}]
+                    });
+
+					$(document).off('click.layerClose').on('click.layerClose', '.bt-red1.pos-right > button', function () {
+                        skt_landing.action.popup.close();
+					});
+				}
+            }); */
+
+			//190430 삭제_04 - 부가서비스 가입 버튼 클릭시 얼럿 노출 삭제
+			/* $('.ui_gear_alert').on('click', function (e) {
+			    e.preventDefault();
+
+                skt_landing.action.popup.open({
+                    url:'/hbs/',
+                    hbs:'popup',
+                    'title': 'VR기기 재고 소진으로<br> 5GX VR 팩 기어 부가서비스 가입이 종료되었습니다.',
+                    'title_type': 'sub',
+                    'bt_b': [{
+                        style_class: 'bt-red1 pos-right',
+                        txt: '확인'
+                    }]
+                });
+
+                $(document).off('click.layerClose').on('click.layerClose', '.bt-red1.pos-right > button', function () {
+                    skt_landing.action.popup.close();
+                });
+			}); */
+
+			//190430 삭제_05 - VR 팩 카드보드 부가서비스 가입 버튼 클릭시 얼럿 노출 삭제
+			/* $('.ui_bobo_alert').on('click', function (e) {
+			    e.preventDefault();
+
+                skt_landing.action.popup.open({
+                    url:'/hbs/',
+                    hbs:'popup',
+                    'title': 'VR기기 재고 소진으로<br> 5GX VR 팩 카드보드 부가서비스 가입이 종료되었습니다.',
+                    'title_type': 'sub',
+                    'bt_b': [{
+                        style_class: 'bt-red1 pos-right',
+                        txt: '확인'
+                    }]
+                });
+
+                $(document).off('click.layerClose').on('click.layerClose', '.bt-red1.pos-right > button', function () {
+                    skt_landing.action.popup.close();
+                });
+			}); */
+		});
+	</script>
+</body>
+</html>

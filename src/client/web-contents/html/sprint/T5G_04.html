@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+	<!-- 5g용 CSS/JS 추가 -->
+	<link rel="stylesheet" type="text/css" href="/css/t_m5g.css" media="all" />
+	<script type="text/javascript" src="/js/t_m5g.js"></script>
+	<!-- //5g용 CSS/JS 추가 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1><img src="/img/t_m5g/og_logo_t.png" alt="T world" class="og-h-tit-log-t">5G 데이터→시간으로 변환하기</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+					<div class="og-promo-banner">
+						<!-- 190425 수정_01 (아래 3가지 상품의 가입여부를 체크하여 배너출력) -->
+						<a href="#"><img src="/img/t_m5g/og_banner_pooq.png" alt="POOQ 콘텐츠 팩 - 지상파 TV 실시간 · VOD 스트리밍 무제한"></a>
+						<a href="#"><img src="/img/t_m5g/og_banner_oksusu.png" alt="oksusu &amp; 안심 팩 - oksusu 포인트 + 매일 1GB 전용 데이터"></a>
+						<a href="#"><img src="/img/t_m5g/og_banner_flo.png" alt="FLO 앤 데이터 - FLO 음악 컨텐츠 무제한 + FLO 전용 데이터 3GB"></a>
+						<!-- //190425 수정_01 (아래 3가지 상품의 가입여부를 체크하여 배너출력) -->
+					</div>
+
+					<hr class="cont-sp type1" aria-hidden="true" />
+					<!-- .cont-box -->
+					<div class="cont-box og-timeConf-wrap"><!-- js : 설정하는 동안에는 .active를 추가, 넘쳤을때는 .overflowed 를 추가 -->
+						<div class="og-time-picked">
+							<p class="time-last notice_case1"><span class="comment-time">이용할 시간을 아래 컨트롤러로 설정해 주세요.</span></p>
+							<p class="time-last notice_case2" style="display: none;"><span class="comment-time">10시간 40분까지 선택가능</span></p> <!-- 개발에서 가능 사용 시간 계산하여 표시 -->
+							<p class="time-last notice_case3" style="display: none;"><strong class="overflowed">넘치셨어요!</strong> <span class="comment-time">10시간 40분까지 선택가능</span></p> <!-- 개발에서 사용 가능 시간 계산하여 표시 -->
+						</div>
+						<div class="circle-out-box" style="position: relative; width:300px; height:300px; margin:0 auto;">
+							<input type="hidden" name="circle_pi" id="circle_pi" value="0" />
+							<svg width="300" height="300" class="circle-datepicker">
+								<defs>
+									<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+										<stop offset="0%" stop-color="#FE6A5B" />
+										<stop offset="100%" stop-color="#D74141" />
+									</linearGradient>
+								</defs>
+								<circle cx="150" cy="150" r="115" stroke="#F3F3F3" stroke-width="30" fill="none" />
+								<path class="shape" fill="#E8E8E8" stroke="#D6D6D6" d="M 150, 120 m 0 -100 a 130 130 0 1 0 1 0 z m 0 30 a 100 100 0 1 1 -1 0 Z" /> <!-- 기본 회색 도넛 -->
+								<path class="circle-datepicker__path" stroke-linecap="round" stroke="url(#gradient)" stroke-width="30" fill="none" d="" /> <!-- 버튼 이동시 생성되는 주황색 도넛 -->
+								<!-- circle class="circle-datepicker__start" cx="150" cy="10" r="9" stroke="#ED4747" stroke-width="1"  fill="#F5D8D5" / -->
+								<circle class="circle-datepicker__endBack" cx="150" cy="35" r="23" fill="#E3E3E3" /> <!-- 최외각 1px 라인용 서클 -->
+								<circle class="circle-datepicker__end" cx="150" cy="35" r="16" stroke="#fff" stroke-width="12" fill="#EF4B49" /> <!-- 흰색 및 주황색 서클 -->
+							</svg>
+							<p class="og-time-display-init">
+								<span class="time-for-5g">이용할 시간</span>
+								<strong class="time-count"><span class="ti-me">00</span><span class="di-v">:</span><span class="mi-n">00</span></strong>
+								<span class="time-is-gb">1GB=1시간</span>
+								<a href="time_2.html" target="_blank" class="og-hide-btn">버튼으로 시간 선택하기</a>
+							</p>
+						</div>
+
+						<div class="og-data-compare">
+							<p class="data-deduct be-fore">
+								<span class="tit-le">데이터 차감</span>
+								<span class="val-ue-wrap"><strong class="val-ue" data-used-data="0">00.00</strong>GB</span>
+							</p>
+							<p class="data-deduct af-ter">
+								<span class="tit-le">데이터 차감후</span>
+								<span class="val-ue-wrap"><strong class="val-ue" data-have-data="10880">10.63</strong>GB</span> <!-- 개발에서 사용자 데이터 등록 필요 data-have-data는 MB단위 strong tag안의 단위는 GB -->
+							</p>
+						</div>
+						<!-- js: 시간이 0이 아닌경우에는  .og-timeConf-wrap 에 .active를 추가해 주세요 -->
+
+						<div class="og-start5G">
+							<button type="button" class="btn-round1 btn-style1" disabled>무제한 5G 시작</button><!-- button의 활성화 조건: 시간 선택 & 잔여데이터가 170MB이상 & 초과선택 아님 -->
+						</div>
+					</div>
+					<!-- //.cont-box -->
+					
+				</div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+	
+	<script type="text/javascript">
+		function pickerRedraw(pi) {
+            $('.circle-datepicker').trigger('circledatepickerredraw', {'pi':pi});
+		}
+		$(function(){
+			var DATA_HOUR = 1024,
+				DATA_MINUTE = 17,
+				$timeContent = $('.og-timeConf-wrap'),
+				$timeButton = $('.og-start5G > button'),
+				$before = $('.og-data-compare > .be-fore > span > strong.val-ue'),
+				$after = $('.og-data-compare > .af-ter > span > strong.val-ue'),
+				haveData = parseInt($after.data('haveData'), 10);
+
+            function setCookie(key, value, days) {//쿠키 설정
+                var date, expires;
+                if (days) {
+                    date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                } else {
+                    expires = "";
+                }
+                document.cookie = key + "=" + value + expires + "; path=/";
+            }
+
+            function getCookie(key) {//쿠키 값 얻어오기
+                var results = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+                if (results) {
+                    return ( unescape(results[2]) );
+                } else {
+                    return undefined;
+                }
+            }
+
+
+			function addZero(n) {
+				return (String(n).length < 2) ? '0' + n : n;
+			}
+
+			$('.circle-datepicker').circle_datepicker().on('timer', function(e, data){
+				var hour = Math.floor(data[0] / 6),
+					minute = Math.floor(data[0] % 6) * 10,
+                    usedData = ((hour * DATA_HOUR) + (minute * DATA_MINUTE))  / 1024,
+					after = (haveData - ((hour * DATA_HOUR) + (minute * DATA_MINUTE)))  / 1024,
+					isTime = hour > 0 ||  minute > 0,
+					isButton = isTime && (haveData - ((hour * DATA_HOUR) + (minute * DATA_MINUTE))) > 170;
+
+				$('#circle_pi').val(data[0]);
+				$timeContent.toggleClass('active', isTime).toggleClass('overflowed', isTime && !isButton);
+				$timeButton.prop('disabled', !isButton);
+
+				$('.notice_case1').toggle(!isTime);
+                $('.notice_case2').toggle(isTime && isButton);
+                $('.notice_case3').toggle(isTime && !isButton);
+
+				$('.ti-me').html(addZero(hour));
+				$('.mi-n').html(addZero(minute));
+				//$('.time-last').html(addZero(hour) + '시간 ' + addZero(minute) + '분');
+
+				$before.html(usedData.toFixed(2));
+				$after.html(after.toFixed(2));
+			});
+		});
+	</script>
+</body>
+</html>

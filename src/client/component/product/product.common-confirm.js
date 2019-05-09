@@ -373,7 +373,9 @@ Tw.ProductCommonConfirm.prototype = {
     }
 
     this._applyCallback(callbackParams);
-    this._isLock = false;
+    setTimeout($.proxy(function() {
+      this._isLock = false;
+    }, this), 5000);
   }
 
 };

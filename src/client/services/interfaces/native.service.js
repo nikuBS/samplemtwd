@@ -31,8 +31,8 @@ Tw.NativeService.prototype = {
   },
   /**
    * @function
-   * @desc
-   * @param gnb
+   * @desc 전체메뉴(MenuComponent) 객체를 설정하고 /main/home 에서 back button 동작 처리
+   * @param gnb - MenuComponent 객체
    */
   setGNB: function (gnb) {
     this._gnb = gnb;
