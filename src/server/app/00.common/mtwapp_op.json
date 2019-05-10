@@ -1268,7 +1268,11 @@
     "menuId": "/product/callplan?prod_id=NA00004350"
   },
   {
-    "old" : "https://m2.tworld.co.kr/normal.do?viewId=V_MYTW1009&serviceId=S_MYTW0034&prod_id=Z&menuId=3,4&OP=Y",
+    "old" : "https://m2.tworld.co.kr/normal.do?viewId=V_MYTW1009&serviceId=S_MYTW0034&prod_id=Z&menuId=3%2C4",
+    "menuId" :"M000563"
+  },
+  {
+    "old" : "https://m2.tworld.co.kr/normal.do?viewId=V_MYTW1009&serviceId=S_MYTW0034&prod_id=Z&menuId=3,4",
     "menuId" :"M000563"
   }
   
