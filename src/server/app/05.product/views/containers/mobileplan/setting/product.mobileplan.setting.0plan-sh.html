@@ -1,0 +1,99 @@
+<%#
+* @file product.mobileplan.setting.0plan-sh.html
+* @author junho kwon (yamanin1@partner.sk.com)
+* @since 2019.5.14
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="product-select-wrap">
+                    <span class="data-tit">0플랜 슈퍼히어로 옵션 선택 <button class="tip-view" id="TC000055" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></span>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="list-comp-input">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio1">
+                                        <input type="radio" name="radio" value="NA00006164" aria-hidden="true">
+                                        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext">0플랜_VIP</span>
+                                                <span class="stext">지난달 유지조건에 따라 VIP멤버십 혜택 제공</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio2">
+                                        <input type="radio" name="radio" value="NA00006165" aria-hidden="true">
+                                        <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                            <span class="ico ico-movie"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">FLO 무제한</span>
+                                                <span class="stext">FLO 무제한 스트리밍 이용</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio3">
+                                        <input type="radio" name="radio" value="NA00006166" aria-hidden="true">
+                                        <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                                            <span class="ico ico-watch"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">oksusu 포인트</span>
+                                                <span class="stext">oksusu 월 12,000 포인트 제공</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <div class="announcement-box">
+                        <div class="announcement-bullet type02">3개의 옵션 중 1가지를 선택할 수 있으며, 변경일을 기준으로 30일 이내에는 다른 옵션으로 변경하실 수 없습니다.</div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn_setup_ok" disabled="disabled">변경 완료</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>$(function () {
+  new Tw.ProductMobileplanSetting0planSh($('.wrap'), '<%= prodId %>', 'MP_02_02_03_20', '<%= ZeroPlanInfo.useOptionProdId %>');
+});</script>
+<% include ../../../components/end.component.html %>
