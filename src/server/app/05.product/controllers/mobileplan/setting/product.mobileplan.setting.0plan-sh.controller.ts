@@ -13,7 +13,7 @@ import FormatHelper from '../../../../../utils/format.helper';
 /**
  * @class
  */
-class ProductMobileplanSetting0plan extends TwViewController {
+class ProductMobileplanSetting0planSh extends TwViewController {
   constructor() {
     super();
   }
@@ -60,4 +60,4 @@ class ProductMobileplanSetting0plan extends TwViewController {
   }
 }
 
-export default ProductMobileplanSetting0plan;
+export default ProductMobileplanSetting0planSh;
