@@ -308,6 +308,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             return;
         }
         var _result = resp.result;
+        _result.countryCd =  this._srchInfo.countryCd;         // 검색 국가
         Tw.Logger.info('rate result _result : ' + JSON.stringify(_result));
 
         if( this._rentYn === true ){ // 임대로밍을 선택한 경우 manageType 값 ''
@@ -339,10 +340,16 @@ Tw.ProductRoamingSearchResult.prototype = {
             noticeParam.voiceShown = false;
         }else if(this.reqParams.manageType === ''){ // 서비스 방식이 임대로밍 인 경우
             _result.rentShown = true;   // 임대로밍 안내사항 노출
-        } else if(this.reqParams.manageType === 'C' && _result.dMoChargeMin){   // 서비스 방식이 2G이고 데이터 이용료가 있는 경우
-            _result.cdmaUnit = true;
-            _result.mTxtCharge = _result.dMoChargeMin;
-            _result.mMtmCharge = _result.dMoChargeMin;
+        } else if(this.reqParams.manageType === 'C'){   // 서비스 방식이 2G인 경우 
+            if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
+                _result.cdmaUnit = true;
+                _result.mTxtCharge = _result.dMoChargeMin;
+                _result.mMtmCharge = _result.dMoChargeMin;
+            }
+
+            if(_result.countryCd == "USA"){     //  미국 CDMA(2G) 종료에 따른 안내 문구
+                _result.usa2gOnly = true;
+            }
         }
 
         if(_result.ableAreaType === 'A'){   // 이용가능 지역 상세보기 여부
