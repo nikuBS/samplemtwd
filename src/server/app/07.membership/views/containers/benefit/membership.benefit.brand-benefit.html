@@ -52,6 +52,14 @@
                     <!--<li>파리크라상 멤버십 적립과 중복 적용 불가<br>(단, 사전 협의한 경우 제외)</li>-->
                     <!--<li>제외 매장: 파리바게트 홈페이지 참조</li>-->
                     <!--</ul>-->
+                    
+                    <!-- OP002-306_[멤버십] New T카라이프 영향도 : Carlife -->
+                    <% if ( data.cateCd === '30' && data.brandCd === '2012000026' ) { %>
+						<!-- 하기 내용은 모든혜택>제휴브랜드>교통>티카라이프 상세에만 추가 하시면 됩니다. -->
+                        <button id="fe-carlife-old-terms" class="bt-link-tx underline" data-popup-id="BE_04_01_L04">(구)T멤버십 카라이프 혜택 보기</button>
+                    <% } %>
+
+
                     <% if ( !(data.cateCd === '3' && data.brandCd === '2012001689') ) { %>
                     <h4 class="sstit">문의 및 상담</h4>
                     <ul class="benefit-list">
