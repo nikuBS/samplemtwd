@@ -340,7 +340,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             noticeParam.voiceShown = false;
         }else if(this.reqParams.manageType === ''){ // 서비스 방식이 임대로밍 인 경우
             _result.rentShown = true;   // 임대로밍 안내사항 노출
-        } else if(this.reqParams.manageType === 'C' && _result.dMoChargeMin){   // 서비스 방식이 2G인 경우 
+        } else if(this.reqParams.manageType === 'C'){   // 서비스 방식이 2G인 경우 
             if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
                 _result.cdmaUnit = true;
                 _result.mTxtCharge = _result.dMoChargeMin;
