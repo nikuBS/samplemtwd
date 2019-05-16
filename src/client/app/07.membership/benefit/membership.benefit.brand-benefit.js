@@ -241,7 +241,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     var $target = $(e.currentTarget);
     var url = $target.attr('href');
 
-    if (this._brandCd === '2012000026' || this._brandCd === '2012003084' || this._brandCd === '2012003539') { // T멤버십 앱으로 이동하시겠습니까 팝업없이 바로 이동
+    if (this._brandCd === '2012000026' || this._brandCd === '2012003084') { // T멤버십 앱으로 이동하시겠습니까 팝업없이 바로 이동
       // [DV001-21674] T membership Car life 내 out link 지원 기능 개발
       if (Tw.BrowserHelper.isApp()) {
         Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
