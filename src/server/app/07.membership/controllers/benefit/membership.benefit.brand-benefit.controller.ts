@@ -11,6 +11,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import ParamsHelper from '../../../../utils/params.helper';
 
 class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
