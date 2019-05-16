@@ -33,7 +33,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
       brandCd : brandCd
     };
 
-
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0018, param),      // 혜택조회
       this.apiService.request(API_CMD.BFF_03_0021, {})   // 위치동의여부 조회

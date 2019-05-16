@@ -64,7 +64,24 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     this.$container.on('click', '#frchs-bt-all', $.proxy(this._goFrchAllView, this));
     this.$container.on('click', '.fe-btn-location', $.proxy(this._onclickGpsBtn, this));
     this.$container.on('click', '.fe-brand-info a', $.proxy(this._onClickBrandInfoLink, this));
+    this.$container.on('click', '#fe-carlife-old-terms', $.proxy(function(){this.open('BE_04_01_L04');},this)); // (구)T멤버십 카라이프 혜택 보기 약관 레이어 팝업
   },
+  
+    /**
+   * CarLife 구 이용약관 Popup
+   */
+  open: function (hbs, e) {
+    this._popupService.open({
+      hbs: hbs,// 파라미터로 들어온 hbs의 파일명
+      layer: true
+    }, null, $.proxy(this._closeCallback, this), hbs, e);
+  },
+  
+ 
+  _closeCallback: function () {
+    this._popupService.close();
+  },
+  
 
   _registHbsHelper: function(){
     Handlebars.registerHelper('tel', Tw.FormatHelper.getDashedPhoneNumber);
@@ -224,7 +241,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     var $target = $(e.currentTarget);
     var url = $target.attr('href');
 
-    if (this._brandCd === '2012000026' || this._brandCd === '2012003084') {
+    if (this._brandCd === '2012000026' || this._brandCd === '2012003084') { // T멤버십 앱으로 이동하시겠습니까 팝업없이 바로 이동
       // [DV001-21674] T membership Car life 내 out link 지원 기능 개발
       if (Tw.BrowserHelper.isApp()) {
         Tw.CommonHelper.showDataCharge($.proxy(Tw.CommonHelper.openUrlExternal, this, url));
@@ -445,4 +462,5 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     }
     return contents;
   }
+
 };

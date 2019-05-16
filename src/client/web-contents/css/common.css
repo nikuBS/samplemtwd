@@ -9544,7 +9544,10 @@ button:focus span {
   line-height: 1.7; }
 
 
-/* 190508 추가 [#7589/DV001-21275] */
+/* 190508 추가 [#7589/DV001-21275] 어드민 등록 팝업 */
 .popup .popup-info.full .editor-type .tod-popbenf-inwrap {position:relative; margin:-1.5rem -1.25rem -1.25rem -1.25rem;}
 .popup .popup-info.full .editor-type .tod-popbenf-inwrap .tod-popbenf-absbtn {position:absolute; bottom:0; left:0;}
 .popup .popup-info.full .editor-type .tod-popbenf-inwrap .tod-popbenf-absbtn a {display:block; width:100%; height:100%;}
+.popup .popup-info.full .editor-type .tod-popeditor-inwrap {position:relative; background:#fff; margin:-1.5rem -1.25rem -1.25rem -1.25rem; padding:1.5rem 1.25rem 1.25rem 1.25rem;}
+.popup .popup-info.full .editor-type .tod-popeditor-inwrap .font-only-black-ti {font-size:1.13rem; font-weight:700; color:#222 !important;}
+
