@@ -11,40 +11,44 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
-import ParamsHelper from '../../../../utils/params.helper';
 
 class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
+    let brandCd;
+
     if ( !req.query.brandCd ) {
 
-      this.error.render(res, {
-        code: '',
-        msg: 'not found brand code',
-        pageInfo: pageInfo,
-        svcInfo
-      });
-      return;
+      const params = req.query.params;
+
+      if( !params ) {
+        this.error.render(res, {
+          code: '',
+          msg: 'not found brand code',
+          pageInfo: pageInfo,
+          svcInfo
+        });
+        return;
+
+      } else {
+        const deParms = decodeURIComponent(params).split('::');
+        brandCd = deParms[1].split('=')[1];
+      }
+    } else {
+
+      if ( (svcInfo ? 'Y' : 'N') === 'N'
+        && req.query.cateCd === '49' 
+        && req.query.brandCd === '2012003539' ) {
+
+        const enParams = encodeURIComponent('cateCd=49::brandCd=2012003539');
+        res.redirect('/common/tid/login?target=/membership/benefit/brand-benefit?params=' + enParams);
+
+        return;
+      }
+
+      brandCd = req.query.brandCd;
     }
-
-    if ( req.query.cateCd === '49' 
-      && req.query.brandCd === '2012003539' 
-      && (svcInfo ? 'Y' : 'N') === 'N') {  // 제휴 브랜드 중 레저큐 이면서 미 로그인 일때 로그인 페이지로 리다이렉트
-      const path = req.baseUrl + (req.path !== '/' ? req.path : '');
-
-      delete req.query.id_token;
-      delete req.query.stateVal;
-      delete req.query.state;
-      delete req.query.token_type;
-      delete req.query.sso_session_id;
-
-      res.redirect('/common/tid/login?target=' + path + ParamsHelper.setQueryParams(req.query));
-
-      return;
-    }
-
-    const brandCd = req.query.brandCd;    // '2012001524' 파리바게트
 
     const param = {
       brandCd : brandCd
