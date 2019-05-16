@@ -16,44 +16,22 @@ class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    let brandCd;
-
     if ( !req.query.brandCd ) {
 
-      const params = req.query.params;
-
-      if( !params ) {
-        this.error.render(res, {
-          code: '',
-          msg: 'not found brand code',
-          pageInfo: pageInfo,
-          svcInfo
-        });
-        return;
-
-      } else {
-        const deParms = decodeURIComponent(params).split('::');
-        brandCd = deParms[1].split('=')[1];
-      }
-    } else {
-
-      if ( (svcInfo ? 'Y' : 'N') === 'N'
-        && req.query.cateCd === '49' 
-        && req.query.brandCd === '2012003539' ) {
-
-        const enParams = encodeURIComponent('cateCd=49::brandCd=2012003539');
-        res.redirect('/common/tid/login?target=/membership/benefit/brand-benefit?params=' + enParams);
-
-        return;
-      }
-
-      brandCd = req.query.brandCd;
+      this.error.render(res, {
+        code: '',
+        msg: 'not found brand code',
+        pageInfo: pageInfo,
+        svcInfo
+      });
+      return;
     }
+
+    const brandCd = req.query.brandCd;    // '2012001524' 파리바게트
 
     const param = {
       brandCd : brandCd
     };
-
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0018, param),      // 혜택조회
