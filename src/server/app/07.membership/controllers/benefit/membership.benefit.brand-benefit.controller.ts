@@ -87,12 +87,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
    */
   private goView(res: Response, svcInfo: any, pageInfo: any, data: any) {
 
-    /*
-    if(data.cateCd === '49' && data.brandCd === '2012003539' && data.loginYn === "N"){  // 제휴 브랜드 중 레저큐 이면서 미 로그인 일때 로그인 페이지로 리다이렉트
-      res.redirect('/common/tid/login?target=/membership/benefit/brand-benefit?cateCd=49&brandCd=2012003539');
-    }
-    */
-
     res.render('benefit/membership.benefit.brand-benefit.html', {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
