@@ -11,6 +11,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import ParamsHelper from '../../../../utils/params.helper';
 
 class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
@@ -85,12 +86,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
    * @param data
    */
   private goView(res: Response, svcInfo: any, pageInfo: any, data: any) {
-
-    /*
-    if(data.cateCd === '49' && data.brandCd === '2012003539' && data.loginYn === "N"){  // 제휴 브랜드 중 레저큐 이면서 미 로그인 일때 로그인 페이지로 리다이렉트
-      res.redirect('/common/tid/login?target=/membership/benefit/brand-benefit?cateCd=49&brandCd=2012003539');
-    }
-    */
 
     res.render('benefit/membership.benefit.brand-benefit.html', {
       svcInfo: svcInfo,
