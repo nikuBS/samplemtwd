@@ -35140,6 +35140,14 @@ body.apphome .section-box {
 .rm-prd-info .rm-info-cs{padding:0 0 .3rem 3.375rem;background:url(/img/product/rm-info-ico-cs.png) no-repeat 0 center;background-size:2.75rem auto}
 .rm-prd-info .rm-info-cs .tel-num{font-size:1.125rem;font-weight:bold}
 
+/* 국가별 로밍 이용요금 조회 - 괌 사이판 팝업 */
+.rm-pop-search{position:absolute; display:block; width:100%; height:100%; top:0; left:0; z-index:100}
+.rm-pop-search .rm-pop-bg{position:fixed; width:100%; height:100%; bottom:0; left:0; background:rgba(0,0,0,.7); z-index:100}
+.rm-pop-search .rm-pop-ct{position:absolute;width:90%;height:126.5vw;top:100px;left:5%;z-index:101;box-sizing:border-box;background:url(/img/product/rm-search-guamsaipan.png) no-repeat 0 0;background-size:100% auto}
+.rm-pop-search .rm-pop-close{position:absolute;top:.625rem;right:.625rem}
+.rm-pop-search .bt-slice{position:absolute;bottom:4%;left:50%;margin-left:-25%}
+.rm-pop-search .bt-slice .bt-red1{width:50%}
+
  /* baro 무료체험 프로모션 */
 .rm-baro-exp-promo .tx-baro-h{width:4.78rem;vertical-align:top}
 .rm-baro-exp-promo .fc-baro{color:#4b64e2}
@@ -35148,11 +35156,3 @@ body.apphome .section-box {
 .rm-baro-exp-promo .rm-baro-exp-box .fc-baro{font-size:1.125rem;font-weight:normal}
 .rm-baro-exp-promo .rm-baro-exp-box .rm-baro-promo-img{text-align:center}
 .rm-baro-exp-promo .rm-baro-exp-box .rm-baro-promo-img img{width:9.9rem}
-
-/* 국가별 로밍 이용요금 조회 - 괌 사이판 팝업 */
-.rm-pop-search{position:absolute; display:block; width:100%; height:100%; top:0; left:0; z-index:100}
-.rm-pop-search .rm-pop-bg{position:fixed; width:100%; height:100%; bottom:0; left:0; background:rgba(0,0,0,.7); z-index:100}
-.rm-pop-search .rm-pop-ct{position:absolute;width:90%;height:126.5vw;top:100px;left:5%;z-index:101;box-sizing:border-box;background:url(/img/product/rm-search-guamsaipan.png) no-repeat 0 0;background-size:100% auto}
-.rm-pop-search .rm-pop-close{position:absolute;top:.625rem;right:.625rem}
-.rm-pop-search .bt-slice{position:absolute;bottom:4%;left:50%;margin-left:-25%}
-.rm-pop-search .bt-slice .bt-red1{width:50%}
