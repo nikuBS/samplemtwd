@@ -1,5 +1,6 @@
 /**
  * 모바일 부가서비스 > 5GX VR 팩 카드보드 & 기어
+ * 모바일 부가서비스 > 분할납_기어VR팩_신청, 일시납_기어VR팩_신청, 분할납_보보VR팩_신청, 일시납_보보VR팩_신청 
  * @author anklebreaker
  * @since 2019-04-05
  */
@@ -22,7 +23,7 @@ class ProductMobileplanAddJoin5gxVRpack extends TwViewController {
   }
 
   /* 접근이 허용되는 상품코드 */
-  private readonly _prodIdList = ['NA00006518', 'NA00006531'];
+  private readonly _prodIdList = ['NA00006518', 'NA00006531', 'NA00006616', 'NA00006617', 'NA00006618', 'NA00006619'];
 
   /**
    * @desc 화면 렌더링
