@@ -27003,17 +27003,19 @@ a.bt-link-tx.underline.small {
   background: url(/img/ico/ico-loaming-06.png);
   background-size: 100%; }
 
+/* 190514 수정 [s] */
 .loaming-slide .horizontal-list li:nth-of-type(1) .ico {
-  background: url(/img/product/ico-loam-slide01.png);
+  background: url(/img/product/ico-loam-slide-barocall.png);
   background-size: 100%; }
-
+  
 .loaming-slide .horizontal-list li:nth-of-type(2) .ico {
-  background: url(/img/product/ico-loam-slide02.png);
+  background: url(/img/product/ico-loam-slide01.png);
   background-size: 100%; }
 
 .loaming-slide .horizontal-list li:nth-of-type(3) .ico {
   background: url(/img/product/ico-loam-slide03.png);
   background-size: 100%; }
+/* 190514 수정 [e] */
 
 .loaming-slide.type01 li, .shop-info .shop-txt .loaming-slide.type02 li, .shop-info .shop-txt .loaming-slide.type03 li {
   background: #e6f2fe; }
@@ -35156,3 +35158,6 @@ body.apphome .section-box {
 .rm-baro-exp-promo .rm-baro-exp-box .fc-baro{font-size:1.125rem;font-weight:normal}
 .rm-baro-exp-promo .rm-baro-exp-box .rm-baro-promo-img{text-align:center}
 .rm-baro-exp-promo .rm-baro-exp-box .rm-baro-promo-img img{width:9.9rem}
+
+/* 190508_[#7582/OP002-237] T앱 */
+.app-list-new.tod-new-align .app-list-bottom ul{-webkit-box-pack:start; -ms-flex-pack:start ; justify-content:flex-start; }
