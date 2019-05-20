@@ -32,9 +32,10 @@ class MembershipBenefitBrandBenefit extends TwViewController {
     } else {
 
       const needLogin = this.needLoginList.findIndex(data => ((data.catCd === req.query.cateCd && data.brandCd === req.query.brandCd)));
+      
       // 미로그인 상태 & 로그인이 필요한 경우
       if ((svcInfo ? 'Y' : 'N') === 'N' && needLogin !== -1) {
-          const path = '/common' + req.baseUrl + (req.path !== '/' ? req.path : '');
+          const path = req.baseUrl + (req.path !== '/' ? req.path : '');
           const queryStr = ParamsHelper.setQueryParams(req.query).replace(/\&/gi, 'urlQuery');
 
           res.redirect('/common/tid/login?target=' + path + queryStr);
@@ -48,6 +49,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
         pageInfo: pageInfo,
         svcInfo
       });
+      return;
     }
 
     const param = {
