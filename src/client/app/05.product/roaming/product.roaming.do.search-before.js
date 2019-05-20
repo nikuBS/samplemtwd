@@ -2,6 +2,7 @@
  * @file product.roaming.do.search-before.js
  * @desc T로밍 > 국가별 로밍 요금조회 검색 전 화면 (RM_03_01_01_01)
  * @author Eunjung Jung
+ * @editor 양정규
  * @since 2018.11.12
  */
 
@@ -29,6 +30,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
   _roamingSearchInit: function () {
     this.$userPhoneInfo = this.$container.find('#fe-search-phone');
+    this.$guamsaipanPop = this.$container.siblings('#fe-guamsaipan-pop');
 
     this._phoneInfo = {
         eqpMdlNm : '',      // 휴대폰 이름
@@ -110,6 +112,9 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));    // 휴대폰 정보 변경
     this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));    // 휴대폰 정보 선택
     this.$container.on('click', '.fe-roaming-model', $.proxy(this._onSelectModel, this));   // 휴대폰 모델명 선택
+    this.$guamsaipanPop.on('click', '.fe-close', $.proxy(function(){
+      this.$guamsaipanPop.addClass('none');
+    }, this)); // 괌/사이 요율정보 팝업 비노출
   },
     /**
      * @function
@@ -168,10 +173,14 @@ Tw.ProductRoamingSearchBefore.prototype = {
       // 검색어가 없는 경우 alert 호출
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
     }else {
-
-      this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
+      // OP002-333 : 괌/사이판 조회 시 별도 요율 정보 팝업 노출 요청
+      if ([Tw.ROAMING_SEARCH.GUAM, Tw.ROAMING_SEARCH.SAI, Tw.ROAMING_SEARCH.SAIPAN].indexOf(this.keyword) > -1) {
+          this.$guamsaipanPop.removeClass('none');
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
           .done($.proxy(this._handleSuccessSearchResult, this, e))
           .fail($.proxy(this._handleFailSearch, this));
+      }
     }
   },
   /**
