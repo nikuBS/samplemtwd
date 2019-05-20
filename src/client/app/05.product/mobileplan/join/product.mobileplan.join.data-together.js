@@ -333,29 +333,41 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
    */
   _procJoinRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
+    var fromProdId = this._confirmOptions.preinfo.frProdInfo.prodId, toProdId = this._prodId; 
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {
-      scrbTermCd: 'S'
-    }, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
+
+    //기존 가입중인 요금제 해지 메시지와 변경된 요금제 가입 메시지를 호출함.
+    this._apiService.requestArray([
+      {command: Tw.API_CMD.BFF_10_0038, params: {}, pathParams: [fromProdId]},
+      {command: Tw.API_CMD.BFF_10_0038, params: {scrbTermCd: 'S'}, pathParams: [toProdId]}
+    ]).done($.proxy(this._isVasTerm, this));
+      
   },
 
   /**
    * @function
-   * @param resp - 가입유도팝업 API 응답 값 처리
+   * @desc 가입유도팝업 조회 API 응답 값 처리
+   *        해지방어,가입유도 메시지가 존재하는지 확인후 해지방어 메시지가 존재하면 해지 방어 메시지를 팝업으로 출력함.
+   * @param curResp - 해지방어팝업 조회 응답 API
+   * @param newResp - 가입유도팝업 조회 응답 API 
    * @returns {*}
    */
-  _isVasTerm: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+  _isVasTerm: function(curResp, newResp) {
+    var resps = [curResp, newResp].filter(function(res) {
+      return res.code === Tw.API_CODE.CODE_00 && !Tw.FormatHelper.isEmpty(res.result);
+    });
+    
+    if(resps.length < 1){
       this._isResultPop = true;
       return this._openSuccessPop();
     }
 
-    this._openVasTermPopup(resp.result);
+    this._openVasTermPopup(resps[0].result);
   },
 
   /**
