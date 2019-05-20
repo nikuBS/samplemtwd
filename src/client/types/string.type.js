@@ -1805,7 +1805,7 @@ Tw.ROAMING_ERROR = {
 };
 
 Tw.ROAMING_DOWNLOAD_URL = {
-  SMART_GUIDE: 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
+  SMART_GUIDE: 'https://cdnm.tworld.co.kr/img/smartphone_AUTO_01.pdf ',
   PHONE_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
   RENTAL_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
 };
