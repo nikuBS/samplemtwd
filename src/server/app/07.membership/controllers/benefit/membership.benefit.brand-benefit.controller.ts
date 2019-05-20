@@ -23,24 +23,16 @@ class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    let brandCd = req.query.brandCd || '';
-    const encParams = req.query.encpParams || '';
+    const brandCd = req.query.brandCd;
+    const needLogin = this.needLoginList.findIndex(data => ((data.catCd === req.query.cateCd && data.brandCd === req.query.brandCd)));
+    
+    // 미로그인 상태 & 로그인이 필요한 경우
+    if ((svcInfo ? 'Y' : 'N') === 'N' && needLogin !== -1) {
+        const path = req.baseUrl + (req.path !== '/' ? req.path : '');
+        const queryStr = ParamsHelper.setQueryParams(req.query).replace(/\&/gi, 'urlQuery');
 
-    if (!FormatHelper.isEmpty(encParams)) {
-      const decParams = decodeURIComponent(encParams).split('::');
-      brandCd = decParams[1].split('=')[1];
-    } else {
-
-      const needLogin = this.needLoginList.findIndex(data => ((data.catCd === req.query.cateCd && data.brandCd === req.query.brandCd)));
-      
-      // 미로그인 상태 & 로그인이 필요한 경우
-      if ((svcInfo ? 'Y' : 'N') === 'N' && needLogin !== -1) {
-          const path = req.baseUrl + (req.path !== '/' ? req.path : '');
-          const queryStr = ParamsHelper.setQueryParams(req.query).replace(/\&/gi, 'urlQuery');
-
-          res.redirect('/common/tid/login?target=' + path + queryStr);
-      }
-    }
+        res.redirect('/common/tid/login?target=' + path + queryStr);
+    } 
 
     if (FormatHelper.isEmpty(brandCd)) {
       this.error.render(res, {
