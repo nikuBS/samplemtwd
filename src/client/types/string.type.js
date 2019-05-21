@@ -1805,7 +1805,7 @@ Tw.ROAMING_ERROR = {
 };
 
 Tw.ROAMING_DOWNLOAD_URL = {
-  SMART_GUIDE: 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
+  SMART_GUIDE: 'https://cdnm.tworld.co.kr/img/smartphone_AUTO_01.pdf',
   PHONE_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
   RENTAL_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
 };
@@ -1859,6 +1859,12 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
 Tw.ROAMING_BPCP = {
   BUY: '쿠폰 구매/선물',
   REGISTER: 'T로밍쿠폰 상세'
+};
+
+Tw.ROAMING_SEARCH = {
+  GUAM: '괌',
+  SAI: '사이',
+  SAIPAN: '사이판'
 };
 
 Tw.POSTCODE_MESSAGE = {
