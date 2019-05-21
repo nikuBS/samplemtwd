@@ -9551,3 +9551,9 @@ button:focus span {
 .popup .popup-info.full .editor-type .tod-popeditor-inwrap {position:relative; background:#fff; margin:-1.5rem -1.25rem -1.25rem -1.25rem; padding:1.5rem 1.25rem 1.25rem 1.25rem;}
 .popup .popup-info.full .editor-type .tod-popeditor-inwrap .font-only-black-ti {font-size:1.13rem; font-weight:700; color:#222 !important;}
 
+
+/* 190516 추가 [OP002-381] 공통 Class추가 */
+.tod-fleft {float:left !important;}
+.tod-fright {float:right !important;}
+.tod-w100 {width:100% !important;}
+.tod-blind {position:absolute !important; width:1px; height:1px; margin:-1px; clip:rect(0,0,0,0); overflow:hidden; color:transparent;}
