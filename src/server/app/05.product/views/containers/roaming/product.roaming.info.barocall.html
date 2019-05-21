@@ -1,0 +1,458 @@
+<%#
+* MenuName: T로밍 > 로밍안내 > baro 통화 (RM_18)
+* @file product.roaming.info.barocall.html
+* @author p026951
+* @since 2019.05.15
+%>
+
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: 'baro 통화', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+
+            <div class="cont-box nogaps noborder">
+                <div class="prVisual fe-contents">
+                    <div class="idpt-baro-top">
+                        <img src="<%= CDN %>/img/product/img_collab_h.png" alt="baro" class="idpt-mobile">    
+                        <p>데이터 로밍 요금제에 가입하고<br><strong>해외에서 한국으로 자유롭게 baro 통화!</strong></p>
+                    </div>
+                    <div class="idpt-baro-intro">
+                        <div class="baro-intro-left">
+                            <img src="<%= CDN %>/img/product/img_collab_h2.png" alt="baro란?" class="idpt-mobile">
+                        </div>
+                        <div class="baro-intro-right">
+                            <p>해외에서 T전화를 이용해 <strong>고품질의<br>데이터 음성통화</strong>를 할 수 있는 서비스입니다.<br>해외에서도 국내처럼 자유롭게 <strong>baro 통화</strong>하세요!</p>
+                            <div>
+                                <p class="baro-list-title">이런 점이 좋아요!</p>
+                                <ul class="idpt-baro-list">
+                                    <li>데이터 로밍 요금제를 쓰면 해외에서 데이터를 통한 음성 통화가 무료예요.(단, 제3국 발신 제외)
+                                        <div class="bt-alone"><a href="javascript:void(0);" class="bt-line-gray2 idpt-popup-open baro" data-popup="baro">혜택 대상 로밍 요금제 확인하기</a></div>
+                                    </li>
+                                    <li>국내 휴대폰·집전화 어디로 걸든 T전화를 이용해 자유롭게 통화할 수 있어요.</li>
+                                    <li>해외에서도 국내처럼 빠르고 생생한 품질의 음성통화를 이용할 수 있어요.</li>
+                                </ul>
+                                <div class="idpt-benefit" style="padding:0">
+                                    <div class="idpt-popup">
+                                        <div class="idpt-popup-wrap" style="display:block">
+                                            <div class="idpt-popup-header"><p class="popup-title">baro 통화 혜택 대상 로밍 요금제</p><a href="javascript:void(0)" onclick="history.back();" class="idpt-popup-close">팝업닫기</a></div>
+                                            <div class="idpt-popup-cont-wrap">
+                                                <div class="idpt-popup-cont">
+                                                    <div class="tbl-wrap">
+                                                        <table class="idpt-tbl-discount">
+                                                        <caption>baro 통화 혜택 대상 로밍 요금제</caption>
+                                                        <colgroup>
+                                                        <col width="37%">
+                                                        <col width="29%">
+                                                        <col>
+                                                        </colgroup>
+                                                        <thead>
+                                                            <tr>
+                                                            <th scope="col">요금제명</th>
+                                                            <th scope="col">baro 통화 혜택 대상 여부</th>
+                                                            <th scope="col">유의사항</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                            <td>baro OnePass 300</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro OnePass 300 기간형</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro OnePass 500</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro OnePass 500 기간형</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro OnePass VIP 기간형</td>
+                                                            <td>X</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro 3GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro YT 4GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro 4GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro YT 5GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro 7GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>baro YT 8GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T괌사이판 5천원</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T괌사이판 국내처럼</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 아시아패스</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 아시아패스YT</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 한중일패스</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 한중일패스YT</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 미주패스 3GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 미주패스 6GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 미주패스YT 4GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 미주패스YT 7GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 유럽패스 3GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 유럽패스 6GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 유럽패스YT 4GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 유럽패스YT 7GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 OnePass400</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 OnePass400기간형</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 데이터 12시간</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 데이터 1만원</td>
+                                                            <td>O</td>
+                                                            <td>기본 제공 데이터를 다 쓰면<br>데이터 사용 제한</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 데이터 3만원</td>
+                                                            <td>O</td>
+                                                            <td>기본 제공 데이터를 다 쓰면<br>데이터 사용 제한</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 데이터 5만원</td>
+                                                            <td>O</td>
+                                                            <td>기본 제공 데이터를 다 쓰면<br>데이터 사용 제한</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 실버 무한톡</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 HD Voice</td>
+                                                            <td>X</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 HD Voice 플러스</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 LongPass 2GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 LongPass 3GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 LongPass 5GB</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 올인원29</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 올인원59</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 올인원99</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 팅+ 무한톡</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 함께쓰기 3GB</td>
+                                                            <td>O</td>
+                                                            <td>기본 제공 데이터를 다 쓰면<br>데이터 사용 제한</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>T로밍 함께쓰기 6GB</td>
+                                                            <td>O</td>
+                                                            <td>기본 제공 데이터를 다 쓰면<br>데이터 사용 제한</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>내집처럼 T로밍 중국</td>
+                                                            <td>X</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>내집처럼 T로밍 중국 플러스</td>
+                                                            <td>O</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript">
+                                var popOpen = document.querySelector('.idpt-popup-open'),
+                                popClose = document.querySelector('.idpt-popup-close'),
+                                popUp = document.querySelector('.idpt-popup');
+                                popOpen.addEventListener('click', function () {
+                                    var popupId = popOpen.getAttribute('data-popup');
+                                    // window.history.pushState(null, null, '#'+popupId);
+                                    location.hash = '#'+popupId;
+                                    popUp.style.display = "block";
+                                    popUp.setAttribute('tabindex', -1);
+                                    popUp.focus();
+                                    document.querySelector('.idpt-popup-cont-wrap').scrollTo(0,0);
+                                    skt_landing.action.checkScroll.lockScroll();
+                                });
+                                popClose.addEventListener('click', function () {
+                                    var chgHash = location.hash;
+                                    var focusReturn = chgHash.replace(/#/,"");
+                                    var focusElement = document.querySelector('a[data-popup=' + focusReturn + ']');
+                                    popUp.style.display = "none";
+                                    focusElement.focus();
+                                    skt_landing.action.checkScroll.unLockScroll();
+                                });
+                                window.addEventListener('hashchange', function(){
+                                    var chgHash = location.hash;
+                                    if(chgHash == "") {
+                                    popUp.style.display = "none";
+                                    skt_landing.action.checkScroll.unLockScroll();
+                                }
+                                });
+                                </script>
+                                <p class="baro-list-title mt10">유의사항</p>
+                                <ul class="idpt-baro-list">
+                                    <li>데이터 네트워크나 Wi-Fi를 연결해 서비스를 이용하실 수 있습니다.</li>
+                                    <li>해외 네트워크나 Wi-Fi가 불안정하면 일반 음성 로밍으로 연결됩니다. 이 때 음성 로밍 요금이 청구됩니다.</li>
+                                    <li><strong style="color:#ea002c">&lt;baro 무료 체험 프로모션!&gt;</strong><br>데이터 로밍 요금제를 가입하지 않고 해외에 가서도 baro 통화를 무료로 체험하실 수 있습니다.<br>해외에서 한국으로 약 20분 동안의 무료 통화를 체험해보세요.<br><span style="color:#ea002c">*데이터 10MB(400kbps 이하 속도)가 제공되며 다 쓰면 데이터는 자동으로 차단됩니다.</span><br><br><strong style="color:#ea002c">※ 프로모션 기간: 2019년 4월 2일(화)~2019년 6월 30일(일)</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="idpt-baro-use">
+                        <img src="<%= CDN %>/img/product/h_collab_use.png" alt="baro 이용 방법" class="idpt-mobile">    					    
+                        <ul class="idpt-baro-use-list clearfix">
+                            <li>해외 도착 후<br>휴대폰 전원 켜기</li>
+                            <li>비행기 모드<br>해제</li>
+                            <li>T전화 앱을 켜고<br>baro 실행</li>
+                        </ul>
+                    </div>
+                    <div class="idpt-baro-network">
+                        <img src="<%= CDN %>/img/product/h_collab_use2.png" alt="네트워크 상태에 따른 최적의 통화 연결" class="idpt-mobile">
+                        <div class="clearfix">
+                            <div class="baro-network-left">
+                                <img src="<%= CDN %>/img/product/img_collab_use1.png" alt="" class="idpt-mobile">            
+                            </div>
+                            <div class="baro-network-right">
+                                <img src="<%= CDN %>/img/product/img_collab_use2.png" alt="" class="idpt-mobile">            
+                            </div>
+                        </div>
+                        <p>* baro UI는 아이폰 버전 6.1.0 이상 / 안드로이드폰 버전 7.2.0 이상에서 확인 가능합니다.</p></div><div class="cont-box">
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">baro Q&amp;A</h5>
+                                <div class="acco-cover toggle on">
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                            <li class="acco-box">
+                                                <!-- .on: 열기 -->
+                                                <div class="acco-tit"><strong class="bullet">Q</strong> baro 통화란? <button role="button" aria-pressed="false">상세보기</button></div><div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">SK텔레콤의 데이터 로밍 요금제에 가입한 고객님이 해외에서 T전화 앱을 이용해 자유롭게 통화할 수 있는 서비스입니다. 국내 휴대폰·집전화 어디로 걸든 자유롭게 통화할 수 있습니다.<br>일반 음성 로밍이 아닌 데이터를 사용하기 때문에 로밍 요금을 대폭 절감할 수 있습니다. 또한 해외에서도 지연 없이 빠르고 생생하게 통화할 수 있습니다.<br>*데이터 로밍 요금제에 가입하지 않은 고객은 사용한만큼만 요금이 청구됩니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><strong class="bullet">Q</strong> baro 통화를 사용할 수 있는 방법은? <button role="button" aria-pressed="false">상세보기</button></div><div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">해당 기능이 적용되는 T전화 앱(아이폰 버전  6.0.0 이상/ 안드로이드폰 버전 7.0.0 이상)을 국내에서 설치하거나 업데이트 해주세요. 이후, 데이터 로밍 요금제에 가입하고 해외에서 앱을 실행하면 자유롭게 이용하실 수 있습니다.<br>baro 통화는 데이터 연결 후 이용할 수 있습니다. 데이터 네트워크 또는 Wi-Fi에 연결한 후 서비스를 이용해주세요.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><strong class="bullet">Q</strong> baro 통화로 한국 외의 국가에도 전화를 걸 수 있나요? <button role="button" aria-pressed="false">상세보기</button></div><div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">baro 통화를 이용한 발신은 한국으로만 하실 수 있습니다. 단, 데이터 로밍 요금제를 이용하는 고객님은 방문한 국가 안에서 무료로 음성통화를 이용하실 수 있습니다. <strong>한국, 방문한 국가가 아닌 제 3국으로 통화하시면 일반 음성 로밍 요금이 청구됩니다.</strong></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><strong class="bullet">Q</strong> 한국에 돌아와 일반 T전화를 사용하려면 어떻게 설정해야 하나요? <button role="button" aria-pressed="false">상세보기</button></div><div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">한국에 돌아와 SK텔레콤 네트워크를 설정하면 자동으로 '일반 T전화'로 바뀝니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit"><strong class="bullet">Q</strong> 국내에서 모바일 인터넷 전화(mVoIP)가 안되는 요금제를 이용하고 있습니다. 이런 경우 baro 통화를 이용할 수 없나요? <button role="button" aria-pressed="false">상세보기</button></div><div class="acco-cont">
+                                                    <ul class="list-dot">
+                                                        <li class="list">baro 통화 이용은 국내 요금제의 모바일 인터넷 전화(mVoIP) 정책과 관계가 없습니다. 데이터 네트워크나 Wi-Fi에 연결한 후 자유롭게 이용하실 수 있습니다.<br>단, 국내 요금제가 3G 전용이거나, HD Voice(LTE 음성통화) 차단 부가서비스에 가입했다면 baro 통화를 이용하실 수 없습니다.</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list02">
+                    <li><button type="button" id="TC000056" class="tip-view-btn" aria-haspopup="true">서비스 이용 조건<span class="tip-view">TIP</span></button></li>
+                    <li><button type="button" id="TC000057" class="tip-view-btn" aria-haspopup="true">요금 청구 및 이용 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button type="button" id="TC000058" class="tip-view-btn" aria-haspopup="true">유의사항<span class="tip-view">TIP</span></button></li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <h3>함께하면 더욱 스마트한 앱서비스</h3>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide slide-nopd">
+                            <ul class="horizontal-list smart-app" style="width: 81px;">
+                                <li class="fe-roaming-baro-Tcall">
+                                    <div>
+                                        <button class="txt-tit"><img class="ico" src="<%= CDN %>/adminupload/product/57345/4131/1794460000.png" alt="">T전화</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .widget -->
+            </div> 
+
+        </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingBaroCall($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

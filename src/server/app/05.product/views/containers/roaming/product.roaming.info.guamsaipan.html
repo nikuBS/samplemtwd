@@ -1,0 +1,228 @@
+<%#
+* MenuName: T로밍 > 로밍안내 > T괌사이판 국내처럼 (RM_19)
+* @file product.roaming.info.guamsaipan.html
+* @author p026951
+* @since 2019.05.15
+%>
+
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../common/views/components/header.component.html', { title: 'T괌사이판 국내처럼', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <div class="cont-box nogaps noborder">
+                <div class="idpt-gs-wrap">
+                    <img src="<%= CDN %>/img/product/img_guamSaipan_top.jpg" alt="괌, 사이판 여행 대표 요금제 출시 / 괌, 사이판으로 여행 갈 때는 SK텔레콤만의 특별한 로밍 혜택을 누려보세요." class="idpt-mobile">
+                    <div class="idpt-gs-container">
+                        <div class="idpt-gs">
+                            <div class="idpt-tab-wrap">
+                                <ul class="tab-menu clearfix">
+                                    <li class="on" role="button">T괌사이판 국내처럼</li>
+                                    <li role="button">T괌사이판 5천원</li>
+                                </ul>
+                                <div class="tab-contents show gs-orange">
+                                    <div class="gs-info-wrap">
+                                        <p class="idpt-gs-title">괌/사이판 여행 대표 요금제1<br><strong>T괌사이판 국내처럼</strong></p>
+                                        <p class="idpt-gs-txt">※ 19년 1월 17일(목)부터 ‘T로밍 괌사이판패스’가 ‘T괌사이판 국내처럼’으로 명칭이
+                                        변경 되었습니다.</p>
+                                        <p class="idpt-gs-txt">괌/사이판에서 지정한 날(시작일)부터 30일 동안, <span>국내 가입 요금제의 기본제공 데이터를
+                                        그대로 사용</span>하실 수 있는 요금제입니다.</p>
+                                        <p class="idpt-gs-point">출국 후 가입해도 동일하게 이용하실 수 있습니다.</p>
+                                        <ul class="idpt-gs-list">
+                                            <li class="gs-list-01">
+                                            <div>
+                                                <p class="gs-list-title">데이터</p>
+                                                <p class="gs-list-txt">요금제 유형별 이용 안내 ‘데이터’ 참고</p>
+                                            </div>
+                                            </li>
+                                            <li class="gs-list-02">
+                                            <div>
+                                                <p class="gs-list-title">음성</p>
+                                                <p class="gs-list-txt">baro 이용 시 음성 로밍 무료(단, 제3국 발신 제외)</p>
+                                                <p class="gs-list-refer">※ 일반 음성 로밍 이용 시 매일 3분 무료</p>
+                                            </div>
+                                            </li>
+                                            <li class="gs-list-03">
+                                            <div>
+                                                <p class="gs-list-title">문자</p>
+                                                <p class="gs-list-txt">SMS/MMS 기본제공</p>
+                                            </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="gs-table-wrap">
+                                        <p class="gs-table-title">요금제 유형별 이용 안내</p>
+                                        <table class="gs-table">
+                                        <caption>요금제 유형별 이용 안내</caption><colgroup>
+                                        <col>
+                                        <col style="width:28%">
+                                        <col style="width:28%">
+                                        <col style="width:28%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">유형</th>
+                                            <th scope="col">한도형</th>
+                                            <th scope="col">무제한형</th>
+                                            <th scope="col">완전 무제한형</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <th scope="row">데이터</th>
+                                                <td>
+                                                <strong>국내 요금제의 기본제공 데이터를 다 쓰면 최대 400kbps 속도로 계속 이용</strong>
+                                            </td>
+                                            <td>
+                                                <strong>국내 요금제의 기본제공 데이터를 다 쓰면 매일 추가 데이터 1GB 제공, 이후 최대 400kbps
+                                                속도로 계속 이용</strong>
+                                            </td>
+                                            <td>
+                                                <strong>데이터 사용량/속도 제한 없이 완전 무제한으로 이용</strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">음성통화</th>
+                                                <td colspan="3">
+                                                <strong>baro를 이용하면 로밍 음성통화 무료(단, 제3국 발신
+                                                제외)</strong><br><span style="font-size:11px;color:#666">※
+                                                <strong>일반 로밍 음성통화를 이용할 경우 매일 3분 무료 통화</strong> 제공, 이후
+                                                <strong>1.98원/초(국내 통화요금과 같음)</strong></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">문자</th>
+                                                <td colspan="3">
+                                                SMS/MMS <strong>기본제공</strong>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <p class="idpt-gs-point">국내 요금제 유형별로 더 자세한 사항은 고객센터(국내: 02-6343-9000, 해외: +82-2-6343-9000) 또는 상품 상세(가입) 페이지를 통해 확인하실 수 있습니다.</p>
+                                            <button class="fe-roaming-guamsaipan1 fe-link-internal idpt-mobile gs-button">자세히 보기</button>
+                                    </div>
+                                </div>
+                                <div class="tab-contents gs-red">
+                                    <div class="gs-info-wrap">
+                                        <p class="idpt-gs-title">괌/사이판 여행 대표 요금제2<br><strong>T괌사이판 5천원</strong></p>
+                                        <p class="idpt-gs-txt">괌/사이판에서 국내 가입 요금제의 데이터를 쓰고 싶지 않거나, 남은 데이터가 없는 고객님을 위해,
+                                        <span>10일 동안 5,000원(부가세 포함)으로 매일 LTE/3G 데이터 500MB(다 쓰면 속도제어)</span>를 저렴하게
+                                        사용하실 수 있는 요금제입니다.</p>
+                                        <ul class="idpt-gs-list">
+                                            <li class="gs-list-04">
+                                                <div>
+                                                    <p class="gs-list-title">데이터</p>
+                                                    <p class="gs-list-txt">매일 500MB + 최대 400kbps 속도</p>
+                                                </div>
+                                            </li>
+                                            <li class="gs-list-02">
+                                                <div>
+                                                    <p class="gs-list-title">음성</p>
+                                                    <p class="gs-list-txt">baro 이용 시 음성 로밍 무료(단, 제3국 발신 제외)</p>
+                                                    <p class="gs-list-refer">※ 일반 음성 로밍 이용 시 매일 3분 무료</p>
+                                                </div>
+                                            </li>
+                                            <li class="gs-list-03">
+                                                <div>
+                                                    <p class="gs-list-title">문자</p>
+                                                    <p class="gs-list-txt">SMS/MMS 기본제공</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="gs-table-wrap">
+                                        <p class="gs-table-title">요금제 유형별 이용 안내</p>
+                                        <table class="gs-table">
+                                        <caption>요금제 유형별 이용 안내</caption><colgroup>
+                                        <col>
+                                        <col style="width:84%">
+                                        </colgroup>
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">유형</th>
+                                            <th scope="col">T괌사이판 5천원</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <th scope="row">데이터</th>
+                                            <td style="vertical-align:middle">
+                                                <strong>매일 500MB 기본제공</strong> + 다 쓰면 최대 400kbps 속도로 계속 이용할 수 있음
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">음성통화</th>
+                                                <td>
+                                                <strong>baro를 이용하면 로밍 음성통화 무료(단, 제3국 발신 제외)</strong><br><span style="font-size:11px;color:#666">※ <strong>일반 로밍 음성통화를 이용할 경우 매일 3분 무료 통화</strong> 제공, 이후 <strong>1.98원/초(국내 통화요금과 같음)</strong></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">문자</th>
+                                            <td>SMS/MMS <strong>기본제공</strong></td>
+                                        </tr>
+                                        </tbody>
+                                        </table>
+                                        <button class="fe-roaming-guamsaipan2 fe-link-internal idpt-mobile gs-button">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script type="text/javascript">
+                    var tabMenu = document.querySelectorAll('.idpt-tab-wrap .tab-menu > li'),
+                    tabContent = document.getElementsByClassName('tab-contents');
+                    for (var i = 0; i < tabMenu.length; i++) {
+                        (function (index) {                 
+                            tabMenu[i].onclick = function () {     
+                                for (var j = 0; j < tabMenu.length; j++) {
+                                    tabMenu[j].classList.remove("on");
+                                    tabContent[j].classList.remove("show");
+                                }                 
+                                tabMenu[index].classList.add("on");
+                                tabContent[index].classList.add("show");
+                            }               
+                        })(i);
+                    }
+                    </script>
+                </div>
+            </div>
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list02">
+                    <li><button type="button" id="TC000059" class="tip-view-btn" aria-haspopup="true">T괌사이판 국내처럼 이용 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button type="button" id="TC000060" class="tip-view-btn" aria-haspopup="true">T괌사이판 5천원 이용 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button type="button" id="TC000061" class="tip-view-btn" aria-haspopup="true">서비스 제공 국가<span class="tip-view">TIP</span></button></li>
+                </ul>
+            </div>
+        </div>
+        <!-- #footer -->
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+        <!--// #footer -->
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductRoamingGuamSaipan($('.wrap'));
+  });
+</script>
+<% include ../../components/end.component.html %>

@@ -127,6 +127,9 @@ export const URL = {
   '/product/roaming/info/lte': { login: false, id: 'RM_16_02_01', title: '자동로밍' },
   '/product/roaming/info/secure-troaming': { login: false, id: 'RM_16_03', title: '자동안심 T로밍이란?' },
   '/product/roaming/info/data-roaming': { login: false, id: 'RM_16_04', title: 'SMS / DATA 로밍' },
+  '/product/roaming/info/barocall': { login: false, id: 'RM_18', title: 'baro 통화' },
+  '/product/roaming/info/baropromotion': { login: false, id: 'RM_20', title: 'baro 무료 체험 프로모션' },
+  '/product/roaming/info/guamsaipan': { login: false, id: 'RM_19', title: 'T괌사이판 국내처럼' },
   '/product/roaming/fee': { login: false, id: 'RM_11', title: '로밍 요금제' },
   '/product/roaming/planadd': { login: false, id: 'RM_12', title: '로밍 부가서비스' },
 
