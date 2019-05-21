@@ -69,6 +69,9 @@ import ProductRoamingGuide from './controllers/roaming/product.roaming.info.guid
 import ProductRoamingLteGuide from './controllers/roaming/product.roaming.info.lte.controller';
 import ProductRoamingSecureTroaming from './controllers/roaming/product.roaming.info.secure-troaming.controller';
 import ProductRoamingDataRoaming from './controllers/roaming/product.roaming.info.data-roaming.controller';
+import ProductRoamingBaroCall from './controllers/roaming/product.roaming.info.barocall.controller';
+import ProductRoamingBaroPromotion from './controllers/roaming/product.roaming.info.baropromotion.controller';
+import ProductRoamingGuamSaipan from "./controllers/roaming/product.roaming.info.guamsaipan.controller";
 import ProductRoamingFee from './controllers/roaming/product.roaming.fee.controller';
 import ProductRoamingPlanAdd from './controllers/roaming/product.roaming.planadd.controller';
 import ProductRoamingCoupon from './controllers/roaming/product.roaming.coupon.controller';
@@ -166,6 +169,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/info/lte', controller: ProductRoamingLteGuide });
     this.controllers.push({ url: '/roaming/info/secure-troaming', controller: ProductRoamingSecureTroaming });
     this.controllers.push({ url: '/roaming/info/data-roaming', controller: ProductRoamingDataRoaming });
+    this.controllers.push({ url: '/roaming/info/barocall', controller: ProductRoamingBaroCall });
+    this.controllers.push({ url: '/roaming/info/baropromotion', controller: ProductRoamingBaroPromotion });
+    this.controllers.push({ url: '/roaming/info/guamsaipan', controller: ProductRoamingGuamSaipan });
     this.controllers.push({ url: '/roaming/fee', controller: ProductRoamingFee });
     this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });

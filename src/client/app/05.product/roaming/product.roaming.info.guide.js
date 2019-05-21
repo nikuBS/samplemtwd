@@ -57,9 +57,12 @@ Tw.ProductRoamingGuide.prototype = {
         return b;
     },
     _bindBtnEvents: function () {
-      this.$container.on('click', '#fe-rm-info-slide1', $.proxy(this._goLteGuide, this));           // 자동로밍
-      this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goSecureTroaming, this));     // 자동안심 T로밍
-      this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goDataRoaming, this));        // SMS 문자, 데이터 로밍
+      //this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goSecureTroaming, this));     // 자동안심 T로밍
+      this.$container.on('click', '#fe-rm-info-slide1', $.proxy(this._goBaroCall, this));      // baro 통화
+      this.$container.on('click', '#fe-rm-info-slide2', $.proxy(this._goBaroPromotion, this));      // baro 무료 체험 프로모션
+      this.$container.on('click', '#fe-rm-info-slide3', $.proxy(this._goGuamSaipan, this));      // T괌사이판 국내처럼
+      this.$container.on('click', '#fe-rm-info-slide4', $.proxy(this._goLteGuide, this));           // 자동로밍
+      this.$container.on('click', '#fe-rm-info-slide5', $.proxy(this._goDataRoaming, this));        // SMS 문자, 데이터 로밍
       this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));                    // 자주하는 질문
       // this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
       this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart')); // 로밍안내서 다운받기 스마트폰
@@ -84,8 +87,17 @@ Tw.ProductRoamingGuide.prototype = {
   _goLteGuide : function() {
     this._history.goLoad('/product/roaming/info/lte');
   },
-  _goSecureTroaming : function () {
-    this._history.goLoad('/product/roaming/info/secure-troaming');
+  //_goSecureTroaming : function () {
+  //  this._history.goLoad('/product/roaming/info/secure-troaming');
+  //},
+  _goBaroCall : function () {
+    this._history.goLoad('/product/roaming/info/barocall');
+  },
+  _goBaroPromotion : function () {
+    this._history.goLoad('/product/roaming/info/baropromotion');
+  },
+  _goGuamSaipan : function () {
+    this._history.goLoad('/product/roaming/info/guamsaipan');
   },
   _goDataRoaming : function () {
     this._history.goLoad('/product/roaming/info/data-roaming');
