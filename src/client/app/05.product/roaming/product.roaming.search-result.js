@@ -2,6 +2,7 @@
  * @file product.roaming.do.search-before.js
  * @desc T로밍 > 국가별 로밍 요금조회 검색 결과 화면 (RM_04)
  * @author Eunjung Jung
+ * @editor 양정규
  * @since 2018.11.12
  */
 
@@ -44,6 +45,7 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$roamingNoti = this.$container.find('#fe-rm-noti');
         this.$notiButton = this.$container.find('.fe-noti-btn');
         this.$userPhoneInfo = this.$container.find('#fe-search-phone');
+      this.$guamsaipanPop = this.$container.siblings('#fe-guamsaipan-pop');
         this._phoneInfo = { // 사용자 휴대폰 정보
             eqpMdlNm : this._srchInfo.eqpMdlNm, // 휴대폰 이름
             eqpMdlCd : this._srchInfo.eqpMdlCd  // 휴대폰 모델 코드
@@ -224,6 +226,9 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));    // 유럽패스
         this.$container.on('click', '.fe-rm-data', $.proxy(this._goRoamingList, this, 'data'));
         this.$container.on('click', '.fe-rm-voice', $.proxy(this._goRoamingList, this, 'voice'));
+        this.$guamsaipanPop.on('click', '.fe-close', $.proxy(function(){
+          this.$guamsaipanPop.addClass('none');
+        }, this)); // 괌/사이 요율정보 팝업 비노출
     },
     _goRoamingList: function (type) {
         if(type === 'data') {
@@ -619,9 +624,14 @@ Tw.ProductRoamingSearchResult.prototype = {
         if(this.searchKeyword === ''){
             this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         }else {
-            this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
-                .done($.proxy(this._handleSuccessSearchResult, this, e))
-                .fail($.proxy(this._handleFailSearchResult, this));
+            // OP002-333 : 괌/사이판 조회 시 별도 요율 정보 팝업 노출 요청
+          if ([Tw.ROAMING_SEARCH.GUAM, Tw.ROAMING_SEARCH.SAI, Tw.ROAMING_SEARCH.SAIPAN].indexOf(this.keyword) > -1) {
+                this.$guamsaipanPop.removeClass('none');
+            } else {
+                this._apiService.request(Tw.API_CMD.BFF_10_0060, { keyword: this.searchKeyword })
+                    .done($.proxy(this._handleSuccessSearchResult, this, e))
+                    .fail($.proxy(this._handleFailSearchResult, this));
+            }
         }
     },
     /**

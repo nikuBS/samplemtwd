@@ -1861,6 +1861,12 @@ Tw.ROAMING_BPCP = {
   REGISTER: 'T로밍쿠폰 상세'
 };
 
+Tw.ROAMING_SEARCH = {
+  GUAM: '괌',
+  SAI: '사이',
+  SAIPAN: '사이판'
+};
+
 Tw.POSTCODE_MESSAGE = {
   NONE: '건물명 없음'
 };
