@@ -8,7 +8,7 @@ Tw.OUTLINK = {
   DIRECT_MOBILE: 'https://m.shop.tworld.co.kr/wireless/product/detail',
   DIRECT_ACCESSORY: 'https://m.shop.tworld.co.kr/accessory/view',
   DIRECT_IOT:'https://m.shop.tworld.co.kr/iot/nugu/view',
-  BECOME_ANYTHING: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
+  BECOME_ANYTHING: 'http://bit.ly/2Ls2RCO',
   T_HONORS_CLUB: 'http://www.thonorsclub.com/',
   TWORLD_DATA_PRESENT: 'https://skt.sh/HhNCw',
   TWORLD_TING: 'https://skt.sh/Gf1q3',
