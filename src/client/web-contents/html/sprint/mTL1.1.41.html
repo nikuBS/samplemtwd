@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
@@ -16,25 +15,25 @@
     <meta property="og:site_name" content="SKT" />
     <meta property="og:image" content="/image/common/skt_facebook.jpg" />
     <meta property="og:description" content="SKT framework" />
-    <title>SKT</title>
-    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
-    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
-    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
-    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
-    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
-    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
-    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+    <title>내가고른패키지 이벤트 | T world</title>
+    <style>
+        /*Default set*/
+        html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b {margin:0; padding:0; font-weight:400; -webkit-text-size-adjust:none; font-family:"Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Roboto", "Noto Sans KR",  sans-serif; font-style:normal; }
+        /* 190516 이벤트 공통 CSS */
+        .tod-eventDetail {padding-bottom:1.25rem;}
+        .tod-eventDetail .inner {margin:0.9375rem; padding:1.25rem; border:1px solid #ddd; background:#fff}
+        .tod-eventDetail .evtImg img {width:100%; vertical-align:top}
+        .tod-eventDetail .evtImg > a {display:block}
+        .tod-eventDetail .evtBtnBox {text-align:center; vertical-align:middle; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; overflow:hidden;}
+        .tod-eventDetail .evtBtnL, .tod-eventDetail .evtBtnL2, .tod-eventDetail .evtBtnL.btnWhite, .tod-eventDetail .evtBtnL.btnWhite2 {display:inline-block; width:100%; height:2.1875rem; line-height:2.1875rem; font-size:1.0625rem; letter-spacing:-0.0625rem; text-decoration:none !important;}
+        .tod-eventDetail .evtBtnRed {background:#ea002c; border: 0 none; color:#fff !important;}
+        .tod-eventDetail .blind {position:absolute !important; width:1px; height:1px; margin:-1px; clip:rect(0,0,0,0); overflow:hidden; color:transparent;}
+    </style>
 </head>
-
-
 <body>
-<div class="tod-eventDetail2" style="padding:0">
+<div class="tod-eventDetail" style="padding:0">
     <h1 class="blind">내가고른패키지 이벤트</h1>
-    <div class="tod-evtImg tod-psr tod-center" style="padding:0 0 45px">
+    <div class="evtImg" style="position:relative; padding:0 0 2.8125rem">
         <div>
             <img src="/img/event/img_event_mTL1.1.41_1.png" alt="내가고른패키지 (다음 상세내용 참조)">
             <div class="blind">
@@ -118,8 +117,8 @@
 
         <div style="position:relative;">
             <img src="/img/event/img_event_mTL1.1.34_5.png" alt="T가족모아 결합하면 데이터에 추가혜택까지! 내가고른패키지는, 내가 필요하고 원하는 상품만 골라 한 번에 가입할 수 있고 평균 25%의 파격적인 할인혜택을 받을 수 있습니다! 지금 바로, SK텔레콤 매장에 방문하셔서 상담을 받아보세요!">
-            <div class="tod-btnBox" style="position:absolute;right:0;bottom:0;width:100%;padding:0 15px;text-align:center">
-                <a href="tel:18000212" class="tod-btnL tod-btnRed" style="width:100%;font-size:12px;font-weight:bold"><span class="tod-fBd">상담하기(1800-0212)</span></a>
+            <div class="evtBtnBox" style="position:absolute;right:0;bottom:0;width:100%;padding:0 0.9375rem;text-align:center">
+                <a href="tel:18000212" class="evtBtnL evtBtnRed" style="width:100%;font-size:0.75rem;font-weight:bold"><span>상담하기(1800-0212)</span></a>
             </div>
         </div>
 
