@@ -1,0 +1,17 @@
+<%#
+* @file tevent.static.html
+* @author 이정민 (skt.p130713@partner.sk.com)
+* @since 2019.5.21
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<%- include('./static/'+ htmlId + '.html'); %>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.XtractorService($('body'));
+  });
+</script>
+<% include ../components/end.component.html %>
