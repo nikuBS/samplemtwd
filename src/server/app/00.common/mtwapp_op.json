@@ -1222,5 +1222,29 @@
   {  
     "old":"https://smartdc.sktelecom.com:8443/bpcp/iframe/new",
     "menuId":"/product/callplan?prod_id=NA00005696"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006616",
+    "menuId" :"/product/callplan?prod_id=NA00006616"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006617",
+    "menuId" :"/product/callplan?prod_id=NA00006617"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006618",
+    "menuId" :"/product/callplan?prod_id=NA00006618"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006619",
+    "menuId" :"/product/callplan?prod_id=NA00006619"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006577",
+    "menuId" :"/product/callplan?prod_id=NA00006577"
+  },
+  {
+    "old" : "http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00006520",
+    "menuId" :"/product/callplan?prod_id=NA00006520"
   }
 ]
