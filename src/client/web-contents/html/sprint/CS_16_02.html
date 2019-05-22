@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>고객지원 &lt; 지점/대리점,A/S센터 &lt; 5GX 체험존 찾기 &lt; 매장정보</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <!-- 접근성 수정 -->
+            <li><a href="#contents">본문 바로가기</a></li>
+            <!--// 접근성 수정 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">매장정보</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <!-- .shop-info -->
+                    <div class="shop-info">
+                        <!-- .shop-nam -->
+                        <div class="shop-name">에스알대리점 경인교대역점</div>
+                        <!-- // .shop-nam -->
+                        <!-- .shop-rating -->
+                        <div class="shop-rating">
+                            <span class="ico-star"><span class="star-count star4"><span class="blind">별점</span></span></span>
+                            <!-- 웹접근성 수정 - '별점 10점 중 2점'과 같이 고정적이지 않은 설명이 필요하므로 개발에서 진행 필요 -->
+                            <!-- 별 갯수에 따라 .star1~star5로 설정 -->
+                            <span class="txt-rating">평점 <span class="grade-total">4.0</span> (<span class="grade-count">100</span>명)</span>
+                        </div>
+                        <!-- // .shop-rating -->
+                        <!-- .shop-tag -->
+                        <div class="shop-tag">
+                            <span class="tag">5GX 체험존</span>
+                            <span class="tag">VR 체험존</span>
+                        </div>
+                        <!-- // .shop-tag -->
+                        <!-- .shop-map -->
+                        <div class="shop-map">
+                            <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:100px;left:100px;">
+                            <img src="/img/dummy/map.jpg" style="width:100%;" alt="임시이미지">
+                        </div>
+                        <!-- .shop-txt -->
+                        <div class="shop-txt">
+                            <ul>
+                                <li>
+                                    <dl class="type01">
+                                        <dt>주소</dt>
+                                        <dd>서울 서초구 신반포로 176, 1층 130호<br />(반포동, 센트럴시티빌딩)</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="type02">
+                                        <dt>연락처</dt>
+                                        <dd>02-554-4011<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="type01">
+                                        <dt>운영시간</dt>
+                                        <dd>평일 10:00~20:00</dd>
+                                        <dd>주말 11:00~17:00</dd>
+                                        <dd>공휴일 09:00~21:00</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="type03">
+                                        <dt>찾아오시는 길</dt>
+                                        <dd>
+                                            <ol>
+                                                <li>
+                                                    <strong>1. 도보</strong>
+                                                    <span>강남고속터미널(센트럴시티빌딩1층) 하차터미널 앞</span>
+                                                </li>
+                                                <li>
+                                                    <strong>2. 대중교통</strong>
+                                                    <span>지하철 3,7,9호선 고속터미널역 하차, 1층 하차장 이동</span>
+                                                </li>
+                                            </ol>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- // .shop-txt -->
+                    </div>
+                    <!-- // .shop-info -->
+                </div>
+                <!-- // cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

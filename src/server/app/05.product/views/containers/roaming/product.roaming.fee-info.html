@@ -1,0 +1,290 @@
+<%#
+* MenuName: T로밍 > 로로밍 상품 이용 안내
+* @file product.roaming.fee-info.html
+* @author Hyeryoun Lee
+* @since 2019.05.20
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '로밍 상품 이용 안내', svcInfo: svcInfo }) %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container rm-prd-info">
+            <div class="rm-info-top">
+                <h3 class="pt60"><img src="<%= CDN %>/img/product/rm-info-tx-top.png" alt="로밍을 넘어 baro의 시대"></h3>
+                <p class="rm-info-tx fs13 mt10">초[로밍] baro</p>
+                <p class="fs13 mt14">쉽고 편리하게 이용할 수 있는<br>로밍 서비스를 소개합니다.
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <h4 class="tit-type2">baro란?</h4>
+                <p class="article-type1 mt12">이용이 불편하고 데이터 사용이 부담됐던 로밍을 바로잡은, SK텔레콤의 새로운 로밍 브랜드입니다.</p>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <h5 class="tit-type2"><span>01</span> baro 통화</h5>
+                <p class="article-type1 mt12">SK텔레콤 고객님은 '기간'과 '데이터'만 선택하면 T전화로 baro 무료통화</p>
+                <div class="loaming-visual mt20">
+                    <img src="<%= CDN %>/img/product/rm-info-img1.png" alt="">
+                </div>
+                <strong class="article-type1 bk mt16 block">baro 통화란?</strong>
+                <p class="article-type1">해외에서 T전화를 이용해 고품질의 데이터 음성통화를 할 수 있는 서비스입니다. SK텔레콤 고객님이라면, baro 요금제에 가입하고 내 번호 그대로 통화할 수 있어요.</p>
+                <ul class="bt-slice mt16">
+                    <li class="bt-white2">
+                        <a href="/product/roaming/info/barocall">자세히 보기</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box noborder">
+                <h5 class="tit-type2"><span>02</span> baro 요금제</h5>
+                <p class="article-type1 mt12">baro 요금제는 글로벌 통합 로밍 요금제입니다. '기간'과 '데이터'만 결정하면 요금제 선택 완료.<br>나라 상관 없이 해외 나갈 땐 baro 요금제 하나면 끝!</p>
+                <div class="widget">
+                    <div class="widget-box toggle01">
+                        <ul class="representcharge-list">
+                            <li class="acco-box">
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <p class="text">내게 주는 선물 같은, 일주일의 여행이라면? </p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <div class="widget">
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list">
+                                                    <li data-url="/product/callplan?prod_id=NA00006489" class="fe-go-plan">
+                                                        <a href="/product/callplan?prod_id=NA00006489" type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title">baro 3GB</h5>
+                                                                <p class="info mt6">29,000원/7일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">3GB</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="bul-list type2 fs13 ml16">
+                                                    <li>만 18세~29세 이하 고객님은 데이터 1GB를 추가로 받을 수 있는 baro YT 4GB 요금제에 가입하세요.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <p class="text">누구나 꿈꾸는 한 달 동안의 여행이라면?</p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <div class="widget">
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list">
+                                                    <li data-url="/product/callplan?prod_id=NA00006493" class="fe-go-plan">
+                                                        <a href="/product/callplan?prod_id=NA00006493" type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title">baro 4GB</h5>
+                                                                <p class="info mt6">39,000원/30일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">4GB</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li data-url="/product/callplan?prod_id=NA00006497" class="fe-go-plan">
+                                                        <a href="/product/callplan?prod_id=NA00006497" type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title">baro 7GB</h5>
+                                                                <p class="info mt6">59,000원/30일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">7GB</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="bul-list type2 fs13 ml16">
+                                                    <li>만 18세~29세 이하 고객님은 데이터 1GB를 추가로 받을 수 있는 baro YT 5/8GB 요금제에 가입하세요.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <p class="text">짧은 여행을 계획하셨나요?</p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <div class="widget">
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list">
+                                                    <li data-url="/product/callplan?prod_id=NA00003196" class="fe-go-plan">
+                                                        <a href="/product/callplan?prod_id=NA00003196" type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title">baro OnePass 300</h5>
+                                                                <p class="info mt6">9,900원/1일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">300MB</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li data-url="/product/callplan?prod_id=NA00005049" class="fe-go-plan">
+                                                        <a href="/product/callplan?prod_id=NA00005049" type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title">baro OnePass 500</h5>
+                                                                <p class="info mt6">16,500원/1일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">500MB</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="bul-list type2 fs13 ml16">
+                                                    <li>기간형 상품은 한국 시간 기준 고객 지정 시각부터 24시간 이용 가능합니다.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <button role="button" aria-pressed="false" class="representcharge-info">
+                                    <p class="text">무제한 데이터를 원하시나요?</p>
+                                </button>
+                                <div class="productinfoscroll-box slide-nopd">
+                                    <div class="widget">
+                                        <div class="widget-box horizontal">
+                                            <div class="horizontal-slide slide-nopd">
+                                                <ul class="horizontal-list">
+                                                    <li data-url="/product/callplan?prod_id=NA00006487" class="fe-go-plan">
+                                                        <a type="button" class="product-info" href="/product/callplan?prod_id=NA00006486">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title ltitle">baro OnePass VIP <span>기간형</span></h5>
+                                                                <p class="info mt6">19,000원/1일<span class="block">(부가세 포함)</span></p>
+                                                            </div>
+                                                            <div class="type">
+                                                                <span class="blind">데이터</span>
+                                                                <span class="str">데이터 무제한</span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="bul-list type2 fs13 ml16">
+                                                    <li>데이터 무제한, 음성 30분, 문자 30건의 혜택을 누려보세요.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps-btm">
+                <h5 class="tit-type2"><span>03</span> baro Box</h5>
+                <p class="article-type1 mt12">여러 명이 함께 여행간다면? 해외에서 데이터를 나눠 쓰는 baro Box!</p>
+                <div class="loaming-visual mt20">
+                    <img src="<%= CDN %>/img/product/rm-info-img2.png" alt="">
+                </div>
+                <strong class="article-type1 bk mt16 block">baro Box란?</strong>
+                <p class="article-type1">전 세계 주요국에서 무선인터넷을 사용 할 수 있도록 T로밍 전용 Wi-Fi 기기를 임대해드리는 서비스입니다.</p>
+                <ul class="bt-slice mt16">
+                    <li class="bt-white2" id="inquire-btn">
+                        <a href="/product/roaming/fi/guide">자세히 보기</a>
+                    </li>
+                </ul>
+                <div class="rm-barobox-list">
+                    <ul>
+                        <li>
+                            <span class="tit">baro Box<br>일본, 미국, 캐나다</span>
+                            <span class="price"><strong>3,700원/일</strong>(부가세 포함)</span>
+                        </li>
+                        <li>
+                            <span class="tit">baro Box<br>아시아</span>
+                            <span class="price"><strong>4,700원/일</strong>(부가세 포함)</span>
+                        </li>
+                        <li>
+                            <span class="tit">baro Box<br>글로벌</span>
+                            <span class="price"><strong>7,700원/일</strong>(부가세 포함)</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="rm-barobox-gift mt20">
+                    <h6>baro Box 데이터 선물<br>프로모션</h6>
+                    <p class="mt16">baro Box를 대여할 때 등록한<br><strong>대표 회선(본인 명의)에</strong> LTE/3G 데이터<br><strong>300MB</strong>를 제공해드립니다.</p>
+                    <dl class="mt16">
+                        <dt><strong>이럴 때 이용하세요.</strong></dt>
+                        <dd class="mt8">
+                            <ol>
+                                <li>1. 함께 여행하는 일행과 잠시 떨어졌을 때</li>
+                                <li>2. 여행 중 일행과 다른 일정이 있을 때</li>
+                                <li>3. baro Box 배터리가 없을 때</li>
+                            </ol>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <h5 class="tit-type2"><span>04</span> baro를 프로모션으로 만나보세요!</h5>
+                <div class="loaming-visual mt20">
+                    <img src="<%= CDN %>/img/product/rm-info-img3.png" alt="">
+                </div>
+                <strong class="article-type1 bk mt16 block">baro 무료 체험 프로모션</strong>
+                <p class="article-type1">SK텔레콤 고객님이라면, 이제 데이터 로밍 차단 걱정은 NO! 지금 무료로 baro를 체험해보세요!</p>
+                <strong class="article-type1 bk mt20 block">프로모션 기간</strong>
+                <p class="article-type1">2019년 4월 2일(화) ~ 2019년 6월 30일(일)</p>
+                <strong class="article-type1 bk mt8 block">프로모션 혜택</strong>
+                <p class="article-type1">로밍 데이터 10MB(400kbps 이하 속도) 무료</p>
+                <strong class="article-type1 bk mt8 block">혜택 제공 횟수</strong>
+                <p class="article-type1">월 1회 제공</p>
+                <ul class="bul-list type2 fs13 mt4">
+                    <li>로밍 데이터 10MB로 T전화를 이용한 baro 통화를 약 20분 동안 무료로 이용하실 수 있습니다.</li>
+                    <li>SK텔레콤 고객님 중 해외 여행 시 로밍 요금제를 이용하지 않고, 로밍 데이터를 차단하지 않은 고객님 대상 프로모션입니다.</li>
+                </ul>
+                <ul class="bt-slice mt16">
+                    <li class="bt-white2" id="inquire-btn">
+                        <a href="/product/roaming/info/baropromotion">자세히 보기</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box">
+                <p class="article-type1">휴대폰/유심을 분실하거나 도난당했을 경우<br><strong class="article-type1 bk">T로밍 고객센터</strong>로 바로 연락주세요.</p>
+                <div class="rm-info-cs mt16">
+                    <a href="tel:+82-2-6343-9000" class="tel-num">+82-2-6343-9000</a>
+                    <p class="article-type1">(SK텔레콤 휴대폰에서 통화요금 무료, 연중무휴)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>
