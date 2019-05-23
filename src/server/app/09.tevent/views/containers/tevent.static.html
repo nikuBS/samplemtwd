@@ -6,12 +6,14 @@
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
-<%- include('./static/'+ htmlId + '.html'); %>
+    <div class="container">
+        <%- include('./static/'+ htmlId + '.html'); %>
+    </div>
 </body>
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.XtractorService($('body'));
+    new Tw.XtractorService($('.container'));
   });
 </script>
 <% include ../components/end.component.html %>

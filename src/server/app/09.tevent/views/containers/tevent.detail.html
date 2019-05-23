@@ -32,7 +32,7 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                  <div class="cont-box nogaps">
-                    <iframe src="<%= result.url %>" title="<%= result.prNm %>" frameborder="0" width="100%" height="<%= result.height %>"></iframe>
+                    <iframe id="event-iframe" src="<%= result.url %>" title="<%= result.prNm %>" frameborder="0" width="100%" height="<%= result.height %>"></iframe>
                  </div>
                 <!--// .cont-box -->
             </div>
@@ -45,6 +45,11 @@
 <script>
   $(document).ready(function () {
     // new Tw.TeventDetail($('.wrap'));
+    $('#event-iframe').load(function() {
+      var $iframe = $(this);
+      var contentsHeight = $iframe.contents().find('.container').height() + 'px';
+      $iframe.css('height', contentsHeight);
+    });
   });
 </script>
 <% include ../components/end.component.html %>
