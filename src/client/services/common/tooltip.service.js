@@ -219,5 +219,13 @@ Tw.TooltipService.prototype = {
       window.location.href = this._link;
       this._isLink = false;
     }
+  },
+  /**
+   * @function
+   * @desc tooltip contents를 제공
+   * @returns {*}
+   */
+  getContentList: function () {
+    return _.clone( this._contentList );
   }
 };

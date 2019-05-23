@@ -1187,10 +1187,12 @@ export const MYT_SUSPEND_COMPLETE_MSG = {
   CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
+  APPLY_LONGTERM: '접수',
   TYPE: {
     ALL: '걸기/받기 모두 정지',
     CALL: '걸기만 정지'
-  }
+  },
+  LONG_TERM_SUSPEND_WARNING: '접수하신 장기 일시정지 시작일자는 입증서류 확인 후<br>처리 시점에 따라 변경될 수 있습니다.'
 };
 
 export const BENEFIT_TBCOMBINATION_JOIN_STATUS = {
