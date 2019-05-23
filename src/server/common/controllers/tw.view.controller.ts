@@ -129,6 +129,8 @@ abstract class TwViewController {
    * @param userId
    */
   private login(req, res, next, path, tokenId, userId) {
+    this.logger.debug(this, '[@@@ tw.view.controller-login]');
+    this.logger.debug(this, '[@@@ tw.view.controller-login] isEmpty(tokenId) : ', FormatHelper.isEmpty(tokenId));
     if ( !FormatHelper.isEmpty(tokenId) ) {
       const state = req.query.stateVal || req.query.state;
       this.apiService.requestLoginTid(tokenId, state).subscribe((resp) => {
@@ -173,7 +175,10 @@ abstract class TwViewController {
    * @param path
    */
   private sessionCheck(req, res, next, path) {
+    this.logger.debug(this, '[@@@ tw.view.controller-sessionCheck]');
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+    this.logger.debug(this, '[@@@ tw.view.controller-sessionCheck] isEmpty(loginCookie) : ', FormatHelper.isEmpty(loginCookie));
+    this.logger.debug(this, '[@@@ tw.view.controller-sessionCheck] loginCookie : ', loginCookie);
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       this._logger.info(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
@@ -190,6 +195,7 @@ abstract class TwViewController {
    * @param res
    */
   private setChannel(req, res): Observable<any> {
+    this.logger.debug(this, '[@@@ tw.view.controller-setChannel]');
     const channel = BrowserHelper.isApp(req) ? CHANNEL_TYPE.MOBILE_APP : CHANNEL_TYPE.MOBILE_WEB;
     this.logger.info(this, '[set cookie]', channel);
     return this._loginService.setChannel(req, channel);
@@ -206,6 +212,7 @@ abstract class TwViewController {
    * @param childInfo
    */
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
+    this.logger.debug(this, '[@@@ tw.view.controller-getAuth]');
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
     this.loginService.setNoticeType(req, '').subscribe();
