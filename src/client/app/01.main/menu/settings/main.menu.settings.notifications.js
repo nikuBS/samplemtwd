@@ -14,6 +14,7 @@ Tw.MainMenuSettingsNotifications = function (rootEl) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
 
   this._termsAgreed = {
     twdAdRcvAgreeYn: false,
@@ -57,6 +58,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
       'click', '#fe-service-terms, #fe-recommend-terms, #fe-tplace-terms', $.proxy(this._onTermsClicked, this));
     this.$container.on('click', '#fe-go-device-noti', $.proxy(this._onDeviceNotiClicked, this));
     this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
+    this.$container.on('click', '#fe-tplace-list', $.proxy(this._onOpenTplaceListClick, this));
   },
 
   /**
@@ -298,5 +300,13 @@ Tw.MainMenuSettingsNotifications.prototype = {
     this._timer = setTimeout($.proxy(function () {
       this._kiddingCount = 0;
     }, this), 500);
+  },
+
+  /**
+   * @function
+   * @desc 대상 매장 보기 버튼 클릭시 - tplace 매장 리스트 팝업을 출력함.
+   */
+  _onOpenTplaceListClick: function(){
+    this._historyService.goLoad('/main/menu/settings/tplaces');
   }
 };
