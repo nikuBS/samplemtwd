@@ -66,6 +66,7 @@ Tw.ProductRoamingGuide.prototype = {
       this.$container.on('click', '#fe-rm-faq', $.proxy(this._goLoadFaq, this));                    // 자주하는 질문
       // this.$container.on('click', '.fe-roaming-button', $.proxy(this._goLoadRoamingGuide, this));
       this.$container.on('click', '#fe-rm-smart-guide', $.proxy(this._goDownLoadGuide, this, 'smart')); // 로밍안내서 다운받기 스마트폰
+      this.$container.on('click', '#fe-rm-smart-partner-guide', $.proxy(this._goDownLoadGuide, this, 'smart-partner')); // 로밍안내서 다운받기 스마트폰 제휴 사업자
       this.$container.on('click', '#fe-rm-phone-guide', $.proxy(this._goDownLoadGuide, this, 'phone')); // 로밍안내서 다운받기 일반폰
       this.$container.on('click', '#fe-rm-rental-guide', $.proxy(this._goDownLoadGuide, this, 'rental')); // 로밍안내서 다운받기 임대로밍
   },
@@ -76,8 +77,10 @@ Tw.ProductRoamingGuide.prototype = {
    * @private
    */
   _goDownLoadGuide: function (type) {
-    if(type === 'smart') {  // 스마트폰 자동로밍 가이드
+    if(type === 'smart') {  // 스마트폰 로밍 요금제 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_GUIDE,'');
+    } else if(type === 'smart-partner'){    // 스마트폰 제휴 사업자 가이드
+      Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.SMART_PARTNER_GUIDE,'');
     } else if(type === 'phone'){    // 일반폰 자동로밍 가이드
       Tw.CommonHelper.openUrlExternal(Tw.ROAMING_DOWNLOAD_URL.PHONE_GUIDE,'');
     } else {    // 임대로밍 자동로밍 가이드
