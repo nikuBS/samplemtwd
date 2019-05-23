@@ -29,9 +29,8 @@ class MembershipBenefitBrandBenefit extends TwViewController {
     // 미로그인 상태 & 로그인이 필요한 경우
     if ((svcInfo ? 'Y' : 'N') === 'N' && needLogin !== -1) {
         const path = req.baseUrl + (req.path !== '/' ? req.path : '');
-        const queryStr = ParamsHelper.setQueryParams(req.query).replace(/\&/gi, 'urlQuery');
 
-        res.render('error.login-block.html', { target: path + queryStr });
+        res.render('error.login-block.html', { target: path + ParamsHelper.setQueryParams(req.query) });
     } 
 
     if (FormatHelper.isEmpty(brandCd)) {

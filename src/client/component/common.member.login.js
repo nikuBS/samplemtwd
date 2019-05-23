@@ -35,6 +35,9 @@ Tw.CommonMemberLogin.prototype = {
    * @private
    */
   _init: function (target) {
+    if ( /&amp;/.test(target) ) {
+      target = target.replace(/&amp;/gi, '&');
+    }
     this._apiService.sendNativeSession('');
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) +
       '&type=reload', $.proxy(this._onNativeLogin, this, target));
