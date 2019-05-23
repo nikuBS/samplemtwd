@@ -5370,3 +5370,88 @@ body.apphome .main-membershop-box {
 
 .inputbox .input input[type=number] {
   padding-right: 0; }
+
+/* 190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */
+/*tod-mls-comp{}*/
+.tod-mls-hd{padding: 1.75rem 1.5rem 0;}
+.tod-mls-hd .i-beta{display: inline-block; width: 1.563rem; height: 0.75rem; margin-left: 0.375rem; line-height: 1;} 
+.tod-mls-hd .i-beta img{width: 100%; vertical-align: middle; margin-top: 2px;}
+.tod-mls-hd .sp-tit{display: block; font-size: 1rem;}
+.tod-mls-hd .sp-date{display: block; font-size: 0.875rem;color: #959595;}
+
+.tod-mls-ft{position: relative; min-height: 3.25rem; background: linear-gradient(0.25turn, #f7635c, #f75f6b, #f65b7e); text-align: center;}
+
+.tod-mls-ft .tod-mls-load,
+.tod-mls-ft .tod-mls-link{position: absolute; left:0; top: 0; width: 100%;}
+
+.tod-mls-ft .tod-mls-load,
+.tod-mls-ft .link-plan{
+  display: inline-block; 
+  width: 100%; 
+  padding: 1.125rem 0; 
+  font-size: 1rem; 
+  line-height:1; 
+  color: #fff; 
+  text-align: center; box-sizing: border-box;}
+.tod-mls-ft .tod-mls-link{display:none;}
+.tod-mls-cont{position: relative; width: 100%; min-height: 12.2rem;}
+.tod-mls-cont .tod-mls-card{position: absolute; left:0; top: 0; display: none;}
+.tod-mls-cont .tod-mls-card.intro-area-1{display:block;}
+.tod-mls-cont .tod-mls-card.recomCase-area{position: relative;}
+
+.tod-mls-msg-bx{width: auto; min-height: 12.2rem; padding: 1.25rem 1.5rem 0; box-sizing: border-box;}
+.tod-mls-msg-bx .icon-wrap{display: block; width: 3.5rem; height: 3.5rem;}
+.tod-mls-msg-bx .i-img > img{ width: 100%;}
+.tod-mls-msg-bx .txt-wrap{margin-top: 0.625rem; font-size: 1.5rem; line-height: 1.75rem;}
+@media all and (max-width:360px) {
+    .tod-mls-msg-bx .txt-wrap {
+        font-size: 1.45rem;
+    }
+}
+
+@media all and (max-width:320px) {
+    .tod-mls-msg-bx .txt-wrap {
+        font-size: 1.3rem;
+    }
+}
+.tod-mls-msg-bx .sp-name,
+.tod-mls-msg-bx .sp-desc{display: inline-block;}
+
+/* .tod-mls-comp - loading */
+.tod-cir_wrap{display:flex; justify-content: center; align-items: center}
+.tod-cir_wrap .cir{
+    display: inline-block; width:0.5rem; height:0.5rem; border-radius:100%; background:#fff; margin:5px; 
+    -webkit-animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite; 
+    -webkit-animation-direction:alternate ; 
+    -webkit-animation-timing-function:ease-in-out; 
+    -webkit-transform-origin:50%;
+    animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite; 
+    animation-direction:alternate ; 
+    animation-timing-function:ease-in-out; 
+    transform-origin:50%;
+}
+.tod-cir_wrap .cir:nth-child(1){-webkit-animation-delay: 0s; animation-delay: 0s}
+.tod-cir_wrap .cir:nth-child(2){-webkit-animation-delay: 0.1s; animation-delay: 0.1s}
+.tod-cir_wrap .cir:nth-child(3){-webkit-animation-delay: 0.2s; animation-delay: 0.2s}
+.tod-cir_wrap.stop .cir{-webkit-animation-play-state: paused;animation-play-state: paused}
+
+@keyframes tod-cirmove{
+    from{transform:scale(1)}
+    to{transform:scale(1.8)}
+}
+
+/* .tod-mls-comp - slick Custom */
+.tod-mls-card .section-swiper-box .slider-box .slick-dots {top: -38px;}
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active span, 
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active button{
+    background: #f76252;border-color: #f76252;
+}
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li span, 
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li button{
+    background: #d8d8d8;border-color: #d8d8d8;
+}
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active {margin-top: 0rem;}
+@media all and (max-width:320px) {
+    .tod-mls-card .section-swiper-box .slider-box .slick-dots li {padding: 3px;}
+}
+/* //190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */  
