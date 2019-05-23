@@ -1,0 +1,66 @@
+<%#
+* @file main.menu.settings.tplaces.html
+* @author junho kwon (yamanin1@partner.sk.com)
+* @since 2018.09.28
+* HO_04_01_02_03
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div class="wrap">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup"><!-- 2019.03.20 h60 삭제 -->
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: '대상 매장', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+				<div class="container">
+					<hr class="cont-sp type1" aria-hidden="true">
+
+					<!-- cont-box -->
+					<div class="cont-box nogaps-hoz">
+						<!-- .shop-info -->
+						<div class="shop-info">
+							<!-- .shop-txt -->
+							<div class="shop-txt">
+								<ul id="fe-list">
+									<li>
+										<dl class="type02 fe-list" value="D13965-0182">
+											<dt>대교대리점 Tplace 종각점</dt>
+											<dd>서울 종로구 우정국로 6, 1층 (관철동,SK텔레콤)<br>(서울 종로구 관철동 서울 종로구 관철동)
+												<a class="bt-tel" href="tel:02-6402-0040"><span role="img" class="blind">매장으로 전화하기</span></a></dd>
+										</dl>
+									</li>
+								</ul>
+							</div>
+							<!-- // .shop-txt -->
+						</div>
+						<!-- // .shop-info -->
+					</div>
+					<!-- // cont-box -->
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps noborder none">
+						<div class="bt-more bg-none">
+							<button role="button">더 보기</button>
+						</div>
+					</div>
+					<!-- // .cont-box -->
+				</div>
+			</div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MainMenuSettingsTplaces($('.wrap'));
+  });
+</script>
+<% include ../../../components/end.component.html %>
