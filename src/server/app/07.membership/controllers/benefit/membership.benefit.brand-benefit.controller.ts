@@ -11,13 +11,30 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import ParamsHelper from '../../../../utils/params.helper';
 
 class MembershipBenefitBrandBenefit extends TwViewController {
+
+  // 로그인이 필요한 category 및 brand code 정의
+  private needLoginList = [
+    {catCd : '49', brandCd : '2012003539'}
+  ];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    if (FormatHelper.isEmpty(req.query.brandCd)) {
+    const brandCd = req.query.brandCd;
+    const needLogin = this.needLoginList.findIndex(data => ((data.catCd === req.query.cateCd && data.brandCd === req.query.brandCd)));
+    
+    // 미로그인 상태 & 로그인이 필요한 경우
+    if ((svcInfo ? 'Y' : 'N') === 'N' && needLogin !== -1) {
+        const path = req.baseUrl + (req.path !== '/' ? req.path : '');
+        const queryStr = ParamsHelper.setQueryParams(req.query).replace(/\&/gi, 'urlQuery');
+
+        res.render('error.login-block.html', { target: path + queryStr });
+    } 
+
+    if (FormatHelper.isEmpty(brandCd)) {
       this.error.render(res, {
         code: '',
         msg: 'not found brand code',
@@ -26,8 +43,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
       });
       return;
     }
-
-    const brandCd = req.query.brandCd;    // '2012001524' 파리바게트
 
     const param = {
       brandCd : brandCd
