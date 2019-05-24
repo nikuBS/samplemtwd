@@ -15,7 +15,7 @@
  * @param actRepYn
  * @constructor
  */
-Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn) {
+Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn, mbrNm) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -33,6 +33,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
   this._targetDataLink = '';
   this._membershipBanner = null;
   this._isActRep = actRepYn === 'Y';
+  this.$elArrMlsCard = [];
+  this.mlsLoadingStaus = [];
+
+  this.mbrNm = mbrNm || '';
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -137,6 +141,8 @@ Tw.MainHome.prototype = {
 
     this._cachedSmartCard();
     this._makeBarcode();
+    this._cachedMlsCard();
+
   },
 
   /**
@@ -1413,6 +1419,12 @@ Tw.MainHome.prototype = {
         this._initSmartCard(index);
       }
     }, this));
+
+    _.map(this.$elArrMlsCard, $.proxy(function (mls, index) {
+      if ( this._elementScrolled(mls) ) {
+        this._initMlsCard(index);
+      }
+    }, this));
   },
 
   /**
@@ -1884,7 +1896,7 @@ Tw.MainHome.prototype = {
     Tw.Logger.error(error);
     // 홈화면에서 alert 제거
     // this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
-    new Tw.XtractorService(this.$container);
+    //new Tw.XtractorService(this.$container);
   },
 
   /**
@@ -2038,5 +2050,234 @@ Tw.MainHome.prototype = {
     } else {
       this._historyService.replaceURL('#store');
     }
+  },
+
+  /**
+   * @function
+   * @desc MLS 객체 변수 초기화
+   * @private
+   */
+  _cachedMlsCard: function () {
+    for ( var i = 0; i < 5; i++ ) {
+      var $mlsCard = this.$container.find('.fe-mls-' + i);
+      if ( $mlsCard.length > 0 ) {
+        this.$elArrMlsCard.push($mlsCard);
+        this.mlsLoadingStaus.push(false);
+      }
+    }
+  },
+
+  /**
+   * @function
+   * @desc 스크롤 이동된 MLS 데이터 요청
+   * @param index
+   * @private
+   */
+  _initMlsCard: function (index) {
+    this._getMlsCard(index);
+  },
+
+  /**
+   * @function
+   * @desc MLS 데이터 요청
+   * @param index
+   * @private
+   */
+  _getMlsCard: function (index) {
+    if ( index >= 0 && index < this.mlsLoadingStaus.length && !this.mlsLoadingStaus[index] ) {
+      var experimentExpsScrnId = this.$elArrMlsCard[index].data('mls-id');
+      this._drawMlsCard(experimentExpsScrnId, index);
+      this.mlsLoadingStaus[index] = true;
+    }
+  },
+
+  /**
+   * @function
+   * @desc MLS 분기 처리
+   * @param experimentExpsScrnId
+   * @param index
+   * @private
+   */
+  _drawMlsCard: function (experimentExpsScrnId, index) {
+    switch ( experimentExpsScrnId ) {
+      case Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS:
+        this._getRecommendProdsData(this.$elArrMlsCard[index]);
+        break;
+      default:
+        Tw.Logger.warn('Not Support');
+    }
+  },
+
+  /**
+   * @function
+   * @desc 내게 맞는 요금제 추천 MLS 요청
+   * @private
+   */
+  _getRecommendProdsData: function(element) {
+
+    /*
+    var storeRecommendProds = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS));
+    
+    if ( Tw.FormatHelper.isEmpty(storeRecommendProds) 
+          || Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() 
+          || this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
+    */
+        this._apiService.request(
+          Tw.API_CMD.BFF_10_0178, 
+          {
+            experimentExpsScrnId: Tw.EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
+            prcplnRcTyp: 'GNRL', 
+            prcplnChlTyp: Tw.BrowserHelper.isApp() ? 'MOBILE' : 'WEB'
+          })
+        .done($.proxy(this._successRecommendProdsData, this, element))
+        .fail($.proxy(this._failRecommendProdsData, this));
+
+    /*
+    } else {
+      this._drawRecommendProd(element, storeRecommendProds.data);
+    }
+    */
+  },
+
+  /**
+   * @function
+   * @desc 내게 맞는 요금제 추천 MLS 데이터 처리
+   * @param resp
+   * @private
+   */
+  _successRecommendProdsData: function (element, resp) {
+
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var storeData = {
+        data: resp,
+        expired: Tw.DateHelper.add5min(new Date()),
+        svcMgmtNum: this._svcMgmtNum
+      };
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODUCT, JSON.stringify(storeData));
+
+      if(!Tw.FormatHelper.isEmpty(resp.result)) {
+        this._drawRecommendProduct(element, resp);
+      }
+    }
+  },
+
+  /**
+   * @function
+   * @desc 내게 맞는 요금제 추천 MLS 데이터 실패 처리
+   * @param error
+   * @private
+   */
+  _failRecommendProdsData: function(error) {
+    Tw.Logger.error(error);
+  },
+
+  /**
+   * @function
+   * @desc 내게 맞는 요금제 추천 MLS 데이터 렌더링
+   * @param data
+   * @private
+   */
+  _drawRecommendProduct: function (element, resp) {
+    $.ajax(Tw.Environment.cdn + '/hbs/recommend_prods.hbs', {})
+      .done($.proxy(this._handleRecommendProds, this, element, resp.result.items[0].prodId, this._parseRecommendProdsData(resp)))
+      .fail($.proxy(null, this, null));
+  },
+
+  /**
+   * @function
+   * @desc 내게 맞는 요금제 추천 MLS 데이터 파싱
+   * @param resp
+   * @returns {*}
+   * @private
+   */
+  _parseRecommendProdsData: function (resp) {
+
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+
+      var cdn = Tw.Environment.cdn;
+      var item = resp.result.items[0];
+      var list = [];
+
+      _.map(item.props, $.proxy(function (card) {
+
+        if(card.reasonCode !== '#') {
+          var addInfo = {
+            prodId: item.prodId, 
+            prodNm: item.prodNm,
+            prodType: item.prodType,
+            hasData: card.reasonTyp === 'data'? true : false,
+            hasInsurance: card.reasonTyp === 'insurance'? true : false,
+            hasMembership: card.reasonTyp === 'membership'? true : false,
+            hasMusic: card.reasonTyp === 'music'? true : false,
+            hasVideo: card.reasonTyp === 'video'? true : false,
+            mbrNm: this.mbrNm, 
+            priority: parseInt(Tw.RECOMMEND_PRODS_PRIORITY[card.reasonTyp], 10),
+            CDN: cdn,
+          }
+
+          addInfo[card.reasonCode] = true;
+          card.reasonPreText = card.reasonPreText === '#' ? '' : card.reasonPreText;
+          card.reasonPostText = card.reasonPostText === '#' ? '' : card.reasonPostText;
+
+          //card = _.extend(addInfo, card);
+          list.push(_.extend(addInfo, card));
+        }
+
+      }, this));
+
+      return list.sort(function(a, b) {
+        return a.priority - b.priority;
+      });
+
+    } else {
+      return {};
+    }
+  },
+
+  /**
+   * @desc after get hbs
+   * @param {string} element
+   * @param {string} result
+   * @param {function} callback excutable code after load banners
+   * @param {string} hbs 
+   * @private
+   */
+  _handleRecommendProds: function(element, prodId, result, hbs) { 
+
+    if ( !Tw.FormatHelper.isEmpty(result) ) {
+      this._recommendProdsTempl = Handlebars.compile(hbs);
+      element.find('.intro-area-1').after(this._recommendProdsTempl({result: result, CDN:Tw.Environment.cdn}));
+      element.find('.tod-mls-link').children('.link-plan').attr('href', '/product/callplan?prod_id=' + prodId);
+
+      var widget = $(element).find('.slider7');
+      $(widget).each(function(){
+        var $parent = $(this).closest('.section-box'),
+            $card = $parent.find('.tod-mls-card'),
+            time = 2000;
+
+        if ($parent.data('action') === undefined) {
+          $parent.data('action', true);
+          $card.eq(1).show();
+          $('.tod-mls-slider.slider').slick({
+              dots: true,
+              infinite: true,
+              speed: 300,
+              slidesToShow: 1,
+              adaptiveHeight: true
+          });
+          $card.eq(1).hide();
+
+          $card.eq(0).fadeOut(time);
+          $card.eq(1).fadeIn(time);
+
+          $('.tod-mls-ft > div').eq(0).fadeOut(time);
+          $('.tod-mls-ft > div').eq(1).fadeIn(time);
+        }
+      });
+
+    } else {
+      element.hide();
+    }
+    this._resetHeight();
   }
 };
