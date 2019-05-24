@@ -850,6 +850,49 @@ skt_landing.widgets = {
       //skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
+    /**
+     * @summary .slider7 클래스에 대한 slick, slick.beforeChange 이벤트 바인딩
+     * @description
+     * - {@link http://127.0.0.1:5500/html/sprint/HO_01_01.html}
+     * - span > a 태그 변경시 slider01.html 내의 주석 참조 - @190417 접근성 대비 테스트
+     * @function
+     * @param {Object} ta - selector
+     * @example
+     * skt_landing.widgets.widget_slider7();
+     */
+    widget_slider7: function (ta) {
+        var widget = ta ? $(ta).find('.slider7') : $('.slider7');
+        $(widget).each(function(){
+            var $parent = $(this).closest('.section-box'),
+                $card = $parent.find('.tod-mls-card'),
+                actionTop = $parent.offset().top - ($parent.height() / 1.2),
+                time = 2000;
+
+            $(window).on('scroll', function () {
+              if ($(this).scrollTop() > actionTop && $parent.data('action') === undefined) {
+                $parent.data('action', true);
+                $card.eq(0).fadeOut(time);
+                $card.eq(1).fadeIn(time, function () {
+                  // 슬라이더 설정
+                  $card.eq(2).show();
+                  $('.tod-mls-slider.slider').slick({
+                      dots: true,
+                      infinite: true,
+                      speed: 300,
+                      slidesToShow: 1,
+                      adaptiveHeight: true
+                  });
+                  $card.eq(2).hide();
+                  $card.eq(1).stop(true, true).fadeOut(time);
+                  $card.eq(2).stop(true, true).fadeIn(time);
+
+                  $('.tod-mls-ft > div').eq(0).fadeOut(time);
+                  $('.tod-mls-ft > div').eq(1).fadeIn(time);
+                });
+              }
+            });
+        });
+    },  
   /**
    * @summary 아코디언
    * @description

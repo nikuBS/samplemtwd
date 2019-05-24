@@ -35169,3 +35169,10 @@ body.apphome .section-box {
 
 /* 190508_[#7582/OP002-237] T앱 */
 .app-list-new.tod-new-align .app-list-bottom ul{-webkit-box-pack:start; -ms-flex-pack:start ; justify-content:flex-start; }
+
+/* 190522 추가 [OP002-375] */
+.with-payment-line .list-comp-input .select-list > li .comp-list-layout .layout-text .stext .tod-text1{padding-left:0.1875rem;font-size:0.9375rem;font-weight:normal;color:#f76252}
+.with-payment-line .tod-total-payment{padding:1.4375rem 1rem;border-top:1px solid #e1e1e1;text-align:right}
+.with-payment-line .tod-total-payment .tod-title{display:block;font-size:0.8125rem}
+.with-payment-line .tod-total-payment .tod-price-area{position:relative;font-size:0.9375rem;font-weight:bold}
+.with-payment-line .tod-total-payment .tod-price{font-size:1.875rem}

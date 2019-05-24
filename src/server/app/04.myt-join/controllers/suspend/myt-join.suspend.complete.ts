@@ -31,7 +31,7 @@ class MyTJoinSuspendComplete extends TwViewController {
     let duration = '';
     switch ( params.command ) {
       case 'longterm': // 장기 일시정지 신청
-        data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
+        data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY_LONGTERM;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
 
@@ -48,6 +48,7 @@ class MyTJoinSuspendComplete extends TwViewController {
             .replace('{DURATION}', duration)
             .replace('{SVC_INFO}', FormatHelper.conTelFormatWithDash(params.svcNum));
         }
+        data['desc'] += '<br><br>' + MYT_SUSPEND_COMPLETE_MSG.LONG_TERM_SUSPEND_WARNING;
         break;
 
       case 'resuspend': // 장기 일시정지 재신청
@@ -79,7 +80,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         break;
     }
     return data;
-  };
+  }
 }
 
 export default MyTJoinSuspendComplete;

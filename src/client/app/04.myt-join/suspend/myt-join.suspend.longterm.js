@@ -369,6 +369,28 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    * @desc 장기일시정지 요청
    */
   _requestSuspend: function () {
+    //[OP002-692] 장기일시정지 안내 TIP 팝업 사용
+    var tooltip =  _.find( Tw.Tooltip.getContentList() || [], { mtwdTtipId: 'MS_03_05_03_tip_03' });
+    if(!_.isEmpty(tooltip)) {
+      this._popupService.open({
+          url: '/hbs/',
+          hbs: 'popup',
+          'title': tooltip.ttipTitNm,
+          'btn-close': 'btn-tooltip-close tw-popup-closeBtn',
+          'title_type': 'tit-tooltip',
+          'cont_align': 'tl font-only-black',
+          'contents': tooltip.ttipCtt,
+          'tooltip': 'tooltip-pd'
+        },
+        null, $.proxy(this._onPopupClose, this), null, this.$btSuspend
+      );
+    }
+  },
+  /**
+   * @function
+   * @desc 신청 툴팁팝업 close callback
+   */
+  _onPopupClose: function(){
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
       .done($.proxy(this._onSuccessRequest, this))
       .fail($.proxy(this._onError, this));
