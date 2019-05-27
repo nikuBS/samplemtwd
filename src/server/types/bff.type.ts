@@ -638,5 +638,3 @@ export const MYT_SUSPEND_REASON_CODE = {
   SEMI_MILITARY: '27' // 군입대(현역외)
 };
 
-
-export const MYT_SUSPEND_MILITARY_RECEIVE_CD = ['5000341', '5000342', '5000349', '5000350' ];
