@@ -233,20 +233,20 @@ Tw.MyTJoinSuspendStatus.prototype = {
     var popup = {};
     var count = 0;
 
-    if ( this._params.progress.receiveCd === '5000341' || this._params.progress.receiveCd === '5000342' ) {
-      popup = {
-        content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
-        title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
-        hash: 'tip'
-      };
-      count = 2;
-    } else {
-      popup = {
-        content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
-        title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
-        hash: 'tip'
-      };
-      count = 1;
+    if ( Tw.MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(this._params.progress.receiveCdreceiveCd ) !== -1) {
+        popup = {
+          content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
+          title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
+          hash: 'tip'
+        };
+        count = 2;
+      } else {
+        popup = {
+          content: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TIP,
+          title: Tw.MYT_JOIN_SUSPEND.LONG.ABROAD.TITLE,
+          hash: 'tip'
+        };
+        count = 1;
     }
     this._openCommonFileDialog(count, popup);
   },
