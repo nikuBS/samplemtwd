@@ -247,10 +247,10 @@ Tw.MyTFareBillCommon.prototype = {
     cloneNode.attr('id', 'fe-' + index);
 
     cloneNode.find('.fe-svc-info').text($target.find('.fe-svc-info').text());
-    cloneNode.find('.fe-money').text(Tw.FormatHelper.addComma($target.find('.fe-money').data('value'))); // 수정필요
+    cloneNode.find('.fe-money').text(Tw.FormatHelper.addComma($target.find('.fe-money').data('value')));
     var _invDt = $target.find('.fe-inv-dt').data('value');
     cloneNode.find('.fe-inv-dt').text(
-      Tw.DateHelper.getShortDateWithFormatAddByUnit(_invDt, 1, 'month', 'YYYY.M.', 'YYYYMMDD')); // 수정필요
+      Tw.DateHelper.getShortDateWithFormatAddByUnit(_invDt, 1, 'month', 'YYYY.M.', 'YYYYMMDD'));
 
     $layer.find('.fe-selected-line').append(cloneNode);
   },
