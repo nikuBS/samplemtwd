@@ -850,7 +850,7 @@ skt_landing.widgets = {
       //skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
-    /**
+  /**
      * @summary .slider7 클래스에 대한 slick, slick.beforeChange 이벤트 바인딩
      * @description
      * - {@link http://127.0.0.1:5500/html/sprint/HO_01_01.html}
@@ -871,28 +871,25 @@ skt_landing.widgets = {
             $(window).on('scroll', function () {
               if ($(this).scrollTop() > actionTop && $parent.data('action') === undefined) {
                 $parent.data('action', true);
-                $card.eq(0).fadeOut(time);
-                $card.eq(1).fadeIn(time, function () {
-                  // 슬라이더 설정
-                  $card.eq(2).show();
-                  $('.tod-mls-slider.slider').slick({
-                      dots: true,
-                      infinite: true,
-                      speed: 300,
-                      slidesToShow: 1,
-                      adaptiveHeight: true
-                  });
-                  $card.eq(2).hide();
-                  $card.eq(1).stop(true, true).fadeOut(time);
-                  $card.eq(2).stop(true, true).fadeIn(time);
-
-                  $('.tod-mls-ft > div').eq(0).fadeOut(time);
-                  $('.tod-mls-ft > div').eq(1).fadeIn(time);
+                $card.eq(1).show();
+                $('.tod-mls-slider.slider').slick({
+                    dots: true,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 1,
+                    adaptiveHeight: true
                 });
+                $card.eq(1).hide();
+
+                $card.eq(0).fadeOut(time);
+                $card.eq(1).fadeIn(time);
+
+                $('.tod-mls-ft > div').eq(0).fadeOut(time);
+                $('.tod-mls-ft > div').eq(1).fadeIn(time);
               }
             });
         });
-    },  
+    },
   /**
    * @summary 아코디언
    * @description

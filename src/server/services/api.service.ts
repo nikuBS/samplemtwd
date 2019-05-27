@@ -320,8 +320,10 @@ class ApiService {
    * @param type
    */
   private requestLogin(command, params, type): Observable<any> {
+    this.logger.debug(this, '[@@@ api.service-requestLogin]');
     return this.request(command, params)
       .switchMap((resp) => {
+        this.logger.debug(this, '[@@@ api.service-requestLogin] resp.code : ', resp.code);
         if ( resp.code === API_CODE.CODE_00 ) {
           return Observable.combineLatest([
             this.loginService.setSvcInfo(this.req, this.res, {
@@ -520,6 +522,7 @@ class ApiService {
    * @param state
    */
   public requestLoginTid(token: string, state: string): Observable<any> {
+    this.logger.debug(this, '[@@@ api.service-requestLoginTid]');
     return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
   }
 

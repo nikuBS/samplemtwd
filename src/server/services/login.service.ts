@@ -24,6 +24,7 @@ class LoginService {
    * @param req
    */
   public sessionGenerate(req): Observable<any> {
+    this.logger.debug(this, '[@@@ login.service-sessionGenerate]');
     return Observable.create((observer) => {
       req.session.regenerate((error) => {
         this.logger.info(this, '[Session Generate]', error);
@@ -38,6 +39,8 @@ class LoginService {
    * @param req
    */
   public getSessionId(req) {
+    this.logger.debug(this, '[@@@ login.service-getSessionId]');
+    this.logger.debug(this, '[@@@ login.service-getSessionId]] req.session.id : ', req.session.id);
     return req.session.id;
   }
 
@@ -46,7 +49,11 @@ class LoginService {
    * @param req
    */
   public isLogin(req): boolean {
+    this.logger.debug(this, '[@@@ login.service-isLogin]');
+    this.logger.debug(this, '[@@@ login.service-isLogin] isEmpty(req.session) : ', FormatHelper.isEmpty(req.session));
     if ( !FormatHelper.isEmpty(req.session) ) {
+      this.logger.debug(this, '[@@@ login.service-isLogin] isEmpty(req.session.svcInfo) : ', FormatHelper.isEmpty(req.session.svcInfo));
+      this.logger.debug(this, '[@@@ login.service-isLogin] isEmpty(req.session.serverSession) : ', FormatHelper.isEmpty(req.session.serverSession));
       return !FormatHelper.isEmpty(req.session.svcInfo) && !FormatHelper.isEmpty(req.session.serverSession);
     }
     return false;
@@ -59,6 +66,9 @@ class LoginService {
    * @param value
    */
   public setCookie(res, key: string, value: string) {
+    this.logger.debug(this, '[@@@ login.service-setCookie]');
+    this.logger.debug(this, '[@@@ login.service-setCookie] key : ', key);
+    this.logger.debug(this, '[@@@ login.service-setCookie] value : ', value);
     res.cookie(key, value);
   }
 
@@ -68,6 +78,9 @@ class LoginService {
    * @param key
    */
   public getCookie(req, key: string) {
+    this.logger.debug(this, '[@@@ login.service-getCookie]');
+    this.logger.debug(this, '[@@@ login.service-getCookie] key : ', key);
+    this.logger.debug(this, '[@@@ login.service-getCookie] req.cookies[key] : ', req.cookies[key]);
     return req.cookies[key];
   }
 
@@ -77,8 +90,17 @@ class LoginService {
    * @param req
    */
   public getSvcInfo(req): any {
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo]');
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] req.xtvidCookie : ', req.cookies['XTVID']);
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] req.xtlidCookie : ', req.cookies['XTLID']);
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] req.xtloginidCookie : ', req.cookies['XTLOGINID']);
     const request = req; // || this.request;
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] request.xtvidCookie : ', request.cookies['XTVID']);
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] request.xtlidCookie : ', request.cookies['XTLID']);
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] request.xtloginidCookie : ', request.cookies['XTLOGINID']);
     // this.logger.debug(this, '[getSvcInfo]', request.session);
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] isEmpty(request.session) : ', FormatHelper.isEmpty(request.session));
+    this.logger.debug(this, '[@@@ login.service-getSvcInfo] isEmpty(request.session.svcInfo) : ', FormatHelper.isEmpty(request.session.svcInfo));
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
       this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
       let result = null;
@@ -99,10 +121,14 @@ class LoginService {
    * @param svcInfo
    */
   public setSvcInfo(req, res, svcInfo: any): Observable<any> {
+    this.logger.debug(this, '[@@@ login.service-setSvcInfo]');
     return Observable.create((observer) => {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
+      this.logger.debug(this, '[@@@ login.service-setSvcInfo] setXtractorCookie 호출 직전');
       this.setXtractorCookie(req, res, svcInfo);
 
+      this.logger.debug(this, '[@@@ login.service-setSvcInfo] isEmpty(req.session.svcInfo) : ', FormatHelper.isEmpty(req.session.svcInfo));
+      
       if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
         req.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
@@ -121,6 +147,7 @@ class LoginService {
    * @param res
    */
   public clearXtCookie(res): any {
+    this.logger.debug(this, '[@@@ login.service-clearXtCookie]');
     res.clearCookie(COOKIE_KEY.XTLID);
     res.clearCookie(COOKIE_KEY.XTLOGINID);
     res.clearCookie(COOKIE_KEY.XTLOGINTYPE);
@@ -135,6 +162,8 @@ class LoginService {
    * @param svcInfo
    */
   private setXtractorCookie(req, res, svcInfo: any): any {
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie]');
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(req.session.svcInfo) : ', FormatHelper.isEmpty(req.session.svcInfo));
     if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
       return;
     }
@@ -142,23 +171,33 @@ class LoginService {
     const currentXtInfo = req.session.svcInfo.xtInfo || {},
       xtInfo: any = {};
 
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(currentXtInfo.XTLID) : ', FormatHelper.isEmpty(currentXtInfo.XTLID));
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(svcInfo.svcMgmtNum) : ', FormatHelper.isEmpty(svcInfo.svcMgmtNum));
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(currXtInfo.XTLOGINID) : ', FormatHelper.isEmpty(currentXtInfo.XTLOGINID));
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(svcInfo.userId) : ', FormatHelper.isEmpty(svcInfo.userId));
     if ( FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       xtInfo.XTLID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
       res.cookie(COOKIE_KEY.XTLID, xtInfo.XTLID);
+      this.logger.debug(this, '[@@@ login.service-setXtractorCookie] xtInfo.XTLID : ', xtInfo.XTLID);
     }
 
     if ( !FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       xtInfo.XTUID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
       res.cookie(COOKIE_KEY.XTUID, xtInfo.XTUID);
+      this.logger.debug(this, '[@@@ login.service-setXtractorCookie] xtInfo.XTUID : ', xtInfo.XTUID);
     }
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTLOGINID) && !FormatHelper.isEmpty(svcInfo.userId) ) {
       xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
       res.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
+      this.logger.debug(this, '[@@@ login.service-setXtractorCookie] xtInfo.XTLOGINID : ', xtInfo.XTLOGINID);
     }
 
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(currentXtInfo.XTSVCGR) : ', FormatHelper.isEmpty(currentXtInfo.XTSVCGR));
+    this.logger.debug(this, '[@@@ login.service-setXtractorCookie] isEmpty(svcInfo.svcGr) : ', FormatHelper.isEmpty(svcInfo.svcGr));
     if ( FormatHelper.isEmpty(currentXtInfo.XTSVCGR) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       xtInfo.XTSVCGR = svcInfo.svcGr;
+      this.logger.debug(this, '[@@@ login.service-setXtractorCookie] xtInfo.XTSVCGR : ', xtInfo.XTSVCGR);
     }
 
     req.session.svcInfo.xtInfo = xtInfo;
@@ -241,6 +280,9 @@ class LoginService {
    * @param req
    */
   public getServerSession(req): string {
+    this.logger.debug(this, '[@@@ login.service-getServerSession]');
+    this.logger.debug(this, '[@@@ login.service-getServerSession] isEmpty(req.session) : ', FormatHelper.isEmpty(req.session));
+    this.logger.debug(this, '[@@@ login.service-getServerSession] isEmpty(req.sess.serverSess) : ', FormatHelper.isEmpty(req.session.serverSession));
     if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.serverSession) ) {
       this.logger.debug(this, '[getServerSession]', req.cookies[COOKIE_KEY.TWM], req.session.serverSession);
       return req.session.serverSession;
@@ -255,7 +297,13 @@ class LoginService {
    * @param serverSession
    */
   public setServerSession(req, res, serverSession: string): Observable<any> {
+    this.logger.debug(this, '[@@@ login.service-setServerSession]');
     return Observable.create((observer) => {
+
+      this.logger.debug(this, '[@@@ login.service-setServerSession] isEmpty(req) : ', FormatHelper.isEmpty(req));
+      this.logger.debug(this, '[@@@ login.service-setServerSession] isEmpty(req.session) : ', FormatHelper.isEmpty(req.session));
+      this.logger.debug(this, '[@@@ login.service-setServerSession] serverSession : ', serverSession);
+
       if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
         req.session.serverSession = serverSession;
         req.session.save(() => {
@@ -273,7 +321,12 @@ class LoginService {
    * @param channel
    */
   public setChannel(req, channel: string): Observable<any> {
+    this.logger.debug(this, '[@@@ login.service-setChannel]');
     return Observable.create((observer) => {
+      this.logger.debug(this, '[@@@ login.service-setChannel] isEmpty(req) : ', FormatHelper.isEmpty(req));
+      this.logger.debug(this, '[@@@ login.service-setChannel] isEmpty(req.session) : ', FormatHelper.isEmpty(req.session));
+      this.logger.debug(this, '[@@@ login.service-setChannel] channel : ', channel);
+
       if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
         req.session.channel = channel;
         req.session.save(() => {
