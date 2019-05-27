@@ -5455,3 +5455,6 @@ body.apphome .main-membershop-box {
     .tod-mls-card .section-swiper-box .slider-box .slick-dots li {padding: 3px;}
 }
 /* //190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */  
+
+ /* 190515 추가 [OP002-465] 홈 화면 이럴땐 이렇게 하세요 타이틀 조정 */ 
+ .main-tip-box > .stit.tit.tod-tit-lar{font-size:1.56rem; line-height:1.88rem}

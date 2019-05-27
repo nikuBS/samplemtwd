@@ -9558,3 +9558,5 @@ button:focus span {
 .tod-w100 {width:100% !important;}
 .tod-blind {position:absolute !important; width:1px; height:1px; margin:-1px; clip:rect(0,0,0,0); overflow:hidden; color:transparent;}
 
+/* 190514 추가 [OP002-210] 분실임대 매장  */
+.bt-dropdown.tod-bt-lar{font-size:1.0625rem}
