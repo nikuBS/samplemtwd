@@ -23,6 +23,7 @@ Tw.MyTFareBillCard = function (rootEl) {
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay')); // validation check
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
 
+  this._paymentCommon.selectLine();
   this._init();
 };
 

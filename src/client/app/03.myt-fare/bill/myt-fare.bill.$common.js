@@ -50,8 +50,9 @@ Tw.MyTFareBillCommon.prototype = {
    * @desc set initial array
    */
   _setInitArray: function () {
-    var $targetId = this.$unpaidList.find('.fe-line.checked').attr('id');
-    this._selectedLine.push($targetId);
+    _.each(this.$unpaidList.find('.fe-line.checked'), $.proxy(function (obj) {
+      this._selectedLine.push($(obj).attr('id'));
+    }, this));
   },
   /**
    * @function
@@ -72,8 +73,16 @@ Tw.MyTFareBillCommon.prototype = {
       $.proxy(this._openSelectLine, this), // open callback
       $.proxy(this._afterClose, this), // close callback
       'select-line',
-      $(e.currentTarget)
+      e !== undefined ? $(e.currentTarget):null
     );
+  },
+
+  /**
+   * @function
+   * @desc OP002-376 페이지 진입 전 팝업 띄우기
+   */
+  selectLine: function () {
+    this._selectLine();
   },
   /**
    * @function
@@ -123,6 +132,7 @@ Tw.MyTFareBillCommon.prototype = {
       $target.find('input').removeAttr('checked');
     }
     $target.on('change', $.proxy(this._onCheck, this));
+    this._setAmount(); // '납부하실 총 청구금액'
     $target.appendTo(this.$layer.find('.fe-line-list'));
   },
   /**
@@ -152,7 +162,9 @@ Tw.MyTFareBillCommon.prototype = {
    * @desc set amount
    */
   _setAmount: function () {
-    this.$container.find('.fe-amount').text(Tw.FormatHelper.addComma(this._amount.toString()));
+    var _amount = Tw.FormatHelper.addComma(this._amount.toString());
+    this.$container.find('.fe-amount').text(_amount);
+    this.$layer.find('.fe-amount').text(_amount);  // 청구금액 합계
   },
   /**
    * @function
@@ -176,6 +188,8 @@ Tw.MyTFareBillCommon.prototype = {
       this._amount -= $parentTarget.find('.fe-money').data('value'); // 합계에서 빼기
     }
 
+    // '납부하실 총 청구금액'
+    this._setAmount();
     if (this._selectedLine.length === 0) {
       this.$selectBtn.attr('disabled', 'disabled');
     } else {
@@ -233,8 +247,10 @@ Tw.MyTFareBillCommon.prototype = {
     cloneNode.attr('id', 'fe-' + index);
 
     cloneNode.find('.fe-svc-info').text($target.find('.fe-svc-info').text());
-    cloneNode.find('.fe-money').text($target.find('.fe-money').text().replace(Tw.CURRENCY_UNIT.WON, ''));
-    cloneNode.find('.fe-inv-dt').text($target.find('.fe-inv-dt').text());
+    cloneNode.find('.fe-money').text(Tw.FormatHelper.addComma($target.find('.fe-money').data('value'))); // 수정필요
+    var _invDt = $target.find('.fe-inv-dt').data('value');
+    cloneNode.find('.fe-inv-dt').text(
+      Tw.DateHelper.getShortDateWithFormatAddByUnit(_invDt, 1, 'month', 'YYYY.M.', 'YYYYMMDD')); // 수정필요
 
     $layer.find('.fe-selected-line').append(cloneNode);
   },
