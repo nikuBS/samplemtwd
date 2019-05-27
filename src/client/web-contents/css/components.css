@@ -35134,7 +35134,10 @@ body.apphome .section-box {
  /* 로밍 상품 이용 안내 */
 .rm-prd-info .rm-info-top{height:17.5rem;background:#061a2e url(/img/product/rm-info-bg-top.jpg) no-repeat center 0;background-size:22.5rem auto;text-align:center;color:#fff}
 .rm-prd-info .rm-info-top h3 img{width:13.5rem}
-.rm-prd-info .rm-info-top .rm-info-tx{display:inline-block;width:13.6rem;background-color:#8addff;line-height:1.5625rem;color:#061831}
+/* 190527 수정[s] */
+.rm-prd-info .rm-info-top .rm-info-tx{display:inline-block}
+.rm-prd-info .rm-info-top .rm-info-tx img{width:13.59rem;vertical-align:top}
+/* 190527 수정[e] */
 .rm-prd-info h5.tit-type2 span{display:inline-block;width:2.5625rem;background-color:#4765ff;font-size:0.75rem;font-weight:bold;color:#fff;border-radius:.8rem;text-align:center;line-height:1.5625rem;vertical-align:top}
 .rm-prd-info .representcharge-list .representcharge-info .text{color:#333;font-weight:bold}
 .rm-prd-info .representcharge-list .representcharge-info{padding:1.19rem 1.88rem 0.94rem 0}
