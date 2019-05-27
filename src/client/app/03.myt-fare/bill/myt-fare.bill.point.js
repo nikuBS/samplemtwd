@@ -23,6 +23,7 @@ Tw.MyTFareBillPoint = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
+  this._paymentCommon.selectLine();
   this._init();
 };
 

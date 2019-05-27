@@ -1,40 +1,47 @@
 <%#
 * @file myt-fare.bill.common.component.html
 * @author Jayoon Kong (jayoon.kong@sk.com)
+* @editor 양정규
 * @since 2018.09.19
 %>
 <% if (unpaidList) { %>
 <div class="user-month-bill mt0 fe-unpaid-list">
-    <% for (var i = 0; i < unpaidList.length; i++) { %>
-    <% if (unpaidList.defaultIndex === i) { %>
+
     <div class="this-month-bill">
-        <p class="stit fe-svc-name"><%= unpaidList[i].svcName %></p>
-        <p class="term fe-svc-num"><%= unpaidList[i].svcNumber %>
+        <p class="stit fe-svc-name"><%= unpaidList[0].svcName %></p>
+        <p class="term fe-svc-num"><%= unpaidList[0].svcNumber %>
             <% if (unpaidList.cnt > 1) { %>
             <span class="fe-multi-line"> 외 <span class="fe-line-cnt"><%= unpaidList.cnt - 1 %></span>개 회선</span>
             <% } %>
         </p>
         <p class="price mt10">
-            <span class="fe-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
+            <span class="fe-amount" data-value="<%= unpaidList.sumUnpaid %>"><%= formatHelper.addComma(unpaidList.sumUnpaid.toString()) %></span>원
         </p>
         <% if (unpaidList.cnt > 1) { %>
         <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부회선 추가</button></span>
         <% } %>
     </div>
-    <% } %>
 
-    <li id="<%= i %>" class="none fe-line checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked <% } %>"
+    <%
+        for (var i = 0; i < unpaidList.length; i++) {
+        let isUnpaid = unpaidList[i].isUnpaid;
+    %>
+    <li id="<%= i %>" class="none fe-line checkbox type01-big <%= isUnpaid ? 'checked':''%>"
         data-svc-mgmt-num="<%= unpaidList[i].svcMgmtNum %>"
         data-bill-acnt-num="<%= unpaidList[i].billAcntNum %>"
         role="checkbox"
-        aria-checked="<% if (unpaidList.defaultIndex === i) { %><%=true%><% } else { %><%=false%><% } %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-        <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox2"
-        <% if (unpaidList.defaultIndex === i) { %> checked <% } %> />
+        aria-checked="<%= isUnpaid %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+        <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox2" <%= isUnpaid ? 'checked':''%>/>
         <!-- 체크상태일 경우 checked="false" -->
         <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
             <p class="layout-text">
                 <span class="mtext fe-svc-info"><%= unpaidList[i].svcName %> <%= unpaidList[i].svcNumber %></span>
-                <span class="stext fe-money" data-value="<%= unpaidList[i].intMoney %>"><span><%= unpaidList[i].invMoney %></span> 원</span>
+                <span class="stext fe-money" data-value="<%= unpaidList[i].intMoney %>">
+                    <span><%= unpaidList[i].invMoney %></span> 원
+                    <%if(isUnpaid){%>
+                    <span class="tod-text1">(미납요금)</span>
+                    <%}%>
+                </span>
                 <span class="dtext fe-inv-dt" data-value="<%= unpaidList[i].invDt %>"><%= unpaidList[i].invYearMonth %></span>
             </p>
         </div>

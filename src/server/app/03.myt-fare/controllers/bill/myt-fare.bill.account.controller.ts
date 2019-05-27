@@ -1,28 +1,25 @@
 /**
  * @file myt-fare.bill.account.controller.ts
  * @author Jayoon Kong
+ * @editor 양정규
  * @since 2018.09.18
  * @desc 계좌이체 요금납부 page
  */
 
 import {NextFunction, Request, Response} from 'express';
-import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_CD} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
+import MyTFareBillPaymentCommon from './myt-fare.bill.payment.common.controller';
 
 /**
  * @class
  * @desc 계좌이체 요금납부
  */
-class MyTFareBillAccount extends TwViewController {
-  constructor() {
-    super();
-  }
+class MyTFareBillAccount extends MyTFareBillPaymentCommon {
 
   /**
    * @function
@@ -51,7 +48,8 @@ class MyTFareBillAccount extends TwViewController {
           res.render('bill/myt-fare.bill.account.html', {
             ...data,
             unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc),
-            autoInfo: this.parseInfo(autoInfo)
+            autoInfo: this.parseInfo(autoInfo),
+            formatHelper: FormatHelper
           });
         } else {
           this.error.render(res, {
@@ -68,73 +66,11 @@ class MyTFareBillAccount extends TwViewController {
 
   /**
    * @function
-   * @desc 미납요금 대상자 조회
-   * @returns {Observable<any>}
-   */
-  private getUnpaidList(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0021, {});
-  }
-
-  /**
-   * @function
    * @desc 자동납부 정보 조회
    * @returns {Observable<any>}
    */
   private getAutoInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0022, {});
-  }
-
-  /**
-   * @function
-   * @desc 데이터 정보 가공
-   * @param result
-   * @param svcInfo
-   * @param allSvc
-   * @returns {any}
-   */
-  private parseData(result: any, svcInfo: any, allSvc: any): any {
-    const list = result.settleUnPaidList; // 미납리스트
-    if (!FormatHelper.isEmpty(list)) {
-      list.cnt = result.recCnt;
-      list.invDt = '';
-      list.defaultIndex = 0;
-
-      /* list 갯수만큼 loop */
-      list.map((data, index) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.'); // 서버에서 내려오는 날짜를 YYYY.M. 포맷에 맞게 변경 */
-        data.intMoney = this.removeZero(data.colAmt); // 금액 앞에 불필요하게 붙는 0 제거
-        data.invMoney = FormatHelper.addComma(data.intMoney); // 금액에 콤마(,) 추가
-        data.svcName = SVC_CD[data.svcCd]; // 서비스명 (모바일/인터넷...)
-        data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
-          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 I나 T(인터넷/집전화 등)일 경우 주소 보여주고, M(모바일)일 경우 '-' 추가
-
-        // 대표회선이고 청구날짜가 최근인 경우 가장 앞에 노출
-        if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
-          list.invDt = data.invDt;
-          list.defaultIndex = index;
-        }
-      });
-    }
-    return list;
-  }
-
-  /**
-   * @function
-   * @desc 금액정보에서 앞자리 0 제거하는 method
-   * @param {string} input
-   * @returns {string}
-   */
-  private removeZero(input: string): string {
-    let isNotZero = false;
-    for (let i = 0; i < input.length; i++) {
-      if (!isNotZero) {
-        if (input[i] !== '0') {
-          input = input.substr(i, input.length - i);
-          isNotZero = true;
-        }
-      }
-    }
-    return input;
   }
 
   /**
@@ -158,27 +94,6 @@ class MyTFareBillAccount extends TwViewController {
     }
     return null;
   }
-
-  /**
-   * @function
-   * @desc get address
-   * @param svcMgmtNum
-   * @param allSvc
-   * @returns {any}
-   */
-  private getAddr(svcMgmtNum: any, allSvc: any): any {
-    const serviceArray = allSvc.s; // 인터넷 회선
-    let addr = '';
-
-    serviceArray.map((data) => {
-      if (data.svcMgmtNum === svcMgmtNum) {
-        addr = data.addr; // 인터넷 회선 보유 시 주소 노출
-      }
-    });
-
-    return addr;
-  }
-
 }
 
 export default MyTFareBillAccount;
