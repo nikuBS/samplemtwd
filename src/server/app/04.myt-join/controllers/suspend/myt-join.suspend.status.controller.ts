@@ -78,11 +78,10 @@ class MyTJoinSuspendStatus extends TwViewController {
         // 해외체류 toDt 없음
         const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
         status['period'] = { from, to };
-        status['reason'] =  suspendStatus.armyExtDt ? MYT_SUSPEND_REASON['5000349'] /* 현역 외 */  : MYT_SUSPEND_REASON['5000341']; /* 현역 */
+        status['reason'] = MYT_SUSPEND_REASON['5000341'];
         status['type'] = 'long-term';
         status['resetable'] = false;
         status['militaryAC'] = true;
-        // 장기일시정지 일시정지 재시작이 있을 경우
         if ( suspendStatus.result.reFromDt && suspendStatus.result.reFromDt !== '' ) {
           status['resuspend'] = true;
           status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.M.D.');
@@ -94,8 +93,6 @@ class MyTJoinSuspendStatus extends TwViewController {
             && (suspendStatus.armyExtDt && suspendStatus.armyExtDt !== '') ) {
             if ( suspendStatus.armyDt === suspendStatus.armyExtDt ) {
               status['invaild_resuspend'] = true;
-            } else if ( suspendStatus.armyExtDt < suspendStatus.armyDt ) {
-              status['reason'] =  MYT_SUSPEND_REASON['5000341']; // 현역
             }
           }
         }
