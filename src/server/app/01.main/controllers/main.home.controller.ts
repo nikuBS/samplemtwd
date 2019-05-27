@@ -60,8 +60,12 @@ class MainHome extends TwViewController {
 
     const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
-
     if ( svcType.login ) {
+
+      this.logger.debug(this, '[@@@ main.home.controller-render] xtvidCookie : ', req.cookies['XTVID']);
+      this.logger.debug(this, '[@@@ main.home.controller-render] xtlidCookie : ', req.cookies['XTLID']);
+      this.logger.debug(this, '[@@@ main.home.controller-render] xtloginidCookie : ', req.cookies['XTLOGINID']);
+
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
         if ( svcType.mobilePhone ) {
           // 모바일 - 휴대폰 회선
