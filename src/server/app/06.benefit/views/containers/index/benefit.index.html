@@ -7,24 +7,6 @@
 <% include ../../components/javascript.component.html %>
 <% include ../../components/index/benefit.index.component.html %>
 <body>
-            <script>
-                var tempxtlid = '';
-                var tempxtloginid = '';
-                var tempxtvid = ''; 
-                var cookies = document.cookie.split("; ");
-                for ( var i = 0; i < cookies.length; i++) {
-                    var cPos = cookies[i].indexOf("=");
-                    var cName = cookies[i].substring(0, cPos);
-                    if (cName == 'XTLID') {
-                        tempxtlid = unescape(cookies[i].substring(cPos + 1));
-                    }else if (cName == 'XTLOGINID') {
-                        tempxtloginid = unescape(cookies[i].substring(cPos + 1));
-                    }else if (cName == 'XTVID') {
-                        tempxtvid = unescape(cookies[i].substring(cPos + 1));
-                    }
-                }
-                alert('XTVID : [' + tempxtvid + '], \nXTLID : [' + tempxtlid + '], \nXTLOGINID : [' + tempxtloginid + ']');
-            </script>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
