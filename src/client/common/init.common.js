@@ -100,7 +100,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.50.0');
+        Tw.Popup.toast('QA_v5.54.0');
       }
 
       this._initTrackerApi();
@@ -168,11 +168,7 @@ Tw.Init.prototype = {
    * @private
    */
   _sendXtractorLoginDummy: function () {
-    console.log("CC");
     var cookie = Tw.CommonHelper.getCookie('XT_LOGIN_LOG');
-    console.log("Tw.FormatHelper.isEmpty(cookie) : " + Tw.FormatHelper.isEmpty(cookie));
-    console.log("Tw.FormatHelper.isEmpty(window.XtractorScript) : " + Tw.FormatHelper.isEmpty(window.XtractorScript));
-    console.log("Tw.BrowserHelper.isApp() : " + Tw.BrowserHelper.isApp());
     if ( !Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
       return;
     }
@@ -183,8 +179,7 @@ Tw.Init.prototype = {
           return;
         }
 
-        if ( !Tw.BrowserHelper.isApp() ) {  // 모바일웹
-          console.log("AA");
+        if ( !Tw.BrowserHelper.isApp() ) {
           Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
           window.XtractorScript.xtrLoginDummy($.param({
             V_ID: Tw.CommonHelper.getCookie('XTVID'),
@@ -195,8 +190,7 @@ Tw.Init.prototype = {
           return;
         }
 
-        if ( res.result.XTLOGINTYPE !== 'Z' ) {   // 모바일앱 && 간편로그인이 아닌경우
-          console.log("BB");
+        if ( res.result.XTLOGINTYPE !== 'Z' ) {
           Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
           Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
             xtLid: res.result.XTLID,
