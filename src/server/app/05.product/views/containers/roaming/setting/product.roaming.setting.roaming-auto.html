@@ -83,7 +83,9 @@
                         <li class="announcement-bullet type01">서비스 해지 시, '데이터로밍 무조건 차단 서비스’ 부가서비스가 자동 가입 됩니다.</li>
                         <li class="announcement-bullet type01">기본 혜택에 데이터로밍 통화료만 적용됩니다.<br>
                             (음성/영상/SMS/MMS/데이터정보이용료 미포함)</li>
-                        <li class="announcement-bullet type01">기본 제공 데이터를 모두 사용하신 후에도 일정 속도 이하로 데이터를 이용하실 수 있습니다.</li>
+                        <% if(!isUseTogether) { %>
+                          <li class="announcement-bullet type01">기본 제공 데이터를 모두 사용하신 후에도 일정 속도 이하로 데이터를 이용하실 수 있습니다.</li>
+                        <% } %>
                     </ul>
                 </div>
                 <!--// .cont-box -->

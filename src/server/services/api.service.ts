@@ -320,10 +320,8 @@ class ApiService {
    * @param type
    */
   private requestLogin(command, params, type): Observable<any> {
-    this.logger.debug(this, '[@@@ api.service-requestLogin]');
-    return this.request(command, params)    // BFF_03_0008 T아이디 토큰 처리 
+    return this.request(command, params)
       .switchMap((resp) => {
-        this.logger.debug(this, '[@@@ api.service-requestLogin] resp.code : ', resp.code);
         if ( resp.code === API_CODE.CODE_00 ) {
           return Observable.combineLatest([
             this.loginService.setSvcInfo(this.req, this.res, {
@@ -342,7 +340,7 @@ class ApiService {
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))   //  전체 회선 조회
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
@@ -367,7 +365,7 @@ class ApiService {
             }
           });
 
-          // this.loginService.clearXtCookie(this.res);
+          this.loginService.clearXtCookie(this.res);
           return Observable.combineLatest(
             this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
             this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
@@ -377,7 +375,7 @@ class ApiService {
             this.loginService.setAllSvcInfo(this.req, this.res, null));
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))   // 자녀 회선 조회
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(this.req, this.res, resp.result);
@@ -522,7 +520,6 @@ class ApiService {
    * @param state
    */
   public requestLoginTid(token: string, state: string): Observable<any> {
-    this.logger.debug(this, '[@@@ api.service-requestLoginTid]');
     return this.requestLogin(API_CMD.BFF_03_0008, { token, state }, LOGIN_TYPE.TID);
   }
 

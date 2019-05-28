@@ -44,25 +44,6 @@ class TeventDetail extends TwViewController {
     this.apiService.request(API_CMD.BFF_09_0002, {}, {}, [id]).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         const result = this.parseData(resp.result);
-        const tmp = [
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190128',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190125',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190111',
-          'http://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190115',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190007',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190014',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190016',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190040',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190061',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190071',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190077',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190076',
-          'https://m.tmembership.tworld.co.kr/mobileWeb/html/event/EventIngView.jsp?EVENT_BBS_SEQ=20190096',
-          'https://app.tworld.co.kr/tevent/detail?htmlId=mTL1.1.41'
-        ];
-        const randomIdx = Math.floor(Math.random() * tmp.length);
-        result.url = tmp[randomIdx];
-        // result.height = '400px';
         res.render('tevent.detail.html', {
           result,
           svcInfo: svcInfo,
