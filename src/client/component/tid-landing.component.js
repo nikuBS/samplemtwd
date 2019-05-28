@@ -292,6 +292,7 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _onClickBtChangePw: function (target) {
+    target = target || '/common/member/tid-pwd';
     this._goLoad(Tw.NTV_CMD.CHANGE_PW, '/common/tid/change-pw?target=' + encodeURIComponent(target), $.proxy(this._onNativeChangePw, this));
   },
 
