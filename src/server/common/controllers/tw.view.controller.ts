@@ -14,7 +14,6 @@ import { UrlMetaModel } from '../../models/url-meta.model';
 import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import ParamsHelper from '../../utils/params.helper';
-import CommonHelper from '../../utils/common.helper';
 
 /**
  * @desc controller 상위 class
@@ -64,16 +63,10 @@ abstract class TwViewController {
    * @param next
    */
   public initPage(req: any, res: any, next: any): void {
-    this.logger.debug(this, '[@@@ tw.view.controller-initPage]');
     const path = req.baseUrl + (req.path !== '/' ? req.path : '');
     const tokenId = req.query.id_token;
     const userId = req.query.userId;
     this._type = req.query.type;
-
-    this.logger.debug(this, '[@@@ tw.view.controller-initPage] path : ', path);
-    this.logger.debug(this, '[@@@ tw.view.controller-initPage] tokenId : ', tokenId);
-    this.logger.debug(this, '[@@@ tw.view.controller-initPage] userId : ', userId);
-    this.logger.debug(this, '[@@@ tw.view.controller-initPage] this._type : ', this._type);
 
     this._apiService.setCurrentReq(req, res);
 
@@ -223,6 +216,18 @@ abstract class TwViewController {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
     this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
     this.loginService.setNoticeType(req, '').subscribe();
+
+    if ( !FormatHelper.isEmpty(req.session) ) {
+      if ( !FormatHelper.isEmpty(req.session.svcInfo) ) {
+        if ( !FormatHelper.isEmpty(req.session.svcInfo.xtInfo) ) {
+          this.logger.debug(this, '[@@@ tw.view.controller-getAuth] req.session.svcInfo.xtInfo is not empty');
+          this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);
+          this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);
+          this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);
+        }
+      }
+    }
+
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
