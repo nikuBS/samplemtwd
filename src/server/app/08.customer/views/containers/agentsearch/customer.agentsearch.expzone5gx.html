@@ -1,0 +1,195 @@
+<%#
+* @file customer.agentsearch.expzone5gx.html
+* @author ByungSo Oh (aquinas5@partner.sk.com)
+* @since 2019.05.30
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <%- include('../../../../common/views/components/header.component.html', { title: '5GX 체험존 찾기', svcInfo: svcInfo }); %>
+        <!-- #contents -->
+        <!-- CS_16_01_복사한것 -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <h2 class="blind">내용</h2>
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <!-- .filter -->
+                    <div class="filter">
+                        <div class="inline">
+                            <button class="bt-dropdown text-type01 fe-location-category" id="fe-select-location" title="지역 선택" aria-haspopup="true"><%= locationOrderName %></button>
+                        </div>
+                    </div>
+                    <!-- // .filter -->
+                </div>
+                <!-- // .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- 검색영역 -->
+                    <div class="component">
+                        <div class="component-box">
+                            <!-- .inputbox -->
+                            <span class="inputbox mb20">
+                                <span class="input">
+                                    <input id="fe-input-search" type="text" title="매장명 또는 주소 키워드 입력" placeholder="매장명 또는 주소 키워드 입력" value="<%= isSearch ? keyword : undefined %>">
+                                    <button id="fe-cancel-search" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                            <!-- // .inputbox -->
+                            <!-- .btn-search -->
+                            <div class="btn-search">
+                                <ul class="bt-slice">
+                                    <li class="bt-red1">
+                                        <button id="fe-btn-search" disabled="disabled">검색</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- // .btn-search -->
+                        </div>
+                    </div>        
+                    <!-- //검색영역 -->
+                </div>
+                <!--// .cont-box -->
+
+                <!-- 5GX/VR 필터옵션영역 -->
+                <div class="cont-box bgnone noborder gaps-style03">
+                    <div class="contheader-box">
+                        <div class="totalfilter-wrap">
+                            <span class="total">총 <span class="number-text" id="fe-result-count"><%= result.totalCount %></span>개</span>
+                            
+                            <!-- 2019.02.20 옵션바로 사용할 경우 date-in 클래스 제거 -->
+                            <button type="button" class="filter-btn aria-haspopup date-in fe-select-filter" aria-haspopup="true">
+                                <span class="datebox"><%= fiveOptionName %></span>
+                            <!-- <span class="datebox">5GX 체험존</span>
+                            <span class="datebox">VR 체험존</span> -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- //필터옵션영역 -->
+
+                <!-- .cont-box 체험존 리스트 영역 -->
+                <div class="cont-box nogaps-hoz">
+                    <!-- .search-point -->
+                    <div class="search-point">
+                            <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
+                                <!-- // .ti-caption-gray -->
+                                <!-- .contents-empty -->
+                                <div class="contents-empty">
+                                    <span class="ico type1"></span>
+                                    <p class="desc">검색 결과가 없습니다.<br /><strong>다시 검색해주세요.</strong></p>
+                                </div>
+                                <!-- // .contents-empty -->
+                            </div>
+
+
+                        <!-- .shop-info -->
+                        <div class="shop-info">
+                            <div class="shop-txt">
+
+                                <!-- 5GX 체험존 리스트 -->
+                                <ul id="fe-result-list">
+                                    <% if (result.regionInfoList.length > 0) { %>
+                                    <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
+                                    <li>
+                                        <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                                            <dt><%= result.regionInfoList[i].storeName %></dt>
+                                            <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
+                                                <!-- <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a> -->
+                                                <button class="bt-tel" onclick="document.location.href='tel:<%= result.regionInfoList[i].tel %>'"><span role="img" class="blind">매장으로 전화하기</span></button> 
+                                                <!-- <button onclick="document.location.href='tel:1234-1234'"></button> -->
+                                            </dd>
+                                        </dl>
+                                    </li>
+                                    <% } %>
+                                    <% } %>
+                                </ul>
+                            </div> <!-- end of .shop-txt -->
+
+                            <!-- 2019.02.20 페이징 수정 -->
+                            <% if (result.totalCount > 20) { %>
+                            <div class="paging-wrap top-line type1">
+                                <div class="paging">
+                                    <% if (lastPage > 3) { %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-first" data-page="1" class="first <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">처음 페이지로 이동</span></a>
+                                    <% } %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-prev" data-page="<%= page - 1 %>" class="prev <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">이전 페이지로 이동</span></a>
+                                    <% const start = page - (page % 3 === 0 ? 2 : page % 3 - 1) %>
+                                    <% const end = start + 2 >= lastPage ? lastPage : start + 2; %>
+                                    <% for (let i = start; i <= end; i += 1) { %>
+                                    <% if (i === page) { %>
+                                    <a href="javascript:void(0)" role="button" class="active fe-go-page" title="현재페이지"><%= i %></a>
+                                    <% } else { %>
+                                    <a href="javascript:void(0)" role="button" class="fe-go-page"><%= i %></a>
+                                    <% } %>
+                                    <% } %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-next" data-page="<%= page + 1 %>" class="next <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                                    <% if (lastPage > 3) { %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-last" data-page="<%= lastPage %>" class="last <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">마지막 페이지로 이동</span></a>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
+                            <!-- //2019.02.20 페이징 수정 -->
+
+                        </div>
+                        <!-- // .shop-info -->
+                    </div>
+                    <!-- // .search-point -->
+                </div>
+                <!-- // .cont-box -->
+
+                
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- CS_16_01_복사한것 -->
+
+
+
+
+
+
+
+
+
+
+
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div> <!--// end of class="wrap" -->
+</body>
+<% include ../../components/javascript.component.html %>
+<script type="text/template" id="tpl_search_result_item">
+  {{#list}}
+  <li>
+      <dl class="type02 fe-branch-detail" value={{locCode}}>
+          <dt>{{storeName}}</dt>
+          <!-- <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd> a태그 대신 버튼으로 대체 -->
+          <dd>{{searchAddr}}<br>{{jibunAddr}}<button class="bt-tel" onclick="document.location.href='tel:{{tel}}'"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+      </dl>
+  </li>
+  {{/list}}
+</script>
+<script>
+  $(document).ready(function () {
+    var data = '<%- JSON.stringify(params) %>';
+    if (!!data) {
+        data = JSON.parse(data);
+    }
+    new Tw.CustomerAgentExpzone5gxSearch($('.wrap'), data);
+  });
+</script>
+<% include ../../components/end.component.html %>
