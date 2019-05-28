@@ -62,7 +62,7 @@ class TeventDetail extends TwViewController {
         ];
         const randomIdx = Math.floor(Math.random() * tmp.length);
         result.url = tmp[randomIdx];
-        result.height = '400px';
+        // result.height = '400px';
         res.render('tevent.detail.html', {
           result,
           svcInfo: svcInfo,
