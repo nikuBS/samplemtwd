@@ -37,12 +37,18 @@
                         <% } %>
                         <!-- .shop-tag -->
                         <div class="shop-tag">
-                            <% if (detail.direct === 'Y') { %><span class="tag">바로 픽업</span><% } %>
-                            <% if (detail.premium === 'Y') { %><span class="tag">T프리미엄스토어</span><% } %>
-                            <% if (detail.rent === 'Y') { %><span class="tag">임대폰</span><% } %>
-                            <% if (detail.skb === 'Y') { %><span class="tag">SK브로드밴드</span><% } %>
-                            <% if (detail.apple === 'Y') { %><span class="tag">애플취급점</span><% } %>
-                            <% if (detail.authAgnYn === 'Y') { %><span class="tag">공식인증 대리점</span><% } %>
+                            <!-- 5GX체험존 및 VR체험존 태그 조건 비교 -->
+                            <% if (isExpZone) { %>
+                                <% if (detail.fiveGxYn === 'Y') { %><span class="tag">5GX 체험존</span><% } %>
+                                <% if (detail.fiveVrYn === 'Y') { %><span class="tag">VR 체험존</span><% } %>
+                             <% }  else { %>
+                                <% if (detail.direct === 'Y') { %><span class="tag">바로 픽업</span><% } %>
+                                <% if (detail.premium === 'Y') { %><span class="tag">T프리미엄스토어</span><% } %>
+                                <% if (detail.rent === 'Y') { %><span class="tag">임대폰</span><% } %>
+                                <% if (detail.skb === 'Y') { %><span class="tag">SK브로드밴드</span><% } %>
+                                <% if (detail.apple === 'Y') { %><span class="tag">애플취급점</span><% } %>
+                                <% if (detail.authAgnYn === 'Y') { %><span class="tag">공식인증 대리점</span><% } %>
+                            <% } %>
                         </div>
                         <!-- // .shop-tag -->
                         <!-- .shop-map -->
