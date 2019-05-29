@@ -28,6 +28,7 @@ import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../t
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
+import { SvcInfoModel } from '../../../models/svc-info.model';
 
 /**
  * @desc 메인화면-MY 초기화를 위한 class
@@ -74,7 +75,7 @@ class MainHome extends TwViewController {
             this.getUsageData(svcInfo),
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getRecommendProds(req)
+            this.getRecommendProds(req, svcInfo.prodId)
           ).subscribe(([usageData, membershipData, redisData, hasRecommendProds]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
@@ -544,23 +545,33 @@ class MainHome extends TwViewController {
   /**
    * 내게맞는요금제 추천
    * @param {Request} req
-   * @return {object}
+   * @param {any} prodId
+   * @return {Observable<any>}
    */
-  private getRecommendProds(req: Request): Observable<any>  {
-    return this.apiService.request(API_CMD.BFF_10_0178, {
-      experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
-      prcplnRcTyp: 'GNRL', 
-      prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
-    }).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        if ( FormatHelper.isEmpty(resp.result) ) {
-          return false;
-        } else {
-          return true;
+  private getRecommendProds(req: Request, prodId: any): Observable<any>  {
+
+    if (BrowserHelper.isApp(req)) {
+      return this.apiService.request(API_CMD.BFF_10_0178, {
+        experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
+        prcplnRcTyp: 'GNRL', 
+        prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( FormatHelper.isEmpty(resp.result) ) {
+            return false;
+          } else {
+            // 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
+            if (!FormatHelper.isEmpty(resp.result.items) && resp.result.items.prodId === prodId) {
+              return false;
+            }
+            return true;
+          }
         }
-      }
-      return false;
-    });
+        return false;
+      });
+    } else {
+      return Observable.of(false);
+    }
   }
 }
 
