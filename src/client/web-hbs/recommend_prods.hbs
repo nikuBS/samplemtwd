@@ -1,0 +1,114 @@
+<!-- 요금제 추천 case result: 1개~6개  -->
+<div class="tod-mls-card recomCase-area">
+    <span class="blind">나에게 꼭 맞는 추천요금제 안내</span>
+    <!-- widget / slick.js -->
+    <div class="section-swiper-box">
+        <div class="widget">
+            <div class="widget-box slider7">
+                <div class="slider-box">
+                    <!-- list -->
+                    <div class="tod-mls-slider slider">
+                        {{#each result}}
+                        <!-- item -->
+                        <div class="s-item">
+                            <!-- 개발 영역 -->
+                            <div class="tod-mls-msg-bx">
+                                <span class="icon-wrap">
+                                    <!-- 개발 : 아이콘 이미지 변경 -->
+                                    <i class="i-img">
+                                    {{#if hasData}}
+                                        {{#if prcpln_01}}
+                                            <img src="{{CDN}}/img/main/ho-ico-data-2.png" alt="데이터 소진">
+                                        {{/if}}
+                                        {{#if prcpln_02}}
+                                            <img src="{{CDN}}/img/main/ho-ico-data-3.png" alt="데이터 심야">
+                                        {{/if}}
+                                        {{#if prcpln_03}}
+                                            <img src="{{CDN}}/img/main/ho-ico-data-1.png" alt="데이터 추천">
+                                        {{/if}}
+                                    {{/if}}
+                                    {{#if hasInsurance}}
+                                        <img src="{{CDN}}/img/main/ho-ico-insu.png" alt="보험">
+                                    {{/if}}
+                                    {{#if hasMembership}}
+                                        <img src="{{CDN}}/img/main/ho-ico-mem.png" alt="멤버십">
+                                    {{/if}}
+                                    {{#if hasMusic}}
+                                        <img src="{{CDN}}/img/main/ho-ico-music.png" alt="음악">
+                                    {{/if}}
+                                    {{#if hasVideo}}
+                                        <img src="{{CDN}}/img/main/ho-ico-avi.png" alt="동영상">
+                                    {{/if}}
+                                    {{#if hasMsg}}
+                                        <img src="{{CDN}}/img/main/ho-ico-msg.png" alt="메세지">
+                                    {{/if}}
+                                    </i>
+                                </span>
+                                <p class="txt-wrap">
+                                    <!-- 개발 : 메세지 영역 / bold 영역 <storng>text</strong> -->
+                                    {{#if hasData}}
+                                    <span class="sp-name">{{mbrNm}}님</span>
+                                    {{/if}}
+                                        {{#if prcpln_01}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong> {{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_02}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong> {{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_03}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong> {{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_04}}
+                                            <span class="sp-desc">{{reasonPreText}}<strong>{{prodNm}}</strong> {{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_05}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_06}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_07}}
+                                            <span class="sp-desc">{{reasonPreText}}<strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_08}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_09}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_10}}
+                                            <span class="sp-desc">{{reasonPreText}}<strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_11}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_12}}
+                                            <span class="sp-desc">{{reasonPreText}}<strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_13}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong>{{reasonPostText}}</span>
+                                        {{/if}}
+                                        {{#if prcpln_14}}
+                                            <span class="sp-desc">{{reasonPreText}} <strong>{{prodNm}}</strong> {{reasonPostText}}</span>
+                                        {{/if}}
+                                </p>
+                            </div>
+                            <!-- //개발 영역 -->
+                        </div>
+                        {{/each}}
+                        <div class="s-item">
+                            <div class="tod-mls-msg-bx">
+                                <span class="icon-wrap">
+                                    <i class="i-img"><img src="{{CDN}}/img/main/ho-ico-msg.png" alt="메세지"></i>
+                                </span>
+                                <p class="txt-wrap">
+                                    <span class="sp-desc">다음에도 꼭 맞는 요금제를 추천해 드릴게요.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

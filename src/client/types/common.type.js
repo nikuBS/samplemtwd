@@ -6,7 +6,8 @@ Tw.LSTORE_KEY = {
   CHANGE_LOGIN_STATUS: 'changeLoginStatus',
   RECENT_SEARCH_KEYWORD : 'recentSearchKeyword',
   PRODUCT_JOIN_RESERVATION: 'productJoinReservation',
-  MEMBERSHIP_INFO: 'membershipInfo'
+  MEMBERSHIP_INFO: 'membershipInfo',
+  RECOMMEND_PRODS: 'recommendProds'
 };
 
 Tw.FIDO_TYPE = {
