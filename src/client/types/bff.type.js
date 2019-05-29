@@ -295,3 +295,17 @@ Tw.MYT_SUSPEND_REASON_CODE = {
   OVERSEAS: '22', // 해외체류
   SEMI_MILITARY_: '27' // 군입대(현역외)
 };
+
+Tw.MYT_SUSPEND_MILITARY_RECEIVE_CD = ['5000341', '5000342', '5000349', '5000350' ];
+
+Tw.EXPERIMENT_EXPS_SCRN_ID = {
+  RECOMMEND_PRODS: 'MTW_M000184_01'
+};
+
+Tw.RECOMMEND_PRODS_PRIORITY = {
+  data: '1',
+  video: '2',
+  music: '3',
+  insurance: '4',
+  membership: '5'
+};
