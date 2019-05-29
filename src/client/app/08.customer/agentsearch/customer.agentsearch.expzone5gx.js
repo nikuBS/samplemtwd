@@ -15,9 +15,9 @@ Tw.CustomerAgentExpzone5gxSearch = function (rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this.fiveOptionType = params.fiveOptionType;
-
   this.fiveOptionNames = {"0": "전체", "1": "5GX 체험존", "2": "VR 체험존"};
+  this.fiveOptionType = params.fiveOptionType;
+  
   this.selectedLocationCode = params.locationOrder;
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
   
@@ -167,6 +167,7 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
         this.selectedLocationCode = $(e.currentTarget).attr('id');
         this.$container.find('#fe-select-location').text(selectedLocationName);
         this._popupService.close();
+        this._historyService.goLoad(this._getSearchUrl(null, true));
       }, this));
     }, this));
   },
