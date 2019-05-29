@@ -24,8 +24,8 @@ Tw.CustomerAgentsearchRentPhone = function (root, list) {
 
   this._categoryCode = { // SB와 맞추기 위한 하드코딩
     1: '서울',
-    2: '경기도',
-    3: '강원도',
+    2: '인천/경기',
+    3: '강원',
     4: '부산/울산/경남/경북/대구',
     5: '광주/전남/전북/대전/충남/충북',
     6: '제주'

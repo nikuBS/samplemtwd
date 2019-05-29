@@ -32,6 +32,7 @@ import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsea
 import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agentsearch.repair.controller';
 import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
+import CustomerAgentsearchExpZone5gx from './controllers/agentsearch/customer.agentsearch.expzone5gx.controller';
 import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
 import CustomerDocument from './controllers/document/customer.document.controller';
 import CustomerResearchesResult from './controllers/researches/customer.researches.result.controller';
@@ -74,6 +75,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/repair', controller: CustomerAgentsearchRepair });
     this.controllers.push({ url: '/agentsearch/repair-detail', controller: CustomerAgentsearchRepairDetail });
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
+    this.controllers.push({ url: '/agentsearch/expzone5gx', controller: CustomerAgentsearchExpZone5gx });
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
