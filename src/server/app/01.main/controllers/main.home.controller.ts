@@ -561,8 +561,26 @@ class MainHome extends TwViewController {
             return false;
           } else {
             // 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
-            if (!FormatHelper.isEmpty(resp.result.items) && resp.result.items.prodId === prodId) {
+            const items = resp.result.items;
+            if (!FormatHelper.isEmpty(items) && items[0].prodId === prodId) {
               return false;
+            } else {
+              const list = items[0].props;
+              let validPropCnt = 0;
+
+              list.map((target) => {
+                if (target.reasonCode !== '#') {
+                  validPropCnt++;
+                }
+              });
+
+              // 모든 건에 reasonCode가 "#"으로 오는 경우는 노출하지 않음
+              if (validPropCnt === 0) {
+                return false;
+              } else {
+                return true;
+              }
+              
             }
             return true;
           }
