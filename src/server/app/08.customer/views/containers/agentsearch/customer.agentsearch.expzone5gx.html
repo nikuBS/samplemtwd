@@ -105,9 +105,8 @@
                                         <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
                                             <dt><%= result.regionInfoList[i].storeName %></dt>
                                             <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
-                                                <!-- <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a> -->
-                                                <button class="bt-tel" onclick="document.location.href='tel:<%= result.regionInfoList[i].tel %>'"><span role="img" class="blind">매장으로 전화하기</span></button> 
-                                                <!-- <button onclick="document.location.href='tel:1234-1234'"></button> -->
+                                                <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
+                                                <!-- <button class="bt-tel" onclick="document.location.href='tel:<%= result.regionInfoList[i].tel %>'"><span role="img" class="blind">매장으로 전화하기</span></button>  -->
                                             </dd>
                                         </dl>
                                     </li>
@@ -157,14 +156,6 @@
 
 
 
-
-
-
-
-
-
-
-
         <footer id="fe-all-menu">
             <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
             <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -177,8 +168,8 @@
   <li>
       <dl class="type02 fe-branch-detail" value={{locCode}}>
           <dt>{{storeName}}</dt>
-          <!-- <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd> a태그 대신 버튼으로 대체 -->
-          <dd>{{searchAddr}}<br>{{jibunAddr}}<button class="bt-tel" onclick="document.location.href='tel:{{tel}}'"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+          <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd>
+          <!-- <dd>{{searchAddr}}<br>{{jibunAddr}}<button class="bt-tel" onclick="document.location.href='tel:{{tel}}'"><span role="img" class="blind">매장으로 전화하기</span></button></dd> -->
       </dl>
   </li>
   {{/list}}
