@@ -5374,7 +5374,7 @@ body.apphome .main-membershop-box {
 /* 190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */
 /*tod-mls-comp{}*/
 .tod-mls-hd{padding: 1.75rem 1.5rem 0;}
-.tod-mls-hd .i-beta{display: inline-block; width: 1.563rem; height: 0.75rem; margin-left: 0.375rem; line-height: 1;} 
+.tod-mls-hd .i-beta{display: inline-block; width: 1.563rem; height: 0.75rem; margin-left: 0.17rem; line-height: 1;} 
 .tod-mls-hd .i-beta img{width: 100%; vertical-align: middle; margin-top: 2px;}
 .tod-mls-hd .sp-tit{display: block; font-size: 1rem;}
 .tod-mls-hd .sp-date{display: block; font-size: 0.875rem;color: #959595;}
@@ -5416,6 +5416,7 @@ body.apphome .main-membershop-box {
 }
 .tod-mls-msg-bx .sp-name,
 .tod-mls-msg-bx .sp-desc{display: inline-block;}
+.tod-mls-msg-bx .sp-desc > strong{color: #f65a7e;}
 
 /* .tod-mls-comp - loading */
 .tod-cir_wrap{display:flex; justify-content: center; align-items: center}
