@@ -1420,6 +1420,7 @@ Tw.MainHome.prototype = {
       }
     }, this));
 
+    // MLS 추천 요금제 확인
     _.map(this.$elArrMlsCard, $.proxy(function (mls, index) {
 
       var $parent = mls.closest('.section-box');
@@ -2077,7 +2078,20 @@ Tw.MainHome.prototype = {
    * @private
    */
   _initMlsCard: function (index) {
-    this._getMlsCard(index);
+
+    // Tw.INIT.COMPLETE event 발생 후에도 Tw.Environment.cdn가 설정되지 않는 경우가 발생
+    if( !Tw.Environment.init ) {
+      //$(window).on(Tw.INIT_COMPLETE, $.proxy(this._getMlsCard(index), this));
+      var checkInit = setInterval(function() {
+        if(Tw.Environment.init && !Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
+            clearInterval(checkInit);
+            this._getMlsCard(index);
+        }
+      }, 200);
+  
+    } else {
+      this._getMlsCard(index);
+    }
   },
 
   /**
