@@ -62,7 +62,7 @@ class MainHome extends TwViewController {
 
     const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
-    const recommendProdsData = {
+    let recommendProdsData = {
       hasRecommendProds: false,
       nowDate: DateHelper.getShortDateNoDot(new Date())
     };
@@ -76,10 +76,11 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getRecommendProds(req, svcInfo.prodId)
-          ).subscribe(([usageData, membershipData, redisData, hasRecommendProds]) => {
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            recommendProdsData.hasRecommendProds = hasRecommendProds;
+            recommendProdsData = recommendProdsResult;
+
             const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
             res.render(`main.home-${flag}.html`, renderData);
           });
@@ -550,6 +551,11 @@ class MainHome extends TwViewController {
    */
   private getRecommendProds(req: Request, prodId: any): Observable<any>  {
 
+    const defaultRetVal = {
+      hasRecommendProds: false,
+      nowDate: DateHelper.getShortDateNoDot(new Date())
+    };
+
     if (BrowserHelper.isApp(req)) {
       return this.apiService.request(API_CMD.BFF_10_0178, {
         experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
@@ -558,12 +564,12 @@ class MainHome extends TwViewController {
       }).map((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( FormatHelper.isEmpty(resp.result) ) {
-            return false;
+            return defaultRetVal;
           } else {
             // 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
             const items = resp.result.items;
             if (!FormatHelper.isEmpty(items) && items[0].prodId === prodId) {
-              return false;
+              return defaultRetVal;
             } else {
               const list = items[0].props;
               let validPropCnt = 0;
@@ -576,19 +582,20 @@ class MainHome extends TwViewController {
 
               // 모든 건에 reasonCode가 "#"으로 오는 경우는 노출하지 않음
               if (validPropCnt === 0) {
-                return false;
+                return defaultRetVal;
               } else {
-                return true;
-              }
-              
+                return {
+                  hasRecommendProds: true,
+                  nowDate: DateHelper.getShortDateNoDot(new Date(parseFloat(resp.result.timestamp) * 1000))
+                };
+              }  
             }
-            return true;
           }
         }
-        return false;
+        return defaultRetVal;
       });
     } else {
-      return Observable.of(false);
+      return Observable.of(defaultRetVal);
     }
   }
 }
