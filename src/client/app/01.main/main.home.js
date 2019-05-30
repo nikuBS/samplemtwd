@@ -2085,7 +2085,6 @@ Tw.MainHome.prototype = {
       var checkInit = setInterval(function() {
         if(Tw.Environment.init && !Tw.FormatHelper.isEmpty(Tw.Environment.cdn)) {
             clearInterval(checkInit);
-            this._getMlsCard(index);
         }
       }, 200);
   
