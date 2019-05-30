@@ -15,9 +15,9 @@ Tw.CustomerAgentExpzone5gxSearch = function (rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this.fiveOptionNames = {"0": "전체", "1": "5GX 체험존", "2": "VR 체험존"};
   this.fiveOptionType = params.fiveOptionType;
-  
+
+  this.fiveOptionNames = {"0": "전체", "1": "5GX 체험존", "2": "VR 체험존"};
   this.selectedLocationCode = params.locationOrder;
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
   
@@ -165,9 +165,10 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
       $root.on('click', 'input[type=radio]', $.proxy(function (e) {
         var selectedLocationName = $(e.currentTarget).data('location'); /* templete.type.js에서 사용자 정의 속성 */
         this.selectedLocationCode = $(e.currentTarget).attr('id');
-        this.$container.find('#fe-select-location').text(selectedLocationName);
-        this._popupService.close();
-        this._historyService.goLoad(this._getSearchUrl(null, true));
+
+        var url = '/customer/agentsearch/expzone5gx?keyword='; 
+        url += '&locationOrder=' + (this.selectedLocationCode ? this.selectedLocationCode : '1') + '&locationOrderName=' + selectedLocationName;
+        this._historyService.goLoad(url);
       }, this));
     }, this));
   },
@@ -261,7 +262,7 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
    * @param  {Object} e - click event
    */
   _onBranchDetail: function (e) {
-    if (e.target.nodeName.toLowerCase() === 'button') { /* 지점 선택이지만 전화 걸기 부분이라서 아무런 동작 하지 않음 */
+    if (e.target.nodeName.toLowerCase() === 'a') { /* 지점 선택이지만 전화 걸기 부분이라서 아무런 동작 하지 않음 */
       return;
     }
 
