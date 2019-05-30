@@ -1421,7 +1421,10 @@ Tw.MainHome.prototype = {
     }, this));
 
     _.map(this.$elArrMlsCard, $.proxy(function (mls, index) {
-      if ( this._elementScrolled(mls) ) {
+
+      var $parent = mls.closest('.section-box');
+      var actionTop = $parent.offset().top - ($parent.height() / 1.2);
+      if ($(window).scrollTop() > actionTop) {
         this._initMlsCard(index);
       }
     }, this));
