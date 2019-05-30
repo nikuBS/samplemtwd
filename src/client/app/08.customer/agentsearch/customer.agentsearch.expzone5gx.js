@@ -159,6 +159,9 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
       data: list,
       btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(function ($root) {
+      /* 팝업 오픈 시 이전에 선택된 지역 체크 */
+      $root.find('input#' + this.selectedLocationCode).attr('checked', true);
+      
       $root.on('click', '.btn-floating', $.proxy(function () {
         this._popupService.close();
       }, this));
