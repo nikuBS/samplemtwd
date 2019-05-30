@@ -102,6 +102,11 @@ export default abstract class MyTFareBillPaymentCommon extends TwViewController 
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
           FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 I나 T(인터넷/집전화 등)일 경우 주소 보여주고, M(모바일)일 경우 '-' 추가
         list.sumUnpaid += parseInt(data.isUnpaid ? data.intMoney : 0, 10);
+        // 납부건수가 1건이면서, 당월 청구금액이면. [sumUnpaid] 에 당월 청구금액(invAmt), isUnpaid = true 설정한다.
+        if (list.cnt === 1 && DateHelper.getDiffByUnit(_invDtFmt, thisMonth, 'month') === -1) {
+          list.sumUnpaid = data.intMoney;
+          data.isUnpaid = true;
+        }
       });
     }
     return list;
