@@ -25,6 +25,8 @@ Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
 
   this._bindEvent();
 
+  this._historyService = new Tw.HistoryService();
+
   this._moveToTworld();
 
 };
@@ -37,6 +39,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-link', $.proxy(this._goLoad, this));
     this.$container.on('click', '.fe-tworld', $.proxy(this._onClickTworld, this));
+    this.$container.on('click', '.fe-go-to-web', $.proxy(this._onClickTworldWeb, this));
   },
   /**
    * @function
@@ -52,7 +55,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
    * @desc tworld 바로가기 클릭 event
    */
   _onClickTworld: function () {
-    _moveTworld();
+    this._moveToTworld();
   },
     /**
    * @function
@@ -165,5 +168,13 @@ Tw.CommonShareAppInstallInfo.prototype = {
     if (isLink || this._isLink) {
       Tw.CommonHelper.openUrlExternal(this._href);
     }
+  },
+  /**
+   * @function
+   * @desc tworld web 바로가기 클릭 event
+   */
+  _onClickTworldWeb: function () {
+    var url = 'https://m.tworld.co.kr' + this._target;
+    this._historyService.goLoad(url);
   }
 };
