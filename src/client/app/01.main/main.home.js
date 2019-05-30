@@ -2115,13 +2115,11 @@ Tw.MainHome.prototype = {
    */
   _getRecommendProdsData: function(element) {
 
-    /*
     var storeRecommendProds = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS));
     
     if ( Tw.FormatHelper.isEmpty(storeRecommendProds) 
           || Tw.DateHelper.convDateFormat(storeRecommendProds.expired).getTime() < new Date().getTime() 
           || this._svcMgmtNum !== storeRecommendProds.svcMgmtNum ) {
-    */
         this._apiService.request(
           Tw.API_CMD.BFF_10_0178, 
           {
@@ -2132,11 +2130,9 @@ Tw.MainHome.prototype = {
         .done($.proxy(this._successRecommendProdsData, this, element))
         .fail($.proxy(this._failRecommendProdsData, this));
 
-    /*
     } else {
-      this._drawRecommendProd(element, storeRecommendProds.data);
+      this._drawRecommendProduct(element, storeRecommendProds.data);
     }
-    */
   },
 
   /**
@@ -2153,7 +2149,7 @@ Tw.MainHome.prototype = {
         expired: Tw.DateHelper.add5min(new Date()),
         svcMgmtNum: this._svcMgmtNum
       };
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODUCT, JSON.stringify(storeData));
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS, JSON.stringify(storeData));
 
       if(!Tw.FormatHelper.isEmpty(resp.result)) {
         this._drawRecommendProduct(element, resp);
@@ -2219,7 +2215,6 @@ Tw.MainHome.prototype = {
           card.reasonPreText = card.reasonPreText === '#' ? '' : card.reasonPreText;
           card.reasonPostText = card.reasonPostText === '#' ? '' : card.reasonPostText;
 
-          //card = _.extend(addInfo, card);
           list.push(_.extend(addInfo, card));
         }
 
