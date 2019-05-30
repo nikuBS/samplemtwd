@@ -44,6 +44,7 @@ Tw.MyTFareBillCommon.prototype = {
     this._standardCnt = 5; // 더보기 기준 갯수
     this._amount = this.$container.find('.fe-amount').data('value');
     this._isClicked = false;
+    this._isfirstPop = false; // 서브메인 등 외부에서 [납부요금 선택]팝업 호출 했는지 유무
   },
   /**
    * @function
@@ -67,6 +68,7 @@ Tw.MyTFareBillCommon.prototype = {
    * @param e
    */
   _selectLine: function (e) {
+    this._isfirstPop = false;
     this._popupService.open({
         'hbs': 'MF_01_01_02'
       },
@@ -82,8 +84,14 @@ Tw.MyTFareBillCommon.prototype = {
    * @desc OP002-376 페이지 진입 전 팝업 띄우기
    */
   selectLine: function () {
-    this._selectLine();
+    // 납부가능 건수가 2건 이상일때만 팝업 띄우기
+    if (this.$unpaidList.find('.fe-select-line').length) {
+      this._selectLine();
+      // 순서에 유의!! _selectLine() 함수에서 this._isfirstPop = false 를 설정해주기 때문에 해당 함수 다음에 세팅!
+      this._isfirstPop = true;
+    }
   },
+
   /**
    * @function
    * @desc open layer
@@ -102,6 +110,12 @@ Tw.MyTFareBillCommon.prototype = {
   _bindLayerEvent: function () {
     this.$unpaidList.find('.fe-line').each($.proxy(this._setEachData, this)); // 각 line별 이벤트
     this.$layer.on('click', '.fe-select', $.proxy(this._onClickDoneBtn, this)); // 선택 버튼 클릭 시 이벤트
+    // 외부에서 호출(납부방법 페이지 진입하자마자 팝업 띄우는 경우) 할 때만 닫기 버튼 클릭시 처음 호출했던곳으로 이동시킨다.
+    if (this._isfirstPop){
+      this.$layer.on('click', '.fe-close-pop', $.proxy(function () {
+        this._historyService.go(-2);
+      }, this));
+    }
   },
   /**
    * @function
