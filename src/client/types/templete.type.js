@@ -187,6 +187,18 @@ Tw.POPUP_TPL = {
       ]
     }]
   },
+  CUSTOMER_AGENTSEARCH_LOCATION: [
+    {
+      list: [
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-location="서울"', txt: '서울' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-location="인천/경기"', txt: '인천/경기' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-location="강원"', txt: '강원' },
+        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-location="부산/울산/경남/경북/대구"', txt: '부산/울산/경남/경북/대구' },
+        { 'label-attr': 'id="5"', 'radio-attr': 'id="5" name="r2" data-location="광주/전남/전북/대전/충남/충북"', txt: '광주/전남/전북/대전/충남/충북' },
+        { 'label-attr': 'id="6"', 'radio-attr': 'id="6" name="r2" data-location="제주"', txt: '제주' }
+      ]
+    }
+  ],
   IMMEDIATELY_CHARGE_DATA: {
     TITLE: '충전방법 선택',
     REFILL: {

@@ -4949,13 +4949,13 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .tod-side-chbox.simple-form .custom-form{top:0; left:0.375rem}
 /* //190503_[#7633/DV001-21789] myT 군입대 장기일시정지요건 */
 
-/* 190516 [#OP002-372] [이벤트] Mobile_내가고른패키지 내용 수정 */
-.tod-eventDetail2 .inner{margin:15px;padding:20px;border:1px solid #ddd;background:#fff}
-.tod-evtImg img{width:100%;vertical-align:top}
-.tod-evtImg > a{display:block}
-.tod-psr{position: relative !important;}
-.tod-center{text-align: center !important;}
-.tod-btnBox{text-align: center;vertical-align: middle;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;overflow: hidden;}
-.tod-btnRed {background: #ea002c;border: 0 none;color: #fff !important;}
-.tod-btnL, .tod-btnL2, .tod-btnL.btnWhite, .tod-btnL.btnWhite2 {display: inline-block;width: 100%;height: 35px;font-size: 17px;line-height: 35px;letter-spacing: -1px;}
-/* //190516 [#OP002-372] [이벤트] Mobile_내가고른패키지 내용 수정 */
+/* 190516 [#OP002-372] [이벤트] Mobile_내가고른패키지 내용 수정 / 190529 [OP002-732][UX/PUB] (W-1905-135-00) 5GX 브롤스타즈 체험존 혜택 */
+.tod-eventDetail {padding-bottom:1.25rem;}
+.tod-eventDetail .inner {margin:0.9375rem; padding:1.25rem; border:1px solid #ddd; background:#fff}
+.tod-eventDetail .evtImg img {width:100%; vertical-align:top}
+.tod-eventDetail .evtImg > a {display:block}
+.tod-eventDetail .evtBtnBox {text-align:center; vertical-align:middle; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; overflow:hidden;}
+.tod-eventDetail .evtBtnL, .tod-eventDetail .evtBtnL2, .tod-eventDetail .evtBtnL.btnWhite, .tod-eventDetail .evtBtnL.btnWhite2 {display:inline-block; width:100%; height:2.1875rem; line-height:2.1875rem; font-size:1.0625rem; letter-spacing:-0.0625rem;}
+.tod-eventDetail .evtBtnRed {background:#ea002c; border: 0 none; color:#fff !important;}
+.tod-eventDetail .blind {width:1px; height:1px; margin:-1px; clip:rect(0,0,0,0);}
+/* //190516 [#OP002-372] [이벤트] Mobile_내가고른패키지 내용 수정 / 190529 [OP002-732][UX/PUB] (W-1905-135-00) 5GX 브롤스타즈 체험존 혜택 */

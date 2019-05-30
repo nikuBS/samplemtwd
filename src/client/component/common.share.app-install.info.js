@@ -24,6 +24,9 @@ Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
   this._isLink = false;
 
   this._bindEvent();
+
+  this._moveToTworld();
+
 };
 
 Tw.CommonShareAppInstallInfo.prototype = {
@@ -49,6 +52,13 @@ Tw.CommonShareAppInstallInfo.prototype = {
    * @desc tworld 바로가기 클릭 event
    */
   _onClickTworld: function () {
+    _moveTworld();
+  },
+    /**
+   * @function
+   * @desc tworld 바로가기
+   */
+  _moveToTworld: function() {
     var appCustomScheme = 'mtworldapp2://tworld?' + encodeURIComponent('target=' + this._target + '&loginType=' + this._loginType);
 
     if (this._isAndroid) {
@@ -61,6 +71,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
 
     setTimeout($.proxy(this._goApp, this, appCustomScheme), 0);
   },
+
   /**
    * @function
    * @desc check store for android

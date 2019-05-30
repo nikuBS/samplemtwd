@@ -896,16 +896,9 @@ Tw.MyTDataSubMain.prototype = {
    */
   _successPattern: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var curDate = new Date().getDate();
-      // 1 ~ 4 일 (집계중으로표시하지 않음)
-      if ( curDate > 4 ) {
-        this.data.pattern = resp.result;
-        setTimeout($.proxy(this._initPatternChart, this), 300);
-      }
-      else {
-        this.$patternChart.hide();
-        this.$container.find('[data-id=pattern_empty]').hide();
-      }
+      // OP002-794: 집계중기간(매월 1일 ~ 12일경) 지난달 제외한 직전3개월 데이터로 표시함. 항상 노출로 변경
+      this.data.pattern = resp.result;
+      setTimeout($.proxy(this._initPatternChart, this), 300);
     }
     else {
       this._isRequestPattern = false;

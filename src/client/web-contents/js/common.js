@@ -7,13 +7,14 @@ var fixScroll_onoff="";
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
+  skt_landing.action.headerHeight = 39; // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
   if ( $(window).scrollTop() > 0 ){
     $('body').addClass("scroll fly");
     $('#header').addClass('bg-type');
-    if(skt_landing.util.win_info.get_scrollT() > 39){
+    if(skt_landing.util.win_info.get_scrollT() > skt_landing.action.headerHeight){  // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류
       $('.home-tab-belt').addClass('fixed');
     }
   }
@@ -109,7 +110,7 @@ $(window).on('resize', function (e, datas) {
   }else{
       $('body').addClass('fly');
   }
-  if(skt_landing.util.win_info.get_scrollT() > 39){
+  if(skt_landing.util.win_info.get_scrollT() > skt_landing.action.headerHeight){  // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류
       $('.home-tab-belt').addClass('fixed');
   }else{
       $('.home-tab-belt').removeClass('fixed');
@@ -1526,7 +1527,7 @@ skt_landing.action = {
       }else{
           $('body').addClass('fly');
       }
-      if(skt_landing.util.win_info.get_scrollT() > 39){
+      if(skt_landing.util.win_info.get_scrollT() > skt_landing.action.headerHeight){  // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류
           $('.home-tab-belt').addClass('fixed');
       }else{
           $('.home-tab-belt').removeClass('fixed');
@@ -1549,11 +1550,13 @@ skt_landing.action = {
   */
   header_shadow : function(){
     $(window).bind('scroll', function(){
-      if(skt_landing.util.win_info.get_scrollT() == 0){
-          $('body').removeClass('scroll');
-      }else{
+      // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류 START
+      if(skt_landing.util.win_info.get_scrollT() > skt_landing.action.headerHeight){
           $('body').addClass('scroll');
+      }else{
+          $('body').removeClass('scroll');
       }
+      // [#OP002-130] 2019.05.08 [UX정합성 2차] 홈 화면 메인 탭메뉴 언더라인 노출 타이밍 오류 END
     });
   },
   /**

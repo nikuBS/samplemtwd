@@ -141,6 +141,7 @@ export const API_CMD = {
   BFF_04_0007: { path: '/core-bill/v1/micro-pay/total-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // MYT
   BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true, store: true },
   BFF_05_0002: { path: '/core-balance/:version/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -574,6 +575,7 @@ export const API_CMD = {
   BFF_08_0073: { path: '/core-modification/:version/ifaq/iFaq-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0077: { path: '/core-modification/v1//region-five-store-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -922,6 +924,8 @@ export const API_CMD = {
   BFF_11_0024: { path: '/core-membership/:version/tmembership/mrcht-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0025: { path: '/core-membership/:version/tmembership/near-brand', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0026: { path: '/core-membership/:version/tmembership/area-by-geo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
+
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },

@@ -24,6 +24,7 @@ Tw.MyTFareBillSms = function (rootEl) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 alert 띄우는 컴포넌트
 
+  this._paymentCommon.selectLine();
   this._bindEvent();
 };
 

@@ -144,7 +144,8 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     M000821: 'CMMA_A11_B3-76',
     M000537: 'CMMA_A11_B3-77',
     M000118: 'CMMA_A11_B3-78',
-    M000119: 'CMMA_A11_B3-79'
+    M000119: 'CMMA_A11_B3-79',
+    M001882: 'CMMA_A11_B3-94'
   },
 
   /**

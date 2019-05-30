@@ -30,6 +30,10 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
       });
     }
 
+    // T로밍 함께쓰기 6종 상품번호
+    const useTogether = ['NA00005690', 'NA00005691', 'NA00005692', 'NA00005693', 'NA00005694', 'NA00005695'];
+    const isUseTogether = useTogether.indexOf(prodId) > -1;
+
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0007, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
@@ -58,7 +62,8 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,
         expireDate : expireDate,
-        pageInfo : pageInfo
+        pageInfo : pageInfo,
+        isUseTogether : isUseTogether
       });
     });
 

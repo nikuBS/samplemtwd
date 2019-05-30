@@ -9,6 +9,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, SESSION_CMD } from '../../../types/api-command.type';
+import { EXPERIMENT_EXPS_SCRN_ID } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
   HOME_SMART_CARD,
@@ -27,6 +28,7 @@ import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../t
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
+import { SvcInfoModel } from '../../../models/svc-info.model';
 
 /**
  * @desc 메인화면-MY 초기화를 위한 class
@@ -60,6 +62,10 @@ class MainHome extends TwViewController {
 
     const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
+    let recommendProdsData = {
+      hasRecommendProds: false,
+      nowDate: DateHelper.getShortDateNoDot(new Date())
+    };
 
     if ( svcType.login ) {
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
@@ -68,11 +74,14 @@ class MainHome extends TwViewController {
           Observable.combineLatest(
             this.getUsageData(svcInfo),
             this.getMembershipData(svcInfo),
-            this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
-          ).subscribe(([usageData, membershipData, redisData]) => {
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+            this.getRecommendProds(req, svcInfo.prodId)
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+            recommendProdsData = recommendProdsResult;
+
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
             res.render(`main.home-${flag}.html`, renderData);
           });
         } else {
@@ -82,7 +91,7 @@ class MainHome extends TwViewController {
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, redisData]) => {
             homeData.usageData = usageData;
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
             res.render(`main.home-${flag}.html`, renderData);
           });
         }
@@ -93,14 +102,14 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
         ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
-          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
           res.render(`main.home-${flag}.html`, renderData);
         });
       }
     } else {
       // 비로그인
       this.getRedisData(noticeCode, '').subscribe((redisData) => {
-        const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '' };
+        const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '', recommendProdsData };
         res.render(`main.home-${flag}.html`, renderData);
       });
     }
@@ -532,6 +541,62 @@ class MainHome extends TwViewController {
       default:
     }
     return '';
+  }
+
+  /**
+   * 내게맞는요금제 추천
+   * @param {Request} req
+   * @param {any} prodId
+   * @return {Observable<any>}
+   */
+  private getRecommendProds(req: Request, prodId: any): Observable<any>  {
+
+    const defaultRetVal = {
+      hasRecommendProds: false,
+      nowDate: DateHelper.getShortDateNoDot(new Date())
+    };
+
+    if (BrowserHelper.isApp(req)) {
+      return this.apiService.request(API_CMD.BFF_10_0178, {
+        experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
+        prcplnRcTyp: 'GNRL', 
+        prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( FormatHelper.isEmpty(resp.result) ) {
+            return defaultRetVal;
+          } else {
+            // 추천 요금제와 현재 요금제가 같은 경우는 노출 안함(요금제 변경)
+            const items = resp.result.items;
+            if (!FormatHelper.isEmpty(items) && items[0].prodId === prodId) {
+              return defaultRetVal;
+            } else {
+              const list = items[0].props;
+              let validPropCnt = 0;
+
+              list.map((target) => {
+                if (target.reasonCode !== '#') {
+                  validPropCnt++;
+                }
+              });
+
+              // 모든 건에 reasonCode가 "#"으로 오는 경우는 노출하지 않음
+              if (validPropCnt === 0) {
+                return defaultRetVal;
+              } else {
+                return {
+                  hasRecommendProds: true,
+                  nowDate: DateHelper.getShortDateNoDot(new Date(parseFloat(resp.result.timestamp) * 1000))
+                };
+              }  
+            }
+          }
+        }
+        return defaultRetVal;
+      });
+    } else {
+      return Observable.of(defaultRetVal);
+    }
   }
 }
 

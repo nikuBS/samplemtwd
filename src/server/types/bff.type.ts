@@ -544,6 +544,10 @@ export const TOTAL_SHARE_DATA_SKIP_ID = [
   'DD3H8',   // NA00006405	5G XL(미정) 통합공유 데이터 50GB
   'DD3GV',   // NA00006404	5G L(미정) 통합공유 데이터 30GB
   'DD3GC',   // NA00006403	5G M(미정) 통합공유 데이터 15GB
+  // New T플랜 요금제 대응
+  'DD3IU',   // NA00006537	에센스 통합공유 데이터 15GB
+  'DD3J6',   // NA00006538	스페셜 통합공유 데이터 15GB
+  'DD3JI'    // NA00006539	맥스 통합공유 데이터 15GB
 ];
 
 export const INFINITY_DATA_PROD_ID = [
@@ -638,3 +642,8 @@ export const MYT_SUSPEND_REASON_CODE = {
   SEMI_MILITARY: '27' // 군입대(현역외)
 };
 
+export const MYT_SUSPEND_MILITARY_RECEIVE_CD = ['5000341', '5000342', '5000349', '5000350' ];
+
+export const EXPERIMENT_EXPS_SCRN_ID = {
+  RECOMMEND_PRODS: 'MTW_M000184_01'
+};
