@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG, MYT_SUSPEND_STATE_EXCLUDE } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE } from '../../types/bff.type';
+import { SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE, MYT_SUSPEND_MILITARY_RECEIVE_CD } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 
@@ -204,10 +204,13 @@ class MyTJoinSubmainController extends TwViewController {
             toDt: data.myPausedState.toDt
           };
         }
-      } else if ( data.myPausedState && ((data.myPausedState.armyDt && data.myPausedState.armyDt !== '') ||
-        (data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '')) ) {
-        data.myLongPausedState = { state: true };
-        data.myPausedState.armyDt = data.myPausedState.armyDt || data.myPausedState.armyExtDt;
+      } else if ( data.myPausedState &&
+        ( data.myPausedState.armyDt && data.myPausedState.armyDt !== '' )
+        || ( data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '' ) ) {
+        data.myLongPausedState = {
+          state: true
+        };
+         data.myPausedState.armyDt = data.myPausedState.armyDt || data.myPausedState.armyExtDt;
       }
 
       if ( data.myLongPausedState ) {
@@ -216,7 +219,7 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
-        data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
+        data.myLongPausedState.isArmy = (MYT_SUSPEND_MILITARY_RECEIVE_CD.indexOf(data.myLongPausedState.receiveCd) > -1);
         if ( data.myPausedState.svcStCd === 'AC' ) {
           if ( ( data.myPausedState.armyDt && data.myPausedState.armyDt !== '' )
             || ( data.myPausedState.armyExtDt && data.myPausedState.armyExtDt !== '' ) ) {
