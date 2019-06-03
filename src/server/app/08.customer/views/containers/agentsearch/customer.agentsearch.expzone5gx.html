@@ -67,8 +67,12 @@
                         <div class="totalfilter-wrap">
                             <span class="total">총 <span class="number-text" id="fe-result-count"><%= result.totalCount %></span>개</span>
                             
-                            <!-- 2019.02.20 옵션바로 사용할 경우 date-in 클래스 제거 -->
-                            <button type="button" class="filter-btn aria-haspopup date-in fe-select-filter" aria-haspopup="true">
+                            <!-- 2019.02.20 옵션바로 사용할 경우 date-in 클래스 제거, 전체일때 파란색 border line 제거 -->
+                            <% if (params.fiveOptionType == 0) { %>
+                                <button type="button" class="filter-btn aria-haspopup fe-select-filter" aria-haspopup="true">
+                            <% } else { %>
+                                <button type="button" class="filter-btn aria-haspopup date-in fe-select-filter" aria-haspopup="true">
+                            <% } %>
                                 <span class="datebox"><%= fiveOptionName %></span>
                             <!-- <span class="datebox">5GX 체험존</span>
                             <span class="datebox">VR 체험존</span> -->
