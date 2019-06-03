@@ -231,9 +231,11 @@ Tw.MyTDataSubMain.prototype = {
    * @returns {number}
    */
   __convertVoice: function (value) {
-    var min = parseInt((value % 3600) / 60, 10);
-    var sec = value % 60;
-    return min + ':' + sec;
+    var voice = Tw.FormatHelper.convVoiceFormat(value);
+    if (voice.hours > 0) {
+      return (voice.hours * 60) + voice.min + ':' + voice.sec;
+    }
+    return voice.min + ':' + voice.sec;
   },
   /**
    * @function
