@@ -11,7 +11,6 @@ Tw.MyTJoinMyPlanAddThigh5 = function(rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-  this._init();
 };
 
 Tw.MyTJoinMyPlanAddThigh5.prototype = {
@@ -35,9 +34,13 @@ Tw.MyTJoinMyPlanAddThigh5.prototype = {
     var customUrl = 'https://finnq.onelink.me/YERF/46b2e4dc';
     var packageName = 'com.finnq.f1';
     if (Tw.BrowserHelper.isApp()) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { 'package': packageName });
+      if (Tw.BrowserHelper.isIos()) {
+        location.href = customUrl;
+      } else {
+        this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { 'package': packageName });
+      }
     } else {
-      Tw.CommonHelper.openUrlExternal(customUrl);
+      location.href = customUrl;
     }
   }
 };
