@@ -15,15 +15,21 @@ Tw.CustomerAgentExpzone5gxSearch = function (rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this.fiveOptionNames = {'0': '전체', '1': '5GX 체험존', '2': 'VR 체험존', '3': '5GX 체험존,VR 체험존'};
   this.fiveOptionType = params.fiveOptionType;
 
-  this.fiveOptionNames = {"0": "전체", "1": "5GX 체험존", "2": "VR 체험존"};
+  /* 기본 전체 옵션인 경우 파란 테두리 없애기 */
+  // if(this.$container.find('.fe-select-filter span').text().trim().indexOf(this.fiveOptionNames['0']) > -1){
+  //   this.$container.find('.fe-select-filter').removeClass('date-in');
+  // }
+
+
   this.selectedLocationCode = params.locationOrder;
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
   
   this._cacheElements();
   this._bindEvents();
-  this.$inputSearch.trigger("keyup");
+  this.$inputSearch.trigger('keyup');
 };
 
 Tw.CustomerAgentExpzone5gxSearch.prototype = {
@@ -84,9 +90,19 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
   _handleOpenSelectFilterPopup: function($layer) {
 
     /* fiveOptionType가 0이라면 전체를 선택, 그외는 fiveOptionType-1 번째를 선택-eq(0) 부터 시작 */
-    var $checkbox = this.fiveOptionType == 0 ? this.$container.find('.select-list li input') : this.$container.find('.select-list li:eq(' + (parseInt(this.fiveOptionType) - 1) + ') input');
-    $checkbox.attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true); 
-   
+    /*     var $checkbox = this.fiveOptionType == 0 ? this.$container.find('.select-list li input') : this.$container.find('.select-list li:eq(' + (parseInt(this.fiveOptionType) - 1) + ') input');
+    $checkbox.attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true);  */
+
+    /* fiveOptionType가 0이라면 전체 비선택, 3이라면 전체를 선택, 그외는 fiveOptionType-1 번째를 선택-eq(0) 부터 시작 */
+    if(this.fiveOptionType == Object.keys(this.fiveOptionNames)[0]){  /* 전체 */
+      this.$container.find('.select-list li input').attr('checked', false).closest('.checkbox').removeClass('checked').attr('aria-checked',false);
+
+    } else if(this.fiveOptionType == Object.keys(this.fiveOptionNames)[3]){ /* 5gxZone + vrZone으로 모두 선택 */
+      this.$container.find('.select-list li input').attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true); 
+    } else {  /* 둘중에 하나만 선택한 조건 */
+      this.$container.find('.select-list li:eq(' + (parseInt(this.fiveOptionType) - 1) + ') input').attr('checked', true).closest('.checkbox').addClass('checked').attr('aria-checked',true);
+    }
+
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
   },
@@ -99,10 +115,17 @@ Tw.CustomerAgentExpzone5gxSearch.prototype = {
    */
   _handleSelectFilters: function($layer) {
 
-    var zoneValue = "0";
+    var zoneValue = '0';
     if($('.select-list li input:checked').size()  == 1){
-      zoneValue = $('.select-list li input:checked').val()
+      zoneValue = $('.select-list li input:checked').val();
+    } else if($('.select-list li input:checked').size()  == 2){
+      zoneValue = Object.keys(this.fiveOptionNames)[3];  /* this.fiveOptionNames의 key값 */
     }
+
+    if(this.$container.find('.fe-select-filter span').text().trim().indexOf(this.fiveOptionNames['0']) > -1){
+      this.$container.find('.fe-select-filter').removeClass('date-in');
+    }
+
 
     if ( zoneValue == this.fiveOptionType){
       this._popupService.close();

@@ -523,6 +523,14 @@ export const MYT_JOIN_WIRE_SET_PAUSE = {
   SP: '일시 정지 해제'
 };
 
+export const MYT_JOIN_THIGH5_PREFERENTIAL = {
+  NC00000074: '우대금리 2%',
+  NC00000075: 'T high5 캐시백 1%',
+  NC00000076: '우대금리 2%',
+  NC00000077: 'T high5 캐시백 1%',
+  NC00000080: 'T high5 0히어로 캐시백 1%'
+};
+
 export enum CUSTOMER_NOTICE_CATEGORY {
   TWORLD = 'T world',
   DIRECTSHOP = 'T world 다이렉트',
