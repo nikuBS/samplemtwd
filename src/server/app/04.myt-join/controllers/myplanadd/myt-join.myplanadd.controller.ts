@@ -20,11 +20,12 @@ const PLAN_BUTTON_TYPE = {
 };
 
 const THIGH5_PROD_IDS: any = [
-  'NC00000074',   // T high5  우대혜택 12 저
-  'NC00000075',   // T high5  우대혜택 12 고
-  'NC00000076',   // T high5  우대혜택 24 저
-  'NC00000077',   // T high5  우대혜택 24 고
-  'NC00000079'    // T high5 적금
+  'NC00000074',   // T high5 우대혜택 12 저
+  'NC00000075',   // T high5 우대혜택 12 고
+  'NC00000076',   // T high5 우대혜택 24 저
+  'NC00000077',   // T high5 우대혜택 24 고
+  'NC00000079',   // T high5 적금
+  'NC00000080'    // T high5 군요금제 사용관련 상품
 ];
 
 /**
