@@ -89,7 +89,13 @@
 
                             <div class="date-info use_time">
                                 <p class="data-title">5만원 이하 요금제 사용 기간</p>
-                                <p class="data-state"><span class="str"><%= dGradeDay %></span>일</p>
+                                <p class="data-state">
+                                    <% if (dGradeDay >= 45) { %>
+                                    <span class="str">45</span>일 이상 사용
+                                    <% } else { %>
+                                    <span class="str"><%= dGradeDay %></span>일
+                                    <% } %>
+                                </p>
                             </div>
                             <div class="date-info defer_time">
                                 <p class="data-title">유예 기간</p>
