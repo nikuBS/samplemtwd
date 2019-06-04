@@ -19,6 +19,15 @@ const PLAN_BUTTON_TYPE = {
   SUBSCRIBE: 'SC' // 가입
 };
 
+const THIGH5_PROD_IDS: any = [
+  'NC00000074',   // T high5 우대혜택 12 저
+  'NC00000075',   // T high5 우대혜택 12 고
+  'NC00000076',   // T high5 우대혜택 24 저
+  'NC00000077',   // T high5 우대혜택 24 고
+  'NC00000079',   // T high5 적금
+  'NC00000080'    // T high5 군요금제 사용관련 상품
+];
+
 /**
  * @class
  * @desc 나의 부가서비스
@@ -127,7 +136,8 @@ class MyTJoinMyPlanAdd extends TwViewController {
         } :
         {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
-      scrbDt: DateHelper.getShortDate(addition.scrbDt)
+      scrbDt: DateHelper.getShortDate(addition.scrbDt),
+      isTHigh5Prod: THIGH5_PROD_IDS.indexOf(addition.prodId) !== -1 ? 'Y' : 'N'
     };
   }
 

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">T high5 적금 현황 조회</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+			<h2 class="blind">내용</h2>
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h3 class="tit">상품 가입 현황</h3>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">상품명</span>
+								<span class="use">T high5 적금</span>
+							</li>
+							<li>
+								<span class="stit">가입일</span>
+								<span class="use">2019.05.28</span>
+							</li>
+							<li>
+								<span class="stit">적금가입기간 </span>
+								<span class="use">12개월/24개월</span>
+							</li>
+						</ul>
+					</div>
+					<div class="tod-listDown-btn">
+						<span class="bt-wrap">
+							<a href="#" class="bt-link-tx small underline">상세내역보기(핀크 app)</a>
+						</span>
+					</div>
+				</div><!-- //.cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true">
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h3 class="tit">T high5 적금 혜택 현황</h3>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">우대 혜택</span>
+								<span class="use">T high5 캐시백 1%</span>
+							</li>
+							<li>
+								<span class="stit">추가 혜택</span>
+								<span class="use">T high5 0히어로 캐시백 1%</span>
+							</li>
+						</ul>
+					</div>
+				</div><!-- //.cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true">
+				<div class="cont-box">
+					<div class="ti-caption-type01">
+						<h2 class="tit">5만원 이하 요금제 사용 기간<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">5만원 이하 요금제 사용 기간 Tip</span></i></button></h2>
+					</div>
+					<div class="tod-graph-wrap ">
+						<div class="tod-time-info tod-less-price"> <!-- 5만원 이하 요금제 사용 일 수 1일 ~ 44일 인 경우 tod-less-price 클래스 추가  -->
+								
+							<div class="date-info use_time">
+								<p class="data-title">5만원 이하 요금제 사용 기간</p>
+								<p class="data-state"><span class="str">35</span>일</p>
+							</div>
+							<div class="date-info defer_time">
+								<p class="data-title">유예 기간</p>
+								<p class="data-state"><span class="str">44</span>일</p>
+							</div>
+						</div>
+						<div class="bar-chart-hoz">
+							<span class="data-bar red" style="width:30%"></span>
+						</div>
+					</div>
+				</div>
+				<hr class="cont-sp type1" aria-hidden="true">
+				<div class="cont-box nogaps">
+					<ul class="full-link-list">
+						<li>
+							<button>
+								<span class="inner">
+									<span class="tit">요금제 변경 가능 알림 서비스</span>
+								</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<div class="cont-box bgnone noborder">
+                    <div class="announcement-box fs12">
+						<span class="blind">유의사항</span>
+                        <ul>
+							<li class="announcement-bullet type01">월정액 5만 원 미만 요금제로 변경하실 경우 변경한 요금제의 사용 일수 45일 차부터 캐시백 혜택을 받으실 수 없습니다.</li>  
+							<li class="announcement-bullet type01">45일 차에 혜택이 자동 변경되므로 요금제를 다시 변경한 후 캐시백 혜택을 받으시길 바랍니다.<br>(변경일로부터 1개월 안에는 요금제를 다시 변경하실 수 없습니다)</li>
+							<li class="announcement-bullet type01">적금 상품 정책(불입액 연체/중도해지 등)에 의한 금리 변동 정보는 표시되지 않으며, 납입금, 만기 수령금 및 납입현황에 대한 정확한 정보는 핀크 App. 및 은행 고객센터(1588-5050)에서 확인이 가능합니다.</li> 
+							<li class="announcement-bullet type01">핀크 app 바로가기 <br>
+								<a href="#" class="bt-link-tx small underline">https://finnq.onelink.me/YERF/46b2e4dc</a>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

@@ -4735,6 +4735,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .og-5mktp-wrap .og-vr-refer{display:block; font-size:0.75rem; margin-top:0.625rem}
 .og-5mktp-wrap .og-vr-refer{display:block; font-size:0.75rem; margin-top:0.625rem}
 .og-5mktp-wrap .og-5mktp-em{color:#ef4b49}
+.og-5mktp-wrap .og-5mktp-em-b{color:#ef4b49; font-weight:bold;} /* 190603 추가 */
 
 /*kjm - 마음껏 누리는 생활*/
 .og-5mktp-wrap .og-5mktp-block{display:block}
@@ -4840,12 +4841,16 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 
 .og-plan-price-list .acco-title{padding:1.67rem 0 2.11rem  }
 .og-plan-price-list .acco-title .og-plan-price-tit{font-size:1.9375rem; font-weight:bold; color:#000}
+.og-plan-price-list .acco-title .og-plan-price-tit a{float:right; font-size:0.81rem; margin-top: 0.375rem; padding: 0 0.6rem;} /* 190603 추가 */
 .og-plan-price-list .og-plan-price-ex{display:block; font-size:1.25rem; color:#000}
 
 .og-plan-price-list .acco-content{margin:0 -1.5rem; background:#f2f2f2; padding:1.6rem 1.5rem }
 .og-plan-price-list .acco-content .og-plan-gift-list{}
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-tit{font-size:1rem; }
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-tit strong{font-weight:normal; color:#ef4b49}
+
+.og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-tit a{float: right; font-size: 0.81rem; margin: -0.313rem 0 0.75rem; padding:0 0.6rem} /* 190603 추가*/
+
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-box{margin-top:0.5rem}
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-box img{width:100%; height:auto; vertical-align:top}
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-gift-item:not(:first-child){margin-top:1.4375rem}
@@ -4858,7 +4863,7 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .og-plan-price-list .acco-content .og-plan-gift-list .og-plan-pack-list .og-plan-pack-item:first-child{margin-left:0}
 .og-plan-price-list .og-share .og-share-box{ padding:1.56rem 0.9rem; background:#fff url('/img/t_m5g/og_share_img.png') no-repeat right 50%; background-size:7.65rem; min-height:5.62rem; box-sizing:border-box }
 .og-plan-price-list .og-share .og-share-box .og-share-txt{width:65%; font-size:0.84rem}
-.og-plan-price-list .og-share .og-share-box_2{ padding:1.56rem 0.9rem; background:#fff url('/img/t_m5g/og_share_img_2.png') no-repeat right 50%; background-size:9.65rem; min-height:5.62rem; box-sizing:border-box }
+.og-plan-price-list .og-share .og-share-box_2{ padding:1.56rem 0.9rem; background:#fff url('/img/t_m5g/og_share_img_2.png') no-repeat right 50%; background-size:9.65rem; min-height:5.62rem; box-sizing:border-box } /* 190430 [#7617]_추가 */
 
 .og-5mktp-wrap .og-vr-price-box{margin:0 -1.5rem; background:#f7f7f7}
 .og-5mktp-wrap .og-vr-price-box .og-vr-price-list{width:100%}
@@ -4869,6 +4874,8 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 
 .device_android .og-showbt-ios {display:none;}	/* 190403 수정 */
 .device_ios .og-showbt-android {display:none;}	/* 190403 수정 */
+
+.og-5mktp-wrap .og-vrpack-box .vrbnf-detail .tit .og-refer{margin-bottom: 17px; margin-top: 10px; float:right; color: #666; font-size: 0.75rem;} /* 190603 추가 */
 
 /* //190325 추가 - 마케팅페이지 */
 
@@ -4939,9 +4946,9 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .dwg-frm-area .frm-textarea::placeholder {font-weight:normal}
 /* //[DV001-20897] 190419 추가 - 190422 수정 - 190429 수정 - DG방어 */
 
-/* 190424 5GX 스탠다드 */
-.production-benefit-wrap .ico.ico-5g-membership-vip{background-image:url(../img/ico/ico-5g-membership-vip.png);background-size: 3.75rem}
-.production-benefit-wrap .ico.ico-5g-insurance-off{background-image:url(../img/ico/ico-5g-insurance-off.png);background-size: 3.75rem}
+/* 190424 [DV001-21491] 5GX 스탠다드 */
+.production-benefit-wrap .ico.ico-5g-membership-vip{background-image:url(/img/ico/ico-5g-membership-vip.png);background-size: 3.75rem}
+.production-benefit-wrap .ico.ico-5g-insurance-off{background-image:url(/img/ico/ico-5g-insurance-off.png);background-size: 3.75rem}
 
 /* 190503_[#7633/DV001-21789] myT 군입대 장기일시정지요건 */
 .tod-side-chbox.simple-form{display:inline-block; margin-left:0.3125rem}

@@ -35179,3 +35179,15 @@ body.apphome .section-box {
 .with-payment-line .tod-total-payment .tod-title{display:block;font-size:0.8125rem}
 .with-payment-line .tod-total-payment .tod-price-area{position:relative;font-size:0.9375rem;font-weight:bold}
 .with-payment-line .tod-total-payment .tod-price{font-size:1.875rem}
+
+/* 190524 추가 [OP002-753] T high5 적금 */
+.tod-listDown-btn{text-align:right; border-top:1px solid #e5e5e5; margin:0 -1rem; padding:0.3rem 1rem 0.67rem}
+.tod-listDown-btn .bt-wrap{display:inline-block}
+.tod-listDown-btn .bt-wrap .bt-link-tx{margin:0}
+.tod-graph-wrap .tod-time-info{display:-webkit-flex; display:flex; justify-content:space-between ; margin-bottom:0.53rem}
+.tod-graph-wrap .tod-time-info.tod-less-price .use_time .data-state{color:#e7002a}
+.tod-graph-wrap .tod-time-info .data-title{font-size:0.75rem; color:#8d8d8d; margin-bottom:0.19rem}
+.tod-graph-wrap .tod-time-info .data-state{font-size:0.56rem; color:#000; }
+.tod-graph-wrap .tod-time-info .data-state .str{font-weight:bold; font-size:1.12rem;}
+.tod-graph-wrap .tod-time-info .use_time{text-align:left}
+.tod-graph-wrap .tod-time-info .defer_time{text-align:right}
