@@ -440,12 +440,14 @@ Tw.TidLandingComponent.prototype = {
    */
   _successSetSession: function (target) {
 
+    /*
     var msg = '##### For TID debugging #####' + '\n'
               + 'target ====> ' +  target + '\n'
               + 'location.pathname ====> ' +  location.pathname + '\n'
               + 'location.search ====> ' +  location.search + '\n';
 
     alert(msg);
+    */
 
     /*
     if(target === '/common/member/logout/complete')
