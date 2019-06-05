@@ -440,14 +440,12 @@ Tw.TidLandingComponent.prototype = {
    */
   _successSetSession: function (target) {
 
-    if ( !!Tw.FormatHelper.isEmpty(target) ) {
-      var msg = '##### For TID debugging #####' + '\n'
-                + 'target ====> ' +  target + '\n'
-                + 'location.pathname ====> ' +  location.pathname + '\n'
-                + 'location.search ====> ' +  location.search + '\n';
+    var msg = '##### For TID debugging #####' + '\n'
+              + 'target ====> ' +  target + '\n'
+              + 'location.pathname ====> ' +  location.pathname + '\n'
+              + 'location.search ====> ' +  location.search + '\n';
 
-      alert(msg);
-    }
+    alert(msg);
 
     /*
     if(target === '/common/member/logout/complete')
