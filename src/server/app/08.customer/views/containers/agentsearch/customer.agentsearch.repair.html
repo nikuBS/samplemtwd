@@ -34,42 +34,39 @@
                             </dl>
                         </div>
                         <!-- // .as-representative-number -->
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box accordion2">
-                                <div class="acco-style as-acco"><!-- 스타일별 클래스 추가 -->
-                                    <ul class="acco-box">
-                                        <li class="acco-list"><!-- on , off -->
-                                            <div class="acco-title"><button role="button" aria-pressed="">A/S센터 업무시간</button></div>
-                                            <div class="acco-content">
-                                                <div class="as-time-list">
-                                                    <dl>
-                                                        <dt>행복 A/S센터</dt>
-                                                        <dd>09:00 ~ 18:00 (토/일요일 및 공휴일 휴무)</dd>
-                                                    </dl>
-                                                    <dl>
-                                                        <dt>종로 A/S센터 </dt>
-                                                        <dd>10:00 ~ 19:00</dd>
-                                                    </dl>
-                                                    <dl>
-                                                        <dt>제주, 광주 A/S센터 </dt>
-                                                        <dd>(평일) 10:00 ~ 18:00 / (토요일) 10:00 ~ 14:00</dd>
-                                                    </dl>
-                                                    <!-- <dl> -->
-                                                        <!-- <dt>A/S mini센터</dt> -->
-                                                        <!-- <dd>10:00 ~ 19:00 (토/일요일 및 공휴일 휴무)<em class="tx-notice">※ A/S mini센터 : 대리점 내 애플 A/S센터 </em></dd> -->
-                                                    <!-- </dl> -->
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                        <!-- .tod-as-time-list -->
+                        <div class="tod-as-time-list">
+                            <div class="tod-inner">
+                                <h3 class="h-title">A/S센터 업무시간</h3>
+                                <ul class="list-as">
+                                    <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">행복 A/S센터</span>
+                                            <span class="sp-td">(월~금) 09:00 ~ 18:00</span>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">종로 A/S센터</span>
+                                            <span class="sp-td">(월~금) 10:00 ~ 19:00</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">제주, 광주 A/S센터</span>
+                                            <span class="sp-td">(월~금) 10:00 ~ 18:00<br>(토) 10:00 ~ 14:00</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="list-noti">
+                                    <li>토, 일요일 및 공휴일 휴무</li>
+                                    <li>A/S센터에 방문할 때는 신분증을 꼭 가져 오세요.</li>
+                                </ul>
                             </div>
                         </div>
-                        <!--// .widget -->
-                        <!-- .as-bringing -->
-                        <div class="as-bringing"><sup>*</sup>A/S센터에 방문할 때는 신분증을 꼭 가져 오세요.</div>
-                        <!-- // .as-bringing -->
+                        <!--// .tod-as-time-list -->
+
                         <% let regions = ['서울', '경기', '강원', '경상', '전라충청', '제주']; %>
                         <% for (let i = 0; i < centres.length; i++) { %>
                         <% if (centres[i].length === 0) continue; %>
