@@ -35191,3 +35191,22 @@ body.apphome .section-box {
 .tod-graph-wrap .tod-time-info .data-state .str{font-weight:bold; font-size:1.12rem;}
 .tod-graph-wrap .tod-time-info .use_time{text-align:left}
 .tod-graph-wrap .tod-time-info .defer_time{text-align:right}
+
+/* 190604 [OP002-872][UX/PUB] (W-1905-057-01) [UX정합성 2차][AS센터 찾기] - CS_03_01 */
+.tod-as-time-list{border-top: 1px solid #e1e1e1;}
+.tod-as-time-list .tod-inner{padding: 1.25rem 0 .875rem 0;}
+.tod-as-time-list .h-title{font-size: 0.94rem; margin-bottom: 00.63rem;}
+.tod-as-time-list .list-as > li{padding: 1.25rem 0;}
+.tod-as-time-list .sp-tr{display: table; width: 100%; color: #858585;}
+.tod-as-time-list .sp-th, .tod-as-time-list .sp-td{display: table-cell; vertical-align: middle;}
+.tod-as-time-list .sp-th{width: 55%;font-size: .875rem; text-align: left;}
+.tod-as-time-list .sp-td{width: 45%; font-size: .875rem; color:#000; text-align: right;}
+.tod-as-time-list .list-noti{border-top: 1px solid #e1e1e1; padding-top:13px; margin-bottom: 0.938rem;}
+.tod-as-time-list .list-noti > li{position:relative; font-size: 0.75rem; line-height: 1rem; color: #858585; margin:0.5rem 0;  padding-left: 0.5rem;} 
+.tod-as-time-list .list-noti > li:before {display: inline-block; content: ''; position: absolute; left: 0; top: 0.38rem; width: 0.19rem; height: 0.19rem; background: #666; border-radius: 50%;}
+
+/* 190516 추가 [OP002-389] faq */
+.tod-faq-search{overflow:hidden}
+.tod-faq-search .tod-faq-filter{width:27%; float:left; }
+.tod-faq-search .tod-faq-filter .bt-dropdown.text-type02{width:100%; padding:0.6875rem 2.25rem 0.6875rem 0.75rem}
+.tod-faq-search .tod-have-filter{width:-webkit-calc(100% - 27% - 0.5rem); width:-ms-calc(100% - 27% - 0.5rem); width:calc(100% - 27% - 0.5rem); float:right}

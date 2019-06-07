@@ -128,5 +128,14 @@
         </div>
         <!--// #contents -->
     </div>
+    <!-- 190531 스크립트 추가 -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.resultsearch-box > .custom-form > input').on('change', function () {
+                $('.resultsearch-box > label').toggleClass('on', $(this).prop('checked'));
+            });
+        });
+    </script>
+    <!-- //190531 스크립트 추가 -->
 </body>
 </html>
