@@ -17,13 +17,18 @@
                             <ul>
                                 <li>
                                     <div>
-                                        <span class="title">서비스업체</span>
+                                        <!--
+                                        TODO : 6월 첫째주 배포로 연기됨.
+                                        사용처 -> 이용내역문의처 정보
+                                        서비스명 -> 서비스업체
+                                        -->
+                                        <span class="title">사용처</span>
                                         <span class="tx-cont">{{useServiceCompany}}</span>
                                     </div>
                                     <div>
                                         <ul class="inner-list">
                                             <li>
-                                                <span class="title">이용서비스</span>
+                                                <span class="title">서비스명</span>
                                                 <span class="tx-cont">{{useServiceNm}}</span>
                                             </li>
                                             <li>
@@ -34,12 +39,12 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <span class="title">결제금액</span>
+                                    <span class="title">금액</span>
                                     <span class="tx-cont">{{useAmt}} <span class="tx-regular">원</span></span>
                                 </li>
                                 <li>
-                                    <span class="title">이용내역문의처</span>
-                                    <span class="tx-cont">{{useServiceCompanyTel}}</span>
+                                    <span class="title">공제액</span>
+                                    <span class="tx-cont">{{dedAmt}} <span class="tx-regular">원</span></span>
                                 </li>
                                 <li>
                                     <span class="title">일시</span>
@@ -92,21 +97,16 @@
                 </li>
                 <li>
                     <dl>
-                        <dt>유튜브 프리미엄</dt>
+                        <dt>유튜브 레드</dt>
                         <dd>유튜브(YouTube)하단 도움말→의견 보내기
                             <a href="https://support.google.com/youtube/contact/commerce_contact?hl=ko&cfsi=subs_red_2 " class="fe-link-external" target="_blank" title="새창열림">고객센터 바로가기</a>
                         </dd>
                     </dl>
                 </li>
-                <li>
-                    <dl>
-                        <dt>Apple</dt>
-                        <dd>
-                            <a href="http://itunes.com/bill" class="fe-link-external" target="_blank" title="새창열림">http://iTunes.com/bill</a>
-                        </dd>
-                    </dl>
-                </li>
             </ul>
+            <p class="payment-detail-btm-info">
+                고객정보보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 사용처에서 확인하실 수 있습니다.
+            </p>
         </div>
     </div>
     <!--// #header -->
