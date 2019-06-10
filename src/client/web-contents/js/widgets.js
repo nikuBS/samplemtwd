@@ -734,8 +734,9 @@ skt_landing.widgets = {
       if($(this).find('.slick-initialized').length > 0){
         $(this).find('.slider').slick('destroy');
       }
-      var _this = $(this).find('.slider');      
-      if($(this).hasClass('slider1-auto')) {    //@DV001-16538
+      var _this = $(this).find('.slider');
+      if($(this).data('slider-auto')) {    //@DV001-16538 // 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경
+        $(this).addClass('slider1-auto'); // 190610_추가
         _this.slick({
           autoplay: true,
           autoplaySpeed: 4000,

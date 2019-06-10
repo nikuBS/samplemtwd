@@ -1,0 +1,132 @@
+ <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>개인정보 제3자 제공 동의</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="agree-chk-wrap">
+                            <div class="list-comp-input-agree">
+                                <div class="widget">
+                                    <div class="widget-box check">
+                                        <ul class="select-list" role="group">
+                                            <li>
+                                                <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" title="개인정보 제3자 제공 동의" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                        <p class="layout-text all-chk">
+                                                            <span class="mtext">모두 동의 (선택항목 포함)</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" title="개인정보 제3자 제공 동의" value="" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text tod-pdtype2">
+                                                            <span class="mtext">혜택 제공을 위한 제3자 제공, 처리위탁 동의 (필수)</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">혜택 제공을 위한 제3자 제공, 처리위탁 동의 약관 자세히 보기</span></button>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" title="개인정보 제3자 제공 동의" value="" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                                        <p class="layout-text tod-pdtype2">
+                                                            <span class="mtext">혜택 제공을 위한 제3자 광고수신 동의 (선택)</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">혜택 제공을 위한 제3자 광고수신 동의 약관 자세히 보기</span></button>
+                                            </li>
+                                        </ul>       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <ul class="announcement-box">
+                            <li class="announcement-bullet type01">약관 명을 클릭하면 상세 내용을 볼 수 있습니다.</li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full item-two">
+                            <li>
+                                <button class="btn-floating btn-style2">취소</button>
+                            </li>
+                            <li class="bt-red1">
+                                <button>다음</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
