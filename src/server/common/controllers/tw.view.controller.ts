@@ -213,7 +213,7 @@ abstract class TwViewController {
     // 19.05.28 
     // APP 을 통한 로그인 시 XTLID, XTLOGINID, XTSVCGR, XTLOGINTYPE 쿠키가 생성되지 않는 (사라지는?) 문제를 해결하기 위해
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
-    // this.checkXtCookie(req, res);
+    this.checkXtCookie(req, res);
 
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);

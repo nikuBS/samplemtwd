@@ -5469,3 +5469,12 @@ body.apphome .main-membershop-box {
 .tod-bann-auto .tod-bann-btn:before{content:''; display:inline-block; width:0.8125rem !important; height:0.8125rem !important; border-radius:50%; text-align:center;  background:rgba(00,00,00,0.3) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;}
 .tod-bann-auto .tod-bann-btn.stop:before{background-image:url('/img/main/tod_ban_stop.png')}
 /* //190603 추가 [OP002-994] 배너 개선 */
+
+/* 190610 추가 [DV001-21929] 메인 그래프 주석 추가 건 */
+.tod-flydata-wrap{display:block; text-align:center; width:100%; margin-bottom:0.625rem;}
+.tod-link-flydata{display:inline-block; position: relative; font-size:1rem;}
+.tod-link-flydata .tod-icon-flydata{position: absolute; top: 0.1rem; left: 0;}
+.tod-link-flydata .sp-tit{margin-right:0.625rem; padding-left: 1.31rem;}
+.tod-link-flydata .sp-data{color:#178bce; font-weight:700;}
+.tod-icon-flydata{display: inline-block; width: 1.06rem; height: 1.06rem; background: url(/img/ico/icon_34px_datalist.png) no-repeat 0 0; background-size: 100% 100%;}
+/* //190610 추가 [DV001-21929] 메인 그래프 주석 추가 건 */

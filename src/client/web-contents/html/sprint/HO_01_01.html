@@ -480,7 +480,7 @@
                                 <div class="main-charge-box benefit section-swiper-box main-banner-img tod-bann-auto"> <!-- 190603_수정 : tod-bann-auto 추가 -->
                                     <!-- .widget -->
                                     <div class="widget">
-                                        <div class="widget-box slider1 slider1-auto"> <!-- 190603_수정 : slider1-auto -->
+                                        <div class="widget-box slider1" data-slider-auto="true"> <!-- 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경 -->
 											<div class="slider-box">
                                                 <ul class="slider">
                                                     <li>
@@ -559,7 +559,7 @@
                                 <div class="main-charge-box advice section-swiper-box main-banner-img tod-bann-auto"> <!-- 190603_수정: tod-bann-auto -->
                                     <!-- .widget -->
                                     <div class="widget">
-                                        <div class="widget-box slider1 slider1-auto"> <!-- 190603_수정 : slider1-auto -->
+                                        <div class="widget-box slider1" data-slider-auto="true"> <!-- 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경 -->
                                             <div class="slider-box">
                                                 <ul class="slider">
                                                     <li>
@@ -626,7 +626,7 @@
                                     <button type="button" class="stit tit">이럴 땐<br>이렇게 하세요</button><!--2019.02.13 변경-->
                                     <!-- .widget -->
                                     <div class="widget">
-                                        <div class="widget-box slider1 slider1-auto">  <!-- 190603_수정: slider1-auto -->
+                                        <div class="widget-box slider1" data-slider-auto="true"> <!-- 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경 -->
                                             <div class="slider-box">
                                                 <ul class="slider">
                                                     <li>
@@ -757,9 +757,7 @@
             skt_landing.action.home_slider({
                 initialSlide: 0
             });
-            skt_landing.widgets.widget_slider1();
             skt_landing.widgets.widget_slider2();
-            skt_landing.widgets.widget_slider7(); // 190522 추가 - js [M-1904-103-00] [마케팅] T월드 내게맞는요금제 추천 개발
         });
     </script>
 </body>
