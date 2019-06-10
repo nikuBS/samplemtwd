@@ -6521,18 +6521,20 @@ a.ui-button:active,
   color: #999999;
   font-size: 0.75rem; }
 
+/* 190531 수정 [OP002-1288] 검색 결과내 텍스트,체크박스 정합성 */
 .resultsearch-box .custom-form input[type=checkbox] + .c-type1 {
   width: 0.75rem !important;
   height: 0.75rem !important;
-  margin: 0.19rem 0.44rem 0 0; }
+  margin: 0.19rem 0.44rem 0 0;
+  background-image:url(/img/svg/component_check_small_on_disabled.svg); }
 
 .resultsearch-box .on {
-  color: #f76252;
-  font-weight: 700; }
+  color: #000; }
 
-.device_ios .resultsearch-box .custom-form + label {
+.resultsearch-box .custom-form + label {
   display: inline-block;
-  vertical-align: -2px; }
+  vertical-align: -0.125rem; }
+/* //190531 수정 [OP002-1288] 검색 결과내 텍스트,체크박스 정합성 */
 
 .connection-searchword {
   position: relative;
