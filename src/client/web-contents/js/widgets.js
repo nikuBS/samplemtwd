@@ -755,6 +755,14 @@ skt_landing.widgets = {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
         });
+
+        // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+        _this.next('button.tod-bann-btn').on('click', function () {
+            _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
+            $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
+            $(this).toggleClass('stop', !$(this).hasClass('stop'));
+        });
+        // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
       }else{
         _this.slick({
           dots: true,
