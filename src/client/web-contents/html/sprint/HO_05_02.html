@@ -36,7 +36,7 @@
         </ul>
     </div>
     // #skip_navigation -->
-    <iv class="wrap">
+    <div class="wrap">
         <!-- #header -->
         <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
             <div class="h-belt"><!-- border-bottom : 1px -->
@@ -52,14 +52,14 @@
                 </div>
                 <div class="resultsearch-box">
                     <span class="custom-form"><input type="checkbox" id="resultsearch" name="resultsearch"><span class="c-type1"></span></span>
-                    <label for="resultsearch">결과 내 재검색</label>
+                    <label for="resultsearch" class="">결과 내 재검색</label><!-- 체크박스 선택시 class="on" 추가 -->
                     <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
                 </div>
             </div>
         </div>
         <!--// #header -->
         <!-- #contents -->
-        <iv id="contents" class="container-wrap">
+        <div id="contents" class="container-wrap">
             <div class="container">
 
                 <div class="connection-searchword">
@@ -995,9 +995,19 @@
                 </div>
                 <!-- //사이트 이용안내 -->
 
-            </iv>
-        </iv>
+            </div>
+        </div>
         <!--// #contents -->
     </div>
+
+    <!-- 190531 스크립트 추가 -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.resultsearch-box > .custom-form > input').on('change', function () {
+                $('.resultsearch-box > label').toggleClass('on', $(this).prop('checked'));
+            });
+        });
+    </script>
+    <!-- //190531 스크립트 추가 -->
 </body>
 </html>

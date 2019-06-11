@@ -5459,3 +5459,22 @@ body.apphome .main-membershop-box {
 
  /* 190515 추가 [OP002-465] 홈 화면 이럴땐 이렇게 하세요 타이틀 조정 */ 
  .main-tip-box > .stit.tit.tod-tit-lar{font-size:1.56rem; line-height:1.88rem}
+
+ /* 190603 추가 [OP002-994] 배너 개선 */
+.tod-bann-auto .slider1-auto .slider-box{position:relative}
+.tod-bann-auto .slider1-auto .slick-dots{right:2.9375rem !important}
+.tod-bann-auto.main-tip-box.box-type .slider1-auto .slider-box .tod-bann-btn{top:-3.9375rem !important}
+.tod-bann-auto.accessories-box .slider1-auto .slider-box .tod-bann-btn{top:1.6875rem !important}
+.tod-bann-auto .tod-bann-btn{position:absolute; width:auto !important; top:1.3125rem; right:1.5rem; padding:0.3125rem; line-height:0; vertical-align:top }
+.tod-bann-auto .tod-bann-btn:before{content:''; display:inline-block; width:0.8125rem !important; height:0.8125rem !important; border-radius:50%; text-align:center;  background:rgba(00,00,00,0.3) url('/img/main/tod_ban_play.png') no-repeat 50% 50%; background-size:100%;}
+.tod-bann-auto .tod-bann-btn.stop:before{background-image:url('/img/main/tod_ban_stop.png')}
+/* //190603 추가 [OP002-994] 배너 개선 */
+
+/* 190610 추가 [DV001-21929] 메인 그래프 주석 추가 건 */
+.tod-flydata-wrap{display:block; text-align:center; width:100%; margin-bottom:0.625rem;}
+.tod-link-flydata{display:inline-block; position: relative; font-size:1rem;}
+.tod-link-flydata .tod-icon-flydata{position: absolute; top: 0.1rem; left: 0;}
+.tod-link-flydata .sp-tit{margin-right:0.625rem; padding-left: 1.31rem;}
+.tod-link-flydata .sp-data{color:#178bce; font-weight:700;}
+.tod-icon-flydata{display: inline-block; width: 1.06rem; height: 1.06rem; background: url(/img/ico/icon_34px_datalist.png) no-repeat 0 0; background-size: 100% 100%;}
+/* //190610 추가 [DV001-21929] 메인 그래프 주석 추가 건 */

@@ -734,8 +734,9 @@ skt_landing.widgets = {
       if($(this).find('.slick-initialized').length > 0){
         $(this).find('.slider').slick('destroy');
       }
-      var _this = $(this).find('.slider');      
-      if($(this).hasClass('slider1-auto')) {    //@DV001-16538
+      var _this = $(this).find('.slider');
+      if($(this).data('slider-auto')) {    //@DV001-16538 // 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경
+        $(this).addClass('slider1-auto'); // 190610_추가
         _this.slick({
           autoplay: true,
           autoplaySpeed: 4000,
@@ -755,6 +756,15 @@ skt_landing.widgets = {
             return $('<button/>').text(i + 1);//@190418 - 접근성
           }
         });
+
+        // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+        _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>')); // 190610_추가
+        _this.next('button.tod-bann-btn').on('click', function () {
+            _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
+            $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
+            $(this).toggleClass('stop', !$(this).hasClass('stop'));
+        });
+        // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
       }else{
         _this.slick({
           dots: true,

@@ -439,6 +439,7 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
+      
     if ( target === location.pathname + location.search ) {
       this._historyService.reload();
     } else {

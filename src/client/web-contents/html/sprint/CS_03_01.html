@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>AS센터 찾기</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <!-- 2019.01.06 수정 -->
+                    <div class="h-tit">A/S센터 찾기</div>
+                    <!-- //2019.01.06 수정 -->
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 2019.01.06 수정 -->
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- //2019.01.06 수정 -->
+                <!-- .cont-box -->
+                <div class="cont-box pb0">
+                    <!-- .as-center -->
+                    <div class="as-center">
+                        <!-- 2019.01.06 수정 -->
+                        <h3 class="as-tit">SK텔레콤 AS센터 안내</h3>
+                        <!-- //2019.01.06 수정 -->
+                        <!-- .as-representative-number -->
+                        <div class="as-representative-number">
+                            <dl>
+                                <dt>대표번호</dt>
+                                <dd>1544-0110</dd>
+                            </dl>
+                        </div>
+                        <!-- // .as-representative-number -->
+
+                        <!-- .widget : 190604 삭제_01 -->
+                        <!-- 
+                        <div class="widget">
+                            <div class="widget-box accordion2">
+                                <div class="acco-style as-acco">
+                                    <ul class="acco-box">
+                                        <li class="acco-list">
+                                            <div class="acco-title"><button role="button" aria-pressed="">A/S센터 업무시간</button></div>
+                                            <div class="acco-content">
+                                                <div class="as-time-list">
+                                                    <dl>
+                                                        <dt>행복 A/S센터</dt>
+                                                        <dd>09:00~18:00 (토/일요일 및 공휴일 휴무)</dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>종로 A/S센터 </dt>
+                                                        <dd>10:00~19:00</dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>제주, 광주 A/S센터</dt>
+                                                        <dd>평일 10:00~18:00 / 토요일 10:00~14:00</dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>A/S mini센터</dt>
+                                                        <dd>10:00~19:00 (토/일요일 및 공휴일 휴무)<em class="tx-notice">※ A/S mini 센터: 대리점 내 애플 A/S센터</em></dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!--// .widget -->
+                        <!-- .as-bringing : 190604 삭제_02 -->
+                        <!-- 
+                        <div class="as-bringing"><sup>*</sup>A/S센터에 방문할 때는 신분증을 꼭 가져 오세요.</div>
+                        -->
+                        <!-- // .as-bringing -->
+
+                        <!-- 190604 추가 -->
+                        <div class="tod-as-time-list">
+                            <div class="tod-inner">
+                                <h3 class="h-title">A/S센터 업무시간</h3>
+                                <ul class="list-as">
+                                    <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">행복 A/S센터</span>
+                                            <span class="sp-td">(월~금) 09:00 ~ 18:00</span>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">종로 A/S센터</span>
+                                            <span class="sp-td">(월~금) 10:00 ~ 19:00</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="sp-tr">
+                                            <span class="sp-th">제주, 광주 A/S센터</span>
+                                            <span class="sp-td">(월~금) 10:00 ~ 18:00<br>(토) 10:00 ~ 14:00</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <ul class="list-noti">
+                                    <li>토, 일요일 및 공휴일 휴무</li>
+                                    <li>A/S센터에 방문할 때는 신분증을 꼭 가져 오세요.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //190604 추가 -->
+
+                        <!-- .ti-caption-gray.bdt -->
+                        <div class="ti-caption-gray bdt">
+                            <h3 class="tit">서울</h3>
+                        </div>
+                        <!-- // .ti-caption-gray.bdt -->
+                        <!-- .link-long-list -->
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>구로A/S센터</em>서울 구로구 경인로 53길 15<br />(구로동 1585) SK텔레콤 고객센터 1층
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>종로A/S센터(구 명동센터)</em>서울 종로구 종로12길 18<br />(관철동 19-4 우석빌딩) 2층
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- // .link-long-list -->
+                        <!-- .ti-caption-gray.bdt -->
+                        <div class="ti-caption-gray bdt">
+                            <h3 class="tit">경기</h3>
+                        </div>
+                        <!-- // .ti-caption-gray.bdt -->
+                        <!-- .link-long-list -->
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>인천A/S센터</em>인천 남동구 성말로 17,<br />(구월동 1462) 인천A/S센터
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- // .link-long-list -->
+                        <!-- .ti-caption-gray.bdt -->
+                        <div class="ti-caption-gray bdt">
+                            <h3 class="tit">경상</h3>
+                        </div>
+                        <!-- // .ti-caption-gray.bdt -->
+                        <!-- .link-long-list -->
+                        <ul class="link-long-list">
+                            <!--<li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>대구A/S센터</em>대구 중구 달구벌대로 2171<br />(삼덕동2가 187-1) 1층 SK텔레콤
+                                        <span class="tx-sub">
+                                            <span class="ico"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>-->
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>부산A/S센터</em>부산 부산진구 신천대로 258<br />(부암동 52-6) SK텔레콤 부산A/S센터
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- // .link-long-list -->
+                        <!-- .ti-caption-gray.bdt -->
+                        <div class="ti-caption-gray bdt">
+                            <h3 class="tit">전라충청</h3>
+                        </div>
+                        <!-- // .ti-caption-gray.bdt -->
+                        <!-- .link-long-list -->
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>광주A/S센터</em>광주 광산구 임방울대로 342<br />(수완동 1424) 남선대리점 수완프리미엄점내 위치
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>대전A/S센터</em>대전 서구 문정로 41<br />(탄방동 594 SKT대전신사옥) 2층
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- // .link-long-list --><!-- .ti-caption-gray.bdt -->
+                        <div class="ti-caption-gray bdt">
+                            <h3 class="tit">제주</h3>
+                        </div>
+                        <!-- // .ti-caption-gray.bdt -->
+                        <!-- .link-long-list -->
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>
+                                        <em>제주A/S센터</em>제주 제주시 서광로 302,<br />(이도이동) 1층 (이도2동 1773-5번지)
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        <!-- // .link-long-list -->
+                    </div>
+                    <!-- // .as-center -->
+                </div>
+                <!--// .cont-box -->
+                <!-- .customer-as -->
+                <div class="customer-as">
+                    <span class="ico"></span>
+                    <span class="txt"><strong>필요한 서류는 챙기셨나요?</strong>서비스 가입∙변경 신청 할 경우, 필요한 서류를 미리 준비해서 방문하시면 더욱 빠른 서비스를 받으실 수 있습니다.</span>
+                    <div class="link"><a class="bt-link-tx underline" href="">필요서류 안내</a></div>
+                </div>
+                <!-- // .customer-as -->
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover">
+                                <div class="acco-style acco-as">
+                                    <ul class="acco-list">
+                                        <li class="acco-box"><!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">A/S 대체폰 무료 제공</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-item">
+                                                    <li>행복 A/S센터는 모든 제조사의 휴대폰을 수리할 수 있습니다. 직접 A/S를 신청한 경우 수리기간 중 A/S 대체폰을 무료로 사용할 수 있습니다.<br>단, 신청일 내에 수리할 수 있는 경우는 제외.</li>
+                                                    <li>A/S 대체폰은 센터별 보유량에 따라 이용이 어려울 수 있습니다.<br>2016. 11. 1.부터 SK텔레콤 지점에서 아이폰 A/S 대체폰 서비스가 중단되었습니다.<br>해당 서비스는 SK텔레콤 행복 A/S센터(1544-0110)에서만 이용하실 수 있습니다.</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box"><!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">기기 수리 후 수령방법</button></div>
+                                            <div class="acco-cont">
+                                                <ul class="list-item">
+                                                    <li>기기 수리가 끝나면 직접 방문하여 받으시거나, 접수한 SK텔레콤 지점∙대리점으로 배송됩니다.<br>(단, 접수하신 SK텔레콤 지점이나 대리점으로만 배송 가능.)</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box"><!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">무상 및 유상서비스를 확인하세요.</button></div>
+                                            <div class="acco-cont">
+                                                <dl class="service">
+                                                    <dt>무상서비스</dt>
+                                                    <dd>
+                                                        <ul class="list-item">
+                                                            <li>보증기간 안에 기기가 고장날 경우, 무상으로 수리를 받을 수 있습니다. 단, 최초 구성품의 하드웨어 구성요소만 무상보증이 적용되고, 소프트웨어 및 다른 장비에는 적용되지 않습니다.</li>
+                                                            <li>휴대전화 보증기간은 1년, 배터리 보증기간은 6개월입니다. 단, 영업용도(대체폰, 임대폰, 로밍폰, 마케팅용 등)로 전환하여 사용할 경우 보증기간은 6개월로 줄어듭니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="service">
+                                                    <dt>유상서비스</dt>
+                                                    <dd>
+                                                        <ul class="list-item">
+                                                            <li>
+                                                                품목별 소비자 분쟁해결 기준(공정거래위원회 고시)에 따라 제품에 대한 유상수리를 판단합니다.
+                                                                <div class="out-link"><a class="bt-link-tx underline" href="">유상수리 판단기준보기</a></div>
+                                                            </li>
+                                                            <li>다양한 결제방식으로 수리비를 결제하실 수 있습니다.</li>
+                                                        </ul>
+                                                    </dd>
+                                                    <dd>
+                                                        <ol class="list-item02">
+                                                            <li>
+                                                                <strong class="list-tit">1. 요금안내서 결제(후납청구)</strong>
+                                                                <span class="dot">수리한 다음 달 SK텔레콤 휴대폰 요금안내서에 ‘기기 A/S료’항목으로 청구됩니다.</span>
+                                                                <span class="dot">각종 포인트로 결제한 후 남은 수리비용이 3만 원 이상인 경우 무이자 할부(3, 6개월)를 선택하거나 할부를 신청할 수 있습니다.</span>
+                                                            </li>
+                                                            <li>
+                                                                <strong class="list-tit">2. 포인트 결제</strong>
+                                                                <span class="single">각종 포인트(레인보우포인트, T포인트, OK캐쉬백 등)로 수리비를 결제할 수 있습니다.</span>
+                                                            </li>
+                                                            <li>
+                                                                <strong class="list-tit">3. 수리비 결제 알리미 서비스</strong>
+                                                                <span class="single">A/S할인 및 각종 포인트 등의 결제금액을 문자로 안내해 드립니다.<br>(단, 직영 A/S센터 방문고객에 한함)</span>
+                                                            </li>
+                                                        </ol>
+                                                    </dd>
+                                                </dl>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                <!-- // .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .link-long-list -->
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <em>제조사별 A/S센터</em>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- // .link-long-list -->
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <!-- .cont-box -->
+                <!-- 190604 현행화 -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip">A/S 신청 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!-- //190604 현행화 -->
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>
