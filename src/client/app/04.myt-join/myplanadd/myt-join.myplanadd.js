@@ -130,10 +130,10 @@ Tw.MyTJoinMyPlanAdd.prototype = {
 
     if (this._bpcpService.isBpcp(link)) {
       return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
-    } else if (link.indexOf('http')) {
+    } else if (link.indexOf('http') !== -1) {
       Tw.CommonHelper.openUrlExternal(link);
     } else {
-      window.location.href = link + prodId ? '?prod_id=' + prodId : '';
+      window.location.href = link + (prodId ? '?prod_id=' + prodId : '');
     }
   }
 };
