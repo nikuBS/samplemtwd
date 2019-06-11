@@ -758,6 +758,7 @@ skt_landing.widgets = {
         });
 
         // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+        _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>')); // 190610_추가
         _this.next('button.tod-bann-btn').on('click', function () {
             _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
             $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
