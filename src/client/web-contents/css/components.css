@@ -35210,3 +35210,14 @@ body.apphome .section-box {
 .tod-faq-search .tod-faq-filter{width:27%; float:left; }
 .tod-faq-search .tod-faq-filter .bt-dropdown.text-type02{width:100%; padding:0.6875rem 2.25rem 0.6875rem 0.75rem}
 .tod-faq-search .tod-have-filter{width:-webkit-calc(100% - 27% - 0.5rem); width:-ms-calc(100% - 27% - 0.5rem); width:calc(100% - 27% - 0.5rem); float:right}
+
+/* 190607 추가 [OP002-1203] SK PAY */
+.agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text.tod-pdtype2 {padding:1.25rem 0 1.313rem;}
+.check-payment .tod-num {margin-top:0.25rem; font-size:1.63rem;}
+.check-payment .tod-num .str {font-weight:700; font-size:1.63rem; vertical-align:baseline;}
+.cont-actionsheet .tod-ac-list-dep2 {background:#f7f9fa; padding:0.1875rem 0;}
+.cont-actionsheet .tod-ac-list-dep2 > li.type3 {position:relative; padding-left:2.25rem;}
+.cont-actionsheet .tod-ac-list-dep2 > li.type3:after {content:''; position:absolute; top:0; left:2.25rem; right:2.25rem; height:0.0625rem; background:#eee;}
+.cont-actionsheet .tod-ac-list-dep2 > li:first-child.type3:after {content:none;}
+.cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
+.cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}

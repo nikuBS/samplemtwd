@@ -96,7 +96,7 @@ export default abstract class MyTFareBillPaymentCommon extends TwViewController 
          */
         const _invDtFmt = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY-MM');
         data.isUnpaid = DateHelper.getDiffByUnit(_invDtFmt, thisMonth, 'month') < -1;
-        data.intMoney = this.removeZero(data.isUnpaid ? data.colAmt : data.invAmt); // 금액 앞에 불필요하게 붙는 0 제거 (청구금액과 미납금액 구분해준다.)
+        data.intMoney = this.removeZero(data.colAmt); // 금액 앞에 불필요하게 붙는 0 제거 (VOC:OP002-1372. 무조건 미납금액'colAmt' 필드만사용. 청구금액도 이필드만 사용한다.)
         data.invMoney = FormatHelper.addComma(data.intMoney); // 금액에 콤마(,) 추가
         data.svcName = SVC_CD[data.svcCd]; // 서비스명 (모바일/인터넷...)
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
