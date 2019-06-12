@@ -111,10 +111,6 @@ Tw.BannerService.prototype = {
         if (type === Tw.REDIS_BANNER_TYPE.TOS) {
           new Tw.XtractorService(this.$banners, true);
         }
-        if(this._banners[0].isRolling){
-          //this.$banners.addClass('fe-banner-auto');
-          this.$banners.closest('widget-box').addClass('slider1-auto'); // 190610_추가
-        }
 
         // set slick
         if (this.$banners.hasClass('fe-banner-auto')) { // auto scrolling
