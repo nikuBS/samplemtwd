@@ -302,7 +302,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         this.$container.find('.error-txt.start').text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_STARTED_PRD);
         this.$container.find('.error-txt.start').removeClass('none');
       }
-    }else if((paramDate<=this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
+    }else if((paramDate<=this._currentDate)&&(parseInt(paramTime,10)<parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       $errorsElement.removeClass('none');
     }else{
