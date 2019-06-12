@@ -578,3 +578,29 @@ background:url('../img/customer/common/btn-right-arrow.png') center 40% no-repea
 /* 2019.02.27 */
 .idpt-container .idpt-accordian > li > a.no-accordian { cursor: default; pointer-events: none; }
 .idpt-container .idpt-accordian > li > a.no-accordian::after { display:none; }
+
+/* 190605 추가 [OP002-1256] 분실파손 보상안내 */
+.idpt-container .idpt-twocont-list.idpt-step-list li {margin:0; display:table; margin-top:-0.0625rem}
+.idpt-container .idpt-twocont-list.idpt-step-list li div{display:table-cell}
+.idpt-container .idpt-box-process-list{margin-top:1.875rem}
+.idpt-container .idpt-box-process-list li{border:0.0625rem solid #c1c1c1; background:#f5f5f5; text-align:center; padding:0.8125rem; margin-bottom:1.875rem; position:relative}
+.idpt-container .idpt-box-process-list li:after{content:''; display:inline-block; width:0.9375rem; height:0.9375rem; border:0.0625rem solid #cfcfcf; border-width:0 0 0.0625rem 0.0625rem; -webkit-transform:translate3d(-50%,0,0) rotate(-45deg); transform:translate3d(-50%,0,0) rotate(-45deg); position:absolute ; left:50%; bottom:-1.1875rem}
+.idpt-container .idpt-box-process-list li .box-title{font-weight:bold; padding-bottom:0.3125rem}
+.idpt-container .idpt-box-process-list li:last-child{margin-bottom:0}
+.idpt-container .idpt-box-process-list li:last-child:after{content:none}
+.idpt-container .idpt-req-box-list{margin-top:1.875rem}
+.idpt-container .idpt-req-box-list > li{border:0.0625rem solid #c1c1c1; border-radius:0.3125rem; padding:0.9375rem; text-align:center; margin-bottom:2.6875rem; position:relative}
+.idpt-container .idpt-req-box-list > li:after{content:''; display:inline-block; width:1.125rem; height:1.125rem; position:absolute; left:50%; bottom:-2rem; background:url('/img/customer/common/next-step-arr.png') no-repeat left top; background-size:100%; transform:translate3d(-50%,0,0); }
+.idpt-container .idpt-req-box-list > li:last-child:after{content:none}
+.idpt-container .idpt-req-box-list > li:last-child{margin:0}
+.idpt-container .idpt-req-box-list > li.strong{border-color:#000}
+.idpt-container .idpt-req-box-list > li .tit{font-weight:bold}
+.idpt-container .idpt-req-box-list > li .box-cont{color:#959595; margin-top:0.625rem}
+.idpt-container .box-inner-list{text-align:left;}
+.idpt-container .box-inner-list .box-small-list > li{margin-top:0.1875rem}
+.idpt-container .box-inner-list > li:not(:first-child){margin-top:0.625rem}
+.idpt-container .star-txt{padding-left:0.5375rem; font-size:0.8125rem; line-height:1.125rem; color:#959595; position:relative }
+.idpt-container .star-txt:before{content:'*'; position:absolute; left:0; top:0.0938rem}
+.idpt-container .bar-txt{padding-left:0.5375rem; position:relative}
+.idpt-container .bar-txt:before{content:'-'; position:absolute; left:0; top:0}
+.idpt-container .idpt-twocont-list .box-inner-list li{border:none; height:auto; width:auto}
