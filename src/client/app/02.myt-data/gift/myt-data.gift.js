@@ -120,8 +120,8 @@ Tw.MyTDataGift.prototype = {
     //   this._remainApiError($target);
     //   return;
     // }
-
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    var code = res.code;
+    if ( code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) { // 재시도 가능여부 판단. N인경우 looping 중지, reqCnt 0부터 다시 요청
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
@@ -141,10 +141,13 @@ Tw.MyTDataGift.prototype = {
         this.reqCnt = result.reqCnt; // 재시도 횟수
         this._getRemainDataInfo($target);
       }
-    } else if ( res.code === 'GFT0004' ) {
-      this.$container.trigger('showUnableGift', res.code);
+    } else if ( code === 'GFT0004' ) {
+      if (this.unlimitProdIds.indexOf(this._svcInfo.prodId) !== -1) {
+        code = 'GFT0004_2';
+      }
+      this.$container.trigger('showUnableGift', code);
     } else {
-      this.$container.trigger('showUnableGift', res.code);
+      this.$container.trigger('showUnableGift', code);
       // Tw.Error(res.code, res.msg).pop();
     }
   },
