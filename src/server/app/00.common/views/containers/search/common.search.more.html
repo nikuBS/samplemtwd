@@ -42,13 +42,15 @@
             </div>
             <div class="resultsearch-box">
                 <span class="custom-form">
-                    <% if(keyword===inKeyword){ %>
-                        <input type="checkbox" id="resultsearch" name="resultsearch">
-                    <% }else{ %>
-                        <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
-                    <% } %>
+                  <% if(keyword===inKeyword){ %>
+                    <input type="checkbox" id="resultsearch" name="resultsearch">
                     <span class="c-type1"></span></span>
-                <label for="resultsearch">결과 내 재검색</label>
+                    <label for="resultsearch">결과 내 재검색</label>
+                  <% }else{ %>
+                    <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
+                    <span class="c-type1"></span></span>
+                    <label for="resultsearch" class="on">결과 내 재검색</label>
+                  <% } %>
                 <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
             </div>
         </div>
