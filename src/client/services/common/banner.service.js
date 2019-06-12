@@ -112,15 +112,16 @@ Tw.BannerService.prototype = {
           new Tw.XtractorService(this.$banners, true);
         }
 
-        if(this._banners[0].isRolling){
+        if(this._banners[0].isRolling && this._banners.length > 1){
           //this.$banners.addClass('fe-banner-auto');
-          this.$banners.closest('widget-box').addClass('slider1-auto'); // 190610_추가
+          this.$banners.closest('.widget-box').addClass('slider1-auto').data("slider-auto", "true"); // 190610_추가
         }
         
 
         // set slick
-        if (this.$banners.closest('widget-box').hasClass('slider1-auto')) { // auto scrolling
-          this.$banners.slick({
+        var _this = this.$banners;
+        if (_this.closest('.widget-box').data('slider-auto')) { // auto scrolling
+          _this.slick({
             autoplay: true,
             autoplaySpeed: 4000,
             dots: this._banners.length !== 1,
@@ -160,7 +161,7 @@ Tw.BannerService.prototype = {
           // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
 
         } else {
-          this.$banners.slick({
+          _this.slick({
             dots: this._banners.length !== 1,
             infinite: false,
             speed: 300,
