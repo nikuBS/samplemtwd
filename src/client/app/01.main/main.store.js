@@ -190,6 +190,10 @@ Tw.MainStore.prototype = {
           return banner.bnnrLocCd === target.target;
         });
         if ( banner.length > 0 ) {
+          //(function(flag){ banner.forEach(function(e){ e.isRolling = flag;}) })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
+          //(function(flag){ banner.forEach(function(e){ e.isRandom = flag;}) })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
+          (function(flag){ banner.forEach(function(e){ e.isRolling = flag;}) })(true);
+
           if ( target.target === '7' ) {
             this._membershipBanner = {
               kind: Tw.REDIS_BANNER_TYPE.ADMIN,
