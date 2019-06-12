@@ -112,8 +112,14 @@ Tw.BannerService.prototype = {
           new Tw.XtractorService(this.$banners, true);
         }
 
+        if(this._banners[0].isRolling){
+          //this.$banners.addClass('fe-banner-auto');
+          this.$banners.closest('widget-box').addClass('slider1-auto'); // 190610_추가
+        }
+        
+
         // set slick
-        if (this.$banners.hasClass('fe-banner-auto')) { // auto scrolling
+        if (this.$banners.closest('widget-box').hasClass('slider1-auto')) { // auto scrolling
           this.$banners.slick({
             autoplay: true,
             autoplaySpeed: 4000,
@@ -143,6 +149,16 @@ Tw.BannerService.prototype = {
               }
             }
           });
+
+          // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+          _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>')); // 190610_추가
+          _this.next('button.tod-bann-btn').on('click', function () {
+              _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
+              $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
+              $(this).toggleClass('stop', !$(this).hasClass('stop'));
+          });
+          // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
+
         } else {
           this.$banners.slick({
             dots: this._banners.length !== 1,
@@ -283,8 +299,12 @@ Tw.BannerService.prototype = {
 
     if (type === Tw.REDIS_BANNER_TYPE.TOS) {
       return _.chain(banners)
-        .sort(function(a, b) {  
-          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+        .sort(function(a, b) {
+          if(banners[0].isRandom){
+            return Math.floor(Math.random() * 3) -1 ;
+          }else{
+            return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+          }
         })
         .map(function(banner) {
           return $.extend(banner, {
@@ -309,7 +329,11 @@ Tw.BannerService.prototype = {
           );
         })
         .sort(function(a, b) {
-          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+          if(banners[0].isRandom){
+            return Math.floor(Math.random() * 3) -1 ;
+          }else{
+            return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+          }          
         })
         .reduce(function(nBanners, banner) {
           var temp = {
