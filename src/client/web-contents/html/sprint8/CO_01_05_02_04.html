@@ -200,8 +200,12 @@
         </div>
         <!--// #contents -->
         <script type="text/javascript">
+            // 190529 옵션 추가
             skt_landing.dev.sortableInit({
-               axis: 'y'
+                axis: 'y',
+                scrollSensitivity: 100,
+                scrollSpeed: 30,
+                forceScroll: true
             });
             /*
                 1. option만 설정할 경우 (기본 섹렉터는 #sortable-enabled 입니다.)
