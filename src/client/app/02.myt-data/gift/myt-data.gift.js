@@ -5,12 +5,11 @@
  * @since 2018.10.08
  */
 
-Tw.MyTDataGift = function (rootEl, svcInfo) {
+Tw.MyTDataGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._svcInfo = JSON.parse(svcInfo);
 
   this._cachedElement();
   this._bindEvent();
@@ -18,20 +17,8 @@ Tw.MyTDataGift = function (rootEl, svcInfo) {
 };
 
 Tw.MyTDataGift.prototype = {
-  limitedGiftUsageQty: 500, // 기본 잔여 데이터 500MB
-  unlimitProdIds: [
-    'NA00005957', // T플랜 라지
-    'NA00005958', // T플랜 패밀리
-    'NA00005959', // T플랜 인피니티
-    'NA00006537', // T플랜 에센스
-    'NA00006538', // T플랜 스페셜
-    'NA00006539', // T플랜 맥스
-    'NA00006157', // 0플랜 라지
-    'NA00006401', // 0플랜 슈퍼히어로
-    'NA00006403', // 5GX 스탠다드
-    'NA00006404', // 5GX 프라임
-    'NA00006405'  // 5GX 플래티넘
-  ],
+  LIMITED_GIFT_USAGE_QTY: 500, // 기본 잔여 데이터 500MB
+
   /**
    * @function
    * @desc 바로 선물 / 자동 선물 화면 분기
@@ -50,9 +37,6 @@ Tw.MyTDataGift.prototype = {
       this.reqCnt = 0;
       this.currentRemainDataInfo = null;
       this._getRemainDataInfo();
-    }
-    if (this.unlimitProdIds.indexOf(this._svcInfo.prodId) !== -1) {
-      this.limitedGiftUsageQty = 0;
     }
   },
 
@@ -120,13 +104,13 @@ Tw.MyTDataGift.prototype = {
     //   this._remainApiError($target);
     //   return;
     // }
-    var code = res.code;
-    if ( code === Tw.API_CODE.CODE_00 ) {
+
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) { // 재시도 가능여부 판단. N인경우 looping 중지, reqCnt 0부터 다시 요청
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
           this._remainApiError($target);
-        } else if ( Number(result.dataRemQty) < this.limitedGiftUsageQty ) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
+        } else if ( Number(result.dataRemQty) < this.LIMITED_GIFT_USAGE_QTY ) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
           this.$container.trigger('showUnableGift', 'GFT0004');
         } else {
           // API DATA SUCCESS
@@ -141,13 +125,10 @@ Tw.MyTDataGift.prototype = {
         this.reqCnt = result.reqCnt; // 재시도 횟수
         this._getRemainDataInfo($target);
       }
-    } else if ( code === 'GFT0004' ) {
-      if (this.unlimitProdIds.indexOf(this._svcInfo.prodId) !== -1) {
-        code = 'GFT0004_2';
-      }
-      this.$container.trigger('showUnableGift', code);
+    } else if ( res.code === 'GFT0004' ) {
+      this.$container.trigger('showUnableGift', res.code);
     } else {
-      this.$container.trigger('showUnableGift', code);
+      this.$container.trigger('showUnableGift', res.code);
       // Tw.Error(res.code, res.msg).pop();
     }
   },
@@ -182,7 +163,7 @@ Tw.MyTDataGift.prototype = {
     var fnCheckedUI = function (nIndex, elInput) {
       var $input = $(elInput);
       var nInputMount = Number($input.val());
-      if ( nLimitMount - nInputMount < this.limitedGiftUsageQty) { // [잔여량 데이터 - 선물할 데이터량]이 500mb보다 작으면 비활성화
+      if ( nLimitMount - nInputMount < this.LIMITED_GIFT_USAGE_QTY) { // [잔여량 데이터 - 선물할 데이터량]이 500mb보다 작으면 비활성화
         $input.prop('disabled', true);
         $input.parent().parent().addClass('disabled');
       } else {
