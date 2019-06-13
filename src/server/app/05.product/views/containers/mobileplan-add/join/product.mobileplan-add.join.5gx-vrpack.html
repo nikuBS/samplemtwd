@@ -26,23 +26,26 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                    
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
+                        <span class="tit-small">변경할 상품의 옵션을 설정하세요.</span>
                         <span class="tit-big"><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></span>
                     </div>
                 </div>
                 <!--// .cont-box -->
 
-                <div class="ti-caption-gray">
-                    <h3 class="tit">배송정보입력</h3>
-                </div>
+                <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="input-number-wrap">
-
+                            
+                        <h3 class="tit">배송정보입력</h3>    
+                        
                         <div class="form-box">
                             <ul class="form-data-list">
                                 <li>
@@ -50,6 +53,7 @@
                                     <div class="inputbox readonly">
                                         <span class="input">
                                             <input type="text" id="inpName" class="fe-input-disabled" value="<%= svcInfo.mbrNm %>" readonly aria-describedby>
+                                            <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </div>
                                 </li>
@@ -58,6 +62,7 @@
                                     <div class="inputbox readonly">
                                         <span class="input">
                                             <input type="text" id="inpPhnum" class="fe-input-disabled" value="<%= svcInfo.svcNumDash %>" title="휴대폰번호 숫자만 입력해 주세요" readonly aria-describedby>
+                                            <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </div>
                                 </li>
@@ -68,8 +73,8 @@
                                             <input type="text" class="fe-address-zipcode fe-input-disabled" id="inpAddr" placeholder="우편번호 조회" title="우편번호 조회 입력" readonly>
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
-                                        <span class="bt-box">
-                                            <button type="button" class="fe-search-zipcode">우편번호 찾기</button>
+                                        <span class="r-btn">
+                                            <button type="button" class="btn-round2 btn-style3 fe-search-zipcode">우편번호&nbsp;검색</button>
                                         </span>
                                     </div>
                                     <div class="inputbox mt8">
@@ -92,6 +97,18 @@
 
                 </div>
                 <!--// .cont-box -->
+
+                <% if (['NA00006616', 'NA00006617'].indexOf(prodId) > -1) { %>
+                <!-- 꼭 확인해 주세요 -->
+                <!-- 190612 추가_04 -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip" id="TC000063" aria-haspopup="true">가입 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// 190612 추가_04 -->
+                <% } %>
 
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">

@@ -165,8 +165,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
             listId: index,
             useServiceNm: o.useServiceNm || o.payFlag, 
             FullDate: Tw.DateHelper.getFullDateAnd24Time(o.payTime),
-            useAmt: Tw.FormatHelper.addComma(o.useCharge), // 이용금액
-            dedAmt: Tw.FormatHelper.addComma(o.deductionCharge) // 공제금액
+            useAmt: Tw.FormatHelper.addComma(o.useCharge) // 이용금액
           });
         });
     } else {

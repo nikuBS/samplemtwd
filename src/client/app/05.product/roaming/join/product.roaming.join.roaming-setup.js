@@ -332,7 +332,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       if(className==='start'){
         $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       }else{
