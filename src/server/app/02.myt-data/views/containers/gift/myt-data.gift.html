@@ -124,7 +124,7 @@
   $(document).ready(function () {
     var oMyTDataGiftImmediately = new Tw.MyTDataGiftImmediately($('#tab1-tab'), '<%- JSON.stringify(svcInfo) %>');
     var oMyTDataGiftMonthly = new Tw.MyTDataGiftMonthly($('#tab2-tab'), '<%- JSON.stringify(svcInfo) %>');
-    var oMyTDataGift = new Tw.MyTDataGift($('.wrap'), '<%- JSON.stringify(svcInfo) %>');
+    var oMyTDataGift = new Tw.MyTDataGift($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>
