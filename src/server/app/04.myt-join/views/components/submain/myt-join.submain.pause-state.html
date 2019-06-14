@@ -10,6 +10,7 @@
 <div class="cont-box nogaps">
     <ul class="full-link-list">
         <% if (data.myPausedState && data.myPausedState.svcStCd) { %>
+        <!--일시정지 상태 영역-->
         <li>
             <button type="button" data-id="pause_c">
                 <span class="inner">
@@ -74,32 +75,35 @@
                 <% } %>
             </button>
         </li>
+        <!--// 일시정지 상태 영역-->
         <% } %>
-        <% if (data.isOldNumber) { %>
-        <li>
-            <button type="button" data-id="old_number" title="010 전환 번호변경" aria-haspopup="true">
-                <span class="inner">
-                    <span class="tit">010 전환 번호변경</span>
-                    <span class="text">신청하기</span>
-                </span>
-            </button>
-        </li>
-        <% } %>
-        <% if (data.isNotChangeNumber) { %>
-        <li>
-            <button type="button" data-id="change_number" title="번호변경 안내서비스" aria-haspopup="true">
-                <span class="inner">
-                    <span class="tit">번호변경 안내서비스</span>
-                    <span class="text">
-                        <% if (data.numberChanged) { %>
-                        연장 및 해지
-                        <% } else { %>
-                        신청하기
-                        <% } %>
+        <%if(data.type === 0){%>
+            <% if (data.isOldNumber) { %>
+            <li>
+                <button type="button" data-id="old_number" title="010 전환 번호변경" aria-haspopup="true">
+                    <span class="inner">
+                        <span class="tit">010 전환 번호변경</span>
+                        <span class="text">신청하기</span>
                     </span>
-                </span>
-            </button>
-        </li>
+                </button>
+            </li>
+            <% } %>
+            <% if (data.isNotChangeNumber) { %>
+            <li>
+                <button type="button" data-id="change_number" title="번호변경 안내서비스" aria-haspopup="true">
+                    <span class="inner">
+                        <span class="tit">번호변경 안내서비스</span>
+                        <span class="text">
+                            <% if (data.numberChanged) { %>
+                            연장 및 해지
+                            <% } else { %>
+                            신청하기
+                            <% } %>
+                        </span>
+                    </span>
+                </button>
+            </li>
+            <% } %>
         <% } %>
     </ul>
 </div>
