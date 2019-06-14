@@ -58,15 +58,19 @@ Tw.MyTJoinSubMain.prototype = {
         this.$contractPlan = this.$container.find('[data-id=contract-plan]');
       }
       // 무선
-      if ( this.data.type === 0 ) {
+      // 포켓파이 회선 추가 OP002-1517
+      if ( this.data.type === 0 || this.data.svcInfo.svcAttrCd === 'M3' ) {
         if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
           this.$pauseC = this.$container.find('[data-id=pause_c]');
         }
-        if ( this.data.isOldNumber ) {
-          this.$oldNum = this.$container.find('[data-id=old_number]');
-        }
-        if ( this.data.isNotChangeNumber ) {
-          this.$chgNumSvc = this.$container.find('[data-id=change_number]');
+        // 무선
+        if (this.data.type === 0) {
+          if ( this.data.isOldNumber ) {
+            this.$oldNum = this.$container.find('[data-id=old_number]');
+          }
+          if ( this.data.isNotChangeNumber ) {
+            this.$chgNumSvc = this.$container.find('[data-id=change_number]');
+          }
         }
       }
     }
@@ -118,15 +122,18 @@ Tw.MyTJoinSubMain.prototype = {
         this.$contractPlan.on('click', $.proxy(this._onMovedContractPlan, this));
       }
       // 무선
-      if ( this.data.type === 0 ) {
+      // 포켓파이 회선추가 OP002-1517
+      if ( this.data.type === 0 || this.data.svcInfo.svcAttrCd === 'M3') {
         if ( this.data.myPausedState && this.data.myPausedState.svcStCd ) {
           this.$pauseC.on('click', $.proxy(this._onMovedMobilePause, this));
         }
-        if ( this.data.isOldNumber ) {
-          this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
-        }
-        if ( this.data.isNotChangeNumber ) {
-          this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
+        if (this.data.type === 0) {
+          if ( this.data.isOldNumber ) {
+            this.$oldNum.on('click', $.proxy(this._onMoveOldNum, this));
+          }
+          if ( this.data.isNotChangeNumber ) {
+            this.$chgNumSvc.on('click', $.proxy(this._onMoveChgNumSvc, this));
+          }
         }
       }
     }
