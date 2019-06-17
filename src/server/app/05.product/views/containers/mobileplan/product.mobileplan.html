@@ -94,9 +94,9 @@
                                                             <div class="product-info-btn">
                                                                 <h5 class="title"><%= product.prodNm %></h5>
                                                                 <% if (product.basFeeInfo.isNaN) { %>
-                                                                    <p class="info"><span class="money"><%= product.basFeeInfo.value %></span></p>
+                                                                    <p class="info"><span class="money money-noleft"><%= product.basFeeInfo.value %></span></p>
                                                                 <% } else { %>
-                                                                    <p class="info">월<span class="money"><%= product.basFeeInfo.value %></span>원</p>
+                                                                    <p class="info"><span class="money money-noleft"><%= product.basFeeInfo.value %></span>원</p>
                                                                 <% } %>
                                                             </div>
                                                             <% if (product.displayInfo) { %>
@@ -200,9 +200,9 @@
                                             <a type="button" class="product-info" href="/product/callplan?prod_id=<%= plan.prodId %>">
                                                 <h5 class="title"><%= plan.prodNm %></h5>
                                                 <% if (plan.basFeeInfo.isNaN) { %>
-                                                    <p class="info"><span class="money"><%= plan.basFeeInfo.value %></span></p>
+                                                    <p class="info"><span class="money money-noleft"><%= plan.basFeeInfo.value %></span></p>
                                                 <% } else { %>
-                                                    <p class="info">월<span class="money"><%= plan.basFeeInfo.value %></span>원</p>
+                                                    <p class="info"><span class="money money-noleft"><%= plan.basFeeInfo.value %></span>원</p>
                                                 <% } %>
                                                 <% if (plan.displayInfo) { %>
                                                     <div class="<%= plan.displayInfo.icon %>">

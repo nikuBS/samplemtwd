@@ -37,9 +37,9 @@
                         <ul class="list-comp-lineinfo">
                             <% joined.map(addition => { 
                                 const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                                <li class="add-con" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
+                                <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
                                     <% if (hasLink) { %>
-                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
+                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                     <% } else { %>
                                     <div class="not-link">
                                     <% } %>
@@ -89,9 +89,9 @@
                             <ul class="list-comp-lineinfo">
                                 <% reserved.map(addition => { 
                                     const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                                <li class="add-con" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
+                                <li class="<%= hasButtons?'add-con':''%>" data-isFree ="<%= addition.payFreeYn === 'Y' %>">
                                     <% if (hasLink) { %>
-                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
+                                    <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                     <% } else { %>
                                     <div class="not-link">
                                     <% } %>
@@ -143,7 +143,7 @@
                             <% joinable.map(addition => { %>
                             <li>
                                 <% if (addition.prodLinkYn === "Y") { %>
-                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
+                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                     <span class="tit"><%= addition.prodNm %></span>
                                     <span class="txt">자세히 보기</span>
                                 </a>
