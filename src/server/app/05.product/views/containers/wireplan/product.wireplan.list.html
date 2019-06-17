@@ -53,7 +53,7 @@
                                     <div class="plan">
                                         <span class="tit"><%= prod.prodNm %></span>
                                         <% if (/^[0-9,]+$/.test(prod.basFeeAmt)) { %>
-                                            <span class="val">월 <%= prod.basFeeAmt %>원</span>
+                                            <span class="val"><%= prod.basFeeAmt %>원</span>
                                         <% } else { %>
                                             <span class="val"><%= prod.basFeeAmt %></span>
                                         <% } %>
@@ -94,7 +94,7 @@
                                     <div class="plan">
                                         <span class="tit"><%= prod.prodNm %></span>
                                         <% if (/^[0-9,]+$/.test(prod.basFeeAmt)) { %>
-                                            <span class="val">월 <%= prod.basFeeAmt %>원</span>
+                                            <span class="val"><%= prod.basFeeAmt %>원</span>
                                         <% } else { %>
                                             <span class="val"><%= prod.basFeeAmt %></span>
                                         <% } %>

@@ -43,10 +43,10 @@
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { 
                                 const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                            <li class="add-con" data-isFree="<%= addition.payFreeYn === 'Y' %>">
+                            <li class="<%= hasButtons?'add-con':''%>" data-isFree="<%= addition.payFreeYn === 'Y' %>">
                                 <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                                 <% if (hasLink) { %>
-                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>">
+                                <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
                                 <% } else { %>
                                 <div class="not-link">
                                 <% } %>
