@@ -485,6 +485,14 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       RM_11_01_01_02_tip_03_05 : {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
+        target : []
+      },
+      TC000065: {
+        tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
+        target : ['NA00005821']
+      },
+      TC000066: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
         target : ['NA00005821']
       },
       RM_11_01_01_02_tip_03_06 : {
