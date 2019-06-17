@@ -35194,6 +35194,11 @@ body.apphome .section-box {
 .tod-graph-wrap .tod-time-info .use_time{text-align:left}
 .tod-graph-wrap .tod-time-info .defer_time{text-align:right}
 
+/* 190528 추가 [OP002-821] 상품원장 가입버튼 비활성화 case */
+.productdetails-ledgercase .btn .bt-white1:disabled,
+.productdetails-ledgercase .btn .bt-white1.disabled {background:#fff; opacity:0.4;}
+.joinconsulting-wrap .btn-round3 {white-space:nowrap;}
+
 /* 190604 [OP002-872][UX/PUB] (W-1905-057-01) [UX정합성 2차][AS센터 찾기] - CS_03_01 */
 .tod-as-time-list{border-top: 1px solid #e1e1e1;}
 .tod-as-time-list .tod-inner{padding: 1.25rem 0 .875rem 0;}
@@ -35216,6 +35221,7 @@ body.apphome .section-box {
 /* 190604 추가 [OP002-1552] 나의 부가서비스 리스트 */
 .add-prd-wrap .list-comp-lineinfo li .not-link .lineinfo-data {padding-right:1rem; box-sizing:border-box;}
 .add-prd-wrap .list-comp-lineinfo li:not(.add-con) .not-link {padding-bottom:1.38rem;}
+.add-prd-wrap .list-comp-lineinfo li.add-con > a.link {padding-bottom:0;}
 
 /* 190607 추가 [OP002-1203] SK PAY */
 .agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text.tod-pdtype2 {padding:1.25rem 0 1.313rem;}
