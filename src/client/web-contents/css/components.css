@@ -2032,10 +2032,12 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
+/* 190604 수정 [OP002-1552] 나의 부가서비스 리스트 */
 .list-comp-lineinfo li button .lineinfo-data .ico, .list-comp-lineinfo li a.link .lineinfo-data .ico {
   position: absolute;
   right: 0;
-  top: -0.13rem; }
+  top: -0.28rem; }
+/* //190604 수정 [OP002-1552] 나의 부가서비스 리스트 */
 
 .list-comp-lineinfo li button .lineinfo-data .txt-sup, .list-comp-lineinfo li a.link .lineinfo-data .txt-sup {
   vertical-align: middle;
@@ -35192,6 +35194,11 @@ body.apphome .section-box {
 .tod-graph-wrap .tod-time-info .use_time{text-align:left}
 .tod-graph-wrap .tod-time-info .defer_time{text-align:right}
 
+/* 190528 추가 [OP002-821] 상품원장 가입버튼 비활성화 case */
+.productdetails-ledgercase .btn .bt-white1:disabled,
+.productdetails-ledgercase .btn .bt-white1.disabled {background:#fff; opacity:0.4;}
+.joinconsulting-wrap .btn-round3 {white-space:nowrap;}
+
 /* 190604 [OP002-872][UX/PUB] (W-1905-057-01) [UX정합성 2차][AS센터 찾기] - CS_03_01 */
 .tod-as-time-list{border-top: 1px solid #e1e1e1;}
 .tod-as-time-list .tod-inner{padding: 1.25rem 0 .875rem 0;}
@@ -35211,6 +35218,11 @@ body.apphome .section-box {
 .tod-faq-search .tod-faq-filter .bt-dropdown.text-type02{width:100%; padding:0.6875rem 2.25rem 0.6875rem 0.75rem}
 .tod-faq-search .tod-have-filter{width:-webkit-calc(100% - 27% - 0.5rem); width:-ms-calc(100% - 27% - 0.5rem); width:calc(100% - 27% - 0.5rem); float:right}
 
+/* 190604 추가 [OP002-1552] 나의 부가서비스 리스트 */
+.add-prd-wrap .list-comp-lineinfo li .not-link .lineinfo-data {padding-right:1rem; box-sizing:border-box;}
+.add-prd-wrap .list-comp-lineinfo li:not(.add-con) .not-link {padding-bottom:1.38rem;}
+.add-prd-wrap .list-comp-lineinfo li.add-con > a.link {padding-bottom:0;}
+
 /* 190607 추가 [OP002-1203] SK PAY */
 .agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text.tod-pdtype2 {padding:1.25rem 0 1.313rem;}
 .check-payment .tod-num {margin-top:0.25rem; font-size:1.63rem;}
@@ -35221,3 +35233,15 @@ body.apphome .section-box {
 .cont-actionsheet .tod-ac-list-dep2 > li:first-child.type3:after {content:none;}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
+
+/* 190613 [OP002-714] 광고수신동의 */
+.tod-alram-box + hr.cont-sp.type1{display:none}
+.tod-alram-box .on-off-list.new > li{padding:0 !important; min-height:2.625rem;}
+.tod-alram-box .on-off-list.new .btn-switch{-webkit-transform:translateY(-0.4375rem); transform:translateY(-0.4375rem)}
+.tod-alram-box .on-off-list.new .tod-alarm-txt .tod-link-type{color:#178bce; font-size:0.8125rem; text-decoration:underline; padding:0.125rem 0}
+.tod-alram-box .tod-alarm-close{position:absolute; width:1.25rem; height:1.25rem; right:0.4375rem; top:0.4375rem; background:url('/img/svg/icon_48px_titlebar_exit.svg') no-repeat 50% 50%; background-size:50%}
+
+/* 190617 [OP002-1534] baro Box 임대 내 로밍센터 영업시간 추가 노출 */
+.mapimg-area .rm-tx-hour{font-size:.81rem}
+.mapimg-area .rm-tx-hour span{position:relative;display:block;padding-left:0.63rem;font-size:.75rem;color:#666}
+.mapimg-area .rm-tx-hour span:before{content:"";position:absolute;top:5px;left:0;width:3px;height:3px;border-radius:100%;background:#666}
