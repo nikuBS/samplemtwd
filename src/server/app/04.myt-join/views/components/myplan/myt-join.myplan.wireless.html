@@ -32,6 +32,8 @@
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- .cont-box -->
+        <!-- 190611_수정01 -->
+        <!--
         <div class="cont-box nogaps">
             <ul class="full-link-list">
                 <li>
@@ -43,15 +45,17 @@
                 </li>
             </ul>
         </div>
+        -->
+        <!-- //190611_수정01 -->
         <!--// .cont-box -->
         <% } %>
 
         <% if ( feePlan.optionAndDiscountProgramList.length > 0 ) { %>
-        <hr class="cont-sp type1" aria-hidden="true"/>
+        <!-- <hr class="cont-sp type1" aria-hidden="true"/> --> <!-- //190611_삭제02 -->
 
         <!-- .cont-box -->
         <div class="cont-box nogaps-btm">
-            <h3 class="tit-type7">옵션 &middot; 할인 프로그램</h3>
+            <h3 class="tit-type7">옵션/할인 프로그램</h3>
             <div class="separate-link-list">
                 <ul>
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
@@ -79,19 +83,26 @@
         <hr class="cont-sp type1" aria-hidden="true"/>
 
         <!-- .cont-box -->
-        <div class="cont-box nogaps">
-            <ul class="full-link-list">
-                <li>
-                    <a href="/product/mobileplan">
-                        <span class="inner">
-                            <span class="tit">요금제 변경하기</span>
-                        </span>
-                    </a>
-                </li>
+        <!-- 190611_수정01 -->
+        <div class="cont-box">
+            <!-- <ul class="full-link-list">
+                    <li>
+                        <button>
+                            <span class="inner">
+                                <span class="tit">요금제 변경하기</span>
+                            </span>
+                        </button>
+                    </li>
+                </ul> -->
+            <div class="ti-caption-type01 pb24">
+                <h3 class="tit">요금제 변경</h3>
+            </div>
+            <ul class="bt-slice item-two">
+                <li><a href="/myt-join/myplan/alarm" type="button" class="btn-round1 btn-style4">변경 가능일 알림</a></li>
+                <li><a href="/product/mobileplan" type="button" class="btn-round1 btn-style4">요금제 변경하기</a></li>
             </ul>
         </div>
         <!--// .cont-box -->
-
         <% if ( tipList ) { %>
         <!-- .cont-box -->
         <div class="cont-box noborder bgnone">
@@ -108,6 +119,5 @@
         </div>
         <!--// .cont-box -->
         <% } %>
-
     </div>
 </div>
