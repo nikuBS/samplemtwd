@@ -11,6 +11,7 @@
  * @param confirmOptions - 정보확인 데이터
  */
 Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
+
   // 컨테이너 레이어 선언
   this.$container = rootEl;
 
@@ -190,6 +191,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    Tw.CommonHelper.replaceExternalLinkTarget(this.$popupContainer);
   },
 
   /**
@@ -201,7 +203,13 @@ Tw.ProductMobileplanAddJoin.prototype = {
     e.preventDefault();
     e.stopPropagation();
 
-    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+    if($(e.currentTarget).hasClass('fe-link-external')
+      && $(e.currentTarget).attr('href').indexOf('#') !== 0) {
+      this._confirmExternalUrl(e);
+      this._popupService.close();
+    } else {
+      this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+    }
   },
 
   /**
@@ -270,6 +278,33 @@ Tw.ProductMobileplanAddJoin.prototype = {
    */
   _onClosePop: function() {
     this._historyService.goBack();
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 지원
+   * @param e - 클릭 이벤트
+   * @returns {*|void}
+   */
+  _confirmExternalUrl: function(e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    }
+
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 실행
+   * @param href - 링크 값
+   */
+  _openExternalUrl: function(href) {
+    Tw.CommonHelper.openUrlExternal(href);
   }
 
 };
