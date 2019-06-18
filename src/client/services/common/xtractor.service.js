@@ -13,6 +13,11 @@ Tw.XtractorService = function($container, isTosBanner) {
   // Init
   setTimeout($.proxy(this._init, this), 500);
 
+  // 화면 스크롤 시 배너 객체가 화면 내 노출될 경우 BV 통계 호출해주도록 수정
+  $(document).scroll($.proxy(function () {    
+    this._onLoadBV();
+  }, this));
+
 };
 
 Tw.XtractorService.prototype = {
@@ -64,8 +69,17 @@ Tw.XtractorService.prototype = {
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
 
+    var scrollTop = $(window).scrollTop();  // 현재 스크롤의 Top
+    var scrollBottom = scrollTop + $(window).height();  // 현재 스크롤의 Bottom
+
+    var objTop = $elem.offset().top;    // 배너 객체의 Top
+    var objBottom = objTop + $elem.innerHeight();   // 배너 객체의 Bottom
+
     if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
-      this.logView(E_ID, CS_ID);
+      // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
+      if (scrollTop < objTop && scrollBottom > objBottom) {
+        this.logView(E_ID, CS_ID);
+      }
     }
 
     /* TOS Banner */
@@ -82,7 +96,9 @@ Tw.XtractorService.prototype = {
       !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
       !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
       !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
-      this._sendXtrEvent($.param(BannerArgs));
+        if (scrollTop < objTop && scrollBottom > objBottom) {
+          this._sendXtrEvent($.param(BannerArgs));
+        }
     }
   },
 
@@ -96,6 +112,7 @@ Tw.XtractorService.prototype = {
     var $elem = $(e.currentTarget),
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
+
 
     if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
       this.logClick(E_ID, CS_ID);
