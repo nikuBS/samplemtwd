@@ -35257,7 +35257,14 @@ body.apphome .section-box {
 .list-comp-input .select-list.tod-btm-line > li:last-of-type .comp-list-layout:before{background:#f2f2f2}
 .cont-box .cont-box.btm-line{border-bottom:1px solid #e5e5e5}
 
-/* 190613 [OP002-1662] T끼리데이터선물 기본제공량 부족case 처리수정 */
+/* 190618 [OP002-1614] 은행 자동납부 / 카드자동납부 1% 할인 대상 고객 납부 방법 변경 시 1% 혜택 소멸에 대한 Noti 팝업 요청 */
+.tod-myt-noti-comp{background-color: #eff6fb; padding: 1.25rem 1rem;}
+.tod-myt-noti-comp .icon-dialog-emoji-56{vertical-align: middle; margin-right: 0.5rem;}
+.tod-myt-noti-comp .dt-tit{font-size: 0.813rem;}
+.tod-myt-noti-comp .dd-desc{font-size: 0.75rem; padding-top: 0.625rem;}
+.tod-myt-noti-comp .dd-desc > span{display:block;}
+
+/* 190618 [OP002-1662] T끼리데이터선물 기본제공량 부족case 처리수정 */
 .data-gift-wrap .result-nolist {padding-bottom:2rem; text-align:center;}
 .data-gift-wrap .result-nolist .ico {display:inline-block;}
 .data-gift-wrap .result-nolist .ico + p {margin-top:1rem;}
