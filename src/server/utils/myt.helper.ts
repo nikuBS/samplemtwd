@@ -194,6 +194,57 @@ class MyTHelper {
     return usageData;
   }
 
+  /**
+   * 자녀회선 사용량 데이터 가공(휴대폰)
+   * @param usageData
+   * @public
+   */
+  static parseChildCellPhoneUsageData(usageData: any): any {
+    const kinds = [
+      MYT_DATA_USAGE.DATA_TYPE.DATA,
+      MYT_DATA_USAGE.DATA_TYPE.VOICE,
+      MYT_DATA_USAGE.DATA_TYPE.SMS,
+      MYT_DATA_USAGE.DATA_TYPE.ETC
+    ];
+    const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
+    const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
+    let dataArr = gnrlData.concat(spclData);
+
+    MyTHelper.setTotalRemained(usageData);
+
+    // 당일 사용량(PA) DDZ25, DDZ23, DD0PB 에 해당하는 공제항목이 있으면
+    // 해당 항목의 prodId와 같고 && skipId가 'PA'인 항목은 노출 제외
+
+    const pas = dataArr.filter((_data) => {
+      return DAY_BTN_STANDARD_SKIP_ID.indexOf(_data.skipId) !== -1;
+    });
+
+    if ( pas.length > 0 ) {
+      pas.map((pa) => {
+        dataArr = dataArr.filter((_data) => {
+          return !(_data.skipId === SKIP_NAME.DAILY && _data.prodId === pa.prodId);
+        });
+      });
+    }
+
+    // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
+    dataArr = dataArr.filter((_data) => {
+      return !(_data.skipId === SKIP_NAME.DAILY && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
+    });
+
+    usageData.data = dataArr;
+
+    kinds.map((kind) => {
+      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
+        usageData[kind].map((data) => {
+          MyTHelper.convShowData(data);
+        });
+      }
+    });
+
+    return usageData;
+  }
+
   static convShowData(data: any) {
     data.isUnlimited = !isFinite(data.total);
     data.isUsedUnlimited = !isFinite(data.used);

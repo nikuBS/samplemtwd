@@ -51,7 +51,7 @@ class MyTDataUsageChild extends TwViewController {
       if (FormatHelper.isEmpty(childInfo)) {
         return this.renderErr(res, svcInfo, pageInfo, {});
       }
-      const usageData = MyTHelper.parseUsageData(usageDataResult);
+      const usageData = MyTHelper.parseChildCellPhoneUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
       usageData['childSvcNum'] = StringHelper.phoneStringToDash(childInfo.svcNum);
       usageData['childSvcMgmtNum'] = childInfo.svcMgmtNum;

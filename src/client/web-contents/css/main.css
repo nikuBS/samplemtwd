@@ -5508,3 +5508,11 @@ body.apphome .main-membershop-box {
 .on-off-list .line { border-bottom: 1px solid #e1e1e1 !important; }
 .on-off-list .last-line-top { border-top: 1px solid #e1e1e1 !important; }
 /* //190613 [OP002-714] 광고수신동의 */
+/* 190617 추가 [OP002-1531] 간편로그인 */
+.main-error-box.welcome.tod-login-box .tx{margin-top:12px}
+.main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 {max-width:10rem}
+.main-error-box.welcome.tod-login-box .tod-simple-login-btn{text-align:center}
+.main-error-box.welcome.tod-login-box .tod-simple-login-btn .tod-bt{font-size:13px; color:#178bce; text-decoration:underline; padding:12px }
+.main-error-box.welcome.tod-login-box .desc2{bottom:9px; z-index:5}
+.main-error-box.welcome.tod-login-box + .tod-login-quick-list .quick-menu-list{margin-top:18px}
+/* //190617 추가 [OP002-1531] 간편로그인 */
