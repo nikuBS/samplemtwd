@@ -57,6 +57,9 @@
 <% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    // Xtractor 에서 바로가기 url 수집하는 API 호출
+    window.XtractorScript.xtrMenualApi('<%= referer %>');
+
     new Tw.CommonShareAppInstallInfo($('.wrap'), '<%= target %>', '<%= loginType %>');
   });
 </script>
