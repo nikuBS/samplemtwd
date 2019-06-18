@@ -93,9 +93,29 @@ Tw.TNotifyComponent.prototype = {
     this.$list = $popupContainer.find('.fe-list-item');
     this.$btMore = $popupContainer.find('#fe-bt-more');
 
+    var _onClickAgree = function () {
+      this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
+        .done(function () {
+          $popupContainer.find('.fe-banner-area').hide(); // 배너 닫기
+        })
+        .fail($.proxy(function (err) {
+          Tw.Error(err.code, err.msg).pop();
+        }, this));
+    };
+
     this.$btMore.on('click', $.proxy(this._onClickBtMore, this));
     $popupContainer.on('click', '#fe-bt-go-setting', $.proxy(this._onClickGoSetting, this));
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
+    // T World 광고성 정보 수신동의 (선택) 체크박스 선택
+    $popupContainer.on('click', '.fe-agree', $.proxy(_onClickAgree, this));
+    // T world 광고성 정보 수신동의 상세보기 클릭
+    $popupContainer.on('click', '.fe-show-detail', function () {
+      Tw.CommonHelper.openTermLayer2('03');
+    });
+    // 배너 닫기
+    $popupContainer.on('click', '.fe-close', function () {
+      $popupContainer.find('.fe-banner-area').hide(); // 배너 닫기
+    });
   },
 
   /**
@@ -117,10 +137,17 @@ Tw.TNotifyComponent.prototype = {
    * @private
    */
   _getPushData: function (userId) {
-    this._apiService.request(Tw.API_CMD.BFF_04_0004, {
+    this._apiService.requestArray([
+      {command: Tw.API_CMD.BFF_03_0021}, // 약관들 동의 여부
+      {command: Tw.API_CMD.BFF_04_0004, params: {tid: userId}} // T알림 리스트 요청
+      ])
+      .done($.proxy(this._successPushData, this))
+      .fail($.proxy(this._failPushData, this));
+
+    /*this._apiService.request(Tw.API_CMD.BFF_04_0004, {
       tid: userId
     }).done($.proxy(this._successPushData, this))
-      .fail($.proxy(this._failPushData, this));
+      .fail($.proxy(this._failPushData, this));*/
   },
 
   /**
@@ -129,11 +156,27 @@ Tw.TNotifyComponent.prototype = {
    * @param resp
    * @private
    */
-  _successPushData: function (resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openTNotify(this._parseList(resp.result));
+  _successPushData: function (terms, noti) {
+    if ( noti.code === Tw.API_CODE.CODE_00 ) {
+      // TEST
+      /*
+      noti.result.push({
+        pushContents: '전체공지 테스트입니다',
+        pushTitle: '제목',
+        pushType:'T',
+        regDate: '2019-02-13 19:14:10.0',
+        seq: '1000000079'
+      });
+      var _list = this._parseList(noti.result);
+
+      // <T world 광고성 정보 수신 동의> 항목 미동의자 인경우 노출
+      _list.isShowBanner = true;
+      */
+      var _list = this._parseList(noti.result);
+      _list.isShowBanner = terms.code === Tw.API_CODE.CODE_00 && terms.result.twdAdRcvAgreeYn === 'N';
+      this._openTNotify(_list);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(noti.code, noti.msg).pop();
     }
   },
 

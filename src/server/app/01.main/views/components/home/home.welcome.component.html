@@ -7,7 +7,9 @@
     <div class="dialog-box">
         <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind"></span></i></div>
         <button id="fe-bt-noti-go" class="dialog-txt" data-xt_eid="CMMA_A2_B6-17" data-xt_csid="NO" data-xt_action="BC">
-            <span class="name"><%= svcInfo.mbrNm %> 고객님, {{ msg.gretPhrs }}</span>
+            <span class="name">
+                {{#ifCond msg.custNmUseYn '===' 'Y'}}<%= svcInfo.mbrNm %> 고객님, {{/ifCond}}{{ msg.gretPhrs }}
+            </span>
             <span class="key">{{ msg.wmsgCtt }}</span>
         </button>
         <div class="dialog-right-btn">

@@ -35245,3 +35245,7 @@ body.apphome .section-box {
 .mapimg-area .rm-tx-hour{font-size:.81rem}
 .mapimg-area .rm-tx-hour span{position:relative;display:block;padding-left:0.63rem;font-size:.75rem;color:#666}
 .mapimg-area .rm-tx-hour span:before{content:"";position:absolute;top:5px;left:0;width:3px;height:3px;border-radius:100%;background:#666}
+
+/* 190618 [OP002-1536] 로밍 서브메인 수정 */
+.rm-main-recomm li .product-info-btn .info{margin-top:.3rem;line-height:1.1rem}
+.rm-main-recomm li .product-info-btn i{color:#333;font-size:.81rem}
