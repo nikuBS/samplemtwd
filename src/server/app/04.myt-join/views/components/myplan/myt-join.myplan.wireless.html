@@ -28,28 +28,6 @@
         <!--// .cont-box -->
         <% } %>
 
-        <% if ( isFeeAlarm ) { %>
-        <hr class="cont-sp type1" aria-hidden="true"/>
-
-        <!-- .cont-box -->
-        <!-- 190611_수정01 -->
-        <!--
-        <div class="cont-box nogaps">
-            <ul class="full-link-list">
-                <li>
-                    <a href="/myt-join/myplan/alarm">
-                        <span class="inner">
-                            <span class="tit">요금제 변경 가능 알림 서비스</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        -->
-        <!-- //190611_수정01 -->
-        <!--// .cont-box -->
-        <% } %>
-
         <% if ( feePlan.optionAndDiscountProgramList.length > 0 ) { %>
         <!-- <hr class="cont-sp type1" aria-hidden="true"/> --> <!-- //190611_삭제02 -->
 
@@ -79,9 +57,6 @@
         </div>
         <!--// .cont-box -->
         <% } %>
-
-        <hr class="cont-sp type1" aria-hidden="true"/>
-
         <!-- .cont-box -->
         <!-- 190611_수정01 -->
         <div class="cont-box">
@@ -97,10 +72,16 @@
             <div class="ti-caption-type01 pb24">
                 <h3 class="tit">요금제 변경</h3>
             </div>
+            <% if ( isFeeAlarm ) { %>
             <ul class="bt-slice item-two">
                 <li><a href="/myt-join/myplan/alarm" type="button" class="btn-round1 btn-style4">변경 가능일 알림</a></li>
                 <li><a href="/product/mobileplan" type="button" class="btn-round1 btn-style4">요금제 변경하기</a></li>
             </ul>
+            <% } else { %>
+            <ul class="bt-slice item-two">
+                <button type="button" class="btn-round1 btn-style4">요금제 변경하기</button>
+            </ul>
+            <% } %>
         </div>
         <!--// .cont-box -->
         <% if ( tipList ) { %>
