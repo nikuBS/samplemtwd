@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+
+
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap noborder">
+				<div class="page-header noborder"><!--2019.02.28 noborder 추가-->
+					<div class="header-ti">
+                        <h1>T끼리 데이터 선물</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+                <div class="container">
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="true" aria-c0ontrols="tab1-tab" id="tab1"><a href="">바로 선물</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab2"><a href="">자동 선물 <span>(1)</span></a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box b-line">
+													<div class="ti-caption-type01">
+														<!-- 2019-01-26 터치영역 확대 수정 -->
+														<!--접근성 수정-->
+														<button class="tit" aria-haspopup="true">선물 받는 분 번호<span class="btn-tip"><i class="icon-badge-tip"><span class="blind">선물 받는 분 번호 tip</span></i></span></button>
+														<!-- //접근성 수정-->
+													</div>
+													<!-- 2019-01-17 inp-btn 추가 -->
+													<div class="inputbox bt-add inp-btn">
+														<span class="input new">
+															<!--접근성 수정-->
+															<input type="text" placeholder="숫자만 입력" title="선물 받는 분 번호 숫자만 입력" aria-describedby="aria-exp-desc1">
+															<!-- //접근성 수정-->
+															<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+														</span>
+														<span class="r-btn">
+															<button type="button" class="btn-round2 btn-style3">주소록</button>
+														</span>
+													</div>
+													<p class="fs13 mt10"><a class="bt-link-tx underline" href="">선물 받을 수 있는 요금제 확인</a></p>
+												</div>
+												<hr class="cont-sp type1" aria-hidden="true"/>
+
+												<div class="cont-box pb0">
+													<div class="ti-caption-type01 pb0">
+														<!-- 2019-01-26 터치영역 확대 수정 -->
+														<!--접근성 수정-->
+														<button class="tit" aria-haspopup="true">선물할 데이터양<span class="btn-tip"><i class="icon-badge-tip"><span class="blind">선물할 데이터양 tip</span></i></span></button>
+														<!-- //접근성 수정-->
+														<p class="num">한도 <em>499MB</em> <span class="ft-medium">남음</span></p>
+													</div>
+													<div class="data-gift-wrap">
+														<div class="result-nolist">
+															<i class="ico"></i>
+															<p>선물 후 기본잔여데이터가 500MB이상 인 경우에만<br> 선물하기가 가능합니다.</p>
+														</div>
+													</div>
+												</div>
+												<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+												<div class="bt-fixed-area">
+													<ul class="bt-slice full">
+														<li class="bt-red1">
+															<button>선물하기</button>
+														</li>
+													</ul>
+												</div>
+												<!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box nogaps">
+													자동 선물 내용입니다.
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
+                    <!--// .cont-box -->
+
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<!--접근성 수정-->
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 데이터 선물하기 조건안내<i class="icon-badge-tip"><span class="blind">T끼리 데이터 선물하기 조건안내 tip</span></i></button></li>
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 선물 받은 데이터 사용안내<i class="icon-badge-tip"><span class="blind">T끼리 선물 받은 데이터 사용안내 tip</span></i></button></li>
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 데이터 선물하기 유의사항<i class="icon-badge-tip"><span class="blind">T끼리 데이터 선물하기 유의사항 tip</span></i></button></li>
+							<!-- //접근성 수정-->
+						</ul>
+					</div>
+
+
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
+	</div>
+</body>
+</html>
