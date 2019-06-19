@@ -78,7 +78,9 @@ Tw.XtractorService.prototype = {
     if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
       // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
       if (scrollTop < objTop && scrollBottom > objBottom) {
-        this.logView(E_ID, CS_ID);
+        if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
+          this.logView(E_ID, CS_ID);
+        }
       }
     }
 
@@ -184,7 +186,7 @@ Tw.XtractorService.prototype = {
     }
 
     if (this._loggedList.indexOf(key) !== -1) {
-      Tw.Logger.info('[Xtractor] this key already logged.');
+      // Tw.Logger.info('[Xtractor] this key already logged.');   // scroll 이벤트 때문에 너무 많이 발생하므로 주석 처리
       return false;
     }
 
