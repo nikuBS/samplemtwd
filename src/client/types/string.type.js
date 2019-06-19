@@ -1401,6 +1401,10 @@ Tw.CUSTOMER_EMAIL = {
   }
 };
 
+Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
+  MSG : '내 위치 정보 사용을 위해 단말기 위치(GPS)를 켜주세요.'
+};
+
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
   TITLE: '전화상담 예약 완료',
   DATE: '예약일자',
@@ -1458,6 +1462,7 @@ Tw.BRANCH = {
   VIEW_LOCATION_TERM: '위치기반 서비스 이용약관 전문보기',
   DO_YOU_AGREE: '동의하시겠습니까?',
   AGREE: '동의',
+  DISAGREE: '미동의',
   CLOSE: '닫기'
 };
 

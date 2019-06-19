@@ -138,7 +138,7 @@
 
 <script>
     $(document).ready(function () {
-        new Tw.CustomerAgentsearchNear($('.wrap'));
+        new Tw.CustomerAgentsearchNear($('.wrap'), '<%= svcInfo !== null %>');
     });
 </script>
 <% include ../../components/end.component.html %>
