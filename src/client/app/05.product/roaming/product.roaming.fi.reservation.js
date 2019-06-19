@@ -308,38 +308,20 @@ Tw.ProductRoamingFiReservation.prototype = {
       $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
       this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
 
-      //약도 이미지 및 영업시간 변경
+      //약도 이미지 변경
       var imgUrl = $('#fe-receive-img').attr('src');
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
-      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png')
-      $('#fe-receive-officehour').html($(e.target).parents('label').attr('data-officehour'));
-
-      // 기본 반환장소 설정
-      // TODO: 반납 버튼 ID(#flab05) 하드코딩 상태
-      if( $(e.target).parents('label').attr('setreturn') == "1" ) {
-        $('#flab05').text($(e.target).parents('label').attr('return-value'));
-        $('#flab05').attr('data-center',$(e.target).parents('label').attr('return-data-center'));
-        var returnImgUrl = $('#fe-return-img').attr('src');
-        var returnStartLen = returnImgUrl.lastIndexOf('/');
-        var returnCdnUrl = returnImgUrl.substring(0,returnStartLen+1);
-        $('#fe-return-img').attr('src', returnCdnUrl + $(e.target).parents('label').attr('return-data-img') + '.png')
-        $('#fe-return-officehour').html($(e.target).parents('label').attr('return-data-officehour'));
-        $('#flab05').attr('disabled',true);
-      } else {
-        $('#flab05').attr('disabled',false); 
-      }
-
+      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
     }else{
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
 
-      //약도 이미지 및 영업시간 변경
+      //약도 이미지 변경
       var imgUrl1 = $('#fe-return-img').attr('src');
       var startLen1 = imgUrl1.lastIndexOf('/');
       var cdnUrl1 = imgUrl1.substring(0,startLen1+1);
       $('#fe-return-img').attr('src', cdnUrl1 + $(e.target).parents('label').attr('data-img') + '.png');
-      $('#fe-return-officehour').html($(e.target).parents('label').attr('data-officehour'));
     }
 
     this._popupService.close();

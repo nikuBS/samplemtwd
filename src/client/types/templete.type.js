@@ -444,33 +444,23 @@ Tw.POPUP_TPL = {
     {
       'list': [
         { 'radio-attr': 'id="00" name="r2"',
-          'label-attr':'id="00" data-center="A100110000" data-img="place-img-01-01" value="인천공항 1터미널 1층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간"',
+          'label-attr':'id="00" data-center="A100110000" data-img="place-img-01-01" value="인천공항 1터미널 1층 로밍센터"',
           txt: '인천공항 1터미널 1층 로밍센터' },
         { 'radio-attr': 'id="01" name="r2"',
-          'label-attr':'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 3번 출구옆 : 24시간"',
+          'label-attr':'id="01" data-center="1430456896" data-img="place-img-02-1" value="인천공항 2터미널 1층 로밍센터"',
           txt: '인천공항 2터미널 1층 로밍센터' },
         { 'radio-attr': 'id="02" name="r2"',
-          'label-attr':'id="02" data-center="A100140000" data-img="place-img-03" value="김포공항 1층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 23:00"',
+          'label-attr':'id="02" data-center="A100140000" data-img="place-img-03" value="김포공항 1층 로밍센터"',
           txt: '김포공항 1층 로밍센터' },
         { 'radio-attr': 'id="03" name="r2"',
-          'label-attr':'id="03" data-center="A900100000" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 19:00"',
+          'label-attr':'id="03" data-center="A900100000" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"',
           txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'id="04" name="r2"',
-          'label-attr':'id="04" data-center="A200130000" data-img="place-img-05-1" value="김해공항 1층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 21:30"',
+          'label-attr':'id="04" data-center="A200130000" data-img="place-img-05-1" value="김해공항 1층 로밍센터"',
           txt: '김해공항 1층 로밍센터' },
         { 'radio-attr': 'id="05" name="r2"',
-          'label-attr':'id="05" data-center="C399900000" data-img="place-img-06" value="대구공항 2층 로밍센터"' +
-          ' data-officehour="<strong>업무시간</strong> | 07:00 ~ 22:00"',
-          txt: '대구공항 2층 로밍센터' },
-        { 'radio-attr': 'id="06" name="r2"',
-          'label-attr':'id="06" data-center="1430452300" data-img="place-img-10" value="대구 SKT 황금점 매장"' +
-          ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"',
-          txt: '대구 SKT 황금점 매장' }
+          'label-attr':'id="05" data-center="C399900000" data-img="place-img-06" value="대구공항 2층 로밍센터"',
+          txt: '대구공항 2층 로밍센터' }
       ]
     }
   ],
@@ -488,46 +478,35 @@ Tw.POPUP_TPL = {
       'list': [
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="06" data-center="A100110000" data-booth="1000004045"' +
-            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"' +
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령가능</span>"',
+            ' data-img="place-img-01-f" value="인천공항 1터미널 3층 로밍센터(F 카운터)"',
           txt: '인천공항 1터미널 3층 로밍센터(F 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="07" data-center="A100110000" data-booth="1000004047"' +
-            ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"' +
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령가능</span>"',
+            ' data-img="place-img-01-h" value="인천공항 1터미널 3층 로밍센터(H 카운터)"',
           txt: '인천공항 1터미널 3층 로밍센터(H 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="08" data-center="1430456896" data-booth="1430456957"' +
-            ' data-img="place-img-02-de" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"' +
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령가능</span>"',
+            ' data-img="place-img-02-de" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"',
           txt: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="09" data-center="A100140000" data-booth="1000004055"' +
-            ' data-img="place-img-03" value="김포공항 1층 로밍센터"' +
-            ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 23:00"',
+            ' data-img="place-img-03" value="김포공항 1층 로밍센터"',
           txt: '김포공항 1층 로밍센터' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="10" data-center="A900100000" data-booth="1000004057"' +
-            ' data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"' +
-            ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 19:00"',
+            ' data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"',
           txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="11" data-center="A200130000" data-booth="1000012532"' +
-            ' data-img="place-img-05" value="김해공항 3층 로밍센터"' +
-            ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 21:30"',
+            ' data-img="place-img-05" value="김해공항 3층 로밍센터"',
           txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="12" data-center="C399900000" data-booth="1430455436"' +
-            ' data-img="place-img-06" value="대구공항 2층 로밍센터"' +
-            ' data-officehour="<strong>업무시간</strong> | 07:00 ~ 22:00"',
+            ' data-img="place-img-06" value="대구공항 2층 로밍센터"',
           txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="13" data-center="1430452300" data-booth="1430452300"' +
-            ' data-img="place-img-10" value="대구 SKT 황금점 매장"' +
-            ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"' +
-            ' setreturn="1"' +
-            ' return-data-center="1430452300" return-data-img="place-img-10" return-value="대구 SKT 황금점 매장"' +
-            ' return-data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"',
+            ' data-img="place-img-10" value="대구 SKT 황금점 매장"',
           txt: '대구 SKT 황금점 매장' }
       ]
     }
