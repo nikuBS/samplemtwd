@@ -54,6 +54,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00006403', 20], // 5gx standard
     ['NA00006404', 30], // 5gx prime
     ['NA00006405', 50], // 5gx platinum
+    ['NA00006534', 1.5], // T플랜 세이브
     ['NA00006535', 2.5], // T플랜 안심2.5G
     ['NA00006536', 4],  // T플랜 안심4G
     ['NA00006537', 15], // T플랜 에센스
@@ -236,8 +237,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
               plan === 'NA00006537' || plan === 'NA00006538') { // Tplan large/family의 경우 '최대' 삽입, 0Plan large, T플랜 에센스, T플랜 스페셜 포함
             option.qttText = '최대 ' + option.qttText;
             option.copnDtlClNm = option.copnDtlClNm.replace('100%', '');
+            option.isTplan = true;
           }
-          option.isTplan = true;
           return option;
         }
       } else if (this.planAdaptive[plan]) {
