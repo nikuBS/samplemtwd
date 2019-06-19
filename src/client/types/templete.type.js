@@ -524,7 +524,10 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'name="r2"',
           'label-attr':'id="13" data-center="1430452300" data-booth="1430452300"' +
             ' data-img="place-img-10" value="대구 SKT 황금점 매장"' +
-            ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"',
+            ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"' +
+            ' setreturn="1"' +
+            ' return-data-center="1430452300" return-data-img="place-img-10" return-value="대구 SKT 황금점 매장"' +
+            ' return-data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"',
           txt: '대구 SKT 황금점 매장' }
       ]
     }
