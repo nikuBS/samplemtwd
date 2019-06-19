@@ -863,8 +863,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     CANCEL: '멤버십 카드 해지'
   },
   REISSUE_COMPLETE: {
-    PRE: '발급 카드 정보 : </br> T멤버십(',
-    POST: ') 모바일 카드'
+    PRE: '발급 카드 정보 : </br> T멤버십',
+    POST: ' 모바일 카드'
   },
   ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
   ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
@@ -878,8 +878,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     BUTTON: '해지'
   },
   ALERT_1_A58: {
-    TITLE: 'T멤버십(Leaders Club)으로 종류를 변경하시겠습니까?',
-    MSG: '2017년 1월 1일 부터 T멤버십(Leaders Club) 카드만 제공하고 있습니다.',
+    TITLE: 'T멤버십으로 종류를 변경하시겠습니까?',
     BUTTON: '변경'
   },
   ALERT_1_A59: { TITLE: '알림', MSG: '이용정지 상태에서 정보를 수정을 하실 수 없습니다.' },
