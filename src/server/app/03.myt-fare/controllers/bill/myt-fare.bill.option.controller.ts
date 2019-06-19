@@ -105,6 +105,13 @@ class MyTFareBillOption extends TwViewController {
     } else {
       data.isAuto = false;
     }
+    // 자동납부 1% 할인 대상자
+    data.isDiscountRecipient = false;
+    if ((data.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK || data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) &&   // 납부방법코드(은행,카드)
+      data.cmsClCd === '1' &&                                                                                 // MS 신청여부(완료)
+      data.cmmsAplyYn === 'N' ) {                                                                             // 수수료적용여부(미적용)
+      data.isDiscountRecipient = true;
+    }
     return data;
   }
 
