@@ -26,6 +26,7 @@ import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 /**
  * @class
@@ -510,7 +511,7 @@ class ProductCommonCallplan extends TwViewController {
       isDisplayChar: !isSeeContents && FormatHelper.isEmpty(convResult.basOfrDataQtyCtt) && FormatHelper.isEmpty(convResult.basOfrVcallTmsCtt)
     };
   }
-
+  
   /**
    * 유사한 상품 데이터 변환
    * @param prodTypCd - 상품유형코드
@@ -559,6 +560,70 @@ class ProductCommonCallplan extends TwViewController {
       prodFltIds: prodFltIds,
       prodCnt: ['G', 'F'].indexOf(prodTypCd) !== -1 ? prodIdsLength : similarProductInfo.result.prodCnt
     });
+  }
+
+  /**
+   * 채널별 가입/해지 안내문구 조회
+   * @param prodTypCd - 상품유형코드
+   * @param channelGuidmsgInfo - 채널별 가입/해지 안내문구 조회 API 응답 값
+   */
+  private _channelScrbtermGuidmsg (isApp: any , channelGuidmsgInfo: any) {
+    if (channelGuidmsgInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(channelGuidmsgInfo.result)) {
+      return null;
+    }
+
+    const pcScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+            return item.pcScrbTermYn;
+    }),
+          mwScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+            return item.mwScrbTermYn;
+    }),
+          appScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+            return item.appScrbTermYn;
+    }),
+          scrbTermGuidCd: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+            return item.scrbTermGuidCd;
+    }),
+          scrbTermGuidMsgCtt: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+            return item.scrbTermGuidMsgCtt;
+    }),
+          mwApp: any = mwScrbTermYn + appScrbTermYn,
+          pcMwApp: any = pcScrbTermYn + mwScrbTermYn + appScrbTermYn;
+
+    const msg: any =  this._channelGuid(isApp, pcMwApp);
+
+    return Object.assign(channelGuidmsgInfo.result, {
+      pcScrbTermYn: pcScrbTermYn,
+      mwScrbTermYn: mwScrbTermYn,
+      appScrbTermYn: appScrbTermYn,
+      scrbTermGuidCd: scrbTermGuidCd,
+      scrbTermGuidMsgCtt: scrbTermGuidMsgCtt,
+      mwApp: mwApp,
+      msg: msg
+    });
+  }
+
+  /**
+   * 자동 채널별 안내 문구
+   * @param isApp - 앱 여부
+   * @param pcMwApp - 채널별 가입불가 구분코드
+   */
+  private _channelGuid (isApp: any, pcMwApp: any): any {
+
+    if ( pcMwApp === 'NNN' ) {
+      return '고객센터 또는 지점/대리점에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YNN' ) {
+      return 'PC 웹사이트(www.tworld.co.kr)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YNY' && !isApp ) {
+      return 'PC 웹사이트 또는 모바일 T월드(APP)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'NNY' && !isApp ) {
+      return '모바일 T월드(APP)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YYN' && isApp ) {
+      return 'PC 웹사이트(www.tworld.co.kr) 또는 모바일 웹사이트(m.tworld.co.kr)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'NYN' && isApp ) {
+      return '모바일 웹사이트(m.tworld.co.kr)에서 가입이 가능합니다.';
+    }
+    return null;
   }
 
   /**
@@ -821,6 +886,7 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, [prodId]),
           this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [prodId]),
           this.apiService.request(API_CMD.BFF_10_0112, {}, {}, [prodId]),
+          this.apiService.request(API_CMD.BFF_10_0180, { scrbTermCd: 'A' }, {}, [prodId]),
           this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
           this._getMyContentsData(basicInfo.result.prodStCd, basicInfo.result.grpProdScrnConsCd, prodId),
           this._getExtendContentsData(basicInfo.result.prodStCd, basicInfo.result.prodGrpYn,
@@ -830,7 +896,7 @@ class ProductCommonCallplan extends TwViewController {
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
-          relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, prodRedisInfo, prodRedisContentsInfo,
+          relateTagsInfo, seriesInfo, recommendsInfo, recommendsAppInfo, similarProductInfo, channelGuidmsgInfo, prodRedisInfo, prodRedisContentsInfo,
           prodRedisExtendContentsInfo, mobilePlanCompareInfo, isJoinedInfo, additionsProdFilterInfo, combineRequireDocumentInfo
         ]) => {
           const apiError = this.error.apiError([ relateTagsInfo, seriesInfo, prodRedisInfo ]);
@@ -889,6 +955,7 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
+            channelGuidmsgInfo: this._channelScrbtermGuidmsg(BrowserHelper.isApp(req), channelGuidmsgInfo),  // 채널별 가입/해지 안내문구 조회
             isJoined: this._isJoined(basicInfo.result.prodTypCd,
               [...this._getPlmProdIdsByList(basicInfo.result.plmProdList), prodId], isJoinedInfo, svcProdId),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
@@ -898,7 +965,8 @@ class ProductCommonCallplan extends TwViewController {
             isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s),
             loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
             bpcpServiceId,
-            eParam
+            eParam,
+            isApp: BrowserHelper.isApp(req)
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));
