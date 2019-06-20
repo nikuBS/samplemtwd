@@ -12,7 +12,18 @@ Tw.XtractorService = function($container, isTosBanner) {
 
   // Init
   setTimeout($.proxy(this._init, this), 500);
+  
+  // 화면 스크롤 시 배너 객체가 화면 내 노출될 경우 BV 통계 호출해주도록 수정
+  $(document).scroll($.proxy(function () {    
+    this._onLoadBV();
+  }, this));
 
+  // 상하 스크롤 없이 좌우 터치 이벤트를 통한 배너 스와이프 시 BV 통계 호출해주도록 수정
+  $(document).on('touchmove', '[data-xt_action="BV"]', $.proxy(function () {    
+    this._onLoadBV();
+  }, this));
+
+  this._observeTransition();
 };
 
 Tw.XtractorService.prototype = {
@@ -24,9 +35,52 @@ Tw.XtractorService.prototype = {
   _init: function() {
     this._loggedList = [];
     this._isScript = this._isTosBanner && (window.XtractorEvent && window.XtractorEvent.xtrEvent) || !this._isTosBanner && (window.XtractorScript && window.XtractorScript.xtrCSDummy);
-
+    
     this._bindBC();
     this._onLoadBV();
+  },
+
+  /**
+   * @function
+   * @desc 화면에 실제 노출되는 배너에 대한 노출통계 수집을 위한 처리
+   */
+  _observeTransition: function() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    var _this = this;
+    var viewElms = [];
+    var isRun = false;
+    var viewRunner = function(){
+        if(isRun){
+          return;
+      }
+      isRun = true;
+      var _viewElms = viewElms;
+      viewElms = [];
+
+      _viewElms.forEach(function(elem, idx){
+          // 여기에 처리하고자 하는 액션을 구현 
+          _this._sendBV(elem);
+      });
+      isRun = false;
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type == "attributes") {
+          if(viewElms.indexOf(mutation.target) === -1){
+              viewElms.push(mutation.target);
+          }
+          setTimeout(viewRunner, 100);
+        }
+      });
+    });
+    
+    $('[data-xt_action="BV"]').each(function(a,b){
+        observer.observe(b, {
+          attributes: true //configure it to listen to attribute changes
+        });
+    });
   },
 
   /**
@@ -64,8 +118,19 @@ Tw.XtractorService.prototype = {
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
 
+    var scrollTop = $(window).scrollTop();  // 현재 스크롤의 Top
+    var scrollBottom = scrollTop + $(window).height();  // 현재 스크롤의 Bottom
+    
+    var objTop = $elem.offset().top;    // 배너 객체의 Top
+    var objBottom = objTop + $elem.innerHeight();   // 배너 객체의 Bottom
+
     if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
-      this.logView(E_ID, CS_ID);
+      // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
+      if (scrollTop < objTop && scrollBottom > objBottom) {
+        if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
+          this.logView(E_ID, CS_ID);
+        }
+      }
     }
 
     /* TOS Banner */
@@ -82,7 +147,9 @@ Tw.XtractorService.prototype = {
       !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
       !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
       !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
-      this._sendXtrEvent($.param(BannerArgs));
+        if (scrollTop < objTop && scrollBottom > objBottom) {
+          this._sendXtrEvent($.param(BannerArgs));
+        }
     }
   },
 
@@ -96,6 +163,7 @@ Tw.XtractorService.prototype = {
     var $elem = $(e.currentTarget),
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
+
 
     if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
       this.logClick(E_ID, CS_ID);
@@ -167,7 +235,7 @@ Tw.XtractorService.prototype = {
     }
 
     if (this._loggedList.indexOf(key) !== -1) {
-      Tw.Logger.info('[Xtractor] this key already logged.');
+      // Tw.Logger.info('[Xtractor] this key already logged.');   // scroll 이벤트 때문에 너무 많이 발생하므로 주석 처리
       return false;
     }
 

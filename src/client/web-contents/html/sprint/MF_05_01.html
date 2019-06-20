@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <!-- Grand open 접근성 수정 -->
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+		</ul>
+		<!-- Grand open 접근성 수정 -->
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">납부방법</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+<!-- 190617 추가 -->
+                <!-- 자동납부 1% 할인 대상자 에게만 노출 -->
+                <div class="cont-box nogaps">
+                    <div class="tod-myt-noti-comp">
+                        <dl>
+                            <dt class="dt-tit">
+                                <i class="icon-dialog-emoji-56"><span class="blind"></span></i><strong>고객님은 자동납부 1% 할인을 받고 계십니다.</strong>
+                            </dt>
+                            <dd class="dd-desc">
+                                자동납부 변경 및 해지를 하시는 경우 1% 할인 혜택이 소멸되며,  재신청을 하셔도 1% 할인은 제공되지 않으니 유의하시기 바랍니다.
+                                <span>※ 은행 &rarr; 은행, 카드 &rarr; 카드 변경은 제외</span> 
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+<!-- //190617 추가 -->
+                <!-- .cont-box -->
+                <div class="cont-box">
+                	<div class="cont-tit-wrap">
+                		<span class="tit-small">자동납부 (계좌이체)</span>
+                		<span class="tit-big">신한카드 <em>44354547*********</em></span>
+                	</div>
+<!-- 190617 리디자인_01 -->
+                    <ul class="bt-slice item-two mt30">
+                        <li><button type="button" class="btn-round1 btn-style4">변경</button></li>
+                        <li><button type="button" class="btn-round1 btn-style1">해지</button></li>
+                    </ul>
+<!-- 190617 리디자인_01 -->
+                </div>
+                <!--// .cont-box -->
+                <div class="ti-caption-gray">
+                	<h3 class="tit">상세정보</h3>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                	<ul class="detail-info-list">
+                		<li>
+                			<dl>
+                				<dt>최초 승인예정일</dt>
+                				<dd>
+                					<p class="value">2018.6.11.</p>
+                				</dd>
+                			</dl>
+                		</li>
+                		<li>
+                			<dl>
+                				<dt>요금납부일</dt>
+                				<dd>
+                					<p class="value">매달 21일</p>
+                					<a class="bt-link-tx underline" href="#" title="요금 납부일 변경">변경</a>
+                				</dd>
+                			</dl>
+                		</li>
+                		<li>
+                			<dl>
+                				<dt>연락처</dt>
+                				<dd>
+                					<p class="value">010-93**-78**</p>
+                				</dd>
+                			</dl>
+                		</li>
+                		<li>
+                			<dl>
+                				<dt>예금주명</dt>
+                				<dd>
+                					<p class="value">홍*길</p>
+                				</dd>
+                			</dl>
+                		</li>
+                	</ul>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+<!-- 190617 리디자인_02 -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip" aria-haspopup="true">인출(승인)일 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true">자동납부 할인 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true">이용시간 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true">추가문의 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+<!-- //190617 리디자인_02 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

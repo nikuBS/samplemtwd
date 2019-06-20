@@ -2032,10 +2032,12 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
+/* 190604 수정 [OP002-1552] 나의 부가서비스 리스트 */
 .list-comp-lineinfo li button .lineinfo-data .ico, .list-comp-lineinfo li a.link .lineinfo-data .ico {
   position: absolute;
   right: 0;
-  top: -0.13rem; }
+  top: -0.28rem; }
+/* //190604 수정 [OP002-1552] 나의 부가서비스 리스트 */
 
 .list-comp-lineinfo li button .lineinfo-data .txt-sup, .list-comp-lineinfo li a.link .lineinfo-data .txt-sup {
   vertical-align: middle;
@@ -15614,7 +15616,7 @@ a.bt-link-tx.underline.small {
 .site-informationuse-list .amount.ico-member .link:after {
   background-image: url(/img/ico/ico-member.png); }
 
-/* 이용안내 - 서비스 안내 - 
+/* 이용안내 - 서비스 안내 -
 사이트 이용방법 [sprint8/CS_06_02.html]  :::  컨텐츠
 온라인 T world 이용안내 [sprint8/CS_06_03.html]  :::  컨텐츠
  */
@@ -15671,7 +15673,7 @@ a.bt-link-tx.underline.small {
   font-size: 0.88rem;
   line-height: 1.13rem; }
 
-/* 이용안내 - 서비스 안내 - 
+/* 이용안내 - 서비스 안내 -
 사이트 이용방법 [sprint8/CS_07_01.html]  :::  컨텐츠
  */
 .servicecenter-wrap01 {
@@ -35130,7 +35132,7 @@ body.apphome .section-box {
 
 .tel-area .announcement-box li {
   color: rgba(102, 102, 102, 0.6); }
-  
+
  /* 로밍 상품 이용 안내 */
 .rm-prd-info .rm-info-top{height:17.5rem;background:#061a2e url(/img/product/rm-info-bg-top.jpg) no-repeat center 0;background-size:22.5rem auto;text-align:center;color:#fff}
 .rm-prd-info .rm-info-top h3 img{width:13.5rem}
@@ -35192,6 +35194,11 @@ body.apphome .section-box {
 .tod-graph-wrap .tod-time-info .use_time{text-align:left}
 .tod-graph-wrap .tod-time-info .defer_time{text-align:right}
 
+/* 190528 추가 [OP002-821] 상품원장 가입버튼 비활성화 case */
+.productdetails-ledgercase .btn .bt-white1:disabled,
+.productdetails-ledgercase .btn .bt-white1.disabled {background:#fff; opacity:0.4;}
+.joinconsulting-wrap .btn-round3 {white-space:nowrap;}
+
 /* 190604 [OP002-872][UX/PUB] (W-1905-057-01) [UX정합성 2차][AS센터 찾기] - CS_03_01 */
 .tod-as-time-list{border-top: 1px solid #e1e1e1;}
 .tod-as-time-list .tod-inner{padding: 1.25rem 0 .875rem 0;}
@@ -35202,7 +35209,7 @@ body.apphome .section-box {
 .tod-as-time-list .sp-th{width: 55%;font-size: .875rem; text-align: left;}
 .tod-as-time-list .sp-td{width: 45%; font-size: .875rem; color:#000; text-align: right;}
 .tod-as-time-list .list-noti{border-top: 1px solid #e1e1e1; padding-top:13px; margin-bottom: 0.938rem;}
-.tod-as-time-list .list-noti > li{position:relative; font-size: 0.75rem; line-height: 1rem; color: #858585; margin:0.5rem 0;  padding-left: 0.5rem;} 
+.tod-as-time-list .list-noti > li{position:relative; font-size: 0.75rem; line-height: 1rem; color: #858585; margin:0.5rem 0;  padding-left: 0.5rem;}
 .tod-as-time-list .list-noti > li:before {display: inline-block; content: ''; position: absolute; left: 0; top: 0.38rem; width: 0.19rem; height: 0.19rem; background: #666; border-radius: 50%;}
 
 /* 190516 추가 [OP002-389] faq */
@@ -35210,6 +35217,11 @@ body.apphome .section-box {
 .tod-faq-search .tod-faq-filter{width:27%; float:left; }
 .tod-faq-search .tod-faq-filter .bt-dropdown.text-type02{width:100%; padding:0.6875rem 2.25rem 0.6875rem 0.75rem}
 .tod-faq-search .tod-have-filter{width:-webkit-calc(100% - 27% - 0.5rem); width:-ms-calc(100% - 27% - 0.5rem); width:calc(100% - 27% - 0.5rem); float:right}
+
+/* 190604 추가 [OP002-1552] 나의 부가서비스 리스트 */
+.add-prd-wrap .list-comp-lineinfo li .not-link .lineinfo-data {padding-right:1rem; box-sizing:border-box;}
+.add-prd-wrap .list-comp-lineinfo li:not(.add-con) .not-link {padding-bottom:1.38rem;}
+.add-prd-wrap .list-comp-lineinfo li.add-con > a.link {padding-bottom:0;}
 
 /* 190607 추가 [OP002-1203] SK PAY */
 .agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text.tod-pdtype2 {padding:1.25rem 0 1.313rem;}
@@ -35221,3 +35233,38 @@ body.apphome .section-box {
 .cont-actionsheet .tod-ac-list-dep2 > li:first-child.type3:after {content:none;}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
+
+/* 190613 [OP002-714] 광고수신동의 */
+.tod-alram-box + hr.cont-sp.type1{display:none}
+.tod-alram-box .on-off-list.new > li{padding:0 !important; min-height:2.625rem;}
+.tod-alram-box .on-off-list.new .btn-switch{-webkit-transform:translateY(-0.4375rem); transform:translateY(-0.4375rem)}
+.tod-alram-box .on-off-list.new .tod-alarm-txt .tod-link-type{color:#178bce; font-size:0.8125rem; text-decoration:underline; padding:0.125rem 0}
+.tod-alram-box .tod-alarm-close{position:absolute; width:1.25rem; height:1.25rem; right:0.4375rem; top:0.4375rem; background:url('/img/svg/icon_48px_titlebar_exit.svg') no-repeat 50% 50%; background-size:50%}
+
+/* 190617 [OP002-1534] baro Box 임대 내 로밍센터 영업시간 추가 노출 */
+.mapimg-area .rm-tx-hour{font-size:.81rem}
+.mapimg-area .rm-tx-hour span{position:relative;display:block;padding-left:0.63rem;font-size:.75rem;color:#666}
+.mapimg-area .rm-tx-hour span:before{content:"";position:absolute;top:5px;left:0;width:3px;height:3px;border-radius:100%;background:#666}
+
+/* 190618 [OP002-1536] 로밍 서브메인 수정 */
+.rm-main-recomm li .product-info-btn .info{margin-top:.3rem;line-height:1.1rem}
+.rm-main-recomm li .product-info-btn i{color:#333;font-size:.81rem}
+
+/* 190613 [OP002-1382] 일시정지 예약 */
+.my-subscription-wrap .my-device-type .p-num .tod-add-text{padding-left:0.25rem;font-size:0.9375rem;font-weight:400;color:#959595}
+.list-comp-input.tod-type2 .select-list > li .comp-list-layout{padding-right:1rem}
+.list-comp-input.tod-type2 .select-list > li .comp-list-layout:before{left:3.38rem;right:0}
+.list-comp-input .select-list.tod-btm-line > li:last-of-type .comp-list-layout:before{background:#f2f2f2}
+.cont-box .cont-box.btm-line{border-bottom:1px solid #e5e5e5}
+
+/* 190618 [OP002-1614] 은행 자동납부 / 카드자동납부 1% 할인 대상 고객 납부 방법 변경 시 1% 혜택 소멸에 대한 Noti 팝업 요청 */
+.tod-myt-noti-comp{background-color: #eff6fb; padding: 1.25rem 1rem;}
+.tod-myt-noti-comp .icon-dialog-emoji-56{vertical-align: middle; margin-right: 0.5rem;}
+.tod-myt-noti-comp .dt-tit{font-size: 0.813rem;}
+.tod-myt-noti-comp .dd-desc{font-size: 0.75rem; padding-top: 0.625rem;}
+.tod-myt-noti-comp .dd-desc > span{display:block;}
+
+/* 190618 [OP002-1662] T끼리데이터선물 기본제공량 부족case 처리수정 */
+.data-gift-wrap .result-nolist {padding-bottom:2rem; text-align:center;}
+.data-gift-wrap .result-nolist .ico {display:inline-block;}
+.data-gift-wrap .result-nolist .ico + p {margin-top:1rem;}

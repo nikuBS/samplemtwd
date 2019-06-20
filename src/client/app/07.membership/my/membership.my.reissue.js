@@ -69,8 +69,7 @@ Tw.MembershipMyReissue.prototype = {
   _successReissueRequest: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
       // '발급 카드 정보 : </br> T멤버십(' 과 ') 모바일 카드' 사이에 카드 종류 넣기
-      var reissueComplete = Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.PRE +
-        Tw.MEMBERSHIP_TYPE[this._mbrTypCd] + Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.POST;
+      var reissueComplete = Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.PRE + Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.POST;
 
       this._popupService.afterRequestSuccess(null, '/membership/my', null,
         Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, reissueComplete ); // 완료 팝업 Open

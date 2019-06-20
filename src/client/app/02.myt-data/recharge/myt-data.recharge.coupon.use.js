@@ -31,6 +31,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
     this.$numberInput = this.$container.find('input[type=tel]');
+    this.$tipRefill = this.$container.find('.fe-tip-refill');
+    this.$tipGift = this.$container.find('.fe-tip-gift');
+
     // this.$errorSpan = this.$container.find('.error-txt');
     // this.$errorV18 = this.$container.find('#fe-2-v18');
     // this.$errorV9 = this.$container.find('#fe-2-v9');
@@ -70,9 +73,13 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _onTabChanged: function (hash) {
     if (hash.raw === 'refill') {
       this._onOptionSelected();
+      this.$tipGift.hide();
+      this.$tipRefill.show();
       this._currentTab = 'refill';
     } else if (hash.raw === 'gift') {
       this._onNumberChanged();
+      this.$tipRefill.hide();
+      this.$tipGift.show();
       this._currentTab = 'gift';
     }
 

@@ -24,6 +24,22 @@
                 <!-- .cont-box -->
                 <!-- 자동납부 신청된 경우 납부정보 표시 -->
                 <% if (paymentOption.isAuto) { %>
+                <% if (paymentOption.isDiscountRecipient) { %>
+                    <!-- 자동납부 1% 할인 대상자 에게만 노출 -->
+                    <div class="cont-box nogaps">
+                        <div class="tod-myt-noti-comp">
+                            <dl>
+                                <dt class="dt-tit">
+                                    <i class="icon-dialog-emoji-56"><span class="blind"></span></i><strong>고객님은 자동납부 1% 할인을 받고 계십니다.</strong>
+                                </dt>
+                                <dd class="dd-desc">
+                                    자동납부 변경 및 해지를 하시는 경우 1% 할인 혜택이 소멸되며,  재신청을 하셔도 1% 할인은 제공되지 않으니 유의하시기 바랍니다.
+                                    <span>※ 은행 &rarr; 은행, 카드 &rarr; 카드 변경은 제외</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                <% } %>
                 <div class="cont-box">
                     <div class="cont-tit-wrap">
                         <span class="tit-small"><%= addrInfo.payNm %></span>
