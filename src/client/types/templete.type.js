@@ -438,7 +438,7 @@ Tw.POPUP_TPL = {
     '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe11.html' },
     '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe12.html' },
     '07': { title: '마케팅 활동 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe13.html' },
-    '09': { title: '개인정보 처리방침', url: 'https://privacy.sktelecom.com/view.do?ctg=policy&name=policy'}
+    '09': { title: '개인정보 처리방침', url: 'https://m.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=mWEB&stplTypCd=02'}
   },
   ROAMING_RETURN_PLACE: [
     {
