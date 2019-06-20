@@ -145,7 +145,7 @@
                     </div>
                     <!--// .cont-box -->
 
-                    <div class="cont-box noborder bgnone fe-tip-refill">
+                    <div class="cont-box noborder bgnone fe-tip-refill" style="display: <%= tab === 'refill' ? 'block' : 'none' %>;">
                         <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                         <ul class="pg-chk-list02">
                             <li><button class="btn-tip" id="TC000017">데이터 리필 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
@@ -153,7 +153,7 @@
                         </ul>
                     </div>
 
-                    <div class="cont-box noborder bgnone fe-tip-gift" style="display: none;">
+                    <div class="cont-box noborder bgnone fe-tip-gift" style="display: <%= tab === 'gift' ? 'block' : 'none' %>;">
                         <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                         <ul class="pg-chk-list02">
                             <li><button class="btn-tip" id="DC_05_01_tip_02">가족 간 선물하기 이용 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
