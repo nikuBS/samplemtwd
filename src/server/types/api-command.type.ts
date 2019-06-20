@@ -892,6 +892,10 @@ export const API_CMD = {
     path: '/core-product/:version/ledger/:args0/channel-scrbterm-guidmsg',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0181: {
+    path: '/core-product/:version/mobiles/additions/:args0/send-sms',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
