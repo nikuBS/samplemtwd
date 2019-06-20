@@ -135,6 +135,13 @@ Tw.ProductMobileplanAddJoin.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    // Swing 문자 발송 API 호출 (분실안심990_예약)
+    if ( this._prodId == 'NA00006395') {
+      this._apiService.request(Tw.API_CMD.BFF_10_0181, {
+        smsPhrsGrpId: 'SMART'
+      }, {}, [this._prodId]);
+    }
+    
     this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_10_0038, {
       scrbTermCd: 'S'
