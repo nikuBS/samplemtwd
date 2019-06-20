@@ -12,12 +12,13 @@ Tw.XtractorService = function($container, isTosBanner) {
 
   // Init
   setTimeout($.proxy(this._init, this), 500);
-
+  
   // 화면 스크롤 시 배너 객체가 화면 내 노출될 경우 BV 통계 호출해주도록 수정
   $(document).scroll($.proxy(function () {    
     this._onLoadBV();
   }, this));
 
+  this._observeTransition();
 };
 
 Tw.XtractorService.prototype = {
@@ -29,9 +30,52 @@ Tw.XtractorService.prototype = {
   _init: function() {
     this._loggedList = [];
     this._isScript = this._isTosBanner && (window.XtractorEvent && window.XtractorEvent.xtrEvent) || !this._isTosBanner && (window.XtractorScript && window.XtractorScript.xtrCSDummy);
-
+    
     this._bindBC();
     this._onLoadBV();
+  },
+
+  /**
+   * @function
+   * @desc 화면에 실제 노출되는 배너에 대한 노출통계 수집을 위한 처리
+   */
+  _observeTransition: function() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
+    var _this = this;
+    var viewElms = [];
+    var isRun = false;
+    var viewRunner = function(){
+        if(isRun){
+          return;
+      }
+      isRun = true;
+      var _viewElms = viewElms;
+      viewElms = [];
+
+      _viewElms.forEach(function(elem, idx){
+          // 여기에 처리하고자 하는 액션을 구현 
+          _this._sendBV(elem);
+      });
+      isRun = false;
+    }
+
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type == "attributes") {
+          if(viewElms.indexOf(mutation.target) === -1){
+              viewElms.push(mutation.target);
+          }
+          setTimeout(viewRunner, 100);
+        }
+      });
+    });
+    
+    $('[data-xt_action="BV"]').each(function(a,b){
+        observer.observe(b, {
+          attributes: true //configure it to listen to attribute changes
+        });
+    });
   },
 
   /**
@@ -71,7 +115,7 @@ Tw.XtractorService.prototype = {
 
     var scrollTop = $(window).scrollTop();  // 현재 스크롤의 Top
     var scrollBottom = scrollTop + $(window).height();  // 현재 스크롤의 Bottom
-
+    
     var objTop = $elem.offset().top;    // 배너 객체의 Top
     var objBottom = objTop + $elem.innerHeight();   // 배너 객체의 Bottom
 
