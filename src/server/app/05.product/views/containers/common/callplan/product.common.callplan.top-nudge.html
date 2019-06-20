@@ -1,14 +1,28 @@
-<% if ((( isWireplan || isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
+<% if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '03' && ( channelGuidmsgInfo.mwApp !== 'YY' || (( isWireplan || isWireplanAdd || isCombine ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) ) && !isJoined ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+<div class="joinconsulting-wrap">       
+    <p class="text"><%= channelGuidmsgInfo.scrbTermGuidMsgCtt %></p>
+</div>
+
+<% } else if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '01' && 
+((( isWireplan || isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) ) { %>
 <div class="fe-reservation_wrap">
     <hr class="cont-sp type1" aria-hidden="true"/>
-
     <div class="joinconsulting-wrap">
-        <p class="text">가입상담을 받아보시겠어요?</p>
+        <p class="text">지점, 대리점에서 가입 가능합니다.<br> 가입 상담을 받아보시겠어요?</p>
         <div class="btn">
-            <a href="/product/wireplan/join/reservation?type_cd=<%= reservationTypeCd %>&prod_id=<%= prodId %>" class="btn-round3 btn-style3">예약</a>
+            <a href="/product/wireplan/join/reservation?type_cd=<%= reservationTypeCd %>&prod_id=<%= prodId %>" class="btn-round3 btn-style3">가입상담 신청</a>
         </div>
     </div>
 </div>
+
+<% } else if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '01' && channelGuidmsgInfo.mwApp !== 'YY' && !isJoined && channelGuidmsgInfo.msg !== null ) { %>
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="joinconsulting-wrap">   
+        <p class="text"><%= channelGuidmsgInfo.msg %></p>
+    </div>
+    
 <% } %>
 
 <% if (combineRequireDocumentInfo) { %>
