@@ -19,9 +19,15 @@
         <% } %>
     </div>
     <% } else { %>
-    <div class="limit">
-        <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-    </div>
+        <% if ( basicInfo.prodStCd === 'F1000' ) { %>
+        <div class="limit">
+            <%= '가입중단 상품' %>
+        </div>
+        <% } else{ %>
+        <div class="btn fe-btn_wrap">
+            <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+        </div>
+        <% } %>
     <% } %>
     <% } else { %>
     <% if ( basicInfo.prodScrbYn === 'Y' && !isJoined ) { %>
@@ -39,9 +45,17 @@
     </div>
     <% } %>
     <% if ( basicInfo.prodScrbYn === 'N' && !isJoined ) { %>
-    <div class="limit">
-        <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-    </div>
+        <% if ( basicInfo.prodStCd === 'F1000' ) { %>
+        <div class="limit">
+            <%= '가입중단 상품' %>
+        </div>
+        <% } else{ %>
+        <div class="btn fe-btn_wrap">
+            <% if ( !isDiscount ) { %>
+                <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+            <% } %>
+        </div>
+        <% } %>
     <% } %>
     <% } %>
 </div>
@@ -66,14 +80,26 @@
     </div>
     <% } %>
     <% if ( basicInfo.prodScrbYn === 'N' && !isJoined && !prodRedisInfo.summary.sktProdBenfCtt ) { %>
-    <div class="limit ty01">
-        <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-    </div>
+        <% if ( basicInfo.prodStCd === 'F1000' ) { %>
+        <div class="limit ty01">
+            <%= '가입중단 상품' %>
+        </div>
+        <% } else{ %>
+        <div class="btn fe-btn_wrap">
+            <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+        </div>
+        <% } %>
     <% } %>
     <% if ( basicInfo.prodScrbYn === 'N' && !isJoined && prodRedisInfo.summary.sktProdBenfCtt ) { %>
-    <div class="limit">
-        <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-    </div>
+        <% if ( basicInfo.prodStCd === 'F1000' ) { %>
+        <div class="limit">
+            <%= '가입중단 상품' %>
+        </div>
+        <% } else{ %>
+        <div class="btn fe-btn_wrap">
+            <button type="button" class="bt-white1" style="color:#3e4b69;" disabled>가입</button>
+        </div>
+        <% } %>
     <% } %>
 </div>
 <% } %>
