@@ -18,6 +18,11 @@ Tw.XtractorService = function($container, isTosBanner) {
     this._onLoadBV();
   }, this));
 
+  // 상하 스크롤 없이 좌우 터치 이벤트를 통한 배너 스와이프 시 BV 통계 호출해주도록 수정
+  $(document).on('touchmove', '[data-xt_action="BV"]', $.proxy(function () {    
+    this._onLoadBV();
+  }, this));
+
   this._observeTransition();
 };
 
