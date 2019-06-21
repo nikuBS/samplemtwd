@@ -107,7 +107,7 @@ Tw.TNotifyComponent.prototype = {
     $popupContainer.on('click', '#fe-bt-go-setting', $.proxy(this._onClickGoSetting, this));
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
     // T World 광고성 정보 수신동의 (선택) 체크박스 선택
-    $popupContainer.on('click', '.fe-agree', $.proxy(_onClickAgree, this));
+    $popupContainer.on('change', '.fe-agree', $.proxy(_onClickAgree, this));
     // T world 광고성 정보 수신동의 상세보기 클릭
     $popupContainer.on('click', '.fe-show-detail', function () {
       Tw.CommonHelper.openTermLayer2('03');
