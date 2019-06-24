@@ -36,7 +36,7 @@ export const API_CMD = {
   BFF_03_0005_C: { path: '/selected-svc', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0023_C: { path: '/core-recharge/:version/refill-gifts', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // COMMON
-  BFF_01_0002: { path: '/:version/common/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_01_0002: { path: '/:version/common/sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_01_0003: { path: '/:version/common/selected-sessions', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_01_0005: { path: '/:version/common/selected-sessions', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false, native: true },
   BFF_01_0006: { path: '/core-modification/:version/address/legal-dongs', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -890,10 +890,6 @@ export const API_CMD = {
   },
   BFF_10_0180: {
     path: '/core-product/:version/ledger/:args0/channel-scrbterm-guidmsg',
-    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
-  },
-  BFF_10_0181: {
-    path: '/core-product/:version/mobiles/additions/:args0/send-sms',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
 
