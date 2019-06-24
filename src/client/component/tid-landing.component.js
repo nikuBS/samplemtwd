@@ -340,7 +340,6 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _onNativeLogin: function (target, resp) {
-    alert(resp.resultCode);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._successLogin(target, resp.params);
     } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
