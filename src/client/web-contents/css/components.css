@@ -32268,8 +32268,10 @@ body.apphome .section-box {
   padding: 1.06rem 0 1.06rem 0;
   text-align: left; }
 
+/* 190624 수정 [OP002-1203] SK PAY */
 .full-link-list.type02 li button, .full-link-list.type02 li a {
-  padding: 1.06rem 0 1.06rem 0; }
+  padding: 1.06rem 1.25rem 1.06rem 0; }
+/* //190624 수정 [OP002-1203] SK PAY */
 
 .full-link-list.type02 li button:after, .full-link-list.type02 li a:after {
   right: 0; }
@@ -35233,6 +35235,7 @@ body.apphome .section-box {
 .cont-actionsheet .tod-ac-list-dep2 > li:first-child.type3:after {content:none;}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
+.full-link-list li button .inner .text.tod-txt-point, .full-link-list li a .inner .text.tod-txt-point, .full-link-list li .no-link .inner .text.tod-txt-point {color:#f76252;}
 
 /* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
 .tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}

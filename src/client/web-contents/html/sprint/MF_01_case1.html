@@ -72,35 +72,29 @@
                         <div class="cont-box nogaps noborder">
                             <!-- .cont-actionsheet -->
                             <div class="cont-actionsheet mf-actionsheet">
-                                <div class="lineManagement-header">
-                                    <ul class="ac-list">
-                                        <li class="type1">
-                                            <button type="button">
-                                                <span class="table">
-                                                    <span class="table-row">
-                                                        <span class="table-cell">
-                                                            <span class="txt">자동납부</span>
-                                                        </span>
-                                                        <span class="table-cell right">
-                                                            <span class="spot">사용중</span>
-                                                            <span class="link"></span>
-                                                        </span>
+                                <!-- 190624 수정_01 -->
+                                <ul class="ac-list">
+                                    <li class="type1">
+                                        <button type="button">
+                                            <span class="table">
+                                                <span class="table-row">
+                                                    <span class="table-cell">
+                                                        <span class="txt">자동납부</span>
+                                                    </span>
+                                                    <span class="table-cell right">
+                                                        <span class="spot">사용중</span>
+                                                        <span class="link"></span>
                                                     </span>
                                                 </span>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <hr aria-hidden="true">
-                                </div>
-                                <div class="ac-tit">요금 즉시 납부</div><!-- 190607 현행화 -->
-                                <!-- 190607 수정_01 -->
-                                <ul class="ac-list">
-                                    <li class="type3">
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li class="type1">
                                         <button>
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">간편결제 SK PAY</span>
+                                                        <span class="txt">계좌이체 납부</span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot"></span>
@@ -110,78 +104,42 @@
                                             </span>
                                         </button>
                                     </li>
-                                    <li>
-                                        <div class="type3">
-                                            <button class="tod-ac-bt-toggle open" role="button" aria-pressed="true"><!-- 하위메뉴 영역 펼침시 class="open" 추가, aria-pressed="true" 닫힘시 class="open" 삭제, aria-pressed="false" -->
-                                                <span class="table">
-                                                    <span class="table-row">
-                                                        <span class="table-cell">
-                                                            <span class="txt">일반결제</span>
-                                                        </span>
-                                                        <span class="table-cell right">
-                                                            <span class="spot"></span>
-                                                            <span class="link"><span class="blind">하위메뉴 보기</span></span><!-- 하위메뉴 영역 펼침시 "하위메뉴 보기" 닫힘시 "하위메뉴 닫기" -->
-                                                        </span>
-                                                    </span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                        <div style="display:block;"><!-- 하위메뉴 영역 펼침시 style="display:block;" 닫힘시 style="display:none;" -->
-                                            <ul class="tod-ac-list-dep2">
-                                                <li class="type3">
-                                                    <button>
-                                                        <span class="table">
-                                                            <span class="table-row">
-                                                                <span class="table-cell">
-                                                                    <span class="txt">계좌이체 납부</span>
-                                                                </span>
-                                                                <span class="table-cell right">
-                                                                    <span class="spot"></span>
-                                                                    <span class="link"></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                                <li class="type3">
-                                                    <button>
-                                                        <span class="table">
-                                                            <span class="table-row">
-                                                                <span class="table-cell">
-                                                                    <span class="txt">체크/신용카드 납부</span>
-                                                                </span>
-                                                                <span class="table-cell right">
-                                                                    <span class="spot"></span>
-                                                                    <span class="link"></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                                <li class="type3">
-                                                    <button>
-                                                        <span class="table">
-                                                            <span class="table-row">
-                                                                <span class="table-cell">
-                                                                    <span class="txt">입금전용계좌 문자 신청<span class="add">입금전용계좌 정보를 문자로 전송합니다.자동납부 인출 중이 아닌 경우에만 이용 가능합니다.</span></span>
-                                                                </span>
-                                                                <span class="table-cell right">
-                                                                    <span class="spot">신청</span>
-                                                                    <span class="link"></span>
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="type3">
+                                    <li class="type1">
                                         <button>
                                             <span class="table">
                                                 <span class="table-row">
                                                     <span class="table-cell">
-                                                        <span class="txt">OK캐쉬백/T포인트 납부</span>
+                                                        <span class="txt">SK pay 납부</span>
+                                                    </span>
+                                                    <span class="table-cell right">
+                                                        <span class="spot"></span>
+                                                        <span class="link"></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li class="type1">
+                                        <button>
+                                            <span class="table">
+                                                <span class="table-row">
+                                                    <span class="table-cell">
+                                                        <span class="txt">일반결제 납부</span>
+                                                    </span>
+                                                    <span class="table-cell right">
+                                                        <span class="spot"></span>
+                                                        <span class="link"></span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li class="type1">
+                                        <button>
+                                            <span class="table">
+                                                <span class="table-row">
+                                                    <span class="table-cell">
+                                                        <span class="txt">포인트납부예약</span>
                                                     </span>
                                                     <span class="table-cell right">
                                                         <span class="spot"></span>
@@ -192,58 +150,7 @@
                                         </button>
                                     </li>
                                 </ul>
-                                <!-- //190607 수정_01 -->
-                                <hr aria-hidden="true">
-                                <!-- 190607 현행화 -->
-                                <div class="ac-tit">포인트 요금 납부 예약</div>
-                                <ul class="ac-list">
-                                    <li class="type3">
-                                        <button>
-                                            <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        <span class="txt">OK캐쉬백포인트</span>
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        <span class="spot">7,520P</span>
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li class="type3">
-                                        <button>
-                                            <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        <span class="txt">T포인트</span>
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        <span class="spot">6,257P</span>
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li class="type3">
-                                        <button>
-                                            <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        <span class="txt">레인보우포인트</span>
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        <span class="spot">4,250P</span>
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </button>
-                                    </li>
-                                </ul>
-                                <!-- //190607 현행화 -->
+                                <!-- //190624 수정_01 -->
                                 <button type="button" class="btn-floating btn-style3">닫기</button>
                             </div>
                             <!-- // .cont-actionsheet -->
