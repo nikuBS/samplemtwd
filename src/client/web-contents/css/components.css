@@ -35234,6 +35234,18 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
 
+/* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
+.tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}
+.tod-list-wishNum-wrap .radio-list-type > li{border-bottom: 1px solid #e1e1e1; overflow: hidden;}
+.tod-list-wishNum-wrap .custom-form, .tod-list-wishNum-wrap .lab{padding: 1rem 0;}
+.tod-list-wishNum-wrap .custom-form {float:left; vertical-align: middle; margin-right: 0.75rem;}
+.tod-list-wishNum-wrap .custom-form input[type=radio] + .r-type1 {vertical-align: middle;}
+.tod-list-wishNum-wrap .lab{float:left; vertical-align:middle; font-size:0.94rem; width:85%; box-sizing:border-box;}
+.tod-notice-comp-infolist{padding:1.25rem 1rem;}
+.tod-notice-comp-infolist .item{position: relative; font-size: 0.75rem; line-height: 1.06rem; color: #858585; margin-bottom: 0.75rem;}
+.tod-notice-comp-infolist .item:last-child{margin-bottom: 0;}
+.tod-notice-comp-infolist .item > .sp-ex{position: absolute; left: 0; top: 0;}
+
 /* 190613 [OP002-714] 광고수신동의 */
 .tod-alram-box + hr.cont-sp.type1{display:none}
 .tod-alram-box .on-off-list.new > li{padding:0 !important; min-height:2.625rem;}
