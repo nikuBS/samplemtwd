@@ -18,5 +18,5 @@ spec:
     targetPort: 8090
   selector:
     app: bff-nodejs-mobile
-    version: '1.70'
+    version: '1.71'
   type: ClusterIP
