@@ -5374,7 +5374,7 @@ body.apphome .main-membershop-box {
 /* 190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */
 /*tod-mls-comp{}*/
 .tod-mls-hd{padding: 1.75rem 1.5rem 0;}
-.tod-mls-hd .i-beta{display: inline-block; width: 1.563rem; height: 0.75rem; margin-left: 0.17rem; line-height: 1;} 
+.tod-mls-hd .i-beta{display: inline-block; width: 1.563rem; height: 0.75rem; margin-left: 0.17rem; line-height: 1;}
 .tod-mls-hd .i-beta img{width: 100%; vertical-align: middle; margin-top: 2px;}
 .tod-mls-hd .sp-tit{display: block; font-size: 1rem;}
 .tod-mls-hd .sp-date{display: block; font-size: 0.875rem;color: #959595;}
@@ -5386,12 +5386,12 @@ body.apphome .main-membershop-box {
 
 .tod-mls-ft .tod-mls-load,
 .tod-mls-ft .link-plan{
-  display: inline-block; 
-  width: 100%; 
-  padding: 1.125rem 0; 
-  font-size: 1rem; 
-  line-height:1; 
-  color: #fff; 
+  display: inline-block;
+  width: 100%;
+  padding: 1.125rem 0;
+  font-size: 1rem;
+  line-height:1;
+  color: #fff;
   text-align: center; box-sizing: border-box;}
 .tod-mls-ft .tod-mls-link{display:none;}
 .tod-mls-cont{position: relative; width: 100%; min-height: 12.2rem;}
@@ -5421,14 +5421,14 @@ body.apphome .main-membershop-box {
 /* .tod-mls-comp - loading */
 .tod-cir_wrap{display:flex; justify-content: center; align-items: center}
 .tod-cir_wrap .cir{
-    display: inline-block; width:0.5rem; height:0.5rem; border-radius:100%; background:#fff; margin:5px; 
-    -webkit-animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite; 
-    -webkit-animation-direction:alternate ; 
-    -webkit-animation-timing-function:ease-in-out; 
+    display: inline-block; width:0.5rem; height:0.5rem; border-radius:100%; background:#fff; margin:5px;
+    -webkit-animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite;
+    -webkit-animation-direction:alternate ;
+    -webkit-animation-timing-function:ease-in-out;
     -webkit-transform-origin:50%;
-    animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite; 
-    animation-direction:alternate ; 
-    animation-timing-function:ease-in-out; 
+    animation:tod-cirmove 0.4s; animation-fill-mode:both; animation-iteration-count: infinite;
+    animation-direction:alternate ;
+    animation-timing-function:ease-in-out;
     transform-origin:50%;
 }
 .tod-cir_wrap .cir:nth-child(1){-webkit-animation-delay: 0s; animation-delay: 0s}
@@ -5443,11 +5443,11 @@ body.apphome .main-membershop-box {
 
 /* .tod-mls-comp - slick Custom */
 .tod-mls-card .section-swiper-box .slider-box .slick-dots {top: -38px;}
-.tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active span, 
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active span,
 .tod-mls-card .section-swiper-box .slider-box .slick-dots li.slick-active button{
     background: #f76252;border-color: #f76252;
 }
-.tod-mls-card .section-swiper-box .slider-box .slick-dots li span, 
+.tod-mls-card .section-swiper-box .slider-box .slick-dots li span,
 .tod-mls-card .section-swiper-box .slider-box .slick-dots li button{
     background: #d8d8d8;border-color: #d8d8d8;
 }
@@ -5455,9 +5455,9 @@ body.apphome .main-membershop-box {
 @media all and (max-width:320px) {
     .tod-mls-card .section-swiper-box .slider-box .slick-dots li {padding: 3px;}
 }
-/* //190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */  
+/* //190522 추가 [OP002-480] [마케팅] T월드 내게맞는요금제 추천 개발(mls) */
 
- /* 190515 추가 [OP002-465] 홈 화면 이럴땐 이렇게 하세요 타이틀 조정 */ 
+ /* 190515 추가 [OP002-465] 홈 화면 이럴땐 이렇게 하세요 타이틀 조정 */
  .main-tip-box > .stit.tit.tod-tit-lar{font-size:1.56rem; line-height:1.88rem}
 
  /* 190603 추가 [OP002-994] 배너 개선 */
@@ -5508,6 +5508,7 @@ body.apphome .main-membershop-box {
 .on-off-list .line { border-bottom: 1px solid #e1e1e1 !important; }
 .on-off-list .last-line-top { border-top: 1px solid #e1e1e1 !important; }
 /* //190613 [OP002-714] 광고수신동의 */
+
 /* 190617 추가 [OP002-1531] 간편로그인 */
 .main-error-box.welcome.tod-login-box .tx{margin-top:12px}
 .main-error-box.welcome.tod-login-box .btn-area .btn-round1.btn-style1 {max-width:10rem}
@@ -5516,3 +5517,6 @@ body.apphome .main-membershop-box {
 .main-error-box.welcome.tod-login-box .desc2{bottom:9px; z-index:5}
 .main-error-box.welcome.tod-login-box + .tod-login-quick-list .quick-menu-list{margin-top:18px}
 /* //190617 추가 [OP002-1531] 간편로그인 */
+
+/* 190618 추가 [OP002-1209] T world App > Store 영역 일부 변경 검토 요청 */
+.tod-icon-headset-red {display:inline-block; width:1.375rem; height:1.188rem; background:url(/img/ico/icon_headset.png) no-repeat 0 0; background-size:100% 100%; }

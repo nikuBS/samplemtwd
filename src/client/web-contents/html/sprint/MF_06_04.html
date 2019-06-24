@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    -->
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header noborder">
+                    <div class="header-ti">
+                        <h1>자동 선결제</h1>
+                    </div>
+                    <!-- 190619 추가_01 -->
+					<div class="header-mask">
+                        <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+                    </div>
+					<!-- //190619 추가_01 -->
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- 190619 수정_01 -->
+					<hr class="cont-sp type1" aria-hidden="true"/>
+					<!-- .cont-box -->
+					<div class="cont-box">
+                        <div class="ti-caption-type01 pb20">
+                            <h3 class="tit">금액정보<button class="btn-tip" title="금액정보 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></h3>
+                        </div>
+                    <!-- //190619 수정_01 -->
+                        <ul class="form-data-list">
+                            <li class="type2">
+                                <label class="tit">기준금액<button aria-haspopup="true" class="tip-view">기준금액 정보보기</button></label>
+                                <button class="bt-dropdown big" title="기준금액" aria-haspopup="true">50만원<span class="ico"></span></button>
+                            </li>
+                            <li class="type2">
+                                <label class="tit">선결제 금액<button aria-haspopup="true" class="tip-view">선결제 금액 정보보기</button></label>
+                                <button class="bt-dropdown big" title="선결제 금액" aria-haspopup="true">50만원<span class="ico"></span></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <!-- 2018-10-29 form 수정 -->
+                        <ul class="form-data-list">
+                            <!--접근성 수정-->
+                            <li>
+                                <label class="tit" for="flab02">카드주명</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab02" type="text" value="김월드" readonly/>
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab07">생년월일</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab07" type="number" placeholder="예시)891124" title="생년월일 입력 해주세요 예시)891124"/>
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab04">카드번호</label>
+                                <!-- 190619 수정_02 -->
+								<span class="inputbox bt-add inp-btn">
+									<span class="input">
+										<input id="flab04" type="number" placeholder="숫자만 입력" title="카드번호 숫자만 입력" />
+										<button class="cancel"><span class="blind">삭제</span></button>
+									</span>
+									<span class="r-btn">
+										<button type="button" class="btn-round2 btn-style3">자동납부&nbsp;카드정보</button>
+									</span>
+								</span>			
+                                <!-- //190619 수정_02 -->
+                            </li>
+                            <li>
+                                <label class="tit" for="flab05">유효기간</label>
+                                <div class="input-wrap-half">
+                                    <span class="inputbox">
+                                        <span class="input">
+                                            <input id="flab05" type="number" placeholder="YYYY" title="유효기간 년 YYYY" maxlength="4"/>
+                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                    <span class="inputbox">
+                                        <span class="input">
+                                            <input type="number" placeholder="MM" title="유효기간 월 MM" maxlength="2"/>
+                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                </div>
+                            </li>
+                            <li>
+                                <label class="tit" for="flab06">비밀번호</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab06" type="password" placeholder="앞 2자리" maxlength="2" title="비밀번호 앞 2자리 입력"/>
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </li>
+                            <!-- //접근성 수정-->
+                        </ul>
+                        <!--// 2018-10-29 form 수정 -->
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- 190619 수정_03 -->
+					<!-- .cont-box -->
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button class="btn-tip" aria-haspopup="true">이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
+                    <!--// .cont-box -->
+					<!-- //190619 수정_03 -->
+
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>신청하기</button><!-- 2018-10-29 문구 변경 -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
