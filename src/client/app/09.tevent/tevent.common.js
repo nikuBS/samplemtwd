@@ -27,7 +27,30 @@ Tw.TeventCommon.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
+    this._reqTwdAdRcvAgreeInfo();
   },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 여부 조회 및 미동의시 배너영역 노출 
+   * @param 
+   */
+  _reqTwdAdRcvAgreeInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          if (res.result.twdAdRcvAgreeYn === 'N') {
+            $('#agree-banner-area').show();
+          }
+        } else {
+          Tw.Error(res.code, res.msg).pop();
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+
   /**
    * @function
    * @desc 변수 초기화
@@ -51,6 +74,10 @@ Tw.TeventCommon.prototype = {
     this.$eventSelector.on('click', $.proxy(this._openEventPop, this));
     this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
+
+    this.$container.on('click', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
+    this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
   },
   /**
    * @function
@@ -101,6 +128,37 @@ Tw.TeventCommon.prototype = {
       this._requestForList($target);
     }
   },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 활성화 처리
+   */
+  _modAgree: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
+      .done(function (){
+        $('#agree-banner-area').hide();
+      })
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 약관 상세보기
+   */
+  _showAgreeDetail: function () {
+    Tw.CommonHelper.openTermLayer2('03');
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 배너 닫기
+   */
+  _closeAgree: function () {
+    $('#agree-banner-area').hide();
+  },
+
   /**
    * @function
    * @desc 리스트 더보기 API 호출
@@ -203,7 +261,7 @@ Tw.TeventCommon.prototype = {
 
       if (this._uri === 'ing') {
         $liNode.find('.fe-event-img img').attr({
-          'src': $content[i].filePath,
+          'src': Tw.Environment.cdn + $content[i].filePath,
           'alt': $content[i].prCtt
         });
       } else if (this._uri === 'win') {
