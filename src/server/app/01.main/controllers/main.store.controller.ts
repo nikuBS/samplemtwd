@@ -63,16 +63,11 @@ class MainStore extends TwViewController {
 
   private parseHelpData(cicntsList): any {
     const resultArr = <any>[];
-    (function(flag){ cicntsList.forEach(function(e){ e.isRolling = flag;}); })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
-    (function(flag){ cicntsList.forEach(function(e){ e.isRandom = flag;}); })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
-    //(function(flag){ cicntsList.forEach(function(e){ e.isRolling = flag;}); })(true);
-
-    var isRandom = cicntsList[0].isRandom;
-
+    var scrnTypCd = cicntsList[0].scrnTypCd;
     
     cicntsList.sort(function(prev, next){
 
-      if(isRandom){
+      if(scrnTypCd === 'R'){
         return Math.floor(Math.random() * 3) -1;
       }else{
         return prev.mainExpsSeq - next.mainExpsSeq;
