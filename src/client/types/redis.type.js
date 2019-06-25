@@ -41,5 +41,6 @@ Tw.REDIS_TOOLTIP_CODE = {
 
 Tw.REDIS_BANNER_TYPE = {
   TOS: 'tos',
-  ADMIN: 'admin'
+  ADMIN: 'admin',
+  TOS_ADMIN: 'tos_admin'
 };
