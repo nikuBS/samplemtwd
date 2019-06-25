@@ -78,8 +78,8 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
         var url    = Tw.Environment.environment !== 'prd' ? Tw.TRACKER_API.targetUrl.development : Tw.TRACKER_API.targetUrl.production;
         var params = $.extend(this._getTrackerData($elm[0]), {action: 'CLICK'});
         $elm.attr('data-tracked', 'true');
-        console.info('tracker extend click : ' , url + '?' + $.param(params));
-        //Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
+        //console.info('tracker extend click : ' , url + '?' + $.param(params));
+        Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
     },
 
     /**
@@ -100,8 +100,8 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
             $elm = $elms.eq(i);
             var params = $.extend(this._getTrackerData($elm[0]), {action: 'VIEW'});
             $elm.attr('data-tracked', 'true');
-            console.info('tracker extend : ' , url + '?' + $.param(params));
-            //Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
+            //console.info('tracker extend : ' , url + '?' + $.param(params));
+            Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
 
         }
     },
@@ -142,9 +142,9 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
       }
 
       this._params = params;
-      console.info('tracker : ' , url + '?' + $.param(params));
+      //console.info('tracker : ' , url + '?' + $.param(params));
   
-      //Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
+      Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
       this._isInit = true;
       $(this).trigger('init');
       this.scanTracker()
