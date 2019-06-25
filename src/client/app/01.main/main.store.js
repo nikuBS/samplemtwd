@@ -72,7 +72,7 @@ Tw.MainStore.prototype = {
    * @private
    */
   _setBanner: function () {
-    this._getTosStoreBanner();
+    this._getTosAdminStoreBanner();
   },
 
   /**
@@ -80,9 +80,11 @@ Tw.MainStore.prototype = {
    * @desc 토스 배너 정보 요청
    * @private
    */
-  _getTosStoreBanner: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0004' })
-      .done($.proxy(this._successTosStoreBanner, this))
+  _getTosAdminStoreBanner: function () {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
+    ]).done($.proxy(this._successTosAdminStoreBanner, this))
       .fail($.proxy(this._failTosStoreBanner, this));
   },
 
@@ -92,8 +94,32 @@ Tw.MainStore.prototype = {
    * @param resp
    * @private
    */
-  _successTosStoreBanner: function (resp) {
-    this._drawBanner([{ target: '4', banner: resp }]);
+  _successTosAdminStoreBanner: function (resp, admBanner) {
+    var result = [{ target: '4', banner: resp },
+    { target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
+
+    result.forEach(function(row){
+      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
+        if(!row.banner.result.summary){
+          row.banner.result.summary = {target: row.target};  
+        }
+        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
+        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
+      }else{
+        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
+      }
+
+      row.banner.result.imgList = row.banner.result.imgList.concat( 
+        admBanner.result.banners.filter(function(admbnr){
+          return admbnr.bnnrLocCd === row.target;
+        }).map(function(admbnr){
+          admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+          admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+          return admbnr;
+        })
+      );
+    })
+    this._drawTosAdminBanner(result);
   },
 
   /**
@@ -116,28 +142,35 @@ Tw.MainStore.prototype = {
    * @param banners
    * @private
    */
-  _drawBanner: function (banners) {
-    var adminList = [{ target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
+  _drawTosAdminBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
-        if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
-          if ( bnr.target === '7' ) {
-            this._membershipBanner = {
-              kind: Tw.REDIS_BANNER_TYPE.TOS,
-              list: bnr.banner.result.imgList
-            };
-          } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, Tw.CommonHelper.setBannerForStatistics(bnr.banner.result.imgList, bnr.banner.result.summary), bnr.target, $.proxy(this._successDrawBanner, this));
-          }
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+        if ( bnr.target === '7' ) {
+          this._membershipBanner = {
+            kind: Tw.REDIS_BANNER_TYPE.TOS_ADMIN,
+            list: bnr.banner.result.imgList
+          };
+        } else {
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
         }
-      } else {
-        adminList.push(bnr);
       }
     }, this));
 
-    if ( adminList.length > 0 ) {
-      this._getAdminBanner(adminList);
+    var directBanner = _.filter(banners, function(banner) {
+      return banner.bnnrLocCd === 'S';
+    }).map(function (target) {
+      target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+      return target;
+    });
+
+    if ( directBanner.length > 0 ) {
+      var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
+      this.$container.find('#fe-direct-banner ul').append(tplLine({ list: directBanner, cdn: Tw.Environment.cdn }));
+    } else {
+      this.$container.find('#fe-direct-banner').addClass('none');
     }
+    new Tw.XtractorService(this.$container);
+
   },
 
   /**
