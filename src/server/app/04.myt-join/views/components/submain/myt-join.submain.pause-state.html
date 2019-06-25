@@ -17,7 +17,7 @@
                 <% if (data.myPausedState.svcStCd === 'AC') { %>
                     <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
                         <% var longStateCd = data.myLongPausedState.opStateCd; %>
-                        <% if (data.myPausedState.armyDt) { %>
+                        <% if (data.myPausedState.armyDt || data.myPausedState.armyExtDt) { %>
                         <span class="tit">일시정지 현황</span>
                         <span class="text">장기일시정지 해제 중</span>
                         <% } else { %>
@@ -38,7 +38,7 @@
                         <% } %>
 
                     <% } else { %>
-                        <% if ( data.myPausedState.armyDt ) { %>
+                        <% if ((data.myPausedState.armyDt || data.myPausedState.armyExtDt)) { %>
                         <span class="tit">일시정지 현황</span>
                         <span class="text">장기일시정지 해제 중</span>
                         <% } else if(data.myPausedState.reservedYn === 'Y') { %>
