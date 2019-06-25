@@ -85,6 +85,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
       isMobilePlan: false,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      toProdId: this._prodId,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,

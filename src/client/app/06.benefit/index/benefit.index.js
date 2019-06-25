@@ -94,6 +94,10 @@ Tw.BenefitIndex.prototype = {
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
     this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
+    
+    this.$container.on('click', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
+    this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
   },
 
   /**
@@ -145,6 +149,34 @@ Tw.BenefitIndex.prototype = {
     } else {
       location.href= '/product/callplan?prod_id=' + _benefitId;
     }
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 활성화 처리
+   */
+  _modAgree: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
+      .done(function (){
+        $('#agree-banner-area').hide();
+      })
+      .fail($.proxy(this._onFail, this));
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 약관 상세보기
+   */
+  _showAgreeDetail: function () {
+    Tw.CommonHelper.openTermLayer2('03');
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 배너 닫기
+   */
+  _closeAgree: function () {
+    $('#agree-banner-area').hide();
   },
 
   /**
@@ -306,7 +338,8 @@ Tw.BenefitIndex.prototype = {
       {command: Tw.API_CMD.BFF_05_0115},
       {command: Tw.API_CMD.BFF_05_0106},
       {command: Tw.API_CMD.BFF_05_0094},
-      {command: Tw.API_CMD.BFF_05_0196}
+      {command: Tw.API_CMD.BFF_05_0196},
+      {command: Tw.API_CMD.BFF_03_0021} // T world 동의여부 조회
     ]).done($.proxy(this._successMyBenefitDiscountInfo, this))
       .fail($.proxy(this._onFail, this));
   },
@@ -367,6 +400,14 @@ Tw.BenefitIndex.prototype = {
       data.benefitDiscount += (resp.result.dcList && resp.result.dcList.length > 0) ? resp.result.dcList.length : 0;
     }
     // 혜택.할인 건수 끝
+    // T world 광고성 정보 수신동의(선택) 여부
+    if ((resp = arguments[9]).code === Tw.API_CODE.CODE_00) {
+      if (resp.result.twdAdRcvAgreeYn === 'Y') {
+        this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'N'});
+      } else {
+        $('#agree-banner-area').show();
+      }
+    }
 
     this.$membership.text(data.membership);
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));

@@ -267,6 +267,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this._getCurrentCombineList();
     }
 
+    this.$btnApply.attr('data-tracker_type_cd', this._typeCd)
     this.$btnSelectTypeCd.text(Tw.PRODUCT_RESERVATION[this._typeCd]);
     this._historyService.replacePathName(window.location.pathname + '?type_cd=' + this._typeCd);
   },

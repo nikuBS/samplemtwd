@@ -112,11 +112,11 @@ Tw.BannerService.prototype = {
           new Tw.XtractorService(this.$banners, true);
         }
 
-        var isRolling = this._banners.reduce(function(a,b){
+        var rollYn = this._banners.reduce(function(a,b){
           return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
-        }, {isRolling:true}).isRolling;
+        }, {rollYn:'Y'}).rollYn == 'Y';
 
-        if(isRolling && this._banners.length > 1){
+        if(rollYn === 'Y' && this._banners.length > 1){
           //this.$banners.addClass('fe-banner-auto');
           this.$banners.closest('.widget-box').addClass('slider1-auto').data("slider-auto", "true"); // 190610_추가
         }
@@ -358,13 +358,10 @@ Tw.BannerService.prototype = {
         }, [])
         .value();
     }else if(type === Tw.REDIS_BANNER_TYPE.TOS_ADMIN){
-      
-      (function(flag){ banners.forEach(function(e){ if(e.kind === Tw.REDIS_BANNER_TYPE.ADMIN) e.isRolling = flag;}) })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
-      (function(flag){ banners.forEach(function(e){ if(e.kind === Tw.REDIS_BANNER_TYPE.ADMIN) e.isRandom = flag;}) })(!Math.floor(Math.random() * 2)); // 첫번재 Result의 자동롤링 여부를 임시 삽입
-      
-      var isRandom = banners.reduce(function(a,b){
+       
+      var scrnTypCd = banners.reduce(function(a,b){
         return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
-      }, {isRandom:false}).isRandom;
+      }, {scrnTypCd:'F'}).scrnTypCd;
 
       return _.chain(banners)
         .filter(function(banner) { 
@@ -382,7 +379,7 @@ Tw.BannerService.prototype = {
           var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(a.bnnrExpsSeq)}
             , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(b.bnnrExpsSeq)};
           
-          if(isRandom){
+          if(scrnTypCd === 'R'){
             return prev.kind - next.kind || Math.floor(Math.random() * 3) -1;
           }else{
             return prev.kind - next.kind || prev.expSeq - next.expSeq;

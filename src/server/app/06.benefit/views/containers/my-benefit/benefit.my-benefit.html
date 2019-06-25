@@ -25,32 +25,31 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="myinfo-wrap">
-                    <div class="myinfo-cont">
+                        <div class="tod-myinfo-cont membership">
                         <% if( days ){ %>
-                        <div class="title-m">고객님은 SK텔레콤과 함께 하신지<br /><span class="tx-bold tx-red"><%= days %></span>째 입니다.</div>
+                        <div class="title-m">
+                            <p>고객님은 SK텔레콤과 함께 하신지</p>
+                            <span class="tx-bold tx-red"><%= year %></span>년 <span class="tx-bold tx-red"><%= month %></span>개월째 입니다.
+                        </div>
                         <% } else { %>
                         <div class="title-m">SK텔레콤과 함께 해주신 고객님을 위한 다양한 혜택을 확인하세요!</div>
                         <% } %>
                     </div>
                     <% if( locals.membership ){ %>
-                    <div class="ico-wrap">
-                        <% if( membership === 'S' ){ %>
-                        <span class="ico-ill-type3 silver"><span class="blind">silver</span></span>
-                        <% } else if( membership === 'G') { %>
-                        <span class="ico-ill-type3 gold"><span class="blind">gold</span></span>
-                         <% } else if( membership === 'V') { %>
-                        <span class="ico-ill-type3 vip"><span class="blind">vip</span></span>
-                        <% } %>
-                    </div>
-                    <div class="membership-link">
-                        <a href="/membership/submain" class="bt-link-tx underline">나의 멤버십</a>
-                        <!-- BETA 버젼 임시로 외부 링크로
-                        <button data-id="fe-membership" href="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp"
-                                class="bt-link-tx underline" title="새창">
-                            나의 멤버쉽
+                    <!-- 190619 수정_02 -->
+                    <div class="calling-plan type01">
+                        <button class="wrap-link fs-type01">
+                            <span class="left">나의 멤버십</span>
+                            <% if( membership === 'S' ){ %>
+                            <span class="tod-right"><strong class="normal">SILVER</strong></span>
+                            <% } else if( membership === 'G') { %>
+                            <span class="tod-right"><strong class="normal">GOLD</strong></span>
+                            <% } else if( membership === 'V') { %>
+                            <span class="tod-right"><strong class="normal">VIP</strong></span>
+                            <% } %>
                         </button>
-                        -->
                     </div>
+                    <!-- //190619 수정_02 -->
                    <% } %>
                 </div>
             </div>
@@ -61,63 +60,73 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="wrap-gaps-top">
+                    <!-- 190619 수정_03 -->
                     <div class="charge-guide-wrap">
-                        <div class="charge-cont">
-                            <span class="sub-disc01">포인트</span>
-                            <span class="tit tx-blue"><span class="charge-txt"><%= total %></span>P</span>
-                            <span class="sub-disc04"><span class="elem">OK캐쉬백 <%= okCashback %>P</span>
-                            <span class="elem">T포인트 <%= t %>P</span></span>
+                        <div class="tod-charge-cont">
+                            <span class="sub-disc01 tx-medium">포인트</span>
+                            <span class="tit"><span class="charge-txt"><%= total %> P</span></span>
+                            <% if( okCashback !=== '0' || t !=== '0' ){ %>
+                            <span class="sub-disc04">
+                                <% if( okCashback !=== '0' ){ %>
+                                <span class="elem">OK캐쉬백 <%= okCashback %>P</span>
+                                <% } %>
+                                <% if( t !=== '0' ){ %>
+                                <span class="elem">T포인트 <%= t %>P</span>
+                                <% } %>
+                            </span>
+                            <% } %>
                         </div>
                         <div class="right-area">
                             <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
                         </div>
                     </div>
+                    <!-- //190619 수정_03 -->
                 </div>
                 <ul class="link-long-list">
-                    <% if(locals.rainbow) {%>
+                    <% if( locals.rainbow && rainbow !=== '0' ) { %>
                     <li>
                         <div class="link-long">
                             <a href="/benefit/my/rainbowpoint">레인보우포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= rainbow %></i> P</span>
-                                            <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
-                                        </span>
+                                    <span class="normal"><i class="tx-bold"><%= rainbow %></i> P</span>
+                                    <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
+                                </span>
                             </a>
                         </div>
                     </li>
                     <% } %>
-                    <% if(locals.noContract) {%>
+                    <% if( locals.noContract ) { %>
                     <li>
                         <div class="link-long">
                             <a href="/myt-join/myplancombine/noagreement">무약정플랜포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= noContract %></i> P</span>
-                                            <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
-                                        </span>
+                                    <span class="normal"><i class="tx-bold"><%= noContract %></i> P</span>
+                                    <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
+                                </span>
                             </a>
                         </div>
                     </li>
                     <% } %>
-                    <% if(locals.military) {%>
+                    <% if( locals.military ) { %>
                     <li>
                         <div class="link-long">
                             <a href="/benefit/my/military">지켜줘서 고마워 현역플랜포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= military %></i> P</span>
-                                            <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
-                                        </span>
+                                    <span class="normal"><i class="tx-bold"><%= military %></i> P</span>
+                                    <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
+                                </span>
                             </a>
                         </div>
                     </li>
                     <% } %>
-                    <% if(locals.cookiz) {%>
+                    <% if( locals.cookiz ) { %>
                     <li>
                         <div class="link-long">
                             <a href="/benefit/my/cookiz">쿠키즈팅포인트
                                 <span class="tx-sub">
-                                            <span class="normal"><i class="tx-bold"><%= cookiz %></i> P</span>
-                                            <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
-                                        </span>
+                                    <span class="normal"><i class="tx-bold"><%= cookiz %></i> P</span>
+                                    <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
+                                </span>
                             </a>
                         </div>
                     </li>
@@ -126,74 +135,59 @@
             </div>
             <!--// .cont-box -->
 
-            <% if(count > 0) { %>
-            <div class="ti-caption-gray">
-                <h3 class="tit">혜택 / 할인</h3>
-                <p class="num">총 <em><%= count %></em>건</p>
-            </div>
-            <% } %>
+            <hr class="cont-sp type1" aria-hidden="true"/> <!-- 190619 수정_04-->
+
+            <% if( count > 0 ) { %>
+            <!-- 190619 수정_05-->	
             <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <div class="history-list type2">
-                    <ul>
+            <div class="cont-box pb0">
+                <div class="ti-caption-type01">
+                    <h2 class="tit tx-medium">혜택 / 할인 <%= count %>건</h2>
+                </div>            
+                <div class="data-list-type1">
+                    <ul class="tod-type1">
                         <% if(locals.bill) { %>
                         <li>
-                            <div class="li-elem">
-                                <a href="/myt-join/myplancombine/infodiscount" class="bt-detail-top">
-                                    <div class="title-box">
-                                        <span class="sub-tit02">요금 할인</span>
-                                        <span class="tit"><%= bill.item %> <% if(bill.total > 1) { %> 외 <%= bill.total-1 %>건 <% }%></span>
-                                    </div>
-                                </a>
+                            <span class="stit"><%= bill.item %> <% if(bill.total > 1) { %> 외 <%= bill.total-1 %>건 <% }%></span>
+                            <div class="sta">
+                                <span>요금할인</span>
+                                <span><a class="bt-link-tx underline" href="/myt-join/myplancombine/infodiscount" role="button">가입내역조회</a></span>
                             </div>
                         </li>
                         <% } %>
                         <% if(locals.welfare) { %>
                         <li>
-                            <div class="li-elem">
-                                <a href="/product/callplan?prod_id=TW20000016" class="bt-detail-top">
-                                    <div class="title-box">
-                                        <span class="sub-tit02">요금 할인</span>
-                                        <span class="tit">복지고객할인 <%= welfare.total %>건</span>
-                                    </div>
-                                </a>
+                            <span class="stit">복지고객할인</span>
+                            <div class="sta">
+                                <span>요금할인</span>
+                                <span><a class="bt-link-tx underline" href="/product/callplan?prod_id=TW20000016" role="button">자세히 보기</a></span>
                             </div>
                         </li>
                         <% } %>
                         <% if(locals.bond) { %>
                         <li>
-                            <div class="li-elem">
-                                <a href="/myt-join/combinations" class="bt-detail-top">
-                                    <div class="title-box">
-                                        <span class="sub-tit02">결합 할인</span>
-                                        <span class="tit"> <%= bond.name %> <% if(bond.total > 1) { %> 외 <%= bond.total-1 %>건 <% }%></span>
-                                    </div>
-                                </a>
+                            <span class="stit"><%= bond.name %> <% if(bond.total > 1) { %> 외 <%= bond.total-1 %>건 <% }%></span>
+                            <div class="sta">
+                                <span>결합할인</span>
+                                <span><a class="bt-link-tx underline" href="/myt-join/combinations" role="button">가입내역조회</a></span>
                             </div>
                         </li>
                         <% } %>
                         <% if(locals.coupons) { %>
                         <li>
-                            <div class="li-elem">
-                                <a href="/myt-data/recharge/coupon" class="bt-detail-top">
-                                    <div class="title-box">
-                                        <span class="sub-tit02">장기가입 혜택</span>
-                                        <span class="tit">데이터 리필쿠폰 <% if(coupons > 0) { %> <%= coupons %>장 <% }%> </span>
-                                    </div>
-                                </a>
+                            <span class="stit">데이터 리필쿠폰 <% if(coupons > 0) { %> <%= coupons %>장 <% }%></span>
+                            <div class="sta">
+                                <span>장기가입 혜택</span>
+                                <span><a class="bt-link-tx underline" href="/myt-data/recharge/coupon" role="button">쿠폰조회</a></span>
                             </div>
                         </li>
                         <% } %>
                         <% if(locals.loyalty) { %>
                         <li>
-                            <div class="li-elem">
-                                <a href="/product/callplan?prod_id=TW00000061" class="bt-detail-top">
-                                    <div class="title-box">
-                                        <span class="sub-tit02">장기가입 혜택</span>
-                                        <span class="tit">장기가입 요금 할인</span>
-                                        <span class="sub-tit"><%= loyalty %> 할인</span>
-                                    </div>
-                                </a>
+                            <span class="stit"><%= loyalty %> 할인</span>
+                            <div class="sta">
+                                <span>장기가입 혜택</span>
+                                <span><a class="bt-link-tx underline" href="/product/callplan?prod_id=TW00000061" role="button">자세히 보기</a></span>
                             </div>
                         </li>
                         <% } %>
@@ -201,7 +195,8 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
+            <!-- //190619 수정_05-->	
+            <% } %>
         </div>
     </div>
     <!--// #contents -->

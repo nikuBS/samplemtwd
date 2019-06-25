@@ -37,15 +37,15 @@ class BenefitMyBenefit extends TwViewController {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0001, {}), // membership: MBR0001, MBR0002
       this.apiService.request(API_CMD.BFF_07_0041, {}),
-      this.apiService.request(API_CMD.BFF_05_0132, {}),
-      this.apiService.request(API_CMD.BFF_05_0175, {}),
-      this.apiService.request(API_CMD.BFF_05_0115, {}), // cookiz: BIL0070
+      this.apiService.request(API_CMD.BFF_05_0132, {}), // /core-bill/:version/rainbow-points
+      this.apiService.request(API_CMD.BFF_05_0175, {}), // /core-bill/:version/no-contract-plan-points
+      this.apiService.request(API_CMD.BFF_05_0115, {}), // cookiz: BIL0070  (/core-bill/:version/cookiz-ting-points)
       this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
-      this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인
-      this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인
-      this.apiService.request(API_CMD.BFF_05_0196, {}),
-      this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역
-      this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회
+      this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인 (/core-modification/:version/bill-discounts)
+      this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인 (/core-modification/:version/combination-discounts)
+      this.apiService.request(API_CMD.BFF_05_0196, {}), // (/core-modification/:version/loyalty-benefits)
+      this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역 (/core-recharge/:version/refill-coupons)
+      this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회 (/:version/my-t/my-info)
     ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons, joininfo]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
@@ -138,6 +138,10 @@ class BenefitMyBenefit extends TwViewController {
           duration = duration.replace(/(0)([1-9])/gi, '$2');
         }
         options['days'] = duration;
+
+        const durationArr = duration.split(' ');
+        options['year'] = durationArr[0].replace('년', '');
+        options['month'] = durationArr[1].replace('개월', '');
 
         res.render('my-benefit/benefit.my-benefit.html', options);
       }

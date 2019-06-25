@@ -14,29 +14,30 @@ import { MY_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
 class BenefitMyBenefitRainbowPointCommon {
-  public static MAXIMUM_ITEM_LENGTH: number = 20;
-  public static MAXIMUM_LIST_LENGTH: number = 5;
+  public static MAXIMUM_ITEM_LENGTH: number = 1000;   // 최대 1000건의 이력까지 노출해주도록 임의 처리 (최대 노출이력 건수 늘려야할 소요 있을지?)
+  // public static MAXIMUM_LIST_LENGTH: number = 5;   // 페이징 -> 더보기 방식 변경에 따른 미사용
 
-  public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
-    const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
-    const totalPage = Math.ceil((total / itemLengthPerPage));
-    const totalPageset = Math.ceil(totalPage / pagesetLength);
-    const currentPageset = Math.floor((curPage - 1) / pagesetLength) + 1;
-    const endNum = currentPageset < totalPageset ? startNum + pagesetLength - 1 : totalPage;
-    const prevPageIdx = currentPageset > 0 ? ((currentPageset - 1) * pagesetLength) : null;
-    const nextPageIdx = totalPageset > currentPageset ? (currentPageset * pagesetLength) + 1 : null;
-    const needPaging = total > itemLengthPerPage;
-    return {
-      needPaging,
-      uri,
-      startNum,
-      endNum,
-      curPage,
-      total,
-      prevPageIdx,
-      nextPageIdx
-    };
-  }
+  // 페이징 -> 더보기 방식 변경에 따른 미사용
+  // public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
+  //   const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
+  //   const totalPage = Math.ceil((total / itemLengthPerPage));
+  //   const totalPageset = Math.ceil(totalPage / pagesetLength);
+  //   const currentPageset = Math.floor((curPage - 1) / pagesetLength) + 1;
+  //   const endNum = currentPageset < totalPageset ? startNum + pagesetLength - 1 : totalPage;
+  //   const prevPageIdx = currentPageset > 0 ? ((currentPageset - 1) * pagesetLength) : null;
+  //   const nextPageIdx = totalPageset > currentPageset ? (currentPageset * pagesetLength) + 1 : null;
+  //   const needPaging = total > itemLengthPerPage;
+  //   return {
+  //     needPaging,
+  //     uri,
+  //     startNum,
+  //     endNum,
+  //     curPage,
+  //     total,
+  //     prevPageIdx,
+  //     nextPageIdx
+  //   };
+  // }
 
   public static getResult(resp: any): any {
     return resp.result;
@@ -79,16 +80,17 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       const isMultiLineToAdjustment = this.isMultiLine(linesToAdjustment);
       const isMultiLineToTransfer = this.isMultiLine(linesToTransfer);
 
-      const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
-        BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
-        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
+      // 페이징 -> 더보기 방식 변경에 따른 미사용
+      // const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
+      //   BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+      //   BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
 
       const options = {
         rainbowPointsInfo,
         rainbowPointHistories,
         isMultiLineToAdjustment,
         isMultiLineToTransfer,
-        paging,
+        // paging,  // 페이징 -> 더보기 방식 변경에 따른 미사용
         svcInfo,
         pageInfo
       };

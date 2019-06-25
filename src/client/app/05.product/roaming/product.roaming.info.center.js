@@ -48,7 +48,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
   },
 
   _bindEvent: function() {
-    this.$btnWidget.on('click', $.proxy(this._widgetSelect, this));
+    this.$btnWidget.on('click', $.proxy(this._widgetSelect, this)).eq(0).trigger('click');
     this.$btnDropdown.on('click', $.proxy(this._openActionsheet, this));
   },
 
