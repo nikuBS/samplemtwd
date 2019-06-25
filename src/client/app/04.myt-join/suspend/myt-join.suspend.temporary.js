@@ -165,8 +165,13 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     // duration check
     this.$dateFrom = this.$container.find('[data-role="fe-date-from"]');
     this.$dateTo = this.$container.find('[data-role="fe-date-to"]');
-
-    if ( this.$dateTo.val() < this.$dateFrom.val() ) {// 종료일자가 시작일 이전일 경우
+    var diff = Tw.DateHelper.getDiffByUnit(this.$dateFrom.val(), Tw.DateHelper.getCurrentShortDate(), 'days');
+    if ( diff < 0 ) {// 시작일이 오늘 이전일 경우
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
+        null, null, null, null, $(event.currentTarget));
+      return;
+    }
+    else if ( this.$dateTo.val() < this.$dateFrom.val() ) {// 종료일자가 시작일 이전일 경우
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
         null, null, null, null, $(event.currentTarget));
       return;

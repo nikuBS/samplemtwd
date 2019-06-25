@@ -51,6 +51,11 @@ class MyTJoinSuspend extends TwViewController {
           options['suspend'].period = { from, to };
           options['suspend'].reason = result.svcChgRsnNm.replace( MYT_SUSPEND_STATE_EXCLUDE , '');
           options['suspend'].status = true;
+          // options['suspend'].reserved = true;
+        } else if ( suspendState.result.reservedYn === 'Y' && suspendState.result.fromDt === '99991231' ) {
+          // OP002-156 2g 장기간 미사용자는 SKT에서 일시정지 처리 방지 처리 요청
+          options['suspend'].status = false;
+          options['suspend'].unused2gUser = true;
         } else {
           options['suspend'].status = false;
         }

@@ -210,7 +210,11 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState = {
           state: true
         };
-         data.myPausedState.armyDt = data.myPausedState.armyDt || data.myPausedState.armyExtDt;
+        data.myPausedState.armyDt = data.myPausedState.armyDt || data.myPausedState.armyExtDt;
+      } else if ( data.myPausedState.reservedYn === 'Y' ) { // 일시정지 예약자
+        const fromDt = data.myPausedState.fromDt, toDt = data.myPausedState.toDt;
+        data.myPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDate(fromDt);
+        data.myPausedState.eDate = toDt ? (this.isMasking(toDt) ? toDt : DateHelper.getShortDate(toDt)) : null; // 해외체류는 toDt 없음
       }
 
       if ( data.myLongPausedState ) {
