@@ -42,7 +42,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     _roamingSearchInit: function () {
         this.$roamingRatelist = this.$container.find('.fe-rate-info');
-        this.$roamingNoti = this.$container.find('#fe-rm-noti');
+        this.$roamingNoti = this.$container.find('.fe-rm-noti');
         this.$notiButton = this.$container.find('.fe-noti-btn');
         this.$userPhoneInfo = this.$container.find('#fe-search-phone');
       this.$guamsaipanPop = this.$container.siblings('#fe-guamsaipan-pop');
@@ -216,7 +216,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '.fe-rmplan-btn', $.proxy(this._goRoamingPlan, this));      // 로밍요금제
         this.$container.on('click', '.fe-btn-rmadd', $.proxy(this._goRoamingPlanAdd, this));    // 로밍 부가서비스
         this.$container.on('click', '.fe-rm-card', $.proxy(this._goRoamingCard, this));         // 로밍 카드 쿠폰
-        this.$container.on('click', '.fe-noti-btn', $.proxy(this._notiDetailView, this));       // 음성통화 수신요금 안내
         this.$container.on('click', '.fe-change-model', $.proxy(this._onChangeModel, this));    // 휴대폰 정보 변경
         this.$container.on('click', '.fe-manage-type', $.proxy(this._openMangeType, this));     // 이용가능 서비스 방식
         this.$container.on('click', '.fe-roaming-mfactCd', $.proxy(this._onHpSearch, this));    // 휴대폰 제조사 선택
@@ -387,6 +386,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
         this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan?prod_id=TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
+        skt_landing.widgets.widget_accordion(this.$container);
+
 
         // 팔라우, 세이셸, 마다가스카르의 국가의 경우 공지팝업 호출
         if(_result.dablYn === 'Y') {
@@ -516,17 +517,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
         this._roamingDecriptonInit();
-    },
-    _notiDetailView: function (e) {
-        var $target = $(e.currentTarget);
-        var ariaPressed = $target.attr('aria-pressed');
-        if(ariaPressed === 'false'){
-            $target.attr('aria-pressed', 'true');
-            $target.parents('li').addClass('on');
-        }else {
-            $target.attr('aria-pressed', 'false');
-            $target.parents('li').removeClass('on');
-        }
     },
   /**
    * @function
