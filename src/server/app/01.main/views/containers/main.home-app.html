@@ -151,6 +151,14 @@
                                 <!--<% } %>-->
 
                                 <div class="call-message">
+                                    <% if(homeData.usageData.data.isTplanUse) { %>
+                                    <div class="tod-flydata-wrap">
+                                            <a href="/myt-data/hotdata" class="tod-link-flydata">
+                                                <span class="sp-tit"><i class="tod-icon-flydata" data-xt_eid="CMMA_A2_B6-229" data-xt_csid="NO" data-xt_action="BC"></i>T가족모아데이터</span>
+                                                <span class="sp-data"><%= homeData.usageData.data.showShareRemained %></span>
+                                            </a>
+                                        </div>
+                                    <% } %>
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                                     <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-34" data-xt_eid="CMMA_A2_B6-5" data-xt_csid="NO" data-xt_action="BC"><span class="blind">통화</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></a>
                                     <% } %>
