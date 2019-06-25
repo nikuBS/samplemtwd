@@ -49,6 +49,7 @@ Tw.Init.prototype = {
     Tw.Error = new Tw.ErrorService();
     Tw.Tooltip = new Tw.TooltipService();
     Tw.Bpcp = new Tw.BpcpService();
+    Tw.Tracker = Tw.TrackerService.newInstance();
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
@@ -103,7 +104,7 @@ Tw.Init.prototype = {
         Tw.Popup.toast('QA_v5.68.0');
       }
 
-      this._initTrackerApi();
+      //this._initTrackerApi();
     }
   },
 

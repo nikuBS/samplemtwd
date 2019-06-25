@@ -148,6 +148,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     M001882: 'CMMA_A11_B3-94'
   },
 
+  TRACKER_CODES: [
+    'M000813','M000814','M000815','M000816','M000817','M000818','M000812','M000819','M000820','M000821'
+  ],
+
   /**
    * @function
    * @desc back 버튼 등으로 인한 hash값 변경시 메뉴 닫도록...
@@ -757,6 +761,13 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
         item.isExternalLink = !!item.menuUrl && item.menuUrl.indexOf('http') !== -1;
         if (item.isLink || !!this.XTRACTOR_CODE[item.menuId]) { // 통계코드 추가
           item.xtrCode = this.XTRACTOR_CODE[item.menuId];
+        }
+
+        if(this.TRACKER_CODES.indexOf(item.menuId) > -1){
+          item.tracker = {
+            menuId: item.menuId,
+            menuNm: item.menuNm
+          }
         }
         // if ( !!item.urlAuthClCd ) {
         //   if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
