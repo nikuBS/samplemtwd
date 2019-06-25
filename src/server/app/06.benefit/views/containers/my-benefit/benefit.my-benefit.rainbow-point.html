@@ -97,8 +97,12 @@
             <div class="cont-box nogaps">
                 <% if (rainbowPointHistories.length > 0) { %>
                     <ul class="list-comp-lineinfo type5 no-bt">
-                        <% for (var i = 0; i < rainbowPointHistories.length; i++) { %>
-                        <li>
+                    <% for (var i = 0; i < rainbowPointHistories.length; i++) { %>
+                        <% if ( i >= 10 ) { %>
+                        <li style="display: none" aria-hidden="true">
+                        <% } else { %>
+                        <li aria-hidden="false">
+                        <% } %>
                             <div class="lineinfo-user">
                                 <span class="info-title"><%= rainbowPointHistories[i].opClNm %></span>
                                 <span class="info-sub">
@@ -112,22 +116,14 @@
                                 </span>
                             </div>
                         </li>
-                        <% } %>
+                    <% } %>
                     </ul>
-                    <% if (paging.needPaging) { %>
-                    <div class="paging-wrap top-line">
-                        <div class="paging">
-                            <% if (paging.prevPageIdx) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
-                            <% } %>
-                            <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" aria-selected="<%= (paging.curPage == i) ? 'true' : 'false' %>" ><%= i %></a>
-                            <% } %>
-                            <% if (paging.nextPageIdx) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
-                            <% } %>
-                        </div>
+                    <% if (rainbowPointHistories.length > 10) { %>
+                    <!-- 190625_[OP002-1761] 추가01 -->
+                    <div class="btn-more mr16 ml16">
+                        <button class="fe-btn_more">더보기</button>
                     </div>
+                    <!-- //190625_[OP002-1761] 추가01 -->
                     <% } %>
                 <% } else { %>
                     <div class="contents-empty">
@@ -139,28 +135,32 @@
             <!--// .cont-box -->
 
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- 190625_[OP002-1761] 현행화 -->
+            <!-- <hr class="cont-sp type1" aria-hidden="true"/> -->
+            <!-- //190625_[OP002-1761] 현행화 -->
             <!-- .cont-box -->
+            <!-- 190625_[OP002-1761] 현행화 -->
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
                     <li>
-                        <button type="button" class="btn-tip" aria-haspopup="true" id="BS_01_01_tip_03">
+                        <button type="button" class="btn-tip" title="TIP 보기" aria-haspopup="true" id="BS_01_01_tip_03"><!--웹접근성 수정 -->
                             적립 안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="btn-tip" aria-haspopup="true" id="BS_01_01_tip_04">
+                        <button type="button" class="btn-tip" title="TIP 보기" aria-haspopup="true" id="BS_01_01_tip_04"><!--웹접근성 수정 -->
                             사용 안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="btn-tip" aria-haspopup="true" id="BS_01_01_tip_06">
+                        <button type="button" class="btn-tip" title="TIP 보기" aria-haspopup="true" id="BS_01_01_tip_06"><!--웹접근성 수정 -->
                             소멸예정포인트 안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
                         </button>
                     </li>
                 </ul>
             </div>
+            <!-- //190625_[OP002-1761] 현행화 -->
             <!--// .cont-box -->
         </div>
     </div>
