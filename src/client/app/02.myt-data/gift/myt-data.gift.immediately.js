@@ -39,6 +39,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
     this.tpl_immediately_error = Handlebars.compile($('#tpl_immediately_error').html());
+    this.tpl_immediately_limit_error = Handlebars.compile($('#tpl_immediately_limit_error').html());
   },
 
   _bindEvent: function () {
@@ -93,7 +94,9 @@ Tw.MyTDataGiftImmediately.prototype = {
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0003 }));
         break;
       case 'GFT0004':
-        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004 }));
+        // OP002-1656 기본제공량 부족 case 디자인 수정
+        $wrapImmediatelyGift = $('.fe-wrap-limit-immediately');
+        $wrapImmediatelyGift.html(this.tpl_immediately_limit_error({ content: Tw.MYT_DATA_GIFT.GFT0004 }));
         break;
       case 'GFT0004_2':
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004_2 }));

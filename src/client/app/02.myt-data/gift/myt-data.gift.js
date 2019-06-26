@@ -52,7 +52,7 @@ Tw.MyTDataGift.prototype = {
       this._getRemainDataInfo();
     }
     if (this._isUnlimitProd()) {
-      this.limitedGiftUsageQty = 0;
+      this.limitedGiftUsageQty = 0; // 무제한 요금제에서 잔여량 부족시 화면 접근 시 자동 애러 처리 됨. (기획 도예원 확인)
     }
   },
 
@@ -136,6 +136,11 @@ Tw.MyTDataGift.prototype = {
           this._remainApiError($target);
         } else if ( Number(result.dataRemQty) < this.limitedGiftUsageQty ) { // 데이터 잔여량이 기본 잔여 데이터(500mb)보다 작은 경우
           this.$container.trigger('showUnableGift', limitErrorCode);
+          var apiDataQty = res.result.dataRemQty;
+          var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+          this.currentRemainDataInfo = apiDataQty;
+          this.$remainQty.text(dataQty.data + dataQty.unit);
+          this._procShortageError();
         } else {
           // API DATA SUCCESS
           this._remainApiSuccess();
@@ -149,12 +154,26 @@ Tw.MyTDataGift.prototype = {
         this.reqCnt = result.reqCnt; // 재시도 횟수
         this._getRemainDataInfo($target);
       }
-    } else if ( code === ERROR_CODE.GFT0004 ) {
-      this.$container.trigger('showUnableGift', limitErrorCode);
+    // OP002-1656 GFT0004 애러는 서버에서 내려오지 않기로 정함.(잔여량 표시 불가)
+    /*else if ( code === ERROR_CODE.GFT0004 ) {
+        this.$container.trigger('showUnableGift', limitErrorCode);
+        this._procShortageError();
+      */
     } else {
       this.$container.trigger('showUnableGift', code);
       // Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  /**
+   * @function
+   * @desc 기본제고량 부족 애러는 데이터 선택 영영에 애러메세지 표시.
+   * @private
+   */
+  _procShortageError: function () {
+    this.$wrapSuccessRemainApi.show();
+    this.$wrapErrorRemainApi.hide();
+    this.$container.find('.fe-warning').hide();
   },
 
   _remainApiError: function ($target) {
