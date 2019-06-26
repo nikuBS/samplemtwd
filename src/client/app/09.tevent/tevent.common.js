@@ -4,7 +4,6 @@
  * @since 2018.11.21
  * @desc 이벤트
  */
-
 /**
  * @namespace
  * @desc 이벤트 namespace

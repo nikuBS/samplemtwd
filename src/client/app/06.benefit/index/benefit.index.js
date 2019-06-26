@@ -3,7 +3,6 @@
  * @author 양정규 (skt.P130715@partner.sk.com)
  * @since 2018-10-26
  */
-
 /**
  * @class
  * @desc 혜택 할인 Index
