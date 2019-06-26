@@ -192,7 +192,7 @@ Tw.PERIOD_UNIT = {
   YEAR: '년'
 };
 
-Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
+Tw.WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 Tw.REFILL_COUPON_CONFIRM = {
   TITLE_REFILL: '리필 하시겠습니까?',
@@ -811,6 +811,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A92: { TITLE: '결합회선 2회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A93: { TITLE: '회선을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A94: { TITLE: '회선을 삭제하시겠습니까?', MSG: '' },
+  ALERT_3_A95: { TITLE: '대구 SKT 황금점 매장은 일요일 휴무로 다른 장소를 선택해주시길 바랍니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -1759,24 +1760,39 @@ Tw.TMAP_STRING = {
 };
 
 Tw.ROAMING_RETURN_CODE = {
-  '1430452300': { name: '대구 SKT 황금점 매장', img: 'place-img-10' },
-  '1430456896': { name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-01-01' },
-  'A100110000': { name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-02-1' },
-  'A100140000': { name: '김포공항 1층 로밍센터', img: 'place-img-03' },
-  'A900100000': { name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
-  'A200130000': { name: '김해공항 3층 로밍센터', img: 'place-img-05-1' },
-  'C399900000': { name: '대구공항 2층 로밍센터', img: 'place-img-06' }
+  '1430452300': { name: '대구 SKT 황금점 매장', img: 'place-img-10',
+                  officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
+  '1430456896': { name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-01-01',
+                  officeHour: '<strong>업무시간</strong> | 3번 출구옆 : 24시간 / 4번 출구 옆 : 06:00 ~ 22:00' },
+  'A100110000': { name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-02-1',
+                  officeHour: '<strong>업무시간</strong> | 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간' },
+  'A100140000': { name: '김포공항 1층 로밍센터', img: 'place-img-03',
+                  officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
+  'A900100000': { name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
+                  officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00' },
+  'A200130000': { name: '김해공항 1층 로밍센터', img: 'place-img-05-1',
+                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
+  'C399900000': { name: '대구공항 2층 로밍센터', img: 'place-img-06',
+                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' }
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
-  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f' },
-  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h' },
-  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03' },
-  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
-  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05' },
-  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10' },
-  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06' },
-  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de' }
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(F 카운터)', img: 'place-img-01-f',
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(H 카운터)', img: 'place-img-01-h',
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 5~6번 출구 로밍센터(24시간)에서 수령 가능</span>' },
+  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03',
+                officeHour: '<strong>업무시간</strong> | 06:30 ~ 23:00' },
+  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04',
+                officeHour: '<strong>업무시간</strong> | 09:00 ~ 19:00' },
+  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05',
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 21:30' },
+  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10',
+                officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
+  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
+                officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
 };
 
 Tw.SERVICE_AREA_TYPE = {

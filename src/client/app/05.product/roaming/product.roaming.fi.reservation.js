@@ -101,6 +101,14 @@ Tw.ProductRoamingFiReservation.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
     }
 
+    // 임대시작일 또는 반납일이 일요일 + 대구 황금점일 경우 Alert 호출 (휴무일)
+    if ( this.$inputReceive.attr('data-booth') === '1430452300' ) {
+      if ( Tw.DateHelper.getDayOfWeek(this.$inputSdate.val()) === '일' || Tw.DateHelper.getDayOfWeek(this.$inputEdate.val()) === '일' ) {
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A95.MSG,
+          Tw.ALERT_MSG_PRODUCT.ALERT_3_A95.TITLE, null, null, null, $(e.currentTarget));
+      }
+    }
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     //국가코드 조회 API 호출
     this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''})
@@ -308,20 +316,50 @@ Tw.ProductRoamingFiReservation.prototype = {
       $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
       this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
 
-      //약도 이미지 변경
+      //약도 이미지 및 영업시간 변경
       var imgUrl = $('#fe-receive-img').attr('src');
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
-      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
+      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png')
+      $('#fe-receive-officehour').html($(e.target).parents('label').attr('data-officehour'));
+
+      // 기본 반환장소 설정 (대구 황금점만 해당)
+      // TODO: 반납 버튼 ID 하드코딩
+      if( $(e.target).parents('label').attr('return-set') == "1" ) {
+        this.$inputReturn.text($(e.target).parents('label').attr('return-value')); // 반납 센터명 출력
+        this.$inputReturn.attr('data-center',$(e.target).parents('label').attr('return-data-center')); // 반납 센터코드 설정
+
+        var returnImgUrl = $('#fe-return-img').attr('src');
+        var returnStartLen = returnImgUrl.lastIndexOf('/');
+        var returnCdnUrl = returnImgUrl.substring(0,returnStartLen+1);
+        $('#fe-return-img').attr('src', returnCdnUrl + $(e.target).parents('label').attr('return-data-img') + '.png')
+        $('#fe-return-officehour').html($(e.target).parents('label').attr('return-data-officehour'));
+        this.$inputReturn.attr('disabled',true);
+      } else {
+        if ( this.$inputReturn.attr('disabled') == "disabled" ) {
+          // 기본(Default) 반환장소로 변경하고 disabled 해제
+          this.$inputReturn.text('인천공항 1터미널 1층 로밍센터'); // 반납 센터명 출력
+          this.$inputReturn.attr('data-center','A100110000'); // 반납 센터코드 설정
+  
+          var defaultReturnImgUrl = $('#fe-return-img').attr('src');
+          var defaultReturnStartLen = defaultReturnImgUrl.lastIndexOf('/');
+          var defaultReturnCdnUrl = defaultReturnImgUrl.substring(0,defaultReturnStartLen+1);
+          $('#fe-return-img').attr('src', defaultReturnCdnUrl + 'place-img-01-01' + '.png')
+          $('#fe-return-officehour').html('<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간');
+        }
+        this.$inputReturn.attr('disabled',false);
+      }
+
     }else{
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
 
-      //약도 이미지 변경
+      //약도 이미지 및 영업시간 변경
       var imgUrl1 = $('#fe-return-img').attr('src');
       var startLen1 = imgUrl1.lastIndexOf('/');
       var cdnUrl1 = imgUrl1.substring(0,startLen1+1);
       $('#fe-return-img').attr('src', cdnUrl1 + $(e.target).parents('label').attr('data-img') + '.png');
+      $('#fe-return-officehour').html($(e.target).parents('label').attr('data-officehour'));
     }
 
     this._popupService.close();
