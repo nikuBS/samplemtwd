@@ -1741,7 +1741,7 @@ Tw.MainHome.prototype = {
       { target: '2', banner: banner2 },
       { target: '3', banner: banner3 },
       { target: '7', banner: banner7 },
-      { target: 'e' }, { target: 'f' }, { target: 'g' }];
+      { target: 'e' }, { target: 'f' }, { target: 'g' }, { target: 'S' }];
 
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
@@ -1790,7 +1790,7 @@ Tw.MainHome.prototype = {
    */
   _successTosAdminWebBanner: function (resp, admBanner) {
     var result = [{ target: '5', banner: resp },
-    { target: 'e' }, { target: 'f' }, { target: 'g' }];
+    { target: 'e' }, { target: 'f' }, { target: 'g' }, { target: 'S' }];
 
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
@@ -1850,12 +1850,11 @@ Tw.MainHome.prototype = {
       }
     }, this));
 
-    var directBanner = _.filter(banners, function(banner) {
-      return banner.bnnrLocCd === 'S';
-    }).map(function (target) {
-      target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-      return target;
-    });
+    var directBanner = banners.filter(function(e){
+      return e.target == 'S'
+    }).map(function(e){
+      return e.banner.result.imgList
+    })[0];
 
     if ( directBanner.length > 0 ) {
       var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
