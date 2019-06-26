@@ -51,12 +51,18 @@
                     <li>
                         <label class="tit" for="flab04">수령 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true" data-center="{{data.rominfo.rental_sale_org_id}}" data-booth="{{data.rominfo.rental_booth_org_id}}">{{data.rominfo.show_rental_sale_org_nm}}<span class="ico"></span></button>
-                        <div class="mapimg-area pt10"><img id="fe-receive-img" src="{{cdn}}/img/product/{{data.rominfo.receive_center_img}}.png" alt="{{data.rominfo.rental_sale_org_nm}}"/></div>
+                        <div class="mapimg-area pt10">
+                          <img id="fe-receive-img" src="{{cdn}}/img/product/{{data.rominfo.receive_center_img}}.png" alt="{{data.rominfo.rental_sale_org_nm}}"/>
+                          <p class="rm-tx-hour" id="fe-receive-officehour">{{{data.rominfo.receive_center_officeHour}}}</p>
+                        </div>
                     </li>
                     <li>
                         <label class="tit" for="flab05">반납 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
-                        <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true" data-center="{{data.rominfo.rtn_sale_org_id}}">{{data.rominfo.show_rtn_sale_org_nm}}<span class="ico"></span></button>
-                        <div class="mapimg-area pt10"><img id="fe-return-img" src="{{cdn}}/img/product/{{data.rominfo.return_center_img}}.png" alt="{{data.rominfo.rtn_sale_org_nm}}"/></div>
+                        <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true" data-center="{{data.rominfo.rtn_sale_org_id}}"{{#if data.isDisabled}} disabled="disabled"{{/if}}>{{data.rominfo.show_rtn_sale_org_nm}}<span class="ico"></span></button>
+                        <div class="mapimg-area pt10">
+                          <img id="fe-return-img" src="{{cdn}}/img/product/{{data.rominfo.return_center_img}}.png" alt="{{data.rominfo.rtn_sale_org_nm}}"/>
+                          <p class="rm-tx-hour" id="fe-return-officehour">{{{data.rominfo.return_center_officeHour}}}</p>
+                        </div>
                     </li>
                 </ul>
 
