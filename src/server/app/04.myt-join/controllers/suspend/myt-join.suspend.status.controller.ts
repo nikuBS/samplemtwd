@@ -46,7 +46,7 @@ class MyTJoinSuspendStatus extends TwViewController {
       };
 
       const status = {};
-      if ( suspendStatus.result.svcStCd === 'SP' || suspendStatus.result.reservedYn === 'Y') { // 일시정지 상태
+      if ( suspendStatus.result.svcStCd === 'SP' ) { // 일시정지 상태
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.M.D.');
         // 해외체류 toDt 없음
         const to = suspendStatus.result.toDt ? DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.M.D.') : null;
@@ -57,12 +57,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         status['resetable'] = true;
         status['resuspendable'] = false; // 장기일시정지(군입대) 일시해제 경우 재신청 버튼 노출
         status['militaryAC'] = false;
-        status['reservedYn'] = false;
-        if ( suspendStatus.result.reservedYn === 'Y' ) { // 일시정지 예약자
-          status['type'] = 'temporary';
-          status['reason'] = MYT_SUSPEND_REASON['1000000'];
-          status['reservedYn'] = true;
-        } else if ( suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
+        if ( suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.MILITARY
           || suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.OVERSEAS
           || suspendStatus.result.svcChgRsnCd === MYT_SUSPEND_REASON_CODE.SEMI_MILITARY ) { // 장기일시정지(case 6)
           status['type'] = 'long-term';

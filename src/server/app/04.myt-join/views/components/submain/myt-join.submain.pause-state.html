@@ -15,14 +15,7 @@
             <button type="button" data-id="pause_c">
                 <span class="inner">
                 <% if (data.myPausedState.svcStCd === 'AC') { %>
-                    <% if (data.myPausedState.reservedYn === 'Y') { %>
-                       <span class="tit">일시정지 현황
-                            <span class="sub">
-                                <%= data.myPausedState.sDate %> ~ <%= data.myPausedState.eDate %>
-                            </span>
-                       </span>
-                       <span class="text">일시정지 예약중</span>
-                    <% } else if (data.myLongPausedState && data.myLongPausedState.state) { %>
+                    <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
                         <% var longStateCd = data.myLongPausedState.opStateCd; %>
                         <% if (data.myPausedState.armyDt) { %>
                         <span class="tit">일시정지 현황</span>
@@ -85,19 +78,19 @@
         <!--// 일시정지 상태 영역-->
         <% } %>
         <%if(data.type === 0){%>
-        <% if (data.isOldNumber) { %>
-        <li>
-            <button type="button" data-id="old_number" title="010 전환 번호변경" aria-haspopup="true">
+            <% if (data.isOldNumber) { %>
+            <li>
+                <button type="button" data-id="old_number" title="010 전환 번호변경" aria-haspopup="true">
                     <span class="inner">
                         <span class="tit">010 전환 번호변경</span>
                         <span class="text">신청하기</span>
                     </span>
-            </button>
-        </li>
-        <% } %>
-        <% if (data.isNotChangeNumber) { %>
-        <li>
-            <button type="button" data-id="change_number" title="번호변경 안내서비스" aria-haspopup="true">
+                </button>
+            </li>
+            <% } %>
+            <% if (data.isNotChangeNumber) { %>
+            <li>
+                <button type="button" data-id="change_number" title="번호변경 안내서비스" aria-haspopup="true">
                     <span class="inner">
                         <span class="tit">번호변경 안내서비스</span>
                         <span class="text">
@@ -108,9 +101,9 @@
                             <% } %>
                         </span>
                     </span>
-            </button>
-        </li>
-        <% } %>
+                </button>
+            </li>
+            <% } %>
         <% } %>
     </ul>
 </div>
