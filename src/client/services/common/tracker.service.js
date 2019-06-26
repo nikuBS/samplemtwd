@@ -46,13 +46,13 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
         return;
       }
   
-      //this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._sendTrackerApi, this));
-      setTimeout($.proxy(this._sendTrackerApi, this, {
-          resultCode: Tw.NTV_CODE.CODE_00,
-          params: {
-              adid: "test1"
-          }
-        }), 500);
+      this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._sendTrackerApi, this));
+    //   setTimeout($.proxy(this._sendTrackerApi, this, {
+    //       resultCode: Tw.NTV_CODE.CODE_00,
+    //       params: {
+    //           adid: "test1"
+    //       }
+    //     }), 500);
     },
 
     /**
