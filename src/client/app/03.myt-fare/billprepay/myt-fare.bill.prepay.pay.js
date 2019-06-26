@@ -17,7 +17,6 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, name) {
   this.$title = title;
   this._name = name;
   this._amount = '0';
-  this._tempAmount = '';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -86,28 +85,9 @@ Tw.MyTFareBillPrepayPay.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
-    this.$container.on('keyup focus change', '.fe-prepay-amount', $.proxy(this._addZero, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500));
-  },
-
-  /**
-   * @function
-   * @param event
-   * @desc 숫자 한자리 입력시 뒤에 '0' 을 붙여준다.
-   */
-  _addZero: function(event){
-    var $super = this;
-    var $this = $(event.currentTarget);
-    if (event.type === 'focusin') {
-      $super._tempAmount = $this.val();
-    } else if (event.type === 'keyup') {
-      if ($super._tempAmount === '' && $this.val().length === 1 && $this.val() > 0) {
-        $this.val($this.val()+'0');
-      }
-      $super._tempAmount = $this.val();
-    }
   },
 
   /**

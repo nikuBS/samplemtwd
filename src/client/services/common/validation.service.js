@@ -149,9 +149,10 @@ Tw.ValidationService.prototype = {
       if (!this._validation.checkIsAvailablePoint(_prepayAmount, this.$container.find('.fe-max-amount').attr('id'))) {
         message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10;
       } else if ($target.data('validLabel') === 'prepay') { // 소액결제,콘텐츠이용료 선결제 시
+        var reg = /[0-9]*0$/g;
         if (!this._validation.checkIsMore(_prepayAmount, 9)) {
           message = Tw.ALERT_MSG_MYT_FARE.TEN;
-        } else if (!this._validation.checkMultiple(_prepayAmount, 10)) {
+        } else if (!reg.test(_prepayAmount)) {
           message = Tw.ALERT_MSG_MYT_FARE.TEN;
         } else {
           isValid = true;
