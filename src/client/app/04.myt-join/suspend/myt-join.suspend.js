@@ -25,7 +25,6 @@ Tw.MyTJoinSuspend = function (rootEl, params) {
   this._long = null;
   this._cachedElement();
   this._bindEvent();
-  this._checkUnused2gUser();
 };
 
 Tw.MyTJoinSuspend.prototype = {
@@ -48,22 +47,7 @@ Tw.MyTJoinSuspend.prototype = {
     this.$container.on('click', '.fe-bt-back', $.proxy(this._onClose, this));
     $(document).on('ready', $.proxy(this._setInitialTab, this));
   },
-  /**
-   * @function
-   * @desc 2G 장기 미사용으로 이용정지 예약이 걸린 사용자 체크
-   */
-  _checkUnused2gUser: function () {
-    if ( this._params.suspend.unused2gUser ) {
-      this._popupService.openAlert( Tw.MYT_JOIN_SUSPEND.ERROR.UNUSED_2G_USER, null, null, $.proxy(this._goBack, this));
-    }
-  },
-  /**
-   * @function
-   * @desc 뒤로가기 실행
-   */
-  _goBack: function() {
-    this._historyService.goBack();
-  },
+
   /**
    * @function
    * @desc URL hash로 초기 선택 탭 설정

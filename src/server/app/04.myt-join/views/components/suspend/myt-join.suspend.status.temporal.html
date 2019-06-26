@@ -15,8 +15,6 @@
                     <span class="title">상태</span>
                     <%if(locals.militaryAC){ %>
                     <span class="tx-cont tx-bold">장기일시정지의 일시해제</span>
-                    <% } else if(locals.reservedYn){ %>
-                    <span class="tx-cont tx-bold">일시정지 예약</span>
                     <% } else { %>
                     <span class="tx-cont tx-bold"><% if(type === 'long-term'){ %>장기<% } %>일시정지 중</span>
                     <% } %>
