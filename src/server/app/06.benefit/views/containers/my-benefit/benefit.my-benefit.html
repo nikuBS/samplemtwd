@@ -69,12 +69,12 @@
                         <div class="tod-charge-cont">	
                             <span class="sub-disc01 tx-medium">포인트</span>
                             <span class="tit"><span class="charge-txt"><%= total %> P</span></span>
-                            <% if( okCashback !== '0' || t !== '0' ){ %>
+                            <% if( okCashback > 0 || t > 0 ){ %>
                             <span class="sub-disc04">
-                                <% if( okCashback !== '0' ){ %>
+                                <% if( okCashback > 0 ){ %>
                                 <span class="elem">OK캐쉬백 <%= okCashback %>P</span>
                                 <% } %>
-                                <% if( t !== '0' ){ %>
+                                <% if( t > 0 ){ %>
                                 <span class="elem">T포인트 <%= t %>P</span>
                                 <% } %>
                             </span>
@@ -90,7 +90,7 @@
                     <% if( locals.rainbow && rainbow !== '0' ) { %>
                     <li>
                         <div class="link-long">
-                            <button>레인보우포인트
+                            <button id="fe-rainbow">레인보우포인트
                                 <span class="tx-sub">
                                     <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
                                     <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->    
@@ -102,7 +102,7 @@
                     <% if(locals.noContract) {%>
                     <li>
                         <div class="link-long">
-                            <button>무약정플랜포인트
+                                <button id="fe-nocontract">무약정플랜포인트
                                 <span class="tx-sub">
                                     <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
                                     <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
@@ -114,7 +114,7 @@
                     <% if(locals.military) {%>
                     <li>
                         <div class="link-long">
-                            <button>지켜줘서 고마워 현역플랜포인트 
+                                <button id="fe-military">지켜줘서 고마워 현역플랜포인트 
                                 <span class="tx-sub">
                                     <span class="normal"><i class="tx-bold"><%= military %></i> 점</span>
                                     <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
@@ -126,7 +126,7 @@
                     <% if(locals.cookiz) {%>
                     <li>
                         <div class="link-long">
-                            <button>쿠키즈팅포인트
+                                <button id="fe-cookiz">쿠키즈팅포인트
                                 <span class="tx-sub">
                                     <span class="normal"><i class="tx-bold"><%= cookiz %></i> 점</span>
                                     <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
