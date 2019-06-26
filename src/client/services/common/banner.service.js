@@ -114,7 +114,7 @@ Tw.BannerService.prototype = {
 
         var rollYn = this._banners.reduce(function(a,b){
           return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
-        }, {rollYn:'Y'}).rollYn == 'Y';
+        }, {rollYn:'Y'}).rollYn;
 
         if(rollYn === 'Y' && this._banners.length > 1){
           //this.$banners.addClass('fe-banner-auto');
