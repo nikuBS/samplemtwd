@@ -138,7 +138,13 @@ Tw.MyTFareBillPrepayMain.prototype = {
       }
       this._prepayAmount = result.tmthChrgPsblAmt; // 선결제 가능금액 (선결제 팝업으로 보내야 하는 값)
 
-      this.$useAmount.attr('id', result.tmthUseAmt).text(Tw.FormatHelper.addComma(result.tmthUseAmt)); // 당월 사용금액에 콤마(,) 추가
+      var tmthUseAmt = result.tmthUseAmt;
+      // 소액결제 화면 && 소액결제 미동의 && 이용금액 0 인 경우 차단중 문구 표시
+      if (this.$title === 'small' && tmthUseAmt === '0' && result.paymentAgreeYn === 'N') {
+        this.$price.text(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A0);
+      } else {
+        this.$useAmount.attr('id', tmthUseAmt).text(Tw.FormatHelper.addComma(tmthUseAmt)); // 당월 사용금액에 콤마(,) 추가
+      }
       this.$remainAmount.attr('id', result.remainUseLimit).text(Tw.FormatHelper.addComma(result.remainUseLimit)); // 잔여한도에 콤마(,) 추가
       this.$prepayAmount.attr('id', result.tmthChrgPsblAmt).text(Tw.FormatHelper.addComma(result.tmthChrgPsblAmt)); // 선결제 가능금액에 콤마(,) 추가
 
@@ -158,6 +164,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
     this._dayAmountList = [];
     this._onceAmountList = [];
 
+    this.$price = this.$container.find('.fe-price');
     this.$useAmount = this.$container.find('.fe-use-amount');
     this.$remainAmount = this.$container.find('.fe-remain-amount');
     this.$prepayAmount = this.$container.find('.fe-prepay-amount');
