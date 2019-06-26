@@ -103,21 +103,28 @@
                             </li>
                             <li>
                                 <label class="tit" for="flab04">카드번호</label>
-                                <span class="inputbox">
-                                    <span class="input fe-card-num">
-                                        <input id="flab04" type="text" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNumH %>"
-                                               title="카드번호 입력" readonly />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                <div class="fe-exp-wrap">
+                                    <span class="inputbox bt-add inp-btn">
+                                        <span class="input fe-card-num">
+                                            <input id="flab04" type="text" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNumH %>"
+                                                   title="카드번호 입력" readonly />
+                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                        <span class="fe-card-num" style="display:none;">
+                                            <span class="input">
+                                                <input id="flab07" class="fe-card-number required-input-field fe-only-number"
+                                                       maxlength="16" minlength="15" data-valid-label="card" data-err-target="fe-exp-wrap"
+                                                       type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                       placeholder="숫자만 입력" title="카드번호 숫자만 입력" />
+                                                <button class="cancel"><span class="blind">삭제</span></button>
+                                            </span>
+                                            <span class="r-btn">
+                                                <button type="button" class="btn-round2 btn-style3 fe-card-info" data-err-target="fe-exp-wrap">자동납부 카드정보</button>
+                                            </span>
+                                        </span>
                                     </span>
-                                    <span class="input fe-card-num" style="display:none;">
-                                        <input id="flab07" class="fe-card-number required-input-field fe-only-number"
-                                               maxlength="16" minlength="15" data-valid-label="card"
-                                               type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
-                                </span>
+                                </div>
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
                             </li>
                             <li>
                                 <label class="tit" for="flab05">유효기간</label>
