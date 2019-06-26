@@ -388,7 +388,7 @@ Tw.BannerService.prototype = {
             })
           }
 
-          nBanners.push($.extend(banner, temp));
+          nBanners.push($.extend({}, banner, temp));
 
           return nBanners;
         }, [])

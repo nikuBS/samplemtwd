@@ -96,7 +96,7 @@ Tw.MainStore.prototype = {
    */
   _successTosAdminStoreBanner: function (resp, admBanner) {
     var result = [{ target: '4', banner: resp },
-    { target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }];
+    { target: 'a' }, { target: 'b' }, { target: 'c' }, { target: 'd' }, { target: 'S' }];
 
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
@@ -156,12 +156,11 @@ Tw.MainStore.prototype = {
       }
     }, this));
 
-    var directBanner = _.filter(banners, function(banner) {
-      return banner.bnnrLocCd === 'S';
-    }).map(function (target) {
-      target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-      return target;
-    });
+    var directBanner = banners.filter(function(e){
+      return e.target == 'S'
+    }).map(function(e){
+      return e.banner.result.imgList
+    })[0];
 
     if ( directBanner.length > 0 ) {
       var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
