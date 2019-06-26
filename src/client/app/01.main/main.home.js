@@ -1032,7 +1032,9 @@ Tw.MainHome.prototype = {
         apiBlock = true;
       }
     } else if ( microResp.code === Tw.API_CODE.CODE_00 ) {
-      result.micro = Tw.FormatHelper.addComma(microResp.result.totalSumPrice);
+      if (microResp.result.totalSumPrice === '0' && microResp.result.paymentAgreeYn === 'N') {
+        result.paymentAgreeN = true; // 소액결제 미동의 && 이용 요금 없는 경우 플래그 추가
+      }
     }
 
     if ( contentsResp.code === Tw.API_CODE.BFF_0006 || contentsResp.code === Tw.API_CODE.BFF_0011 ) {
