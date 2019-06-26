@@ -80,9 +80,11 @@
                             </span>
                             <% } %>
                         </div>
+                        <% if( total !== '0' || rainbow !== '0' || okCashback > 0 || t > 0 ){ %>
                         <div class="right-area">
                             <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
                         </div>
+                        <% } %>
                     </div>
                     <!-- //190619 수정_03 -->
                 </div>
