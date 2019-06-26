@@ -114,7 +114,7 @@ Tw.BannerService.prototype = {
 
         var rollYn = this._banners.reduce(function(a,b){
           return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
-        }, {rollYn:'Y'}).rollYn;
+        }, {}).rollYn||'Y';
 
         if(rollYn === 'Y' && this._banners.length > 1){
           //this.$banners.addClass('fe-banner-auto');
@@ -361,7 +361,7 @@ Tw.BannerService.prototype = {
        
       var scrnTypCd = banners.reduce(function(a,b){
         return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
-      }, {scrnTypCd:'F'}).scrnTypCd;
+      }, {}).scrnTypCd||'F';
 
       return _.chain(banners)
         .filter(function(banner) { 

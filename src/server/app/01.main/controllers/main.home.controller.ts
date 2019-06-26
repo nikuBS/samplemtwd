@@ -247,8 +247,7 @@ class MainHome extends TwViewController {
    */
   private parseHelpData(cicntsList: any): any {
     const resultArr = <any>[];
-    var scrnTypCd = cicntsList[0].scrnTypCd;
-
+    var scrnTypCd = cicntsList[0].scrnTypCd||'F';
     
     cicntsList.sort(function(prev, next){
 
@@ -257,7 +256,9 @@ class MainHome extends TwViewController {
       }else{
         return prev.mainExpsSeq - next.mainExpsSeq;
       }          
-    })
+    });
+    cicntsList[0].rollYn = cicntsList[0].rollYn||'Y';
+
     for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }
