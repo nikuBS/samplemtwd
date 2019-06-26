@@ -20,11 +20,11 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
-                <div class="cont-box nogaps bgnone">
+                <div class="cont-box nogaps">
                     <!-- .component -->
                     <div class="component">
                         <div class="component-box tabs">
-                            <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
                                         <li role="presentation"  aria-controls="tab1-tab" id="tab1">
@@ -38,7 +38,6 @@
                                 <div class="tab-contents">
                                     <ul>
                                         <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-id="fe-tab-temporary">
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
                                             <div class="cont-box" data-suspend-state=<%= suspend.status %> >
                                                 <div class="charge-guide-wrap">
                                                     <div class="charge-cont">
@@ -58,7 +57,6 @@
                                             <% }  %>
                                         </li>
                                         <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" data-id="fe-tab-long-term">
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
                                             <div class="cont-box" data-suspend-state=<%= suspend.status %> >
                                                 <div class="charge-guide-wrap">
                                                     <div class="charge-cont">
@@ -70,8 +68,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr class="cont-sp type1" aria-hidden="true"/>
-                                            <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {suspend, isApp}); %>
+                                           <%- include('../../components/suspend/myt-join.suspend.longterm.content.html', {suspend, isApp}); %>
                                         </li>
                                     </ul>
                                 </div>

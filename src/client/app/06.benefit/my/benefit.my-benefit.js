@@ -37,6 +37,7 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _cachedElement: function () {
     this.$payBtn = this.$container.find('#fe-pay');
+    this.$mbsBtn = this.$container.find('#fe-mbs');
   },
 
   /**
@@ -45,6 +46,7 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _bindEvent: function () {
     this.$payBtn.on('click', $.proxy(this._onClickPay, this));
+    this.$mbsBtn.on('click', $.proxy(this._goMyMbs, this));
     // BETA 버젼에서 임시로 외부링크로 이동
     // this.$container.find('[data-id="fe-membership"]').on('click', $.proxy(this._onClickMembership, this));
   },
@@ -77,6 +79,15 @@ Tw.BenefitMyBenefit.prototype = {
         ]
       }]
     }, $.proxy(this._bindPopupEvent, this), null, null, $(event.currentTarget));
+  },
+
+  /**
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
+   * @param event
+   */
+  _goMyMbs: function () {
+    this._historyService.goLoad('/membership/submain');
   },
 
   /**

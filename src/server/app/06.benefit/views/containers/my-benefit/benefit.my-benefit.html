@@ -25,28 +25,32 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="myinfo-wrap">
-                        <div class="tod-myinfo-cont membership">
-                        <% if( days ){ %>
+                    <!-- 190619 수정_01 -->
+                    <div class="tod-myinfo-cont membership">
+                    <% if( days ){ %>
                         <div class="title-m">
                             <p>고객님은 SK텔레콤과 함께 하신지</p>
                             <span class="tx-bold tx-red"><%= year %></span>년 <span class="tx-bold tx-red"><%= month %></span>개월째 입니다.
                         </div>
-                        <% } else { %>
+                    <% } else { %>
                         <div class="title-m">SK텔레콤과 함께 해주신 고객님을 위한 다양한 혜택을 확인하세요!</div>
-                        <% } %>
+                    <% } %>
                     </div>
+                    <!-- //190619 수정_01 -->
                     <% if( locals.membership ){ %>
                     <!-- 190619 수정_02 -->
                     <div class="calling-plan type01">
-                        <button class="wrap-link fs-type01">
+                        <button class="wrap-link fs-type01" id="fe-mbs">
                             <span class="left">나의 멤버십</span>
-                            <% if( membership === 'S' ){ %>
-                            <span class="tod-right"><strong class="normal">SILVER</strong></span>
-                            <% } else if( membership === 'G') { %>
-                            <span class="tod-right"><strong class="normal">GOLD</strong></span>
-                            <% } else if( membership === 'V') { %>
-                            <span class="tod-right"><strong class="normal">VIP</strong></span>
-                            <% } %>
+                            <span class="tod-right">
+                                <% if( membership === 'S' ){ %>
+                                <strong class="normal">SILVER</strong>
+                                <% } else if( membership === 'G') { %>
+                                <strong class="normal">GOLD</strong>
+                                <% } else if( membership === 'V') { %>
+                                <strong class="normal">VIP</strong>
+                                <% } %>
+                            </span>
                         </button>
                     </div>
                     <!-- //190619 수정_02 -->
@@ -62,15 +66,15 @@
                 <div class="wrap-gaps-top">
                     <!-- 190619 수정_03 -->
                     <div class="charge-guide-wrap">
-                        <div class="tod-charge-cont">
+                        <div class="tod-charge-cont">	
                             <span class="sub-disc01 tx-medium">포인트</span>
                             <span class="tit"><span class="charge-txt"><%= total %> P</span></span>
-                            <% if( okCashback !=== '0' || t !=== '0' ){ %>
+                            <% if( okCashback !== '0' || t !== '0' ){ %>
                             <span class="sub-disc04">
-                                <% if( okCashback !=== '0' ){ %>
+                                <% if( okCashback !== '0' ){ %>
                                 <span class="elem">OK캐쉬백 <%= okCashback %>P</span>
                                 <% } %>
-                                <% if( t !=== '0' ){ %>
+                                <% if( t !== '0' ){ %>
                                 <span class="elem">T포인트 <%= t %>P</span>
                                 <% } %>
                             </span>
@@ -83,67 +87,68 @@
                     <!-- //190619 수정_03 -->
                 </div>
                 <ul class="link-long-list">
-                    <% if( locals.rainbow && rainbow !=== '0' ) { %>
+                    <% if( locals.rainbow && rainbow !== '0' ) { %>
                     <li>
                         <div class="link-long">
-                            <a href="/benefit/my/rainbowpoint">레인보우포인트
+                            <button>레인보우포인트
                                 <span class="tx-sub">
-                                    <span class="normal"><i class="tx-bold"><%= rainbow %></i> P</span>
-                                    <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
+                                    <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
+                                    <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->    
                                 </span>
-                            </a>
+                            </button>
                         </div>
                     </li>
                     <% } %>
-                    <% if( locals.noContract ) { %>
+                    <% if(locals.noContract) {%>
                     <li>
                         <div class="link-long">
-                            <a href="/myt-join/myplancombine/noagreement">무약정플랜포인트
+                            <button>무약정플랜포인트
                                 <span class="tx-sub">
-                                    <span class="normal"><i class="tx-bold"><%= noContract %></i> P</span>
-                                    <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
+                                    <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
+                                    <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                                 </span>
-                            </a>
+                            </button>
                         </div>
                     </li>
                     <% } %>
-                    <% if( locals.military ) { %>
+                    <% if(locals.military) {%>
                     <li>
                         <div class="link-long">
-                            <a href="/benefit/my/military">지켜줘서 고마워 현역플랜포인트
+                            <button>지켜줘서 고마워 현역플랜포인트 
                                 <span class="tx-sub">
-                                    <span class="normal"><i class="tx-bold"><%= military %></i> P</span>
-                                    <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
+                                    <span class="normal"><i class="tx-bold"><%= military %></i> 점</span>
+                                    <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                                 </span>
-                            </a>
+                            </button>
                         </div>
                     </li>
                     <% } %>
-                    <% if( locals.cookiz ) { %>
+                    <% if(locals.cookiz) {%>
                     <li>
                         <div class="link-long">
-                            <a href="/benefit/my/cookiz">쿠키즈팅포인트
+                            <button>쿠키즈팅포인트
                                 <span class="tx-sub">
-                                    <span class="normal"><i class="tx-bold"><%= cookiz %></i> P</span>
-                                    <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
+                                    <span class="normal"><i class="tx-bold"><%= cookiz %></i> 점</span>
+                                    <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
                                 </span>
-                            </a>
+                            </button>
                         </div>
                     </li>
                     <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
-
+        
             <hr class="cont-sp type1" aria-hidden="true"/> <!-- 190619 수정_04-->
 
-            <% if( count > 0 ) { %>
             <!-- 190619 수정_05-->	
             <!-- .cont-box -->
             <div class="cont-box pb0">
+                <% if(count > 0) { %>
                 <div class="ti-caption-type01">
                     <h2 class="tit tx-medium">혜택 / 할인 <%= count %>건</h2>
-                </div>            
+                </div>
+                <% } %>
                 <div class="data-list-type1">
                     <ul class="tod-type1">
                         <% if(locals.bill) { %>
@@ -195,8 +200,7 @@
                 </div>
             </div>
             <!--// .cont-box -->
-            <!-- //190619 수정_05-->	
-            <% } %>
+            <!-- //190619 수정_05-->
         </div>
     </div>
     <!--// #contents -->

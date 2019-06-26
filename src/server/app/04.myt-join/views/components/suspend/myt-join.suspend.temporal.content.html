@@ -4,11 +4,12 @@
 * @since 2018-10-16
 %>
 <!--// .cont-box -->
+<hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
-<div class="cont-box pt0">
-    <h3 class="mt0 top-line">일시정지 기간<button class="tip-view" id="MS_03_05_01_tip_01" title="일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
+<div class="cont-box">
+    <h3>일시정지 기간<button class="tip-view" id="MS_03_05_01_tip_01" title="일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
     <div class="inputbox date-selcet">
-        <span class="date-type"><input type="date" value=<%= suspend.today %> min=<%= suspend.today %> title="일시정지 기간 시작날짜 선택" data-role="fe-date-from"/></span>
+        <span class="date-type"><input type="date" value=<%= suspend.today %> title="일시정지 기간 시작날짜 선택" disabled="" data-role="fe-date-from"/></span>
         <span class="bar">~</span>
         <span class="date-type">
             <input type="date" value=<%= suspend.threeMonths %> title="일시정지 기간 종료날짜 선택" data-role="fe-date-to"/>
@@ -20,11 +21,11 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps btm-line">
+<div class="cont-box nogaps">
     <div class="wrap-gaps-top">
         <h3>일시정지 설정<button class="tip-view" id="MS_03_05_01_tip_02" title="일시정지 설정 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
-    <div class="list-comp-input tod-type2">
+    <div class="list-comp-input">
         <div class="widget">
             <div class="widget-box radio">
                 <ul class="select-list" role="group">
@@ -35,7 +36,7 @@
                         <!-- 체크상태일 경우 checked="checked" -->
                         <div class="comp-list-layout" id="aria-comp-radio1">
                             <p class="layout-text">
-                                <span class="mtext">걸기/받기 모두 정지</span>
+                                <span class="mtext">걸기 / 받기 모두 정지</span>
                             </p>
                         </div>
                     </li>
@@ -59,20 +60,20 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps btm-line">
+<div class="cont-box nogaps">
     <div class="wrap-gaps-top">
         <h3>일시정지 종료 7일 전<button class="tip-view" id="MS_03_05_01_tip_03" title="일시정지 종료 7일 전 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
-    <div class="list-comp-input tod-type2">
+    <div class="list-comp-input">
         <div class="widget">
             <div class="widget-box radio">
-                <ul class="select-list" role="group">
+                <ul class="select-list btm-line" role="group">
                     <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="fe-radio-accept-type" value="" title="일시정지 종료 7일 전"
                                aria-labelledby="aria-comp-radio3" checked data-role="fe-accept-call-beforehand"/>
                         <!-- 체크상태일 경우 checked="checked" -->
-                        <div class="comp-list-layout pr16" id="aria-comp-radio3">
+                        <div class="comp-list-layout" id="aria-comp-radio3">
                             <p class="layout-text">
                                 <span class="mtext">받기 가능 상태로 자동 전환</span>
                             </p>
@@ -98,14 +99,14 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps btm-line">
+<div class="cont-box nogaps">
     <div class="wrap-gaps-top">
         <h3>일시정지 종료일<button class="tip-view" id="MS_03_05_01_tip_04"  title="일시정지 종료일 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
-    <div class="list-comp-input tod-type2">
+    <div class="list-comp-input">
         <div class="widget">
             <div class="widget-box radio">
-                <ul class="select-list tod-btm-line" role="group">
+                <ul class="select-list btm-line" role="group">
                     <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="fe-radio-noti" value="" title="일시정지 종료일"
@@ -133,7 +134,7 @@
         </div>
     </div>
 
-    <div class="list-comp-input-agree mt16" data-role="fe-restore-noti-group">
+    <div class="list-comp-input-agree" data-role="fe-restore-noti-group">
         <div class="widget">
             <div class="widget-box check">
                 <ul class="select-list" role="group">
@@ -143,7 +144,7 @@
                             <!-- // Grand open 접근성 수정 -->
                             <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" data-noti-method="email" checked/><!-- 체크상태일 경우 checked="checked" -->
                             <!-- Grand open 접근성 수정 id삭제-->
-                            <div class="comp-list-layout pr16">
+                            <div class="comp-list-layout">
                                 <!-- // Grand open 접근성 수정 -->
                                 <div class="layout-text">
                                     <div class="form-type">
@@ -173,7 +174,7 @@
                             <!-- // Grand open 접근성 수정 -->
                             <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox2" data-noti-method="sms" checked/><!-- 체크상태일 경우 checked="checked" -->
                             <!-- Grand open 접근성 수정 id삭제 -->
-                            <div class="comp-list-layout pr16">
+                            <div class="comp-list-layout">
                                 <!-- // Grand open 접근성 수정 -->
                                 <div class="layout-text">
                                     <div class="form-type">
@@ -184,19 +185,21 @@
                                             <span class="tit">휴대폰번호</span>
                                             <div class="form-box">
                                                 <!-- 2019-01-17 inp-btn 추가 -->
-                                                <span class="inputbox bt-add inp-btn mt14">
+                                                <span class="inputbox bt-add inp-btn">
                                                     <span class="input">
                                                         <input type="tel" placeholder="숫자만 입력" title="일시정지 종료일 안내받을 휴대폰번호 숫자만 입력"
                                                                data-id="fe-input-tel" maxlength="13">
                                                         <button class="cancel stop-bubble"><span class="blind">삭제</span></button>
                                                     </span>
-                                                    <% if(isApp) { %>
-                                                    <span class="bt-box3">
-                                                        <button
-                                                            type="button "
-                                                            class="fe-btn_native_contact btn-round2 btn-style3">주소록</button>
+                                                    <span class="bt-box">
+                                                        <% if(isApp) { %>
+                                                        <span class="bt-box">
+                                                            <button
+                                                                type="button "
+                                                                class="fe-btn_native_contact">주소록</button>
+                                                        </span>
+                                                        <% } %>
                                                     </span>
-                                                    <% } %>
                                                 </span>
                                             </div>
                                         </div>
