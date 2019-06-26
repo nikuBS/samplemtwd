@@ -466,7 +466,7 @@
                     <a href="/customer/faq#how" type="button" class="stit tit tod-tit-lar" data-xt_eid="CMMA_A2_B6-170" data-xt_csid="NO" data-xt_action="BC"><strong>이럴 땐<br>이렇게 하세요</strong></a>
                     <!-- .widget -->
                     <div class="widget">
-                        <div class="widget-box slider1" data-slider-auto="<%- redisData.help[0][0]..rollYn == 'Y'?'true':'false' %>">
+                        <div class="widget-box slider1" data-slider-rollyn="<%- redisData.help[0][0].scrnTypCd %>" data-slider-auto="<%- redisData.help[0][0].rollYn == 'Y'?'true':'false' %>">
                             <div class="slider-box">
                                 <ul class="slider">
                                     <% redisData.help.map((help) => { %>
