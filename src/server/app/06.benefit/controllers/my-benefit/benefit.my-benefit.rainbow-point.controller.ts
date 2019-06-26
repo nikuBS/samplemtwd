@@ -18,6 +18,7 @@ class BenefitMyBenefitRainbowPointCommon {
   public static MAXIMUM_ITEM_LENGTH: number = 20;
   public static MAXIMUM_LIST_LENGTH: number = 5;
 
+  
   public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
     const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
     const totalPage = Math.ceil((total / itemLengthPerPage));
