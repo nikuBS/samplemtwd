@@ -74,7 +74,6 @@ Tw.TeventCommon.prototype = {
     this.$contentList.on('click', 'li', $.proxy(this._getDetailEvent, this));
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
 
-    // this.$container.on('click', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
     this.$container.on('change', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
     this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
