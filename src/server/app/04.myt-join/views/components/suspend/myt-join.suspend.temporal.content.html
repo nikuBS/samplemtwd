@@ -4,10 +4,9 @@
 * @since 2018-10-16
 %>
 <!--// .cont-box -->
-<hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
-<div class="cont-box">
-    <h3>일시정지 기간<button class="tip-view" id="MS_03_05_01_tip_01" title="일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
+<div class="cont-box pt0">
+    <h3 class="mt0 top-line">일시정지 기간<button class="tip-view" id="MS_03_05_01_tip_01" title="일시정지 기간 TIP보기" aria-haspopup="true">TIP</button></h3>
     <div class="inputbox date-selcet">
         <span class="date-type"><input type="date" value=<%= suspend.today %> min=<%= suspend.today %> title="일시정지 기간 시작날짜 선택" data-role="fe-date-from"/></span>
         <span class="bar">~</span>
@@ -21,7 +20,7 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps">
+<div class="cont-box nogaps btm-line">
     <div class="wrap-gaps-top">
         <h3>일시정지 설정<button class="tip-view" id="MS_03_05_01_tip_02" title="일시정지 설정 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
@@ -36,7 +35,7 @@
                         <!-- 체크상태일 경우 checked="checked" -->
                         <div class="comp-list-layout" id="aria-comp-radio1">
                             <p class="layout-text">
-                                <span class="mtext">걸기 / 받기 모두 정지</span>
+                                <span class="mtext">걸기/받기 모두 정지</span>
                             </p>
                         </div>
                     </li>
@@ -60,14 +59,14 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps">
+<div class="cont-box nogaps btm-line">
     <div class="wrap-gaps-top">
         <h3>일시정지 종료 7일 전<button class="tip-view" id="MS_03_05_01_tip_03" title="일시정지 종료 7일 전 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
     <div class="list-comp-input tod-type2">
         <div class="widget">
             <div class="widget-box radio">
-                <ul class="select-list btm-line" role="group">
+                <ul class="select-list" role="group">
                     <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="fe-radio-accept-type" value="" title="일시정지 종료 7일 전"
@@ -99,7 +98,7 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps">
+<div class="cont-box nogaps btm-line">
     <div class="wrap-gaps-top">
         <h3>일시정지 종료일<button class="tip-view" id="MS_03_05_01_tip_04"  title="일시정지 종료일 TIP보기" aria-haspopup="true">TIP</button></h3>
     </div>
@@ -134,7 +133,7 @@
         </div>
     </div>
 
-    <div class="list-comp-input-agree" data-role="fe-restore-noti-group">
+    <div class="list-comp-input-agree mt16" data-role="fe-restore-noti-group">
         <div class="widget">
             <div class="widget-box check">
                 <ul class="select-list" role="group">
