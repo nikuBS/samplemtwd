@@ -35286,3 +35286,18 @@ body.apphome .section-box {
 .data-gift-wrap .result-nolist {padding-bottom:2rem; text-align:center;}
 .data-gift-wrap .result-nolist .ico {display:inline-block;}
 .data-gift-wrap .result-nolist .ico + p {margin-top:1rem;}
+
+/* 190619 [DV001-22052] 혜택할인 > 나의혜택할인 > 서브메인 UI 개선 */
+.myinfo-wrap .tod-myinfo-cont{padding-right:0;}
+.myinfo-wrap .tod-myinfo-cont .title-m p{font-size:0.938rem;line-height:1.313rem;}
+.myinfo-wrap .tod-myinfo-cont .title-m{font-size:1.313rem;}
+.myinfo-wrap .tod-myinfo-cont .title-m .tx-red{color:#f76252!important;}
+.tod-charge-cont .sub-disc01{font-size:1rem;}
+.tod-charge-cont .sub-disc04{color:#8d8d8d;}
+.data-list-type1 .tod-type1 .sta{margin-top:0.625rem;}
+.data-list-type1 .tod-type1 li:first-of-type{padding-top:0; border-top:0;}
+.data-list-type1 .tod-type1 .sta span .bt-link-tx{margin-left:0;}
+.calling-plan.type01 .tod-right{position:absolute;right:0.81rem; }
+
+/* 190625 [OP002-1760] 레인보우 포인트 화면 개선 요청 */
+.contents-empty.tod-narrow-empty{padding:3.2rem 0}

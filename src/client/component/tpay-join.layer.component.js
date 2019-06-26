@@ -14,8 +14,16 @@ Tw.TPayJoinLayerPopup = function ($element) {
 
 Tw.TPayJoinLayerPopup.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '#fe-btn-go-tpay', $.proxy(this.open, this));
+    this.$container.on('click', '#fe-btn-go-tpay', $.proxy(this._onGoSubmain, this));
   },
+  /**
+   * 멤버십 서브메인으로 이동
+   */
+  _onGoSubmain: function () {
+    this._historyService.goLoad('/membership/submain');
+  },
+  
+  // 아래 Tpay 팝업은 OP002-1800 요건 적용으로 사용되지 않음
   /**
    * Tpay popup open
    */

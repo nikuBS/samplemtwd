@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, address=no, email=no" />
+		<link rel="shortcut icon" href="/img/common/favicon.ico" />
+		<link rel="shortcut icon" href="/img/common/favicon.png" />
+		<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+		<meta name="description" content="페이지설명" />
+		<meta name="keywords" content="서비스키워드" />
+		<meta property="og:title" content="SKT 홈페이지" />
+		<meta property="og:site_name" content="SKT" />
+		<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+		<meta property="og:description" content="SKT framework" />
+		<title>SKT</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+		<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+		<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+		<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+		<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+		<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+		<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+		<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+		<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+		
+	</head>
+
+
+	<body class="bg-gray">
+		<!-- Grand open 접근성 수정 -->  
+		<!-- #skip_navigation -->
+		<div id="skipNav" class="skip_navi"> 
+			<ul>
+				<li><a href="#contents">본문 바로가기</a></li>
+			</ul>
+		</div>
+		<!--// #skip_navigation -->
+		<!--// Grand open 접근성 수정 -->
+		<div class="wrap">
+			<!-- #header -->
+			<div id="header" class="header-wrap">
+				<div class="h-belt">
+					<div class="h-default">
+						<div class="h-menu">
+							<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+						</div>
+						<div class="h-tit">나의 혜택/할인</div>
+						<div class="h-serarch">
+							<button class="icon-gnb-search"><span class="blind">검색</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			
+			<!-- #contents -->
+			<div id="contents" class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<!-- .cont-box -->
+					<div class="cont-box pb0">
+						<div class="myinfo-wrap pb20">
+							<!-- 190619 수정_01 -->
+	                        <div class="tod-myinfo-cont membership">
+	                            <div class="title-m">
+								<p>고객님은 SK텔레콤과 함께 하신지</p>
+								<span class="tx-bold tx-red">YY</span>년 <span class="tx-bold tx-red">MM</span>개월째 입니다.</div>
+	                        </div>
+							<!-- //190619 수정_01 -->
+							<!-- 190619 삭제_01 -->
+	                        <!-- <div class="ico-wrap">
+								<span class="ico-ill-type3 silver"><span class="blind">silver</span></span>
+								
+								<span class="ico-ill-type3 gold"><span class="blind">gold</span></span>
+								<span class="ico-ill-type3 vip"><span class="blind">vip</span></span>
+								
+							</div>
+							<div class="membership-link"><button type="button" class="bt-link-tx underline">나의 멤버쉽</button></div> -->
+							<!-- //190619 삭제_01 -->
+	                    </div>
+						<!-- 190619 수정_02 -->
+						<div class="calling-plan type01">
+							<button class="wrap-link fs-type01">
+								<span class="left">나의 멤버십</span>
+								<span class="tod-right"><strong class="normal">VIP</strong></span>
+							</button>
+						</div>
+						<!-- //190619 수정_02 -->
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps">						
+						<div class="wrap-gaps-top">
+							<!-- 190619 수정_03 -->
+							<div class="charge-guide-wrap">								
+								<div class="tod-charge-cont">									
+									<span class="sub-disc01 tx-medium">포인트</span>
+									<span class="tit"><span class="charge-txt">24,000 P</span></span>
+									<span class="sub-disc04"><span class="elem">OK캐쉬백 2,000P</span><span class="elem">T포인트 3,000P</span></span>
+								</div>
+								<div class="right-area">
+									<button class="bt-link-tx underline">포인트 요금납부</button>
+								</div>
+							</div>
+							<!-- //190619 수정_03 -->
+						</div>
+						<ul class="link-long-list">
+	                        <li>
+	                            <div class="link-long">
+	                                <button>레인보우포인트
+	                                    <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">9,100</i> 점</span>
+	                                        <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->    
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="link-long">
+	                                <button>무약정플랜포인트
+	                                    <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">1,700</i> 점</span>
+	                                        <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="link-long">
+	                                <button>지켜줘서 고마워 현역플랜포인트 
+	                                    <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">2,100</i> 점</span>
+	                                        <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="link-long">
+	                                <button>쿠키즈팅포인트
+	                                    <span class="tx-sub">
+	                                        <span class="normal"><i class="tx-bold">8,000</i> 점</span>
+	                                        <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                    </ul>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/> <!-- 190619 수정_04-->		
+
+					<!-- 190619 수정_05-->	
+					<!-- .cont-box -->
+					<div class="cont-box pb0">
+						<div class="ti-caption-type01">
+							<h2 class="tit tx-medium">혜택 / 할인 5건</h2>
+						</div>
+						<div class="data-list-type1">
+							<ul class="tod-type1">
+								<li>
+									<span class="stit">선택약정 할인 제도 외 2건</span>
+									<div class="sta">
+										<span>요금할인</span>
+										<span><a class="bt-link-tx underline" href="" role="button">가입내역조회</a></span>
+									</div>
+								</li>
+								<li>
+									<span class="stit">복지고객할인</span>
+									<div class="sta">
+										<span>요금할인</span>
+										<span><a class="bt-link-tx underline" href="" role="button">자세히 보기</a></span>
+									</div>
+								</li>
+								<li>
+									<span class="stit">온가족플랜 외 1건</span>
+									<div class="sta">
+										<span>결합할인</span>
+										<span><a class="bt-link-tx underline" href="" role="button">가입내역조회</a></span>
+									</div>
+								</li>
+								<li>
+									<span class="stit">데이터 리필쿠폰 2장</span>
+									<div class="sta">
+										<span>장기가입 혜택</span>
+										<span><a class="bt-link-tx underline" href="" role="button">쿠폰조회</a></span>
+									</div>
+								</li>
+								<li>
+									<span class="stit">장기고객 요금할인</span>
+									<div class="sta">
+										<span>장기가입 혜택</span>
+										<span><a class="bt-link-tx underline" href="" role="button">자세히 보기</a></span>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--// .cont-box -->
+					<!-- //190619 수정_05-->
+
+				</div>
+			</div>
+			<!--// #contents -->
+		</div>
+	</body>
+
+</html>
