@@ -38,6 +38,10 @@ Tw.BenefitMyBenefit.prototype = {
   _cachedElement: function () {
     this.$payBtn = this.$container.find('#fe-pay');
     this.$mbsBtn = this.$container.find('#fe-mbs');
+    this.$rbBtn = this.$container.find('#fe-rainbow');
+    this.$noctrtBtn = this.$container.find('#fe-nocontract');
+    this.$milBtn = this.$container.find('#fe-military');
+    this.$ckzBtn = this.$container.find('#fe-cookiz');
   },
 
   /**
@@ -47,6 +51,10 @@ Tw.BenefitMyBenefit.prototype = {
   _bindEvent: function () {
     this.$payBtn.on('click', $.proxy(this._onClickPay, this));
     this.$mbsBtn.on('click', $.proxy(this._goMyMbs, this));
+    this.$rbBtn.on('click', $.proxy(this._goRainbow, this));
+    this.$noctrtBtn.on('click', $.proxy(this._goNoCtrt, this));
+    this.$milBtn.on('click', $.proxy(this._goMilitary, this));
+    this.$ckzBtn.on('click', $.proxy(this._goCookiz, this));
     // BETA 버젼에서 임시로 외부링크로 이동
     // this.$container.find('[data-id="fe-membership"]').on('click', $.proxy(this._onClickMembership, this));
   },
@@ -88,6 +96,42 @@ Tw.BenefitMyBenefit.prototype = {
    */
   _goMyMbs: function () {
     this._historyService.goLoad('/membership/submain');
+  },
+
+  /**
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
+   * @param event
+   */
+  _goRainbow: function () {
+    this._historyService.goLoad('/benefit/my/rainbowpoint');
+  },
+
+  /**
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
+   * @param event
+   */
+  _goNoCtrt: function () {
+    this._historyService.goLoad('/myt-join/myplancombine/noagreement');
+  },
+
+  /**
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
+   * @param event
+   */
+  _goMilitary: function () {
+    this._historyService.goLoad('/benefit/my/military');
+  },
+
+  /**
+   * @function
+   * @desc 나의 멤버십 화면으로 이동
+   * @param event
+   */
+  _goCookiz: function () {
+    this._historyService.goLoad('/benefit/my/cookiz');
   },
 
   /**
