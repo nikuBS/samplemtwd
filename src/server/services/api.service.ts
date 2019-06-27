@@ -370,9 +370,10 @@ class ApiService {
             this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
             this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
         } else {
-          return Observable.combineLatest(
-            this.loginService.setSvcInfo(this.req, this.res, null),
-            this.loginService.setAllSvcInfo(this.req, this.res, null));
+          // return Observable.combineLatest(
+          //   this.loginService.setSvcInfo(this.req, this.res, null),
+          //   this.loginService.setAllSvcInfo(this.req, this.res, null));
+          throw resp;
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
@@ -380,7 +381,8 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setChildInfo(this.req, this.res, null);
+          // return this.loginService.setChildInfo(this.req, this.res, null);
+          throw resp;
         }
       })
       .map((resp) => {
@@ -426,7 +428,8 @@ class ApiService {
           this.loginService.clearXtCookie(this.res);
           return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
         } else {
-          return this.loginService.setSvcInfo(this.req, this.res, null);
+          // return this.loginService.setSvcInfo(this.req, this.res, null);
+          throw resp;
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
@@ -434,7 +437,8 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setAllSvcInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setAllSvcInfo(this.req, this.res, null);
+          // return this.loginService.setAllSvcInfo(this.req, this.res, null);
+          throw resp;
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
@@ -442,7 +446,8 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setChildInfo(this.req, this.res, resp.result);
         } else {
-          return this.loginService.setChildInfo(this.req, this.res, null);
+          // return this.loginService.setChildInfo(this.req, this.res, null);
+          throw resp;
         }
       }).map((resp) => {
         return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo(this.req) };
