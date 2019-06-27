@@ -16,6 +16,9 @@
 Tw.BannerService = function(rootEl, type, banners, target, callback) {
   this.$container = rootEl;
   if (!banners || banners.length <= 0) {
+    if(target){
+      this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');;
+    }
     return;
   }
 
