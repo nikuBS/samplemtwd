@@ -23,8 +23,8 @@
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="myinfo-wrap">
+            <div class="cont-box pb0">
+                <div class="myinfo-wrap pb20">
                     <!-- 190619 수정_01 -->
                     <div class="tod-myinfo-cont membership">
                     <% if( days ){ %>
@@ -36,26 +36,26 @@
                         <div class="title-m">SK텔레콤과 함께 해주신 고객님을 위한 다양한 혜택을 확인하세요!</div>
                     <% } %>
                     </div>
-                    <!-- //190619 수정_01 -->
-                    <% if( locals.membership ){ %>
-                    <!-- 190619 수정_02 -->
-                    <div class="calling-plan type01">
-                        <button class="wrap-link fs-type01" id="fe-mbs">
-                            <span class="left">나의 멤버십</span>
-                            <span class="tod-right">
-                                <% if( membership === 'S' ){ %>
-                                <strong class="normal">SILVER</strong>
-                                <% } else if( membership === 'G') { %>
-                                <strong class="normal">GOLD</strong>
-                                <% } else if( membership === 'V') { %>
-                                <strong class="normal">VIP</strong>
-                                <% } %>
-                            </span>
-                        </button>
-                    </div>
-                    <!-- //190619 수정_02 -->
-                   <% } %>
                 </div>
+                <!-- //190619 수정_01 -->
+                <% if( locals.membership ){ %>
+                <!-- 190619 수정_02 -->
+                <div class="calling-plan type01">
+                    <button class="wrap-link fs-type01" id="fe-mbs">
+                        <span class="left">나의 멤버십</span>
+                        <span class="tod-right">
+                            <% if( membership === 'S' ){ %>
+                            <strong class="normal">SILVER</strong>
+                            <% } else if( membership === 'G') { %>
+                            <strong class="normal">GOLD</strong>
+                            <% } else if( membership === 'V') { %>
+                            <strong class="normal">VIP</strong>
+                            <% } %>
+                        </span>
+                    </button>
+                </div>
+                <!-- //190619 수정_02 -->
+                <% } %>
             </div>
             <!--// .cont-box -->
 
@@ -69,18 +69,18 @@
                         <div class="tod-charge-cont">	
                             <span class="sub-disc01 tx-medium">포인트</span>
                             <span class="tit"><span class="charge-txt"><%= total %> P</span></span>
-                            <% if( okCashback > 0 || t > 0 ){ %>
+                            <% if( okCashback !== '0' || t !== '0' ){ %>
                             <span class="sub-disc04">
-                                <% if( okCashback > 0 ){ %>
+                                <% if( okCashback !== '0' ){ %>
                                 <span class="elem">OK캐쉬백 <%= okCashback %>P</span>
                                 <% } %>
-                                <% if( t > 0 ){ %>
+                                <% if( t !== '0' ){ %>
                                 <span class="elem">T포인트 <%= t %>P</span>
                                 <% } %>
-                            </span>
-                            <% } %>
+                            </span>                            
+                        <% } %>
                         </div>
-                        <% if( total !== '0' || rainbow !== '0' || okCashback > 0 || t > 0 ){ %>
+                        <% if ( rainbow !== '0' || okCashback !== '0' || t !== '0' ) { %>
                         <div class="right-area">
                             <button class="bt-link-tx underline" id="fe-pay">포인트 요금납부</button>
                         </div>
