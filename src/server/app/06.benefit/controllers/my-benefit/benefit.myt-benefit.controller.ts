@@ -143,10 +143,17 @@ class BenefitMyBenefit extends TwViewController {
 
         if (duration !== null && !FormatHelper.isEmpty(duration)) {
           const durationArr = duration.split(' ');
-          options['year'] = durationArr[0].replace('년', '');
-          options['month'] = durationArr[1].replace('개월', '');
+          if (durationArr.length > 1) {
+            options['year'] = durationArr[0].replace('년', '');
+            options['month'] = durationArr[1].replace('개월', '');
+          } else {
+            if (durationArr[0].indexOf('년') > -1) {
+              options['year'] = durationArr[0].replace('년', '');
+            } else if (durationArr[0].indexOf('개월') > -1) {
+              options['month'] = durationArr[0].replace('개월', '');
+            }
+          }
         }
-        
 
         res.render('my-benefit/benefit.my-benefit.html', options);
       }

@@ -30,7 +30,15 @@
                     <% if( days ){ %>
                         <div class="title-m">
                             <p>고객님은 SK텔레콤과 함께 하신지</p>
+                            <% if( locals.year ){ %>
+                                <% if( locals.month ){ %>
                             <span class="tx-bold tx-red"><%= year %></span>년 <span class="tx-bold tx-red"><%= month %></span>개월째 입니다.
+                                <% } else { %>
+                            <span class="tx-bold tx-red"><%= year %></span>년째 입니다.
+                                <% } %>
+                            <% } else { %>
+                            <span class="tx-bold tx-red"><%= month %></span>개월째 입니다.                            
+                            <% } %>
                         </div>
                     <% } else { %>
                         <div class="title-m">SK텔레콤과 함께 해주신 고객님을 위한 다양한 혜택을 확인하세요!</div>
