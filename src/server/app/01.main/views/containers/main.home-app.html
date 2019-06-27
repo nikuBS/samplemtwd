@@ -151,6 +151,14 @@
                                 <!--<% } %>-->
 
                                 <div class="call-message">
+                                    <% if(homeData.usageData.data.isTplanUse) { %>
+                                    <div class="tod-flydata-wrap">
+                                            <a href="/myt-data/hotdata" class="tod-link-flydata">
+                                                <span class="sp-tit"><i class="tod-icon-flydata" data-xt_eid="CMMA_A2_B6-229" data-xt_csid="NO" data-xt_action="BC"></i>T가족모아데이터</span>
+                                                <span class="sp-data"><%= homeData.usageData.data.showShareRemained %></span>
+                                            </a>
+                                        </div>
+                                    <% } %>
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                                     <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-34" data-xt_eid="CMMA_A2_B6-5" data-xt_csid="NO" data-xt_action="BC"><span class="blind">통화</span></i> <span class="ff-tg-light"><%= homeData.usageData.voice.showRemainedText %></span></a>
                                     <% } %>
@@ -646,7 +654,7 @@
 
                         <!-- 프로모션 배너 1 -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box benefit section-swiper-box main-banner-img">
+                            <div class="main-charge-box benefit section-swiper-box main-banner-img tod-bann-auto">
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box">
@@ -682,7 +690,7 @@
 
                         <!-- 프로모션 배너 2 -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box advice section-swiper-box main-banner-img">
+                            <div class="main-charge-box advice section-swiper-box main-banner-img tod-bann-auto">
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box">
@@ -717,7 +725,7 @@
 
                         <!-- 프로모션 배너 3 -->
                         <div class="section-box nogaps">
-                            <div class="main-charge-box advice section-swiper-box main-banner-img">
+                            <div class="main-charge-box advice section-swiper-box main-banner-img tod-bann-auto">
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box">
@@ -734,11 +742,11 @@
                         <% if(redisData.help && redisData.help.length > 0) { %>
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
-                            <div class="main-tip-box box-type section-swiper-box">
+                            <div class="main-tip-box box-type section-swiper-box tod-bann-auto">
                                 <a href="/customer/faq#how" type="button" class="stit tit" data-xt_eid="CMMA_A2_B66-38" data-xt_csid="NO" data-xt_action="BC">이럴 땐<br>이렇게 하세요</a>
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1" data-slider-auto="<%- redisData.help[0][0].rollYn == 'Y'?'true':'false' %>">
                                         <div class="slider-box">
                                             <ul class="slider">
                                                 <% redisData.help.map((help) => { %>

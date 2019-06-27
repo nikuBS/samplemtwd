@@ -14,9 +14,11 @@ import { MY_BENEFIT_RAINBOW_POINT } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
 class BenefitMyBenefitRainbowPointCommon {
+
   public static MAXIMUM_ITEM_LENGTH: number = 20;
   public static MAXIMUM_LIST_LENGTH: number = 5;
 
+  
   public static getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
     const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
     const totalPage = Math.ceil((total / itemLengthPerPage));
@@ -79,16 +81,17 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       const isMultiLineToAdjustment = this.isMultiLine(linesToAdjustment);
       const isMultiLineToTransfer = this.isMultiLine(linesToTransfer);
 
-      const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
-        BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
-        BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
+      // 페이징 -> 더보기 방식 변경에 따른 미사용
+      // const paging = BenefitMyBenefitRainbowPointCommon.getPaging(this._BASE_URL,
+      //   BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+      //   BenefitMyBenefitRainbowPointCommon.MAXIMUM_LIST_LENGTH, curPage, rainbowPointHistoryResult.totRecCnt);
 
       const options = {
         rainbowPointsInfo,
         rainbowPointHistories,
         isMultiLineToAdjustment,
         isMultiLineToTransfer,
-        paging,
+        // paging,  // 페이징 -> 더보기 방식 변경에 따른 미사용
         svcInfo,
         pageInfo
       };
@@ -118,7 +121,9 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
    */
   private reqRainbowPointHistories(page: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0100, {
-      size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+      // 페이징 -> 더보기 방식 변경에 따라 전체 이력을 한번에 조회해오게 되므로 최대 1000건의 이력까지 노출해주도록 임의로 처리함
+      // size: BenefitMyBenefitRainbowPointCommon.MAXIMUM_ITEM_LENGTH,
+      size: 1000,
       page
     });
   }

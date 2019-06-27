@@ -97,8 +97,8 @@ Tw.BannerService.prototype = {
           });
       },
       afterChange: function(e, slick) {
-        slick.$slider.find('.slick-current > button').focus();
-        // $(slick.$slides[index]).find('button').focus();
+        //slick.$slider.find('.slick-current > button').focus();  // 스라이드 될때마다 스크롤이 이동되어 주석처리함
+        //$(slick.$slides[index]).find('button').focus();
       }
     });
 
@@ -112,21 +112,29 @@ Tw.BannerService.prototype = {
           new Tw.XtractorService(this.$banners, true);
         }
 
+        var rollYn = this._banners.reduce(function(a,b){
+          return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
+        }, {}).rollYn||'Y';
+
+        if(rollYn === 'Y' && this._banners.length > 1){
+          //this.$banners.addClass('fe-banner-auto');
+          this.$banners.closest('.widget-box').addClass('slider1-auto').data("slider-auto", "true"); // 190610_추가
+        }
+        
         // set slick
-        if (this.$banners.hasClass('fe-banner-auto')) { // auto scrolling
-          this.$banners.slick({
+        var _this = this.$banners;
+        if (_this.closest('.widget-box').data('slider-auto')) { // auto scrolling
+          _this.slick({
             autoplay: true,
             autoplaySpeed: 4000,
-            dots: this._banners.length !== 1,
+            dots: true,
+            arrows: true,
             infinite: true,
-            speed: 500,
+            speed : 300,
             lazyLoad: 'progressive',
-            focusOnSelect: true,
-            pauseOnFocus: true,
-            pauseOnHover: true,
-            pauseOnDotsHover: true,
-            accessibility: false,
-            arrows: false,
+            centerMode: false,
+            focusOnSelect: false,
+            touchMove : true,
             customPaging: function(slider, i) {
               if (i === 0) {
                 return $('<button />').attr(
@@ -143,8 +151,18 @@ Tw.BannerService.prototype = {
               }
             }
           });
+
+          // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 START
+          _this.after($('<button type="button" class="tod-bann-btn stop"><span class="blind">일시정지</span></button>')); // 190610_추가
+          _this.next('button.tod-bann-btn').on('click', function () {
+              _this.slick($(this).hasClass('stop') ? 'slickPause' : 'slickPlay');
+              $(this).find('.blind').html($(this).hasClass('stop') ? '재생' : '일시정지');
+              $(this).toggleClass('stop', !$(this).hasClass('stop'));
+          });
+          // 190603 - 자동롤링 시 Play/Stop 버튼 기능 제공 END
+
         } else {
-          this.$banners.slick({
+          _this.slick({
             dots: this._banners.length !== 1,
             infinite: false,
             speed: 300,
@@ -284,22 +302,22 @@ Tw.BannerService.prototype = {
     if (type === Tw.REDIS_BANNER_TYPE.TOS) {
       return _.chain(banners)
         .sort(function(a, b) {  
-          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq); 
         })
         .map(function(banner) {
           return $.extend(banner, {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: true,
+            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
+            linkType: banner.tosImgLinkTrgtClCd,
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
             imgLinkUrl: banner.imgLinkUrl,
-            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
-            linkType: banner.tosImgLinkTrgtClCd,
             isTos: true
           });
         })
         .value();
-    } else {
+    } else if(type === Tw.REDIS_BANNER_TYPE.ADMIN) {
       return _.chain(banners)
         .filter(function(banner) { 
           return (
@@ -320,6 +338,57 @@ Tw.BannerService.prototype = {
           };
 
           nBanners.push($.extend(banner, temp));
+
+          return nBanners;
+        }, [])
+        .value();
+    }else if(type === Tw.REDIS_BANNER_TYPE.TOS_ADMIN){
+       
+      var scrnTypCd = banners.reduce(function(a,b){
+        return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
+      }, {}).scrnTypCd||'F';
+
+      return _.chain(banners)
+        .filter(function(banner) { 
+          if(banner.kind === Tw.REDIS_BANNER_TYPE.TOS){ // 조건 여부 확인 필요
+            return true;
+          }
+
+          return (
+            (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
+            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
+            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
+          );
+        })
+        .sort(function(a, b) {
+          var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(a.bnnrExpsSeq)}
+            , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(b.bnnrExpsSeq)};
+          
+          if(scrnTypCd === 'R'){
+            return prev.kind - next.kind || Math.floor(Math.random() * 3) -1;
+          }else{
+            return prev.kind - next.kind || prev.expSeq - next.expSeq;
+          }          
+          
+        })
+        .reduce(function(nBanners, banner) {
+          var isTos = banner.kind === Tw.REDIS_BANNER_TYPE.TOS;
+          var temp = {
+            isHTML: banner.bnnrTypCd === 'H',
+            isBill: !isTos? banner.billYn === 'Y' : true, // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
+            isInternalLink: isTos? banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
+            linkType: isTos? banner.tosImgLinkTrgtClCd : Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
+          };
+          if(isTos){
+            $.extend(temp, {
+              bnnrFilePathNm: banner.bnnrFileNm,
+              bnnrImgAltCtt: banner.imgAltCtt,
+              imgLinkUrl: banner.imgLinkUrl,
+              isTos: true
+            })
+          }
+
+          nBanners.push($.extend({}, banner, temp));
 
           return nBanners;
         }, [])

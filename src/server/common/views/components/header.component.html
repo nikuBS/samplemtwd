@@ -1,7 +1,7 @@
 <% if(locals.type && locals.type === 'popup') { %>
 <!-- #header -->
-<div class="header-wrap <% if (locals.headerClass) { %> <%= locals.headerClass %> <% } %>">
-    <div class="page-header">
+<div class="header-wrap noborder<% if (locals.headerClass) { %> <%= locals.headerClass %> <% } %>">
+    <div class="page-header noborder">
         <div class="header-ti">
             <h1><%- title %></h1>
         </div>
@@ -115,7 +115,7 @@
                     <button class="bt fe-menu-link" value="/main/menu/settings/terms">이용약관</button>
                 </li>
                 <li>
-                    <button class="bt fe-outlink" value="https://privacy.sktelecom.com/view.do?ctg=policy&name=policy">
+                    <button class="bt fe-outlink" value="https://m.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=mWEB&stplTypCd=02">
                         <strong>개인정보 처리방침</strong>
                     </button>
                 </li>
@@ -199,7 +199,7 @@
                     {{#if loginNeed}}
                     <button class="bt fe-bt-login">
                     {{else if isLink}}
-                    <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">
+                    <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">
                     {{else}}
                     <button class="bt">
                     {{/if}}
@@ -230,7 +230,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -239,7 +239,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
                         {{/if}}
                     </ul>
                     {{/if}}
@@ -252,7 +252,7 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
+                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -273,7 +273,7 @@
                         {{#if loginNeed}}
                         <button class="bt fe-bt-login">
                             {{else if isLink}}
-                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">
                                 {{else}}
                                 <button class="bt">
                                     {{/if}}
@@ -301,7 +301,7 @@
                             {{#if loginNeed}}
                             <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                             {{else}}
-                            <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC">{{menuNm}}</button></li>
+                            <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_menu_id="{{ menuId }}" data-tracker_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
                             {{/if}}
                             {{/each}}
                         <ul>

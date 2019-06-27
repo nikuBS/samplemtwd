@@ -247,6 +247,18 @@ class MainHome extends TwViewController {
    */
   private parseHelpData(cicntsList: any): any {
     const resultArr = <any>[];
+    var scrnTypCd = cicntsList[0].scrnTypCd||'F';
+    
+    cicntsList.sort(function(prev, next){
+
+      if(scrnTypCd === 'R'){
+        return Math.floor(Math.random() * 3) -1;
+      }else{
+        return prev.mainExpsSeq - next.mainExpsSeq;
+      }          
+    });
+    cicntsList[0].rollYn = cicntsList[0].rollYn||'Y';
+
     for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }

@@ -384,12 +384,16 @@ Tw.ProductRoamingFiInquire.prototype = {
         this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
       res.result.rominfo.receive_center_img =  this._receiveObj[res.result.rominfo.rental_booth_org_id].img;
+      res.result.rominfo.receive_center_officeHour = this._receiveObj[res.result.rominfo.rental_booth_org_id].officeHour;
       res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rental_sale_org_id].img;
+      res.result.rominfo.return_center_officeHour = this._returnObj[res.result.rominfo.rental_sale_org_id].officeHour;
       res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rental_sale_org_id].name;
       res.result.rominfo.show_rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
       res.result.rominfo.changeCountry = changeCountry;
       res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
       res.result.maxDate = this._dateHelper.getEndOfMonSubtractDate(undefined,-6,'YYYY-MM-DD');
+      // 수령/반납장소 모두 대구황금점일 경우 반납장소 Disabled 처리
+      res.result.isDisabled = (res.result.rominfo.rental_booth_org_id === '1430452300' && res.result.rominfo.rental_sale_org_id === '1430452300');
 
       var data = res.result;
 
@@ -419,7 +423,9 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inputReceive = $popupLayer.find('#flab04');
     this.$inputReturn = $popupLayer.find('#flab05');
     this.$returnImg = $popupLayer.find('#fe-return-img');
+    this.$returnOfficeHour = $popupLayer.find('#fe-return-officehour');
     this.$receiveImg = $popupLayer.find('#fe-receive-img');
+    this.$receiveOfficeHour = $popupLayer.find('#fe-receive-officehour');
 
     $popupLayer.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
     $popupLayer.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
@@ -505,6 +511,35 @@ Tw.ProductRoamingFiInquire.prototype = {
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
       this.$receiveImg.attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
+      this.$receiveOfficeHour.html($(e.target).parents('label').attr('data-officehour'));
+
+      // 기본 반환장소 설정 (대구 황금점만 해당)
+      // TODO: 반납 버튼 ID 하드코딩
+      if( $(e.target).parents('label').attr('return-set') == "1" ) {
+        $('#flab05').text($(e.target).parents('label').attr('return-value')); // 반납 센터명 출력
+        $('#flab05').attr('data-center',$(e.target).parents('label').attr('return-data-center')); // 반납 센터코드 설정
+
+        var returnImgUrl = $('#fe-return-img').attr('src');
+        var returnStartLen = returnImgUrl.lastIndexOf('/');
+        var returnCdnUrl = returnImgUrl.substring(0,returnStartLen+1);
+        this.$returnImg.attr('src', returnCdnUrl + $(e.target).parents('label').attr('return-data-img') + '.png')
+        this.$returnOfficeHour.html($(e.target).parents('label').attr('return-data-officehour'));
+        $('#flab05').attr('disabled',true);
+      } else {
+        if ( $('#flab05').attr('disabled') == "disabled" ) {
+          // 기본(Default) 반환장소로 변경하고 disabled 해제
+          $('#flab05').text('인천공항 1터미널 1층 로밍센터'); // 반납 센터명 출력
+          $('#flab05').attr('data-center','A100110000'); // 반납 센터코드 설정
+  
+          var defaultReturnImgUrl = $('#fe-return-img').attr('src');
+          var defaultReturnStartLen = defaultReturnImgUrl.lastIndexOf('/');
+          var defaultReturnCdnUrl = defaultReturnImgUrl.substring(0,defaultReturnStartLen+1);
+          this.$returnImg.attr('src', defaultReturnCdnUrl + 'place-img-01-01' + '.png')
+          this.$returnOfficeHour.html('<strong>업무시간</strong> | 업무시간 : 9-10 출구 : 06:00 ~ 22:00 / 5-6 출구 : 24시간');
+        }
+        $('#flab05').attr('disabled',false);
+      }
+
     }else{ // 반납 장소 선택 ActionSheet
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
@@ -514,6 +549,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       var startLen1 = imgUrl1.lastIndexOf('/');
       var cdnUrl1 = imgUrl1.substring(0,startLen1+1);
       this.$returnImg.attr('src', cdnUrl1 + $(e.target).parents('label').attr('data-img') + '.png');
+      this.$returnOfficeHour.html($(e.target).parents('label').attr('data-officehour'));
     }
 
     this._popupService.close();
@@ -596,6 +632,14 @@ Tw.ProductRoamingFiInquire.prototype = {
     if (Tw.DateHelper.getDifference(getMinDate, this.$inputEditSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE, null, null, null, $(e.currentTarget));
+    }
+
+    // 임대시작일 또는 반납일이 일요일 + 대구 황금점일 경우 Alert 호출 (휴무일)
+    if ( this.$inputReceive.attr('data-booth') === '1430452300' ) {
+      if ( Tw.DateHelper.getDayOfWeek(this.$inputEditSdate.val()) === '일' || Tw.DateHelper.getDayOfWeek(this.$inputEditEdate.val()) === '일' ) {
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A95.MSG,
+          Tw.ALERT_MSG_PRODUCT.ALERT_3_A95.TITLE, null, null, null, $(e.currentTarget));
+      }
     }
 
     var expbranchnm = this.$inputReturn.text();

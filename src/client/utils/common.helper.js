@@ -382,7 +382,7 @@ Tw.CommonHelper = (function () {
 
   var setBannerForStatistics = function(banners, summary) {
     return _.map(banners, function(banner) {
-      return $.extend(summary, banner);
+      return $.extend({}, summary, banner);
     });
   };
 

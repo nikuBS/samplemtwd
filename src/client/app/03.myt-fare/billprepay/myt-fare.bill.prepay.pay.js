@@ -89,6 +89,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500));
   },
+
   /**
    * @function
    * @desc maxLength 적용

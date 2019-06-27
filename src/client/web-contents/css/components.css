@@ -32268,8 +32268,10 @@ body.apphome .section-box {
   padding: 1.06rem 0 1.06rem 0;
   text-align: left; }
 
+/* 190624 수정 [OP002-1203] SK PAY */
 .full-link-list.type02 li button, .full-link-list.type02 li a {
-  padding: 1.06rem 0 1.06rem 0; }
+  padding: 1.06rem 1.25rem 1.06rem 0; }
+/* //190624 수정 [OP002-1203] SK PAY */
 
 .full-link-list.type02 li button:after, .full-link-list.type02 li a:after {
   right: 0; }
@@ -35233,6 +35235,7 @@ body.apphome .section-box {
 .cont-actionsheet .tod-ac-list-dep2 > li:first-child.type3:after {content:none;}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
+.full-link-list li button .inner .text.tod-txt-point, .full-link-list li a .inner .text.tod-txt-point, .full-link-list li .no-link .inner .text.tod-txt-point {color:#f76252;}
 
 /* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
 .tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}
@@ -35269,6 +35272,9 @@ body.apphome .section-box {
 .list-comp-input .select-list.tod-btm-line > li:last-of-type .comp-list-layout:before{background:#f2f2f2}
 .cont-box .cont-box.btm-line{border-bottom:1px solid #e5e5e5}
 
+/* 190624 [OP002-1525] 일시정지 예약 */ 
+.pg-chk-list02 li button.btn-tip{text-align:left} 
+
 /* 190618 [OP002-1614] 은행 자동납부 / 카드자동납부 1% 할인 대상 고객 납부 방법 변경 시 1% 혜택 소멸에 대한 Noti 팝업 요청 */
 .tod-myt-noti-comp{background-color: #eff6fb; padding: 1.25rem 1rem;}
 .tod-myt-noti-comp .icon-dialog-emoji-56{vertical-align: middle; margin-right: 0.5rem;}
@@ -35280,3 +35286,18 @@ body.apphome .section-box {
 .data-gift-wrap .result-nolist {padding-bottom:2rem; text-align:center;}
 .data-gift-wrap .result-nolist .ico {display:inline-block;}
 .data-gift-wrap .result-nolist .ico + p {margin-top:1rem;}
+
+/* 190619 [DV001-22052] 혜택할인 > 나의혜택할인 > 서브메인 UI 개선 */
+.myinfo-wrap .tod-myinfo-cont{padding-right:0;}
+.myinfo-wrap .tod-myinfo-cont .title-m p{font-size:0.938rem;line-height:1.313rem;}
+.myinfo-wrap .tod-myinfo-cont .title-m{font-size:1.313rem;}
+.myinfo-wrap .tod-myinfo-cont .title-m .tx-red{color:#f76252!important;}
+.tod-charge-cont .sub-disc01{font-size:1rem;}
+.tod-charge-cont .sub-disc04{color:#8d8d8d;}
+.data-list-type1 .tod-type1 .sta{margin-top:0.625rem;}
+.data-list-type1 .tod-type1 li:first-of-type{padding-top:0; border-top:0;}
+.data-list-type1 .tod-type1 .sta span .bt-link-tx{margin-left:0;}
+.calling-plan.type01 .tod-right{position:absolute;right:0.81rem; }
+
+/* 190625 [OP002-1760] 레인보우 포인트 화면 개선 요청 */
+.contents-empty.tod-narrow-empty{padding:3.2rem 0}

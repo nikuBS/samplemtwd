@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">소액결제</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                   <div class="monthly-billing">
+                       <div class="detail">9월 이용금액</div>
+                       <div class="price"><span class="str">482,960</span>원</div>
+                        <div class="limit">잔여한도<span class="str">17,040</span>원</div>
+                   </div>
+                   <!-- 190620_수정01 -->
+                   <ul class="bt-slice item-two">
+                        <li>
+                            <button type="button" class="btn-round1 btn-style4">이용내역</button>
+                        </li>
+                        <li>
+                            <button type="button" class="btn-round1 btn-style4">한도변경</button>
+                        </li>
+                    </ul>
+                    <!-- //190620_수정01 -->
+                </div>
+                <!--// .cont-box -->
+                
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                   <ul class="link-list">
+                        <li>
+                            <dl>
+                                <dt>선결제 가능금액</dt>
+                                <dd>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="선결제 화면 이동">
+                                        <span class="val"><span class="str">40,000</span>원</span>
+                                    </button>
+                                </dd>
+                            </dl>                            
+                        </li>
+                        <!-- CASE 1 : 미사용 인 경우 -->
+                        <li>
+                            <dl>
+                                <!--접근성 수정-->
+                                <dt>자동 선결제<button aria-haspopup="true" class="tip-view" title="자동 선결제" aria-haspopup="true">TIP</button></dt>
+                                <!-- //접근성 수정-->
+                                <dd>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="자동선결제 설정 화면 이동">
+                                        <span class="val">신청</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                        <!--// CASE 1 : 미사용 인 경우 -->
+                        <!-- CASE 2 : 사용중 인 경우 -->
+                        <li>
+                            <dl>
+                                <!--접근성 수정-->
+                                <dt>자동 선결제<button aria-haspopup="true" class="tip-view" title="자동 선결제" aria-haspopup="true">TIP</button></dt>
+                                <!-- //접근성 수정-->
+                                <dd>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="자동 선결제 변경 및 해지정보  화면 이동">
+                                        <span class="val">변경 및 해지</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                        <!--// CASE 2 : 사용중 인 경우 -->
+                   </ul>
+                </div>
+                <!--// .cont-box -->
+                
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="on-off-list new"><!-- 2019-01-15 수정 -->
+                       <!-- CASE 1 : 소액결제 사용중인 경우 -->
+                        <li class="line"><!-- 2019-01-15 수정 -->
+                            <dl>
+                                <dt>소액결제 이용설정</dt>
+                                <dd>
+                                    <div class="switch-wrap">
+										<span class="widget">
+											<span class="widget-box switch">
+												<span class="btn-switch type1 on">
+													<span class="switch-style" role="checkbox" aria-checked="false">
+                                                        <span class="on-tx">사용</span>
+                                                        <!--접근성 수정-->
+                                                        <input type="checkbox" title="소액결제 이용설정" />
+                                                        <!-- //접근성 수정-->
+														<span class="off-tx">차단</span>
+													</span>
+												</span>
+											</span>
+										</span>
+									</div>
+                                </dd>
+                            </dl>                            
+                        </li>
+                        <!--// CASE 1 : 소액결제 사용중인 경우 -->
+                        <!-- CASE 2 : 소액결제 차단중인 경우 --><!-- 2018-09-21 수정 -->
+                        <li><!-- 19.03.25 line 클래스 제거 -->
+                            <dl>
+                                <dt>소액결제 사용설정</dt>
+                                <dd>
+                                    <div class="switch-wrap">
+										<span class="widget">
+											<span class="widget-box switch">
+												<span class="btn-switch type1">
+													<span class="switch-style" role="checkbox" aria-checked="false">
+                                                        <span class="on-tx">사용</span>
+                                                        <!--접근성 수정-->
+                                                        <input type="checkbox" title="소액결제 사용설정" />
+                                                        <!-- //접근성 수정-->
+														<span class="off-tx">차단</span>
+													</span>
+												</span>
+											</span>
+										</span>
+									</div>
+                                </dd>
+                            </dl>                            
+                        </li>
+                        <!--// CASE 2 : 소액결제 차단중인 경우 -->
+                    </ul>
+                    <hr class="" aria-hidden="true"/>
+                    <ul class="link-list">
+                        <!-- CASE 1 : 미사용 인 경우 -->
+                        <li class="last-line-top"><!-- 19.03.25 last-line-top 클래스 추가 -->
+                            <dl>
+                                <!--접근성 수정-->
+                                <dt>결제 비밀번호<button class="tip-view" title="결제 비밀번호" aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="결제 비밀번호 설정 화면 이동">
+                                        <span class="val">신청</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                        <!--// CASE 1 : 미사용 인 경우 -->
+                        <!-- CASE 2 : 사용중 인 경우 -->
+                        <li>
+                            <dl>
+                                <!--접근성 수정-->
+                                <dt>결제 비밀번호<button class="tip-view" title="결제 비밀번호" aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="결제 비밀번호 설정 화면 이동">
+                                        <span class="val">변경</span>
+                                    </button>
+                                </dd>
+                            </dl>
+                        </li>
+                        <!--// CASE 2 : 사용중 인 경우 -->
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- 2018-10-29 이용안내 삭제 -->
+                        
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 <div class="plan">
-    <strong class="tit"><%= feePlan.feePlanProd.prodNm %></strong>
+    <strong class="tit" data-tracker="V" data-tracker_prod_id="<%= feePlan.feePlanProd.prodId %>" data-tracker_prod_nm="<%= feePlan.feePlanProd.prodNm %>"><%= feePlan.feePlanProd.prodNm %></strong>
     <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
     <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
     <% } %>

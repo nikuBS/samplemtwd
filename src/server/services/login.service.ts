@@ -101,13 +101,14 @@ class LoginService {
   public setSvcInfo(req, res, svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
-      this.setXtractorCookie(req, res, svcInfo);
 
       if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
         req.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
         Object.assign(req.session.svcInfo, svcInfo);
       }
+      this.setXtractorCookie(req, res, svcInfo);
+
       req.session.save(() => {
         this.logger.debug(this, '[setSvcInfo]', req.session.svcInfo);
         observer.next(req.session.svcInfo);
