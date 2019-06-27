@@ -72,9 +72,10 @@ class BenefitMyBenefit extends TwViewController {
           options['okCashback'] = this._dataPreprocess(ocb.result.availPt);
           options['t'] = this._dataPreprocess(ocb.result.availTPt);
         } else {
-          options['okCashback'] = 0;
-          options['t'] = 0;
+          options['okCashback'] = '0';
+          options['t'] = '0';
         }
+
         options['rainbow'] = this._dataPreprocess(rainbow.result.usblPoint);
 
         if ( noContract.result.muPointYn === 'Y' ) {
@@ -144,7 +145,8 @@ class BenefitMyBenefit extends TwViewController {
           const durationArr = duration.split(' ');
           options['year'] = durationArr[0].replace('년', '');
           options['month'] = durationArr[1].replace('개월', '');
-        }        
+        }
+        
 
         res.render('my-benefit/benefit.my-benefit.html', options);
       }
