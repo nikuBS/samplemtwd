@@ -28,7 +28,10 @@ class CommonMemberLoginFail extends TwViewController {
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo, allSvc, chideInfo, pageInfo) {
     const errorCode = req.query.errorCode;
-    res.render('member/common.member.login.fail.html', { errorCode, svcInfo, pageInfo });
+    this.loginService.logoutSession(req, res).subscribe(() => {
+      res.render('member/common.member.login.fail.html', { errorCode, svcInfo, pageInfo });
+    });
+    // res.render('member/common.member.login.fail.html', { errorCode, svcInfo, pageInfo });
   }
 }
 
