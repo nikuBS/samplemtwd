@@ -1179,6 +1179,7 @@ export const PRODUCT_COMBINE_FAMILY_TYPE = {
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';
 export const MYT_SUSPEND_REASON = {
+  1000000: '고객요청',
   5000341: '군입대(현역)',
   5000342: '군입대(현역)',
   5000343: '해외체류',
