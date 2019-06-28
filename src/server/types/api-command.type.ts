@@ -503,6 +503,9 @@ export const API_CMD = {
   BFF_07_0092: { path: '/core-bill/:version/payment/auto-payment', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0093: { path: '/core-bill/:version/point-onetime-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0094: { path: '/core-bill/:version/point-autopay-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

@@ -133,6 +133,7 @@ export enum MYT_FARE_POINT_PAYMENT_STATUS {
 }
 
 export enum MYT_FARE_PAYMENT_TITLE {
+  SKPAY = 'SK pay 납부',
   ACCOUNT = '계좌이체',
   CARD = '체크/신용카드',
   OKCASHBAG = 'OK캐쉬백',
@@ -306,6 +307,11 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   '11': 'T포인트',
   '40': '페이톡 계좌이체',
   '41': '계좌이체',
+  '22' : 'SK PAY 카드',
+  '23' : 'SK PAY 카드 + OCB',
+  '30' : 'SK PAY OCB',
+  '31' : 'SK PAY 계좌이체',
+  '32' : 'SK PAY 계좌이체 + OCB',
   Y: '납부 완료',
   N: '납부 취소',
   A: '납부 완료'
@@ -315,7 +321,12 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING = {
   '02': 'CARD',
   '10': 'POINT',
   '11': 'POINT',
-  '41': 'BANK'
+  '41': 'BANK',
+  '22' : 'SKPAY',
+  '23' : 'SKPAY',
+  '30' : 'SKPAY',
+  '31' : 'SKPAY',
+  '32' : 'SKPAY'
 };
 
 export const MYT_PAYMENT_HISTORY_AUTO_TYPE = {
