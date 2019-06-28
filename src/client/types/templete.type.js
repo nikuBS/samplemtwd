@@ -369,6 +369,7 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_SMALL_LIMIT: [
     {
       'list': [
+        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만원' },
         { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
         { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
         { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
@@ -384,6 +385,7 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_CONTENTS_LIMIT: [
     {
       'list': [
+        { 'label-attr': 'id="600000"', 'radio-attr': 'name="r2" id="600000"', txt: '60만원' },
         { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
         { 'label-attr': 'id="400000"', 'radio-attr': 'name="r2" id="400000"', txt: '40만원' },
         { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
