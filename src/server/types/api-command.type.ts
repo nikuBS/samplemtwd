@@ -776,6 +776,12 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0116: { path: '/core-product/:version/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0118: { 
+    path: '/core-product/:version/mobiles/additions-sets/:args0/numberplus-list',
+    method: API_METHOD.GET, 
+    server: API_SERVER.BFF, 
+    bypass: true 
+  },
   BFF_10_0119: {
     path: '/core-product/:version/services/combinations/:args0/scrbcheck',
     method: API_METHOD.GET,
