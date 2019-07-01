@@ -22,6 +22,7 @@
     "Handlebars": true,
     "JSON": true,
     "skt_landing": true,
-    "Tmap": true
+    "Tmap": true,
+    "SKpaySDK": true
   }
 }
