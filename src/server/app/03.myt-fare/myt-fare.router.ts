@@ -49,10 +49,6 @@ import MyTFareBillOptionCancelComplete from './controllers/bill/myt-fare.bill.op
 import MyTFareBillOptionSms from './controllers/bill/myt-fare.bill.option.sms.controller';
 import MyTFareBillOptionRegister from './controllers/bill/myt-fare.bill.option.register.controller';
 import MyTFareBillOptionChangeAddress from './controllers/bill/myt-fare.bill.option.change-address.controller';
-import MyTFareBillSkpayManage from './controllers/bill/myt-fare.bill.skpay.manage.controller';
-import MyTFareBillSkpayResult from './controllers/bill/myt-fare.bill.skpay.result.controller';
-import MyTFareBillSkpay from './controllers/bill/myt-fare.bill.skpay.controller';
-import MyTFareBillSkpayAgree from './controllers/bill/myt-fare.bill.skpay.agree.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -127,12 +123,6 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/hotbill', controller: MytFareHotbill });
     this.controllers.push({ url: '/bill/hotbill/child', controller: MytFareHotbill });
     this.controllers.push({ url: '/bill/hotbill/prev', controller: MytFareHotbill });
-
-    // 간편결제 SK PAY
-    this.controllers.push({ url: '/bill/skpay', controller: MyTFareBillSkpay });
-    this.controllers.push({ url: '/bill/skpay/agree', controller: MyTFareBillSkpayAgree });
-    this.controllers.push({ url: '/bill/skpay/manage', controller: MyTFareBillSkpayManage });
-    this.controllers.push({ url: '/bill/skpay/result', controller: MyTFareBillSkpayResult, post: true });
   }
 }
 

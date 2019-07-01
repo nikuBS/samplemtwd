@@ -414,10 +414,6 @@ export const MYT_PAYMENT_DETAIL_TITLE = {
   CP: '콘텐츠 이용료 선결제 상세 내역'
 };
 
-export const MYT_PAYMENT_SKPAY_MANAGE = {
-  DI: 'SK pay 설정'
-};
-
 export const MYT_PAYMENT_DETAIL_ERROR = {
   MSG: '상세내역을 조회할 수 없습니다.'
 };
@@ -454,14 +450,6 @@ export const MYT_FARE_COMPLETE_MSG = {
   NUMBER: '번호로',
   SMS: '문자 전송 완료',
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
-};
-
-export const MYT_FARE_ERROR_MSG = {
-  TITLE: '결제/납부처리가 완료되지 않았습니다.',
-  MSG_SYSTEM: '시스템 오류입니다. 고객센터에 문의하세요.',
-  MSG_TIME: '요청 시간초과 입니다. 고객센터에 문의하세요.',
-  MSG_TEMP: '시스템의 비정상 동작으로 요금납부가 일시적으로 불가능합니다. 잠시 후 이용해 주시기 바랍니다.',
-  MSG_CODE: '에러코드'
 };
 
 export const MYT_DATA_HISTORY_BADGE_NAMES = {
