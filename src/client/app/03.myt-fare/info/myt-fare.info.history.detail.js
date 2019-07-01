@@ -51,10 +51,7 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
           case 'BANK':
             this.$templateWrapper.append(this.$template.$directBank(this.detailData));
             break;
-          case 'SKPAY':
-            this.$templateWrapper.append(this.$template.$directSkpay(this.detailData));
-            break;
-          default:
+          default: 
             this.$templateWrapper.append(this.$template.$directBase(this.detailData));
             break;
         }
@@ -93,7 +90,6 @@ Tw.MyTFareInfoHistoryDetail.prototype = {
     this.$template = {
       $directBase : Handlebars.compile($('#fe-payment-detail-dt').html()),
       $directOCBandCard : Handlebars.compile($('#fe-payment-detail-ocb-card').html()),
-      $directSkpay : Handlebars.compile($('#fe-payment-detail-skpay').html()),
       $directBank : Handlebars.compile($('#fe-payment-detail-bank').html()),
       $auto : Handlebars.compile($('#fe-payment-detail-auto').html()),
       $autoUnit : Handlebars.compile($('#fe-payment-detail-auto-unit').html()), // 통합인출
