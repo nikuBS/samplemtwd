@@ -192,57 +192,6 @@
         </div>
         {{/if}}
     </script>
-    <script id="fe-payment-detail-skpay" type="text/x-handlebars-template">
-        <!-- 즉시납부 SKPAY -->
-        <div class="cont-box nogaps-hoz bg-payment">
-            <div class="user-bill-detail">
-                <ul>
-                    <li>
-                        <div class="head-text">
-                            <span class="tit">납부금액</span>
-                            <span class="val">{{dataAmt}} {{#if dataIsBankOrCard}}원{{else}}P{{/if}}</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="head-text">
-                            <span class="tit">납부내용</span>
-                            <span class="val">{{invYearNoDotMonth}}월 청구분</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="head-text">
-                            <span class="tit">요청내역</span>
-                        </div>
-                        <div class="sub-text">
-                            <span class="tit">요청 결과</span>
-                            <span class="val">{{dataProcCode}}</span>
-                        </div>
-                        <div class="sub-text">
-                            <span class="tit">요청 일시</span>
-                            <span class="val">{{reqDate}}</span>
-                        </div>
-                        <div class="sub-text">
-                            <span class="tit">승인 일시</span>
-                            <span class="val">{{comDate}}</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="head-text">
-                            <span class="tit">결제수단</span>
-                            <span class="val">{{dataSettleWayCode}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!--// 즉시납부 포인트 / 카드 -->
-        {{#if dataIsBankOrCard}}
-        {{else}}
-        <div class="myt-note-wrap type2">
-            <span class="tit">※OK캐쉬백 /T포인트 <span class="tx-bold vbl">납부취소는 납부 후 20일 이내</span>에만 가능합니다.</span>
-        </div>
-        {{/if}}
-    </script>
     <script id="fe-payment-detail-bank" type="text/x-handlebars-template">
         <!-- 즉시납부내역 은헹 -->
         <div class="cont-box nogaps-hoz bg-payment">

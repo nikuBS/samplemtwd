@@ -40,7 +40,6 @@ Tw.MyTFareBillCommon.prototype = {
 
     this._selectedLine = [];
     this._billList = [];
-    this._billDetailList = [];
     this._moreCnt = 0;
     this._standardCnt = 5; // 더보기 기준 갯수
     this._amount = this.$container.find('.fe-amount').data('value');
@@ -285,29 +284,6 @@ Tw.MyTFareBillCommon.prototype = {
   },
   /**
    * @function
-   * @desc 외부에서 회선 상세 리스트 호출
-   * @returns {Array}
-   */
-  getBillDetailList: function () {
-    return this._billDetailList;
-  },
-    /**
-   * @function
-   * @desc 요청 파라미터에 들어갈 billDetail list 셋팅
-   * @param $target
-   */
-  _setBillDetailList: function ($target) {
-    var billObj = {
-      invDt: $target.find('.fe-inv-dt').attr('data-value'),
-      billSvcMgmtNum: $target.attr('data-svc-mgmt-num'),
-      billAcntNum: $target.attr('data-bill-acnt-num'),
-      payAmt: $target.find('.fe-money').attr('data-value'),
-      svcNumber: $target.find('.fe-svcNumber').text()
-    };
-    this._billDetailList.push(billObj);
-  },
-  /**
-   * @function
    * @desc 외부에서 회선리스트 호출
    * @returns {Array}
    */
@@ -334,13 +310,11 @@ Tw.MyTFareBillCommon.prototype = {
     }
 
     this._billList = [];
-    this._billDetailList = [];
     for (var i in this._selectedLine) {
       var $target = this.$unpaidList.find('#' + this._selectedLine[i]);
 
       this._setList($target, $layer, i);
       this._setBillList($target);
-      this._setBillDetailList($target);
     }
   }
 };

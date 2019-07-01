@@ -351,9 +351,6 @@ Tw.API_CMD = {
   BFF_07_0084: { path: '/core-bill/:version/use-contents-prepay/auto-delete', method: Tw.API_METHOD.POST },
   BFF_07_0087: { path: '/core-bill/:version/ocb-point-pay', method: Tw.API_METHOD.POST },
   BFF_07_0088: { path: '/core-bill/:version/payment/over-payment-refund-account', method: Tw.API_METHOD.POST },
-  BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
-  BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
-  BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
