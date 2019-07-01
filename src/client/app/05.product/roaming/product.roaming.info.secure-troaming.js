@@ -16,10 +16,12 @@ Tw.ProductRoamingSecureTroaming = function (rootEl) {
 
 Tw.ProductRoamingSecureTroaming.prototype = {
   _bindEvents: function () {
-    this.$container.on('click', '.fe-roaming-kcj', $.proxy(this._goLoadProduct, this, 'NA00005699'));
-    this.$container.on('click', '.fe-roaming-asia', $.proxy(this._goLoadProduct, this, 'NA00005900'));
-    this.$container.on('click', '.fe-roaming-usa', $.proxy(this._goLoadProduct, this, 'NA00006038'));
-    this.$container.on('click', '.fe-roaming-europe', $.proxy(this._goLoadProduct, this, 'NA00006046'));
+    this.$container.on('click', '.fe-roaming-baro3gb', $.proxy(this._goLoadProduct, this, 'NA00006489'));
+    this.$container.on('click', '.fe-roaming-baro4gb', $.proxy(this._goLoadProduct, this, 'NA00006493'));
+    this.$container.on('click', '.fe-roaming-baro7gb', $.proxy(this._goLoadProduct, this, 'NA00006497'));
+    this.$container.on('click', '.fe-roaming-baroOp300', $.proxy(this._goLoadProduct, this, 'NA00003196'));
+    this.$container.on('click', '.fe-roaming-baroOp500', $.proxy(this._goLoadProduct, this, 'NA00005049'));
+    this.$container.on('click', '.fe-roaming-baroOpVip', $.proxy(this._goLoadProduct, this, 'NA00006486'));
   },
   /**
    * @function
