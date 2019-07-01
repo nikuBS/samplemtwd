@@ -1,0 +1,167 @@
+<%#
+* @file myt-fare.bill.skpay.html
+* @author Kyoungsup Cho (kscho@partner.sk.com)
+* @since 2019.06.25
+%>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% include ../../components/skpay.component.html %>
+<body>
+    <div id="myt-fare-bill-skpay" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+        <div class="popup-page tw-popup fixed-bottom h60">
+            <!-- #header (공통 component 사용) -->
+            <%- include('../components/header.component.html', { title: '간편결제 SK PAY', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+            <!--// #header -->
+            <!-- #contents -->
+            <div id="contents" class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <!-- 미납 회선정보 공통 컴포넌트 -->
+                        <% include ../../components/bill/myt-fare.bill.common.component.html %>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="check-acco fe-refund-check-btn">
+                            <div class="tit">
+                                <div class="simple-form">
+                                    <span class="custom-form"><input type="checkbox" id="check1" name="check"><span class="c-type1"></span></span>
+                                    <label for="check1">환불계좌 입력</label>
+                                    <button id="MF_01_01_tip_05" class="btn-tip"><i class="icon-badge-tip"><span class="blind">환불계좌 입력 tip</span></i></button>
+                                </div>
+                            </div>
+                            <div class="acco-cont fe-refund-box">
+                                <div class="input-list">
+                                    <!-- 자동납부계좌가 존재할 경우 -->
+                                    <% if (autoInfo && autoInfo.isAuto) { %>
+                                    <ul class="fe-auto-info fe-refund-account-info">
+                                        <li>
+                                            <span class="custom-form"><input type="radio" id="radio3" name="radio-1" checked="checked"><span class="r-type1"></span></span>
+                                            <label for="radio3">
+                                                <span class="tx-tit">자동납부계좌와 동일</span>
+                                                <span class="tx-sub">
+                                                    <span class="fe-auto-refund-bank" data-code="<%= autoInfo.bankCode %>">
+                                                        <%= autoInfo.bankName %>
+                                                    </span> <span class="fe-auto-refund-number"><%= autoInfo.bankNum %></span>
+                                                </span>
+                                            </label>
+                                        </li>
+                                        <li class="fe-manual-input fe-refund-input fe-bank-wrap">
+                                            <span class="custom-form"><input type="radio" id="radio4" name="radio-1"><span class="r-type1"></span></span>
+                                            <label for="radio4">
+                                                <span class="tx-tit">직접입력</span>
+                                                <span class="form-wrap half-type mt14">
+                                                    <span class="select">
+                                                        <button class="bt-dropdown big select-bank fe-select-refund-bank fe-required-select"
+                                                                disabled="" title="환불계좌 은행 선택" aria-haspopup="true">
+                                                            은행 선택<span class="ico"></span>
+                                                        </button>
+                                                    </span>
+                                                    <span class="inputbox ml8">
+                                                        <span class="input">
+                                                            <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
+                                                                   title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field fe-only-number"
+                                                                   data-valid-label="account" />
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
+                                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <!-- 자동납부계좌가 없을 경우 -->
+                                    <% } else { %>
+                                    <ul>
+                                        <li class="pt20 fe-refund-input checked fe-bank-wrap">
+                                            <span class="form-wrap half-type">
+                                                <span class="select">
+                                                    <button class="bt-dropdown big select-bank fe-select-refund-bank fe-required-select"
+                                                            title="환불계좌 은행 선택" aria-haspopup="true">
+                                                        은행 선택<span class="ico"></span>
+                                                    </button>
+                                                </span>
+                                                <span class="inputbox ml8">
+                                                    <span class="input">
+                                                        <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
+                                                               title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field fe-only-number"
+                                                               data-valid-label="account" />
+                                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
+                                            <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                        </li>
+                                    </ul>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li>
+                                <button id="TC000067" class="btn-tip" aria-haspopup="true">
+                                    SK pay 납부 안내<i class="icon-badge-tip"><span class="blind">SK pay 납부 안내 tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_01" class="btn-tip" aria-haspopup="true">
+                                    요금납부 안내<i class="icon-badge-tip"><span class="blind">요금납부 안내 tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_02" class="btn-tip" aria-haspopup="true">
+                                    이용정지고객 안내<i class="icon-badge-tip"><span class="blind">이용정지고객 안내 tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_03" class="btn-tip" aria-haspopup="true">
+                                    통합청구이용고객 안내<i class="icon-badge-tip"><span class="blind">통합청구이용고객 안내 tip</span></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    
+                </div>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-check-pay" >결제(납부)하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step fe-close"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillSkpay({
+      $element: $('#myt-fare-bill-skpay'),
+      data: '<%= redirectUri %>',
+      svcNumber: '<%= unpaidList[0].svcNumber %>',
+      svcMgmtNum: '<%= svcInfo.svcMgmtNum %>',
+      acntNum: '<%= svcInfo.acntNum %>'
+    });
+  });
+</script>
+<% include ../../components/end.component.html %>
