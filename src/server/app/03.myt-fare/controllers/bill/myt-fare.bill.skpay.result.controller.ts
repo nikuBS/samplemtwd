@@ -68,6 +68,8 @@ class MyTFareBillSkpayResult extends TwViewController {
     this.logger.error(this, 'result', result);
     this.logger.error(this, 'resultUtf', resultUtf);
 
+    return res.render(renderUrl, Object.assign(this._getDataDebug('TEST', JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
+
     if (status == 200) {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
       console.log('===========================================11st paymentToken');
@@ -156,6 +158,17 @@ class MyTFareBillSkpayResult extends TwViewController {
    */
   private _getDataError(mainTitle: any, errorCode: any, errorMsg: any): any {
     var _error = '[' + MYT_FARE_ERROR_MSG.MSG_CODE + " : " + errorCode + ']';
+    let data = {
+      mainTitle: mainTitle,
+      subTitle: errorMsg,
+      description: _error,
+      centerName: '',
+      centerUrl: ''
+    };
+    return data;
+  }
+  private _getDataDebug(mainTitle: any, errorCode: any, errorMsg: any): any {
+    var _error = errorCode;
     let data = {
       mainTitle: mainTitle,
       subTitle: errorMsg,
