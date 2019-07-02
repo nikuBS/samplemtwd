@@ -10,7 +10,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { MYT_FARE_ERROR_MSG } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { MYT_FARE_COMPLETE_MSG } from '../../../../types/string.type';
-import LoggerService from '../../../../services/logger.service';
 
 interface Query {
   orderNumber: string;
@@ -43,8 +42,6 @@ class MyTFareBillSkpayResult extends TwViewController {
     const query: Query = {
       orderNumber: req.query.dataKey
     };
-    var logger = new LoggerService();
-    var header = req.headers;
     var status = req.body.status;
     var result = req.body.result;
     var paymentToken = '';
@@ -54,27 +51,12 @@ class MyTFareBillSkpayResult extends TwViewController {
     var historyDepth = -3;
     var renderUrl = 'bill/myt-fare.bill.skpay.result.html';
 
-    resultUtf = this.getResultUtf(result, resultUtf);
-    console.log('===========================================11st header');
-    console.dir(header);
-    console.log('===========================================11st status');
-    console.log(status);
-    console.log('===========================================11st result');
-    console.log(result);
-    console.log('===========================================11st resultUtf');
-    console.log(resultUtf);
-    this.logger.error(this, 'header', header);
-    this.logger.error(this, 'status', status);
-    this.logger.error(this, 'result', result);
-    this.logger.error(this, 'resultUtf', resultUtf);
-
     return res.render(renderUrl, Object.assign(this._getDataDebug('TEST', JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
 
+    resultUtf = this.getResultUtf(result, resultUtf);
+    
     if (status == 200) {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
-      console.log('===========================================11st paymentToken');
-      console.log(paymentToken);
-      this.logger.error(this, 'paymentToken', paymentToken);
       let data = this.getDataApi(query, paymentToken);
       this.apiService.request(API_CMD.BFF_07_0097, data).subscribe((createInfo) => {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
