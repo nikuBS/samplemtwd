@@ -325,8 +325,8 @@ Tw.BannerService.prototype = {
         .filter(function(banner) { 
           return (
             (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
-            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
-            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
+            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateFormat(banner.expsStaDtm, 'YYYYMMDDhhmm'), today, 'minute') <= 0) && // not yet exposure dat e
+            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateFormat(banner.expsEndDtm, 'YYYYMMDDhhmm'), today, 'minute') >= 0)  // end of exposure date
           );
         })
         .sort(function(a, b) {
@@ -359,8 +359,8 @@ Tw.BannerService.prototype = {
 
           return (
             (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) && // only mobile
-            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) && // not yet exposure date
-            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)  // end of exposure date
+            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateFormat(banner.expsStaDtm, 'YYYYMMDDhhmm'), today, 'minute') <= 0) && // not yet exposure date
+            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateFormat(banner.expsEndDtm, 'YYYYMMDDhhmm'), today, 'minute') >= 0)  // end of exposure date
           );
         })
         .sort(function(a, b) {
