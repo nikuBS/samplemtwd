@@ -51,7 +51,7 @@ class MyTFareBillSkpayResult extends TwViewController {
     var historyDepth = -3;
     var renderUrl = 'bill/myt-fare.bill.skpay.result.html';
 
-    return res.render(renderUrl, Object.assign(this._getDataDebug('TEST', JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
+    // return res.render(renderUrl, Object.assign(this._getDataDebug('TEST', JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
 
     resultUtf = this.getResultUtf(result, resultUtf);
     
@@ -64,8 +64,9 @@ class MyTFareBillSkpayResult extends TwViewController {
           // historyDepth = -4;
           // return res.render(renderUrl, Object.assign(this._getDataComplete(), { pageInfo, historyDepth }));
         } else {
-          // return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
-          return this.error.render(res, { title: MYT_FARE_ERROR_MSG.TITLE, code: createInfo.code, msg: createInfo.msg, pageInfo: pageInfo, svcInfo: svcInfo });
+          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
+          // return this.error.render(res, { title: MYT_FARE_ERROR_MSG.TITLE, code: createInfo.code, msg: createInfo.msg, pageInfo: pageInfo, svcInfo: svcInfo });
+          // 오류 페이지에서 확인하면 -1로 SK pay 화면으로 가는 문제.
         }
       });
     } else {
@@ -76,13 +77,14 @@ class MyTFareBillSkpayResult extends TwViewController {
         msgError = resultJsonError.message;
       }
       if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.USEREXIT, codeError, msgError), { pageInfo, historyDepth }));
+        return res.redirect('/myt-fare/submain');
+        // return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.USEREXIT, codeError, msgError), { pageInfo, historyDepth }));
       } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
       } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
       } else {
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
       }
     }
   }
