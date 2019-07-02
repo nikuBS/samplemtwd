@@ -78,11 +78,12 @@ class MyTFareBillSkpayResult extends TwViewController {
       let data = this.getDataApi(query, paymentToken);
       this.apiService.request(API_CMD.BFF_07_0097, data).subscribe((createInfo) => {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-          historyDepth = -4;
-          return res.render(renderUrl, Object.assign(this._getDataComplete(), { pageInfo, historyDepth }));
+          return res.redirect('/myt-fare/bill/pay-complete');
+          // historyDepth = -4;
+          // return res.render(renderUrl, Object.assign(this._getDataComplete(), { pageInfo, historyDepth }));
         } else {
-          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
-          // return this.error.render(res, {          //   title: MYT_PAYMENT_SKPAY.TITLE,          //   code: createInfo.code,          //   msg: createInfo.msg,          //   pageInfo: pageInfo,          //   svcInfo: svcInfo          // });
+          // return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
+          return this.error.render(res, { title: MYT_FARE_ERROR_MSG.TITLE, code: createInfo.code, msg: createInfo.msg, pageInfo: pageInfo, svcInfo: svcInfo });
         }
       });
     } else {
@@ -99,7 +100,7 @@ class MyTFareBillSkpayResult extends TwViewController {
       } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
       } else {
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, status, resultUtf + " " + codeError + " " + msgError), { pageInfo, historyDepth }));
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
       }
     }
   }
