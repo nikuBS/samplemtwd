@@ -76,7 +76,7 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
         var $elm = $(elm);
 
         var url    = Tw.Environment.environment !== 'prd' ? Tw.TRACKER_API.targetUrl.development : Tw.TRACKER_API.targetUrl.production;
-        var params = $.extend(this._getTrackerData($elm[0]), {action: 'CLICK'});
+        var params = $.extend(this._getTrackerData($elm[0]), {tw_action: 'CLICK'});
         $elm.attr('data-tracked', 'true');
         //console.info('tracker extend click : ' , url + '?' + $.param(params));
         Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
@@ -98,7 +98,7 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
                 continue;
             }
             $elm = $elms.eq(i);
-            var params = $.extend(this._getTrackerData($elm[0]), {action: 'VIEW'});
+            var params = $.extend(this._getTrackerData($elm[0]), {tw_action: 'VIEW'});
             $elm.attr('data-tracked', 'true');
             //console.info('tracker extend : ' , url + '?' + $.param(params));
             Tw.CommonHelper.sendRequestImg(url + '?' + $.param(params));
@@ -161,7 +161,7 @@ Tw.TrackerService.prototype = $.extend(Tw.TrackerService.prototype, {
                     value : $elm.attr(nm)
                 }
             }).reduce(function(p, n){
-                p[n.key.replace(/_([a-z])/g, function (g) { return g[1].toUpperCase(); })] = n.value;
+                p[n.key] = n.value;
                 return p;
             }, {})
         , this._params);
