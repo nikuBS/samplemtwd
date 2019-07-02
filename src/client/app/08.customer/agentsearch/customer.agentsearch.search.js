@@ -15,6 +15,8 @@ Tw.CustomerAgentsearch = function (rootEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this.tubeNameList = []; // 지하철 역명 저장되는 배열
+  
 
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
@@ -63,10 +65,15 @@ Tw.CustomerAgentsearch.prototype = {
           var urlParams = new window.URLSearchParams(window.location.search);
           var area = urlParams.get('area').split(':');
           var line = urlParams.get('line').split(':');
+          var tubeName = urlParams.get('keyword').split(':');
+          // Tw.Logger.info('[검색후 url 지하철 : ]', tubeName);
           this.$container.find('#fe-select-area').text(area[0]);
           this.$container.find('#fe-select-line').text(line[0]);
+          this.$container.find('#fe-select-name').text(tubeName[0]);
           this._selectedTubeAreaCode = area[1];
           this._selectedTubeLineCode = line[1];
+          this._selectedTubeNameCode = tubeName[1];
+          $.proxy(this._getTubeNameList(),this);
         }
       }, this), 0);
     }
@@ -117,7 +124,8 @@ Tw.CustomerAgentsearch.prototype = {
   _cacheElements: function () {
     this.$inputName = this.$container.find('#fe-input-name');
     this.$inputAddr = this.$container.find('#fe-input-addr');
-    this.$inputTube = this.$container.find('#fe-input-tube');
+    this.$inputTube = this.$container.find('#fe-select-name');
+    // this.$inputTube = this.$container.find('#fe-input-tube');
     this.$btnSearchName = this.$container.find('#fe-btn-search-name');
     this.$btnSearchAddr = this.$container.find('#fe-btn-search-addr');
     this.$btnSearchTube = this.$container.find('#fe-btn-search-tube');
@@ -143,6 +151,7 @@ Tw.CustomerAgentsearch.prototype = {
       $.proxy(this._onPaging, this));
     this.$container.on('click', '#fe-select-area', $.proxy(this._onTubeArea, this));
     this.$container.on('click', '#fe-select-line', $.proxy(this._onTubeLine, this));
+    this.$container.on('click', '#fe-select-name', $.proxy(this._onTubeName, this));
   },
 
   /**
@@ -195,7 +204,7 @@ Tw.CustomerAgentsearch.prototype = {
           this.$btnSearchAddr.attr('disabled', 'disabled');
         }
         break;
-      case 'fe-input-tube':
+      case 'fe-select-name':
         if (enable) {
           this.$btnSearchTube.removeAttr('disabled');
         } else {
@@ -253,7 +262,7 @@ Tw.CustomerAgentsearch.prototype = {
           currentTarget: {
             id: id
           }
-        });
+        }, true);
         return;
       }
 
@@ -286,7 +295,7 @@ Tw.CustomerAgentsearch.prototype = {
    */
   _onTubeArea: function () {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
-    if (this._selectedTubeAreaCode) { // 선택된 항목에 checked 추가
+    if (!Tw.FormatHelper.isEmpty(this._selectedTubeAreaCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
         if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
           item['radio-attr'] += ' checked';
@@ -310,6 +319,8 @@ Tw.CustomerAgentsearch.prototype = {
         this.$container.find('#fe-select-area').text(selectedAreaName);
         this.$container.find('#fe-select-line').text('노선선택');
         this._selectedTubeLineCode = null;
+        this.$container.find('#fe-select-name').text('지하철 역명 선택');
+        this._selectedTubeNameCode = null;
         this._popupService.close();
       }, this));
     }, this));
@@ -326,7 +337,7 @@ Tw.CustomerAgentsearch.prototype = {
     }
 
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this._selectedTubeAreaCode];
-    if (this._selectedTubeLineCode) { // 선택된 항목에 checked 추가
+    if (!Tw.FormatHelper.isEmpty(this._selectedTubeLineCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
         if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
           item['radio-attr'] += ' checked';
@@ -345,20 +356,127 @@ Tw.CustomerAgentsearch.prototype = {
         this._popupService.close();
       }, this));
       $root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        this.tubeNameList = []; // 지하철 역명 저장되는 배열
         var selectedLine = $(e.currentTarget).data('line');
         this.$container.find('#fe-select-line').text(selectedLine);
         this._selectedTubeLineCode = $(e.currentTarget).attr('id');
+        this.$container.find('#fe-select-name').text('지하철 역명 선택');
+        this._selectedTubeNameCode = null;
+        $.proxy(this._getTubeNameList(), this ); // 노선 선택하면 API 호출하여 지하철 역명 리스트 생성
+        this._popupService.close();
+        // Tw.Logger.info('[라인 선택 후 지역 값 텍스트, 인코딩 전 : ]', this.$container.find('#fe-select-area').text().trim());
+        // Tw.Logger.info('[라인 선택 후 호선값 텍스트, 인코딩 전 : ]', this.$container.find('#fe-select-line').text().trim());
+
+
+      }, this));
+    }, this));
+  },
+
+    /**
+   * @function
+   * @desc 지하철 탭에서 노선 선택 시 actionsheet 로 선택 가능한 노선 표시
+   */
+  _getTubeNameList: function () {
+
+    // Tw.Logger.info('_getTubeNameList 함수에 들어왔는지 확인');
+    // Tw.Logger.info('[리스트 만들기전 지역 값은? : ]', this._selectedTubeAreaCode);
+    // Tw.Logger.info('[리스트 만들기전 호선값은 ? : ]', this._selectedTubeLineCode);
+    // 지역 및 노선 값
+    var tubeName = {
+      // 'fe-select-area' : this.$container.find('#fe-select-area').text().trim(),
+      'fe-select-area' : encodeURIComponent(this.$container.find('#fe-select-area').text().trim()),
+      // 'fe-select-line' : this.$container.find('#fe-select-line').text().trim()
+      'fe-select-line' : encodeURIComponent(this.$container.find('#fe-select-line').text().trim())
+      // feSelectArea : this._selectedTubeAreaCode,
+      // feSelectLine : this._selectedTubeLineCode
+    };
+
+    // Tw.Logger.info('[리스트 만들기전 파라미터 객체 값은 ? : ]', tubeName);
+
+    // 지하철 목록 검색(역명))
+    this._apiService.request(Tw.API_CMD.BFF_08_0078, tubeName)
+    .done($.proxy(function (res) {
+      // Tw.Logger.info('[res 값은 ? : ]', res);
+      if (res.code === Tw.API_CODE.CODE_00) {
+        // if(res.result === '0'){  0일때를 고려할지 생각중
+          // this._popupService.close();
+          // this._callback(); 혹시 다른거 처리하려면..
+        // }
+        var result = res.result;
+        // Tw.Logger.info('[Subway Name API result]', result);
+
+        var tubeNameformatList = [];
+        for (var i = 0; i < result.length; i++) {
+          var nameListObj = {
+            'label-attr': 'id=' + i,
+            'radio-attr': 'id=' + i + ' name="r2" data-name=' + result[i].subwStnNm,
+            'txt': result[i].subwStnNm
+          };
+          tubeNameformatList.push(nameListObj);
+        }
+        
+        this.tubeNameList.push({ 'list': tubeNameformatList });
+
+        // Tw.Logger.info('[tubeNameList list 생성 되었는지]', this.tubeNameList);
+
+      }
+      // Tw.Error(res.code, res.msg).pop();  // 에러 팝업을 띄울지 지울지 고민중
+    }, this))
+    .fail(function (err) {  // Fail에 대란 처리를 지울지 
+      // Tw.Logger.info('[API 조회 실패?] ]');
+      Tw.Error(err.code, err.msg).pop();
+    });
+
+
+  },
+
+
+    /**
+   * @function
+   * @desc 지하철 탭에서 역명 선택 시 actionsheet 로 선택 가능한 역명 표시
+   */
+  _onTubeName: function () {
+    if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
+      this._popupService.openAlert('지역 및 노선을 선택해 주세요.');
+      return;
+    }
+
+    var list = this.tubeNameList;
+    if (this._selectedTubeNameCode) { // 선택된 항목에 checked 추가
+      list[0].list = _.map(list[0].list, $.proxy(function (item) {
+        if (item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1) {
+          item['radio-attr'] += ' checked';
+        }
+        return item;
+      }, this));
+    }
+
+    this._popupService.open({
+      hbs: 'actionsheet01',
+      layer: true,
+      data: list,
+      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
+    }, $.proxy(function ($root) {
+      $root.on('click', '.btn-floating', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        var selectedName = $(e.currentTarget).data('name');
+        this.$container.find('#fe-select-name').text(selectedName);
+        this._selectedTubeNameCode = $(e.currentTarget).attr('id');
+        this.$btnSearchTube.removeAttr('disabled');
         this._popupService.close();
       }, this));
     }, this));
   },
+
 
   /**
    * @function
    * @desc 검색 버튼 클릭 시 검색결과 요청
    * @param  {Object} e - click event
    */
-  _onSearchRequested: function (e) {
+  _onSearchRequested: function (e, isOptions) {
     if (e && e.currentTarget.id.indexOf('tube') !== -1) {
       if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
         this._popupService.openAlert('지역/노선을 선택해 주세요.');
@@ -366,7 +484,11 @@ Tw.CustomerAgentsearch.prototype = {
       }
     }
     // query param으로 필요한 정보를 보내면 검색관련 작업은 server rendering으로 이루어짐
-    this._historyService.replaceURL(this._getSearchUrl(e, true));
+    if(isOptions){  // 옵션 필터링으로 검색 시 
+      this._historyService.replaceURL(this._getSearchUrl(e, false, null, true )); // 옵션 필터링으로 검색 시 
+    } else {
+      this._historyService.replaceURL(this._getSearchUrl(e, true));
+    }
   },
 
   /**
@@ -395,11 +517,11 @@ Tw.CustomerAgentsearch.prototype = {
    * @param  {Boolean} bySearchBtn - 검색 버튼을 통한 검색인지, pagination을 통한 검색인지
    * @param  {Number} page - bySearchBtn true 인 경우 targeting 할 page 번호
    */
-  _getSearchUrl: function (e, bySearchBtn, page) {  // bySearchBtn: true - 처음검색, false - page 검색
+  _getSearchUrl: function (e, bySearchBtn, page, isOptions) {  // bySearchBtn: true - 처음검색, false - page 검색
     var url = '/customer/agentsearch/search?type=';
     var hash = '#name';
 
-    if (bySearchBtn) {
+    if (bySearchBtn) {  // 버튼 검색인 경우 - 기존 필터 적용 되지 않도록
       switch (e.currentTarget.id) {
         case 'fe-btn-search-name':
           url += 'name&keyword=' + this.$inputName.val();
@@ -411,7 +533,33 @@ Tw.CustomerAgentsearch.prototype = {
         case 'fe-btn-search-tube':
           var area = this.$container.find('#fe-select-area').text().trim();
           var line = this.$container.find('#fe-select-line').text().trim();
-          url += 'tube&keyword=' + this.$inputTube.val() +
+          var tubeName = this.$container.find('#fe-select-name').text().trim();
+          // url += 'tube&keyword=' + this.$inputTube.val() +
+          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
+            '&area=' + area + ':' + this._selectedTubeAreaCode +
+            '&line=' + line + ':' + this._selectedTubeLineCode;
+          hash = '#tube';
+          break;
+        default:
+          return;
+      }
+      url += '&storeType=' + 0;
+      url += hash;
+      return url;
+    } else if (isOptions){  // 필터 검색인 경우
+      switch (e.currentTarget.id) {
+        case 'fe-btn-search-name':
+          url += 'name&keyword=' + this.$inputName.val();
+          break;
+        case 'fe-btn-search-addr':
+          url += 'addr&keyword=' + this.$inputAddr.val();
+          hash = '#addr';
+          break;
+        case 'fe-btn-search-tube':
+          var area = this.$container.find('#fe-select-area').text().trim();
+          var line = this.$container.find('#fe-select-line').text().trim();
+          var tubeName = this.$container.find('#fe-select-name').text().trim();
+          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
             '&area=' + area + ':' + this._selectedTubeAreaCode +
             '&line=' + line + ':' + this._selectedTubeLineCode;
           hash = '#tube';
@@ -432,7 +580,8 @@ Tw.CustomerAgentsearch.prototype = {
         case '#tube':
           var areaTube = this.$container.find('#fe-select-area').text().trim();
           var lineTube = this.$container.find('#fe-select-line').text().trim();
-          url += 'tube&keyword=' + this.$inputTube.val() +
+          var tubeName = this.$container.find('#fe-select-name').text().trim();
+          url += 'tube&keyword=' + tubeName + ':' +  this._selectedTubeNameCode +
             '&area=' + areaTube + ':' + this._selectedTubeAreaCode +
             '&line=' + lineTube + ':' + this._selectedTubeLineCode;
           hash = '#tube';
