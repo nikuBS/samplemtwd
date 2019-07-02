@@ -23,6 +23,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd = function (rootEl, prodId, displayId, 
   this.$container = rootEl;
   this._prodId = prodId;
   this._displayId = displayId;
+  this._checkedSvnNum = null;
   this._confirmOptions = {};
 
   this._cachedElement();
@@ -48,14 +49,18 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     this.$btnWishNum = this.$container.find('.fe-btn_wish_num');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
-    this.$selectedNum = this.$container.find('.fe-line_list');
     this.$wishNumList = this.$container.find('.fe-line_wrap');
     this.$wishList = this.$container.find('#fe-wish_list');
     this.$wishBox = this.$container.find('#listBox');
     this.$svcNumTotal = this.$container.find('#svcNumTotal');
+
+    this.$checkedLineBox = this.$container.find('.fe-line_wrap2');
+    this.$selectedNum = this.$container.find('.fe-line_list');
     
     this.$emptyWrap = this.$container.find('.fe-empty_wrap');
     this.$inputNumber = this.$container.find('.fe-num_input');
+
+    this.$checkedLineTemp = Handlebars.compile($('#fe-templ-line_item').html());
   },
 
   /**
@@ -72,6 +77,9 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
     this.$btnSetupOk.on('click', _.debounce($.proxy(this._procConfirm, this), 500));
 
+    
+    this.$container.on('click', '#listBox li', $.proxy(this._clickSvcNum, this));
+
     this.$container.on('change', 'input[name="svcNums"]', $.proxy(this._changeSvcNum, this));
 
     if (Tw.BrowserHelper.isIos()) {
@@ -81,10 +89,31 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
 
   /**
    * @function
+   * @desc 넘버플러스II 희망번호 삭제
+   * @returns {*|void}
+   */
+  _delNum: function(e){
+    this._checkedSvnNum = null;
+
+    this.$btnSetupOk.prop('disabled', true);
+    this.$checkedLineBox.addClass('none');
+    this.$selectedNum.empty();
+    this._showEmptyResult();
+
+  },
+
+  /**
+   * @function
    * @desc 넘버플러스II 희망번호 조회
    * @returns {*|void}
    */
   _wishNum: function () {
+    if(this._checkedSvnNum){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A97.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A97.TITLE);
+      return;
+    }
+
     if (this.$inputNumber.val().length < 4) {
       return;
     }
@@ -120,7 +149,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
    */
   _showEmptyResult: function() {
     this.$wishBox.empty();
-    this.$svcNumTotal.text('0');
+    this.$svcNumTotal.text('0').closest('.cont-box').show();
     this.$wishNumList.hide();
     this.$emptyWrap.show();
   },
@@ -145,6 +174,11 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     this.$btnSetupOk.attr('disabled', false);
   },
 
+  _clickSvcNum: function(e){
+    var $elm = $($(e.currentTarget).find('input'))
+    $elm.prop('checked', !$elm.prop('checked')).trigger('change');
+  },
+
   /**
    * @function
    * @desc 넘버플러스II 희망번호 리스트 반환
@@ -155,7 +189,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     var result = this._getResult(resp);
     var list = result.phoneLineList;
     return _.map(list, function (item) {
-      item.svcNum = item.svcNum;
+      item.svcNumDash = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
       return item;
     });
   },
@@ -176,7 +210,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     });
 
     this.$wishBox.html(html.join(''));
-    this.$svcNumTotal.text(list.length);
+    this.$svcNumTotal.text(list.length).closest('.cont-box').show();
     this.$wishNumList.show();
     this.$emptyWrap.hide();
   },
@@ -348,18 +382,23 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
    * @desc 설정완료 API 요청
    */
   _procConfirm: function () {
+    this.$btnSetupOk.prop('disabled', true);
     var checkSvcNum = $('input[name="svcNums"]:checked');
 
-    if(checkSvcNum.size() < 1){
-      alert('선택된 번호가 없습니다.');
+    if(checkSvcNum.size() < 1 && !this._checkedSvnNum){
+      this.$btnSetupOk.prop('disabled', false);
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A96.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A96.TITLE);
       return;
     }
     
     Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this.$btnSetupOk.prop('disabled', false);
+    this._checkedSvnNum = this._checkedSvnNum||checkSvcNum.val();
 
     this._apiService.request(Tw.API_CMD.BFF_10_0017, {
       joinTermCd: '01',
-      optSvcNums: checkSvcNum.val()
+      optSvcNums: this._checkedSvnNum
     }, {}, [this._prodId])
     .done($.proxy(this._procConfirmRes, this))
     .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
@@ -378,6 +417,13 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    this.$inputNumber.val('');
+    this._showEmptyResult();
+    this.$svcNumTotal.closest('.cont-box').hide();
+    this.$emptyWrap.hide();
+    this.$checkedLineBox.removeClass('none');
+    this.$selectedNum.html(this.$checkedLineTemp({nunber: this._checkedSvnNum, numMask: Tw.FormatHelper.conTelFormatWithDash(this._checkedSvnNum)}));
+
     new Tw.ProductCommonConfirm(true, null, this._convConfirmOptions(resp.result), $.proxy(this._prodConfirmOk, this));
   },
 
@@ -390,7 +436,13 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
-      svcNumList: checkSvcNum.val()
+      svcNumList: [
+        {
+          "serviceNumber1" : this._checkedSvnNum.substr(0,3),
+          "serviceNumber2" : this._checkedSvnNum.substr(3,4),
+          "serviceNumber3" : this._checkedSvnNum.substr(7)
+        }
+      ]
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
     .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
