@@ -577,6 +577,7 @@ Tw.NODE_CMD = {
   GET_MENU_RCMD: { path: '/menu-rcmd', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
+  GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
   DELETE_SESSION_STORE: { path: '/session-store', method: Tw.API_METHOD.DELETE },
