@@ -14,6 +14,8 @@ import { UrlMetaModel } from '../../models/url-meta.model';
 import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import ParamsHelper from '../../utils/params.helper';
+import CommonHelper from '../../utils/common.helper';
+
 
 /**
  * @desc controller 상위 class
@@ -177,6 +179,7 @@ abstract class TwViewController {
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       this._logger.info(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+      CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.redirect('/common/member/logout/expire?target=' + this.getTargetUrl(path, req.query));
     } else {
       this._logger.info(this, '[Session empty]');
