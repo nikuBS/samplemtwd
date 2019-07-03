@@ -813,6 +813,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A93: { TITLE: '회선을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A94: { TITLE: '회선을 삭제하시겠습니까?', MSG: '' },
   ALERT_3_A95: { TITLE: '대구 SKT 황금점 매장은 일요일 휴무로 다른 장소를 선택해주시길 바랍니다.', MSG: '' },
+  ALERT_3_A96: { TITLE: '선택된 휴대폰 번호가 존재하지 않습니다.', MSG: '' },
+  ALERT_3_A97: { TITLE: '이미 신청하신 희망 번호가 존재합니다. 삭제후 추가해주시기 바랍니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -1404,7 +1406,7 @@ Tw.CUSTOMER_EMAIL = {
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG : '내 위치 정보 사용을 위해 단말기 위치(GPS)를 켜주세요.'
+  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다.단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
 Tw.CUSTOMER_HELPLINE_COMPLETE = {

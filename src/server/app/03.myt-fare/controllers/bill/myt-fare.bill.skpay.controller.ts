@@ -36,7 +36,8 @@ class MyTFareBillSkpay extends MyTFareBillPaymentCommon {
       title: MYT_FARE_PAYMENT_TITLE.SKPAY,
       svcInfo: svcInfo, // 회선정보 (필수 데이터)
       pageInfo: pageInfo, // 페이지정보 (필수 데이터)
-      redirectUri : req.protocol + '://' + req.headers.host + '/myt-fare/bill/skpay/result'
+      redirectUri : 'https://' + req.headers.host + '/myt-fare/bill/skpay/result'
+      // redirectUri : req.protocol + '://' + req.headers.host + '/myt-fare/bill/skpay/result'
     };
 
     if (BrowserHelper.isApp(req)) { // 앱 환경 여부 체크

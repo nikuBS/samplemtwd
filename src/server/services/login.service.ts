@@ -2,12 +2,13 @@ import FormatHelper from '../utils/format.helper';
 import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
-import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
+import { BUILD_TYPE, COOKIE_KEY} from '../types/common.type';
 import { XTRACTOR_KEY } from '../types/config.type';
 import EnvHelper from '../utils/env.helper';
 import CryptoHelper from '../utils/crypto.helper';
 import BrowserHelper from '../utils/browser.helper';
 import DateHelper from '../utils/date.helper';
+import CommonHelper from '../utils/common.helper';
 
 /**
  * 세션정보를 다루는 service
@@ -452,6 +453,7 @@ class LoginService {
         this.logger.debug(this, '[logoutSession]', req.session, error);
         res.clearCookie(COOKIE_KEY.TWM);
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+        CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
         observer.next();
         observer.complete();
       });

@@ -12,6 +12,7 @@ import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 import { SvcInfoModel } from '../models/svc-info.model';
 import DateHelper from '../utils/date.helper';
+import CommonHelper from '../utils/common.helper';
 
 /**
  * @desc API 요청을 위한 service
@@ -201,6 +202,7 @@ class ApiService {
               if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                 this.logger.info(this, '[Session expired]');
                 res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+                CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                 res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
               } else {
                 res.render('error.login-block.html', { target: this.loginService.getPath(req) });
@@ -251,6 +253,7 @@ class ApiService {
                 if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                   this.logger.info(this, '[Session expired]');
                   res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+                  CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                   res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
                 } else {
                   res.render('error.login-block.html', { target: this.loginService.getPath(req) });

@@ -409,6 +409,8 @@ Tw.API_CMD = {
 
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
+  BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
+  
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
@@ -467,6 +469,7 @@ Tw.API_CMD = {
     path: '/core-product/:version/services/combinations/:args0/terminations/prechecks',
     method: Tw.API_METHOD.GET
   },
+  BFF_10_0118: { path: '/core-product/:version/mobiles/additions-sets/:args0/numberplus-list', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/:version/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
   BFF_10_0137: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0138: { path: '/core-product/:version/wire/additions/:args0/joins/reservations', method: Tw.API_METHOD.DELETE },
@@ -578,6 +581,12 @@ Tw.NODE_CMD = {
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
+
+    /*임시 API TOS배너확인후 삭제*/
+    GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: Tw.API_METHOD.GET },
+    GET_BANNER_TOS_KEY: { path: '/banner/bannerTosKey', method: Tw.API_METHOD.GET },
+    GET_BANNER_TOS_INFO: { path: '/banner/bannerTosInfo ', method: Tw.API_METHOD.GET },
+
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
   DELETE_SESSION_STORE: { path: '/session-store', method: Tw.API_METHOD.DELETE },

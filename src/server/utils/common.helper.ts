@@ -23,6 +23,23 @@ class CommonHelper {
       totalPage
     };
   }
+
+  /**
+   * 특정 문자열이 포함된 cookie를 삭제한다.
+   * @param req 
+   * @param res 
+   * @param preFix 
+   */
+  static clearCookieWithpreFix(req, res, preFix) {
+    const cookies = req.cookies;
+    let key;
+
+    for (key in cookies) {
+      if (key.indexOf(preFix) === 0) {
+        res.clearCookie(key);
+      }
+    }
+  }
 }
 
 export default CommonHelper;
