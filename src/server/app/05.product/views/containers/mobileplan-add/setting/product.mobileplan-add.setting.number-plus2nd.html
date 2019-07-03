@@ -1,0 +1,68 @@
+<%#
+* @file product.mobileplan-add.setting.number-plus2nd.html
+* @author
+* @since 2019.07.04
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi" aria-hidden="true">
+        <ul></ul>
+    </div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg h60 popup-static txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="input-number-wrap tod-set-wishNum-wrap">
+                        <h3 class="tit type1">신청하신 희망번호</h3>
+                        <div class="list-comp-thumnail">
+                            <ul class="comp-box">
+                                <li class="list-box type-main">
+                                    <p class="list-text">
+                                        <span class="mtext"><%= combineLineInfo.svcNumMask %></span>
+                                    </p>
+                                    <div class="list-btn">
+                                        <div class="bt-alone"><button class="fe-btn_del_num bt-line-gray1">해지</button></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                    
+                    <div class="tod-notice-comp-infolist">
+                        <ul>
+                            <li class="item">서비스 해지 후 재가입은 91일 이내 2회 한해 가능합니다.</li>
+                            <li class="item pl30"><span class="sp-ex">예시)</span>1월 1일 가입 후 2월 1일 해지 후 재가입한 경우 1월 1일 이후 91일째인 4월 2일 가능함</li>
+                        </ul>
+                    </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddSettingNumberPlus2nd($('.wrap'), '<%= prodId %>', 'nApp_7476_01', '<%= svcInfo.prodId %>');
+  });
+</script>
+<% include ../../../components/end.component.html %>
