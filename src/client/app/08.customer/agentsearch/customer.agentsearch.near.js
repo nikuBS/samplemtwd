@@ -11,6 +11,7 @@
 Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
   this.$container = rootEl;
   this.isLogin = (isLogin === 'true');
+  this.isLocationAccess = false;  // 앱일때 GPS ON 여부 및 모바일 웹일때 위치 액세스 가능 여부
 
   // 처음에 표시할 위치가 있을 경우 query param을 이용
   this.paramData = Tw.UrlHelper.getQueryParams();
@@ -120,7 +121,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         /* 현재 위치 좌표값 설정 */
         this.locationCoorinates.latitudeCurrentX = location.coords.latitude;
         this.locationCoorinates.longitudeCurrentY = location.coords.longitude;
-
+        this.isLocationAccess = true;
         if (this.isLogin) { // 로그인 이면서 GPS가 켜져 있는 경우 위치정보 동의 부터 확인
           this._checkTermAgreement({
             longitude: location.coords.longitude,
@@ -133,22 +134,27 @@ Tw.CustomerAgentsearchNear.prototype = {
           });
         }
       }, this), $.proxy(function (error) { // 위치 정보 확인 불가능한 경우
+        this.isLocationAccess = false;
         // switch (error.code) {
           // case error.PERMISSION_DENIED: // 케이스 구분 없이 에러일때로 처리?
             // alert("User denied the request for Geolocation.");
             if (!this.isLogin && this.isMyLocationCliked) { // 비로그인 이면서 GPS 차단 및 내위치 버튼 눌렀을때 현재 페이지 유지
               // this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG2, null, '확인', $.proxy(this._historyService.goBack, this));
-              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인');
+              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._historyService.goBack, this));
               return;
             } else if (!this.isLogin) { // 비로그인
               // this._historyService.goBack();
               this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._historyService.goBack, this));
-            } else { // 로그인
+            } else if(this.isLogin && this.isMyLocationCliked){ // 로그인 이면서 현재 위치 클릭 했을때
+              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인');
+              return;
+            } else { // 로그인 이면서 위치 정보 액세스 불가 일때
               this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._onCurrentLocation({
                 longitude: this.locationCoorinates.longitudeDefaultY,
                 latitude: this.locationCoorinates.latitudeDefaultX
               }), this));
             }
+
             // break;
         //   case error.POSITION_UNAVAILABLE:
         //   case error.TIMEOUT:
@@ -241,15 +247,21 @@ Tw.CustomerAgentsearchNear.prototype = {
   _askCurrentLocationApp: function () { // app인 경우, mweb인 경우에 대한 각각의 현재위치 조회
     if (Tw.BrowserHelper.isApp()) { // 앱인 경우 현재위치 네이티브에 조회
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1 /*  || this.locationDisagree */ ) { // 네이티브에서 현재위치 조회 불가인 경우
-          alsert('gps 정보 못 받아올때');
+        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) { // 네이티브에서 현재위치 조회 불가인 경우
+          this.isLocationAccess = false;
+          if(this.isMyLocationCliked){
+            return;
+          }
+          // alsert('gps 정보 못 받아올때');
           this._onCurrentLocation({ // 현재 위치 확인 불가 시 중구 위치로 설정
             longitude: this.locationCoorinates.longitudeDefaultY,
             latitude: this.locationCoorinates.latitudeDefaultX
           });
+          
           // Tw.Logger.info('thomas_check joongGu Y location Test - 중구위치표시 : ', this.locationCoorinates.longitudeDefaultY); // 중구 위치 Y 좌표 확인
           // Tw.Logger.info('thomas_check joongGu X location Test - 중구위치표시 : ', this.locationCoorinates.latitudeDefaultX); // 중구 위치 X 좌표 확인
         } else { // 네이티브에서 현재 위치 조회 가능한 경우
+          this.isLocationAccess = true;
           this._checkTermAgreement(res.params);
         }
       }, this));
@@ -407,6 +419,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       reqLat: location.latitude,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      // Tw.Logger.info('thomas_check Ajax Tmap 응답값은? : ', res);
       this._currentDo = res.searchRegionsInfo[0].regionInfo.properties.doName.split(' ')[0].trim();
       this._currentGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
 
@@ -478,12 +491,13 @@ Tw.CustomerAgentsearchNear.prototype = {
       15
     );
 
+    
     // Add marker for current location
     if (Tw.FormatHelper.isEmpty(this._currentMarker)) {
       this._currentMarker = new Tmap.Layer.Markers();
       this._map.addLayer(this._currentMarker);
     } else {
-      // this._currentMarker.clearMarkers();
+      this._currentMarker.clearMarkers();
     }
     var size = new Tmap.Size(38, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
@@ -493,7 +507,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     var marker = new Tmap.Marker(lonlat, icon);
 
     // isManuallyChanged는 _hasLocation으로 봐도 되는지..?
-    if (!this._hasDest || this.isMyLocationCliked) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함
+    if (this.isLocationAccess && (!this._hasDest || this.isMyLocationCliked)) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함, 위치 액세스가 가능하며 내위치 클릭 이거나 위도 경도가 url에 없는경우 마커 그려줌
       this._currentMarker.addMarker(marker);
     }
 
@@ -835,7 +849,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     // }
     this.$divListBtns.removeClass('none');
     // if(this.$pshop.hasClass('p-shop')){
-    this.$pshop.removeClass('p-shop');
+    // this.$pshop.removeClass('p-shop');
     // }
     if (!this._listInitilized || this.isMyLocationCliked) {
       this._initList();
@@ -857,7 +871,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     // }
     this.$divListBtns.addClass('none');
     // this.$divMap.removeClass('none');
-    this.$pshop.addClass('p-shop');
+    // this.$pshop.addClass('p-shop');
     if (!this._mapInitilized || this.isMyLocationCliked) {
       this._initMap();
       this._onBranchTypeChanged();
