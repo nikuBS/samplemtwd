@@ -815,6 +815,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A95: { TITLE: '대구 SKT 황금점 매장은 일요일 휴무로 다른 장소를 선택해주시길 바랍니다.', MSG: '' },
   ALERT_3_A96: { TITLE: '선택된 휴대폰 번호가 존재하지 않습니다.', MSG: '' },
   ALERT_3_A97: { TITLE: '이미 신청하신 희망 번호가 존재합니다. 삭제후 추가해주시기 바랍니다.', MSG: '' },
+  ALERT_3_A98: { TITLE: '숫자 4자리를 입력해주세요.', MSG: '' },
+  ALERT_3_A99: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지 후 사용하시던 번호는 당일 재사용이 불가합니다. 서비스를 해지 하시겠습니까?', BUTTON: '해지하기' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -985,6 +987,7 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MV_02_02_04: '보호자',
   MV_02_02_06: '가족그룹',
   INFO_SETTING_SUCCESS: '정보 입력 완료',
+  NA00004073_02: '희망번호',
   nApp_7476_01: '결합회선',
   nApp_7475_01: '배송정보 등록완료'
 };
@@ -1898,7 +1901,7 @@ Tw.POSTCODE_MESSAGE = {
 };
 
 Tw.ROAMING_RESERVATION_STATE = {
-  11: '예약 대기 중',
+  11: '예약 완료',
   12: '예약 완료',
   16: '미수령',
   17: '예약 취소'

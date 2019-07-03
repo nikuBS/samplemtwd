@@ -115,6 +115,8 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     }
 
     if (this.$inputNumber.val().length < 4) {
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A98.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A98.TITLE);
       return;
     }
 
@@ -130,8 +132,9 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
    * @param resp - API 응답 값
    */
   _onDoneWishNumList: function (resp) {
+    this.$btnSetupOk.attr('disabled', true);
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
-      this._popupService.openAlert(resp.msg, resp.code);
+      //this._popupService.openAlert(resp.msg, resp.code);
       this._showEmptyResult();
       return;
     }
@@ -171,7 +174,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
    * @returns {JSON}
    */
   _changeSvcNum: function(e){
-    this.$btnSetupOk.attr('disabled', false);
+    this.$btnSetupOk.attr('disabled', !$(e.currentTarget).is(':checked'));
   },
 
   _clickSvcNum: function(e){
@@ -237,7 +240,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     }
 
     this._toggleClearBtn();
-    this._toggleNumAddBtn();
+    //this._toggleNumAddBtn();
   },
 
   /**
@@ -292,7 +295,7 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
   _clearNum: function () {
     this.$inputNumber.val('');
     this.$btnClearNum.hide().attr('aria-hidden', 'true');
-    this._toggleNumAddBtn();
+    //this._toggleNumAddBtn();
   },
 
   /**

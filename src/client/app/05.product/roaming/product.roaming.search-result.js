@@ -344,17 +344,17 @@ Tw.ProductRoamingSearchResult.prototype = {
             noticeParam.voiceShown = false;
         } else if (this.reqParams.manageType === '') { // 서비스 방식이 임대로밍 인 경우
             _result.rentShown = true;   // 임대로밍 안내사항 노출
-        } else if (this.reqParams.manageType === 'W') { // 서비스 방식이 3G자동로밍 인 경우
-            var chargeWhenConnected = ['CAN', 'MEX']; // 통화가 연결된 후 요금 청구되는 국가 리스트
-            if ( chargeWhenConnected.indexOf(_result.countryCd) !== -1) {
-              _result.isChargeWhenConnected = true;
-            }
         } else if (this.reqParams.manageType === 'C') {   // 서비스 방식이 2G인 경우 
             if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
                 _result.cdmaUnit = true;
                 _result.mTxtCharge = _result.dMoChargeMin;
                 _result.mMtmCharge = _result.dMoChargeMin;
             }
+        }
+
+        var chargeWhenConnected = ['CAN', 'MEX']; // 통화가 연결된 후 요금 청구되는 국가 리스트
+        if ( chargeWhenConnected.indexOf(_result.countryCd) !== -1) {
+          _result.isChargeWhenConnected = true;
         }
 
         if(_result.ableAreaType === 'A'){   // 이용가능 지역 상세보기 여부

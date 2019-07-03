@@ -67,8 +67,8 @@ Tw.ProductMobileplanAddSettingNumberPlus2nd.prototype = {
    */
   _delNum: function(e) {
 
-    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A99.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A99.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A99.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
       $.proxy(this._delNumReq, this, $(e.currentTarget).data('svc_mgmt_num')));
   },
 

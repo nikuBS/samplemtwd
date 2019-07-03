@@ -12,7 +12,7 @@
 <!--// #skip_navigation -->
 <div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -21,6 +21,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
 
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box">
                     <div class="product-tit-wrap">
                         <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
@@ -95,7 +96,7 @@
                 <div class="fe-line_wrap2 none" aria-hidden="true">
                     <div class="cont-box nogaps">
                         <div class="input-number-wrap">
-                            <h3 class="tit type1">신청하신 회선</h3>
+                            <h3 class="tit type1">신청하신 희망번호</h3>
                             <div class="list-comp-thumnail">
                                 <ul class="comp-box fe-line_list"></ul>
                             </div>
@@ -124,7 +125,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinNumberPlus2nd($('.wrap'), '<%= prodId %>', 'nApp_7476_01', '<%= svcInfo.prodId %>');
+    new Tw.ProductMobileplanAddJoinNumberPlus2nd($('.wrap'), '<%= prodId %>', 'NA00004073_02', '<%= svcInfo.prodId %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
