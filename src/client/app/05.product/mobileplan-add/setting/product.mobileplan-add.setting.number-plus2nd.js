@@ -94,12 +94,14 @@ Tw.ProductMobileplanAddSettingNumberPlus2nd.prototype = {
    * @returns {*}
    */
   _addDelNumRes: function(resp) {
-    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
       return Tw.Error(resp.code, resp.msg).pop();
     }
-
-    this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
+    setTimeout($.proxy(function () {
+      this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
+      Tw.CommonHelper.endLoading('.container');
+    },this),500);
   }
 };
