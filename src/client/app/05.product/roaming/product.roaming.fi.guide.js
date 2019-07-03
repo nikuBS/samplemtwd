@@ -20,12 +20,15 @@ Tw.ProductRoamingFiGuide.prototype = {
     this.$btnInquire = this.$container.find('#inquire-btn');
     this.$btnReservation = this.$container.find('#reservation-btn');
     this.$btnProduct = this.$container.find('.product-infolink');
+    this.$btnDataPopup = this.$container.find('.data-popup-btn');
+    this.$dataPopup = this.$container.find('#data-popup');
   },
 
   _bindEvent: function() {
     this.$btnInquire.on('click', $.proxy(this._goInquire, this));
     this.$btnReservation.on('click', $.proxy(this._goReservation, this));
     this.$btnProduct.on('click', $.proxy(this._goProductPage, this));
+    this.$btnDataPopup.on('click', $.proxy(this._togglePopup, this));
   },
 
   /**
@@ -56,6 +59,15 @@ Tw.ProductRoamingFiGuide.prototype = {
     //baro Box 이용 가능 요금제 상세 페이지 이동
     var productId = $(e.target).parents('button').attr('id') === undefined ? $(e.target).attr('id') : $(e.target).parents('button').attr('id');
     this._historyService.goLoad('/product/callplan?prod_id=' + productId);
+  },
+
+  /**
+   * @function
+   * @desc 데이터 사용 예시 팝업 토글
+   * @private
+   */
+  _togglePopup: function() {
+    this.$dataPopup.toggle();
   },
 
   _reload: function() {
