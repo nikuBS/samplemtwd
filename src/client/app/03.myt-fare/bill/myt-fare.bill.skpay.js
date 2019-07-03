@@ -341,18 +341,9 @@ Tw.MyTFareBillSkpay.prototype = {
         }
       };
 
-      console.log('===========================================1');
-
-      SKpaySDK.performPaymentWithUI({
-        authorizationGrant: 'resp.result.authorizationGrant',
-        offerToken: 'resp.result.offerToken',
-        orderNumber: 'resp.result.orderNumber',
-        redirectUri: this.redirectUri + '?dataKey=' + 'resp.result.orderNumber'
-      });
-
-      // this._apiService.request(Tw.API_CMD.BFF_07_0095, dateReq)
-      //   .done($.proxy(this._onSuccessSkpayAuth, this))
-      //   .fail($.proxy(this._onFailSkpayAuth, this));
+      this._apiService.request(Tw.API_CMD.BFF_07_0095, dateReq)
+        .done($.proxy(this._onSuccessSkpayAuth, this))
+        .fail($.proxy(this._onFailSkpayAuth, this));
     } catch (e) {
       if (e instanceof ReferenceError) {
         Tw.Error(Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CODE, Tw.ALERT_MSG_SKPAY.NOT_RESPONSE.CONTENTS).pop();
