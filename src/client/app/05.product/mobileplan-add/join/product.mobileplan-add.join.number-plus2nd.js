@@ -99,6 +99,8 @@ Tw.ProductMobileplanAddJoinNumberPlus2nd.prototype = {
     this.$checkedLineBox.addClass('none');
     this.$selectedNum.empty();
     this._showEmptyResult();
+    this.$svcNumTotal.text('0').closest('.cont-box').hide();
+    this.$emptyWrap.hide();
 
   },
 
