@@ -29,11 +29,14 @@ Tw.CustomerAgentsearchDetail.prototype = {
    * @param  {Object} coord - 해당 지점의 좌표 값
    */
   _showDataChargePopupIfNeeded: function (mapEl, coord) {
-    if (Tw.BrowserHelper.isApp()) {
+    // Tw.Logger.info('thomas_check get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
+    if (Tw.BrowserHelper.isApp() && !Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {
       var confirmed = false;
       Tw.CommonHelper.showDataCharge(
         $.proxy(function () {
           confirmed = true;
+          Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
+          // Tw.Logger.info('thomas_check set이후 get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
         }, this),
         $.proxy(function () {
           if (!confirmed) {

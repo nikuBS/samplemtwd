@@ -1404,7 +1404,7 @@ Tw.CUSTOMER_EMAIL = {
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
-  MSG : '내 위치 정보 사용을 위해 단말기 위치(GPS)를 켜주세요.'
+  MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다.단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
