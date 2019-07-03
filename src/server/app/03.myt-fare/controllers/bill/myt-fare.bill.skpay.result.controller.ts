@@ -51,8 +51,6 @@ class MyTFareBillSkpayResult extends TwViewController {
     var historyDepth = -3;
     var renderUrl = 'bill/myt-fare.bill.skpay.result.html';
 
-    // return res.render(renderUrl, Object.assign(this._getDataDebug('TEST', JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
-
     resultUtf = this.getResultUtf(result, resultUtf);
     
     if (status == 200) {
