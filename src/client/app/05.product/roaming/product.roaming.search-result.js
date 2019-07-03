@@ -339,20 +339,21 @@ Tw.ProductRoamingSearchResult.prototype = {
             onseMtCharge: _result.onseMtCharge      // 음성통화 수신 요금 세종텔레콤
         };
 
-        if(this.reqParams.manageType === 'L'){  // 서비스 방식이 LTE인 경우
-            _result.lteShown = true;    // LTE 안내 사항 노출
+        if(this.reqParams.manageType === 'L') {  // 서비스 방식이 LTE인 경우
+            _result.lteShown = true;    // LTE 안내 사항 노출 및 음성 '서비스 이용 불가' 문구 변경
             noticeParam.voiceShown = false;
-        }else if(this.reqParams.manageType === ''){ // 서비스 방식이 임대로밍 인 경우
+        } else if (this.reqParams.manageType === '') { // 서비스 방식이 임대로밍 인 경우
             _result.rentShown = true;   // 임대로밍 안내사항 노출
-        } else if(this.reqParams.manageType === 'C'){   // 서비스 방식이 2G인 경우 
+        } else if (this.reqParams.manageType === 'W') { // 서비스 방식이 3G자동로밍 인 경우
+            var chargeWhenConnected = ['CAN', 'MEX']; // 통화가 연결된 후 요금 청구되는 국가 리스트
+            if ( chargeWhenConnected.indexOf(_result.countryCd) !== -1) {
+              _result.isChargeWhenConnected = true;
+            }
+        } else if (this.reqParams.manageType === 'C') {   // 서비스 방식이 2G인 경우 
             if(_result.dMoChargeMin){       //데이터 이용료가 있는 경우
                 _result.cdmaUnit = true;
                 _result.mTxtCharge = _result.dMoChargeMin;
                 _result.mMtmCharge = _result.dMoChargeMin;
-            }
-
-            if(_result.countryCd == "USA"){     //  미국 CDMA(2G) 종료에 따른 안내 문구
-                _result.usa2gOnly = true;
             }
         }
 
