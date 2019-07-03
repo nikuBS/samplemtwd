@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import FormatHelper from '../../../../../utils/format.helper';
+import StringHelper from '../../../../../utils/string.helper';
 
 /**
  * @class
@@ -40,7 +41,7 @@ class ProductMobileplanAddSettingNumberPlus2nd extends TwViewController {
 
     return combinationLineList.reduce((temp, item) => {
       return Object.assign(temp, item, {
-        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNum)
+        svcNumMask: StringHelper.maskPhoneNumber( item.svcNum)
       });
     }, {});
   }
