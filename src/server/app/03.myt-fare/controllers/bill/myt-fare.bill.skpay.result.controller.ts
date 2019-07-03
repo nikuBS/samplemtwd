@@ -59,16 +59,11 @@ class MyTFareBillSkpayResult extends TwViewController {
       this.apiService.request(API_CMD.BFF_07_0097, data).subscribe((createInfo) => {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
           return res.redirect('/myt-fare/bill/pay-complete');
-          // historyDepth = -4;
-          // return res.render(renderUrl, Object.assign(this._getDataComplete(), { pageInfo, historyDepth }));
         } else {
           return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
-          // return this.error.render(res, { title: MYT_FARE_ERROR_MSG.TITLE, code: createInfo.code, msg: createInfo.msg, pageInfo: pageInfo, svcInfo: svcInfo });
-          // 오류 페이지에서 확인하면 -1로 SK pay 화면으로 가는 문제.
         }
       });
     } else {
-      // '{"code":"USER_EXIT","message":"사용자가 SK pay를 종료하였습니다."}'
       if (resultUtf) {
         let resultJsonError: ResultJsonError = JSON.parse(resultUtf);
         codeError = resultJsonError.code;
@@ -76,13 +71,12 @@ class MyTFareBillSkpayResult extends TwViewController {
       }
       if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
         return res.redirect('/myt-fare/submain');
-        // return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.USEREXIT, codeError, msgError), { pageInfo, historyDepth }));
       } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
       } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
-      } else {
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, JSON.stringify(req.headers), JSON.stringify(req.body)), { pageInfo, historyDepth }));
+      } else { //정의되지 않은 오류
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
       }
     }
   }
