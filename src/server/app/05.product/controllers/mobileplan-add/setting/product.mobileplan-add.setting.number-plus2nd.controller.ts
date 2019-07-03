@@ -41,7 +41,7 @@ class ProductMobileplanAddSettingNumberPlus2nd extends TwViewController {
 
     return combinationLineList.reduce((temp, item) => {
       return Object.assign(temp, item, {
-        svcNumMask: StringHelper.maskPhoneNumber( FormatHelper.conTelFormatWithDash(item.svcNum))
+        svcNumMask: StringHelper.maskPhoneNumber( item.svcNum)
       });
     }, {});
   }
