@@ -1898,7 +1898,7 @@ Tw.POSTCODE_MESSAGE = {
 };
 
 Tw.ROAMING_RESERVATION_STATE = {
-  11: '예약 대기 중',
+  11: '예약 완료',
   12: '예약 완료',
   16: '미수령',
   17: '예약 취소'
