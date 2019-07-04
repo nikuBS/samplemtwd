@@ -269,7 +269,7 @@ Tw.MyTFareBill.prototype = {
    */
   _setSmsField: function () {
     if (!this._isSmsTarget) {
-      this.$layer.find('.fe-sms').parent().hide();
+      this.$layer.find('.fe-sms').hide();
     }
   },
   /**
