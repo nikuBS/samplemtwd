@@ -77,6 +77,7 @@ class ApiRouter {
     GET_MENU_RCMD: { path: '/menu-rcmd', method: API_METHOD.GET, target: this.getMenuRecommendation },
     GET_BANNER_ADMIN: { path: '/banner/admin', method: API_METHOD.GET, target: this.getBannerAdmin },
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
+    GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: API_METHOD.GET, target: this.getNewBannerTos },
     GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
     SET_MASKING_COMPLETE: { path: '/masking-complete', method: API_METHOD.POST, target: this.setMaskingComplete },
     DELETE_SESSION_STORE: { path: '/session-store', method: API_METHOD.DELETE, target: this.deleteSessionStore, },
@@ -450,6 +451,8 @@ class ApiRouter {
       });
   }
 
+
+
   /**
    * TOS 배너 조회
    * @param req
@@ -559,6 +562,102 @@ class ApiRouter {
         }
       })
       .subscribe((resp) => {
+        Object.assign(resp.result, bannerLink);
+        return res.json(resp);
+      }, (err) => {
+        return res.json(err);
+      });
+  }
+
+  /**
+   * TOS 배너 조회
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getNewBannerTos(req: Request, res: Response, next: NextFunction) {
+    const loginService = new LoginService();
+    const code = req.query.code;
+    const svcInfo = loginService.getSvcInfo(req);
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
+
+    const svcMgmtNum = svcInfo.svcMgmtNum || 'null';
+    const userId = svcInfo.userId;
+
+    let bannerLink = null;
+    let serialNums = '';
+    let realTimeBanner, campaignBanner;
+    
+    this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
+      .switchMap((resp) => {  //TOS 정보를 호출함
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( resp.result.bltnYn === 'N' ) {
+            throw resp;
+          } else {
+            resp.result.bltnYn = 'Y';
+            if ( resp.result.tosLnkgYn === 'Y' ) {
+              bannerLink = resp.result;
+              return this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + userId + ':' + svcMgmtNum);
+            } else {
+              throw resp;
+            }
+          }
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {//조회된 TOS정보 중 실시간배너(R)인것만 추출하여 배너를 조회함
+        if ( resp.code === API_CODE.CODE_00 ) {
+          serialNums = (resp.result||'').trim();
+          realTimeBanner = serialNums.split('|').filter(e => e.indexOf('R') > -1);
+          campaignBanner = serialNums.split('|').filter(e => e.indexOf('C') > -1);
+
+          if(serialNums === ''){
+            return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+          }else{
+            return Observable.combineLatest(
+              ...(realTimeBanner.map(e => this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + e))),
+              ...(campaignBanner.map(e => this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + e)))
+            ).switchMap(([...args ]:any[]) => {
+              let imgList = args.filter(e => e.code === API_CODE.CODE_00)
+                .filter(e => {
+                  let start = DateHelper.convDateCustomFormat(e.result.summary.cmpgnStaDt + e.result.summary.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+                  let end = DateHelper.convDateCustomFormat(e.result.summary.cmpgnEndDt + e.result.summary.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+                  let today = new Date().getTime();
+                  return start < today && end > today;
+                }).reduce((p,n) => {
+                  n.result.imgList.forEach(e => p.push(Object.assign({}, n.result.summary, e))); 
+                  return p;
+                }, []);
+              
+              if(imgList.length > 0){
+                return Observable.of({
+                  code: API_CODE.CODE_00,
+                  result: {
+                    summary: {},
+                    imgList: imgList
+                  }
+                });
+              }else{
+                return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+              }
+            });
+          }
+
+        } else {
+          return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+        }
+      })
+      .subscribe((resp) => {
+        if ( resp.code !== API_CODE.CODE_00 ){
+          resp.code = API_CODE.CODE_00;
+          resp.result = {};
+        }
         Object.assign(resp.result, bannerLink);
         return res.json(resp);
       }, (err) => {

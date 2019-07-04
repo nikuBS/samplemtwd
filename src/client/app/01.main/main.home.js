@@ -1702,10 +1702,10 @@ Tw.MainHome.prototype = {
    */
   _getTosAdminAppBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0001' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0002' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0003' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0007' } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminAppBanner, this))
       .fail($.proxy(this._failTosAppBanner, this));
@@ -1718,7 +1718,7 @@ Tw.MainHome.prototype = {
    */
   _getTosAdminWebBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0005' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0005' } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminWebBanner, this))
       .fail($.proxy(this._failTosWebBanner, this));
