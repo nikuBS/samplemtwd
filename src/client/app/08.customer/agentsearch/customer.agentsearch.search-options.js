@@ -50,6 +50,7 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     this.$container.on('click', 'input[type="checkbox"]', $.proxy(this._onCategoryChanged, this));
     this.$container.on('click', '.bt-red1 button', $.proxy(this._onApply, this));
     this.$container.on('click', '#fe-bt-close', $.proxy(this._onClose, this));
+    this.$container.on('click', '.resetbtn', $.proxy(this._resetFilters, this)); // 초기화 버튼
   },
 
   /**
@@ -87,6 +88,24 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
         this._applyCallback(this._newOptions);
       }
     }, this), 100);
+  },
+
+    /**
+   * @desc 필터 선택 초기화 버튼 클릭 시 선택된 필터 지움
+   * @private
+   */
+  _resetFilters: function() {
+    var selectedFilters = this.$container.find('li[aria-checked="true"]');
+    selectedFilters.attr('aria-checked', false).removeClass('checked');
+    selectedFilters.find('input').removeAttr('checked');
+    var checkedFilter = this.$container.find('li:eq(0)');
+    checkedFilter.attr('aria-checked', true).addClass('checked');
+    checkedFilter.find('input').addClass('checked');
+    this._newOptions = {};
+    $.extend(true, this._newOptions, {  // 전체로 초기화
+      storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
+    });
+    // this._newOptions = this._currentOptions;
   },
 
   /**

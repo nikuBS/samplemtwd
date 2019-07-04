@@ -1,0 +1,131 @@
+<%#
+* @file product.mobileplan-add.join.number-plus2nd.html
+* @author
+* @since 2019.07.04
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
+                        <h3 class="tit-big"><%= prodRedisInfo.summary.prodNm %></h3>
+                    </div>
+                </div>
+                
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder">
+                    <div class="ti-caption-type01 pb20">
+                        <h3 class="tit">희망번호<button class="tip-view" title="희망번호 정보보기" id="TC000064" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></h3>
+                    </div>
+
+                    <div class="input-number-wrap">
+                        <p class="tit">희망하시는 휴대폰 번호 뒷자리를 입력하세요</p>
+                        <div class="form-box">
+                            <span class="inputbox bt-add inp-btn error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                <span class="input">
+                                    <input type="tel" class="fe-num_input" name="" value="" placeholder="휴대폰 번호 뒷자리" title="휴대폰 번호 뒷자리 입력" maxlength="4">
+                                    <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="bt-box3">
+                                    <button type="button" class="btn-round2 btn-style3 fe-btn_wish_num">번호조회</button>
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <script id="fe-wish_list" type="text/x-handlebars-template">                    
+                    <li>
+                        <span class="custom-form"><input type="radio" name="svcNums" class="none" value="{{svcNum}}"><span class="r-type1"></span></span>
+                        <label for="radio1" class="lab">{{svcNumDash}}</label>
+                    </li>
+                </script>
+
+                <!-- 필터옵션영역 -->
+                <div class="cont-box bgnone noborder gaps-style03" style='display:none;'>
+                    <div class="contheader-box">
+                        <div class="totalfilter-wrap">
+                            <span class="total">총 <span id="svcNumTotal" class="number-text">0</span>건</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- //필터옵션영역 -->
+
+                <!-- .cont-box 검색결과 리스트 -->
+                <div class="cont-box nogaps-hoz noborder fe-line_wrap" style="display: none" aria-hidden="true">
+                    <div class="tod-list-wishNum-wrap">
+                        <ul id="listBox" class="radio-list-type">    
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box  검색결과 없음. -->
+                <div class="cont-box nogaps-hoz fe-empty_wrap" style="display: none" aria-hidden="true">
+                    <div class="result-none type2">
+                        원하는 번호가 존재하지 않습니다.<br>
+                        희망번호를 다시 입력해 주세요.
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="fe-line_wrap2 none" aria-hidden="true">
+                    <div class="cont-box nogaps">
+                        <div class="input-number-wrap">
+                            <h3 class="tit type1">신청하신 희망번호</h3>
+                            <div class="list-comp-thumnail">
+                                <ul class="comp-box fe-line_list"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled>설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+<% include ../../../components/mobileplan-add/product.line.onlynumber.component.html %>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoinNumberPlus2nd($('.wrap'), '<%= prodId %>', 'NA00004073_02', '<%= svcInfo.prodId %>');
+  });
+</script>
+<% include ../../../components/end.component.html %>

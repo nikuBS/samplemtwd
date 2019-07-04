@@ -604,3 +604,6 @@ background:url('../img/customer/common/btn-right-arrow.png') center 40% no-repea
 .idpt-container .bar-txt{padding-left:0.5375rem; position:relative}
 .idpt-container .bar-txt:before{content:'-'; position:absolute; left:0; top:0}
 .idpt-container .idpt-twocont-list .box-inner-list li{border:none; height:auto; width:auto}
+
+/* 190701 추가 [OP002-1939] 이럴 땐 이렇게 하세요 */
+.idpt-container .tod-except01 {padding-top:0.625rem;}

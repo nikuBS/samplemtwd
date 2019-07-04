@@ -19,6 +19,7 @@ import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
+import CommonHelper from '../../utils/common.helper';
 
 const os = require('os');
 
@@ -193,6 +194,7 @@ class ApiRouter {
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+      CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.json({
         code: API_CODE.NODE_1004,
         msg: NODE_API_ERROR[API_CODE.NODE_1004]

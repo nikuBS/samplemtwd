@@ -11,15 +11,20 @@
 Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
   this.$container = rootEl;
   this.isLogin = (isLogin === 'true');
+  this.isLocationAccess = false;  // 앱일때 GPS ON 여부 및 모바일 웹일때 위치 액세스 가능 여부
+
+  // 처음에 표시할 위치가 있을 경우 query param을 이용
+  this.paramData = Tw.UrlHelper.getQueryParams();
+  this._hasDest = this.paramData.long && this.paramData.lat ? true : false;
 
   // 디폴트는 중구의 좌표
   this.locationCoorinates = {
-    latitudeDefaultX : Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_X,
-    longitudeDefaultY : Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_Y,
-    latitudeCurrentX : null,
-    longitudeCurrentY : null
+    latitudeDefaultX: Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_X,
+    longitudeDefaultY: Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_Y,
+    latitudeCurrentX: null,
+    longitudeCurrentY: null
   }
-  
+
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -36,13 +41,13 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
   this._currentBranchType = 0;
   this._currentDo = undefined;
   this._currentGu = undefined;
+  this.isMyLocationCliked = false;
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
     this._showDataChargeIfNeeded($.proxy(function () {
       this._init();
-      this._cacheElements();
+      // this._cacheElements();
       this._bindEvents();
-      // this._switchToList();
     }, this));
   }, this));
 };
@@ -59,6 +64,9 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$resultList = this.$container.find('#fe-list');
     this.$btnMore = this.$container.find('#fe-btn-more');
     this.$pshop = this.$container.find('#fe-p-shop');
+    this.$showList = this.$container.find('#fe-btn-view-list');
+    this.$showMap = this.$container.find('#fe-btn-view-map');
+
   },
 
   /**
@@ -66,19 +74,36 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @desc app인 경우 현재 위치 조회하고, mweb인 경우 약관 먼저 조회
    */
   _init: function () {
-    this.$container.find('.btn-switch').css('z-index', 1000);
+    this._cacheElements();
+    // if(!this.isMyLocationCliked){ // 내 위치 버튼을 누르지 않았을때만
+    // this.$container.find('#fe-btn-view-map').addClass('none'); // 최초 지도보기 버튼 안보이게
+    // this.$container.find('.btn-switch').css('z-index', 1000);
+    // }
+    // url에 좌표가 있거나 내위치 클릭이 아닌경우
+    if (this._hasDest && !this.isMyLocationCliked) { // NOTE 위치를 지정해서 들어오는 경우는 권한 체크 필요 없다고 간주.
+      this._onCurrentLocation({
+        longitude: this.paramData.long,
+        latitude: this.paramData.lat
+      });
+    } else {
+      this._requestCurrentPosition();
+    }
+  },
 
+  _requestCurrentPosition: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._askCurrentLocationApp();
     } else {
       this._checkLocationMobileWeb();
     }
   },
+
   _bindEvents: function () {
-    this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this));
+    this.$container.on('click', '#fe-myLocation', $.proxy(this._onMyLocationClicked, this)); // 내 위치 버튼 클릭 이벤트
+    this.$container.on('click', '#fe-change-region', $.proxy(this._onRegionChangeClicked, this)); // 위치 변경 버튼 클릭 이벤트
     this.$typeOption.on('click', $.proxy(this._onTypeOption, this));
-    this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
-    this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
+    // this.$container.on('click', '#fe-btn-view-list', $.proxy(this._switchToList, this));
+    // this.$container.on('click', '#fe-btn-view-map', $.proxy(this._switchToMap, this));
     this.$btnMore.on('click', $.proxy(this._onMore, this));
     this.$resultList.on('click', '.fe-list', $.proxy(this._onListItemClicked, this));
   },
@@ -89,57 +114,69 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @desc 모웹인 경우 위치 조회하여 조회 불가시 GPS 켜 달라는 메세지 출력
    */
   _checkLocationMobileWeb: function () {
-
+    // Tw.Logger.info('thomas_check 내위치 일때 타는지 확인'); // 위치 정보 응답코드 확인
+    // Only works in secure mode(Https) - for test, use localhost for url (컴퓨터의 브라우저는 현재 위치 받아 오지만 핸드폰으로 직접 로컬 붙을때는 거부 상태로 됨, https로 스테이징 이상에서만 테스트 가능)
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition($.proxy(function (location) {  // 위치 정보 확인 가능한 경우
+      navigator.geolocation.getCurrentPosition($.proxy(function (location) { // 위치 정보 확인 가능한 경우
         /* 현재 위치 좌표값 설정 */
         this.locationCoorinates.latitudeCurrentX = location.coords.latitude;
         this.locationCoorinates.longitudeCurrentY = location.coords.longitude;
-        
-        if(this.isLogin){ // 로그인 이면서 GPS가 켜져 있는 경우 위치정보 동의 부터 확인
-          $.proxy(this._checkTermAgreement({
+        this.isLocationAccess = true;
+        if (this.isLogin) { // 로그인 이면서 GPS가 켜져 있는 경우 위치정보 동의 부터 확인
+          this._checkTermAgreement({
             longitude: location.coords.longitude,
             latitude: location.coords.latitude
-          }), this);
-        }else{  // 비로그인 이지만 GPS가 켜져 있는 경우 현재 위치 노출
-          $.proxy(this._onCurrentLocation({
+          });
+        } else { // 비로그인 이지만 GPS가 켜져 있는 경우 현재 위치 노출
+          this._onCurrentLocation({
             longitude: location.coords.longitude,
             latitude: location.coords.latitude
-          }), this)
+          });
         }
-      }, this), $.proxy(function (error) {  // 위치 정보 확인 불가능한 경우
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
+      }, this), $.proxy(function (error) { // 위치 정보 확인 불가능한 경우
+        this.isLocationAccess = false;
+        // switch (error.code) {
+          // case error.PERMISSION_DENIED: // 케이스 구분 없이 에러일때로 처리?
             // alert("User denied the request for Geolocation.");
-            if (!this.isLogin) {
-              this._historyService.goBack();
-            } else {
+            if (!this.isLogin && this.isMyLocationCliked) { // 비로그인 이면서 GPS 차단 및 내위치 버튼 눌렀을때 현재 페이지 유지
+              // this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG2, null, '확인', $.proxy(this._historyService.goBack, this));
+              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._historyService.goBack, this));
+              return;
+            } else if (!this.isLogin) { // 비로그인
+              // this._historyService.goBack();
+              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._historyService.goBack, this));
+            } else if(this.isLogin && this.isMyLocationCliked){ // 로그인 이면서 현재 위치 클릭 했을때
+              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인');
+              return;
+            } else { // 로그인 이면서 위치 정보 액세스 불가 일때
               this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._onCurrentLocation({
                 longitude: this.locationCoorinates.longitudeDefaultY,
                 latitude: this.locationCoorinates.latitudeDefaultX
               }), this));
             }
-            break;
-          case error.POSITION_UNAVAILABLE:
-          case error.TIMEOUT:
-          case error.UNKNOWN_ERROR:
-            // alert("Location information is unavailable. 또는 The request to get user location timed out 또는 An unknown error occurred.");
-            if (this.isLogin) {
-              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._checkTermAgreement({
-                longitude: this.locationCoorinates.longitudeDefaultY,
-                latitude: this.locationCoorinates.latitudeDefaultX
-              }), this));
-            } else {
-              this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._onCurrentLocation({
-                longitude: this.locationCoorinates.longitudeDefaultY,
-                latitude: this.locationCoorinates.latitudeDefaultX
-              }), this));
-            }
-            break;
-        } // end of switch
+
+            // break;
+        //   case error.POSITION_UNAVAILABLE:
+        //   case error.TIMEOUT:
+        //   case error.UNKNOWN_ERROR:
+        //     // alert("Location information is unavailable. 또는 The request to get user location timed out 또는 An unknown error occurred.");
+        //     if (this.isLogin) { // 로그인이면 약관이 아니라 중구위치로
+        //       this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._checkTermAgreement({
+        //         longitude: this.locationCoorinates.longitudeDefaultY,
+        //         latitude: this.locationCoorinates.latitudeDefaultX
+        //       }), this));
+        //     } else { // 비로그인 이면서 위치사용불가, 타임아웃, 모르는에러일때는  히스토리백?
+        //       this._popupService.openAlert(Tw.CUSTOMER_MOBILEWEB_GPSOFF.MSG, null, '확인', $.proxy(this._onCurrentLocation({
+        //         longitude: this.locationCoorinates.longitudeDefaultY,
+        //         latitude: this.locationCoorinates.latitudeDefaultX
+        //       }), this));
+        //     }
+        //     break;
+        // } // end of switch
       }, this)); // end of error
     } // end of if 'geolocation' in navigator
   },
+
 
 
   /**
@@ -148,11 +185,14 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @param  {Function} callback - 동의 시 실행할 callback
    */
   _showDataChargeIfNeeded: function (callback) {
-    if (Tw.BrowserHelper.isApp()) {
+    // Tw.Logger.info('thomas_check get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
+    if (Tw.BrowserHelper.isApp() && !Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {
       var confirmed = false;
       Tw.CommonHelper.showDataCharge(
         $.proxy(function () {
           confirmed = true;
+          Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
+          // Tw.Logger.info('thomas_check set이후 get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
           callback();
         }, this),
         $.proxy(function () {
@@ -207,14 +247,21 @@ Tw.CustomerAgentsearchNear.prototype = {
   _askCurrentLocationApp: function () { // app인 경우, mweb인 경우에 대한 각각의 현재위치 조회
     if (Tw.BrowserHelper.isApp()) { // 앱인 경우 현재위치 네이티브에 조회
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1 || this.locationDisagree) { // 네이티브에서 현재위치 조회 불가인 경우
+        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) { // 네이티브에서 현재위치 조회 불가인 경우
+          this.isLocationAccess = false;
+          if(this.isMyLocationCliked){
+            return;
+          }
+          // alsert('gps 정보 못 받아올때');
           this._onCurrentLocation({ // 현재 위치 확인 불가 시 중구 위치로 설정
             longitude: this.locationCoorinates.longitudeDefaultY,
             latitude: this.locationCoorinates.latitudeDefaultX
           });
+          
           // Tw.Logger.info('thomas_check joongGu Y location Test - 중구위치표시 : ', this.locationCoorinates.longitudeDefaultY); // 중구 위치 Y 좌표 확인
           // Tw.Logger.info('thomas_check joongGu X location Test - 중구위치표시 : ', this.locationCoorinates.latitudeDefaultX); // 중구 위치 X 좌표 확인
         } else { // 네이티브에서 현재 위치 조회 가능한 경우
+          this.isLocationAccess = true;
           this._checkTermAgreement(res.params);
         }
       }, this));
@@ -269,10 +316,14 @@ Tw.CustomerAgentsearchNear.prototype = {
       $.proxy(function () {
         if (this.locationDisagree) { // 위치정보 팝업 미동의 시
           // Tw.Logger.info('thomas_check 위치 정보 팝업 미동의 버튼 선택 시 중구 보여줌 '); // 중구 위치 X 좌표 확인
-          this._onCurrentLocation({
-            longitude: this.locationCoorinates.longitudeDefaultY,
-            latitude: this.locationCoorinates.latitudeDefaultX
-          }); // 동의 정보 저장하지 않고 현재 위치를 보여줌 (중구)
+          if (this.isMyLocationCliked) { // 내위치 버튼을 누른 상태가 아니면 중구 보여주고 그렇지 않으면 기존페이지 유지 (모웹 및 앱 동일)
+            return;
+          } else {
+            this._onCurrentLocation({
+              longitude: this.locationCoorinates.longitudeDefaultY,
+              latitude: this.locationCoorinates.latitudeDefaultX
+            }); // 동의 정보 저장하지 않고 현재 위치를 보여줌 (중구)
+          }
         } else { // 위치정보 팝업 동의 시
           var data = {
             twdLocUseAgreeYn: 'Y'
@@ -283,7 +334,7 @@ Tw.CustomerAgentsearchNear.prototype = {
               if (res.code === Tw.API_CODE.CODE_00) {
                 if (Tw.BrowserHelper.isApp()) {
                   this._onCurrentLocation(location);
-                } else {  // 모웹의 로그인 이면서 동의버튼 선택 시 현재 위치 노출
+                } else { // 모웹의 로그인 이면서 동의버튼 선택 시 현재 위치 노출
                   this._onCurrentLocation({
                     longitude: this.locationCoorinates.longitudeCurrentY,
                     latitude: this.locationCoorinates.latitudeCurrentX
@@ -307,6 +358,12 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @param  {Boolean} isManuallyChanged - 위치변경을 통해 임의로 위치를 변경한 경우
    */
   _onCurrentLocation: function (location, isManuallyChanged) { // isManuallyChanged: true - 임의로 현재 위치를 변경한 경우
+
+    this._location = location;
+    // Tw.Logger.info('thomas_check 현재 위치값은? :', location); // 위치 정보 응답코드 확인
+    /*
+
+   // $.proxy(this._onHashChange(), this);
     var $tmapBox = this.$container.find('#fe-tmap-box');
     // init Tmap and show
     if (Tw.FormatHelper.isEmpty(this._map)) {
@@ -317,6 +374,14 @@ Tw.CustomerAgentsearchNear.prototype = {
         httpsMode: true
       });
     }
+
+
+    // 리스트 화면에서 $tmapBox 영역 높이가 0. 지도 랜더링에 문제가 있음.
+    // 지도 랜더링 이후 view switch 필요.
+    // _switchToMap, _switchToList에서 초기 플래그로 랜더링 처리하는 방안도 고려 필요.
+    // if( this._historyService.getHash() && this._historyService.getHash() === '#list' ) {
+    // $.proxy(this._onHashChange(), this);
+    // }
 
     // Tmap 에 중심좌표 설정
     this._map.setCenter(
@@ -340,6 +405,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     if (!isManuallyChanged) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함
       this._currentMarker.addMarker(marker);
     }
+    */
 
     // Retrieve current region
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_REGION, {
@@ -353,6 +419,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       reqLat: location.latitude,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      // Tw.Logger.info('thomas_check Ajax Tmap 응답값은? : ', res);
       this._currentDo = res.searchRegionsInfo[0].regionInfo.properties.doName.split(' ')[0].trim();
       this._currentGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
 
@@ -364,10 +431,20 @@ Tw.CustomerAgentsearchNear.prototype = {
         this.$region1.text(regions[0] + ' ' + regions[1]);
         this.$region2.text(regions[2]);
       }
+
+      // 주변 매장 찾기( Tw.AJAX_CMD.GET_TMAP_REGION 요청 성공 시 호출로 변경)
+      this._requestNearShop(location);
     }, this)).fail($.proxy(function (err) {
       this._popupService.openAlert(err.status + ' ' + err.statusText);
     }, this));
+  },
 
+  /**
+   * @function
+   * @desc 주변 매장 검색 요청
+   * @param location
+   */
+  _requestNearShop: function (location) {
     // Retrieve near shops
     this._apiService.request(Tw.API_CMD.BFF_08_0008, {
         currLocX: location.longitude,
@@ -375,7 +452,11 @@ Tw.CustomerAgentsearchNear.prototype = {
       }).done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           this._nearShops = res.result.regionInfoList;
-          this._onNearShops();
+          // this._onNearShops();
+
+          // 위치와 주변 매장 정보를 가져 온 뒤 화면 초기화
+          this._onHashChange();
+          $(window).on('hashchange', $.proxy(this._onHashChange, this));
         } else {
           Tw.Error(res.coee, res.msg).pop();
         }
@@ -387,8 +468,122 @@ Tw.CustomerAgentsearchNear.prototype = {
 
   /**
    * @function
+   * @desc 지도영역 초기화
+   * @param
+   */
+  _initMap: function () {
+    var location = this._location;
+    this._mapInitilized = true;
+    // $.proxy(this._onHashChange(), this);
+    var $tmapBox = this.$container.find('#fe-tmap-box');
+    // init Tmap and show
+    if (Tw.FormatHelper.isEmpty(this._map)) {
+      this._map = new Tmap.Map({
+        div: $tmapBox.attr('id'),
+        width: '100%',
+        height: $tmapBox.width() + 'px',
+        httpsMode: true
+      });
+    }
+    // Tmap 에 중심좌표 설정
+    this._map.setCenter(
+      new Tmap.LonLat(location.longitude, location.latitude).transform('EPSG:4326', 'EPSG:3857'),
+      15
+    );
+
+    
+    // Add marker for current location
+    if (Tw.FormatHelper.isEmpty(this._currentMarker)) {
+      this._currentMarker = new Tmap.Layer.Markers();
+      this._map.addLayer(this._currentMarker);
+    } else {
+      this._currentMarker.clearMarkers();
+    }
+    var size = new Tmap.Size(38, 38);
+    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+    var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
+      .transform('EPSG:4326', 'EPSG:3857');
+    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.COMPASS, size, offset);
+    var marker = new Tmap.Marker(lonlat, icon);
+
+    // isManuallyChanged는 _hasLocation으로 봐도 되는지..?
+    if (this.isLocationAccess && (!this._hasDest || this.isMyLocationCliked)) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함, 위치 액세스가 가능하며 내위치 클릭 이거나 위도 경도가 url에 없는경우 마커 그려줌
+      this._currentMarker.addMarker(marker);
+    }
+
+    // marker 표시
+    var size = new Tmap.Size(24, 38);
+    var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
+
+    if (Tw.FormatHelper.isEmpty(this._markerLayer1)) {
+      this._markerLayer1 = new Tmap.Layer.Markers();
+      this._markerLayer2 = new Tmap.Layer.Markers();
+      this._map.addLayer(this._markerLayer1);
+      this._map.addLayer(this._markerLayer2);
+    } else {
+      this._markerLayer1.clearMarkers();
+      this._markerLayer2.clearMarkers();
+    }
+
+    var shops = this._nearShops;
+    for (var i = 0; i < shops.length; i++) {
+      var lonlat = new Tmap.LonLat(shops[i].geoX, shops[i].geoY)
+        .transform('EPSG:4326', 'EPSG:3857');
+      var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
+      var label = new Tmap.Label(shops[i].locCode);
+      var marker = new Tmap.Markers(lonlat, icon, label);
+      if (shops[i].storeType === '1') {
+        this._markerLayer1.addMarker(marker);
+      } else {
+        this._markerLayer2.addMarker(marker);
+      }
+      marker.events.register('touchstart', marker, this._onMarkerClicked);
+    }
+
+    if (this._currentBranchType === 0) {
+      this.$resultCount.text(shops.length);
+      // Tw.Logger.info('thomas_check shops.length 는? : ', shops.length);
+      // Tw.Logger.info('thomas_check shops.length 는? : ', this._regionChanged);
+      if (shops.length == 0 /*  && this._regionChanged */ ) {
+        this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
+        // this._regionChanged = false;
+      }
+    }
+    /*else  {
+         var branchType = this._currentBranchType;
+         this.$resultCount.text(_.filter(this._nearShops, function (item) {
+           return item.storeType === (branchType + '');
+         }).length);
+       } */
+
+    // this.$resultList.empty();
+    // this._onMore();
+
+  },
+  /**
+   * @function
+   * @desc 리스트 초기화
+   * @param
+   */
+  _initList: function () {
+    this._listInitilized = true;
+    if (this._currentBranchType === 0) {
+      this.$resultCount.text(this._nearShops.length);
+    } else {
+      var branchType = this._currentBranchType;
+      this.$resultCount.text(_.filter(this._nearShops, function (item) {
+        return item.storeType === (branchType + '');
+      }).length);
+    }
+    this.$resultList.empty();
+    this._onMore();
+  },
+
+  /**
+   * @function
    * @desc 주변 매장 검색이 완료되면 이를 tmap 상의 layer에 marker로 표시
    */
+  /*
   _onNearShops: function () { // Add near shops' markers
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
@@ -429,6 +624,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$resultList.empty();
     this._onMore();
   },
+  */
 
   /**
    * @function
@@ -498,6 +694,16 @@ Tw.CustomerAgentsearchNear.prototype = {
 
   /**
    * @function
+   * @desc 내위치 버튼 클릭 시
+   */
+  _onMyLocationClicked: function () {
+    this.isMyLocationCliked = true;
+    // this.$showList.hasClass('none') ? this.isShowListNone = true : this.isShowListNone = false;
+    $.proxy(this._init(), this);
+  },
+
+  /**
+   * @function
    * @desc 위치변경 클릭 시 layer popup 발생시킴
    */
   _onRegionChangeClicked: function () {
@@ -529,10 +735,15 @@ Tw.CustomerAgentsearchNear.prototype = {
       areaLLCode: largeCd,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      /*
       this._onCurrentLocation({
         longitude: res.searchPoiInfo.pois.poi[0].frontLon,
         latitude: res.searchPoiInfo.pois.poi[0].frontLat
       }, true);
+      */
+      var url = '/customer/agentsearch/near?long=' + res.searchPoiInfo.pois.poi[0].frontLon +
+        '&lat=' + res.searchPoiInfo.pois.poi[0].frontLat + this._historyService.getHash();
+      this._historyService.goLoad(url);
     }, this)).fail(function (err) {
       Tw.Error(err.status, err.statusText).pop();
     });
@@ -571,6 +782,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }, $.proxy(function (root) {
       root.on('click', 'li button', $.proxy(function (e) {
         this._popupService.close();
+        this._currentBranchType = parseInt(e.currentTarget.value, 10);
         setTimeout($.proxy(function () {
           this._onBranchTypeChanged(e);
         }, this), 300);
@@ -584,27 +796,30 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @param  {Object} e - click event
    */
   _onBranchTypeChanged: function (e) {
-    this._currentBranchType = parseInt(e.currentTarget.value, 10);
+    // this._currentBranchType = parseInt(e.currentTarget.value, 10);
     this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
     switch (this._currentBranchType) {
       case 0:
-        this._markerLayer1.setVisibility(true);
-        this._markerLayer2.setVisibility(true);
-
+        if (this._mapInitilized) {
+          this._markerLayer1.setVisibility(true);
+          this._markerLayer2.setVisibility(true);
+        }
         this.$resultCount.text(this._nearShops.length);
         break;
       case 1:
-        this._markerLayer1.setVisibility(true);
-        this._markerLayer2.setVisibility(false);
-
+        if (this._mapInitilized) {
+          this._markerLayer1.setVisibility(true);
+          this._markerLayer2.setVisibility(false);
+        }
         this.$resultCount.text(_.filter(this._nearShops, function (item) {
           return item.storeType === '1';
         }).length);
         break;
       case 2:
-        this._markerLayer1.setVisibility(false);
-        this._markerLayer2.setVisibility(true);
-
+        if (this._mapInitilized) {
+          this._markerLayer1.setVisibility(false);
+          this._markerLayer2.setVisibility(true);
+        }
         this.$resultCount.text(_.filter(this._nearShops, function (item) {
           return item.storeType === '2';
         }).length);
@@ -612,8 +827,11 @@ Tw.CustomerAgentsearchNear.prototype = {
       default:
         break;
     }
-    this.$resultList.empty();
-    this._onMore();
+
+    if (this._listInitilized) {
+      this.$resultList.empty();
+      this._onMore();
+    }
   },
 
   /**
@@ -621,10 +839,21 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @desc 지도 화면 숨기고 list 화면 노출
    */
   _switchToList: function () {
+    // if(this.$showMap.hasClass('none')){
+    this.$showMap.removeClass('none');
+    // }
+    this.$showList.addClass('none');
     this.$divMap.addClass('none');
+    // if(this.$divList.hasClass('none')){
     this.$divList.removeClass('none');
+    // }
     this.$divListBtns.removeClass('none');
-    this.$pshop.removeClass('p-shop');
+    // if(this.$pshop.hasClass('p-shop')){
+    // this.$pshop.removeClass('p-shop');
+    // }
+    if (!this._listInitilized || this.isMyLocationCliked) {
+      this._initList();
+    }
   },
 
   /**
@@ -632,9 +861,35 @@ Tw.CustomerAgentsearchNear.prototype = {
    * @desc 리스트 화면 숨기고 지도화면 노출
    */
   _switchToMap: function () {
+    // if(this.$showList.hasClass('none')){
+    this.$showList.removeClass('none');
+    // }
+    this.$showMap.addClass('none');
     this.$divList.addClass('none');
-    this.$divListBtns.addClass('none');
+    // if(this.$divMap.hasClass('none')){
     this.$divMap.removeClass('none');
-    this.$pshop.addClass('p-shop');
+    // }
+    this.$divListBtns.addClass('none');
+    // this.$divMap.removeClass('none');
+    // this.$pshop.addClass('p-shop');
+    if (!this._mapInitilized || this.isMyLocationCliked) {
+      this._initMap();
+      this._onBranchTypeChanged();
+    }
+  },
+
+  /**
+   * @function
+   * @desc hash change handler
+   */
+  _onHashChange: function () {
+    // Tw.Logger.info('thomas_check _onHashChange 내부');
+    if (!this._historyService.getHash() || this._historyService.getHash() === '#map') {
+      // Tw.Logger.info('thomas_check _onHashChange Map 내부');
+      this._switchToMap();
+    } else if (this._historyService.getHash() === '#list') {
+      // Tw.Logger.info('thomas_check _onHashChange List 내부');
+      this._switchToList();
+    }
   }
 };

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <!-- 접근성 수정 -->
+            <li><a href="#contents">본문 바로가기</a></li>
+            <!--// 접근성 수정 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">내 위치와 가까운 매장</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"> <!-- 190520 [OP002-403] 추가01 -->
+                <!-- cont-box -->
+                <!-- 2019.02.14 수정 -->
+                <div class="cont-box noborder"> <!-- //190520_수정 03 : 클래스 수정-->
+
+                    <!-- .shop-info -->
+                    <div class="shop-info">
+                        <!-- 2019.02.14 수정 -->
+                        <!-- .shop-step -->
+                        <div class="shop-box">
+                            <!-- .shop-step -->
+                            <!-- 190520_수정 02-->
+                            <div class="shop-step tod-shop-header mb20">
+                                <span class="step-tx"><em>서울</em><span class="arrow">&gt;</span><em>중구</em></span>
+                                <div class="tod-area-btnwrap"><!-- //190520 [OP002-403] 수정01 -->
+                                    <button class="btn-round2 btn-style3 tod-ico-btn"><span>내 위치</span></button>
+                                    <button class="btn-round2 btn-style3">위치 변경</button>
+                                </div> 
+                            </div>
+                            <!-- //190520_수정 02-->
+                            <!-- // .shop-step -->
+                            <!-- filter -->
+                            <!-- 190520_삭제 01-->
+                            <!-- <div class="shop-filter">
+                                <div class="inline">
+                                    <button class="bt-dropdown text-type01" title="매장 선택" aria-haspopup="true">전체</button>
+                                </div>
+                            </div> -->
+                            <!-- //190520_삭제 01-->
+                            <!-- // filter -->
+                        </div>
+                        <!-- // .shop-box -->
+                        <!-- 190520_추가 01-->
+                        <div class="shop-result">
+                            <span class="count">총 <em>32</em>개</span>
+                            <div class="inline">
+                                <button class="bt-dropdown text-type01 tod-cate-sel" title="매장 선택" aria-haspopup="true">전체</button>
+                                <!-- 웹접근성 수정 -->
+                            </div>
+                            <div class="tod-bt-alone"><!-- //190520 [OP002-403] 수정02 -->
+                                <button class="btn-round2 btn-style3">리스트 보기</button>
+                            </div>
+                        </div>
+                        <!-- //190520_추가 01-->
+                        <!-- .shop-map -->
+                        <div class="shop-map">
+                            <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:100px;left:100px;width:16px;">
+                            <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:100px;left:170px;width:16px;">
+                            <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:170px;left:100px;width:16px;">
+                            <img src="/img/ico/ico-tmap-pin.png" alt="지도 위치 핀" style="position:absolute;top:170px;left:170px;width:16px;">
+                            <img src="/img/ico/ico-tmap-compass.png" alt="지도 위치 나침반" style="position:absolute;top:125px;left:125px;width:32px" />
+                            <img src="/img/dummy/map.jpg" style="width:100%;" alt="임시이미지">
+                            <!-- .switch -->
+                            <!-- 190520_삭제 02-->
+                            <!-- <div class="btn-switch">
+                                <div class="bt-alone"><button class="bt-line-gray2">리스트 보기</button></div>
+                            </div> -->
+                            <!-- //190520_삭제 02-->
+                            <!-- // .switch -->
+                        </div>
+                        <!-- // .shop-map -->
+                    </div>
+                    <!-- // .shop-info -->
+                </div>
+                <!-- // cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

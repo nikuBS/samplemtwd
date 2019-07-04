@@ -28614,14 +28614,16 @@ input[type="radio"].formradio-small.type2 + label {
   color: #ef4b49;
   font-weight: 700; }
 
+/* 190613 수정 [OP002-1497] 혜택/할인 리스트 가로탭 좌우여백 수정(UX정합성 수정) */
 .benefit-link li:before {
   content: '';
-  width: 0.06rem;
+  width: 1px;
   height: 1rem;
   background: #f2f2f2;
   position: absolute;
   left: 1rem;
   top: 1.19rem; }
+/* //190613 수정 [OP002-1497] 혜택/할인 리스트 가로탭 좌우여백 수정(UX정합성 수정) */
 
 .benefit-link li:first-of-type {
   padding-left: 0; }
@@ -32269,7 +32271,7 @@ body.apphome .section-box {
   text-align: left; }
 
 /* 190624 수정 [OP002-1203] SK PAY */
-.full-link-list.type02 li button, .full-link-list.type02 li a {
+.full-link-list.type02 li button, .full-link-list.type02 li a, .full-link-list.type02 li .no-link {
   padding: 1.06rem 1.25rem 1.06rem 0; }
 /* //190624 수정 [OP002-1203] SK PAY */
 
@@ -35177,6 +35179,20 @@ body.apphome .section-box {
 /* 190508_[#7582/OP002-237] T앱 */
 .app-list-new.tod-new-align .app-list-bottom ul{-webkit-box-pack:start; -ms-flex-pack:start ; justify-content:flex-start; }
 
+/* 190520 추가 [OP002-403] T world 매장 찾기 */
+.tod-station-sel{display:block; clear:both; padding-top: 0.63rem}
+.tod-station-sel .bt-dropdown.text-type02{width:100%}
+.shop-info .shop-step.tod-shop-header{overflow:hidden }
+.shop-info .shop-step.tod-shop-header .step-tx{line-height:2rem}
+.shop-info .btn-round2.tod-ico-btn span{display:inline-block; padding-left:1.1875rem ; background:url('/img/ico/tod-gps-ico.png') no-repeat 0 0.5625rem; background-size:0.8125rem 0.8125rem}
+.shop-result .bt-dropdown.tod-cate-sel{padding:0.125rem 2.25rem 0 0.75rem}
+.tod-pop-dayclose-ch{margin-top:1.25rem}
+.tod-pop-dayclose-ch .custom-form{vertical-align:middle}
+.tod-pop-dayclose-ch label{display:inline-block; vertical-align:middle; font-size:0.8125rem; margin-left:0.4375rem; color:#666}
+.shop-info .shop-step.tod-shop-header .step-tx{display:block; margin-bottom:4px}
+.shop-info .shop-step.tod-shop-header .tod-area-btnwrap{display:block}
+.shop-result .tod-bt-alone{position:absolute; right:1rem; top:50%; -webkit-transform:translateY(-50%); transform:translateY(-50%)}
+
 /* 190522 추가 [OP002-375] */
 .with-payment-line .list-comp-input .select-list > li .comp-list-layout .layout-text .stext .tod-text1{padding-left:0.1875rem;font-size:0.9375rem;font-weight:normal;color:#f76252}
 .with-payment-line .tod-total-payment{padding:1.4375rem 1rem;border-top:1px solid #e1e1e1;text-align:right}
@@ -35236,6 +35252,7 @@ body.apphome .section-box {
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle .table-cell > span.link {-webkit-transform:rotate(90deg); transform:rotate(90deg);}
 .cont-actionsheet .ac-list .type3 .tod-ac-bt-toggle.open .table-cell > span.link {-webkit-transform:rotate(-90deg); transform:rotate(-90deg);}
 .full-link-list li button .inner .text.tod-txt-point, .full-link-list li a .inner .text.tod-txt-point, .full-link-list li .no-link .inner .text.tod-txt-point {color:#f76252;}
+.inputbox.inp-btn .r-btn.tod-nowrap {white-space:nowrap;}
 
 /* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
 .tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}
@@ -35255,6 +35272,13 @@ body.apphome .section-box {
 .tod-alram-box .on-off-list.new .btn-switch{-webkit-transform:translateY(-0.4375rem); transform:translateY(-0.4375rem)}
 .tod-alram-box .on-off-list.new .tod-alarm-txt .tod-link-type{color:#178bce; font-size:0.8125rem; text-decoration:underline; padding:0.125rem 0}
 .tod-alram-box .tod-alarm-close{position:absolute; width:1.25rem; height:1.25rem; right:0.4375rem; top:0.4375rem; background:url('/img/svg/icon_48px_titlebar_exit.svg') no-repeat 50% 50%; background-size:50%}
+
+/* 190613 추가 [OP002-1497] 혜택/할인 리스트 가로탭 좌우여백 수정(UX정합성 수정) */
+.horizon-fullbox .widget-box .horizontal-slide .horizontal-list.benefit-link li {padding:0 0.9375rem 0;}
+.horizon-fullbox .widget-box .horizontal-slide .horizontal-list.benefit-link li:before {left:0;}
+.tod-horizon-shadow .widget-box {position:relative;}
+.tod-horizon-shadow .widget-box:before {content:''; position:absolute; z-index:1; top:0; bottom:0; left:0; width:1rem; background:-webkit-linear-gradient(left, rgba(255,255,255,1) 20%, rgba(255,255,255,0) 100%); background:linear-gradient(to right, rgba(255,255,255,1) 20%, rgba(255,255,255,0) 100%);}
+.tod-horizon-shadow .widget-box:after {content:''; position:absolute; z-index:1; top:0; bottom:0; right:0; width:1rem; background:-webkit-linear-gradient(right, rgba(255,255,255,1) 20%, rgba(255,255,255,0) 100%); background:linear-gradient(to left, rgba(255,255,255,1) 20%, rgba(255,255,255,0) 100%);}
 
 /* 190617 [OP002-1534] baro Box 임대 내 로밍센터 영업시간 추가 노출 */
 .mapimg-area .rm-tx-hour{font-size:.81rem}
@@ -35301,3 +35325,29 @@ body.apphome .section-box {
 
 /* 190625 [OP002-1760] 레인보우 포인트 화면 개선 요청 */
 .contents-empty.tod-narrow-empty{padding:3.2rem 0}
+
+/* 190701 [OP002-1967] baro Box 이용안내 컨텐츠 개선 */
+.rm-barobox-info{font-size:.8125rem}
+.rm-barobox-info h4{font-size:.9375rem;color:#000}
+.rm-barobox-info h4 span{display:block;color:#ea002c;font-weight:bold}
+.rm-barobox-info .rm-baro-info-tx{color:#000}
+.rm-barobox-info .rm-baro-info-tx span{font-size:1.1875rem;color:#000}
+.rm-barobox-info .rm-baro-info-tx2{color:#666}
+.rm-barobox-info p span{color:#ea002c}
+.rm-barobox-info .data-a th span{font-size:.75rem;letter-spacing:-1px}
+.rm-barobox-info .data-a td{background-color:#fff}
+.rm-barobox-info .data-a td span{font-size:.75rem;letter-spacing:-1px}
+.rm-barobox-info .bullet-type li a{display:inline-block;color:#178bce;text-decoration:underline}
+.rm-barobox-info .bullet-type li span{display:inline-block;color:#333}
+.rm-barobox-info .coupon-way .acco-list .acco-box .acco-tit button{height:4.0625rem;padding:0 1rem;font-size:.8125rem;line-height:1.4615rem;font-weight:bold}
+.rm-barobox-info .coupon-way .acco-list .acco-box .acco-tit button:after{right:1rem}
+.rm-barobox-info .coupon-way .acco-list .acco-box .acco-cont{padding:0 1rem !important}
+.rm-barobox-info .recommendedrate-list .products-desc{color:#666}
+.rm-barobox-info .rm-baro-box-dataEx li{width:50%;float:left;padding:6.25rem 0 1rem;text-align:center;border-top:1px solid #e1e1e1;border-left:1px solid #e1e1e1;margin-left:-1px}
+.rm-barobox-info .rm-baro-box-dataEx li:nth-child(odd){border-left:0;margin:0}
+.rm-barobox-info .rm-baro-box-dataEx li:nth-child(-n+2){border-top:0}
+.rm-barobox-info .rm-baro-box-dataEx li strong{display:block}
+.rm-barobox-info .rm-baro-box-dataEx li.kakao{background:url(/img/product/rm-barobox-ico-kakao.png) no-repeat center 1.25rem;background-size:3.75rem auto}
+.rm-barobox-info .rm-baro-box-dataEx li.voice{background:url(/img/product/rm-barobox-ico-voicetalk.png) no-repeat center 1.25rem;background-size:3.75rem auto}
+.rm-barobox-info .rm-baro-box-dataEx li.ie{background:url(/img/product/rm-barobox-ico-ie.png) no-repeat center 1.25rem;background-size:3.75rem auto}
+.rm-barobox-info .rm-baro-box-dataEx li.map{background:url(/img/product/rm-barobox-ico-googlemap.png) no-repeat center 1.25rem;background-size:3.75rem auto}

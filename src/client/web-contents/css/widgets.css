@@ -1782,3 +1782,6 @@ li.checkbox.type01 {
 
 .rg-br-body .rg-br-id-check .widget-box.tube .rg-br-tube-list.two li.last.disabled:before {
   border-radius: 0 0.25rem 0.25rem 0; }
+
+/* 190520 추가 [OP002-403] T world 매장 찾기 */
+.tod-new-color .widget-box.tube .tube-list li.checked{background:#f76252; border-color:#f76252; box-shadow:0 0 0 1px #f76252}

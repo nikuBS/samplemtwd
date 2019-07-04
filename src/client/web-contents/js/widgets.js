@@ -49,6 +49,19 @@ skt_landing.widgets = {
         console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음
       }
     }
+
+	skt_landing.widgets.widget_headerBorder(); // 190625 [OP002-403] 추가
+  },
+    /**
+   * @summary data-header-noborder=true가 있는 경우 header의 하단 보더라인 제거. 헤더와 탭이 연속해서 있을 경우 사용.
+   * @description
+   * - {@link http://coding.tworld.co.kr:8088/html/sprint/CS_02_01_case1.html}
+   * @function
+   * @example
+   * skt_landing.widgets.widget_headerBorder();
+  */
+  widget_headerBorder: function(){
+    $('[data-header-noborder=true]').length === 1 && $('.h-belt').addClass('noborder');
   },
   /**
    * @summary ..widget-box.tube 의 ( radio, checkebox.. )등의 커스텀된 디자인 적용

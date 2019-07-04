@@ -11,7 +11,7 @@
   * @param {Object} rootEl - 최상위 element Object
   * @param {JSON} data - myt-fare.info.history.controlloer.ts 로 부터 전달되어 온 납부내역 정보
   */
-Tw.MyTFareInfoHistoryDetail = function (rootEl, data) {
+ Tw.MyTFareInfoHistoryDetail = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
 

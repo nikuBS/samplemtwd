@@ -23,8 +23,8 @@
                 <div class="cont-box nogaps">
                     <!-- .component -->
                     <div class="component">
-                        <div class="component-box tabs">
-                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                        <div class="component-box tabs" data-header-noborder="true">
+                            <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
                                         <li role="presentation" class="fe-tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
@@ -37,7 +37,8 @@
                                             <a role="tab" aria-selected="false" class="fe-custom-replace-history" href="#tube">지하철</a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> <!-- end of tab-linker -->
+                                <hr class="cont-sp type1" aria-hidden="true">
                                 <div class="tab-contents">
                                     <ul>
                                         <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
@@ -46,24 +47,24 @@
                                                 <!-- .cont-box -->
                                                 <div class="cont-box pb0">
                                                     <!-- .inputbox -->
-                                                    <span class="inputbox">
+                                                    <span class="inputbox mb20">
                                                         <span class="input">
                                                             <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" autocomplete="off" />
                                                             <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
                                                     <!-- // .inputbox -->
-                                                    <!-- .filter -->
-                                                    <div class="filter">
+                                                    <!-- .filter 201907004 삭제-->
+                                                    <!-- <div class="filter">
                                                         <div class="inline">
                                                             <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- // .filter -->
                                                     <!-- .btn-search -->
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
-                                                            <li class="bt-blue1">
+                                                            <li class="bt-red1">
                                                                 <button id="fe-btn-search-name" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
@@ -80,24 +81,24 @@
                                                 <!-- .cont-box -->
                                                 <div class="cont-box pb0">
                                                     <!-- .inputbox -->
-                                                    <span class="inputbox">
+                                                    <span class="inputbox mb20">
                                                         <span class="input">
                                                             <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch && type === 'addr' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
                                                     <!-- // .inputbox -->
-                                                    <!-- .filter -->
-                                                    <div class="filter">
+                                                    <!-- .filter 20190704 삭제-->
+                                                    <!-- <div class="filter">
                                                         <div class="inline">
                                                             <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- // .filter -->
                                                     <!-- .btn-search -->
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
-                                                            <li class="bt-blue1">
+                                                            <li class="bt-red1">
                                                                 <button id="fe-btn-search-addr" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
@@ -115,34 +116,37 @@
                                                 <div class="cont-box nogaps-btm">
                                                     <!-- 2019.02.22 역이름 검색 프로세스 수정-->
                                                     <!-- .filter -->
-                                                    <div class="filter subway">
+                                                    <div class="filter subway mb20">    <!-- mb20 넣는게 맞는지 확인 필요 20190704 -->
                                                         <div class="inline">
                                                             <button class="bt-dropdown text-type02" id="fe-select-area" title="지역선택" aria-haspopup="true">지역선택</button>
                                                         </div>
                                                         <div class="inline">
                                                             <button class="bt-dropdown text-type02" id="fe-select-line" title="노선선택" aria-haspopup="true">노선선택</button>
                                                         </div>
+                                                        <div class="tod-station-sel">
+															<button class="bt-dropdown text-type02" id="fe-select-name" title="지하철 역명 선택" aria-haspopup="true">지하철 역명 선택</button>
+														</div>
                                                     </div>
                                                     <!-- // .filter -->
-                                                    <!-- .inputbox -->
-                                                    <span class="inputbox">
+                                                    <!-- .inputbox 삭제 예정 20190704-->
+                                                    <!-- <span class="inputbox">
                                                         <span class="input">
                                                             <input id="fe-input-tube" type="text" title="지하철명" placeholder="정확한 역명 예) 홍대역(X), 홍대입구역(O)" value="<%= isSearch && type === 'tube' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
-                                                    </span>
+                                                    </span> -->
                                                     <!-- // .inputbox -->
-                                                    <!-- .filter -->
-                                                    <div class="filter">
+                                                    <!-- .filter 20190704 삭제-->
+                                                    <!-- <div class="filter">
                                                         <div class="inline">
                                                             <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- // .filter -->
                                                     <!-- .btn-search -->
                                                     <div class="btn-search">
                                                         <ul class="bt-slice">
-                                                            <li class="bt-blue1">
+                                                            <li class="bt-red1">
                                                                 <button id="fe-btn-search-tube" <%= isSearch ? undefined : 'disabled' %>>검색</button>
                                                             </li>
                                                         </ul>
@@ -161,29 +165,106 @@
                     <!--// .component -->
                 </div>
                 <!--// .cont-box -->
+
+                <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
+                        <!-- .ti-caption-gray -->
+                        <!-- <div class="ti-caption-gray"> -->
+                    <div class="cont-box bgnone noborder gaps-style03">
+                        <div class="contheader-box">
+                            <div class="totalfilter-wrap">
+                                <span class="total">총 <span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span>
+                                <!-- <button type="button" class="filter-btn">전체</button> -->
+                                <!-- <button type="button" class="filter-btn date-in">
+                                    <span class="datebox"><%= isSearch ? optionsText : '전체' %></span><span class="text">외</span> 
+                                    <span class="number pl4">2</span><span class="text">건</span>
+                                </button> -->
+                                <% if( (isSearch && optionsText.text.indexOf('전체') == -1) ||  ( isSearch &&optionsText.text.indexOf('전체') !== -1 && optionsText.count > 0)) { %>
+                                    <button type="button" class="filter-btn date-in fe-options" aria-haspopup="true">
+                                    <% } else { %>
+                                    <button type="button" class="filter-btn fe-options" aria-haspopup="true">
+                                <% } %>
+                                    <span class="datebox"><%= isSearch ? optionsText.text : '전체' %></span>
+                                    <!-- if(<%= isSearch && 'count' in optionsText %>) { -->
+                                    <% if( isSearch && optionsText.count > 1) { %>
+                                        <span class="text">외</span> 
+                                        <span class="number pl4"><%= optionsText.count - 1 %></span><span class="text">건</span>
+                                    <% } %>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fe-result <%= isSearch && result.totalCount > '0' ? undefined : 'none' %>">
+                    <div class="cont-box bgnone noborder gaps-style03">
+                        <div class="contheader-box">
+                            <div class="totalfilter-wrap">
+                                <!-- <% isSearch ? optionsText.count : '' %> -->
+                                <span class="total">총<span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span>
+                                <!-- <button type="button" class="filter-btn">전체</button> -->
+                                <% if( (isSearch && optionsText.text.indexOf('전체') == -1) ||  ( isSearch &&optionsText.text.indexOf('전체') !== -1 && optionsText.count > 0)) { %>
+                                <button type="button" class="filter-btn date-in fe-options" aria-haspopup="true">
+                                <% } else { %>
+                                <button type="button" class="filter-btn fe-options" aria-haspopup="true">
+                                <% } %>
+                                    <span class="datebox"><%= isSearch ? optionsText.text : '전체' %></span>
+                                    <!-- if(<%= isSearch && 'count' in optionsText %>) { -->
+                                    <% if( isSearch && optionsText.count > 1) { %>
+                                        <span class="text">외</span> 
+                                        <span class="number pl4"><%= optionsText.count - 1 %></span><span class="text">건</span>
+                                    <% } %>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- .cont-box -->
-                <div class="cont-box pt0">
+                <div class="cont-box nogaps-hoz">
                     <!-- .search-point -->
                     <div class="search-point">
-                        <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
-                            <!-- .ti-caption-gray -->
-                            <div class="ti-caption-gray">
-                                <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3>
-                            </div>
+
+                                        
+                            <!-- <div class="totalfilter-wrap"> -->
+                                <!-- <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3> -->
+                                <!-- <span class="total">총 <span class="number-text">0</span>개</span> -->
+                            <!-- </div> -->
                             <!-- // .ti-caption-gray -->
-                            <!-- .contents-empty -->
+                        <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
+                        <!-- .contents-empty -->
                             <div class="contents-empty">
                                 <span class="ico type1"></span>
                                 <p class="desc">검색 결과가 없습니다.<br /><strong>다시 검색해주세요.</strong></p>
                             </div>
                             <!-- // .contents-empty -->
                         </div>
+                        
 
                         <div class="fe-result <%= isSearch && result.totalCount > '0' ? undefined : 'none' %>">
+
+
                             <!-- .ti-caption-gray -->
-                            <div class="ti-caption-gray">
-                                <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3>
-                            </div>
+                            <!-- <div class="ti-caption-gray"> -->
+                            <!-- <div class="totalfilter-wrap"> -->
+                                <!-- <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3> -->
+                                <!-- <span class="total">총 <span class="number-text"><%= isSearch ? result.totalCount : '0' %></span>개</span> -->
+                                <!-- <h3 class="tit">총 <em id="fe-result-count"><%= isSearch ? result.totalCount : '0' %></em>개의 매장이 검색되었습니다.</h3> -->
+                                <!-- <button type="button" class="filter-btn date-in">
+                                        <span class="datebox">대리점, 공식인증 대리점, 애플취급점</span><span class="text">외</span> 
+                                        <span class="number pl4">2</span><span class="text">건</span>
+                                </button> -->
+
+<!-- 
+                            <div class="filter">
+                                <div class="inline">
+                                    <button class="bt-dropdown text-type01 fe-options" title="검색조건" aria-haspopup="true"><%= isSearch ? optionsText : '전체' %></button>
+                                </div>
+                            </div> -->
+
+
+                            <!-- </div> -->
+
                             <!-- // .ti-caption-gray -->
                             <!-- .shop-info -->
                             <div class="shop-info">

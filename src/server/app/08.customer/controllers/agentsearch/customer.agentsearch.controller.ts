@@ -31,7 +31,8 @@ class CustomerAgentsearch extends TwViewController {
       const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
       const area = req.query.area ? req.query.area.split(':')[0] : undefined;
       const line = req.query.line ? req.query.line.split(':')[0] : undefined;
-      const keyword = req.query.keyword;
+      const keyword = !!area && !!line ? req.query.keyword.split(':')[0] : req.query.keyword;
+      // const keyword = req.query.keyword;
       const optionsString = req.query.options;
       const page = req.query.page ? parseInt(req.query.page, 10) : 1;
       this.getQueryResult(type, storeType, keyword, area, line, optionsString, page, res, svcInfo, pageInfo).subscribe(
@@ -140,7 +141,7 @@ class CustomerAgentsearch extends TwViewController {
    * @param  {string} options - 선택된 옵션들(TPremiumStore, Apple취급점 등)
    * @returns string
    */
-  private makeOptionsText(storeType: string, options: string): string {
+  private makeOptionsText(storeType: string, options: string): any {
     let text = BRANCH_SEARCH_OPTIONS[storeType];
     let optionToShow = '';
     let count = 0;
@@ -154,12 +155,18 @@ class CustomerAgentsearch extends TwViewController {
     }
     if (count > 0) {
       text += ', ' + optionToShow;
-      if (count > 1) {
-        text += BRANCH_SEARCH_OPTIONS.etc + (count - 1) + BRANCH_SEARCH_OPTIONS.count;
-      }
+      // if (count > 1) {
+        // return {text,count};  // 옵션의 처리 업무가 1개 이상일 때 리턴
+      //   text += BRANCH_SEARCH_OPTIONS.etc + (count - 1) + BRANCH_SEARCH_OPTIONS.count;
+      // }
     }
 
-    return text;
+    // const optionsAbc = {textabc : text,countabc : count};
+    // this.logger.info(this, '[ text ] : ', text);
+    // this.logger.info(this, '[ count ] : ', count);
+    // return text;
+    // return optionsAbc;
+    return {text,count};
   }
 }
 
