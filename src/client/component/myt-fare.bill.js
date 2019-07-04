@@ -153,6 +153,106 @@ Tw.MyTFareBill.prototype = {
   },
   /**
    * @function
+   * @desc SK Pay 제3자 동의여부 체크 API 호출
+   */
+  _getSkpayAgree: function () {
+    var date = {
+      skpayMndtAgree: '',
+      skpaySelAgree: '',
+      gbn: 'R'
+    };
+    this._apiService.request(Tw.API_CMD.BFF_07_0096, date)
+      .done($.proxy(this._skpayAgreeSuccess, this))
+      .fail($.proxy(this._skpayAgreeFail, this));
+  },
+    /**
+   * @function
+   * @desc SK Pay 제3자 동의여부 체크 API 응답 처리 (성공)
+   * @param res
+   */
+  _skpayAgreeSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      if(res.result.skpayMndtAgree === 'Y') {
+        this._historyService.replaceURL('/myt-fare/bill/skpay');
+      } else {
+        this._historyService.replaceURL('/myt-fare/bill/skpay/agree');
+      }
+    } else {
+      this._skpayAgreeFail(res);
+    }
+  },
+  /**
+   * @function
+   * @desc SK Pay 제3자 동의여부 체크 API 응답 처리 (실패)
+   */
+  _skpayAgreeFail: function (res) {
+    this._err = {
+      code: res.code,
+      msg: res.msg
+    };
+    Tw.Error(this._err.code, this._err.msg).pop(); // 에러 시 공통팝업 호출
+  },
+  /**
+   * @function
+   * @desc SK Pay 제3자 동의여부 호출
+   */
+  _clickSkpay: function (e) {
+    this._getSkpayAgree();
+  },
+  /**
+   * @function
+   * @desc 일반결제 팝업
+   */
+  _clickEtcBill: function (e) {
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_LAYER_ETC_BILL_DATA;
+    this._popupService.open({
+      url: '/hbs/',
+      hbs: 'MF_09_01_01',// hbs의 파일명
+      layer: true,
+      data: data
+    },
+    $.proxy(this._onOpenPopup, this),
+    null,
+    'paymentselect',
+    this.$target);
+  },
+  /**
+   * @function
+   * @desc 포인트 결제 팝업
+   */
+  _clickPointBill: function (e) {
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_LAYER_POINT_BILL_DATA;
+    this._popupService.open({
+      url: '/hbs/',
+      hbs: 'MF_09_01_01',// hbs의 파일명
+      layer: true,
+      data: data
+    },
+    $.proxy(this._onOpenPopup, this),
+    null,
+    'paymentselect',
+    this.$target);
+  },
+  _openSelectLine: function ($layer) {
+    this.$layer = $layer;
+    this.$selectBtn = $layer.find('.fe-select');
+
+    this._bindLayerEvent();
+  },
+  _bindLayerEvent: function () {
+    if (this._isfirstPop){
+      this.$layer.on('click', '.fe-close-pop', $.proxy(function () {
+        this._historyService.go(-2);
+      }, this));
+    }
+  },
+  _afterClose: function () {
+    if (this._isClicked) {
+      this._setAmount(); // 합계 셋팅
+    }
+  },
+  /**
+   * @function
    * @desc 자동납부 데이터 셋팅
    */
   _setAutoField: function () {
@@ -193,10 +293,13 @@ Tw.MyTFareBill.prototype = {
    */
   _bindEvent: function () {
     this.$layer.on('click', '.fe-account', $.proxy(this._goPage, this, 'account'));
-    this.$layer.on('click', '.fe-card', $.proxy(this._goPage, this, 'card'));
-    this.$layer.on('click', '.fe-point', $.proxy(this._goPage, this, 'point'));
-    this.$layer.on('click', '.fe-sms', $.proxy(this._goPage, this, 'sms'));
+    this.$layer.on('click', '.fe-skpay', $.proxy(this._clickSkpay, this));
+    this.$layer.on('click', '.fe-etc-bill', $.proxy(this._clickEtcBill, this));
+    this.$layer.on('click', '.fe-point-bill', $.proxy(this._clickPointBill, this));
 
+    this.$layer.on('click', '.fe-card', $.proxy(this._goPage, this, 'card'));
+    this.$layer.on('click', '.fe-sms', $.proxy(this._goPage, this, 'sms'));
+    this.$layer.on('click', '.fe-point', $.proxy(this._goPage, this, 'point'));
     // point bind event
     this.$layer.on('click', '.fe-ok-cashbag', $.proxy(this._goPage, this, 'cashbag'));
     this.$layer.on('click', '.fe-t-point', $.proxy(this._goPage, this, 'tpoint'));
