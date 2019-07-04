@@ -1,3 +1,3 @@
-const VERSION = '1.78.0';
+const VERSION = '1.79.0';
 
 export default VERSION;
