@@ -405,6 +405,7 @@ Tw.MYT_FARE_PAYMENT_PREPAY_PASSWORD_NAME = {
 };
 
 Tw.MYT_FARE_PAYMENT_NAME = {
+  SKPAY: 'SK pay 납부',
   ACCOUNT: '계좌이체',
   CARD: '체크/신용카드',
   POINT: '포인트',
@@ -2020,4 +2021,35 @@ Tw.ALERT_MSG_5G = {
 
 Tw.WEB_ACCESSBILITY = {
   NEW_WINDOW: '새창열림'
+};
+
+Tw.ALERT_MSG_SKPAY = {
+  DEL_JOIN: {
+    TITLE: 'Tworld에 연결된 SK pay 정보를 삭제합니다.',
+    CONTENTS: '이후 간편결제 이용을 위해서는 SK PAY에 등록 된 카드 연결 및 동의를 다시 하셔야 합니다.',
+    OK_BTN: '확인',
+    CANCEL_BTN: '취소'
+  },
+  NO_JOIN: {
+    TITLE: 'Tworld에 연결된 SK pay 사용자가 아닙니다.',
+    CONTENTS: '등록 후 사용해주세요.',
+    OK_BTN: '확인'
+  },
+  DEL_OK: {
+    TITLE: '알림',
+    CONTENTS: '정상처리 되었습니다.',
+    OK_BTN: '확인'
+  },
+  NOT_RESPONSE: {
+    TITLE: '알림',
+    CONTENTS: 'SK pay가 응답하지 않습니다. 잠시 후 다시 시도해 주세요.',
+    CODE: '11SDKNORES',
+    OK_BTN: '확인'
+  },
+  PAY_LIMIT: {
+    TITLE: '알림',
+    CONTENTS: '납부 요금이 1,000원 미만일 경우, 결제가 불가합니다.',
+    CODE: '11SDKNORES',
+    OK_BTN: '확인'
+  }
 };

@@ -80,23 +80,20 @@ Tw.POPUP_TPL = {
       { title: '가려진 정보를 보는 방법', check: false, value: 'B', text: '가려진 정보를 보는 방법' }
     ]
   }],
-  FARE_PAYMENT_LAYER_DATA: [
+  FARE_PAYMENT_LAYER_ETC_BILL_DATA: [
     {
-      'title': '요금 즉시 납부',
+      'title': '일반결제 납부',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
         { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
-      ]
-    },
-    {
-      'list': [
         {
           'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
-        }
+        },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
       ]
-    },
+    }
+  ],
+  FARE_PAYMENT_LAYER_POINT_BILL_DATA: [
     {
       'title': '포인트 요금 납부 예약',
       'list': [
@@ -106,20 +103,24 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
+  FARE_PAYMENT_LAYER_DATA: [
     {
-      'title': '요금 즉시 납부',
+      'title': '',
       'list': [
         { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
+        { 'button-attr': 'type="button"', 'txt': 'SK pay 납부', 'option': 'fe-skpay' },
+        { 'button-attr': 'type="button"', 'txt': '일반결제 납부', 'option': 'fe-etc-bill' },
+        { 'button-attr': 'type="button"', 'txt': '포인트납부예약', 'option': 'fe-point-bill' }
       ]
-    },
+    }
+  ],
+  FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
     {
+      'title': '',
       'list': [
-        {
-          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
-          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
-        }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': 'SK pay 납부', 'option': 'fe-skpay' },
+        { 'button-attr': 'type="button"', 'txt': '일반결제 납부', 'option': 'fe-etc-bill' }
       ]
     }
   ],
