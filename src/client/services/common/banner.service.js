@@ -367,20 +367,13 @@ Tw.BannerService.prototype = {
           );
         })
         .sort(function(a, b) {
-          var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
-                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
-            }
-            , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
-                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
-            };
-
-            prev.expSeq = prev.bannerType < 2? Number(a.cmpgnStaDt + a.cmpgnStaHm) : Number(a.bnnrExpsSeq);
-            next.expSeq = next.bannerType < 2? Number(b.cmpgnStaDt + b.cmpgnStaHm) : Number(b.bnnrExpsSeq);
+          var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(a.bnnrExpsSeq)}
+            , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(b.bnnrExpsSeq)};
           
           if(scrnTypCd === 'R'){
-            return prev.bannerType - next.bannerType || Math.floor(Math.random() * 3) -1;
+            return prev.kind - next.kind || Math.floor(Math.random() * 3) -1;
           }else{
-            return prev.bannerType - next.bannerType || prev.expSeq - next.expSeq;
+            return prev.kind - next.kind || prev.expSeq - next.expSeq;
           }          
           
         })
