@@ -311,7 +311,7 @@ Tw.BannerService.prototype = {
           return $.extend(banner, {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: true,
-            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
+            isInternalLink: Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1 ,
             linkType: banner.tosImgLinkTrgtClCd,
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
@@ -386,7 +386,7 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: !isTos? banner.billYn === 'Y' : true, // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
-            isInternalLink: isTos? banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
+            isInternalLink: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1  : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
             linkType: isTos? banner.tosImgLinkTrgtClCd : Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
           };
           if(isTos){
