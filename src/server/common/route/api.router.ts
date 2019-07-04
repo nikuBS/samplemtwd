@@ -643,7 +643,7 @@ class ApiRouter {
                   return p;
                 }, []);
               
-              if(imgList.length > 0){
+              //if(imgList.length > 0){ // 캠페인 대상군이지만 대상 캠페인이 없으면 디폴트 출력되지 않게 해달라고 하여 수정함
                 return Observable.of({
                   code: API_CODE.CODE_00,
                   result: {
@@ -651,9 +651,9 @@ class ApiRouter {
                     imgList: imgList
                   }
                 });
-              }else{
-                return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
-              }
+              // }else{
+              //   return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+              // }
             });
           }
 
