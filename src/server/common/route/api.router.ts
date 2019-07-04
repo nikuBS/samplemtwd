@@ -78,12 +78,6 @@ class ApiRouter {
     GET_BANNER_ADMIN: { path: '/banner/admin', method: API_METHOD.GET, target: this.getBannerAdmin },
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
     GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: API_METHOD.GET, target: this.getNewBannerTos },
-
-    /*임시 API TOS배너확인후 삭제*/
-    GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: API_METHOD.GET, target: this.getBannerTosLnkgInfo  },
-    GET_BANNER_TOS_KEY: { path: '/banner/bannerTosKey', method: API_METHOD.GET, target: this.getBannerTosKey },
-    GET_BANNER_TOS_INFO: { path: '/banner/bannerTosInfo', method: API_METHOD.GET, target: this.getBannerTosInfo  },
-
     GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
     SET_MASKING_COMPLETE: { path: '/masking-complete', method: API_METHOD.POST, target: this.setMaskingComplete },
     DELETE_SESSION_STORE: { path: '/session-store', method: API_METHOD.DELETE, target: this.deleteSessionStore, },
@@ -668,52 +662,6 @@ class ApiRouter {
         return res.json(resp);
       }, (err) => {
         return res.json(err);
-      });
-  }
-
-  /**
-   * BannerTosLnkgInfo 조회
-   * @param req
-   * @param res
-   * @param next
-   */
-  private getBannerTosLnkgInfo(req: Request, res: Response, next: NextFunction) {
-    const code = req.query.code;
-    this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
-      .subscribe((resp) => {
-        res.json(resp);
-      });
-  }
-  
-  /**
-   * getBannerTosKey 조회
-   * @param req
-   * @param res
-   * @param next
-   */
-  private getBannerTosKey(req: Request, res: Response, next: NextFunction) {
-    const code = req.query.code;
-    const uId = req.query.uId;
-    this.redisService.getTosRedisKey(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ":" + uId + "*")
-      .switchMap((resp) => {
-        return this.redisService.getStringTos(resp.result); 
-      })
-      .subscribe((resp) => {
-        res.json(resp);
-      });
-  }
-
-  /**
-   * bannerTosInfo 조회
-   * @param req
-   * @param res
-   * @param next
-   */
-  private getBannerTosInfo(req: Request, res: Response, next: NextFunction) {
-    const cId = req.query.cId;
-    this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + cId)
-      .subscribe((resp) => {
-        res.json(resp);
       });
   }
 
