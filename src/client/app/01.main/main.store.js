@@ -144,10 +144,6 @@ Tw.MainStore.prototype = {
    */
   _drawTosAdminBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
-        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
-      }
-      
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
         if ( bnr.target === '7' ) {
           this._membershipBanner = {
