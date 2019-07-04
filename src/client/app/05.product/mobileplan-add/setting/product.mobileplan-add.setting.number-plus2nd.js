@@ -102,6 +102,6 @@ Tw.ProductMobileplanAddSettingNumberPlus2nd.prototype = {
     setTimeout($.proxy(function () {
       this._historyService.replaceURL('/product/callplan?prod_id=' + this._prodId);
       Tw.CommonHelper.endLoading('.container');
-    },this),500);
+    },this),1000);
   }
 };
