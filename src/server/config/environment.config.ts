@@ -24,6 +24,8 @@ const environment = {
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_GAPP: 'm-dev.tworld.co.kr:3000',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
+    SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
       host: '61.250.20.204',
       port: 9014
@@ -63,6 +65,8 @@ const environment = {
     // DOMAIN: 'http://icp-dev.tworld.co.kr',
     DOMAIN_GAPP: 'devgm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
+    SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
       host: '61.250.20.204',
       port: 9014
@@ -102,6 +106,8 @@ const environment = {
     // DOMAIN: 'http://icp-stg.tworld.co.kr',
     DOMAIN_GAPP: 'icp-stggm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
+    SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
       host: '61.250.20.204',
       port: 9014
@@ -141,6 +147,8 @@ const environment = {
     DOMAIN_GAPP: 'gapp.tworld.co.kr',
     DOMAIN_GWEB: 'gm.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
+    SKPAY_USER: 'https://pay-auth.sk-pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
+    SKPAY_PAY: 'https://pay-auth.sk-pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
       host: 'relay.signgate.com',
       port: 443
