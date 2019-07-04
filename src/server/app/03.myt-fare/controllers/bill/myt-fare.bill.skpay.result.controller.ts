@@ -67,14 +67,14 @@ class MyTFareBillSkpayResult extends TwViewController {
       if (resultUtf) {
         let resultJsonError: ResultJsonError = JSON.parse(resultUtf);
         codeError = resultJsonError.code;
-        msgError = resultJsonError.message;
+        // msgError = resultJsonError.message;
       }
       if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
         return res.redirect('/myt-fare/submain');
       } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
       } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
-        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP + " " + msgError), { pageInfo, historyDepth }));
+        return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
       } else { //정의되지 않은 오류
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo, historyDepth }));
       }
