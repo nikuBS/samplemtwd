@@ -314,7 +314,7 @@ Tw.BannerService.prototype = {
           return $.extend(banner, {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: true,
-            isInternalLink: banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL,
+            isInternalLink: Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1 ,
             linkType: banner.tosImgLinkTrgtClCd,
             bnnrFilePathNm: banner.bnnrFileNm,
             bnnrImgAltCtt: banner.imgAltCtt,
@@ -367,13 +367,20 @@ Tw.BannerService.prototype = {
           );
         })
         .sort(function(a, b) {
-          var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(a.bnnrExpsSeq)}
-            , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, expSeq: Number(b.bnnrExpsSeq)};
+          var prev = {kind: a.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
+                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
+            }
+            , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
+                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
+            };
+
+            prev.expSeq = prev.bannerType < 2? Number(a.cmpgnStaDt + a.cmpgnStaHm) : Number(a.bnnrExpsSeq);
+            next.expSeq = next.bannerType < 2? Number(b.cmpgnStaDt + b.cmpgnStaHm) : Number(b.bnnrExpsSeq);
           
           if(scrnTypCd === 'R'){
-            return prev.kind - next.kind || Math.floor(Math.random() * 3) -1;
+            return prev.bannerType - next.bannerType || Math.floor(Math.random() * 3) -1;
           }else{
-            return prev.kind - next.kind || prev.expSeq - next.expSeq;
+            return prev.bannerType - next.bannerType || prev.expSeq - next.expSeq;
           }          
           
         })
@@ -382,7 +389,7 @@ Tw.BannerService.prototype = {
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: !isTos? banner.billYn === 'Y' : true, // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
-            isInternalLink: isTos? banner.tosImgLinkClCd === Tw.TOS_BANNER_LINK_TYPE.INTERNAL : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
+            isInternalLink: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1  : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
             linkType: isTos? banner.tosImgLinkTrgtClCd : Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
           };
           if(isTos){
