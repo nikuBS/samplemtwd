@@ -694,7 +694,7 @@ class ApiRouter {
   private getBannerTosKey(req: Request, res: Response, next: NextFunction) {
     const code = req.query.code;
     const uId = req.query.uId;
-    this.redisService.getTosRedisKey(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ":" + uId + ":*")
+    this.redisService.getTosRedisKey(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ":" + uId + "*")
       .switchMap((resp) => {
         return this.redisService.getStringTos(resp.result); 
       })
