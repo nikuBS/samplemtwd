@@ -217,40 +217,6 @@ class RedisService {
       });
     });
   }
-
-  /**
-   * json data 조회
-   * @param key
-   * @param client
-   */
-  public getTosRedisKey(key): Observable<any> {
-    let client = this.tosClient;
-    this.logger.info(this, '[Get keys]', key);
-    return Observable.create((observer) => {
-      client.keys(key, (err, reply) => {
-        const resp = {
-          code: API_CODE.REDIS_SUCCESS,
-          msg: 'success',
-          result: null
-        };
-
-        if ( FormatHelper.isEmpty(reply) ) {
-          resp.code = API_CODE.REDIS_EMPTY;
-          resp.msg = NODE_API_ERROR[API_CODE.REDIS_EMPTY];
-        } else {
-          try {
-            resp.result = reply[0]; 
-          } catch ( e ) {
-            resp.code = API_CODE.REDIS_ERROR;
-            resp.msg = NODE_API_ERROR[API_CODE.REDIS_ERROR];
-          }
-        }
-        this.logger.info(this, '[Get Keys]', key, resp);
-        observer.next(resp);
-        observer.complete();
-      });
-    });
-  }
 }
 
 export default RedisService;

@@ -82,7 +82,7 @@ Tw.MainStore.prototype = {
    */
   _getTosAdminStoreBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0004' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminStoreBanner, this))
       .fail($.proxy(this._failTosStoreBanner, this));
@@ -144,10 +144,6 @@ Tw.MainStore.prototype = {
    */
   _drawTosAdminBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
-        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
-      }
-      
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
         if ( bnr.target === '7' ) {
           this._membershipBanner = {
