@@ -1752,15 +1752,17 @@ Tw.MainHome.prototype = {
         row.banner = { result: {summary : { target: row.target }, imgList : [] } };
       }
 
-      row.banner.result.imgList = row.banner.result.imgList.concat( 
-        admBanner.result.banners.filter(function(admbnr){
-          return admbnr.bnnrLocCd === row.target;
-        }).map(function(admbnr){
-          admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-          admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-          return admbnr;
-        })
-      );
+      if(admBanner.code === Tw.API_CODE.CODE_00){
+        row.banner.result.imgList = row.banner.result.imgList.concat( 
+          admBanner.result.banners.filter(function(admbnr){
+            return admbnr.bnnrLocCd === row.target;
+          }).map(function(admbnr){
+            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            return admbnr;
+          })
+        );
+      }
     })
     this._drawTosAdminBanner(result);
   },

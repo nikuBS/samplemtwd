@@ -124,40 +124,80 @@ Tw.MyTDataSubMain.prototype = {
   _initialize: function () {
     this._svcMgmtNumList = [];
     this._initScroll();
-    this._initBanners();
+    //this._initBanners();
+    this._getTosAdminMytDataBanner();
   },
+
   /**
    * @function
-   * @desc banner tos api 호출
+   * @desc 토스 배너 정보 요청
+   * @private
    */
-  _initBanners: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
-      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
-      .fail($.proxy(this._errorRequest, this));
+  _getTosAdminMytDataBanner: function () {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0008' } },
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
+    ]).done($.proxy(this._successTosAdminMytDataBanner, this));
   },
+
   /**
    * @function
-   * @desc _initBanners() 성공 콜백
+   * @desc 토스 배너 처리
+   * @param resp
+   * @private
    */
-  _successBanner: function (type, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var result = resp.result;
-      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
-      if ( isCheckBanner ) {
-        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : Tw.CommonHelper.setBannerForStatistics(result.imgList, result.summary);
-        new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
+  _successTosAdminMytDataBanner: function (banner1, admBanner) {
+    var result = [{ target: 'M', banner: banner1 }];
+
+    result.forEach(function(row){
+      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
+        if(!row.banner.result.summary){
+          row.banner.result.summary = {target: row.target};  
+        }
+        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
+        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
+      }else{
+        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
       }
-      else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
-          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
-          .fail($.proxy(this._errorRequest, this));
+
+      if(admBanner.code === Tw.API_CODE.CODE_00){
+        row.banner.result.imgList = row.banner.result.imgList.concat( 
+          admBanner.result.banners.map(function(admbnr){
+            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            return admbnr;
+          })
+        );
       }
-    }
-    else {
-      this.$container.find('[data-id=banners-empty]').hide();
-      this.$container.find('[data-id=banners]').hide();
-    }
+    })
+    this._drawTosAdminMytDataBanner(result);
   },
+
+  /**
+   * @function
+   * @desc 토스 배너 렌더링
+   * @param banners
+   * @private
+   */
+  _drawTosAdminMytDataBanner: function (banners) {
+    _.map(banners, $.proxy(function (bnr) {
+      if ( bnr.banner.result.bltnYn === 'N' ) {
+        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
+      }
+      
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) 
+          && bnr.banner.result.imgList.length > 0) {
+        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+      }else{
+        this.$container.find('[data-id=banners-empty]').hide();
+        this.$container.find('[data-id=banners]').hide();
+      }
+    }, this));
+    
+    new Tw.XtractorService(this.$container);
+
+  },
+  
   /**
    * @function
    * @desc 배너 설정유무
