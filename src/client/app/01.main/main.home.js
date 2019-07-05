@@ -36,6 +36,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this.$elArrMlsCard = [];
   this.mlsLoadingStaus = [];
   this._adid = null;
+  this._twdUrl = '';
   this.mbrNm = mbrNm || '';
 
   this._lineComponent = new Tw.LineComponent();
@@ -230,20 +231,15 @@ Tw.MainHome.prototype = {
       // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
       // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 조건문을 제거
       if ( Tw.BrowserHelper.isAndroid() ) {
+        this._twdUrl = url;
         this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._getAdid, this));
-
-        // console.log(Tw.BrowserHelper.isIos() ? 'IOS app' : Tw.BrowserHelper.isAndroid() ? 'Android app' : '기타 단말');
-  
-        if ( url.indexOf('?') > -1 ) {
-          url = url + '&adid=' + this._adid;
-        } else {
-          url = url + '?adid=' + this._adid;
-        }
+        // Native API 는 비동기로 호출되므로 링크 이동을 _getAdid 함수내에서 처리하도록 한다.
+      } else {
+        Tw.CommonHelper.openUrlExternal(url);
       }
+    } else {
+      Tw.CommonHelper.openUrlExternal(url);
     }
-
-    alert('URL : \n' + url);
-    Tw.CommonHelper.openUrlExternal(url);
   },
 
   /**
@@ -253,20 +249,25 @@ Tw.MainHome.prototype = {
    * @private
    */
   _getAdid: function (res) {
+    var url = this._twdUrl;
+    this._twdUrl = '';
+    
     if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
       return;
     }
 
     if ( Tw.BrowserHelper.isAndroid() ) {
-      alert('ADID : [' + res.params.adid + ']');
       this._adid = res.params.adid;
+
+      if ( url.indexOf('?') > -1 ) {
+        url = url + '&adid=' + this._adid;
+      } else {
+        url = url + '?adid=' + this._adid;
+      }
     }
-    
-    // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
-    // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 주석을 제거
-    // if ( Tw.BrowserHelper.isIos() ) {
-    //   this._adid = res.params.idfa;
-    // }
+
+    // 링크 이동 처리
+    Tw.CommonHelper.openUrlExternal(url);
   },
 
   /**
