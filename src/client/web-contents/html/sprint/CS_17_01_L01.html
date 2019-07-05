@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- 팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+    <!-- #skip_navigation -->
+    <!-- <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div> -->
+    <!--// #skip_navigation -->
+    <!-- //팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+
+    <div class="wrap">
+         <!-- .popup hbs -->
+         <div class="popup-page tw-popup nobg fixed-bottom"><!-- 기본배경색은 white, 회색배경색은 .nobg --><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>조건선택</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <div class="ti-caption-gray bdt titlebox-bgtype01">
+                        <h3 class="tit">필터를 선택해주세요</h3>
+                        <div class="num">
+                            <button class="resetbtn">초기화</button>
+                        </div>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <h3 class="filterlist-title">교육종류</h3>
+                        <div class="productfilter-type">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box check">
+                                    <div class="productfilter">
+                                        <ul class="select-list" role="group">
+                                            <li class="checkbox" role="checkbox" aria-checked="false">
+                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" />
+                                                <span class="text" id="aria-comp-checkbox1">스마트폰 기초 과정</span>
+                                            </li>
+                                            <li class="checkbox" role="checkbox" aria-checked="false">
+                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox2" />
+                                                <span class="text" id="aria-comp-checkbox2">스마트폰 응용 과정</span>
+                                            </li>
+											<li class="checkbox" role="checkbox" aria-checked="false">
+                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox3" />
+                                                <span class="text" id="aria-comp-checkbox3">코딩교실</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                </div>
+
+				<!-- 하단 fixed 버튼 -->
+				<div class="bt-fixed-area">
+					<ul class="bt-slice full">
+						<li class="bt-red1">
+							<button>적용하기</button>
+						</li>
+					</ul>
+				</div>
+				<!-- //하단 fixed 버튼 -->
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+
+</html>
