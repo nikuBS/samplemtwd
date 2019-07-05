@@ -89,30 +89,29 @@ class MyTHelper {
       return data;
     }
 
+    // 기본제공 데이터: (사용중인 요금제에 해당하는 공제항목으로 존재할경우 공제항목 최상단에 노출)
+    //  - usageData.gnrlData[n] 중에 svcInfo.prodId와 같은 prodId를 가진 공제항목
+    // 통합공유 데이터: (t가족모아, t끼리 데이터 선물하기, 데이터함께쓰기)
+    //  - 기본제공데이터가 있는 경우 기본제공 데이터 하단에 노출
+    //    - t가족모아 이용중인 경우 (usageData.spclData[n]중 TOTAL_SHARE_DATA_SKIP_ID에 속하는 데이터가 있는경우)
+    //      - 가능량: usageData.spclData[n].showRemained
+    //      - 사용량: usageData.spclData[n].showUsed
+    //    - 아닌 경우
+    //      - 가능량: 기본제공데이터.showRemaineds,
+    //      - 사용량: T끼리 데이터 선물하기 + 데이터 함께쓰기 사용량
+    //    - 기본제공 데이터가 있지만 기본제공 데이터량이 무제한인 경우(INFINITY_DATA_PROD_ID에 속하는 경우)엔 표시 안함[DV001-18235]
+    //  - 기본제공데이터가 없는 경우 표시안함
     const kinds = [
       MYT_DATA_USAGE.DATA_TYPE.DATA,
       MYT_DATA_USAGE.DATA_TYPE.VOICE,
       MYT_DATA_USAGE.DATA_TYPE.SMS,
       MYT_DATA_USAGE.DATA_TYPE.ETC
     ];
-    const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
+    const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목 (합산 가능한 공제항목)
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let dataArr = new Array();
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
-
-    // 기본제공 데이터: usageData.gnrlData[n] 중에 svcInfo.prodId와 같은 prodId를 가진 data 로 잔여량 최상단에 노출
-    // 통합공유 데이터:
-    //  - 기본제공데이터가 있는 경우 기본제공 데이터 하단에 노출
-    //    - 기본제공 데이터가 있지만 기본제공 데이터량이 무제한인 경우(INFINITY_DATA_PROD_ID에 속하는 경우)엔 표시 안함[DV001-18235]
-    //    - 데이터 표시 방법: (XX GB공유가능, XXGB 공유)
-    //      - usageData.spclData[n]중 TOTAL_SHARE_DATA_SKIP_ID에 속하는 데이터가 있는경우
-    //        - 가능량: usageData.spclData[n].showRemained
-    //        - 사용량: usageData.spclData[n].showUsed
-    //      - 아닌 경우
-    //        - 가능량: 기본제공데이터.showRemaineds,
-    //        - 사용량: T끼리 데이터 선물하기 + 데이터 함께쓰기 사용량
-    //  - 기본제공데이터가 없는 경우 표시안함
 
     if ( gnrlData ) {
       // 총데이터 잔여량 표시 데이터 세팅
@@ -148,14 +147,14 @@ class MyTHelper {
 
       // 기본제공 데이터 존재
       if ( usageData.hasDefaultData ) {
-        // T/O플랜인 경우 기본제공 데이터의 tOPlanSharedData에 할당
+        // t가족모아 이용중인 경우 기본제공 데이터의 tOPlanSharedData에 할당
         if ( !FormatHelper.isEmpty(tOPlanSharedData.skipId) ) {
           defaultData.tOPlanSharedData = tOPlanSharedData;
         } else {
           // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
           if ( INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) !== -1 ) {
             defaultData.sharedData = false;
-          } else {
+          } else { // T끼리 데이터 선물 사용량 + 데이터 함께쓰기 사용량 표시를 위한 키값
             defaultData.sharedData = true;
           }
         }

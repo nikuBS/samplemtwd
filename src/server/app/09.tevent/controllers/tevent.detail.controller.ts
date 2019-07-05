@@ -34,6 +34,9 @@ class TeventDetail extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const id = req.query.id;
     const htmlId = req.query.htmlId;
+    // 이벤트 상세 iframe에 들어갈 페이지 렌더링
+    // 1. 퍼블리싱에서 전달받은 html 파일명으로 views/containers/static폴더 안에 생성
+    // 2. htmlId의 값으로 파일명을 query string으로 전달(ex mTL1.1.41)
     if (htmlId) {
       return res.render('tevent.static.html', {
         htmlId: htmlId,
