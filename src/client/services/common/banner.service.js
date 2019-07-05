@@ -310,7 +310,7 @@ Tw.BannerService.prototype = {
         .map(function(banner) {
           return $.extend(banner, {
             isHTML: banner.bnnrTypCd === 'H',
-            isBill: Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1,
+            isBill: Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) === -1,
             isInternalLink: Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1 ,
             linkType: banner.tosImgLinkTrgtClCd,
             bnnrFilePathNm: banner.bnnrFileNm,
@@ -385,7 +385,7 @@ Tw.BannerService.prototype = {
           var isTos = banner.kind === Tw.REDIS_BANNER_TYPE.TOS;
           var temp = {
             isHTML: banner.bnnrTypCd === 'H',
-            isBill: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1 : banner.billYn === 'Y', // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
+            isBill: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) === -1 : banner.billYn === 'Y', // TOS인경우 기존에 무조건 과금으로 입력된(확인필요함)
             isInternalLink: isTos? Tw.TOS_BANNER_LINK_TYPE.INTERNAL.indexOf(banner.tosImgLinkClCd) > -1  : banner.imgLinkTrgtClCd === Tw.BANNER_LINK_TYPE.INTERNAL,
             linkType: isTos? banner.tosImgLinkTrgtClCd : Tw.TOS_BANNER_LINK_TARGET[_.invert(Tw.BANNER_LINK_TARGET)[banner.linkTypCd]]
           };
