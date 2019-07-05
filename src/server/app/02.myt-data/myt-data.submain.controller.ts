@@ -163,12 +163,15 @@ class MytDataSubmainController extends TwViewController {
         data.refill = refill;
       }
 
+      // 무선 여부 확인
       if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
         data.isWireLess = true;
       }
 
       const reqBkdArr = new Array();
 
+      // 충전,선물 이력 건수 조회 후 이력이 있는 경우에만 해당 이력 API 호출(성능 개선건 반영)[DV001-13474]
+      // PPS인 경우 데이터한도요금제 충전내역, 팅/쿠키즈/안심음성 충전내역만 조회
       if (this.isPPS) {
         reqBkdArr.push(this._getDataChargeBreakdown());
         reqBkdArr.push(this._getEtcChargeBreakdown());
