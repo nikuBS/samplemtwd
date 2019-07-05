@@ -35,7 +35,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn,
   this._isActRep = actRepYn === 'Y';
   this.$elArrMlsCard = [];
   this.mlsLoadingStaus = [];
-
+  this._adid = null;
   this.mbrNm = mbrNm || '';
 
   this._lineComponent = new Tw.LineComponent();
@@ -224,7 +224,47 @@ Tw.MainHome.prototype = {
    */
   _onClickExternal: function ($event) {
     var url = $($event.currentTarget).data('url');
+
+    // 모바일T App 을 통하여 접근한 경우에만 adid 값을 넘김
+    if ( Tw.BrowserHelper.isApp() ) {
+      // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
+      // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 조건문을 제거
+      if ( Tw.BrowserHelper.isAndroid() ) {
+        this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._getAdid, this));
+
+        // console.log(Tw.BrowserHelper.isIos() ? 'IOS app' : Tw.BrowserHelper.isAndroid() ? 'Android app' : '기타 단말');
+  
+        if ( url.indexOf('?') > -1 ) {
+          url = url + '&adid=' + this._adid;
+        } else {
+          url = url + '?adid=' + this._adid;
+        }
+      }
+    }
+
     Tw.CommonHelper.openUrlExternal(url);
+  },
+
+  /**
+   * @function
+   * @desc
+   * @param res
+   * @private
+   */
+  _getAdid: function (res) {
+    if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
+      return;
+    }
+
+    if ( Tw.BrowserHelper.isAndroid() ) {
+      this._adid = res.params.adid;
+    }
+    
+    // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
+    // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 주석을 제거
+    // if ( Tw.BrowserHelper.isIos() ) {
+    //   this._adid = res.params.idfa;
+    // }
   },
 
   /**
