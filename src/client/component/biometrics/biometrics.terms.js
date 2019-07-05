@@ -7,12 +7,12 @@
 /**
  * @class
  * @desc 설정 > 생체인증 > 약관 동의
- * @param userId
+ * @param mbrChlId
  * @constructor
  */
-Tw.BiometricsTerms = function (userId) {
+Tw.BiometricsTerms = function (mbrChlId) {
   this._callback = null;
-  this._userId = userId;
+  this._mbrChlId = mbrChlId;
 
   this._popupService = Tw.Popup;
 };
@@ -107,7 +107,7 @@ Tw.BiometricsTerms.prototype = {
    * @private
    */
   _onClickConfirm: function () {
-    var biometiricsCert = new Tw.BiometricsCert(this._userId);
+    var biometiricsCert = new Tw.BiometricsCert(this._mbrChlId);
     biometiricsCert.open(this._callback, $.proxy(this._onCloseCallback, this));
   },
 
