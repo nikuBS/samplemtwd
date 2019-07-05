@@ -242,6 +242,7 @@ Tw.MainHome.prototype = {
       }
     }
 
+    alert('URL : \n' + url);
     Tw.CommonHelper.openUrlExternal(url);
   },
 
@@ -257,6 +258,7 @@ Tw.MainHome.prototype = {
     }
 
     if ( Tw.BrowserHelper.isAndroid() ) {
+      alert('ADID : [' + res.params.adid + ']');
       this._adid = res.params.adid;
     }
     
