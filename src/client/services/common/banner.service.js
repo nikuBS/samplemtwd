@@ -371,7 +371,7 @@ Tw.BannerService.prototype = {
                       bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
             }
             , next = {kind: b.kind === Tw.REDIS_BANNER_TYPE.TOS?0:1, 
-                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(a.tosBatCmpgnSerNum||'A').substr(0,1)]
+                      bannerType: {'R': 0,'C': 1, 'D': 2, 'A': 3}[(b.tosBatCmpgnSerNum||'A').substr(0,1)]
             };
 
             prev.expSeq = prev.bannerType < 2? Number(a.cmpgnStaDt + a.cmpgnStaHm) : Number(a.bnnrExpsSeq);
