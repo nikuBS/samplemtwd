@@ -18,7 +18,7 @@
     <div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
         <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
             <!-- #header -->
-            <%- include('../components/header.component.html', { title: '개인정보 제3자 제공 동의', type: 'popup', svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
+            <%- include('../components/header.component.html', { title: 'SK pay 납부 약관동의', type: 'popup', svcInfo: data.svcInfo, pageInfo: data.pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap" data-id="container">
@@ -48,11 +48,11 @@
                                                     <input type="checkbox" id="chk2" name="checkbox1" title="개인정보 제3자 제공 동의" value="" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text tod-pdtype2" for="chk2">
-                                                            <span class="mtext">혜택 제공을 위한 제3자 제공, 처리위탁 동의 (필수)</span>
+                                                            <span class="mtext">개인정보 제3자 제공 동의 (필수)</span>
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view" data-type="77"><span class="blind">혜택 제공을 위한 제3자 제공, 처리위탁 동의 약관 자세히 보기</span></button>
+                                                <button class="agree-view" data-type="77"><span class="blind">개인정보 제3자 제공 동의 약관 자세히 보기</span></button>
                                             </li>
                                         </ul>  
                                     </div>
