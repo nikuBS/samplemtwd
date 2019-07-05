@@ -375,7 +375,9 @@ Tw.BannerService.prototype = {
             next.expSeq = next.bannerType < 2? Number(b.cmpgnStaDt + b.cmpgnStaHm) : Number(b.bnnrExpsSeq);
           
           if(scrnTypCd === 'R'){
-            return prev.bannerType - next.bannerType || Math.floor(Math.random() * 3) -1;
+            var isTos = prev.kind === Tw.REDIS_BANNER_TYPE.TOS && next.kind === Tw.REDIS_BANNER_TYPE.TOS;
+            // TOS인경우 랜덤을 적용하지 않음
+            return prev.bannerType - next.bannerType || isTos? prev.expSeq - next.expSeq : Math.floor(Math.random() * 3) -1;
           }else{
             return prev.bannerType - next.bannerType || prev.expSeq - next.expSeq;
           }          
