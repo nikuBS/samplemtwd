@@ -7,15 +7,15 @@
 /**
  * @class
  * @desc 설정 > 생체인증 > 등록 해제
- * @param userId
+ * @param mbrChlId
  * @constructor
  */
-Tw.BiometricsDeregister = function (userId) {
+Tw.BiometricsDeregister = function (mbrChlId) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = Tw.HistoryService();
 
-  this._userId = userId;
+  this._mbrChlId = mbrChlId;
   this._cancelFido = false;
   this._goRegister = false;
 
@@ -62,10 +62,10 @@ Tw.BiometricsDeregister.prototype = {
   _onCloseCancelFido: function () {
     if ( this._cancelFido ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId,
         value: 'N'
       });
-      this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, { svcMgmtNum: this._userId }, $.proxy(this._onFidoDeRegister, this));
+      this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, { svcMgmtNum: this._mbrChlId }, $.proxy(this._onFidoDeRegister, this));
     }
   },
 
@@ -78,7 +78,7 @@ Tw.BiometricsDeregister.prototype = {
   _onFidoDeRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === this.ERROR_CODE.COMPLETE ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId,
         value: 'N'
       });
       this._openComplete();
@@ -129,7 +129,7 @@ Tw.BiometricsDeregister.prototype = {
    */
   _onCloseBioDeRegister: function () {
     if ( this._goRegister ) {
-      this._biometricsTerm = new Tw.BiometricsTerms(this._userId);
+      this._biometricsTerm = new Tw.BiometricsTerms(this._mbrChlId);
       this._biometricsTerm.open(this._callback);
     }
   }
