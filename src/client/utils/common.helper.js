@@ -173,7 +173,7 @@ Tw.CommonHelper = (function () {
   var showDataCharge = function (confirmCallback, closeCallback) {
     Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
       $.proxy(function (res) {
-        if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
+        if ( res.resultCode === Tw.NTV_CODE.CODE_00 /*&& !res.params.isWifiConnected */) {
           Tw.Popup.openConfirm(
             Tw.POPUP_CONTENTS.NO_WIFI,
             null,
