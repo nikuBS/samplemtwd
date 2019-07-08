@@ -2,7 +2,7 @@ const environment = {
   local: {
     BFF_SERVER: 'http://61.250.19.37:31020',
     BFF_SERVER_G: 'http://211.188.180.73:31010',
-    CDN: 'http://localhost:3001',
+    CDN: 'http://172.23.249.77:3001',
     CDN_ORIGIN: 'http://localhost:3001',
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
