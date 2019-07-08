@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body><!-- 배경이 흰색일 경우 .bg-white -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt"><!-- 보더라인 없을 경우 .noborder -->
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <h1 class="h-tit">행복커뮤니티 센터</h1>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true"/>
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<div class="tod-visualheader">
+						<i class="ico happy"></i>
+						<h3 class="tit">행복커뮤니티 센터란?</h3>
+						<div class="text">
+							고객의 더 나은 ICT 생활을 위해 SK텔레콤 매장이 제공하는 종합 ICT 교육/편의 서비스입니다.<br>
+							SK텔레콤은 행복커뮤니티 센터를 통해 지역사회와 소통하고, 전 국민의 ICT 삶의 질 향상을 위해 노력하고 있습니다.
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true"/>
+				<!-- .cont-box -->
+				<div class="cont-box nogaps bgnone">
+					<!-- .component -->
+					<div class="component">
+						<div class="component-box tabs">
+							<div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+								<div class="tab-linker tod-multiline">
+									<ul role="tablist">
+										<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">알기쉬운<br>스마트폰 교실</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+										<li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">신나는<br>코딩교실</a></li>
+										<li role="tab" aria-selected="true" aria-controls="tab3-tab" id="tab3"><a href="">갤러리</a></li>
+									</ul>
+								</div>
+								<div class="tab-contents">
+									<ul>
+										<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
+											<!-- 알기쉬운 스마트폰 교실 탭내용 -->
+											<!-- //알기쉬운 스마트폰 교실 탭내용 -->
+										</li>
+										<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+											<!-- 신나는 코딩교실 탭내용 -->
+											<!-- //신나는 코딩교실 탭내용 -->
+										</li>
+										<li role="tabpanel" id="tab3-tab" aria-labelledby="tab3" aria-selected="true">
+											<!-- 갤러리 탭내용 -->
+											<!-- .cont-box -->
+											<div class="cont-box tod-visualsummary">
+												<p>“ 갇혀 있던 작품이 빛을 볼 수 있도록, 능력은 있지만<br> 기회가 없던 작가들에게<br> <span class="tx-bold">SK텔레콤이 전시 공간을 지원</span>합니다. ”</p>
+											</div>
+											<!--// .cont-box -->
+
+											<!-- .cont-box -->
+											<div class="cont-box nogaps">
+												<!-- .widget -->
+												<div class="widget">
+													<div class="widget-box accordion">
+														<div class="acco-cover"><!-- toggle : 한개만 열기 -->
+															<div class="acco-style tod-renew-bgnone linetop">
+																<ul class="acco-list pd0"><!-- .on: 열기 -->
+																	<li class="acco-box">
+																		<div class="acco-tit"><button role="button" aria-pressed="false">서울-종각점</button></div>
+																		<div class="acco-cont">
+																			<div class="inner tod-program-intro">
+																				<p class="tit-copy mb24">김옥정 작가전 “지친 일상으로부터의 치유”</p>
+																				<ul>
+																					<li class="ico-wrap">
+																						<i class="ico ico06"></i>
+																						<div class="text-wrap">
+																							<em class="stit">작가 소개</em>
+																							<p class="txt tod-txcolor1">김옥정 작가(1993년생)</p>
+																							<p class="txt mt6">&lt;경력&gt;
+																								<br>개인전 1회(2018년)
+																								<br>단체전 2회(2016~2017년)
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico07"></i>
+																						<div class="text-wrap">
+																							<em class="stit">작품 소개</em>
+																							<p class="txt">자연물의 유기적인 곡선을 바탕으로<br> 원과 선이 중첩하여 유기적 형태의 자연을 그린 작품</p>
+																							<p class="txt mt6">열대우림처럼 표현된 자연을 감상하며 지친 일상으로부터 치유</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico03"></i>
+																						<div class="text-wrap">
+																							<em class="stit">매장 주소 / 오픈 시간 / 전시 일자</em>
+																							<p class="txt">주소 : 서울시 종로구 우정국로 6 (02-739-3345)
+																								<br>오픈 시간 : 11시~20시
+																								<br>전시 일자 : 2019.5.1~2019.6.23(8주)
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico08"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 작품</em>
+																							<div class="thumb-wrap"><img src="/img/customer/img-happygallery1_01.png" alt="&lt;tree dance&gt; 장지에 채색 162x260cm, 2018"></div>
+																							<div class="thumb-wrap col mt16">
+																								<img class="tod-fleft" src="/img/customer/img-happygallery1_02.png" alt="&lt;umbrella tree_01&gt; 장지에 아교와 피그먼트 100x80.3cm, 2018">
+																								<img class="tod-fright" src="/img/customer/img-happygallery1_03.png" alt="&lt;umbrella tree_02&gt; 장지에 아교와 피그먼트 91x72.7.3cm, 2018">
+																							</div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</li>
+																	<li class="acco-box">
+																		<div class="acco-tit"><button role="button" aria-pressed="false">인천-인천지점</button></div>
+																		<div class="acco-cont">
+																			<div class="inner tod-program-intro">
+																				<p class="tit-copy mb24">“라이프 인 컬러”전</p>
+																				<ul>
+																					<li class="ico-wrap">
+																						<i class="ico ico09"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 소개</em>
+																							<p class="txt tod-txcolor1">&lt;라이프 인 컬러&gt;전은 우리의 일상을<br> 다채로운 시각으로 바라보는 젊은 예술가<br> 7인을 소개합니다.</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico07"></i>
+																						<div class="text-wrap">
+																							<em class="stit">작품 소개</em>
+																							<p class="txt">젊은 작가들의 보통의 일상에서<br> 영감을 받아 감각적인 컬러로 표현함.</p>
+																							<p class="txt tod-txcolor1 mt6">&lt;판매사이트&gt;
+																								<br><a href="https://smartstore.naver.com/weenu" target="_blank" title="새창" role="button" class="bt-link-tx underline">https://smartstore.naver.com/weenu</a>
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico03"></i>
+																						<div class="text-wrap">
+																							<em class="stit">매장 주소 / 오픈 시간 / 전시 일자</em>
+																							<p class="txt">주소 : 인천광역시 남동구 구월동 1459 (080-011-6000)
+																								<br>오픈 시간 : 09시~18시(주말 및 공휴일 휴무)
+																								<br>전시 일자 : 2019.7.1~2019.11.30(22주)
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico08"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 작품</em>
+																							<div class="thumb-wrap"><img src="/img/customer/img-happygallery2_01.png" alt="가수정 &lt;Looking right&gt; 영화같은 삶을 꿈꾸는 작가. 삶의 감정을 영화 속 인물을 통해 작가만의 색채로 다시 표현되다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_02.png" alt="이엘리 &lt;In your heart&gt; 그로테스크하면서도 재기발랄한 캐릭터들의 세상을 그리는 작가. 진실되고 자유로운 표현을 통해 일상 속 판타지를 상상하다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_03.png" alt="김유림 &lt;TOMATOMA_LONDON&gt; 관계의 소중함에 대해 이야기하는 작가. 같아 보이지만 제각각이 다른 빨간 지붕의 마을'토마토마'를 통해 다양성과 조화로움이 공존하는 나만의 유토피아를 그리다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_04.png" alt="리나박 &lt;The moment of love&gt; 순간의 감정을 기록하는 작가. 존재하는 모든 것들로부터의 감정을 기록하다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_05.png" alt="김주은 &lt;APT.&gt; 채울 수 없는 공허함에 대해 이야기하는 작가. 미숙하지만 강렬했던 우리 청춘의 모습을 추억한다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_06.png" alt="김하늘 &lt;Girl in White&gt; 감정을 직관적으로 표현하는 작가. 작품마다 달린 타이틀, 표정이 없는 모습이 주는 모호함을 통해 우리 스스로의 감정에 질문을 던진다."></div>
+																							<div class="thumb-wrap mt8"><img src="/img/customer/img-happygallery2_07.png" alt="만욱 [따뜻한 스웨터를 입은 차가운 남자] 나무 판넬 위에 그림을 그리는 작가. 편견없이 우리의 본 모습 그대로를 서로 사랑할 수 있는 세상을 꿈꾼다."></div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</li>
+																	<li class="acco-box">
+																		<div class="acco-tit"><button role="button" aria-pressed="false">전북-전주지점</button></div>
+																		<div class="acco-cont">
+																			<div class="inner tod-program-intro">
+																				<p class="tit-copy mb24">“물결, 연결로 서사하다”</p>
+																				<ul>
+																					<li class="ico-wrap">
+																						<i class="ico ico06"></i>
+																						<div class="text-wrap">
+																							<em class="stit">참여작가 소개</em>
+																							<p class="txt tod-txcolor1">고형숙·김성혁·민경박·장금범·서완호·임주아·최은우</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico07"></i>
+																						<div class="text-wrap">
+																							<em class="stit">작품 소개</em>
+																							<p class="txt">Artist Lab 물왕멀7인의 예술가들은 ‘연결’을 주제로<br> SKT전주지점의 주변 모습들을 각자의 시각으로 풀어낸 작품</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico03"></i>
+																						<div class="text-wrap">
+																							<em class="stit">매장 주소 / 오픈 시간 / 전시 일자</em>
+																							<p class="txt">주소 : 전라북도 전주시 완산구 기린대로 194
+																								<br>오픈 시간 : 09시~18시(주말 및 공휴일 휴무)
+																								<br>전시 일자 : 2019.5.22~2019.8.2(11주)
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico08"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 작품</em>
+																							<div class="thumb-wrap"><img src="/img/customer/img-happygallery3_01.png" alt="&lt;연결 Connect&gt; 72.7x90.9cm, oil on canvas, 2019"></div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</li>
+																	<li class="acco-box">
+																		<div class="acco-tit"><button role="button" aria-pressed="false">부산-서면지점</button></div>
+																		<div class="acco-cont">
+																			<div class="inner tod-program-intro">
+																				<p class="tit-copy mb24">“Tomorrow ; 불완전한 결정” 전</p>
+																				<ul>
+																					<li class="ico-wrap">
+																						<i class="ico ico09"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 소개</em>
+																							<p class="txt tod-txcolor1">&lt;Tomorrow ; 불완전한 결정&gt;전은 각자의 개성은 다르지만<br> 열렬히 꿈을 쫓는 젊은 5명의 청년 예술가의 모습을 보여주는 전시이다.</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico07"></i>
+																						<div class="text-wrap">
+																							<em class="stit">작품 소개</em>
+																							<p class="txt tod-txcolor1">부산 동아대학교 예술체육대학 미술학과 5인전으로<br> 불투명한 미래지만 하고자 하는 열정 하나로 꿈을 향해 나아가는 젊은 작가들의 의지를 표현함.</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico03"></i>
+																						<div class="text-wrap">
+																							<em class="stit">매장 주소 / 오픈 시간 / 전시 일자</em>
+																							<p class="txt">주소 : 부산광역시 부산진구 신천대로 258
+																								<br>오픈 시간 : 평일 09:00-18:00(주말 및 공휴일 휴무)
+																								<br>전시 일자 : 2019.6.27~2019.08.30
+																							</p>
+																						</div>
+																					</li>
+																					<li class="ico-wrap mt24">
+																						<i class="ico ico08"></i>
+																						<div class="text-wrap">
+																							<em class="stit">전시 작품</em>
+																							<div class="thumb-wrap col">
+																								<img class="tod-fleft" src="/img/customer/img-happygallery4_01.png" alt="김성훈 &lt;기록찍기&gt; 폐가, 종이에 안료, 117x91cm, 2019">
+																								<img class="tod-fright" src="/img/customer/img-happygallery4_02.png" alt="박윤주 &lt;무제&gt; 162.2×130.3(cm), oil painting, 2019.JPG">
+																							</div>
+																							<div class="thumb-wrap col mt16">
+																								<img class="tod-fleft" src="/img/customer/img-happygallery4_03.png" alt="천해원 &lt;little forest&gt; 116 ×91(cm), 아크릴, 실 2018">
+																								<img class="tod-fright" src="/img/customer/img-happygallery4_04.png" alt="손형호 &lt;자괴감의자화상&gt; 162.2×130.3(cm), oil painting, 2019">
+																							</div>
+																							<div class="thumb-wrap col mt16">
+																								<img src="/img/customer/img-happygallery4_05.png" alt="박서진 &lt;티타임&gt; 116cm x 91cm, 장지에 혼합재료, 2019.JPG">
+																							</div>
+																						</div>
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!--// .widget -->
+											</div>
+											<!--// .cont-box -->
+											<!-- //갤러리 탭내용 -->
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .component -->
+				</div>
+				<!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>
