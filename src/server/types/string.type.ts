@@ -1245,3 +1245,10 @@ export const MOBILEPLAN_ADD_ERROR_MSG = {
     NON_USER: '5GX 프라임, 5GX 플래티넘 이용중인 고객들 대상으로 가입 가능한 부가서비스입니다.'
   }
 };
+
+export const HAPPYCOM_SEARCH_OPTIONS = {
+  all: '전체',
+  speedYn: '스마트폰 기초 과정',
+  applEduYn: '스마트폰 응용 과정',
+  codingEduYn: '코딩교실'
+};
