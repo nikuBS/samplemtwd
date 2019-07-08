@@ -10,6 +10,7 @@ export enum REDIS_KEY {
   PRODUCT_COMPARISON = 'ProductComparison:',
   PRODUCT_DOWNGRADE = 'ProductDownGrade:',
   PRODUCT_DOWNGRADE_TYPE = 'ProductDownGradeType:',
+  PRODUCT_CHANGEGUIDE = 'ProductChgGuidMsg:',
 
   SC_URL = 'ScuturlApi:',
   QUICK_MENU = 'UserQuickMenuByUser:',
