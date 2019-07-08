@@ -28,29 +28,31 @@
         <!-- .container-wrap -->
         <div class="container-wrap">
             <div class="container">
-                <div class="complete-wrap">
+                <div class="complete-wrap tod-complete-wrap">
                     <div class="title-box">
-                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <i class="icon-comm-bi122"><span class="blind">T월드 - 안내</span></i>
                         <p class="tx-tit"><span class="tx-highlight">이용에 불편을 드려서 죄송합니다.</span></p>
                     </div>
                     <div class="tx-contents">
-                        <% if (code === 401) { %>
-                        <p class="basic-txt">연결하려는 페이지에 장애로 인하여<br />일시적으로 페이지를 불러올 수 없습니다.
-                            <br /><br />새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
-                        </p>
-                        <% } else if (code === 403) { %>
-                        <p class="basic-txt">비정상적인 접근으로 페이지 로딩에 실패하였습니다.<br />정상적인 경로를 이용하여 주십시오.</p>
-                        <% } else if (code === 404) { %>
-                        <p class="basic-txt">요청하신 페이지를 찾을 수 없습니다.
-                            <br /><br />찾으시는 페이지가 삭제되었거나<br />이름이 변경된 경우 사용할 수 없습니다.
-                        </p>
-                        <% } else { %>
-                        <p class="basic-txt">
-                            서버 사용량이 폭주하거나, 내부 오류가 발생하였습니다.<br /><br />
-                            이에 요청된 요구사항의 처리가 불가능하여<br />현재 사용할 수 없습니다.<br />
-                            새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
-                        </p>
-                        <% } %>
+                        <div class="tx-desc-wrap">
+                            <% if (code === 401) { %>
+                            <p class="basic-txt">연결하려는 페이지에 장애로 인하여<br />일시적으로 페이지를 불러올 수 없습니다.
+                                <br /><br />새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
+                            </p>
+                            <% } else if (code === 403) { %>
+                            <p class="basic-txt">비정상적인 접근으로 페이지 로딩에 실패하였습니다.<br />정상적인 경로를 이용하여 주십시오.</p>
+                            <% } else if (code === 404) { %>
+                            <p class="basic-txt">요청하신 페이지를 찾을 수 없습니다.
+                                <br /><br />찾으시는 페이지가 삭제되었거나<br />이름이 변경된 경우 사용할 수 없습니다.
+                            </p>
+                            <% } else { %>
+                            <p class="basic-txt">
+                                서버 사용량이 폭주하거나, 내부 오류가 발생하였습니다.<br /><br />
+                                이에 요청된 요구사항의 처리가 불가능하여<br />현재 사용할 수 없습니다.<br />
+                                새로고침을 하시거나 잠시 후 이용해 주시기 바랍니다.
+                            </p>
+                            <% } %>
+                        </div>
                         <% if (!(code === 403 || code === 404)) { %>
                         <ul class="bt-slice item-one">
                             <li><button type="button" class="btn-round2 btn-style3 fe-reload">새로고침</button></li>
@@ -71,7 +73,7 @@
                 <% if (code === 403) { %>
                 <li><a href="/main/home" type="button" class="btn-floating btn-style2">홈으로</a></li>
                 <% } else { %>
-                <li><button type="button" class="btn-floating btn-style2 fe-common-back">돌아가기</button></li>
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
                 <% } %>
             </ul>
         </div>

@@ -35326,6 +35326,16 @@ body.apphome .section-box {
 /* 190625 [OP002-1760] 레인보우 포인트 화면 개선 요청 */
 .contents-empty.tod-narrow-empty{padding:3.2rem 0}
 
+/* 190627 [OP002-1908] 공통 에러코드 팝업 레이아웃 개선 */
+.icon-comm-bi122 {display:inline-block; width:3.75rem; height:3.75rem; background:url('/img/ico/ico-comm-bi122.png') no-repeat 0 0; background-size: 100% 100%;}
+.icon-comm-errorcode{display:inline-block; width:0.875rem; height:0.625rem;background:url('/img/ico/ico-error-code.png') no-repeat 0 0;background-size: 100% 100%;}
+.complete-wrap.tod-complete-wrap .tod-error-code{position:fixed; right:16px; top:10px; font-size:0;}
+.complete-wrap.tod-complete-wrap .tod-error-code .txt-code{font-size:0.75rem; padding-left:0.32rem;}
+.complete-wrap.tod-complete-wrap .title-box .tx-tit, .tod-complete-wrap .tx-contents .tx-desc-wrap{padding-top:3rem;}
+.complete-wrap.tod-complete-wrap .tx-contents{padding-top:0;}
+.complete-wrap.tod-complete-wrap button.bt-link-tx.underline, 
+.complete-wrap.tod-complete-wrap a.bt-link-tx.underline{padding-top:0 !important;padding-bottom:0 !important;}
+
 /* 190701 [OP002-1967] baro Box 이용안내 컨텐츠 개선 */
 .rm-barobox-info{font-size:.8125rem}
 .rm-barobox-info h4{font-size:.9375rem;color:#000}
@@ -35383,12 +35393,13 @@ body.apphome .section-box {
 .tab-area.new01 .tab-linker.tod-multiline ul li a, .tab-area.new01 .tab-linker.tod-multiline ul li button {height:auto; line-height:1.3;}
 .search-point .bn-search .inner .ico.tod-resize {background-size:75% !important; background-position:100% 50% !important;}
 .search-point.tod-type2 .bn-search {padding:0; background:none;}
-.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-cont {padding:0 1rem; background:none;}
-.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-cont .inner {border-top:1px solid #e1e1e1; padding:1.875rem 0;}
+.accordion .tod-renew .acco-list .acco-box .acco-tit button, .accordion .tod-renew .acco-list .acco-box .acco-tit a,
+.accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit button, .accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit a {padding:1.0625rem 2.5rem 1rem 1rem;}
+.accordion .tod-renew.linetop .acco-list, .accordion .tod-renew-bgnone.linetop .acco-list {position:relative;}
+.accordion .tod-renew.linetop .acco-list:before, .accordion .tod-renew-bgnone.linetop .acco-list:before {content:''; position:absolute; top:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
 .accordion .tod-renew-bgnone .acco-list .acco-box.on:after, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view:after {left:1rem; right:1rem;}
-.accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit button, .accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit a {padding:1rem 2.5rem 1rem 1rem !important;}
-.accordion .tod-renew-bgnone.linetop .acco-list {position:relative;}
-.accordion .tod-renew-bgnone.linetop .acco-list:before {content:''; position:absolute; top:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
+.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {position:relative; background:none;}
+.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont:before, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont:before {content:''; position:absolute; top:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
 .shop-info .shop-tag .tag.tod-color-happy1 {background-color:#00a49b;}
 .shop-info .shop-tag .tag.tod-color-happy2 {background-color:#fa6501;}
 .shop-info .shop-tag .tag.tod-color-happy3 {background-color:#4e7ac5;}

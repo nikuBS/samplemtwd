@@ -3,22 +3,26 @@
     <!-- .container-wrap -->
     <div class="container-wrap">
         <div class="container">
-            <div class="complete-wrap">
+            <div class="complete-wrap tod-complete-wrap">
                 <div class="title-box">
-                    <i class="icon-complete-120"><span class="blind">complete</span></i>
-                    <p class="tx-tit"><span class="tx-highlight pt10">이용에 불편을 드려서 죄송합니다.</span></p>
+                    <i class="icon-comm-bi122"><span class="blind">T월드 - 안내</span></i>
+                    <!-- 에러코드 영역 -->
+                    {{#if data}}
+                    {{#if data.code}}
+                    <p class="tod-error-code">
+                        <i class="icon-comm-errorcode"><em class="blind">에러코드</em></i>
+                        <span class="txt-code">{{data.code}}</span>
+                    </p>
+                    {{/if}}
+                    {{#if data.msg}}
+                    <!-- //에러코드 영역 -->
+                    <p class="tx-tit"><span class="tx-highlight pt10">{{data.msg}}</span></p>
+                    {{/if}}
+                    {{/if}}
                 </div>
                 <div class="tx-contents">
-                    {{#if data}}
-                        {{#if data.code}}
-                            <p class="code-txt">에러 코드 : {{data.code}}</p>
-                        {{/if}}
-                        {{#if data.msg}}
-                            <p class="basic-txt">{{data.msg}}</p>
-                        {{/if}}
-                    {{/if}}
                     <ul class="bt-slice item-one">
-                        <li><button type="button" class="btn-round2 btn-style3 fe-request">문의하기</button></li>
+                        <li><button type="button" class="btn-round2 btn-style3 fe-request">이메일 상담하기</button></li>
                     </ul>
                 </div>
             </div>
@@ -27,7 +31,7 @@
 
     <div class="bt-fixed-area">
         <ul class="bt-slice full">
-            <li><button type="button" class="btn-floating btn-style2 tw-popup-closeBtn">돌아가기</button></li>
+            <li><button type="button" class="btn-floating btn-style2 tw-popup-closeBtn">확인</button></li>
         </ul>
     </div>
     <!--// .container-wrap -->
