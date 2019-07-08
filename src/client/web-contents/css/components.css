@@ -35326,6 +35326,16 @@ body.apphome .section-box {
 /* 190625 [OP002-1760] 레인보우 포인트 화면 개선 요청 */
 .contents-empty.tod-narrow-empty{padding:3.2rem 0}
 
+/* 190627 [OP002-1908] 공통 에러코드 팝업 레이아웃 개선 */
+.icon-comm-bi122 {display:inline-block; width:3.75rem; height:3.75rem; background:url('/img/ico/ico-comm-bi122.png') no-repeat 0 0; background-size: 100% 100%;}
+.icon-comm-errorcode{display:inline-block; width:0.875rem; height:0.625rem;background:url('/img/ico/ico-error-code.png') no-repeat 0 0;background-size: 100% 100%;}
+.complete-wrap.tod-complete-wrap .tod-error-code{position:fixed; right:16px; top:10px; font-size:0;}
+.complete-wrap.tod-complete-wrap .tod-error-code .txt-code{font-size:0.75rem; padding-left:0.32rem;}
+.complete-wrap.tod-complete-wrap .title-box .tx-tit, .tod-complete-wrap .tx-contents .tx-desc-wrap{padding-top:3rem;}
+.complete-wrap.tod-complete-wrap .tx-contents{padding-top:0;}
+.complete-wrap.tod-complete-wrap button.bt-link-tx.underline, 
+.complete-wrap.tod-complete-wrap a.bt-link-tx.underline{padding-top:0 !important;padding-bottom:0 !important;}
+
 /* 190701 [OP002-1967] baro Box 이용안내 컨텐츠 개선 */
 .rm-barobox-info{font-size:.8125rem}
 .rm-barobox-info h4{font-size:.9375rem;color:#000}
