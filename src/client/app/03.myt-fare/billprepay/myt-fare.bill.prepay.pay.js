@@ -12,10 +12,11 @@
  * @param title - 소액결제/콘텐츠이용료
  * @param name - 회원명
  */
-Tw.MyTFareBillPrepayPay = function (rootEl, title, name) {
+Tw.MyTFareBillPrepayPay = function (rootEl, title, name, isMasking) {
   this.$container = rootEl;
   this.$title = title;
   this._name = name;
+  this._isMasking = isMasking && isMasking === 'true' ? true : false;
   this._amount = '0';
 
   this._apiService = Tw.Api;
@@ -44,6 +45,12 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._setInitValue();
     this._initVariables();
     this._bindEvent();
+
+
+    // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
+    if (this._isMasking) {
+      this.$container.find('.fe-card-info').trigger('click');
+    }
   },
   /**
    * @function
@@ -343,7 +350,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
       // 납부방법(01:은행, 02:카드, 03:지로, 04:가상)
       if (result.payMthdCd === '02' && !Tw.FormatHelper.isEmpty(result.s_bank_card_num)) {
         this._recvAutoCardNumber = result.s_bank_card_num;
-        this.$cardNumber.val(result.s_bank_card_num);
+        this.$cardNumber.val(result.s_bank_card_num).trigger('change');
+        this._getMessageTarget($(e.currentTarget)).hide().attr('aria-hidden', 'true');
       } else {
         this._cardInfoFail(e);
       }

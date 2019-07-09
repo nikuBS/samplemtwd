@@ -29,7 +29,7 @@
                                 <span class="input">
                                     <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="tel"
                                            inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay"
-                                           title="선결제 금액 10원 단위 (숫자만 입력)" placeholder="10원 단위 (숫자만 입력)" />
+                                           title="선결제 금액 1만원 단위 (숫자만 입력)" placeholder="1만원 단위 (숫자만 입력)" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                                 <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
@@ -147,7 +147,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayPay($('.wrap'), 'small', '<%= svcInfo.mbrNm %>');
+    new Tw.MyTFareBillPrepayPay($('.wrap'), 'small', '<%= svcInfo.mbrNm %>', '<%= pageInfo.masking%>');
   });
 </script>
 <% include ../../components/end.component.html %>
