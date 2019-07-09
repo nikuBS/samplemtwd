@@ -1,0 +1,153 @@
+<%#
+* @file myt-fare.bill.small.prepay.html
+* @author 양정규
+* @since 2019.06.26
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div class="popup-page tw-popup nobg fixed-bottom">
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '선결제', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="data-result">
+                        <p class="tit">선결제 가능 최대금액 </p>
+                        <p class="data"><em class="fe-max-amount"></em><span>원</span></p>
+                    </div>
+
+                    <ul class="form-data-list mt26">
+                        <li>
+                            <label class="tit" for="flab01">선결제 금액</label>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="tel"
+                                           inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay"
+                                           title="선결제 금액 10원 단위 (숫자만 입력)" placeholder="10원 단위 (숫자만 입력)" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <ul class="form-data-list">
+                        <li>
+                            <label class="tit" for="flab02">카드주명</label>
+                            <span class="inputbox">
+                                <span class="input">
+                                  <input id="flab02" class="fe-name" type="text" value="" readonly />
+                                  <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </li>
+                        <li>
+                            <label class="tit">납부방법</label>
+                            <button id="00" class="bt-dropdown big fe-select-card-type" title="납부방법" aria-haspopup="true">일시불<span class="ico"></span></button>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab04">카드번호</label>
+                            <div class="fe-exp-wrap">
+                                <span class="inputbox bt-add inp-btn">
+                                    <span class="input">
+                                      <input id="flab04" class="fe-card-number required-input-field fe-only-number" type="tel" minlength="15" maxlength="16"
+                                             inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" title="카드번호 숫자만 입력" data-valid-label="card" data-err-target="fe-exp-wrap" />
+                                      <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="r-btn">
+                                        <button type="button" class="btn-round2 btn-style3 fe-card-info" data-err-target="fe-exp-wrap">자동납부 카드정보</button>
+                                    </span>
+                                </span>
+                            </div>
+                            <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab05">유효기간</label>
+                            <div class="input-wrap-half fe-exp-wrap">
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab05" class="fe-card-y required-input-field fe-only-number"
+                                               type="tel" inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="expiration"
+                                               placeholder="YYYY" title="유효기간 년 입력YYYY" minlength="4" maxlength="4">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input class="fe-card-m required-input-field fe-only-number"
+                                               type="tel" inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="expiration"
+                                               placeholder="MM" title="유효기간 월 입력MM" minlength="2" maxlength="2">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                            <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
+                                유효기간이 올바르지 않습니다.
+                            </span>
+                        </li>
+                        <li>
+                            <label class="tit" for="flab06">비밀번호</label>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="flab06" type="number" class="fe-card-pw required-input-field fe-only-number"
+                                           inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="password" title="비밀번호 앞 2자리 입력"
+                                           placeholder="앞 2자리" minlength="2" maxlength="2" style="-webkit-text-security: disc;" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li>
+                            <button id="MF_06_03_tip_01" class="btn-tip" aria-haspopup="true">결제안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                        </li>
+                        <li>
+                            <button id="MF_06_03_tip_02" class="btn-tip" aria-haspopup="true">환불안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-check-pay" disabled="disabled">결제하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-popup-close">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillPrepayPay($('.wrap'), 'small', '<%= svcInfo.mbrNm %>');
+  });
+</script>
+<% include ../../components/end.component.html %>
