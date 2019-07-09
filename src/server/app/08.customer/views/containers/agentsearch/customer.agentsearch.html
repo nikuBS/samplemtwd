@@ -14,22 +14,8 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <%- include('../../../../common/views/components/header.component.html', { title: '지점∙대리점 찾기', svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '지점/대리점 찾기', svcInfo: svcInfo }); %>
         <!-- #contents -->
-        <div id="header" class="header-wrap">
-            <div class="h-belt">
-                <div class="h-default">
-                    <div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-                    <div class="h-tit">지점∙대리점 찾기</div>
-                    <div class="h-serarch">
-                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
@@ -63,7 +49,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox mb20">
                                                         <span class="input">
-                                                            <input id="fe-input-name" type="text" title="지점∙대리점명" placeholder="지점∙대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" autocomplete="off" />
+                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" autocomplete="off" />
                                                             <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
