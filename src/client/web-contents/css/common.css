@@ -9564,6 +9564,7 @@ button:focus span {
 .bt-dropdown.tod-bt-lar{font-size:1.0625rem}
 
 /* 190703 추가 [OP002-1430] 행복커뮤니티 페이지 신규 Tab 개발 */
+.tod-nowrap {white-space:nowrap !important;}
 .tod-txcolor1 {color:#000 !important;}
 .tod-txcolor2 {color:#333 !important;}
 .tod-txcolor3 {color:#666 !important;}

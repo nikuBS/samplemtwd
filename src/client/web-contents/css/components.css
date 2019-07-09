@@ -35363,9 +35363,12 @@ body.apphome .section-box {
 .rm-barobox-info .rm-baro-box-dataEx li.map{background:url(/img/product/rm-barobox-ico-googlemap.png) no-repeat center 1.25rem;background-size:3.75rem auto}
 
 /* 190703 추가 [OP002-1430] 행복커뮤니티 페이지 신규 Tab 개발 */
-.tod-form-wrap {display:table; width:100%;}
-.tod-form-wrap.fixlay {table-layout:fixed;}
-.tod-form-wrap .inputbox, .tod-form-wrap .select {display:table-cell; vertical-align:middle;}
+.tod-form-wrap .inputbox, .tod-form-wrap .select {display:block;}
+.tod-form-wrap .select .bt-dropdown.big {height:2.5rem; overflow:hidden; padding:0 1.688rem 0 0.63rem; line-height:2.59375rem; word-break:break-all;}
+.tod-form-wrap .inputbox .input input[type=text], .tod-form-wrap .inputbox .input input[type=file], .tod-form-wrap .inputbox .input input[type=password],
+.tod-form-wrap .inputbox .input input[type=number], .tod-form-wrap .inputbox .input input[type=tel], .tod-form-wrap .inputbox .input input[type=email] {height:2.5rem;}
+.tod-form-wrap.row {display:table; width:100%; table-layout:fixed;}
+.tod-form-wrap.row .inputbox, .tod-form-wrap.row .select {display:table-cell; vertical-align:middle;}
 .tod-visualheader {position:relative; padding:0 5.625rem 0 0;}
 .tod-visualheader .ico {position:absolute; top:50%; right:0; display:block; margin:-0.3125rem 0 0; -webkit-transform:translateY(-50%); transform:translateY(-50%);}
 .tod-visualheader .ico.happy {width:4.313rem; height:3.25rem; background:url('/img/ico/ico-visualheader-happy.png') no-repeat 50% 50%; background-size:100%;}
@@ -35393,13 +35396,17 @@ body.apphome .section-box {
 .tab-area.new01 .tab-linker.tod-multiline ul li a, .tab-area.new01 .tab-linker.tod-multiline ul li button {height:auto; line-height:1.3;}
 .search-point .bn-search .inner .ico.tod-resize {background-size:75% !important; background-position:100% 50% !important;}
 .search-point.tod-type2 .bn-search {padding:0; background:none;}
-.accordion .tod-renew .acco-list .acco-box .acco-tit button, .accordion .tod-renew .acco-list .acco-box .acco-tit a,
-.accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit button, .accordion .tod-renew-bgnone .acco-list .acco-box .acco-tit a {padding:1.0625rem 2.5rem 1rem 1rem;}
+.accordion .tod-renew:not(.btn-hold) .acco-list .acco-box .acco-tit button, .accordion .tod-renew:not(.btn-hold) .acco-list .acco-box .acco-tit a,
+.accordion .tod-renew-bgnone:not(.btn-hold) .acco-list .acco-box .acco-tit button, .accordion .tod-renew-bgnone:not(.btn-hold) .acco-list .acco-box .acco-tit a {padding:1.0625rem 2.5rem 1rem 1rem;}
 .accordion .tod-renew.linetop .acco-list, .accordion .tod-renew-bgnone.linetop .acco-list {position:relative;}
 .accordion .tod-renew.linetop .acco-list:before, .accordion .tod-renew-bgnone.linetop .acco-list:before {content:''; position:absolute; top:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
 .accordion .tod-renew-bgnone .acco-list .acco-box.on:after, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view:after {left:1rem; right:1rem;}
-.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {position:relative; background:none;}
-.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont:before, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont:before {content:''; position:absolute; top:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
+.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit + .acco-cont, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {background:none;}
+.accordion .tod-renew .acco-list .acco-box.on > .acco-tit, .accordion .tod-renew .acco-list .acco-box.imp-view > .acco-tit,
+.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit {position:relative;}
+.accordion .tod-renew .acco-list .acco-box.on > .acco-tit:after, .accordion .tod-renew .acco-list .acco-box.imp-view > .acco-tit:after,
+.accordion .tod-renew-bgnone .acco-list .acco-box.on > .acco-tit:after, .accordion .tod-renew-bgnone .acco-list .acco-box.imp-view > .acco-tit:after {content:''; position:absolute; bottom:0; left:1rem; right:1rem; border-bottom:1px solid #e1e1e1;}
+.accordion .tod-renew .acco-list .acco-box.on > .acco-tit:after, .accordion .tod-renew .acco-list .acco-box.imp-view > .acco-tit:after {left:0; right:0;}
 .shop-info .shop-tag .tag.tod-color-happy1 {background-color:#00a49b;}
 .shop-info .shop-tag .tag.tod-color-happy2 {background-color:#fa6501;}
 .shop-info .shop-tag .tag.tod-color-happy3 {background-color:#4e7ac5;}
