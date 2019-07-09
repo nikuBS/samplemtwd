@@ -19,7 +19,7 @@ Tw.XtractorService = function($container, isTosBanner) {
   }, this));
 
   // 상하 스크롤 없이 좌우 터치 이벤트를 통한 배너 스와이프 시 BV 통계 호출해주도록 수정
-  $(document).on('touchmove', '[data-xt_action="BV"]', $.proxy(function () {    
+  $(document).on('touchmove', '[data-xt_action="BN"],[data-xt_action="BV"]', $.proxy(function () {    
     this._onLoadBV();
   }, this));
 
@@ -34,7 +34,10 @@ Tw.XtractorService.prototype = {
    */
   _init: function() {
     this._loggedList = [];
-    this._isScript = this._isTosBanner && (window.XtractorEvent && window.XtractorEvent.xtrEvent) || !this._isTosBanner && (window.XtractorScript && window.XtractorScript.xtrCSDummy);
+    // this._isScript = this._isTosBanner && (window.XtractorEvent && window.XtractorEvent.xtrEvent) || !this._isTosBanner && (window.XtractorScript && window.XtractorScript.xtrCSDummy);
+    this._isScript = (window.XtractorEvent && window.XtractorEvent.xtrEvent) || (window.XtractorScript && window.XtractorScript.xtrCSDummy);
+    this._isScript1 = (window.XtractorEvent && window.XtractorEvent.xtrEvent);
+    this._isScript2 = (window.XtractorScript && window.XtractorScript.xtrCSDummy);
     
     this._bindBC();
     this._onLoadBV();
@@ -76,7 +79,7 @@ Tw.XtractorService.prototype = {
       });
     });
     
-    $('[data-xt_action="BV"]').each(function(a,b){
+    $('[data-xt_action="BN"],[data-xt_action="BV"]').each(function(a,b){
         observer.observe(b, {
           attributes: true //configure it to listen to attribute changes
         });
@@ -88,11 +91,13 @@ Tw.XtractorService.prototype = {
    * @desc 노출 처리
    */
   _onLoadBV: function() {
-    if (this._isTosBanner) {
-      _.each(this.$container.find('[data-xt_action="BN"]'), $.proxy(this._sendBV, this));
-    } else {
-      _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
-    }
+    // if (this._isTosBanner) {
+    //   _.each(this.$container.find('[data-xt_action="BN1"]'), $.proxy(this._sendBV, this));
+    // } else {
+      _.each(this.$container.find('[data-xt_action="BN"],[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+      // console.log('tos 배너 bv 호출');
+      // _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+    // }
   },
 
   /**
@@ -100,11 +105,12 @@ Tw.XtractorService.prototype = {
    * @desc 클릭 이벤트 바인딩
    */
   _bindBC: function() {
-    if (this._isTosBanner) {
-      this.$container.on('mousedown', '[data-xt_action="BN"]', $.proxy(this._sendBC, this));
-    } else {
-      this.$container.on('mousedown', '[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
-    }
+    // if (this._isTosBanner) {
+    //   this.$container.on('mousedown', '[data-xt_action="BN1"]', $.proxy(this._sendBC, this));
+    // } else {
+      // this.$container.on('mousedown', '[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
+      this.$container.on('mousedown', '[data-xt_action="BN"],[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
+    // }
   },
 
   /**
@@ -114,9 +120,9 @@ Tw.XtractorService.prototype = {
    * @returns {boolean}
    */
   _sendBV: function(elem) {
-    var $elem = $(elem),
-      E_ID = $elem.data('xt_eid'),
-      CS_ID = $elem.data('xt_csid');
+    var $elem = $(elem);
+
+    var bannerType = $elem.data('xt_action');
 
     var scrollTop = $(window).scrollTop();  // 현재 스크롤의 Top
     var scrollBottom = scrollTop + $(window).height();  // 현재 스크롤의 Bottom
@@ -124,33 +130,52 @@ Tw.XtractorService.prototype = {
     var objTop = $elem.offset().top;    // 배너 객체의 Top
     var objBottom = objTop + $elem.innerHeight();   // 배너 객체의 Bottom
 
-    if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
-      // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
-      if (scrollTop < objTop && scrollBottom > objBottom) {
-        if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
-          this.logView(E_ID, CS_ID);
+    if (bannerType === 'BN') {
+      // console.log('TOS 배너 - ' + $elem.data('xt_cmpgn_num'));
+
+      /* TOS Banner */
+      var BannerArgs = {
+        CMPGN_NUM: $elem.data('xt_cmpgn_num'),
+        EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
+        CELL_NUM: $elem.data('xt_cell_num'),
+        MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
+        ACTION: 'Exp'
+      };
+
+      if (!Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
+          if (scrollTop < objTop && scrollBottom > objBottom) {
+
+            console.log('TOS 배너 - ' + $elem.data('xt_cmpgn_num') + ' 배너가 화면 안에 들어옴');
+            
+            if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
+              console.log('TOS 배너 - ' + $elem.data('xt_cmpgn_num') + ' 노출통계 호출');
+              this._sendXtrEvent($.param(BannerArgs));
+            }
+          }
+      }
+    } 
+    if (bannerType === 'BV') {
+      // console.log('어드민 배너 - ' + $elem.data('xt_eid'));
+
+      var E_ID = $elem.data('xt_eid'),
+          CS_ID = $elem.data('xt_csid');
+
+      if (!Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
+        // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
+        if (scrollTop < objTop && scrollBottom > objBottom) {
+
+          console.log('어드민 배너 - ' + $elem.data('xt_eid') + ' 배너가 화면 안에 들어옴');
+
+          if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
+            console.log('어드민 배너 - ' + $elem.data('xt_eid') + ' 노출통계 호출');
+            this.logView(E_ID, CS_ID);
+          }
         }
       }
-    }
-
-    /* TOS Banner */
-    var BannerArgs = {
-      CMPGN_NUM: $elem.data('xt_cmpgn_num'),
-      EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
-      CELL_NUM: $elem.data('xt_cell_num'),
-      MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
-      ACTION: 'Exp'
-    };
-
-    if (this._isTosBanner &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
-        if (scrollTop < objTop && scrollBottom > objBottom) {
-          this._sendXtrEvent($.param(BannerArgs));
-        }
-    }
+    }    
   },
 
   /**
@@ -160,30 +185,36 @@ Tw.XtractorService.prototype = {
    * @returns {boolean}
    */
   _sendBC: function(e) {
-    var $elem = $(e.currentTarget),
-      E_ID = $elem.data('xt_eid'),
-      CS_ID = $elem.data('xt_csid');
-
-
-    if (!this._isTosBanner && !Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
-      this.logClick(E_ID, CS_ID);
-    }
+    var $elem = $(e.currentTarget);
+    var bannerType = $elem.data('xt_action');
 
     /* TOS Banner */
-    var BannerArgs = {
-      CMPGN_NUM: $elem.data('xt_cmpgn_num'),
-      EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
-      CELL_NUM: $elem.data('xt_cell_num'),
-      MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
-      ACTION: 'Clk'
-    };
+    if (bannerType === 'BN') {
+      
+      var BannerArgs = {
+        CMPGN_NUM: $elem.data('xt_cmpgn_num'),
+        EXEC_SCHD_NUM: $elem.data('xt_schd_num'),
+        CELL_NUM: $elem.data('xt_cell_num'),
+        MSG_SER_NUM: $elem.data('xt_msg_ser_num'),
+        ACTION: 'Clk'
+      };
 
-    if (this._isTosBanner &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
-      !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
-      this._sendXtrEvent($.param(BannerArgs));
+      if (!Tw.FormatHelper.isEmpty(BannerArgs.CMPGN_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.EXEC_SCHD_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.CELL_NUM) &&
+        !Tw.FormatHelper.isEmpty(BannerArgs.MSG_SER_NUM)) {
+        this._sendXtrEvent($.param(BannerArgs));
+      }
+    } 
+
+    /* 어드민 Banner */
+    if (bannerType === 'BV') {
+      var E_ID = $elem.data('xt_eid'),
+          CS_ID = $elem.data('xt_csid');
+
+      if (!Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
+        this.logClick(E_ID, CS_ID);
+      }
     }
   },
 
@@ -215,6 +246,7 @@ Tw.XtractorService.prototype = {
    * @param $wrap - BV노출 이벤트를 처리할 영역
    */
   sendBVWrap: function($wrap) {
+    console.log('이거 용도가 뭐지??');
     _.each($wrap.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
   },
 
@@ -229,7 +261,7 @@ Tw.XtractorService.prototype = {
   _sendXtrCSDummy: function(E_ID, CS_ID, ACTION) {
     var key = E_ID + '|' + CS_ID + '|' + ACTION;
 
-    if (!this._isScript) {
+    if (!this._isScript2) {
       Tw.Logger.warn('[Xtractor] Logger is failed. Xtractor script is not found.');
       return false;
     }
@@ -253,7 +285,7 @@ Tw.XtractorService.prototype = {
    * @returns {boolean}
    */
   _sendXtrEvent: function(param) {
-    if (!this._isScript) {
+    if (!this._isScript1) {
       Tw.Logger.warn('[Xtractor] Logger is failed. Xtractor script is not found.');
       return false;
     }

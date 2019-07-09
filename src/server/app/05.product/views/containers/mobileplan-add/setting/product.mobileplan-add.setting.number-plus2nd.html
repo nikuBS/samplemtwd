@@ -62,7 +62,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddSettingNumberPlus2nd($('.wrap'), '<%= prodId %>', 'nApp_7476_01', '<%= svcInfo.prodId %>');
+    new Tw.ProductMobileplanAddSettingNumberPlus2nd($('.wrap'), '<%= prodId %>', 'nApp_7476_01', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

@@ -241,7 +241,7 @@ Tw.MembershipSubmain.prototype = {
    */
   _successTosAdminMemberShipBanner: function (banner1, banner2, admBanner) {
     var result = [{ target: 'S', banner: banner1 },
-    { target: 'B', banner: banner1 }];
+    { target: 'B', banner: banner2 }];
 
     result.forEach(function(row){
       if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
