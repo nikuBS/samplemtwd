@@ -149,7 +149,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayPay($('.wrap'), 'contents', '<%= svcInfo.mbrNm %>');
+    new Tw.MyTFareBillPrepayPay($('.wrap'), 'contents', '<%= svcInfo.mbrNm %>', '<%= pageInfo.masking%>');
   });
 </script>
 <% include ../../components/end.component.html %>
