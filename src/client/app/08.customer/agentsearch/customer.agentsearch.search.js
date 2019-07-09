@@ -73,6 +73,8 @@ Tw.CustomerAgentsearch.prototype = {
           this._selectedTubeAreaCode = area[1];
           this._selectedTubeLineCode = line[1];
           this._selectedTubeNameCode = tubeName[1];
+          // Tw.Logger.info('[검색후 url 지하철 역명 번호 : ]', this._selectedTubeNameCode);
+          // alert(this._selectedTubeNameCode);
           $.proxy(this._getTubeNameList(),this);
         }
       }, this), 0);
@@ -164,6 +166,12 @@ Tw.CustomerAgentsearch.prototype = {
       this.$inputName.val('');
       this.$inputAddr.val('');
       this.$inputTube.val('');
+      this.$container.find('#fe-select-area').text('지역선택');
+      this.$container.find('#fe-select-line').text('노선선택');
+      this.$container.find('#fe-select-name').text('지하철 역명 선택');
+      this._selectedTubeAreaCode = null;
+      this._selectedTubeLineCode = null;
+      this._selectedTubeNameCode = null;
       this.$divResult.addClass('none');
       this._prevTab = window.location.hash;
       this._isSearched = false;
@@ -297,7 +305,9 @@ Tw.CustomerAgentsearch.prototype = {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeAreaCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
+        if (item['radio-attr'].indexOf('checked') !== -1) {
+          item['radio-attr'] = item['radio-attr'].replace('checked', '');
+        } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
           item['radio-attr'] += ' checked';
         }
         return item;
@@ -339,7 +349,9 @@ Tw.CustomerAgentsearch.prototype = {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this._selectedTubeAreaCode];
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeLineCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
+          if (item['radio-attr'].indexOf('checked') !== -1) {
+            item['radio-attr'] = item['radio-attr'].replace('checked', '');
+          } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
           item['radio-attr'] += ' checked';
         }
         return item;
@@ -408,10 +420,11 @@ Tw.CustomerAgentsearch.prototype = {
         var tubeNameformatList = [];
         for (var i = 0; i < result.length; i++) {
           var nameListObj = {
-            'label-attr': 'id=' + i,
-            'radio-attr': 'id=' + i + ' name="r2" data-name=' + result[i].subwStnNm,
+            'label-attr': 'id="' + ((i < 10) ? '0' + i : i) + '"',
+            'radio-attr': 'id="'+ ((i < 10) ? '0' + i : i) + '" name="r2" data-name="' + result[i].subwStnNm + '"',
             'txt': result[i].subwStnNm
           };
+
           tubeNameformatList.push(nameListObj);
         }
         
@@ -441,10 +454,15 @@ Tw.CustomerAgentsearch.prototype = {
       return;
     }
 
+    // Tw.Logger.info('[현재 지하철 노선도]', this._selectedTubeNameCode);
     var list = this.tubeNameList;
-    if (this._selectedTubeNameCode) { // 선택된 항목에 checked 추가
+
+    // Tw.Logger.info('[현재 지하철 노선도 list[0].list]', list[0].list);
+    if (!Tw.FormatHelper.isEmpty(this._selectedTubeNameCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1) {
+        if (item['radio-attr'].indexOf('checked') !== -1) {
+          item['radio-attr'] = item['radio-attr'].replace('checked', '');
+        } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1) {
           item['radio-attr'] += ' checked';
         }
         return item;
@@ -464,6 +482,7 @@ Tw.CustomerAgentsearch.prototype = {
         var selectedName = $(e.currentTarget).data('name');
         this.$container.find('#fe-select-name').text(selectedName);
         this._selectedTubeNameCode = $(e.currentTarget).attr('id');
+        // Tw.Logger.info('[선택된 지하철 이름]', this._selectedTubeNameCode);
         this.$btnSearchTube.removeAttr('disabled');
         this._popupService.close();
       }, this));
