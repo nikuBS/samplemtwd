@@ -605,7 +605,8 @@ export enum BENEFIT_SUBMAIN_CATEGORY {
   F01421 = 'discount',
   F01422 = 'combinations',
   F01423 = 'long-term',
-  F01424 = 'participation'
+  F01424 = 'participation',
+  F01714 = 'purchase'
 }
 
 export enum PREPAID_AMT_CD {

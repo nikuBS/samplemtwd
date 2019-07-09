@@ -445,6 +445,7 @@ Tw.BenefitIndex.prototype = {
       'combinations'  : 'F01422',
       'long-term'     : 'F01423',
       'participation' : 'F01424',
+      'purchase'      : 'F01714',
       'submain'       : ''
     };
     return categoryId[Tw.UrlHelper.getLastPath()];
