@@ -532,9 +532,10 @@ class MyTFareBillGuide extends TwViewController {
   }
   // 청구 년월 구하기
   public getSelClaimDt(date: string): any {
-    // return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
-    return this._commDataInfo.selClaimDt =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    // return this._commDataInfo.selClaimDt =
+    //   DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    // NOTE this._commDataInfo.selClaimDt에 대입 불필요로 보임.
+    return date ? DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE ) : '';
   }
   // 청구 년월 구하기
   public getSelClaimDtM(date: string): any {
