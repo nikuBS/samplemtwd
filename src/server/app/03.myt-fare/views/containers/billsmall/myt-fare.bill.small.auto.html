@@ -163,7 +163,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto'), 'small', 'auto');
+    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto'), 'small', 'auto', '<%= pageInfo.masking%>');
   });
 </script>
 <% include ../../components/end.component.html %>

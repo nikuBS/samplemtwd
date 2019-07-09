@@ -202,7 +202,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto-change'), 'small', 'change');
+    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-small-auto-change'), 'small', 'change', '<%= pageInfo.masking%>');
   });
 </script>
 <% include ../../components/end.component.html %>

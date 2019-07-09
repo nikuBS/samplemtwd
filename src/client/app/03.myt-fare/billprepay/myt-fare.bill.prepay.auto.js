@@ -12,11 +12,12 @@
  * @param title - 소액결제/콘텐츠이용료
  * @param type - 신청/변경
  */
-Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
+Tw.MyTFareBillPrepayAuto = function (rootEl, title, type, isMasking) {
   this.$container = rootEl;
   this.$title = title;
   this.$type = type;
   this.$isPage = true;
+  this._isMasking = isMasking && isMasking === 'true' ? true : false;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -41,6 +42,11 @@ Tw.MyTFareBillPrepayAuto.prototype = {
 
     this._validationService.bindEvent();
     setTimeout($.proxy(this._checkStandardAmount, this), 100); // 기준금액 체크
+
+    // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
+    if (this._isMasking) {
+      this.$container.find('.fe-card-info').trigger('click');
+    }
   },
   /**
    * @function
@@ -368,7 +374,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       // 납부방법(01:은행, 02:카드, 03:지로, 04:가상)
       if (result.payMthdCd === '02' && !Tw.FormatHelper.isEmpty(result.s_bank_card_num)) {
         this._recvAutoCardNumber = result.s_bank_card_num;
-        this.$cardNumber.val(result.s_bank_card_num);
+        this.$cardNumber.val(result.s_bank_card_num).trigger('change');
+        this._getMessageTarget($(e.currentTarget)).hide().attr('aria-hidden', 'true');
       } else {
         this._cardInfoFail(e);
       }
