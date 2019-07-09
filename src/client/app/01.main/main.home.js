@@ -250,21 +250,24 @@ Tw.MainHome.prototype = {
    */
   _getAdid: function (res) {
     var url = this._twdUrl;
+    var dstUrl = '';
+    var str = '?';
     this._twdUrl = '';
-    
+
+    dstUrl = url.replace('http://', '');
+    dstUrl = dstUrl.replace('https://', '');
+
     if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
       return;
     }
 
-    if ( Tw.BrowserHelper.isAndroid() ) {
-      this._adid = res.params.adid;
+    this._adid = res.params.adid;
 
-      if ( url.indexOf('?') > -1 ) {
-        url = url + '&adid=' + this._adid;
-      } else {
-        url = url + '?adid=' + this._adid;
-      }
+    if ( url.indexOf('?') > -1 ) {
+      str = '&';        
     }
+
+    url += str + 'url=1&dstUrl=' + encodeURIComponent(dstUrl) + '&adid=' + this._adid;
 
     // 링크 이동 처리
     Tw.CommonHelper.openUrlExternal(url);
