@@ -115,7 +115,7 @@
     new Tw.CustomerAgentsearchDetail($('#fe-tmap-box'), {
       lon: '<%= detail.geoX %>',
       lat: '<%= detail.geoY %>'
-    });
+    }, '<%= svcInfo !== null %>');
   });
 </script>
 <% include ../../components/end.component.html %>
