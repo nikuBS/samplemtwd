@@ -225,7 +225,7 @@ Tw.CertificationSelect.prototype = {
    * @private
    */
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.mbrChlId }, $.proxy(this._onCheckFido, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.userId }, $.proxy(this._onCheckFido, this));
   },
 
   /**
@@ -249,7 +249,7 @@ Tw.CertificationSelect.prototype = {
    * @private
    */
   _checkFidoUse: function () {
-    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.mbrChlId }, $.proxy(this._onCheckFidoUse, this));
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.userId }, $.proxy(this._onCheckFidoUse, this));
   },
 
   /**

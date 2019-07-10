@@ -27,7 +27,6 @@ export interface ISvcInfo {
   twdInfoRcvAgreeYn: string; // T world 개인정보수집이용동의여부(Y/N)
   twdLocUseAgreeYn: string; // T world 위치정보 이용동의여부(Y/N)
   tplaceUseAgreeYn: string; // T place 이용동의여부(Y/N)
-  mbrChlId: string;         // 멤버채널ID
   // noticeType: string;
 }
 
@@ -63,7 +62,6 @@ export class SvcInfoModel implements ISvcInfo {
   twdLocUseAgreeYn: string = '';
   tplaceUseAgreeYn: string = '';
   loginType: string = '';
-  mbrChlId: string = '';
 
   constructor(object) {
     this.svcMgmtNum = object.svcMgmtNum || this.svcMgmtNum;
@@ -94,7 +92,6 @@ export class SvcInfoModel implements ISvcInfo {
     this.twdInfoRcvAgreeYn = object.twdInfoRcvAgreeYn || this.twdInfoRcvAgreeYn;
     this.twdLocUseAgreeYn = object.twdLocUseAgreeYn || this.twdLocUseAgreeYn;
     this.tplaceUseAgreeYn = object.tplaceUseAgreeYn || this.tplaceUseAgreeYn;
-    this.mbrChlId = object.mbrChlId || this.mbrChlId;
     // this.noticeType = object.noticeType || this.noticeType;
   }
 }
