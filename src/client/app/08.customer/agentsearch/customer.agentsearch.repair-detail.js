@@ -10,7 +10,7 @@
  * @param  {Object} rootEl - 최상위 elem
  * @param  {Object} location - 해당 A/S센터의 위치값
  */
-Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
+Tw.CustomerAgentsearchRepairDetail = function (rootEl, location, isLogin) {
   this.$container = rootEl;
   this._location = location;
 
@@ -18,6 +18,7 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
   this._historyService = new Tw.HistoryService();
 
   this._dataChargeConfirmed = false;
+  this.isLogin = (isLogin === 'true');
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생 후 나머지 처리
     this._showDataChargePopupIfNeeded();
@@ -32,22 +33,44 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
    */
   _showDataChargePopupIfNeeded: function () {
     if (Tw.BrowserHelper.isApp()) {
-      var confirmed = false;
-      Tw.CommonHelper.showDataCharge(
-        $.proxy(function () {
-          confirmed = true;
-        }, this),
-        $.proxy(function () {
-          if (!confirmed) {
-            this._historyService.goBack();
-            return;
-          }
-
+      if(this.isLogin) {
+        if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
+          var confirmed = false;
+          Tw.CommonHelper.showDataCharge(
+            $.proxy(function () {
+              confirmed = true;
+              Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
+            }, this),
+            $.proxy(function () {
+              if (!confirmed) {
+                this._historyService.goBack();
+                return;
+              }
+              this._cacheElements();
+              this._showMap();
+            }, this)
+          );
+        } else {  // 로그인 이면서 과금 팝업 쿠키값 받아 올수 있을때
           this._cacheElements();
           this._showMap();
-        }, this)
-      );
-    } else {
+        }
+      } else {  // 비로그인
+        var confirmed = false;
+        Tw.CommonHelper.showDataCharge(
+          $.proxy(function () {
+            confirmed = true;
+          }, this),
+          $.proxy(function () {
+            if (!confirmed) {
+              this._historyService.goBack();
+              return;
+            }
+            this._cacheElements();
+            this._showMap();
+          }, this)
+        );
+      }
+    } else {  // 앱이 아닐때
       this._cacheElements();
       this._showMap();
     }
