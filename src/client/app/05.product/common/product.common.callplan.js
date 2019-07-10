@@ -522,8 +522,11 @@ Tw.ProductCommonCallplan.prototype = {
       return this._openCombineNeedWireError();
     }
 
-    // 해지에 해당될 경우 즉시 사전체크 호출
-    if (joinTermCd !== '01') {
+    
+    if(joinTermCd !== '01' && this._prodTypCd === 'C'){ // 해지방어 팝업
+      return this._reqTerminateDefense(joinTermCd, url);
+        
+    }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출
       return this._procPreCheck(joinTermCd, url);
     }
 
@@ -601,6 +604,67 @@ Tw.ProductCommonCallplan.prototype = {
     // Close popup and Req DG
     this._popupService.close();
     this._reqDownGrade(joinTermCd, url, currentProdId, mbrNm);
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param mbrNm - 고객명
+   */
+  _reqTerminateDefense: function(joinTermCd, url) {
+    // this._apiService.request(Tw.NODE_CMD.GET_DOWNGRADE, {
+    //   type_yn: 'N',
+    //   value: currentProdId + '/' + this._prodId
+    // }).done($.proxy(this._resDownGrade, this, joinTermCd, url, currentProdId, mbrNm));
+
+    setTimeout($.proxy(function(joinTermCd, url){
+
+      $.proxy(this._resTerminateDefense, this, joinTermCd, url)({
+        code: Tw.API_CODE.CODE_00,
+        result: Tw.PRODUCT_TERMINATE_DEFENSE[this._prodId]
+      })
+    }, this, joinTermCd, url), 100);
+
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회 응답 처리
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param resp - DG방어 1뎁스 Redis 조회 값
+   * @param mbrNm - 고객명
+   * @returns {*}
+   */
+  _resTerminateDefense: function(joinTermCd, url, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._procPreCheck(joinTermCd, url);
+    }
+
+    new Tw.ProductMobilePlanAddDowngradeProtect(this.$container, resp.result, resp.result.prodId, resp.result.mbrNm,
+      this._prodId, this._event, $.proxy(this._procPreCheck, this, joinTermCd, url));
+  },
+
+  /**
+   * @function
+   * @desc 다운그레이드 Redis 조회 응답 처리
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @param currentProdId - 현재 상품코드
+   * @param resp - DG방어 1뎁스 Redis 조회 값
+   * @param mbrNm - 고객명
+   * @returns {*}
+   */
+  _resDownGrade: function(joinTermCd, url, currentProdId, mbrNm, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      return this._onLineProcess(joinTermCd, url);
+    }
+
+    this._openDownGrade(joinTermCd, url, currentProdId, mbrNm, resp.result);
   },
 
   /**

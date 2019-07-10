@@ -1071,6 +1071,94 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
   NA00006117: '인피니티 클럽 이용료 100%할인'
 };
 
+Tw.PRODUCT_TERMINATE_DEFENSE = {
+  NA00003362: {
+    TITLE: "LTE 안심옵션",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00000682: {
+    TITLE: "휴대폰인증서서비스",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00006516: {
+    TITLE: "POOQ 콘텐츠 팩",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00005880: {
+    TITLE: "oksusu 프리",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00005066: {
+    TITLE: "oksusu 안심팩(할인)",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00004413: {
+    TITLE: "휴대폰간편로그인",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00002666: {
+    TITLE: "휴대폰번호보호",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00004343: {
+    TITLE: "콜키퍼",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00002027: {
+    TITLE: "안전결제 프리미엄",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00001350: {
+    TITLE: "착신전환일반",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00006520: {
+    TITLE: "FLO 앤 데이터",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NB00000627: {
+    TITLE: "로그인보호서비스",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00004805: {
+    TITLE: "T안심콜 라이트",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00004350: {
+    TITLE: "마이스마트콜",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00005638: {
+    TITLE: "마이스마트콜II",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00006577: {
+    TITLE: "POOQ 앤 데이터",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  },
+  NA00005037: {
+    TITLE: "안심옵션 프리미엄",
+    htmlMSgYn: 'Y',
+    guidMsgCtt:'<!-- 혜택 -->             <h2 class="blind">요금제 변경안내 내용</h2>             <div class="dwg-typeImg-area">             </div>             <!-- 혜택 -->                  <!-- button fixed -->         <div class="bt-fixed-area dwg-dialog-area">             <div class="dwg-dialog-btns">                 <div class="col">                     <button class="btn-dialog-1 fe-btn_change" data-xt_eid="newDGBC161" data-xt_csid="_NBC" data-xt_action="BC"><span>지금 변경할래요.</span></button>                 </div>                 <div class="col">                     <button class="btn-dialog-2 fe-btn_close" data-xt_eid="newDGBC161" data-xt_csid="_NBRBC" data-xt_action="BC"><span>다음에 할게요.</span></button>                 </div>             </div>         </div>         <!-- //button fixed -->'
+  }
+}
+
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
 Tw.HOTBILL_ERROR = {
   ZINVE8106: '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
