@@ -4,10 +4,10 @@
  * @since 2018.10.10
  */
 
-Tw.MainMenuSettingsBiometrics = function (rootEl, target, mbrChlId) {
+Tw.MainMenuSettingsBiometrics = function (rootEl, target, userId) {
   this.$container = rootEl;
   // this._target = target;
-  this._mbrChlId = mbrChlId;
+  this._userId = userId;
 
   this._nativeService = Tw.Native;
 
@@ -30,14 +30,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     this.$container.on('click', '#fe-bt-register-fido', $.proxy(this._onClickRegisterFido, this));
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._mbrChlId }, $.proxy(this._onFidoCheck, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._userId }, $.proxy(this._onFidoCheck, this));
   },
   _onClickRegisterFido: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._mbrChlId);
+    var biometricsTerm = new Tw.BiometricsTerms(this._userId);
     biometricsTerm.open($.proxy(this._updateFidoInfo, this));
   },
   _onClickCancelFido: function () {
-    var biometricsDeregister = new Tw.BiometricsDeregister(this._mbrChlId);
+    var biometricsDeregister = new Tw.BiometricsDeregister(this._userId);
     biometricsDeregister.openPopup($.proxy(this._updateFidoInfo, this));
   },
   _onFidoCheck: function (resp) {
@@ -48,7 +48,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
       //   this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FACE_ON);
       // }
       this._setEnableStatus(Tw.NTV_FIDO_REGISTER_TXT.FIDO_ON);
-      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId }, $.proxy(this._onFidoUse, this));
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId }, $.proxy(this._onFidoUse, this));
     } else {
       // if ( this._target === Tw.FIDO_TYPE.FINGER ) {
       //   this._setDisableStatus(Tw.NTV_FIDO_REGISTER_TXT.FINGER_OFF);
@@ -84,14 +84,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     if ( $currentTarget.attr('checked') === 'checked' ) {
       // off
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'N'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
     } else {
       // on
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'Y'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_USE);
