@@ -305,7 +305,7 @@ Tw.CustomerAgentsearch.prototype = {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeAreaCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('checked') !== -1) {
+        if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1)) {
           item['radio-attr'] = item['radio-attr'].replace('checked', '');
         } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
           item['radio-attr'] += ' checked';
@@ -349,7 +349,7 @@ Tw.CustomerAgentsearch.prototype = {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this._selectedTubeAreaCode];
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeLineCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-          if (item['radio-attr'].indexOf('checked') !== -1) {
+          if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1)) {
             item['radio-attr'] = item['radio-attr'].replace('checked', '');
           } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
           item['radio-attr'] += ' checked';
@@ -460,7 +460,7 @@ Tw.CustomerAgentsearch.prototype = {
     // Tw.Logger.info('[현재 지하철 노선도 list[0].list]', list[0].list);
     if (!Tw.FormatHelper.isEmpty(this._selectedTubeNameCode)) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
-        if (item['radio-attr'].indexOf('checked') !== -1) {
+        if (item['radio-attr'].indexOf('checked') !== -1 && !(item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1)) {
           item['radio-attr'] = item['radio-attr'].replace('checked', '');
         } else if (item['radio-attr'].indexOf('id="' + this._selectedTubeNameCode) !== -1) {
           item['radio-attr'] += ' checked';
