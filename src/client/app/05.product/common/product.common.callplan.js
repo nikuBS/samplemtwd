@@ -615,18 +615,17 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqTerminateDefense: function(joinTermCd, url) {
-    // this._apiService.request(Tw.NODE_CMD.GET_DOWNGRADE, {
-    //   type_yn: 'N',
-    //   value: currentProdId + '/' + this._prodId
-    // }).done($.proxy(this._resDownGrade, this, joinTermCd, url, currentProdId, mbrNm));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
+      .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
 
-    setTimeout($.proxy(function(joinTermCd, url){
 
-      $.proxy(this._resTerminateDefense, this, joinTermCd, url)({
-        code: Tw.API_CODE.CODE_00,
-        result: Tw.PRODUCT_TERMINATE_DEFENSE[this._prodId]
-      })
-    }, this, joinTermCd, url), 100);
+    // setTimeout($.proxy(function(joinTermCd, url){
+
+    //   $.proxy(this._resTerminateDefense, this, joinTermCd, url)({
+    //     code: Tw.API_CODE.CODE_00,
+    //     result: Tw.PRODUCT_TERMINATE_DEFENSE[this._prodId]
+    //   })
+    // }, this, joinTermCd, url), 100);
 
   },
 
