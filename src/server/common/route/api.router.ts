@@ -354,15 +354,7 @@ class ApiRouter {
     }
 
     this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + value)
-    .switchMap((resp) => {
-      if(resp.code !== API_CODE.CODE_00){
-        // 특정 요금제로의 안내팝업 없을 경우 /ALL 안내팝업 조회
-        var valueToAll = value.split('/')[0] + '/ALL';
-        return this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + valueToAll);
-      }
-      return Observable.of(resp);
-    })
-    .subscribe((resp) => {
+      .subscribe((resp) => {
         if (resp.code !== API_CODE.CODE_00) {
           return res.json(resp);
         }
