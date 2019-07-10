@@ -7,11 +7,11 @@
 /**
  * @class
  * @desc 설정 > 생체인증 > 본인확인
- * @param mbrChlId
+ * @param userId
  * @constructor
  */
-Tw.BiometricsCert = function (mbrChlId) {
-  this._mbrChlId = mbrChlId;
+Tw.BiometricsCert = function (userId) {
+  this._userId = userId;
   this._callback = null;
 
   this._apiService = Tw.Api;
@@ -278,7 +278,7 @@ Tw.BiometricsCert.prototype = {
    */
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var biometricsRegister = new Tw.BiometricsRegister(this._mbrChlId);
+      var biometricsRegister = new Tw.BiometricsRegister(this._userId);
       biometricsRegister.open(this._callback, $.proxy(this._onCloseCallback, this));
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);

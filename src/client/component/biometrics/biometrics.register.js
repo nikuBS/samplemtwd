@@ -7,11 +7,11 @@
 /**
  * @class
  * @desc 설정 > 생체인증 > 등록
- * @param mbrChlId
+ * @param userId
  * @constructor
  */
-Tw.BiometricsRegister = function (mbrChlId) {
-  this._mbrChlId = mbrChlId;
+Tw.BiometricsRegister = function (userId) {
+  this._userId = userId;
   this._callback = null;
 
   this._popupService = Tw.Popup;
@@ -71,7 +71,7 @@ Tw.BiometricsRegister.prototype = {
 
     this.$infoIng = $popupContainer.find('.fe-info-ing');
     this.$infoClick = $popupContainer.find('.fe-info-click');
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { vcMgmtNum: this._mbrChlId }, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { vcMgmtNum: this._userId }, $.proxy(this._onFidoRegister, this));
   },
 
   /**
@@ -95,7 +95,7 @@ Tw.BiometricsRegister.prototype = {
     $event.stopPropagation();
     this.$infoClick.addClass('none');
     this.$infoIng.removeClass('none');
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._mbrChlId }, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._userId }, $.proxy(this._onFidoRegister, this));
   },
 
   /**
@@ -110,7 +110,7 @@ Tw.BiometricsRegister.prototype = {
       // this._popupService.closeAll();
       this._popupService.close();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._mbrChlId,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._userId,
         value: 'Y'
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {

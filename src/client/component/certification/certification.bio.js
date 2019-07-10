@@ -101,7 +101,7 @@ Tw.CertificationBio.prototype = {
    * @private
    */
   _goBioRegister: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._svcInfo.mbrChlId);
+    var biometricsTerm = new Tw.BiometricsTerms(this._svcInfo.userId);
     biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
 
@@ -115,7 +115,7 @@ Tw.CertificationBio.prototype = {
       authUrl: this._authUrl,
       authKind: this._authKind,
       prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : '',
-      svcMgmtNum: this._svcInfo.mbrChlId
+      svcMgmtNum: this._svcInfo.userId
     }, $.proxy(this._onFidoAuth, this));
   },
 
