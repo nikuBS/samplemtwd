@@ -615,18 +615,8 @@ Tw.ProductCommonCallplan.prototype = {
    * @param mbrNm - 고객명
    */
   _reqTerminateDefense: function(joinTermCd, url) {
-    // this._apiService.request(Tw.NODE_CMD.GET_DOWNGRADE, {
-    //   type_yn: 'N',
-    //   value: currentProdId + '/' + this._prodId
-    // }).done($.proxy(this._resDownGrade, this, joinTermCd, url, currentProdId, mbrNm));
-
-    setTimeout($.proxy(function(joinTermCd, url){
-
-      $.proxy(this._resTerminateDefense, this, joinTermCd, url)({
-        code: Tw.API_CODE.CODE_00,
-        result: Tw.PRODUCT_TERMINATE_DEFENSE[this._prodId]
-      })
-    }, this, joinTermCd, url), 100);
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, { scrbTermCd: 'V' },{}, [this._prodId] )
+      .done($.proxy(this._resTerminateDefense, this, joinTermCd, url));
 
   },
 
@@ -645,7 +635,10 @@ Tw.ProductCommonCallplan.prototype = {
       return this._procPreCheck(joinTermCd, url);
     }
 
-    new Tw.ProductMobilePlanAddDowngradeProtect(this.$container, resp.result, resp.result.prodId, resp.result.mbrNm,
+    resp.result.guidMsgCtt = Tw.CommonHelper.replaceCdnUrl(resp.result.prodTmsgHtmlCtt);
+    resp.result.htmlMSgYn = 'Y';
+
+    new Tw.ProductMobilePlanAddDowngradeProtect(this.$container, resp.result, resp.result.prodId, '',
       this._prodId, this._event, $.proxy(this._procPreCheck, this, joinTermCd, url));
   },
 
