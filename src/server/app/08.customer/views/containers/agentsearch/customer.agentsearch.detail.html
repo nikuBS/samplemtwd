@@ -41,11 +41,6 @@
                             <% if (isExpZone) { %>
                                 <% if (detail.fiveGxYn === 'Y') { %><span class="tag">5GX 체험존</span><% } %>
                                 <% if (detail.fiveVrYn === 'Y') { %><span class="tag">VR 체험존</span><% } %>
-                            <!--행복 커뮤니티 센터-->
-                            <% } else if (isHappy) { %>
-                                <% if (detail.speedYn === 'Y') { %><span class="tag">스마트폰 기초 과정</span><% } %>
-                                <% if (detail.applEduYn === 'Y') { %><span class="tag">스마트폰 응용 과정</span><% } %>
-                                <% if (detail.codingEduYn === 'Y') { %><span class="tag">코딩 교실</span><% } %>
                              <% }  else { %>
                                 <% if (detail.direct === 'Y') { %><span class="tag">바로 픽업</span><% } %>
                                 <% if (detail.premium === 'Y') { %><span class="tag">T프리미엄스토어</span><% } %>
@@ -75,15 +70,14 @@
                                         <dd><%= detail.tel %><a class="bt-tel" href="tel:<%= detail.tel %>"><span role="img" class="blind">매장으로 전화하기</span></a></dd>
                                     </dl>
                                 </li>
-                                <!--행복 커뮤니티 에서 들어온 경우는 '운영시간' 영역 비노출-->
-                                <!-- <li class="<%= isHappy ? 'none':undefined%>">
+                                <li>
                                     <dl class="type01">
                                         <dt>운영시간</dt>
                                         <dd>평일 <%= detail.weekdayOpenTime %>~<%= detail.weekdayCloseTime %></dd>
                                         <dd>주말 <%= detail.satOpenTime %>~<%= detail.satCloseTime %></dd>
                                         <dd>공휴 <%= detail.holidayOpenTime %>~<%= detail.holidayCloseTime %></dd>
                                     </dl>
-                                </li> -->
+                                </li>
                                 <li>
                                     <dl class="type03">
                                         <dt>찾아오시는길</dt>
