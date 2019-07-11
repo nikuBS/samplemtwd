@@ -604,6 +604,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._listInitilized = true;
     if (this._currentBranchType === 0) {
       this.$resultCount.text(this._nearShops.length);
+      this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
     } else {
       var branchType = this._currentBranchType;
       this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[branchType]);
