@@ -1702,10 +1702,10 @@ Tw.MainHome.prototype = {
    */
   _getTosAdminAppBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0001' } },
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0002' } },
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0003' } },
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0007' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminAppBanner, this))
       .fail($.proxy(this._failTosAppBanner, this));
@@ -1718,7 +1718,7 @@ Tw.MainHome.prototype = {
    */
   _getTosAdminWebBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0005' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0005' } },
       { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
     ]).done($.proxy(this._successTosAdminWebBanner, this))
       .fail($.proxy(this._failTosWebBanner, this));
@@ -1752,17 +1752,15 @@ Tw.MainHome.prototype = {
         row.banner = { result: {summary : { target: row.target }, imgList : [] } };
       }
 
-      if(admBanner.code === Tw.API_CODE.CODE_00){
-        row.banner.result.imgList = row.banner.result.imgList.concat( 
-          admBanner.result.banners.filter(function(admbnr){
-            return admbnr.bnnrLocCd === row.target;
-          }).map(function(admbnr){
-            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
-            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
-            return admbnr;
-          })
-        );
-      }
+      row.banner.result.imgList = row.banner.result.imgList.concat( 
+        admBanner.result.banners.filter(function(admbnr){
+          return admbnr.bnnrLocCd === row.target;
+        }).map(function(admbnr){
+          admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+          admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+          return admbnr;
+        })
+      );
     })
     this._drawTosAdminBanner(result);
   },
@@ -1838,10 +1836,6 @@ Tw.MainHome.prototype = {
    */
   _drawTosAdminBanner: function (banners) {
     _.map(banners, $.proxy(function (bnr) {
-      if ( bnr.banner.result.bltnYn === 'N' ) {
-        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
-      }
-
       if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
         if ( bnr.target === '7' ) {
           this._membershipBanner = {
