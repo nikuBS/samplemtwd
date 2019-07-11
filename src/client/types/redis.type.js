@@ -4,7 +4,7 @@ Tw.BANNER_LINK_TYPE = {
 };
 
 Tw.TOS_BANNER_LINK_TYPE = {
-  INTERNAL: ['01', '02']
+  INTERNAL: '01'
 };
 
 Tw.BANNER_LINK_TARGET = {
