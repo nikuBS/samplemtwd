@@ -354,7 +354,6 @@ Tw.API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
-  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: Tw.API_METHOD.GET},
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -411,8 +410,7 @@ Tw.API_CMD = {
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
-  BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: Tw.API_METHOD.GET },
-
+  
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
@@ -583,13 +581,6 @@ Tw.NODE_CMD = {
   GET_MENU_RCMD: { path: '/menu-rcmd', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
-  GET_NEW_BANNER_TOS: { path: '/banner/newTos', method: Tw.API_METHOD.GET },
-
-    /*임시 API TOS배너확인후 삭제*/
-    GET_BANNER_TOS_LNKG_INFO: { path: '/banner/bannerTosLnkgInfo', method: Tw.API_METHOD.GET },
-    GET_BANNER_TOS_KEY: { path: '/banner/bannerTosKey', method: Tw.API_METHOD.GET },
-    GET_BANNER_TOS_INFO: { path: '/banner/bannerTosInfo ', method: Tw.API_METHOD.GET },
-
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
   DELETE_SESSION_STORE: { path: '/session-store', method: Tw.API_METHOD.DELETE },

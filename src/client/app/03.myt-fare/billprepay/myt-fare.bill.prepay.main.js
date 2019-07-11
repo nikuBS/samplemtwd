@@ -281,9 +281,16 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @param e
    */
   _prepay: function (e) {
+    var hbsName = 'MF_06_03'; // 소액결제 선결제 팝업
+    if (this.$title === 'contents') {
+      hbsName = 'MF_07_03'; // 콘텐츠이용료 선결제 팝업
+    }
+
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) { // 앱일 경우에만 이동
-        this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/prepay');
+        this._popupService.open({
+          'hbs': hbsName
+        }, $.proxy(this._goPrepay, this), null, 'pay', $(e.currentTarget));
       } else {
         this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
       }
