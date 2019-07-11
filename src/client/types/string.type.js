@@ -2054,10 +2054,3 @@ Tw.ALERT_MSG_SKPAY = {
     OK_BTN: '확인'
   }
 };
-
-Tw.HAPPYCOM_SEARCH_OPTIONS = {
-  all: '전체',
-  speedYn: '스마트폰 기초 과정',
-  applEduYn: '스마트폰 응용 과정',
-  codingEduYn: '코딩교실'
-};
