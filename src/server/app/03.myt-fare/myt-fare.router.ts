@@ -53,8 +53,6 @@ import MyTFareBillSkpayManage from './controllers/bill/myt-fare.bill.skpay.manag
 import MyTFareBillSkpayResult from './controllers/bill/myt-fare.bill.skpay.result.controller';
 import MyTFareBillSkpay from './controllers/bill/myt-fare.bill.skpay.controller';
 import MyTFareBillSkpayAgree from './controllers/bill/myt-fare.bill.skpay.agree.controller';
-import MyTFareBillSmallPrepay from './controllers/billsmall/myt-fare.bill.small.prepay.controller';
-import MyTFareBillContentsPrepay from './controllers/billcontents/myt-fare.bill.contents.prepay.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -81,14 +79,12 @@ class MytFareRouter extends TwRouter {
 
     // 소액결제
     this.controllers.push({ url: '/bill/small', controller: MyTFareBillSmall });
-    this.controllers.push({ url: '/bill/small/prepay', controller: MyTFareBillSmallPrepay });
     this.controllers.push({ url: '/bill/small/auto', controller: MyTFareBillSmallAuto });
     this.controllers.push({ url: '/bill/small/auto/info', controller: MyTFareBillSmallAutoInfo });
     this.controllers.push({ url: '/bill/small/auto/change', controller: MyTFareBillSmallAutoChange });
 
     // 콘텐츠이용내역
     this.controllers.push({ url: '/bill/contents', controller: MyTFareBillContents });
-    this.controllers.push({ url: '/bill/contents/prepay', controller: MyTFareBillContentsPrepay });
     this.controllers.push({ url: '/bill/contents/auto', controller: MyTFareBillContentsAuto });
     this.controllers.push({ url: '/bill/contents/auto/info', controller: MyTFareBillContentsAutoInfo });
     this.controllers.push({ url: '/bill/contents/auto/change', controller: MyTFareBillContentsAutoChange });
