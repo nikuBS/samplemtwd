@@ -138,16 +138,16 @@ Tw.POPUP_TPL = {
   CUSTOMER_AGENTSEARCH_TUBE_LINE: {
     0: [{
       list: [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
-        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
-        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' },
-        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-line="4호선"', txt: '4호선' },
-        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-line="5호선"', txt: '5호선' },
-        { 'label-attr': 'id="5"', 'radio-attr': 'id="5" name="r2" data-line="6호선"', txt: '6호선' },
-        { 'label-attr': 'id="6"', 'radio-attr': 'id="6" name="r2" data-line="7호선"', txt: '7호선' },
-        { 'label-attr': 'id="7"', 'radio-attr': 'id="7" name="r2" data-line="8호선"', txt: '8호선' },
-        { 'label-attr': 'id="8"', 'radio-attr': 'id="8" name="r2" data-line="9호선"', txt: '9호선' },
-        { 'label-attr': 'id="9"', 'radio-attr': 'id="9" name="r2" data-line="경강선"', txt: '경강선' },
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="01"', 'radio-attr': 'id="01" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="02"', 'radio-attr': 'id="02" name="r2" data-line="3호선"', txt: '3호선' },
+        { 'label-attr': 'id="03"', 'radio-attr': 'id="03" name="r2" data-line="4호선"', txt: '4호선' },
+        { 'label-attr': 'id="04"', 'radio-attr': 'id="04" name="r2" data-line="5호선"', txt: '5호선' },
+        { 'label-attr': 'id="05"', 'radio-attr': 'id="05" name="r2" data-line="6호선"', txt: '6호선' },
+        { 'label-attr': 'id="06"', 'radio-attr': 'id="06" name="r2" data-line="7호선"', txt: '7호선' },
+        { 'label-attr': 'id="07"', 'radio-attr': 'id="07" name="r2" data-line="8호선"', txt: '8호선' },
+        { 'label-attr': 'id="08"', 'radio-attr': 'id="08" name="r2" data-line="9호선"', txt: '9호선' },
+        { 'label-attr': 'id="09"', 'radio-attr': 'id="09" name="r2" data-line="경강선"', txt: '경강선' },
         { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2" data-line="경춘선"', txt: '경춘선' },
         { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2" data-line="분당선"', txt: '분당선' },
         { 'label-attr': 'id="12"', 'radio-attr': 'id="12" name="r2" data-line="수인선"', txt: '수인선' },
@@ -163,28 +163,28 @@ Tw.POPUP_TPL = {
     }],
     1: [{
       list: [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
-        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
-        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' },
-        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-line="4호선"', txt: '4호선' },
-        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-line="부산김해경전철"', txt: '부산김해경전철' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="01"', 'radio-attr': 'id="01" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="02"', 'radio-attr': 'id="02" name="r2" data-line="3호선"', txt: '3호선' },
+        { 'label-attr': 'id="03"', 'radio-attr': 'id="03" name="r2" data-line="4호선"', txt: '4호선' },
+        { 'label-attr': 'id="04"', 'radio-attr': 'id="04" name="r2" data-line="부산김해경전철"', txt: '부산김해경전철' }
       ]
     }],
     2: [{
       list: [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
-        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
-        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="01"', 'radio-attr': 'id="01" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="02"', 'radio-attr': 'id="02" name="r2" data-line="3호선"', txt: '3호선' }
       ]
     }],
     3: [{
       list: [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2" data-line="1호선"', txt: '1호선' }
       ]
     }],
     4: [{
       list: [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2" data-line="1호선"', txt: '1호선' }
       ]
     }]
   },

@@ -23,11 +23,11 @@ interface BranchDetail {
   custRateAvg: string;
   custRateCnt: string;
   weekdayOpenTime: string;
-  weekdayCloseTime: string;
+  // weekdayCloseTime: string;
   satOpenTime: string;
-  satCloseTime: string;
+  // satCloseTime: string;
   holidayOpenTime: string;
-  holidayCloseTime: string;
+  // holidayCloseTime: string;
   talkMap: string;
   premium: string;
   direct: string;
@@ -99,11 +99,11 @@ class CustomerAgentsearchDetail extends TwViewController {
     const purified: BranchDetail = { ...detail };
 
     purified.weekdayOpenTime = FormatHelper.insertColonForTime(purified.weekdayOpenTime);
-    purified.weekdayCloseTime = FormatHelper.insertColonForTime(purified.weekdayCloseTime);
+    // purified.weekdayCloseTime = FormatHelper.insertColonForTime(purified.weekdayCloseTime); // 운영시간 영역 비노출로 지워야 될 부분인지 확인 필요, OP002-1404
     purified.satOpenTime = FormatHelper.insertColonForTime(purified.satOpenTime);
-    purified.satCloseTime = FormatHelper.insertColonForTime(purified.satCloseTime);
+    // purified.satCloseTime = FormatHelper.insertColonForTime(purified.satCloseTime); // 운영시간 영역 비노출로 지워야 될 부분인지 확인 필요, OP002-1404
     purified.holidayOpenTime = FormatHelper.insertColonForTime(purified.holidayOpenTime);
-    purified.holidayCloseTime = FormatHelper.insertColonForTime(purified.holidayCloseTime);
+    // purified.holidayCloseTime = FormatHelper.insertColonForTime(purified.holidayCloseTime); // 운영시간 영역 비노출로 지워야 될 부분인지 확인 필요, OP002-1404
 
     const star = Math.round(parseFloat(purified.custRateAvg));
     purified.star = 'star' + star;

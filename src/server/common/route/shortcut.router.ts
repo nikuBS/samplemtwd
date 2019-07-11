@@ -70,16 +70,18 @@ class ShortcutRouter {
    * @param target
    */
   private redirectTarget(req, res, next, target) {
-    const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
-    const curDate = new Date().getTime();
+    // const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
+    const endDate = target.effEndDtm;
+    const curDate = DateHelper.getCurrentShortDate(new Date());
     const menuUrl = target.trgtUrl;
     const loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
     const referer = req.path;
 
-    if ( endDate > curDate ) {
+    if ( endDate >= curDate ) {
       res.redirect('/common/share/bridge?' + 'target=' + encodeURIComponent(menuUrl) + '&loginType=' + loginType + '&referer=' + referer);
     } else {
-      next();
+      // next();
+      res.redirect('/main/home');
     }
   }
 

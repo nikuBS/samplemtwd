@@ -12,6 +12,7 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
   this.$container = rootEl;
   this.isLogin = (isLogin === 'true');
   this.isLocationAccess = false;  // 앱일때 GPS ON 여부 및 모바일 웹일때 위치 액세스 가능 여부
+  this.isPopupNoResult = false;
 
   // 처음에 표시할 위치가 있을 경우 query param을 이용
   this.paramData = Tw.UrlHelper.getQueryParams();
@@ -79,6 +80,13 @@ Tw.CustomerAgentsearchNear.prototype = {
     // this.$container.find('#fe-btn-view-map').addClass('none'); // 최초 지도보기 버튼 안보이게
     // this.$container.find('.btn-switch').css('z-index', 1000);
     // }
+
+    // Tw.Logger.info('thomas_check 현재 해시값은? : ', this._historyService.getHash().substring(1));
+    var currentHash = this._historyService.getHash().substring(1);
+    this._currentBranchType = currentHash.indexOf('Branch') !== -1 ? 1 : currentHash.indexOf('Agent') !== -1 ? 2 : 0;
+    // Tw.Logger.info('thomas_check 현재 브랜치 타입은? : ', this._currentBranchType);
+
+
     // url에 좌표가 있거나 내위치 클릭이 아닌경우
     if (this._hasDest && !this.isMyLocationCliked) { // NOTE 위치를 지정해서 들어오는 경우는 권한 체크 필요 없다고 간주.
       this._onCurrentLocation({
@@ -186,23 +194,43 @@ Tw.CustomerAgentsearchNear.prototype = {
    */
   _showDataChargeIfNeeded: function (callback) {
     // Tw.Logger.info('thomas_check get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
-    if (Tw.BrowserHelper.isApp() && !Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {
-      var confirmed = false;
-      Tw.CommonHelper.showDataCharge(
-        $.proxy(function () {
-          confirmed = true;
-          Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
-          // Tw.Logger.info('thomas_check set이후 get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
+    if (Tw.BrowserHelper.isApp()) {
+      if(this.isLogin) {
+         if(!Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')) {  // 과금팝업 동의 쿠키 값 받아올수 없을때
+          var confirmed = false;
+          Tw.CommonHelper.showDataCharge(
+            $.proxy(function () {
+              confirmed = true;
+              Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y');
+              // Tw.Logger.info('thomas_check set이후 get cookie 정보는? : ', Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.ON_SESSION_PREFIX + 'AGENTSEARCH', 'Y')); // 위치 정보 응답코드 확인
+              callback();
+            }, this),
+            $.proxy(function () {
+              if (confirmed) {
+                return;
+              }
+              this._historyService.goBack();
+            }, this)
+          );
+        } else {  // 로그인 이면서 과금 팝업 쿠키값 받아 올수 있을때
           callback();
-        }, this),
-        $.proxy(function () {
-          if (confirmed) {
-            return;
-          }
-          this._historyService.goBack();
-        }, this)
-      );
-    } else {
+        }
+      } else {  // 비로그인
+        var confirmed = false;
+        Tw.CommonHelper.showDataCharge(
+          $.proxy(function () {
+            confirmed = true;
+            callback();
+          }, this),
+          $.proxy(function () {
+            if (confirmed) {
+              return;
+            }
+            this._historyService.goBack();
+          }, this)
+        );
+      }
+    } else {  // 앱이 아닐때
       callback();
     }
   },
@@ -279,6 +307,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       return;
     }
 
+    this._permissionShowed = true;  // 위치 정보 이용동의 팝업을 한번 보여주면 그 다음부터는 안보이도록 - 빼야될 라인 일지도
     this.locationDisagree = true;
     this._popupService.open({
         title: Tw.BRANCH.PERMISSION_TITLE,
@@ -506,8 +535,10 @@ Tw.CustomerAgentsearchNear.prototype = {
     var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.COMPASS, size, offset);
     var marker = new Tmap.Marker(lonlat, icon);
 
+    
     // isManuallyChanged는 _hasLocation으로 봐도 되는지..?
-    if (this.isLocationAccess && (!this._hasDest || this.isMyLocationCliked)) { // 임의로 위치 변경한 경우 현재 위치 마커 변경안함, 위치 액세스가 가능하며 내위치 클릭 이거나 위도 경도가 url에 없는경우 마커 그려줌
+    // 임의로 위치 변경한 경우 현재 위치 마커 변경안함, 파리미터 위치 액세스가 가능하며, 설정 미동의가 아니며 내위치 클릭 이거나 위도 경도가 url에 없는경우 마커 그려줌
+    if (this.isLocationAccess && !this.locationDisagree && (!this._hasDest || this.isMyLocationCliked)) { 
       this._currentMarker.addMarker(marker);
     }
 
@@ -544,7 +575,11 @@ Tw.CustomerAgentsearchNear.prototype = {
       this.$resultCount.text(shops.length);
       // Tw.Logger.info('thomas_check shops.length 는? : ', shops.length);
       // Tw.Logger.info('thomas_check shops.length 는? : ', this._regionChanged);
-      if (shops.length == 0 /*  && this._regionChanged */ ) {
+      // if (shops.length == 0 /*  && this._regionChanged */ ) {
+      // if (shops.length == 0 && this._regionChanged) {
+      // this.isPopupNoResult = false;
+      if (shops.length == 0 && !this.isPopupNoResult) {
+        this.isPopupNoResult = true;
         this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
         // this._regionChanged = false;
       }
@@ -569,8 +604,10 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._listInitilized = true;
     if (this._currentBranchType === 0) {
       this.$resultCount.text(this._nearShops.length);
+      this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[this._currentBranchType]);
     } else {
       var branchType = this._currentBranchType;
+      this.$typeOption.text(Tw.BRANCH.SELECT_BRANCH_TYPE[branchType]);
       this.$resultCount.text(_.filter(this._nearShops, function (item) {
         return item.storeType === (branchType + '');
       }).length);
@@ -884,10 +921,12 @@ Tw.CustomerAgentsearchNear.prototype = {
    */
   _onHashChange: function () {
     // Tw.Logger.info('thomas_check _onHashChange 내부');
-    if (!this._historyService.getHash() || this._historyService.getHash() === '#map') {
+    // if (!this._historyService.getHash() || this._historyService.getHash() === '#map') {
+    if (!this._historyService.getHash() || this._historyService.getHash().indexOf('#map') !== -1) {
       // Tw.Logger.info('thomas_check _onHashChange Map 내부');
       this._switchToMap();
-    } else if (this._historyService.getHash() === '#list') {
+    // } else if (this._historyService.getHash() === '#list') {
+    } else if (this._historyService.getHash().indexOf('#list') !== -1) {
       // Tw.Logger.info('thomas_check _onHashChange List 내부');
       this._switchToList();
     }

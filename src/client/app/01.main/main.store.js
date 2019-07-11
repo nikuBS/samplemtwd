@@ -15,7 +15,10 @@ Tw.MainStore = function (rootEl, menuId) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
+  this._nativeService = Tw.Native;
   this._menuId = menuId;
+  this._adid = null;
+  this._twdUrl = '';
 
   this._bindEventLanding();
 
@@ -47,6 +50,51 @@ Tw.MainStore.prototype = {
    */
   _onClickExternal: function ($event) {
     var url = $($event.currentTarget).data('url');
+
+    // 모바일T App 을 통하여 접근한 경우에만 adid 값을 넘김
+    if ( Tw.BrowserHelper.isApp() ) {
+      // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
+      // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 조건문을 제거
+      if ( Tw.BrowserHelper.isAndroid() ) {
+        this._twdUrl = url;
+        this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._getAdid, this));
+        // Native API 는 비동기로 호출되므로 링크 이동을 _getAdid 함수내에서 처리하도록 한다.
+      } else {
+        Tw.CommonHelper.openUrlExternal(url);
+      }
+    } else {
+      Tw.CommonHelper.openUrlExternal(url);
+    }
+  },
+
+  /**
+   * @function
+   * @desc
+   * @param res
+   * @private
+   */
+  _getAdid: function (res) {
+    var url = this._twdUrl;
+    var dstUrl = '';
+    var str = '?';
+    this._twdUrl = '';
+
+    dstUrl = url.replace('http://', '');
+    dstUrl = dstUrl.replace('https://', '');
+
+    if ( res.resultCode !== Tw.NTV_CODE.CODE_00 || Tw.FormatHelper.isEmpty(res.params.adid) ) {
+      return;
+    }
+
+    this._adid = res.params.adid;
+
+    if ( url.indexOf('?') > -1 ) {
+      str = '&';        
+    }
+
+    url += str + 'url=1&dstUrl=' + encodeURIComponent(dstUrl) + '&adid=' + this._adid;
+
+    // 링크 이동 처리
     Tw.CommonHelper.openUrlExternal(url);
   },
 
@@ -275,4 +323,3 @@ Tw.MainStore.prototype = {
     // this._resetHeight();
   }
 };
-

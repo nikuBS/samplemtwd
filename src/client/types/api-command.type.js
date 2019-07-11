@@ -574,6 +574,7 @@ Tw.NODE_CMD = {
   GET_APP_NOTICE: { path: '/app-notice', method: Tw.API_METHOD.GET },
   GET_XTINFO: { path: '/xtractor-info', method: Tw.API_METHOD.GET },
   GET_DOWNGRADE: { path: '/downgrade', method: Tw.API_METHOD.GET },
+  GET_CHANGEGUIDE: { path: '/changeGuide', method: Tw.API_METHOD.GET },
 
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },

@@ -24,6 +24,9 @@ class CustomerAgentsearch extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
+
+
+    //  this.logger.info(this, '[ svcInfo 정보는 ] : ', svcInfo);
     if (FormatHelper.isEmpty(req.query)) {
       res.render('agentsearch/customer.agentsearch.html', { isSearch: false, svcInfo, pageInfo });
     } else {

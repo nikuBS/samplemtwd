@@ -30,6 +30,10 @@ Tw.MyTJoinMyPlanAddThigh5.prototype = {
     this.$btnOpenApp.on('click', $.proxy(this._openApp, this));
   },
 
+  /**
+   * @desc 핀크앱 오픈(미설치된 경우 스토어로 연결)
+   * @private
+   */
   _openApp: function() {
     var customUrl = 'https://finnq.onelink.me/YERF/46b2e4dc';
     var packageName = 'com.finnq.f1';

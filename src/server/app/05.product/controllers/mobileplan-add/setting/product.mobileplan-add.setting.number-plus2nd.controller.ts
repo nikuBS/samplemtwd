@@ -8,9 +8,10 @@ import TwViewController from '../../../../../common/controllers/tw.view.controll
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
-import BrowserHelper from '../../../../../utils/browser.helper';
+import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../../utils/format.helper';
 import StringHelper from '../../../../../utils/string.helper';
+import ProductHelper from '../../../../../utils/product.helper';
 
 /**
  * @class
@@ -64,26 +65,32 @@ class ProductMobileplanAddSettingNumberPlus2nd extends TwViewController {
          title: PRODUCT_TYPE_NM.SETTING
        };
 
-      if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
-        return this.error.render(res, renderCommonInfo);
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIdList.indexOf(prodId) === -1) {
+      return this.error.render(res, renderCommonInfo);
+    }
+
+
+
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '03' }, {}, [prodId])
+    ]).subscribe(([combineLineInfo, joinTermInfo]) => {
+      const apiError = this.error.apiError([combineLineInfo, joinTermInfo]);
+
+      if (!FormatHelper.isEmpty(apiError)) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: apiError.code,
+          msg: apiError.msg,
+          isBackCheck: true
+        }));
       }
 
-
-     this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId])
-       .subscribe((combineLineInfo) => {
-         if (combineLineInfo.code !== API_CODE.CODE_00) {
-           return this.error.render(res, Object.assign(renderCommonInfo, {
-             code: combineLineInfo.code,
-             msg: combineLineInfo.msg
-           }));
-         }
-
-         res.render('mobileplan-add/setting/product.mobileplan-add.setting.number-plus2nd.html', Object.assign(renderCommonInfo, {
-           prodId: prodId,
-           combineLineInfo: this._convCombineLineInfo(combineLineInfo.result, allSvc),
-           isApp: BrowserHelper.isApp(req)
-         }));
-       });
+      res.render('mobileplan-add/setting/product.mobileplan-add.setting.number-plus2nd.html', Object.assign(renderCommonInfo, {
+        prodId: prodId,
+        combineLineInfo: this._convCombineLineInfo(combineLineInfo.result, allSvc),
+        joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
+      }));
+    });
   }
 }
 

@@ -9562,3 +9562,16 @@ button:focus span {
 
 /* 190514 추가 [OP002-210] 분실임대 매장  */
 .bt-dropdown.tod-bt-lar{font-size:1.0625rem}
+
+/* 190703 추가 [OP002-1430] 행복커뮤니티 페이지 신규 Tab 개발 */
+.tod-nowrap {white-space:nowrap !important;}
+.tod-txcolor1 {color:#000 !important;}
+.tod-txcolor2 {color:#333 !important;}
+.tod-txcolor3 {color:#666 !important;}
+.tod-txcolor4 {color:#858585 !important;}
+.tod-txcolor5 {color:#757575 !important;}
+.tod-txcolor6 {color:#f76252 !important;}
+.tod-txcolor7 {color:#ef4b49 !important;}
+.tod-txcolor8 {color:#178bce !important;}
+.tod-txcolor9 {color:#59bcf5 !important;}
+.btn-more.tod-linety2 {border-color:#e5e5e5;}

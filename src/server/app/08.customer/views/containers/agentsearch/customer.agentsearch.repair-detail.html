@@ -68,7 +68,7 @@
     new Tw.CustomerAgentsearchRepairDetail($('.wrap'), {
       longitude: '<%= detail.geoX %>',
       latitude: '<%= detail.geoY %>'
-    });
+    }, '<%= svcInfo !== null %>');
   })
 </script>
 <% include ../../components/end.component.html %>

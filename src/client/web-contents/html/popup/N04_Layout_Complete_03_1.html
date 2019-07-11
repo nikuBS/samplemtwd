@@ -57,30 +57,38 @@
         <!-- .popup hbs -->
         <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- .container-wrap -->
+           
             <div class="container-wrap">
                 <div class="container">
-                    <div class="complete-wrap">
+                    
+                    <!-- 20190627 [OP002-1908] 수정_01 -->
+                    <div class="complete-wrap tod-complete-wrap">
                         <div class="title-box">
-                            <i class="icon-warning-120"><span class="blind">warning</span></i>
+                            <i class="icon-comm-bi122"><span class="blind">T월드 - 안내</span></i>
                             <p class="tx-tit"><span class="tx-highlight pt10">이용에 불편을 드려서 죄송합니다.</span></p>
                         </div>
                         <div class="tx-contents">
-                            <p class="code-txt">에러 코드 : CS0100</p>
-                            <!-- <p class="basic-txt">시스템이 정상적으로 작동하지 않아 서비스를 이용 하실 수 없습니다</p> --><!--2019.02.22 에러문구:텍스트만 있는 경우 -->
-                            <p class="basic-txt">실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 ‘사용내역/<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>’에서 확인 가능합니다.</p><!--2019.02.22 에러문구:텍스트안에 링크가 있는 경우 추가-->
+                            <div class="tx-desc-wrap">
+                               <!-- <p class="basic-txt">시스템이 정상적으로 작동하지 않아 서비스를 이용 하실 수 없습니다</p> -->
+                               <!--2019.02.22 에러문구:텍스트만 있는 경우 -->
+                               <p class="basic-txt">실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 ‘사용내역/<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>’에서 확인 가능합니다.</p><!--2019.02.22 에러문구:텍스트안에 링크가 있는 경우 추가-->
+                            </div>
                             <ul class="bt-slice item-one">
-                                <li><button type="button" class="btn-round2 btn-style3">문의하기</button></li>
+                                <li><button type="button" class="btn-round2 btn-style3">이메일 상담하기</button></li>
                             </ul>
                         </div>
                     </div>
+                    <!-- //20190627 [OP002-1908] 수정_01 -->
+                
                 </div>
             </div>
 
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
-                    <li><button type="button" class="btn-floating btn-style2">돌아가기</button></li>
+                    <li><button type="button" class="btn-floating btn-style2">확인</button></li><!-- 20190627 [OP002-1908] 수정_02 -->
                 </ul>
             </div>
+           
             <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
             <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->

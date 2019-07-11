@@ -32,7 +32,8 @@
                                     {{#if svcProdBasFeeInfo.isNaN}}
                                         {{svcProdBasFeeInfo.value}}
                                     {{else}}
-                                        월 {{svcProdBasFeeInfo.value}} 원
+                                        {{svcProdBasFeeInfo.value}} 원
+									<span class="tx-regular">(월/부가세 포함)</span><!-- 190605  수정_01 -->
                                     {{/if}}
                             </span>
                             {{/if}}
@@ -60,7 +61,7 @@
                             <span class="tit-tx"><span class="blind">{{joinTypeText}}할 상품정보</span>{{toProdName}}</span>
                         {{/if}}
                         {{#if isNumberBasFeeInfo}}
-                            <span class="sub-disc03"><span class="tx-bold vbl">{{#if isMobilePlan}}월 {{/if}}{{toProdBasFeeInfo}}원</span> 부가세 포함</span>
+							<span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}원 </span>(월/부가세 포함)</span>
                         {{else}}
                             <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}</span></span>
                         {{/if}}

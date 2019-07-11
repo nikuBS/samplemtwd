@@ -72,6 +72,7 @@ class ApiRouter {
     GET_APP_NOTICE: { path: '/app-notice', method: API_METHOD.GET, target: this.getAppNotice },
     GET_XTINFO: { path: '/xtractor-info', method: API_METHOD.GET, target: this.getXtInfo },
     GET_DOWNGRADE: { path: '/downgrade', method: API_METHOD.GET, target: this.getDowngrade },
+    GET_CHANGEGUIDE: { path: '/changeGuide', method: API_METHOD.GET, target: this.getChangeGuide },
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
@@ -331,6 +332,34 @@ class ApiRouter {
     });
   }
 
+  /**
+   * 상품안내 팝업 레디스 조회
+   * @param req
+   * @param res
+   * @param next
+   */
+  private getChangeGuide(req: Request, res: Response, next: NextFunction) {
+    const value: any = req.query.value || null;
+      // typeYn: any = req.query.type_yn || 'N';
+
+    if (FormatHelper.isEmpty(value)) {
+      return res.json({ code: '01' });
+    }
+
+    this.redisService.getData(REDIS_KEY.PRODUCT_CHANGEGUIDE + value)
+      .subscribe((resp) => {
+        if (resp.code !== API_CODE.CODE_00) {
+          return res.json(resp);
+        }
+
+        res.json(Object.assign(resp, {
+          result: Object.assign(resp.result, {
+            guidMsgCtt: EnvHelper.replaceCdnUrl(resp.result.guidMsgCtt)
+          })
+        }));
+      });
+  }
+  
   /**
    * DG방어 레디스 조회
    * @param req
