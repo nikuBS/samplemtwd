@@ -51,20 +51,20 @@ Tw.MainStore.prototype = {
   _onClickExternal: function ($event) {
     var url = $($event.currentTarget).data('url');
 
-    // 모바일T App 을 통하여 접근한 경우에만 adid 값을 넘김
-    if ( Tw.BrowserHelper.isApp() ) {
-      // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
-      // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 조건문을 제거
-      if ( Tw.BrowserHelper.isAndroid() ) {
-        this._twdUrl = url;
-        this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._getAdid, this));
-        // Native API 는 비동기로 호출되므로 링크 이동을 _getAdid 함수내에서 처리하도록 한다.
-      } else {
-        Tw.CommonHelper.openUrlExternal(url);
-      }
-    } else {
+    // // 모바일T App 을 통하여 접근한 경우에만 adid 값을 넘김
+    // if ( Tw.BrowserHelper.isApp() ) {
+    //   // 현재 iOS App 에서는 GET_ADID 메서드가 제공되고 있지 않으므로 우선 Android App 에 대해서만 적용하여 테스트함.
+    //   // 추후 iOS App 에서 해당 메서드 제공되도록 배포되면 아래 조건문을 제거
+    //   if ( Tw.BrowserHelper.isAndroid() ) {
+    //     this._twdUrl = url;
+    //     this._nativeService.send(Tw.NTV_CMD.GET_ADID, {}, $.proxy(this._getAdid, this));
+    //     // Native API 는 비동기로 호출되므로 링크 이동을 _getAdid 함수내에서 처리하도록 한다.
+    //   } else {
+    //     Tw.CommonHelper.openUrlExternal(url);
+    //   }
+    // } else {
       Tw.CommonHelper.openUrlExternal(url);
-    }
+    // }
   },
 
   /**
