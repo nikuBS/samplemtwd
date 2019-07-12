@@ -70,19 +70,20 @@ class ShortcutRouter {
    * @param target
    */
   private redirectTarget(req, res, next, target) {
-    // const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
-    const endDate = target.effEndDtm;
+    // target.effEndDtm가 1일이므로 +30일을 하려면 29를 더해야 함
+    const endDate = DateHelper.getAddDays(DateHelper.convDateFormat(target.effEndDtm), 29, 'YYYYMMDD');
+
     const curDate = DateHelper.getCurrentShortDate(new Date());
-    const menuUrl = target.trgtUrl;
-    const loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
+    let menuUrl = target.trgtUrl;
+    let loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
     const referer = req.path;
 
-    if ( endDate >= curDate ) {
-      res.redirect('/common/share/bridge?' + 'target=' + encodeURIComponent(menuUrl) + '&loginType=' + loginType + '&referer=' + referer);
-    } else {
-      // next();
-      res.redirect('/main/home');
+    if ( endDate < curDate ) {
+      menuUrl = '/main/home';
+      loginType = 'N';
     }
+
+    res.redirect('/common/share/bridge?' + 'target=' + encodeURIComponent(menuUrl) + '&loginType=' + loginType + '&referer=' + referer);
   }
 
   /**
