@@ -95,48 +95,33 @@ Tw.CustomerEmailQualityOption.prototype = {
   _onSelectQualityPhoneLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
+    var $wrapTplQuality = this.$wrap_tpl_quality;
 
     var $target = $(e.currentTarget);
-    var isInternetLine = $('.fe-quality-inqSvcClCd li.checked').index() === 0; // 라디오 버튼 선택여부 0: 인터넷/TV 1: 집전화 -> 인터넷케이스일때 true
-    var filteredLine = []; // 노출할 목록 정의
-    var fnSelectLine; // 액션시트 함수 정의
+    // var isInternetLine = $('.fe-quality-inqSvcClCd li.checked').index() === 0; // 라디오 버튼 선택여부 0: 인터넷/TV 1: 집전화 -> 인터넷케이스일때 true
+    // 2019-07-12 OP002-439 : 라디오 버튼 (인터넷/TV , 집전화) 비노출로 변경. 무조건 회선선택 하는거 노출
 
-
-    // 인터넷 케이스일때
-    if ( isInternetLine ) {
-      // 목록설정
-      filteredLine = this.allSvc.s.filter(function (item) {
-        // I: 인터넷 T: IPTV
-        return item.svcGr === 'I' || item.svcGr === 'T';
-      });
-
-      // 인터넷 케이스와 집전화 케이스의 차이는 txt 속성만 차이
-      fnSelectLine = function (item, index) {
-        return {
-          'txt': item.addr,
-          'radio-attr': 'data-index="' + index + '" data-svcmgmtnum="' + item.svcMgmtNum + '"' + ($('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? ' checked' : ' '),
-          'label-attr': ' '
-        };
-      };
-    } else {
-      // 집전화 케이스일때 
-
-      // 목록설정
-      filteredLine = this.allSvc.s.filter(function (item) {
-        // U: 집전화
-        return item.svcGr === 'U';
-      });
-      fnSelectLine = function (item, index) {
-        return {
-          'txt': Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
-          'radio-attr': 'data-index="' + index + '" data-svcmgmtnum="' + item.svcMgmtNum + '"' + ($('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? ' checked' : ' '),
-          'label-attr': ' '
-        };
-      };
-    }
-
+    var txt = '';
     // 리스트 설정
-    var list = filteredLine.map(fnSelectLine);
+    var list = this.allSvc.s.map(function (item, index) {
+      // I: 인터넷 T: IPTV
+      if(item.svcGr === 'I' || item.svcGr === 'T'){
+        txt = item.addr;
+      }
+      // 집전화 케이스일때
+      else if (item.svcGr === 'U'){
+        txt = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
+      }
+
+      var _svcMgmtNum = $wrapTplQuality.find('.fe-select-phone-line').data('svcmgmtnum');
+      var radioAttrVal = Tw.StringHelper.stringf('data-index="{0}" data-svcmgmtnum="{1}" data-svc-gr="{2}"', index, item.svcMgmtNum, item.svcGr );
+      radioAttrVal += _svcMgmtNum === item.svcMgmtNum ? ' checked' : ' ';
+      return {
+        'txt': txt,
+        'radio-attr': radioAttrVal,
+        'label-attr': ' '
+      };
+    });
 
     /**
      * @function 
@@ -236,6 +221,14 @@ Tw.CustomerEmailQualityOption.prototype = {
 
     $target.text(svcNum);
     $target.data('svcmgmtnum', svcMgmtNum);
+
+    var $inqSvcClCd = this.$wrap_tpl_quality.find('.fe-quality-inqSvcClCd');
+    // I: 인터넷 T: IPTV
+    if(['I','T'].indexOf($target.data('svcGr')) !== -1) {
+      $inqSvcClCd.find('[value="I"]').prop('checked', true);
+    } else {
+      $inqSvcClCd.find('[value="P"]').prop('checked', true);
+    }
     e.stopPropagation();
     e.preventDefault();
 
