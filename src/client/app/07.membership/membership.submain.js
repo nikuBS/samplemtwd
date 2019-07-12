@@ -20,7 +20,8 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, menuId) {
   this._menuId = menuId;
   this._cachedElement();
   this._bindEvent();
-  this._getMembershipBanner();
+  //this._getMembershipBanner();
+  this._getTosAdminMembershipBanner();
   this._checkLocationAgreement();
 };
 
@@ -217,71 +218,83 @@ Tw.MembershipSubmain.prototype = {
         }, this)
     );
   },
+
+
   /**
    * @function
-   * @desc 멤버십 서브메인 및 멤버십 바코드 팝업. Tos 배너 정보요청.
+   * @desc 토스 배너 정보 요청
    * @private
    */
-  _getMembershipBanner: function (){
+  _getTosAdminMembershipBanner: function () {
     this._apiService.requestArray([
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },  // 멤버십 서브메인
-      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }   // 멤버십 바코드 팝업
-    ]).done($.proxy(this._successTosBanner, this));
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0006' } },
+      { command: Tw.NODE_CMD.GET_NEW_BANNER_TOS, params: { code: '0007' } },
+      { command: Tw.NODE_CMD.GET_BANNER_ADMIN, params: { menuId: this._menuId } }
+    ]).done($.proxy(this._successTosAdminMemberShipBanner, this));
   },
-  _successTosBanner: function (banner1, banner2) {
+
+  /**
+   * @function
+   * @desc 토스 배너 처리
+   * @param resp
+   * @private
+   */
+  _successTosAdminMemberShipBanner: function (banner1, banner2, admBanner) {
     var result = [{ target: 'S', banner: banner1 },
-      { target: 'B', banner: banner2 }];
-    var adminList = [];
-    _.map(result, $.proxy(function (bnr) {
-      if ( this._checkTosBanner(bnr.banner) ) {
-        if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
-          if ( bnr.target === 'B' ) {
-            this._membershipPopupBanner = {
-              type: Tw.REDIS_BANNER_TYPE.TOS,
-              list: bnr.banner.result.imgList
-            };
-          } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, Tw.CommonHelper.setBannerForStatistics(bnr.banner.result.imgList, bnr.banner.result.summary), 'S');
-          }
+    { target: 'B', banner: banner2 }];
+
+    result.forEach(function(row){
+      if(row.banner && row.banner.code === Tw.API_CODE.CODE_00){
+        if(!row.banner.result.summary){
+          row.banner.result.summary = {target: row.target};  
         }
-      } else {
-        adminList.push(bnr);
+        row.banner.result.summary.kind = Tw.REDIS_BANNER_TYPE.TOS;
+        row.banner.result.imgList = Tw.CommonHelper.setBannerForStatistics(row.banner.result.imgList, row.banner.result.summary);
+      }else{
+        row.banner = { result: {summary : { target: row.target }, imgList : [] } };
+      }
+
+      if(admBanner.code === Tw.API_CODE.CODE_00){
+        row.banner.result.imgList = row.banner.result.imgList.concat( 
+          admBanner.result.banners.filter(function(admbnr){
+            return admbnr.bnnrLocCd === row.target;
+          }).map(function(admbnr){
+            admbnr.kind = Tw.REDIS_BANNER_TYPE.ADMIN;
+            admbnr.bnnrImgAltCtt = admbnr.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+            return admbnr;
+          })
+        );
+      }
+    })
+    this._drawTosAdminMemberShipBanner(result);
+  },
+
+  /**
+   * @function
+   * @desc 토스 배너 렌더링
+   * @param banners
+   * @private
+   */
+  _drawTosAdminMemberShipBanner: function (banners) {
+    _.map(banners, $.proxy(function (bnr) {
+      if ( bnr.banner.result.bltnYn === 'N' ) {
+        this.$container.find('ul.slider[data-location=' + bnr.target + ']').parents('div.nogaps').addClass('none');
+      }
+      
+      if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+        if ( bnr.target === 'B' ) {
+          this._membershipPopupBanner = {
+            kind: Tw.REDIS_BANNER_TYPE.TOS_ADMIN,
+            list: bnr.banner.result.imgList
+          };
+        } else {
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS_ADMIN, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+        }
       }
     }, this));
-    if ( adminList.length > 0 ) {
-      this._getAdminBanner(adminList);
-    }
-  },
-  _successAdminBanner: function (adminList, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      _.map(adminList, $.proxy(function (target) {
-        var banner = _.filter(resp.result.banners, function (banner) {
-          return banner.bnnrLocCd === target.target;
-        });
-        if ( banner.length > 0 ) {
-          if ( target.target === 'B' ) {
-            this._membershipPopupBanner = {
-              type: Tw.REDIS_BANNER_TYPE.ADMIN,
-              list: banner
-            };
-          } else {
-            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banner, target.target);
-          }
-        } else {
-          this.$container.find('.fe-membership-banner').remove();
-        }
-      }, this));
-    }
-  },
-  /**
-   * @function
-   * @desc Tos 배너 정보 없는 경우 Redis 배너 정보 요청
-   * @param adminList
-   * @private
-   */
-  _getAdminBanner: function (adminList) {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
-        .done($.proxy(this._successAdminBanner, this, adminList));
+    
+    new Tw.XtractorService(this.$container);
+
   },
   _checkTosBanner: function (tosBanner) {
     if ( tosBanner.code === Tw.API_CODE.CODE_00 ) {
@@ -580,7 +593,7 @@ Tw.MembershipSubmain.prototype = {
       });
     }
     if ( !Tw.FormatHelper.isEmpty(this._membershipPopupBanner) ) {
-      new Tw.BannerService($popupContainer, this._membershipPopupBanner.type, this._membershipPopupBanner.list, '7');
+      new Tw.BannerService($popupContainer, this._membershipPopupBanner.kind, this._membershipPopupBanner.list, '7');
     }
   },
   /**
