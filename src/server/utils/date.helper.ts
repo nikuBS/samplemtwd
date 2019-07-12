@@ -415,6 +415,20 @@ class DateHelper {
   static add5min(date: any): any {
     return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
   }
+
+  /**
+   * @function
+   * @desc get next day
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param format
+   * @returns {string} : 2019-07-11
+   * @public
+   */
+  static getAddDays(date, days, format) {
+    return moment(this.convDateFormat(date))
+      .add(days, 'days')
+      .format(format);
+  }
 }
 
 export default DateHelper;
