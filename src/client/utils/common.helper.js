@@ -97,6 +97,34 @@ Tw.CommonHelper = (function () {
     return localStorage.getItem(key);
   };
 
+    /**
+   * @desc setter
+   * @param {string} key
+   * @param {string} value
+   * @public
+   */
+  var setSessionStorage = function (key, value) {
+    sessionStorage.setItem(key, value);
+  };
+
+  /**
+   * @desc getter
+   * @param {string} key 
+   * @public
+   */
+  var getSessionStorage = function (key) {
+    return sessionStorage.getItem(key);
+  };
+
+  /**
+   * @desc delete data in session storage
+   * @param {string} key
+   * @public
+   */
+  var removeSessionStorage = function (key) {
+    return sessionStorage.removeItem(key);
+  };
+
   /**
    * @desc getter
    * @param {string} key 
@@ -386,6 +414,28 @@ Tw.CommonHelper = (function () {
     });
   };
 
+  /**
+   * @desc compare origin TWM and current TWM
+   */
+  var checkValidSession = function() {
+    var preTWM = this.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM) || '';
+    var curTWM = this.getCookie(Tw.COOKIE_KEY.TWM);
+
+    if(this.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y') {
+      // 값이 비어 있으면, TWM 값을 저장
+      if(Tw.FormatHelper.isEmpty(preTWM)) {
+        this.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, this.getCookie(Tw.COOKIE_KEY.TWM));
+      } else {
+        if(preTWM !== curTWM) {
+          // this.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, '');
+          var historyService = new Tw.HistoryService();
+          historyService.replaceURL('/common/member/logout/expire?sess_invalid=Y&target=' + location.pathname + location.search);
+          return;
+        }
+      }
+    }
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -412,6 +462,10 @@ Tw.CommonHelper = (function () {
     replaceExternalLinkTarget: replaceExternalLinkTarget,
     sendRequestImg: sendRequestImg,
     focusOnActionSheet: focusOnActionSheet,
-    setBannerForStatistics: setBannerForStatistics
+    setBannerForStatistics: setBannerForStatistics,
+    setSessionStorage: setSessionStorage,
+    getSessionStorage: getSessionStorage,
+    removeSessionStorage: removeSessionStorage,
+    checkValidSession: checkValidSession
   };
 })();

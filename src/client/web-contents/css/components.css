@@ -35390,7 +35390,7 @@ body.apphome .section-box {
 .tod-program-intro .text-wrap .stit {display:block; margin:0 0 0.25rem; font-weight:bold; font-size:0.8125rem;}
 .tod-program-intro .text-wrap .txt {font-size:0.75rem; color:#8d8d8d;}
 .tod-program-intro .thumb-wrap:after {content:''; display:block; clear:both;}
-.tod-program-intro .thumb-wrap img {display:block; max-width:100%;}
+.tod-program-intro .thumb-wrap img {display:block; width:100%;}
 .tod-program-intro .thumb-wrap.col img {max-width:49.4%;}
 .tab-area.new01 .tab-linker.tod-multiline ul li {height:auto; padding:0.625rem 0; vertical-align:middle;}
 .tab-area.new01 .tab-linker.tod-multiline ul li a, .tab-area.new01 .tab-linker.tod-multiline ul li button {height:auto; line-height:1.3;}
@@ -35410,3 +35410,16 @@ body.apphome .section-box {
 .shop-info .shop-tag .tag.tod-color-happy1 {background-color:#00a49b;}
 .shop-info .shop-tag .tag.tod-color-happy2 {background-color:#fa6501;}
 .shop-info .shop-tag .tag.tod-color-happy3 {background-color:#4e7ac5;}
+.tod-flag {display:inline-block; vertical-align:middle; margin:0 0 0.125rem; height:1rem; line-height:1.063rem; padding:0 0.25rem; border-radius:0.125rem; font-size:0.63rem; background:#178bce; color:#fff; white-space:nowrap;}
+.tod-flag.color-gray {background-color:#6c7583;}
+
+/* 190712 추가 [OP002-2198] baro 통화 가능여부 조회 기능 추가 */
+.rm-barocall-inq{padding:1.875rem 1.25rem;background-color:#dbebf7}
+.rm-barocall-inq .inq-top{padding-left:5.0625rem;background:url(/img/product/rm-barocall-inq.png) no-repeat 0.3125rem 0;background-size:3.8125rem auto}
+.rm-barocall-inq .inq-top strong{color:#4766ff}
+.rm-barocall-inq .inq-top p{font-size:.75rem;color:#666}
+.rm-barocall-inq .inq-top button{color:#fff;width:160px;height:40px;background-color:#4766ff;border-radius:20px}
+.rm-barocall-inq .inq-result{height:7.125rem;padding:0 1rem;line-height:7.125rem;border:1px solid #cdd9e3;background-color:#fff}
+.rm-barocall-inq .inq-result .vertical{display:inline-block;width:100%;text-align:center;line-height:1rem;vertical-align:middle}
+.rm-barocall-inq .inq-result .vertical strong{font-weight:normal;font-size:0.875rem}
+.rm-barocall-inq .inq-result .vertical p{font-size:0.75rem;color:#666}
