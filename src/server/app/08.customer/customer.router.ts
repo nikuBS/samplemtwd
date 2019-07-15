@@ -38,6 +38,7 @@ import CustomerDocument from './controllers/document/customer.document.controlle
 import CustomerResearchesResult from './controllers/researches/customer.researches.result.controller';
 import CustomerAgentsearchRentPhone from './controllers/agentsearch/customer.agentsearch.rentphone.controller';
 import CustomerFaqView from './controllers/faq/customer.faq.view.controller';
+import CustomerAgentsearchHappycom from './controllers/agentsearch/customer.agentsearch.happycom.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -76,6 +77,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/agentsearch/repair-detail', controller: CustomerAgentsearchRepairDetail });
     this.controllers.push({ url: '/agentsearch/repair-manufacturer', controller: CustomerAgentsearchRepairManufacturer });
     this.controllers.push({ url: '/agentsearch/expzone5gx', controller: CustomerAgentsearchExpZone5gx });
+    this.controllers.push({ url: '/agentsearch/happycom', controller: CustomerAgentsearchHappycom });
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
