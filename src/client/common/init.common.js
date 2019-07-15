@@ -17,6 +17,7 @@ Tw.Environment = {
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
+  this._errorService = null;
 
   this._initService();
   this._initComponent();
@@ -53,6 +54,10 @@ Tw.Init.prototype = {
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
+    this._errorService = Tw.Error;
+
+    // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
+    Tw.CommonHelper.checkValidSession();
   },
 
   /**
