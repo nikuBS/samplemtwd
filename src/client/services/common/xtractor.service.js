@@ -3,7 +3,7 @@
  * @param $container - 컨테이너 레이어
  * @param isTosBanner - TOS 배너 여부
  */
-Tw.XtractorService = function($container, isTosBanner) {
+Tw.XtractorService = function($container, isTosBanner) {  
   this.$container = $container;
   this._isTosBanner = isTosBanner || false;
 
@@ -12,28 +12,27 @@ Tw.XtractorService = function($container, isTosBanner) {
 
   // Init
   setTimeout($.proxy(this._init, this), 500);
-  
-  // 화면 스크롤 시 배너 객체가 화면 내 노출될 경우 BV 통계 호출해주도록 수정
-  $(document).scroll($.proxy(function () {    
-    this._onLoadBV();
-  }, this));
-
-  this._observeTransition();
 };
 
 Tw.XtractorService.prototype = {
-
   /**
    * @function
    * @desc 최초 동작
    */
-  _init: function() {
-    this._loggedList = [];
+  _init: function() { 
+    this._loggedList = window['XTRACTOR_LOGGED_LIST'] = window['XTRACTOR_LOGGED_LIST']? window['XTRACTOR_LOGGED_LIST'] : [];
     this._isScript1 = (window.XtractorEvent && window.XtractorEvent.xtrEvent);
     this._isScript2 = (window.XtractorScript && window.XtractorScript.xtrCSDummy);
-    
+   
     this._bindBC();
-    this._onLoadBV();
+    this._observeTransition();
+    this._initScroll();
+  },
+
+  _initScroll: function () {
+    $(window).scroll($.proxy(function () {
+      this._onLoadBV();
+    }, this));
   },
 
   /**
@@ -55,7 +54,7 @@ Tw.XtractorService.prototype = {
       viewElms = [];
 
       _viewElms.forEach(function(elem, idx){
-          // 여기에 처리하고자 하는 액션을 구현 
+          // 여기에 처리하고자 하는 액션을 구현
           _this._sendBV(elem);
       });
       isRun = false;
@@ -147,8 +146,13 @@ Tw.XtractorService.prototype = {
       if (!Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
         // 배너 객체가 현재 화면 내에 들어올 경우 logView 함수 호출
         if (scrollTop < objTop && scrollBottom > objBottom) {
-          if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
-            this.logView(E_ID, CS_ID);
+          // MLS 배너의 경우 slick-current, slick-active 속성이 없으므로 E_ID 네이밍으로 필터링 함...
+          if (E_ID.indexOf('MLS') > -1) {
+            this.logView(E_ID, CS_ID); 
+          } else {
+            if ($elem.hasClass('slick-current') || $elem.hasClass('slick-active')) {
+              this.logView(E_ID, CS_ID);            
+            }
           }
         }
       }
@@ -164,6 +168,7 @@ Tw.XtractorService.prototype = {
   _sendBC: function(e) {
     var $elem = $(e.currentTarget);
     var bannerType = $elem.data('xt_action');
+    var bannerType2 = $elem.data('xt_action2');
 
     /* TOS Banner */
     if (bannerType === 'BN') {
@@ -185,7 +190,7 @@ Tw.XtractorService.prototype = {
     } 
 
     /* 어드민 Banner */
-    if (bannerType === 'BV') {
+    if (bannerType === 'BC' || bannerType2 === 'BC') {
       var E_ID = $elem.data('xt_eid'),
           CS_ID = $elem.data('xt_csid');
 
