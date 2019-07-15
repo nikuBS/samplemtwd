@@ -53,3 +53,8 @@ Tw.TRACKER_API = {
     production: 'https://dbp.sktelecom.com/tracker'
   }
 };
+
+Tw.SSTORE_KEY = {
+  ORI_TWM: 'oriTWM',
+  PRE_TWM: 'preTWM'
+};
