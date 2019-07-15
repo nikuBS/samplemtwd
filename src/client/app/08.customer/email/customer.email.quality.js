@@ -338,5 +338,5 @@ Tw.CustomerEmailQuality.prototype = {
   // 요청 버튼 클릭가능하도록 처리
   _handleButtonAbled: function ($target) {
     $target.prop('disabled', false);
-  },
+  }
 };
