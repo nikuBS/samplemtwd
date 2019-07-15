@@ -45,12 +45,11 @@ class CustomerAgentsearchDetail extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
     const branchCode = req.query.code;
     const isExpZone = req.query.isExpZone || false; /* 5gx 및 VR zone 관련 플래그 추가 */
-    const isHappy = req.query.isHappy || false; // 행복 커뮤니티 페이지
     
     this.getBranchDetailInfo(res, svcInfo, pageInfo, branchCode).subscribe(
       (detail) => {
         if (!FormatHelper.isEmpty(detail)) {
-          res.render('agentsearch/customer.agentsearch.detail.html', { detail, svcInfo, pageInfo, isExpZone, isHappy });
+          res.render('agentsearch/customer.agentsearch.detail.html', { detail, svcInfo, pageInfo, isExpZone });
         }
       },
       (err) => {

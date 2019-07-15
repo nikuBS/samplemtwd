@@ -354,7 +354,6 @@ Tw.API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
-  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: Tw.API_METHOD.GET},
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -411,8 +410,7 @@ Tw.API_CMD = {
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
-  BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: Tw.API_METHOD.GET },
-
+  
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },

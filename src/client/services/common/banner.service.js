@@ -111,10 +111,6 @@
         } else {
           this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN })); // render banners
   
-          if (type === Tw.REDIS_BANNER_TYPE.TOS) {
-            new Tw.XtractorService(this.$banners, true);
-          }
-  
           var rollYn = this._banners.reduce(function(a,b){
             return b.kind === Tw.REDIS_BANNER_TYPE.ADMIN? b : a;
           }, {}).rollYn||'N';
@@ -220,6 +216,8 @@
           if (callback) { // set callback
             this.$banners.find('img').on('load', callback);
           }
+  
+          new Tw.XtractorService(this.$banners, true);
         }
       }
     },

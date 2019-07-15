@@ -15,7 +15,6 @@ Tw.MyTFareBillPrepayChangeLimit = function (rootEl, title) {
   this.$container = rootEl;
   this.$title = title;
   this.$isClicked = false;
-  this._isUnpaid = 'N';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -72,8 +71,11 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    */
   _getLimitSuccess: function ($target, res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._isUnpaid = res.result.isUnpaid;
-      this._changeLimit(res.result);
+      if (res.result.isUnpaid === 'Y') {
+        this._getLimitFail();
+      } else {
+        this._changeLimit(res.result);
+      }
     } else {
       this._fail($target, res);
     }
@@ -263,15 +265,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @param e
    */
   _openChangeConfirm: function (e) {
-    // OP002-2293 : 미납일 경우 한도 하향만 가능
-    if (this._isUnpaid === 'Y' && this._checkIsUp()){
-      this._getLimitFail();
-    } else {
-      var $target = $(e.currentTarget);
-      this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
-        $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
-        $target);
-    }
+    var $target = $(e.currentTarget);
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+      $.proxy(this._onChange, this), $.proxy(this._change, this, $target), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON,
+      $target);
   },
   /**
    * @function
@@ -328,8 +325,9 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
    * @returns {boolean}
    */
   _checkIsUp: function () {
-    // 2019-07-15 한도 상향 기준(OP002-2290) : "월한도"를 기준으로 함.
-    return parseInt(this.$monthSelector.attr('id'), 10) > parseInt(this.$monthSelector.attr('origin-value'), 10);
+    return ((parseInt(this.$monthSelector.attr('id'), 10) > parseInt(this.$monthSelector.attr('origin-value'), 10)) ||
+      (parseInt(this.$daySelector.attr('id'), 10) > parseInt(this.$daySelector.attr('origin-value'), 10)) ||
+      (parseInt(this.$onceSelector.attr('id'), 10) > parseInt(this.$onceSelector.attr('origin-value'), 10)));
   },
   /**
    * @function
