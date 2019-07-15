@@ -200,46 +200,23 @@
 
 <script type="text/template" id="tpl_quality_internet">
     <div class="cont-box">
-        <!-- 2019-07-12 OP002-439 : 사용안함
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
                     <li class="radiobox type01 checked" role="radio" aria-checked="true">
-                        &lt;!&ndash; 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" &ndash;&gt;
-                        <input type="radio" name="radio1-big1" value="I" title="인터넷/TV" checked="">&lt;!&ndash; 체크상태일 경우 checked="false" &ndash;&gt;
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="radio" name="radio1-big1" value="I" title="인터넷/TV" checked=""><!-- 체크상태일 경우 checked="false" -->
                         인터넷/TV
                     </li>
                     <li class="radiobox type01 ml30" role="radio" aria-checked="false">
-                        &lt;!&ndash; 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" &ndash;&gt;
-                        <input type="radio" name="radio1-big1" value="P" title="집전화">&lt;!&ndash; 체크상태일 경우 checked="checked" &ndash;&gt;
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio1-big1" value="P" title="집전화"><!-- 체크상태일 경우 checked="checked" -->
                         집전화
                     </li>
                 </ul>
             </div>
         </div>
-        -->
-
         <div class="inquiryform-wrap">
-            <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
-            var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
-            %>
-            <p class="title">문의하실 내용을 작성해 주세요.</p>
-            <div class="info-form-box">
-                <button class="bt-dropdown big tx-bold fe-quality-line fe-select-phone-line" title="문의하실 회선정보 선택" aria-haspopup="true"
-                        data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"><%-filteredLine[0].addr%><span class="ico"></span>
-                </button>
-            </div>
-            <% } else if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 1 ) {
-            var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
-            %>
-            <p class="title">문의하실 내용을 작성해 주세요.</p>
-            <div class="inputbox">
-                <div class="input">
-                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"
-                           value="<%-filteredLine[0].addr%>" disabled>
-                </div>
-            </div>
-            <%}%>
             <!--<% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
                 var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
             %>
@@ -261,13 +238,13 @@
             </div>
 
             <% } else { %>
-            <div class="inputbox">
+            <!--<div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
+            <!--<p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
                     <input type="text" class="fe-zip" placeholder="우편번호 조회" title="발생 지역 우편번호 조회 입력" value="" readonly="" disabled>
@@ -291,7 +268,6 @@
                 </div>
             </div>
             <% } %>-->  <!--2019.04.15 VOC 대응 무조건 주소입력-->
-            <!-- 2019-07-12 OP002-439 : 사용안함
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add inp-btn">
                 <span class="input">
@@ -314,8 +290,7 @@
                            readonly="" disabled required>
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
-            </div>-->
-
+            </div>
             <!--<div class="inputbox bt-add">-->
                 <!--<span class="input">-->
                     <!--<input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" disabled aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">-->
