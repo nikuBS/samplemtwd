@@ -16,7 +16,6 @@ Tw.TidLandingComponent = function (rootEl, redirectTarget) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
 
   if ( !Tw.FormatHelper.isEmpty(this.$container) ) {
     this._bindEvent(redirectTarget);
@@ -440,9 +439,6 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
-      
-    // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
-    Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
     
     if ( target === location.pathname + location.search ) {
       this._historyService.reload();

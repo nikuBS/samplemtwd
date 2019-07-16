@@ -213,11 +213,6 @@ abstract class TwViewController {
     this.loginService.setCookie(res, COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType(req));
     this.loginService.setNoticeType(req, '').subscribe();
 
-    // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
-    if ( isLogin && FormatHelper.isEmpty(req.cookies[COOKIE_KEY.TWM_LOGIN])) {
-      res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
-    }
-
     // 19.05.28 
     // APP 을 통한 로그인 시 XTLID, XTLOGINID, XTSVCGR, XTLOGINTYPE 쿠키가 생성되지 않는 (사라지는?) 문제를 해결하기 위해
     // request 에 해당 쿠키가 존재하지 않는 경우 새로 발급하도록 처리
