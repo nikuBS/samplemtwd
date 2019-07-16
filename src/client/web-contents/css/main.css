@@ -5523,3 +5523,7 @@ body.apphome .main-membershop-box {
 
 /* 190618 추가 [OP002-1209] T world App > Store 영역 일부 변경 검토 요청 */
 .tod-icon-headset-red {display:inline-block; width:1.375rem; height:1.188rem; background:url(/img/ico/icon_headset.png) no-repeat 0 0; background-size:100% 100%; }
+
+/* 190704 추가 [OP002-2257] main banner 자동재생관련 */
+.section-box.nogaps.tod-no-mg{margin:0.63rem 0 0 0}
+.main-charge-box.section-swiper-box.tod-nar-ban{min-height:8.75rem}
