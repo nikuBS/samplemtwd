@@ -22,7 +22,7 @@ Tw.CustomerAgentHappycom = function (rootEl, params) {
   if (Tw.FormatHelper.isEmpty(this._historyService.getHash())){
     location.hash = '#easy';
   }
-  this._hash = this._historyService.getHash();
+  this._hash = '';
   this._init();
   this._cacheElements(params);
   this._bindEvents();
@@ -37,16 +37,36 @@ Tw.CustomerAgentHappycom.prototype = {
    * @desc 최초 실행
    */
   _init: function(){
-    var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
-    this._cacheElementsTab(_container);
+    this._initTab();
 
     // 탭 변경 시 설정부분
     window.onhashchange = $.proxy(function (e) {
       this._resetSearch(e);
     }, this);
+  },
+
+  /**
+   * @function
+   * @desc 현재 선택된 탭으로 설정해준다.
+   */
+  _initTab: function() {
+    this._hash = this._historyService.getHash();
+    // 변경 된 탭의 엘리먼트로 세팅한다.
+    var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
+    this._cacheElementsTab(_container);
 
     // 변경 된 탭 선택 해준다.
     this.$container.find('li[role="tab"]').attr('aria-selected', false).find('[href="' + this._hash + '"]').parent().attr('aria-selected', true);
+
+    // 버튼명 변경(스마트폰 교실 예약하기, 코딩교실 예약하기)
+    var _url = 'http://www.sktacademy.co.kr/mobileclass/reserve/Reserve_W.asp'; // 스마트폰 교실 예약하기
+    if (this._hash === '#easy') {
+      this._reserveBtn.text(Tw.HAPPYCOM_STR.SMART_PHONE_BTN);
+      this._reserveBtn.data('external',  _url);
+    } else if (this._hash === '#exciting') {
+      this._reserveBtn.text(Tw.HAPPYCOM_STR.CODING_BTN);
+      this._reserveBtn.data('external',  _url+'?EDU_GU=3');
+    }
   },
 
   /**
@@ -289,13 +309,18 @@ Tw.CustomerAgentHappycom.prototype = {
    * @desc 탭 변경
    */
   _resetSearch: function (e){
+    // 필터 검색 등 다른 팝업에서 해쉬 변경일 때는 무시하며, 현재 3개 탭 변경일 때만 리다이렉트 시킨다.
     var _oldHash = e.oldURL.substring(e.oldURL.indexOf('#')+1);
     if (['easy','exciting','gallery'].indexOf(_oldHash) === -1) {
       return;
     }
+    // 탭 변경시 검색조건(필터 포함) 초기화 하여 디폴트(서울 지역) 으로 조회 되도록 리다이렉트
+    this._historyService.replaceURL('/customer/agentsearch/happycom' + this._historyService.getHash());
+    // 해쉬 체인지 인경우 _initTab 를 다시 해줘야 정상동작한다.
+    this._initTab();
 
-    this._hash = this._historyService.getHash();
-
+    // 로직 변경으로 아래 내용은 사용안하지만.. 혹시 몰라서 둠.
+    /*this._hash = this._historyService.getHash();
     // 변경 된 탭의 엘리먼트로 세팅한다.
     var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
     this._cacheElementsTab(_container);
@@ -327,7 +352,7 @@ Tw.CustomerAgentHappycom.prototype = {
     } else if (this._hash === '#exciting') {
       this._reserveBtn.text(Tw.HAPPYCOM_STR.CODING_BTN);
       this._reserveBtn.data('external',  _url+'?EDU_GU=3');
-    }
+    }*/
   },
 
   /**
