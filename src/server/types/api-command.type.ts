@@ -581,6 +581,7 @@ export const API_CMD = {
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0077: { path: '/core-modification/v1//region-five-store-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

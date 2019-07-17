@@ -1,0 +1,100 @@
+<!--
+* @file customer.agentsearch.happycom.html
+* @author 양정규 (skt.P130715@partner.sk.com)
+* @since 2019.07.04
+-->
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: '행복커뮤니티 센터', svcInfo: svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="tod-visualheader">
+                    <i class="ico happy"></i>
+                    <h3 class="tit">행복커뮤니티 센터란?</h3>
+                    <div class="text">
+                        고객의 더 나은 ICT 생활을 위해 SK텔레콤 매장이 제공하는 종합 ICT 교육/편의 서비스입니다.<br>
+                        SK텔레콤은 행복커뮤니티 센터를 통해 지역사회와 소통하고, 전 국민의 ICT 삶의 질 향상을 위해 노력하고 있습니다.
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps bgnone">
+                <!-- .component -->
+                <div class="component">
+                    <div class="component-box tabs">
+                        <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-linker tod-multiline">
+                                <ul role="tablist fe-tab-list">
+                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#easy">알기쉬운<br>스마트폰 교실</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#exciting">신나는<br>코딩교실</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="#gallery">갤러리</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-contents">
+                                <ul>
+                                    <!-- 알기쉬운 스마트폰 교실 탭내용 -->
+                                    <% include ../../components/agentsearch/customer.agentsearch.happycom.easy.html %>
+                                    <!-- //알기쉬운 스마트폰 교실 탭내용 -->
+                                    <!-- 신나는 코딩교실 탭내용 -->
+                                    <% include ../../components/agentsearch/customer.agentsearch.happycom.exciting.html %>
+                                    <!-- //신나는 코딩교실 탭내용 -->
+                                    <!-- 갤러리 탭내용 -->
+                                    <% include ../../components/agentsearch/customer.agentsearch.happycom.gallery.html %>
+                                    <!-- //갤러리 탭내용 -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .component -->
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+        <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+
+</div> <!--// end of class="wrap" -->
+</body>
+<% include ../../components/javascript.component.html %>
+
+<script type="text/template" id="tpl_search_result_item">
+    {{#list}}
+    <li>
+        <dl class="type02 fe-branch-detail" value={{locCode}}>
+            <dt>{{storeName}}</dt>
+            <dd>{{searchAddr}}<br>{{jibunAddr}}<a class="bt-tel" href="tel:{{tel}}"><span class="blind">매장으로 전화하기</span></a></dd>
+        </dl>
+    </li>
+    {{/list}}
+</script>
+<script>
+  $(document).ready(function () {
+    var data = '<%- JSON.stringify(params) %>';
+    if (!!data) {
+      data = JSON.parse(data);
+    }
+    new Tw.CustomerAgentHappycom($('.wrap'), data);
+  });
+</script>
+<% include ../../components/end.component.html %>
