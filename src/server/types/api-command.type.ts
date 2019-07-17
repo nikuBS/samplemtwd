@@ -506,6 +506,7 @@ export const API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -580,6 +581,7 @@ export const API_CMD = {
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0077: { path: '/core-modification/v1//region-five-store-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -919,6 +921,7 @@ export const API_CMD = {
   BFF_10_0122: { path: '/core-product/:version/services/roaming/prod-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0123: { path: '/core-product/:version/submain/roaming-sprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0141: { path: '/core-product/:version/services/t-roam-tog/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

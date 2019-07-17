@@ -606,8 +606,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
   COMPLETE_REGISTER_PASSWORD: '결제 비밀번호 신청이 완료되었습니다.',
   COMPLETE_CANCEL_AUTO_PREPAY: '자동 선결제가 해지되었습니다.',
-  NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
-  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
+  NOT_ALLOWED_CHANGE_LIMIT: '한도를 상향할 수 없습니다',
+  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>매달 한도를 상향하실 수 있습니다.',
   NOT_ALLOWED_AUTO_PREPAY: '자동 선결제는 기준금액이 1만원 이상인 경우 신청 가능합니다.',
   PREPAY_REMAIN_ERROR: '이번 달 잔여한도가 정상적으로 조회되지 않았습니다. 잠시 후 다시 시도해 주세요.',
   GO_PAYMENT: '납부하러 가기',
@@ -644,6 +644,7 @@ Tw.ALERT_MSG_MYT_FARE = {
     '잠금 상태인 경우에는 ARS(1509)를 통해 비밀번호 재설정 또는 부가서비스 해지 후 재가입하실 수 있습니다.' +
     '<br />' +
     '휴대폰결제 비밀번호 부가서비스를 해지하러 가시겠습니까?',
+  EMPTY_CARD_INFO: '자동납부로 등록된 카드정보가 없습니다.',
   A59: '조회 종료일 유효한 일자가 아닙니다.',
   A60: '시작일이 종료일보다 클 수 없습니다.',
   ALERT_CARD_TYPE: '카드 할부는 납부금액이 5만원 이상인 경우에 가능합니다.',
@@ -2052,4 +2053,11 @@ Tw.ALERT_MSG_SKPAY = {
     CODE: '11SDKNORES',
     OK_BTN: '확인'
   }
+};
+
+Tw.HAPPYCOM_SEARCH_OPTIONS = {
+  all: '전체',
+  speedYn: '스마트폰 기초 과정',
+  applEduYn: '스마트폰 응용 과정',
+  codingEduYn: '코딩교실'
 };

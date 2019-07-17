@@ -84,10 +84,10 @@
 								<label class="tit" for="flab01">선결제 금액</label>
 								<span class="inputbox">
 									<span class="input">
-										<input id="flab01" type="text" title="선결제 금액 1만원 단위 (숫자만 입력)" placeholder="1만원 단위 (숫자만 입력)" aria-describedby="id-helper0"/>
+										<input id="flab01" type="number" placeholder="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" title="1,000원부터 10원단위 선결제 가능 (숫자만 입력)" aria-describedby="aria-exp-unit" /><!-- 190715 [OP002-2474] 수정 01 -->
 										<button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt" id="id-helper0">선결제 가능 최대금액을 초과하였습니다.</span>
+                                    <span class="error-txt" id="aria-exp-unit">선결제 가능 최대금액을 초과하였습니다.</span> <!-- 190715 [OP002-2474] 수정 02 -->
                                 </span>
                                 <!-- //접근성 수정-->
 							</li>

@@ -1,0 +1,82 @@
+ <!-- .popup hbs -->
+ <div class="popup-page tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>조건선택</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="ti-caption-gray bdt titlebox-bgtype01">
+                <h3 class="tit">필터를 선택해주세요</h3>
+                <div class="num">
+                    <button class="resetbtn">초기화</button>
+                </div>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+
+                <h3 class="filterlist-title">교육종류</h3>
+                <div class="productfilter-type">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <div class="productfilter">
+                                <ul class="select-list" role="group">
+                                    <!--접근성 수정-->
+                                    <li class="checkbox" role="checkbox" aria-checked="false">
+                                        <input type="checkbox" name="checkbox" value="speedYn" aria-labelledby="aria-comp-checkbox1">
+                                        <span class="text" id="aria-comp-checkbox1">
+                                            스마트폰 기초 과정
+                                        </span>
+                                    </li>
+                                    <li class="checkbox" role="checkbox" aria-checked="false">
+                                        <input type="checkbox" name="checkbox" value="applEduYn" aria-labelledby="aria-comp-checkbox2">
+                                        <span class="text" id="aria-comp-checkbox2">
+                                            스마트폰 응용 과정
+                                        </span>
+                                    </li>
+                                    <li class="checkbox" role="checkbox" aria-checked="false">
+                                        <input type="checkbox" name="checkbox" value="codingEduYn" aria-labelledby="aria-comp-checkbox3">
+                                        <span class="text" id="aria-comp-checkbox3">
+                                            코딩 교실
+                                        </span>
+                                    </li>
+                                    <!-- //접근성 수정-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+        </div>
+        <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+        <div class="bt-fixed-area">
+            <!--// .cont-box -->
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button>적용하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn" ><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

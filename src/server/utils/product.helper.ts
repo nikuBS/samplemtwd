@@ -271,7 +271,10 @@ class ProductHelper {
       isNumberFrDcAmt = !isNaN(Number(installmentAgreement.frDcAmt)),
       isNumberToDcAmt = !isNaN(Number(installmentAgreement.toDcAmt)),
       isNumberGapDcAmt = !isNaN(Number(installmentAgreement.gapDcAmt)),
-      isPremTerm = installmentAgreement.premTermYn === 'Y';
+      isPremTerm = installmentAgreement.premTermYn === 'Y',
+      premTermYn = (installmentAgreement.agrmtUseCnt < 181 && isPremTerm) ||
+       (installmentAgreement.agrmtUseCnt > 180 && installmentAgreement.agrmtUseCnt < 366)
+      ;
 
     return Object.assign(installmentAgreement, {
       isInstallAgreement: installmentAgreement.gapDcAmt > 0,  // 지원금 차액 정산금 동의 노출 여부
@@ -284,16 +287,18 @@ class ProductHelper {
       isNumberGapDcAmt: isNumberGapDcAmt,
       gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,  // 지원금 차액
       isPremTerm: isPremTerm, // 프리미엄패스 해지여부
-      premTermMsg: isPremTerm ? ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null // 프리미엄패스 해지시 안내문구
+      // premTermMsg: isPremTerm ? ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null, // 프리미엄패스 해지시 안내문구
+      premTermMsg: ProductHelper.getPremTermMsg(isPremTerm, installmentAgreement.agrmtUseCnt), // 프리미엄패스 가입고객 요금제 하향시 안내문구
+      premTermYn: premTermYn // 프리미엄패스 안내문구 노출여부
     });
   }
 
   /**
-   * 프리미엄패스 해지시 안내문구 산출 (약정사용일수에 따라 다름)
+   * 프리미엄패스 가입고객 요금제 하향시 안내문구 산출 (약정사용일수에 따라 다름)
    * @param agrmtUseCnt - 약정사용일수
    */
-  static getPremTermMsg(agrmtUseCnt: any): any {
-    if (agrmtUseCnt < 181) {
+  static getPremTermMsg(isPremTerm, agrmtUseCnt): any {
+    if (isPremTerm &&  agrmtUseCnt < 181) {// 180일 이하일때만 프리미엄패스1 해지여부 체크
       return PREMTERM_MSG.LESS_180;
     } else if (agrmtUseCnt > 180 && agrmtUseCnt < 366) {
       return PREMTERM_MSG.LESS_365;
