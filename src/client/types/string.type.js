@@ -1413,6 +1413,11 @@ Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
   MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
+Tw.CUSTOMER_NEAR_POPUP = {
+  AGE_TITLE: '위치기반서비스 이용안내',
+  AGE_CONTENT: '만 14세 미만 고객의 경우 위치기반서비스를 이용할 수 없습니다.'
+};
+
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
   TITLE: '전화상담 예약 완료',
   DATE: '예약일자',

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { BRANCH_SEARCH_OPTIONS } from '../../../../types/string.type';
 import { NextFunction } from 'connect';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 enum SearchType {
   NAME = 'name',  // 이름 검색
@@ -26,50 +27,61 @@ class CustomerAgentsearch extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
 
-    //  this.logger.info(this, '[ svcInfo 정보는 ] : ', svcInfo);
-    if (FormatHelper.isEmpty(req.query)) {
-      res.render('agentsearch/customer.agentsearch.html', { isSearch: false, svcInfo, pageInfo });
-    } else {
-      const type = req.query.type;  // 'name', 'addr', 'tube'
-      const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
-      const area = req.query.area ? req.query.area.split(':')[0] : undefined;
-      const line = req.query.line ? req.query.line.split(':')[0] : undefined;
-      const keyword = !!area && !!line ? req.query.keyword.split(':')[0] : req.query.keyword;
-      // const keyword = req.query.keyword;
-      const optionsString = req.query.options;
-      const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-      this.getQueryResult(type, storeType, keyword, area, line, optionsString, page, res, svcInfo, pageInfo).subscribe(
-        (result) => {
-          if (FormatHelper.isEmpty(result)) {
-            return;
-          }
-
-          const total = parseInt(result.totalCount, 10);
-          const lastPage = Math.floor(total / 20) + (total % 20 ? 1 : 0);
-          res.render('agentsearch/customer.agentsearch.html', {
-            isSearch: true,
-            type,
-            keyword,
-            optionsText: this.makeOptionsText(storeType, optionsString),
-            result,
-            params: this.queryParams,
-            page,
-            lastPage,
-            svcInfo,
-            pageInfo
-          });
-        },
-        (err) => {
-          this.error.render(res, {
-            code: err.code,
-            msg: err.msg,
-            pageInfo: pageInfo,
-            svcInfo
-          });
-        }
-      );
+    /* 앱 이면서 로그인인 경우 - 이면 아래 if조건을 타고 아니면 true를 전달해서 실행 - OP002-2058  */
+    let acceptAgeObserver = new Observable(subscriber => { subscriber.next(true); } );
+    if(BrowserHelper.isApp(req) && svcInfo){
+      acceptAgeObserver = this.checkAge(svcInfo);
     }
+        
+    acceptAgeObserver.subscribe((isAcceptAge) => {
+ 
+     if (FormatHelper.isEmpty(req.query)) {
+       res.render('agentsearch/customer.agentsearch.html', { isSearch: false, svcInfo, pageInfo, isAcceptAge });
+     } else {
+       const type = req.query.type;  // 'name', 'addr', 'tube'
+       const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
+       const area = req.query.area ? req.query.area.split(':')[0] : undefined;
+       const line = req.query.line ? req.query.line.split(':')[0] : undefined;
+       const keyword = !!area && !!line ? req.query.keyword.split(':')[0] : req.query.keyword;
+       // const keyword = req.query.keyword;
+       const optionsString = req.query.options;
+       const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+       this.getQueryResult(type, storeType, keyword, area, line, optionsString, page, res, svcInfo, pageInfo).subscribe(
+         (result) => {
+           if (FormatHelper.isEmpty(result)) {
+             return;
+           }
+ 
+           const total = parseInt(result.totalCount, 10);
+           const lastPage = Math.floor(total / 20) + (total % 20 ? 1 : 0);
+           res.render('agentsearch/customer.agentsearch.html', {
+             isSearch: true,
+             type,
+             keyword,
+             optionsText: this.makeOptionsText(storeType, optionsString),
+             result,
+             params: this.queryParams,
+             page,
+             lastPage,
+             svcInfo,
+             pageInfo,
+             isAcceptAge
+           });
+         },
+         (err) => {
+           this.error.render(res, {
+             code: err.code,
+             msg: err.msg,
+             pageInfo: pageInfo,
+             svcInfo
+           });
+         }
+       );
+     }
+      
+    })  // end of acceptAgeObserver.subscribe((isAcceptAge) => {
   }
+
 
   /**
    * @function
@@ -171,6 +183,36 @@ class CustomerAgentsearch extends TwViewController {
     // return optionsAbc;
     return {text,count};
   }
+
+
+    /**
+   * @function
+   * @desc 만 나이 리턴
+   * @param  {any} svcInfo - 사용자 정보
+   * @returns string
+   */
+  private checkAge(svcInfo: any): any {
+    this.logger.info(this, '[ 나이체크 함수 탔는지 확인 ]');
+    return this.apiService.request(API_CMD.BFF_08_0080, {svcMgmtNum : svcInfo.svcMgmtNum}).map((resp) => {
+      if (resp.code === API_CODE.CODE_00) {
+        this.logger.info(this, '[ 현재 나이는? :  ]', resp.result.age);
+        return resp.result.age >= 14 ? true : false;
+      }
+
+      this.error.render(resp, {
+        title : "checkAge14",
+        code: resp.code,
+        msg: resp.msg,
+        // pageInfo: pageInfo,
+        svcInfo
+      });
+
+      return undefined;
+    });
+  } // end of checkAge
+
+
+
 }
 
 export default CustomerAgentsearch;
