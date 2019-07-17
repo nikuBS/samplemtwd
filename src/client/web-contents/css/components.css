@@ -35423,3 +35423,6 @@ body.apphome .section-box {
 .rm-barocall-inq .inq-result .vertical{display:inline-block;width:100%;text-align:center;line-height:1rem;vertical-align:middle}
 .rm-barocall-inq .inq-result .vertical strong{font-weight:normal;font-size:0.875rem}
 .rm-barocall-inq .inq-result .vertical p{font-size:0.75rem;color:#666}
+
+/* 190715 [OP002-2474] T world x SK pay 적용 */
+.user-month-bill .tod-pay-txt{font-size:1.125rem; margin-bottom:2.5rem; line-height:1.375rem }
