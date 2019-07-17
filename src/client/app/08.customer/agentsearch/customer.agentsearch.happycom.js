@@ -19,7 +19,10 @@ Tw.CustomerAgentHappycom = function (rootEl, params) {
   this._options = {};
   this._newOptions = {};
 
-  this._hash = this._historyService.getHash() || '#easy';
+  if (Tw.FormatHelper.isEmpty(this._historyService.getHash())){
+    location.hash = '#easy';
+  }
+  this._hash = this._historyService.getHash();
   this._init();
   this._cacheElements(params);
   this._bindEvents();
@@ -79,6 +82,7 @@ Tw.CustomerAgentHappycom.prototype = {
     this.$btnLocation = container.find('.fe-location-category'); /* 지역선택 */
     this._list = container.find('.fe-result-list'); // 결과 리스트
     this._btnMore = container.find('.fe-btn-more'); // 더보기 버튼
+    this._reserveBtn = container.find('.fe-reserve'); // 예약하기 버튼
   },
 
   /**
@@ -291,7 +295,6 @@ Tw.CustomerAgentHappycom.prototype = {
     }
 
     this._hash = this._historyService.getHash();
-    Tw.Logger.info('## tab change ', this._hash);
 
     // 변경 된 탭의 엘리먼트로 세팅한다.
     var _container = this.$container.find('#'+ this.$container.find('[href="'+this._hash+'"]').parent().attr('aria-controls'));
@@ -305,7 +308,7 @@ Tw.CustomerAgentHappycom.prototype = {
     this.$inputSearch.val('').trigger('keyup'); // 검색값 초기화
 
     // 필터값 초기화
-    this.$container.find('.fe-select-filter').removeClass('date-in').find('span').text(Tw.HAPPYCOM_SEARCH_OPTIONS.all); // 필터값 초기화
+    this.$container.find('.fe-select-filter').removeClass('date-in').find('span').text(Tw.COMMON_STRING.ALL); // 필터값 초기화
     this._options = {};
 
     // 검색 결과 값 초기화
@@ -315,6 +318,16 @@ Tw.CustomerAgentHappycom.prototype = {
     this.$container.find('.fe-total-count').text(0);
 
     this._page = 1; // 페이지 카운트 초기화
+
+    // 버튼명 변경(스마트폰 교실 예약하기, 코딩교실 예약하기)
+    var _url = 'http://www.sktacademy.co.kr/mobileclass/reserve/Reserve_W.asp'; // 스마트폰 교실 예약하기
+    if (this._hash === '#easy') {
+      this._reserveBtn.text(Tw.HAPPYCOM_STR.SMART_PHONE_BTN);
+      this._reserveBtn.data('external',  _url);
+    } else if (this._hash === '#exciting') {
+      this._reserveBtn.text(Tw.HAPPYCOM_STR.CODING_BTN);
+      this._reserveBtn.data('external',  _url+'?EDU_GU=3');
+    }
   },
 
   /**

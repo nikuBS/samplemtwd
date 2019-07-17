@@ -2055,9 +2055,7 @@ Tw.ALERT_MSG_SKPAY = {
   }
 };
 
-Tw.HAPPYCOM_SEARCH_OPTIONS = {
-  all: '전체',
-  speedYn: '스마트폰 기초 과정',
-  applEduYn: '스마트폰 응용 과정',
-  codingEduYn: '코딩교실'
+Tw.HAPPYCOM_STR = {
+  SMART_PHONE_BTN: '스마트폰 교실 예약하기',
+  CODING_BTN: '코딩교실 예약하기'
 };
