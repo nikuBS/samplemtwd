@@ -419,6 +419,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    new Tw.XtractorService(this.$container);
   },
 
   /**
