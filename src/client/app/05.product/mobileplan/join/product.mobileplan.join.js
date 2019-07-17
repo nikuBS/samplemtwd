@@ -150,7 +150,7 @@ Tw.ProductMobileplanJoin.prototype = {
    */
   _premTermYn: function() {
     if(this._confirmOptions.premTermYn){
-      this._popupService.openAlert(null, this._confirmOptions.premTermMsg);
+      this._popupService.openAlert(this._confirmOptions.premTermMsg);
     }
   },
 
