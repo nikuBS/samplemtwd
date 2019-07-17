@@ -49,7 +49,8 @@ class CustomerMain extends TwViewController {
       this.getBanners(), // 배너정보
       this.getNotice(req), // 공지사항
       this.getResearch() // 설문조사
-    ).subscribe(([banners, notice, researchList]) => {
+      , this.getTest()
+    ).subscribe(([banners, notice, researchList, test]) => {
       const noticeList = notice ? this.parseNoticeList(BrowserHelper.isApp(req), notice) : [];
       res.render('main/customer.main.html', {
         svcInfo: svcInfo,
@@ -150,6 +151,20 @@ class CustomerMain extends TwViewController {
 
     return 'M';
   }
+
+  /**
+   * @function
+   * @desc For Test
+   * @returns {Observable}
+   */
+  private getTest = (): Observable<any> => this.apiService.request(API_CMD.BFF_01_0068, {})
+    .map((res) => {
+      if ( res.code === API_CODE.CODE_00 ) {
+        return res.result;
+      } else {
+        return null;
+      }
+    })
 }
 
 export default CustomerMain;
