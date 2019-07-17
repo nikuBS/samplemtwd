@@ -602,7 +602,10 @@ Tw.NODE_CMD = {
   GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
-  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET }
+  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET },
+
+  // for OP002-2289 test
+  CHANGE_TWM_VALUE: { path: '/change/twm-value', method: Tw.API_METHOD.GET }
 };
 
 Tw.SESSION_CMD = {
@@ -699,7 +702,8 @@ Tw.API_LOGIN_ERROR = {
   ATH1003: 'ATH1003', // 로그인 30회 초과
   ATH3236: 'ATH3236', // 분실정지(대표회선)
   ICAS3228: 'ICAS3228', // 고객보호비밀번호(대표회선) 입력 필요
-  ICAS3235: 'ICAS3235' // 휴면계정
+  ICAS3235: 'ICAS3235', // 휴면계정
+  FE0001: 'FE0001' // 로그인 후 Native callback에 파라미터가 넘어오지 않는 경우
 };
 
 Tw.API_ADD_SVC_ERROR = {
