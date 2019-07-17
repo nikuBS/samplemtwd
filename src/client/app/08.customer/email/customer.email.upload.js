@@ -16,7 +16,8 @@ Tw.CustomerEmailUpload = function (rootEl, data) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService();
-  this._limitFileByteSize = 2097152; // 업로드 제한 크기 2mb
+  // this._limitFileByteSize = 2097152; // 업로드 제한 크기 2mb
+  this._limitFileByteSize = 3145728; // 업로드 제한 크기 3mb
   this._acceptExt = ['jpg', 'jpeg', 'png', 'gif']; // 업로드 가능 확장명
 
   this._init(data);

@@ -777,7 +777,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A29: { TITLE: '없는 번호이거나 잘못된 번호입니다.\n올바른 회선번호를 입력해주세요.', MSG: '' },
   ALERT_3_A30: { TITLE: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.', MSG: '' },
   ALERT_3_A31: { TITLE: '결합상품명을 미선택하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?', MSG: '' },
-  ALERT_3_A32: { TITLE: '첨부파일의 용량이 2MB를 초과하여 등록 하실 수 없습니다. 다시 확인해 주세요.', MSG: '' },
+  ALERT_3_A32: { TITLE: '첨부파일의 용량이 3MB를 초과하여 등록 하실 수 없습니다. 다시 확인해 주세요.', MSG: '' },
   ALERT_3_A33: { TITLE: '파일 확장자가 jpg, jpeg, png, gif인 파일만 첨부할 수 있습니다. 다시 확인해 주세요.', MSG: '' },
   ALERT_3_A34: { TITLE: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.', MSG: '' },
   ALERT_3_A35: { TITLE: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -1413,6 +1413,11 @@ Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
   MSG : '고객님의 위치 정보(GPS)를 불러올 수 없습니다. 단말기 및 브라우저 설정에서 위치 정보 사용에 허용해 주시기 바랍니다.'
 };
 
+Tw.CUSTOMER_NEAR_POPUP = {
+  AGE_TITLE: '위치기반서비스 이용안내',
+  AGE_CONTENT: '만 14세 미만 고객의 경우 위치기반서비스를 이용할 수 없습니다.'
+};
+
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
   TITLE: '전화상담 예약 완료',
   DATE: '예약일자',
@@ -1497,7 +1502,7 @@ Tw.UPLOAD_FILE = {
   BUTTON_DELETE: '삭제하기',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해 주세요.',
-  EMAILINFO_01: '첨부파일 용량은 1개 파일당 2MB 첨부가능합니다.',
+  EMAILINFO_01: '첨부파일 용량은 1개 파일당 3MB 첨부가능합니다.',
   EMAILINFO_02: '첨부파일은 최대 5개까지 등록하실 수 있습니다.',
   EMAILINFO_03: '이미지(jpg, jpeg, gif, png)파일을 첨부할 수 있습니다.'
 };
@@ -2055,9 +2060,7 @@ Tw.ALERT_MSG_SKPAY = {
   }
 };
 
-Tw.HAPPYCOM_SEARCH_OPTIONS = {
-  all: '전체',
-  speedYn: '스마트폰 기초 과정',
-  applEduYn: '스마트폰 응용 과정',
-  codingEduYn: '코딩교실'
+Tw.HAPPYCOM_STR = {
+  SMART_PHONE_BTN: '스마트폰 교실 예약하기',
+  CODING_BTN: '코딩교실 예약하기'
 };

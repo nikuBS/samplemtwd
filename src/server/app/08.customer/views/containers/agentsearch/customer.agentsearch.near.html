@@ -14,7 +14,8 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <!-- OP002-2492의 툴팁 적용을 위하여 data-menuId="<%= pageInfo.menuId%>" 추가 -->
+    <div class="wrap" data-menuId="<%= pageInfo.menuId%>">
         <%- include('../../../../common/views/components/header.component.html', { title: '내 위치와 가까운 매장', svcInfo: svcInfo }); %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -30,7 +31,9 @@
                         <div class="shop-box">
                             <!-- .shop-step -->
                             <div class="shop-step tod-shop-header mb20">
-                                <span class="step-tx"><em id="fe-region1"></em><span class="arrow">&gt;</span><em id="fe-region2"></em></span>  <!-- 이곳의 기존 소스 화살표 나오는 부분 검토필요 -->
+                                <span class="step-tx"><em id="fe-region1"></em><span class="arrow">&gt;</span><em id="fe-region2"></em>
+                                <button class="btn-tip top-area-tip" id="TC000071" aria-haspopup="true" title="내 위치와 가까운 매장 안내"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                                </span>  <!-- 이곳의 기존 소스 화살표 나오는 부분 검토필요 -->
                                 <div class="tod-area-btnwrap">
                                     <button class="btn-round2 btn-style3 tod-ico-btn" id="fe-myLocation"><span>내 위치</span></button>
                                     <button class="btn-round2 btn-style3" id="fe-change-region">위치 변경</button>
@@ -166,7 +169,7 @@
 
 <script>
     $(document).ready(function () {
-        new Tw.CustomerAgentsearchNear($('.wrap'), '<%= svcInfo !== null %>');
+        new Tw.CustomerAgentsearchNear($('.wrap'), '<%= svcInfo !== null %>', '<%= isAcceptAge %>');
     });
 </script>
 <% include ../../components/end.component.html %>

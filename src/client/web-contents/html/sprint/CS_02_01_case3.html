@@ -164,7 +164,9 @@
                     <!-- .search-point -->
                     <div class="search-point">
                         <!-- .bn-search -->
-                        <div class="bn-search">
+                        <!-- 190708 [OP002-2267] 수정_01 : case1, 2 중 하나만 나옴 -->
+                        <!-- case1 : 14세 이상 -->
+                        <div class="bn-search" aria-hidden="false">
                             <div class="inner">
                                 <span class="ico"></span>
                                 <div class="txt">
@@ -174,6 +176,21 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- //case1 : 14세 이상 -->
+                        <!-- case2 : 14세 이하 -->
+                        <div class="bn-search blind-height0" aria-hidden="true">
+                            <div class="inner">
+                                <span class="ico"></span>
+                                <div class="txt">
+                                    나의 위치와
+                                    <strong>가까운 매장을 찾아보세요</strong>
+                                    <a class="bt-link-tx underline" href="">찾아보기</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="cont-sp type1 tod-hr-line01" aria-hidden="true">
+                        <!-- //case2 : 14세 이하 -->
+                        <!-- //190708 [OP002-2267] 수정_01 : case1, 2 중 하나만 나옴 -->
                         <!-- // .bn-search -->
                         <!-- .hours-of-business -->
                         <!-- 2019.03.07 컨텐츠 내용 수정 -->
