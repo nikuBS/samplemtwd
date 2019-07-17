@@ -35,19 +35,40 @@ Tw.TeventCommon.prototype = {
    * @param 
    */
   _reqTwdAdRcvAgreeInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
-      .done($.proxy(function (res) {
-        if (res.code === Tw.API_CODE.CODE_00) {
-          if (res.result.twdAdRcvAgreeYn === 'N') {
-            $('#agree-banner-area').show();
-          }
-        } else {
-          Tw.Error(res.code, res.msg).pop();
+    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에 
+    // T world 광고정보수신동의 여부를 조회하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 T world 광고정보수신동의 여부 조회하도록)
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+    .done($.proxy(function (res) {
+      if(res.code===Tw.API_CODE.CODE_00) {
+        if(res.result !== null) { // 로그인된 경우
+          // T world 광고정보수신동의 여부 조회
+          this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+          .done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+              if (res.result.twdAdRcvAgreeYn === 'N') {
+                $('#agree-banner-area').show();
+              }
+            } else {
+              // BFF_03_0021 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+              // Tw.Error(res.code, res.msg).pop();
+              return;
+            }
+          }, this))
+          .fail(function (err) {
+            // BFF_03_0021 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+            // Tw.Error(err.code, err.msg).pop();
+            return;
+          });
+        } else {  // 비로그인
+          return;
         }
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
-      });
+      }
+    }, this))
+    .fail(function (err) {
+      // GET_SVC_INFO API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+      // Tw.Error(err.code, err.msg).pop();
+      return;
+    });    
   },
 
   /**
