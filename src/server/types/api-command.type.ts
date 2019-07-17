@@ -919,6 +919,7 @@ export const API_CMD = {
   BFF_10_0122: { path: '/core-product/:version/services/roaming/prod-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0123: { path: '/core-product/:version/submain/roaming-sprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0141: { path: '/core-product/:version/services/t-roam-tog/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
