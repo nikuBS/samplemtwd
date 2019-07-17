@@ -33,6 +33,10 @@ Tw.InputFocusService.prototype = {
     }, this));
 
     _.map(this.$inputList, $.proxy(function (input) {
+      if($(input).hasClass('fe-not_new_line')){
+        return;
+      }
+
       $(input).off('keyup', $.proxy(this._onKeyupInput, this)).on('keyup', $.proxy(this._onKeyupInput, this));
     }, this));
   },
