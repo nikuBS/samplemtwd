@@ -318,6 +318,7 @@
                             <% } %>
                         </div>
 
+                        <% if (isAcceptAge) { %>
                         <!-- .bn-search -->
                         <div class="bn-search">
                             <div class="inner">
@@ -330,6 +331,10 @@
                             </div>
                         </div>
                         <!-- // .bn-search -->
+                        <% } else { %>
+                            <hr class="cont-sp type1 tod-hr-line01" aria-hidden="true">
+                        <% } %>
+
                         <!-- .hours-of-business -->
                         <div class="hours-of-business">
                             <div class="tit">업무시간 안내</div>
