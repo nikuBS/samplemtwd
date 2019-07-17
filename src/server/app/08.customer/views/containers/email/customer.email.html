@@ -29,6 +29,17 @@
                         <div class="component-box tabs">
                             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <%- include ../../components/email/customer.email.tab.html %>
+                                <!-- 190607 [OP002-414] 추가_01 -->
+                                <hr class="cont-sp type1" aria-hidden="true">
+
+                                <div class="cont-box nogaps b-line1">
+                                    <ul class="announcement-notice bg-space">
+                                        <li>문의 글 작성 시 20분 동안 페이지 이동이 없으면 자동으로 로그아웃 됩니다.</li>
+                                    </ul>
+                                </div>
+                                
+                                <hr class="cont-sp type1" aria-hidden="true">
+                                <!-- // 190607 [OP002-414] 추가_01 -->
                                 <div class="tab-contents">
                                     <ul>
                                         <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
@@ -49,7 +60,7 @@
                                                         <div class="option-box">
                                                             <div class="inputbox textarea-type">
                                                                 <div class="input">
-                                                                <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6"
+                                                                <textarea class="input-focus inner-tx fe-text_content fe-not_new_line" cols="20" rows="6"
                                                                           placeholder="내용 입력" maxlength="12000"
                                                                           title="내용 입력"
                                                                           aria-labelledby="aria-email-qacont" required></textarea>
@@ -84,7 +95,7 @@
                                                         <div class="option-box">
                                                             <div class="inputbox textarea-type">
                                                                 <div class="input">
-                                                                <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6"
+                                                                <textarea class="input-focus inner-tx fe-text_content fe-not_new_line" cols="20" rows="6"
                                                                           placeholder="내용 입력" maxlength="12000"
                                                                           title="내용 입력"
                                                                           aria-labelledby="aria-email-qacont" required></textarea>

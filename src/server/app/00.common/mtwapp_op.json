@@ -44,10 +44,6 @@
     "menuId":"M000245"
   },
   {
-    "old":"http://m2.tworld.co.kr/normal.do?serviceId=S_BILL0059&viewId=V_CENT0238&domainVer=m2",
-    "menuId":"M000254"
-  },
-  {
     "old":"http://m2.tworld.co.kr/normal.do?serviceId=S_BILL0066&viewId=V_BILL0043&domainVer=m2&menuId=1,1,3",
     "menuId":"M001788"
   },
@@ -1266,5 +1262,9 @@
   {
     "old":"http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00004775",
     "menuId":"/product/callplan?prod_id=NA00004775"
+  },
+  {
+    "old":"http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00004136",
+    "menuId":"/product/callplan?prod_id=NA00004136"
   }
 ]

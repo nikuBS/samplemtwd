@@ -35424,5 +35424,11 @@ body.apphome .section-box {
 .rm-barocall-inq .inq-result .vertical strong{font-weight:normal;font-size:0.875rem}
 .rm-barocall-inq .inq-result .vertical p{font-size:0.75rem;color:#666}
 
+/* 190708 [OP002-2267] 수정 만 14세 미만 고객의 경우 ‘내 위치와 가까운 매장’ 진입 차단 */
+.tod-hr-line01 {margin:0 -1rem; padding:0;}
+
+/* 190715 [OP002-2470] 내 위치와 가까운 매장 내 안내문구 추가 */
+.shop-info .btn-tip.top-area-tip {display:inline-block; vertical-align:top; padding:0.46rem 0 0.25rem; margin:0; box-sizing:content-box }
+
 /* 190715 [OP002-2474] T world x SK pay 적용 */
 .user-month-bill .tod-pay-txt{font-size:1.125rem; margin-bottom:2.5rem; line-height:1.375rem }

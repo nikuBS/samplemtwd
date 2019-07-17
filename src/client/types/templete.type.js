@@ -788,7 +788,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
     list: [
       { text: '음성통화(발신, 수신, 발신/수신) 불량' },
       { text: '문자(발신, 수신, 발신/수신) 불량' },
-      { text: '인터넷 접속 불량, 특정 앱 분량, 기타' }
+      { text: '인터넷 접속 불량, 특정 앱 불량, 기타' }
     ]
   },
   Q_TYPE03: {
