@@ -20,8 +20,10 @@ import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/r
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
+import { REPL_MODE_SLOPPY } from 'repl';
 
 const os = require('os');
+const signature = require('cookie-signature');
 
 /**
  * @desc NODE API 구성 (JIRA 명세 확인)
@@ -102,6 +104,9 @@ class ApiRouter {
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
     GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
+
+    // for OP002-2289 test
+    CHANGE_TWM_VALUE: { path: '/change/twm-value', method: API_METHOD.GET, target: this.changeTwm },
   };
 
   /**
@@ -1321,6 +1326,40 @@ class ApiRouter {
     }, (error) => {
       res.json(error);
     });
+  }
+
+  // for OP002-2289 test
+  /**
+   * SESSION ID(TWM) 값 변경
+   * @param req
+   * @param res
+   * @param next
+   */
+  private changeTwm(req: Request, res: Response, next: NextFunction) {
+
+    const loginService = new LoginService();
+    const sessionId = loginService.getCookie(req, COOKIE_KEY.TWM);
+    let resultSessionId = '';
+    this.redisService.getRedisKey('session:' + '*')
+      .subscribe((resp) => {
+        
+        resp.result.some((key, subIndex) => {
+          const id = 's:' + signature.sign(key.replace('session:', ''), 'sktechx');
+          if ( id !== sessionId) {
+            resultSessionId = id;
+          }
+          return id !== sessionId;
+        });
+
+        if ( sessionId === resultSessionId) {
+          resp.code = API_CODE.REDIS_ERROR;
+        } else {
+          resp.code = API_CODE.CODE_00;
+          resp.result = resultSessionId;
+        }
+
+        res.json(resp);
+      });
   }
 
 }

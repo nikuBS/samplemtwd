@@ -28,5 +28,8 @@ Tw.CommonMemberLogoutExpire.prototype = {
     this._apiService.sendNativeSession('');
     Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
     Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
+
+    // 로그아웃 시 sessionStorage의 TWM 값을 초기화 한다.
+    Tw.CommonHelper.removeSessionStorage(Tw.SSTORE_KEY.PRE_TWM);
   }
 };
