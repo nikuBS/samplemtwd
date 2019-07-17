@@ -102,5 +102,9 @@
   {
     "old": "/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=NA00005696",
     "new": "/product/callplan?prod_id=NA00005696"
+  },
+  {
+    "old":"/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&prod_id=NA00004136",
+    "new":"/product/callplan?prod_id=NA00004136"
   }
 ]
