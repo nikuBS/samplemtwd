@@ -236,6 +236,9 @@ Tw.CustomerEmailQuality.prototype = {
 
     if ( selSvcMgmtNum === '0' ) {
       htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+      // 기획 김린아 요청: 회선이 없는 고객의 경우 [사용하시는 서비스에 맞게 항목을 다시 선택해주세요. ]
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.RETRY_SERVICE);
+      return;
     }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams, null, null, null, { jsonp : false })
