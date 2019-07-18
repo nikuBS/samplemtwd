@@ -88,6 +88,7 @@ Tw.CustomerAgentHappycom.prototype = {
     delete params.searchText;
     delete params.locationOrder;
     delete params.currentPage;
+    delete params.storeType;
     $.extend(true, this._options, params);  // 필터 검색 파라미터 세팅
   },
 
