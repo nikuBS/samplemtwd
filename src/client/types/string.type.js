@@ -1405,7 +1405,8 @@ Tw.CUSTOMER_EMAIL = {
   HISTORY_DELETE: {
     TITLE: '문의 내역을 삭제하시겠습니까?',
     CONTENT: '선택한 문의 내역을 삭제할 경우 추가 문의한 내역도 함께 삭제됩니다.'
-  }
+  },
+  RETRY_SERVICE:'사용하시는 서비스에 맞게 항목을 다시 선택해주세요.'
 };
 
 Tw.CUSTOMER_MOBILEWEB_GPSOFF = {
