@@ -104,11 +104,10 @@ Tw.ProductRoamingBaroCall.prototype = {
     }
 
     var result = resp.result;
-    if( result.baroPlanYn === 'Y' && result.baroDeviceYn === 'Y' && result.baroVasYn === 'Y'
-      && result.baroItem4Yn === 'Y' || result.baroItem5Yn === 'Y' ){
+    if(result.baroPlanYn === 'Y' && result.baroDeviceYn === 'Y' && result.baroVasYn === 'Y'){
       this.$iqnResult1.removeClass('none');
 
-    }else if( result.baroItem6Yn === 'Y' || result.baroItem7Yn === 'Y'){
+    }else if( result.baroItem4Yn === 'Y' || result.baroItem5Yn === 'Y'){
       this.$iqnResult2.removeClass('none');
     
     }else{
