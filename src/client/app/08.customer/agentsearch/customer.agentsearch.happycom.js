@@ -369,7 +369,16 @@ Tw.CustomerAgentHappycom.prototype = {
       storeType : 0 // 매장형태 (0:전체, 1:지점, 2:대리점)
     };
 
-    $.extend(params, this._options);
+    // 전체 검색일 경우 필터값 3개 전부 'N'으로 설정하여 보낸다.
+    if (Tw.FormatHelper.isEmpty(this._options)){
+      $.extend(params, {
+        speedYn : 'N',      // 스마트폰 기초 과정 여부
+        applEduYn : 'N',    // 스마트폰 응용 과정 여부
+        codingEduYn : 'N'   // 코딩 교실 여부
+      });
+    } else {
+      $.extend(params, this._options);
+    }
 
     // [행복커뮤니티 센터 찾기] API 호출
     this._apiService
