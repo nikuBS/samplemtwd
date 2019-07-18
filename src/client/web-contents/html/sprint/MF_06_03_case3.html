@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>선결제</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="user-month-bill mt0">
+                            <div class="this-month-bill">
+                                <p class="stit">선결제 가능 최대금액 </p>
+                                <p class="price mt10">109,860원</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box">
+                        <ul class="form-data-list">
+                            <li>
+                                <!--접근성 수정-->
+                                <label class="tit" for="flab01">선결제 금액</label>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input id="flab01" type="number" placeholder="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" title="1,000원부터 10원단위 선결제 가능 (숫자만 입력)" aria-describedby="aria-exp-unit">
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span id="aria-exp-unit" class="error-txt">선결제 가능한 최소 금액은 1,000원 부터 입니다.</span> 
+                                    <!-- 1,000원 미만 금액 입력시 : 선결제 가능한 최소 금액은 1,000원 부터 입니다.
+                                        선결제 가능 최대 금액 이상 입력 시 : 선결제 가능 최대금액을 초과하였습니다.
+                                        1원 단위 입력 시 : 선결제 금액은 10원 단위로 입력 가능합니다. -->
+                                </span>
+                                <!-- //접근성 수정-->
+                            </li>
+                        </ul>
+                    </div>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="base-list">
+                            <ul>
+                                <li class="thin">
+                                    <span class="title-type1">예금주명</span>
+                                    <span class="tx-cont">김민정</span>
+                                </li>
+                                <li>
+                                    <span class="title-type1">계좌정보<button class="btn-tip"><i class="icon-badge-tip"><span class="blind">계좌정보 tip</span></i></button></span>
+                                    <!-- 2019.02.11 span수정 접근성 -->
+                                    <div class="tx-cont2">
+                                        <div class="input-list">
+                                            <ul>
+                                                <li>
+                                                    <span class="custom-form"><input type="radio" id="radio1" name="radio" checked="checked"><span class="r-type1"></span></span>
+                                                    <label for="radio1">
+                                                        <span class="tx-tit">자동납부계좌와 동일</span>
+                                                        <span class="tx-sub">신한은행 11*-***-*****</span>
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <span class="custom-form"><input type="radio" id="radio2" name="radio"><span class="r-type1"></span></span>
+                                                    <label for="radio2" class="block tod-floatnone">
+                                                        <span class="tx-tit">직접입력</span>
+                                                        <span class="form-wrap half-type mt14">
+                                                            <span class="select">
+                                                                <button class="bt-dropdown big" disabled="" title="계좌정보 은행 선택" aria-haspopup="true">은행 선택<span class="ico"></span></button>
+                                                            </span>
+                                                            <span class="inputbox ml8">
+                                                                <span class="input">
+                                                                    <input type="number" placeholder="숫자만 입력" title="계좌정보 숫자만 입력" disabled="" />
+                                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </label>
+                                                    <!-- 다른계좌 입력 -->
+                                                    <span class="error-txt ml36 tod-clearboth">계좌번호가 올바르지 않습니다.</span>
+                                                    <!-- 자동납부 계좌정보 없는 경우 -->
+                                                    <span class="error-txt ml36 tod-clearboth">은행정보가 올바르지 않습니다.</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>   
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip">결제안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip">환불안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button disabled="disabled">납부하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>
