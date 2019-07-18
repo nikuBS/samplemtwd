@@ -4966,3 +4966,15 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .tod-eventDetail .evtBtnRed {background:#ea002c; border: 0 none; color:#fff !important;}
 .tod-eventDetail .blind {width:1px; height:1px; margin:-1px; clip:rect(0,0,0,0);}
 /* //190516 [#OP002-372] [이벤트] Mobile_내가고른패키지 내용 수정 / 190529 [OP002-732][UX/PUB] (W-1905-135-00) 5GX 브롤스타즈 체험존 혜택 */
+
+/* 190718 추가 [OP002-2498] 5GX마케팅 페이지 내 5GX부스트파크 신규 페이지 추가 */
+.og-5mktp-intro-headwrap.tod-bgwhite{background:#fff; height:auto;}
+.og-5mktp-intro-headwrap.tod-bgwhite .txt-r{color:#dd120e}
+.tod-og-keyVisual{margin-top:0.9375rem}
+.tod-og-keyVisual a{display:block; }
+.tod-og-keyVisual img{width:100%; height:auto; vertical-align:top}
+.tod-og-newLink-list {margin-top:1.5625rem; overflow:hidden}
+.tod-og-newLink-list li:not(:last-child){margin-right:0.625rem}
+.tod-og-newLink-list li{width:calc((100% - 0.625rem)/2); float:left; }
+.tod-og-newLink-list li img{width:100%; height:auto; vertical-align:top}
+.tod-og-newLink-list li a{display:block}
