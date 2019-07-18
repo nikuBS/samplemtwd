@@ -410,6 +410,8 @@ Tw.API_CMD = {
   BFF_08_0075: { path: '/core-auth/:version/autosms/sendAutoSMSAuthNum', method: Tw.API_METHOD.POST },
   BFF_08_0076: { path: '/:version/autosms/skt-sms/confirm', method: Tw.API_METHOD.POST },
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
+  BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: Tw.API_METHOD.GET },
+  BFF_08_0080: { path: '/core-modification/v1/customer-age/calculation', method: Tw.API_METHOD.GET },
   
 
   // EVENT
@@ -502,7 +504,8 @@ Tw.API_CMD = {
   BFF_10_0085: { path: '/core-product/:version/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
   BFF_10_0086: { path: '/core-product/:version/roaming/fee-plans/:args0/terminations', method: Tw.API_METHOD.DELETE },
   BFF_10_0092: { path: '/core-product/:version/roaming/services/t-roam-tog/:args0/members', method: Tw.API_METHOD.POST },
-
+  BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: Tw.API_METHOD.POST },
+  
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
   BFF_11_0002: { path: '/core-membership/:version/card/info', method: Tw.API_METHOD.GET },
@@ -696,7 +699,8 @@ Tw.API_LOGIN_ERROR = {
   ATH1003: 'ATH1003', // 로그인 30회 초과
   ATH3236: 'ATH3236', // 분실정지(대표회선)
   ICAS3228: 'ICAS3228', // 고객보호비밀번호(대표회선) 입력 필요
-  ICAS3235: 'ICAS3235' // 휴면계정
+  ICAS3235: 'ICAS3235', // 휴면계정
+  FE0001: 'FE0001' // 로그인 후 Native callback에 파라미터가 넘어오지 않는 경우
 };
 
 Tw.API_ADD_SVC_ERROR = {

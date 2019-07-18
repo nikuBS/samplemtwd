@@ -313,7 +313,10 @@ Tw.MyTFareBillSkpay.prototype = {
             identifier: billDetailList[i].billSvcMgmtNum, //billSvcMgmtNum
             name : billDetailList[i].invDt,
             price : billDetailList[i].payAmt,
-            category: "미납요금" //fix
+            category: "미납요금", //fix
+            provider: {
+              "identifier": billDetailList[i].billAcntNum //청구계정번호(bill_acnt_num)
+            }
           };
           _itemsOffered.push(item);
         }

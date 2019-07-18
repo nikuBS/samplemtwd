@@ -16,6 +16,7 @@ Tw.TidLandingComponent = function (rootEl, redirectTarget) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   if ( !Tw.FormatHelper.isEmpty(this.$container) ) {
     this._bindEvent(redirectTarget);
@@ -340,16 +341,22 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _onNativeLogin: function (target, resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._successLogin(target, resp.params);
-    } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
-      Tw.Logger.info('Login Cancel');
-      var type = +resp.params.type;
-      if ( type === Tw.NTV_LOGINTYPE.ACTION_SHEET ) {
-        this._historyService.replaceURL('/main/home');
-      }
+
+    // 로그인 후 Native call에서 resp가 넘어오지 않는 경우에 대한 오류 코드 추가
+    if (Tw.FormatHelper.isEmpty(resp) ) {
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + Tw.API_LOGIN_ERROR.FE0001);
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode);
+      if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+        this._successLogin(target, resp.params);
+      } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
+        Tw.Logger.info('Login Cancel');
+        var type = +resp.params.type;
+        if ( type === Tw.NTV_LOGINTYPE.ACTION_SHEET ) {
+          this._historyService.replaceURL('/main/home');
+        }
+      } else {
+        this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode);
+      }
     }
   },
 
@@ -439,6 +446,9 @@ Tw.TidLandingComponent.prototype = {
    * @private
    */
   _successSetSession: function (target) {
+      
+    // native에서 해당 값을 cookie에 set 하지 않기 때문에 로그인 완료시 cookie에 값을 설정한다.
+    Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, 'Y');
     
     if ( target === location.pathname + location.search ) {
       this._historyService.reload();

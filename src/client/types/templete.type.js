@@ -439,8 +439,10 @@ Tw.POPUP_TPL = {
     '03': { title: '광고성 정보 수신 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe3.html' },
     '04': { title: '고객 혜택 제공을 위한 개인정보 수집 이용 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe4.html' },
     '05': { title: 'OK캐쉬백 카드 서비스 이용약관', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe11.html' },
-    '06': { title: 'OK캐쉬백 암호화된 동일힌 식별정보 제공 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe12.html' },
-    '07': { title: '마케팅 활동 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe13.html' },
+    // OP002-2365 [M] OCB 최신 약관 및 동의 현행화 관련 수정
+    '06': { title: 'OK캐쉬백 암호화된 동일인 식별정보 제공 동의', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe12.html' },
+    // OP002-2365 [M] OCB 최신 약관 및 동의 현행화 관련 수정
+    '07': { title: 'OK캐쉬백 마케팅 활용을 위한 개인정보 제3자 제공 동의(선택)', url: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.3_iframe13.html' },
     '09': { title: '개인정보 처리방침', url: 'https://m.skt-id.co.kr/member/terms/termsInfo.do?chnlId=TWDT&client_type=mWEB&stplTypCd=02'}
   },
   ROAMING_RETURN_PLACE: [
@@ -786,7 +788,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
     list: [
       { text: '음성통화(발신, 수신, 발신/수신) 불량' },
       { text: '문자(발신, 수신, 발신/수신) 불량' },
-      { text: '인터넷 접속 불량, 특정 앱 분량, 기타' }
+      { text: '인터넷 접속 불량, 특정 앱 불량, 기타' }
     ]
   },
   Q_TYPE03: {

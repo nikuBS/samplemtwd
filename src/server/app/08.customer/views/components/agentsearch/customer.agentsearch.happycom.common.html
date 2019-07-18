@@ -1,0 +1,91 @@
+<hr class="cont-sp type1" aria-hidden="true" />
+<!-- .cont-box -->
+<div class="cont-box nogaps-top">
+    <div class="search-point tod-type2">
+        <div class="bn-search">
+            <div class="inner">
+                <span class="ico tod-resize"></span>
+                <div class="txt tod-txcolor1">
+                    <span class="tx-bold">‘행복커뮤니티 센터 찾기’</span>를 이용해<br> 프로그램을 예약하고<br> 예약 내용을 확인해보세요.
+                    <button type="button" id="TC000068" class="btn-tip ml0" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
+                        <i class="icon-badge-tip"><span class="blind">TC000068</span></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul class="bt-slice item-two">
+        <li><button data-external="" class="btn-round1 btn-style4 fs13 fe-reserve">스마트폰 교실 예약하기</button></li>
+        <li><button data-external="http://www.sktacademy.co.kr/MOBILECLASS/reserve/Reserve_V.asp" class="btn-round1 btn-style1 fs13">나의 예약 조회하기</button></li>
+    </ul>
+</div>
+<!--// .cont-box -->
+
+
+<hr class="cont-sp type1" aria-hidden="true" />
+<!-- .cont-box -->
+<div class="cont-box">
+    <h3 class="mb10">행복커뮤니티 센터 찾기</h3>
+    <div class="tod-form-wrap">
+        <span class="select mb10">
+            <button class="bt-dropdown big fe-location-category" title="지역 선택" aria-haspopup="true"><%= locationOrderName || '서울' %><span class="ico"></span></button>
+        </span>
+        <span class="inputbox">
+            <span class="input">
+                <input class="fe-input-search" type="text" title="검색어 입력" placeholder="매장명 또는 주소 키워드 입력" value="<%= isSearch ? keyword : undefined %>" />
+                <button class="cancel"><span class="blind">삭제</span></button>
+            </span>
+        </span>
+    </div>
+    <div class="btn-search mt20">
+        <ul class="bt-slice">
+            <li class="bt-red1"><button class="fe-btn-search" disabled="disabled">검색</button></li>
+        </ul>
+    </div>
+</div>
+<!--// .cont-box -->
+
+<!-- .cont-box -->
+<div class="cont-box bgnone noborder gaps-style03">
+    <div class="contheader-box">
+        <div class="totalfilter-wrap">
+            <span class="total">총 <span class="number-text fe-total-count"><%= result.totalCount %></span>개</span>
+            <% const _dateInClass = optionsText === '전체' ? '':'date-in'; %>
+            <button type="button" class="filter-btn fe-select-filter <%=_dateInClass%>" aria-haspopup="true"><!-- 필터 선택값 노출시 .date-in 클래스 추가 -->
+                <span class="datebox"><%= optionsText %></span>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- Case1 검색 결과 없는 경우 -->
+<div class="cont-box nogaps-hoz fe-no-contents <%= result.totalCount === 0 ? undefined : 'none' %>">
+    <div class="result-none type2">
+        검색 결과가 없습니다.<br>
+        <span class="tx-medium">다시 검색해주세요.</span>
+    </div>
+</div>
+<!-- //Case1 검색 결과 없는 경우 -->
+<!-- Case2 검색 결과 리스트 노출 -->
+<div class="cont-box nogaps-hoz">
+    <div class="shop-info">
+        <div class="shop-txt">
+            <ul class="fe-result-list">
+                <% for (let i = 0; i < result.regionInfoList.length; i++) { %>
+                <li>
+                    <dl class="type02 fe-branch-detail" value="<%= result.regionInfoList[i].locCode %>">
+                        <dt><%= result.regionInfoList[i].storeName %></dt>
+                        <dd><%= result.regionInfoList[i].searchAddr %><br><%= result.regionInfoList[i].jibunAddr %>
+                            <a class="bt-tel" href="tel:<%= result.regionInfoList[i].tel %>"><span role="img" class="blind">매장으로 전화하기</span></a>
+                        </dd>
+                    </dl>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+    <div class="btn-more tod-linety2 fe-btn-more <%= result.totalCount > 20 ? undefined : 'none' %>">
+        <button>더 보기</button>
+    </div>
+</div>
+<!-- //Case2 검색 결과 리스트 노출 -->
+<!-- // .cont-box -->

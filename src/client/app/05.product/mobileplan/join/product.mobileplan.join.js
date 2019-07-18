@@ -103,7 +103,9 @@ Tw.ProductMobileplanJoin.prototype = {
     this._confirmOptions = $.extend(this._confirmOptions, {
       isOverpayResult: overpayResults.isOverpayResult,
       isOverPayError: !overpayResults.isOverpayResult && this._overpayRetryCnt > 2,
-      overpay: overpayResults
+      overpay: overpayResults,
+      premTermYn: this._confirmOptions.installmentAgreement.premTermYn,
+      premTermMsg: this._confirmOptions.installmentAgreement.premTermMsg
     });
 
     this._getJoinConfirmContext();
@@ -138,6 +140,18 @@ Tw.ProductMobileplanJoin.prototype = {
     this._callConfirmCommonJs();
 
     Tw.Tooltip.separateMultiInit(this.$container);
+
+    this._premTermYn();
+  },
+
+  /**
+   * @function
+   * @desc 프리미엄패스1,2 가입고객 안내팝업 노출
+   */
+  _premTermYn: function() {
+    if(this._confirmOptions.premTermYn){
+      this._popupService.openAlert(this._confirmOptions.premTermMsg);
+    }
   },
 
   /**

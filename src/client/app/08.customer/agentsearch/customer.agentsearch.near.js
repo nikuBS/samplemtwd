@@ -8,12 +8,12 @@
  * @constructor
  * @param  {Object} rootEl - 최상단 elem
  */
-Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
+Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this.$container = rootEl;
   this.isLogin = (isLogin === 'true');
   this.isLocationAccess = false;  // 앱일때 GPS ON 여부 및 모바일 웹일때 위치 액세스 가능 여부
   this.isPopupNoResult = false;
-
+  
   // 처음에 표시할 위치가 있을 경우 query param을 이용
   this.paramData = Tw.UrlHelper.getQueryParams();
   this._hasDest = this.paramData.long && this.paramData.lat ? true : false;
@@ -44,13 +44,29 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin) {
   this._currentGu = undefined;
   this.isMyLocationCliked = false;
 
-  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
-    this._showDataChargeIfNeeded($.proxy(function () {
-      this._init();
-      // this._cacheElements();
-      this._bindEvents();
-    }, this));
-  }, this));
+  // 14세 미만일때 팝업 보여주고 
+  this.isAcceptAge = (isAcceptAge === 'true');  // 문자 true를 boolean으로 변경
+  if(!this.isAcceptAge){
+    this._popupService.openAlert(Tw.CUSTOMER_NEAR_POPUP.AGE_CONTENT, Tw.CUSTOMER_NEAR_POPUP.AGE_TITLE, '확인', $.proxy(function(){this._historyService.replaceURL('/customer/agentsearch/search')}, this));
+  }else{
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
+        this._showDataChargeIfNeeded($.proxy(function () {
+          this._init();
+          // this._cacheElements();
+          this._bindEvents();
+        }, this));
+      }, this));
+    }else{
+      this._showDataChargeIfNeeded($.proxy(function () {
+        this._showDataChargeIfNeeded($.proxy(function () {
+          this._init();
+          // this._cacheElements();
+          this._bindEvents();
+        }, this));
+      }, this));
+    }
+  }
 };
 
 Tw.CustomerAgentsearchNear.prototype = {
