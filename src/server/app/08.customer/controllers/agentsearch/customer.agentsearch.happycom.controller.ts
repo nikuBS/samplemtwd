@@ -86,15 +86,26 @@ export default class CustomerAgentsearchHappycom extends TwViewController {
       storeType: 0 // 매장형태 (0:전체, 1:지점, 2:대리점)
     };
 
+    let isAll = true;
     if (!FormatHelper.isEmpty(options)) {
+      isAll = false;
       options.split('::').map((option) => params[option] = 'Y');
+    } else {
+      // 전체 검색일 경우 필터값 3개 전부 'N'으로 설정하여 보낸다.
+      params['speedYn'] = 'N';      // 스마트폰 기초 과정 여부
+      params['applEduYn'] = 'N';    // 스마트폰 응용 과정 여부
+      params['codingEduYn'] = 'N';  // 코딩 교실 여부
     }
-
-    // js 파일로 던져질 params
-    this.queryParams = { ...params, searchText: decodeURIComponent(params.searchText) };
 
     return this.apiService.request(API_CMD.BFF_08_0079, params).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
+        // js 파일로 던져질 params
+        if (isAll) {
+          delete params['speedYn'];
+          delete params['applEduYn'];
+          delete params['codingEduYn'];
+        }
+        this.queryParams = { ...params, searchText: decodeURIComponent(params.searchText) };
         return resp.result;
       }
 
