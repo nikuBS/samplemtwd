@@ -48,15 +48,25 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this.isAcceptAge = (isAcceptAge === 'true');  // 문자 true를 boolean으로 변경
   if(!this.isAcceptAge){
     this._popupService.openAlert(Tw.CUSTOMER_NEAR_POPUP.AGE_CONTENT, Tw.CUSTOMER_NEAR_POPUP.AGE_TITLE, '확인', $.proxy(function(){this._historyService.replaceURL('/customer/agentsearch/search')}, this));
+  }else{
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
+        this._showDataChargeIfNeeded($.proxy(function () {
+          this._init();
+          // this._cacheElements();
+          this._bindEvents();
+        }, this));
+      }, this));
+    }else{
+      this._showDataChargeIfNeeded($.proxy(function () {
+        this._showDataChargeIfNeeded($.proxy(function () {
+          this._init();
+          // this._cacheElements();
+          this._bindEvents();
+        }, this));
+      }, this));
+    }
   }
-
-  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () { // INIT_COMPLETE 이벤트 발생후 나머지 처리
-    this._showDataChargeIfNeeded($.proxy(function () {
-      this._init();
-      // this._cacheElements();
-      this._bindEvents();
-    }, this));
-  }, this));
 };
 
 Tw.CustomerAgentsearchNear.prototype = {
