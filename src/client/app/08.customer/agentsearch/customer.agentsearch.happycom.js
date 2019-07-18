@@ -364,7 +364,8 @@ Tw.CustomerAgentHappycom.prototype = {
     var params = {
       searchText: encodeURIComponent(this.$inputSearch.val()),
       currentPage: this._page++,
-      locationOrder: this.selectedLocationCode
+      locationOrder: this.selectedLocationCode,
+      storeType : 0 // 매장형태 (0:전체, 1:지점, 2:대리점)
     };
 
     $.extend(params, this._options);

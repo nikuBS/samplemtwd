@@ -82,7 +82,8 @@ export default class CustomerAgentsearchHappycom extends TwViewController {
     const params = {
       searchText: encodeURIComponent(keyword),
       currentPage: page,
-      locationOrder
+      locationOrder,
+      storeType: 0 // 매장형태 (0:전체, 1:지점, 2:대리점)
     };
 
     if (!FormatHelper.isEmpty(options)) {
@@ -110,9 +111,8 @@ export default class CustomerAgentsearchHappycom extends TwViewController {
 
   /**
    * @function
-   * @desc 전체/지점/대리점 그리고 TPremiumStore, Apple 취급점 등의 option선택에 대해 화면에 표시해 줄 string 생성
-   * @param  {string} storeType - 전체/지점/대리점
-   * @param  {string} options - 선택된 옵션들(TPremiumStore, Apple취급점 등)
+   * @desc option선택에 대해 화면에 표시해 줄 string 생성
+   * @param  {string} options - 선택된 옵션들(speedYn: '스마트 기초 과정', applEduYn: '스마트 응용 과정', codingEduYn: '코딩교실')
    * @returns string
    */
   private makeOptionsText(options: string): any {
