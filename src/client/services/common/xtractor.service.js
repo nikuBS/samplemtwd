@@ -33,6 +33,7 @@ Tw.XtractorService.prototype = {
     $(window).scroll($.proxy(function () {
       this._onLoadBV();
     }, this));
+    this._onLoadBV();
   },
 
   /**
@@ -249,7 +250,7 @@ Tw.XtractorService.prototype = {
 
     if (this._loggedList.indexOf(key) !== -1) {
       // Tw.Logger.info('[Xtractor] this key already logged.');   // scroll 이벤트 때문에 너무 많이 발생하므로 주석 처리
-      return false;
+        return false;
     }
 
     try {

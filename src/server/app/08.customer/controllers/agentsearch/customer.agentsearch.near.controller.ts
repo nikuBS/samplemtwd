@@ -10,15 +10,17 @@ import { NextFunction } from 'connect';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
+import FormatHelper from '../../../../utils/format.helper';
 
 class CustomerAgentsearchNear extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    /* 앱 이면서 로그인인 경우 - 이면 아래 if조건을 타고 아니면 true를 전달해서 실행 - OP002-2058  */
+    /* 로그인인 경우 - 이면 아래 if조건을 타고 아니면 true를 전달해서 실행 - OP002-2058  */
     let acceptAgeObserver = new Observable(subscriber => { subscriber.next(true); } );
-    if(BrowserHelper.isApp(req) && svcInfo){
+    // if(BrowserHelper.isApp(req) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)){
+    if(svcInfo){  // 로그인한 사용자인 경우에만 나이조회(모웹,웹 구분 없음)
       acceptAgeObserver = this.checkAge(svcInfo);
     }
         
@@ -42,10 +44,10 @@ class CustomerAgentsearchNear extends TwViewController {
    */
   private checkAge(svcInfo: any): any {
 
-    this.logger.info(this, '[ 나이체크 함수 탔는지 확인 ]');
-    return this.apiService.request(API_CMD.BFF_08_0080, {svcMgmtNum : svcInfo.svcMgmtNum}).map((resp) => {
+    // this.logger.info(this, '[ 나이체크 함수 탔는지 확인 ]');
+    return this.apiService.request(API_CMD.BFF_08_0080, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
-        this.logger.info(this, '[ 현재 나이 정보는 resp.result.age] : ', resp.result.age);
+        // this.logger.info(this, '[ 현재 나이 정보는 resp.result.age] : ', resp.result.age);
         return resp.result.age >= 14 ? true : false;
       }
 
