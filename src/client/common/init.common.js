@@ -201,6 +201,15 @@ Tw.Init.prototype = {
             xtLoginId: res.result.XTLOGINID,
             xtSvcGr: res.result.XTSVCGR
           });
+        } else if ( res.result.XTLOGINTYPE === 'Z' ) {
+          Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
+          window.XtractorScript.xtrLoginDummy($.param({
+            V_ID: Tw.CommonHelper.getCookie('XTVID'),
+            L_ID: res.result.XTLID,
+            T_ID: res.result.XTLID,
+            GRADE: 'Z',
+            LOGIN_TYPE: 'Z'
+          }));
         }
       }, this));
   },
