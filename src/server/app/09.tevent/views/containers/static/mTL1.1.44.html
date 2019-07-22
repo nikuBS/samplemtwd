@@ -96,7 +96,7 @@
   var openInternal = function(target) {
     var href = $(target).attr('href');
     var url = document.domain + href;
-    Tw.CommonHelper.openUrlInApp(url);
+    parent.window.location.href = url;
     return false;
   }
 </script>
