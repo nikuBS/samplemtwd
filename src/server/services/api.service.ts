@@ -351,7 +351,8 @@ class ApiService {
             userId: resp.result.userId,
             xtUserId: resp.result.xtUserId,
             totalSvcCnt: resp.result.totalSvcCnt,
-            expsSvcCnt: resp.result.expsSvcCnt
+            expsSvcCnt: resp.result.expsSvcCnt,
+            mbrChlId: resp.result.mbrChlId
           };
           category.map((line) => {
             const curLine = resp.result[LINE_NAME[line]];
