@@ -53,6 +53,9 @@ Tw.Init.prototype = {
 
     this._apiService = Tw.Api;
     this._nativeService = Tw.Native;
+
+    // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
+    Tw.CommonHelper.checkValidSession();
   },
 
   /**
@@ -101,7 +104,7 @@ Tw.Init.prototype = {
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
       if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast('QA_v5.70.0');
+        Tw.Popup.toast('QA_v5.73.0');
       }
 
       //this._initTrackerApi();
@@ -198,6 +201,15 @@ Tw.Init.prototype = {
             xtLoginId: res.result.XTLOGINID,
             xtSvcGr: res.result.XTSVCGR
           });
+        } else if ( res.result.XTLOGINTYPE === 'Z' ) {
+          Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
+          window.XtractorScript.xtrLoginDummy($.param({
+            V_ID: Tw.CommonHelper.getCookie('XTVID'),
+            L_ID: res.result.XTLID,
+            T_ID: res.result.XTLID,
+            GRADE: 'Z',
+            LOGIN_TYPE: 'Z'
+          }));
         }
       }, this));
   },
