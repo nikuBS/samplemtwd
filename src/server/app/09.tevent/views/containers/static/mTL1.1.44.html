@@ -95,8 +95,7 @@
 
   var openInternal = function(target) {
     var href = $(target).attr('href');
-    var url = document.domain + href;
-    parent.window.location.href = url;
+    parent.window.location.href = href;
     return false;
   }
 </script>
