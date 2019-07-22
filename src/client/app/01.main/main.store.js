@@ -39,6 +39,7 @@ Tw.MainStore.prototype = {
   _bindEventLanding: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
+    this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
   },
 
   /**
@@ -112,6 +113,17 @@ Tw.MainStore.prototype = {
 
     $event.preventDefault();
     $event.stopPropagation();
+  },
+
+  /**
+   * @function
+   * @desc 과금 팝업 오픈 후 외부 브라우저 랜딩 처리
+   * @param $event 이베트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickCharge: function ($event) {
+    Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
   },
 
   /**
