@@ -70,13 +70,13 @@ abstract class TwViewController {
     const userId = req.query.userId;
     this._type = req.query.type;
 
-    this._apiService.setCurrentReq(req, res);
-
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.set('expires', '0');
     res.set('pragma', 'no-cache');
 
     this.setChannel(req, res).subscribe((resp) => {
+      this._apiService.setCurrentReq(req, res);
+      
       if ( this.checkLogin(req) ) {
         this.sessionLogin(req, res, next, path);
       } else {
