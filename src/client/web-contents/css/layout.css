@@ -4978,3 +4978,357 @@ body.og-5mktp-intro>.wrap, body.og-5mktp-intro .container-wrap {margin:0; paddin
 .tod-og-newLink-list li{width:calc((100% - 0.625rem)/2); float:left; }
 .tod-og-newLink-list li img{width:100%; height:auto; vertical-align:top}
 .tod-og-newLink-list li a{display:block}
+
+/* 190723 추가 - 외부업무 지원  START */
+/* 슬라이드 스타일 indecator reset */
+.slider-box.og-slider {padding:0.9375rem 0 0}
+.slider-box.og-slider .slick-dots{
+  position: relative!important;
+  top:unset !important;
+  bottom:unset !important;
+  left:unset !important;
+  right:unset !important;
+  margin:0625em atuo 0 !important;
+  text-align: center !important;
+}
+.slider-box.og-slider .slick-dots li,
+.slider-box.og-slider .slick-dots li.slick-active {
+  float:none !important;
+  display: inline-block !important;
+  width:0.23rem !important;
+}
+.slide-pagingtype .slider-box.og-slider .slick-dots li button, .slide-pagingtype .slider-box.og-slider .slick-dots li span{
+  background:#ccc;
+  border-radius: unset!important;
+  border:0 !important;
+  opacity: 1 !important;
+}
+.slide-pagingtype .slider-box.og-slider .slick-dots li.slick-active button, .slide-pagingtype .slider-box.og-slider .slick-dots li.slick-active span{
+  background:#dd120e;
+}
+.og-slider .slick-initialized .slick-slide{
+  position: relative;
+}
+/* 슬라이드 스타일 수정 */
+.og-slider .og-main-banner{
+  width:100%;
+}
+.og-slider .og-main-banner div{
+  position: absolute;
+  left:1rem;
+  top:20px;
+  text-align: left;
+  font-size: 1.125rem;
+  font-weight: 800;
+}
+.og-slider .og-main-banner.boostpark{
+  background: #eee ;
+}
+.og-slider .og-main-banner:after{
+  position: absolute;
+  width:24px;
+  height:16px;
+  left:1rem;
+  top:50%;
+  margin-top:-16px;
+  background:url(/img/boostpark/og_main_arrow_right.png) no-repeat ;
+  background-position: right bottom;
+  background-size: contain;
+  content: "";
+}
+.og-slider .og-main-banner.boostpark img {
+  min-width:280px;
+  min-height: 330px;
+  overflow:hidden;
+  float: right;
+}
+.og-slider .og-main-banner.boostpark span{
+  display: inline-block;
+  font-weight: 400;
+  font-size:0.625rem;
+  padding-bottom: 0.625rem;
+}
+.og-slider .og-main-banner.boostpark em{
+  color:#dd120e;
+}
+.tod-og-newLink-list li{
+  background-color:#f8f8f8;
+}
+.tod-og-newLink-list li a{
+  display: block;
+  position: relative;
+  height:100px;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  padding:1.25rem 0.625rem;
+  border-top:1px solid #000;
+}
+.tod-og-newLink-list li a:after{
+  position: absolute;
+  width:24px;
+  height:100%;
+  right: 0.625rem;
+  bottom:1rem;
+  background:url(/img/boostpark/og_main_arrow_right.png) no-repeat ;
+  background-position: right bottom;
+  background-size: contain;
+  content: "";
+}
+.tod-og-newLink-list li a span{
+  font-weight: 400;
+  font-size:0.5rem;
+}
+
+/* 부스트 파크 상세페이지 */
+
+.og-boostpark-sub{
+  background:#fff;
+}
+.og-boostpark-sub .exbold{
+  font-weight: 800;
+}
+.og-boostpark-sub .bold{
+  font-weight: 700;
+}
+.og-boostpark-sub .point-color{
+  color:#dd120e;
+}
+.og-boostpark-underline{
+  display: inline-block;
+}
+.og-boostpark-underline:after{
+  display: block;
+  width:100%;
+  height:8px;
+  margin-top:-8px;
+  content: "";
+  background: #c9fbed;
+}
+
+.og-boostpark-sub h4{
+  font-size:24px;
+}
+.og-boostpark-sub h5{
+  font-size:15px;
+}
+.og-boostpark-sub h6,
+.og-boostpark-sub p{
+  font-size:14px;
+}
+
+
+/* 컨텐츠 헤더영역 */
+.og-boostpark-head{
+  text-align: center;
+  font-weight:800;
+}
+.og-boostpark-head img{
+  margin-bottom:36px;
+}
+.og-boostpark-head:after{
+  display: block;
+  width:50%;
+  margin:36px auto;
+  height:2px;
+  background:url(/img/boostpark/og_boostpark_divider.png) no-repeat ;
+  background-size:contain;
+  content: "";
+}
+/* 컨텐츠 텍스트박스영역 */
+.og-boostpark-wrap{
+  text-align: center;
+  padding: 0 24px 16px;
+}
+.og-boostpark-wrap h4{
+  margin-top:36px;
+}
+.og-boostpark-wrap h5{
+  margin-top:8px;
+}
+/* 컨텐츠 텍스트 > 회색박스영역 */
+.og-boostpark-txtwrap{
+  display: table;
+  width:100%;
+  min-height:80px;
+  margin-top:36px;
+  text-align: left;
+  font-size:12px;
+  line-height: 16px;
+  position: relative;
+  background-color:#f2f2f2;
+  border-radius:5px;
+}
+.og-boostpark-txtwrap div{
+  display:table-cell;
+  vertical-align: middle
+}
+.og-boostpark-txtwrap:before{
+  display: block;
+  content:"";
+  background-size:contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  bottom:0;
+}
+.og-boostpark-txtwrap:after{
+  display: block;
+  clear: both;
+  content:"";
+}
+.harryporter .og-boostpark-txtwrap:before{
+  width:75px;
+  height:91px;
+  left:16px;
+  bottom:-6px;
+  background-image:url(/img/boostpark/og_boostpark_bg_harrypotter.png) ;
+}
+.harryporter .og-boostpark-txtwrap p{
+  padding:14px 20px 0 100px;
+}
+.harryporter .og-boostpark-txtwrap a{
+  float:right;
+  font-size:7px;
+  border-radius: 1.88rem;
+  border:1px solid rgba(0,0,0, 0.1);
+  padding: 4px 12px;
+  margin:6px 12px;
+  line-height: 100%;
+  text-decoration: none;
+}
+.harryporter .og-boostpark-txtwrap a:hover,
+.harryporter .og-boostpark-txtwrap a:active{
+  color:#000;
+}
+.harryporter .og-boostpark-txtwrap a i{
+  border: solid black;
+  border-width: 0 1px 1px 0;
+  display: inline-block;
+  padding: 2px;
+  margin-left:4px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+.lol .og-boostpark-txtwrap p{
+  padding:16px 20px;
+}
+.lol .og-boostpark-txtwrap p span{
+  display:block;
+  font-size:9px;
+  margin-bottom:3px;
+}
+.lol .og-boostpark-txtwrap:before{
+  bottom:0;
+  right:0;
+  width:110px;
+  height:47px;
+  background-image:url(/img/boostpark/og_boostpark_bg_t1.png);
+}
+.map .og-boostpark-txtwrap p{
+  text-align: right;
+  padding:16px 20px 16px 40%;
+}
+.map .og-boostpark-txtwrap:before{
+  top:-20px;
+  left:0;
+  width:126px;
+  height:104px;
+  background-image:url(/img/boostpark/og_boostpark_bg_map.png);
+}
+/* 컨텐츠 텍스트 > 광고영역 */
+.og-boostpark-ad{
+  display: table;
+  width:100%;
+  border-radius: 5px;
+  height:80px;
+  color:#fff;
+  font-size:14px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  position: relative;
+  margin-top:16px;
+
+}
+.og-boostpark-ad i{
+  position: absolute;
+  right:0;
+  top:0;
+  font-size:9px;
+  padding:4px 8px;
+  background:#3acfa8;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.og-boostpark-ad p{
+  display:table-cell;
+  vertical-align:middle;
+  position: relative;
+  text-align: center;
+  font-weight: 300;
+  padding:0 16px;
+}
+.og-boostpark-ad p span{
+  font-size:9px;
+  display: block;
+}
+.og-boostpark-ad p span.small{
+  font-size:8px;
+  color:#3acfa8;
+  font-weight: 700;
+}
+.og-boostpark-ad:before{
+  display: block;
+  width:100%;
+  height:100%;
+  content: "";
+  position: absolute;
+  top:0;
+  left:0;
+  border-radius: 5px;
+  background-color:rgba(0,0,0, 0.6);
+}
+.og-boostpark-ad.bg01{
+  background-image:url(/img/boostpark/og_boostpark_bg01.png) ;
+}
+.og-boostpark-ad.bg02{
+  background-image:url(/img/boostpark/og_boostpark_bg02.png);
+}
+
+/* 부스트파크 위치 지하철 맵 */
+.og-boostpark-map{
+  position: relative;
+  margin-bottom:-10px;
+}
+.og-boostpark-map .head{
+  position: relative;
+  padding:56px 24px 0;
+  z-index:1;
+}
+.og-boostpark-map .head h1{
+  font-size:26px;
+  margin-bottom:10px;
+}
+.og-boostpark-map img{
+  position: relative;
+  margin-top:-88px;
+  margin-bottom:0;
+}
+.og-boostpark-map .comingsoon{
+  width:100%;
+  margin:0 auto 20%;
+  text-align: center;
+  position: absolute;
+  bottom:0;
+}
+.og-boostpark-map .comingsoon h5{
+  display: inline-block;
+  margin:20px auto;
+  border-bottom:1px solid #000;
+  font-size:12xp;
+}
+.og-boostpark-map .comingsoon h5 i{
+  font-style:italic;
+}
+.og-boostpark-map .comingsoon h3{
+  font-size:19px;
+}
+/* 190723 추가 - 외부업무 지원 END */
