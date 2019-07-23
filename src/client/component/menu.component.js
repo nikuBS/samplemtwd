@@ -190,6 +190,9 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
+   
+    // for OP002-2289 test
+    this.$container.on('click', '.fe-chg-session', $.proxy(this._onClickChangeSession, this));
   },
 
   /**
@@ -970,5 +973,28 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       return false;
     }
     return true;
+  },
+
+  // for OP002-2289 test
+  /**
+   * @function
+   * @desc 충전/선물 버튼 클릭 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickChangeSession: function ($event) {
+    this._apiService.request(Tw.NODE_CMD.CHANGE_TWM_VALUE, {})
+      .done($.proxy(this._callBackChangeSession, this))
+      .fail($.proxy(this._callBackChangeSession, this));
+  },
+
+  _callBackChangeSession: function (resp) {
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM, resp.result);
+      this._popupService.openAlert('세션 변경 성공');
+    } else {
+      this._popupService.openAlert('세션 변경 실패');
+    }
   }
 };
