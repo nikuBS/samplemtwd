@@ -64,7 +64,9 @@ Tw.PRODUDT.PROMOTIONS = {
         return null;
       }
       
-      if(2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
+      if(data.joinDate1 === 'N'){
+        return null; 
+      }else if(2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션 이벤트 가입일 M+2
       }else if(2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return 'NONE_FREE_2'; ////100원 프로모션 이벤트 가입일 M+2 이상이고 코인을 지급 받지 않았을 경우
@@ -90,7 +92,9 @@ Tw.PRODUDT.PROMOTIONS = {
         return null;
       }
       
-      if(2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
+      if(data.joinDate1 === 'N'){
+        return null; 
+      }else if(2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return {xt: {
           eid: xtEids[data.prodId][1],
           changeCsid: '_BSCTM',
