@@ -251,7 +251,7 @@ Tw.ValidationService.prototype = {
    */
   _getMessageTarget: function ($target) {
     var $messageTarget = $target.parent().siblings('.fe-error-msg');
-    if ($target.attr('data-valid-label') === 'expiration' || $target.attr('data-err-target') === 'fe-exp-wrap') {
+    if ($target.attr('data-valid-label') === 'expiration') {
       $messageTarget = $target.parents('.fe-exp-wrap').siblings('.fe-error-msg');
     }
     return $messageTarget;
