@@ -40,7 +40,7 @@
     "new":"/product/callplan?prod_id=NA00005923"
   },
   {
-    "old":"/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=TW00001062 ",
+    "old":"/mnormal.do?serviceId=S_PROD2001&viewId=M_PROD2001&prod_id=TW00001062",
     "new":"/product/callplan?prod_id=TW00001062"
   },
   {
