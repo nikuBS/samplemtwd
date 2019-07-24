@@ -504,7 +504,8 @@ Tw.API_CMD = {
   BFF_10_0085: { path: '/core-product/:version/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
   BFF_10_0086: { path: '/core-product/:version/roaming/fee-plans/:args0/terminations', method: Tw.API_METHOD.DELETE },
   BFF_10_0092: { path: '/core-product/:version/roaming/services/t-roam-tog/:args0/members', method: Tw.API_METHOD.POST },
-
+  BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: Tw.API_METHOD.POST },
+  
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
   BFF_11_0002: { path: '/core-membership/:version/card/info', method: Tw.API_METHOD.GET },
