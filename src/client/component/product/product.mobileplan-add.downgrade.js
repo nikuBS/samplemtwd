@@ -120,7 +120,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 titleNm: '혜택안내',
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
-                layer: true
+                layer: true,
+                cdn: Tw.Environment.cdn
             }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_contents', this._openEvent);
         }else if(actionType.action === 'POPUP2'){
             this._2depthPopup = true;
@@ -129,7 +130,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 titleNm: '혜택안내',
                 xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
-                layer: true
+                layer: true,
+                cdn: Tw.Environment.cdn
             }, $.proxy(function($popupContainer){
                 $popupContainer.on('click', '.fe-btn_close', $.proxy($popupContainer.find('.popup-closeBtn').trigger, this, 'click'));
                 $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
@@ -150,7 +152,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 hbs: actionType.hbs2,
                 titleNm: '혜택안내',
                 titleClass: 'no-header color-type-CUSTOM',
-                layer: true
+                layer: true,
+                cdn: Tw.Environment.cdn
             }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', this._openEvent);
         }
     },
