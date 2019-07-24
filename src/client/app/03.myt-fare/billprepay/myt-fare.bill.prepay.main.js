@@ -288,9 +288,13 @@ Tw.MyTFareBillPrepayMain.prototype = {
 
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) { // 앱일 경우에만 이동
+<<<<<<< HEAD
         this._popupService.open({
           'hbs': hbsName
         }, $.proxy(this._goPrepay, this), null, 'pay', $(e.currentTarget));
+=======
+        this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/prepay');
+>>>>>>> parent of 6dd037deb... OP002-2484_T world x SK pay 적용 요청건_2차_01
       } else {
         this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
       }

@@ -354,6 +354,10 @@ Tw.API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
+<<<<<<< HEAD
+=======
+  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: Tw.API_METHOD.GET},
+>>>>>>> parent of 6dd037deb... OP002-2484_T world x SK pay 적용 요청건_2차_01
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
