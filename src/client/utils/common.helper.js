@@ -430,10 +430,11 @@ Tw.CommonHelper = (function () {
           // this.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, '');
           var historyService = new Tw.HistoryService();
           historyService.replaceURL('/common/member/logout/expire?sess_invalid=Y&target=' + location.pathname + location.search);
-          return;
+          return false;
         }
       }
     }
+    return true;
   };
 
   return {
