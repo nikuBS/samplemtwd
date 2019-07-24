@@ -141,6 +141,8 @@ class LoginService {
       return;
     }
 
+    
+
     const currentXtInfo = req.session.svcInfo.xtInfo || {},
       xtInfo: any = {};
 
@@ -156,7 +158,7 @@ class LoginService {
 
     // 간편로그인인 경우 XTLOGINID 에 서비스관리번호를 SET 해준다. 
     // (간편로그인시 svcInfo.userId 가 null)
-    if ( !FormatHelper.isEmpty(svcInfo.loginType) && svcInfo.loginType === 'S') { 
+    if ( !FormatHelper.isEmpty(req.session.svcInfo.loginType) && req.session.svcInfo.loginType === 'S') { 
       if ( FormatHelper.isEmpty(currentXtInfo.XTLOGINID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
         xtInfo.XTLOGINID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
         res.cookie(COOKIE_KEY.XTLOGINID, xtInfo.XTLOGINID);
