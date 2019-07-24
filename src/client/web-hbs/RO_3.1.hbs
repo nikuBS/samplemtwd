@@ -1,0 +1,54 @@
+<div class="popup-page tw-popup  fixed-bottom h120 {{titleClass}}"><!--  하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+    {{#if titleNm}}
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{titleNm}}</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    {{/if}}
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <!-- offering -->
+                        <div class="tod-offer-wrap tc">
+                            <div class="offer-ico-img mb20">
+                                <span class="ico-img"><img src="/img/ico/ico-popup-type01-120.png" alt=""></span>
+                            </div>
+                            <p class="offer-tit">
+                                고객님은 <br>
+                                가입한 요금제 혜택으로 <br>
+                                이 서비스를 무료로 이용하실 수 있습니다.
+                            </p>
+                            <p class="offer-txt-3 mt40">
+                                그래도 해지하시겠어요? 
+                            </p>
+                        </div>
+                        <!-- //offering -->
+                    </div>
+                    <!-- //.cont-box -->
+                </div>
+
+                <!-- 하단 fixed 버튼 -->
+                <div class="bt-fixed-area tod-offer-bt-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1"><a href="#" class="fe-btn_close" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.closeCsid}}" data-xt_action="BC">계속 이용하기</a></li>
+                        <li class="bt-offer">
+                            <span><a href="#" class="tod-offer-link fe-btn_change" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.changeCsid}}" data-xt_action="BC">해지하기</a></span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //하단 fixed 버튼 -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
