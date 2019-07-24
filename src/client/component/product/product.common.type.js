@@ -56,7 +56,7 @@ Tw.PRODUDT.PROMOTIONS = {
     WHEN: [function(data){ 
       var isFree = data.isFree;
       var pooqData = ['NA00006577', 'NA00006584'];
-      var month = Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMM01');
+      var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var successNum = pooqData.indexOf(data.prodId) > -1? '1': '2';
       if(/*isFree*/ data.joinDate2 !== 'N'){
         return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지
@@ -75,7 +75,7 @@ Tw.PRODUDT.PROMOTIONS = {
     }],
     EXTEND: [function(data){ 
       var isFree = data.isFree;
-      var month = Tw.DateHelper.getShortDateWithFormat(today, 'YYYYMM01');
+      var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var xtEids = {
         NA00006516: ['pooq_ret_001', 'pooq_ret_005', 'pooq_ret_009'],
         NA00006522: ['pooq_ret_002', 'pooq_ret_006', 'pooq_ret_010'],
