@@ -207,13 +207,14 @@ Tw.Init.prototype = {
           var userAgentString = Tw.BrowserHelper.getUserAgent();
           var appVersion = '';
           var eqpMdlNm = '';
+          var eqpMdlCd = '';
           var osInfo = '';
 
           // App Version 정보
           if ( /appVersion:/.test(userAgentString) ) {
             appVersion = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
           }
-          // 단말 모델코드 (ex. SHW-123S)
+          // 단말 모델명 (ex. SHW-123S)
           if ( /model:/.test(userAgentString) ) {
             eqpMdlNm = userAgentString.split('model:')[1].split('|')[0];
           }
@@ -225,7 +226,19 @@ Tw.Init.prototype = {
             osInfo = 'Ios ' + Tw.BrowserHelper.getIosVersion();
           }
 
-          console.log('OS버전 : ' + osInfo + '\n앱버전 : ' + appVersion + '\n모델명 : ' + eqpMdlNm);
+          // 단말 모델코드 (ex. CCAE)
+          this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+            .done($.proxy(function (res) {
+              if( res.code===Tw.API_CODE.CODE_00 ) {
+                if( !Tw.FormatHelper.isEmpty(res.result) ) {
+                  if( !Tw.FormatHelper.isEmpty(res.result.eqpMdlCd) ) {
+                    eqpMdlCd = res.result.eqpMdlCd;
+                  }                  
+                }
+              }
+            }));
+
+          console.log('OS버전 : ' + osInfo + '\n앱버전 : ' + appVersion + '\n모델명 : ' + eqpMdlNm + '\n모델코드 : ' + eqpMdlCd);
 
           window.XtractorScript.xtrLoginDummy($.param({
             V_ID: Tw.CommonHelper.getCookie('XTVID'),
@@ -235,7 +248,8 @@ Tw.Init.prototype = {
             LOGIN_TYPE: 'Z',
             OS: osInfo,
             APP_VER: appVersion,
-            MODEL: eqpMdlNm
+            MODEL: eqpMdlNm,
+            MDL_CD: eqpMdlCd
           }));
         }
       }, this));
