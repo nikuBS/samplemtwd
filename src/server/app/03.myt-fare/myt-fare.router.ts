@@ -53,11 +53,6 @@ import MyTFareBillSkpayManage from './controllers/bill/myt-fare.bill.skpay.manag
 import MyTFareBillSkpayResult from './controllers/bill/myt-fare.bill.skpay.result.controller';
 import MyTFareBillSkpay from './controllers/bill/myt-fare.bill.skpay.controller';
 import MyTFareBillSkpayAgree from './controllers/bill/myt-fare.bill.skpay.agree.controller';
-<<<<<<< HEAD
-=======
-import MyTFareBillSmallPrepay from './controllers/billsmall/myt-fare.bill.small.prepay.controller';
-import MyTFareBillContentsPrepay from './controllers/billcontents/myt-fare.bill.contents.prepay.controller';
->>>>>>> parent of 6dd037deb... OP002-2484_T world x SK pay 적용 요청건_2차_01
 
 class MytFareRouter extends TwRouter {
   constructor() {
