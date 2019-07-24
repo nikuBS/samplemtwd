@@ -594,8 +594,6 @@ Tw.VALIDATE_MSG_MYT_DATA = {
 Tw.ALERT_MSG_MYT_FARE = {
   SELECT_LINE: '회선을 선택해 주세요.',
   TEN_POINT: '10포인트 단위로 입력해 주세요.',
-  TEN_UNIT: '선결제 금액은 10원 단위로 입력 가능합니다.',
-  TEN_MIN: '선결제 가능한 최소 금액은 1,000원 부터 입니다.',
   TEN_THOUSAND: '선결제 금액은 10,000원 단위로 입력해 주세요.',
   LESS_THAN_BILL_AMOUNT: '납부할 금액을 초과했습니다.',
   UP_TO_ONE: '1포인트 이상 입력해주세요.',
