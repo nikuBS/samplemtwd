@@ -124,15 +124,6 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
-  FARE_PAYMENT_PREPAY_SKPAY: [
-    {
-      'title': '',
-      'list': [
-        { 'button-attr': 'type="button"', 'txt': 'SK pay 결제', 'option': 'fe-skpay' },
-        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 결제', 'option': 'fe-card' }
-      ]
-    }
-  ],
   CUSTOMER_AGENTSEARCH_TUBE_AREA: [
     {
       list: [

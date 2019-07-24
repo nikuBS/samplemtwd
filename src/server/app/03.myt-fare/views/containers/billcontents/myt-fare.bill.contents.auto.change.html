@@ -67,7 +67,7 @@
                         <ul class="form-data-list">
                             <li class="type2">
                                 <label class="tit">기준금액</label>
-                                <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgStrdAmt %>"
+                                <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-standard-amount" title="기준금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
@@ -75,7 +75,7 @@
                             </li>
                             <li class="type2">
                                 <label class="tit">선결제 금액</label>
-                                <button id="<%= autoPrepayInfo.autoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgAmt %>"
+                                <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgAmt %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
@@ -103,27 +103,20 @@
                             </li>
                             <li>
                                 <label class="tit" for="flab04">카드번호</label>
-                                <div class="fe-exp-wrap">
-                                    <span class="inputbox bt-add inp-btn">
-                                        <span class="input fe-card-num">
-                                            <input id="flab04" type="text" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNumH %>"
-                                                   title="카드번호 입력" readonly />
-                                            <button class="cancel"><span class="blind">삭제</span></button>
-                                        </span>
-                                        <span class="fe-card-num" style="display:none;">
-                                            <span class="input">
-                                                <input id="flab07" class="fe-card-number required-input-field fe-only-number" minlength="15" maxlength="16"
-                                                       title="카드번호 숫자만 입력" placeholder="숫자만 입력" data-valid-label="card" data-err-target="fe-exp-wrap"
-                                                       type="tel" inputmode="numeric" min="0" pattern="[0-9]*" />
-                                                <button class="cancel"><span class="blind">삭제</span></button>
-                                            </span>
-                                            <span class="r-btn">
-                                                <button type="button" class="btn-round2 btn-style3 fe-card-info" data-err-target="fe-exp-wrap">자동납부&nbsp;카드정보</button>
-                                            </span>
-                                        </span>
+                                <span class="inputbox">
+                                    <span class="input fe-card-num">
+                                        <input id="flab04" type="text" value="<%= autoPrepayInfo.cardCdNm %> <%= autoPrepayInfo.cardNumH %>"
+                                               title="카드번호 입력" readonly />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                </div>
-                                <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
+                                    <span class="input fe-card-num" style="display:none;">
+                                        <input id="flab07" class="fe-card-number required-input-field fe-only-number" minlength="15" maxlength="16"
+                                               title="카드번호 숫자만 입력" placeholder="숫자만 입력" data-valid-label="card"
+                                               type="tel" inputmode="numeric" min="0" pattern="[0-9]*" />
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
+                                </span>
                             </li>
                             <li>
                                 <label class="tit" for="flab05">유효기간</label>
@@ -200,7 +193,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-contents-auto-change'), 'contents', 'change', '<%= pageInfo.masking%>');
+    new Tw.MyTFareBillPrepayAuto($('#myt-fare-bill-contents-auto-change'), 'contents', 'change');
   });
 </script>
 <% include ../../components/end.component.html %>

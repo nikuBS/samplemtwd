@@ -16,31 +16,24 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- .cont-box -->
                 <div class="cont-box">
-                    <div class="user-month-bill mt0">
-                        <div class="this-month-bill">
-                            <p class="stit">선결제 가능 최대금액</p>
-                            <p class="data price"><em class="fe-max-amount"></em><span>원</span></p>
-                        </div>
+                    <div class="data-result">
+                        <p class="tit">선결제 가능 최대금액 </p>
+                        <p class="data"><em class="fe-max-amount"></em><span>원</span></p>
                     </div>
-                </div>
-    
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box">
-                    <ul class="form-data-list">
+
+                    <ul class="form-data-list mt26">
                         <li>
                             <label class="tit" for="flab01">선결제 금액</label>
                             <span class="inputbox">
-                                <span class="input">
-                                    <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="number"
-                                        inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay"
-                                        title="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" placeholder="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                                <span class="error-txt fe-error-msg" id="id-helper1" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
+                            <span class="input">
+                                <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="tel" maxlength="8"
+                                       inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="prepay"
+                                       placeholder="1만원 단위 (숫자만 입력)" title="선결제 금액 1만원 단위 (숫자만 입력)" />
+                                <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
+                            <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
+                        </span>
                         </li>
                     </ul>
                 </div>
