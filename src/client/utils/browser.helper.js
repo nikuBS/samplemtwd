@@ -83,6 +83,26 @@ Tw.BrowserHelper = (function () {
     return match ? match[1] : undefined;
   };
 
+  /**
+   * @desc getter
+   * @returns {string}
+   * @public
+   */
+  var getIosVersion = function () {
+    var match = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/),
+        version;
+
+    if (match !== undefined && match !== null) {
+      version = [
+          parseInt(match[1], 10),
+          parseInt(match[2], 10),
+          parseInt(match[3] || 0, 10)
+      ];
+      return parseFloat(version.join('.'));
+    }
+    return undefined;
+  };
+
   return {
     isAndroid: isAndroid,
     isIos: isIos,
@@ -92,6 +112,7 @@ Tw.BrowserHelper = (function () {
     isSamsung: isSamsung,
     isIosChrome: isIosChrome,
     getUserAgent: getUserAgent,
-    getAndroidVersion: getAndroidVersion
+    getAndroidVersion: getAndroidVersion,
+    getIosVersion: getIosVersion
   };
 })();

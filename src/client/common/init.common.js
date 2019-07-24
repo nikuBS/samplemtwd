@@ -203,12 +203,39 @@ Tw.Init.prototype = {
           });
         } else if ( res.result.XTLOGINTYPE === 'Z' ) {
           Tw.CommonHelper.setCookie('XT_LOGIN_LOG', 'Y');
+
+          var userAgentString = Tw.BrowserHelper.getUserAgent();
+          var appVersion = '';
+          var eqpMdlNm = '';
+          var osInfo = '';
+
+          // App Version 정보
+          if ( /appVersion:/.test(userAgentString) ) {
+            appVersion = userAgentString.match(/\|appVersion:([\.0-9]*)\|/)[1];
+          }
+          // 단말 모델코드 (ex. SHW-123S)
+          if ( /model:/.test(userAgentString) ) {
+            eqpMdlNm = userAgentString.split('model:')[1].split('|')[0];
+          }
+          
+          // OS 정보 (ex. Android 1.1.1)
+          if (Tw.BrowserHelper.isAndroid()) {
+            osInfo = 'Android ' + Tw.BrowserHelper.getAndroidVersion();
+          } else if (Tw.BrowserHelper.isIos()) {
+            osInfo = 'Ios ' + Tw.BrowserHelper.getIosVersion();
+          }
+
+          console.log('OS버전 : ' + osInfo + '\n앱버전 : ' + appVersion + '\n모델명 : ' + eqpMdlNm);
+
           window.XtractorScript.xtrLoginDummy($.param({
             V_ID: Tw.CommonHelper.getCookie('XTVID'),
             L_ID: res.result.XTLID,
-            T_ID: res.result.XTLID,
+            T_ID: res.result.XTLID, // 간편로그인의 경우 ID 대신 서비스관리번호를 수집함.
             GRADE: 'Z',
-            LOGIN_TYPE: 'Z'
+            LOGIN_TYPE: 'Z',
+            OS: osInfo,
+            APP_VER: appVersion,
+            MODEL: eqpMdlNm
           }));
         }
       }, this));
