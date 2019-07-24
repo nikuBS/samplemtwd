@@ -1,0 +1,56 @@
+<div class="popup-page tw-popup  fixed-bottom h120 {{titleClass}}"><!--  하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+    {{#if titleNm}}
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{titleNm}}</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    {{/if}}
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <!-- offering -->
+                        <div class="tod-offer-wrap tc">
+                            <p class="offer-tit">
+                                POOQ 계속 이용하고<br>
+                                <span class="tod-txcolor6">5,000코인</span> 받아가세요!
+                            </p>
+                            <div class="offer-img pt20">
+                                <img src="/img/product/offer-img-coin5000.png" alt="">
+                            </div>
+                            <p class="offer-txt-3 mt20"><span class="tx-medium">Coin이란?</span></p>
+                            <p class="offer-txt-1 mt10">
+                               POOQ에서 최신 영화 및 <br>
+                               VOD 콘텐츠를 <br>
+                               자유롭게 구매하실 수 있는 포인트입니다.  
+                            </p>
+                        </div>
+                        <!-- //offering -->
+                    </div>
+                    <!-- //.cont-box -->
+                </div>
+
+                <!-- 하단 fixed 버튼 -->
+                <div class="bt-fixed-area tod-offer-bt-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1"><a href="BPCP:0000139001" class="fe-btn-link" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.closeCsid}}" data-xt_action="BC">계속 이용하고 코인 받기</a></li>
+                        <li class="bt-offer">
+                            <span><a href="#" class="tod-offer-link fe-btn_change" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.changeCsid}}" data-xt_action="BC">해지하기</a></span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //하단 fixed 버튼 -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
