@@ -193,7 +193,6 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
         var $link = $(e.currentTarget);
         var link = $link.attr('href');
 
-        //$popupContainer.find('.popup-closeBtn').trigger('click');
         if (this._bpcpService.isBpcp(link)) {
           return this._bpcpService.open(link, this._data.svcMgmtNum, null);
         } else if (link.indexOf('http') !== -1) {
