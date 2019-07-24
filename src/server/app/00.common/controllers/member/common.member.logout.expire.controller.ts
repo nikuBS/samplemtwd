@@ -49,7 +49,7 @@ class CommonMemberLogoutExpire extends TwViewController {
    */
   private processInvalidSession(req: any, res: any) {
     this.loginService.sessionGenerate(req);
-    this.loginService.setCookie(res, COOKIE_KEY.TWM_LOGIN, '');
+    res.clearCookie(COOKIE_KEY.TWM_LOGIN);
     this.logger.error(this, '[Invalid Session(Change Sessiokn)] ', req.headers, req.session);
   }
 }
