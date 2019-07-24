@@ -1,0 +1,37 @@
+<div class="popup-page nobg tw-popup fixed-bottom">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{data.title}}</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box" style="position: fixed; padding: 0 0; left: 0;right: 0;bottom: 60px;top: 50px; overflow: auto; -webkit-overflow-scrolling: touch;">
+                {{{data.content}}}
+            </div>
+            <!--// .cont-box -->
+        </div>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full item-two">
+                <li>
+                    <button class="btn-floating btn-style2" data-id="cancel-btn">취소</button>
+                </li>
+                <li class="bt-red1">
+                    <button data-id="join-btn">동의</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
