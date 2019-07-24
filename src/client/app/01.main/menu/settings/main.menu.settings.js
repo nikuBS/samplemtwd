@@ -108,9 +108,9 @@ Tw.MainMenuSettings.prototype = {
   _isWidgetNotSupported: function (osType) {
     switch (osType) {
       case 'A':
-        return this._currentVersion < '5.0.4';
+        return Tw.ValidationHelper.checkVersionValidation('5.0.4', this._currentVersion, 3);
       case 'I':
-        return this._currentVersion < '5.0.5';
+        return Tw.ValidationHelper.checkVersionValidation('5.0.5', this._currentVersion, 3);
       default:
         return true;
     }

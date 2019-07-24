@@ -301,6 +301,64 @@ Tw.ValidationHelper = (function () {
     return false;
   }
 
+  /**
+   * 버전 유효성 체크(3자리 : major.minor.patch -> 예 : 5.11.3)
+   * @param {*} criteria 
+   * @param {*} version 
+   * @param {*} operator (1: 같음, 2: 다름, 3: 미만, 4: 이하, 5: 이상 6: 초과)
+   */
+  function checkVersionValidation(criteria, version, operator) {
+
+    var i=0;
+    var criteriaArr = criteria.split('.');
+    var versionArr = version.split('.');
+
+    if(criteriaArr.length !== 3) {
+      return false;
+    }
+
+    // 같음
+    if(operator === 1) {
+      return criteria === version;
+    // 다름
+    } else if(operator === 2) {
+      return criteria !== version;
+    // 이상 또는 이하 인 경우 같은
+    } else if((operator === 4 || operator === 5) && criteria === version) {
+      return true;
+    }
+
+    for(i=0; i<3; i++) {
+
+      var target1 = Number(criteriaArr[i]);
+      var target2 = Number(versionArr[i]);
+
+      // 미만
+      if(operator === 3) {
+        if(target1 > target2) return true;
+      // 이하
+      } else if(operator === 4) {
+        if(target1 > target2) {
+          return true;
+        } else if(target1 < target2){
+          return false;
+        }
+      // 이상
+      } else if(operator === 5) {
+        if(target1 < target2) {
+          return true;
+        } else if(target1 > target2){
+          return false;
+        }
+      // 초과
+      } else if(operator === 6) {
+        if(target1 < target2) return true;
+      }
+    }
+
+    return false;
+  }
+
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
@@ -332,6 +390,7 @@ Tw.ValidationHelper = (function () {
     checkIsSame: checkIsSame,
     checkIsDifferent: checkIsDifferent,
     checkExpiration: checkExpiration,
-    showAndHideErrorMsg: showAndHideErrorMsg
+    showAndHideErrorMsg: showAndHideErrorMsg,
+    checkVersionValidation: checkVersionValidation
   };
 })();
