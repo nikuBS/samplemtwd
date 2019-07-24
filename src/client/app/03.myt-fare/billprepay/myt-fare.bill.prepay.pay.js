@@ -12,11 +12,10 @@
  * @param title - 소액결제/콘텐츠이용료
  * @param name - 회원명
  */
-Tw.MyTFareBillPrepayPay = function (rootEl, title, name, isMasking) {
+Tw.MyTFareBillPrepayPay = function (rootEl, title, name) {
   this.$container = rootEl;
   this.$title = title;
   this._name = name;
-  this._isMasking = isMasking && isMasking === 'true' ? true : false;
   this._amount = '0';
 
   this._apiService = Tw.Api;
@@ -25,7 +24,6 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, name, isMasking) {
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-check-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 공통 얼럿 노출
-  this._recvAutoCardNumber = ''; // 수신한 자동납부 카드번호
 
   this._init();
 };
@@ -45,12 +43,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this._setInitValue();
     this._initVariables();
     this._bindEvent();
-
-
-    // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
-    if (this._isMasking) {
-      this.$container.find('.fe-card-info').trigger('click');
-    }
   },
   /**
    * @function
@@ -95,7 +87,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
-    this.$container.on('click', '.fe-card-info', _.debounce($.proxy(this._getCardInfo, this), 500));
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500));
   },
 
@@ -193,7 +184,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
    */
   _closePop: function () {
     this._popupService.closeAll();
-    this._historyService.replaceURL('/myt-fare/bill/' + this.$title);
   },
   /**
    * @function
@@ -287,12 +277,11 @@ Tw.MyTFareBillPrepayPay.prototype = {
       checkAuto: 'N',
       requestSum: $.trim(this.$prepayAmount.val().toString()),
       cardNumVal: $layer.find('.fe-payment-option-number').text(),
-      cardCorp: $layer.find('.fe-payment-option-name').attr('id') || '',
-      cardNm: $layer.find('.fe-payment-option-name').text() || '',
+      cardCorp: $layer.find('.fe-payment-option-name').attr('id'),
+      cardNm: $layer.find('.fe-payment-option-name').text(),
       cardExpyyVal: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
       instMm: this.$cardTypeSelector.attr('id').toString(),
-      cardPwdVal: $.trim(this.$cardPw.val().toString()),
-      isAutoCardInfo: this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N' // [OP002-1754]2019-07-02 추가
+      cardPwdVal: $.trim(this.$cardPw.val().toString())
     };
     return reqData;
   },
@@ -324,65 +313,5 @@ Tw.MyTFareBillPrepayPay.prototype = {
       msg: err.msg
     };
     this._popupService.close();
-  },
-
-  /**
-   * @function
-   * @desc 자동납부 카드정보 조회
-   */
-  _getCardInfo: function (e) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0098, {})
-      .done($.proxy(this._cardInfoSuccess, this, e))
-      .fail($.proxy(this._cardInfoFail, this, e));
-
-  },
-
-  /**
-   * @function
-   * @param e
-   * @param res
-   * @desc 자동납부 카드정보 응답 처리 (성공)
-   */
-  _cardInfoSuccess: function (e, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.popup-page');
-      var result = res.result;
-      // 납부방법(01:은행, 02:카드, 03:지로, 04:가상)
-      if (result.payMthdCd === '02' && !Tw.FormatHelper.isEmpty(result.s_bank_card_num)) {
-        this._recvAutoCardNumber = result.s_bank_card_num;
-        this.$cardNumber.val(result.s_bank_card_num).trigger('change');
-        this._getMessageTarget($(e.currentTarget)).hide().attr('aria-hidden', 'true');
-      } else {
-        this._cardInfoFail(e);
-      }
-    }else {
-      this._cardInfoFail(e);
-    }
-  },
-
-  /**
-   * @function
-   * @desc get message target
-   * @param $target
-   * @returns {this | *}
-   */
-  _getMessageTarget: function ($target) {
-    var $messageTarget = $target.parent().siblings('.fe-error-msg');
-    if ($target.attr('data-valid-label') === 'expiration' || $target.attr('data-err-target') === 'fe-exp-wrap') {
-      $messageTarget = $target.parents('.fe-exp-wrap').siblings('.fe-error-msg');
-    }
-    return $messageTarget;
-  },
-
-  /**
-   * @function
-   * @param e
-   * @desc 자동납부 카드정보 응답 처리 (실패)
-   */
-  _cardInfoFail: function (e) {
-    Tw.CommonHelper.endLoading('.popup-page');
-    this._getMessageTarget($(e.currentTarget)).text(Tw.ALERT_MSG_MYT_FARE.EMPTY_CARD_INFO)
-      .show()
-      .attr('aria-hidden', 'false');
   }
 };

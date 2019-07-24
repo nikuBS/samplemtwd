@@ -12,12 +12,11 @@
  * @param title - 소액결제/콘텐츠이용료
  * @param type - 신청/변경
  */
-Tw.MyTFareBillPrepayAuto = function (rootEl, title, type, isMasking) {
+Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this.$container = rootEl;
   this.$title = title;
   this.$type = type;
   this.$isPage = true;
-  this._isMasking = isMasking && isMasking === 'true' ? true : false;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -26,7 +25,6 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type, isMasking) {
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-pay'), true); // 유효성 검증
   this._focusService = new Tw.InputFocusService(rootEl, this.$container.find('.fe-pay')); // 키패드 이동 클릭 시 다음 input으로 이동
   this._backAlert = new Tw.BackAlert(rootEl, true); // x 버튼 클릭 시 공통 얼럿 노출
-  this._recvAutoCardNumber = ''; // 수신한 자동납부 카드번호
 
   this._init();
 };
@@ -42,11 +40,6 @@ Tw.MyTFareBillPrepayAuto.prototype = {
 
     this._validationService.bindEvent();
     setTimeout($.proxy(this._checkStandardAmount, this), 100); // 기준금액 체크
-
-    // 마스킹 해제 시 [카드 자동납부 정보] 자동으로 호출한다.
-    if (this._isMasking) {
-      this.$container.find('.fe-card-info').trigger('click');
-    }
   },
   /**
    * @function
@@ -80,7 +73,6 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
     this.$container.on('click', '.fe-standard-amount', $.proxy(this._selectAmount, this, this._standardAmountList));
     this.$container.on('click', '.fe-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
-    this.$container.on('click', '.fe-card-info', _.debounce($.proxy(this._getCardInfo, this), 500));
     this.$payBtn.click(_.debounce($.proxy(this._autoPrepay, this), 500));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
 
@@ -300,7 +292,6 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       reqData.cardNm = this.$cardNumber.attr('data-name');
       reqData.cardEffYM = $.trim(this.$cardY.val())+ $.trim(this.$cardM.val());
       reqData.cardPwd = $.trim(this.$cardPw.val());
-      reqData.isAutoCardInfo = this._recvAutoCardNumber === this.$cardNumber.val() ? 'Y':'N'; // [OP002-1754]2019-07-02 추가
     }
     return reqData;
   },
@@ -348,65 +339,5 @@ Tw.MyTFareBillPrepayAuto.prototype = {
    */
   _onClose: function () {
     this._backAlert.onClose();
-  },
-
-  /**
-   * @function
-   * @desc 자동납부 카드정보 조회
-   */
-  _getCardInfo: function (e) {
-    this._apiService.request(Tw.API_CMD.BFF_07_0098, {})
-      .done($.proxy(this._cardInfoSuccess, this, e))
-      .fail($.proxy(this._cardInfoFail, this, e));
-
-  },
-
-  /**
-   * @function
-   * @param e
-   * @param res
-   * @desc 자동납부 카드정보 응답 처리 (성공)
-   */
-  _cardInfoSuccess: function (e, res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.popup-page');
-      var result = res.result;
-      // 납부방법(01:은행, 02:카드, 03:지로, 04:가상)
-      if (result.payMthdCd === '02' && !Tw.FormatHelper.isEmpty(result.s_bank_card_num)) {
-        this._recvAutoCardNumber = result.s_bank_card_num;
-        this.$cardNumber.val(result.s_bank_card_num).trigger('change');
-        this._getMessageTarget($(e.currentTarget)).hide().attr('aria-hidden', 'true');
-      } else {
-        this._cardInfoFail(e);
-      }
-    }else {
-      this._cardInfoFail(e);
-    }
-  },
-
-  /**
-   * @function
-   * @desc get message target
-   * @param $target
-   * @returns {this | *}
-   */
-  _getMessageTarget: function ($target) {
-    var $messageTarget = $target.parent().siblings('.fe-error-msg');
-    if ($target.attr('data-valid-label') === 'expiration' || $target.attr('data-err-target') === 'fe-exp-wrap') {
-      $messageTarget = $target.parents('.fe-exp-wrap').siblings('.fe-error-msg');
-    }
-    return $messageTarget;
-  },
-
-  /**
-   * @function
-   * @param e
-   * @desc 자동납부 카드정보 응답 처리 (실패)
-   */
-  _cardInfoFail: function (e) {
-    Tw.CommonHelper.endLoading('.popup-page');
-    this._getMessageTarget($(e.currentTarget)).text(Tw.ALERT_MSG_MYT_FARE.EMPTY_CARD_INFO)
-      .show()
-      .attr('aria-hidden', 'false');
   }
 };
