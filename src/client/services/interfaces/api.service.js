@@ -21,20 +21,28 @@ Tw.ApiService.prototype = {
    * @returns {*}
    */
   request: function (command, params, headers, pathParams, version, option) {
-    // var pathVariables = this._getPathVariables(arguments);
-    pathParams = pathParams || [];
-    var htOptions = this._makeOptions(command, params, headers, pathParams, version, option);
-    Tw.Logger.info('[API REQ]', htOptions);
 
-    return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version))
-      .fail(function (err) {
-        if ( err.statusText === 'timeout' ) {
-          err.code = 'timeout';
-          err.msg = 'Timeout from ' + command.path;
-        }
-        return err;
-      });
+    // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
+    if(!Tw.CommonHelper.checkValidSession()) {
+      return;
+    } else {
+      // var pathVariables = this._getPathVariables(arguments);
+      pathParams = pathParams || [];
+      var htOptions = this._makeOptions(command, params, headers, pathParams, version, option);
+      Tw.Logger.info('[API REQ]', htOptions);
+
+      return $.ajax(htOptions)
+        .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version))
+        .fail(function (err) {
+          if ( err.statusText === 'timeout' ) {
+            err.code = 'timeout';
+            err.msg = 'Timeout from ' + command.path;
+          }
+          return err;
+        });
+    }
+    
+
   },
 
   /**

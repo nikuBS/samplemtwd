@@ -354,6 +354,7 @@ Tw.API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
+  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: Tw.API_METHOD.GET},
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -602,7 +603,10 @@ Tw.NODE_CMD = {
   GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
-  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET }
+  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET },
+
+  // for OP002-2289 test
+  CHANGE_TWM_VALUE: { path: '/change/twm-value', method: Tw.API_METHOD.GET }
 };
 
 Tw.SESSION_CMD = {
