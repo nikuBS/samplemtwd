@@ -55,6 +55,9 @@ import MyTFareBillSkpay from './controllers/bill/myt-fare.bill.skpay.controller'
 import MyTFareBillSkpayAgree from './controllers/bill/myt-fare.bill.skpay.agree.controller';
 import MyTFareBillSmallPrepay from './controllers/billsmall/myt-fare.bill.small.prepay.controller';
 import MyTFareBillContentsPrepay from './controllers/billcontents/myt-fare.bill.contents.prepay.controller';
+import MyTFareBillSmallSKpay from './controllers/billsmall/myt-fare.bill.small.skpay.controller';
+import MyTFareBillContentsSKpay from './controllers/billcontents/myt-fare.bill.contents.skpay.controller';
+import MyTFareBillSkpayResultPrepay from './controllers/bill/myt-fare.bill.skpay.result.prepay.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -85,6 +88,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/small/auto', controller: MyTFareBillSmallAuto });
     this.controllers.push({ url: '/bill/small/auto/info', controller: MyTFareBillSmallAutoInfo });
     this.controllers.push({ url: '/bill/small/auto/change', controller: MyTFareBillSmallAutoChange });
+    this.controllers.push({ url: '/bill/small/skpay', controller: MyTFareBillSmallSKpay });
 
     // 콘텐츠이용내역
     this.controllers.push({ url: '/bill/contents', controller: MyTFareBillContents });
@@ -92,6 +96,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/contents/auto', controller: MyTFareBillContentsAuto });
     this.controllers.push({ url: '/bill/contents/auto/info', controller: MyTFareBillContentsAutoInfo });
     this.controllers.push({ url: '/bill/contents/auto/change', controller: MyTFareBillContentsAutoChange });
+    this.controllers.push({ url: '/bill/contents/skpay', controller: MyTFareBillContentsSKpay });
 
     // 소액결제, 컨텐츠 이용료 상세내역
     this.controllers.push({ url: '/bill/small/history', controller: MyTFareBillSmallHistory });
@@ -137,6 +142,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/skpay/agree', controller: MyTFareBillSkpayAgree });
     this.controllers.push({ url: '/bill/skpay/manage', controller: MyTFareBillSkpayManage });
     this.controllers.push({ url: '/bill/skpay/result', controller: MyTFareBillSkpayResult, post: true });
+    this.controllers.push({ url: '/bill/skpay/result/prepay', controller: MyTFareBillSkpayResultPrepay, post: true });
   }
 }
 

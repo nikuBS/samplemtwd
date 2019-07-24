@@ -283,7 +283,11 @@ Tw.MyTFareBillPrepayMain.prototype = {
   _prepay: function (e) {
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) { // 앱일 경우에만 이동
-        this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/prepay');
+        new Tw.MyTFareBillPrepayMainSKpay({
+          $element: this.$container,
+          callbackSKpay: $.proxy(this._goSKpay, this),
+          callbackCard: $.proxy(this._goCard, this)
+        }).openPaymentOption(e);
       } else {
         this._goAppInfo(e); // 웹일 경우 앱 설치 유도 페이지로 이동
       }
@@ -291,6 +295,21 @@ Tw.MyTFareBillPrepayMain.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A89.TITLE,
         null, null, null, $(e.currentTarget)); // 0원이면 안내 alert 노출
     }
+  },
+    /**
+   * @function
+   * @desc 체크/신용카드 결제
+   * @param $layer
+   */
+  _goCard: function ($layer) {
+    this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/prepay');
+  },
+/**
+   * @function
+   * @desc SK Pay 결제
+   */
+  _goSKpay: function ($layer) {
+    this._historyService.goLoad('/myt-fare/bill/'+ this.$title +'/skpay');
   },
   /**
    * @function
