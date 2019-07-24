@@ -118,6 +118,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             this._popupService.open({
                 hbs: actionType.hbs,
                 titleNm: '혜택안내',
+                xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true
             }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_contents', this._openEvent);
@@ -126,6 +127,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             this._popupService.open({
                 hbs: actionType.hbs1,
                 titleNm: '혜택안내',
+                xt: this._data.xt,
                 titleClass: 'no-header color-type-CUSTOM',
                 layer: true
             }, $.proxy(function($popupContainer){
