@@ -493,6 +493,7 @@ Tw.API_CMD = {
   BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0176: { path: '/core-product/:version/mobiles/additions-sets/addressid-sets', method: Tw.API_METHOD.POST },
   BFF_10_0181: { path: '/core-product/:version/mobiles/additions/:args0/send-sms', method: Tw.API_METHOD.GET },
+  BFF_10_0183: { path: '/core-product/:version/services/wireless/multi-addition/:args0', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -504,6 +505,7 @@ Tw.API_CMD = {
   BFF_10_0085: { path: '/core-product/:version/roaming/fee-plans/:args0/sets', method: Tw.API_METHOD.PUT },
   BFF_10_0086: { path: '/core-product/:version/roaming/fee-plans/:args0/terminations', method: Tw.API_METHOD.DELETE },
   BFF_10_0092: { path: '/core-product/:version/roaming/services/t-roam-tog/:args0/members', method: Tw.API_METHOD.POST },
+  BFF_10_0182: { path: '/core-product/:version/roaming/baro-call-possible', method: Tw.API_METHOD.POST },
 
   // MEMBERSHIP
   BFF_11_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
