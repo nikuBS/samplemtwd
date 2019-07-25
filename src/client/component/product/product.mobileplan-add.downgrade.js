@@ -124,7 +124,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 cdn: Tw.Environment.cdn
             }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_contents', this._openEvent);
         }else if(actionType.action === 'POPUP2'){
-            this._2depthPopup = true;
+            this._2depthPopup = false;
             this._popupService.open({
                 hbs: actionType.hbs1,
                 titleNm: '혜택안내',
@@ -133,7 +133,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                 layer: true,
                 cdn: Tw.Environment.cdn
             }, $.proxy(function($popupContainer){
-                $popupContainer.on('click', '.fe-btn_close', $.proxy($popupContainer.find('.popup-closeBtn').trigger, this, 'click'));
+                $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onNextDepth, this, $popupContainer));
                 $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
                 new Tw.XtractorService($popupContainer);
             }, this), $.proxy(this._dgSuccess, this, actionType), 'dg_1depth_contents', this._openEvent);
@@ -148,13 +148,15 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
      */
     _dgSuccess: function(actionType) {
         if(this._2depthPopup){
-            this._popupService.open({
-                hbs: actionType.hbs2,
-                titleNm: '혜택안내',
-                titleClass: 'no-header color-type-CUSTOM',
-                layer: true,
-                cdn: Tw.Environment.cdn
-            }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', this._openEvent);
+            setTimeout( $.proxy(function(){
+                this._popupService.open({
+                    hbs: actionType.hbs2,
+                    titleNm: '혜택안내',
+                    titleClass: 'no-header color-type-CUSTOM',
+                    layer: true,
+                    cdn: Tw.Environment.cdn
+                }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', this._openEvent);
+            } , this), 500);
         }
     },
 
@@ -182,6 +184,15 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
       $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onClose, this));
     },
 
+    /**
+     * @function
+     * @desc 1뎁스 팝업을 종료하고 2뎁스 팝업을 생성할경우
+     * @return $.Deferred
+     */
+    _onNextDepth: function($popupContainer) {
+        this._2depthPopup = true;
+        $popupContainer.find('.popup-closeBtn').trigger('click');
+    },
     /**
      * @function
      * @desc 이벤트 바인딩
