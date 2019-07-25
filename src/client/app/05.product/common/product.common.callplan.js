@@ -18,7 +18,7 @@
  * @param eParam - BPCP eParam
  */
 Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
-  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam, loggedYn, svcProdId) {
+  isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam, loggedYn) {
   // 컨테이너 레이어 선언
   this.$container = rootEl;
 
@@ -46,9 +46,6 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._templateSetting = Handlebars.compile($('#fe-templ-setting').html()); // 설정 정보 영역 Handlebars
   this._event = null;
   this._loggedYn = loggedYn;
-  this._svcProdId = svcProdId;
-
-  this._selectedLine = null; // 현재 선택 되어 있는 회선정보
 
   // 설정 버튼 목록 컨버팅
   this._convertSettingBtnList();
@@ -99,7 +96,6 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contents.find('.idpt-pc').length > 0) {
       this.$contents.find('.idpt-pc').remove();
     }
-
     // 혹시 모를 새창 값 셋팅 (웹표준)
     Tw.CommonHelper.replaceExternalLinkTarget(this.$contents);
   },
@@ -528,15 +524,7 @@ Tw.ProductCommonCallplan.prototype = {
 
     
     if(joinTermCd !== '01' && this._prodTypCd === 'C'){ // 해지방어 팝업
-      return new Tw.ProductMobilePlanAddDowngrade(this.$container, {
-        svcMgmtNum: this._svcMgmtNum, 
-        prodId: this._prodId, 
-        svcProdId: this._svcProdId
-      }, this._event
-        , $.proxy(this._procPreCheck, this, joinTermCd, url)
-        , $.proxy(this._reqTerminateDefense, this, joinTermCd, url));
-      //this._reqTerminateDefense(joinTermCd, url);
-      //this._procPreCheck(joinTermCd, url)
+      return this._reqTerminateDefense(joinTermCd, url);
         
     }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출
       return this._procPreCheck(joinTermCd, url);
@@ -574,7 +562,7 @@ Tw.ProductCommonCallplan.prototype = {
   _resChangeGuide: function(joinTermCd, url, currentProdId, mbrNm, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       // DG방어 팝업 호출
-      return this._reqDownGrade(joinTermCd, url, currentProdId, mbrNm);
+      this._reqDownGrade(joinTermCd, url, currentProdId, mbrNm);
       // return this._onLineProcess(joinTermCd, url);
     }
 
