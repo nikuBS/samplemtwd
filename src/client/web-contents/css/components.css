@@ -20549,6 +20549,7 @@ a.bt-link-tx.underline.small {
 
 .shop-info .shop-map {
   position: relative;
+  z-index: 0; /* 190717 수정 [OP002-2509] [고객센터] [PUB] (W-1907-074-01) (자체_오류대응)내 위치와 가까운 매장에서 플로팅버튼 지도 뒤로 가려지는 오류 수정 */
   margin: 0 -1rem; }
 
 .shop-info .shop-map .btn-switch {

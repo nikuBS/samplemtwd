@@ -44,6 +44,9 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
   this._currentGu = undefined;
   this.isMyLocationCliked = false;
 
+  var currentHash = this._historyService.getHash().substring(1);
+  this._currentBranchType = currentHash.indexOf('Branch') !== -1 ? 1 : currentHash.indexOf('Agent') !== -1 ? 2 : 0;
+
   // 14세 미만일때 팝업 보여주고 
   this.isAcceptAge = (isAcceptAge === 'true');  // 문자 true를 boolean으로 변경
   if(!this.isAcceptAge){
@@ -58,13 +61,11 @@ Tw.CustomerAgentsearchNear = function (rootEl, isLogin, isAcceptAge) {
         }, this));
       }, this));
     }else{
-      this._showDataChargeIfNeeded($.proxy(function () {
         this._showDataChargeIfNeeded($.proxy(function () {
           this._init();
           // this._cacheElements();
           this._bindEvents();
         }, this));
-      }, this));
     }
   }
 };
@@ -98,8 +99,8 @@ Tw.CustomerAgentsearchNear.prototype = {
     // }
 
     // Tw.Logger.info('thomas_check 현재 해시값은? : ', this._historyService.getHash().substring(1));
-    var currentHash = this._historyService.getHash().substring(1);
-    this._currentBranchType = currentHash.indexOf('Branch') !== -1 ? 1 : currentHash.indexOf('Agent') !== -1 ? 2 : 0;
+    // var currentHash = this._historyService.getHash().substring(1);
+    // this._currentBranchType = currentHash.indexOf('Branch') !== -1 ? 1 : currentHash.indexOf('Agent') !== -1 ? 2 : 0;
     // Tw.Logger.info('thomas_check 현재 브랜치 타입은? : ', this._currentBranchType);
 
 

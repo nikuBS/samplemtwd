@@ -27,7 +27,7 @@ const environment = {
     SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
     SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
-      host: '61.250.20.204',
+      host: '61.250.20.26',
       port: 9014
     }
   },
@@ -68,7 +68,7 @@ const environment = {
     SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
     SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
-      host: '61.250.20.204',
+      host: '61.250.20.26',
       port: 9014
     }
   },
@@ -109,7 +109,7 @@ const environment = {
     SKPAY_USER: 'https://stg-auth.11pay.co.kr/pages/js/v3/lib/crypto/encryptedUserAgent.js',
     SKPAY_PAY: 'https://stg-auth.11pay.co.kr/pages/skpay/SKpaySDK.js',
     SIGNGATE: {
-      host: '61.250.20.204',
+      host: '61.250.20.26',
       port: 9014
     }
   },
