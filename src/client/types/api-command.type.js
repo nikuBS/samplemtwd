@@ -494,6 +494,8 @@ Tw.API_CMD = {
   BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0176: { path: '/core-product/:version/mobiles/additions-sets/addressid-sets', method: Tw.API_METHOD.POST },
   BFF_10_0181: { path: '/core-product/:version/mobiles/additions/:args0/send-sms', method: Tw.API_METHOD.GET },
+  
+  BFF_10_0183: { path: '/core-product/:version/services/wireless/multi-addition/:args0', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
