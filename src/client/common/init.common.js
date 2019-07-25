@@ -17,11 +17,13 @@ Tw.Environment = {
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
+  this._eqpMdlCd = '';
 
   this._initService();
   this._initComponent();
   this._initXtvId();
   this._getEnvironment();
+  this._getSvcInfo();
   this._sendXtractorLoginDummy();
 };
 
@@ -171,7 +173,29 @@ Tw.Init.prototype = {
    * @desc
    * @private
    */
+  _getSvcInfo: function () {
+    var _this = this;
+
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function (res) {
+        if( res.code===Tw.API_CODE.CODE_00 ) {
+          if( !Tw.FormatHelper.isEmpty(res.result) ) {
+            if( !Tw.FormatHelper.isEmpty(res.result.eqpMdlCd) ) {
+              _this._eqpMdlCd = res.result.eqpMdlCd;
+            }                  
+          }
+        }
+      }));
+  },
+
+  /**
+   * @function
+   * @desc
+   * @private
+   */
   _sendXtractorLoginDummy: function () {
+    var _this = this;
+
     var cookie = Tw.CommonHelper.getCookie('XT_LOGIN_LOG');
     if ( !Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
       return;
@@ -226,18 +250,13 @@ Tw.Init.prototype = {
             osInfo = 'Ios ' + Tw.BrowserHelper.getIosVersion();
           }
 
-          // 단말 모델코드 (ex. CCAE)
-          this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-            .done($.proxy(function (res) {
-              if( res.code===Tw.API_CODE.CODE_00 ) {
-                if( !Tw.FormatHelper.isEmpty(res.result) ) {
-                  if( !Tw.FormatHelper.isEmpty(res.result.eqpMdlCd) ) {
-                    eqpMdlCd = res.result.eqpMdlCd;
-                  }                  
-                }
-              }
-            }));
-
+          // // 단말 모델코드 (ex. CCAE)
+          if ( !Tw.FormatHelper.isEmpty(_this._eqpMdlCd) ) {
+            eqpMdlCd = _this._eqpMdlCd;
+          } else {
+            eqpMdlCd = 'undefined';
+          }
+          
           console.log('OS버전 : ' + osInfo + '\n앱버전 : ' + appVersion + '\n모델명 : ' + eqpMdlNm + '\n모델코드 : ' + eqpMdlCd);
 
           window.XtractorScript.xtrLoginDummy($.param({
