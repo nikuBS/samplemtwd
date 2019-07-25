@@ -1,10 +1,10 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: bff-nodejs-mobile-1.91
+  name: bff-nodejs-mobile-1.92
   labels:
     app: bff-nodejs-mobile
-    version: '1.91'
+    version: '1.92'
 spec:
   replicas: 40
   strategy:
@@ -15,12 +15,12 @@ spec:
   selector:
     matchLabels:
       app: bff-nodejs-mobile
-      version: '1.91'
+      version: '1.92'
   template:
     metadata:
       labels:
         app: bff-nodejs-mobile
-        version: '1.91'
+        version: '1.92'
     spec:
       affinity:
         podAntiAffinity:
@@ -36,7 +36,7 @@ spec:
               topologyKey: kubernetes.io/hostname
       containers:
       - name: bff-nodejs-mobile
-        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.91.0
+        image: mtwp.icp.skt.com:8500/mtw-prd/bff-nodejs-mobile:1.92.0
         env:
         - name: REDIS_PWD_KEY
           valueFrom:
