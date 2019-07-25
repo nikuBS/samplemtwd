@@ -10,16 +10,16 @@ Tw.PRODUDT.PROMOTIONS = {
     USED: 'Y',
     PRODS:{
       'NA00006516': { //Pooq 콘텐츠 팩
-        SUB_PROD: ['NA00006545', 'NA00006546', 'NA00006657']
+        SUB_PROD: ['NA00006545', 'NA00006546', 'NA00006657', 'NA00006517']
       },
       'NA00006522': { //Pooq 콘텐츠 팩 플러스
-        SUB_PROD: ['NA00006543', 'NA00006544', 'NA00006657']
+        SUB_PROD: ['NA00006543', 'NA00006544', 'NA00006657', 'NA00006523']
       },
       'NA00006577': { //Pooq 앤 데이터
-        SUB_PROD: ['NA00006579', 'NA00006580', 'NA00006657']
+        SUB_PROD: ['NA00006579', 'NA00006580', 'NA00006657', 'NA00006578']
       },
       'NA00006584': { //Pooq 앤 데이터 플러스
-        SUB_PROD: ['NA00006586', 'NA00006587', 'NA00006657']
+        SUB_PROD: ['NA00006586', 'NA00006587', 'NA00006657', 'NA00006585']
       }
     },
     BEFORE:[
@@ -48,8 +48,9 @@ Tw.PRODUDT.PROMOTIONS = {
           var joinDate1 = resp.result[prodIds[0]];  //100원프로모션 가입일
           var joinDate2 = resp.result[prodIds[1]];  //무료요금제 가입일
           var coinDate = resp.result[prodIds[2]];  //코인 적립일
-          var joinDate = resp.result[prodIds[3]];   // 부가서비스 가입일
-          def.resolve({joinDate: joinDate, coinDate: coinDate, joinDate1 : joinDate1, joinDate2 : joinDate2});
+          var certDate = resp.result[prodIds[3]];  // 부가서비스 인증일
+          var joinDate = resp.result[prodIds[4]];   // 부가서비스 가입일
+          def.resolve({joinDate: joinDate, certDate: certDate, coinDate: coinDate, joinDate1 : joinDate1, joinDate2 : joinDate2});
         });
       }
     ],
@@ -58,19 +59,23 @@ Tw.PRODUDT.PROMOTIONS = {
       var pooqData = ['NA00006577', 'NA00006584'];
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var successNum = pooqData.indexOf(data.prodId) > -1? '1': '2';
-      if(data.coinDate != 'N'){
+      if(data.coinDate !== 'N'){
         return null;
       }else if(/*isFree*/ data.joinDate2 !== 'N'){
         return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지
       } 
       
-      if(data.joinDate1 === 'N'){
+      if(data.certDate === 'N'){ //data.joinDate1 === 'N'){
         return null; 
-      }else if(2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
+      }else if(data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return 'NONE_FREE_1' + '_' + successNum; //100원 프로모션 이벤트 가입일 M+2
-      }else if(2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
-        return 'NONE_FREE_2'; ////100원 프로모션 이벤트 가입일 M+2 이상이고 코인을 지급 받지 않았을 경우
+      }else{
+        return 'NONE_FREE_2'; ////5000코인 지급 팝업
       }
+      
+      //else if(2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
+      //  return 'NONE_FREE_2'; ////100원 프로모션 이벤트 가입일 M+2 이상이고 코인을 지급 받지 않았을 경우
+      //}
       return null;
     }],
     EXTEND: [function(data){ 
