@@ -74,8 +74,9 @@ class MyTFareBillContentsAutoChange extends TwViewController {
    */
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.comboStandardAmount = result.cmbAutoChrgStrdAmt / 10000; // 기준금액 만원단위로 표시
-      result.comboChargeAmount = result.cmbAutoChrgAmt / 10000; // 선결제금액 만원단위로 표시
+      // OP002-1757 필드명 변경(cmb 프리픽스 제거). cmbAutoChrgStrdAmt, cmbAutoChrgAmt -> autoChrgStrdAmt, autoChrgAmt
+      result.comboStandardAmount = result.autoChrgStrdAmt / 10000; // 기준금액 만원단위로 표시
+      result.comboChargeAmount = result.autoChrgAmt / 10000; // 선결제금액 만원단위로 표시
       result.comboMaxAmount = result.cmbMaxAmt / 10000; // 최대금액 만원단위로 표시
     }
     return result;
