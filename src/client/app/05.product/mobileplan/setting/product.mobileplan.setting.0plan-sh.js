@@ -11,7 +11,7 @@
  * @param displayId - 화면 ID
  * @param currentOptionProdId - 현재 옵션 상품코드
  */
-Tw.ProductMobileplanSetting0planSh = function(rootEl, prodId, displayId, currentOptionProdId) {
+Tw.ProductMobileplanSetting0planSh = function(rootEl, prodId, displayId, currentOptionProdId, floNDataUseYn, pooqNDataUseYn) {
   // 컨테이너 레이어 선언
   this.$container = rootEl;
 
@@ -26,6 +26,8 @@ Tw.ProductMobileplanSetting0planSh = function(rootEl, prodId, displayId, current
   this._prodId = prodId;
   this._displayId = displayId;
   this._currentOptionProdId = currentOptionProdId;
+  this._floNDataUseYn = floNDataUseYn;
+  this._pooqNDataUseYn = pooqNDataUseYn;
 
   // Element 캐싱
   this._cachedElement();
@@ -100,7 +102,7 @@ Tw.ProductMobileplanSetting0planSh.prototype = {
 
   /**
    * @function
-   * @desc 설정 완료 API 응답 처리 & 완료 팝업 실행
+   * @desc 설정 완료 API 응답 처리 & 인증팝업 노출여부 체크(인증팝업 불필요시 완료팝업 실행)
    * @param resp - API 응답 값
    * @returns {*}
    */
@@ -109,6 +111,25 @@ Tw.ProductMobileplanSetting0planSh.prototype = {
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
+
+    if( !(this._floNDataUseYn === 'N' && 'NA00006634' === $checked.val()) && !(this._pooqNDataUseYn === 'N' && 'NA00006622' === $checked.val()) ){
+      this._isResultPop = true;
+      return this._openSuccessPop();
+    }
+
+    this._openAddCertifyPopup();
+  },
+
+  /**
+   * @function
+   * @desc 완료 팝업 실행
+   */
+  _openSuccessPop: function() {
+    if (!this._isResultPop) {
+      return;
     }
 
     this._popupService.open({
@@ -138,8 +159,72 @@ Tw.ProductMobileplanSetting0planSh.prototype = {
   _closeAndGo: function(e) {
     e.preventDefault();
     e.stopPropagation();
+    
+    if($(e.currentTarget).hasClass('fe-link-external')
+      && $(e.currentTarget).attr('href').indexOf('#') !== 0) {
+      this._confirmExternalUrl(e);
+      this._popupService.close();
+    } else {
+      this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+    }
+  },
 
-    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+  /**
+   * @function
+   * @desc 인증유도팝업 실행
+   */
+  _openAddCertifyPopup: function () {
+    var popupOptions;
+    var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
+  
+    if(this._floNDataUseYn === 'N' && 'NA00006634' === $checked.val()) {
+      popupOptions = {
+        hbs: 'MV_01_02_02_01_case01',
+        editor_html : '<div class="tod-popbenf-inwrap" style="border-bottom:1px solid transparent"><img src="'+Tw.Environment.cdn+'/img/product/img-banner-flo_m.png" alt="간단한 추가 인증을 완료해야 서비스 이용이 가능해요. * SMS로도 링크를 전송해드릴게요. 꼭 인증을 완료해주세요!" class="vt" style="width:100%"><div class="tod-popbenf-absbtn" style="left:14.55%;top:69.4%;width:70.9%;height:11.2%"><a href="http://www.music-flo.com/purchase/skt" target="_blank" title="새창" class="fe-link-external"><span class="blind">인증하기</span></a></div></div>',
+        bt: [
+          {
+            style_class: 'unique fe-btn_back',
+            txt: '닫기'
+          }
+        ]
+      };
+      this._isResultPop = true;
+      this._popupService.open(popupOptions, $.proxy(this._bindAddCertifyPopupEvent, this), $.proxy(this._openSuccessPop, this), 'addcertify_pop');
+
+    }else if(this._pooqNDataUseYn === 'N' && 'NA00006622' === $checked.val()){
+      popupOptions = {
+        hbs: 'MV_01_02_02_01_case01',
+        editor_html : '<div class="tod-popbenf-inwrap" style="border-bottom:1px solid transparent"><img src="'+Tw.Environment.cdn+'/img/product/img-banner-pooq03_m.png" alt="간단한 추가 인증을 완료해야 서비스 이용이 가능해요. * SMS로도 링크를 전송해드릴게요. 꼭 인증을 완료해주세요!" class="vt" style="width:100%"><div class="tod-popbenf-absbtn" style="left:14.55%;top:69.4%;width:70.9%;height:11.2%"><a href="https://member.pooq.co.kr/skt" target="_blank" title="새창" class="fe-link-external"><span class="blind">인증하기</span></a></div></div>',
+        bt: [
+          {
+            style_class: 'unique fe-btn_back',
+            txt: '닫기'
+          }
+        ]
+      };
+      this._isResultPop = true;
+      this._popupService.open(popupOptions, $.proxy(this._bindAddCertifyPopupEvent, this), $.proxy(this._openSuccessPop, this), 'addcertify_pop');
+    }
+  },
+
+  /**
+   * @function
+   * @desc 인증유도팝업 이벤트 바인딩
+   * @param $popupContainer - 인증유도팝업 컨테이너 레이어
+   */
+  _bindAddCertifyPopupEvent: function ($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    new Tw.XtractorService(this.$container);
+  },
+
+  /**
+   * @function
+   * @desc 인증유도팝업 내 닫기 버튼 클릭 시
+   */
+  _closeAndOpenResultPopup: function () {
+    this._isResultPop = true;
+    this._popupService.close();
   },
 
   /**
@@ -156,6 +241,33 @@ Tw.ProductMobileplanSetting0planSh.prototype = {
    */
   _onClosePop: function() {
     this._historyService.goBack();
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 지원
+   * @param e - 클릭 이벤트
+   * @returns {*|void}
+   */
+  _confirmExternalUrl: function(e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    }
+
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+  },
+
+  /**
+   * @function
+   * @desc 외부 링크 실행
+   * @param href - 링크 값
+   */
+  _openExternalUrl: function(href) {
+    Tw.CommonHelper.openUrlExternal(href);
   }
 
 };

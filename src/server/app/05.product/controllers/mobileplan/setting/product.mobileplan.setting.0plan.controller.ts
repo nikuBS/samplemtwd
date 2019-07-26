@@ -7,6 +7,7 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 
@@ -20,6 +21,10 @@ class ProductMobileplanSetting0plan extends TwViewController {
 
   /* 접근이 허용되는 상품코드 */
   private readonly _allowedProdIdList = ['NA00006157'];
+
+  /* 사용여부 확인 필요 상품코드 */
+  private _floNData = 'NA00006520';
+  private _pooqNData = 'NA00006577';
 
   /**
    * @desc 화면 렌더링
@@ -43,18 +48,25 @@ class ProductMobileplanSetting0plan extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0034, {}, {})
-      .subscribe((ZeroPlanInfo) => {
-        if (ZeroPlanInfo.code !== API_CODE.CODE_00) {
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0177, {}, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._floNData]),
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._pooqNData])
+      ).subscribe(([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]) => {
+        const apiError = this.error.apiError([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]);
+  
+        if (!FormatHelper.isEmpty(apiError)) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: ZeroPlanInfo.code,
-            msg: ZeroPlanInfo.msg
+            code: apiError.code,
+            msg: apiError.msg,
           }));
         }
-
+  
         res.render('mobileplan/setting/product.mobileplan.setting.0plan.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          ZeroPlanInfo: ZeroPlanInfo.result
+          zeroPlanInfo: zeroPlanInfo.result,
+          floNDataUseYn: floNDataUseYn.result,
+          pooqNDataUseYn: pooqNDataUseYn.result
         }));
       });
   }

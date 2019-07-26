@@ -1,0 +1,34 @@
+<div class="popup tw-popup">
+  <div class="popup-info full nobg" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
+    <div class="popup-contents {{notice_has}}" id="alertText">
+      <div class="inner-contents">
+        {{#if img_src}}
+          <div class="img-type">
+            {{#if img_url}}
+              <a href="{{img_url}}"><img src="{{img_src}}"></a>
+            {{else}}
+              <img src="{{img_src}}">
+            {{/if}}
+          </div>
+        {{/if}}
+        {{#if editor_html}}
+          <div class="editor-type">
+            {{{editor_html}}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    {{#if bt}}
+      <div class="bt-box">
+        <ul class="bt-slice">
+          {{#bt}}
+            <li class="{{style_class}}">
+              <button>{{txt}}</button>
+            </li>
+          {{/bt}}
+        </ul>
+      </div>
+    {{/if}}
+  </div>
+  <div class="popup-blind"></div>
+</div>
