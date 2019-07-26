@@ -198,7 +198,7 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @desc API 응답 이후 event binding
    */
   _bindEventAfterData: function () {
-    this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
+    // this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('click', '.fe-micro-history', $.proxy(this._microHistory, this));
     this.$container.on('click', '.fe-contents-history', $.proxy(this._contentsHistory, this));
     this.$container.on('click', '.fe-change-limit', $.proxy(this._changeLimit, this));
@@ -210,9 +210,9 @@ Tw.MyTFareBillPrepayMain.prototype = {
    * @function
    * @desc 월별 이용내역 조회 페이지로 이동
    */
-  _prepayHistoryMonth: function () {
+  /*_prepayHistoryMonth: function () {
     this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
-  },
+  },*/
   /**
    * @function
    * @desc 이용내역 조회 - 소액결제일 경우 actionsheet로 이용내역/차단내역 선택
