@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <!-- 접근성 수정
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    -->
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap noborder"><!-- 190723 [OP002-2580] 수정_01 (리디자인) -->
+                <div class="page-header noborder"><!-- 190723 [OP002-2580] 수정_02 (리디자인) -->
+                    <div class="header-ti">
+                        <h1>우편번호 조회</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+					<div class="cont-box nogaps">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new01"><!-- 타입별 탭형태 변환 --><!-- 190723 [OP002-2580] 수정_03 (리디자인) -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">도로명 주소</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a href="">지번 주소</a></li>
+										</ul>
+									</div>
+                                    <hr class="cont-sp type1" aria-hidden="true"><!-- 190723 [OP002-2580] 추가_01 (리디자인) -->
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+												도로명 주소 내용입니다.
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+												<div class="cont-box">
+													<p class="con-txt1">찾으시려는 주소지의 동/읍/면/리<br/>이름을 입력 후 검색 버튼을 눌러주세요.</p>
+													<div class="cont-noti">
+														<p class="type3 pt4">ex) ‘서울 강남구 삼성동’의 경우 ‘삼성’ 입력</p>
+													</div>
+													<div class="inputbox search mt40">
+														<span class="input">
+															<input type="text" value="을지로" title="지번주소 입력" value="" >
+															<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+															<button class="search">검색</button>
+														</span>
+													</div>
+												</div>
+												<!-- .cont-box -->
+												<div class="cont-box nogaps">
+													<div class="ti-caption-gray">
+														총 <strong>0</strong>건의 검색 결과가 있습니다.
+													</div>
+													<p class="addree-no-result result-nolist">
+														<span class="ico"></span>
+														<span class="txt0">일치하는 주소가 없습니다.<br>주소를 정확히 확인 후 다시 입력해 주세요.</span>
+													</p>
+												</div>
+												<!-- //.cont-box -->
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
+					<!--// .cont-box -->
+
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>
