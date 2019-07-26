@@ -354,6 +354,10 @@ Tw.API_CMD = {
   BFF_07_0095: { path: '/core-bill/:version/bill-skpay/auth-grant', method: Tw.API_METHOD.POST },
   BFF_07_0096: { path: '/core-bill/:version/bill-skpay/update-psnlagreeinfo', method: Tw.API_METHOD.POST },
   BFF_07_0097: { path: '/core-bill/:version/bill-skpay/settle-skpay', method: Tw.API_METHOD.POST },
+  BFF_07_0098: { path: '/core-bill/:version/micro-pay/prepay-info', method: Tw.API_METHOD.GET},
+  BFF_07_0099: { path: '/core-bill/:version/skpay-prepay/auth-grant', method: Tw.API_METHOD.POST },
+  BFF_07_0100: { path: '/core-bill/:version/skpay-prepay/use-contents-prepay', method: Tw.API_METHOD.POST },
+  BFF_07_0101: { path: '/core-bill/:version/skpay-prepay/micro-prepay', method: Tw.API_METHOD.POST },
 
   //CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: Tw.API_METHOD.GET },
@@ -493,6 +497,8 @@ Tw.API_CMD = {
   BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0176: { path: '/core-product/:version/mobiles/additions-sets/addressid-sets', method: Tw.API_METHOD.POST },
   BFF_10_0181: { path: '/core-product/:version/mobiles/additions/:args0/send-sms', method: Tw.API_METHOD.GET },
+  
+  BFF_10_0183: { path: '/core-product/:version/services/wireless/multi-addition/:args0', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },

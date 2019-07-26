@@ -1904,7 +1904,10 @@ Tw.MainHome.prototype = {
       return e.target == 'S'
     }).map(function(e){
       return e.banner.result.imgList
-    })[0];
+    })[0].map(function (target) {
+      target.chargeOrExternal = 'fe-home-external';
+      return target;
+    });
 
     if ( directBanner.length > 0 ) {
       var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
@@ -1987,6 +1990,7 @@ Tw.MainHome.prototype = {
         return banner.bnnrLocCd === 'S';
       }).map(function (target) {
         target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
+        target.chargeOrExternal = 'fe-home-external';
         return target;
       });
 

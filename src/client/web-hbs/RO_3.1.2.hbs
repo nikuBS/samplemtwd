@@ -1,0 +1,59 @@
+<div class="popup-page tw-popup  fixed-bottom h60 {{titleClass}}"><!--  하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ...  -->
+    {{#if titleNm}}
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{titleNm}}</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    {{/if}}
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <!-- offering -->
+                        <div class="tod-offer-wrap tc">
+                            <p class="offer-tit">혜택이 계속 됩니다.</p>
+                            <div class="offer-img pt20">
+                                <img src="{{cdn}}/img/product/offer-img-pooq.png" alt="">
+                            </div>
+                            <div class="offer-list mt30">
+                                <dl>
+                                    <dt>POOQ 콘텐츠 팩의 2가지 즐거움</dt>
+                                    <dd>
+                                        <p class="tod-rblue-wrap">
+                                            <span class="num">01</span>
+                                            <span class="txt">80여 개의 LIVE 채널</span>
+                                        </p>
+                                    </dd>
+                                    <dd>
+                                        <p class="tod-rblue-wrap">
+                                            <span class="num">02</span>
+                                            <span class="txt">22만 편의 Quick VOD</span>
+                                        </p>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <!-- //offering -->
+                    </div>
+                    <!-- //.cont-box -->
+                </div>
+
+                <!-- 하단 fixed 버튼 -->
+                <div class="bt-fixed-area tod-offer-bt-area">
+                    <button type="button" class="btn-floating btn-style2 fe-btn_close">닫기</button><!-- 190722 [OP002-2397] 수정_01 -->
+                </div>
+                <!-- //하단 fixed 버튼 -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

@@ -145,9 +145,19 @@ Tw.ValidationService.prototype = {
 
     if ($target.hasClass('fe-prepay-amount')) {
       isValid = false;
+      $target.val(parseInt(''+$target.val(), 10));
       var _prepayAmount = $target.val();
       if (!this._validation.checkIsAvailablePoint(_prepayAmount, this.$container.find('.fe-max-amount').attr('id'))) {
         message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10;
+      } else if ($target.data('validLabel') === 'prepay') { // 소액결제,콘텐츠이용료 선결제 시
+        var reg = /[0-9]*0$/g;
+        if (!this._validation.checkIsMore(_prepayAmount, 999)) {
+          message = Tw.ALERT_MSG_MYT_FARE.TEN_MIN;
+        } else if (!reg.test(_prepayAmount)) {
+          message = Tw.ALERT_MSG_MYT_FARE.TEN_UNIT;
+        } else {
+          isValid = true;
+        }
       } else if (!this._validation.checkIsMore(_prepayAmount, 9999)) {
         message = Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND;
       } else if (!this._validation.checkMultiple(_prepayAmount, 10000)) {
@@ -242,7 +252,7 @@ Tw.ValidationService.prototype = {
    */
   _getMessageTarget: function ($target) {
     var $messageTarget = $target.parent().siblings('.fe-error-msg');
-    if ($target.attr('data-valid-label') === 'expiration') {
+    if ($target.attr('data-valid-label') === 'expiration' || $target.attr('data-err-target') === 'fe-exp-wrap') {
       $messageTarget = $target.parents('.fe-exp-wrap').siblings('.fe-error-msg');
     }
     return $messageTarget;

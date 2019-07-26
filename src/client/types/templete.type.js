@@ -124,6 +124,15 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_PREPAY_SKPAY: [
+    {
+      'title': '',
+      'list': [
+        { 'button-attr': 'type="button"', 'txt': 'SK pay 결제', 'option': 'fe-skpay' },
+        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 결제', 'option': 'fe-card' }
+      ]
+    }
+  ],
   CUSTOMER_AGENTSEARCH_TUBE_AREA: [
     {
       list: [
@@ -1039,7 +1048,7 @@ Tw.BANNER_DOT_TMPL = '{{index}} 선택됨';
 Tw.HOME_DIRECT_BANNER =
   '{{#each list}}' +
   '<li>' +
-  '<button class="bt fe-home-external" data-url="{{imgLinkUrl}}" title="새창" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
+  '<button class="bt {{chargeOrExternal}}" data-url="{{imgLinkUrl}}" title="새창" data-xt_eid="{{oferStcCd}}" data-xt_csid="NO" data-xt_action="BC">' +
   '<span class="img"><img src="{{../cdn}}{{bnnrFilePathNm}}" alt=""></span>' +
   '<strong class="ti">{{bnnrImgAltCtt}}</strong>' +
   '</button>' +

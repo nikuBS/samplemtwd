@@ -966,7 +966,8 @@ class ProductCommonCallplan extends TwViewController {
             loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
             bpcpServiceId,
             eParam,
-            isApp: BrowserHelper.isApp(req)
+            isApp: BrowserHelper.isApp(req),
+            svcProdId: svcProdId
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));
