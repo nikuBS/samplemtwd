@@ -80,34 +80,46 @@ export default abstract class MyTFareBillPaymentCommon extends TwViewController 
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
       list.sumUnpaid = 0; // 미납금액 합계
+      list.isOnlyThisMon = true;  // 청구금액이 "당월"만 있는지 "당월+미납" 인지 여부. OP002-2797[입금전용계좌 문자신]만 사용
 
       // 이번달
       const thisMonth = DateHelper.getShortDateWithFormat(DateHelper.getCurrentDate(), 'YYYY-MM');
-      /* list 갯수만큼 loop */
-      list.map((data) => {
+      // 미납금액 총액 임시저장. OP002-2797[입금전용계좌 문자신]만 사용
+      let _tempSumUnpaid = 0;
 
-        // DV001-16851 청구월은 +1 해야함
-        // 서버에서 내려오는 날짜를 YYYY년 M월 포맷에 맞게 변경 /
+      // list 갯수만큼 loop
+      list.map((data) => {
+        /*
+          DV001-16851 청구월은 +1 해야함
+          서버에서 내려오는 날짜를 YYYY년 M월 포맷에 맞게 변경
+        */
         data.invYearMonth = DateHelper.getShortDateWithFormatAddByUnit(data.invDt, 1, 'months', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE);
-        /**
-         * OP002-127
-         * 청구금액, 미납금액 구분
-         * invDt == 지난달 은 "청구금액"을 가져오며, 지난달보다 더 과거이면 "미납금액"을 가져와야 함
-         */
         const _invDtFmt = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY-MM');
-        data.isUnpaid = DateHelper.getDiffByUnit(_invDtFmt, thisMonth, 'month') < -1;
+        // 현재 data 의 미납여부
+        data.checked = data.isUnpaid = DateHelper.getDiffByUnit(_invDtFmt, thisMonth, 'month') < -1;
         data.intMoney = this.removeZero(data.colAmt); // 금액 앞에 불필요하게 붙는 0 제거 (VOC:OP002-1372. 무조건 미납금액'colAmt' 필드만사용. 청구금액도 이필드만 사용한다.)
         data.invMoney = FormatHelper.addComma(data.intMoney); // 금액에 콤마(,) 추가
         data.svcName = SVC_CD[data.svcCd]; // 서비스명 (모바일/인터넷...)
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
           FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 I나 T(인터넷/집전화 등)일 경우 주소 보여주고, M(모바일)일 경우 '-' 추가
+        // 미납인경우, 미납액을 더해준다.
         list.sumUnpaid += parseInt(data.isUnpaid ? data.intMoney : 0, 10);
+        _tempSumUnpaid += parseInt(data.intMoney, 10);
+        // 1건 이라도 미납이 있으면 "당월요금만 존재" case 가 아님.
+        if (list.isOnlyThisMon && data.isUnpaid) {
+          list.isOnlyThisMon = false;
+        }
         // 납부건수가 1건이면서, 당월 청구금액이면. [sumUnpaid] 에 당월 청구금액(invAmt), isUnpaid = true 설정한다.
         if (list.cnt === 1 && DateHelper.getDiffByUnit(_invDtFmt, thisMonth, 'month') === -1) {
           list.sumUnpaid = data.intMoney;
-          data.isUnpaid = true;
+          data.checked = true;
         }
       });
+
+      // 당월요금만 존재할 경우, 임시총액을 총 납부할 금액에 넣어준다.
+      if (list.isOnlyThisMon) {
+        list.sumUnpaid = _tempSumUnpaid;
+      }
     }
     return list;
   }

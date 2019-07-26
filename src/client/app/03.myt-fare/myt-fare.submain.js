@@ -78,6 +78,8 @@ Tw.MyTFareSubMain.prototype = {
       }
       // 납부방법버튼
       this.$payMthd = this.$container.find('button[data-id=pay-mthd]');
+      // 청구지 주소/연락처 버튼
+      this.$changeAddress = this.$container.find('button[data-id=change-address]');
     }
     // 성능개선 대상으로 무조건 노출로 변경
     // if ( this.data.isMicroPrepay ) {
@@ -155,6 +157,7 @@ Tw.MyTFareSubMain.prototype = {
       }
       // 납부방법버튼
       this.$payMthd.on('click', $.proxy(this._onClickedPayMthd, this));
+      this.$changeAddress.on('click', $.proxy(this._onClickedChangeAddress, this));
     }
     // 성능개선 대상으로 무조건 노출로 변경
     // if ( this.data.isMicroPrepay ) {
@@ -787,6 +790,11 @@ Tw.MyTFareSubMain.prototype = {
     var clsName = event.target.className;
     var index = clsName.replace('link', '');
     this._historyService.goLoad('/myt-fare/billguide/guide?date=' + this._feeChartInfo[index]);
+  },
+
+  // 청구지 주소/연락처 변경으로 이동
+  _onClickedChangeAddress: function () {
+    this._historyService.goLoad('/myt-fare/bill/option/change-address');
   },
 
   _onErrorReceivedBillData: function (resp) {

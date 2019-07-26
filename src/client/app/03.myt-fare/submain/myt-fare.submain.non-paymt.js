@@ -27,6 +27,9 @@ Tw.MyTFareSubMainNonPayment.prototype = {
       // 이용정지 해제
       this.$susp = this.$container.find('button[data-id=susp]');
     }
+
+    // 납부하기 버튼
+    this.$billPym = this.$container.find('button[data-id=bill-pym]');
   },
 
   _bindEvent: function () {
@@ -36,6 +39,8 @@ Tw.MyTFareSubMainNonPayment.prototype = {
     if ( this.data.suspension ) {
       this.$susp.on('click', $.proxy(this._onClickedSuspension, this));
     }
+    // 납부하기 버튼
+    this.$billPym.on('click', $.proxy(this._onClickedBillPym, this));
   },
 
   _setClaimList: function () {
@@ -180,7 +185,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
   // 이용정지해제 팝업 호출
   _onClickedSuspension: function () {
     // openModalTypeA hash 값 추가 되면 suspend 값 추가
-    var colAmt = parseInt(this.data.suspension.colAmt, 10);
+    var colAmt = Tw.FormatHelper.addComma(this.data.suspension.colAmt);
     this._popupService.openModalTypeA(Tw.NON_PAYMENT.SUSPENSION.TITLE,
       Tw.NON_PAYMENT.SUSPENSION.CONTENT_1 + colAmt + Tw.NON_PAYMENT.SUSPENSION.CONTENT_2,
       Tw.NON_PAYMENT.SUSPENSION.BTNAME, null, $.proxy(this._onSuspensionConfirmed, this), null);
@@ -212,12 +217,14 @@ Tw.MyTFareSubMainNonPayment.prototype = {
       else if ( result.success === Tw.NON_PAYMENT.SUCCESS.R ) {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.S_R);
       }
-      else {
-        Tw.Error(resp.code, resp.msg).pop();
-      }
     }
     else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+
+  // 요금납부 이동
+  _onClickedBillPym: function (event) {
+    new Tw.MyTFareBill(this.$container, this.data.svcInfo.svcAttrCd, $(event.currentTarget));
   }
 };
