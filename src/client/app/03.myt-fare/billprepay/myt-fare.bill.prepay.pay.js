@@ -52,6 +52,15 @@ Tw.MyTFareBillPrepayPay.prototype = {
       this.$container.find('.fe-card-info').trigger('click');
     }
   },
+
+  /**
+   * @function
+   * @desc 월별 이용내역 조회 페이지로 이동
+   */
+  _prepayHistoryMonth: function () {
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
+  },
+
   /**
    * @function
    * @desc 선결제 가능금액 셋팅
@@ -92,6 +101,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
    * @desc event binding
    */
   _bindEvent: function () {
+    this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
