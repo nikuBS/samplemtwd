@@ -227,7 +227,6 @@ Tw.MainStore.prototype = {
     }).map(function(e){
       return e.banner.result.imgList
     })[0].map(function (target) {
-      target.bnnrImgAltCtt = target.bnnrImgAltCtt.replace(/<br>/gi, ' ');
       target.chargeOrExternal = target.billYn === 'Y' ? 'fe-home-charge' : 'fe-home-external';
       return target;
     });
