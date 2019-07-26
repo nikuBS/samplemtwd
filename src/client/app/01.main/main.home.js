@@ -1907,7 +1907,7 @@ Tw.MainHome.prototype = {
     })[0].map(function (target) {
       target.chargeOrExternal = 'fe-home-external';
       return target;
-    });;
+    });
 
     if ( directBanner.length > 0 ) {
       var tplLine = Handlebars.compile(Tw.HOME_DIRECT_BANNER);
