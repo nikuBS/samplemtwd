@@ -71,9 +71,18 @@ Tw.MyTFareBillPrepayPaySKpay.prototype = {
    * @desc event binding
    */
   _bindEvent: function () {
+    this.$container.on('click', '.fe-max-amount', $.proxy(this._prepayHistoryMonth, this));
     this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._checkPay, this), 500));
+  },
+
+  /**
+   * @function
+   * @desc 월별 이용내역 조회 페이지로 이동
+   */
+  _prepayHistoryMonth: function () {
+    this._historyService.goLoad('/myt-fare/bill/' + this.$title + '/monthly');
   },
 
   /**
