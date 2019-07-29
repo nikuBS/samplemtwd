@@ -35483,3 +35483,7 @@ body.apphome .section-box {
 .data-list-type1 .type1.tod-high5 li .use {display:table-cell;}
 .data-list-type1 .type1.tod-high5 li .stit {padding-right:0;}
 .data-list-type1 .type1.tod-high5 li .use {position:static; text-align:right;}
+
+/* 190726 추가 [OP002-2866] main banner 자동재생관련 - components 에도 추가 */
+.section-box.nogaps.tod-no-mg{margin:0.63rem 0 0 0;}
+.main-charge-box.section-swiper-box.tod-nar-ban{min-height:8.75rem;}
