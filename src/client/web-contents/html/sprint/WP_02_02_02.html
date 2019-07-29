@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>-->
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+     <div class="wrap">
+         <!-- .popup hbs -->
+         <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>가입</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true">  <!-- //190722[OP002-2383] 추가01 : 리디자인 적용 -->
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="user-info tod-user-info"> <!-- //190722[OP002-2383] 수정01 -->
+                            <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
+                            <span class="ico-type2"><span class="blind">선택된 회선정보 아이콘</span></span>
+                            <!-- 190722[OP002-2383] 수정02 -->
+                            <div class="in-info">
+                                <!-- 2019.02.08 한줄만 노출될 경우 lh-full 클래스 추가 -->
+                                <span class="number lh-full tod-lar-num">
+                                    <span class="blind">회선번호</span>우리집 인터넷_301호 ************
+                                </span>
+                            </div>
+                            <!-- //190722[OP002-2383] 수정02 -->
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="charge-guide-wrap">
+                            <div class="charge-cont">
+                                <span class="sub-disc01">
+                                    <span class="elem">가입할 부가서비스</span>
+                                </span>
+                                <span class="tit-tx">T 자녀 PC제어</span>
+                                <!-- <h3 class="tit-tx tit-type2">T 자녀 PC제어</h3> -->
+                                <span class="sub-disc03"><span class="tx-bold vbl">5,500원</span> (월/부가세 포함)</span><!-- 190605 수정_01 -->
+                                <p class="sub-disc04 mt20">IP공유 부가서비스입니다.</p>
+                                <div class="product-bx">
+                                    <strong class="product">PC 수</strong> <em class="num">1</em>
+                                </div>
+                                <p class="ctext">* 처음 가입신청 후에 PC 수를 추가신청하실 수 있습니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box set-info">
+                        <div class="link-long bb0">
+                            <button>설정 정보
+                                <span class="tx-sub">
+                                    <span class="normal">입력 완료</span>
+                                    <span class="ico">설정 정보 팝업 열기</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="service-info">
+                            <h3><strong class="service-tit">자동 가입</strong>서비스</h3>
+                            <span>
+                                <em class="service-add">부가서비스</em>
+                                <span class="service-txt">T다뷰 1개월 무료(자동 할인)</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="ti-caption-gray">
+                        <h3 class="tit">약관과 이용 동의</h3>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <div class="agree-chk-wrap">
+                            <div class="list-comp-input-agree">
+                                <div class="widget">
+                                    <div class="widget-box check">
+                                        <ul class="select-list" role="group">
+                                            <li>
+                                                <!-- Grand open 접근성 수정 role="checkbox" 삭제 -->
+                                                <div class="checkbox type01" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <!-- // Grand open 접근성 수정 -->   
+                                                    <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <!-- 2019.01.23 title값 삭제 -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                        <p class="layout-text">
+                                                             <!-- Grand open 접근성 수정 -->
+                                                            <span id="aria-comp-checkbox1" class="mtext">서비스 이용약관 및 개인정보<br>수집 동의(필수)</span>
+                                                             <!-- // Grand open 접근성 수정 -->
+                                                            <span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
+                                                                </span>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- <hr class="cont-sp type1" aria-hidden="true"/> --> <!-- //190722[OP002-2383] 삭제01 : 리디자인 적용 -->
+
+                    <!-- .cont-box -->
+                    <!-- 190722[OP002-2383] 수정03 : 리디자인 적용 -->
+					<div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li>
+                                <button aria-haspopup="true" class="btn-tip">상품 가입 시 유의사항<i class="icon-badge-tip"><span class="blind">상품 가입 시 유의사항 tip</span></i></button>
+                            </li>
+                            <!-- 2019.01.24 title,aria-haspopup 추가 -->
+                        </ul>
+                    </div>
+                    <!-- //190722[OP002-2383] 수정03 : 리디자인 적용 -->
+                    <!--// .cont-box -->
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button disabled="disabled">가입하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+
+</html>
