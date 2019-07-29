@@ -1,8 +1,8 @@
 /**
- * MenuName: T로밍 > 로로밍 상품 이용 안내 (RM_17)
- * @file product.roaming.fee-info.controller
+ * MenuName: T로밍 > 이벤트 > 바른 로밍 (N_promotion_landing_page1)
+ * @file product.roaming.event.right-roam.controller
  * @author Hyeryoun Lee
- * @since 2019. 5. 20.
+ * @since 2019. 7. 29.
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
