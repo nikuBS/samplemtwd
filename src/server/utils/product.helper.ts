@@ -272,9 +272,7 @@ class ProductHelper {
       isNumberToDcAmt = !isNaN(Number(installmentAgreement.toDcAmt)),
       isNumberGapDcAmt = !isNaN(Number(installmentAgreement.gapDcAmt)),
       isPremTerm = installmentAgreement.premTermYn === 'Y',
-      premTermYn = (installmentAgreement.agrmtUseCnt < 181 && isPremTerm) ||
-       (installmentAgreement.agrmtUseCnt > 180 && installmentAgreement.agrmtUseCnt < 366)
-      ;
+      premTermYn = (installmentAgreement.agrmtUseCnt < 181 && isPremTerm);
 
     return Object.assign(installmentAgreement, {
       isInstallAgreement: installmentAgreement.gapDcAmt > 0,  // 지원금 차액 정산금 동의 노출 여부
