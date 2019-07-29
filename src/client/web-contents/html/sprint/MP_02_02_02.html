@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <!--<div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>-->
+    <!--// #skip_navigation -->
+    <!-- Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg txt-screed"><!-- 2019.03.27 txt-screed 클래스 추가 --><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... / 배경없을때 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>가입</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+					<hr class="cont-sp type1" aria-hidden="true">  <!-- //190722[OP002-2383] 추가01 : 리디자인 적용 -->
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="user-info tod-user-info"> <!-- //190722[OP002-2383] 수정01 -->
+							<span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
+							<!-- 2019.01.24  aria-hidden="true" 추가 sblee -->
+							<span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
+							<!-- 2019.01.24  aria-hidden="true" 추가 sblee -->
+							<div class="in-info">
+								<!-- 190722[OP002-2383] 수정02 -->
+								<span class="number tod-lar-num">
+									<span class="blind">회선번호</span>010-73**-06**
+									<button type="button" class="bt-link-tx underline small">회선변경</button>
+								</span>
+								<!-- //190722[OP002-2383] 수정02 -->
+								<!-- 2019.01.24  aria-hidden="true" 삭제 sblee -->
+								<span class="sub-info">
+									<span class="elem"><span class="blind">사용요금제명</span>뉴 T끼리 맞춤형(100분+1.5GB)</span>
+									<span class="elem tod-price"><span class="blind">월 이용요금</span>65,950 원 <span class="tx-regular">(월/부가세 포함)</span></span><!-- //190722[OP002-2383] 수정03 -->
+								</span>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="charge-guide-wrap">
+							<div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem">변경할 요금제</span>
+								</span>
+								<span class="tit-tx"><span class="blind">변경 요금제명</span>Data 인피니티</span>
+								<span class="sub-disc03"><span class="tx-bold vbl">100,000원 </span>(월/부가세 포함)</span><!-- 190605  수정_02 -->
+							</div>
+							<div class="cont-noti mt36">
+								<p class="type1">데이터 쉐어링 혜택 + 여행, 영화 무료관람, 스마트워치, 인피니티 클럽 VIP 혜택 및 데이터 저장소 ‘클라우드베리’ 업그레이드 180GB 제공</p>
+							</div>
+							<div class="pt30">
+								<ul class="bt-slice">
+									<li class="bt-red1"> <!-- //190722[OP002-2383] 수정04 : 리디자인 적용 -->
+										<button>사용 중인 요금제와 비교하기</button>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-hoz">
+						<ul class="link-list">
+							<li>
+								<dl>
+									<dt>설정 정보</dt>
+									<dd>
+										<span class="val">인피니티 여행</span>
+										<button>정보입력 팝업 열기</button>
+									</dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-top">
+						<div class="info-list">
+							<ul>
+								<li>
+									<div class="tit-area">
+										<span class="tit">자동</span>
+										<span class="sub-tit">가입되는 항목</span>
+									</div>
+									<div class="cont-area">
+										<dl>
+											<dt>부가서비스</dt>
+											<dd>T RING플러스(무료)</dd>
+										</dl>
+										<dl>
+											<dt>혜택</dt>
+											<dd>
+												<ul>
+													<li>B TV 70 실시간 방송 등 콘텐츠 무료</li>
+													<li>SK텔레콤 VIP 멤버십 혜택</li>
+													<li>분실파손보험 무료 </li>
+												</ul>
+											</dd>
+										</dl>
+									</div>
+								</li>
+								<li>
+									<div class="tit-area">
+										<span class="tit">자동</span>
+										<span class="sub-tit">해지되는 항목</span>
+									</div>
+									<div class="cont-area">
+										<dl>
+											<dt>부가서비스</dt>
+											<dd>T안심콜 라이트</dd>
+										</dl>
+										<dl>
+											<dt>혜택</dt>
+											<dd class="list-none">
+												<ul>
+													<li>추가 제공되는 혜택이 없습니다.</li>
+												</ul>
+											</dd>
+										</dl>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="cont-noti pt20">
+							<span class="type2">데이터안심정액제 또는 데이터퍼펙트정액제 가입고객은 당월부터 월정액 할인혜택이 제공되지 않습니다.</span>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="ti-caption-gray">
+						<h3 class="tit">초과 사용량 정산 안내</h3>
+					</div>
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="charge-guide-wrap">
+							<div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem">기본 제공량 초과 이용요금</span>
+								</span>
+								<span class="tit"><span class="charge-txt">15,000</span>원</span>
+								<span class="sub-disc04">(다음 달 청구 예정금액)</span>
+							</div>
+							<div class="basic-list top-line">
+								<span class="blind">변경 요금제 데이터/ 음성/ 문자 정보 노출</span>
+								<ul>
+									<li>
+										<span class="title tx-black3">데이터</span>
+										<span class="tx-cont">
+											<span class="data-info"><span class="tx-bold vbl">7GB 사용</span> / 6GB 제공</span>
+											<span class="price">10,000원</span>
+										</span>
+									</li>
+									<li>
+										<span class="title tx-black3">음성통화</span>
+										<span class="tx-cont">
+											<span class="data-info"><span class="tx-bold vbl">355분 사용</span> / 300분 제공</span>
+											<span class="price">4,400원</span>
+										</span>
+									</li>
+									<li>
+										<span class="title tx-black3">문자</span>
+										<span class="tx-cont">
+											<span class="data-info"><span class="tx-bold vbl">130통 사용</span> / 100통</span>
+											<span class="price">600원</span>
+										</span>
+									</li>
+								</ul>
+							</div>
+							<div class="cont-noti pt26">
+								<span class="type1">월 중간에 요금제를 변경하시면 이용요금은 실제 이용한 날만큼 청구되며, 초과 사용량은 다음 달 청구요금에 반영됩니다.</span>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="ti-caption-gray">
+						<h3 class="tit">약관과 이용 동의</h3>
+					</div>
+					<!-- .cont-box -->
+					<div class="cont-box nogaps">
+						<div class="agree-chk-wrap">
+							<div class="list-comp-input-agree">
+								<div class="widget">
+									<div class="widget-box check">
+										<!-- 2019.01.22  title값 삭제 sblee -->
+										<ul class="select-list" role="group">
+											<li>
+												<div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+													<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+													<!-- 2019.01.07  title="모두동의" 삭제 sblee -->
+													<div class="comp-list-layout" id="aria-comp-checkbox1">
+														<p class="layout-text all-chk">
+															<span class="mtext">모두 동의</span>
+														</p>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+													<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+													<div class="comp-list-layout" id="aria-comp-checkbox2">
+														<div class="layout-text">
+															<span class="mtext">지원금 차액 정산금 동의(필수)</span>
+															<span class="stext mt10">요금제를 변경하시면 지원금 차액이 다음 달 청구 요금에 반영(지원금 반환 또는 추가 지원)되어 계산됩니다.</span>
+															<div class="basic-list">
+																<ul>
+																	<li>
+																		<div class="inner-top">
+																			<span class="title">지원금 차액 청구 예상금액 <span class="sub-tx">(하루 단위로 계산)</span></span>
+																			<span class="tx-cont"><span class="tx-bold vbl">50,000</span>원</span>
+																		</div>
+																		<div class="inner-row top-line">
+																			<ul>
+																				<li>
+																					<span class="title">현재 지원금</span>
+																					<span class="tx-cont">70,000원</span>
+																				</li>
+																				<li>
+																					<span class="title">변경 후 지원금</span>
+																					<span class="tx-cont">120,000원</span>
+																				</li>
+																				<li>
+																					<span class="title">지원금 차액</span>
+																					<span class="tx-cont">50,000원</span>
+																				</li>
+																				<li>
+																					<span class="title">사용기간/약정기간</span>
+																					<span class="tx-cont">100일/700일</span>
+																				</li>
+																			</ul>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+															<div class="cont-noti mt20">
+																<ul class="bullet-type">
+																	<li>고객님의 남은 약정기간(약정기간-사용기간)을 고려하여 보조금 차액을 정산한 후 추가 납부금액 또는 환급금액이 결정됩니다.</li>
+																	<li> 단, 프리미엄패스1 가입자의 경우 6개월 유지 시 차액 정산금은 청구되지 않으니, 참고 하시기 바랍니다.</li> <!-- 190618 수정_01 -->
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+													<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" -->
+													<div class="comp-list-layout" id="aria-comp-checkbox3">
+														<p class="layout-text">
+															<span class="mtext">서비스 이용약관(필수)</span>
+															<span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
+                                                                </span>
+                                                            </span>
+														</p>
+													</div>
+												</div>
+												<button class="agree-view"><span class="blind">자세히 보기</span></button>
+											</li>
+											<li>
+												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+													<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" -->
+													<!-- 2019.01.07  aria-labelledby="aria-comp-checkbox4" 수정 sblee -->
+													<div class="comp-list-layout" id="aria-comp-checkbox4"><!-- 2019.01.07  aria-labelledby="aria-comp-checkbox4" 수정 sblee -->
+														<p class="layout-text">
+															<span class="mtext">개인정보 수집/이용 위탁 동의(필수)</span>
+															<span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.약관내용입니다 자세한 내용 을 보시려면 화살표를 눌러 확인하여주시기 바랍니다.
+                                                                </span>
+                                                            </span>
+														</p>
+													</div>
+												</div>
+												<button class="agree-view"><span class="blind">자세히 보기</span></button>
+											</li>
+										</ul>
+										<!--// 2019.01.22  title값 삭제 sblee -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<!-- <hr class="cont-sp type1" aria-hidden="true"/> --> <!-- //190722[OP002-2383] 삭제01 : 리디자인 적용 -->
+
+					<!-- .cont-box -->
+					<!-- 190722[OP002-2383] 수정05 : 리디자인 적용 -->
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<!-- 2019.01.24 title값 수정 -->
+						<!-- Grand open 접근성 수정 -->
+						<ul class="pg-chk-list02">
+							<li>
+								<button aria-haspopup="true" class="btn-tip">사용 중인 요금제 해지 시 유의사항<i class="icon-badge-tip"><span class="blind">사용 중인 요금제 해지 시 유의사항 tip</span></i></button>
+							</li>
+							<li>
+								<button aria-haspopup="true" class="btn-tip">요금제 변경하여 가입 시 유의사항<i class="icon-badge-tip"><span class="blind">요금제 변경하여 가입 시 유의사항 tip</span></i></button>
+							</li>
+							<li>
+								<button aria-haspopup="true" class="btn-tip">서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내 tip</span></i></button>
+							</li>
+						</ul>
+						<!--// Grand open 접근성 수정 -->
+						<!--// 2019.01.24 title값 수정 -->
+					</div>
+					<!-- //190722[OP002-2383] 수정05 : 리디자인 적용 -->
+					<!--// .cont-box -->
+
+                    <div class="bt-fixed-area">
+						<ul class="bt-slice full">
+							<li class="bt-red1">
+								<button disabled>가입하기 </button>
+							</li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
