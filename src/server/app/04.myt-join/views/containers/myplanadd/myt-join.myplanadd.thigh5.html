@@ -48,7 +48,7 @@
                     </div>
                     <div class="tod-listDown-btn">
 						<span class="bt-wrap">
-							<button class="bt-link-tx small underline fe-btn-open-app">상세내역보기(핀크 app)</button>
+							<button class="bt-link-tx small underline fe-btn-open-app">자세히 보기</button>
 						</span>
                     </div>
                 </div><!-- //.cont-box -->
@@ -59,17 +59,25 @@
                         <h3 class="tit">T high5 적금 혜택 현황</h3>
                     </div>
                     <div class="data-list-type1">
-                        <ul class="type1">
-                            <% if (preferential) { %>
+                        <ul class="type1 tod-high5">
                             <li>
                                 <span class="stit">우대 혜택</span>
-                                <span class="use"><%= preferential %></span>
+                                <span class="use">우대금리 2%</span>
                             </li>
-                            <% } %>
-                            <% if (thigh5HeroYn === 'Y') { %>
+                            <!--
+                            아래의 경우만 노출
+                            'NC00000075',   // 12개월 고금리
+                            'NC00000077',   // 24개월 고금리-->
+                            <% if (dGradeYn === 'Y') { %>
                             <li>
                                 <span class="stit">추가 혜택</span>
-                                <span class="use">T high5 0히어로 캐시백 1%</span>
+                                <span class="use">
+                                    T high5 캐시백 1%
+                                    <!--군 요금제 사용자인 경우-->
+                                    <%if (thigh5HeroYn === 'Y') {%>
+                                    <br>T high5 0히어로 캐시백 1%
+                                    <%}%>
+                                </span>
                             </li>
                             <% } %>
                         </ul>
@@ -80,26 +88,17 @@
                 <div class="cont-box">
                     <div class="ti-caption-type01">
                         <h2 class="tit">
-                            5만원 이하 요금제 사용 기간
-                            <button type="button" class="btn-tip" id="TC000062" page-id="M001886" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">5만원 이하 요금제 사용 기간 Tip</span></i></button>
+                            추가 혜택  변경 유예기간
+                            <button type="button" class="btn-tip" id="TC000062" page-id="M001886" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">Tip</span></i></button>
                         </h2>
                     </div>
                     <div class="tod-graph-wrap ">
-                        <div class="tod-time-info <%= dGradeDay > 0 ? 'tod-less-price' : '' %>"> <!-- 5만원 이하 요금제 사용 일 수 1일 ~ 44일 인 경우 tod-less-price 클래스 추가  -->
-
+                        <div class="tod-time-info tod-less-price"> <!-- 5만원 이하 요금제 사용 일 수 1일 ~ 44일 인 경우 tod-less-price 클래스 추가  -->
                             <div class="date-info use_time">
-                                <p class="data-title">5만원 이하 요금제 사용 기간</p>
-                                <p class="data-state">
-                                    <% if (dGradeDay >= 45) { %>
-                                    <span class="str">45</span>일 이상 사용
-                                    <% } else { %>
-                                    <span class="str"><%= dGradeDay %></span>일
-                                    <% } %>
-                                </p>
+                                <p class="data-title">5만원 이하 요금제 사용일</p>
                             </div>
                             <div class="date-info defer_time">
-                                <p class="data-title">유예 기간</p>
-                                <p class="data-state"><span class="str">44</span>일</p>
+                                <p class="data-state"><span class="blind">사용일</span><span class="str tod-txcolor6"><%= dGradeDay %></span><span class="blind">유예기간</span><span class="str">/44</span>일</p>
                             </div>
                         </div>
                         <div class="bar-chart-hoz">
@@ -120,19 +119,23 @@
                         </li>
                     </ul>
                 </div>
-                <div class="cont-box bgnone noborder">
-                    <div class="announcement-box fs12">
-                        <span class="blind">유의사항</span>
-                        <ul>
-                            <li class="announcement-bullet type01">월정액 5만 원 미만 요금제로 변경하실 경우 변경한 요금제의 사용 일수 45일 차부터 캐시백 혜택을 받으실 수 없습니다.</li>
-                            <li class="announcement-bullet type01">45일 차에 혜택이 자동 변경되므로 요금제를 다시 변경한 후 캐시백 혜택을 받으시길 바랍니다.<br>(변경일로부터 1개월 안에는 요금제를 다시 변경하실 수 없습니다)</li>
-                            <li class="announcement-bullet type01">적금 상품 정책(불입액 연체/중도해지 등)에 의한 금리 변동 정보는 표시되지 않으며, 납입금, 만기 수령금 및 납입현황에 대한 정확한 정보는 핀크 App. 및 은행 고객센터(1588-5050)에서 확인이 가능합니다.</li>
-                            <li class="announcement-bullet type01">핀크 app 바로가기 <br>
-                                <button class="bt-link-tx small underline fe-btn-open-app">https://finnq.onelink.me/YERF/46b2e4dc</button>
-                            </li>
-                        </ul>
-                    </div>
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li>
+                            <button id="TC000075" page-id="" class="btn-tip" aria-haspopup="true">
+                                추가 혜택이 변경되는 경우<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                            </button>
+                        </li>
+                        <li>
+                            <button id="TC000076" page-id="" class="btn-tip" aria-haspopup="true">
+                                불입액 연체중도 해지 경우<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
+                <!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->

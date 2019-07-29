@@ -24,6 +24,41 @@
                 <div class="product-select-wrap">
                     <span class="data-tit">0플랜 옵션 선택 <button class="tip-view" id="MP_02_02_03_14_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">TIP</button></span>
                 </div>
+                
+                <% if ( zeroPlanInfo.useOptionProdId === 'NA00006166' ) { %>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">이용중인 혜택</span>
+                        <h3 class="tit-big">oksusu 1만2천 포인트</h3>
+                        <p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
+                        <p class="tod-txcolor7 mt6">2019년 8월 31일까지 타 혜택으로 변경하지 않을 경우, <br>9월 1일에 "T멤버십 VIP 혜택" 자동 변경 됩니다.</p>
+                    </div>
+                </div>
+                <% } %>
+                <% if ( zeroPlanInfo.useOptionProdId === 'NA00006165' ) { %>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">이용중인 혜택</span>
+                        <h3 class="tit-big">FLO 모바일 무제한 듣기</h3>
+                        <p class="tod-txcolor5 mt16">새롭게 변경된 아래 혜택을 이용해보세요. <br>(변경시, 기존 혜택은 재선택하실 수 없습니다.)</p>
+                    </div>
+                </div>
+                <% } %>
+                <% if ( zeroPlanInfo.useOptionProdId === 'NA00006634' && floNDataUseYn.isAdditionUse === 'Y' ) { %>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <p style="font-size:0.75rem">다른 혜택으로 변경 시, FLO 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 FLO 앤 데이터 상품을 별도 해지해주세요.</p>
+                    </div>
+                </div>
+                <% } %>
+                <% if ( zeroPlanInfo.useOptionProdId === 'NA00006622' && pooqNDataUseYn.isAdditionUse === 'Y' ) { %>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <p style="font-size:0.75rem">다른 혜택으로 변경 시, POOQ 앤 데이터 월정액은 정상 과금됩니다. 원치 않으실 경우 POOQ 앤 데이터 상품을 별도 해지해주세요.</p>
+                    </div>
+                </div>
+                <% } %>
+                <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
@@ -32,31 +67,31 @@
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
                                     <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio1">
-                                        <input type="radio" name="radio" value="NA00006164" aria-hidden="true">
+                                        <input type="radio" name="radio" value="NA00006164" title="0플랜 옵션 선택" aria-hidden="true">
                                         <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                             <p class="layout-text">
-                                                <span class="mtext">0플랜_VIP</span>
-                                                <span class="stext">지난 유지조건에 따라 VIP멤버십 혜택 제공</span>
+                                                <span class="mtext">T멤버십 VIP 혜택</span>
+                                                <span class="stext">지난 달 유지조건에 따라 VIP멤버십 혜택 제공</span>
                                             </p>
                                         </div>
                                     </li>
                                     <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio2">
-                                        <input type="radio" name="radio" value="NA00006165" aria-hidden="true">
+                                        <input type="radio" name="radio" value="NA00006634" title="0플랜 옵션 선택" aria-hidden="true">
                                         <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
                                             <span class="ico ico-movie"></span>
                                             <p class="layout-text">
-                                                <span class="mtext">FLO 무제한</span>
-                                                <span class="stext">FLO 무제한 스트리밍 이용</span>
+                                                <span class="mtext">FLO 앤 데이터 월정액 무료</span>
+                                                <span class="stext">전용데이터 매월 3GB로 최신 음악 무제한 듣기</span>
                                             </p>
                                         </div>
                                     </li>
                                     <li class="radiobox type01" role="radio" aria-checked="false" aria-labelledby="aria-comp-radio3">
-                                        <input type="radio" name="radio" value="NA00006166" aria-hidden="true">
+                                        <input type="radio" name="radio" value="NA00006622" title="0플랜 옵션 선택" aria-hidden="true">
                                         <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
                                             <span class="ico ico-watch"></span>
                                             <p class="layout-text">
-                                                <span class="mtext">oksusu 포인트</span>
-                                                <span class="stext">oksusu 월 12,000 포인트 제공</span>
+                                                <span class="mtext">POOQ 앤 데이터 월정액 무료</span>
+                                                <span class="stext">전용데이터 매일 1GB로 80개 채널, 22만개 드라마, 예능 즐기기</span>
                                             </p>
                                         </div>
                                     </li>
@@ -94,6 +129,6 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanSetting0plan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_14', '<%= ZeroPlanInfo.useOptionProdId %>');
+  new Tw.ProductMobileplanSetting0plan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_14', '<%= zeroPlanInfo.useOptionProdId %>', '<%= floNDataUseYn.isAdditionUse %>', '<%= pooqNDataUseYn.isAdditionUse %>');
 });</script>
 <% include ../../../components/end.component.html %>
