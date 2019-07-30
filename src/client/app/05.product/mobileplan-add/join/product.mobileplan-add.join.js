@@ -105,9 +105,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
    * @desc 공통 정보확인 컴포넌트 호출 (isPopup false)
    */
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, {
-      isWidgetInit: true
-    }, $.proxy(this._prodConfirmOk, this));
+    new Tw.ProductCommonConfirm(false, this.$container, this._confirmOptions, $.proxy(this._prodConfirmOk, this));
   },
 
   /**

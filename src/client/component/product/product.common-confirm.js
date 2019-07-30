@@ -25,6 +25,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._isPopup = isPopup;
   this._applyCallback = applyCallback;
   this._isLock = false;
+  this._lineChangeUrl = null;
 
   if (isPopup) {
     this._openPop();
@@ -47,6 +48,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnCloseConfirm = this.$container.find('.fe-btn_close_confirm');
     this.$btnComparePlans = this.$container.find('.fe-btn_compare_plans');
     this.$btnTipView = this.$container.find('.fe-btn_tip_view');
+    this.$btnLineChange = this.$container.find('.fe-line-change');
 
     this.$agreeWrap = this.$container.find('.fe-agree_wrap');
     this.$checkboxAgreeAll = this.$container.find('.fe-checkbox_agree_all');
@@ -74,6 +76,7 @@ Tw.ProductCommonConfirm.prototype = {
     this.$btnCloseConfirm.on('click', $.proxy(this._closePop, this));
     this.$btnComparePlans.on('click', $.proxy(this._openComparePlans, this));
     this.$btnTipView.on('click', $.proxy(this._openTipView, this));
+    this.$btnLineChange.on('click', $.proxy(this._onLineProcess, this));
 
     this.$checkboxAgreeAll.on('change', $.proxy(this._agreeAllToggle, this));
     this.$checkboxAgreeItem.on('change', $.proxy(this._agreeItemToggle, this));
@@ -104,6 +107,22 @@ Tw.ProductCommonConfirm.prototype = {
     if ($wrap.length > 0) {
       $wrap.addClass('fe-tooltip-replaced-link');
     }
+
+    this._apiService.request(Tw.NODE_CMD.GET_PRODUCT_LINECHANGE_INFO, {prodId: this._data.toProdId})
+    .done($.proxy(function(resp) {
+      if ( resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+        return;
+      }
+      
+      if ( resp.result.isLineChangable ) {
+        this.$btnLineChange.removeClass('none');
+        this._lineChangeUrl = resp.result.lineChangeUrl;
+      }
+    },this));
+  },
+
+  _onLineProcess: function() {
+    this._historyService.goLoad(this._lineChangeUrl);
   },
 
   _convData: function(data) {
