@@ -538,7 +538,6 @@ class ProductCommonCallplanPreview extends TwViewController {
           combineRequireDocumentInfo: null,  // 구비서류 제출 심사내역
           reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd),
           isProductCallplan: true,
-          lineProcessCase: null,
           isAllowJoinCombine: false,
           loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
           bpcpServiceId: '',

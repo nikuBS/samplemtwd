@@ -184,7 +184,8 @@ Tw.ProductMobileplanJoin.prototype = {
         this._confirmOptions.installmentAgreement.isInstallAgreement),
       isInstallmentAgreement: this._confirmOptions.installmentAgreement.isInstallAgreement,
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
-      downgrade: this._getDowngrade()
+      downgrade: this._getDowngrade(),
+      toProdId: this._prodId
     });
   },
 
