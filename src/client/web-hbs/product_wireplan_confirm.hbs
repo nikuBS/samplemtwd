@@ -15,13 +15,14 @@
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box">
-                <div class="user-info">
+                <div class="user-info tod-user-info">
                     <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
                     <span class="{{iconClass}}" aria-hidden="true"><span class="blind">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
-                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNickname}}_{{svcNumMask}}</span>
+                        <span class="number lh-full tod-lar-num"><span class="blind">회선번호</span>{{svcNickname}}_{{svcNumMask}}</span>
                     </div>
                 </div>
             </div>
@@ -241,42 +242,40 @@
                 <!--// .cont-box -->
             {{/if}}
             {{#if isNoticeList}}
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list fe-noti-list">
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02 fe-noti-list">
                         {{#if isTerm}}
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="MV_01_02_03_tip_02_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
-                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            <button class="btn-tip fe-product-tip" id="MV_01_02_03_tip_02_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내</span></i>
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="MV_01_02_03_tip_02_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
-                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            <button class="btn-tip fe-product-tip" id="MV_01_02_03_tip_02_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내</span></i>
                             </button>
                         </li>
                         {{else}}
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="WP_02_02_02_tip_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
-                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            <button class="btn-tip fe-product-tip" id="WP_02_02_02_tip_02" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내</span></i>
                             </button>
                         </li>
                         <li>
-                            <button type="button" class="tip-view-btn fe-product-tip" id="WP_02_02_02_tip_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
-                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            <button class="btn-tip fe-product-tip" id="WP_02_02_02_tip_03" aria-haspopup="true" title="서비스 이용안내 정보보기">
+                                서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내</span></i>
                             </button>
                         </li>
                         {{/if}}
                         {{#noticeList}}
-                            <li>
-                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}" title="{{noticeTit}}">
-                                    {{noticeTit}}<span class="tip-view">TIP</span>
-                                </button>
-                                <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
-                            </li>
+                        <li>
+                            <button class="btn-tip fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}" title="{{noticeTit}}">
+                                {{noticeTit}}<i class="icon-badge-tip"><span class="blind">{{noticeTit}}</span></i>
+                            </button>
+                            <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
+                        </li>
                         {{/noticeList}}
                     </ul>
                 </div>
