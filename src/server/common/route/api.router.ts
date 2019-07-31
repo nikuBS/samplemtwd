@@ -375,6 +375,7 @@ class ApiRouter {
     _apiService.setCurrentReq(req, res);
 
     const _prodId = req.query.prodId || null;
+    const _redirectUrl = req.query.redirectUrl || '/product/callplan?prod_id=' + _prodId;
     const _allSvcInfo = _loginService.getAllSvcInfo(req);
     const _svcInfo = _loginService.getSvcInfo(req);
     const _svcAttrCd = !FormatHelper.isEmpty(_svcInfo) && !FormatHelper.isEmpty(_svcInfo.svcAttrCd) ? _svcInfo.svcAttrCd : null;
@@ -398,7 +399,7 @@ class ApiRouter {
 
       if( ['A', 'C'].indexOf(_lineProcessCase) > -1 ) {
         _isLineChangable = true;
-        _lineChangeUrl = '/product/line-change?p_mod=' + (_lineProcessCase === 'A' ? 'select' : 'change') + '&t_prod_id=' + _prodId + '&t_url=' + encodeURIComponent('/product/callplan?prod_id=' + _prodId);
+        _lineChangeUrl = '/product/line-change?p_mod=' + (_lineProcessCase === 'A' ? 'select' : 'change') + '&t_prod_id=' + _prodId + '&t_url=' + encodeURIComponent(_redirectUrl);
       }
 
       var lineChangeInfo_resp = {
