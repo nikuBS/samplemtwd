@@ -20,7 +20,6 @@ import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/r
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
-import ProductHelper from '../../utils/product.helper';
 
 const os = require('os');
 
@@ -74,7 +73,6 @@ class ApiRouter {
     GET_XTINFO: { path: '/xtractor-info', method: API_METHOD.GET, target: this.getXtInfo },
     GET_DOWNGRADE: { path: '/downgrade', method: API_METHOD.GET, target: this.getDowngrade },
     GET_CHANGEGUIDE: { path: '/changeGuide', method: API_METHOD.GET, target: this.getChangeGuide },
-    GET_PRODUCT_LINECHANGE_INFO: { path: '/product/linechange-info', method: API_METHOD.GET, target: this.getLineChangeInfo },
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
@@ -367,51 +365,6 @@ class ApiRouter {
           })
         }));
       });
-  }
-
-  private getLineChangeInfo(req: Request, res: Response, next: NextFunction) {
-    const _loginService = new LoginService();
-    const _apiService = new ApiService();
-    _apiService.setCurrentReq(req, res);
-
-    const _prodId = req.query.prodId || null;
-    const _redirectUrl = req.query.redirectUrl || '/product/callplan?prod_id=' + _prodId;
-    const _allSvcInfo = _loginService.getAllSvcInfo(req);
-    const _svcInfo = _loginService.getSvcInfo(req);
-    const _svcAttrCd = !FormatHelper.isEmpty(_svcInfo) && !FormatHelper.isEmpty(_svcInfo.svcAttrCd) ? _svcInfo.svcAttrCd : null;
-
-    // 상품타입코드 조회
-    _apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [_prodId]).subscribe((resp) => {
-      // API Error
-      if (resp.code !== API_CODE.CODE_00) {
-        return res.json(resp);
-      }
-      // 상품 퇴출상태
-      if (resp.result.prodStCd === 'G1000' || FormatHelper.isEmpty(resp.result.prodTypCd)) {
-        return res.json(resp);
-      }
-
-      const _prodTypCd = resp.result.prodTypCd;
-
-      var _isLineChangable = false;
-      var _lineChangeUrl = '';
-      const _lineProcessCase = ProductHelper._getLineProcessCase(_prodTypCd, _allSvcInfo, _svcAttrCd);
-
-      if( ['A', 'C'].indexOf(_lineProcessCase) > -1 ) {
-        _isLineChangable = true;
-        _lineChangeUrl = '/product/line-change?p_mod=' + (_lineProcessCase === 'A' ? 'select' : 'change') + '&t_prod_id=' + _prodId + '&t_url=' + encodeURIComponent(_redirectUrl);
-      }
-
-      var lineChangeInfo_resp = {
-        code: API_CODE.CODE_00,
-        result: {
-          isLineChangable: _isLineChangable,
-          lineChangeUrl: _lineChangeUrl
-        }
-      };
-      
-      return res.json(lineChangeInfo_resp);
-    });
   }
   
   /**
