@@ -18,35 +18,28 @@
             <!-- .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box">
-                <div class="user-info tod-user-info">
+                <div class="user-info">
                     <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
                     <span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
                         {{#if isMobilePlan}}
-                        <span class="number tod-lar-num">
-                          <span class="blind">회선번호</span>{{svcNumMask}}
-                          <button type="button" class="bt-link-tx underline small fe-line-change none">회선변경</button>
-                        </span>
+                        <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         <span class="sub-info">
                             <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
                             {{#if svcProdBasFeeInfo}}
-                                <span class="elem tod-price">
+                                <span class="elem">
                                 <span class="blind">월 이용요금</span>
                                     {{#if svcProdBasFeeInfo.isNaN}}
                                         {{svcProdBasFeeInfo.value}}
                                     {{else}}
                                         {{svcProdBasFeeInfo.value}} 원
-									              <span class="tx-regular">(월/부가세 포함)</span><!-- 190605  수정_01 -->
+									<span class="tx-regular">(월/부가세 포함)</span><!-- 190605  수정_01 -->
                                     {{/if}}
                             </span>
                             {{/if}}
                         </span>
                         {{else}}
-                        <span class="number lh-full tod-lar-num">
-                          <span class="blind">회선번호</span>{{svcNumMask}}
-                          <button type="button" class="bt-link-tx underline small fe-line-change none">회선변경</button>
-                        </span>
-                        
+                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{/if}}
                     </div>
                 </div>
@@ -81,7 +74,7 @@
                     {{#if isComparePlan}}
                         <div class="pt30">
                             <ul class="bt-slice">
-                                <li class="bt-red1">
+                                <li class="bt-blue1">
                                     <button class="fe-btn_compare_plans" aria-haspopup="true">사용 중인 요금제와 비교하기</button>
                                 </li>
                             </ul>
@@ -499,29 +492,31 @@
                 <!--// .cont-box -->
             {{/if}}
             {{#if isNoticeList}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
                 <!-- .cont-box -->
-                <div class="cont-box noborder bgnone">
-                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-                    <ul class="pg-chk-list02 fe-noti-list">
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02 fe-noti-list">
                         {{#noticeList}}
                             <li>
-                                <button class="btn-tip fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">
-                                    {{noticeTit}}<i class="icon-badge-tip"><span class="blind">{{noticeTit}}</span></i>
+                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">
+                                    {{noticeTit}}<span class="tip-view">TIP</span>
                                 </button>
                                 <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
                             </li>
                         {{/noticeList}}
                         {{#isMobilePlan}}
                             <li>
-                                <button class="btn-tip fe-product-tip" id="MP_02_02_02_tip_01" aria-haspopup="true">
-                                    서비스 이용안내<i class="icon-badge-tip"><span class="blind">서비스 이용안내</span></i>
+                                <button type="button" class="tip-view-btn fe-product-tip" id="MP_02_02_02_tip_01" aria-haspopup="true">
+                                    서비스 이용안내 <span class="tip-view">TIP</span>
                                 </button>
                             </li>
                         {{/isMobilePlan}}
                         {{#isDiscountPgm}}
                             <li>
-                                <button class="btn-tip fe-product-tip" id="BS_02_01_01_02_tip_01" aria-haspopup="true">
-                                    할인반환금 안내<i class="icon-badge-tip"><span class="blind">할인반환금 안내</span></i>
+                                <button type="button" class="tip-view-btn fe-product-tip" id="BS_02_01_01_02_tip_01" aria-haspopup="true">
+                                    할인반환금 안내 <span class="tip-view">TIP</span>
                                 </button>
                             </li>
                         {{/isDiscountPgm}}

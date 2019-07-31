@@ -724,6 +724,102 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * 요금제변경/가입시 회선변경 Process 진입유형 계산
+   * @param prodTypCd - 상품유형코드
+   * @param allSvc - 사용자 회선 데이터
+   * @param svcAttrCd - 현재 회선의 유형 값
+   * @return 회선변경 Process Case
+   * @see A: 현재회선으로 가입 가능 && 기준회선 외 다른회선 선택 가능
+   * @see B: 현재회선으로 가입 가능 && 가입가능 회선이 1개
+   * @see C: 현재회선으로 가입 불가능 && 가입가능한 다른 회선 선택 가능
+   * @see D: 현재회선으로 가입 불가능 && 가입불가
+   */
+  private _getLineProcessCase(prodTypCd: any, allSvc?: any, svcAttrCd?: any): any {
+    if (FormatHelper.isEmpty(allSvc) || FormatHelper.isEmpty(svcAttrCd)) {
+      return null;
+    }
+
+    const allowedSvcAttrInfo: any = this._getAllowedSvcAttrCd(prodTypCd),
+      isAllowedCurrentSvcAttrCd: boolean = allowedSvcAttrInfo.svcAttrCds.indexOf(svcAttrCd) !== -1;
+
+    if (FormatHelper.isEmpty(allowedSvcAttrInfo.group)) {
+      return 'D';
+    }
+
+    const allowedLineLength = this._getAllowedLineLength(allowedSvcAttrInfo.svcAttrCds, allSvc[allowedSvcAttrInfo.group]);
+
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength > 1) {
+      return 'A';
+    }
+
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength === 1) {
+      return 'B';
+    }
+
+    if (!isAllowedCurrentSvcAttrCd && allowedLineLength > 0) {
+      return 'C';
+    }
+
+    return 'D';
+  }
+
+  /**
+   * 접근가능 회선 개수 계산
+   * @param svcAttrCds - 사용자의 회선 유형 배열
+   * @param svcGroupList - 접근 가능 회선 유형 코드 배열
+   */
+  private _getAllowedLineLength(svcAttrCds: any, svcGroupList: any): any {
+    let length: any = 0;
+
+    svcGroupList.forEach((item) => {
+      if (svcAttrCds.indexOf(item.svcAttrCd) !== -1) {
+        length++;
+      }
+    });
+
+    return length;
+  }
+
+  /**
+   * 접근가능 회선 유형 계산
+   * @param prodTypCd - 상품 유형
+   */
+  private _getAllowedSvcAttrCd(prodTypCd: any): any {
+    if (['AB', 'C', 'H_P', 'H_A', 'F', 'G'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 'm',
+        svcAttrCds: ['M1', 'M2', 'M3', 'M4']
+      };
+    }
+
+    if (['D_I', 'E_I'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S1']
+      };
+    }
+
+    if (['D_P', 'E_P'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S3']
+      };
+    }
+
+    if (['D_T', 'E_T'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S2']
+      };
+    }
+
+    return {
+      group: null,
+      svcAttrCds: []
+    };
+  }
+
+  /**
    * basicInfo 10_0001의 plmProdList value중 plmProdId 들을 배열로 만들기
    * @param plmProdList - 연결된 상품코드 배열
    */
@@ -864,6 +960,7 @@ class ProductCommonCallplan extends TwViewController {
               [...this._getPlmProdIdsByList(basicInfo.result.plmProdList), prodId], isJoinedInfo, svcProdId),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
+            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
             isProductCallplan: true,
             isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s),
             loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
