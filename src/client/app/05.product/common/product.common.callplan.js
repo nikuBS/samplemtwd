@@ -729,18 +729,22 @@ Tw.ProductCommonCallplan.prototype = {
 
     this._url = url;
     this._joinTermCd = joinTermCd;
+    
+    this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+
+    // 사전체크 에러메시지를 가입페이지에서 처리하도록 넘김
 
     // 사전체크 API가 없는 경우엔 skip
-    if (Tw.FormatHelper.isEmpty(preCheckApi)) {
-      this._joinTermCd = null;
-      return this._procAdvanceCheck({ code: '00' });
-    }
+    // if (Tw.FormatHelper.isEmpty(preCheckApi)) {
+    //   this._joinTermCd = null;
+    //   return this._procAdvanceCheck({ code: '00' });
+    // }
 
-    // 사전체크 API 요청
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
-      .done($.proxy(this._procAdvanceCheck, this))
-      .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
+    // // 사전체크 API 요청
+    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    // this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
+    //   .done($.proxy(this._procAdvanceCheck, this))
+    //   .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
   },
 
   /**
