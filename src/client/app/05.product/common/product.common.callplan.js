@@ -10,13 +10,14 @@
  * @param prodId - 상품 코드
  * @param prodTypCd - 상품 유형코드
  * @param settingBtnList - 설정버튼 목록
+ * @param lineProcessCase - 회선변경 프로세스 유형값 (ts컨트롤러 참고)
  * @param isPreview - 미리보기 원장 여부
  * @param isAllowJoinCombine - 결합상품 가입 가능 여부
  * @param svcMgmtNum - 서비스관리번호
  * @param bpcpServiceId - BPCP ID
  * @param eParam - BPCP eParam
  */
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList,
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase,
   isPreview, isAllowJoinCombine, svcMgmtNum, bpcpServiceId, eParam, loggedYn, svcProdId) {
   // 컨테이너 레이어 선언
   this.$container = rootEl;
@@ -35,6 +36,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList,
   this._prodId = prodId;
   this._prodTypCd = prodTypCd;
   this._settingBtnList = settingBtnList;
+  this._lineProcessCase = lineProcessCase;
   this._isPreview = isPreview === 'Y';
   this._isAllowJoinCombine = isAllowJoinCombine === 'Y';
   this._svcMgmtNum = svcMgmtNum;
@@ -525,7 +527,7 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     
-    if(joinTermCd !== '01' && this._prodTypCd === 'C'){ // 해지방어 팝업, 상품타입이 부가서비스일 경우
+    if(joinTermCd !== '01' && this._prodTypCd === 'C'){ // 해지방어 팝업
       return new Tw.ProductMobilePlanAddDowngrade(this.$container, {
         svcMgmtNum: this._svcMgmtNum, 
         prodId: this._prodId, 
@@ -536,7 +538,7 @@ Tw.ProductCommonCallplan.prototype = {
       //this._reqTerminateDefense(joinTermCd, url);
       //this._procPreCheck(joinTermCd, url)
         
-    }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출, 부가서비스가 아닐 경우
+    }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출
       return this._procPreCheck(joinTermCd, url);
     }
 
@@ -573,6 +575,7 @@ Tw.ProductCommonCallplan.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       // DG방어 팝업 호출
       return this._reqDownGrade(joinTermCd, url, currentProdId, mbrNm);
+      // return this._onLineProcess(joinTermCd, url);
     }
 
     this._openChangeGuide(joinTermCd, url, currentProdId, mbrNm, resp.result);
@@ -663,7 +666,7 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _resDownGrade: function(joinTermCd, url, currentProdId, mbrNm, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      return this._procPreCheck(joinTermCd, url);
+      return this._onLineProcess(joinTermCd, url);
     }
 
     this._openDownGrade(joinTermCd, url, currentProdId, mbrNm, resp.result);
@@ -696,7 +699,7 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _resDownGrade: function(joinTermCd, url, currentProdId, mbrNm, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      return this._procPreCheck(joinTermCd, url);
+      return this._onLineProcess(joinTermCd, url);
     }
 
     this._openDownGrade(joinTermCd, url, currentProdId, mbrNm, resp.result);
@@ -713,7 +716,25 @@ Tw.ProductCommonCallplan.prototype = {
    */
   _openDownGrade: function(joinTermCd, url, currentProdId, mbrNm, downGradeInfo) {
     new Tw.ProductMobilePlanDowngradeProtect(this.$container, downGradeInfo, currentProdId, mbrNm,
-      this._prodId, this._event, $.proxy(this._procPreCheck, this, joinTermCd, url));
+      this._prodId, this._event, $.proxy(this._onLineProcess, this, joinTermCd, url));
+  },
+
+  /**
+   * @function
+   * @desc 회선 변경 프로세스 실행
+   * @param joinTermCd - 01 가입 03 해지
+   * @param url - 타겟 url
+   * @returns {*}
+   */
+  _onLineProcess: function(joinTermCd, url) {
+    // 해지 및 회선변경 프로세스 case 2, 4 에 해당되면 즉시 사전체크 호출
+    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D')) {
+      return this._procPreCheck(joinTermCd, url);
+    }
+
+    // 회선변경 프로세스 진입
+    this._historyService.goLoad('/product/line-change?p_mod=' + (this._lineProcessCase === 'A' ? 'select' : 'change') +
+      '&t_prod_id=' + this._prodId + '&t_url=' + encodeURIComponent(url + '?prod_id=' + this._prodId));
   },
 
   /**
