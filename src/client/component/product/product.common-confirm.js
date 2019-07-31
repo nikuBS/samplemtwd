@@ -108,7 +108,7 @@ Tw.ProductCommonConfirm.prototype = {
       $wrap.addClass('fe-tooltip-replaced-link');
     }
 
-    this._apiService.request(Tw.NODE_CMD.GET_PRODUCT_LINECHANGE_INFO, {prodId: this._data.toProdId, redirectUrl : location.pathname + location.search})
+    this._apiService.request(Tw.NODE_CMD.GET_PRODUCT_LINECHANGE_INFO, {prodId: this._data.toProdId})
     .done($.proxy(function(resp) {
       if ( resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
         return;
