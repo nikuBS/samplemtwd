@@ -1,0 +1,171 @@
+<%#
+* MenuName: T로밍 > 이벤트 > 바른 로밍
+* @file product.roaming.event.right-roam.html
+* @author junho Kwon
+* @since 2019.07.29
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: 'baro 로밍 festival 프로모션', svcInfo: svcInfo }) %>
+    <!--// #header -->
+    <!-- #contents -->
+    
+
+    <div class="tod-eventDetail" style="padding:0">
+        <style type="text/css">
+            .imagemap {position:relative;width:device-width;}
+            .imagemap a {display:block; height:100%;}
+        </style>
+        <h1 class="blind">5GX Summer Festival 프로모션 페이지</h1>
+        <div class="evtImg" style="position:relative;">
+            <div>
+                <img src="<%= CDN %>/img/product/img-baro-landing_1.png" alt="">
+                <div class="blind">
+                    <h3>바른 로밍 Festival</h3>
+                    <p>baro 로밍 요금제 가입하고, baro 통화 하면? 추첨 경품에 자동 응모됩니다!</p>
+                    <p>LG 트롬 건조기,스타일러,다이슨 청소기,쥬라기월드 입장권 등</p>
+                </div>
+            </div>
+            
+            <div class="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_2.png" alt="">
+                <div class="evtBtnBox" style="position:absolute; bottom:0%; left:5%; width:90%; height:20%;"><a href="/product/callplan?prod_id=NA00006489"><span class="blind">가입하기</span></a></div>
+                <div class="blind">
+                    <h3>01. 바로, 가입 꾹! 누르기</h3>
+                    <p>7월 이내 여행이신가요? baro 3GB 29,000원(부가세 포함)</p>
+                </div>
+            </div>
+
+            <div class="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_3.png" alt="">
+                <div class="evtBtnBox" style="position:absolute; bottom:1%; left:5%; width:90%; height:25%;"><a href="/product/callplan?prod_id=NA00006493"><span class="blind">바로 자세히보기</span></a></div>
+                <div class="blind">
+                    <p>부담 없는 금액으로 한 달을! baro 4GB 39,000원(부가세 포함)</p>
+                </div>
+            </div>
+
+            <div class="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_4.png" alt="">
+                <div class="evtBtnBox" style="position:absolute; bottom:17%; left:5%; width:90%; height:20%;"><a href="/product/callplan?prod_id=NA00006497"><span class="blind">바로 자세히보기</span></a></div>
+                <div class="blind">
+                    <p>데이터 넉넉하게 다녀오자! baro 7GB 59,000원(부가세 포함)</p>
+                </div>
+            </div>
+            <div class="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_6.png" alt="">
+                <div class="blind">
+                    <h3>02 바로 통화하기</h3>
+                </div>
+            </div>        
+            <div calss="imagemap">            
+                <div class="baro-banner">
+                    <div class="main-charge-box benefit section-swiper-box main-banner-img tod-bann-auto">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1" data-slider-auto="true"> <!-- 190610_수정 : Slide Auto 기능 클래스에서 attr로 변경 -->
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img class="full-img" src="<%= CDN %>/img/product/img-baro-banner1.png" alt="고품질의 데이터 무료 통화 / 데이터 로밍 요금제 가입만 해도 해외에서 무료 통화 가능">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img class="full-img" src="<%= CDN %>/img/product/img-baro-banner2.png" alt="baro통화는 T 전화로 / 한국, 해외에서 빠르고 생생한 고품질 무료 통화 ">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img class="full-img" src="<%= CDN %>/img/product/img-baro-banner3.png" alt="내 번호 그대로 / 전 세계 어디서나 내 번호 그대로 편리하게 통화">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>           
+            </div> 
+            <div calss="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_7.png" alt="">
+                <div class="blind">
+                    <p>1만명에게 드리는 추첨경품! LG트롬 건조기 듀얼 인버터 1명, LG트롬 스타일러 슬림 1명, 다이슨V11 컴플리트 청소기 2명, 다이슨 슈퍼소닉 드리이기 3명, 쥬라기 월드 특별전 입장권 50명, baro 로밍 쿠폰 3GB/7일 1,000명, SK pay point 1만 원 2,000원, 스타벅스 카페 아메리카노(Tall)3,000원, 베스킨라빈스 싱글 레귤러 4,000명</p>
+                    <ul>
+                        <li>이벤트 기간 : 2019년 7월 9일(화) ~ 8월 31일(토)<li>
+                        <li>당첨자 발표 : 2019년 9월 10일(화)<li>
+                    </ul>
+                </div>
+            </div>     
+            <div class="imagemap">
+                <img src="<%= CDN %>/img/product/img-baro-landing_5.png" alt="">
+                <!--div class="evtBtnBox" style="position:absolute; top:24.2%; left:33.6%; width:32.5%; height:3.3%;"><a href="http://bit.ly/323q4zD" target="_blank"><span class="blind">바로 자세히보기</span></a></div-->
+                <div class="blind">
+                    <h3>꿈같은 로밍 생활 Cool baro</h3>
+                    <ul>
+                        <li>설마 해외까지 혜택이?  차원이 다른 baro의 즐거움</li>
+                        <li>7/9~8/31 지금 baro 신청하고 바로 선물 받아가자!</li>
+                        <li>7/15~8/31 항에서 baro 가입하고  ‘baro 라면’ 챙겨가자!</li>
+                        <li>7/19~8/31 baro Box 퀴즈 풀고 1일 무료 이용권 받자!</li>
+                        <li>7/20~8/31 ‘괌/사이판 국내처럼’ 이용후기 올리고 경품 받기!</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box accordion" style="background:#f2f2f2">
+                        <div class="acco-cover focuson">
+                            <div class="acco-style acco-as">
+                                <ul class="acco-list">
+                                    <li class="acco-box on"><!-- .on: 열기 -->
+                                        <div class="acco-tit"><button role="button" aria-pressed="true"><strong style="font-size:0.875rem;">유의사항</strong></button></div>
+                                        <div class="acco-cont announcement-box"  style="background:#f2f2f2;padding-top:0;">                                               
+                                            <ul class="bul-text-list" style="padding-top:0">
+                                                <li style="margin-top:0">이 이벤트는 개인정보 수집 및 이용에 동의하신 SK텔레콤 고객님만 참여하실 수 있습니다.</li>
+                                                <li>부정적인 방법으로 이벤트에 응모할 경우 당첨이 취소될 수 있습니다.</li>
+                                                <li>이 이벤트는 SK텔레콤 사정에 따라 변경되거나 조기 종료될 수 있습니다.</li>
+                                                <li>개인정보 오기입 및 휴대폰 해지, 정지, 번호변경 등으로 인한 불이익은 책임지지 않습니다.</li>
+                                            </ul>
+                                            <ul class="bul-text-list" style="margin-top:0.813rem;">
+                                                <strong style="font-size:0.75rem;letter-spacing:-1px">[ baro 로밍 요금제 이용하고 10,000명 추첨 선물 응모하기 이벤트 ]</strong>
+                                                <li> 이벤트에 기간(한국시간 기준) 내 응모하고 baro 로밍 요금제 가입/해외에서 데이터 사용 및 baro 통화를 이용하면 추첨을 통해 경품을 드립니다.</li>
+                                                <li> 쥬라기 월드 특별전 입장권, baro 로밍 쿠폰 3GB/7일, SK pay point 1만 원, 스타벅스카페 아메리카노(Tall), 배스킨라빈스 싱글 레귤러 아이스크림에 당첨될 경우 별도의 안내 연락 없이 2019년 9월 10일 이후 참여하신 휴대폰 번호로 모바일 쿠폰을 보내드립니다.</li>
+                                                <li>기간 안에 사용하지 않은 모바일 쿠폰은 기간 연장이나 교환/환불이 불가합니다.</li>
+                                                <li>전화 연락으로 당첨 발표 및 배송지를 확인할 때, 제세공과금 신고를 위해 신분증 등 고객님의 정보를 요청할 수 있습니다.</li>
+                                                <li>세 번 이상 연락되지 않을 경우 당첨은 자동으로 취소됩니다.</li>
+                                                <li>5만 원이 초과되는 경품에 대한 제세공과금(22%)은 SK텔레콤이 부담합니다.</li>
+                                                <li>경품 이미지는 실제와 다를 수 있으며, 경품의 종류 및 수량, 이벤트 일정은 SK텔레콤의 사정에 따라 변경되거나 지연될 수 있습니다.</li>                                                    
+                                            </ul>   
+                                            <p style="font-size:0.75rem;padding-left:0.5rem;margin-top:1.4rem;"><strong>이벤트 관련 문의 : 02-885-7016(유료) / 평일 10:00~18:00</strong></p>                                       
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <!-- // .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>
