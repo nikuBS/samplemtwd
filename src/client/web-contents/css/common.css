@@ -9579,3 +9579,12 @@ button:focus span {
 /* 190715 추가 [OP002-2474] T world x SK pay 적용 */
 .tod-clearboth{clear:both;}
 .tod-floatnone{float:none !important}
+
+/* 190715 추가 [OP002-2474] T world x SK pay 적용 */
+.tod-clearboth{clear:both;}
+.tod-floatnone{float:none !important}
+
+/* 190723 [OP002-2580] 동호 입력 */
+.address-wrap.inputbox.tod-type1 .input{width:auto}
+.address-wrap.inputbox.tod-type1 .dongho.first{width:9.54%}
+.address-wrap.inputbox.tod-type1 .dongho{width:6.06%;padding-left:0.43rem;vertical-align:middle}
