@@ -35477,6 +35477,13 @@ body.apphome .section-box {
 .user-info.tod-user-info .ico{background-image:url('/img/ico/ico-con-user-new.png') ; top:50%; margin-top:-1rem}
 .user-info.tod-user-info .in-info2{min-height:auto}
 
+/* 190726 [OP002-2539] T High5 적금 부가서비스 UI 개선 */
+.data-list-type1 .type1.tod-high5 li {display:table; width:100%;}
+.data-list-type1 .type1.tod-high5 li .stit,
+.data-list-type1 .type1.tod-high5 li .use {display:table-cell;}
+.data-list-type1 .type1.tod-high5 li .stit {padding-right:0;}
+.data-list-type1 .type1.tod-high5 li .use {position:static; text-align:right;}
+
 /* 190726 추가 [OP002-2866] main banner 자동재생관련 - components 에도 추가 */
 .section-box.nogaps.tod-no-mg{margin:0.63rem 0 0 0;}
 .main-charge-box.section-swiper-box.tod-nar-ban{min-height:8.75rem;}
