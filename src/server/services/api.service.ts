@@ -193,7 +193,7 @@ class ApiService {
     this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
-      this.setServerSession(resp.headers, req, res).subscribe(() => {
+      this.setServerSession(resp.headers, req, res, command).subscribe(() => {
         if ( contentType.includes('json') ) {
           if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
             if ( respData.code === API_CODE.BFF_0003 ) {
@@ -244,7 +244,7 @@ class ApiService {
 
       if ( command.server === API_SERVER.BFF ) {
         const contentType = headers['content-type'];
-        this.setServerSession(headers, req, res).subscribe((resp) => {
+        this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
             if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
               if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0003 ) {
@@ -289,13 +289,20 @@ class ApiService {
    * @param headers
    * @param req
    * @param res
+   * @parem command
    */
-  private setServerSession(headers, req, res): Observable<any> {
+  private setServerSession(headers, req, res, command): Observable<any> {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
       if ( !FormatHelper.isEmpty(serverSession) ) {
+        if ( req.session.serverSession !== serverSession) {
+          this.logger.error(this, '[BE Session changed]', command.path, req.originalUrl
+                            , '[ Before : ' + req.session.serverSession + ' ]'
+                            , '[ After : ' + serverSession + ' ]'
+                            , req.session.svcInfo);
+        }
         return this.loginService.setServerSession(req, res, serverSession);
       } else {
         return Observable.of({});
