@@ -298,6 +298,8 @@ Tw.MyTDataRechargeCouponUse.prototype = {
 
     // submain에서 진입한 경우 뒤로가기 동작에서 submain으로 보내주기 위함
     Tw.CommonHelper.setLocalStorage('recharge', 'done');
+    // [OP002-2795] 잔여량 세션 데이터 업데이트 필요
+    this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId : Tw.SESSION_CMD.BFF_05_0001 });
     switch (type) {
       case 'data':
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=data');

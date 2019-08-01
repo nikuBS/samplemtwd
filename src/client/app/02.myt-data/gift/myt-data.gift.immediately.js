@@ -333,6 +333,8 @@ Tw.MyTDataGiftImmediately.prototype = {
    */
   _onRequestSuccessGiftData: function ($target, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      // [OP002-2795] 잔여량 세션 데이터 업데이트 필요
+      this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, { apiId : Tw.SESSION_CMD.BFF_05_0001 });
       this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else if ( res.code === 'GFT0008' ) {
       this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY, null, null, null, $target);
