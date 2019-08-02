@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="/img/common/favicon.png" />
     <meta name="description" content="페이지설명" />
     <meta name="keywords" content="서비스키워드" />
-    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:title" content="SKT 홈페이지" /> 
     <meta property="og:site_name" content="SKT" />
     <meta property="og:image" content="/image/common/skt_facebook.jpg" />
     <meta property="og:description" content="SKT framework" />
@@ -28,15 +28,17 @@
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
 </head>
 <body>
+    <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
+    <!--<div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
-    </div>
+    </div>-->
     <!--// #skip_navigation -->
+    <!-- Grand open 접근성 수정 -->
     <div class="wrap">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -76,13 +78,13 @@
 						<div class="charge-guide-wrap">
 							<div class="charge-cont">
 								<span class="sub-disc01">
-									<span class="elem">해지할 요금제</span>
+									<span class="elem">해지할 할인프로그램</span>
 								</span>
-								<span class="tit-tx"><span class="blind">가입할 상품정보</span>T로밍 아시아패스</span>
-								<span class="sub-disc03"><span class="tx-bold vbl">25,000원</span> (월/부가세 포함)</span><!-- 190605 수정_01 -->
+								<span class="tit-tx"><span class="blind">해지할 할인프로그램</span>척척할인</span>
+								<span class="sub-disc03"><span class="tx-bold vbl">5,500원</span> (월/부가세 포함)</span><!-- 190605 수정_01 -->
 							</div>
 							<div class="cont-noti pt36">
-								<span class="type3">데이터기본제공량을 다 사용하면 매일 50MB 추가, 안심옵션 혜택 제공</span>
+								<span class="type3">매월 제휴사 상품 일정금액 이상 소비시 통신비 할인</span>
 							</div>
 						</div>
 					</div>
@@ -158,7 +160,7 @@
 											<li>
 												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
 													<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
-													<!--// 2019.01.22  title값 삭제 sblee -->
+													<!-- 2019.01.22  title값 삭제 sblee -->
 													<div class="comp-list-layout" id="aria-comp-checkbox1">
 														<p class="layout-text">
 															<span class="mtext">서비스 해지 동의(필수)</span>
@@ -185,8 +187,10 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
 					    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-						<ul class="noti-list02">
-							<li><button aria-haspopup="true" class="tip-view-btn" title="상품 해지 시 유의사항 정보보기">상품 해지 시 유의사항<span class="tip-view">TIP</span></button></li>
+					    <ul class="noti-list02">
+							<!-- Grand open 접근성 수정 -->
+							<li><button aria-haspopup="true" class="tip-view-btn">상품 해지 시 유의사항<span class="tip-view">TIP</span></button></li>
+							<!--// Grand open 접근성 수정 -->
 							<!-- 2019.01.24 title값 수정 -->
 						</ul>
 					</div>
