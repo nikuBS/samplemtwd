@@ -135,7 +135,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
             }, $.proxy(function($popupContainer){
                 $popupContainer.on('click', '.fe-btn_close', $.proxy(this._onNextDepth, this, $popupContainer));
                 $popupContainer.on('click', '.fe-btn_change', $.proxy(this._onChange, this));
-                new Tw.XtractorService($popupContainer);
+                new Tw.XtractorService($popupContainer, true);
             }, this), $.proxy(this._dgSuccess, this, actionType), 'dg_1depth_contents', this._openEvent);
 
         }
@@ -147,7 +147,7 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
      * @return $.Deferred
      */
     _dgSuccess: function(actionType) {
-        if(this._2depthPopup){
+        if(this._2depthPopup){            
             setTimeout( $.proxy(function(){
                 this._popupService.open({
                     hbs: actionType.hbs2,
@@ -226,8 +226,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
      * @function
      * @desc 최종 팝업을 닫을때 모든 팝업을 정리함
      */
-    _onContentsClose: function() {
-  
+    _onContentsClose: function() {  
+        
       this._popupService.close();
     },
 

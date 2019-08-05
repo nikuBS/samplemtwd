@@ -217,7 +217,8 @@
             this.$banners.find('img').on('load', callback);
           }
   
-          new Tw.XtractorService(this.$banners, true);
+          // new Tw.XtractorService(this.$banners, true);
+          new Tw.XtractorService(this.$banners);
         }
       }
     },
