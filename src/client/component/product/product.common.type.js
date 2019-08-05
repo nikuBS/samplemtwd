@@ -91,7 +91,8 @@ Tw.PRODUDT.PROMOTIONS = {
         return {xt: {
           eid: xtEids[data.prodId][0],
           changeCsid: '_ASCTM',
-          closeCsid: '_ASC'
+          closeCsid: '_ASC',
+          topCloseCsId: '_CLS'
         }};  // 무료요금제 이용시 안내 메시지
       }else if(data.coinDate != 'N'){
         return null;
@@ -103,13 +104,15 @@ Tw.PRODUDT.PROMOTIONS = {
         return {xt: {
           eid: xtEids[data.prodId][1],
           changeCsid: '_BSCTM',
-          closeCsid: '_ASC'
+          closeCsid: '_ASC',
+          topCloseCsId: '_CLS'
         }};  // 무료요금제 이용시 안내 메시지
       }else if(2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
         return {xt: {
           eid: xtEids[data.prodId][2],
           changeCsid: '_CSCTM',
-          closeCsid: '_ASC'
+          closeCsid: '_ASC',
+          topCloseCsId: '_CLS'
         }};  // 무료요금제 이용시 안내 메시지
       }
       return null;
