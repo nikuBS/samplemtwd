@@ -206,6 +206,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           item.on('click', $.proxy(this._onImmDetailRefill, this));
           break;
         case 'data_coupon':
+        case 's_data_coupon': // OP002-2865 [myT] (W-1907-166-01) T단기데이터 노출 화면 변경 및 메뉴 추가 요청 OP002-2928
         case 't_coupon':
         case 'jeju_coupon':
           item.on('click', $.proxy(this._onPrepayCoupon, this, classNm));
@@ -268,6 +269,11 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       case 'data_coupon':
         $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA);
         break;
+      // OP002-2865 [myT] (W-1907-166-01) T단기데이터 노출 화면 변경 및 메뉴 추가 요청 OP002-2928 start
+      case 's_data_coupon':
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA);
+        break;
+      // OP002-2865 [myT] (W-1907-166-01) T단기데이터 노출 화면 변경 및 메뉴 추가 요청 OP002-2928 end
       case 't_coupon':
         $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON);
         break;
