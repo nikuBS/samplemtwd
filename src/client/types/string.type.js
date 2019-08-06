@@ -258,7 +258,8 @@ Tw.NON_PAYMENT = {
   },
   ERROR: {
     P_R: '이미 납부가능일이 등록되어있습니다.',
-    S_R: '이미 이용정지가 해제되어있습니다.'
+    S_R: '이미 이용정지가 해제되어있습니다.',
+    ETC: '오류가 발생하였습니다.<br/>고객센터로 문의 부탁드립니다.'
   },
   TOAST: {
     P: '납부가능일이 선택되었습니다.',
@@ -2081,4 +2082,8 @@ Tw.WIRE_NUMBER_CHANGE = {
     DESC: '<span class="tod-info-title">(변경한 번호 : <span class="tod-color-orange">{{NUMBER}}</span>)',
     LINK: 'T world 홈으로 이동'
   }
+};
+
+Tw.PRODUCT_JOIN_OCB = {
+  POPUP : '혜택 안내'
 };
