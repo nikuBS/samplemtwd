@@ -126,7 +126,6 @@ Tw.ApiService.prototype = {
     }
 
     if ( resp.code === Tw.API_CODE.NODE_1005 ) {
-
       var params = 'sess_invalid=Y'
         + '&pre_server_se=' + resp.result.preServerSession
         + '&cur_server_se=' + resp.result.curServerSession
