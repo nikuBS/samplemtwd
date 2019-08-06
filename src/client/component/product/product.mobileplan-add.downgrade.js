@@ -154,7 +154,8 @@ Tw.ProductMobilePlanAddDowngrade.prototype = {
                     titleNm: '혜택안내',
                     titleClass: 'no-header color-type-CUSTOM',
                     layer: true,
-                    cdn: Tw.Environment.cdn
+                    cdn: Tw.Environment.cdn,
+                    xt: this._data.xt
                 }, $.proxy(this._bindEventContentsPopup, this), $.proxy(this._onContentsClose, this), 'dg_2depth_contents', this._openEvent);
             } , this), 500);
         }
