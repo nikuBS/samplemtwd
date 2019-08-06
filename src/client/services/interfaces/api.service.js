@@ -23,7 +23,7 @@ Tw.ApiService.prototype = {
   request: function (command, params, headers, pathParams, version, option) {
 
     // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
-    if(!Tw.CommonHelper.checkValidSession()) {
+    if(!Tw.CommonHelper.checkValidSession(location.pathname, command.path, 'CLIENT_API_REQ')) {
       return;
     } else {
       // var pathVariables = this._getPathVariables(arguments);
@@ -118,6 +118,25 @@ Tw.ApiService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(resp.loginType) ) {
       this.sendNativeSession(resp.loginType);
       delete resp.loginType;
+    }
+
+    // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
+    if(!Tw.CommonHelper.checkValidSession(location.pathname, command.path, 'CLIENT_API_RES')) {
+      return;
+    }
+
+    if ( resp.code === Tw.API_CODE.NODE_1005 ) {
+
+      var params = 'sess_invalid=Y'
+        + '&pre_server_se=' + resp.result.preServerSession
+        + '&cur_server_se=' + resp.result.curServerSession
+        + '&url=' + resp.result.url
+        + '&command_path=' + resp.result.commandPath
+        + '&point=' + resp.result.point
+        + '&target=' + resp.result.target;
+
+      this._historyService.replaceURL('/common/member/logout/expire?' + params);
+      return;
     }
 
     if ( resp.code === Tw.API_CODE.NODE_1004 ) {
