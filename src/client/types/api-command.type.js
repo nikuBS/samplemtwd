@@ -218,9 +218,6 @@ Tw.API_CMD = {
   BFF_05_0205: { path: '/core-bill/:version/use-contents/auth/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: Tw.API_METHOD.POST },
   BFF_05_0207: { path: '/core-product/:version/services/combinations/:args0/personally-terminations', method: Tw.API_METHOD.PUT },
-  BFF_05_0209: { path: '/core-modification/:version/wire-phone/:args0/change', method:Tw.API_METHOD.GET },
-  BFF_05_0210: { path: '/core-modification/:version/wire-phone/:args0/change/number', method: Tw.API_METHOD.GET },
-  BFF_05_0211: { path: '/core-modification/:version/wire-phone/:args0/change/put', method: Tw.API_METHOD.GET },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
@@ -274,7 +271,6 @@ Tw.API_CMD = {
   BFF_06_0050: { path: '/core-recharge/:version/tfamily-sharing-limitations', method: Tw.API_METHOD.POST },
   BFF_06_0051: { path: '/core-recharge/:version/tfamily-sharing-limitations/:args0', method: Tw.API_METHOD.DELETE },
   BFF_06_0052: { path: '/core-bill/:version/pps-cards', method: Tw.API_METHOD.POST },
-
   BFF_06_0053: { path: '/core-bill/:version/pps-credit-cards', method: Tw.API_METHOD.POST },
   BFF_06_0054: { path: '/core-bill/:version/pps-auto', method: Tw.API_METHOD.POST },
   BFF_06_0055: { path: '/core-bill/:version/pps-auto', method: Tw.API_METHOD.GET },

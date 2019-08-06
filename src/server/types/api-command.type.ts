@@ -332,9 +332,6 @@ export const API_CMD = {
   BFF_05_0206: { path: '/core-bill/:version/micro-pay/auth/hist-requests', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0207: { path: '/core-product/:version/services/combinations/:args0/personally-terminations',
     method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0209: { path: '/core-modification/:version/wire-phone/:args0/change', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0210: { path: '/core-modification/:version/wire-phone/:args0/change/number', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0211: { path: '/core-modification/:version/wire-phone/:args0/change/put', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
