@@ -170,7 +170,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.P_R);
       }
       else {
-        Tw.Error(resp.code, resp.msg).pop();
+        this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.ETC);
       }
     }
     else {
@@ -216,6 +216,8 @@ Tw.MyTFareSubMainNonPayment.prototype = {
       }
       else if ( result.success === Tw.NON_PAYMENT.SUCCESS.R ) {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.S_R);
+      } else {
+        this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.ETC);
       }
     }
     else {
