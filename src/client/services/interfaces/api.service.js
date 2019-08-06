@@ -125,13 +125,6 @@ Tw.ApiService.prototype = {
       return;
     }
 
-    // for test
-    if(command.path === Tw.NODE_CMD.CHANGE_TWM_VALUE_2.path) {
-      if(resp.code === Tw.API_CODE.CODE_00) {
-        Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM, resp.result);
-      }
-    }
-
     if ( resp.code === Tw.API_CODE.NODE_1005 ) {
 
       var params = 'sess_invalid=Y'
