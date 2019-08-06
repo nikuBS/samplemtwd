@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <!-- Grand open 접근성 수정 -->
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+        <!-- // Grand open 접근성 수정 -->
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">미납요금</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"> <!-- //190729 [OP002-2796] 추가01 : 리디자인 적용 -->
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="unpaid-charges">
+                        <dl class="total-box">
+                            <dt>미납요금</dt>
+                            <dd><span class="num ff-tg-black">119,090</span><span class="ff-tg-medium">원</span></dd>
+                        </dl>
+                        <ul class="point-box"> <!-- //190729 [OP002-2796] 수정01 -->
+                            <li>
+                                <dl>
+                                    <dt>2018년 4월</dt>
+                                    <dd>40,000원</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>2018년 5월</dt>
+                                    <dd>40,000원</dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 190729 [OP002-2796] 추가02 -->
+                    <ul class="bt-slice">
+                        <li><button class="btn-round1 btn-style1">납부하기</button></li>
+                    </ul>
+                    <!-- //190729 [OP002-2796] 추가02 -->
+                </div>
+               
+                <!--// .cont-box -->
+                <div class="cont-box bgnone noborder">
+                    <div class="box-suggest">
+                        <div class="suggest-info">
+                            <ul class="suggest-dot type2">
+                                <li>2대 이상의 회선을 통합청구 신청하신 경우 합산된 요금이 청구 됩니다.</li>
+                                <!-- <li>이용에 불편이 없도록 미납요금을 납부하시기 바랍니다.</li> --> <!-- //190729 [OP002-2796] 삭제01 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
