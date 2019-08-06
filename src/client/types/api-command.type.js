@@ -65,6 +65,8 @@ Tw.API_CMD = {
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
   BFF_01_0064: { path: '/:version/mask-methods', method: Tw.API_METHOD.GET },
   BFF_01_0065: { path: '/core-modification/:version/share-scuturl', method: Tw.API_METHOD.GET },
+  // for test
+  BFF_01_0068: { path: '/:version/cookie-test-api', method: Tw.API_METHOD.GET},
   // AUTH
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/:version/user/accounts', method: Tw.API_METHOD.DELETE },
@@ -612,7 +614,11 @@ Tw.NODE_CMD = {
   GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
-  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET }
+  GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: Tw.API_METHOD.GET },
+
+  // for OP002-2289 test
+  CHANGE_TWM_VALUE_1: { path: '/change/twm-value-1', method: Tw.API_METHOD.GET },
+  CHANGE_TWM_VALUE_2: { path: '/change/twm-value-2', method: Tw.API_METHOD.GET }
 };
 
 Tw.SESSION_CMD = {
@@ -677,6 +683,7 @@ Tw.API_CODE = {
   NODE_1002: '1002',  // 인증 오류
   NODE_1003: '1003',  // 처리 완료
   NODE_1004: '1004',  // 세션 만료
+  NODE_1005: '1005',  // 세션 변경
 
   NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
   RECEIVER_LIMIT: 'ZNGME0000', // 쿠폰 받는 사람 횟수 초과

@@ -9,6 +9,7 @@ import CryptoHelper from '../utils/crypto.helper';
 import BrowserHelper from '../utils/browser.helper';
 import DateHelper from '../utils/date.helper';
 import CommonHelper from '../utils/common.helper';
+import { API_CODE } from '../types/api-command.type';
 
 /**
  * 세션정보를 다루는 service
@@ -273,7 +274,7 @@ class LoginService {
         req.session.serverSession = serverSession;
         req.session.save(() => {
           this.logger.debug(this, '[setServerSession]', req.session);
-          observer.next(req.session.serverSession);
+          observer.next({code : API_CODE.CODE_00, serverSession : req.session.serverSession});
           observer.complete();
         });
       }

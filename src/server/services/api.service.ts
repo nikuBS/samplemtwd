@@ -189,13 +189,18 @@ class ApiService {
   private apiCallback(observer, command, req, res, startTime, resp) {
     const contentType = resp.headers['content-type'];
 
-    const respData = resp.data;
+    let respData = resp.data;
     this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
-      this.setServerSession(resp.headers, req, res, command).subscribe(() => {
+      this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
-          if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
+          // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
+          if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+            // BFF server session이 변경되었을 경우
+            if ( data && data.code === API_CODE.NODE_1005) {
+              this.redirectInvalidSession(req, res, data);
+            }
             if ( respData.code === API_CODE.BFF_0003 ) {
               const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
               this.logger.error(this, '[API RESP] Need Login', respData.code, respData.msg, this.loginService.getFullPath(req));
@@ -216,6 +221,9 @@ class ApiService {
                 this.checkServiceBlock(resp.result);
               }
             }
+          // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
+          } else if ( data && data.code === API_CODE.NODE_1005) {
+            respData = {code: API_CODE.NODE_1005, result: data.result};
           }
         }
 
@@ -238,7 +246,7 @@ class ApiService {
    */
   private handleError(observer, command, req, res, err) {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
-      const error = err.response.data;
+      let error = err.response.data;
       const headers = err.response.headers;
       this.logger.error(this, '[API ERROR]', command.path, error, req.baseUrl);
 
@@ -246,7 +254,14 @@ class ApiService {
         const contentType = headers['content-type'];
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
-            if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') || req.base.indexOf('store')) ) {
+            // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
+            if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+            
+              // BFF server session이 변경되었을 경우
+              if ( resp && resp.code === API_CODE.NODE_1005) {
+                this.redirectInvalidSession(req, res, resp);
+              }
+
               if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0003 ) {
                 const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
                 this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
@@ -267,7 +282,11 @@ class ApiService {
                   this.checkServiceBlock(resp.result);
                 }
               }
+            // client에서 API 직접 호출 시 BFF server session이 변경되었을 경우
+            } else if ( resp && resp.code === API_CODE.NODE_1005) {
+              error = {code: API_CODE.NODE_1005, result: resp.result};
             }
+
           }
 
           observer.next(error);
@@ -296,12 +315,25 @@ class ApiService {
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
-      if ( !FormatHelper.isEmpty(serverSession) ) {
-        if ( req.session.serverSession !== serverSession) {
-          this.logger.error(this, '[BE Session changed]', command.path, req.originalUrl
-                            , '[ Before : ' + req.session.serverSession + ' ]'
-                            , '[ After : ' + serverSession + ' ]'
-                            , req.session.svcInfo);
+      if ( !FormatHelper.isEmpty(serverSession)) {
+        // 로그인 상태이고, 이전 request의 서버 세션과 response 서버 세션이 다를 경우는 오류 처리 한다.
+        if ( req.session.serverSession !== serverSession && this.loginService.isLogin(req)) {
+          // this.logger.error(this, '[BE Session changed]', command.path, req.originalUrl
+          //                   , '[ Before : ' + req.session.serverSession + ' ]'
+          //                   , '[ After : ' + serverSession + ' ]'
+          //                   , req.session.svcInfo);
+
+          return Observable.of({
+              code : API_CODE.NODE_1005, 
+              result : {
+                commandPath : command.path,
+                preServerSession : req.session.serverSession,
+                curServerSession : serverSession,
+                url : req.baseUrl + this.loginService.getPath(req),
+                point : 'SERVER_API_RES',
+                target : this.loginService.getPath(req)
+              }
+            });
         }
         return this.loginService.setServerSession(req, res, serverSession);
       } else {
@@ -756,6 +788,23 @@ class ApiService {
     const blockUrl = block.fallbackUrl || '/common/util/service-block';
     this.res.redirect(blockUrl + '?fromDtm=' + block.fromDtm + '&toDtm=' + block.toDtm);
     return;
+  }
+
+  /***
+   * BFF Spring의 session 변경 시 자동 logout 페이지로 redirect
+   * @param resp
+   */
+  private redirectInvalidSession(req, res, resp) {
+
+    const params = 'sess_invalid=Y'
+                + '&pre_server_se=' + resp.result.preServerSession
+                + '&cur_server_se=' + resp.result.curServerSession
+                + '&url=' + resp.result.url
+                + '&command_path=' + resp.result.commandPath
+                + '&point=' + resp.result.point
+                + '&target=' + resp.result.target;
+
+    res.redirect('/common/member/logout/expire?' + params);
   }
 }
 
