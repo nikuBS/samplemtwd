@@ -417,19 +417,27 @@ Tw.CommonHelper = (function () {
   /**
    * @desc compare origin TWM and current TWM
    */
-  var checkValidSession = function() {
+  var checkValidSession = function(url, commandPath, point) {
     var preTWM = this.getSessionStorage(Tw.SSTORE_KEY.PRE_TWM) || '';
-    var curTWM = this.getCookie(Tw.COOKIE_KEY.TWM);
+    var curTWM = this.getCookie(Tw.COOKIE_KEY.TWM) || '';
 
-    if(this.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y') {
+    if(this.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y' && !Tw.FormatHelper.isEmpty(curTWM)) {
       // 값이 비어 있으면, TWM 값을 저장
       if(Tw.FormatHelper.isEmpty(preTWM)) {
+        Tw.Logger.info('[checkValidSession]', 'Set PRE TWM : ', preTWM);
         this.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, this.getCookie(Tw.COOKIE_KEY.TWM));
       } else {
-        if(preTWM !== curTWM) {
-          // this.setCookie(Tw.COOKIE_KEY.TWM_LOGIN, '');
+        if(preTWM !== curTWM && location.search.indexOf("sess_invalid=Y") === -1) {
+          Tw.Logger.error('[checkValidSession]', 'Set PRE TWM : ', preTWM);
           var historyService = new Tw.HistoryService();
-          historyService.replaceURL('/common/member/logout/expire?sess_invalid=Y&target=' + location.pathname + location.search);
+          var params = 'sess_invalid=Y'
+            + '&pre_twm=' + preTWM
+            + '&url=' + url
+            + '&command_path=' + commandPath
+            + '&point=' + point
+            + '&target=' + location.pathname + location.search;
+
+          historyService.replaceURL('/common/member/logout/expire?' + params);
           return false;
         }
       }
