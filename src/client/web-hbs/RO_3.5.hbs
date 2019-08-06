@@ -1,0 +1,57 @@
+<div class="popup-page tw-popup  fixed-bottom h120 {{titleClass}}">
+    {{#if titleNm}}
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>{{titleNm}}</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+    {{/if}}
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                <!-- offering -->
+                <div class="tod-offer-wrap tc">
+                    <p class="offer-tit">
+                        FLO 계속 이용하고<br>
+                        <span class="tod-txcolor6">OK캐쉬백 5천 포인트</span> 받아가세요!
+                    </p>
+                    <div class="offer-img pt20">
+                        <img src="{{cdn}}/img/product/offer-img-ok5000.png" alt="">
+                    </div>
+                    <p class="offer-txt-2 mt20">
+                                <span class="tx-medium">
+                                    FLO 맞춤 추천, 알고 계신가요?<br>
+                                    내가 좋아하는 음악과 비슷한 곡을 찾아줘요!
+                                </span>
+                    </p>
+                </div>
+                <!-- //offering -->
+            </div>
+            <!-- //.cont-box -->
+        </div>
+
+        <!-- 하단 fixed 버튼 -->
+        <div class="bt-fixed-area tod-offer-bt-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1"><a href="/product/wireplan/join/ocb?eid={{xt.eid}}" class="fe-btn_close" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.closeCsid}}" data-xt_action="BV" data-xt_action="BC">계속 이용하고 OK캐쉬백 받기</a></li>
+                <li class="bt-offer">
+                    <span><a href="#" class="tod-offer-link fe-btn_change" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.changeCsid}}" data-xt_action="BV" data-xt_action="BC">해지하기</a></span>
+                </li>
+            </ul>
+        </div>
+        <!-- //하단 fixed 버튼 -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn" data-xt_eid="{{xt.eid}}" data-xt_csid="{{xt.topCloseCsId}}" data-xt_action="BV" data-xt_action2="BC"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

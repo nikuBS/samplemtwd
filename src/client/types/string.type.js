@@ -2083,3 +2083,7 @@ Tw.WIRE_NUMBER_CHANGE = {
     LINK: 'T world 홈으로 이동'
   }
 };
+
+Tw.PRODUCT_JOIN_OCB = {
+  POPUP : '혜택 안내'
+};

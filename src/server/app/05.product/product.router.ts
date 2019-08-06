@@ -62,6 +62,7 @@ import ProductWireplanSettingLettering from './controllers/wireplan/setting/prod
 import ProductWireplanSettingShowSender from './controllers/wireplan/setting/product.wireplan.setting.show-sender.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductWireplanReservationCancel from './controllers/wireplan/product.wireplan.reservation-cancel.controller';
+import ProductWireplanOkCashback from './controllers/wireplan/join/product.wireplan.join.ocb.controller';
 
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
@@ -73,7 +74,7 @@ import ProductRoamingSecureTroaming from './controllers/roaming/product.roaming.
 import ProductRoamingDataRoaming from './controllers/roaming/product.roaming.info.data-roaming.controller';
 import ProductRoamingBaroCall from './controllers/roaming/product.roaming.info.barocall.controller';
 import ProductRoamingBaroPromotion from './controllers/roaming/product.roaming.info.baropromotion.controller';
-import ProductRoamingGuamSaipan from "./controllers/roaming/product.roaming.info.guamsaipan.controller";
+import ProductRoamingGuamSaipan from './controllers/roaming/product.roaming.info.guamsaipan.controller';
 import ProductRoamingFee from './controllers/roaming/product.roaming.fee.controller';
 import ProductRoamingPlanAdd from './controllers/roaming/product.roaming.planadd.controller';
 import ProductRoamingCoupon from './controllers/roaming/product.roaming.coupon.controller';
@@ -164,6 +165,7 @@ class ProductRouter extends TwRouter {
     // this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
     // this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
+    this.controllers.push({ url: '/wireplan/join/ocb', controller: ProductWireplanOkCashback });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
