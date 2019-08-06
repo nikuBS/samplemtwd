@@ -290,7 +290,7 @@ class MyTJoinSubmainController extends TwViewController {
         break;
       case 'S1':
       case 'S2':
-      case 'S3':
+      case 'S3': // 집전화
         // 유선
         this.type = 2;
         break;
