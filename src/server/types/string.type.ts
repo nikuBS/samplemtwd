@@ -1252,3 +1252,7 @@ export const HAPPYCOM_SEARCH_OPTIONS = {
   applEduYn: '스마트폰 응용 과정',
   codingEduYn: '코딩교실'
 };
+
+export const MYT_JOIN_WIRE_NUMBER_CHANGE = {
+  TITLE: '전화 번호변경'
+};

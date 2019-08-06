@@ -1,0 +1,56 @@
+<div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>번호변경 확인</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <p class="con-txt1">전화 전화번호 변경 신청을 <br>하시겠습니까?</p><!-- 190712 수정_01 -->
+                <div class="data-result c-new01 mt40 mb20">
+                    <p class="tit">현재 번호</p>
+                    <p class="data"><em>{{ data.from }} </em><span></span></p>
+                    <span class="result-arrow mt10"></span>
+                    <p class="tit mt10">변경 후 번호</p>
+                    <p class="data"><em>{{ data.to }} </em><span></span></p>
+                    <p class="tit"><a class="bt-link-tx underline" id="fe-bt-back">다른 번호 조회하기</a></p>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <!-- .cont-box -->
+            <div class="cont-box noborder bgnone">
+                <div class="cont-noti">
+                    <ul class="bullet-type">
+                        <li>고객님! 개인정보보호를 위해 온라인/금융 기관에 등록하신 번호도 반드시 변경 하시길 바랍니다.</li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+
+        <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button type="button" id="fe-bt-confirm">변경 완료</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button type="button" class="prev-step">취소</button>
+    <!--// .popup-closeBtn -->
+</div>

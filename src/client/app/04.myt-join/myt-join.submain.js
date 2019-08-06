@@ -113,6 +113,7 @@ Tw.MyTJoinSubMain.prototype = {
       this.$wirePause.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$untillInfo.on('click', $.proxy(this._onMovedWireOtherSvc, this));
       this.$workNotify.on('click', $.proxy(this._onMovedWireOtherSvc, this));
+      this.$container.on('click', '#fe-wire-num-change', $.proxy(this._onChangeWireNumber, this));
     }
     else {
       if ( this.data.isInstallement ) {
@@ -500,5 +501,20 @@ Tw.MyTJoinSubMain.prototype = {
    */
   _onOpenCertifyPopup: function () {
     Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
+  },
+  /**
+   * @function
+   * @desc 유선회선 전화번호 변경 신청시 브로드랜드 가입회선 체크
+   * @private
+   */
+  _onChangeWireNumber: function (e) {
+    if(this.data.svcInfo.actCoClCd === 'B' ){ // 브로드밴드 가입자       
+      this._popupService.openConfirmButton(Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.CONTENTS,
+        Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.TITLE,
+        $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.OUTLINK.BROADBAND), null,
+        Tw.BUTTON_LABEL.CLOSE, Tw.WIRE_NUMBER_CHANGE.ALERT_BROADBAND.BUTTON, $(e.currentTarget));
+    } else {
+      this._historyService.goLoad('/myt-join/submain/wire/numchange');
+    }
   }
 };
