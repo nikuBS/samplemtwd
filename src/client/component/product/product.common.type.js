@@ -59,11 +59,11 @@ Tw.PRODUDT.PROMOTIONS = {
       var pooqData = ['NA00006577', 'NA00006584'];
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var successNum = pooqData.indexOf(data.prodId) > -1? '1': '2';
-      if(data.coinDate !== 'N'){
-        return null;
-      }else if(/*isFree*/ data.joinDate2 !== 'N'){
+      if(/*isFree*/ data.joinDate2 !== 'N'){
         return 'FREE_1' + '_' + successNum;  // 무료요금제 이용시 안내 메시지
-      } 
+      }else if(data.coinDate !== 'N'){
+        return null;
+      }  
       
       if(data.certDate === 'N'){ //data.joinDate1 === 'N'){
         return null; 
