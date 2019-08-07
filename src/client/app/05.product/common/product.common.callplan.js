@@ -528,15 +528,14 @@ Tw.ProductCommonCallplan.prototype = {
 
     
     if(joinTermCd !== '01' && this._prodTypCd === 'C'){ // 해지방어 팝업
-      return new Tw.ProductMobilePlanAddDowngrade(this.$container, {
-        svcMgmtNum: this._svcMgmtNum, 
-        prodId: this._prodId, 
-        svcProdId: this._svcProdId
-      }, this._event
-        , $.proxy(this._procPreCheck, this, joinTermCd, url)
-        , $.proxy(this._reqTerminateDefense, this, joinTermCd, url));
-      //this._reqTerminateDefense(joinTermCd, url);
-      //this._procPreCheck(joinTermCd, url)
+      // return new Tw.ProductMobilePlanAddDowngrade(this.$container, {
+      //   svcMgmtNum: this._svcMgmtNum, 
+      //   prodId: this._prodId, 
+      //   svcProdId: this._svcProdId
+      // }, this._event
+      //   , $.proxy(this._procPreCheck, this, joinTermCd, url)
+      //   , $.proxy(this._reqTerminateDefense, this, joinTermCd, url));
+      return this._reqTerminateDefense(joinTermCd, url);
         
     }else if (joinTermCd !== '01') {// 해지에 해당될 경우 즉시 사전체크 호출
       return this._procPreCheck(joinTermCd, url);
