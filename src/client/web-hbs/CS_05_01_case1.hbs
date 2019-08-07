@@ -1,0 +1,87 @@
+    <!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>조건선택</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="ti-caption-gray bdt titlebox-bgtype01">
+                <h3 class="tit">필터를 선택해 주세요</h3>
+                <div class="num">
+                    <!--접근성 수정-->
+                    <a class="resetbtn" role="button">초기화</a>
+                    <!-- //접근성 수정-->
+                </div>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                {{#each filters}}
+                <!-- 카테고리 이름 반복-->
+                <h3 class="filterlist-title">{{faqCategoryNm}}</h3>
+                <div class="productfilter-type">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <div class="productfilter">
+                                <ul class="select-list" role="group">
+                                    {{#each subFilters}}
+                                    <!--접근성 수정-->
+                                    <li class="checkbox" role="checkbox">
+                                        <!-- <input type="checkbox" name="checkbox" value="" title="{{faqCategoryNm}}"  {{#if checked}}checked="checked"{{/if}} data-filter-id="{{faqFilterId}}" aria-labelledby="{{ariaLabelledby}}"> -->
+                                        
+                                        <span class="text" aria-hidden="true">{{faqFilterNm}}</span>
+                                        <input type="checkbox" name="checkbox" value="" title="{{faqFilterNm}}"  {{#if checked}}checked="checked"{{/if}} data-filter-id="{{faqFilterId}}">
+                                    </li>
+                                    {{/each}}
+                                    <!--접근성 수정-->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                {{/each}}
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+        </div>
+        <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+        <div class="bt-fixed-area">
+            <!--// .cont-box -->
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    {{!-- <button disabled>적용하기</button> --}}
+                    <button>적용하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
