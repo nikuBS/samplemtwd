@@ -157,10 +157,10 @@ Tw.PRODUDT.PROMOTIONS = {
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
                   // 인증코드       적립        할인(100원)    요금제 혜택...
-        SUB_PROD: ['NA00006521', 'NA6655', 'NA00006541', 'NA00006542', 'NA00006576']
+        SUB_PROD: ['NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
       },
       'NA00006599': { // FLO 앤 데이터 플러스
-        SUB_PROD: ['NA00006600', 'NA6655', 'NA00006601', 'NA00006602']
+        SUB_PROD: ['NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
       }
     },
     BEFORE:[
@@ -198,7 +198,6 @@ Tw.PRODUDT.PROMOTIONS = {
     ],
     WHEN: [function(data){
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
-      console.log('case ? '+ moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month' ));
       if ( data.certDate === 'N' ) {
         return null; // 인증상품 가입여부 N => 기존해지 프로세스(case_04)
       } else if( data.joinDate2 !== 'N') {
@@ -208,17 +207,14 @@ Tw.PRODUDT.PROMOTIONS = {
         if(data.coinDate != 'N'){
           return null;
         } else if( data.joinDate1 === 'N' || 2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month' )) {
-          console.log('case 03 '+ moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month' ));
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         } else if( data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')) {
-          console.log('case 02 '+ moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month' ));
           return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
         }
       }
       return null;
     }],
     EXTEND: [function(data){
-      var isFree = data.isFree;
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var xtEids = {
         NA00006520: ['flo_ret_001', 'flo_ret_003', 'flo_ret_005'],

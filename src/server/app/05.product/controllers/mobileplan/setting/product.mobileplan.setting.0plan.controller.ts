@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
+import DateHelper from '../../../../../utils/date.helper';
 
 /**
  * @class
@@ -51,8 +52,9 @@ class ProductMobileplanSetting0plan extends TwViewController {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0177, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._floNData]),
-      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._pooqNData])
-      ).subscribe(([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]) => {
+      this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [this._pooqNData]),
+      this.apiService.request(API_CMD.BFF_01_0067, {})
+      ).subscribe(([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn, birthdayInfo]) => {
         const apiError = this.error.apiError([zeroPlanInfo, floNDataUseYn, pooqNDataUseYn]);
   
         if (!FormatHelper.isEmpty(apiError)) {
@@ -66,7 +68,8 @@ class ProductMobileplanSetting0plan extends TwViewController {
           prodId: prodId,
           zeroPlanInfo: zeroPlanInfo.result,
           floNDataUseYn: floNDataUseYn.result,
-          pooqNDataUseYn: pooqNDataUseYn.result
+          pooqNDataUseYn: pooqNDataUseYn.result,
+          isUnderAge19: DateHelper.isUnderAge(19, birthdayInfo.result.birthday)
         }));
       });
   }

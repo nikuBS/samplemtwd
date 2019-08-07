@@ -95,6 +95,8 @@ export const API_CMD = {
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_01_0064: { path: '/:version/mask-methods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0065: { path: '/core-modification/:version/share-scuturl', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0067: { path: '/:version/user/birthday-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // AUTH
   BFF_03_0000_TEST: { path: '/:version/load-test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0000: { path: '/:version/test-login', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
