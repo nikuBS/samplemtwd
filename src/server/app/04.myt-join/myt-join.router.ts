@@ -36,7 +36,6 @@ import MyTJoinNumChange from './controllers/submain/myt-join.submain.numchange.c
 import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.controller';
 import MyTJoinMyPlanCombineShare from './controllers/myplancombine/myt-join.myplancombine.share.controller';
 import MyTJoinSuspendComplete from './controllers/suspend/myt-join.suspend.complete';
-import MyTJoinWireNumChange from './controllers/submain/myt-join.submain.wire.numchange.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -85,8 +84,6 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/addition/thigh5', controller: MyTJoinMyPlanAddTHigh5 });
     this.controllers.push({ url: '/combinations/share', controller: MyTJoinMyPlanCombineShare });
     this.controllers.push({ url: '/combinations(/:combination)?', controller: MyTJoinMyPlanCombine });
-    this.controllers.push({ url: '/submain/wire/numchange', controller: MyTJoinWireNumChange });
-    this.controllers.push({ url: '/submain/wire/numchange/complete', controller: MyTJoinWireNumChange });
   }
 }
 
