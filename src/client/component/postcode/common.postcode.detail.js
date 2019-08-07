@@ -293,6 +293,8 @@ Tw.CommonPostcodeDetail.prototype = {
       $cloneNode.removeClass('none');
 
       $cloneNode.attr('data-bld-cd', $content[i].bldCd);
+      $cloneNode.attr('data-bld-cl-cd', $content[i].bldClCd); // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500
+      $cloneNode.attr('data-bldblk-unt-mndt-yn', $content[i].bldblk_unt_mndt_yn); // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500
 
       var bldNm = $content[i].bldNm;
       if ($content[i].bldNm.indexOf('N/A') !== -1) { // 결과가 N/A로 내려올 경우 텍스트 변경 (건물명 없음)
@@ -347,7 +349,9 @@ Tw.CommonPostcodeDetail.prototype = {
       'building': $.trim($target.find('.fe-building').text()),
       'zip': $.trim($target.find('.fe-zip').text()),
       'ldongCd': this.$selectedAddress.attr('id'),
-      'bldCd': $target.attr('data-bld-cd')
+      'bldCd': $target.attr('data-bld-cd'),
+      'bldClCd': $target.attr('data-bld-cl-cd'), // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500
+      'bldBlkUntMndtYn': $target.attr('data-bldblk-unt-mndt-yn') // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500
     };
 
     new Tw.CommonPostcodeLast(this.$container, this.$target, this.$selectedAddressObject, this.$callback); // 마지막 페이지 팝업 load

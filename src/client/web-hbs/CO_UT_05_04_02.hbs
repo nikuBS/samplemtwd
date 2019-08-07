@@ -1,8 +1,8 @@
 <!-- .popup hbs -->
 <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
-    <div class="header-wrap">
-        <div class="page-header">
+    <div class="header-wrap noborder"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리OP002-2500 -->
+        <div class="page-header noborder"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리OP002-2500 -->
             <div class="header-ti">
                 <h1>우편번호 조회</h1>
             </div>
@@ -18,7 +18,7 @@
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                        <div class="tab-area new01"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리OP002-2500 -->
                             <div class="tab-linker fe-tab-linker">
                                 <ul role="tablist" class="fe-tab-selector">
                                     <li role="presentation" aria-controls="tab1-tab" id="tab1">
@@ -29,6 +29,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <hr class="cont-sp type1" aria-hidden="true"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리OP002-2500 -->
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-type="B">
@@ -74,7 +75,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="bt-more fe-more-btn">
+                                            <div class="btn-more mr16 ml16 fe-more-btn"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 End -->
                                                 <button>더보기(<span class="fe-more-length"></span>)</button>
                                             </div>
                                         </div>
@@ -129,7 +130,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div class="bt-more fe-more-btn">
+                                            <div class="btn-more mr16 ml16 fe-more-btn"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 End -->
                                                 <button>더보기(<span class="fe-more-length"></span>)</button>
                                             </div>
                                         </div>
