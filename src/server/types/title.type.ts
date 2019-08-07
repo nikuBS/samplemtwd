@@ -9,7 +9,10 @@ export const MYT_DATA_SUBMAIN_TITLE = {
 };
 
 export const MYT_FARE_SUBMAIN_TITLE = {
-  MAIN: '나의 요금'
+  MAIN: '나의 요금',
+  ERROR: {
+    NO_DATA: '최근 6개월 내 청구된 내역이 없습니다.'
+  }
 };
 
 export const MYT_JOIN_SUBMAIN_TITLE = {
