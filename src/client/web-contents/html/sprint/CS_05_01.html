@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">자주 하는 질문</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"> <!-- // 190516 추가01 -->
+                <div class="faq-main">
+                    <!-- 190516 삭제01 -->
+                    <!-- <div class="ti-caption-gray">
+                        <h4 class="tit">FAQ</h4>
+                    </div> -->
+                    <!-- //190516 삭제01 -->
+					<!-- .cont-box -->
+					<!-- 190516 수정01 -->
+                    <div class="cont-box">
+                        <!-- 190516 작업으로 되어 있던 tod-faq-search 전체 삭제 -->
+						<!-- <div class="tod-faq-search">
+							<div class="tod-faq-filter">
+								<button class="bt-dropdown text-type02" title="검색 카테고리 선택" aria-haspopup="true">전체</button>
+							</div>
+							<div class="inputbox address-wrap mt0 tod-have-filter">
+								<span class="input">
+									<input type="text" placeholder="키워드로 질문 검색" maxlength="" title="키워드로 질문 입력">
+									<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+								</span>
+								<span class="space"></span>
+								<span class="bt-box">
+									<button type="button" class="btn-sch">검색</button>
+								</span>
+							</div>
+                        </div> -->
+                        <div class="tod-form-wrap">
+                            <span class="select mb10">
+                                <button class="bt-dropdown big" title="카테고리 선택" aria-haspopup="true">T월드 이용안내<span class="ico"></span></button>
+                            </span>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="text" title="검색어 입력" placeholder="궁금하신 점을 직접 찾아보실 수 있어요" value="" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="btn-search mt20">
+                            <ul class="bt-slice">
+                                <li class="bt-red1"><button>검색</button></li>
+                            </ul>
+                        </div>
+					</div>
+					<!-- //190516 수정01 -->
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true">
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <div class="main-faq-menu">
+                            <ul>
+                                <li><button class="menu-bt ico-type01"><span class="ico"></span>요금제</button></li>
+                                <li><button class="menu-bt ico-type02"><span class="ico"></span>가입/변경/해지</button></li>
+                                <li><button class="menu-bt ico-type03"><span class="ico"></span>요금조회/납부</button></li>
+                                <li><button class="menu-bt ico-type04"><span class="ico"></span>T로밍</button></li>
+                                <li><button class="menu-bt ico-type05"><span class="ico"></span>T멤버십</button></li>
+                                <li><button class="menu-bt ico-type06"><span class="ico"></span>앱/부가서비스</button></li>
+                                <li><button class="menu-bt ico-type07"><span class="ico"></span>통화품질개선</button></li>
+                                <li><button class="menu-bt ico-type08"><span class="ico"></span>T월드 다이렉트</button></li>
+                                <li><button class="menu-bt ico-type09"><span class="ico"></span>T월드 이용안내</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>회원가입, 로그인 관련 자주 하는 질문 보기
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="link-long">
+                                    <button>스마트홈 관련 자주 하는 질문 보기
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="ti-caption-gray">
+                        <h4 class="tit">이럴 땐 이렇게 하세요</h4>
+                    </div>
+
+                    <!-- 2019.02.21 이럴땐 이렇게 하세요 문구 수정-->
+                    <div class="howto-list-wrap">
+                        <div class="howto-list-box" id="how1">
+                            <strong>데이터가 부족할 때는<br>이렇게</strong>
+                            <ul>
+                                <li><button class="list-bt">마음껏 데이터를 쓰고 싶다면</button></li> <!-- 2019.05.13 문구수정 -->
+                                <li><button class="list-bt">데이터 초과요금 걱정 마세요.</button></li>
+                                <li><button class="list-bt">데이터를 다 썼는데 어떻게 하지?</button></li>
+                                <li><button class="list-bt">남는 데이터를 나눠 줄 수 있다고?</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">데이터 걱정 없이 동영상 보는 방법</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">나만의 이용패턴에 맞는 할인 방법</button></li>
+                                <li><button class="list-bt">태블릿에서도 데이터 사용하기</button></li>
+                            </ul>
+                        </div>
+                        <!-- <div class="howto-list-box" id="how2">
+                            <strong>T멤버십 혜택을 즐기고<br>싶을 때는 이렇게</strong>
+                            <ul>
+                                <li><button class="list-bt">T멤버십 기본혜택은?</button></li>
+                                <li><button class="list-bt">초콜릿 멤버십몰을 즐겨보세요.</button></li>
+                                <li><button class="list-bt">VIP 혜택과 해외이용 혜택 보기</button></li>
+                            </ul>
+                        </div> -->
+                        <div class="howto-list-box" id="how3">
+                            <strong>해외여행 가실 때는<br>이렇게</strong> <!-- 2019.05.14 문구 현행화 -->
+                            <ul>
+                                <li><button class="list-bt">T로밍 서비스 이용방법은?</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">데이터 사용을 차단하고 싶어요.</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">해외여행 중 유용한 팁 알아보기</button></li>
+                                <li><button class="list-bt">로밍 전용 요금제를 이용해 보세요.</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">해외여행 다녀와서 체크해야 할 것은?</button></li>
+                            </ul>
+                        </div>
+                        <div class="howto-list-box" id="how4">
+                            <strong>휴대폰을 분실/파손하셨을<br> 때는 이렇게</strong> <!-- //190605_수정01 --> 
+                            <ul>
+                                <!-- 2019.01.06 수정 -->
+                                <li><button class="list-bt">이렇게 파손 보상 받으세요</button></li><!-- //190605_수정02 --> 
+                                <!-- //2019.01.06 수정 -->
+                                <li><button class="list-bt">휴대폰 분실신고를 해야 한다면?</button></li>
+                                <li><button class="list-bt">분실 휴대폰 위치 추적하기</button></li>
+                                <li><button class="list-bt">임대폰 / 기기변경이 필요할 때</button></li> 
+                                <li><button class="list-bt">이렇게 분실 보상 받으세요</button></li> <!-- //190605_수정03 --> 
+                                <li><button class="list-bt">안심백업하셨나요? 데이터 복원하기</button></li> 
+                            </ul>
+                        </div>
+                        <div class="howto-list-box" id="how5">
+                            <strong>부모님의 스마트폰<br>사용은 이렇게</strong>
+                            <ul>
+                                <li><button class="list-bt">데이터 사용요금, 걱정 없이 쓰세요</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">스마트폰 초보 탈출을 위한 이용방법</button></li> <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">스마트폰 센스를 올려주는 활용 가이드</button></li> <!-- 2019.02.25 문구수정 -->
+                            </ul>
+                        </div>
+                        <div class="howto-list-box" id="how6">
+                            <strong>우리 아이 스마트폰<br>관리는 이렇게</strong>
+                            <ul>
+                                <li><button class="list-bt">똑똑한 엄마들의 자녀요금 관리법</button></li>
+                                <li><button class="list-bt">바른 휴대폰 사용습관 실천 가이드</button></li>
+                                <li><button class="list-bt">아이 안전을 위한 스마트폰 활용방법</button></li> <!-- 2019.05.14 문구 현행화 -->
+                            </ul>
+                        </div>
+                        <div class="howto-list-box" id="how7">
+                            <strong>개인정보 도용 대비는<br>이렇게</strong>
+                            <ul>
+                                <li><button class="list-bt">스팸 정보를 차단하고 싶어요.</button></li>
+                                <li><button class="list-bt">스미싱, 대처 방법을 알려주세요.</button></li>  <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">휴대폰 명의도용, 이렇게 대비하세요.</button></li>  <!-- 2019.02.25 문구수정 -->
+                                <li><button class="list-bt">생활 속 예방으로 개인정보를 지키세요.</button></li>  <!-- 2019.02.25 문구수정 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

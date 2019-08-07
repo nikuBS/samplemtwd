@@ -35255,16 +35255,6 @@ body.apphome .section-box {
 .full-link-list li button .inner .text.tod-txt-point, .full-link-list li a .inner .text.tod-txt-point, .full-link-list li .no-link .inner .text.tod-txt-point {color:#f76252;}
 .inputbox.inp-btn .r-btn.tod-nowrap {white-space:nowrap;}
 
-/* 190610 [OP002-966] 번호변경 */
-.data-result.c-new01{color:#000}
-.data-result.c-new01 .tit{color:#000}
-.data-result.c-new01 .data em, .data-result.c-new01 .data span{color:#000}
-.data-result.c-new01 .result-arrow{width:2.625rem;height:2.625rem;background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat;background-size:100% 100%}
-.data-result.c-new01 .div-half:after {width:2rem; height:2rem; background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat; background-size:100% 100%} 
-.tx-contents .tod-info{text-align:center}
-.tx-contents .tod-info .tod-info-title{font-size:0.8125rem;color:#959595}
-.tx-contents .tod-info .tod-color-orange{color:#f76252}
-
 /* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
 .tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}
 .tod-list-wishNum-wrap .radio-list-type > li{border-bottom: 1px solid #e1e1e1; overflow: hidden;}
