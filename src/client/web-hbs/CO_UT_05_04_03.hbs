@@ -1,8 +1,8 @@
 <!-- .popup hbs -->
 <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
-    <div class="header-wrap">
-        <div class="page-header">
+    <div class="header-wrap noborder"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 -->
+        <div class="page-header noborder"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 -->
             <div class="header-ti">
                 <h1>우편번호 조회</h1>
             </div>
@@ -18,7 +18,7 @@
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs">
-                        <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                        <div class="tab-area new01"><!-- 타입별 탭형태 변환 --> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 -->
                             <div class="tab-linker fe-tab-linker">
                                 <ul role="tablist" class="fe-tab-selector">
                                     <li role="presentation" aria-controls="tab1-tab" id="tab1">
@@ -29,6 +29,7 @@
                                     </li>
                                 </ul>
                             </div>
+                            <hr class="cont-sp type1" aria-hidden="true"> <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 -->
                             <div class="tab-contents">
                                 <ul>
                                     <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" data-type="B">
@@ -40,6 +41,22 @@
                                                 </strong>
                                             </p>
                                             <h3 class="tit mt40">상세 주소</h3>
+                                            <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 Start -->
+                                            {{#if data.isUntMnDt}}
+                                            <span class="inputbox address-wrap tod-type1 mt10">
+                                                        <span class="input">
+                                                            <input type="number" class="fe-dong" placeholder="동 입력" maxlength="" title="동">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <span class="dongho first">동</span>
+                                                        <span class="input">
+                                                            <input type="number" class="fe-ho" placeholder="호 입력" maxlength="" title="호">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <span class="dongho">호</span>
+                                                    </span>
+                                            {{/if}}
+                                            <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 End -->
                                             <span class="inputbox mt10">
                                                 <span class="input">
                                                     <input type="text" class="fe-address" placeholder="상세 주소 입력" title="상세 주소" aria-labelledby="aria-citation-phone">
@@ -59,6 +76,22 @@
                                                 <span class="fe-number"></span> <span class="fe-building"></span>
                                             </strong>
                                             <h3 class="tit mt40">상세 주소</h3>
+                                            <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 Start -->
+                                            {{#if data.isUntMnDt}}
+                                                <span class="inputbox address-wrap tod-type1 mt10">
+                                                        <span class="input">
+                                                            <input type="number" class="fe-dong" placeholder="동 입력" maxlength="" title="동">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <span class="dongho first">동</span>
+                                                        <span class="input">
+                                                            <input type="number" class="fe-ho" placeholder="호 입력" maxlength="" title="호">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <span class="dongho">호</span>
+                                                    </span>
+                                            {{/if}}
+                                            <!-- OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 End -->
                                             <span class="inputbox mt10">
                                                 <span class="input">
                                                     <input type="text" class="fe-address" placeholder="상세 주소 입력" title="상세 주소" aria-labelledby="aria-citation-phone">
@@ -83,7 +116,7 @@
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button class="fe-save">저장</button>
+                    <button class="fe-save" disabled="disabled">저장</button>
                 </li>
             </ul>
         </div>

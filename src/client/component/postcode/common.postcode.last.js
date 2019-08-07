@@ -33,14 +33,27 @@ Tw.CommonPostcodeLast.prototype = {
    * @param $addressObject - 2페이지에서 넘어온 데이터
    */
   _init: function ($addressObject) {
+
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
+    var isMnDt = false;
+    if($addressObject.bldClCd === 'A2' || $addressObject.bldClCd === 'A3' || $addressObject.bldBlkUntMndtYn === 'Y') {
+        isMnDt = true;
+    }
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
+
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
     this._popupService.open({
-        hbs: 'CO_UT_05_04_03'
+        hbs: 'CO_UT_05_04_03',
+        data: {
+            isUntMnDt: isMnDt
+        }
       },
       $.proxy(this._onLastEvent, this, $addressObject),
       $.proxy(this._saveAddress, this),
       'post0003',
       this.$target
     );
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
   },
   /**
    * @function
@@ -50,7 +63,6 @@ Tw.CommonPostcodeLast.prototype = {
    */
   _onLastEvent: function ($addressObject, $layer) {
     this.$layer = $layer;
-
     this._setInitTab($addressObject);
     this._initVariables($addressObject.tabId);
     this._initData($addressObject);
@@ -130,7 +142,9 @@ Tw.CommonPostcodeLast.prototype = {
    * @desc event binding
    */
   _bindEvent: function () {
-    this.$layer.on('keyup', '.fe-address', $.proxy(this._checkIsAbled, this));
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
+    this.$layer.on('keyup input', '.fe-address, .fe-dong, .fe-ho', $.proxy(this._checkIsAbled, this));
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
     this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
     this.$saveBtn.click(_.debounce($.proxy(this._getStandardAddress, this), 500));
   },
@@ -191,13 +205,21 @@ Tw.CommonPostcodeLast.prototype = {
    * @returns {{postType: *, bldCd, baseAddress: string, detailAddress: string, ldongCd}}
    */
   _getStandardReqData: function () {
+
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
+    var dong = this.$layer.find('.fe-dong').val();
+    var ho = this.$layer.find('.fe-ho').val();
+
     return {
       postType: this._postType,
       bldCd: this.$mainAddress.attr('data-bld-cd'),
       baseAddress: encodeURI(this.$mainAddress.attr('data-origin') + ' ' + this.$number.text()),
       detailAddress: encodeURI($.trim(this.$detailAddress.val())),
-      ldongCd: this.$mainAddress.attr('data-ldong-cd')
+      ldongCd: this.$mainAddress.attr('data-ldong-cd'),
+      bldblkNm: dong,
+      blduntValNm: ho
     };
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
   },
   /**
    * @function
