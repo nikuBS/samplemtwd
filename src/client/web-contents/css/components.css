@@ -35495,5 +35495,4 @@ body.apphome .section-box {
 .user-greeting.tod-user-greeting .msg{font-size:0.875rem; text-align:center}
 .with-payment-line .list-comp-input .select-list > li .comp-list-layout .layout-text .stext span.tod-unpaid-box{display:inline-block; height:1rem; line-height:1rem; white-space:nowrap; color:#fff; font-size:0.625rem; font-weight:normal; margin-left:0.125rem; background:#f76252; border-radius:0.25rem; padding:0 0.3125rem; vertical-align:middle;  }
 
-/* 190731 [OP002-2876] T단기데이터 노출 화면 변경 및 메뉴 추가 요청 */
-.cont-actionsheet .ac-list .type1 .table-cell > span.simbol.tod-ico01 {background: url(/img/svg/icon_48px_coupon_Tdata.svg) no-repeat 0 0; background-size: 100% 100%; }
+
