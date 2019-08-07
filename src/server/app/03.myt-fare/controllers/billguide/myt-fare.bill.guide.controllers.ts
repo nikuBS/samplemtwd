@@ -18,6 +18,7 @@ import StringHelper from '../../../../utils/string.helper';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/string.type';
+import {MYT_FARE_SUBMAIN_TITLE} from '../../../../types/title.type';
 
 class MyTFareBillGuide extends TwViewController {
   constructor() {
@@ -28,7 +29,7 @@ class MyTFareBillGuide extends TwViewController {
   public pageInfo: any;
   private _billpayInfo: any = {}; // 청구요금조회 | BFF_05_0036 , 사용요금조회 | BFF_05_0047
   private _useFeeInfo: any = {}; // 사용요금조회 | BFF_05_0047
-  private _intBillLineInfo: any = {}; // 통합청구등록회선조회 | BFF_05_0049
+  private _intBillLineInfo: any = []; // 통합청구등록회선조회 | BFF_05_0049
   private _unpaidBillsInfo: any = {}; // 미납내역 조회 | BFF_05_0030
   private _childLineInfo: any = {}; // 자녀회선 조회 | BFF_05_0024
   private _ppsInfo: any; // PPS 요금안내서 정보조회
@@ -171,10 +172,30 @@ class MyTFareBillGuide extends TwViewController {
     Promise.all(reqArr).then(function(resArr) {
       thisMain.logger.info(thisMain, `[ Promise.all > success ] : `, resArr);
       try {
+        // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
+        if (resArr[0].code !== API_CODE.CODE_00 || FormatHelper.isEmpty(resArr[0].result)) {
+          return thisMain.error.render(res, {
+            title: 'title',
+            code: API_CODE.CODE_500,
+            msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA,
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
+          });
+        }
 
         if ( svcInfo.actRepYn === 'Y' ) {
           // 청구 요금 데이터
-          thisMain._billpayInfo = resArr[0].result;
+          // OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다.
+          thisMain._billpayInfo = {
+            invDt: '',
+            totInvAmt: '',
+            dcAmt: '',
+            invSvcList: [],
+            paidAmtSvcCdList: [],
+            paidAmtDetailList: [],
+          };
+
+          Object.assign(thisMain._billpayInfo, resArr[0].result);
           if ( thisMain._billpayInfo.invSvcList && thisMain._billpayInfo.invSvcList.length > 0) {
             // 청구 회선, 날짜 목록
             thisMain._intBillLineInfo = Object.assign([], resArr[0].result.invSvcList[0].svcList);
@@ -183,7 +204,14 @@ class MyTFareBillGuide extends TwViewController {
           thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
 
         } else {
-          thisMain._useFeeInfo = resArr[0].result.invAmtList;
+          // OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다.
+          thisMain._useFeeInfo = {
+            repSvcNm: '',
+            invAmtList: [],
+            unPayAmtList: [],
+            unPaidTotSum: []
+          }
+          Object.assign(thisMain._useFeeInfo, resArr[0].result);
           // 현재는 param이 없지만 추후 추가를 위해 넣어둠
           if ( resArr[0].result.invAmtList && resArr[0].result.invAmtList.length > 0) {
             // 사용 요금 데이터(조회한 날짜로 찾음)
@@ -192,7 +220,7 @@ class MyTFareBillGuide extends TwViewController {
             // 사용 날짜 목록
             thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
           }
-          thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(resArr[0].result.repSvcNm);  // 통합청구대표 이름
+          thisMain._commDataInfo.repSvcNm = FormatHelper.conTelFormatWithDash(thisMain._useFeeInfo.repSvcNm);  // 통합청구대표 이름
           thisMain._commDataInfo.svcType = thisMain.getSvcType(thisMain._billpayInfo.usedAmountDetailList[0].svcNm);  // 서비스 타입(한글)
         }
 
@@ -289,6 +317,13 @@ class MyTFareBillGuide extends TwViewController {
 
       } catch ( e )  {
         thisMain.logger.info(e);
+        return thisMain.error.render(res, {
+          title: 'title',
+          code: API_CODE.CODE_500,
+          msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
       }
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);

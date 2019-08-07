@@ -24,6 +24,14 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" class="blind" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container" data-id="non-container">
+            <!-- 190729 [OP002-2796] 추가01 -->
+            <% if (data.suspStaDt) { %>
+            <div class="user-greeting tod-user-greeting">
+                <p class="msg">고객님의 이용정지 예정일은 <em class="tod-txcolor6"><%= data.suspStaDt %></em> 입니다.</p>
+            </div>
+            <%}%>
+            <!-- //190729 [OP002-2796] 추가01 -->
+
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="unpaid-charges">
@@ -46,21 +54,27 @@
                     </ul>
                     <% } %>
                 </div>
-                <% var itemTwo = data.possibleDay && data.suspension; %>
-                <% if (data.possibleDay || data.suspension) { %>
-                <ul class="bt-slice <%= itemTwo? 'item-two':''; %>">
+                <%var itemTwo = data.possibleDay && data.suspension;%>
+                <%if(itemTwo){%>
+                <ul class="bt-slice">
+                    <li><button class="btn-round1 btn-style1" data-id="bill-pym">납부하기</button></li>
+                </ul>
+                <%}%>
+                <ul class="bt-slice <%= itemTwo? 'item-two mt10':''; %>">
+                    <%if(!itemTwo){%>
+                    <li><button class="btn-round1 btn-style1" data-id="bill-pym">납부하기</button></li>
+                    <%}%>
                     <% if (data.possibleDay) { %>
-                    <li class="bt-white2">
-                        <button type="button" data-id="day" title="납부가능일 선택" aria-haspopup="true">납부가능일 선택</button>
+                    <li>
+                        <button class="btn-round1 btn-style4" type="button" data-id="day" title="납부가능일 선택" aria-haspopup="true">납부가능일 선택</button>
                     </li>
                     <% } %>
                     <% if (data.suspension) { %>
-                    <li class="bt-white2">
-                        <button type="button" data-id="susp" title="이용정지 해제" aria-haspopup="true">이용정지 해제</button>
+                    <li>
+                        <button class="btn-round1 btn-style4" type="button" data-id="susp" title="이용정지 해제" aria-haspopup="true">이용정지 해제</button>
                     </li>
                     <% } %>
                 </ul>
-                <% } %>
             </div>
             <!--// .cont-box -->
             <div class="cont-box bgnone noborder">
@@ -71,9 +85,6 @@
                             <li>고객님은 현재 미납된 요금이 있습니다.<br/>이용에 불편이 없도록 미납요금을 납부하시기 바랍니다.</li>
                             <% if (data.possibleDay) { %>
                             <li>즉시 요금납부가 어려우시면 납부가능일을 선택해 주세요.</li>
-                                <% if (data.suspStaDt) { %>
-                                <li>고객님의 이용정지 예정일은 <%= data.suspStaDt %> 입니다.</li>
-                                <% } %>
                             <% } %>
                         </ul>
                     </div>

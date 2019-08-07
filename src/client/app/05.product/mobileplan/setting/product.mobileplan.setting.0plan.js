@@ -11,7 +11,7 @@
  * @param displayId - 화면 ID
  * @param currentOptionProdId - 현재 옵션 상품코드
  */
-Tw.ProductMobileplanSetting0plan = function(rootEl, prodId, displayId, currentOptionProdId, floNDataUseYn, pooqNDataUseYn) {
+Tw.ProductMobileplanSetting0plan = function(rootEl, prodId, displayId, currentOptionProdId, floNDataUseYn, pooqNDataUseYn, isUnderAge19) {
   // 컨테이너 레이어 선언
   this.$container = rootEl;
 
@@ -28,6 +28,7 @@ Tw.ProductMobileplanSetting0plan = function(rootEl, prodId, displayId, currentOp
   this._currentOptionProdId = currentOptionProdId;
   this._floNDataUseYn = floNDataUseYn;
   this._pooqNDataUseYn = pooqNDataUseYn;
+  this._isUnderAge19 = isUnderAge19;
 
   // Element 캐싱
   this._cachedElement();
@@ -55,6 +56,10 @@ Tw.ProductMobileplanSetting0plan.prototype = {
     }
 
     this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
+
+    if ( this._isUnderAge19 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A100.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A100.TITLE);
+    }
   },
 
   /**
@@ -93,6 +98,15 @@ Tw.ProductMobileplanSetting0plan.prototype = {
 
     if (this._currentOptionProdId === $checked.val()) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+    }
+
+    // 19세 미만일 경우 선택한 부가옵션과 연계된 부가서비스에 가입되어 있지 않으면 가입 불가 + Alert 발생
+    if ( this._isUnderAge19 ) {
+      if (($checked.val() === 'NA00006634' && this._floNDataUseYn === 'N')
+        || ($checked.val() === 'NA00006622' && this._pooqNDataUseYn === 'N')) {
+
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A101.MSG);
+      }
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);

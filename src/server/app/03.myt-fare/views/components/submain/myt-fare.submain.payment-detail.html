@@ -63,6 +63,16 @@
                     </span>
                 </button>
             </li>
+            <% if (data.type !== 'UF') { %>
+            <li>
+                <button type="button" data-id="change-address">
+                        <span class="inner">
+                            <span class="tit">청구지 주소/연락처 변경</span>
+                            <span class="text type2">조회/수정</span>
+                        </span>
+                </button>
+            </li>
+            <% } %>
         <% } %>
     </ul>
 </div>

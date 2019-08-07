@@ -77,16 +77,16 @@
                         <div class="tod-charge-cont">	
                             <span class="sub-disc01 tx-medium">포인트</span>
                             <span class="tit"><span class="charge-txt"><%= total %> P</span></span>
-                            <% if( okCashback !== '0' || t !== '0' ){ %>
+                            <%# if( okCashback !== '0' || t !== '0' ){ %>
                             <span class="sub-disc04">
-                                <% if( okCashback !== '0' ){ %>
+                                <%# if( okCashback !== '0' ){ %>
                                 <span class="elem">OK캐쉬백 <%= okCashback %>P</span>
-                                <% } %>
-                                <% if( t !== '0' ){ %>
+                                <%# } %>
+                                <%# if( t !== '0' ){ %>
                                 <span class="elem">T포인트 <%= t %>P</span>
-                                <% } %>
+                                <%# } %>
                             </span>                            
-                        <% } %>
+                        <%# } %>
                         </div>
                         <% if ( rainbow !== '0' || okCashback !== '0' || t !== '0' ) { %>
                         <div class="right-area">
@@ -97,7 +97,7 @@
                     <!-- //190619 수정_03 -->
                 </div>
                 <ul class="link-long-list">
-                    <% if( locals.rainbow && rainbow !== '0' ) { %>
+                    <% if( locals.rainbow /*&& rainbow !== '0'*/ ) { %>
                     <li>
                         <div class="link-long">
                             <button id="fe-rainbow">레인보우포인트

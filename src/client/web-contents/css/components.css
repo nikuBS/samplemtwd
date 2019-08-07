@@ -35255,6 +35255,16 @@ body.apphome .section-box {
 .full-link-list li button .inner .text.tod-txt-point, .full-link-list li a .inner .text.tod-txt-point, .full-link-list li .no-link .inner .text.tod-txt-point {color:#f76252;}
 .inputbox.inp-btn .r-btn.tod-nowrap {white-space:nowrap;}
 
+/* 190610 [OP002-966] 번호변경 */
+.data-result.c-new01{color:#000}
+.data-result.c-new01 .tit{color:#000}
+.data-result.c-new01 .data em, .data-result.c-new01 .data span{color:#000}
+.data-result.c-new01 .result-arrow{width:2.625rem;height:2.625rem;background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat;background-size:100% 100%}
+.data-result.c-new01 .div-half:after {width:2rem; height:2rem; background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat; background-size:100% 100%} 
+.tx-contents .tod-info{text-align:center}
+.tx-contents .tod-info .tod-info-title{font-size:0.8125rem;color:#959595}
+.tx-contents .tod-info .tod-color-orange{color:#f76252}
+
 /* 190611 [OP002-1282] [UX/PUB] [W-1905-191-00] [상품] 넘버플러스II 설정페이지 추가 요청 */
 .tod-set-wishNum-wrap .tit{margin-bottom: 0.625rem;}
 .tod-list-wishNum-wrap .radio-list-type > li{border-bottom: 1px solid #e1e1e1; overflow: hidden;}
@@ -35479,3 +35489,10 @@ body.apphome .section-box {
 /* 190726 추가 [OP002-2866] main banner 자동재생관련 - components 에도 추가 */
 .section-box.nogaps.tod-no-mg{margin:0.63rem 0 0 0;}
 .main-charge-box.section-swiper-box.tod-nar-ban{min-height:8.75rem;}
+
+/* 190729 [OP002-2796] 요금납부 화면 내 미납+당월요금 조회 기능 개선 요청 */
+.user-greeting.tod-user-greeting{padding:0.94rem 0 ; }
+.user-greeting.tod-user-greeting .msg{font-size:0.875rem; text-align:center}
+.with-payment-line .list-comp-input .select-list > li .comp-list-layout .layout-text .stext span.tod-unpaid-box{display:inline-block; height:1rem; line-height:1rem; white-space:nowrap; color:#fff; font-size:0.625rem; font-weight:normal; margin-left:0.125rem; background:#f76252; border-radius:0.25rem; padding:0 0.3125rem; vertical-align:middle;  }
+
+

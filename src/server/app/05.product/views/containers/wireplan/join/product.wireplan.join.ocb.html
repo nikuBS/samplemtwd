@@ -1,0 +1,78 @@
+<%#
+* FileName: product.wireplan.join.ocb.html
+* Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
+* Date: 2019. 8. 2.
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom pb0">
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-ver">
+                    <!-- .tod-terms-comp -->
+                    <div class="tod-terms-comp">
+                        <ul class="list">
+                            <li>
+                                <span class="custom-form"><input type="checkbox" class="fe-agree-check" id="oka1" name="r1"><span class="c-type1"></span></span>
+                                <label for="oka1">개인정보 제3자 제공 동의</label>
+                                <div class="terms-item">
+                                    <ol>
+                                        <li>1. 개인정보를 제공받는 자 : SK플래닛㈜</li>
+                                        <li>2. 개인정보를 제공받는 자의 이용 목적: 이벤트 참여자 대상 포인트 적립</li>
+                                        <li>3. 제공하는 개인정보의 항목: 휴대폰번호</li>
+                                        <li>4. 개인정보를 제공받는 자의 보유&middot;이용 기간: 이벤트 종료 후 1개월 보관 후 파기</li>
+                                        <li>5. 개인정보의 제3자 제공에 대한 동의를 거부할 수 있으며, 이 경우 이벤트 참여가 제한됩니다.</li>
+                                    </ol>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="custom-form"><input type="checkbox" class="fe-agree-check" id="oka2" name="r1"><span class="c-type1"></span></span>
+                                <label for="oka2">개인정보 처리위탁 동의</label>
+                                <div class="terms-item">
+                                    <ol>
+                                        <li>1. 개인정보 받는 자: SK플래닛㈜</li>
+                                        <li>2. 위탁 업무: 이벤트 포인트 적립</li>
+                                    </ol>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .tod-terms-comp -->
+                </div>
+                <!-- //.cont-box -->
+            </div>
+
+            <!-- 하단 fixed 버튼 -->
+            <div class="bt-fixed-area tod-offer-bt-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button type="button" id="fe-bt-agree" disabled>약관에 모두 동의 합니다.</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- //하단 fixed 버튼 -->
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!-- <button class="fe-xt-bt-close"  data-xt_eid="<%= eid %>" data-xt_csid="_CLS" data-xt_action="BC"/> -->
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>$(function () {
+  new Tw.ProductWireplanJoinOcb($('.wrap'));
+});</script>
+<% include ../../../components/end.component.html %>

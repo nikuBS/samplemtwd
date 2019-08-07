@@ -3,9 +3,9 @@
  * @param $container - 컨테이너 레이어
  * @param isTosBanner - TOS 배너 여부
  */
-Tw.XtractorService = function($container, isTosBanner) {  
+Tw.XtractorService = function($container, isNotSwipeBanner) {  
   this.$container = $container;
-  this._isTosBanner = isTosBanner || false;
+  this._isNotSwipeBanner = isNotSwipeBanner || false;    // Swipe 형태의 배너가 아닌, 화면 노출 즉시 노출통계(BV) 를 수집해야 하는 경우 true 로 호출 필요.
 
   // Log
   Tw.Logger.info('[Xtractor] init container', this.$container);
@@ -27,6 +27,10 @@ Tw.XtractorService.prototype = {
     this._bindBC();
     this._observeTransition();
     this._initScroll();
+
+    if (this._isNotSwipeBanner) {
+      this._onLoadBV2();
+    }
   },
 
   _initScroll: function () {
@@ -90,6 +94,14 @@ Tw.XtractorService.prototype = {
    */
   _onLoadBV: function() {
     _.each(this.$container.find('[data-xt_action="BN"],[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+  },
+
+  /**
+   * @function
+   * @desc 노출 처리
+   */
+  _onLoadBV2: function() {
+    _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV2, this));
   },
 
   /**
@@ -158,6 +170,25 @@ Tw.XtractorService.prototype = {
         }
       }
     }    
+  },
+
+
+  /**
+   * @function
+   * @desc 노출 이벤트 수행
+   * @param elem - 노출 선언된 객체
+   * @returns {boolean}
+   */
+  _sendBV2: function(elem) {
+    var $elem = $(elem);
+    
+    var E_ID = $elem.data('xt_eid'),
+        CS_ID = $elem.data('xt_csid');
+
+    // if (!Tw.FormatHelper.isEmpty(E_ID) && !Tw.FormatHelper.isEmpty(CS_ID)) {
+    if (!Tw.FormatHelper.isEmpty(E_ID)) {
+      this.logView(E_ID, '');
+    }
   },
 
   /**
