@@ -2074,6 +2074,7 @@ Tw.HAPPYCOM_STR = {
 Tw.WIRE_NUMBER_CHANGE = {
   NOT_AVAILABLE_NUMBER: '조회하신 뒷번호 4자리 범위로 변경 가능한 번호가 존재하지 않습니다. 다른 조건으로 조회해 주세요.',
   HAS_PREV_REQUEST: '해당 서비스는 이미 접수중 또는 취소 중이므로 변경 요청을 할 수 없습니다.',
+  NOT_ON_SERVICE: '해당 서비스는 사용중인 서비스가 아니므로 변경요청을 할 수 없습니다.',
   ALERT_BROADBAND: {
     TITLE: 'SK브로드밴드 가입 회선입니다.',
     CONTENTS: '전화 106 또는 SK브로드밴드 홈페이지를 이용해 주시기 바랍니다.',
