@@ -120,6 +120,13 @@ Tw.ApiService.prototype = {
       delete resp.loginType;
     }
 
+    // for test
+    if(command.path === Tw.NODE_CMD.CHANGE_TWM_VALUE_2.path) {
+      if(resp.code === Tw.API_CODE.CODE_00) {
+        Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM, resp.result);
+      }
+    }
+
     // cookie의 TWM 값과 sessionStorage에 저장된 값을 비교하여, 다를 경우 세션만료 페이지로 이동 시킨다.
     if(!Tw.CommonHelper.checkValidSession(location.pathname, command.path, 'CLIENT_API_RES')) {
       return;

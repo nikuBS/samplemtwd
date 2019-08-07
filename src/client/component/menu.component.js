@@ -190,6 +190,11 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
+
+    // for OP002-2289 test
+    this.$container.on('click', '.fe-chg-session-1', $.proxy(this._onClickChangeSession1, this));
+    this.$container.on('click', '.fe-chg-session-2', $.proxy(this._onClickChangeSession2, this));
+    this.$container.on('click', '.fe-chg-session-3', $.proxy(this._onClickChangeSession3, this));
   },
 
   /**
@@ -970,5 +975,66 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       return false;
     }
     return true;
+  },
+
+  // for OP002-2289 test
+  /**
+   * @function
+   * @desc 충전/선물 버튼 클릭 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickChangeSession1: function ($event) {
+    this._apiService.request(Tw.NODE_CMD.CHANGE_TWM_VALUE_1, {})
+      .done($.proxy(this._callBackChangeSession1, this))
+      .fail($.proxy(this._callBackChangeSession1, this));
+  },
+
+  _callBackChangeSession1: function (resp) {
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.TWM, resp.result);
+      this._popupService.openAlert('Client 변경 성공');
+    } else {
+      this._popupService.openAlert('Client 변경 실패');
+    }
+  },
+
+  // for OP002-2911 test
+  /**
+   * @function
+   * @desc Client API Response Test
+   * @return {void}
+   * @private
+   */
+  _onClickChangeSession2: function () {
+    this._apiService.request(Tw.NODE_CMD.CHANGE_TWM_VALUE_2, {})
+      .done($.proxy(this._callBackChangeSession2, this))
+      .fail($.proxy(this._callBackChangeSession2, this));
+  },
+
+  _callBackChangeSession2: function (resp) {
+
+  },
+
+  // for OP002-2911 test
+  /**
+   * @function
+   * @desc Server API Response Test
+   * @return {void}
+   * @private
+   */
+  _onClickChangeSession3: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0068, {})
+      .done($.proxy(this._callBackChangeSession3, this))
+      .fail($.proxy(this._callBackChangeSession3, this));
+  },
+
+  _callBackChangeSession3: function (resp) {
+    if(resp.code === Tw.API_CODE.CODE_00) {
+      this._popupService.openAlert('Server 세션 변경 성공');
+    } else {
+      this._popupService.openAlert('Server 세션 변경 실패');
+    }
   }
 };
