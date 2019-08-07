@@ -429,6 +429,16 @@ class DateHelper {
       .add(days, 'days')
       .format(format);
   }
+
+  /**
+   * @function
+   * @desc 현재 날짜를 기준으로 목표 나이가 만 targetAge 미만인 지 여부를 T/F 반환 (미만이면 TRUE)
+   * @param {number} targetAge 목표 나이
+   * @param {string} birthday 대상자의 생년월일, YYYYMMDD
+   */
+  static isUnderAge(targetAge, birthday) {
+    return targetAge > moment(this.getCurrentShortDate()).diff(birthday, 'year');
+  }
 }
 
 export default DateHelper;
