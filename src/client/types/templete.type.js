@@ -209,6 +209,92 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  CUSTOMER_FAQ_SEARCH_CATEGORY: [
+    {
+      list: [
+        { 'label-attr': 'id="1000000"', 'radio-attr': 'id="1000000" name="r2" data-search-category="전체"', txt: '전체' },
+        { 'label-attr': 'id="1100000"', 'radio-attr': 'id="1100000" name="r2" data-search-category="요금제"', txt: '요금제' },
+        { 'label-attr': 'id="1200000"', 'radio-attr': 'id="1200000" name="r2" data-search-category="가입/변경/해지"', txt: '가입/변경/해지' },
+        { 'label-attr': 'id="1300000"', 'radio-attr': 'id="1300000" name="r2" data-search-category="요금조회/납부"', txt: '요금조회/납부' },
+        { 'label-attr': 'id="1400000"', 'radio-attr': 'id="1400000" name="r2" data-search-category="T로밍"', txt: 'T로밍' },
+        { 'label-attr': 'id="1500000"', 'radio-attr': 'id="1500000" name="r2" data-search-category="T멤버십"', txt: 'T멤버십' },
+        { 'label-attr': 'id="1600000"', 'radio-attr': 'id="1600000" name="r2" data-search-category="앱/부가서비스"', txt: '앱/부가서비스' },
+        { 'label-attr': 'id="1700000"', 'radio-attr': 'id="1700000" name="r2" data-search-category="통화품질개선"', txt: '통화품질개선' },
+        { 'label-attr': 'id="1800000"', 'radio-attr': 'id="1800000" name="r2" data-search-category="T월드 다이렉트"', txt: 'T월드 다이렉트' },
+        { 'label-attr': 'id="1900000"', 'radio-attr': 'id="1900000" name="r2" data-search-category="T월드 이용안내"', txt: 'T월드 이용안내' }
+      ]
+    }
+  ],
+
+  CUSTOMER_FAQ_SEARCH_FILTER: [
+    {
+      faqCategoryId: "1100000", faqCategoryNm: "요금제", subFilters: [
+        {faqFilterId: "1101000", faqFilterNm: "모바일"},
+        {faqFilterId: "1102000", faqFilterNm: "결합상품"},
+        {faqFilterId: "1103000", faqFilterNm: "휴대용 와이파이"}, 
+        {faqFilterId: "1104000", faqFilterNm: "인터넷/집전화 상품"}
+        ]
+    },
+    {
+      faqCategoryId: "1200000", faqCategoryNm: "가입/변경/해지", subFilters: [
+        {faqFilterId: "1201000", faqFilterNm: "가입/변경/해지"},
+        {faqFilterId: "1202000", faqFilterNm: "휴대폰 분실/습득"},
+        {faqFilterId: "1203000", faqFilterNm: "일시정지"}
+        ]
+    },
+    {
+      faqCategoryId: "1300000", faqCategoryNm: "요금조회/납부", subFilters: [
+        {faqFilterId: "1301000", faqFilterNm: "모바일"},
+        {faqFilterId: "1302000", faqFilterNm: "인터넷 요금"},
+        {faqFilterId: "1303000", faqFilterNm: "전화요금"}
+        ]
+    },
+    {
+      faqCategoryId: "1400000", faqCategoryNm: "T로밍", subFilters: [
+        {faqFilterId: "1401000", faqFilterNm: "데이터 로밍"},
+        {faqFilterId: "1402000", faqFilterNm: "요금/로밍 쿠폰"},
+        {faqFilterId: "1403000", faqFilterNm: "이용방법/장애"}
+        ]
+    }, 
+    {
+      faqCategoryId: "1500000", faqCategoryNm: "T멤버십", subFilters: [
+        {faqFilterId: "1501000", faqFilterNm: "카드발급"},
+        {faqFilterId: "1502000", faqFilterNm: "신청/변경/해지"},
+        {faqFilterId: "1503000", faqFilterNm: "T멤버십 활용/혜택"},
+        {faqFilterId: "1504000", faqFilterNm: "포인트/활용/혜택"},
+        {faqFilterId: "1505000", faqFilterNm: "T멤버십 기타"}
+        ]
+    },
+    {
+      faqCategoryId: "1600000", faqCategoryNm: "앱/부가서비스", subFilters: [
+        {faqFilterId: "1601000", faqFilterNm: "부가서비스"},
+        {faqFilterId: "1602000", faqFilterNm: "앱 이용안내"}
+        ]
+    },
+    {
+      faqCategoryId: "1700000", faqCategoryNm: "통화품질개선", subFilters: [
+        {faqFilterId: "1701000", faqFilterNm: "통화품질"},
+        {faqFilterId: "1702000", faqFilterNm: "인터넷 기술장애/품질"},
+        {faqFilterId: "1703000", faqFilterNm: "휴대폰 안내"}
+        ]
+    }, 
+    {
+      faqCategoryId: "1800000", faqCategoryNm: "T월드 다이렉트", subFilters: [
+        {faqFilterId: "1801000", faqFilterNm: "휴대폰 구매/혜택"},
+        {faqFilterId: "1802000", faqFilterNm: "T월드 다이렉트 구매/이동"},
+        {faqFilterId: "1803000", faqFilterNm: "T월드 다이렉트 배송"},
+        {faqFilterId: "1804000", faqFilterNm: "T월드 다이렉트 교환/반품"},
+        {faqFilterId: "1805000", faqFilterNm: "휴대폰가격공시 기타"}
+        ]
+    }, 
+    {
+      faqCategoryId: "1900000", faqCategoryNm: "T월드 이용안내", subFilters: [
+        {faqFilterId: "1901000", faqFilterNm: "모바일 T World"},
+        {faqFilterId: "1902000", faqFilterNm: "회원/계정"}
+        ]
+    }
+  ],
+
   IMMEDIATELY_CHARGE_DATA: {
     TITLE: '충전방법 선택',
     REFILL: {
