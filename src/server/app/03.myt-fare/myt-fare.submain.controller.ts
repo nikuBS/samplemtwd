@@ -11,7 +11,7 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD } from '../../types/api-command.type';
+import {API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD} from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -69,6 +69,16 @@ class MyTFareSubmainController extends TwViewController {
 
         this.apiService.request(API_CMD.BFF_05_0203, {}).subscribe((resp) => {
           if ( resp.code === API_CODE.CODE_00 ) {
+            // OP002-2986. 통합청구에서 해지할경우(개별청구) 청구번호가 바뀐다고함. 그럼 성공이지만 결과를 안준다고 함.
+            if (!resp.result || FormatHelper.isEmpty(resp.result.invDt)) {
+              this.error.render(res, {
+                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+                code: API_CODE.CODE_500,
+                msg: MYT_FARE_SUBMAIN_TITLE.ERROR.NO_DATA,
+                pageInfo: data.pageInfo,
+                svcInfo: data.svcInfo
+              });
+            }
             const claim = resp.result;
 
             // PPS, 휴대폰이 아닌 경우는 서비스명 노출
