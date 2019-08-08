@@ -195,7 +195,7 @@ class ApiService {
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
-          // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
+          // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
           if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
@@ -329,7 +329,7 @@ class ApiService {
                 commandPath : command.path,
                 preServerSession : req.session.serverSession,
                 curServerSession : serverSession,
-                url : req.baseUrl + this.loginService.getPath(req),
+                url : this.loginService.getPath(req),
                 point : 'SERVER_API_RES',
                 target : this.loginService.getPath(req)
               }

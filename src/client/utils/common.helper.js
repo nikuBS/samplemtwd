@@ -428,10 +428,11 @@ Tw.CommonHelper = (function () {
         this.setSessionStorage(Tw.SSTORE_KEY.PRE_TWM, this.getCookie(Tw.COOKIE_KEY.TWM));
       } else {
         if(preTWM !== curTWM && location.search.indexOf("sess_invalid=Y") === -1) {
-          Tw.Logger.error('[checkValidSession]', 'Set PRE TWM : ', preTWM);
+          Tw.Logger.error('[checkValidSession]', preTWM, curTWM);
           var historyService = new Tw.HistoryService();
           var params = 'sess_invalid=Y'
             + '&pre_twm=' + preTWM
+            + '&cur_twm=' + curTWM
             + '&url=' + url
             + '&command_path=' + commandPath
             + '&point=' + point
