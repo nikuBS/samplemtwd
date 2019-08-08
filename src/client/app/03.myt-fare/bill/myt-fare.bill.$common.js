@@ -102,6 +102,12 @@ Tw.MyTFareBillCommon.prototype = {
     this.$layer = $layer;
     this.$selectBtn = $layer.find('.fe-select');
 
+    if (this._selectedLine.length === 0) {
+      this.$selectBtn.attr('disabled', 'disabled');
+    } else {
+      this.$selectBtn.removeAttr('disabled');
+    }
+
     this._bindLayerEvent();
   },
   /**
