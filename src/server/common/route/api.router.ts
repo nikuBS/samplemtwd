@@ -22,7 +22,6 @@ import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
 
 const os = require('os');
-const signature = require('cookie-signature');
 
 /**
  * @desc NODE API 구성 (JIRA 명세 확인)
@@ -103,10 +102,6 @@ class ApiRouter {
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo },
     GET_AUTH_METHOD_BLOCK: { path: '/auth-method/block', method: API_METHOD.GET, target: this.getAuthMethodsBlock },
-
-    // for OP002-2289 test
-    CHANGE_TWM_VALUE_1: { path: '/change/twm-value-1', method: API_METHOD.GET, target: this.changeTwm },
-    CHANGE_TWM_VALUE_2: { path: '/change/twm-value-2', method: API_METHOD.GET, target: this.changeTwm }
   };
 
   /**
@@ -1328,40 +1323,6 @@ class ApiRouter {
     });
   }
 
-  // for OP002-2289 test
-  /**
-   * SESSION ID(TWM) 값 변경
-   * @param req
-   * @param res
-   * @param next
-   */
-  private changeTwm(req: Request, res: Response, next: NextFunction) {
-
-    const loginService = new LoginService();
-    const sessionId = loginService.getCookie(req, COOKIE_KEY.TWM);
-    let resultSessionId = '';
-    this.redisService.getRedisKey('session:' + '*')
-      .subscribe((resp) => {
-        
-        resp.result.some((key, subIndex) => {
-          const id = 's:' + signature.sign(key.replace('session:', ''), 'sktechx');
-          if ( id !== sessionId) {
-            resultSessionId = id;
-          }
-          return id !== sessionId;
-        });
-
-        if ( sessionId === resultSessionId) {
-          resp.code = API_CODE.REDIS_ERROR;
-        } else {
-          resp.code = API_CODE.CODE_00;
-          resp.result = resultSessionId;
-        }
-
-        res.json(resp);
-      });
-  }
-  
 }
 
 export default ApiRouter;
