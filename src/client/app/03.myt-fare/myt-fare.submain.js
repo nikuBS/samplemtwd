@@ -114,6 +114,8 @@ Tw.MyTFareSubMain.prototype = {
     this.$contribution = this.$container.find('[data-id=contbt]');
     // }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
+    // 타겟배너 신청버튼
+    this.$apply = this.$container.find('[data-id=apply]');
   },
 
   _bindEvent: function () {
@@ -189,6 +191,8 @@ Tw.MyTFareSubMain.prototype = {
     this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
     // }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+    // 타겟배너 (요금납부 화면으로 이동)
+    this.$apply.on('click', $.proxy(this._onClickedPayMthd, this));
   },
 
   // lazyloading 처리

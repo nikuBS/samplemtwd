@@ -155,13 +155,14 @@ class MyTFareSubmainController extends TwViewController {
       this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
-      this._getTaxInvoice(),
+      this._getAffiliateCard()
+      // this._getTaxInvoice(),
       // this._getContribution(),
       // this._getMicroPrepay(),
       // this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
-    ).subscribe(([ nonpayment,  paymentInfo, totalPayment,
-                   taxInvoice, /* contribution,*/ /* microPay, contentPay/*, banner*/]) => {
+    ).subscribe(([ nonpayment,  paymentInfo, totalPayment, affiliateCard
+                   /* taxInvoice, contribution, microPay, contentPay, banner*/]) => {
       // 소액결제
       /*if ( microPay ) {
         data.microPay = microPay;
@@ -202,6 +203,11 @@ class MyTFareSubmainController extends TwViewController {
           });
         });
       }
+
+      // 제휴카드 정보
+      if (affiliateCard) {
+        data.isShowAffiliateCard = affiliateCard.join_card_yn === 'N' && affiliateCard.pay_mthd_cd === '02';
+      }
       // 세금계산서
       // if ( taxInvoice ) {
       //   data.taxInvoice = taxInvoice;
@@ -235,10 +241,11 @@ class MyTFareSubmainController extends TwViewController {
     Observable.combineLatest(
       this._getUsageFee(),
       this._getPaymentInfo(),
+      this._getAffiliateCard()
       // this._getMicroPrepay(),
       // this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl),
-    ).subscribe(([usage, paymentInfo, /* microPay, contentPay, banner*/]) => {
+    ).subscribe(([usage, paymentInfo, affiliateCard /* microPay, contentPay, banner*/]) => {
       if ( usage && usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -268,6 +275,10 @@ class MyTFareSubmainController extends TwViewController {
           //   // 은행자동납부, 카드자동납부, 은행지로자동납부
           //   data.isNotAutoPayment = false;
           // }
+        }
+        // 제휴카드 정보
+        if (affiliateCard) {
+          data.isShowAffiliateCard = affiliateCard.join_card_yn === 'N' && affiliateCard.pay_mthd_cd === '02';
         }
         // 소액결제 (성능개선항목으로 제거)
         /*if ( microPay ) {
@@ -496,6 +507,17 @@ class MyTFareSubmainController extends TwViewController {
     return this.apiService.request(API_CMD.BFF_07_0080, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 || resp.code.indexOf('BIL') > -1 ) {
         return resp;
+      } else {
+        return null;
+      }
+    });
+  }
+
+  // 제휴카드 정보조회
+  _getAffiliateCard() {
+    return this.apiService.request(API_CMD.BFF_07_0102, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        return resp.result;
       } else {
         return null;
       }
