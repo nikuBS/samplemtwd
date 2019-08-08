@@ -40,7 +40,7 @@ class MyTFareBillSms extends MyTFareBillPaymentCommon {
 
         res.render('bill/myt-fare.bill.sms.html', {
           isAllPaid: isAllPaid,
-          unpaidList: isAllPaid ? [] : this.parseData(unpaidList.result, svcInfo, allSvc),
+          unpaidList: isAllPaid ? [] : this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
           virtualBankList: accountList, // 입금전용계좌 리스트
           title: MYT_FARE_PAYMENT_TITLE.SMS,
           svcInfo: this.getSvcInfo(svcInfo), // 회선정보 (필수 데이터)
