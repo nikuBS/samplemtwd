@@ -142,8 +142,6 @@ Tw.CommonPostcodeLast.prototype = {
    */
   _bindEvent: function ($addressObject) {
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
-    this.$layer.on('keyup blur', '.fe-dong', $.proxy(this._validateNumberAlphabet, this));
-    this.$layer.on('keyup blur', '.fe-ho', $.proxy(this._validateNumberAlphabet, this));
     this.$layer.on('keyup input', '.fe-dong', $.proxy(this._checkIsAbled, this));
     this.$layer.on('keyup input', '.fe-ho', $.proxy(this._checkIsAbled, this));
 
@@ -183,8 +181,14 @@ Tw.CommonPostcodeLast.prototype = {
         this.$saveBtn.removeAttr('disabled');
     }
     */
-    if (Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-dong').val())) ||
-        Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-ho').val()))) {
+    Tw.InputHelper.inputNumberAndAlphabet(this.$selectedTab.find('.fe-dong'));
+    Tw.InputHelper.inputNumberAndAlphabet(this.$selectedTab.find('.fe-ho'));
+
+    var fe_dong = this.$selectedTab.find('.fe-dong').val();
+    var fe_ho = this.$selectedTab.find('.fe-ho').val();
+
+    if (Tw.FormatHelper.isEmpty($.trim(fe_dong)) ||
+        Tw.FormatHelper.isEmpty($.trim(fe_ho))) {
         this.$saveBtn.attr('disabled', 'disabled');
     } else {
         this.$saveBtn.removeAttr('disabled');
@@ -238,8 +242,8 @@ Tw.CommonPostcodeLast.prototype = {
   _getStandardReqData: function () {
 
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
-    var dong = this.$layer.find('.fe-dong').val();
-    var ho = this.$layer.find('.fe-ho').val();
+    var dong = this.$selectedTab.find('.fe-dong').val();
+    var ho = this.$selectedTab.find('.fe-ho').val();
 
     return {
       postType: this._postType,
