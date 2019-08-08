@@ -139,7 +139,7 @@ Tw.CustomerFaqSearch.prototype = {
         }));
 
         if (res.result.last) {
-          this.$container.find('.bt-more').addClass('none');
+          this.$container.find('.btn-more').addClass('none');
         }
       } else {
         Tw.Error(res.code, res.msg).pop();
