@@ -47,7 +47,7 @@ class MyTFareBillAccount extends MyTFareBillPaymentCommon {
         if (unpaidList.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.account.html', {
             ...data,
-            unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc),
+            unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
             autoInfo: this.parseInfo(autoInfo),
             formatHelper: FormatHelper
           });

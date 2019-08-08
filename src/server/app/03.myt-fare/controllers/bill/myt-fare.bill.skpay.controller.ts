@@ -51,7 +51,7 @@ class MyTFareBillSkpay extends MyTFareBillPaymentCommon {
         if (unpaidList.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.skpay.html', {
             ...data,
-            unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc),
+            unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc, pageInfo),
             // autoInfo: this.parseInfo(autoInfo), // 자동납부 정보를 선택할 수 없게 수정.
             autoInfo: null,
             formatHelper: FormatHelper
