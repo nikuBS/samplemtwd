@@ -220,7 +220,7 @@ Tw.API_CMD = {
   BFF_05_0207: { path: '/core-product/:version/services/combinations/:args0/personally-terminations', method: Tw.API_METHOD.PUT },
   BFF_05_0209: { path: '/core-modification/:version/wire-phone/:args0/change', method:Tw.API_METHOD.GET },
   BFF_05_0210: { path: '/core-modification/:version/wire-phone/:args0/change/number', method: Tw.API_METHOD.GET },
-  BFF_05_0211: { path: '/core-modification/:version/wire-phone/:args0/change/put', method: Tw.API_METHOD.GET },
+  BFF_05_0211: { path: '/core-modification/:version/wire-phone/:args0/change/put', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
