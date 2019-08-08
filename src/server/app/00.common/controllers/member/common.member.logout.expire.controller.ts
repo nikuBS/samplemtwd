@@ -52,12 +52,12 @@ class CommonMemberLogoutExpire extends TwViewController {
 
     res.clearCookie(COOKIE_KEY.TWM_LOGIN);
 
-    const redisService = RedisService.getInstance();
+    const curTWM = req.query.cur_twm || '';
     const preTWM = req.query.pre_twm || '';
     const url = req.query.url;
     const commandPath = req.query.command_path || '';
     const point = req.query.point || '';
-    const device = this.loginService.getDevice(req);
+    const device = this.loginService.getDevice(req) || 'web';
     const headerComment = '[Invalid Session(Change Session)] ' + point;
     const curSession = req.session;
 
@@ -79,10 +79,10 @@ class CommonMemberLogoutExpire extends TwViewController {
             , 'DEVICE : ' + device                                                  // User Agent
             , 'URL : ' + url                                                        // 발생 페이지의 URL
             , 'COMMAND : ' + commandPath                                            // 발생 command
-            , 'PRE_TWM : ' + preTWM    // 이전 session ID
+            , 'PRE_TWM : ' + preTWM                                                 // 이전 session ID
             , preSession                                                            // 이전 session
-            , 'CUR_TWM : ' + this.loginService.getCookie(req, COOKIE_KEY.TWM)       // 현재 session ID
-            , curSession);                                                         // 현재 session
+            , 'CUR_TWM : ' + curTWM                                                 // 현재 session ID
+            , curSession);                                                          // 현재 session
       });
     } else {
       const preServerSession = req.query.pre_server_se || '';
@@ -96,7 +96,7 @@ class CommonMemberLogoutExpire extends TwViewController {
         , 'COMMAND : ' + commandPath                                                // 발생 command
         , 'PRE_SERVER_SESSION : ' + preServerSession                                // 이전 server session ID
         , 'CUR_SERVER_SESSION : ' + curServerSession                                // 현재 server session ID
-        , 'CUR_TWM : ' + this.loginService.getCookie(req, COOKIE_KEY.TWM)           // 현재 session ID 
+        , 'CUR_TWM : ' + this.loginService.getCookie(req, COOKIE_KEY.TWM)           // 현재 session ID
         , curSession);                                                              // 현재 session(변경되지 않았으므로, 이전과 현재가 동일함)
     }
   }
