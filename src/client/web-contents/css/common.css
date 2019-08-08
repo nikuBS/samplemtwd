@@ -9581,8 +9581,8 @@ button:focus span {
 .tod-floatnone{float:none !important}
 
 /* 190723 [OP002-2580] 동호 입력 */
-.address-wrap.inputbox.tod-type1 .input input[type=number]{padding-right:2.25rem}/* 190808 [OP002-2580] 동호 입력 추가_01 */
-.address-wrap.inputbox.tod-type1 .input input[type=number]:focus{padding:0.75rem 2.25rem 0.75rem 0.63rem;line-height:1}/* 190808 [OP002-2580] 동호 입력 추가_02 */
+.address-wrap.inputbox.tod-type1 .input input{padding-right:2.25rem}/* 190808 [OP002-2580] 동호 입력 추가_01 */
+.address-wrap.inputbox.tod-type1 .input input:focus{padding:0.75rem 2.25rem 0.75rem 0.63rem;line-height:1}/* 190808 [OP002-2580] 동호 입력 추가_02 */
 .address-wrap.inputbox.tod-type1 .input{width:auto}
 .address-wrap.inputbox.tod-type1 .dongho.first{width:9.54%}
 .address-wrap.inputbox.tod-type1 .dongho{width:6.06%;padding-left:0.43rem;vertical-align:middle}

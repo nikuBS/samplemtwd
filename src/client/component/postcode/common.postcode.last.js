@@ -18,12 +18,11 @@ Tw.CommonPostcodeLast = function ($container, $target, $addressObject, $callback
   this.$container = $container;
   this.$target = $target;
   this.$callback = $callback;
-
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._inputHelper = Tw.InputHelper;
-
   this._init($addressObject);
+
 };
 
 Tw.CommonPostcodeLast.prototype = {
@@ -66,7 +65,7 @@ Tw.CommonPostcodeLast.prototype = {
     this._setInitTab($addressObject);
     this._initVariables($addressObject.tabId);
     this._initData($addressObject);
-    this._bindEvent();
+    this._bindEvent($addressObject);
   },
   /**
    * @function
@@ -141,25 +140,57 @@ Tw.CommonPostcodeLast.prototype = {
    * @function
    * @desc event binding
    */
-  _bindEvent: function () {
+  _bindEvent: function ($addressObject) {
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
-    this.$layer.on('keyup input', '.fe-address, .fe-dong, .fe-ho', $.proxy(this._checkIsAbled, this));
+    this.$layer.on('keyup blur', '.fe-dong', $.proxy(this._validateNumberAlphabet, this));
+    this.$layer.on('keyup blur', '.fe-ho', $.proxy(this._validateNumberAlphabet, this));
+    this.$layer.on('keyup input', '.fe-dong', $.proxy(this._checkIsAbled, this));
+    this.$layer.on('keyup input', '.fe-ho', $.proxy(this._checkIsAbled, this));
+
+    if($addressObject.bldClCd !== 'A2' && $addressObject.bldClCd !== 'A3' && $addressObject.bldBlkUntMndtYn !== 'Y') {
+      this.$saveBtn.removeAttr('disabled');
+    }
+
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
+
     this.$layer.on('click', '.fe-close-all', $.proxy(this._close, this));
     this.$saveBtn.click(_.debounce($.proxy(this._getStandardAddress, this), 500));
   },
+
+  // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
+  /**
+   * @function
+   * @desc 동,호 입력값 유효성 검증(영문,숫자만 입력가능)
+   */
+  _validateNumberAlphabet: function (e) {
+      Tw.InputHelper.inputNumberAndAlphabet(e.target);
+  },
+  // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
+
   /**
    * @function
    * @desc 필수 입력 필드 체크 및 버튼 활성화/비활성화 처리
    * @param event
    */
   _checkIsAbled: function (event) {
+
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
+    /*
     var $address = $(event.currentTarget).val();
     if (Tw.FormatHelper.isEmpty($.trim($address))) {
-      this.$saveBtn.attr('disabled', 'disabled');
+        this.$saveBtn.attr('disabled', 'disabled');
     } else {
-      this.$saveBtn.removeAttr('disabled');
+        this.$saveBtn.removeAttr('disabled');
     }
+    */
+    if (Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-dong').val())) ||
+        Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-ho').val()))) {
+        this.$saveBtn.attr('disabled', 'disabled');
+    } else {
+        this.$saveBtn.removeAttr('disabled');
+    }
+    // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 end
+
     this._checkIsEnter(event);
   },
   /**

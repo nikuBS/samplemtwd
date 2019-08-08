@@ -75,7 +75,7 @@ export default abstract class MyTFareBillPaymentCommon extends TwViewController 
    * @param allSvc
    * @returns {any}
    */
-  protected parseData(result: any, svcInfo: any, allSvc: any): any {
+  protected parseData(result: any, svcInfo: any, allSvc: any, pageInfo: any): any {
     const list = result.settleUnPaidList; // 미납리스트
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
@@ -116,8 +116,8 @@ export default abstract class MyTFareBillPaymentCommon extends TwViewController 
         }
       });
 
-      // 당월요금만 존재할 경우, 임시총액을 총 납부할 금액에 넣어준다.
-      if (list.isOnlyThisMon) {
+      // OP002-2797: '입금전용계좌 문자신청' 페이지 일때만 사용한다. 당월요금만 존재할 경우, 임시총액을 총 납부할 금액에 넣어준다.
+      if ('M000238' === pageInfo.menuId && list.isOnlyThisMon) {
         list.sumUnpaid = _tempSumUnpaid;
       }
     }
