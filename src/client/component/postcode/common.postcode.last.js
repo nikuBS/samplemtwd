@@ -144,6 +144,7 @@ Tw.CommonPostcodeLast.prototype = {
     // OP002-2346 [모바일T] 공통 우편번호검색 화면에서 집합건물인 경우 동/호 입력 누락 처리 OP002-2500 start
     this.$layer.on('keyup input', '.fe-dong', $.proxy(this._checkIsAbled, this));
     this.$layer.on('keyup input', '.fe-ho', $.proxy(this._checkIsAbled, this));
+    this.$layer.on('change', '.fe-dong, .fe-ho', $.proxy(this._checkIsAbled, this));
 
     if($addressObject.bldClCd !== 'A2' && $addressObject.bldClCd !== 'A3' && $addressObject.bldBlkUntMndtYn !== 'Y') {
       this.$saveBtn.removeAttr('disabled');
