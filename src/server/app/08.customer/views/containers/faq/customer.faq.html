@@ -20,24 +20,28 @@
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container">
                 <div class="faq-main">
-                    <div class="ti-caption-gray">
-                        <h4 class="tit">FAQ</h4>
-                    </div>
 
                     <!-- .cont-box -->
                     <div class="cont-box">
-                        <div class="inputbox address-wrap mt0" style="width:100%">
-                            <span class="input">
-                                <input id="fe-input" type="text" placeholder="키워드로 질문검색" maxlength="" title="키워드로 질문 입력" autocomplete="off">
-                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        <div class="tod-form-wrap">
+                            <span class="select mb10">
+                                <button class="bt-dropdown big fe-search-category" title="카테고리 선택" aria-haspopup="true">전체<span class="ico"></span></button>
                             </span>
-                            <span class="space"></span>
-                            <span class="bt-box disabled">
-                                <button type="button" id="fe-search" disabled="disabled">검색</button> <!-- 비활성화인경우 disabled="disabled"   -->
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input id="fe-input" type="text" title="검색어 입력" placeholder="궁금하신 점을 직접 찾아보실 수 있어요" value="" autocomplete="off" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
                             </span>
                         </div>
+                        <div class="btn-search mt20">
+                            <ul class="bt-slice disabled">
+                                <li class="bt-red1"><button id="fe-search" disabled="disabled">검색</button></li>
+                            </ul>
+                        </div>
+
                     </div>
-                    <!--// .cont-box -->
+
 
                     <hr class="cont-sp type1" aria-hidden="true">
 
@@ -52,8 +56,8 @@
                                 <li><a href="/customer/faq/category?id=1500000&title=T멤버십" class="menu-bt ico-type05"><span class="ico"></span>T멤버십</a></li>
                                 <li><a href="/customer/faq/category?id=1600000&title=앱/부가서비스" class="menu-bt ico-type06"><span class="ico"></span>앱/부가서비스</a></li>
                                 <li><a href="/customer/faq/category?id=1700000&title=통화품질개선" class="menu-bt ico-type07"><span class="ico"></span>통화품질개선</a></li>
-                                <li><a href="/customer/faq/category?id=1800000&title=T world 다이렉트" class="menu-bt ico-type08"><span class="ico"></span>T world 다이렉트</a></li>
-                                <li><a href="/customer/faq/category?id=1900000&title=T world 이용안내" class="menu-bt ico-type09"><span class="ico"></span>T world 이용안내</a></li>
+                                <li><a href="/customer/faq/category?id=1800000&title=T월드 다이렉트" class="menu-bt ico-type08"><span class="ico"></span>T월드 다이렉트</a></li>
+                                <li><a href="/customer/faq/category?id=1900000&title=T월드 이용안내" class="menu-bt ico-type09"><span class="ico"></span>T월드 이용안내</a></li>
                             </ul>
                         </div>
                     </div>

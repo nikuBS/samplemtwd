@@ -35256,11 +35256,13 @@ body.apphome .section-box {
 .inputbox.inp-btn .r-btn.tod-nowrap {white-space:nowrap;}
 
 /* 190610 [OP002-966] 번호변경 */
+/* 190831 [리디자인] 추가 */
 .data-result.c-new01{color:#000}
-.data-result.c-new01 .tit{color:#000}
+.data-result.c-new01 .tit, .data-result.c-new01 .tit2, .data-result.c-new01 .txt{color:#000}
 .data-result.c-new01 .data em, .data-result.c-new01 .data span{color:#000}
 .data-result.c-new01 .result-arrow{width:2.625rem;height:2.625rem;background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat;background-size:100% 100%}
 .data-result.c-new01 .div-half:after {width:2rem; height:2rem; background:url(/img/ico/ico-after-gray.png) 0 0 no-repeat; background-size:100% 100%} 
+/* //190831 [리디자인] 추가 */
 .tx-contents .tod-info{text-align:center}
 .tx-contents .tod-info .tod-info-title{font-size:0.8125rem;color:#959595}
 .tx-contents .tod-info .tod-color-orange{color:#f76252}

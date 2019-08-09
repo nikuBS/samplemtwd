@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">FAQ</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"> <!-- 190516_수정01 -->
+                <!-- .cont-box -->
+                <!-- 190516_수정01 -->
+                <div class="cont-box">
+                    <!-- 190516 작업으로 되어 있던 tod-faq-search 전체 삭제 -->
+                    <!-- <div class="tod-faq-search">
+                        <div class="tod-faq-filter">
+                            <button class="bt-dropdown text-type02" title="검색 카테고리 선택" aria-haspopup="true">요금제</button>
+                        </div>
+                        <div class="inputbox address-wrap mt0 tod-have-filter">
+                            <span class="input">
+                                <input type="text" value="USIM" maxlength="" title="질문 입력">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                            <span class="space"></span>
+                            <span class="bt-box">
+                                <button type="button" class="btn-sch">검색</button>
+                            </span>
+                        </div>
+                    </div> -->
+                    <div class="tod-form-wrap">
+                        <span class="select mb10">
+                            <button class="bt-dropdown big" title="카테고리 선택" aria-haspopup="true">T월드 이용안내<span class="ico"></span></button>
+                        </span>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="text" title="검색어 입력" placeholder="궁금하신 점을 직접 찾아보실 수 있어요" value="" />
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="btn-search mt20">
+                        <ul class="bt-slice">
+                            <li class="bt-red1"><button>검색</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //190516_수정01 -->
+				<!--// .cont-box -->
+				
+                <!-- 190516 추가02 -->
+                <div class="cont-box bgnone noborder gaps-style03">
+                    <div class="contheader-box">
+                        <div class="totalfilter-wrap">
+                            <span class="total">총 <strong class="number-text">123</strong>건</span>
+							<!-- <button type="button" class="filter-btn" aria-haspopup="true">전체</button> --><!-- 필터를 선택하기전에는 전체 표시 -->
+							<button type="button" class="filter-btn date-in" aria-haspopup="true">
+								<span class="datebox">휴대폰가격공시 기타, 요금제 기타 </span><span class="text">외</span><span class="number">1</span><span class="text">건</span>
+							</button>
+                        </div>
+                    </div>
+                </div>
+				<!-- //190516 추가02 -->
+				
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- 190516_삭제01 -->
+                    <!-- <div class="ti-caption-gray">
+                        <span class="num">
+                            총 <strong>123</strong>건
+                        </span>
+                    </div> -->
+                    <!-- //190516_삭제01 -->
+                    <div class="widget">
+                        <div class="widget-box accordion2">
+                            <div class="acco-style qanda-list"><!-- 스타일별 클래스 추가 -->
+                                <ul class="acco-box">
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <button role="button" aria-pressed="false" class="list-q"><!-- .none-event 클릭못하게할때 -->
+                                                <em class="ico">질문</em>3G/LTE Data 함께쓰기 요금제 이용시 태블릿 PC끼리만 USIM기변이 가능한가요?
+
+                                            </button>
+                                        </div>
+                                        <div class="acco-content">
+                                            <em class="ico">답변</em>네~ 그렇습니다. 태블릿PC로 3G/LTE Date 함께쓰기 요금제 이용시  USIM기변은 태블릿 PC끼리만 가능합니다. 단, 3G 태블릿 PC ←→ LTE 태블릿 PC간 유심기변은 불가합니다.
+                                            <p>※ 태블릿 단말 유심기변 가능 조건 : “3G 태블릿←→3G태블릿” “LTE태블릿←→LTE태블릿”으로 동일 단말유형 및 동일 네트웍 유형 간 USIM기변만 가능합니다. </p>
+                                        </div>
+                                    </li>
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <button role="button" aria-pressed="false" class="list-q"><!-- .none-event 클릭못하게할때 -->
+                                                <em class="ico">질문</em>T 멤버십 더블카드 (하나 체크카드)의 혜택이 궁금해요.
+                                            </button>
+                                        </div>
+                                        <div class="acco-content">
+                                            <em class="ico">답변</em>네~ 인증회원은 SKT SMS 인증 또는 모바일T안심인증 으로 번호변경 가능합니다. SMS 수신불가 단말기인 경우 온라인 T world에서 번호변경이 불가합니다.
+                                        </div>
+                                    </li>
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <button role="button" aria-pressed="false" class="list-q"><!-- .none-event 클릭못하게할때 -->
+                                                <em class="ico">질문</em>[데이터 리필하기] 가족에게 선물한 리필쿠폰 유효기간은 선물한 시점부터 다시 산정되나요?
+                                            </button>
+                                        </div>
+                                        <div class="acco-content">
+                                            <em class="ico">답변</em>네~ 인증회원은 SKT SMS 인증 또는 모바일T안심인증 으로 번호변경 가능합니다. SMS 수신불가 단말기인 경우 온라인 T world에서 번호변경이 불가합니다.
+                                        </div>
+                                    </li>
+                                    <li class="acco-list"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <button role="button" aria-pressed="false" class="list-q"><!-- .none-event 클릭못하게할때 -->
+                                                <em class="ico">질문</em>[데이터 리필하기] 리필한 데이터로 T 데이터 셰어링 서비스 이용이 가능한가요?
+
+                                            </button>
+                                        </div>
+                                        <div class="acco-content">
+                                            <em class="ico">답변</em>네~ 인증회원은 SKT SMS 인증 또는 모바일T안심인증 으로 번호변경 가능합니다. SMS 수신불가 단말기인 경우 온라인 T world에서 번호변경이 불가합니다.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-more mr16 ml16"> <!-- 190516 수정02 --> 
+                        <button>더 보기</button>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
