@@ -71,14 +71,13 @@ class ShortcutRouter {
    */
   private redirectTarget(req, res, next, target) {
     // target.effEndDtm가 1일이므로 +30일을 하려면 29를 더해야 함
-    const endDate = DateHelper.getAddDays(DateHelper.convDateFormat(target.effEndDtm), 29, 'YYYYMMDD');
-
+    const endDate = DateHelper.getAddDays(DateHelper.convDateFormat(target.effEndDtm), 29, 'YYYYMMDD') || '00000000';
     const curDate = DateHelper.getCurrentShortDate(new Date());
     let menuUrl = target.trgtUrl;
     let loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
     const referer = req.path;
 
-    if ( endDate < curDate ) {
+    if ( Number(endDate) < Number(curDate) ) {
       menuUrl = '/main/home';
       loginType = 'N';
     }
