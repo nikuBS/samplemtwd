@@ -87,7 +87,7 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
     }
 
     // 변경할 번호 search
-    this._apiService.request(Tw.API_CMD.BFF_05_0210, param, {}, [this._data.svgMgmtNum])
+    this._apiService.request(Tw.API_CMD.BFF_05_0210, param, {}, [this._data.svcMgmtNum])
       .done($.proxy(this._onSuccessSearchNumber, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
@@ -215,7 +215,7 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._goCompletePage();
     } else {
-      Tw.Error(resp.status, resp.statusText).pop();
+      Tw.Error(resp.code, resp.msg).pop();
       Tw.CommonHelper.endLoading('.container');
     }
   },
