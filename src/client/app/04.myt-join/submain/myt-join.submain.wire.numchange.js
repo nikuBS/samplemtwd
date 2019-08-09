@@ -60,7 +60,8 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
       endLineNum: $('#input-to').val()
     };
 
-    if ( Tw.FormatHelper.isEmpty(param.staLineNum) || param.staLineNum.length !== 4 ||  Tw.FormatHelper.isEmpty(param.endLineNum) || param.endLineNum.length !== 4 ) {
+    if ( Tw.FormatHelper.isEmpty(param.staLineNum) || param.staLineNum.length !== 4
+      || Tw.FormatHelper.isEmpty(param.endLineNum) || param.endLineNum.length !== 4 ) {
       this.$container.find('#err-no-input').show();
       return;
     }
@@ -198,11 +199,25 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
   _requestChangeNumber: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0211,
       { afterSvcNum: this._options.afterSvcNum }, {}, [this._data.svcMgmtNum])
-      .done($.proxy(this._goCompletePage, this))
+      .done($.proxy(this._onSuccessChangeNumber, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
         Tw.CommonHelper.endLoading('.container');
       });
+  },
+  /**
+   * @function
+   * @desc 전화번호 변경 요청 성공 콜백
+   * @param resp
+   * @private
+   */
+  _onSuccessChangeNumber: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._goCompletePage();
+    } else {
+      Tw.Error(resp.status, resp.statusText).pop();
+      Tw.CommonHelper.endLoading('.container');
+    }
   },
   /**
    * @function
