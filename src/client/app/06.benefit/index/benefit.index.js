@@ -37,7 +37,14 @@ Tw.BenefitIndex.prototype = {
     this._initVariables();
     this._bindEvent();
     this._registerHelper();
-    this._allRequest();
+
+    // 환경변수 로딩이 완료된 이후 혜택할인 관련 API 호출되도록 수정
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._allRequest, this));
+    } else {
+      this._allRequest();
+    }
+
     if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
     }
