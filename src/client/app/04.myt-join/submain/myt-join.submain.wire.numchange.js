@@ -87,7 +87,7 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
     }
 
     // 변경할 번호 search
-    this._apiService.request(Tw.API_CMD.BFF_05_0210, param, {}, [this._data.svcMgmtNum])
+    this._apiService.request(Tw.API_CMD.BFF_05_0210, param, {})
       .done($.proxy(this._onSuccessSearchNumber, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
@@ -198,7 +198,7 @@ Tw.MyTJoinPhoneNumWireChange.prototype = {
    */
   _requestChangeNumber: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0211,
-      { afterSvcNum: this._options.afterSvcNum }, {}, [this._data.svcMgmtNum])
+      { afterSvcNum: this._options.afterSvcNum }, {})
       .done($.proxy(this._onSuccessChangeNumber, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
