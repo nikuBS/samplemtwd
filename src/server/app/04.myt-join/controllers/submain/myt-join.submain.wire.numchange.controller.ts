@@ -20,7 +20,7 @@ class MyTJoinPhoneNumWireChange extends TwViewController {
       return;
     }
 
-    this.apiService.request(API_CMD.BFF_05_0209, {}, {}, [svcInfo.svcMgmtNum])
+    this.apiService.request(API_CMD.BFF_05_0209, {}, {})
       .subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           resp.result['svcNum'] = StringHelper.phoneStringToDash(svcInfo.svcNum);
