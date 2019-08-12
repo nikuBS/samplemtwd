@@ -43,7 +43,7 @@
         <!-- .popup hbs -->
         <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
             <!-- #header -->
-            <div class="header-wrap">
+            <div class="header-wrap noborder"><!-- 190831 리디자인_01 : noborder -->
                 <div class="page-header">
                     <div class="header-ti">
                         <h1>이메일 상담</h1>
@@ -56,12 +56,13 @@
                 <h2 class="blind">내용</h2>
                 <div class="container">
 
+
                     <!-- .cont-box -->
                     <div class="cont-box nogaps">
                         <!-- .component -->
                         <div class="component">
                             <div class="component-box tabs">
-                                <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-area new01"><!-- 타입별 탭형태 변환 --><!-- 190831 리디자인_02 : new01 -->
                                     <div class="tab-linker">
                                         <ul role="tablist">
                                             <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">서비스 문의</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
@@ -86,7 +87,29 @@
 
                                             <!-- .cont-box -->
                                             <div class="cont-box nogaps-btm">
-                                                <div class="option-box">
+                                                <!--190806 [OP002-2988] 추가_01-->
+                                                <div class="info-form-box">
+                                                    <div class="ti-caption-type01 pb14">
+                                                        <h2 class="tit">문의 유형 선택</h2>
+                                                    </div>
+                                                    <div>
+                                                        <button class="bt-dropdown big" title="휴대폰" aria-haspopup="true">휴대폰<span class="ico"></span></button> 
+                                                    </div>
+                                                    <div>
+                                                        <button class="bt-dropdown big mt10" title="문의사항을 선택해주세요." aria-haspopup="true">문의사항을 선택해주세요.<span class="ico"></span></button>                                       
+                                                    </div>
+                                                    <div class="link-long bb0">
+                                                        <a href="" class="disabled" title="질문유형과 관계있는 FAQ 정보로 이동">자주 찾는 질문을 먼저 살펴보세요.
+                                                            <span class="tx-sub">
+                                                                <span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 -->
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <!-- //190806 [OP002-2988] 추가_01-->
+
+                                                <!--190806 [OP002-2988] 삭제_01-->
+                                                <!-- <div class="option-box">
                                                     <div>
                                                         <button class="bt-dropdown big tx-bold" title="서비스 선택" aria-haspopup="true">휴대폰</button> 서비스의
                                                     </div>
@@ -101,7 +124,8 @@
                                                             </span>
                                                         </a>
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                <!--//190806 [OP002-2988] 삭제_01-->
                                             </div>
                                             <!--// .cont-box -->
 
@@ -132,20 +156,22 @@
                                                     </div>
                                                     <div class="fileplus-wrap">
                                                         <p class="text">최대 5개 파일을 등록하실 수 있습니다.</p>
-                                                        <div class="bt-alone"><button class="bt-bg-blue1">파일 첨부하기</button></div>
+                                                        <!-- 190831 리디자인_03 : class="bt-alone tod-type1", class="btn-round2 btn-style3"-->
+                                                        <div class="bt-alone tod-type1"><button class="btn-round2 btn-style3">파일&nbsp;첨부하기</button></div>
+                                                        <!-- //190831 리디자인_03 -->
                                                     </div>
                                                     <ul class="filename-list">
                                                         <li>
                                                             <p class="text">IMG_20180912.jpg20180912.jpg20180912.jpg20180912.jpg20180912.jpg20180912.jpg</p>
-                                                            <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+                                                            <div class="bt-alone"><button class="btn-round3 btn-style3">삭제</button></div><!-- 190831 리디자인_04 : class="btn-round3 btn-style3"-->
                                                         </li>
                                                         <li>
                                                             <p class="text">IMG_20180912.jpg</p>
-                                                            <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+                                                            <div class="bt-alone"><button class="btn-round3 btn-style3">삭제</button></div><!-- 190831 리디자인_04 -->
                                                         </li>
                                                         <li>
                                                             <p class="text">IMG_20180912.jpg</p>
-                                                            <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
+                                                            <div class="bt-alone"><button class="btn-round3 btn-style3">삭제</button></div><!-- 190831 리디자인_04 -->
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -176,9 +202,11 @@
                                                             <input type="text" placeholder="받으실분 번호" title="받으실분 번호 입력" value=""/>
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
-                                                        <span class="bt-box">
-                                                            <button type="button">주소록</button>
+                                                        <!-- 190831 리디자인_05 -->
+                                                        <span class="bt-box3">
+                                                            <button type="button" class="btn-round2 btn-style3">주소록</button>
                                                         </span>
+                                                        <!-- //190831 리디자인_05 -->
                                                     </div>
                                                     <div class="widget formradio-style02">
                                                         <div class="widget-box check">
