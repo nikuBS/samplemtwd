@@ -156,28 +156,38 @@ Tw.PRODUDT.PROMOTIONS = {
     USED: 'Y',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
-                  // POOQ              인증코드       적립        할인(100원)    요금제 혜택...
-        SUB_PROD: ['NA00006517', 'NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
+                  //    인증코드       적립        할인(100원)    요금제 혜택...
+        SUB_PROD: [ 'NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
       },
       'NA00006599': { // FLO 앤 데이터 플러스
-        SUB_PROD: ['NA00006517', 'NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
+                 //    인증코드       적립        할인(100원)    요금제 혜택...
+        SUB_PROD: [ 'NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
       }
     },
-    FIRST_PROD : ['NA00006405', 'NA00006539'],
-    SECOND_PROD : ['NA00006404', 'NA00006538'],
+    POOQ: [ 'NA00006517', 'NA00006513', 'NA00006578', 'NA00006585'], //POOQ 관련 서비스
+    FIRST_PROD : ['NA00006405', 'NA00006539'], // 최상위 요금제
+    SECOND_PROD : ['NA00006404', 'NA00006538'], //차상위 요금제
     BEFORE:[
       function(data, def){  // 부가서비스 가입정보를 조회함.
         var promotion = Tw.PRODUDT.PROMOTIONS.FLO;
-        // var prodIds = promotion.PRODS[data.prodId].SUB_PROD.concat(data.prodId);
-        // NOTE 부가서비스 가입일이 우선으로
-        var prodIds = [data.prodId].concat(promotion.PRODS[data.prodId].SUB_PROD);
+        var prodIds = Tw.PRODUDT.PROMOTIONS.FLO.POOQ.concat([data.prodId], promotion.PRODS[data.prodId].SUB_PROD);
 
         Tw.Api.request(Tw.API_CMD.BFF_10_0183, {}, {}, [prodIds.join('~')] )
           .done(function(resp){
            Tw.Logger.info('[FLO]', resp.result);
+
             if ( resp.code === Tw.API_CODE.CODE_00 ) {
-              var idx = 0;
-              var pooqDate = resp.result[prodIds[idx++]];   // pooq 가입여부
+              // POOQ 가입여부 체크
+              var pooq = false; // pooq 가입여부
+              for( var i = 0 ; i < Tw.PRODUDT.PROMOTIONS.FLO.POOQ.length; i++ ){
+                if( resp.result[Tw.PRODUDT.PROMOTIONS.FLO.POOQ[i]] !== 'N'){
+                  pooq = true;
+                  break;
+                }
+              }
+              var pooqContentsDate = resp.result['NA00006517'];  // pooq 컨텐츠팩 가입여부
+              var idx =  Tw.PRODUDT.PROMOTIONS.FLO.POOQ.length;
+
               var joinDate = resp.result[prodIds[idx++]];   // 부가서비스 가입일
               var certDate = resp.result[prodIds[idx++]];  // 부가서비스 인증일
               var coinDate = resp.result[prodIds[idx++]];  // 코인 적립일
@@ -186,7 +196,8 @@ Tw.PRODUDT.PROMOTIONS = {
               var joinDate3 = prodIds.length > idx ? resp.result[prodIds[idx]] : null;
 
               def.resolve({
-                pooqDate: pooqDate,
+                poop : pooq,
+                pooqContentsDate: pooqContentsDate,
                 joinDate: joinDate,
                 certDate: certDate,
                 coinDate: coinDate,
@@ -211,20 +222,23 @@ Tw.PRODUDT.PROMOTIONS = {
         return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
       } else if( data.joinDate3 && data.joinDate3 !== 'N' ) { // FLO 할인 3코드
         return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
-      } else if ( Tw.PRODUDT.PROMOTIONS.FLO.SECOND_PROD.indexOf(data.prodId) > -1 && data.joinDate2 !== 'N') { // FLO 할인 2코드 & NA6404, NA6538
+      } else if ( Tw.PRODUDT.PROMOTIONS.FLO.SECOND_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { // FLO 할인 2코드 & NA6404, NA6538
 
-        if ( data.certDate !== 'N' ){ //Only NA00006521 or NA00006600
+        if ( !data.poop &&  data.certDate !== 'N' ){ // POOQ 부가서비스 가입 없이 Only NA00006521 or NA00006600
           return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
-        } else if ( data.prodId === 'NA00006599' && data.joinDate != 'N' && data.pooqDate !== 'N' ) { // Only NA00006517 + NA00006600
+        } else if ( data.prodId === 'NA00006599' && data.joinDate != 'N' && data.pooqContentsDate !== 'N' ) { // Only NA00006517 + NA00006600
           return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
         } else if ( data.coinDate !== 'N' ) { // OCB 가입
           return null;
-        } else if ( 2 < moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
+        } else if (data.joinDate1 !== 'N') {
+          if ( 2 < moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
+            return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
+          } else {
+            return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
+          }
+        } else{
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-        } else {
-          return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
         }
-
       } else if ( data.coinDate !== 'N') { // OCB 가입 NA6655
         return null;
       } else if( data.joinDate1 !== 'N') {
