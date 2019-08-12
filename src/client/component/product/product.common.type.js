@@ -153,7 +153,7 @@ Tw.PRODUDT.PROMOTIONS = {
     FREE_PRODS: ['NA00006539', 'NA00006538', 'NA00006405', 'NA00006404', 'NA00006403']
   },
   FLO:{
-    USED: 'Y',
+    USED: 'N',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
                   // 인증코드       적립        할인(100원)    요금제 혜택...
