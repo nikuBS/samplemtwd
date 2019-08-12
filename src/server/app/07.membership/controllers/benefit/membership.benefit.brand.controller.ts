@@ -10,7 +10,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import { T_MEMBERSHIP_BENEFIT_BRAND } from '../../../../types/string.type';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 
 class MembershipBenefitBrand extends TwViewController {
@@ -37,7 +37,7 @@ class MembershipBenefitBrand extends TwViewController {
     Observable.combineLatest(
       this.reqCateList(),
       this.reqBrandList(),
-      this.reqMembershipInfo()
+      this.reqMembershipInfo(svcInfo)
     ).subscribe(([respCateList, respBrandList, respMembershipInfo]) => {
       const apiError = this.error.apiError([
         respCateList, respBrandList
@@ -113,8 +113,15 @@ class MembershipBenefitBrand extends TwViewController {
    * @private
    * return Observable
    */
-  private reqMembershipInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_11_0001, {});
+  private reqMembershipInfo(svcInfo): Observable<any> {
+
+    if (FormatHelper.isEmpty(svcInfo)) {
+      return Observable.of({code: API_CODE.BFF_0003});
+    } else {
+      return this.apiService.request(API_CMD.BFF_11_0001, {});
+    }
+
+    
   }
 
   private renderErr(res, err, svcInfo, pageInfo): any {
