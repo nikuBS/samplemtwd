@@ -81,7 +81,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     'NA00003518': true,
     'NA00003519': true,
     'NA00003520': true,
-    'NA00003521': true
+    'NA00003521': true,
+    'NA00006402': true // [OP002-3004] '슬림'요금제 예외 처리 추가
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
