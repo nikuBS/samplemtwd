@@ -86,7 +86,8 @@ Tw.MainMenuSettings.prototype = {
         return item.osType === currentOsType;
       });
       var latestVersion = versionInfo[0].newVer;
-      if (latestVersion > this._currentVersion) {
+      if(Tw.ValidationHelper.checkVersionValidation(latestVersion, this._currentVersion, 3)) {
+      // if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
         this.$versionText.removeClass('point');
       } else {
