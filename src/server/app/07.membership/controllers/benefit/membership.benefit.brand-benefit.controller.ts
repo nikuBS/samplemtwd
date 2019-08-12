@@ -48,8 +48,10 @@ class MembershipBenefitBrandBenefit extends TwViewController {
     };
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_11_0018, param),      // 혜택조회
-      this.apiService.request(API_CMD.BFF_03_0021, {})   // 위치동의여부 조회
+      this.getBrandInfo(param),
+      this.getAgreeInfo(svcInfo)
+      // this.apiService.request(API_CMD.BFF_11_0018, param),      // 혜택조회
+      // this.apiService.request(API_CMD.BFF_03_0021, {})   // 위치동의여부 조회
     ).subscribe(([resp1, resp2]) => {
 
       if ( resp1.code === API_CODE.CODE_00 ) {
@@ -71,7 +73,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
         this.goView(res, svcInfo, pageInfo, data);
       }
     });
-
   }
 
   /**
@@ -88,6 +89,28 @@ class MembershipBenefitBrandBenefit extends TwViewController {
       pageInfo: pageInfo,
       data: data
     });
+  }
+
+  /**
+   * 제휴브랜드 혜택 조회
+   * @private
+   * return Observable
+   */
+  private getBrandInfo(param: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_11_0018, param);
+  }
+
+  /**
+   * T world 동의여부 조회 (광고정보수신/개인정보수집이용/위치정보이용)
+   * @private
+   * return Observable
+   */
+  private getAgreeInfo(svcInfo): Observable<any> {
+    if (FormatHelper.isEmpty(svcInfo)) {
+      return Observable.of({code: API_CODE.BFF_0003});
+    } else {
+      return this.apiService.request(API_CMD.BFF_03_0021, {});
+    }
   }
 }
 
