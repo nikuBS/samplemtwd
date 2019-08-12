@@ -78,7 +78,7 @@ Tw.PRODUDT.PROMOTIONS = {
       //}
       return null;
     }],
-    EXTEND: [function(data){ 
+    EXTEND: [function(data){
       var isFree = data.isFree;
       var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var xtEids = {
@@ -153,7 +153,7 @@ Tw.PRODUDT.PROMOTIONS = {
     FREE_PRODS: ['NA00006539', 'NA00006538', 'NA00006405', 'NA00006404', 'NA00006403']
   },
   FLO:{
-    USED: 'N',
+    USED: 'Y',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
                   // 인증코드       적립        할인(100원)    요금제 혜택...
@@ -163,6 +163,8 @@ Tw.PRODUDT.PROMOTIONS = {
         SUB_PROD: ['NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
       }
     },
+    FIRST_PROD : ['NA00006405', 'NA00006539'],
+    SECOND_PROD : ['NA00006404', 'NA00006538'],
     BEFORE:[
       function(data, def){  // 부가서비스 가입정보를 조회함.
         var promotion = Tw.PRODUDT.PROMOTIONS.FLO;
@@ -172,6 +174,7 @@ Tw.PRODUDT.PROMOTIONS = {
 
         Tw.Api.request(Tw.API_CMD.BFF_10_0183, {}, {}, [prodIds.join('~')] )
           .done(function(resp){
+           Tw.Logger.info('[FLO]', resp.result);
             if ( resp.code === Tw.API_CODE.CODE_00 ) {
               var idx = 0;
               var joinDate = resp.result[prodIds[idx++]];   // 부가서비스 가입일
@@ -179,16 +182,15 @@ Tw.PRODUDT.PROMOTIONS = {
               var coinDate = resp.result[prodIds[idx++]];  // 코인 적립일
               var joinDate1 = resp.result[prodIds[idx++]];  // 100원프로모션 가입일
               var joinDate2 = resp.result[prodIds[idx++]];  // 무료요금제 가입일
-              // Flo 앤 데이터는 요제 혜택이 복수(둘 중 하나만 가입되어 있으면 OK)
-              if(joinDate2 === 'N' && prodIds.length > idx){
-                joinDate2 = resp.result[prodIds[idx]];
-              }
+              var joinDate3 = prodIds.length > idx ? resp.result[prodIds[idx]] : null;
+
               def.resolve({
                 joinDate: joinDate,
                 certDate: certDate,
                 coinDate: coinDate,
                 joinDate1: joinDate1,
-                joinDate2: joinDate2
+                joinDate2: joinDate2,
+                joinDate3: joinDate3
               });
             } else {
               def.fail();
@@ -197,60 +199,69 @@ Tw.PRODUDT.PROMOTIONS = {
       }
     ],
     WHEN: [function(data){
-      var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       if ( data.certDate === 'N' ) {
-        return null; // 인증상품 가입여부 N => 기존해지 프로세스(case_04)
-      } else if( data.joinDate2 !== 'N') {
-        return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
-      } else {
+        return null;
+      }
 
-        if(data.coinDate != 'N'){
-          return null;
-        } else if( data.joinDate1 === 'N' || 2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month' )) {
+      var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
+
+      if( Tw.PRODUDT.PROMOTIONS.FLO.FIRST_PROD.indexOf(data.svcProdId) > -1 && data.joinDate2 !== 'N') { //FLO 할인 2코드 & NA6405, NA6539
+        return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
+      } else if( data.joinDate3 && data.joinDate3 !== 'N' ) { // FLO 할인 3코드
+        return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
+      } else if ( Tw.PRODUDT.PROMOTIONS.FLO.SECOND_PROD.indexOf(data.prodId) > -1 && data.joinDate2 !== 'N') { // FLO 할인 2코드 & NA6404, NA6538
+
+        if ( data.certDate !== 'N' || data.joinDate != 'N'){ //FLO 할인 2코드 & NA6404, NA6538
+          return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
+        } else if ( 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
-        } else if( data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')) {
+        } else {
           return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
         }
+
+      } else if ( data.coinDate !== 'N') { // OCB 가입 NA6655
+        return null;
+      } else if( data.joinDate1 !== 'N') {
+
+        if( 2 > moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month')){
+          return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
+        } else {
+          return 'NONE_FREE_2';
+        }
+
       }
+
       return null;
     }],
     EXTEND: [function(data){
-      var month = Tw.DateHelper.getShortDateWithFormat(new Date(), 'YYYYMM01');
       var xtEids = {
         NA00006520: ['flo_ret_001', 'flo_ret_003', 'flo_ret_005'],
         NA00006599: ['flo_ret_002', 'flo_ret_004', 'flo_ret_006']
       };
-      if ( data.certDate === 'N' ) {
-        return null;
-      } else if(/*isFree*/ data.joinDate2 !== 'N'){
-        // Case_01 무료요금제 이용시 안내 메시지
-        console.log('case 01');
-        return {xt: {
-            eid: xtEids[data.prodId][0],
-            changeCsid: '_ASCTM',
-            closeCsid: '_ASC',
-            topCloseCsId: '_CLS'
-          }};
-      } else {
-        if(data.coinDate != 'N'){
-            return null;
-        } else if ( data.joinDate1 === 'N' || 2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
-          // Case_03 OCB 지급 안내
+
+      var TYPE = Tw.PRODUDT.PROMOTIONS.FLO.WHEN[0](data);
+      switch(TYPE){
+        case 'FREE_1':
+           return {xt: {
+              eid: xtEids[data.prodId][0],
+                changeCsid: '_ASCTM',
+                closeCsid: '_ASC',
+                topCloseCsId: '_CLS'
+            }};
+        case 'NONE_FREE_1':
           return {xt: {
               eid: xtEids[data.prodId][2],
               changeCsid: '_DSCTM',
               closeCsid: '_ASC',
               topCloseCsId: '_CLS'
             }};
-        } else if (data.joinDate1 !== 'N' && 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month')){
-          // Case_02 100원 프로모션 이벤트 가입일 M+2 or X
+        case 'NONE_FREE_2':
           return {xt: {
-              eid: xtEids[data.prodId][1],
-              changeCsid: '_BSCTM',
-              closeCsid: '_ASC',
-              topCloseCsId: '_CLS'
-            }};
-        }
+            eid: xtEids[data.prodId][1],
+            changeCsid: '_BSCTM',
+            closeCsid: '_ASC',
+            topCloseCsId: '_CLS'
+          }};
       }
 
       return null;
