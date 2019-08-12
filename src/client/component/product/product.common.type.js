@@ -156,11 +156,11 @@ Tw.PRODUDT.PROMOTIONS = {
     USED: 'Y',
     PRODS:{
       'NA00006520': { // FLO 앤 데이터
-                  // 인증코드       적립        할인(100원)    요금제 혜택...
-        SUB_PROD: ['NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
+                  // POOQ              인증코드       적립        할인(100원)    요금제 혜택...
+        SUB_PROD: ['NA00006517', 'NA00006521', 'NA00006655', 'NA00006541', 'NA00006542', 'NA00006576']
       },
       'NA00006599': { // FLO 앤 데이터 플러스
-        SUB_PROD: ['NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
+        SUB_PROD: ['NA00006517', 'NA00006600', 'NA00006655', 'NA00006601', 'NA00006602']
       }
     },
     FIRST_PROD : ['NA00006405', 'NA00006539'],
@@ -177,6 +177,7 @@ Tw.PRODUDT.PROMOTIONS = {
            Tw.Logger.info('[FLO]', resp.result);
             if ( resp.code === Tw.API_CODE.CODE_00 ) {
               var idx = 0;
+              var pooqDate = resp.result[prodIds[idx++]];   // pooq 가입여부
               var joinDate = resp.result[prodIds[idx++]];   // 부가서비스 가입일
               var certDate = resp.result[prodIds[idx++]];  // 부가서비스 인증일
               var coinDate = resp.result[prodIds[idx++]];  // 코인 적립일
@@ -185,6 +186,7 @@ Tw.PRODUDT.PROMOTIONS = {
               var joinDate3 = prodIds.length > idx ? resp.result[prodIds[idx]] : null;
 
               def.resolve({
+                pooqDate: pooqDate,
                 joinDate: joinDate,
                 certDate: certDate,
                 coinDate: coinDate,
@@ -211,8 +213,12 @@ Tw.PRODUDT.PROMOTIONS = {
         return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
       } else if ( Tw.PRODUDT.PROMOTIONS.FLO.SECOND_PROD.indexOf(data.prodId) > -1 && data.joinDate2 !== 'N') { // FLO 할인 2코드 & NA6404, NA6538
 
-        if ( data.certDate !== 'N' || data.joinDate != 'N'){ //FLO 할인 2코드 & NA6404, NA6538
+        if ( data.certDate !== 'N' ){ //Only NA00006521 or NA00006600
           return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
+        } else if ( data.prodId === 'NA00006599' && data.joinDate != 'N' && data.pooqDate !== 'N' ) { // Only NA00006517 + NA00006600
+          return 'FREE_1'; // 무료요금제 이용시 안내 메시지(Case_01)
+        } else if ( data.coinDate !== 'N' ) { // OCB 가입
+          return null;
         } else if ( 2 > moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         } else {
