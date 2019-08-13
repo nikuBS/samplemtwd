@@ -39,6 +39,7 @@
             </button>
         </li>
         <% } %>
+        <!--납부/청구 정보 있을때만 노출-->
         <% if (data.paymentInfo) { %>
             <% if (data.type !== 'UF') { %>
             <li>
@@ -63,16 +64,47 @@
                     </span>
                 </button>
             </li>
-            <% if (data.type !== 'UF') { %>
-            <li>
-                <button type="button" data-id="change-address">
-                        <span class="inner">
-                            <span class="tit">청구지 주소/연락처 변경</span>
-                            <span class="text type2">조회/수정</span>
-                        </span>
-                </button>
-            </li>
-            <% } %>
+        <% } %>
+        <%if(data.isShowAffiliateCard){%>
+        <!-- 190805 [OP002-2962] 임시배너 추가_01 -->
+        <li>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="cont-box nogaps-ver pt12 pb12">
+                <div class="membership-use-particulars">
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="bt-detail type1" style="position:relative">
+                                <span class="tx-title" style="padding:0 1.625rem 0 4.375rem;vertical-align:middle;font-size:0.9375rem">
+                                    <span class="ico-wrap"style="position:absolute;top:50%;left:1rem;margin-top:-1.375rem"><img src="<%=CDN%>/img/ico/ico-banner-target01.png" alt="" style="width:2.75rem;height:2.75rem"></span>
+                                    <span>은행자동납부 신청하면 이런 점이 좋아요!</span>
+                                    <button class="tod-no-pseudo bt-link-tx underline ml8 slick-current" style="position:relative;top:auto !important;left:auto;display:block;width:auto;height:auto;margin:0 !important;font-size:0.8125rem;text-decoration:underline;transform:none !important;-webkit-transform:none !important;color:#1788CE" data-id="apply" data-xt_eid="CMMA_A3_B12-11" data-xt_csid="NO" data-xt_action="BV" data-xt_action2="BC">신청하기</button>
+                                </span>
+                                <button class="bt-toggle tod-type1" role="button" aria-pressed="true" title="상세보기" style="position:absolute;top:50%;right:0;width:1.88rem;margin-top:-1.09rem"><span class="blind">상세보기</span></button>
+                            </div>
+                            <div class="toggler">
+                                <div class="acco-cont" style="border-top:0;background:#fff">
+                                    <div class="in-cont" style="padding:0 1.625rem 0 4.375rem;font-size:0.75rem;line-height:1rem;color:#666">
+                                        <p>기기할부금과 소액결제 금액은 연말정산에 포함됩니다. <br>은행계좌로 납부할 경우, 신용카드로 하는 것보다 <br>더 많은 소득공제를 받으실 수 있습니다. <br>(은행계좌 납부 30%, 신용카드 납부 15%)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+        </li>
+        <!-- // 190805 [OP002-2962] 임시배너 추가_01 -->
+        <% } %>
+        <% if (data.paymentInfo && data.type !== 'UF') { %>
+        <li>
+            <button type="button" data-id="change-address">
+                    <span class="inner">
+                        <span class="tit">청구지 주소/연락처 변경</span>
+                        <span class="text type2">조회/수정</span>
+                    </span>
+            </button>
+        </li>
         <% } %>
     </ul>
 </div>

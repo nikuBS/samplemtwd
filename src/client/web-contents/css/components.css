@@ -35497,4 +35497,9 @@ body.apphome .section-box {
 .user-greeting.tod-user-greeting .msg{font-size:0.875rem; text-align:center}
 .with-payment-line .list-comp-input .select-list > li .comp-list-layout .layout-text .stext span.tod-unpaid-box{display:inline-block; height:1rem; line-height:1rem; white-space:nowrap; color:#fff; font-size:0.625rem; font-weight:normal; margin-left:0.125rem; background:#f76252; border-radius:0.25rem; padding:0 0.3125rem; vertical-align:middle;  }
 
+/* 190805 [OP002-2962] target banner 배너 */
+.tod-no-pseudo:after{display:none}
+.membership-use-particulars .bt-detail .bt-toggle.tod-type1:after{top:50%;left:50%;display:inline-block;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);background:url(/img/svg/icon_32px_arrowdown.svg) no-repeat 0 0;background-size:1rem}
+.membership-use-particulars .bt-detail .bt-toggle.tod-type1.open:after{background:url(/img/svg/icon_32px_arrowup.svg) no-repeat 0 0;background-size:1rem}
+
 

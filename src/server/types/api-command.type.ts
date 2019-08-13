@@ -515,6 +515,7 @@ export const API_CMD = {
   BFF_07_0099: { path: '/core-bill/:version/skpay-prepay/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0100: { path: '/core-bill/:version/skpay-prepay/use-contents-prepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0101: { path: '/core-bill/:version/skpay-prepay/micro-prepay', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0102: { path: '/core-bill/:version/affiliatecard-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // CUSTOMER
   BFF_08_0001: { path: '/core-modification/:version/counsel-time-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
