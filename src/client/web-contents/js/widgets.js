@@ -1,7 +1,7 @@
 $(document).on('ready', function () {
   skt_landing.widgets.widget_init();
 });
-/** 
+/**
  * 차트 관련 jQuery 확장 펑션
  * @class
  */
@@ -29,11 +29,11 @@ skt_landing.widgets = {
         widget_list[com_name](widget_ta);
       }
       catch(err) {
-        console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음 
+        console.log('error : ' + com_name); // .widget > .widget-box 구조를 절대적 .widget-box에는 정해진 clsss명만 올수있음
       }
     }
     skt_landing.widgets.widget_deltype();
-    
+
     /* 컴포넌트 실행 */
     component_list = {};
     var component_ta = ta ? $(ta+' .component') : $('.component');
@@ -234,7 +234,7 @@ skt_landing.widgets = {
    * @param {object} ta - selector
    * @example
    * skt_landing.widgets.widget_radio();
-  */  
+  */
   widget_radio: function (ta) {
     var input = ta ? $(ta).find('.radiobox :radio') : $('.radiobox :radio');
     input.each(function () {
@@ -256,7 +256,7 @@ skt_landing.widgets = {
 
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
-      
+
       $(this).on('change', function () {
         if ($(this).prop('disabled')) return;
         var nameGroup = $('[name=' + $(this).attr('name') + ']').not(this);
@@ -361,7 +361,7 @@ skt_landing.widgets = {
       })
     });
   },
-  
+
   /**
    * @summary .slider4 클래스에 대한 slick.js 적용 함수
    * @description
@@ -654,7 +654,7 @@ skt_landing.widgets = {
   */
   widget_tfCombined: function (ta) {
     var box = ta ? $(ta).find('.txfield-combined') : $('.txfield-combined');
-   
+
       box.each(function(){
         if($(this).data('event') == undefined){
           $(this).data('event', 'bind')
@@ -673,7 +673,7 @@ skt_landing.widgets = {
           _this.removeClass('focus');
         });
       });
-/* 정체 불명 
+/* 정체 불명
       box.find('.combined-cell').each(function(num){
         var _this = $(this);
         var _this_w = _this.width();
@@ -695,8 +695,8 @@ skt_landing.widgets = {
   widget_accessability: function ($slick) {
     var _this = $slick;
     _this.on('afterChange', function (e, _slick) {
-      if(!_slick.$dots) return;      
-      var $dots = _slick.$dots.find('span');        
+      if(!_slick.$dots) return;
+      var $dots = _slick.$dots.find('span');
       $dots.each(function (idx, key) {
         $(this).attr({
           'role': 'tab',
@@ -814,7 +814,7 @@ skt_landing.widgets = {
           $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
-      
+
       skt_landing.widgets.widget_accessability(_this);  //@190315 - 접근성 aria
     });
   },
@@ -962,7 +962,7 @@ skt_landing.widgets = {
         $(this).closest('.acco-cover').toggleClass('on');
       });
       _this.find('> .acco-cover > .acco-style > .acco-list > .acco-box:not(".none-event") > .acco-tit button:not(".btn-tip")').on('click', function (event) {
-        
+
         if(_this.find('> .acco-cover').hasClass('toggle')){
           $(this).closest('.acco-box').siblings().removeClass('on');
           $(this).closest('.acco-box').siblings().find('> .acco-tit button').attr('aria-pressed',false);
@@ -1029,7 +1029,7 @@ skt_landing.widgets = {
    * @summary - 스위치 ( checkbox )
    * @description
    * - .switch .btn-switch input 클래스에 대한 이벤트 바인딩 함수
-   * - {@link http://127.0.0.1:5500/html/templete/component_etc.html} 
+   * - {@link http://127.0.0.1:5500/html/templete/component_etc.html}
    * @function
    * @param {Object} ta - selector
    * @example
