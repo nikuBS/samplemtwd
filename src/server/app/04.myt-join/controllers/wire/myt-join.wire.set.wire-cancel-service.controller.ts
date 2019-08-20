@@ -215,13 +215,13 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
       }
       thisMain._resDataInfo.skbdYn = skbdYn;
 
-
-      for ( let i = thisMain._resDataInfo.wireList.length - 1; i >= 0; i-- ) {
+      // 2019-08-20 OP002-3325: SKB 상품도 노출하도록 변경
+      /*for ( let i = thisMain._resDataInfo.wireList.length - 1; i >= 0; i-- ) {
         // skb 상품 제외
         if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
           thisMain._resDataInfo.wireList.splice(i, 1);
         }
-      }
+      }*/
 
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
