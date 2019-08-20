@@ -1,10 +1,10 @@
-<% if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '03' && ( channelGuidmsgInfo.mwApp !== 'YY' || (( isWireplan || isWireplanAdd || isCombine ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) ) && !isJoined ) { %>
+<% if ( basicInfo.prodStCd !== 'F1000' && locals.channelGuidmsgInfo  && channelGuidmsgInfo.scrbTermGuidCd == '03' && ( channelGuidmsgInfo.mwApp !== 'YY' || (( isWireplan || isWireplanAdd || isCombine ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) ) && !isJoined ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 <div class="joinconsulting-wrap">       
     <p class="text"><%= channelGuidmsgInfo.scrbTermGuidMsgCtt %></p>
 </div>
 
-<% } else if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '01' && 
+<% } else if ( basicInfo.prodStCd !== 'F1000' && locals.channelGuidmsgInfo && channelGuidmsgInfo.scrbTermGuidCd == '01' &&
 ((( isWireplan || isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) ) { %>
 <div class="fe-reservation_wrap">
     <hr class="cont-sp type1" aria-hidden="true"/>
@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<% } else if ( basicInfo.prodStCd !== 'F1000' && channelGuidmsgInfo.scrbTermGuidCd == '01' && channelGuidmsgInfo.mwApp !== 'YY' && !isJoined && channelGuidmsgInfo.msg !== null ) { %>
+<% } else if ( basicInfo.prodStCd !== 'F1000' && locals.channelGuidmsgInfo && channelGuidmsgInfo.scrbTermGuidCd == '01' && channelGuidmsgInfo.mwApp !== 'YY' && !isJoined && channelGuidmsgInfo.msg !== null ) { %>
 
     <hr class="cont-sp type1" aria-hidden="true"/>
     <div class="joinconsulting-wrap">   
