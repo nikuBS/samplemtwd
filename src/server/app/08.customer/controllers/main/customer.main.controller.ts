@@ -10,6 +10,9 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import BrowserHelper from '../../../../utils/browser.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
+import { CUSTOMER_NOTICE_CTG_CD } from '../../../../types/bff.type';
+import DateHelper from '../../../../utils/date.helper';
+import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/observable';
 
 /**
@@ -51,6 +54,7 @@ class CustomerMain extends TwViewController {
       this.getResearch() // 설문조사
     ).subscribe(([banners, notice, researchList]) => {
       const noticeList = notice ? this.parseNoticeList(BrowserHelper.isApp(req), notice) : [];
+      // this.logger.info(this, '[ 현재 공지사항 파싱한 noticeList 는 ? :  ]', noticeList);
       res.render('main/customer.main.html', {
         svcInfo: svcInfo,
         banners: this.exceptNullObject(banners),
@@ -69,7 +73,21 @@ class CustomerMain extends TwViewController {
    * @param {Notice} notice
    * @returns {array} notice.content
    */
-  private parseNoticeList = (isApp: boolean, notice: Notice): any[] => isApp ? notice.content.splice(0, 3) : notice.content.splice(0, 6);
+  private parseNoticeList = (isApp: boolean, notice: Notice): any => {
+    let content = isApp ? notice.content.splice(0, 3) : notice.content.splice(0, 6);  // 앱이면 게시물 3개만 노출하고 아니면 6개를 노출
+    // let content = notice.content;
+    // this.logger.info(this, '[ parseNoticeList 내부의 content? :  ]', content);
+    
+      return content.map(item => {
+          return Object.assign(item, {  // 기존 객체에서 fstRgstDtm와 ntcCtgCd의 값만 변경하여 적용
+            // ntcTitNm: item.ntcTitNm, // 제목
+            fstRgstDtm: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.D.'),  // 날짜 포맷 처리
+            ntcCtgCd: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd], // 유형
+          });
+      });
+
+  }
+
 
   /**
    * @function
