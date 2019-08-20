@@ -2,7 +2,7 @@
  * @filemyt-fare.bill.skpay.result.prepay.controller.ts
  * @file SK pay 결과 처리
  * @author Kyoungsup Cho (kscho@partner.sk.com)
- * @since 2019.07.24
+ * @since 2019.08.20
  */
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
@@ -13,7 +13,15 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 interface Query {
   orderNumber: string;
   source: string;
+  previousAmount: string;
+  afterAmount: string;
+  rechargeAmount: string;
+  sms: string;
+  email: string;
+  amtCd: string;
+  mb: string;
 }
+
 interface ResultJsonError {
   code: string;
   message: string;
@@ -22,7 +30,7 @@ interface ResultJson {
   paymentTokenIdentifier: string;
   paymentToken: string;
 }
-class MyTFareBillSkpayResultPrepay extends TwViewController {
+class MyTDataPrepaidSKpayResult extends TwViewController {
   constructor() {
     super();
   }
@@ -41,36 +49,43 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query: Query = {
       orderNumber: req.query.dataKey,
-      source: req.query.source
+      source: req.query.source,
+      previousAmount: req.query.previousAmount,
+      afterAmount: req.query.afterAmount,
+      rechargeAmount: req.query.rechargeAmount,
+      sms: req.query.sms,
+      email: req.query.email,
+      amtCd: req.query.amtCd,
+      mb: req.query.mb
     };
     var status = req.body.status;
     var result = req.body.result;
     var paymentToken = '';
     var resultUtf = '';
     var codeError = '';
-    var renderUrl = 'bill/myt-fare.bill.skpay.result.prepay.html';
-    const small = 'small';
-    const contents = 'contents';
+    var renderUrl = 'prepaid/myt-data.prepaid.skpay.result.html';
+    const urlVoice = 'voice';
+    const urlData = 'data';
 
     resultUtf = this.getResultUtf(result, resultUtf);
 
     if (status == 200) {
       paymentToken = this.getPaymentToken(resultUtf, paymentToken);
-      let data = this.getDataApi(query, paymentToken);
-      if (query.source && query.source === small) {
-        this.apiService.request(API_CMD.BFF_07_0101, data).subscribe((createInfo) => {
+      let data = this.getDataApi(query, paymentToken, urlData);
+      if (query.source && query.source === urlVoice) {
+        this.apiService.request(API_CMD.BFF_06_0086, data).subscribe((createInfo) => {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-              return res.redirect('/myt-fare/bill/pay-complete?type=' + query.source);
+            return res.redirect('/myt-data/recharge/prepaid/voice-complete?type=voice&previousAmount=' + query.previousAmount + '&afterAmount=' + query.afterAmount + '&rechargeAmount='+ query.rechargeAmount);
           } else {
             return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
           }
         });
-      } else if (query.source && query.source === contents) {
-        this.apiService.request(API_CMD.BFF_07_0100, data).subscribe((createInfo) => {
+      } else if (query.source && query.source === urlData) {
+        this.apiService.request(API_CMD.BFF_06_0087, data).subscribe((createInfo) => {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
-              return res.redirect('/myt-fare/bill/pay-complete?type=' + query.source);
+              return res.redirect('/myt-data/recharge/prepaid/data-complete?data=' + query.mb);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
           }
         });
       }
@@ -80,7 +95,7 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
         codeError = resultJsonError.code;
       }
       if (codeError === 'USER_EXIT') { //USER_EXIT 사용자 취소
-        return res.redirect('/myt-fare/submain');
+        return res.redirect('/myt-data/submain');
       } else if (codeError === 'BAD_REQUEST') { //BAD_REQUEST 잘못된 요청
         return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, codeError, MYT_FARE_ERROR_MSG.MSG_TEMP), { pageInfo }));
       } else if (codeError === 'EXCEPTION') { //EXCEPTION 11 Pay 내부 오류
@@ -98,11 +113,23 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
     return resultUtf;
   }
 
-  private getDataApi(query: Query, paymentToken: string) {
-    return {
-      orderNumber: query.orderNumber,
-      paymentToken: paymentToken
-    };
+  private getDataApi(query: Query, paymentToken: string, urlData: string) {
+    if (query.source && query.source === urlData) {
+      return {
+        orderNumber: query.orderNumber,
+        paymentToken: paymentToken,
+        smsYn: query.sms,
+        emailYn: query.email,
+        amtCd: query.amtCd
+      };
+    } else {
+      return {
+        orderNumber: query.orderNumber,
+        paymentToken: paymentToken,
+        smsYn: query.sms,
+        emailYn: query.email
+      };
+    }
   }
 
   private getPaymentToken(resultUtf: string, paymentToken: string) {
@@ -135,4 +162,4 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
   }
 }
 
-export default MyTFareBillSkpayResultPrepay;
+export default MyTDataPrepaidSKpayResult;

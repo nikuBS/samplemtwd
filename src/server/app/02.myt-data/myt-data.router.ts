@@ -28,6 +28,7 @@ import MyTDataPrepaidVoiceComplete from './controllers/prepaid/myt-data.prepaid.
 import MyTDataFamilyHistory from './controllers/familydata/myt-data.familydata.history.controller';
 import MyTDataPrepaidAlarmComplete from './controllers/prepaid/myt-data.prepaid.alarm-complete.controller';
 import MyTDataPrepaidVoiceInfo from './controllers/prepaid/myt-data.prepaid.voice-info.controller';
+import MyTDataPrepaidSKpayResult from './controllers/prepaid/myt-data.prepaid.skpay.result.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -63,6 +64,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/prepaid/data-complete', controller: MyTDataPrepaidDataComplete });
     this.controllers.push({ url: '/recharge/prepaid/alarm', controller: MyTDataPrepaidAlarm });
     this.controllers.push({ url: '/recharge/prepaid/alarm-complete', controller: MyTDataPrepaidAlarmComplete });
+    this.controllers.push({ url: '/recharge/prepaid/skpay/result', controller: MyTDataPrepaidSKpayResult, post: true });
   }
 }
 
