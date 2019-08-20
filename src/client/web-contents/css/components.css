@@ -35502,4 +35502,17 @@ body.apphome .section-box {
 .membership-use-particulars .bt-detail .bt-toggle.tod-type1:after{top:50%;left:50%;display:inline-block;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);background:url(/img/svg/icon_32px_arrowdown.svg) no-repeat 0 0;background-size:1rem}
 .membership-use-particulars .bt-detail .bt-toggle.tod-type1.open:after{background:url(/img/svg/icon_32px_arrowup.svg) no-repeat 0 0;background-size:1rem}
 
+/* 190808 [OP002-3000] 서브메인 영역별 개선 */
+.tod-notice-list.link-long-list li .link-long a, 
+.tod-notice-list.link-long-list li .link-long button{padding:0.9375rem 1.56rem 0.75rem 0}
+.tod-notice-list.link-long-list .tit{display:block; width:100%; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
+.tod-notice-list.link-long-list .notice_info{display:block; margin-top:0.3125rem; font-size:0.75rem; color:#858585;}
+.tod-notice-list.link-long-list .notice_info .cate{display:inline-block;}
+.tod-notice-list.link-long-list .notice_info .date{display:inline-block; padding-left:0.5rem; margin-left:0.5rem; position:relative; }
+.tod-notice-list.link-long-list .notice_info .date:before{content:''; display:inline-block; width:0.0625rem; height:0.625rem; background:#e5e5e5; position:absolute; left:0; top:50%; margin-top:-0.3125rem}
+.btn-link-list.tod-linetop {border-top:1px solid #f2f2f2;}
+.main-faq-menu ul li .menu-bt.ico-type14 .ico {background-image:url(/img/customer/bg_cs_01_01_17_01.png);}
+.main-faq-menu ul li .menu-bt.ico-type15 .ico {background-image:url(/img/customer/bg_cs_01_01_17_02.png);}
+.main-faq-menu ul li .menu-bt.ico-type16 .ico {background-image:url(/img/customer/bg_cs_01_01_17_03.png);}
+
 
