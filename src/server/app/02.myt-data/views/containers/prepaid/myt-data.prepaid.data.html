@@ -5,10 +5,11 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% include ../../components/skpay.component.html %>
 <body>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '데이터 1회 충전', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -55,98 +56,144 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <div class="cont-box">
-                    <p class="fe-email-address none"></p>
-                    <ul class="form-data-list">
-                        <li>
-                            <label class="tit" for="formInput01">충전 데이터</label>
-                            <span class="inputbox">
-                                <button class="bt-dropdown big fe-select-data fe-required-select"
-                                        title="충전 데이터 선택" aria-haspopup="true">
-                                    데이터 선택<span class="ico" title="충전 데이터 선택"></span>
-                                </button>
-                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
-                                    충전할 데이터를 선택해 주세요.
-                                </span>
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="formInput02">카드번호</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="formInput02" type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
-                                           minlength="15" maxlength="16" data-valid-label="card"
-                                           placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
-                                           class="fe-card-number required-input-field fe-only-number" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="formInput03">유효기간</label>
-                            <div class="input-wrap-half fe-exp-wrap">
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input id="formInput03" type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               class="fe-card-y required-input-field fe-only-number" data-valid-label="expiration"
-                                               placeholder="YYYY" title="유효기간 년 YYYY" minlength="4" maxlength="4" />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               class="fe-card-m required-input-field fe-only-number" data-valid-label="expiration"
-                                               placeholder="MM" title="유효기간 월 MM" minlength="2" maxlength="2" />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                </span>
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1 new"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul class="fe-tab-wrap" role="tablist" style="width: 100%;">
+                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a role="tab">SK pay</a></li>
+                                        <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a role="tab">신용카드</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
+                                            <!-- .cont-box -->
+                                            <div class="cont-box">
+                                                <ul class="form-data-list">
+                                                    <li>
+                                                        <label class="tit" for="formInput01">충전 데이터</label>
+                                                        <span class="inputbox">
+                                                            <button class="bt-dropdown big fe-select-amount-skpay" 
+                                                                    title="충전 데이터 선택" aria-haspopup="true">
+                                                                    데이터 선택<span class="ico" title="충전 데이터 선택"></span>
+                                                            </button>
+                                                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
+                                                                충전할 데이터를 선택해 주세요.
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!--// .cont-box -->
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
+                                               <!-- .cont-box -->
+                                            <div class="cont-box">
+                                                <p class="fe-email-address none"></p>
+                                                <ul class="form-data-list">
+                                                    <li>
+                                                        <label class="tit" for="formInput01">충전 데이터</label>
+                                                        <span class="inputbox">
+                                                            <button class="bt-dropdown big fe-select-data fe-required-select"
+                                                                    title="충전 데이터 선택" aria-haspopup="true">
+                                                                데이터 선택<span class="ico" title="충전 데이터 선택"></span>
+                                                            </button>
+                                                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
+                                                                충전할 데이터를 선택해 주세요.
+                                                            </span>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="tit" for="formInput02">카드번호</label>
+                                                        <span class="inputbox">
+                                                            <span class="input">
+                                                                <input id="formInput02" type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                                        minlength="15" maxlength="16" data-valid-label="card"
+                                                                        placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
+                                                                        class="fe-card-number required-input-field fe-only-number" />
+                                                                <button class="cancel"><span class="blind">삭제</span></button>
+                                                            </span>
+                                                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">카드번호를 입력해 주세요.</span>
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="tit" for="formInput03">유효기간</label>
+                                                        <div class="input-wrap-half fe-exp-wrap">
+                                                            <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input id="formInput03" type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                                            class="fe-card-y required-input-field fe-only-number" data-valid-label="expiration"
+                                                                            placeholder="YYYY" title="유효기간 년 YYYY" minlength="4" maxlength="4" />
+                                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                            <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                                            class="fe-card-m required-input-field fe-only-number" data-valid-label="expiration"
+                                                                            placeholder="MM" title="유효기간 월 MM" minlength="2" maxlength="2" />
+                                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                        <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
+                                                            유효기간이 올바르지 않습니다.
+                                                        </span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="tit" for="formInput04">카드 비밀번호</label>
+                                                        <span class="inputbox">
+                                                            <span class="input">
+                                                                <input id="formInput04" type="number" style="-webkit-text-security: disc;"
+                                                                        class="fe-card-pw required-input-field fe-only-number"
+                                                                        inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="password"
+                                                                        placeholder="앞 2자리" title="카드 비밀번호 앞 2자리 입력"
+                                                                        aria-labelledby="aria-exp-label4" maxlength="2" minlength="2" />
+                                                                <button class="cancel"><span class="blind">삭제</span></button>
+                                                            </span>
+                                                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                                <p id="aria-exp-desc1" class="ctext">※ 본인명의의 BC카드, 신한카드로만 충전할 수 있습니다.</p>
+                                            </div>
+                                            <!--// .cont-box -->
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">
-                                유효기간이 올바르지 않습니다.
-                            </span>
-                        </li>
-                        <li>
-                            <label class="tit" for="formInput04">카드 비밀번호</label>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="formInput04" type="number" style="-webkit-text-security: disc;"
-                                           class="fe-card-pw required-input-field fe-only-number"
-                                           inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="password"
-                                           placeholder="앞 2자리" title="카드 비밀번호 앞 2자리 입력"
-                                           aria-labelledby="aria-exp-label4" maxlength="2" minlength="2" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">비밀번호가 올바르지 않습니다.</span>
-                            </span>
-                        </li>
-                    </ul>
-                    <p id="aria-exp-desc1" class="ctext">※ 본인명의의 BC카드, 신한카드로만 충전할 수 있습니다.</p>
+                        </div>
+                    </div>
+                    <!--// .component -->
                 </div>
-                <!--// .cont-box -->
-
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
-                        <li>
-                            <button type="button" id="DC_09_01_tip_01" class="tip-view-btn" aria-haspopup="true">
-                                공인인증서 인증 안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요!</h3>
+                    <ul class="pg-chk-list02">
+                        <li>공인인증서 인증 안내 <button type="button"  id="DC_09_01_tip_01" class="tip-view" title="공인인증서 인증 안내입니다. TIP보기" aria-haspopup="true">TIP</button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
             </div>
             <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
-            <div class="bt-fixed-area">
+            <div class="bt-fixed-area fe-tab1-btn">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-check-recharge" disabled="disabled">충전하기</button>
+                        <button class="fe-request-skpay fe-request" disabled="disabled">충전하기</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="bt-fixed-area fe-tab2-btn" style="display:none;">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-check-recharge fe-request" disabled="disabled">충전하기</button>
                     </li>
                 </ul>
             </div>
@@ -163,7 +210,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataPrepaidData($('.wrap'));
+    new Tw.MyTDataPrepaidData($('.wrap'), <%- JSON.stringify({ skpayInfo }) %>);
   });
 </script>
 
