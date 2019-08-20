@@ -27,8 +27,9 @@ class CommonMemberInit extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this.loginService.sessionGenerate(req).subscribe(() => {
+    this.loginService.sessionGenerate(req, res).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));
+      
       const type = {
         android: BrowserHelper.isApp(req) && BrowserHelper.isAndroid(req) ? 'Y' : 'N',
         ios: BrowserHelper.isApp(req) && BrowserHelper.isIos(req) ? 'Y' : 'N'

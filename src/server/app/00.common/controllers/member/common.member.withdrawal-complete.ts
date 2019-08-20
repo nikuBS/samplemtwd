@@ -38,7 +38,7 @@ class CommonMemberWithdrawalComplete extends TwViewController {
       }
     }
 
-    this.loginService.sessionGenerate(req).subscribe(() => {
+    this.loginService.sessionGenerate(req, res).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));
       res.render('member/common.member.withdrawal-complete.html', { isTid: isTid, pageInfo });
     });

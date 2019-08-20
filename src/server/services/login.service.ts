@@ -25,9 +25,14 @@ class LoginService {
    * 신규 세션 생성
    * @param req
    */
-  public sessionGenerate(req): Observable<any> {
+  public sessionGenerate(req, res): Observable<any> {
     return Observable.create((observer) => {
       req.session.regenerate((error) => {
+
+        res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+        CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+        this.clearXtCookie(res);
+
         this.logger.info(this, '[Session Generate]', error);
         observer.next();
         observer.complete();
@@ -101,6 +106,7 @@ class LoginService {
    * @param svcInfo
    */
   public setSvcInfo(req, res, svcInfo: any): Observable<any> {
+    console.log('###### setSvcInfo ######');
     return Observable.create((observer) => {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
 
@@ -108,6 +114,7 @@ class LoginService {
         req.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
         Object.assign(req.session.svcInfo, svcInfo);
+        console.log(svcInfo);
       }
       this.setXtractorCookie(req, res, svcInfo);
 
@@ -125,6 +132,8 @@ class LoginService {
    */
   public clearXtCookie(res): any {
     res.clearCookie(COOKIE_KEY.XTLID);
+    // XTUID 초기화 추가
+    res.clearCookie(COOKIE_KEY.XTUID);
     res.clearCookie(COOKIE_KEY.XTLOGINID);
     res.clearCookie(COOKIE_KEY.XTLOGINTYPE);
     res.clearCookie(COOKIE_KEY.XTSVCGR);
@@ -141,18 +150,21 @@ class LoginService {
     if ( FormatHelper.isEmpty(req.session.svcInfo) ) {
       return;
     }
-
     
 
     const currentXtInfo = req.session.svcInfo.xtInfo || {},
       xtInfo: any = {};
 
-    if ( FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+    // 현재 선택된 회선이 기준회선일 경우만 변경한다.
+    // if ( FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+    if ( !FormatHelper.isEmpty(svcInfo.svcMgmtNum) && svcInfo.repSvcYn === 'Y') {
       xtInfo.XTLID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
       res.cookie(COOKIE_KEY.XTLID, xtInfo.XTLID);
     }
 
-    if ( !FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+    // 현재 선택된 회선
+    // if ( !FormatHelper.isEmpty(currentXtInfo.XTLID) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+    if ( !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       xtInfo.XTUID = CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB);
       res.cookie(COOKIE_KEY.XTUID, xtInfo.XTUID);
     }
@@ -173,9 +185,11 @@ class LoginService {
 
     if ( FormatHelper.isEmpty(currentXtInfo.XTSVCGR) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       xtInfo.XTSVCGR = svcInfo.svcGr;
+      res.cookie(COOKIE_KEY.XTSVCGR, xtInfo.XTSVCGR);
     }
 
-    req.session.svcInfo.xtInfo = xtInfo;
+    req.session.svcInfo.xtInfo = Object.assign(currentXtInfo , xtInfo);
+    // req.session.svcInfo.xtInfo = xtInfo;
   }
 
   /**
@@ -465,7 +479,9 @@ class LoginService {
         this.logger.debug(this, '[logoutSession]', req.session, error);
         res.clearCookie(COOKIE_KEY.TWM);
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+        CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+        // 로그아웃 시 xtractor cookie 초기화
+        this.clearXtCookie(res);
         observer.next();
         observer.complete();
       });

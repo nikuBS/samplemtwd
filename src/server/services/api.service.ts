@@ -207,7 +207,7 @@ class ApiService {
               if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                 this.logger.info(this, '[Session expired]');
                 res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-                CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+                CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                 res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
               } else {
                 res.render('error.login-block.html', { target: this.loginService.getPath(req) });
@@ -268,7 +268,7 @@ class ApiService {
                 if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                   this.logger.info(this, '[Session expired]');
                   res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-                  CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+                  CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
                   res.redirect('/common/member/logout/expire?target=' + this.loginService.getPath(req));
                 } else {
                   res.render('error.login-block.html', { target: this.loginService.getPath(req) });
@@ -408,7 +408,7 @@ class ApiService {
             }
           });
 
-          this.loginService.clearXtCookie(this.res);
+          // this.loginService.clearXtCookie(this.res);
           return Observable.combineLatest(
             this.loginService.setSvcInfo(this.req, this.res, curSvcInfo),
             this.loginService.setAllSvcInfo(this.req, this.res, resp.result));
@@ -468,7 +468,7 @@ class ApiService {
           };
           Object.assign(curSvcInfo, resp.result);
 
-          this.loginService.clearXtCookie(this.res);
+          // this.loginService.clearXtCookie(this.res);
           return this.loginService.setSvcInfo(this.req, this.res, curSvcInfo);
         } else {
           // return this.loginService.setSvcInfo(this.req, this.res, null);
