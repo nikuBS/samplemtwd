@@ -275,7 +275,7 @@ class ProductHelper {
       premTermYn = (installmentAgreement.agrmtUseCnt < 181 && isPremTerm);
 
     return Object.assign(installmentAgreement, {
-      isInstallAgreement: installmentAgreement.gapDcAmt > 0,  // 지원금 차액 정산금 동의 노출 여부
+      isInstallAgreement: installmentAgreement.penAmt > 0,  // 지원금 차액 정산금 동의 노출 여부
       isNumberPenAmt: isNumberPenAmt,
       penAmt: isNumberPenAmt ? FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,  // 위약금 (실지원금액)
       isNumberFrDcAmt: isNumberFrDcAmt,
