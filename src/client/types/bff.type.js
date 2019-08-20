@@ -211,7 +211,12 @@ Tw.PREPAID_PAYMENT_TYPE = {
   '11': 'T-POINT',
   '41': '은행이체',
   '51': '후납',
-  '99': '선불카드(PPS카드)'
+  '99': '선불카드(PPS카드)',
+  '22': 'SK PAY 카드',
+  '23': 'SK PAY 카드 + OCB',
+  '30': 'SK PAY OCB',
+  '31': 'SK PAY 계좌이체',
+  '32': 'SK PAY 계좌이체 + OCB'
 };
 
 Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {

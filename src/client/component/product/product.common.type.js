@@ -228,13 +228,13 @@ Tw.PRODUDT.PROMOTIONS = {
       } else if ( data.coinDate !== 'N') { // OCB 가입 NA6655
         return null;
       } else if( data.joinDate1 !== 'N') {
-
         if( 2 > moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month')){
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         } else {
           return 'NONE_FREE_2';
         }
-
+      } else {
+        return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
       }
 
       return null;
