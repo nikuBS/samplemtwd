@@ -225,7 +225,7 @@ Tw.ProductHelper = (function () {
       isPremTerm = installmentAgreement.premTermYn === 'Y';
 
     return $.extend(installmentAgreement, {
-      isInstallAgreement: installmentAgreement.gapDcAmt > 0,
+      isInstallAgreement: installmentAgreement.penAmt > 0,
       isNumberPenAmt: isNumberPenAmt,
       penAmt: isNumberPenAmt ? Tw.FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,
       isNumberFrDcAmt: isNumberFrDcAmt,
