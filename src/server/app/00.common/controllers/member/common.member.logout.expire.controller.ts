@@ -38,7 +38,7 @@ class CommonMemberLogoutExpire extends TwViewController {
       this.processInvalidSession(req, res);
     }
 
-    this.loginService.sessionGenerate(req).subscribe(() => {
+    this.loginService.sessionGenerate(req, res).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));
       res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
     });
@@ -49,8 +49,6 @@ class CommonMemberLogoutExpire extends TwViewController {
    * @param req
    */
   private processInvalidSession(req: any, res: any) {
-
-    res.clearCookie(COOKIE_KEY.TWM_LOGIN);
 
     const curTWM = req.query.cur_twm || '';
     const preTWM = req.query.pre_twm || '';

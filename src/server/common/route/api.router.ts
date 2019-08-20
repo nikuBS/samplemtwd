@@ -202,7 +202,7 @@ class ApiRouter {
     const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
     if ( FormatHelper.isEmpty(loginService.getSvcInfo(req)) && !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-      CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+      CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.json({
         code: API_CODE.NODE_1004,
         msg: NODE_API_ERROR[API_CODE.NODE_1004]
@@ -1191,7 +1191,7 @@ class ApiRouter {
    */
   private generateSession(req: Request, res: Response, next: NextFunction) {
     const loginService = new LoginService();
-    loginService.sessionGenerate(req).subscribe(() => {
+    loginService.sessionGenerate(req, res).subscribe(() => {
       this.logger.info(this, '[Session ID]', loginService.getSessionId(req));
       res.json({ code: API_CODE.CODE_00 });
     });

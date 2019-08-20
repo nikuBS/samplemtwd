@@ -179,7 +179,7 @@ abstract class TwViewController {
     if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
       this._logger.info(this, '[Session expired]');
       res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-      CommonHelper.clearCookieWithpreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
+      CommonHelper.clearCookieWithPreFix(req, res, COOKIE_KEY.ON_SESSION_PREFIX);
       res.redirect('/common/member/logout/expire?target=' + this.getTargetUrl(path, req.query));
     } else {
       this._logger.info(this, '[Session empty]');
@@ -426,8 +426,8 @@ abstract class TwViewController {
 
       if ( !FormatHelper.isEmpty(req.session.svcInfo.loginType) ) {
         // XTLOGINTYPE 쿠키 존재 여부 체크 및 미존재시 새로 발급
-        if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINTYPE])) {
-          this.logger.debug(this, '[checkXtCookie] XTLOGINTYPE Cookie does not exist');
+        // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINTYPE])) {
+          // this.logger.debug(this, '[checkXtCookie] XTLOGINTYPE Cookie does not exist');
 
           // TID 를 통한 로그인 시 XTLOGINTYPE 쿠키는 A 로 발급하고 간편로그인인 경우 XTLOGINTYPE 쿠키를 Z 로 발급
           if ( req.session.svcInfo.loginType === LOGIN_TYPE.TID ) {
@@ -435,27 +435,32 @@ abstract class TwViewController {
           } else if ( req.session.svcInfo.loginType === LOGIN_TYPE.EASY ) {
             this.loginService.setCookie(res, COOKIE_KEY.XTLOGINTYPE, 'Z');
           }
-        }
+        // }
       }
 
       if ( !FormatHelper.isEmpty(req.session.svcInfo.xtInfo) ) {
         // XTLID 쿠키 존재 여부 체크 및 미존재시 새로 발급
-        if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLID])) {
-          this.logger.debug(this, '[checkXtCookie] XTLID Cookie does not exist');
+        // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLID])) {
+          // this.logger.debug(this, '[checkXtCookie] XTLID Cookie does not exist');
           this.loginService.setCookie(res, COOKIE_KEY.XTLID, req.session.svcInfo.xtInfo.XTLID);            
-        }
+        // }
+
+        // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTUID])) {
+          // this.logger.debug(this, '[checkXtCookie] XTUID Cookie does not exist');
+          this.loginService.setCookie(res, COOKIE_KEY.XTUID, req.session.svcInfo.xtInfo.XTUID);            
+        // }
 
         // XTLOGINID 쿠키 존재 여부 체크 및 미존재시 새로 발급
-        if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINID])) {
-          this.logger.debug(this, '[checkXtCookie] XTLOGINID Cookie does not exist');
+        // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTLOGINID])) {
+          // this.logger.debug(this, '[checkXtCookie] XTLOGINID Cookie does not exist');
           this.loginService.setCookie(res, COOKIE_KEY.XTLOGINID, req.session.svcInfo.xtInfo.XTLOGINID);            
-        }
+        // }
 
         // XTSVCGR 쿠키 존재 여부 체크 및 미존재시 새로 발급
-        if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTSVCGR])) {
-          this.logger.debug(this, '[checkXtCookie] XTSVCGR Cookie does not exist');
+        // if (FormatHelper.isEmpty(req.cookies[COOKIE_KEY.XTSVCGR])) {
+          // this.logger.debug(this, '[checkXtCookie] XTSVCGR Cookie does not exist');
           this.loginService.setCookie(res, COOKIE_KEY.XTSVCGR, req.session.svcInfo.xtInfo.XTSVCGR);            
-        }
+        // }
       }
     }
   }
