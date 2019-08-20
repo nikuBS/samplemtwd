@@ -123,10 +123,10 @@
                                     %>
 
                                     <li data-target="productLi" >
-                                        <div data-target="checkboxDiv" class="checkbox type01 <%=isBsvc ? 'checked':'undefined';%>" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                        <div data-target="checkboxDiv" class="checkbox type01 <%=isBsvc ? 'checked':'';%>" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                             <input data-value="<%=i %>" type="checkbox" name="checkbox-prod" value="<%=resDataInfo.wireList[i].FEE_PROD_ID%>"
                                                    title="<%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%>"
-                                                   aria-labelledby="aria-comp-checkbox-prod-<%=i %>" <%= isBsvc ? 'disabled checked':'undefined';%>/><!-- 체크상태일 경우 checked="false" -->
+                                                   aria-labelledby="aria-comp-checkbox-prod-<%=i %>" <%= isBsvc ? 'disabled checked':'';%>/><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox-prod-<%=i %>">
                                                 <p class="layout-text">
                                                     <span class="mtext"><%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%></span>
