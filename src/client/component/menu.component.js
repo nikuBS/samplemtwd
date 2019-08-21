@@ -190,8 +190,6 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
     this.$header.on('click', '[data-url]', this._onClickUrlButton);
 
     this.$container.on('click touchend', 'a', $.proxy(this._onTelClicked, this));
-
-    this.$container.on('click', '.fe-xtractor-session', $.proxy(this._onXtractorSession, this));
   },
 
   /**
@@ -972,17 +970,5 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
       return false;
     }
     return true;
-  },
-
-  // for test
-  _onXtractorSession : function() {
-    var msg = 'XTLID : ' + Tw.CommonHelper.getCookie('XTLID') + '<br>';
-    msg += 'XTUID : ' + Tw.CommonHelper.getCookie('XTUID') + '<br>';
-    msg += 'XTLOGINID : ' + Tw.CommonHelper.getCookie('XTLOGINID') + '<br>';
-    msg += 'XTLOGINTYPE : ' + Tw.CommonHelper.getCookie('XTLOGINTYPE') + '<br>';
-    msg += 'XTSVCGR : ' + Tw.CommonHelper.getCookie('XTSVCGR') + '<br>';
-    msg += 'XT_LOGIN_LOG : ' + Tw.CommonHelper.getCookie('XT_LOGIN_LOG') + '<br>';
-
-    this._popupService.openAlert(msg);
   }
 };
