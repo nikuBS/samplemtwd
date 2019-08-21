@@ -594,7 +594,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
     $target.attr('data-amount', $(e.currentTarget).find('button').attr('data-value'));
-
+    $target.data('amount', $(e.currentTarget).find('button').attr('data-value'));
+    
     this._validSelectedValue($target);
     this._checkIsAbled();
     this._checkSkpayIsAbled();
