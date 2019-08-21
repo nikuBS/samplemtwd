@@ -106,7 +106,6 @@ class LoginService {
    * @param svcInfo
    */
   public setSvcInfo(req, res, svcInfo: any): Observable<any> {
-    console.log('###### setSvcInfo ######');
     return Observable.create((observer) => {
       res.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
 
@@ -114,7 +113,6 @@ class LoginService {
         req.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
         Object.assign(req.session.svcInfo, svcInfo);
-        console.log(svcInfo);
       }
       this.setXtractorCookie(req, res, svcInfo);
 
