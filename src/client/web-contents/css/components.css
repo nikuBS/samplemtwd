@@ -3428,12 +3428,12 @@
   background: url(/img/svg/icon_56px_dialog_emoji.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
-.icon-gnb-search {
+.icon-gnb-search {/* 190821 수정 [OP002-3323] 상단 검색 아이콘 영역 확대 */
   display: inline-block;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: url(/img/svg/icon_48px_titlebar_search.svg) no-repeat 0 0;
-  background-size: 100% 100%; }
+  width: 3.19rem;
+  height: 3.19rem;
+  background: url(/img/svg/icon_48px_titlebar_search.svg) no-repeat 50% 47.6%;
+  background-size: 47.6% 47.6%; }
 
 .icon-gnb-close {
   display: inline-block;
@@ -18913,10 +18913,10 @@ a.bt-link-tx.underline.small {
   width: 3.81rem;
   height: 1.5rem; }
 
-.header-wrap .h-belt .h-default .h-serarch {
+.header-wrap .h-belt .h-default .h-serarch {/* 190821 수정 [OP002-3323] 상단 검색 아이콘 영역 확대 */
   position: absolute;
-  right: 0.75rem;
-  top: 0.88rem;
+  right: 0;
+  top: 0;
   line-height: 0;
   font-size: 0; }
 
