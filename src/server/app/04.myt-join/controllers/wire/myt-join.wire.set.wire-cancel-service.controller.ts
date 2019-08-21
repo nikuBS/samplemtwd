@@ -203,6 +203,20 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
       // thisMain._dataInit();
 
+      // 세트 상품으로 묶어야 하기 때문에 'GRP_ID' 로 그룹바이 해준다.
+      const _groupList = thisMain._resDataInfo.wireList.reduce( (acc, cur) => {
+        acc[cur.GRP_ID] = [...acc[cur.GRP_ID] || [], cur];
+        return acc;
+      }, {});
+
+      // 상품 종류 로 내림차순 정렬 'T' 상품이 위로 B 상품이 아래로 정렬되도록 한다.
+      let _sortData = [];
+      Object.keys(_groupList).map((key) => {
+        _sortData = _sortData.concat(thisMain._sortDesc(_groupList[key], 'CO_CL_CD'));
+      });
+
+      thisMain._resDataInfo.wireList = _sortData;  // 세트별(상품별 정렬)로 정렬한걸 다시 넣어준다.
+
       // sk브로드밴드 여부 : 브로드밴드 회선인 경우 화면에서 서브메인으로 리턴시킴
       let skbdYn = 'N';
       for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ) {
@@ -357,6 +371,16 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     return tmp;
   }
 
+  /**
+   * array 내림차순 정렬
+   * @param arr
+   * @param key
+   */
+  private _sortDesc(arr: any[], key: string): any {
+    return arr.sort((a, b) => {
+      return a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0;
+    });
+  }
 
 }
 

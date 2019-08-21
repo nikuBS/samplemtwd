@@ -236,12 +236,30 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
    * @param event
    */
   $productLiEvt: function(event) {
+    var $this =$(event.currentTarget);
+    if ($this.hasClass('fe-skb')) {
+      return;
+    }
+
+    // <OP002-3325 : T 상품 체크 시 같은 그룹의 B 상품 전체 체크하기.
+    var _isChecked = $this.is(':checked');
+    var $child = this.productLi.find('[data-grp-id="' + $this.data('grpId') + '"]');
+
+    $child
+      .prop('checked', _isChecked)
+      .parent().attr('aria-checked', _isChecked);
+    if (_isChecked){
+      $child.parent().addClass('checked');
+    } else {
+      $child.parent().removeClass('checked');
+    }
+    //> OP002-3325 : T 상품 체크 시 같은 그룹의 B 상품 전체 체크하기.
+
     if(this.productLi.find('input[type=checkbox]:checked').length === 0){
       $('#span-err-prod').show().attr('aria-hidden', false);
     } else {
       $('#span-err-prod').hide().attr('aria-hidden', true);
     }
-
     this.dataModel.productList =  this._productChkConfirm(event); // 선택한 항목을 배열에 저장
 
     this._formValidateionChk();
