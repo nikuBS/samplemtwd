@@ -62,7 +62,7 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
               return res.redirect('/myt-fare/bill/pay-complete?type=' + query.source);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo }));
           }
         });
       } else if (query.source && query.source === contents) {
@@ -70,7 +70,7 @@ class MyTFareBillSkpayResultPrepay extends TwViewController {
           if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
               return res.redirect('/myt-fare/bill/pay-complete?type=' + query.source);
           } else {
-            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo }));
+            return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo }));
           }
         });
       }

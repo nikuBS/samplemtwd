@@ -270,20 +270,15 @@ Tw.MyTDataPrepaidHistory.prototype = {
     var index = e.currentTarget.getAttribute('data-origin-idx'),
       history = this._histories[this._currentType][index];
 
-    var _payment = history.cardNm && history.wayCd === '02' ? 
-    Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : 
-    Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
-
-    if(history.wayCd === '22' || history.wayCd === '23' ||history.wayCd === '30' ||history.wayCd === '31' ||history.wayCd === '32'){
-      _payment = Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
-    }
-
     var detail = $.extend(history, {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
       chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
       date: Tw.DateHelper.getShortDate(history.chargeDtm),
       amt: Tw.FormatHelper.addComma(history.amt),
-      payment: _payment
+      payment:
+        history.cardNm && history.wayCd === '02' ? 
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : 
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
     this._popupService.open({ hbs: 'DC_09_06_01', detail: detail }, undefined, undefined, undefined, $(e.currentTarget));
