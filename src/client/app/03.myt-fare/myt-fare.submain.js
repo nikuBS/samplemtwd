@@ -102,11 +102,11 @@ Tw.MyTFareSubMain.prototype = {
       this.$otherLines = this.$container.find('[data-id=other-line]');
       this._genLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
     }
-    // [OP002-2923] template 처리 함수
+    // [OP002-3317] template 처리 함수
     if (this.data.childLineInfo.length > 0) {
       this._genChildLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.CHILD_LIME_TEMP);
     }
-    // [OP002-2923] 다른 회선(자녀포함)이 총 20개 이상인 경우, "더 보기" 버튼 노출
+    // [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우, "더 보기" 버튼 노출
     if (this.data.childLineInfo.length + this.data.otherLines.length > 20) {
       this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
     }
@@ -240,7 +240,7 @@ Tw.MyTFareSubMain.prototype = {
   // 다른회선내역 리스트
   _initOtherLineList: function (lines) {
     var lengthLines = lines.length;
-    // [OP002-2923] 회선 정보 화면 구성
+    // [OP002-3317] 회선 정보 화면 구성
     if (lengthLines > 0 ) {
       var $ul = this.$container.find('ul.my-line-info');
       var htmls = '';
@@ -493,7 +493,7 @@ Tw.MyTFareSubMain.prototype = {
     var line;
     var data;
 
-    // [OP002-2923] 자녀 요금조회 개선 ("나의 요금"의 "다른 회선 목록" 최상단에 노출)
+    // [OP002-3317] 자녀 요금조회 개선 ("나의 요금"의 "다른 회선 목록" 최상단에 노출)
     if (this.data.childLineInfo) {
       lines = this.data.childLineInfo;
       lengthLines = lines.length;
@@ -556,7 +556,7 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   /**
-   * [OP002-2923] 자녀회선 이용내역 조회에 대한 전화번호 formatter
+   * [OP002-3317] 자녀회선 이용내역 조회에 대한 전화번호 formatter
    * @private
    */
   _phoneStrToDash: function (str) {
@@ -790,7 +790,7 @@ Tw.MyTFareSubMain.prototype = {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
       mgmtNum = $target.attr('data-svc-mgmt-num');
     if ( mgmtNum ) {
-      // [OP002-2923] 자녀 요금조회
+      // [OP002-3317] 자녀 요금조회
       if ($target.attr('data-target') === 'childBillInfo') {
         var dt = ''; // TODO: 적용 안함
         if ( Tw.BrowserHelper.isApp() ) {

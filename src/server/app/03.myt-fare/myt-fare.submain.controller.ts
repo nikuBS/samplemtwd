@@ -36,7 +36,7 @@ class MyTFareSubmainController extends TwViewController {
       isNotFirstDate: (new Date().getDate() > 1) || !BLOCK_ON_FIRST_DAY,
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
       isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1),
-      // [OP002-2923] 자녀 요금조회
+      // [OP002-3317] 자녀 요금조회
       childLineInfo: childInfo
     };
 
