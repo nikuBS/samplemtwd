@@ -20,6 +20,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
 import { REDIS_KEY } from '../../../../types/redis.type';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 /**
  * @class
@@ -468,6 +469,83 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     return null;
   }
+  /**
+   * 채널별 가입/해지 안내문구 조회
+   * @param prodTypCd - 상품유형코드
+   * @param channelGuidmsgInfo - 채널별 가입/해지 안내문구 조회 API 응답 값
+   */
+  private _channelScrbtermGuidmsg (isApp: any , channelGuidmsgInfo: any) {
+    if (channelGuidmsgInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(channelGuidmsgInfo.result)) {
+      return null;
+    }
+
+    const pcScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+        return item.pcScrbTermYn;
+      }),
+      mwScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+        return item.mwScrbTermYn;
+      }),
+      appScrbTermYn: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+        return item.appScrbTermYn;
+      }),
+      scrbTermGuidCd: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+        return item.scrbTermGuidCd;
+      }),
+      scrbTermGuidMsgCtt: any = channelGuidmsgInfo.result.prodScrbTermGuidList.map((item) => {
+        return item.scrbTermGuidMsgCtt;
+      }),
+      mwApp: any = mwScrbTermYn + appScrbTermYn,
+      pcMwApp: any = pcScrbTermYn + mwScrbTermYn + appScrbTermYn;
+
+    const msg: any =  this._channelGuid(isApp, pcMwApp);
+
+    return Object.assign(channelGuidmsgInfo.result, {
+      pcScrbTermYn: pcScrbTermYn,
+      mwScrbTermYn: mwScrbTermYn,
+      appScrbTermYn: appScrbTermYn,
+      scrbTermGuidCd: scrbTermGuidCd,
+      scrbTermGuidMsgCtt: scrbTermGuidMsgCtt,
+      mwApp: mwApp,
+      msg: msg
+    });
+  }
+
+  /**
+   * 자동 채널별 안내 문구
+   * @param isApp - 앱 여부
+   * @param pcMwApp - 채널별 가입불가 구분코드
+   */
+  private _channelGuid (isApp: any, pcMwApp: any): any {
+
+    if ( pcMwApp === 'NNN' ) {
+      return '고객센터 또는 지점/대리점에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YNN' ) {
+      return 'PC 웹사이트(www.tworld.co.kr)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YNY' && !isApp ) {
+      return 'PC 웹사이트 또는 모바일 T월드(APP)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'NNY' && !isApp ) {
+      return '모바일 T월드(APP)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'YYN' && isApp ) {
+      return 'PC 웹사이트(www.tworld.co.kr) 또는 모바일 웹사이트(m.tworld.co.kr)에서 가입이 가능합니다.';
+    } else if ( pcMwApp === 'NYN' && isApp ) {
+      return '모바일 웹사이트(m.tworld.co.kr)에서 가입이 가능합니다.';
+    }
+    return null;
+  }
+  /**
+   * 상품 콘텐츠 조회 (self)
+   * @param prodStCd - 상품 상태코드
+   * @param grpProdScrnConsCd - 콘텐츠 그룹 유형
+   * @param prodId - 상품원장 상품코드
+   */
+  private _getMyContentsData(prodStCd: any, grpProdScrnConsCd: any, prodId: any): Observable<any> {
+    if (grpProdScrnConsCd === 'SRRL' && prodStCd === 'E1000') { // 대표 원장과 동일하므로 별도 redis 가져올 필요 없음
+      return Observable.of({result: null});
+    }
+
+    const contentsRedisKey: any = prodStCd === 'E1000' ? REDIS_KEY.PRODUCT_CONTETNS : REDIS_KEY.PRODUCT_PLM_CONTENTS;
+    return this.redisService.getData(contentsRedisKey + prodId);
+  }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
@@ -483,28 +561,47 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0116, {}, {}, [prodId]),
-      this.redisService.getData(REDIS_KEY.PRODUCT_FILTER + 'F01230')
-    ).subscribe(([prodInfo, additionsProdFilterInfo]) => {
-        if (prodInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: prodInfo.code,
-            msg: prodInfo.msg
-          }));
-        }
+      this.redisService.getData(REDIS_KEY.PRODUCT_FILTER + 'F01230'),
+      this.apiService.request(API_CMD.BFF_10_0180, { scrbTermCd: 'A' }, {}, [prodId])
+    ).subscribe(([prodInfo, additionsProdFilterInfo, channelGuidmsgInfo]) => {
+      if (prodInfo.code !== API_CODE.CODE_00) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: prodInfo.code,
+          msg: prodInfo.msg
+        }));
+      }
 
+      Observable.combineLatest(
+        this._getMyContentsData(prodInfo.result.prodStCd, prodInfo.result.grpProdScrnConsCd, prodId)
+      ).subscribe(([prodRedisContentsInfo]) => {
         const isCategory = this._getIsCategory(prodInfo.result.baseInfo.prodTypCd),
           basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodInfo.result.summary.feeManlSetTitNm) ?
             prodInfo.result.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN,
           convertedProdInfo = this._convertProdInfo(prodInfo.result);
 
         const seriesResult = FormatHelper.isEmpty(prodInfo.result.series) ? null : {
-            prodGrpNm : FormatHelper.isEmpty(prodInfo.result.series.prodGrpNm) ? null : prodInfo.result.series.prodGrpNm,
-            list: this._convertSeriesAndRecommendInfo(prodInfo.result.series.seriesProdList)
-          };
+          prodGrpNm : FormatHelper.isEmpty(prodInfo.result.series.prodGrpNm) ? null : prodInfo.result.series.prodGrpNm,
+          list: this._convertSeriesAndRecommendInfo(prodInfo.result.series.seriesProdList)
+        };
 
-        const convContents = FormatHelper.isEmpty(prodInfo.result.contentsList) ? null :
-            this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsList),
-          convRepContents = FormatHelper.isEmpty(prodInfo.result.contentsRepList) ? null :
+        // const convContents = FormatHelper.isEmpty(prodInfo.result.contentsList) ? null :
+        //   this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsList),
+
+
+         // 대표, 종속상품 처리
+        let convContents = null;
+        if ( !FormatHelper.isEmpty(prodInfo.result.contentsList) ) {
+          convContents = FormatHelper.isEmpty(prodInfo.result.contentsList) ? null :
+            this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsList);
+        } else {
+          // [OP002-514] 미리보기에선 PRM 데이터를 표시하고 있지 않음.
+          // 상품 내용이 없을 경우 PRM 데이터를 노출하게 임시 수정
+          convContents = FormatHelper.isEmpty(prodRedisContentsInfo) || FormatHelper.isEmpty(prodRedisContentsInfo.result)
+          || FormatHelper.isEmpty(prodRedisContentsInfo.result.contents) ? null :
+            this._convertContents(prodInfo.result.prodStCd, prodRedisContentsInfo.result.contents);
+        }
+
+        const convRepContents = FormatHelper.isEmpty(prodInfo.result.contentsRepList) ? null :
             this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsRepList),
           contentsResult = this._convertContentsInfo(prodInfo.result.baseInfo.prodStCd, {
             convContents,
@@ -514,10 +611,13 @@ class ProductCommonCallplanPreview extends TwViewController {
             prodGrpRepYn: prodInfo.result.baseInfo.prodGrpRepYn,
             grpProdScrnConsCd: prodInfo.result.baseInfo.grpProdScrnConsCd
           });
+        const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null,
+          svcProdId = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.prodId) ? svcInfo.prodId : null;
 
         res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
           isPreview: true,
           prodId: prodId,
+          prodTitle: renderCommonInfo.title,
           basFeeSubText: basFeeSubText,
           basicInfo: convertedProdInfo.baseInfo,  // 상품 정보 by Api
           prodRedisInfo: {
@@ -542,11 +642,14 @@ class ProductCommonCallplanPreview extends TwViewController {
           isAllowJoinCombine: false,
           loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
           bpcpServiceId: '',
-          eParam: ''
+          eParam: '',
+          svcProdId: svcProdId,
+          channelGuidmsgInfo: this._channelScrbtermGuidmsg(BrowserHelper.isApp(req), channelGuidmsgInfo)  // 채널별 가입/해지 안내문구 조회
         }].reduce((a, b) => {
           return Object.assign(a, b);
         }));
       });
+    });
   }
 }
 

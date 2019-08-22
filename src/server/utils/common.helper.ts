@@ -30,7 +30,7 @@ class CommonHelper {
    * @param res 
    * @param preFix 
    */
-  static clearCookieWithpreFix(req, res, preFix) {
+  static clearCookieWithPreFix(req, res, preFix) {
     const cookies = req.cookies;
     let key;
 

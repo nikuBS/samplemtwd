@@ -116,22 +116,25 @@
                             <div class="widget-box check">
                                 <ul class="select-list btm-line" role="group">
 
-                                    <% for(var i=0; i < resDataInfo.wireList.length; i++) { %>
-
+                                    <%
+                                        resDataInfo.wireList.forEach( (v, i) => {
+                                        let isBsvc = v.CO_CL_CD === 'B'; // B상품 유무
+                                        // OP002-3325 : B상품인 경우 노출하되, disabled 상태
+                                    %>
                                     <li data-target="productLi" >
                                         <div data-target="checkboxDiv" class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                            <input data-value="<%=i %>" type="checkbox" name="checkbox-prod" value="<%=resDataInfo.wireList[i].FEE_PROD_ID%>"
-                                                   title="<%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%>"
-                                                   aria-labelledby="aria-comp-checkbox-prod-<%=i %>" /><!-- 체크상태일 경우 checked="false" -->
+                                            <input data-value="<%=i %>" class="<%= isBsvc ? 'fe-skb':'';%>" type="checkbox" name="checkbox-prod" value="<%=v.FEE_PROD_ID%>"
+                                                   title="<%=v.FEE_PROD_NM + ' ' + v.DTL_ADDR%>"
+                                                   aria-labelledby="aria-comp-checkbox-prod-<%=i %>" data-grp-id="<%=v.GRP_ID%>" <%= isBsvc ? 'disabled':'';%>/><!-- 체크상태일 경우 checked="false" -->
                                             <div class="comp-list-layout" id="aria-comp-checkbox-prod-<%=i %>">
                                                 <p class="layout-text">
-                                                    <span class="mtext"><%=resDataInfo.wireList[i].FEE_PROD_NM %> <%=resDataInfo.wireList[i].DTL_ADDR%></span>
+                                                    <span class="mtext"><%=v.FEE_PROD_NM + ' ' + v.DTL_ADDR%></span>
                                                 </p>
                                             </div>
                                         </div>
                                     </li>
 
-                                    <% } %>
+                                    <% }) %>
 
                                 </ul>
                             </div>
