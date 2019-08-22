@@ -10,9 +10,8 @@
  * @desc 선불폰 음성 1회 충전 namespace
  * @param rootEl - dom 객체
  */
-Tw.MyTDataPrepaidVoice = function (rootEl, skpayInfo) {
+Tw.MyTDataPrepaidVoice = function (rootEl) {
   this.$container = rootEl;
-  this.skpayInfo = (skpayInfo) ? skpayInfo.skpayInfo : undefined;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
@@ -33,7 +32,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$wrapExampleCard = this.$container.find('.fe-wrap-example-card');
     this.$btnRequestCreditCard = this.$container.find('.fe-request-credit-card');
     this.$btnRequestPrepaidCard = this.$container.find('.fe-request-prepaid-card');
-    this.$btnRequestSKpay = this.$container.find('.fe-request-skpay');
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
@@ -41,7 +39,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$prepaid_card = this.$container.find('.fe-prepaid-card');
     this.$prepaid_serial = this.$container.find('.fe-prepaid-serial');
     this.$creditAmount = this.$container.find('.fe-select-amount');
-    this.$skpayAmount = this.$container.find('.fe-select-amount-skpay');
   },
 
   /**
@@ -131,16 +128,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-close-example-card', $.proxy(this._onCloseExampleCard, this));
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowSelectAmount, this));
-    this.$container.on('click', '.fe-select-amount-skpay', $.proxy(this._onShowSelectAmount, this));
     this.$container.on('click', '.fe-request-prepaid-card', $.proxy(this._requestPrepaidCard, this));
     this.$container.on('click', '.fe-request-credit-card', $.proxy(this._validateCreditCard, this));
-    this.$container.on('click', '.fe-request-skpay', $.proxy(this._skpayPopDetail, this));
     this.$container.on('click', '.fe-prepaid-voice-cancel', $.proxy(this._closePrepaidPopup, this));
     this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCreditCard, this));
-    this.$container.on('click', '.fe-skpay-complete', $.proxy(this._requestSKpay, this));
-    this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._checkSkpayIsAbled, this));
-    this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._validatePrepaidCard, this));
-    this.$container.on('change input blur click', '#tab3-tab [required]', $.proxy(this._checkIsAbled, this));
+    this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
+    this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
     this.$cardNumber.on('keyup blur', $.proxy(this._validateCard, this));
     this.$cardY.on('keyup blur', $.proxy(this._validateExpired, this));
@@ -152,7 +145,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   /**
    * @function
-   * @desc tab change (SK pay/선불카드/신용카드)
+   * @desc tab change (선불카드/신용카드)
    * @param event
    */
   _changeTab: function (event) {
@@ -163,15 +156,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
     if ($target.attr('id') === 'tab1') {
       this.$container.find('.fe-tab1-btn').show();
       this.$container.find('.fe-tab2-btn').hide();
-      this.$container.find('.fe-tab3-btn').hide();
-    } else if ($target.attr('id') === 'tab2') {
-      this.$container.find('.fe-tab1-btn').hide();
-      this.$container.find('.fe-tab2-btn').show();
-      this.$container.find('.fe-tab3-btn').hide();
     } else {
       this.$container.find('.fe-tab1-btn').hide();
-      this.$container.find('.fe-tab2-btn').hide();
-      this.$container.find('.fe-tab3-btn').show();
+      this.$container.find('.fe-tab2-btn').show();
     }
   },
 
@@ -332,17 +319,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
       this.$btnRequestCreditCard.prop('disabled', true);
     }
   },
-  /**
-   * @function
-   * @desc input null check 후 버튼 활성화/비활성화 처리
-   */
-  _checkSkpayIsAbled: function () {
-    if ( this.$skpayAmount.data('amount')) {
-      this.$btnRequestSKpay.prop('disabled', false);
-    } else {
-      this.$btnRequestSKpay.prop('disabled', true);
-    }
-  },
 
   /**
    * @function
@@ -366,66 +342,14 @@ Tw.MyTDataPrepaidVoice.prototype = {
         .done($.proxy(this._getCreditCardInfo, this, $elButton));
     }
   },
-    /**
-   * @function
-   * @desc SK pay 결제 준비
-   * @param e
-   */
-  _skpayPopDetail: function (e) {
-    var $elButton = $(e.currentTarget);
-    var previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
-    var rechargeAmount = Number($('.fe-select-amount-skpay').data('amount'));
-    var afterAmount = previousAmount + rechargeAmount;
-    this.amountInfo = {
-      previousAmount: previousAmount,
-      afterAmount: afterAmount,
-      rechargeAmount: rechargeAmount
-    };
-    this._popupService.open({
-      hbs: 'DC_09_01_02',
-      layer: true,
-      data: {
-        previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
-        afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
-        rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString()),
-        emailAddress: this.$emailAddress
-      }
-    }, null, null, null, $elButton);
-  },
-    /**
-   * @function
-   * @desc SK Pay 결제 요청
-   */
-  _requestSKpay: function (e) {
-    if ($('.fe-sms').is(':checked')) {
-      this.skpayInfo.sms = 'Y';
-    } else {
-      this.skpayInfo.sms = 'N';
-    }
-    if ($('.fe-email').is(':checked')) {
-      this.skpayInfo.email = 'Y';
-    } else {
-      this.skpayInfo.email = 'N';
-    }
-    this.skpayInfo.previousAmount = Number($('.fe-remain-amount').data('remainAmount'));
-    this.skpayInfo.rechargeAmount = Number($('.fe-select-amount-skpay').data('amount'));
-    this.skpayInfo.afterAmount = this.skpayInfo.previousAmount + this.skpayInfo.rechargeAmount;
-    new Tw.MyTDataPrepaySKPaySdk({
-      $element: this.$container,
-      data : {
-        skpayInfo: this.skpayInfo,
-        title: 'voice',
-        requestSum: this.skpayInfo.rechargeAmount
-      }
-    }).goSkpay(e);
-  },
+
   /**
    * @function
    * @desc 필수 input field check 및 버튼 활성화/비활성화 처리
    * @returns {boolean}
    */
   _validatePrepaidCard: function () {
-    var arrValid = $.map($('#tab2-tab [required]'), function (elInput) {
+    var arrValid = $.map($('#tab1-tab [required]'), function (elInput) {
       if ( $(elInput).val().length !== 0 ) {
         return true;
       }
@@ -597,7 +521,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
     this._validSelectedValue($target);
     this._checkIsAbled();
-    this._checkSkpayIsAbled();
   },
 
   /**

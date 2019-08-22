@@ -297,9 +297,7 @@ Tw.API_CMD = {
   BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: Tw.API_METHOD.POST },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
   BFF_06_0076: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.DELETE },
-  BFF_06_0085: { path: '/core-bill/:version/skpay-pps/auth-grant', method: Tw.API_METHOD.POST },
-  BFF_06_0086: { path: '/core-bill/:version/skpay-pps/pps-recharge', method: Tw.API_METHOD.POST },
-  BFF_06_0087: { path: '/core-bill/:version/skpay-pps/pps-data', method: Tw.API_METHOD.POST },
+
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
   BFF_07_0005: { path: '/core-bill/:version/point-autopays-history/cashback', method: Tw.API_METHOD.GET },

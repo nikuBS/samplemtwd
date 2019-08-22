@@ -124,22 +124,13 @@ Tw.PPSRechargeLayer.prototype = {
 
   // DC_09 팝업내 아이템 선택시 이동
   _onClickOnce: function (name, event) {
-    new Tw.PPSRechargeLayerSKpayAgree({ //skpay 동의 여부 체크
-      $element: this.$container,
-      callback: $.proxy(this._goSKpayAgree, this, name, event),
-    }).skpayAgree(event);
-    this._popupService.close();
-  },
-  /**
-   * @function
-   * @desc SK Pay 결제 동의
-   */
-  _goSKpayAgree: function (name, event, $layer) {
+    var $target = $(event.target);
     var url = this.defaultUrl + '/data'; // default - data
     if ( name === 'once-voice' ) {
       url = this.defaultUrl + '/voice';
     }
-    this._historyService.goLoad(url);
+    $target.attr('data-url', url);
+    this._popupService.close();
   },
 
   _onClickAuto: function (name, event) {
