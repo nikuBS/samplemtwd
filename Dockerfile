@@ -43,4 +43,7 @@ RUN echo "${NODE_ENV}"
 RUN echo "${WHATAP_CONF}"
 RUN echo "${VER}"
 
+RUN echo "${NODE_DEBUG}"
+RUN echo "${DEBUG}"
+
 CMD ["npm", "run", "server-docker"]
