@@ -246,8 +246,6 @@ Tw.MyTFareBillRainbow.prototype = {
       $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27); // 보유 포인트 이상 입력
     } else if (!this._validation.checkIsMore(this.$point.val(), 1)) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE); // 1포인트 이상 입력
-    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT); // 10포인트 단위로 입력
     } else {
       isValid = true;
     }

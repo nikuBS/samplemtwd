@@ -1724,7 +1724,11 @@ Tw.MainHome.prototype = {
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
       this._onClickCloseNoti(nonShow);
-      Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+      if( noti.billYn === 'Y') {
+        Tw.CommonHelper.showDataCharge($.proxy(function (url) {Tw.CommonHelper.openUrlExternal(url);}, this, noti.linkUrl));
+      } else {
+        Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+      }
     }
   },
 
