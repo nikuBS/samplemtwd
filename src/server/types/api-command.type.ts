@@ -427,6 +427,9 @@ export const API_CMD = {
   BFF_06_0082: { path: '/core-recharge/v1/5g-data-reservations', method: API_METHOD.POST, server: API_SERVER.BFF, native: true },
   BFF_06_0083: { path: '/core-recharge/v1/5g-data-reservations', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true },
   BFF_06_0084: { path: '/core-recharge/v1/5g-data-conversion-histories', method: API_METHOD.GET, server: API_SERVER.BFF, native: true},
+  BFF_06_0085: { path: '/core-bill/:version/skpay-pps/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0086: { path: '/core-bill/:version/skpay-pps/pps-recharge', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0087: { path: '/core-bill/:version/skpay-pps/pps-data', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0005: { path: '/core-bill/:version/point-autopays-history/cashback', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
