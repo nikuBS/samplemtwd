@@ -177,6 +177,7 @@ Tw.PRODUDT.PROMOTIONS = {
            Tw.Logger.info('[FLO]', resp.result);
 
             if ( resp.code === Tw.API_CODE.CODE_00 ) {
+
               // POOQ 가입여부 체크
               var pooq = false; // pooq 가입여부
               for( var i = 0 ; i < Tw.PRODUDT.PROMOTIONS.FLO.POOQ.length; i++ ){
@@ -231,7 +232,7 @@ Tw.PRODUDT.PROMOTIONS = {
         } else if ( data.coinDate !== 'N' ) { // OCB 가입
           return null;
         } else if (data.joinDate1 !== 'N') {
-          if ( 2 < moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
+          if ( 2 <= moment(month).diff(data.joinDate1.substr(0, 6) + '01', 'month') ){
             return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
           } else {
             return 'NONE_FREE_2'; // 100원 프로모션 이벤트 가입일 M+2 or X (Case_02)
@@ -242,7 +243,7 @@ Tw.PRODUDT.PROMOTIONS = {
       } else if ( data.coinDate !== 'N') { // OCB 가입 NA6655
         return null;
       } else if( data.joinDate1 !== 'N') {
-        if( 2 < moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month')){
+        if( 2 <= moment(month).diff(data.joinDate1.substr(0,6) + '01', 'month')){
           return 'NONE_FREE_1'; // OCB 지급 안내 (Case_03)
         } else {
           return 'NONE_FREE_2';
