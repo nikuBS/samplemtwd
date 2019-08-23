@@ -32,11 +32,18 @@ ENV WHATAP_CONF whatap-${NODE}
 ARG VER
 ENV NODE_VER ${VER}
 
+# should be removed
+ENV NODE_DEBUG=redis
+ENV DEBUG=connect*redis,ioredis:*
+
 # open Application port
 EXPOSE 3000
 
 RUN echo "${NODE_ENV}"
 RUN echo "${WHATAP_CONF}"
 RUN echo "${VER}"
+
+RUN echo "${NODE_DEBUG}"
+RUN echo "${DEBUG}"
 
 CMD ["npm", "run", "server-docker"]
