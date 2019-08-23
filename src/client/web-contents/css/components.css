@@ -35515,4 +35515,5 @@ body.apphome .section-box {
 .main-faq-menu ul li .menu-bt.ico-type15 .ico {background-image:url(/img/customer/bg_cs_01_01_17_02.png);}
 .main-faq-menu ul li .menu-bt.ico-type16 .ico {background-image:url(/img/customer/bg_cs_01_01_17_03.png);}
 
-
+/* 190820 [OP002-3312] 포인트 요금납부(1회납부) 페이지 */
+.bt-link-tx.underline.fs-13.nogaps {padding:0!important;}
