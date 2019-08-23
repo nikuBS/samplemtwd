@@ -32,6 +32,10 @@ ENV WHATAP_CONF whatap-${NODE}
 ARG VER
 ENV NODE_VER ${VER}
 
+# should be removed
+ENV NODE_DEBUG=redis
+ENV DEBUG=connect*redis,ioredis:*
+
 # open Application port
 EXPOSE 3000
 
