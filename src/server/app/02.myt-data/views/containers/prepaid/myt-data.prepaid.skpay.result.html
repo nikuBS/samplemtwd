@@ -1,0 +1,67 @@
+<%#
+* @file myt-fare.bill.skpay.result.prepay.html
+* @author Kyoungsup Cho (kscho@partner.sk.com)
+* @since 2019.08.20
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+    <div class="wrap" data-id="container">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- .container-wrap -->
+            <div id="contents" class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <div class="complete-wrap">
+                        <div class="title-box">
+                            <% if(centerName === '') { %>
+                                <i class="icon-warning-120"><span class="blind">warning</span></i>    
+                            <% } else { %>
+                                <i class="icon-complete-120"><span class="blind">complete</span></i>
+                            <% } %>
+                            <p class="tx-tit">
+                                <span class="tx-highlight pt10"><%= mainTitle %></span>
+                                <p class="code-txt"><br /><% if (subTitle !== '') { %><%= subTitle %><br /><% } %></p>
+                            </p>
+                        </div>
+                        <div class="tx-contents">
+                            <% if (description !== '') { %>
+                            <p class="code-txt"><%- description %></p>
+                            <% } %>
+                            <% if (centerName !== '') { %>
+                            <ul class="bt-slice item-one">
+                                <li><a type="button" class="btn-round2 btn-style3" data-id="hist-btn"><%= centerName %></a></li>
+                            </ul>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <% if(centerName === '') { %>
+                        <button class="btn-floating btn-style2"  data-id="ok-btn">닫기</button>
+                    <% } else { %>
+                        <button class="btn-floating btn-style2"  data-id="ok-btn">확인</button>
+                    <% } %>
+                </ul>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+<% include ../../components/javascript.component.html %>
+</body>
+<script>
+    $(document).ready(function () {
+        new Tw.MyTDataPrepaidSkpayResult({
+        $element: $('[data-id=container]')
+        });
+    });
+</script>
+<% include ../../components/end.component.html %>
