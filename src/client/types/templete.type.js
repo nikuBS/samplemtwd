@@ -692,7 +692,7 @@ Tw.MYT_TPL = {
   },
   FARE_SUBMAIN: {
     CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
-      'data-name="{{nickNm}}" data-num="{{svcNum}}" data-target="childBillInfo"><button>' +
+      'data-num="{{svcNum}}" data-target="childBillInfo"><button>' +
       '<span class="ico-wrap">' +
         '<i class="icon-cellphone-80"><span class="blind">cellphone</span></i>' +
       '</span>' +
