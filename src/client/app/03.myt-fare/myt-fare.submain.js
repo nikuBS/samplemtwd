@@ -103,11 +103,12 @@ Tw.MyTFareSubMain.prototype = {
       this._genLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
     }
     // [OP002-3317] template 처리 함수
-    if (this.data.childLineInfo.length > 0) {
+    var countChildLines = (this.data.childLineInfo && this.data.childLineInfo.length) || 0; // _.size(this.data.childLineInfo)
+    if (countChildLines > 0) {
       this._genChildLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.CHILD_LIME_TEMP);
     }
     // [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우, "더 보기" 버튼 노출
-    if (this.data.childLineInfo.length + this.data.otherLines.length > 20) {
+    if (countChildLines + this.data.otherLines.length > 20) {
       this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
     }
     // 세금계산서
