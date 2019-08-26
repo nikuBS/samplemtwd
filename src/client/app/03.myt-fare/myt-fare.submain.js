@@ -793,13 +793,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( mgmtNum ) {
       // [OP002-3317] 자녀 요금조회
       if ($target.attr('data-target') === 'childBillInfo') {
-        var dt = ''; // TODO: 적용 안함
-        if ( Tw.BrowserHelper.isApp() ) {
-          Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-        }
-        setTimeout($.proxy(function () {
-          this._historyService.goLoad('/myt-fare/billguide/child?line=' + mgmtNum + '&date=' + dt);
-        }, this), 500);
+        this._historyService.goLoad('/myt-fare/billguide/child?line=' + mgmtNum);
       } else {
         this.changeLineMgmtNum = mgmtNum;
         this.changeLineMdn = $target.attr('data-num');
