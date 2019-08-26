@@ -967,7 +967,8 @@ class ApiRouter {
       });
     }
     const svcMgmtNum = svcInfo.svcMgmtNum;
-    loginService.clearSessionStore(req, svcMgmtNum)
+    const apiId = req.body.apiId ? req.body.apiId.command : null;
+    loginService.clearSessionStore(req, svcMgmtNum, apiId)
       .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00
