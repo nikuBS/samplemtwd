@@ -343,6 +343,11 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     reqData.chgDLimit = this.$daySelector.attr('id');
     reqData.chgOLimit = this.$onceSelector.attr('id');
 
+    // 2019-08-26 OP002-3444 : 소액결제 한도변경(상/하향) 일 때, microPayLimitAmt(월한도) 값 추가됨.
+    if (this.$title === 'small') {
+      reqData.microPayLimitAmt = this.$monthSelector.attr('origin-value');
+    }
+
     return reqData;
   },
   /**
