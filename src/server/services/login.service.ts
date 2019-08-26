@@ -424,11 +424,18 @@ class LoginService {
    * @param req
    * @param svcMgmtNum
    */
-  public clearSessionStore(req, svcMgmtNum: string): Observable<any> {
+  public clearSessionStore(req, svcMgmtNum: string, apiId?: any): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(req) ) {
         if ( !FormatHelper.isEmpty(req.session.store) && !FormatHelper.isEmpty(req.session.store[svcMgmtNum]) ) {
-          req.session.store[svcMgmtNum] = {};
+          if ( !FormatHelper.isEmpty(apiId)) {
+            const idx = Object.keys(req.session.store[svcMgmtNum] || {}).indexOf( apiId );
+            if ( idx > -1 ) {
+              req.session.store[svcMgmtNum][ apiId ] = {};
+            }
+          } else {
+            req.session.store[svcMgmtNum] = {};
+          }
           req.session.save(() => {
             this.logger.debug(this, '[clearSessionStore]', req.session.store);
             observer.next(req.session.store[svcMgmtNum]);
