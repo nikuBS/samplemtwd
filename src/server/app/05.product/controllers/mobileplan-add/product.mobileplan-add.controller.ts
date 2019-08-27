@@ -33,12 +33,15 @@ export default class ProductAddition extends TwViewController {
    * @param  {any} pageInfo
    */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    var isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
+
     Observable.combineLatest(
-      this._getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
+      this._getMyAdditions(isLogin),
       this._getBestAdditions(),
       this._getRecommendedAdditions(),
-      this._getRecommendedTags()
-    ).subscribe(([myAdditions, bestAdditions, recommendedAdditions, recommendedTags]) => {
+      this._getRecommendedTags(),
+      this.isAdRcvAgreeBannerShown()
+    ).subscribe(([myAdditions, bestAdditions, recommendedAdditions, recommendedTags, isAdRcvAgreeBannerShown]) => {
       const error = {
         code: (myAdditions && myAdditions.code) || bestAdditions.code || recommendedAdditions.code || recommendedTags.code,
         msg: (myAdditions && myAdditions.msg) || bestAdditions.msg || recommendedAdditions.msg || recommendedTags.msg
@@ -54,7 +57,7 @@ export default class ProductAddition extends TwViewController {
         recommendedAdditions,
         recommendedTags
       };
-      res.render('mobileplan-add/product.mobileplan-add.html', { svcInfo, productData, pageInfo });
+      res.render('mobileplan-add/product.mobileplan-add.html', { svcInfo, productData, pageInfo, isLogin, isAdRcvAgreeBannerShown });
     });
   }
 
@@ -153,6 +156,19 @@ export default class ProductAddition extends TwViewController {
       }
 
       return resp.result;
+    });
+  }
+
+  /**
+   * 광고성 정보 수신동의 배너 노출여부
+   * @return {boolean}
+   */
+  private isAdRcvAgreeBannerShown(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return false;
+      }
+      return resp.result.twdAdRcvAgreeYn !== 'Y';
     });
   }
 }
