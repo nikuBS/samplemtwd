@@ -25,6 +25,10 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this._svcMgmtNum = svcInfo && svcInfo.svcMgmtNum ? svcInfo.svcMgmtNum : '';
   this._bpcpServiceId = bpcpServiceId;
   this._eParam = eParam;
+
+  this._isAdult = 'false';
+  this._userId = null;
+
   this._init();
 };
 
@@ -102,8 +106,12 @@ Tw.BenefitIndex.prototype = {
     this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
     
     this.$container.on('change', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
+    this.$container.on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$container.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreePopDetail, this));   // T world 광고정보수신동의 약관 상세보기
     this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
+    this.$container.on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
+    this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 다음에 보기 처리
   },
 
   /**
@@ -115,6 +123,27 @@ Tw.BenefitIndex.prototype = {
     if (!this._isAbleDiscountInfoReq()) {
       this._switchTab(this._convertPathToCategory());
     } else {
+      this._userId = this._svcInfo.userId;
+
+      // 성인인지 여부 (만 14세 이상) 체크
+      this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          if (res.result.age >= 14) {
+            this._isAdult = true;
+          }
+        } else {
+          // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+          // Tw.Error(res.code, res.msg).pop();
+          // return;
+        }
+      }, this))
+      .fail(function (err) {
+        // BFF_08_0080 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+        // Tw.Error(err.code, err.msg).pop();
+        // return;
+      });
+
       this._reqMyBenefitDiscountInfo();
     }
   },
@@ -171,9 +200,33 @@ Tw.BenefitIndex.prototype = {
 
   /**
    * @function
+   * @desc T world 광고정보수신동의 활성화 처리 (팝업)
+   */
+  _modAgreePop: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
+      .done(function (){
+        $('#agree-banner-area').hide();
+        $('#agree-popup-area').hide();
+      })
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+
+  /**
+   * @function
    * @desc T world 광고정보수신동의 약관 상세보기
    */
   _showAgreeDetail: function () {
+    Tw.CommonHelper.openTermLayer2('03');
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 팝업 약관 상세보기
+   */
+  _showAgreePopDetail: function () {
+    $('#agree-popup-area').hide();
     Tw.CommonHelper.openTermLayer2('03');
   },
 
@@ -183,6 +236,57 @@ Tw.BenefitIndex.prototype = {
    */
   _closeAgree: function () {
     $('#agree-banner-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 팝업 닫기
+   */
+  _closeAgreePop: function () {
+    $('#agree-popup-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 팝업 하루동안 보지않기 처리
+   */
+  _hideTwdAdRcvAgreePop: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._setLocalStorage('hideTwdAdRcvAgreePop', this._userId, 365*10);
+    } else {
+      this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365*10);
+    }
+
+    $('#agree-popup-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc 다음에 보기 처리 (Native localstorage 영역에 저장, 반영구적으로 비노출)
+   */
+  _setLocalStorage: function (key, userId, expiredays) {
+    var keyName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
+    var today = new Date();
+    
+    today.setDate( today.getDate() + expiredays );
+
+    Tw.CommonHelper.setLocalStorage(keyName, JSON.stringify({
+      // expireTime: Tw.DateHelper.convDateFormat(today)
+      expireTime: today
+    }));
+  },
+
+  /**
+   * @function
+   * @desc 다음에 보기 쿠키 처리 (반영구적으로 비노출)
+   */
+  _setCookie: function (key, userId, expiredays) {
+    var cookieName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
+    var today = new Date();
+    
+    today.setDate( today.getDate() + expiredays );
+
+    document.cookie = cookieName + '=Y; path=/; expires=' + today.toGMTString() + ';';
   },
 
   /**
@@ -410,6 +514,43 @@ Tw.BenefitIndex.prototype = {
     if ((resp = arguments[9]).code === Tw.API_CODE.CODE_00) {
       if (resp.result.twdAdRcvAgreeYn === 'N') {
         $('#agree-banner-area').show();
+
+        if ( this._isAdult ) {
+          // 모바일App
+          if ( Tw.BrowserHelper.isApp() ) {
+            var data = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
+
+            // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
+            if (Tw.FormatHelper.isEmpty(data)) {
+              $('#agree-popup-area').show();
+              return;
+            }
+
+            // 그 외 경우 처리
+            data = JSON.parse(data);
+
+            var now = new Date();
+            now = Tw.DateHelper.convDateFormat(now);
+
+            if ( Tw.DateHelper.convDateFormat(data.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
+              // console.log('만료시점이 지난 경우 (노출)');
+              // 광고 정보 수신동의 팝업 노출
+              $('#agree-popup-area').show();
+            } else {
+              // console.log('만료시점 이전인 경우 (비노출)');
+            }
+          } 
+          // 모바일웹
+          else {
+            if ( Tw.CommonHelper.getCookie('hideTwdAdRcvAgreePop_' + this._userId) !== null ) {
+              // console.log('다음에 보기 처리 이력 존재');              
+            } else {
+              // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
+              // 광고 정보 수신동의 팝업 노출
+              $('#agree-popup-area').show();
+            }
+          }              
+        }
       }
     }
 
