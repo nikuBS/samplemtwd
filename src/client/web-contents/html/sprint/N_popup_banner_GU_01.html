@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- 팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+    <!-- #skip_navigation -->
+    <!-- <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div> -->
+    <!--// #skip_navigation -->
+	<!-- //팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+	
+    <div class="wrap">
+
+        <!-- .popup hbs -->
+		<div class="popup tw-popup">
+			<div class="popup-info tod-eventpop-type1" role="alertdialog" aria-describedby="alertText">
+                <div class="popup-header">
+                    <button type="button" class="btn-tooltip-close">닫기</button>
+                </div>
+                <!-- Case1 광고성 정보 수신 동의 안내 -->
+                <div class="popup-contents" id="alertText">
+					<div class="inner-contents">
+                        <i class="ico"></i>
+                        <strong class="text-ti-big">추천 혜택&middot;상품 및<br> 새로운 이벤트 소식을 먼저 알려드릴까요?</strong>
+                        <div class="mt20">
+                            T world 광고성 정보 수신 동의 (선택)<br>
+                            <button class="bt-link-tx underline tod-txcolor-normal">상세보기</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="bt-box bt-slice item-two">
+                    <li><button class="btn-floating btn-style-blue disagree">다음에 하기</button></li>
+                    <li><button class="btn-floating btn-style-blue agree">네, 좋아요!</button></li>
+                </ul>
+                <!-- //Case1 광고성 정보 수신 동의 안내 -->
+			</div>
+			<div class="popup-blind"></div>
+		</div>
+		<!--// .popup hbs -->
+		
+    </div>
+</body>
+
+</html>
