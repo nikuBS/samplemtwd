@@ -75,13 +75,14 @@ class MainHome extends TwViewController {
             this.getUsageData(svcInfo),
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getRecommendProds(req, svcInfo.prodId)
-          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult]) => {
+            this.getRecommendProds(req, svcInfo.prodId),
+            this.isAdRcvAgreeBannerShown()
+          ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
 
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
             res.render(`main.home-${flag}.html`, renderData);
           });
         } else {
@@ -609,6 +610,19 @@ class MainHome extends TwViewController {
     } else {
       return Observable.of(defaultRetVal);
     }
+  }
+
+  /**
+   * 광고성 정보 수신동의 배너 노출여부
+   * @return {boolean}
+   */
+  private isAdRcvAgreeBannerShown(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return false;
+      }
+      return resp.result.twdAdRcvAgreeYn !== 'Y';
+    });
   }
 }
 
