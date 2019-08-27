@@ -63,7 +63,7 @@ class LoggerService {
   private getConsoleTransport() {
     const level = String(process.env.NODE_ENV) === 'prd' ? 'error' : 'debug';
     const option = {
-      level: 'test',
+      level: level,
       showLevel: true,
       timestamp: this.tsFormat(),
       handleExceptions: true,
