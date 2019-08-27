@@ -105,21 +105,22 @@ Tw.TeventCommon.prototype = {
                 // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
                 if (Tw.FormatHelper.isEmpty(data)) {
                   $('#agree-popup-area').show();
-                  return;
-                }
-
+                  // return;
+                } 
                 // 그 외 경우 처리
-                data = JSON.parse(data);
+                else {
+                  data = JSON.parse(data);
 
-                var now = new Date();
-                now = Tw.DateHelper.convDateFormat(now);
-
-                if ( Tw.DateHelper.convDateFormat(data.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
-                  // console.log('만료시점이 지난 경우 (노출)');
-                  // 광고 정보 수신동의 팝업 노출
-                  $('#agree-popup-area').show();
-                } else {
-                  // console.log('만료시점 이전인 경우 (비노출)');
+                  var now = new Date();
+                  now = Tw.DateHelper.convDateFormat(now);
+  
+                  if ( Tw.DateHelper.convDateFormat(data.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
+                    // console.log('만료시점이 지난 경우 (노출)');
+                    // 광고 정보 수신동의 팝업 노출
+                    $('#agree-popup-area').show();
+                  } else {
+                    // console.log('만료시점 이전인 경우 (비노출)');
+                  }
                 }
               } 
               // 모바일웹
@@ -239,6 +240,10 @@ Tw.TeventCommon.prototype = {
       .done(function (){
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
+        var now = new Date();
+        var toastMsg = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate() + '\nT world 광고성 정보 및 알림수신 동의 처리가 완료되었습니다.';
+        // Tw.CommonHelper.toast(toastMsg);        
+        Tw.Popup.toast(toastMsg);
       })
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
@@ -254,6 +259,10 @@ Tw.TeventCommon.prototype = {
       .done(function (){
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
+        var now = new Date();
+        var toastMsg = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate() + '\nT world 광고성 정보 및 알림수신 동의 처리가 완료되었습니다.';
+        // Tw.CommonHelper.toast(toastMsg);
+        Tw.Popup.toast(toastMsg);
       })
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
