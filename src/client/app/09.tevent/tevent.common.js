@@ -240,8 +240,7 @@ Tw.TeventCommon.prototype = {
       .done(function (){
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
-        var now = new Date();
-        var toastMsg = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate() + '\nT world 광고성 정보 및 알림수신 동의 처리가 완료되었습니다.';
+        var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);        
         Tw.Popup.toast(toastMsg);
       })
@@ -259,8 +258,7 @@ Tw.TeventCommon.prototype = {
       .done(function (){
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
-        var now = new Date();
-        var toastMsg = now.getFullYear() + '.' + (now.getMonth() + 1) + '.' + now.getDate() + '\nT world 광고성 정보 및 알림수신 동의 처리가 완료되었습니다.';
+        var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);
         Tw.Popup.toast(toastMsg);
       })
