@@ -9586,3 +9586,20 @@ button:focus span {
 .address-wrap.inputbox.tod-type1 .input{width:auto}
 .address-wrap.inputbox.tod-type1 .dongho.first{width:9.54%}
 .address-wrap.inputbox.tod-type1 .dongho{width:6.06%;padding-left:0.43rem;vertical-align:middle}
+
+/* 190820 추가 [OP002-2772] 모바일앱 광고정보수신동의 팝업 */
+.tod-txcolor-normal {color:inherit !important;}
+.popup .popup-info.tod-eventpop-type1 {padding:0; background:transparent; overflow:visible; border-radius:0; font-size:0.8125rem;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents {margin:0; padding:1.75rem; background:#fff; border-radius:0.56rem 0.56rem 0 0;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents .inner-contents p {font-size:inherit; color:inherit;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents .inner-contents .text-ti-big {display:block; font-size:1.438rem; line-height:1.2; font-weight:bold;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents .inner-contents .text-ti {display:block; font-size:0.875rem; font-weight:bold;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents .inner-contents .ico {display:block; width:5.25rem; height:5.75rem; margin:-4.75rem 0 1.5rem; background:url(/img/benefit/bg-ico-eventpop01.png) no-repeat 0 0; background-size:100%;}
+.popup .popup-info.tod-eventpop-type1 .popup-contents .inner-contents .terms-area {height:9.3rem; margin:0 -1.75rem; overflow-y:auto; -webkit-overflow-scrolling:touch;}
+.popup .popup-info.tod-eventpop-type1 .popup-header .btn-tooltip-close {top:2px; right:2px;}
+.popup .popup-info.tod-eventpop-type1 .bt-box {overflow:hidden; margin-top:-1px; background:#fff; border-radius:0 0 0.56rem 0.56rem;}
+.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating {height:3rem; line-height:3rem; border-radius:0; font-size:0.9375rem; font-weight:bold;}
+.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue {background:#69c0ed; color:#fff;}
+.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.back:before {content:''; display:inline-block; vertical-align:middle; width:0.4375rem; height:0.8125rem; margin:0 0.375rem 0.1875rem 0; background:url(/img/benefit/sp-eventpop.png) no-repeat 0 -2.25rem; background-size:3.563rem auto;}
+.popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.disagree {font-size:0.8125rem; color:rgba(255,255,255,.7);}
+.popup .popup-info.tod-eventpop-type1 .bt-box.bt-slice>li {height:auto; padding:0;}
