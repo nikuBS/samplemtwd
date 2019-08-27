@@ -10,11 +10,7 @@ const environment = {
       // port: 31300,
       port: 32300,
       password: '993d2ac0c060da72f0f8298aa4c11ece',
-      db: 0,
-      retry_strategy: function (options) {
-        // reconnect after
-        return Math.min(options.attempt * 10, 1000);
-      }
+      db: 0
     },
     REDIS_TOS: {
       host: '61.250.19.37',
@@ -46,11 +42,7 @@ const environment = {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
       password: 'a935fdca4ac876095bea69cda9ba08c2',
-      db: 0,
-      retry_strategy: function (options) {
-        // reconnect after
-        return Math.min(options.attempt * 10, 1000);
-      }
+      db: 0
     },
     REDIS_SENTINEL: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-dev-nod',
@@ -91,11 +83,7 @@ const environment = {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
       password: '993d2ac0c060da72f0f8298aa4c11ece',
-      db: 0,
-      retry_strategy: function (options) {
-        // reconnect after
-        return Math.min(options.attempt * 10, 1000);
-      }
+      db: 0
     },
     REDIS_SENTINEL: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-stg-nod',
