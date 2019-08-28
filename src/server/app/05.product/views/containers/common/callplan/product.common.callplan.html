@@ -107,7 +107,7 @@ setTimeout(function () {
     $('.chatbot-wrap > .chat-link > .chat-txt').animate({width: '136px', textIndent: '-1.875rem'},200);
 }, 3000);
 // 190821 [OP002-3077] 채팅상담안내 END
-$(document).ready(function () {
+if (Tw.BrowserHelper.isApp()) {
     var $container = $('.wrap');
     $container.on('click', '.fe-link-external', function (e) {
         var url = $(e.currentTarget).attr('href');
@@ -115,6 +115,6 @@ $(document).ready(function () {
 
         return false;
     });
-});
+}
 </script>
 <% include ../../../components/end.component.html %>
