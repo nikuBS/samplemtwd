@@ -60,6 +60,8 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._init();
   // 웹접근성 보완 처리
   this._coverWebAccessBility();
+  // 채팅상담안내 ICON 동작
+  this._chatBotIcon();
 };
 
 Tw.ProductCommonCallplan.prototype = {
@@ -1317,6 +1319,25 @@ Tw.ProductCommonCallplan.prototype = {
       e.preventDefault();
       e.stopPropagation();
     });
+  },
+
+  _chatBotIcon: function() {
+    // 아이콘 초기 위치값 설정
+    if ($('.g-wrap').length) {
+      // APP WebView일 경우 위치
+      $('.chatbot-wrap').css({right: '0.5rem', margin: '0 0', width: '95%', bottom: '3.44rem'});
+    } else {
+      // Mobile Web일 경우 위치
+      $('.chatbot-wrap').css({right: '3.5rem', margin: '0 0', width: '80%'});
+
+    }
+
+    setTimeout(function () {
+      $('.chatbot-wrap > .chat-link > .chat-txt > .ahide').fadeOut(200, function () {
+          $('.chatbot-wrap > .chat-link > .chat-txt > span').removeClass('b-color');
+      });
+      $('.chatbot-wrap > .chat-link > .chat-txt').animate({width: '136px', textIndent: '-1.875rem'},200);
+    }, 3000);
   }
 
 };
