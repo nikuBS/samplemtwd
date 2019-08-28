@@ -54,10 +54,35 @@
             <!--접근성 수정-->
             <button class="tit fe-more-focus" aria-haspopup="true" id="DC_03_01_tip_01" page-id="DC_03_01" >선물할 데이터양<span class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></span></button>
             <!-- //접근성 수정-->
-
+            <!-- OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 Start -->
+            <!--
             <p class="num fe-err-api">한도 <span class="txt_gray fe-txt-remain">조회 중입니다</span> <button class="btn_blue fe-btn-remain" style="display:none">조회하기</button></p>
             <p class="num fe-remain-api" style="display: none" aria-hidden="true">한도 <em class="fe-remain_data">0.00GB</em> <span class="ft-medium">남음</span></p>
+            -->
             <p class="tit-txt fe-warning">데이터를 발송하고 나면 취소할 수 없습니다.</p>
+
+            <div class="tod-fee-cont">
+                <ul class="list">
+                    <li><strong class="ti">선물할 수 있는 데이터</strong>
+                        <em class="tx f-type font-normal g-type fe-err-api">
+                            <span class="fe-txt-remain">조회중 입니다</span><button class="f-type bt-link-tx underline fe-btn-remain" style="display:none" tabindex="0">조회하기</button>
+                        </em>
+                        <em class="tx f-type fe-remain-api" style="display: none" aria-hidden="true"><span class="ff-tg-medium fe-remain_data"></span>GB
+                        </em>
+                    </li>
+                    <li><strong class="ti">선물하기 남은 횟수</strong>
+                        <em class="tx f-type c-point"><span>T끼리 <span class="tx-regular"><%= senderInfo.dataGiftCnt %>회</span><span class="tx-regular">
+                            <% if (senderInfo.goodFamilyMemberYn === 'Y') { %>
+                                / 가족무제한</span></span>
+                            <% } else if(senderInfo.familyMemberYn === 'Y') { %>
+                                / </span>가족 <span class="tx-regular"><%= senderInfo.familyDataGiftCnt %>회</span></span>
+                            <% } %>
+                        </em>
+                    </li>
+                </ul>
+            </div>
+            <!-- OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 End -->
+
         </div>
         <div class="data-gift-wrap fe-wrap-limit-immediately">
             <div class="discount-look-ahead round">

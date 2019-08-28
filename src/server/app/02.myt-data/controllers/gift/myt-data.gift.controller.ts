@@ -57,14 +57,16 @@ class MyTDataGift extends TwViewController {
         });
         break;
       default:
+        // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 Start
         Observable.combineLatest(
-          this.getGiftAutoList()
-        ).subscribe(([autoList]) => {
+          this.getGiftAutoList(),
+          this.getSenderInfo()
+        ).subscribe(([autoList, senderInfo]) => {
           const respDefault = Object.assign(
-            { autoList: autoList },
-            responseData
-          );
-
+            { autoList: autoList,
+                     senderInfo: senderInfo
+                   }, responseData);
+        // OP002-2922 [myT] (W-1907-135-01) [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 OP002-3271 End
           res.render('gift/myt-data.gift.html', respDefault);
         });
     }
