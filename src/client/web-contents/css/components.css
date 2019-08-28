@@ -35517,3 +35517,16 @@ body.apphome .section-box {
 
 /* 190820 [OP002-3312] 포인트 요금납부(1회납부) 페이지 */
 .bt-link-tx.underline.fs-13.nogaps {padding:0!important;}
+
+/* 190820 [OP002-3272]  [VOC] T끼리 데이터 선물하기 선물가능 남은 횟수 표기 개선 */
+.tod-fee-cont {margin-top:1rem; padding-top:0.5rem; border-top:1px solid #f2f2f2;}
+.tod-fee-cont .list {margin: 0.94rem 0;}
+.tod-fee-cont .list li {display: inline-block;width: 100%;vertical-align: top;padding: 0.25rem 0;}
+.tod-fee-cont .list li .ti {float: left;font-size: 1rem;font-weight: 400;line-height: 1.375rem;text-align: left;}
+.tod-fee-cont .list li .tx {float: right;font-size: 1rem;font-weight: 700;}
+.tod-fee-cont .list li .tx button {color: #ef4b49;}
+.tod-fee-cont .list li .tx button.underline {color: #178bce;}
+.tod-fee-cont .list li .c-point {color: #ef4b49;}
+.tod-fee-cont .list li .button-point {color: #178bce;text-decoration: underline; }
+.tod-fee-cont .list li .f-type {font-size: 1rem;}
+.tod-fee-cont .list li .g-type {color: #959595;}
