@@ -34,12 +34,15 @@ export default class Product extends TwViewController {
    * @param  {any} pageInfo
    */
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    var isLogin = svcInfo && svcInfo.svcAttrCd.startsWith('M');
+
     Observable.combineLatest(
       this._getProductGroups(),
       this.getRecommendedPlans(),
-      this._getMyFilters(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
-      this.getRecommendedTags()
-    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
+      this._getMyFilters(isLogin),
+      this.getRecommendedTags(),
+      this.isAdRcvAgreeBannerShown()
+    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags, isAdRcvAgreeBannerShown]) => {
       const error = {
         code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
         msg: groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
@@ -50,7 +53,7 @@ export default class Product extends TwViewController {
       }
 
       const productData = { groups, myFilters, recommendedPlans, recommendedTags };
-      res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
+      res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData, isLogin, isAdRcvAgreeBannerShown });
     });
   }
 
@@ -201,6 +204,19 @@ export default class Product extends TwViewController {
       }
 
       return resp.result;
+    });
+  }
+
+  /**
+   * 광고성 정보 수신동의 배너 노출여부
+   * @return {boolean}
+   */
+  private isAdRcvAgreeBannerShown(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return false;
+      }
+      return resp.result.twdAdRcvAgreeYn !== 'Y';
     });
   }
 }
