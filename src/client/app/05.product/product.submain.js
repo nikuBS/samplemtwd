@@ -12,16 +12,33 @@ Tw.ProductSubmain = function(rootEl, menuId) {
   this._menuId = menuId;
   //this._getTosBanner();
   this._getTosAdminProductBanner();
+  this._cachedElement();
   this._bindEvent();
 };
 
 Tw.ProductSubmain.prototype = {
+  /**
+   * @function
+   * @desc 로그인시 element 변수 초기화
+   * @return {void}
+   * @private
+   */
+  _cachedElement: function () {
+    // 광고성 정보 수신동의 배너
+    this.$adRcvAgreeBanner = this.$container.find('#fe-ad-rcv-agree-banner');
+  },
+  
   /**
    * @desc 이벤트 바인딩
    * @private
    */
   _bindEvent: function() {
     this.$container.on('click', '.fe-go-plan', this._goPlan);
+
+    // 광고성 정보 수신동의 배너 이벤트
+    this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
+    this.$container.on('click', '#fe-bt-on-ad-rcv-agree-banner', $.proxy(this._onClickAgreeAdRcv, this));
+    this.$container.on('click', '#fe-bt-detail-ad-rcv-agree-banner', $.proxy( function() { Tw.CommonHelper.openTermLayer2('03'); }, this ));
   },
 
   /**
@@ -123,6 +140,22 @@ Tw.ProductSubmain.prototype = {
     if (url) {
       window.location.href = url;
     }
+  },
+
+  /**
+   * @function
+   * @desc 광고성 정보 수신동의 클릭(동의) 처리
+   * @return {void}
+   * @private
+   */
+  _onClickAgreeAdRcv: function() {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn:'Y' })
+      .done($.proxy(this._successAgreeAdRcv, this));
+  },
+
+  _successAgreeAdRcv: function() {
+    Tw.CommonHelper.toast(Tw.TOAST_TEXT.RCV_AGREE);
+    this.$adRcvAgreeBanner.addClass('none');
   },
 
   /**
