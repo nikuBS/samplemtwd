@@ -108,7 +108,18 @@ Tw.MainStore.prototype = {
    */
   _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
-    this._historyService.goLoad(url);
+    var exUrlNoti = $($event.currentTarget).data('ex_url_noti') || '';
+
+    if(url.indexOf('m.sktelecom5gx.com') !== -1 && !Tw.FormatHelper.isEmpty(exUrlNoti) ) {
+      Tw.Popup.open(
+        { 
+          hbs: 'service-block',
+          pop_name: 'service-block'
+        }, 
+        null, null);
+    } else{
+      this._historyService.goLoad(url);
+    }
     // Tw.CommonHelper.openUrlInApp(url);
 
     $event.preventDefault();
