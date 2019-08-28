@@ -179,6 +179,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
+    this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
   },
 
   /**
@@ -315,6 +316,21 @@ Tw.MainHome.prototype = {
    */
   _onClickCharge: function ($event) {
     Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
+  },
+
+  /**
+   * @function
+   * @desc replace 이동 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickReplace: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.replaceURL(url);
+
+    $event.preventDefault();
+    $event.stopPropagation();
   },
 
   /**
