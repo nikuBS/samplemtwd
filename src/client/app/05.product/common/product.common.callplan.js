@@ -31,6 +31,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._tidLanding = new Tw.TidLandingComponent();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._apiService = Tw.Api;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   // 공통 변수 선언
   this._prodId = prodId;
