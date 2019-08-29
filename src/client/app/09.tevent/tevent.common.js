@@ -15,8 +15,8 @@ Tw.TeventCommon = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._isLogined = 'false';
-  this._isAdult = 'false';
+  this._isLogined = false;
+  this._isAdult = false;
   this._userId = null;
 
   this._init();

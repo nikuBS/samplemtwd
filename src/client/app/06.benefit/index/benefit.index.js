@@ -26,7 +26,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
   this._bpcpServiceId = bpcpServiceId;
   this._eParam = eParam;
 
-  this._isAdult = 'false';
+  this._isAdult = false;
   this._userId = null;
 
   this._init();
