@@ -76,7 +76,7 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getRecommendProds(req, svcInfo.prodId),
-            this.isAdRcvAgreeBannerShown()
+            this.getIsAdRcvAgreeBannerShown()
           ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
@@ -89,10 +89,11 @@ class MainHome extends TwViewController {
           // 모바일 - 휴대폰 외 회선
           Observable.combineLatest(
             this.getUsageData(svcInfo),
-            this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
-          ).subscribe(([usageData, redisData]) => {
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+            this.getIsAdRcvAgreeBannerShown()
+          ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
             res.render(`main.home-${flag}.html`, renderData);
           });
         }
@@ -100,10 +101,11 @@ class MainHome extends TwViewController {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(svcInfo),
-          this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
-        ).subscribe(([billData, redisData]) => {
+          this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
+          this.getIsAdRcvAgreeBannerShown()
+        ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown]) => {
           homeData.billData = billData;
-          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData };
+          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
           res.render(`main.home-${flag}.html`, renderData);
         });
       }
@@ -616,7 +618,7 @@ class MainHome extends TwViewController {
    * 광고성 정보 수신동의 배너 노출여부
    * @return {boolean}
    */
-  private isAdRcvAgreeBannerShown(): Observable<any> {
+  private getIsAdRcvAgreeBannerShown(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
         return false;
