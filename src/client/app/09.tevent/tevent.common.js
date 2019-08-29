@@ -31,7 +31,7 @@ Tw.TeventCommon.prototype = {
     this._initVariables();
     this._bindEvent();
     this._checkAge();
-    this._reqTwdAdRcvAgreeInfo();
+    // this._reqTwdAdRcvAgreeInfo();
   },
 
 /**
@@ -57,6 +57,7 @@ Tw.TeventCommon.prototype = {
             if (res.code === Tw.API_CODE.CODE_00) {
               if (res.result.age >= 14) {
                 this._isAdult = true;
+                this._reqTwdAdRcvAgreeInfo();
               }
             } else {
               // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
