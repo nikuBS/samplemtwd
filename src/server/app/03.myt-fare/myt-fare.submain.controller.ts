@@ -21,7 +21,7 @@ class MyTFareSubmainController extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const BLOCK_ON_FIRST_DAY = false;
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
@@ -35,9 +35,7 @@ class MyTFareSubmainController extends TwViewController {
       // 1일 기준
       isNotFirstDate: (new Date().getDate() > 1) || !BLOCK_ON_FIRST_DAY,
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
-      isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1),
-      // [OP002-3317] 자녀 요금조회
-      childLineInfo: childInfo
+      isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1)
     };
 
     // 페이지url 통합으로 삭제 DV001-16372
