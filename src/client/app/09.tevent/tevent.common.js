@@ -96,9 +96,10 @@ Tw.TeventCommon.prototype = {
       .done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
           if (res.result.twdAdRcvAgreeYn === 'N') {
-            $('#agree-banner-area').show();
 
             if ( this._isAdult ) {
+              $('#agree-banner-area').show();
+              
               // 모바일App
               if ( Tw.BrowserHelper.isApp() ) {
                 var data = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
