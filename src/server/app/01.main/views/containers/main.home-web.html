@@ -350,7 +350,7 @@
                                 <ul class="slider">
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><button class="bt new fe-home-internal" data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-181" data-xt_csid="NO" data-xt_action="BC"><i class="icon-5gx"></i>5GX</button></li>
+                                            <li><button class="bt new fe-home-internal" data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-181" data-xt_csid="NO" data-xt_action="BC" data-ex_url_noti="<%= pageInfo.exUrlNoti %>"><i class="icon-5gx"></i>5GX</button></li>
                                             <li><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-147" data-xt_csid="NO" data-xt_action="BC"><i class="icon-price-plan-80"></i>요금제</a></li>
                                             <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-148" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"></i>부가서비스</a></li>
                                             <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-149" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>집전화/IPTV</a></li>
@@ -467,6 +467,43 @@
                 </div>
             </div>
             <!-- //인터넷 / 집전화 / IPTV -->
+
+
+            <!-- 광고성 정보 수신동의(선택) -->
+            <% if (svcType.login && isAdRcvAgreeBannerShown) { %>
+            <div class="section-box nogaps tod-alram-box bdtype1" id="fe-ad-rcv-agree-banner">
+                <div class="shadow-box">
+                    <div class="alarm_list">
+                        <div class="banner-box">
+                            <img src="<%= CDN %>/img/etc/alarm_img04.png" alt="추천 혜택&middot;상품 및 새로운 이벤트 소식을 먼저 알려드릴까요?">
+                        </div>
+                        <div class="con-box">
+                            <ul class="on-off-list new">
+                                <li>
+                                    <div class="tod-alarm-txt">
+                                        <p class="con1 pd0">T world 광고성 정보 수신동의 (선택)</p>
+                                        <button type="button" class="tod-link-type" aria-haspopup="true" id="fe-bt-detail-ad-rcv-agree-banner">상세보기</button>
+                                    </div>
+                                    <span class="widget">
+                                        <span class="widget-box switch">
+                                            <span class="btn-switch type1" id="fe-bt-on-ad-rcv-agree-banner"> <!-- toggle class on  -->
+                                                <span class="switch-style" role="checkbox" aria-checked="false">
+                                                    <span class="off-tx">꺼짐</span>
+                                                    <input type="checkbox" title="T World 광고성 정보 수신동의">
+                                                    <span class="on-tx">켜짐</span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="tod-alarm-close" id="fe-bt-close-ad-rcv-agree-banner"><span class="blind">알람닫기</span></button>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+            <!-- 광고성 정보 수신동의(선택) -->
 
             <% if(redisData.help && redisData.help.length > 0) { %>
             <!-- 이럴 땐 이렇게 하세요 -->

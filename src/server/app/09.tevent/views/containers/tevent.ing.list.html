@@ -104,6 +104,33 @@
             </div>
         </div>
         <!--// #contents -->
+
+        <!-- .popup hbs -->
+		<div class="popup tw-popup" style="display: none;" id="agree-popup-area">
+			<div class="popup-info tod-eventpop-type1" role="alertdialog" aria-describedby="alertText">
+                <div class="popup-header">
+                    <button type="button" class="btn-tooltip-close fe-pop-close">닫기</button>
+                </div>
+                <!-- Case1 광고성 정보 수신 동의 안내 -->
+                <div class="popup-contents" id="alertText">
+					<div class="inner-contents">
+                        <i class="ico"></i>
+                        <strong class="text-ti-big">추천 혜택&middot;상품 및<br> 새로운 이벤트 소식을 먼저 알려드릴까요?</strong>
+                        <div class="mt20">
+                            T world 광고성 정보 수신 동의 (선택)<br>
+                            <button class="bt-link-tx underline tod-txcolor-normal fe-pop-show-detail">상세보기</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="bt-box bt-slice item-two">
+                    <li><button class="btn-floating btn-style-blue disagree fe-pop-hide">다음에 하기</button></li>
+                    <li><button class="btn-floating btn-style-blue agree fe-pop-agree">네, 좋아요!</button></li>
+                </ul>
+                <!-- //Case1 광고성 정보 수신 동의 안내 -->
+			</div>
+			<div class="popup-blind"></div>
+		</div>
+		<!--// .popup hbs -->
         <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>

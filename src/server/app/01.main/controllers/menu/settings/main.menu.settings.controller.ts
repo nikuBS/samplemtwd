@@ -14,13 +14,17 @@ export default class MainMenuSettings extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: ISvcInfo,
          allSvc: any, childInfo: any, pageInfo: any) {
+
+    const xRequestedWith = req.header('x-requested-with') || '';
+    
     res.render('menu/settings/main.menu.settings.html', {
       svcInfo,
       pageInfo,
       isApp: BrowserHelper.isApp(req),
       isLogin: this.isLogin(svcInfo),
       // isRegularMember: !!svcInfo && parseInt(svcInfo.expsSvcCnt, 10) > 0,
-      isTidLogin: !!svcInfo && svcInfo.loginType === 'T'
+      isTidLogin: !!svcInfo && svcInfo.loginType === 'T',
+      xRequestedWith
     });
   }
 

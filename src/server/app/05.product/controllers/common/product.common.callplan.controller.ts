@@ -21,7 +21,7 @@ import {
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
 import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN,
-  PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
+  PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST, LIVE_CHAT_CHECK_PROD_ID} from '../../../../types/bff.type';
 import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
@@ -848,6 +848,7 @@ class ProductCommonCallplan extends TwViewController {
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
       bpcpServiceId = req.query.bpcpServiceId || '',
       eParam = req.query.eParam || '',
+      liveChatCheckProdId = LIVE_CHAT_CHECK_PROD_ID.indexOf(prodId) > -1,
       renderCommonInfo = {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
@@ -966,6 +967,7 @@ class ProductCommonCallplan extends TwViewController {
             loggedYn: !FormatHelper.isEmpty(svcInfo) ? 'Y' : 'N',
             bpcpServiceId,
             eParam,
+            liveChatCheckProdId, // 실시간 채팅 상담 추가 상품
             isApp: BrowserHelper.isApp(req),
             svcProdId: svcProdId
           }].reduce((a, b) => {

@@ -15,6 +15,10 @@ Tw.TeventCommon = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
+  this._isLogined = false;
+  this._isAdult = false;
+  this._userId = null;
+
   this._init();
 };
 
@@ -26,36 +30,43 @@ Tw.TeventCommon.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
-    this._reqTwdAdRcvAgreeInfo();
+    this._checkAge();
+    // this._reqTwdAdRcvAgreeInfo();
   },
 
-  /**
+/**
    * @function
-   * @desc T world 광고정보수신동의 여부 조회 및 미동의시 배너영역 노출 
+   * @desc 성인 여부 (만 14세 이상) 체크
    * @param 
    */
-  _reqTwdAdRcvAgreeInfo: function () {
+  _checkAge: function () {
+    var _this = this;
     // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에 
-    // T world 광고정보수신동의 여부를 조회하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 T world 광고정보수신동의 여부 조회하도록)
+    // 성인인지 여부를 체크하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 성인 여부 조회하도록)
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
     .done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00) {
         if(res.result !== null) { // 로그인된 경우
-          // T world 광고정보수신동의 여부 조회
-          this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+          this._isLogined = true;
+
+          this._userId = res.result.userId;
+
+          // 성인인지 여부 (만 14세 이상) 체크
+          this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
           .done($.proxy(function (res) {
             if (res.code === Tw.API_CODE.CODE_00) {
-              if (res.result.twdAdRcvAgreeYn === 'N') {
-                $('#agree-banner-area').show();
+              if (res.result.age >= 14) {
+                this._isAdult = true;
+                this._reqTwdAdRcvAgreeInfo();
               }
             } else {
-              // BFF_03_0021 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+              // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
               // Tw.Error(res.code, res.msg).pop();
               return;
             }
           }, this))
           .fail(function (err) {
-            // BFF_03_0021 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+            // BFF_08_0080 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
             // Tw.Error(err.code, err.msg).pop();
             return;
           });
@@ -69,6 +80,75 @@ Tw.TeventCommon.prototype = {
       // Tw.Error(err.code, err.msg).pop();
       return;
     });    
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 여부 조회 및 미동의시 배너영역 노출 
+   * @param 
+   */
+  _reqTwdAdRcvAgreeInfo: function () {
+    // 이벤트 페이지는 비로그인시 접근도 가능한 화면이기 때문에 
+    // T world 광고정보수신동의 여부를 조회하기 이전에 로그인 여부를 먼저 조회하도록 한다. (로그인 시에만 T world 광고정보수신동의 여부 조회하도록)
+    if (this._isLogined) {
+      // T world 광고정보수신동의 여부 조회
+      this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          if (res.result.twdAdRcvAgreeYn === 'N') {
+
+            if ( this._isAdult ) {
+              $('#agree-banner-area').show();
+              
+              // 모바일App
+              if ( Tw.BrowserHelper.isApp() ) {
+                var data = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
+
+                // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
+                if (Tw.FormatHelper.isEmpty(data)) {
+                  $('#agree-popup-area').show();
+                  // return;
+                } 
+                // 그 외 경우 처리
+                else {
+                  data = JSON.parse(data);
+
+                  var now = new Date();
+                  now = Tw.DateHelper.convDateFormat(now);
+  
+                  if ( Tw.DateHelper.convDateFormat(data.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
+                    // console.log('만료시점이 지난 경우 (노출)');
+                    // 광고 정보 수신동의 팝업 노출
+                    $('#agree-popup-area').show();
+                  } else {
+                    // console.log('만료시점 이전인 경우 (비노출)');
+                  }
+                }
+              } 
+              // 모바일웹
+              else {
+                if ( Tw.CommonHelper.getCookie('hideTwdAdRcvAgreePop_' + this._userId) !== null ) {
+                  // console.log('다음에 보기 처리 이력 존재');
+                } else {
+                  // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
+                  // 광고 정보 수신동의 팝업 노출
+                  $('#agree-popup-area').show();
+                }
+              }              
+            }
+          }
+        } else {
+          // BFF_03_0021 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+          // Tw.Error(res.code, res.msg).pop();
+          return;
+        }
+      }, this))
+      .fail(function (err) {
+        // BFF_03_0021 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+        // Tw.Error(err.code, err.msg).pop();
+        return;
+      });
+    }
   },
 
   /**
@@ -96,8 +176,12 @@ Tw.TeventCommon.prototype = {
     this.$moreBtn.on('click', $.proxy(this._setMoreData, this));
 
     this.$container.on('change', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
+    this.$container.on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
+    this.$container.on('click', '.fe-pop-show-detail', $.proxy(this._showAgreePopDetail, this));   // T world 광고정보수신동의 약관 상세보기
     this.$container.on('click', '.fe-close', $.proxy(this._closeAgree, this));   // T world 광고정보수신동의 배너 닫기
+    this.$container.on('click', '.fe-pop-close', $.proxy(this._closeAgreePop, this));   // T world 광고정보수신동의 팝업 닫기
+    this.$container.on('click', '.fe-pop-hide', $.proxy(this._hideTwdAdRcvAgreePop, this));   // T world 광고정보수신동의 팝업 하루동안 보지않기 처리
   },
   /**
    * @function
@@ -157,6 +241,28 @@ Tw.TeventCommon.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
       .done(function (){
         $('#agree-banner-area').hide();
+        $('#agree-popup-area').hide();
+        var toastMsg = '수신동의가 완료되었습니다.';
+        // Tw.CommonHelper.toast(toastMsg);        
+        Tw.Popup.toast(toastMsg);
+      })
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 활성화 처리 (팝업)
+   */
+  _modAgreePop: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
+      .done(function (){
+        $('#agree-banner-area').hide();
+        $('#agree-popup-area').hide();
+        var toastMsg = '수신동의가 완료되었습니다.';
+        // Tw.CommonHelper.toast(toastMsg);
+        Tw.Popup.toast(toastMsg);
       })
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
@@ -173,10 +279,70 @@ Tw.TeventCommon.prototype = {
 
   /**
    * @function
+   * @desc T world 광고정보수신동의 팝업 약관 상세보기
+   */
+  _showAgreePopDetail: function () {
+    $('#agree-popup-area').hide();
+    Tw.CommonHelper.openTermLayer2('03');
+  },
+
+  /**
+   * @function
    * @desc T world 광고정보수신동의 배너 닫기
    */
   _closeAgree: function () {
     $('#agree-banner-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 팝업 닫기
+   */
+  _closeAgreePop: function () {
+    $('#agree-popup-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc T world 광고정보수신동의 팝업 다음에 보기 처리 (반영구적으로 비노출)
+   */
+  _hideTwdAdRcvAgreePop: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._setLocalStorage('hideTwdAdRcvAgreePop', this._userId, 365*10);
+    } else {
+      this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365*10);
+    }
+
+    $('#agree-popup-area').hide();
+  },
+
+  /**
+   * @function
+   * @desc 다음에 보기 처리 (Native localstorage 영역에 저장, 반영구적으로 비노출)
+   */
+  _setLocalStorage: function (key, userId, expiredays) {
+    var keyName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
+    var today = new Date();
+    
+    today.setDate( today.getDate() + expiredays );
+
+    Tw.CommonHelper.setLocalStorage(keyName, JSON.stringify({
+      // expireTime: Tw.DateHelper.convDateFormat(today)
+      expireTime: today
+    }));
+  },
+
+  /**
+   * @function
+   * @desc 다음에 보기 쿠키 처리 (반영구적으로 비노출)
+   */
+  _setCookie: function (key, userId, expiredays) {
+    var cookieName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
+    var today = new Date();
+
+    today.setDate( today.getDate() + expiredays );
+
+    document.cookie = cookieName + '=Y; path=/; expires=' + today.toGMTString() + ';';
   },
 
   /**

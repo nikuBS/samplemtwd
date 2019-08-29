@@ -40,6 +40,7 @@ Tw.MainStore.prototype = {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
+    this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
   },
 
   /**
@@ -108,7 +109,18 @@ Tw.MainStore.prototype = {
    */
   _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
-    this._historyService.goLoad(url);
+    var exUrlNoti = $($event.currentTarget).data('ex_url_noti') || '';
+
+    if(url.indexOf('m.sktelecom5gx.com') !== -1 && !Tw.FormatHelper.isEmpty(exUrlNoti) ) {
+      Tw.Popup.open(
+        { 
+          hbs: 'service-block',
+          pop_name: 'service-block'
+        }, 
+        null, null);
+    } else{
+      this._historyService.goLoad(url);
+    }
     // Tw.CommonHelper.openUrlInApp(url);
 
     $event.preventDefault();
@@ -124,6 +136,21 @@ Tw.MainStore.prototype = {
    */
   _onClickCharge: function ($event) {
     Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
+  },
+
+  /**
+   * @function
+   * @desc replace 이동 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickReplace: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.replaceURL(url);
+
+    $event.preventDefault();
+    $event.stopPropagation();
   },
 
   /**

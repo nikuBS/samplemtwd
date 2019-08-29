@@ -27,8 +27,10 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul role="tablist">
-                        <li class="tab" role="presentation"><div><a href="/main/home" role="tab" class="icon-home-tab-my on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab" role="presentation"><div><a href="/main/store" role="tab" class="icon-home-tab-store fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                        <!-- <li class="tab" role="presentation"><div><a href="/main/home" role="tab" class="icon-home-tab-my on fe-replace-history" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab" role="presentation"><div><a href="/main/store" role="tab" class="icon-home-tab-store fe-replace-history" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></a><span class="bar"></span></div></li> -->
+                        <li class="tab" role="presentation"><div><button data-url="/main/home" role="tab" class="fe-home-replace icon-home-tab-my on" aria-selected="true" data-xt_eid="CMMA_A2_B6-37" data-xt_csid="NO" data-xt_action="BC"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                        <li class="tab" role="presentation"><div><button data-url="/main/store" role="tab" class="fe-home-replace icon-home-tab-store" aria-selected="false" data-xt_eid="CMMA_A2_B6-38" data-xt_csid="NO" data-xt_action="BC"><span class="blind">store</span></button><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -502,7 +504,7 @@
                         <!-- 2019.03.20 카드 추가 -->
                         <div class="section-box nogaps-ver">
                             <ul class="quick-menu-list tod-quick-menu-list type3">
-                                <li><button class="bt fe-home-internal" data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-178" data-xt_csid="NO" data-xt_action="BC"><i class="ico-my-5gx"></i>5GX</button></li>
+                                <li><button class="bt fe-home-internal" data-url="https://m.sktelecom5gx.com" data-xt_eid="CMMA_A2_B6-178" data-xt_csid="NO" data-xt_action="BC" data-ex_url_noti="<%= pageInfo.exUrlNoti %>"><i class="ico-my-5gx"></i>5GX</button></li>
                                 <li><button class="bt tod-bt-tdirectshop fe-home-charge" title="새창" data-url="https://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_logo&utm_campaign=my_twd&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-179" data-xt_csid="NO" data-xt_action="BC"><i class="tod-ico-t-direct"></i>공식 온라인샵</button></li>
                                 <li><button class="bt fe-home-charge" data-url="http://bit.ly/2WxI5mg" data-xt_eid="CMMA_A2_B6-180" data-xt_csid="NO" data-xt_action="BC"><i class="ico-my-zero"></i>0한동</button></li>
                             </ul>
@@ -739,6 +741,43 @@
                             </div>
                         </div>
                         <!-- // 프로모션 배터 3 -->
+
+                        <!-- 광고성 정보 수신동의(선택) -->
+                        <% if (svcType.login && isAdRcvAgreeBannerShown) { %>
+                        <div class="section-box nogaps tod-alram-box bdtype1" id="fe-ad-rcv-agree-banner">
+                            <div class="shadow-box">
+                                <div class="alarm_list">
+                                    <div class="banner-box">
+                                        <img src="<%= CDN %>/img/etc/alarm_img04.png" alt="추천 혜택&middot;상품 및 새로운 이벤트 소식을 먼저 알려드릴까요?">
+                                    </div>
+                                    <div class="con-box">
+                                        <ul class="on-off-list new">
+                                            <li>
+                                                <div class="tod-alarm-txt">
+                                                    <p class="con1 pd0">T world 광고성 정보 수신동의 (선택)</p>
+                                                    <button type="button" class="tod-link-type" aria-haspopup="true" id="fe-bt-detail-ad-rcv-agree-banner">상세보기</button>
+                                                </div>
+                                                <span class="widget">
+                                                    <span class="widget-box switch">
+                                                        <span class="btn-switch type1" id="fe-bt-on-ad-rcv-agree-banner"> <!-- toggle class on  -->
+                                                            <span class="switch-style" role="checkbox" aria-checked="false">
+                                                                <span class="off-tx">꺼짐</span>
+                                                                <input type="checkbox" title="T World 광고성 정보 수신동의">
+                                                                <span class="on-tx">켜짐</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class="tod-alarm-close" id="fe-bt-close-ad-rcv-agree-banner"><span class="blind">알람닫기</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <!-- 광고성 정보 수신동의(선택) -->
+
                         <% if(redisData.help && redisData.help.length > 0) { %>
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">

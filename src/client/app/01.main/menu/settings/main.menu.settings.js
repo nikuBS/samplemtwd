@@ -8,7 +8,7 @@
  * @class
  * @param (Object) rootEl - 최상위 element
  */
-Tw.MainMenuSettings = function (rootEl) {
+Tw.MainMenuSettings = function (rootEl, xRequestedWith) {
   if (!Tw.BrowserHelper.isApp()) {
     return;
   }
@@ -21,6 +21,7 @@ Tw.MainMenuSettings = function (rootEl) {
   this._apiService = Tw.Api;
 
   this._currentVersion = '';
+  this._xRequestedWith = xRequestedWith;
 
   this._cacheElements();
   this._init();
@@ -125,6 +126,10 @@ Tw.MainMenuSettings.prototype = {
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
       url = 'intent://scan/#Intent;package=com.sktelecom.minit;end';
+
+      if (!Tw.FormatHelper.isEmpty(this._xRequestedWith)) {
+          url = 'intent://scan/#Intent;package='+ this._xRequestedWith.replace(' ', '').replace('.qa', '') +';end';
+      }
     } else if (Tw.BrowserHelper.isIos()) {
       url = 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8';
     }

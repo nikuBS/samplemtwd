@@ -1040,8 +1040,8 @@ li.checkbox.type01 {
 .radiobox.alignment .alignment-box .txt {
   display: table-cell; }
 
-.device_ios .radiobox.type01 input[type=checkbox],
-.device_ios .radiobox.type01 input[type=radio] {
+.device_ios .radiobox.type01[role=checkbox] input[type=checkbox],
+.device_ios .radiobox.type01[role=radio] input[type=radio] {/* 190711 접근성 개선 */
   display: inline;
   position: static;
   top: auto;
@@ -1068,8 +1068,8 @@ li.checkbox.type01 {
   left: auto;
   vertical-align: middle; }
 
-.device_ios .checkbox.type01 input[type=checkbox],
-.device_ios .checkbox.type01 input[type=radio] {
+.device_ios .checkbox.type01[role=checkbox] input[type=checkbox],
+.device_ios .checkbox.type01[role=radio] input[type=radio] {/* 190711 접근성 개선 */
   display: inline;
   position: static;
   top: auto;
@@ -1078,7 +1078,7 @@ li.checkbox.type01 {
   bottom: auto;
   margin: auto; }
 
-.device_ios .checkbox.type01 span {
+.device_ios .checkbox.type01 > span {/* 190711 접근성 개선 */
   display: inline-block;
   margin: 0 0 0 0.31rem; }
 
@@ -1282,7 +1282,7 @@ li.checkbox.type01 {
 .btn-switch.type2 ul li:last-of-type {
   border-radius: 0 0.38rem 0.38rem 0; }
 
-.device_ios .btn-switch .switch-style input {
+.device_ios .btn-switch .switch-style[role=checkbox] input {/* 190711 접근성 개선 */
   position: static;
   width: 0;
   height: 0;
@@ -1523,7 +1523,8 @@ li.checkbox.type01 {
           box-shadow: 0.25rem 0.44rem 0.88rem 0.13rem #dbe8ff;
   background: #178BCE; }
 
-.device_ios .widget-box.tube .tube-list li input {
+.device_ios .widget-box.tube .tube-list li[role=radio] input,
+.device_ios .widget-box.tube .tube-list li[role=checkbox] input {/* 190711 접근성 개선 */
   display: inline;
   position: static;
   top: auto;
@@ -1531,15 +1532,17 @@ li.checkbox.type01 {
   width: auto;
   height: auto; }
 
-.device_ios .radiobox.type01 input[type=checkbox],
-.device_ios .radiobox.type01 input[type=radio] {
+/* 190711 접근성 개선 - 중복 삭제 */
+/* .device_ios .radiobox.type01[role=checkbox] input[type=checkbox],
+.device_ios .radiobox.type01[role=radio] input[type=radio] {
   display: inline;
   position: static;
   top: auto;
   left: auto;
   right: auto;
   bottom: auto;
-  margin: auto; }
+  margin: auto; } */
+/* //190711 접근성 개선 - 중복 삭제 */
 
 .widget-box.iscroll {
   height: 100%;
@@ -1788,5 +1791,256 @@ li.checkbox.type01 {
 
 /* 190731 [OP002-2876] T단기데이터 노출 화면 변경 및 메뉴 추가 요청 */
 .cont-actionsheet .ac-list .type1 .table-cell > span.simbol.tod-ico01 {background: url(/img/svg/icon_48px_coupon_Tdata.svg) no-repeat 0 0; background-size: 100% 100%; }
+
+/* 190808 [OP002-2006] 내게 맞는 요금제 */
+.tod-myplan-visual{position:relative; background:url('/img/t_myPlan/keyvisual_bg.png') no-repeat 50% top; background-size:cover}
+.tod-myplan-visual .keyVisual-inner{width:100%; max-width:30rem; margin:0 auto; position:relative}
+.tod-myplan-visual .keyVisual-inner .keyvisual-mobile{width:100%; vertical-align:top}
+.tod-myplan-visual .keyVisual-inner .plan-comment{width:50%; color:#fff; letter-spacing:-0.0625rem; line-height:1.75rem; font-size:1.4375rem; font-weight:300; padding:2.375rem 0 0 1.3125rem ; position:absolute; left:0; top:0; word-break:keep-all; }
+.tod-myplan-visual .keyVisual-inner .plan-comment .name{display:block; font-size:1rem; letter-spacing:0; margin-bottom:0.3125rem}
+.tod-myplan-visual .keyVisual-inner .benefit-comment{color:#fff; font-size:0.75rem; position:absolute; left:0; bottom:2.5rem; padding-left:21px; opacity:0.7}
+
+.tod-plan-wrap{background:#fff; position:relative }
+.tod-plan-wrap .cont-box.first{padding-top:4.6875rem}
+.tod-plan-wrap .cont-box .plan-item .comment{min-height:4.6875rem;font-size:1.1875rem; line-height:1.5625rem; letter-spacing:-0.0625rem; margin-bottom:0.4375rem}
+.tod-plan-wrap .cont-box .plan-item .comment .cate{font-size:0.875rem; color:#a3a3a3; display:block}
+.tod-plan-wrap .cont-box .plan-item .comment .em{color:#ef4b49; font-weight:700}
+.tod-plan-wrap .cont-box .plan-item img{width:100%; height:auto; vertical-align:top}
+.tod-plan-wrap .cont-box .plan-item .gh-comment{overflow:hidden}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article{float:left; color:#858585; font-size:0.75rem; padding-left:0.8125rem; position:relative; margin-left:0.9375rem; box-sizing:border-box; overflow:hidden}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.first, 
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article:first-child{margin-left:0}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article:before{content:''; display:inline-block; width:0.625rem; height:0.625rem; position:absolute; left:0; top:50%; border-radius:100%; margin-top:-0.3125rem}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.blue:before{background:#019bfa}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.red:before{background:#f76252}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.green:before{background:#12b5aa}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.purple:before{background:#6d5fbf}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership{margin:0 3.125rem  }
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 1.5625rem)/2); width:calc((100% - 1.5625rem)/2)}
+
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .best{color:#666; font-weight:500}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{margin:0.1875rem 0 0.1875rem 1.5625rem }
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article:nth-child(odd){margin-left:0}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .bene-item{display:inline-block; float:left; width:50%}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .price{display:inline-block; float:left; width:50%; text-align:right}
+.tod-plan-wrap .cont-box .plan-item .plan-img-wrap img{width:100%; height:auto; vertical-align:top; }
+
+.tod-plan-wrap .cont-box.tod-plan-last{background:#f3f3f3; padding-bottom:1.875rem}
+.tod-plan-wrap .cont-box .plan-end-box{border-radius:0.625rem; overflow:hidden; background:#fd6161 url('/img/t_myPlan/ending_bg.png') no-repeat right top; background-size:cover; padding:1.875rem; color:#fff}
+.tod-plan-wrap .cont-box .plan-end-box .ending-comment{font-size:1.25rem; line-height:1.6875rem; letter-spacing:-0.0625rem; font-weight:300; padding-bottom:3.1875rem; position:relative }
+.tod-plan-wrap .cont-box .plan-end-box .ending-comment:after{content:''; display:inline-block; width:1.9375rem; height:0.0625rem; position:absolute; left:0; bottom:0; background:#fff}
+.tod-plan-wrap .cont-box .plan-end-box strong{font-weight:700}
+.tod-plan-wrap .cont-box .plan-end-box .ending-comment .yell_em{font-weight:700; color:#fffc1a}
+.tod-plan-wrap .cont-box .plan-end-box .later-comment{font-size:1rem; line-height:1.375rem; letter-spacing:-0.0625rem; font-weight:300; padding-top:3.125rem}
+
+.tod-plan-wrap .di-box{position:absolute; left:0; top:-1.75rem; width:100%; height:5.25rem; box-sizing:border-box; padding:0 0.5rem; z-index:100}
+.tod-plan-wrap .di-box-inner{width:100%; height:4.6875rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.15); border-radius:1.5rem; box-sizing:border-box; transition:all .1s ; position:relative }
+.tod-plan-wrap .di-box-inner .tail{display:inline-block; width:0; height:0; border-top:0.75rem solid #ebf5fe; border-right:0.75rem solid transparent; position:absolute; left:1.25rem; bottom:-0.625rem; z-index:2; transition:all 0.3s}
+.tod-plan-wrap .di-box-inner:after{content:''; display:inline-block; width:0; height:0; border-top:0.75rem solid rgba(00,00,00,0.1); border-right:0.75rem solid transparent; position:absolute; left:1.25rem; bottom:-0.625rem; z-index:1; transform:scale(1.4) translate(0.0625rem, 0.0625rem); filter:blur(0.125rem)}
+.tod-plan-wrap .di-box-container{height:100%; position:relative; z-index:5; background:#ebf5fe; padding-right:0.9375rem; border-radius:1.5rem; transition:all 0.3s}
+
+.tod-plan-wrap .di-box .txt-list{width:100%; height:100%; transform:translateY(0); transition:all 0.3s }
+.tod-plan-wrap .di-box .txt-list li{display:table; width:100%; height:100%; padding-left:4.125rem; box-sizing:border-box; position:absolute; left:0; top:0;}
+.tod-plan-wrap .di-box .txt-list .img{display:inline-block; width:5.0625rem; position:absolute; left:0; top:0; overflow:hidden; margin-left:-0.25rem  }
+.tod-plan-wrap .di-box .txt-list .img img{display:inline-block; width:100%; height:auto;}
+.tod-plan-wrap .di-box .txt-list .txt{font-size:1.0625rem; line-height:1.4375rem;  color:#fff; display:table-cell; vertical-align:middle; padding-left:0.3125rem; letter-spacing:-0.0938rem; font-weight:300  }
+
+@media screen and (max-width:320px){
+  .tod-plan-wrap .di-box .txt-list .txt{font-size:0.9375rem; letter-spacing:-0.125rem}
+}
+.tod-plan-wrap .di-box .txt-list li.txt-black .txt{color:#000}
+.tod-plan-wrap .di-box .txt-list strong{font-weight:500}
+/* fixed */
+.tod-plan-wrap .di-box.fixed{position:fixed ; top:3.8125rem; }
+.tod-plan-wrap .di-box.fixed .di-box-inner{box-shadow:0 0.75rem 0.5rem rgba(00,00,00,0.3);}
+
+/* data :  bar-chart */
+.tod-plan-wrap .tod-bar-chart-wrap{padding:0.625rem 0.9375rem 1.5625rem; position:relative;}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list{width:100%; position:relative}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period{height:1.875rem; display:flex; align-items: center; flex-wrap:nowrap}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.6875rem; color:#858585; line-height:0.75rem }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-wrap{height:100%; width:calc(100% - 1.125rem); width:-webkit-calc(100% - 1.125rem); display:flex; align-items: center; border-bottom:0.0625rem solid #e6e6e6; padding-right:1.25rem; box-sizing:border-box}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-chart-hoz{width:100%}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent{display:inline-block; background:#f7f7f8; border-radius:0.3125rem; width:2.375rem; height:1.375rem; line-height:1.375rem; text-align:center; color:#666; font-size:0.75rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.2); font-weight:500; position:absolute; right:-1.1875rem; bottom:0.5rem; box-sizing:border-box; padding-top:0.0625rem; }
+
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent:after{content:''; display:inline-block; border-top:0.3125rem solid #f7f7f8; border-left:0.3125rem solid transparent; border-right:0.3125rem solid transparent; position:absolute; left:50%; bottom:-0.1875rem; margin-left:-0.3125rem }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .bar-chart-hoz:before{content:none}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .bar-chart-hoz{height:0.25rem}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .bar-chart-hoz .data-bar{height:0.25rem;}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .bar-chart-hoz .data-bar{background:#f76252}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period.basic .data-bar{background:#019bfa}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period.basic .bar-chart-hoz{position:relative; }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period.basic .bar-chart-hoz .data-bar:before{content:''; display:inline-block; width:0.0625rem; height:calc(3000% - 0.25rem); position:absolute; right:-0.0625rem; bottom:-0.8125rem; border-left:0.0625rem dashed #019bfa; }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period.basic .bar-chart-hoz .data-bar .basic-num{font-size:0.6875rem; font-weight:500; white-space:nowrap; position:absolute; right:0; bottom:-1.875rem; transform:translateX(50%); color:#009bfa }
+
+/* data :  pie-chart */
+.tod-plan-wrap .tod-pie-chart-wrap{padding:0.625rem 0 1.5625rem}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-tit{color:#666; font-size:0.8125rem; font-weight:500; padding-bottom:1rem}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container{width:13.75rem; margin:0 auto; overflow:hidden  }
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item{width:6.875rem; float:left}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .amount{font-size:1.1875rem; font-weight:500; color:#009bfa; margin-top:0.3125rem; text-align:center}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .amount.me{color:#f76252}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .item-inner{position:relative}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small{width:5rem; height:5rem; background:#e8e9eb; border-radius:100%; position:relative; margin:0 auto}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small:before{content:''; display:inline-block; width:4rem; height:4rem; background:#fff; position:absolute; left:50%; top:50%; margin:-2rem 0 0 -2rem; border-radius:100%}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .user{display:inline-block; color:#959595; width:2.5rem; font-size:0.6875rem; padding-top:1.125rem; background:url('/img/t_myPlan/all_user.png') no-repeat center top; background-size:100% auto; position:absolute; left:50%; top:50%; transform:translate(-50%, -50%) ; text-align:center}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .user.me{display:inline-block;  background:url('/img/t_myPlan/me_user.png') no-repeat center top; background-size:100% auto; }
+
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .donut-chart-area{width:5rem; height:5rem; }
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100 .slice{clip:rect(0em, 5rem, 5rem, 2.5rem)}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100 .bar, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p51 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p52 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p53 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p54 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p55 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p56 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p57 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p58 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p59 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p60 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p61 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p62 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p63 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p64 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p65 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p66 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p67 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p68 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p69 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p70 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p71 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p72 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p73 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p74 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p75 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p76 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p77 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p78 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p79 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p80 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p81 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p82 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p83 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p84 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p85 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p86 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p87 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p88 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p89 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p90 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p91 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p92 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p93 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p94 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p95 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p96 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p97 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p98 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p99 .fill, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p100 .fill{clip:rect(0, 2.5rem, 5rem, 0); }
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p51 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p52 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p53 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p54 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p55 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p56 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p57 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p58 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p59 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p60 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p61 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p62 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p63 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p64 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p65 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p66 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p67 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p68 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p69 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p70 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p71 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p72 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p73 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p74 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p75 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p76 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p77 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p78 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p79 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p80 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p81 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p82 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p83 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p84 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p85 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p86 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p87 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p88 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p89 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p90 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p91 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p92 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p93 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p94 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p95 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p96 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p97 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p98 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p99 .slice, 
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100.p100 .slice{clip:rect(auto, auto, auto, auto)}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100 .slice.transparent{clip:inherit}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100 .slice.transparent *{background:transparent}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .c100 .slice.transparent .bar{clip:inherit}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .slice.transparent:before{width:0.5rem; height:0.5rem; transform:translateX(-50%); margin:0}
+.tod-plan-wrap .tod-pie-chart-wrap .pie-container .pie-item .donut-chart.small .slice.transparent .bar::before{width:0.5rem; height:0.5rem; transform:translate(-50%, -100%); margin:0}
+
+/* video :  bar-chart */
+.tod-plan-wrap .tod-vBar-chart-wrap{border-bottom:0.0625rem solid #d9d9d9; margin-bottom:1.8125rem}
+.tod-plan-wrap .tod-vBar-chart-wrap .tod-vBar-chart-container{margin:2.1875rem 0.9375rem 0.3125rem 0.625rem; position:relative}
+.tod-plan-wrap .tod-vBar-chart-wrap .tod-vBar-chart-container .vertical_chart{width:5.3125rem; height:8.4375rem; margin:0 auto  }
+.tod-plan-wrap .tod-vBar-chart-wrap .val_wrap{position:absolute; left:0; top:0; width:100%; height:100%; }
+.tod-plan-wrap .tod-vBar-chart-wrap .part.type02{width:-webkit-calc(50%); width:calc(50%)}
+
+/* music :  tri-bar-chart */
+.tod-plan-wrap .tod-vBar-chart-wrap.triangle .tod-vBar-chart-container .vertical_chart{width:8.25rem;  }
+.tod-plan-wrap .tod-vBar-chart-wrap.triangle .part.type02{width:-webkit-calc(50% - 2.4375rem + 0.75rem); width:calc(50% - 2.4375rem + 0.75rem) }
+
+/* member :  bar-pie */
+.tod-plan-wrap .tod-piechart-wrap{padding:0.75rem 0.9375rem 1.5625rem; }
+.tod-plan-wrap .tod-piechart-wrap .widget{position:relative}
+.tod-plan-wrap .tod-piechart-wrap .widget .widget-box.chart{width:9.375rem; height:9.375rem; margin:0 auto; overflow:hidden}
+
+.tod-plan-wrap .part{width:-webkit-calc(50% - 4.6875rem); width:calc(50% - 4.6875rem); color:#f76252; font-size:0.9375rem; text-align:left; position:absolute; top:50%; left:0; font-weight:500; line-height:1; padding-top:0.625rem;}
+.tod-plan-wrap .part.type02{font-size:1.25rem}
+.tod-plan-wrap .part.type02 .item{padding:0}
+.tod-plan-wrap .part.type02 .pointer .cir{top:-0.1875rem}
+.tod-plan-wrap .part.type02 .pointer .line{top:0}
+
+.tod-plan-wrap .part.right{text-align:right; left:auto; right:0}
+.tod-plan-wrap .part .item{color:#666; font-size:0.75rem; display:block; padding-bottom:0.1875rem}
+.tod-plan-wrap .part .pointer .cir{display:inline-block; position:absolute; left:0; top:0; height:0.375rem; width:0.375rem; border-radius:100%; background:#ff5d5c;}
+.tod-plan-wrap .part.right .pointer .cir{left:auto; right:0;}
+.tod-plan-wrap .part .pointer .line{display:inline-block; width:100%; height:0.0625rem; border-top:0.0625rem dotted #ff5d5c; position:absolute; top:0.1875rem; left:0}
+.tod-plan-wrap .part.right .pointer .line{left:auto; right:0}
+
+.tod-plan-wrap .part.fill-FF6563{color:#FF6563}
+.tod-plan-wrap .part.fill-FF6563 .pointer .cir{background:#ff5d5c;}
+.tod-plan-wrap .part.fill-FF6563 .pointer .line{border-color:#ff5d5c}
+.tod-plan-wrap .part.fill-7E77C5{color:#7E77C5}
+.tod-plan-wrap .part.fill-7E77C5 .pointer .cir{background:#7E77C5;}
+.tod-plan-wrap .part.fill-7E77C5 .pointer .line{border-color:#7E77C5}
+.tod-plan-wrap .part.fill-08C2BA{color:#08C2BA}
+.tod-plan-wrap .part.fill-08C2BA .pointer .cir{background:#08C2BA;}
+.tod-plan-wrap .part.fill-08C2BA .pointer .line{border-color:#08C2BA}
+.tod-plan-wrap .part.fill-1DA6F8{color:#1DA6F8}
+.tod-plan-wrap .part.fill-1DA6F8 .pointer .cir{background:#1DA6F8;}
+.tod-plan-wrap .part.fill-1DA6F8 .pointer .line{border-color:#1DA6F8}
+.tod-plan-wrap .part.blue{color:#009bfa}
+.tod-plan-wrap .part.blue .pointer .cir{background:#009bfa;}
+.tod-plan-wrap .part.blue .pointer .line{border-color:#009bfa}
+/* //190808 [OP002-2006] 내게 맞는 요금제 */
+
+
 
 

@@ -144,6 +144,8 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
     this._cachedMlsCard();
 
+    // 광고성 정보 수신동의 배너
+    this.$adRcvAgreeBanner = this.$container.find('#fe-ad-rcv-agree-banner');
   },
 
   /**
@@ -160,6 +162,11 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-data-link', _.debounce($.proxy(this._onClickDataLink, this), 500));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
+
+    // 광고성 정보 수신동의 배너 이벤트
+    this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
+    this.$container.on('click', '#fe-bt-on-ad-rcv-agree-banner', $.proxy(this._onClickAgreeAdRcv, this));
+    this.$container.on('click', '#fe-bt-detail-ad-rcv-agree-banner', $.proxy( function() { Tw.CommonHelper.openTermLayer2('03'); }, this ));
   },
 
   /**
@@ -172,6 +179,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
     this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
     this.$container.on('click', '.fe-home-charge', $.proxy(this._onClickCharge, this));
+    this.$container.on('click', '.fe-home-replace', $.proxy(this._onClickReplace, this));
   },
 
   /**
@@ -282,7 +290,18 @@ Tw.MainHome.prototype = {
    */
   _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
-    this._historyService.goLoad(url);
+    var exUrlNoti = $($event.currentTarget).data('ex_url_noti') || '';
+
+    if(url.indexOf('m.sktelecom5gx.com') !== -1 && !Tw.FormatHelper.isEmpty(exUrlNoti) ) {
+      this._popupService.open(
+        { 
+          hbs: 'service-block',
+          pop_name: 'service-block'
+        }, 
+        null, null);
+    } else{
+      this._historyService.goLoad(url);
+    }
 
     $event.preventDefault();
     $event.stopPropagation();
@@ -297,6 +316,21 @@ Tw.MainHome.prototype = {
    */
   _onClickCharge: function ($event) {
     Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
+  },
+
+  /**
+   * @function
+   * @desc replace 이동 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickReplace: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.replaceURL(url);
+
+    $event.preventDefault();
+    $event.stopPropagation();
   },
 
   /**
@@ -493,6 +527,22 @@ Tw.MainHome.prototype = {
    */
   _onClickGoBillGuide: function () {
     this._historyService.goLoad('/myt-fare/billguide/guide');
+  },
+
+  /**
+   * @function
+   * @desc 광고성 정보 수신동의 클릭(동의) 처리
+   * @return {void}
+   * @private
+   */
+  _onClickAgreeAdRcv: function() {
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn:'Y' })
+      .done($.proxy(this._successAgreeAdRcv, this));
+  },
+
+  _successAgreeAdRcv: function() {
+    Tw.CommonHelper.toast(Tw.TOAST_TEXT.RCV_AGREE);
+    this.$adRcvAgreeBanner.addClass('none');
   },
 
   /**
@@ -1724,7 +1774,11 @@ Tw.MainHome.prototype = {
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
       this._onClickCloseNoti(nonShow);
-      Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+      if( noti.billYn === 'Y') {
+        Tw.CommonHelper.showDataCharge($.proxy(function (url) {Tw.CommonHelper.openUrlExternal(url);}, this, noti.linkUrl));
+      } else {
+        Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+      }
     }
   },
 
