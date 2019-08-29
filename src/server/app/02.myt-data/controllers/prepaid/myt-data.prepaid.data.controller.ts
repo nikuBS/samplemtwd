@@ -31,18 +31,9 @@ class MyTDataPrepaidData extends TwViewController {
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (BrowserHelper.isApp(req)) { // 앱일 경우에만 진입 가능
-      var https = 'https';
-      if(req.headers.host === 'localhost:3000'){
-        https = 'http';
-      }
-      var _skpayInfo = {
-        redirectUri : https + '://' + req.headers.host + '/myt-data/recharge/prepaid/skpay/result',
-        svcMgmtNum : svcInfo.svcMgmtNum
-      }
       res.render('prepaid/myt-data.prepaid.data.html', {
         svcInfo: svcInfo,
-        pageInfo: pageInfo,
-        skpayInfo : _skpayInfo
+        pageInfo: pageInfo
       });
     } else { // 모바일웹일 경우 앱 설치 유도 페이지로 이동
       res.render('share/common.share.app-install.info.html', {
