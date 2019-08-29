@@ -95,21 +95,22 @@
             </div>
             <!-- //.cont-box -->
 
-            <% if (data.type !== 'UF' && ((data.childLineInfo && data.childLineInfo.length > 0) || data.otherLines.length > 0)) { %>
+            <% if ( data.type !== 'UF' && data.otherLines.length > 0) { %>
+            <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm" data-id="other-line">
                 <div class="ti-caption-type01 pb0">
                     <h2 class="tit">다른 회선 요금 조회
-                        <button title="다른 회선 요금 조회" type="button" class="btn-tip" id="MF1_tip_01" page-id="<%= data.pageInfo.menuId %>">
-                            <i class="icon-badge-tip"><span class="blind">tip</span></i>
-                        </button>
+                    <button title="다른 회선 요금 조회" type="button" class="btn-tip" id="MF1_tip_01" page-id="<%= data.pageInfo.menuId %>">
+                        <i class="icon-badge-tip"><span class="blind">tip</span></i>
+                    </button>
                     </h2>
                 </div>
                 <ul class="my-line-info">
                 </ul>
-                <!-- [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
-                <% if (Math.min((data.childLineInfo && data.childLineInfo.length || 0) + data.otherLines.length, 20) === 20) { %>
+                <% if (length === 20) { %>
+                <!-- 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
                 <div class="btn-more">
                     <button type="button">더 보기</button>
                 </div>
