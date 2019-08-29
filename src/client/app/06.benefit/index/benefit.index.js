@@ -520,9 +520,9 @@ Tw.BenefitIndex.prototype = {
     // T world 광고성 정보 수신동의(선택) 여부
     if ((resp = arguments[9]).code === Tw.API_CODE.CODE_00) {
       if (resp.result.twdAdRcvAgreeYn === 'N') {
-        $('#agree-banner-area').show();
 
         if ( this._isAdult ) {
+          $('#agree-banner-area').show();
           // 모바일App
           if ( Tw.BrowserHelper.isApp() ) {
             var storedData = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
