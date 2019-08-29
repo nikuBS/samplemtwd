@@ -231,7 +231,7 @@ Tw.POPUP_TPL = {
       faqCategoryId: "1100000", faqCategoryNm: "요금제", subFilters: [
         {faqFilterId: "1101000", faqFilterNm: "모바일"},
         {faqFilterId: "1102000", faqFilterNm: "결합상품"},
-        {faqFilterId: "1103000", faqFilterNm: "휴대용 와이파이"},
+        {faqFilterId: "1103000", faqFilterNm: "휴대용 와이파이"}, 
         {faqFilterId: "1104000", faqFilterNm: "인터넷/집전화 상품"}
         ]
     },
@@ -255,7 +255,7 @@ Tw.POPUP_TPL = {
         {faqFilterId: "1402000", faqFilterNm: "요금/로밍 쿠폰"},
         {faqFilterId: "1403000", faqFilterNm: "이용방법/장애"}
         ]
-    },
+    }, 
     {
       faqCategoryId: "1500000", faqCategoryNm: "T멤버십", subFilters: [
         {faqFilterId: "1501000", faqFilterNm: "카드발급"},
@@ -277,7 +277,7 @@ Tw.POPUP_TPL = {
         {faqFilterId: "1702000", faqFilterNm: "인터넷 기술장애/품질"},
         {faqFilterId: "1703000", faqFilterNm: "휴대폰 안내"}
         ]
-    },
+    }, 
     {
       faqCategoryId: "1800000", faqCategoryNm: "T월드 다이렉트", subFilters: [
         {faqFilterId: "1801000", faqFilterNm: "휴대폰 구매/혜택"},
@@ -286,7 +286,7 @@ Tw.POPUP_TPL = {
         {faqFilterId: "1804000", faqFilterNm: "T월드 다이렉트 교환/반품"},
         {faqFilterId: "1805000", faqFilterNm: "휴대폰가격공시 기타"}
         ]
-    },
+    }, 
     {
       faqCategoryId: "1900000", faqCategoryNm: "T월드 이용안내", subFilters: [
         {faqFilterId: "1901000", faqFilterNm: "모바일 T World"},
@@ -691,16 +691,6 @@ Tw.MYT_TPL = {
     '</span></span></button></li>'
   },
   FARE_SUBMAIN: {
-    CHILD_LIME_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
-      'data-num="{{svcNum}}" data-target="childBillInfo"><button>' +
-      '<span class="ico-wrap">' +
-        '<i class="icon-cellphone-80"><span class="blind">cellphone</span></i>' +
-      '</span>' +
-      '<span class="cont">' +
-      '<span class="info-title">{{eqpMdlNm}}<i class="icon-children ml6"><span class="blind">자녀</span></i></span>' +
-      '<span class="info-sub">{{svcNum}}</span>' +
-      '<span class="price">{{amt}}</span>' +
-      '</span></button></li>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
       'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
       '<span class="ico-wrap">' +
