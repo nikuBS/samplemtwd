@@ -1,10 +1,9 @@
-<!-- .popup hbs -->
 <div class="popup-page tw-popup fixed-bottom nobg txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>데이터 1회 충전내역 확인</h1>
+                <h1>음성 1회 충전 내역 확인</h1>
             </div>
         </div>
     </div>
@@ -19,14 +18,14 @@
                     <div class="div-half">
                         <div class="elem">
                             <div class="elem-inner">
-                                <p class="tit">남은 데이터</p>
-                                <p class="data"><em class="fe-remain-data"></em><span>MB</span></p>
+                                <p class="tit">현재 잔액</p>
+                                <p class="data"><em>{{data.previousAmount}}</em><span>원</span></p>
                             </div>
                         </div>
                         <div class="elem">
                             <div class="elem-inner">
-                                <p class="tit">충전 후 데이터</p>
-                                <p class="data"><em class="fe-after-data"></em><span>MB</span></p>
+                                <p class="tit">충전 후 잔액</p>
+                                <p class="data"><em>{{data.afterAmount}}</em><span>원</span></p>
                             </div>
                         </div>
                     </div>
@@ -34,18 +33,17 @@
                 <ul class="detail-info-list mt10">
                     <li>
                         <dl>
-                            <dt>카드번호</dt>
+                            <dt>결제 수단</dt>
                             <dd>
-                                <p class="value"><span class="fe-layer-card-number"></span>
-                                    <br />(<span class="fe-layer-card-info"></span>)</p>
+                                <p class="value">SK pay 결제</p>
                             </dd>
                         </dl>
                     </li>
                     <li>
                         <dl>
-                            <dt>충전 데이터</dt>
+                            <dt>충전 금액</dt>
                             <dd>
-                                <p class="value tx-bold fe-recharge-amount"></p>
+                                <p class="value tx-bold">{{data.rechargeAmount}}원</p>
                             </dd>
                         </dl>
                     </li>
@@ -53,12 +51,12 @@
             </div>
             <!--// .cont-box -->
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
+            <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="wrap-gaps-top">
-                    <h3>충전내역 알림 보내기</h3>
+                    <h3>충전 내역 알림 보내기</h3>
                 </div>
                 <!-- .list-comp-input -->
                 <div class="list-comp-input tod-type2">
@@ -66,21 +64,19 @@
                         <div class="widget-box check">
                             <ul class="select-list" role="group">
                                 <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                    <input type="checkbox" class="fe-sms" name="checkbox" value=""
-                                           title="충전내역 알림 보내기" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <input type="checkbox" class="fe-sms" name="checkbox" value="sms" title="값1" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-checkbox1">
                                         <p class="layout-text">
-                                            <span class="mtext">문자</span>
+                                            <span class="mtext">SMS</span>
                                         </p>
                                     </div>
                                 </li>
                                 <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                    <input type="checkbox" class="fe-email" name="checkbox" value=""
-                                           title="충전내역 알림 보내기" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                    <input type="checkbox" class="fe-email" name="checkbox" value="email" title="값2" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                         <p class="layout-text">
                                             <span class="mtext">이메일</span>
-                                            <span class="stext fe-email-address"></span>
+                                            <span class="stext fe-email-address">{{data.emailAddress}}</span>
                                         </p>
                                     </div>
                                 </li>
@@ -96,7 +92,7 @@
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
                 <li class="bt-red1">
-                    <button class="fe-recharge">충전 완료</button>
+                    <button class="fe-skpay-complete">결제 진행</button>
                 </li>
             </ul>
         </div>
@@ -104,7 +100,6 @@
     </div>
     <!-- // .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step fe-popup-close">취소</button>
+    <button class="prev-step fe-prepaid-voice-cancel">취소</button>
     <!--// .popup-closeBtn -->
 </div>
-<!-- // .popup hbs -->
