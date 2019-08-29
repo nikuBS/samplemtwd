@@ -27,11 +27,16 @@ class CommonAutoSmsCert extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    let encParam = req.query.p;
+    let encParam = req.query.p || '';
     if ( encParam.indexOf('(') !== -1 ) {
       encParam = encParam.split('(')[0];
     }
     if ( FormatHelper.isEmpty(encParam) ) {
+
+      const reqLog: any = req;
+      this.logger.error(this, 'CommonAutoSmsCert Referer ====>', req.header('Referer'));
+      this.logger.error(this, 'CommonAutoSmsCert Referer ====>', reqLog.session);
+      
       this.error.render(res, {
         code: '',
         msg: NODE_API_ERROR['01'],
