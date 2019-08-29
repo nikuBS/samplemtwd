@@ -99,7 +99,6 @@ Tw.MyTFareSubMain.prototype = {
     this.$billChart = this.$container.find('[data-id=bill-chart]');
     if ( this.data.otherLines.length > 0 ) {
       // 다른회선 요금 조회
-      this.$otherLines = this.$container.find('[data-id=other-line]');
       this._genLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
     }
     // [OP002-3317] template 처리 함수
@@ -108,8 +107,11 @@ Tw.MyTFareSubMain.prototype = {
       this._genChildLineTemplate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.CHILD_LIME_TEMP);
     }
     // [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우, "더 보기" 버튼 노출
-    if (countChildLines + this.data.otherLines.length > 20) {
-      this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
+    if (countChildLines + this.data.otherLines.length) {
+      this.$otherLines = this.$container.find('[data-id=other-line]');
+      if (countChildLines + this.data.otherLines.length > 20) {
+        this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
+      }
     }
     // 세금계산서
     // if ( this.data.taxInvoice ) {
@@ -181,10 +183,10 @@ Tw.MyTFareSubMain.prototype = {
       // 최근납부내역상세
       this.$paymentDetail.on('click', $.proxy(this._onClickedPaymentDetail, this));
     }
-    // 다른회선 요금 조회
-    if ( this.data.otherLines.length > 0 ) {
+    // [OP002-3317] 다른 회선(자녀포함) 조회
+    if (this.data.childLineInfo && this.data.childLineInfo.length > 0 || this.data.otherLines.length > 0) {
       this.$otherLines.on('click', $.proxy(this._onClickedOtherLine, this));
-      if ( this.data.otherLines.length > 20 ) {
+      if (this.$otherLinesMoreBtn) { // if ( this.data.otherLines.length > 20 ) {
         this.$otherLinesMoreBtn.on('click', $.proxy(this._onOtherLinesMore, this));
       }
     }
@@ -240,13 +242,14 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선내역 리스트
   _initOtherLineList: function (lines) {
-    var lengthLines = lines.length;
     // [OP002-3317] 회선 정보 화면 구성
-    if (lengthLines > 0 ) {
+    var countLines = Math.min(lines.length, 20);
+    if (countLines > 0) {
       var $ul = this.$container.find('ul.my-line-info');
       var htmls = '';
       var line;
-      for (var index = 0; index < lengthLines; index += 1) {
+      // TODO: 여기에서는 왜? 20개 이상이 출력될 수 있도록 되어 있는지 확인 필요
+      for (var index = 0; index < countLines; index += 1) {
         line = lines[index];
         // 회선 형태(자녀 or 기타)에 따라 template rendering
         htmls += (line.child ? this._genChildLineTemplate : this._genLineTemplate)(line);
@@ -513,14 +516,11 @@ Tw.MyTFareSubMain.prototype = {
         // "this._initOtherLineList" 호출 시점에 combineList가 무조건 앞에 오기 때문에, combineList로 추가
         combineList.push(data);
       }
-    } else {
-      lengthLines = 0;
     }
 
     // 기타 회선에 대한 처리
     lines = this.data.otherLines;
-    // 20개까지만 노출. (단, 자녀 회선이 있는 경우, 그만큼 제외하고 노출) (확인 필요!!!)
-    lengthLines = Math.min(lines.length, 20 - lengthLines);
+    lengthLines = lines.length;
     for (index = 0; index < lengthLines; index += 1) {
       // if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
       // line = arguments[idx].result;
@@ -553,7 +553,9 @@ Tw.MyTFareSubMain.prototype = {
     }
     // this._svcMgmtNumList = [];
     // 통합청구리스트, 개별청구리스트
-    this._initOtherLineList(combineList.concat(individualList));
+    // [OP002-3317] 다른 회선(자녀포함) 조회를 위해 전체 목록을 저장
+    this._linesTotal = combineList.concat(individualList);
+    this._initOtherLineList(this._linesTotal);
   },
 
   /**
@@ -800,7 +802,8 @@ Tw.MyTFareSubMain.prototype = {
 
         // 기준회선변경
         // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
-        var target = _.find(this.data.otherLines, {svcMgmtNum: mgmtNum});
+        // [OP002-3317] 합해진 회선에서 찾아도 되지만, 자녀가 아닌지 알고 있기 때문에, "otherLines"에서 검색
+        var target = _.find(/* this._linesTotal */ this.data.otherLines, {svcMgmtNum: mgmtNum});
         this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
             $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
       }
@@ -809,20 +812,22 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른 회선 더보기
   _onOtherLinesMore: function () {
-    var index = this.$otherLines.find('li').length;
-    var totalCount = this.data.otherLines.length - index;
-    if ( totalCount === 0 ) {
+    var indexLast = this.$otherLines.find('li').length;
+    // [OP002-3317]
+    var countTotal = Math.min(this._linesTotal.length - indexLast, 20);
+    // var totalCount = (this.data.childLineInfo && this.data.childLineInfo.length || 0) + this.data.otherLines.length - index;
+    if ( countTotal === 0 ) {
       this.$otherLinesMoreBtn.hide();
       return;
     }
-    var length = totalCount > 20 ? 20 : totalCount;
-    for ( var i = 0; i < length; i++ ) {
-      var item = this.data.otherLines[index + i];
+    for (var index = 0; index < countTotal; index += 1) {
+      var line = this._linesTotal[indexLast + index]; // this.data.otherLines[indexLast + index];
       // 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없음 -> 통합청구여부 icon 출력안하기로 결정됨
       // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
+      /*
       var isCombine = false;
       var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
-      var data = _.extend({
+      data = _.extend({
         combine: isCombine,
         repSvc: repSvc,
         amt: '',
@@ -830,6 +835,8 @@ Tw.MyTFareSubMain.prototype = {
         isAddr: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1)
       }, item);
       var result = this._genLineTemplate(data);
+      */
+      var result = (line.child ? this._genChildLineTemplate : this._genLineTemplate)(line);
       this.$container.find('ul.my-line-info').append(result);
     }
   },
