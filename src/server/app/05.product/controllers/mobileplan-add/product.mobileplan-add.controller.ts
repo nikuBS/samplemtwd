@@ -40,7 +40,7 @@ export default class ProductAddition extends TwViewController {
       this._getBestAdditions(),
       this._getRecommendedAdditions(),
       this._getRecommendedTags(),
-      this.isAdRcvAgreeBannerShown(isLogin)
+      this.getIsAdRcvAgreeBannerShown(isLogin)
     ).subscribe(([myAdditions, bestAdditions, recommendedAdditions, recommendedTags, isAdRcvAgreeBannerShown]) => {
       const error = {
         code: (myAdditions && myAdditions.code) || bestAdditions.code || recommendedAdditions.code || recommendedTags.code,
@@ -163,7 +163,7 @@ export default class ProductAddition extends TwViewController {
    * 광고성 정보 수신동의 배너 노출여부
    * @return {boolean}
    */
-  private isAdRcvAgreeBannerShown(isLogin): Observable<any> {
+  private getIsAdRcvAgreeBannerShown(isLogin): Observable<any> {
     // 비로그인 상태 시 API 호출하지 않음
     if ( !isLogin ) {
       return Observable.of(false);

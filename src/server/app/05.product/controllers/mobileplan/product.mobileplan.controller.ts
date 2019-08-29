@@ -41,7 +41,7 @@ export default class Product extends TwViewController {
       this.getRecommendedPlans(),
       this._getMyFilters(isLogin),
       this.getRecommendedTags(),
-      this.isAdRcvAgreeBannerShown(isLogin)
+      this.getIsAdRcvAgreeBannerShown(isLogin)
     ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags, isAdRcvAgreeBannerShown]) => {
       const error = {
         code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
@@ -211,7 +211,7 @@ export default class Product extends TwViewController {
    * 광고성 정보 수신동의 배너 노출여부
    * @return {boolean}
    */
-  private isAdRcvAgreeBannerShown(isLogin): Observable<any> {
+  private getIsAdRcvAgreeBannerShown(isLogin): Observable<any> {
     // 비로그인 상태 시 API 호출하지 않음
     if ( !isLogin ) {
       return Observable.of(false);
