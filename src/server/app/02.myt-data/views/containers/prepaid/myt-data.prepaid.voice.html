@@ -6,10 +6,9 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
-<% include ../../components/skpay.component.html %>
 <body class="bg-white">
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup-page tw-popup nobg fixed-bottom h60">
+    <div class="popup-page tw-popup fixed-bottom">
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '음성 1회 충전', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -58,35 +57,17 @@
                     <!-- .component -->
                     <div class="component">
                         <div class="component-box tabs">
-                            <div class="tab-area type1 new"><!-- 타입별 탭형태 변환 -->
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                 <div class="tab-linker">
                                     <ul class="fe-tab-wrap" role="tablist" style="width: 100%;">
-                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a role="tab">SK pay</a></li>
-                                        <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a role="tab">선불 이동전화 카드</a></li>
+                                        <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a role="tab">선불 이동전화 카드</a></li>
                                         <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="presentation" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a role="tab">신용카드</a></li>
+                                        <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a role="tab">신용카드</a></li>
                                     </ul>
                                 </div>
                                 <div class="tab-contents">
                                     <ul>
                                         <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
-                                            <div class="cont-box">
-                                                <ul class="form-data-list">
-                                                    <li>
-                                                        <label class="tit" for="formInput01">충전금액</label>
-                                                        <span class="inputbox">
-                                                            <button class="bt-dropdown big fe-select-amount-skpay" title="충전금액 선택"
-                                                                    aria-haspopup="true">
-                                                                금액 선택
-                                                                <span class="ico"></span>
-                                                            </button>
-                                                        </span>
-                                                        <span class="error-txt blind" aria-hidden="true">충전 금액을 선택해 주세요.</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
                                             <div class="cont-box">
                                                 <ul class="form-data-list">
                                                     <li>
@@ -127,7 +108,7 @@
                                                 </ul>
                                             </div>
                                         </li>
-                                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3" aria-selected="false">
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
                                             <div class="cont-box">
                                                 <ul class="form-data-list">
                                                     <li>
@@ -223,10 +204,14 @@
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
-                <div class="cont-box noborder bgnone">
-                    <h3 class="pg-chk-tit">꼭 확인해 주세요!</h3>
-                    <ul class="pg-chk-list02">
-                        <li>공인인증서 인증 안내 <button type="button" class="tip-view" id="DC_09_01_tip_01" page-id="DC_09_01" title="공인인증서 인증 안내입니다. TIP보기" aria-haspopup="true">TIP</button></li>
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02">
+                        <li>
+                            <button type="button" class="tip-view-btn" aria-haspopup="true" id="DC_09_01_tip_01" page-id="DC_09_01">
+                                공인인증서 인증 안내<span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
@@ -236,18 +221,11 @@
             <div class="bt-fixed-area fe-tab1-btn">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-request-skpay fe-request" disabled="disabled">충전하기</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="bt-fixed-area fe-tab2-btn" style="display:none;">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
                         <button class="fe-request-prepaid-card fe-request" disabled="disabled">충전하기</button>
                     </li>
                 </ul>
             </div>
-            <div class="bt-fixed-area fe-tab3-btn" style="display:none;">
+            <div class="bt-fixed-area fe-tab2-btn" style="display:none;">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
                         <button class="fe-request-credit-card fe-request" disabled="disabled">충전하기</button>
@@ -267,7 +245,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataPrepaidVoice($('.wrap'), <%- JSON.stringify({ skpayInfo }) %>);
+    new Tw.MyTDataPrepaidVoice($('.wrap'));
   });
 </script>
 

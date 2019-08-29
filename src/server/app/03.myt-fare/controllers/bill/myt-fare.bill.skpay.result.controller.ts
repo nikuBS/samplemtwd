@@ -60,7 +60,7 @@ class MyTFareBillSkpayResult extends TwViewController {
         if (createInfo.code === API_CODE.CODE_00 && createInfo.result.successYn === 'Y') {
           return res.redirect('/myt-fare/bill/pay-complete');
         } else {
-          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE, createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM), { pageInfo, historyDepth }));
+          return res.render(renderUrl, Object.assign(this._getDataError(MYT_FARE_ERROR_MSG.TITLE,  createInfo.code, MYT_FARE_ERROR_MSG.MSG_SYSTEM + " " + createInfo.msg), { pageInfo, historyDepth }));
         }
       });
     } else {
