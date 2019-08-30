@@ -29,10 +29,6 @@ ARG NODE=dev
 ENV NODE_ENV ${NODE}
 ENV WHATAP_CONF whatap-${NODE}
 
-# should be removed
-ENV NODE_DEBUG=redis
-ENV DEBUG=connect:redis,ioredis:*
-
 ARG VER
 ENV NODE_VER ${VER}
 
@@ -42,9 +38,5 @@ EXPOSE 3000
 RUN echo "${NODE_ENV}"
 RUN echo "${WHATAP_CONF}"
 RUN echo "${VER}"
-
-# should be removed
-RUN echo "${NODE_DEBUG}"
-RUN echo "${DEBUG}"
 
 CMD ["npm", "run", "server-docker"]
