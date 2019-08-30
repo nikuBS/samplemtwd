@@ -1,3 +1,5 @@
+import { MY_BENEFIT } from "./title.type";
+
 export enum SVC_ATTR_NAME {
   M1 = '휴대폰',
   M2 = '선불폰',
@@ -665,4 +667,120 @@ export const MYT_SUSPEND_MILITARY_RECEIVE_CD = ['5000341', '5000342', '5000349',
 
 export const EXPERIMENT_EXPS_SCRN_ID = {
   RECOMMEND_PRODS: 'MTW_M000184_01'
+};
+
+export const MLS_PRODUCT_BENEFIT = {
+  // T플랜 맥스
+  NA00006539: {
+    data: 0,
+    membership: 72000,
+    flo: 94800,
+    pooq: 118000,
+    insurance: 67200,
+    safe: 0,
+    total: 352800
+  },
+  // T플랜 스페셜
+  NA00006538: {
+    data: 0,
+    membership: 72000,
+    flo: 94800,
+    pooq: 0,
+    insurance: 33600,
+    safe: 0,
+    total: 224400
+  },
+  // T플랜 에센스
+  NA00006537: {
+    data: 0,
+    membership: 72000,
+    flo: 0,
+    pooq: 0,
+    insurance: 47400,
+    safe: 0,
+    total: 47400
+  },
+  // T플랜 안심4G
+  NA00006536: {
+    data: 2160000,
+    membership: 0,
+    flo: 0,
+    pooq: 0,
+    insurance: 0,
+    safe: 0,
+    total: 2160000
+  },
+  // T플랜 안심2.5G
+  NA00006535: {
+    data: 1350000,
+    membership: 0,
+    flo: 0,
+    pooq: 0,
+    insurance: 0,
+    safe: 66600,
+    total: 1416000
+  },
+  // T플랜 세이브
+  NA00006534: {
+    data: 810000,
+    membership: 0,
+    flo: 0,
+    pooq: 0,
+    insurance: 0,
+    safe: 0,
+    total: 810000
+  }
+};
+
+export const MLS_DETAIL_MAPPING = {
+  prcpln_01: {
+    data_use_ratio_max : 'ratio',
+    data_use_ratio_bf_m1 : 'ratio',
+    data_use_ratio_bf_m2 : 'ratio',
+    data_use_ratio_bf_m3 : 'ratio'
+  },
+  prcpln_02: {
+    all_night_traffic_mb : 'MB',
+    night_traffic_mb : 'MB'
+  },
+  prcpln_03: {},
+  prcpln_04: {},
+  prcpln_05: {
+    all_video_use_traffic_ratio : 'ratio',
+    video_use_traffic_ratio : 'ratio'
+  },
+  prcpln_06: {},
+  prcpln_07: {},
+  prcpln_08: {
+    all_music_use_traffic_ratio : 'ratio',
+    music_use_traffic_ratio : 'ratio'
+  },
+  prcpln_09: {},
+  prcpln_10: {},
+  prcpln_12: {},
+  prcpln_14: {
+    mbr_use_discount_amt : 'amt',
+    mbr_discount_amt_theme_park : 'amt',
+    mbr_discount_amt_convenience_store : 'amt',
+    mbr_discount_amt_pizza : 'amt',
+    mbr_discount_amt_family_restaurant : 'amt',
+    mbr_discount_amt_coffee : 'amt',
+    mbr_discount_amt_movie : 'amt',
+    mbr_discount_amt_shopping : 'amt',
+    mbr_discount_amt_beauty_and_fashion : 'amt',
+    mbr_discount_amt_mobile_and_media : 'amt',
+    mbr_discount_amt_transportation : 'amt',
+    mbr_discount_amt_education : 'amt',
+    mbr_discount_amt_food_and_beverage : 'amt',
+    mbr_discount_amt_jeju : 'amt',
+    mbr_discount_amt_sports : 'amt',
+    mbr_discount_amt_bakery : 'amt',
+    mbr_discount_amt_chocolate : 'amt'
+  }
+};
+
+export const MLS_PRCPLN_RC_TYP = 'GNRL';
+
+export const MLS_ERROR = {
+  MLS0001: '나에게 꼭 맞는 추천 요금제가 없습니다.'
 };
