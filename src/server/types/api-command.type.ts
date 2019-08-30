@@ -144,6 +144,7 @@ export const API_CMD = {
   BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_05_0212: { path: '/core-bill/:version/bill/mls/recommend-product', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   // MYT
   BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true, store: true },
   BFF_05_0002: { path: '/core-balance/:version/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -993,7 +994,8 @@ export const SESSION_CMD = {
   BFF_05_0068: 'BFF_05_0068',
   BFF_03_0004: 'BFF_03_0004',
   BFF_05_0061: 'BFF_05_0061',
-  BFF_07_0017: 'BFF_07_0017'
+  BFF_07_0017: 'BFF_07_0017',
+  BFF_10_0178: 'BFF_10_0178'
 };
 
 export const API_CODE = {
