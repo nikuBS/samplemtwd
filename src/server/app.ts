@@ -66,20 +66,8 @@ class App {
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
     this.app.use(cookie());
     this.app.use(this.redisService.getMiddleWare());
-
-    // this.app.use(function (req: any, res: any, next) {
-    //   console.log('########## check session ##########');
-    //   console.log(req.session);
-    //   if (!req.session) {
-    //     console.log('########## check session ==> fail ##########');
-    //     return next(new Error('heck session ==> fail')); // handle error
-    //   }
-    //   next(); // otherwise continue
-    // });
-
-
     this.app.use(UA.express()); // req.useragent
-    // this.app.use(morgan(this.accessLogFormat.bind(this)));
+    this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
     this.app.use(express.static(path.join(__dirname, '/public')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
@@ -225,7 +213,6 @@ class App {
   }
 
   private handleInternalServerError(err, req, res, next) {
-    console.log('########## handleInternalServerError ##########');
     if ( req.accepts('html') ) {
       console.error(err.message);
       return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
