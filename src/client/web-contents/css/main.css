@@ -5539,3 +5539,22 @@ body.apphome .main-membershop-box {
 /* 190820 추가 [OP002-2772] 모바일앱 광고정보수신동의 팝업 */
 .tod-alram-box .shadow-box {border-radius:0.94rem;}
 .tod-alram-box.bdtype1 .shadow-box:before {content:''; position:absolute; top:0; right:0; bottom:0; left:0; border:0.125rem solid #abd7ed; border-radius:inherit;}
+
+/* 190828 [OP002-2006] 내게 맞는 요금제 */
+.tod-mls-comp.tod-second-box .tod-mls-msg-bx .sp-name{display:block}
+.tod-mls-comp.tod-second-box .tod-mls-cont .tod-mls-card.intro-area-1{width:100%;}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap{display:inline-block; width:80px; height:40px; padding-top:8px;}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line{display:inline-block; width:6px; height:40px; margin-left:4px ; box-sizing:border-box; border-radius:15px; animation:barmove 0.5s infinite; animation-timing-function: cubic-bezier(.36,0,.21,1.01); animation-direction: alternate-reverse ; animation-fill-mode:both; transform:scaleY(0.5); transform-origin:50% 50% ; padding:5px 0; position:relative}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line:before{content:''; display:inline-block; position:absolute; left:0; top:0; width:5px; height:5px; border-radius:100%; }
+@keyframes barmove{
+  from{transform:scaleY(0.5)}
+  to{transform:scaleY(1)}
+}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line.one{margin-left:0; background:#f7905a; animation-delay:-0s; }
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line.two{background:#f78363; animation-delay:-0.25s;}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line.three{background:#f7796b; animation-delay:-0.6s; }
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line.four{background:#f66d74; animation-delay:-0.75s;}
+.tod-mls-comp.tod-second-box .icon-wrap .line-wrap .line.five{background:#f6627c; animation-delay:-0.95s; }
+.tod-mls-comp.tod-second-box .tod-mls-hd .btn-tip{vertical-align:middle} 
+.tod-mls-comp.tod-second-box .tod-mls-msg-bx{padding:30px 22px 0; width:100%; box-sizing:border-box }
+.tod-mls-comp.tod-second-box .tod-mls-msg-bx .txt-wrap{letter-spacing:-2px; font-weight:300 }

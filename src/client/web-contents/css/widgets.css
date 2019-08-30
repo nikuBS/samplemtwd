@@ -1792,7 +1792,7 @@ li.checkbox.type01 {
 /* 190731 [OP002-2876] T단기데이터 노출 화면 변경 및 메뉴 추가 요청 */
 .cont-actionsheet .ac-list .type1 .table-cell > span.simbol.tod-ico01 {background: url(/img/svg/icon_48px_coupon_Tdata.svg) no-repeat 0 0; background-size: 100% 100%; }
 
-/* 190808 [OP002-2006] 내게 맞는 요금제 */
+/* 190808 추가 [OP002-2006] 내게 맞는 요금제 */
 .tod-myplan-visual{position:relative; background:url('/img/t_myPlan/keyvisual_bg.png') no-repeat 50% top; background-size:cover}
 .tod-myplan-visual .keyVisual-inner{width:100%; max-width:30rem; margin:0 auto; position:relative}
 .tod-myplan-visual .keyVisual-inner .keyvisual-mobile{width:100%; vertical-align:top}
@@ -1806,17 +1806,20 @@ li.checkbox.type01 {
 .tod-plan-wrap .cont-box .plan-item .comment .cate{font-size:0.875rem; color:#a3a3a3; display:block}
 .tod-plan-wrap .cont-box .plan-item .comment .em{color:#ef4b49; font-weight:700}
 .tod-plan-wrap .cont-box .plan-item img{width:100%; height:auto; vertical-align:top}
-.tod-plan-wrap .cont-box .plan-item .gh-comment{overflow:hidden}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article{float:left; color:#858585; font-size:0.75rem; padding-left:0.8125rem; position:relative; margin-left:0.9375rem; box-sizing:border-box; overflow:hidden}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article.first, 
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article:first-child{margin-left:0}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article:before{content:''; display:inline-block; width:0.625rem; height:0.625rem; position:absolute; left:0; top:50%; border-radius:100%; margin-top:-0.3125rem}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article.blue:before{background:#019bfa}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article.red:before{background:#f76252}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article.green:before{background:#12b5aa}
-.tod-plan-wrap .cont-box .plan-item .gh-comment .article.purple:before{background:#6d5fbf}
+.tod-plan-wrap .cont-box .plan-item .gh-comment{overflow:hidden; text-align:center}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article{text-align:center; box-sizing:border-box; overflow:hidden; vertical-align:top; line-height:1rem; margin:0.375rem 0}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.line-block{display:inline-block; margin:0 0 0 1rem; }
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article .article-txt{display:inline-block; color:#858585; font-size:0.75rem; padding-left:0.75rem; position:relative; vertical-align:top; line-height:1rem}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article .article-txt:before{content:''; display:inline-block; width:0.5rem; height:0.5rem; position:absolute; left:0; top:50%; border-radius:100%; margin-top:-0.3125rem}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article:first-child, 
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.first{margin-left:0}
+
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.blue .article-txt::before{background:#019bfa}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.red .article-txt::before{background:#f76252}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.green .article-txt::before{background:#12b5aa}
+.tod-plan-wrap .cont-box .plan-item .gh-comment .article.purple .article-txt::before{background:#6d5fbf}
 .tod-plan-wrap .cont-box .plan-item .gh-comment.membership{margin:0 3.125rem  }
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 1.5625rem)/2); width:calc((100% - 1.5625rem)/2)}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 1.5625rem)/2); width:calc((100% - 1.5625rem)/2); float:left; text-align:left}
 
 .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .best{color:#666; font-weight:500}
 .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{margin:0.1875rem 0 0.1875rem 1.5625rem }
@@ -1857,11 +1860,11 @@ li.checkbox.type01 {
 /* data :  bar-chart */
 .tod-plan-wrap .tod-bar-chart-wrap{padding:0.625rem 0.9375rem 1.5625rem; position:relative;}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list{width:100%; position:relative}
-.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period{height:1.875rem; display:flex; align-items: center; flex-wrap:nowrap}
-.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.6875rem; color:#858585; line-height:0.75rem }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period{height:2.1875rem; display:flex; align-items: center; flex-wrap:nowrap}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.875rem; color:#858585; line-height:2.1875rem }
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-wrap{height:100%; width:calc(100% - 1.125rem); width:-webkit-calc(100% - 1.125rem); display:flex; align-items: center; border-bottom:0.0625rem solid #e6e6e6; padding-right:1.25rem; box-sizing:border-box}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-chart-hoz{width:100%}
-.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent{display:inline-block; background:#f7f7f8; border-radius:0.3125rem; width:2.375rem; height:1.375rem; line-height:1.375rem; text-align:center; color:#666; font-size:0.75rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.2); font-weight:500; position:absolute; right:-1.1875rem; bottom:0.5rem; box-sizing:border-box; padding-top:0.0625rem; }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent{display:inline-block; background:#f7f7f8; border-radius:0.3125rem; width:2.6875rem; height:1.4375rem; line-height:1.4375rem; text-align:center; color:#666; font-size:0.8125rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.2); font-weight:700; position:absolute; right:-1.1875rem; bottom:0.5rem; box-sizing:border-box; margin-top:0.0625rem }
 
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent:after{content:''; display:inline-block; border-top:0.3125rem solid #f7f7f8; border-left:0.3125rem solid transparent; border-right:0.3125rem solid transparent; position:absolute; left:50%; bottom:-0.1875rem; margin-left:-0.3125rem }
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .bar-chart-hoz:before{content:none}
@@ -2012,6 +2015,7 @@ li.checkbox.type01 {
 .tod-plan-wrap .tod-piechart-wrap .widget .widget-box.chart{width:9.375rem; height:9.375rem; margin:0 auto; overflow:hidden}
 
 .tod-plan-wrap .part{width:-webkit-calc(50% - 4.6875rem); width:calc(50% - 4.6875rem); color:#f76252; font-size:0.9375rem; text-align:left; position:absolute; top:50%; left:0; font-weight:500; line-height:1; padding-top:0.625rem;}
+.tod-plan-wrap .part.txt-up .item-num{display:inline-block; vertical-align:top; margin-top:-50px}
 .tod-plan-wrap .part.type02{font-size:1.25rem}
 .tod-plan-wrap .part.type02 .item{padding:0}
 .tod-plan-wrap .part.type02 .pointer .cir{top:-0.1875rem}
@@ -2040,6 +2044,26 @@ li.checkbox.type01 {
 .tod-plan-wrap .part.blue .pointer .cir{background:#009bfa;}
 .tod-plan-wrap .part.blue .pointer .line{border-color:#009bfa}
 /* //190808 [OP002-2006] 내게 맞는 요금제 */
+
+/* 190828 [OP002-2006] 내게 맞는 요금제 - 2차 */
+.cont-box.tod-plan-pop-wrap{padding:0; background:#fff; height:-webkit-calc(100% - 0.56rem); height:calc(100% - 0.56rem); position:relative;}
+.tod-plan-pop-wrap .tod-plan-pop-container{width:100%; background:url('/img/t_myPlan/pop_bg01.png') no-repeat right top; background-size:4rem auto; padding:0 2.9375rem 0 1.5625rem; box-sizing:border-box}
+.tod-plan-pop-wrap .tod-plan-pop-container.type02{background-image:url('/img/t_myPlan/pop_bg02.png'); position:absolute; left:0; bottom:0}
+.tod-plan-pop-wrap .tod-plan-pop-container .plan-pop-tit{font-size:1.75rem; line-height:2.25rem; font-weight:300; letter-spacing:-0.0625rem; padding-top:3.75rem}
+.tod-plan-pop-wrap .tod-plan-pop-container .plan-pop-cont-tit{font-size:1.125rem; font-weight:700; line-height:1.6875rem; padding-top:2.8125rem; background:url('/img/t_myPlan/pop_bg03.png') no-repeat left top; background-size:1.125rem 1.25rem}
+.tod-plan-pop-wrap .tod-plan-pop-container .plan-recom-txt{padding:1.25rem 0 1.875rem; font-size:0.875rem; line-height:1.125rem; color:#858585}
+
+/* 혜택팝업 */
+.tod-plan-bene-list .item{border-bottom:0.0625rem solid #e1e1e1; padding:0.9375rem 0 0.9375rem 5.125rem ; position:relative; }
+.tod-plan-bene-list .item:last-child{border-bottom:none}
+.tod-plan-bene-list .item .bene-wrap{display:table; width:100%; min-height:5.125rem; }
+.tod-plan-bene-list .item .bene-wrap .ico{display:inline-block; width:5.125rem; height:5.125rem; position:absolute; left:0; top:0.9375rem; }
+.tod-plan-bene-list .item .bene-wrap .ico img{width:100%; height:auto;}
+.tod-plan-bene-list .item .bene-wrap .description-wrap{display:table-cell; vertical-align:middle; padding-left:0.9375rem }
+.tod-plan-bene-list .item .bene-wrap .description-wrap .bene-tit{font-size:1.125rem; font-weight:500}
+.tod-plan-bene-list .item .bene-wrap .description-wrap .bene-desc{font-size:0.8125rem; padding-top:0.1875rem}
+.tod-plan-bene-list .item .bene-wrap .description-wrap .bene-desc .bene-desc-sub{color:#858585; display:block;padding-top:0.125rem}
+/* //190828 [OP002-2006] 내게 맞는 요금제 - 2차 */
 
 
 
