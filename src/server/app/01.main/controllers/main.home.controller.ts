@@ -76,7 +76,7 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
             this.getRecommendProds(req, svcInfo.prodId),
-            this.getIsAdRcvAgreeBannerShown()
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
           ).subscribe(([usageData, membershipData, redisData, recommendProdsResult, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
@@ -90,7 +90,7 @@ class MainHome extends TwViewController {
           Observable.combineLatest(
             this.getUsageData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-            this.getIsAdRcvAgreeBannerShown()
+            this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
           ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
             const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
@@ -102,7 +102,7 @@ class MainHome extends TwViewController {
         Observable.combineLatest(
           this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum),
-          this.getIsAdRcvAgreeBannerShown()
+          this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
         ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown]) => {
           homeData.billData = billData;
           const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
@@ -618,7 +618,11 @@ class MainHome extends TwViewController {
    * 광고성 정보 수신동의 배너 노출여부
    * @return {boolean}
    */
-  private getIsAdRcvAgreeBannerShown(): Observable<any> {
+  private getIsAdRcvAgreeBannerShown(loginType): Observable<any> {
+    if (FormatHelper.isEmpty(loginType) || loginType != 'T') {
+      return Observable.of(false);
+    }
+
     return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
         return false;
