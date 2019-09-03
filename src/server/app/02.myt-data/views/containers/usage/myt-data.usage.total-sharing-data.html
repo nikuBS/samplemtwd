@@ -28,18 +28,13 @@
                 <div class="data-list-type1">
                     <ul class="type1">
                         <li>
-                            <span class="stit">공유한 데이터
-                                <button type="button" class="btn-tip" title="리필쿠폰" id="DC1_tip_01" page-id="DC1"  aria-haspopup="true"><i class="icon-badge-tip">
-                                    <span class="blind">DC1_tip_01</span></i>
-                                </button>
-                            </span>
+                            <span class="stit">공유한 데이터<button type="button" class="btn-tip" title="공유한 데이터" id="TC000078" page-id="<%- pageInfo.menuId %>"  aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></span>
                             <%_
                             if (defaultData.tOPlanSharedData) {
                             _%>
                             <span class="use"><strong class="tod-txcolor8"><%- defaultData.tOPlanSharedData.showUsed.data %><%- defaultData.tOPlanSharedData.showUsed.unit %></strong></span>
                             <%_
-                            } else if (defaultData.sharedData) {
-                            // .showUsed로 처리가 가능할 것으로 보이는데
+                            } else if (defaultData.sharedData) { // .showUsed로 처리가 가능할 것으로 보이는데
                             _%>
                             <span class="use"><strong class="tod-txcolor8" id="sharedDataUsed"></strong></span>
                             <%_
@@ -47,24 +42,20 @@
                             _%>
                         </li>
                         <li>
-                            <span class="stit">공유가능 데이터
-                                <button type="button" class="btn-tip" title="리필쿠폰" id="DC1_tip_01" page-id="DC1"  aria-haspopup="true"><i class="icon-badge-tip">
-                                    <span class="blind">DC1_tip_01</span></i>
-                                </button>
-                            </span>
+                            <span class="stit">공유가능 데이터<button type="button" class="btn-tip" title="공유가능 데이터" id="TC000079" page-id="<%- pageInfo.menuId %>"  aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></span>
                             <%_
                             if (defaultData.tOPlanSharedData) {
                             _%>
-                            <span class="use"><strong class="tod-txcolor8"><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong></span>
+                            <span class="use"><strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong></span>
                             <%_
                             } else if (defaultData.sharedData) {
                                 if (defaultData.isRemainUnlimited) {
                             _%>
-                            <span class="use"><strong class="tod-txcolor8 xxx"><%= defaultData.remained %></strong></span>
+                            <span class="use"><strong><%= defaultData.remained %></strong></span>
                             <%_
                                 } else if (defaultData.showRemained) {
                             _%>
-                            <span class="use"><strong class="tod-txcolor8 xxx"><%= defaultData.showRemained.data %><%= defaultData.showRemained.unit %></strong></span>
+                            <span class="use"><strong><%= defaultData.showRemained.data %><%= defaultData.showRemained.unit %></strong></span>
                             <%_
                                 }
                             }
@@ -87,10 +78,8 @@
                     }
                     _%>
                     를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.</p>
-                <!-- [OP002-3465] -->
             </div>
             <hr class="cont-sp type1" aria-hidden="true">
-            <!-- //190826 [OP002-3417] 수정_01 -->
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
                 <ul class="full-link-list type1">
