@@ -49,13 +49,13 @@
                             <span class="use"><strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong></span>
                             <%_
                             } else if (defaultData.sharedData) {
-                                if (defaultData.isRemainUnlimited) {
+                                if (defaultData.isUnlimited) {
                             _%>
-                            <span class="use"><strong><%= defaultData.remained %></strong></span>
+                            <span class="use"><strong>무제한</strong></span>
                             <%_
                                 } else if (defaultData.showRemained) {
                             _%>
-                            <span class="use"><strong><%= defaultData.showRemained.data %><%= defaultData.showRemained.unit %></strong></span>
+                            <span class="use"><strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong></span>
                             <%_
                                 }
                             }
@@ -65,16 +65,33 @@
                 </div>
                 <p class="con-txt0 pb12 pt12 tod-desc-btop">고객님의 요금제는 <strong><%= svcInfo.prodNm %></strong>이며, 기본제공데이터
                     <%_
+                    if (defaultData.isUnlimited) {
+                    _%>
+                    <strong>무제한</strong>
+                    <%_
+                    } else if (defaultData.showRemained) {
+                    _%>
+                    <strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong>
+                    <%_
+                    }
+                    _%>
+                    중 <br>
+                    <%_
                     if (defaultData.tOPlanSharedData) {
                     _%>
-                    <strong><%- defaultData.tOPlanSharedData.showTotal.data %><%- defaultData.tOPlanSharedData.showTotal.unit %></strong> 중 <br>
                     <strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong>
                     <%_
                     } else if (defaultData.sharedData) {
+                        if (defaultData.isUnlimited) {
+                            // 이 부분 확인이 필요할 듯 "무제한를... 공유?"
                     _%>
-                    <strong><%_ if (defaultData.showTotal) { _%><%- defaultData.showTotal.data %><%- defaultData.showTotal.unit %><%_ } _%></strong> 중 <br>
-                    <strong><%_ if (defaultData.showRemained) { _%><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %><%_ } _%></strong>
+                    <strong>무제한</strong>
                     <%_
+                        } else if (defaultData.showRemained) {
+                    _%>
+                    <strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong>
+                    <%_
+                        }
                     }
                     _%>
                     를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.</p>
