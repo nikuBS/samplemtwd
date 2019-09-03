@@ -35530,3 +35530,48 @@ body.apphome .section-box {
 .tod-fee-cont .list li .button-point {color: #178bce;text-decoration: underline; }
 .tod-fee-cont .list li .f-type {font-size: 1rem;}
 .tod-fee-cont .list li .g-type {color: #959595;}
+
+/* 190826 [OP002-3417] 모바일앱 통합공유데이터 사용량/잔여량 표기 개선 */
+.tod-desc-btop {border-top:1px solid #f2f2f2;}
+
+/* 190828 [OP002-3416] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 */
+.data-used{width: 100vw; margin-left: calc(-50vw + 50%);}
+.data-used .chart-wrap.bar2.kjs0 .data-arry .data-ul > li > dl > dd .v {padding-bottom:0.281rem;}
+.data-used .chart-wrap.bar2.kjs1 .data-arry .data-ul > li > dl > dd .bar{background-color:#13bd6f;}
+.data-used .chart-wrap.bar2.kjs1 .data-arry .data-ul > li > dl > dd .v {color:#198d5b;padding-bottom:0.281rem;}
+.data-used .chart-wrap.bar2.kjs2 .data-arry .data-ul > li > dl > dd .bar{background-color:#ffb11a;}
+.data-used .chart-wrap.bar2.kjs2 .data-arry .data-ul > li > dl > dd .v{color:#d77c1a;padding-bottom:0.281rem;}
+.data-used .chart-wrap.bar2.kjs1 .data-arry .data-ul > li.average .bar{background: url(/img/chart/pattern10.gif) repeat 0 0;}
+.data-used .chart-wrap.bar2.kjs2 .data-arry .data-ul > li.average .bar{background: url(/img/chart/pattern11.gif) repeat 0 0;}
+.paymentCon.dayTimeUse{overflow:hidden;}
+.graph_chart_vert{height:13rem;text-align:center;background:url(/img/chart/bg_bar2.gif) repeat-x 0 9.688rem;}
+.graph_chart_vert ul{display:inline-block;*display:inline;*zoom:1;padding-top:1.875rem;text-align:center}
+.graph_chart_vert ul:after{content:'';display:block;clear:both}
+.graph_chart_vert ul li{float:left;position:relative;}
+.graph_chart_vert ul li+li{margin-left:3.438rem}
+.graph_chart_vert ul li:after{content:'';display:block;clear:both}
+.graph_chart_vert ul li strong{position:absolute;top:-1.875rem;left:50%;width:4.375rem;height:1.875rem;margin-left:-2.188rem;font-size:0.75rem;font-weight:bold;}
+.graph_chart_vert ul li span.barInfo{display:block;position:absolute;left:50%;bottom:-1.563rem;width:4.375rem;margin-left:-2.188rem;color:#959595;font-size:0.813rem;text-align:center}
+.graph_chart_vert ul li .graphBar{position:relative;display:block;width:1.313rem; height:7.813rem; font-size:0.813rem; border-bottom:1px solid #ccc;background:#f7f7f7;border-radius: 0.19rem 0.19rem 0 0;}
+.graph_chart_vert ul li .currBar{position:absolute;width:100%;height:1.875rem;bottom:0;left:0;border-radius: 0.19rem 0.19rem 0 0;}
+.graph_chart_vert ul li.time1 .currBar{background:#57549e;}
+.graph_chart_vert ul li.time2 .currBar{background:#57637f}
+.graph_chart_vert ul li.time3 .currBar{background:#f76252;}
+.graph_chart_vert ul li.time4 .currBar{background:#59bcf5;}
+.graph_chart_vert ul li.time1 strong{color:#57549e;}
+.graph_chart_vert ul li.time2 strong{color:#57637f;}
+.graph_chart_vert ul li.time3 strong{color:#f76252;}
+.graph_chart_vert ul li.time4 strong{color:#59bcf5;}
+.graph_chart_hoz {padding-bottom:1.875rem;}
+.graph_chart_hoz .graph_day{padding:1.25rem 0;background:url(/img/chart/bg_bar.gif) repeat-y 1.5rem 0}
+.graph_chart_hoz .graph_day li{*zoom:1;padding:0 2.5rem 0 1.875rem;}
+.graph_chart_hoz .graph_day li+li{margin-top:1.75rem}
+.graph_chart_hoz .graph_day li:after{content:'';display:block;clear:both}
+.graph_chart_hoz .graph_day li strong{position:absolute; right:1rem; margin-top:-0.688rem;font-size:0.75rem; font-weight:bold;color:#f76252;line-height:0.625rem}
+.graph_chart_hoz .graph_day li .graphBar{display:block;background: #f7f7f7;width:100%; height: 0.75rem; border-radius: 0 0.75rem 0.75rem 0; margin-left:-0.313rem;}
+.graph_chart_hoz .graph_day li .currBar{display:block;height: 0.75rem; border-color:#e5e5e5; background:#f76252; border-radius: 0 0.75rem 0.75rem 0; border-left-color: #f76252;}
+.graph_chart_hoz .graph_day li .barInfo{float:left;width:1.25rem;font-size:0.813rem;color:#959595;margin-top:-0.313rem;margin-left:-1.875rem;}
+
+/* 190830 [OP002-3282] 다른 페이지를 찾고 계신가요 영역 개선 */
+.pg-link-list + .pg-link-list {border-top:1px solid #d7d7d7; margin-top:1rem; padding-top:0.5rem;}
+.pg-link-list li.tod-linktype2 .stxt {display:inline-block; padding-left:0.125rem; font-size:0.75rem; color:#858585;}

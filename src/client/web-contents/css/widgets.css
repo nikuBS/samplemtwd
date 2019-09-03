@@ -1861,7 +1861,7 @@ li.checkbox.type01 {
 .tod-plan-wrap .tod-bar-chart-wrap{padding:0.625rem 0.9375rem 1.5625rem; position:relative;}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list{width:100%; position:relative}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period{height:2.1875rem; display:flex; align-items: center; flex-wrap:nowrap}
-.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.875rem; color:#858585; line-height:2.1875rem }
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.875rem; color:#858585; line-height:1rem}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-wrap{height:100%; width:calc(100% - 1.125rem); width:-webkit-calc(100% - 1.125rem); display:flex; align-items: center; border-bottom:0.0625rem solid #e6e6e6; padding-right:1.25rem; box-sizing:border-box}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-chart-hoz{width:100%}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent{display:inline-block; background:#f7f7f8; border-radius:0.3125rem; width:2.6875rem; height:1.4375rem; line-height:1.4375rem; text-align:center; color:#666; font-size:0.8125rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.2); font-weight:700; position:absolute; right:-1.1875rem; bottom:0.5rem; box-sizing:border-box; margin-top:0.0625rem }
