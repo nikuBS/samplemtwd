@@ -168,6 +168,8 @@ class MytDataSubmainController extends TwViewController {
         data.isWireLess = true;
       }
 
+      // 다른 페이지를 찾고 계신가요 통계코드 추가
+      this.getXtEid(data);
       const reqBkdArr = new Array();
 
       // 충전,선물 이력 건수 조회 후 이력이 있는 경우에만 해당 이력 API 호출(성능 개선건 반영)[DV001-13474]
@@ -899,6 +901,41 @@ class MytDataSubmainController extends TwViewController {
         res.render('myt-data.submain.html', { data });
       }
     }
+  }
+
+  /**
+   * 다른 페이지를 찾고 계신가요 통계코드 생성
+   * @param data
+   */
+  private getXtEid(data: any): any {
+    const eid = {
+      hotdata     : 'CMMA_A3_B10-6',    // 실시간 잔여량
+      guide       : 'CMMA_A3_B10-7',    // 요금 안내서
+      hotbill     : 'CMMA_A3_B10-8',    // 실시간 이용요금
+      additions   : 'CMMA_A3_B10-9',    // 나의 부가서비스
+      roaming     : 'CMMA_A3_B10-10',   // 나의 T로밍 이용현황
+      benefit     : 'CMMA_A3_B10-11',   // 혜택/할인
+      mobileplan  : 'CMMA_A3_B10-12'    // 요금제
+    };
+
+    if (data.svcInfo.svcAttrCd === SVC_ATTR_E.PPS) {
+      Object.assign(eid, {
+        guide       : 'CMMA_A3_B10-13',   // 요금 안내서
+        myplan      : 'CMMA_A3_B10-14',   // 나의 요금제
+        additions   : 'CMMA_A3_B10-15',   // 나의 부가서비스
+        roaming     : 'CMMA_A3_B10-16'    // 나의 T로밍 이용현황
+      });
+    } else if (!data.isWireLess) {
+      Object.assign(eid, {
+        guide         : 'CMMA_A3_B10-17',   // 요금 안내서
+        myplan        : 'CMMA_A3_B10-18',   // 나의 요금제
+        combinations  : 'CMMA_A3_B10-19',   // 결합상품
+        combiDiscount : 'CMMA_A3_B10-20',   // 결합할인
+        wireplan      : 'CMMA_A3_B10-21'    // 인터넷/전화/IPTV
+      });
+    }
+
+    data.xtEid = eid;
   }
 }
 

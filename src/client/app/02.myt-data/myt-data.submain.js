@@ -898,7 +898,7 @@ Tw.MyTDataSubMain.prototype = {
    * @param {Object} event
    */
   _onOtherPages: function (event) {
-    var $target = $(event.target);
+    var $target = $(event.currentTarget);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
   },
