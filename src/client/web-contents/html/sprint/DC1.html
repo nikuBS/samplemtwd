@@ -40,7 +40,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#contents-area">본문 바로가기</a></li><!-- 190822 웹접근성 수정_01 -->
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -63,6 +63,9 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
+			<!-- 190822 웹접근성 수정_02 -->
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+			<!-- //190822 웹접근성 수정_02 -->
             <div class="container">
 				<hr class="cont-sp type1" aria-hidden="true" />
 				<!-- .cont-box -->
@@ -70,7 +73,7 @@
 					<ul class="date-graph-list b-line">
 						<li>
 							<!-- 2019.02.10 링크 영역 확대 -->
-							<a class="r-btn" href="" aria-labelledby="aria-comp-bt1">
+							<a class="r-btn" href=""><!-- 190822 웹접근성 수정_03 (aria-labelledby 속성 삭제) -->
 								<div class="left">
 									<!-- .donut-chart.small -->
 									<div class="donut-chart small">
@@ -101,7 +104,7 @@
 								</div>
 								<!--접근성 수정-->
 								<div class="cont">
-									<span class="txt1" id="aria-comp-bt1">나의 데이터</span>
+									<span class="txt1">나의 데이터</span><!-- 190822 웹접근성 수정_04 (aria-labelledby와 매칭된 id값 삭제) -->
 									<div class="date">
 										<span class="remain"><strong>36.7GB</strong> 남음</span>
 									</div>
@@ -137,7 +140,7 @@
                     <ul class="date-graph-list">
 						<li>
 							<!-- 2019.02.10 링크 영역 확대 -->
-							<a class="r-btn" href="" aria-labelledby="aria-comp-bt2">
+							<a class="r-btn" href=""><!-- 190822 웹접근성 수정_03 (aria-labelledby 속성 삭제) -->
 								<div class="left">
 									<!-- .donut-chart.small -->
 									<div class="donut-chart small">
@@ -158,7 +161,7 @@
 								</div>
 								<!--접근성 수정-->
 								<div class="cont">
-									<span class="txt1" id="aria-comp-bt2">영상/부가통화 300분</span>
+									<span class="txt1">영상/부가통화 300분</span><!-- 190822 웹접근성 수정_04 (aria-labelledby와 매칭된 id값 삭제) -->
 									<div class="date">
 										<span class="remain"><strong>3시간 24분</strong> 남음</span>
 									</div>
@@ -168,7 +171,7 @@
 						</li>
 						<li>
 							<!-- 2019.02.10 링크 영역 확대 -->
-							<a class="r-btn" href="" aria-labelledby="aria-comp-bt3">
+							<a class="r-btn" href=""><!-- 190822 웹접근성 수정_03 (aria-labelledby 속성 삭제) -->
 								<div class="left">
 									<!-- .donut-chart.small -->
 									<div class="donut-chart small">
@@ -189,7 +192,7 @@
 								</div>
 								<!--접근성 수정-->
 								<div class="cont">
-									<span class="txt1" id="aria-comp-bt3">SMS/MMS/ⓜ메신저 기본제공</span>
+									<span class="txt1">SMS/MMS/ⓜ메신저 기본제공</span><!-- 190822 웹접근성 수정_04 (aria-labelledby와 매칭된 id값 삭제) -->
 									<div class="date">
 										<span class="remain"><strong>56건</strong> 남음</span>
 									</div>
@@ -345,17 +348,47 @@
 				<!--// .cont-box -->
 				<hr class="cont-sp type1" aria-hidden="true" />
 
+				<!-- 190828 [OP002-3416] 수정_01 --> 
 				<!-- .cont-box -->
-                <div class="cont-box pb0">
-					<!-- 2019.02.20 패딩 간격 수정 pb20 -> pb0 -->
-					<div class="ti-caption-type01 pb0">
+                <div class="cont-box nogaps-btm">
+                	<!-- 2019.02.20 패딩 간격 수정 pb20 -> pb0 -->
+					<div class="ti-caption-type01 pb14">
 						<!--접근성 수정-->
 						<h2 class="tit">최근 데이터 사용량 <button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">최근 데이터 사용량 tip</span></i></button></h2>
 						<!-- //접근성 수정-->
 					</div>
-                    <div class="chart-wrap kjs0"></div>
+                    <!-- .component -->
+                    <div class="component data-used">
+                        <div class="component-box tabs">
+                            <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker tab-multiline">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#tab1-tab">데이터</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#tab2-tab">음성</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="#tab3-tab">문자</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
+                                            <div class="chart-wrap kjs0"></div>
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+                                            <div class="chart-wrap kjs1"></div>
+                                        </li>
+                                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3" aria-selected="false">                      
+                                            <div class="chart-wrap kjs2"></div>              
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .component -->
                 </div>
                 <!--// .cont-box -->
+                <!-- //190828 [OP002-3416] 수정_01 --> 
+
 				<hr class="cont-sp type1" aria-hidden="true" />
 
 				<div class="cont-box nogaps">
@@ -462,36 +495,38 @@
                 </div>
                 <!--// .cont-box -->
 
+				<!-- 190830 [OP002-3282] 수정_01 -->
+				<!-- Case1 - 휴대폰, T Pocket-fi, T Login -->
 				<div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                     <ul class="pg-link-list">
-                        <li>
-                            <button>
-                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 요금제
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 부가서비스
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i class="icon-charge-40"><span class="blind"></span></i>나의  요금 &gt; 요금안내서
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 실시간 이용요금
-                            </button>
-                        </li>
-                        <li>
-                            <button>
-                                <i class="icon-roaming-40"><span class="blind"></span></i>T로밍 &gt; 나의 로밍 이용현황
-                            </button>
-                        </li>
+                        <li><button><i class="icon-history-40"></i>나의 데이터/통화 &gt; 실시간 잔여량</button></li>
+                        <li><button><i class="icon-charge-40"></i>나의 요금 &gt; 요금안내서</button></li>
+                        <li><button><i class="icon-charge-40"></i>나의 요금 &gt; 실시간 이용요금</button></li>
+                        <li><button><i class="icon-my-40"></i>나의 가입정보 &gt; 나의 부가서비스</button></li>
+                        <li><button><i class="icon-roaming-40"></i>T로밍 &gt; 나의 T로밍 이용현황</button></li>
+                    </ul>
+					<ul class="pg-link-list">
+                        <li class="tod-linktype2"><button><i class="icon-discount-40"></i>혜택/할인 <span class="stxt">고객님을 위한 다양한 혜택을 확인하세요</span></button></li>
+                        <li class="tod-linktype2"><button><i class="icon-price-plan-40"></i>요금제 <span class="stxt">내게 맞는 요금제로 변경하세요</span></button></li>
                     </ul>
                 </div>
+				<!-- //Case1 - 휴대폰, T Pocket-fi, T Login -->
+				<!-- Case3 - 인터넷/전화/IPTV -->
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li><button><i class="icon-charge-40"></i>나의 요금 &gt; 요금안내서</button></li>
+                        <li><button><i class="icon-my-40"></i>나의 가입정보 &gt; 나의 요금제</button></li>
+                        <li><button><i class="icon-my-40"></i>나의 가입정보 &gt; 결합상품</button></li>
+                        <li><button><i class="icon-discount-40"></i>혜택/할인 &gt; 결합할인</button></li>
+                    </ul>
+					<ul class="pg-link-list">
+                        <li class="tod-linktype2"><button><i class="icon-internet-40"></i>인터넷/전화/IPTV <span class="stxt">내게 맞는 결합상품을 확인하세요</span></button></li>
+                    </ul>
+                </div>
+				<!-- //Case3 - 인터넷/전화/IPTV -->
+				<!-- //190830 [OP002-3282] 수정_01 -->
 
 			</div>
         </div>
@@ -512,22 +547,65 @@
         target:'.kjs0',
         type : 'bar2',
         average : true,
+        average_place : 'right',
         unit : 'gb', // gb, 원, time
         data_arry : [
-            {
-                t : '8월',
-                v : 100
-            },
-            {
-                t : '7월',
-                v : 50
-            },
-            {
-                t : '5월',
-                v : 100
-            }
-        ]
-       });
+	            {
+	                t : '5월',
+	                v : 100
+	            },
+	            {
+	                t : '6월',
+	                v : 50
+	            },
+	            {
+	                t : '7월',
+	                v : 100
+	            }
+        	]
+       	});
+	    $('body').chart2({
+		    target:'.kjs1',
+		    type : 'bar2',
+		    average : true,
+		    average_place : 'right',
+		    unit : 'time', // gb, 원, time
+		    data_arry : [
+		        {
+		            t : '5월',
+		            v : '78:03'
+		        },
+		        {
+		            t : '6월',
+		            v : '30:00'
+		        },
+		        {
+		            t : '7월',
+		            v : '68:59'
+		        }
+		    ]
+		});
+	    $('body').chart2({
+	        target:'.kjs2',
+	        type : 'bar2',
+	        average : true,
+	        average_place : 'right',
+	        unit : '건', // gb, 원, time,건
+	        data_arry : [
+	            {            	
+	                t : '5월',
+	                v : 58
+	            },
+	            {           	
+	                t : '6월',
+	                v : 20
+	            },
+	            {
+	                t : '7월',
+	                v : 60
+	            }
+	        ]
+	    });
     </script>
 </body>
 
