@@ -17,6 +17,7 @@ Tw.MyTFareSubMain = function (params) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this.data = params.data;
+  this._menuId = this.data.pageInfo.menuId;
   this._rendered();
   this._bindEvent();
   this._initialize();

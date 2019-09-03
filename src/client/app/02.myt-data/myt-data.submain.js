@@ -22,6 +22,7 @@ Tw.MyTDataSubMain = function (params) {
   this._eParam = this.data.eParam;
   this._svcMgmtNum = this.data.svcInfo.svcMgmtNum;
   this._tidLanding = new Tw.TidLandingComponent();
+  this._menuId = this.data.pageInfo.menuId;
   this._rendered();
   this._bindEvent();
   this._initialize();
