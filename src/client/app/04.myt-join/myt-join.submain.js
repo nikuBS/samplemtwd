@@ -17,6 +17,7 @@ Tw.MyTJoinSubMain = function (params) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._nicknamePopup = new Tw.NicknameComponent();
   this.data = params.data;
+  this._menuId = this.data.pageInfo.menuId;
   this._rendered();
   this._bindEvent();
   this._initialize();
