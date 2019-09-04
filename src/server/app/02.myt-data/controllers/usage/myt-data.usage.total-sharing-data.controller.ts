@@ -36,20 +36,27 @@ class MyTDataUsageTotalSharingData extends TwViewController {
 
       const usageData = MyTHelper.parseCellPhoneUsageData(balancesResp.result, svcInfo);
       let defaultData;
+
       if (usageData.hasDefaultData) {
         defaultData = usageData.data[0];
+        // 무한 요금제인지 확인하는 함수
         this.convShowData(defaultData);
+        // [OP002-3465] [DV001-6336] 기본제공 데이터 존재 && 가족모아데이터가 가능한 상품(T/O플랜 등)이 아닌 경우에 대한 총량 추가
+        defaultData.showTotal = MyTHelper.convFormat(defaultData.total || 0, defaultData.unit);
+        // NOTE: "MyTHelper.convFormatWithUnit"는 "MyTHelper.convFormat"의 Array 처리와 같기 때문에, 굳이 함수를 다시 호출하지 않는다.
+        // defaultData.showTotals = MyTHelper.convFormatWithUnit(defaultData.total || 0, defaultData.unit);
+        // defaultData.showTotals = [defaultData.showTotal];
+      } else {
+        defaultData = {};
       }
 
       const option = {
-        defaultData: defaultData || {},
+        balanceAddOns: balanceAddOnsResp.result,
+        defaultData, // : defaultData || {},
         svcInfo: svcInfo || {},
         pageInfo: pageInfo || {}
       };
-
-      option['balanceAddOns'] = balanceAddOnsResp.result;
       res.render('usage/myt-data.usage.total-sharing-data.html', option);
-
     }, (resp) => {
       return this.renderErr(res, resp, svcInfo, pageInfo);
     });
