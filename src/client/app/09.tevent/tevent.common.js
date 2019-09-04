@@ -46,7 +46,7 @@ Tw.TeventCommon.prototype = {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
     .done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00) {
-        if(res.result !== null) { // 로그인된 경우
+        if(res.result !== null && res.result.loginType !== 'S') { // 로그인되어 있고, 간편로그인이 아닌 경우
           this._isLogined = true;
 
           this._userId = res.result.userId;
