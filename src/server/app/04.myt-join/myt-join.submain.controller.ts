@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG, MYT_SUSPEND_STATE_EXCLUDE } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE, MYT_SUSPEND_MILITARY_RECEIVE_CD } from '../../types/bff.type';
+import {SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE, MYT_SUSPEND_MILITARY_RECEIVE_CD, SVC_ATTR_E, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 
@@ -270,6 +270,8 @@ class MyTJoinSubmainController extends TwViewController {
       //   }
       // }
 
+      // 다른 페이지를 찾고 계신가요 통계코드 추가
+      this.getXtEid(data);
       res.render('myt-join.submain.html', { data });
     });
   }
@@ -604,6 +606,42 @@ class MyTJoinSubmainController extends TwViewController {
         }
       }
     });
+  }
+
+  /**
+   * 다른 페이지를 찾고 계신가요 통계코드 생성
+   * @param data
+   */
+  private getXtEid(data: any): any {
+    const eid = {
+      guide         : 'CMMA_A3_B13-11',    // 요금 안내서
+      hotdata       : 'CMMA_A3_B13-12',    // 실시간 잔여량
+      myBenefit     : 'CMMA_A3_B13-13',    // 나의 혜택/할인
+      combiDiscount : 'CMMA_A3_B13-14',    // 결합할인
+      alarm         : 'CMMA_A3_B13-15',    // 요금제 변경 가능일 알림
+      manage        : 'CMMA_A3_B13-16',    // 회원정보
+      certificates  : 'CMMA_A3_B13-17'     // 공인인증센터 *Mobile web 비노출
+    };
+
+    if (data.svcInfo.svcAttrCd === SVC_ATTR_E.PPS) {
+      Object.assign(eid, {
+        manage      : 'CMMA_A3_B13-18',  // 회원정보
+        benefit     : 'CMMA_A3_B13-19',  // 혜택/할인
+        mobileplan  : 'CMMA_A3_B13-20'   // 요금제
+      });
+    } else if (SVC_CDGROUP.WIRE.indexOf(data.svcInfo.svcAttrCd) > -1) {
+      Object.assign(eid, {
+        discountrefund  : 'CMMA_A3_B13-21',  // 할인 반환금 조회
+        gifts           : 'CMMA_A3_B13-22',  // 사은품 조회
+        guide           : 'CMMA_A3_B13-23',  // 요금 안내서
+        combiDiscount   : 'CMMA_A3_B13-24',  // 결합할인
+        serviceArea     : 'CMMA_A3_B13-25',  // 서비스 가능지역 조회
+        manage          : 'CMMA_A3_B13-26',  // 회원정보
+        wireplan        : 'CMMA_A3_B13-27'   // 인터넷/전화/IPTV
+      });
+    }
+
+    data.xtEid = eid;
   }
 }
 

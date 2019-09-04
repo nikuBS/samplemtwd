@@ -123,38 +123,85 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                 <ul class="pg-link-list" data-id="other-pages">
+                    <%
+                        const eid = data.xtEid;
+                        <!--선불폰이 아닌경우-->
+                        if( 'P'.indexOf(data.svcInfo.svcGr) === -1) {
+                    %>
                     <li>
-                        <button data-href="/myt-join/myplancombine/infodiscount">
-                            <i class="icon-my-40"><span class="blind"></span></i>나의 가입정보 &gt; 약정할인 / 기기상환 정보
+                        <button data-href="/myt-fare/info/history" data-xt_eid="<%=eid.billHistory%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 > 요금납부내역 조회
+                        </button>
+                    </li>
+                    <%}%>
+                    <!--휴대폰/포켓파이/티로그인 인 경우-->
+                    <% if( ['M1', 'M3', 'M4'].indexOf(data.svcInfo.svcAttrCd) > -1) {%>
+                    <li>
+                        <button data-href="/myt-data/hotdata" data-xt_eid="<%=eid.hotdata%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-history-40"><span class="blind"></span></i>나의 데이터/통화 > 실시간 잔여량
                         </button>
                     </li>
                     <li>
-                        <button data-href="/benefit/submain/discount">
-                            <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 요금할인
+                        <button data-href="/myt-join/myplancombine/infodiscount" data-xt_eid="<%=eid.infodiscount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-my-40"><span class="blind"></span></i>나의 가입정보 &gt; 약정할인/기기상환 정보
                         </button>
                     </li>
                     <li>
-                        <button data-href="/benefit/my">
-                            <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 나의 할인 혜택
+                        <button data-href="/benefit/my" data-xt_eid="<%=eid.myBenefit%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 나의 혜택/할인
                         </button>
                     </li>
-                    <% if( ['P', 'S'].indexOf(data.svcInfo.svcGr) === -1) {%>
+                    <!--PPS or 유선인경우-->
+                    <%} if ('M2' === data.svcInfo.svcAttrCd || data.svcInfo.svcAttrCd.startsWith('S')) {%>
                     <li>
-                        <button data-href="/benefit/my">
-                            <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 나의 포인트 혜택
-                        </button>
-                    </li>
-                    <% } %>
-                    <li>
-                        <button data-href="/myt-join/myplan">
+                        <button data-href="/myt-join/myplan" data-xt_eid="<%=eid.myplan%>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-my-40"><span class="blind"></span></i>나의 가입정보 &gt; 나의 요금제
                         </button>
                     </li>
                     <li>
-                        <button data-href="/myt-join/additions">
+                        <button data-href="/myt-join/additions" data-xt_eid="<%=eid.additions%>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-my-40"><span class="blind"></span></i>나의 가입정보 &gt; 나의 부가서비스
                         </button>
                     </li>
+                    <!--유선이 아닌경우-->
+                    <%} if(!data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <li>
+                        <button data-href="/benefit/submain/discount" data-xt_eid="<%=eid.discount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 요금할인
+                        </button>
+                    </li>
+                    <!--유선인 경우-->
+                    <%} if(data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <li>
+                        <button data-href="/benefit/submain/combinations" data-xt_eid="<%=eid.combiDiscount%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-discount-40"><span class="blind"></span></i>혜택/할인 &gt; 결합할인
+                        </button>
+                    </li>
+                    <%}%>
+                </ul>
+                <ul class="pg-link-list" data-id="other-pages">
+                    <!--휴대폰/포켓파이/티로그인 인 경우-->
+                    <% if( ['M1', 'M3', 'M4'].indexOf(data.svcInfo.svcAttrCd) > -1) {%>
+                    <li class="tod-linktype2">
+                        <button data-href="/myt-join/submain" data-xt_eid="<%=eid.join%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-my-40"></i>나의 가입정보 <span class="stxt">나의 요금제/부가서비스를 확인하세요</span>
+                        </button>
+                    </li>
+                    <!--유선이 아닌경우-->
+                    <%} if(!data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <li class="tod-linktype2">
+                        <button data-href="/product/mobileplan" data-xt_eid="<%=eid.mobileplan%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-price-plan-40"></i>요금제 <span class="stxt">내게 맞는 요금제로 변경하세요</span>
+                        </button>
+                    </li>
+                    <!--유선인 경우-->
+                    <%} if(data.svcInfo.svcAttrCd.startsWith('S')) {%>
+                    <li class="tod-linktype2">
+                        <button data-href="/product/wireplan" data-xt_eid="<%=eid.wireplan%>" data-xt_csid="NO" data-xt_action="BC">
+                            <i class="icon-internet-40"></i>인터넷/전화/IPTV <span class="stxt">내게 맞는 결합상품을 확인하세요</span>
+                        </button>
+                    </li>
+                    <%}%>
                 </ul>
             </div>
             <!--// .cont-box -->
