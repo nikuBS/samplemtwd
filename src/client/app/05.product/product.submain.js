@@ -7,6 +7,7 @@
 Tw.ProductSubmain = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._menuId = menuId;
@@ -154,7 +155,7 @@ Tw.ProductSubmain.prototype = {
   },
 
   _successAgreeAdRcv: function() {
-    Tw.CommonHelper.toast(Tw.TOAST_TEXT.RCV_AGREE);
+    this._popupService.toast(Tw.TOAST_TEXT.RCV_AGREE);
     this.$adRcvAgreeBanner.addClass('none');
   },
 
