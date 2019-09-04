@@ -122,12 +122,14 @@
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                <%
+                    const eid = data.xtEid;
+                    <!--PPS 회선이 아닌경우는 현재 영역 비노출-->
+                    if(data.type !== 1){
+                %>
                 <ul class="pg-link-list" data-id="other-pages">
                     <!--유선(인터넷,집전화,IPTV)-->
-                    <%
-                        const eid = data.xtEid;
-                        if (data.type === 2){
-                    %>
+                    <% if (data.type === 2){ %>
                     <li>
                         <a href="/myt-join/submain/wire/discountrefund" data-xt_eid="<%=eid.discountrefund%>" data-xt_csid="NO" data-xt_action="BC">
                             <i class="icon-my-40"></i>나의 가입정보 &gt; 할인 반환금 조회
@@ -182,6 +184,7 @@
                     </li>
                     <%}%>
                 </ul>
+                <%}%>
                 <ul class="pg-link-list" data-id="other-pages">
                     <li class="tod-linktype2">
                         <a href="/common/member/manage" data-xt_eid="<%=eid.manage%>" data-xt_csid="NO" data-xt_action="BC">
