@@ -203,7 +203,7 @@ Tw.BenefitIndex.prototype = {
         $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);
-        Tw.CommonHelper.toast(toastMsg);
+        Tw.Popup.toast(toastMsg);
       })
       .fail($.proxy(this._onFail, this));
   },
@@ -219,7 +219,7 @@ Tw.BenefitIndex.prototype = {
         $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
         // Tw.CommonHelper.toast(toastMsg);
-        Tw.CommonHelper.toast(toastMsg);
+        Tw.Popup.toast(toastMsg);
       })
       .fail(function (err) {
         Tw.Error(err.code, err.msg).pop();
