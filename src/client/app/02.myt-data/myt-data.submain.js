@@ -517,23 +517,57 @@ Tw.MyTDataSubMain.prototype = {
 
   /**
    * @function
+   * @desc data,voice,sms 총사용량 체크
+   */
+  __chkData: function (id) {
+
+    var isData = false;
+    var dataUse = this.data.pattern.data;
+    var voiceUse = this.data.pattern.voice;
+    var smsUse = this.data.pattern.sms;
+    var idx;
+    var data;
+
+    if( id === '1') {
+      for (idx = dataUse.length - 1; idx >= 0; idx--) {
+        data = parseInt(dataUse[idx].totalUsage, 10);
+      }
+    } else if(id === '2') {
+      for (idx = voiceUse.length - 1; idx >= 0; idx--) {
+        data = parseInt(voiceUse[idx].totalUsage, 10);
+      }
+    } else if(id === '3') {
+      for (idx = smsUse.length - 1; idx >= 0; idx--) {
+        data = parseInt(smsUse[idx].totalUsage, 10);
+      }
+    }
+
+    if (data > 0) {
+      isData = true;
+    }
+
+    return isData;
+
+  },
+
+  /**
+   * @function
    * @desc 차트생성
    */
   _initPatternChart: function () {
 
     // OP002-2921 [myT] (W-1907-136-01) [myT] 나의 데이터통화 페이지 내 최근 데이터 사용량(그래프) 개선 OP002-3438 Start
 
-    if (this.data.pattern.data && this.data.pattern.data.length > 0) {
-      this.__tabDefaultFocused(1);
-    } else if (this.data.pattern.voice && this.data.pattern.voice.length > 0) {
-      this.__tabDefaultFocused(2);
-    } else if (this.data.pattern.sms && this.data.pattern.sms.length > 0) {
-      this.__tabDefaultFocused(3);
+    if (this.__chkData('1')) {
+      this.__tabDefaultFocused('1');
+    } else if (this.__chkData('2')) {
+      this.__tabDefaultFocused('2');
+    } else if (this.__chkData('3')) {
+      this.__tabDefaultFocused('3');
     }
 
-    if ( (this.data.pattern.data && this.data.pattern.data.length > 0) ||
-         (this.data.pattern.voice && this.data.pattern.voice.length > 0) ||
-         (this.data.pattern.sms && this.data.pattern.sms.length > 0)) {
+    if ( (this.__chkData('1')) || (this.__chkData('2')) || (this.__chkData('3')))
+    {
 
       var data_unit,
           voice_unit,
@@ -546,7 +580,7 @@ Tw.MyTDataSubMain.prototype = {
       var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
 
       // 데이터
-      if (this.data.pattern.data.length > 0) {
+      if (this.__chkData('1')) {
 
           data_unit = Tw.CHART_UNIT.GB;
           data = this.data.pattern.data;
@@ -566,12 +600,12 @@ Tw.MyTDataSubMain.prototype = {
               }
             }
           }
-      } else if (this.data.pattern.data.length < 1) {
+      } else if (!this.__chkData('1')) {
         this.$container.find('.fe-tab-data').hide().siblings().removeClass('none');
       }
 
       // 음성
-      if ( this.data.pattern.voice.length > 0 ) {
+      if (this.__chkData('2')) {
         //this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
         voice_unit = Tw.CHART_UNIT.TIME;
         data = this.data.pattern.voice;
@@ -587,12 +621,12 @@ Tw.MyTDataSubMain.prototype = {
             });
           }
         }
-      } else if (this.data.pattern.voice.length < 1) {
+      } else if (!this.__chkData('2')) {
         this.$container.find('.fe-tab-voice').hide().siblings().removeClass('none');
       }
 
       // 문자
-      if ( this.data.pattern.sms.length > 0 ) {
+      if (this.__chkData('3')) {
         //this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
         sms_unit = Tw.CHART_UNIT.SMS;
         data = this.data.pattern.sms;
@@ -608,7 +642,7 @@ Tw.MyTDataSubMain.prototype = {
             });
           }
         }
-      } else if (this.data.pattern.sms.length < 1) {
+      } else if (!this.__chkData('3')) {
         this.$container.find('.fe-tab-sms').hide().siblings().removeClass('none');
       }
 
