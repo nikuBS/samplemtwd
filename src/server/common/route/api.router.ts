@@ -20,7 +20,6 @@ import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/r
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
 import CommonHelper from '../../utils/common.helper';
-import { isEmpty } from 'rxjs/operators';
 
 const os = require('os');
 
