@@ -41,3 +41,5 @@ export const TID_LOGOUT = {
   LOGIN_FAIL: 1,
   EXCEED_FAIL: 2
 };
+
+export const VALID_SVCGR_CHARS = ['A', 'B', 'C', 'E', 'D', 'P', 'S', 'N'];
