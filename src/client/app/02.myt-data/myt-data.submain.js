@@ -133,21 +133,14 @@ Tw.MyTDataSubMain.prototype = {
    * @param event
    */
   _changeTab: function (event) {
-
     var $target = $(event.currentTarget);
 
     if ($target.attr('id') === 'tab1') {
-      this.$container.find('.fe-tab-data').show();
-      this.$container.find('.fe-tab-voice').hide();
-      this.$container.find('.fe-tab-sms').hide();
+      this.__tabDefaultFocused(1);
     } else if ($target.attr('id') === 'tab2') {
-      this.$container.find('.fe-tab-data').hide();
-      this.$container.find('.fe-tab-voice').show();
-      this.$container.find('.fe-tab-sms').hide();
+      this.__tabDefaultFocused(2);
     } else {
-      this.$container.find('.fe-tab-data').hide();
-      this.$container.find('.fe-tab-voice').hide();
-      this.$container.find('.fe-tab-sms').show();
+      this.__tabDefaultFocused(3);
     }
 
   },
