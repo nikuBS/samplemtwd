@@ -15,7 +15,7 @@ import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
-import { COOKIE_KEY } from '../../types/common.type';
+import { COOKIE_KEY, VALID_SVCGR_CHARS } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
 import EnvHelper from '../../utils/env.helper';
@@ -823,6 +823,10 @@ class ApiRouter {
     } else {
       const svcMgmtNum = svcInfo.svcMgmtNum;
       const svcGr = svcInfo.svcGr;
+      // Admin 등록되지 않은 svcGr 입력 탐지 로그
+      if ( VALID_SVCGR_CHARS.indexOf(svcGr) === -1 ) {
+        this.logger.error(this, 'Invalid svcGr :', svcGr + '\n', svcInfo);
+      }
       this.redisService.getDataTos(REDIS_TOS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
           if ( resp.code === API_CODE.REDIS_SUCCESS ) {
