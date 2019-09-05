@@ -97,6 +97,9 @@ Tw.TNotifyComponent.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
         .done(function () {
           $popupContainer.find('.fe-banner-area').hide(); // 배너 닫기
+          var toastMsg = '수신동의가 완료되었습니다.';
+          // Tw.CommonHelper.toast(toastMsg);        
+          Tw.Popup.toast(toastMsg);
         })
         .fail($.proxy(function (err) {
           Tw.Error(err.code, err.msg).pop();
