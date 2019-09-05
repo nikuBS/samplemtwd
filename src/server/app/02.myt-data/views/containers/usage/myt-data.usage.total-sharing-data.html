@@ -63,8 +63,11 @@
                         </li>
                     </ul>
                 </div>
+                <!--
+                <%_ // API가 필요한 영역으로 판정. 보류함 _%>
                 <p class="con-txt0 pb12 pt12 tod-desc-btop">고객님의 요금제는 <strong><%= svcInfo.prodNm %></strong>이며, 기본제공데이터
                     <%_
+                    // 해당 요금제의 기본제공데이터량
                     if (defaultData.isUnlimited) {
                     _%>
                     <strong>무제한</strong>
@@ -77,6 +80,8 @@
                     _%>
                     중 <br>
                     <%_
+                    // 해당 요금제의 통합공유데이터 기본제공량 (주의! 요금제가 무제한이라도, 정해진 가능치가 따로 있음)
+                    // "5GX 프라임"인 경우, 사용은 무제한, 공유 가능은 30GB이다.
                     if (defaultData.tOPlanSharedData) {
                     _%>
                     <strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong>
@@ -95,6 +100,7 @@
                     }
                     _%>
                     를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.</p>
+                    -->
             </div>
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
