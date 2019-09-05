@@ -833,6 +833,10 @@ class ApiRouter {
           }
         })
         .subscribe((resp) => {
+          // 응답값 조회 실패한 svcGr 입력 탐지 로그
+          if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
+            this.logger.error(this, 'Invalid svcGr :', svcGr + ', ' + resp.msg, '\n', svcInfo);
+          }
           resp.result.enableEdit = 'Y';
           return res.json(resp);
         });

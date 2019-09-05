@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- 팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+    <!-- #skip_navigation -->
+    <!-- <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div> -->
+    <!--// #skip_navigation -->
+    <!-- //팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 기본배경색은 white, 회색배경색은 .nobg --><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap"><!-- 보더라인 없을 경우 .noborder -->
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>나에게 꼭 맞는 요금제</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz"><!-- border 없을 경우 .noborder / 배경색 없을 경우 .bgnone -->
+                        <ul class="tod-plan-bene-list">
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico01.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">VIP 멤버십</dt>
+                                        <dd class="bene-desc">
+                                            연 72,000원 상당의 연 6회
+                                            <span class="bene-desc-sub">CU, 스타벅스, 영화 무료 혜택 제공</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico02.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">POOQ 앤 데이터</dt>
+                                        <dd class="bene-desc">
+                                            연 118,000원 상당의 POOQ 월정액
+                                            <span class="bene-desc-sub">무료영화, 공중파 VOD, 실시간 TV</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">FLO 앤 데이터</dt>
+                                        <dd class="bene-desc">
+                                            연 94,800원 상당의 FLO 월정액
+                                            <span class="bene-desc-sub">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico04.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">휴대폰 분실/파손</dt>
+                                        <dd class="bene-desc">
+                                            연 67,200원 상당의 휴대폰 단말보험
+                                            <span class="bene-desc-sub">최신 휴대폰 교체 지원 및 분실/파손 보험</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico05.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">데이터</dt>
+                                        <dd class="bene-desc">
+                                            월 데이터 100GB 제공
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">FLO 앤 데이터</dt>
+                                        <dd class="bene-desc">
+                                            연 47,400원 상당의 FLO 월정액 할인
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico06.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">데이터</dt>
+                                        <dd class="bene-desc">
+                                            월 118,000원 상당의 심야 데이터 제공
+                                            <span class="bene-desc-sub">00~07시 데이터 4배</span>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="bene-wrap">
+                                    <span class="ico"><img src="/img/t_myPlan/plan_bene_ico07.png" alt=""></span>
+                                    <dl class="description-wrap">
+                                        <dt class="bene-tit">안심옵션</dt>
+                                        <dd class="bene-desc">
+                                            연 66,000원 상당의 안심옵션 무료제공
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //.cont-box -->
+                </div>
+                <!-- 하단 fixed 버튼 (.container 영역 바깥에 위치해야 함) -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li><button class="btn-floating btn-style2">닫기</button></li>
+                    </ul>
+                </div>
+                <!-- //하단 fixed 버튼 (.container 영역 바깥에 위치해야 함) -->
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    
+    </div>
+</body>
+</html>

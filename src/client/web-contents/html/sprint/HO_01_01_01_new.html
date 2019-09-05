@@ -164,21 +164,11 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="period basic">
-                                        <span class="month">기본<br>제공</span>
-                                        <div class="bar-wrap">
-                                            <div class="bar-chart-hoz">
-                                                <span class="data-bar" style="width:50%"> 
-                                                    <span class="basic-num"><span class="tod-blind ">데이터 기본제공량</span>150GB</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    <!-- 190830 [OP002-2006] period basic 삭제01  -->
                                </ul>
                             </div>
                             <ul class="gh-comment">
-                                <li class="blue article">데이터 기본제공량</li>
-                                <li class="red article">사용량</li>
+                                <li class="red article"><span class="article-txt">나의 데이터 전체 사용량</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
@@ -194,7 +184,7 @@
                                     <li class="pie-item">
                                         <!-- 그래프 -->
                                         <div class="donut-chart small">
-                                            <span class="user">전체고객</span>
+                                            <span class="user">다른고객</span> <!-- 190902 [OP002-2006] 수정01 -->
                                             <div class="donut-chart-area">
                                                 <div class="c100 p40"><!-- .p0 ~ 100 -->
                                                     <div class="blue"><!-- red, blue, green, yellow, comet -->
@@ -211,7 +201,7 @@
                                             </div>
                                         </div>
                                         <!-- //그래프 -->
-                                        <p class="amount">200MB</p>
+                                        <p class="amount">25%</p> <!-- //190830 [OP002-2006] 수정01  -->
                                     </li>
                                     <li class="pie-item">
                                         <!-- 그래프 -->
@@ -233,14 +223,16 @@
                                             </div>
                                         </div>
                                         <!-- //그래프 -->
-                                        <p class="amount me">350MB</p>
+                                        <p class="amount me">55%</p> <!-- //190830 [OP002-2006] 수정02  -->
                                     </li>
                                 </ul>
                             </div>
+                            <!-- 190830 [OP002-2006] 수정03  -->
                             <ul class="gh-comment">
-                                <li class="blue article">전체고객 평균 사용량</li>
-                                <li class="red article">나의 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른고객의 전체 데이터 대비 심야데이터 평균 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 심야데이터 평균 사용량</span></li>
                             </ul>
+                            <!-- //190830 [OP002-2006] 수정03  -->
                         </div>
                     </div><!-- //plan-item -->
                     <div class="plan-item">
@@ -262,10 +254,12 @@
                         </p>
                         <div class="plan-img-wrap">
                             <img src="/img/t_myPlan/item_plan_img02.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
+                            <!-- 190830 [OP002-2006] 수정04  -->
                             <ul class="gh-comment">
-                                <li class="blue article">전체고객 평균 사용량</li>
-                                <li class="red article">나의 사용량</li>
+                                <li class="blue article line-block"><span class="article-txt">추천요금제로 변경 시</span></li>
+                                <li class="red article line-block"><span class="article-txt">현재 유지 시</span></li>
                             </ul>
+                            <!-- //190830 [OP002-2006] 수정04  -->
                         </div>
                     </div><!-- //plan-item -->
                     <div class="plan-item">
@@ -296,33 +290,35 @@
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left type02 blue" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part left type02 blue" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">데이터 사용량</span>
+                                                <span class="item">다른 고객</span>  <!-- //190830 [OP002-2006] 수정05  -->
                                                 87%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part right type02" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">영상 서비스</span>
+                                                <span class="item">나</span> <!-- //190830 [OP002-2006] 수정06  -->
                                                 51%
                                             </span>
                                         </div>
                                     </div>
                                </div>
                            </div>
+                           <!-- 190830 [OP002-2006] 수정07 -->
                             <ul class="gh-comment">
-                                <li class="blue article">전체 데이터 사용량</li>
-                                <li class="red article">영상 서비스 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른 고객의 전체 데이터 대비 영상 데이터 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 영상 데이터 사용량</span></li>
                             </ul>
+                            <!-- //190830 [OP002-2006] 수정07  -->
                         </div>
                     </div><!-- //plan-item -->
                 </div><!-- //cont-box -->
@@ -347,33 +343,35 @@
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left blue type02" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part left blue type02" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">데이터 사용량</span>
+                                                <span class="item">다른 고객</span><!-- //190830 [OP002-2006] 수정08  -->
                                                 87%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part right type02" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">음악 서비스</span>
+                                                <span class="item">나</span> <!-- //190830 [OP002-2006] 수정09  -->
                                                 32%
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!-- 190830 [OP002-2006] 수정10 -->
                             <ul class="gh-comment">
-                                <li class="blue article">전체 데이터 사용량</li>
-                                <li class="red article">음악 서비스 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른 고객의 전체 데이터 대비 음악 데이터 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 음악 데이터 사용량</span></li>
                             </ul>
+                            <!-- //190830 [OP002-2006] 수정10 -->
                         </div>
                     </div><!-- //plan-item -->
                     <div class="plan-item">
@@ -383,10 +381,12 @@
                         </p>
                         <div class="plan-img-wrap">
                             <img src="/img/t_myPlan/item_plan_img04.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(FLO 앤 테이터 월 최대할인 -7,900원) ">
+                            <!-- 190830 [OP002-2006] 수정11 -->
                             <ul class="gh-comment">
-                                <li class="blue article">추천요금제로  변경 시</li>
-                                <li class="red article">현재 유지 시</li>
+                                <li class="blue article line-block"><span class="article-txt">추천요금제로 변경 시</span></li>
+                                <li class="red article line-block"><span class="article-txt">현재 유지 시</span></li>
                             </ul>
+                            <!-- //190830 [OP002-2006] 수정11 -->
                         </div>
                     </div><!-- //plan-item -->
                     <div class="plan-item">
@@ -432,14 +432,14 @@
                                 <div class="widget">
                                     <div class="widget-box chart" data-type="pie">
                                         <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="300" height="300"  viewbox="0 0 600 600"  ><!--  -->
-                                            <g style=""> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
+                                            <g> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
                                                 <path class="chart-arc" fill="#FF6563" data-percent="0.57" data-offset-height="0"></path>
                                                 <path class="chart-arc" fill="#7E77C5" data-percent="0.06" data-offset-height="-30"></path>
                                                 <path class="chart-arc" fill="#08C2BA" data-percent="0.15" data-offset-height="-20"></path>
                                                 <path class="chart-arc" fill="#1DA6F8" data-percent="0.22" data-offset-height="-10"></path>
                                             </g>
                                             <g>
-                                                <text class="chart-txt" fill="white" style="font-size:30px;"><tspan>57%</tspan></text>
+                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan>57%</tspan></text>
                                                 <text class="chart-txt" fill="white" style="font-size:21px;">6%</text>
                                                 <text class="chart-txt" fill="white" style="font-size:24px;">15%</text>
                                                 <text class="chart-txt" fill="white" style="font-size:27px;">22%</text>
@@ -458,12 +458,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- 190830 [OP002-2006] 수정12 -->
                             <ul class="gh-comment membership">
-                                <li class="red article best"><span class="bene-item">CGV</span><span class="price">10,200원</span></li>
-                                <li class="blue article"><span class="bene-item">멜론</span><span class="price">10,200원</span></li>
-                                <li class="green article"><span class="bene-item">씨유</span><span class="price">100,200원</span></li>
-                                <li class="purple article"><span class="bene-item">기타</span><span class="price">10,200원</span></li>
-                            </ul>
+                                <li class="red article best"><span class="article-txt"><span class="bene-item">CGV</span><span class="price">10,200원</span></span></li>
+                                <li class="blue article"><span class="article-txt"><span class="bene-item">멜론</span><span class="price">10,200원</span></span></li>
+                                <li class="green article"><span class="article-txt"><span class="bene-item">씨유</span><span class="price">100,200원</span></span></li>
+                                <li class="purple article"><span class="article-txt"><span class="bene-item">기타</span><span class="price">10,200원</span></span></li>
+                            </ul><!-- //190830 [OP002-2006] 수정12 -->
                         </div>
                     </div><!-- //plan-item -->
                 </div><!-- //cont-box -->
@@ -472,7 +473,7 @@
                     <div class="plan-item" >
                         <p class="comment">
                             <span class="cate">함께쓰기</span>
-                            고객님이 이용중이신 <br><em class="em">아이패드</em>(010-88**-55**)는 추천요금제로 <em class="em">함께쓰기</em>가 가능해요.
+                            고객님, 추천요금제는 무료로 <em class="em">함께쓰기</em>가 가능해요. <!-- //190830 [OP002-2006] 수정13 -->
                         </p>
                         <div class="plan-img-wrap">
                             <img src="/img/t_myPlan/item_plan_img08.png" alt=" ">

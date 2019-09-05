@@ -7,16 +7,59 @@
 <!-- .cont-box -->
 <hr class="cont-sp type1" aria-hidden="true" data-id="pattern_empty"/>
 
-<div class="cont-box pb0" data-id="pattern_chart" style="min-height: 150px;">
+<!-- 190828 [OP002-3416] 수정_01 -->
+<!-- .cont-box -->
+<div class="cont-box nogaps-btm" data-id="pattern_chart">
     <!-- 2019.02.20 패딩 간격 수정 pb20 -> pb0 -->
-    <div class="ti-caption-type01 pb0">
-        <h2 class="tit">
-            <span></span>
+    <div class="ti-caption-type01 pb14">
+        <!--접근성 수정-->
+        <h2 class="tit">최근 사용량
             <button type="button" class="btn-tip" title="최근데이터사용량" id="TC000023" page-id="DC1" aria-haspopup="true">
                 <i class="icon-badge-tip"><span class="blind">DC1_tip_03</span></i>
             </button>
         </h2>
+        <!-- //접근성 수정-->
     </div>
-    <div class="chart-wrap pattern">
+    <!-- .component -->
+    <div class="component data-used">
+        <div class="component-box tabs">
+            <div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+                <div class="tab-linker tab-multiline">
+                    <ul class="fe-tab-wrap" role="tablist">
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="#tab1-tab">데이터</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#tab2-tab">음성</a></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="#tab3-tab">문자</a></li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
+                            <div class="chart-wrap kjs0 fe-tab-data fe-tab-body"></div>
+                            <div class="contents-empty none fe-data-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">최근 사용량 내역이 없습니다.</p>
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+                            <div class="chart-wrap kjs1 fe-tab-voice fe-tab-body"></div>
+                            <div class="contents-empty none fe-data-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">최근 사용량 내역이 없습니다.</p>
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3" aria-selected="false">
+                            <div class="chart-wrap kjs2 fe-tab-sms fe-tab-body"></div>
+                            <div class="contents-empty none fe-data-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">최근 사용량 내역이 없습니다.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+    <!--// .component -->
 </div>
+<!--// .cont-box -->
+<!-- //190828 [OP002-3416] 수정_01 -->

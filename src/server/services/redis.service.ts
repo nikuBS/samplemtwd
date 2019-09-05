@@ -197,7 +197,7 @@ class RedisService {
         const resp = {
           code: API_CODE.REDIS_SUCCESS,
           msg: 'success',
-          result: null
+          result: {}
         };
 
         if ( FormatHelper.isEmpty(reply) ) {

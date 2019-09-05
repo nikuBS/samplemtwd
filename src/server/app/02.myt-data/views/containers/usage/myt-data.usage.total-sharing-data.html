@@ -21,96 +21,118 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-
-
             <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- 190826 [OP002-3417] 수정_01 -->
+            <div class="cont-box pb0">
+                <!-- [OP002-3465] -->
+                <div class="data-list-type1">
+                    <ul class="type1">
+                        <li>
+                            <span class="stit">공유한 데이터<button type="button" class="btn-tip" title="공유한 데이터" id="TC000078" page-id="<%- pageInfo.menuId %>"  aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></span>
+                            <%_
+                            if (defaultData.tOPlanSharedData) {
+                            _%>
+                            <span class="use"><strong class="tod-txcolor8"><%- defaultData.tOPlanSharedData.showUsed.data %><%- defaultData.tOPlanSharedData.showUsed.unit %></strong></span>
+                            <%_
+                            } else if (defaultData.sharedData) { // .showUsed로 처리가 가능할 것으로 보이는데
+                            _%>
+                            <span class="use"><strong class="tod-txcolor8" id="sharedDataUsed"></strong></span>
+                            <%_
+                            }
+                            _%>
+                        </li>
+                        <li>
+                            <span class="stit">공유가능 데이터<button type="button" class="btn-tip" title="공유가능 데이터" id="TC000079" page-id="<%- pageInfo.menuId %>"  aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">TIP</span></i></button></span>
+                            <%_
+                            if (defaultData.tOPlanSharedData) {
+                            _%>
+                            <span class="use"><strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong></span>
+                            <%_
+                            } else if (defaultData.sharedData) {
+                                if (defaultData.isUnlimited) {
+                            _%>
+                            <span class="use"><strong>무제한</strong></span>
+                            <%_
+                                } else if (defaultData.showRemained) {
+                            _%>
+                            <span class="use"><strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong></span>
+                            <%_
+                                }
+                            }
+                            _%>
+                        </li>
+                    </ul>
+                </div>
+                <!--
+                <%_ // API가 필요한 영역으로 판정. 보류함 _%>
+                <p class="con-txt0 pb12 pt12 tod-desc-btop">고객님의 요금제는 <strong><%= svcInfo.prodNm %></strong>이며, 기본제공데이터
+                    <%_
+                    // 해당 요금제의 기본제공데이터량
+                    if (defaultData.isUnlimited) {
+                    _%>
+                    <strong>무제한</strong>
+                    <%_
+                    } else if (defaultData.showRemained) {
+                    _%>
+                    <strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong>
+                    <%_
+                    }
+                    _%>
+                    중 <br>
+                    <%_
+                    // 해당 요금제의 통합공유데이터 기본제공량 (주의! 요금제가 무제한이라도, 정해진 가능치가 따로 있음)
+                    // "5GX 프라임"인 경우, 사용은 무제한, 공유 가능은 30GB이다.
+                    if (defaultData.tOPlanSharedData) {
+                    _%>
+                    <strong><%- defaultData.tOPlanSharedData.showRemained.data %><%- defaultData.tOPlanSharedData.showRemained.unit %></strong>
+                    <%_
+                    } else if (defaultData.sharedData) {
+                        if (defaultData.isUnlimited) {
+                            // 이 부분 확인이 필요할 듯 "무제한를... 공유?"
+                    _%>
+                    <strong>무제한</strong>
+                    <%_
+                        } else if (defaultData.showRemained) {
+                    _%>
+                    <strong><%- defaultData.showRemained.data %><%- defaultData.showRemained.unit %></strong>
+                    <%_
+                        }
+                    }
+                    _%>
+                    를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.</p>
+                    -->
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
-                <div class="cont-box pb0 pl0 pr0">
-                    <div class="ti-caption-type01 pb20">
-                        <h2 class="tit">총 공유량</h2>
-                        <p class="num">
-                            <% if (defaultData.tOPlanSharedData) { %>
-                                <em><%= defaultData.tOPlanSharedData.showUsed.data %><%= defaultData.tOPlanSharedData.showUsed.unit %></em>
-                            <% } else if (defaultData.sharedData) { %>
-                                <em id="sharedDataUsed"></em>
-                            <% } %>
-                        </p>
-                    </div>
-                </div>
                 <ul class="full-link-list type1">
                     <li class="fe-tfamily-sharing" style="display: none;" aria-hidden="true">
                         <button>
-                                <span class="inner">
-                                    <span class="tit">T가족모아데이터</span>
-                                    <span class="text fe-data-txt">
-                                    </span>
-                                </span>
+                            <span class="inner">
+                                <span class="tit">T가족모아데이터</span>
+                                <span class="text fe-data-txt"></span>
+                            </span>
                         </button>
                     </li>
                     <li class="fe-data-gift">
                         <button>
-                                <span class="inner">
-                                    <span class="tit">T끼리 데이터 선물하기</span>
-                                    <span class="text fe-data-txt">
-                                    </span>
-                                </span>
+                            <span class="inner">
+                                <span class="tit">T끼리 데이터 선물하기</span>
+                                <span class="text fe-data-txt"></span>
+                            </span>
                         </button>
                     </li>
                     <li class="fe-data-sharing">
                         <button>
-                                <span class="inner">
-                                    <span class="tit">데이터 함께쓰기</span>
-                                    <span class="text fe-data-txt">
-                                        <% if (balanceAddOns.dataSharing === 'N') { %>
-                                            가입하기
-                                        <% } %>
-                                    </span>
-                                </span>
+                            <span class="inner">
+                                <span class="tit">데이터 함께쓰기</span>
+                                <span class="text fe-data-txt"><%= balanceAddOns.dataSharing === 'N' ? '가입하기' : '' %></span>
+                            </span>
                         </button>
                     </li>
                 </ul>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
-
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="ti-caption-type01 type1">
-                    <h3 class="tit">통합공유 데이터란?</h3>
-                </div>
-                <% if (defaultData) { %>
-                <p class="total-share-data">
-                    고객님의 요금제는 <strong><%= defaultData.prodNm %></strong>이며,
-                    기본제공데이터
-                    <strong>
-                        <% if (defaultData.isUnlimited) { %>
-                            무제한
-                        <% } else { %>
-                            <% if (defaultData.showRemained) { %>
-                                <%= defaultData.showRemained.data %><%= defaultData.showRemained.unit %>
-                            <% } %>
-                        <% } %>
-                    </strong> 중 <br>
-                    <strong>
-                        <% if (defaultData.tOPlanSharedData) { %>
-                            <%= defaultData.tOPlanSharedData.showRemained.data %><%= defaultData.tOPlanSharedData.showRemained.unit %>
-                        <% } else if (defaultData.sharedData) { %>
-                            <% if (defaultData.isUnlimited) { %>
-                                무제한
-                            <% } else { %>
-                                <% if (defaultData.showRemained) { %>
-                                  <%= defaultData.showRemained.data %><%= defaultData.showRemained.unit %>
-                                <% } %>
-                            <% } %>
-                        <% } %>
-                    </strong>
-                    를 위의 방법으로 SK텔레콤 고객과 공유하실 수 있습니다.
-                </p>
-                <% } %>
-            </div>
-            <!--// .cont-box -->
-
         </div>
     </div>
     <!--// #contents -->

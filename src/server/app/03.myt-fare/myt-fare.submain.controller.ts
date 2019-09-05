@@ -13,7 +13,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import {API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR, SESSION_CMD} from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import { SVC_ATTR_NAME } from '../../types/bff.type';
+import {SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 class MyTFareSubmainController extends TwViewController {
@@ -46,6 +46,9 @@ class MyTFareSubmainController extends TwViewController {
       }
     }*/
     // this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
+
+    // 다른 페이지를 찾고 계신가요 통계코드 추가
+    this.getXtEid(data);
     if ( data.svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
       this._requestPPS(req, res, data);
@@ -530,6 +533,41 @@ class MyTFareSubmainController extends TwViewController {
     }
 
     return parseInt(str.replace(/,/g, ''), 10);
+  }
+
+  /**
+   * 다른 페이지를 찾고 계신가요 통계코드 생성
+   * @param data
+   */
+  private getXtEid(data: any): any {
+    const eid = {
+      billHistory   : 'CMMA_A3_B12-12',    // 요금납부내역 조회
+      hotdata       : 'CMMA_A3_B12-13',    // 실시간 잔여량
+      infodiscount  : 'CMMA_A3_B12-14',    // 약정할인/기기상환 정보
+      myBenefit       : 'CMMA_A3_B12-15',    // 나의 혜택/할인
+      discount      : 'CMMA_A3_B12-16',    // 요금할인
+      join          : 'CMMA_A3_B12-17',    // 나의 가입정보
+      mobileplan    : 'CMMA_A3_B12-18'     // 요금제
+    };
+
+    if (data.svcInfo.svcAttrCd === SVC_ATTR_E.PPS) {
+      Object.assign(eid, {
+        myplan      : 'CMMA_A3_B12-19',  // 나의 요금제
+        additions   : 'CMMA_A3_B12-20',  // 나의 부가서비스
+        discount    : 'CMMA_A3_B12-21',  // 요금할인
+        mobileplan  : 'CMMA_A3_B12-22'   // 요금제
+      });
+    } else if (SVC_CDGROUP.WIRE.indexOf(data.svcInfo.svcAttrCd) > -1) {
+      Object.assign(eid, {
+        billHistory   : 'CMMA_A3_B12-23',  // 요금납부내역 조회
+        myplan        : 'CMMA_A3_B12-24',  // 나의 요금제
+        additions     : 'CMMA_A3_B12-25',  // 나의 부가서비스
+        combiDiscount : 'CMMA_A3_B12-26',  // 결합할인
+        wireplan      : 'CMMA_A3_B12-27'   // 인터넷/전화/IPTV
+      });
+    }
+
+    data.xtEid = eid;
   }
 }
 

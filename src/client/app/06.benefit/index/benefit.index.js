@@ -28,6 +28,7 @@ Tw.BenefitIndex = function (rootEl, svcInfo, bpcpServiceId, eParam) {
 
   this._isAdult = false;
   this._userId = null;
+  this._loginType = '';
 
   this._init();
 };
@@ -43,7 +44,7 @@ Tw.BenefitIndex.prototype = {
     this._registerHelper();
 
     // 환경변수 로딩이 완료된 이후 혜택할인 관련 API 호출되도록 수정
-    if( !Tw.Environment.init ) {
+    if (!Tw.Environment.init) {
       $(window).on(Tw.INIT_COMPLETE, $.proxy(this._allRequest, this));
     } else {
       this._allRequest();
@@ -58,7 +59,7 @@ Tw.BenefitIndex.prototype = {
    * @function
    * @desc BPCP 최초 호출
    */
-  _initBpcp: function() {
+  _initBpcp: function () {
     this._bpcpService.open(this._bpcpServiceId);
     history.replaceState(null, document.title, location.origin + '/benefit/submain/participation');
   },
@@ -104,7 +105,7 @@ Tw.BenefitIndex.prototype = {
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
     this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
-    
+
     this.$container.on('change', '.fe-agree', $.proxy(this._modAgree, this));  // T world 광고정보수신동의 활성화 처리
     this.$container.on('click', '.fe-pop-agree', $.proxy(this._modAgreePop, this));  // T world 광고정보수신동의 활성화 처리 (팝업)
     this.$container.on('click', '.fe-show-detail', $.proxy(this._showAgreeDetail, this));   // T world 광고정보수신동의 약관 상세보기
@@ -123,26 +124,31 @@ Tw.BenefitIndex.prototype = {
     if (!this._isAbleDiscountInfoReq()) {
       this._switchTab(this._convertPathToCategory());
     } else {
-      this._userId = this._svcInfo.userId;
+      this._loginType = this._svcInfo.loginType;
 
-      // 성인인지 여부 (만 14세 이상) 체크
-      this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
-      .done($.proxy(function (res) {
-        if (res.code === Tw.API_CODE.CODE_00) {
-          if (res.result.age >= 14) {
-            this._isAdult = true;
-          }
-        } else {
-          // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
-          // Tw.Error(res.code, res.msg).pop();
-          // return;
-        }
-      }, this))
-      .fail(function (err) {
-        // BFF_08_0080 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
-        // Tw.Error(err.code, err.msg).pop();
-        // return;
-      });
+      // 간편로그인인 경우 만 나이 계산 API (BFF_08_0080) 호출 시 BE 단에 에러로그 발생하므로 예외 처리
+      if (this._loginType !== 'S') {
+        this._userId = this._svcInfo.userId;
+
+        // 성인인지 여부 (만 14세 이상) 체크
+        this._apiService.request(Tw.API_CMD.BFF_08_0080, {})
+          .done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+              if (res.result.age >= 14) {
+                this._isAdult = true;
+              }
+            } else {
+              // BFF_08_0080 API 호출 시 API code 가 정상으로 넘어오지 않더라도 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+              // Tw.Error(res.code, res.msg).pop();
+              // return;
+            }
+          }, this))
+          .fail(function (err) {
+            // BFF_08_0080 API 호출 오류가 발생했을 시 뒷단 로직에 영향을 주지 않도록 별도 에러처리 없이 return.
+            // Tw.Error(err.code, err.msg).pop();
+            // return;
+          });
+      }
 
       this._reqMyBenefitDiscountInfo();
     }
@@ -175,14 +181,14 @@ Tw.BenefitIndex.prototype = {
     var _benefitId = $(e.currentTarget).data('benefitId');
     if (['TW20000014', 'TW20000018'].indexOf(_benefitId) > -1) {
       var externalUrl = {
-        TW20000014 : Tw.OUTLINK.BECOME_ANYTHING,
-        TW20000018 : Tw.OUTLINK.T_HONORS_CLUB
+        TW20000014: Tw.OUTLINK.BECOME_ANYTHING,
+        TW20000018: Tw.OUTLINK.T_HONORS_CLUB
       };
       this._alertCharge(externalUrl[_benefitId]);
     } else if ('TW20000019' === _benefitId) {
       this._bpcpService.open(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
     } else {
-      location.href= '/product/callplan?prod_id=' + _benefitId;
+      location.href = '/product/callplan?prod_id=' + _benefitId;
     }
   },
 
@@ -191,8 +197,8 @@ Tw.BenefitIndex.prototype = {
    * @desc T world 광고정보수신동의 활성화 처리
    */
   _modAgree: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
-      .done(function (){
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn: 'Y' })
+      .done(function () {
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
@@ -207,8 +213,8 @@ Tw.BenefitIndex.prototype = {
    * @desc T world 광고정보수신동의 활성화 처리 (팝업)
    */
   _modAgreePop: function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0022, {twdAdRcvAgreeYn: 'Y'})
-      .done(function (){
+    this._apiService.request(Tw.API_CMD.BFF_03_0022, { twdAdRcvAgreeYn: 'Y' })
+      .done(function () {
         $('#agree-banner-area').hide();
         $('#agree-popup-area').hide();
         var toastMsg = '수신동의가 완료되었습니다.';
@@ -258,10 +264,10 @@ Tw.BenefitIndex.prototype = {
    * @desc T world 광고정보수신동의 팝업 하루동안 보지않기 처리
    */
   _hideTwdAdRcvAgreePop: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._setLocalStorage('hideTwdAdRcvAgreePop', this._userId, 365*10);
+    if (Tw.BrowserHelper.isApp()) {
+      this._setLocalStorage('hideTwdAdRcvAgreePop', this._userId, 365 * 10);
     } else {
-      this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365*10);
+      this._setCookie('hideTwdAdRcvAgreePop', this._userId, 365 * 10);
     }
 
     $('#agree-popup-area').hide();
@@ -274,8 +280,8 @@ Tw.BenefitIndex.prototype = {
   _setLocalStorage: function (key, userId, expiredays) {
     var keyName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
     var today = new Date();
-    
-    today.setDate( today.getDate() + expiredays );
+
+    today.setDate(today.getDate() + expiredays);
 
     Tw.CommonHelper.setLocalStorage(keyName, JSON.stringify({
       // expireTime: Tw.DateHelper.convDateFormat(today)
@@ -290,8 +296,8 @@ Tw.BenefitIndex.prototype = {
   _setCookie: function (key, userId, expiredays) {
     var cookieName = key + '_' + userId;  // ex) hideTwdAdRcvAgreePop_shindh
     var today = new Date();
-    
-    today.setDate( today.getDate() + expiredays );
+
+    today.setDate(today.getDate() + expiredays);
 
     document.cookie = cookieName + '=Y; path=/; expires=' + today.toGMTString() + ';';
   },
@@ -310,9 +316,9 @@ Tw.BenefitIndex.prototype = {
     if (!Tw.BrowserHelper.isApp()) {
       Tw.CommonHelper.openUrlExternal(_href);
     } else {
-      Tw.CommonHelper.showDataCharge($.proxy(function(){
+      Tw.CommonHelper.showDataCharge($.proxy(function () {
         Tw.CommonHelper.openUrlExternal(_href);
-      },this));
+      }, this));
     }
   },
 
@@ -397,7 +403,7 @@ Tw.BenefitIndex.prototype = {
       }
     });
 
-    this.$showDiscountBtn.toggleClass('disabled',isDisabled).prop('disabled', isDisabled);
+    this.$showDiscountBtn.toggleClass('disabled', isDisabled).prop('disabled', isDisabled);
   },
 
   /**
@@ -414,8 +420,8 @@ Tw.BenefitIndex.prototype = {
    * @desc 핸들바스 파일에서 사용할 펑션 등록
    */
   _registerHelper: function () {
-    Handlebars.registerHelper('numComma', function(val){
-      return Tw.FormatHelper.isEmpty(val) ? val:Tw.FormatHelper.addComma(val.toString());
+    Handlebars.registerHelper('numComma', function (val) {
+      return Tw.FormatHelper.isEmpty(val) ? val : Tw.FormatHelper.addComma(val.toString());
     });
     Handlebars.registerHelper('isEmpty', function (val, options) {
       return Tw.FormatHelper.isEmpty(val) ? options.fn(this) : options.inverse(this);
@@ -423,10 +429,10 @@ Tw.BenefitIndex.prototype = {
     Handlebars.registerHelper('isNotEmpty', function (val, options) {
       return !Tw.FormatHelper.isEmpty(val) ? options.fn(this) : options.inverse(this);
     });
-    Handlebars.registerHelper('cdn', function(val){
+    Handlebars.registerHelper('cdn', function (val) {
       return Tw.Environment.cdn + val;
     });
-    Handlebars.registerHelper('isNaN', function(val, options){
+    Handlebars.registerHelper('isNaN', function (val, options) {
       return isNaN(val) ? options.fn(this) : options.inverse(this);
     });
   },
@@ -437,7 +443,7 @@ Tw.BenefitIndex.prototype = {
    * @returns {boolean}
    */
   _isAbleDiscountInfoReq: function () {
-    return !(!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1);
+    return !(!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1', 'S2', 'S3'].indexOf(this._svcInfo.svcAttrCd) > -1);
   },
 
   /**
@@ -446,19 +452,36 @@ Tw.BenefitIndex.prototype = {
    */
   _reqMyBenefitDiscountInfo: function () {
     this.$benefitArea.removeClass('none');
-    this._apiService.requestArray([
-      {command: Tw.API_CMD.BFF_11_0001},
-      {command: Tw.API_CMD.BFF_07_0041},
-      {command: Tw.API_CMD.BFF_05_0132},
-      {command: Tw.API_CMD.BFF_05_0175},
-      {command: Tw.API_CMD.BFF_05_0120},
-      {command: Tw.API_CMD.BFF_05_0115},
-      {command: Tw.API_CMD.BFF_05_0106},
-      {command: Tw.API_CMD.BFF_05_0094},
-      {command: Tw.API_CMD.BFF_05_0196},
-      {command: Tw.API_CMD.BFF_03_0021} // T world 동의여부 조회
-    ]).done($.proxy(this._successMyBenefitDiscountInfo, this))
-      .fail($.proxy(this._onFail, this));
+    // 간편로그인인 경우 하기 3개 API 호출 시 BE 단에 에러로그 발생하므로 아예 호출하지 않도록 수정
+    // - 멤버십 등급 조회 API (BFF_11_0001)
+    // - 쿠키즈팅 포인트 정보 조회 API (BFF_05_0115)
+    // - T world 동의여부 조회 API (BFF_03_0021))
+    if (this._loginType === 'S') {
+      this._apiService.requestArray([
+        { command: Tw.API_CMD.BFF_07_0041 }, // /bypass/core-bill/v1/ocbcard-info-check-show
+        { command: Tw.API_CMD.BFF_05_0132 }, // /bypass/core-bill/v1/rainbow-points
+        { command: Tw.API_CMD.BFF_05_0175 }, // /bypass/core-bill/v1/no-contract-plan-points
+        { command: Tw.API_CMD.BFF_05_0120 }, // /bypass/core-bill/v1/military-service-points
+        { command: Tw.API_CMD.BFF_05_0106 }, // /bypass/core-modification/v1/bill-discounts
+        { command: Tw.API_CMD.BFF_05_0094 }, // /bypass/core-modification/v1/combination-discounts
+        { command: Tw.API_CMD.BFF_05_0196 } // /bypass/core-modification/v1/loyalty-benefits
+      ]).done($.proxy(this._successMyBenefitDiscountInfo, this))
+        .fail($.proxy(this._onFail, this));
+    } else {
+      this._apiService.requestArray([
+        { command: Tw.API_CMD.BFF_07_0041 },
+        { command: Tw.API_CMD.BFF_05_0132 },
+        { command: Tw.API_CMD.BFF_05_0175 },
+        { command: Tw.API_CMD.BFF_05_0120 },
+        { command: Tw.API_CMD.BFF_05_0106 },
+        { command: Tw.API_CMD.BFF_05_0094 },
+        { command: Tw.API_CMD.BFF_05_0196 },
+        { command: Tw.API_CMD.BFF_11_0001 }, // /bypass/core-membership/v1/card/home
+        { command: Tw.API_CMD.BFF_05_0115 }, // /bypass/core-bill/v1/cookiz-ting-points
+        { command: Tw.API_CMD.BFF_03_0021 } // /bypass/core-auth/v1/tworld-term-agreements
+      ]).done($.proxy(this._successMyBenefitDiscountInfo, this))
+        .fail($.proxy(this._onFail, this));
+    }
   },
 
   /**
@@ -482,85 +505,97 @@ Tw.BenefitIndex.prototype = {
     };
 
     var resp;
-    // 멤버십 등급
-    if ((resp = arguments[0]).code === Tw.API_CODE.CODE_00) {
-      data.membership = Tw.MEMBERSHIP_GRADE[resp.result.mbrGrCd];
-    }
+
+    // 간편로그인인 경우 멤버십 등급 조회 API 호출하지 않으므로 아래 로직도 수행하지 않도록 처리
+    if (this._loginType !== 'S') {
+      // 멤버십 등급
+      if ((resp = arguments[7]).code === Tw.API_CODE.CODE_00) {
+        data.membership = Tw.MEMBERSHIP_GRADE[resp.result.mbrGrCd];
+      }
+    }    
 
     // 포인트 합산 시작
-    countPoint(arguments[1], ['availPt', 'availTPt']); // OK 캐쉬백 & T 포인트
-    countPoint(arguments[2], ['usblPoint']); // 레인보우포인트
-    countPoint(arguments[3], ['muPoint']); // 무약정 플랜
-    countPoint(arguments[4], ['usblPoint']); // 현역플랜 포인트
-    countPoint(arguments[5], ['usblPoint']); // 쿠키즈팅 포인트
+    countPoint(arguments[0], ['availPt', 'availTPt']); // OK 캐쉬백 & T 포인트
+    countPoint(arguments[1], ['usblPoint']); // 레인보우포인트
+    countPoint(arguments[2], ['muPoint']); // 무약정 플랜
+    countPoint(arguments[3], ['usblPoint']); // 현역플랜 포인트
+
+    // 간편로그인인 경우 쿠키즈팅 포인트 정보 조회 API 호출하지 않으므로 아래 로직도 수행하지 않도록 처리
+    if (this._loginType !== 'S') {
+      countPoint(arguments[8], ['usblPoint']); // 쿠키즈팅 포인트
+    }
     // 포인트 합산 시작 끝
 
     // 혜택.할인 건수 시작
-    if ((resp = arguments[6]).code === Tw.API_CODE.CODE_00) {
+    if ((resp = arguments[4]).code === Tw.API_CODE.CODE_00) {
       // 요금할인
       data.benefitDiscount += resp.result.priceAgrmtList.length;
       // 요금할인- 복지고객
       data.benefitDiscount += (resp.result.wlfCustDcList && resp.result.wlfCustDcList.length > 0) ? resp.result.wlfCustDcList.length : 0;
     }
     // 결합할인
-    if ((resp = arguments[7]).code === Tw.API_CODE.CODE_00) {
+    if ((resp = arguments[5]).code === Tw.API_CODE.CODE_00) {
       var resp1 = resp.result;
       if (resp1.prodNm.trim() !== '') {
         data.benefitDiscount += Number(resp1.etcCnt) + 1;
       }
     }
     // 장기가입 혜택 건수
-    if ((resp = arguments[8]).code === Tw.API_CODE.CODE_00) {
+    if ((resp = arguments[6]).code === Tw.API_CODE.CODE_00) {
       // 장기가입 쿠폰
       data.benefitDiscount += (resp.result.benfList && resp.result.benfList.length > 0) ? 1 : 0;
       // 장기가입 요금
       data.benefitDiscount += (resp.result.dcList && resp.result.dcList.length > 0) ? resp.result.dcList.length : 0;
     }
     // 혜택.할인 건수 끝
-    // T world 광고성 정보 수신동의(선택) 여부
-    if ((resp = arguments[9]).code === Tw.API_CODE.CODE_00) {
-      if (resp.result.twdAdRcvAgreeYn === 'N') {
 
-        if ( this._isAdult ) {
-          $('#agree-banner-area').show();
-          // 모바일App
-          if ( Tw.BrowserHelper.isApp() ) {
-            var storedData = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
+    // 간편로그인인 경우 T world 동의여부 조회 API 호출하지 않으므로 아래 로직도 수행하지 않도록 처리
+    if (this._loginType !== 'S') {
+      // T world 광고성 정보 수신동의(선택) 여부
+      if ((resp = arguments[9]).code === Tw.API_CODE.CODE_00) {
+        if (resp.result.twdAdRcvAgreeYn === 'N') {
 
-            // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
-            if (Tw.FormatHelper.isEmpty(storedData)) {
-              $('#agree-popup-area').show();
-              // return;
-            } 
-            // 그 외 경우 처리
-            else {
-              storedData = JSON.parse(storedData);
+          if (this._isAdult) {
+            $('#agree-banner-area').show();
+            // 모바일App
+            if (Tw.BrowserHelper.isApp()) {
+              var storedData = Tw.CommonHelper.getLocalStorage('hideTwdAdRcvAgreePop_' + this._userId);
 
-              var now = new Date();
-              now = Tw.DateHelper.convDateFormat(now);
-  
-              if ( Tw.DateHelper.convDateFormat(storedData.expireTime) < now ) { // 만료시간이 지난 데이터 일 경우
-                // console.log('만료시점이 지난 경우 (노출)');
-                // 광고 정보 수신동의 팝업 노출
+              // 최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우
+              if (Tw.FormatHelper.isEmpty(storedData)) {
                 $('#agree-popup-area').show();
-              } else {
-                // console.log('만료시점 이전인 경우 (비노출)');
+                // return;
+              }
+              // 그 외 경우 처리
+              else {
+                storedData = JSON.parse(storedData);
+
+                var now = new Date();
+                now = Tw.DateHelper.convDateFormat(now);
+
+                if (Tw.DateHelper.convDateFormat(storedData.expireTime) < now) { // 만료시간이 지난 데이터 일 경우
+                  // console.log('만료시점이 지난 경우 (노출)');
+                  // 광고 정보 수신동의 팝업 노출
+                  $('#agree-popup-area').show();
+                } else {
+                  // console.log('만료시점 이전인 경우 (비노출)');
+                }
               }
             }
-          } 
-          // 모바일웹
-          else {
-            if ( Tw.CommonHelper.getCookie('hideTwdAdRcvAgreePop_' + this._userId) !== null ) {
-              // console.log('다음에 보기 처리 이력 존재');              
-            } else {
-              // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
-              // 광고 정보 수신동의 팝업 노출
-              $('#agree-popup-area').show();
+            // 모바일웹
+            else {
+              if (Tw.CommonHelper.getCookie('hideTwdAdRcvAgreePop_' + this._userId) !== null) {
+                // console.log('다음에 보기 처리 이력 존재');              
+              } else {
+                // console.log('최초 접근시 또는 다음에 보기 체크박스 클릭하지 않은 경우 (노출)');
+                // 광고 정보 수신동의 팝업 노출
+                $('#agree-popup-area').show();
+              }
             }
-          }              
+          }
         }
       }
-    }
+    }    
 
     this.$membership.text(data.membership);
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));
@@ -595,14 +630,14 @@ Tw.BenefitIndex.prototype = {
    * @desc URL 마지막 Path 에 해당하는 카테고리 아이디 반환
    * @returns {String}
    */
-  _convertPathToCategory : function () {
+  _convertPathToCategory: function () {
     var categoryId = {
-      'discount'      : 'F01421',
-      'combinations'  : 'F01422',
-      'long-term'     : 'F01423',
-      'participation' : 'F01424',
-      'purchase'      : 'F01714',
-      'submain'       : ''
+      'discount': 'F01421',
+      'combinations': 'F01422',
+      'long-term': 'F01423',
+      'participation': 'F01424',
+      'purchase': 'F01714',
+      'submain': ''
     };
     return categoryId[Tw.UrlHelper.getLastPath()];
   },
@@ -727,7 +762,7 @@ Tw.BenefitIndex.prototype = {
    * @function
    * @desc 할인금액 미리보기 선택값 초기화
    */
-  _previewClear: function() {
+  _previewClear: function () {
     // 인터넷
     this.$container.find('#fe-preview-internet li').removeClass('checked')
       .attr('aria-checked', false)

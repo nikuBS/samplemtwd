@@ -541,7 +541,7 @@ Tw.MainHome.prototype = {
   },
 
   _successAgreeAdRcv: function() {
-    Tw.CommonHelper.toast(Tw.TOAST_TEXT.RCV_AGREE);
+    Tw.Popup.toast(Tw.TOAST_TEXT.RCV_AGREE);
     this.$adRcvAgreeBanner.addClass('none');
   },
 
