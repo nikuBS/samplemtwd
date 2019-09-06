@@ -619,6 +619,9 @@ class MainHome extends TwViewController {
    * @return {boolean}
    */
   private getIsAdRcvAgreeBannerShown(loginType): Observable<any> {
+    // TID Traffic Issue로 메인 페이지 내 호출 로직 제거
+    return Observable.of(false);
+
     if (FormatHelper.isEmpty(loginType) || loginType != 'T') {
       return Observable.of(false);
     }
