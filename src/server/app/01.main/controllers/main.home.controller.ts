@@ -577,6 +577,8 @@ class MainHome extends TwViewController {
         prcplnRcTyp: MLS_PRCPLN_RC_TYP, 
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
       }).map((resp) => {
+        // TODO: 테스트용 로그 삭제
+        this.logger.debug(this, '[TEST RESP]', JSON.stringify(resp));
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( FormatHelper.isEmpty(resp.result) ) {
             return defaultRetVal;

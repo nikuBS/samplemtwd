@@ -1,0 +1,130 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 기본배경색은 white, 회색배경색은 .nobg --><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap"><!-- 보더라인 없을 경우 .noborder -->
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>나에게 꼭 맞는 요금제</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz"><!-- border 없을 경우 .noborder / 배경색 없을 경우 .bgnone -->
+                <ul class="tod-plan-bene-list">
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico01.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">VIP 멤버십</dt>
+                                <dd class="bene-desc">
+                                    연 72,000원 상당의 연 6회
+                                    <span class="bene-desc-sub">CU, 스타벅스, 영화 무료 혜택 제공</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico02.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">POOQ 앤 데이터</dt>
+                                <dd class="bene-desc">
+                                    연 118,000원 상당의 POOQ 월정액
+                                    <span class="bene-desc-sub">무료영화, 공중파 VOD, 실시간 TV</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">FLO 앤 데이터</dt>
+                                <dd class="bene-desc">
+                                    연 94,800원 상당의 FLO 월정액
+                                    <span class="bene-desc-sub">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico04.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">휴대폰 분실/파손</dt>
+                                <dd class="bene-desc">
+                                    연 67,200원 상당의 휴대폰 단말보험
+                                    <span class="bene-desc-sub">최신 휴대폰 교체 지원 및 분실/파손 보험</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico05.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">데이터</dt>
+                                <dd class="bene-desc">
+                                    월 데이터 100GB 제공
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">FLO 앤 데이터</dt>
+                                <dd class="bene-desc">
+                                    연 47,400원 상당의 FLO 월정액 할인
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico06.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">데이터</dt>
+                                <dd class="bene-desc">
+                                    월 118,000원 상당의 심야 데이터 제공
+                                    <span class="bene-desc-sub">00~07시 데이터 4배</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="bene-wrap">
+                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico07.png" alt=""></span>
+                            <dl class="description-wrap">
+                                <dt class="bene-tit">안심옵션</dt>
+                                <dd class="bene-desc">
+                                    연 66,000원 상당의 안심옵션 무료제공
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- //.cont-box -->
+        </div>
+        <!-- 하단 fixed 버튼 (.container 영역 바깥에 위치해야 함) -->
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button class="btn-floating btn-style2" id="fe-btn-close">닫기</button></li>
+            </ul>
+        </div>
+        <!-- //하단 fixed 버튼 (.container 영역 바깥에 위치해야 함) -->
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

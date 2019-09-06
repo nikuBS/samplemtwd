@@ -732,52 +732,143 @@ export const MLS_PRODUCT_BENEFIT = {
   }
 };
 
+// 내게 맞는 요금제 추천 페이지 내 영역 컨트롤
+export const MLS_CATEGORY_MAPPING = {
+    'prcpln_01': 'data',
+    'prcpln_02': 'data',
+    'prcpln_03': 'data',
+    'prcpln_04': 'video',
+    'prcpln_05': 'video',
+    'prcpln_06': 'video',
+    'prcpln_07': 'music',
+    'prcpln_08': 'music',
+    'prcpln_09': 'music',
+    'prcpln_10': 'insurance',
+    'prcpln_14': 'membership'
+};
+
+// TODO: scrb 유형 값들 데이터 포맷 확인 필요 (paid / free / ???)
+// TODO: 호출 결과가 null 또는 'N/A' 형태로 오는 경우가 있음, 결과값 형태 확인 필요
 export const MLS_DETAIL_MAPPING = {
   prcpln_01: {
+    bas_ofr_data_gb_qty_val : 'GB',
     data_use_ratio_max : 'ratio',
+    data_use_ratio_bf_m0 : 'ratio',
     data_use_ratio_bf_m1 : 'ratio',
     data_use_ratio_bf_m2 : 'ratio',
-    data_use_ratio_bf_m3 : 'ratio'
+    bf_m0_ym : 'YYYYMM'
   },
   prcpln_02: {
-    all_night_traffic_mb : 'MB',
-    night_traffic_mb : 'MB'
+    data_use_night_ratio : 'ratio',
+    data_use_night_ratio_median : 'ratio',
+    data_use_night_ratio_median_yn : 'Y/N'
   },
-  prcpln_03: {},
-  prcpln_04: {},
+  prcpln_03: {
+    additional_svc_ansim_option_scrb_type : 'paid'
+  },
+  prcpln_04: {
+    additional_svc_oksusu_scrb_type : 'paid',
+    additional_svc_pooq_scrb_type : 'paid'
+  },
   prcpln_05: {
-    all_video_use_traffic_ratio : 'ratio',
-    video_use_traffic_ratio : 'ratio'
+    app_use_traffic_video_ratio : 'ratio',
+    app_use_traffic_video_ratio_median : 'ratio',
+    app_use_traffic_video_ratio_median_yn : 'Y/N'
   },
-  prcpln_06: {},
-  prcpln_07: {},
+  prcpln_06: {
+    additional_svc_oksusu_scrb_type : 'paid',
+    additional_svc_pooq_scrb_type : 'paid'
+  },
+  prcpln_07: {
+    additional_svc_flo_scrb_type : 'paid',
+    additional_svc_melon_scrb_type : 'paid',
+    additional_svc_bugs_scrb_type : 'paid'
+  },
   prcpln_08: {
-    all_music_use_traffic_ratio : 'ratio',
-    music_use_traffic_ratio : 'ratio'
+    app_use_trafic_music_ratio : 'ratio',
+    app_use_trafic_music_ratio_median : 'ratio',
+    app_use_trafic_music_ratio_median_yn : 'Y/N'
   },
-  prcpln_09: {},
-  prcpln_10: {},
-  prcpln_12: {},
+  prcpln_09: {
+    additional_svc_flo_scrb_type : 'paid',
+    additional_svc_melon_scrb_type : 'paid',
+    additional_svc_bugs_scrb_type : 'paid'
+  },
+  prcpln_10: {
+    additional_svc_allcare_scrb_type : 'paid'
+  },
   prcpln_14: {
-    mbr_use_discount_amt : 'amt',
-    mbr_discount_amt_theme_park : 'amt',
-    mbr_discount_amt_convenience_store : 'amt',
-    mbr_discount_amt_pizza : 'amt',
-    mbr_discount_amt_family_restaurant : 'amt',
-    mbr_discount_amt_coffee : 'amt',
-    mbr_discount_amt_movie : 'amt',
-    mbr_discount_amt_shopping : 'amt',
-    mbr_discount_amt_beauty_and_fashion : 'amt',
-    mbr_discount_amt_mobile_and_media : 'amt',
-    mbr_discount_amt_transportation : 'amt',
-    mbr_discount_amt_education : 'amt',
-    mbr_discount_amt_food_and_beverage : 'amt',
-    mbr_discount_amt_jeju : 'amt',
-    mbr_discount_amt_sports : 'amt',
-    mbr_discount_amt_bakery : 'amt',
-    mbr_discount_amt_chocolate : 'amt'
+    membership_vip_yn : 'Y/N',
+    membership_cnt_ratio_median_yn : 'Y/N',
+    membership_amt_ratio_median_yn : 'Y/N',
+    mbr_use_discount_amt_cum : 'amt',
+    mbr_discount_amt_cum_chocolate : 'amt',
+    mbr_discount_amt_cum_bakery : 'amt',
+    mbr_discount_amt_cum_sports : 'amt',
+    mbr_discount_amt_cum_jeju : 'amt',
+    mbr_discount_amt_cum_food_and_beverage : 'amt',
+    mbr_discount_amt_cum_education : 'amt',
+    mbr_discount_amt_cum_transportation : 'amt',
+    mbr_discount_amt_cum_mobile_and_media : 'amt',
+    mbr_discount_amt_cum_beauty_and_fashion : 'amt',
+    mbr_discount_amt_cum_shopping : 'amt',
+    mbr_discount_amt_cum_movie : 'amt',
+    mbr_discount_amt_cum_coffee : 'amt',
+    mbr_discount_amt_cum_family_restaurant : 'amt',
+    mbr_discount_amt_cum_pizza : 'amt',
+    mbr_discount_amt_cum_convenience_store : 'amt',
+    mbr_discount_amt_cum_theme_park : 'amt'
   }
 };
+
+// API 호출 결과의 Format 작업용 Mapping 자료
+export const MLS_DETAIL_FORMAT = {
+  bas_ofr_data_gb_qty_val : 'GB',
+  data_use_ratio_max : 'ratio',
+  data_use_ratio_bf_m0 : 'ratio',
+  data_use_ratio_bf_m1 : 'ratio',
+  data_use_ratio_bf_m2 : 'ratio',
+  bf_m0_ym : 'YYYYMM',
+  data_use_night_ratio : 'ratio',
+  data_use_night_ratio_median : 'ratio',
+  data_use_night_ratio_median_yn : 'Y/N',
+  additional_svc_ansim_option_scrb_type : 'paid',
+  additional_svc_oksusu_scrb_type : 'paid',
+  additional_svc_pooq_scrb_type : 'paid',
+  app_use_traffic_video_ratio : 'ratio',
+  app_use_traffic_video_ratio_median : 'ratio',
+  app_use_traffic_video_ratio_median_yn : 'Y/N',
+  additional_svc_flo_scrb_type : 'paid',
+  additional_svc_melon_scrb_type : 'paid',
+  additional_svc_bugs_scrb_type : 'paid',
+  app_use_trafic_music_ratio : 'ratio',
+  app_use_trafic_music_ratio_median : 'ratio',
+  app_use_trafic_music_ratio_median_yn : 'Y/N',
+  additional_svc_allcare_scrb_type : 'paid',
+  membership_vip_yn : 'Y/N',
+  membership_cnt_ratio_median_yn : 'Y/N',
+  membership_amt_ratio_median_yn : 'Y/N',
+  mbr_use_discount_amt_cum : 'amt',
+  mbr_discount_amt_cum_chocolate : 'amt',
+  mbr_discount_amt_cum_bakery : 'amt',
+  mbr_discount_amt_cum_sports : 'amt',
+  mbr_discount_amt_cum_jeju : 'amt',
+  mbr_discount_amt_cum_food_and_beverage : 'amt',
+  mbr_discount_amt_cum_education : 'amt',
+  mbr_discount_amt_cum_transportation : 'amt',
+  mbr_discount_amt_cum_mobile_and_media : 'amt',
+  mbr_discount_amt_cum_beauty_and_fashion : 'amt',
+  mbr_discount_amt_cum_shopping : 'amt',
+  mbr_discount_amt_cum_movie : 'amt',
+  mbr_discount_amt_cum_coffee : 'amt',
+  mbr_discount_amt_cum_family_restaurant : 'amt',
+  mbr_discount_amt_cum_pizza : 'amt',
+  mbr_discount_amt_cum_convenience_store : 'amt',
+  mbr_discount_amt_cum_theme_park : 'amt'
+};
+
+// Exceptional MLS Return Values
+export const MLS_EMPTY_CASE = [null, 'N/A'];
 
 export const MLS_PRCPLN_RC_TYP = 'GNRL';
 
