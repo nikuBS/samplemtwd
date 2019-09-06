@@ -90,7 +90,9 @@
                         </div>
                     </div>
                 </div>
+                <% if (resp.category_validation.data) { %>
                 <div class="cont-box first fe-recommend-data">
+                    <% if (resp.reason_codes.prcpln_01) { %>
                     <div class="plan-item fe-prcpln_01">
                         <p class="comment">
                             <span class="cate">데이터</span>
@@ -100,41 +102,31 @@
                             <div class="tod-bar-chart-wrap">
                                <ul class="month-data-list">
                                    <li class="period">
-                                       <span class="month">4월</span>
+                                       <span class="month"><%= resp.reason_details.date_use_ratio_m2 %>월</span>
                                        <div class="bar-wrap">
                                             <div class="bar-chart-hoz">
-                                                <span class="data-bar" style="width:40%">
-                                                    <span class="alert-percent"><span class="tod-blind">사용량</span>40%</span>
+                                                <span class="data-bar" style="width:<%- resp.reason_details.data_use_ratio_bf_m2 * 100 %>%">
+                                                    <span class="alert-percent"><span class="tod-blind">사용량</span><%- resp.reason_details.data_use_ratio_bf_m2 * 100 %>%</span>
                                                 </span>
                                             </div>
                                        </div>
                                    </li>
                                    <li class="period">
-                                        <span class="month">5월</span>
+                                        <span class="month"><%= resp.reason_details.date_use_ratio_m1 %>월</span>
                                         <div class="bar-wrap">
                                             <div class="bar-chart-hoz">
-                                                <span class="data-bar" style="width:100%">
-                                                    <span class="alert-percent"><span class="tod-blind">사용량</span>100%</span>
+                                                <span class="data-bar" style="width:<%- resp.reason_details.data_use_ratio_bf_m1 * 100 %>%">
+                                                    <span class="alert-percent"><span class="tod-blind">사용량</span><%- resp.reason_details.data_use_ratio_bf_m1 * 100 %>%</span>
                                                 </span>
                                             </div>
                                         </div>
                                     </li>
                                     <li class="period">
-                                        <span class="month">6월</span>
+                                        <span class="month"><%= resp.reason_details.date_use_ratio_m0 %>월</span>
                                         <div class="bar-wrap">
                                             <div class="bar-chart-hoz">
-                                                <span class="data-bar" style="width:70%">
-                                                    <span class="alert-percent"><span class="tod-blind">사용량</span>70%</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="period basic">
-                                        <span class="month">기본<br>제공</span>
-                                        <div class="bar-wrap">
-                                            <div class="bar-chart-hoz">
-                                                <span class="data-bar" style="width:50%"> 
-                                                    <span class="basic-num"><span class="tod-blind ">데이터 기본제공량</span>150GB</span>
+                                                <span class="data-bar" style="width:<%- resp.reason_details.data_use_ratio_bf_m0 * 100 %>%">
+                                                    <span class="alert-percent"><span class="tod-blind">사용량</span><%- resp.reason_details.data_use_ratio_bf_m0 * 100 %>%</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -142,11 +134,12 @@
                                </ul>
                             </div>
                             <ul class="gh-comment">
-                                <li class="blue article">데이터 기본제공량</li>
-                                <li class="red article">사용량</li>
+                                <li class="red article"><span class="article-txt">나의 데이터 전체 사용량</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_02) { %>
                     <div class="plan-item fe-prcpln_02">
                         <p class="comment">
                             <span class="cate">데이터</span>
@@ -161,7 +154,7 @@
                                         <div class="donut-chart small">
                                             <span class="user">전체고객</span>
                                             <div class="donut-chart-area">
-                                                <div class="c100 p40"><!-- .p0 ~ 100 -->
+                                                <div class="c100 p<%- resp.reason_details.data_use_night_ratio_median * 100 %>"><!-- .p0 ~ 100 -->
                                                     <div class="blue"><!-- red, blue, green, yellow, comet -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -176,14 +169,14 @@
                                             </div>
                                         </div>
                                         <!-- //그래프 -->
-                                        <p class="amount">200MB</p>
+                                        <p class="amount"><%- resp.reason_details.data_use_night_ratio_median * 100 %>%</p> <!-- //190830 [OP002-2006] 수정01  -->
                                     </li>
                                     <li class="pie-item">
                                         <!-- 그래프 -->
                                         <div class="donut-chart small">
                                             <span class="user me">나</span>
                                             <div class="donut-chart-area">
-                                                <div class="c100 p40"><!-- .p0 ~ 100 -->
+                                                <div class="c100 p<%- resp.reason_details.data_use_night_ratio * 100 %>"><!-- .p0 ~ 100 -->
                                                     <div class="red"><!-- red, blue, green, yellow, comet -->
                                                         <div class="slice">
                                                             <div class="bar"></div>
@@ -198,16 +191,18 @@
                                             </div>
                                         </div>
                                         <!-- //그래프 -->
-                                        <p class="amount me">350MB</p>
+                                        <p class="amount me"><%- resp.reason_details.data_use_night_ratio * 100 %>%</p> <!-- //190830 [OP002-2006] 수정02  -->
                                     </li>
                                 </ul>
                             </div>
                             <ul class="gh-comment">
-                                <li class="blue article">전체고객 평균 사용량</li>
-                                <li class="red article">나의 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른고객의 전체 데이터 대비 심야데이터 평균 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 심야데이터 평균 사용량</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_03) { %>
                     <div class="plan-item fe-prcpln_03">
                         <p class="comment">
                             <span class="cate">데이터</span>
@@ -217,9 +212,13 @@
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img01.png" alt="">
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
-                <div class="cont-box fe-recommend-movie">
+                <% } %>
+                <% if (resp.category_validation.video) { %>
+                <div class="cont-box fe-recommend-video">
+                    <% if (resp.reason_codes.prcpln_04) { %>
                     <div class="plan-item fe-prcpln_04">
                         <p class="comment">
                             <span class="cate">영상</span>
@@ -228,24 +227,28 @@
                         <div class="plan-img-wrap">
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img02.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
                             <ul class="gh-comment">
-                                <li class="blue article">전체고객 평균 사용량</li>
-                                <li class="red article">나의 사용량</li>
+                                <li class="blue article line-block"><span class="article-txt">추천요금제로 변경 시</span></li>
+                                <li class="red article line-block"><span class="article-txt">현재 유지 시</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_06) { %>
                     <div class="plan-item fe-prcpln_06">
                         <p class="comment">
                             <span class="cate">영상</span>
                             실시간 TV, 영화, 지상파 VOD 22만편을 <em class="em">무료로 제공</em>합니다.
                         </p>
                         <div class="plan-img-wrap">
-                            <img src="/img/t_myPlan/item_plan_img03.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img03.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_05) { %>                    
                     <div class="plan-item fe-prcpln_05" >
                         <p class="comment">
                             <span class="cate">영상</span>
-                            데이터 사용량의 <em class="em">51%</em>를 <em class="em">영상 서비스</em>에 이용하고 계시네요.
+                            데이터 사용량의 <em class="em"><%- resp.reason_details.app_use_traffic_video_ratio * 100 %>%</em>를 <em class="em">영상 서비스</em>에 이용하고 계시네요.
                         </p>
                         <div class="plan-chart-wrap">
                            <div class="tod-vBar-chart-wrap">
@@ -254,49 +257,53 @@
                                         <div class="widget">
                                             <div class="widget-box chart" data-type="square" data-width="50" data-overlay="10"> <!-- 그래프 한개의 넓이와 겹치는 영역의 넓이를 등록 -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="135">
-                                                    <polygon fill="#1DA6F8" data-percent="1" data-target="#target1" style="opacity:0.9;"/> <!-- 그래프의 색상과 높이값을 위한 %를 등록 / 첫번째 아이템은 몇 %인지 상관없이 무조건 1로 등록 -->
-                                                    <polygon fill="#FF6563" data-percent="0.51" data-target="#target2" style="opacity:0.9;" /> <!-- 그래프의 색상과 높이값을 위한 %를 등록 -->
+                                                    <polygon fill="#1DA6F8" data-percent="<%- resp.reason_details.app_use_traffic_video_ratio_median / resp.reason_details.app_use_traffic_video_ratio %>" data-target="#target1" style="opacity:0.9;"/> <!-- 그래프의 색상과 높이값을 위한 %를 등록 / 첫번째 아이템은 몇 %인지 상관없이 무조건 1로 등록 -->
+                                                    <polygon fill="#FF6563" data-percent="1" data-target="#target2" style="opacity:0.9;" /> <!-- 그래프의 색상과 높이값을 위한 %를 등록 -->
                                                 </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left type02 blue" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part left type02 blue" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">데이터 사용량</span>
-                                                87%
+                                                <span class="item">다른 고객</span>  <!-- //190830 [OP002-2006] 수정05  -->
+                                                <%- resp.reason_details.app_use_traffic_video_ratio_median * 100 %>%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part right type02" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">영상 서비스</span>
-                                                51%
+                                                <span class="item">나</span> <!-- //190830 [OP002-2006] 수정06  -->
+                                                <%- resp.reason_details.app_use_traffic_video_ratio * 100 %>%
                                             </span>
                                         </div>
                                     </div>
                                </div>
                            </div>
                             <ul class="gh-comment">
-                                <li class="blue article">전체 데이터 사용량</li>
-                                <li class="red article">영상 서비스 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른 고객의 전체 데이터 대비 영상 데이터 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 영상 데이터 사용량</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
+                <% } %>
+                <% if (resp.category_validation.music) { %>
                 <div class="cont-box fe-recommend-music">
+                    <% if (resp.reason_codes.prcpln_08) { %>  
                     <div class="plan-item fe-prcpln_08" >
                         <p class="comment">
                             <span class="cate">음악</span>
-                            데이터 사용량의 <em class="em">32%</em>를 <em class="em">음악 서비스</em>에 이용하고 계시네요.
+                            데이터 사용량의 <em class="em"><%- resp.reason_details.app_use_traffic_music_ratio * 100 %>%</em>를 <em class="em">음악 서비스</em>에 이용하고 계시네요.
                         </p>
                         <div class="plan-chart-wrap">
                             <div class="tod-vBar-chart-wrap triangle">
@@ -305,42 +312,44 @@
                                         <div class="widget">
                                             <div class="widget-box chart" data-type="triangle" data-width="78" data-overlay="24"> <!-- 그래프 한개의 넓이와 겹치는 영역의 넓이를 등록 -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="135">
-                                                    <polygon fill="#1DA6F8" data-percent="1" data-target="#target3" style="opacity:0.9;"/> <!-- 그래프의 색상과 높이값을 위한 %를 등록 / 첫번째 아이템은 몇 %인지 상관없이 무조건 1로 등록 -->
-                                                    <polygon fill="#FF6563" data-percent="0.32" data-target="#target4" style="opacity:0.9;" /> <!-- 그래프의 색상과 높이값을 위한 %를 등록 -->
+                                                    <polygon fill="#1DA6F8" data-percent="<%- resp.reason_details.app_use_traffic_music_ratio_median / resp.reason_details.app_use_traffic_music_ratio %>" data-target="#target3" style="opacity:0.9;"/> <!-- 그래프의 색상과 높이값을 위한 %를 등록 / 첫번째 아이템은 몇 %인지 상관없이 무조건 1로 등록 -->
+                                                    <polygon fill="#FF6563" data-percent="1" data-target="#target4" style="opacity:0.9;" /> <!-- 그래프의 색상과 높이값을 위한 %를 등록 -->
                                                 </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left blue type02" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part left blue type02" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">데이터 사용량</span>
-                                                87%
+                                                <span class="item">다른 고객</span><!-- //190830 [OP002-2006] 수정08  -->
+                                                <%- resp.reason_details.app_use_traffic_music_ratio_median * 100 %>%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 -->
+                                        <div class="part right type02" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
                                             </span>
                                             <span class="item-num">
-                                                <span class="item">음악 서비스</span>
-                                                32%
+                                                <span class="item">나</span> <!-- //190830 [OP002-2006] 수정09  -->
+                                                <%- resp.reason_details.app_use_traffic_music_ratio * 100 %>%
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <ul class="gh-comment">
-                                <li class="blue article">전체 데이터 사용량</li>
-                                <li class="red article">음악 서비스 사용량</li>
+                                <li class="blue article"><span class="article-txt">다른 고객의 전체 데이터 대비 음악 데이터 사용량</span></li>
+                                <li class="red article"><span class="article-txt">나의 전체 데이터 대비 음악 데이터 사용량</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_07) { %>  
                     <div class="plan-item fe-prcpln_07">
                         <p class="comment">
                             <span class="cate">음악</span>
@@ -349,23 +358,29 @@
                         <div class="plan-img-wrap">
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img04.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(FLO 앤 테이터 월 최대할인 -7,900원) ">
                             <ul class="gh-comment">
-                                <li class="blue article">추천요금제로  변경 시</li>
-                                <li class="red article">현재 유지 시</li>
+                                <li class="blue article line-block"><span class="article-txt">추천요금제로 변경 시</span></li>
+                                <li class="red article line-block"><span class="article-txt">현재 유지 시</span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_09) { %>  
                     <div class="plan-item fe-prcpln_09">
                         <p class="comment">
                             <span class="cate">음악</span>
                             전용데이터 3GB, <em class="em">음악콘텐츠</em>를 <em class="em">무제한</em>으로 이용하실 수 있어요.
                         </p>
                         <div class="plan-img-wrap">
-                            <img src="/img/t_myPlan/item_plan_img05.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(FLO 앤 테이터 월 최대할인 -7,900원) ">
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img05.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(FLO 앤 테이터 월 최대할인 -7,900원) ">
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
+                <% } %>
+                <% if (resp.category_validation.insurance) { %>
                 <div class="cont-box fe-recommend-insurance">
+                    <% if (resp.reason_codes.prcpln_10) { %>
                     <div class="plan-item fe-prcpln_10">
                         <p class="comment">
                             <span class="cate">보험</span>
@@ -375,6 +390,8 @@
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img06.png" alt=" ">
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
+                    <% if (resp.reason_codes.prcpln_12) { %>
                     <div class="plan-item fe-prcpln_12">
                         <p class="comment">
                             <span class="cate">보험</span>
@@ -384,9 +401,13 @@
                             <img src="/img/t_myPlan/item_plan_img07.png" alt=" ">
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
+                <% } %>
+                <% if (resp.category_validation.membership) { %>
                 <div class="cont-box fe-recommend-membership">
+                    <% if (resp.reason_codes.prcpln_14) { %>
                     <div class="plan-item fe-prcpln_14" >
                         <p class="comment">
                             <span class="cate">멤버십</span>
@@ -397,14 +418,14 @@
                                 <div class="widget">
                                     <div class="widget-box chart" data-type="pie">
                                         <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="300" height="300"  viewbox="0 0 600 600"  ><!--  -->
-                                            <g style=""> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
+                                            <g> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
                                                 <path class="chart-arc" fill="#FF6563" data-percent="0.57" data-offset-height="0"></path>
                                                 <path class="chart-arc" fill="#7E77C5" data-percent="0.06" data-offset-height="-30"></path>
                                                 <path class="chart-arc" fill="#08C2BA" data-percent="0.15" data-offset-height="-20"></path>
                                                 <path class="chart-arc" fill="#1DA6F8" data-percent="0.22" data-offset-height="-10"></path>
                                             </g>
                                             <g>
-                                                <text class="chart-txt" fill="white" style="font-size:30px;"><tspan>57%</tspan></text>
+                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan>57%</tspan></text>
                                                 <text class="chart-txt" fill="white" style="font-size:21px;">6%</text>
                                                 <text class="chart-txt" fill="white" style="font-size:24px;">15%</text>
                                                 <text class="chart-txt" fill="white" style="font-size:27px;">22%</text>
@@ -424,20 +445,22 @@
                                 </div>
                             </div>
                             <ul class="gh-comment membership">
-                                <li class="red article best"><span class="bene-item">CGV</span><span class="price">10,200원</span></li>
-                                <li class="blue article"><span class="bene-item">멜론</span><span class="price">10,200원</span></li>
-                                <li class="green article"><span class="bene-item">씨유</span><span class="price">100,200원</span></li>
-                                <li class="purple article"><span class="bene-item">기타</span><span class="price">10,200원</span></li>
+                                <li class="red article best"><span class="article-txt"><span class="bene-item">CGV</span><span class="price">10,200원</span></span></li>
+                                <li class="blue article"><span class="article-txt"><span class="bene-item">멜론</span><span class="price">10,200원</span></span></li>
+                                <li class="green article"><span class="article-txt"><span class="bene-item">씨유</span><span class="price">100,200원</span></span></li>
+                                <li class="purple article"><span class="article-txt"><span class="bene-item">기타</span><span class="price">10,200원</span></span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
+                    <% } %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
+                <% } %>
                 <div class="cont-box">
                     <div class="plan-item" >
                         <p class="comment">
                             <span class="cate">함께쓰기</span>
-                            고객님이 이용중이신 <br><em class="em">아이패드</em>(010-88**-55**)는 추천요금제로 <em class="em">함께쓰기</em>가 가능해요.
+                            고객님, 추천요금제는 무료로 <em class="em">함께쓰기</em>가 가능해요. <!-- //190830 [OP002-2006] 수정13 -->
                         </p>
                         <div class="plan-img-wrap">
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img08.png" alt=" ">
@@ -454,17 +477,17 @@
             </div>
             <div class="bt-fixed-area bt-slice full item-two">
                 <ul class="bt-slice item-two full">
-                    <li><button class="btn-floating btn-style2">자세히보기</button></li>
-                    <li class="bt-red1"><button>신청하기</button></li>
+                    <li><button class="btn-floating btn-style2" id="fe-btn-details">자세히보기</button></li>
+                    <li class="bt-red1" id="fe-btn-join"><button>신청하기</button></li>
                 </ul>
             </div>
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 <script>
-  $(document).ready(function () {
-  });
+    $(document).ready(function () {
+      new Tw.MainRecommendProduct($('#fe-benefit-my'), '<%-JSON.stringify(resp) %>');
+    });
 </script>
 <% include ../components/end.component.html %>
