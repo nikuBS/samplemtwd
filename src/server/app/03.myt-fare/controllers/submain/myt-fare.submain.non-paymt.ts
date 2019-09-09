@@ -64,7 +64,7 @@ class MyTFarePaymentOver extends TwViewController {
         if ( possibleDay ) {
           data.possibleDay = possibleDay;
           if ( possibleDay.suspStaDt ) {
-            data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
+            data.suspStaDt = DateHelper.getKoreanDate(possibleDay.suspStaDt);
           }
         }
         if ( claimDate ) {
