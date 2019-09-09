@@ -356,27 +356,33 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
           return;
         }
 
-        for ( var i = 0; i < childLineInfo.length; i++ ) {
-          var d = null;
-          if(arguments[i].result && arguments[i].result.invAmtList && arguments[i].result.invAmtList.length > 0){
-            var date = this.resData.reqQuery ? this.resData.reqQuery.date : null;
-            if(!date){
+        var iterator = function (date) {
+          return function (item) {
+            return item.invDt === date;
+          };
+        };
+
+        for (var i = 0, length = childLineInfo.length; i < length; i += 1) {
+          var result = arguments[i].result;
+          var detail;
+          if (result && result.invAmtList && result.invAmtList.length > 0) {
+            var date = this.resData.reqQuery && this.resData.reqQuery.date;
+            if (!date) {
               date = this.resData.billpayInfo.invDtArr[0];
             }
             // 날짜로 조회결과를 찾아야함
-            d = _.find(arguments[i].result.invAmtList, function(item){
+            detail = _.find(result.invAmtList, iterator(date)/* function (item) {
               return item.invDt === date;
-            });
-            // 결과가 없는 경우
-            if(!d){
-              d = {totInvAmt: '0'};
-            }
+            } */);
           }
-          childLineInfo[i].detailInfo = d;
+          // [OP002-3317] 결과가 없는 경우, 값이 비워지게 되서 출력이 안되는 문제가 있음
+          if (!detail) {
+            detail = { totInvAmt: '0' };
+          }
+          childLineInfo[i].detailInfo = detail;
         }
 
         thisMain._getChildBillInfoInit();
-
       }, this));
   },
   /**
@@ -751,5 +757,4 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     }
     return str;
   }
-
 };
