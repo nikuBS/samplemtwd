@@ -95,8 +95,10 @@
             </div>
             <!-- //.cont-box -->
 
-            <% if ( data.type !== 'UF' && data.otherLines.length > 0) { %>
-            <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
+            <%_
+            var lineCount = (data.childLineInfo && data.childLineInfo.length || 0) + data.otherLines.length;
+            if (data.type !== 'UF' && lineCount > 0) {
+            _%>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm" data-id="other-line">
@@ -109,15 +111,15 @@
                 </div>
                 <ul class="my-line-info">
                 </ul>
-                <% if (length === 20) { %>
-                <!-- 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
+                <!-- [OP002-3317] 다른 회선(자녀포함)이 총 20개 이상인 경우 -->
+                <%_ if (lineCount >= 20) { _%>
                 <div class="btn-more">
                     <button type="button">더 보기</button>
                 </div>
-                <% } %>
+                <%_ } _%>
             </div>
             <!-- .cont-box -->
-            <% } %>
+            <%_ } _%>
 
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">

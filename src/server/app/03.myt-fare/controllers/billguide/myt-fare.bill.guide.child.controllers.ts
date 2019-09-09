@@ -111,6 +111,7 @@ class MyTFareBillGuideChild extends TwViewController {
     /*
     * 실 데이터 - 사용요금조회
     */
+    /*
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0047, {
       invDt: this.reqQuery.date,
       childSvcMgmtNum: this.reqQuery.line
@@ -119,27 +120,49 @@ class MyTFareBillGuideChild extends TwViewController {
     // const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p2');
 
     Promise.all([p1]).then(function(resArr) {
-
-      thisMain._billpayInfo = resArr[0].result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
-        || resArr[0].result.invAmtList[0];
-      // 청구월 목록
-      thisMain._billpayInfo.invDtArr = resArr[0].result.invAmtList.map(item => item.invDt);
+    */
+    // [OP002-3317] 실제 처리할 API는 하나이므로, 개선을 위하여 1개로 처리
+    this.apiService.request(API_CMD.BFF_05_0047, {
+      invDt: this.reqQuery.date,
+      childSvcMgmtNum: this.reqQuery.line
+    }, null, [], API_VERSION.V2).subscribe((resp) => {
+      // [OP002-3317] result가 없는 경우(result = {})가 있음. (요금제 변동, 갑자기 무료 요금제가 되는 경우 5GX 프라임/플랫티넘 + 쿠키즈, 테블릿 등
+      const result = FormatHelper.isEmpty(resp.result) ? { dcAmt: 0, totInvAmt: '0', usedAmountDetailList: [] } : resp.result;
+      if (FormatHelper.isEmpty(result.invAmtList)) {
+        // "OP002-2986 로 청구 데이터 안들어올 수 있으므로 디폴트 세팅 해준다." 참고 (myt-fare.bill.guide.controller.ts)
+        thisMain._billpayInfo = {
+          dcAmt: '',
+          totInvAmt: '',
+          useAmtTot: 0
+        };
+        thisMain._commDataInfo.selClaimDt = '';
+        thisMain._commDataInfo.selClaimDtM = '';
+        thisMain._commDataInfo.selStaDt = '';
+        thisMain._commDataInfo.selEndDt = '';
+        thisMain._commDataInfo.discount = '0';
+        thisMain._commDataInfo.useAmtTot = '0';
+      } else {
+        thisMain._billpayInfo = result.invAmtList.find(item => item.invDt === thisMain.reqQuery.date)
+          || result.invAmtList[0];
+        // 청구월 목록
+        thisMain._billpayInfo.invDtArr = result.invAmtList.map(item => item.invDt);
+        thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
+        thisMain._commDataInfo.selClaimDtM = thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt));
+        thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt));
+        thisMain._commDataInfo.selEndDt = thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt));
+        thisMain._commDataInfo.discount = FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt))));
+        thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt);
+      }
       // 미납요금
-      thisMain._unpaidBillsInfo = resArr[0].result.unPayAmtList;
+      thisMain._unpaidBillsInfo = result.unPayAmtList;
 
-      thisMain._commDataInfo.selClaimDt = thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt));
-      thisMain._commDataInfo.selClaimDtM = thisMain.getSelClaimDtM(String(thisMain._billpayInfo.invDt));
-      thisMain._commDataInfo.selStaDt = thisMain.getSelStaDt(String(thisMain._billpayInfo.invDt));
-      thisMain._commDataInfo.selEndDt = thisMain.getSelEndDt(String(thisMain._billpayInfo.invDt));
-      thisMain._commDataInfo.discount = FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.dcAmt))));
       thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
-      thisMain._commDataInfo.useAmtTot = FormatHelper.addComma(thisMain._billpayInfo.totInvAmt);
       thisMain._commDataInfo.intBillLineList =
         (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(childInfo, thisMain.reqQuery.line) : null;
 
       // thisMain._billpayInfo.invDtArr = thisMain._billpayInfo.invSvcList.map(item => item.invDt);
       // 청구월 목록 (화면)
-      thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
+      thisMain._commDataInfo.conditionChangeDtList = thisMain._billpayInfo.invDtArr ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.renderView(res, 'billguide/myt-fare.bill.guide.child.html', {
         reqQuery: thisMain.reqQuery,
@@ -169,25 +192,19 @@ class MyTFareBillGuideChild extends TwViewController {
 
   // -------------------------------------------------------------[SVC]
   public getSelStaDt(date: string): any { // 월 시작일 구하기
-    // return this._commDataInfo.selStaDt = moment(date).startOf('month').format('YYYY.MM.DD');
-    return this._commDataInfo.selStaDt = DateHelper.getStartOfMonDate( date, 'YYYY.M.D.');
+    return DateHelper.getStartOfMonDate( date, 'YYYY.M.D.');
   }
 
   public getSelEndDt(date: string): any { // 월 끝나는 일 구하기
-    // return this._commDataInfo.selEndDt = moment(date).endOf('month').format('MM.DD');
-    return this._commDataInfo.selEndDt = DateHelper.getEndOfMonDate( date, 'YYYY.M.D.');
+    return DateHelper.getEndOfMonDate( date, 'YYYY.M.D.');
   }
 
   public getSelClaimDt(date: string): any { // 청구 년월 구하기
-    // return this._commDataInfo.selClaimDt = moment(date).add(1, 'days').format( MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
-    return this._commDataInfo.selClaimDt =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
+    return DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE );
   }
 
   public getSelClaimDtM(date: string): any { // 청구 년월 구하기
-    // return this._commDataInfo.selClaimDtM = moment(date).add(1, 'days').format('M');
-    return this._commDataInfo.selClaimDtM =
-      DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
+    return DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
   /**
