@@ -145,20 +145,22 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$searchTarget = $target || $(event.currentTarget);
     this._page = 0;
 
-    var $searchField = this.$searchTarget.siblings('.fe-input');
-    if (this._isValid($searchField)) {
+    // OP002-3434 - 주소 입력불편 개선, 최소 입력 조건 삭제
+    // var $searchField = this.$searchTarget.siblings('.fe-input');
+    // if (this._isValid($searchField)) {
       this._getList();
-    }
+    // }
   },
-  /**
-   * @function
-   * @desc 2자리 이상 입력 여부 체크
-   * @param $target
-   * @returns {boolean|*}
-   */
-  _isValid: function ($target) {
-    return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
-  },
+  // OP002-3434 - 주소 입력불편 개선, 최소 입력 조건 삭제
+  // /**
+  //  * @function
+  //  * @desc 2자리 이상 입력 여부 체크
+  //  * @param $target
+  //  * @returns {boolean|*}
+  //  */
+  // _isValid: function ($target) {
+  //   return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
+  // },
   /**
    * @function
    * @desc 우편번호 검색 API 호출
