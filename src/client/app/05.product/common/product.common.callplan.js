@@ -1006,7 +1006,84 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_TERM_PRODUCT).pop();
     }
 
+    if((Tw.FLO_AND_DATA_PROD_ID.indexOf(this._prodId) !== -1) && this._prodTypCd === 'C' && this._joinTermCd === '01'){
+      return this._floMbrConfirm();
+    }else{
+      this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+    }
+  },
+
+  /**
+   * @function
+   * @desc 무선 부가상품 가입/해지 정보확인(FLO앤데이터/플러스 가입 시 멤버십 이력 체크) API 요청
+   */
+  _floMbrConfirm: function () {
+    this._apiService.request(Tw.API_CMD.BFF_10_0184)
+    .done($.proxy(this._floMbrConfirmRes, this))
+    .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
+  },
+
+  /**
+   * @function
+   * @desc FLO앤데이터/플러스 가입 시 멤버십 이력 체크 API 응답 값 처리, 팝업 실행
+   * @param resp - API 응답 값
+   * @returns {*}
+   */
+  _floMbrConfirmRes: function (resp) {
+    Tw.CommonHelper.endLoading('.container');
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var result = resp.result;
+    if(result.floUseYn === 'Y'){
+      this._popupService.open({
+        url: Tw.Environment.cdn + '/hbs/',
+        'title': Tw.ALERT_MSG_PRODUCT.FLO_PROMOTION_INFO.TITLE,
+        'title_type': 'sub',
+        'cont_align': 'tl',
+        'contents': Tw.ALERT_MSG_PRODUCT.FLO_PROMOTION_INFO.MSG,
+        'bt': [{
+          style_class: 'bt-blue1 fe-btn_go_membership',
+          txt: Tw.ALERT_MSG_PRODUCT.FLO_PROMOTION_INFO.BTN_TEXT
+        }],
+        'bt_b': [{
+          style_class: 'pos-left tw-popup-closeBtn',
+          txt: Tw.BUTTON_LABEL.CANCEL
+        },{
+          style_class:'bt-red1 pos-right fe-btn_join_flo',
+          txt: Tw.BUTTON_LABEL.JOIN
+        }]
+      }, $.proxy(this._mbrFloYnInfo, this));
+    }else{
+      this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+    }
+  },
+
+  /**
+   * @function
+   * @desc 멤버십 할인 이력 조회 팝업 내 T멤버십 할인내역 확인하기 버튼 링크 이벤트 바인딩
+   * @param $popupContainer - 팝업 컨테이너 레이어
+   */
+  _mbrFloYnInfo: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_go_membership', $.proxy(this._goMembership, this));
+    $popupContainer.on('click', '.fe-btn_join_flo', $.proxy(this._goJoinFlo, this));
+  },
+
+  _goJoinFlo: function() {
     this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+  },
+
+  /**
+   * @function
+   * @desc T멤버십 할인내역 확인하기 이동
+   */
+  _goMembership: function() {
+    this._popupService.closeAll();
+    setTimeout(function() {
+      this._historyService.goLoad('/membership/my');
+    }.bind(this));
   },
 
   /**

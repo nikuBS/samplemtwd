@@ -926,6 +926,11 @@ export const API_CMD = {
     path: '/core-product/:version/services/wireless/multi-addition/:args0',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0184: {
+    path: '/core-product/:version/mobiles/additions/flocheck',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
