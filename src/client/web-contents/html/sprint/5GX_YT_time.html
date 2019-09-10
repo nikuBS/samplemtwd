@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <h1 class="h-tit">5GX 시간권 설정</h1><!-- 190909 [OP002-3626] 수정_01 -->
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <!-- 190909 [OP002-3626] 수정_02 -->
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+			<div class="container">
+				<div class="og-banner-tip">
+					<p class="tip-alert">
+						<strong class="st1">정기 점검 안내</strong>
+						<strong class="st2">5GX 시간권 서비스 이용이 제한됩니다.</strong>
+						<span class="st3">2019.01.20. 00:00 ~ 2019.01.20. 06:00 (6시간)</span>
+						<span class="st4">이용에 불편을 드려 죄송합니다.</span>
+					</p>
+					<button type="button" class="og-banner-tip-close" onclick="$('.og-banner-tip').remove();">정기 점검 안내 닫기</button>
+				</div>
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box og-timeConf-wrap" data-type="0" data-hour="0" data-minute="0" data-max-hour="8" data-max-minute="30"><!-- js : 다이얼 설정 시작시 class="active" 추가 --> <!-- 최대 설정 시간 값 개발에서 등록 -->
+					<div class="og-time-picked">
+						<p class="time-last notice_case1"><span class="comment-time">사용할 시간을 다이얼로 설정해 주세요.</span></p><!-- Default 상태시 노출 -->
+                        <p class="time-last notice_case2" style="display:none;"><span class="comment-time">8시간 30분까지 선택가능</span></p><!-- 설정 가능 시간일 경우 노출 - 개발에서 가능 사용 시간 계산하여 표시 -->
+                        <p class="time-last notice_case3" style="display:none;"><strong class="overflowed">사용 가능 시간을 초과 하였습니다.</strong></p><!-- 설정 불가능 시간일 경우(사용 가능 시간 초과 시) 노출 - 개발에서 사용 가능 시간 계산하여 표시 -->
+					</div>
+					<div class="circle-out-box">
+						<svg width="256" height="256" class="circle-datepicker">
+							<defs>
+								<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+									<stop offset="0%" stop-color="#fe6b5c" />
+									<stop offset="100%" stop-color="#ec4646" />
+								</linearGradient>
+								<filter id="shadow-blur" filterUnits="userSpaceOnUse">
+									<feGaussianBlur in="SourceGraphic" stdDeviation="4" />
+									<feOffset dx="2" dy="2" result="offsetblur" /> 
+									<feOffset dx="-2" dy="-2" result="offsetblur" />
+								</filter>
+								<filter id="shadow-inset">
+									<feComponentTransfer in="SourceAlpha">
+										<feFuncA type="table" tableValues="1 0" />
+									</feComponentTransfer>
+									<feGaussianBlur stdDeviation="4" />
+									<feOffset dx="0" dy="4" result="offsetblur" />
+									<feFlood flood-color="#d9d9d9" result="color" />
+									<feComposite in2="offsetblur" operator="in" />
+									<feComposite in2="SourceAlpha" operator="in" />
+									<feMerge>
+										<feMergeNode in="SourceGraphic" />
+										<feMergeNode />
+									</feMerge>
+								</filter>
+							</defs>
+							<circle cx="128" cy="128" r="105" stroke="#e8e8e8" stroke-width="20" fill="none" filter="url(#shadow-inset)" />
+							<path class="circle-datepicker__path" stroke-linecap="round" stroke="url(#gradient)" stroke-width="20" fill="none" d="" /> <!-- 버튼 이동시 생성되는 주황색 도넛 (설정 다이얼 버튼) -->
+							<circle class="circle-datepicker__endBack" cx="128" cy="13" r="13" fill="#f76252" filter="url(#shadow-blur)" /> <!-- 최외각 1px 라인용 서클 -->
+							<circle class="circle-datepicker__end" cx="128" cy="13" r="12" stroke="#ffffff" stroke-width="9" fill="#ef4b49" /> <!-- 흰색 및 주황색 서클 -->
+						</svg>
+						<p class="og-time-display-init">
+							<span class="time-for-5g">사용할 시간</span>
+							<strong class="time-count">
+								<a href="#circle1" class="bt-set on"><span class="ti-me">00</span>시간</a><!-- 시간/분 선택시 class="on" -->
+								<span class="di-v">:</span>
+								<a href="#circle2" class="bt-set"><span class="mi-n">00</span>분</a>
+							</strong>
+							<span class="time-is-gb">최대 12시간 까지<br> 선택 가능</span>
+						</p>
+					</div>
+
+					<div class="og-time-setdata">
+						<p class="tit">사용 가능 시간</p>
+						<div class="data-deduct">
+							<span class="val-ue-wrap"><b>8</b>시간 <b>15</b>분</span>
+						</div>
+						<div class="btns">
+							<button type="button" class="btn-round3">10분</button>
+							<button type="button" class="btn-round3">1시간</button>
+							<button type="button" class="btn-round3">전체</button>
+						</div>
+					</div>
+					<div class="og-start5G line">
+						<button type="button" class="btn-round1 btn-style1" disabled>5GX 시간권 사용</button><!-- 사용 가능 시간 내 사용할 시간 설정 시, 버튼 활성화 -->
+					</div>
+				</div>
+				<!-- //.cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<ul class="full-link-list type02">
+						<li>
+							<button>
+								<span class="inner">
+									<span class="tit">이용내역</span>
+								</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<!-- //.cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<ul class="full-link-list type02">
+						<li>
+							<button>
+								<span class="inner">
+									<span class="tit">나의 요금제</span>
+									<span class="text">5GX</span>
+								</span>
+							</button>
+						</li>
+					</ul>
+				</div>
+				<!-- //.cont-box -->
+
+				<!-- .cont-box -->
+				<div class="cont-box noborder bgnone">
+					<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+					<ul class="pg-chk-list02">
+						<li><button type="button" class="btn-tip" aria-haspopup="true">유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						<li><button type="button" class="btn-tip" aria-haspopup="true">무제한 5G 이용 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+					</ul>
+				</div>
+				<!-- //.cont-box -->
+            </div>
+			<!-- //190909 [OP002-3626] 수정_02 -->
+        </div>
+        <!--// #contents -->
+    </div>
+
+	<!-- 스크립트 샘플입니다. FE에서 참조하셔서 개발 부탁 드립니다. -->
+	<script type="text/javascript">
+		$(function () {
+			var $timeConf = $('.og-timeConf-wrap'),
+				$picker = $('.circle-datepicker'),
+				$timePicker = $('.og-time-display-init > .time-count > a'),
+				$timePicked = $('.og-timeConf-wrap > .og-time-picked > p'),
+				$timeButton = $('.og-time-setdata > .btns > button'),
+				maxHour = $timeConf.data('maxHour'),
+				maxMinute = $timeConf.data('maxMinute'),
+				$hour = $('.ti-me'),
+				$minute = $('.mi-n'),
+				hourPi = 360 / 13,
+				minutePi = 360 / 6,
+				time = 0,
+				pi = 0,
+                idx = 0;
+
+			function pickerRedraw(pi) {
+				$('.circle-datepicker').trigger('circledatepickerredraw', {'pi':pi});
+			}
+
+			function addZero(n) {
+				return (String(n).length < 2) ? '0' + n : n;
+			}
+
+			function togglePicker(index) {
+				$timeConf.data('type', index);
+				$timePicker.removeClass('on').eq(index).addClass('on');
+				pi = (index === 0) ? $timeConf.data('hour') : $timeConf.data('minute');
+				pickerRedraw(pi);
+			}
+
+			// 시간 or 분 선택 시
+			$timePicker.on('click', function (e) {
+            	e.preventDefault();
+            	idx =  $timePicker.index($(this));
+				togglePicker(idx);
+			});
+
+			// 서클 드래그시 설정
+			$picker.circle_datepicker().on('timer', function (e, data) {
+				if ($timeConf.data('type') === 0) {
+					time = parseInt(data[0] / hourPi);
+					if (time === 12) $minute.html('00');
+					$hour.html(addZero(time));
+					$timeConf.data('hour', data[0]);
+				} else {
+					time = parseInt(data[0] / minutePi);
+					$minute.html(time + '0');
+					$timeConf.data('minute', data[0]);
+				}
+
+				// 시간 변경에 따른 디자인 및 텍스트 변경
+				if (parseInt($hour.html(), 10) === 0 && parseInt($minute.html(), 10) === 0) {
+					$timeConf.removeClass('active');
+					$timePicked.hide().eq(0).show();
+				} else {
+					$timeConf.addClass('active');
+					if (parseInt($hour.html(), 10) > maxHour || (parseInt($hour.html(), 10) === maxHour && parseInt($minute.html(), 10) > maxMinute)) {
+						$timePicked.hide().eq(2).show();
+					} else {
+						$timePicked.hide().eq(1).show();
+					}
+				}
+			});
+
+			// 시간 설정 버튼 클릭시
+			$timeButton.on('click', function () {
+				switch ($(this).index()) {
+					case 0 :
+					    // 분단위 시간 설정 클릭시
+						pi = (parseInt($timeConf.data('minute') + minutePi) >= 360) ? 0 : parseInt($timeConf.data('minute') + minutePi);
+						time = parseInt(pi / minutePi);
+						$timeConf.data('minute', pi);
+						togglePicker(1);
+						break;
+					case 1 :
+					    // 시단위 시간 설정 클릭시
+						// 13으로 나누다 보니 00 ~ 00시까지 생김. 첫번째 00시는 없애야함.
+						pi = (parseInt($timeConf.data('hour') + hourPi) >= 360) ? 0 : parseInt($timeConf.data('hour') + hourPi);
+						pi = (pi === parseInt(hourPi)) ? pi + hourPi : pi;
+						time = parseInt(pi / hourPi);
+						$timeConf.data('hour', pi);
+						togglePicker(0);
+						break;
+                    default :
+					    // 전체 시간 설정 클릭시
+                        $timeConf.data('minute', (maxMinute / 10) * minutePi);
+                        $timeConf.data('hour', maxHour * hourPi);
+                        $hour.html(addZero(maxHour));
+                        $minute.html(maxMinute);
+                        togglePicker(idx);
+						break;
+				}
+			});
+		});
+	</script>
+	<!-- //스크립트 샘플입니다. FE에서 참조하셔서 개발 부탁 드립니다. -->
+</body>
+</html>
