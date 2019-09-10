@@ -588,11 +588,11 @@
                         <!-- 내게맞는요금제 추천 -->
                         <% if (svcType.login && recommendProdsData.hasRecommendProds) { %>
                             <div class="section-box nogaps">
-                                <div class="tod-mls-comp fe-mls-1" data-mls-id="MTW_M000184_01">
+                                <div class="tod-mls-comp tod-second-box fe-mls-1" data-mls-id="MTW_M000184_01">
                                     <!-- mls-hd -->
                                     <div class="tod-mls-hd">
                                         <span class="sp-tit">나에게 <strong>꼭 맞는 요금제</strong>
-                                            <i class="i-beta"><img src="<%= CDN %>/img/main/ho-ico-beta.png" alt="beta"></i></span>
+                                            <button class="btn-tip" aria-haspopup="true" id="fe-bt-recommend-prods-guide"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
                                         <span class="sp-date"><%= recommendProdsData.nowDate%></span>
                                     </div>
                                     <!-- //mls-hd -->
@@ -602,11 +602,27 @@
                                         <div class="tod-mls-card intro-area-1">
                                             <div class="tod-mls-msg-bx">
                                                 <span class="icon-wrap">
-                                                    <i class="i-img"><img src="<%= CDN %>/img/main/ho-ico-intro-1.png" alt=""></i>
+                                                    <span class="line-wrap">
+                                                        <span class="line one"></span>
+                                                        <span class="line two"></span>
+                                                        <span class="line three"></span>
+                                                        <span class="line four"></span>
+                                                        <span class="line five"></span>
+                                                    </span>
                                                 </span>
                                                 <p class="txt-wrap">
                                                     <span class="sp-name"><%= svcInfo.mbrNm %>님에게</span>
-                                                    <span class="sp-desc">꼭 맞는 요금제를 찾고 있습니다!</span>
+                                                    <span class="sp-desc">꼭 맞는 요금제를 추천해드릴게요</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="tod-mls-card recomCase-area">
+                                            <div class="tod-mls-msg-bx">
+                                                <span class="icon-wrap">
+                                                    <i class="i-img"><img src="<%= CDN %>/img/main/ho-ico-intro-2.png" alt="데이터 추천"></i>
+                                                </span>
+                                                <p class="txt-wrap">
+                                                    <span class="sp-desc">요금제 추천이 완료되었습니다. <br>지금 바로 확인해보세요!</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -637,7 +653,7 @@
                                             </div>
                                         </div>
                                         <div class="tod-mls-link">
-                                            <a href="#none" class="link-plan" data-xt_eid="MLS_FEE_001" data-xt_csid="_TWB" data-xt_action="BV" data-xt_action2="BC">추천 요금제 바로가기</a>
+                                            <a href="/main/recommend/product" class="link-plan" data-xt_eid="MLS_FEE_001" data-xt_csid="_TWB" data-xt_action="BV" data-xt_action2="BC">추천 요금제 바로가기</a>
                                         </div>
                                     </div>
                                 </div>
