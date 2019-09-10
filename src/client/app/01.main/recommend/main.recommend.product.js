@@ -93,12 +93,9 @@ Tw.MainRecommendProduct.prototype = {
         clearTimeout(this._timer);
       }
 
-      // console.log('##### scroll #####');
-
       this._timer = setTimeout(function () {
         this._index = 0;
           $.each(this.$pbox, function (idx, element) {
-            console.log(element);
             this._index = ($(element).offset().top < ($(window).scrollTop() + 140)) ? idx + 1 : this._index;
           });
           this._toolTipAnimate(this._index);
@@ -107,7 +104,6 @@ Tw.MainRecommendProduct.prototype = {
   },
 
   _toolTipAnimate: function(idx) {
-    console.log('idx===>', idx);
     if (idx !== this._now) {
       this._color = this.$list.eq(idx).data('bgColor');
       $('.di-box-container').css('background', this._color);

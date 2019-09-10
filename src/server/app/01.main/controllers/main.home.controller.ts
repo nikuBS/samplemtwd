@@ -572,7 +572,7 @@ class MainHome extends TwViewController {
     };
 
     if (BrowserHelper.isApp(req)) {
-      return this.apiService.request(API_CMD.BFF_10_0178, {
+      return this.apiService.requestStore(SESSION_CMD.BFF_10_0178, {
         experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
         prcplnRcTyp: MLS_PRCPLN_RC_TYP, 
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'

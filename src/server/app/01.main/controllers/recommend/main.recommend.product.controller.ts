@@ -29,57 +29,8 @@ export default class MainRecommendProduct extends TwViewController {
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
       })
       .switchMap((resp) => {
-
-        // for test
-        // resp = {
-        //   "code":"00",
-        //   "msg":"success",
-        //   "result":{
-        //     "items":[
-        //       {
-        //         "prodId":"NA00006534",
-        //         "prodType":"fee",
-        //         "prodNm":"세이브",
-        //         "props":[
-        //           {
-        //             "reasonPreText":"데이터 걱정 없는",
-        //             "reasonCode":"prcpln_01",
-        //             "reasonPostText":"어떠세요?",
-        //             "reasonTyp":"data"
-        //           },
-        //           {
-        //             "reasonPreText":"데이터 걱정 없는",
-        //             "reasonCode":"prcpln_05",
-        //             "reasonPostText":"어떠세요?",
-        //             "reasonTyp":"data"
-        //           },
-        //           {
-        //             "reasonPreText":"#",
-        //             "reasonCode":"prcpln_08",
-        //             "reasonPostText":"#",
-        //             "reasonTyp":"insurance"
-        //           },
-        //           {
-        //             "reasonPreText":"#",
-        //             "reasonCode":"prcpln_12",
-        //             "reasonPostText":"#",
-        //             "reasonTyp":"membership"
-        //           },
-        //           {
-        //             "reasonPreText":"#",
-        //             "reasonCode":"prcpln_14",
-        //             "reasonPostText":"#",
-        //             "reasonTyp":"music"
-        //           }
-        //         ]
-        //       }
-        //     ],
-        //     "timestamp":"1559114332.78"
-        //   }
-        // };
-
         if ( resp.code === API_CODE.CODE_00 ) {
-          // console.log('\n\n[추천 요금제 호출]\n\n', JSON.stringify(resp));
+          console.log('\n\n[추천 요금제 호출]\n\n', JSON.stringify(resp));
 
           // MLS Key 생성
           const items = resp.result.items;
@@ -157,53 +108,6 @@ export default class MainRecommendProduct extends TwViewController {
           throw resp;
         }
       }).switchMap((resp) => {
-        // for test
-        // TODO: 응답코드가 2001로 오고있음 ㅠ 일단 테스트용 데이터 수동으로 넣어서 작업
-        // resp = {
-        //   'code': '00',
-        //   'status': 'success',
-        //   'results': {
-        //     'data_use_ratio_bf_m0': '0.83133',
-        //     'data_use_ratio_bf_m1': '0.95544',
-        //     'data_use_ratio_bf_m2': '0.69123',
-        //     'bf_m0_ym': '201907',
-
-        //     // 'data_use_night_ratio': '0.34123',
-        //     // 'data_use_night_ratio_median': '0.11345',
-
-        //     'app_use_traffic_video_ratio': '0.92234',
-        //     'app_use_traffic_video_ratio_median': '0.210987',
-        //     'app_use_traffic_video_ratio_median_yn': 'Y',
-
-        //     'app_use_traffic_music_ratio': '0.34567',
-        //     'app_use_traffic_music_ratio_median': '0.21090',
-
-        //     // 'additional_svc_ansim_option_scrb_type': 'paid',
-        //     // 'additional_svc_flo_scrb_type': 'paid',
-        //     // 'additional_svc_melon_scrb_type': 'paid',
-        //     // 'additional_svc_bugs_scrb_type': 'paid'
-
-        //     'mbr_use_discount_amt_cum' : '172000',
-        //     'mbr_discount_amt_cum_chocolate' : '10000',
-        //     'mbr_discount_amt_cum_bakery' : '23000',
-        //     'mbr_discount_amt_cum_sports' : '1000',
-        //     'mbr_discount_amt_cum_jeju' : '0',
-        //     'mbr_discount_amt_cum_food_and_beverage' : '1500',
-        //     'mbr_discount_amt_cum_education': '0', 
-        //     'mbr_discount_amt_cum_transportation' : '4500',
-        //     'mbr_discount_amt_cum_mobile_and_media' : '1000',
-        //     'mbr_discount_amt_cum_beauty_and_fashion' : '9000',
-        //     'mbr_discount_amt_cum_shopping' : '20000',
-        //     'mbr_discount_amt_cum_movie' : '16000',
-        //     'mbr_discount_amt_cum_coffee' : '64000',
-        //     'mbr_discount_amt_cum_family_restaurant' : '7000',
-        //     'mbr_discount_amt_cum_pizza' : '10000',
-        //     'mbr_discount_amt_cum_convenience_store' : '5000',
-        //     'mbr_discount_amt_cum_theme_park' : '0'
-
-        //   }
-        // };
-        // console.log('\n\n[추천 근거 호출]\n\n', resp);
         if ( resp.code === API_CODE.CODE_00 ) {
 
           const membershipDatas: any = [];
