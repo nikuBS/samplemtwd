@@ -26,10 +26,10 @@
                 <div class="keyVisual-inner">
                     <img src="<%= CDN %>/img/t_myPlan/keyvisual_mobile.png" alt="" class="keyvisual-mobile">
                     <p class="plan-comment">
-                        <span class="name"><%= svcInfo.mbrNm %></span>
+                        <span class="name"><%= svcInfo.mbrNm %>님</span>
                         <strong>연 <%= resp.benefit.total %>원</strong><br> 상당의 혜택을<br> 받을 수 있는<br><strong><%= resp.prodNm %></strong>요금제<br>어떠세요?
                     </p>
-                    <p class="benefit-comment">현재 요금제 연 예상 혜택 <strong>47,400</strong>원</p>
+                    <!-- <p class="benefit-comment">현재 요금제 연 예상 혜택 <strong>47,400</strong>원</p> -->
                 </div>
             </div>
             <div class="tod-plan-wrap">
@@ -74,12 +74,12 @@
                                     </span>
                                     <span class="txt">추천요금제는 <strong>멤버십 VIP</strong>로 스타벅스, 영화 예매 등 <strong>무료로 이용</strong> 가능해요!</span>
                                 </li>
-                                <li data-bg-color="#3e4b69" style="display: none;">
+                                <!-- <li data-bg-color="#3e4b69" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico7.png" alt="">
                                     </span>
                                     <span class="txt">추천요금제로 이용중인 <strong>아이패드</strong> (010-**55-**75)는 <strong>함께쓰기</strong>가 가능해요!</span>
-                                </li>
+                                </li> -->
                                 <li class="txt-black" data-bg-color="#ebf5fe" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico1.png" alt="">
@@ -398,7 +398,7 @@
                             휴대폰 파손 시 최대 100만원 까지 파손 비용을 <em class="em">무료로 제공</em>해드려요.
                         </p>
                         <div class="plan-img-wrap">
-                            <img src="/img/t_myPlan/item_plan_img07.png" alt=" ">
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img07.png" alt=" ">
                         </div>
                     </div><!-- //plan-item -->
                     <% } %>
@@ -411,7 +411,7 @@
                     <div class="plan-item fe-prcpln_14" >
                         <p class="comment">
                             <span class="cate">멤버십</span>
-                            <em class="em">영화 제휴서비스</em>를 멤버십으로 가장 많이 이용하셨네요.
+                            <em class="em"><%= resp.reason_details.membership.first.title %> 제휴서비스</em>를 멤버십으로 가장 많이 이용하셨네요.
                         </p>
                         <div class="plan-chart-wrap">
                             <div class="tod-piechart-wrap">
@@ -419,16 +419,16 @@
                                     <div class="widget-box chart" data-type="pie">
                                         <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="300" height="300"  viewbox="0 0 600 600"  ><!--  -->
                                             <g> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
-                                                <path class="chart-arc" fill="#FF6563" data-percent="0.57" data-offset-height="0"></path>
-                                                <path class="chart-arc" fill="#7E77C5" data-percent="0.06" data-offset-height="-30"></path>
-                                                <path class="chart-arc" fill="#08C2BA" data-percent="0.15" data-offset-height="-20"></path>
-                                                <path class="chart-arc" fill="#1DA6F8" data-percent="0.22" data-offset-height="-10"></path>
+                                                <path class="chart-arc" fill="#FF6563" data-percent="<%= resp.reason_details.membership.first.percent %>" data-offset-height="0"></path>
+                                                <path class="chart-arc" fill="#7E77C5" data-percent="<%= resp.reason_details.membership.etc.percent %>" data-offset-height="-30"></path>
+                                                <path class="chart-arc" fill="#08C2BA" data-percent="<%= resp.reason_details.membership.third.percent %>" data-offset-height="-20"></path>
+                                                <path class="chart-arc" fill="#1DA6F8" data-percent="<%= resp.reason_details.membership.second.percent %>" data-offset-height="-10"></path>
                                             </g>
                                             <g>
-                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan>57%</tspan></text>
-                                                <text class="chart-txt" fill="white" style="font-size:21px;">6%</text>
-                                                <text class="chart-txt" fill="white" style="font-size:24px;">15%</text>
-                                                <text class="chart-txt" fill="white" style="font-size:27px;">22%</text>
+                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan><%= resp.reason_details.membership.first.percent * 100 %>%</tspan></text>
+                                                <text class="chart-txt" fill="white" style="font-size:21px;"><%= resp.reason_details.membership.second.percent * 100 %>%</text>
+                                                <text class="chart-txt" fill="white" style="font-size:24px;"><%= resp.reason_details.membership.third.percent * 100 %>%</text>
+                                                <text class="chart-txt" fill="white" style="font-size:27px;"><%= resp.reason_details.membership.etc.percent * 100 %>%</text>
                                             </g>
                                         </svg>
                                     </div>
@@ -438,17 +438,17 @@
                                             <span class="line"></span> <!-- border-color 필요 -->
                                         </span>
                                         <span class="item-num">
-                                            <span class="item">CGV</span>
-                                            10,200원
+                                            <span class="item"><%= resp.reason_details.membership.first.title %></span>
+                                            <%= resp.reason_details.membership.first.amt %>원
                                         </span>
                                     </div>
                                 </div>
                             </div>
                             <ul class="gh-comment membership">
-                                <li class="red article best"><span class="article-txt"><span class="bene-item">CGV</span><span class="price">10,200원</span></span></li>
-                                <li class="blue article"><span class="article-txt"><span class="bene-item">멜론</span><span class="price">10,200원</span></span></li>
-                                <li class="green article"><span class="article-txt"><span class="bene-item">씨유</span><span class="price">100,200원</span></span></li>
-                                <li class="purple article"><span class="article-txt"><span class="bene-item">기타</span><span class="price">10,200원</span></span></li>
+                                <li class="red article best"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.first.title %></span><span class="price"><%= resp.reason_details.membership.first.amt %>원</span></span></li>
+                                <li class="blue article"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.second.title %></span><span class="price"><%= resp.reason_details.membership.second.amt %>원</span></span></li>
+                                <li class="green article"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.third.title %></span><span class="price"><%= resp.reason_details.membership.third.amt %>원</span></span></li>
+                                <li class="purple article"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.etc.title %></span><span class="price"><%= resp.reason_details.membership.etc.amt %>원</span></span></li>
                             </ul>
                         </div>
                     </div><!-- //plan-item -->
@@ -456,17 +456,6 @@
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
-                <div class="cont-box">
-                    <div class="plan-item" >
-                        <p class="comment">
-                            <span class="cate">함께쓰기</span>
-                            고객님, 추천요금제는 무료로 <em class="em">함께쓰기</em>가 가능해요. <!-- //190830 [OP002-2006] 수정13 -->
-                        </p>
-                        <div class="plan-img-wrap">
-                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img08.png" alt=" ">
-                        </div>
-                    </div><!-- //plan-item -->
-                </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <div class="cont-box tod-plan-last">
                     <div class="plan-end-box">

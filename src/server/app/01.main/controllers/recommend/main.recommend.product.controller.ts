@@ -6,7 +6,8 @@
 
 import { Request, Response, NextFunction } from 'express-serve-static-core';
 import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
-import { MLS_ERROR, EXPERIMENT_EXPS_SCRN_ID, MLS_PRCPLN_RC_TYP, MLS_DETAIL_MAPPING, MLS_PRODUCT_BENEFIT, MLS_CATEGORY_MAPPING } from '../../../../types/bff.type';
+import { MLS_ERROR, EXPERIMENT_EXPS_SCRN_ID, MLS_PRCPLN_RC_TYP } from '../../../../types/bff.type';
+import { MLS_DETAIL_MAPPING, MLS_PRODUCT_BENEFIT } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import BrowserHelper from '../../../../utils/browser.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -18,17 +19,67 @@ export default class MainRecommendProduct extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     const recommendProduct = {};
+    let keys: any = [];
 
-    // 로그인 되어 있고, App인 경우만..
-    if (!FormatHelper.isEmpty(svcInfo) && BrowserHelper.isApp(req)) {
-      this.apiService.requestStore(SESSION_CMD.BFF_10_0178, {
+    // App인 경우만..
+    if (BrowserHelper.isApp(req)) {
+      this.apiService.request(API_CMD.BFF_10_0178, {
         experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
         prcplnRcTyp: MLS_PRCPLN_RC_TYP, 
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
       })
       .switchMap((resp) => {
+
+        // for test
+        // resp = {
+        //   "code":"00",
+        //   "msg":"success",
+        //   "result":{
+        //     "items":[
+        //       {
+        //         "prodId":"NA00006534",
+        //         "prodType":"fee",
+        //         "prodNm":"세이브",
+        //         "props":[
+        //           {
+        //             "reasonPreText":"데이터 걱정 없는",
+        //             "reasonCode":"prcpln_01",
+        //             "reasonPostText":"어떠세요?",
+        //             "reasonTyp":"data"
+        //           },
+        //           {
+        //             "reasonPreText":"데이터 걱정 없는",
+        //             "reasonCode":"prcpln_05",
+        //             "reasonPostText":"어떠세요?",
+        //             "reasonTyp":"data"
+        //           },
+        //           {
+        //             "reasonPreText":"#",
+        //             "reasonCode":"prcpln_08",
+        //             "reasonPostText":"#",
+        //             "reasonTyp":"insurance"
+        //           },
+        //           {
+        //             "reasonPreText":"#",
+        //             "reasonCode":"prcpln_12",
+        //             "reasonPostText":"#",
+        //             "reasonTyp":"membership"
+        //           },
+        //           {
+        //             "reasonPreText":"#",
+        //             "reasonCode":"prcpln_14",
+        //             "reasonPostText":"#",
+        //             "reasonTyp":"music"
+        //           }
+        //         ]
+        //       }
+        //     ],
+        //     "timestamp":"1559114332.78"
+        //   }
+        // };
+
         if ( resp.code === API_CODE.CODE_00 ) {
-          console.log('\n\n[추천 요금제 호출]\n\n', JSON.stringify(resp));
+          // console.log('\n\n[추천 요금제 호출]\n\n', JSON.stringify(resp));
 
           // MLS Key 생성
           const items = resp.result.items;
@@ -36,51 +87,71 @@ export default class MainRecommendProduct extends TwViewController {
           if (!FormatHelper.isEmpty(items)) {
             const item = resp.result.items[0];
             const list = item.props;
-            let keys: any = [];
             const reasonCode: any = {};
             const categoryValidation: any = {};
+            const benefit: any = {};
+            let profileKeys: any = {};
+
             recommendProduct['prodId'] = item.prodId;
             recommendProduct['prodNm'] = item.prodNm;
-            recommendProduct['benefit'] = MLS_PRODUCT_BENEFIT[item.prodId];
 
+            // 해택 출력 포맷 변경
+            Object.keys(MLS_PRODUCT_BENEFIT[item.prodId]).map((key) => {
+
+              let value = MLS_PRODUCT_BENEFIT[item.prodId][key];
+
+              if ( FormatHelper.isNumber(value)) {
+                value = FormatHelper.addComma(String(value));
+              }
+              benefit[key] = value;
+            });
+
+            // 자세히 보기의 헤택별 출력 여부
+            recommendProduct['benefit'] = Object.assign(benefit, {
+              hasData: benefit.data === '0' ? false : true,
+              hasMemberShip: benefit.membership === '0' ? false : true,
+              hasFlo: benefit.flo === '0' ? false : true,
+              hasPooq: benefit.pooq === '0' ? false : true,
+              hasInsurance: benefit.insurance === '0' ? false : true,
+              hasSafe: benefit.safe === '0' ? false : true
+            });
+
+            // 추천에 대한 세부 근거(profile)를 호출을 위한 데이터 생성
             list.map((target) => {
               // # 뿐 아니라 SB 상 정의되지 않은 reasonCode 넘어올 경우에도 Skip
               if ( (target.reasonCode !== '#') && !FormatHelper.isEmpty(MLS_DETAIL_MAPPING[target.reasonCode]) ) {
                 // 해당 Category 영역 표시여부
-                categoryValidation[MLS_CATEGORY_MAPPING[target.reasonCode]] = true;
+                categoryValidation[MLS_DETAIL_MAPPING[target.reasonCode]['type']] = true;
                 // 해당 Card 표시여부
                 reasonCode[target.reasonCode] = true;
-                keys = keys.concat(Object.keys(MLS_DETAIL_MAPPING[target.reasonCode]));
+
+                // 상위 type을 각각의 profile_key에 저장한다.
+                const parentType = MLS_DETAIL_MAPPING[target.reasonCode]['type'];
+                
+                Object.keys(MLS_DETAIL_MAPPING[target.reasonCode]['profile_key']).map((key) => {
+                  Object.assign(MLS_DETAIL_MAPPING[target.reasonCode]['profile_key'][key], {'parentType': parentType});
+                });
+
+                profileKeys = Object.assign(profileKeys, MLS_DETAIL_MAPPING[target.reasonCode]['profile_key']);
+                keys = keys.concat(Object.keys(MLS_DETAIL_MAPPING[target.reasonCode]['profile_key']));
               }
             });
-            
-            // 테스트용 코드 (전체카드 노출)
-            categoryValidation['data'] = true;
-            categoryValidation['video'] = true;
-            categoryValidation['music'] = true;
-            categoryValidation['insurance'] = true;
-            categoryValidation['membership'] = true;
-            Object.keys(MLS_CATEGORY_MAPPING).map((keys) => {
-              reasonCode[keys] = true;
-            })
-            // 테스트용 코드 (전체카드 노출)
 
-            console.log('\n\n', keys, '\n\n');
             recommendProduct['category_validation'] = categoryValidation;
             recommendProduct['reason_codes'] = reasonCode;
-            // recommendProduct['reason_codes'] = reasonCode.join(',');
+            recommendProduct['profile_keys'] = profileKeys;
+            recommendProduct['keys'] = keys;
   
             // MLS 추천 없음
             if (keys.length === 0) {
-              return Observable.of({code: API_CODE.CODE_00, resut: {}});
+              throw MLS_ERROR.MLS0001;
             } else {
-              console.log('************ 근거 조회 호출 *****************');
-              console.log({keys});
+              // console.log('************ 근거 조회 호출 *****************');
+              // console.log({keys});
               return this.apiService.request(API_CMD.BFF_05_0212, {keys});
             }
           } else {
-            throw Error(MLS_ERROR.MLS0001);
-            // 오류 화면으로 render
+            throw MLS_ERROR.MLS0001;
           }
         } else {
           throw resp;
@@ -88,55 +159,152 @@ export default class MainRecommendProduct extends TwViewController {
       }).switchMap((resp) => {
         // for test
         // TODO: 응답코드가 2001로 오고있음 ㅠ 일단 테스트용 데이터 수동으로 넣어서 작업
-        resp = {
-          "code": "00",
-          "status": "success",
-          "results": {
-            'data_use_ratio_bf_m0': '0.83',
-            'data_use_ratio_bf_m1': '0.95',
-            'data_use_ratio_bf_m2': '0.69',
-            'bf_m0_ym': '201907',
+        // resp = {
+        //   'code': '00',
+        //   'status': 'success',
+        //   'results': {
+        //     'data_use_ratio_bf_m0': '0.83133',
+        //     'data_use_ratio_bf_m1': '0.95544',
+        //     'data_use_ratio_bf_m2': '0.69123',
+        //     'bf_m0_ym': '201907',
 
-            'data_use_night_ratio': '0.34',
-            'data_use_night_ratio_median': '0.11',
+        //     // 'data_use_night_ratio': '0.34123',
+        //     // 'data_use_night_ratio_median': '0.11345',
 
-            'app_use_traffic_music_ratio': '0.34',
-            'app_use_traffic_music_ratio_median': '0.21',
+        //     'app_use_traffic_video_ratio': '0.92234',
+        //     'app_use_traffic_video_ratio_median': '0.210987',
+        //     'app_use_traffic_video_ratio_median_yn': 'Y',
 
-            'additional_svc_ansim_option_scrb_type': 'paid',
-            'additional_svc_flo_scrb_type': 'paid',
-            'additional_svc_melon_scrb_type': 'paid',
-            'additional_svc_bugs_scrb_type': 'paid',
-            'app_use_traffic_video_ratio': '0.92',
-            'app_use_traffic_video_ratio_median': '0.21',
-            'app_use_traffic_video_ratio_median_yn': 'Y'
-          }
-        };
-        console.log('\n\n[추천 근거 호출]\n\n', resp);
+        //     'app_use_traffic_music_ratio': '0.34567',
+        //     'app_use_traffic_music_ratio_median': '0.21090',
+
+        //     // 'additional_svc_ansim_option_scrb_type': 'paid',
+        //     // 'additional_svc_flo_scrb_type': 'paid',
+        //     // 'additional_svc_melon_scrb_type': 'paid',
+        //     // 'additional_svc_bugs_scrb_type': 'paid'
+
+        //     'mbr_use_discount_amt_cum' : '172000',
+        //     'mbr_discount_amt_cum_chocolate' : '10000',
+        //     'mbr_discount_amt_cum_bakery' : '23000',
+        //     'mbr_discount_amt_cum_sports' : '1000',
+        //     'mbr_discount_amt_cum_jeju' : '0',
+        //     'mbr_discount_amt_cum_food_and_beverage' : '1500',
+        //     'mbr_discount_amt_cum_education': '0', 
+        //     'mbr_discount_amt_cum_transportation' : '4500',
+        //     'mbr_discount_amt_cum_mobile_and_media' : '1000',
+        //     'mbr_discount_amt_cum_beauty_and_fashion' : '9000',
+        //     'mbr_discount_amt_cum_shopping' : '20000',
+        //     'mbr_discount_amt_cum_movie' : '16000',
+        //     'mbr_discount_amt_cum_coffee' : '64000',
+        //     'mbr_discount_amt_cum_family_restaurant' : '7000',
+        //     'mbr_discount_amt_cum_pizza' : '10000',
+        //     'mbr_discount_amt_cum_convenience_store' : '5000',
+        //     'mbr_discount_amt_cum_theme_park' : '0'
+
+        //   }
+        // };
+        // console.log('\n\n[추천 근거 호출]\n\n', resp);
         if ( resp.code === API_CODE.CODE_00 ) {
-          
-          // 받아온 값들의 유형 별로 Format 수정(단위 등)
-          if ( !FormatHelper.isEmpty(resp.results.bf_m0_ym) ) {
-            resp.results['date_use_ratio_m0'] = DateHelper.getCurrentMonth(resp.results.bf_m0_ym);
-            resp.results['date_use_ratio_m1'] = (resp.results['date_use_ratio_m0'] === 1 ? 12 : resp.results['date_use_ratio_m0'] - 1);
-            resp.results['date_use_ratio_m2'] = (resp.results['date_use_ratio_m1'] === 1 ? 12 : resp.results['date_use_ratio_m1'] - 1);
+
+          const membershipDatas: any = [];
+          const results = resp.result.results;
+
+          // 호출한 key중 require가 true인 것의 수신 데이터가 없으면, 상위 영역은 disable 처리한다.
+          recommendProduct['keys'].map((key) => {
+            const parentType = recommendProduct['profile_keys'][key]['parentType'];
+            const required = recommendProduct['profile_keys'][key]['required'];
+            if ( required && !results.hasOwnProperty(key) && recommendProduct['category_validation'][parentType] !== false) {
+              recommendProduct['category_validation'][parentType] = false;
+            }
+          });
+
+          // 데이터 가공
+          Object.keys(results).map((target) => {
+
+            const type = recommendProduct['profile_keys'][target].type;
+            let value = results[target];
+
+            // 멤버십 데이터 추출
+            if ( MLS_DETAIL_MAPPING.prcpln_14.profile_key.hasOwnProperty(target)) {
+              membershipDatas.push({
+                key: target,
+                title: recommendProduct['profile_keys'][target].title,
+                amt: Number(value)
+              });
+            }
+
+            // 유형 별로 Format 수정
+            if ( !FormatHelper.isEmpty(type) && !FormatHelper.isEmpty(value)) {
+
+              value = Number(value);
+
+              // 비율일 경우는 소수 셋째자리 반올림
+              if ( type === 'ratio') {
+                results[target] = value.toFixed(2);
+
+              // 금액은 1000단위 구분자 추가(단, 멤베십은 아래 로직에서 처리)
+              } else if ( MLS_DETAIL_MAPPING.prcpln_14.profile_key.hasOwnProperty(target) === false && type === 'amt') {
+                value = FormatHelper.isNumber(value) ? value : 0;
+                value = FormatHelper.isEmpty(value) ? 0 : value;
+                results[target] = FormatHelper.addComma(String(value));
+              }
+            }
+          });
+
+          // 최소 4개의 데이터가 없으면 멤버십카드를 출력하지 않는다.(Total 데이터 수신 여부는 상위 공통 로직에서 체크)
+          if ( membershipDatas.length > 4) {
+            FormatHelper.sortObjArrDesc(membershipDatas, 'amt');
+            const tempArr = membershipDatas.slice(0, 4);
+
+            // 기타 append
+            tempArr.push({
+              key: 'mbr_discount_amt_cum_etc',
+              title: '기타',
+              amt: Number(tempArr[0].amt) - Number(tempArr[1].amt) - Number(tempArr[2].amt) - Number(tempArr[3].amt)
+            });
+
+            const totalAmt = Number(tempArr[0].amt);
+
+            if ( totalAmt !== 0) {
+              tempArr.map((obj) => {
+                const amt = obj['amt'];
+                obj['percent'] = (Number(amt) / totalAmt).toFixed(2);
+                obj['amt'] = FormatHelper.addComma(String(amt));
+              });
+            }
+            
+            results['membership'] = {
+              total: tempArr[0],
+              first: tempArr[1],
+              second: tempArr[2],
+              third: tempArr[3],
+              etc: tempArr[4]
+            };
+          } else {
+            recommendProduct['category_validation']['membership'] = false;
           }
-          // addDots(formattedResult)...
 
-
+          // 전월계산
+          if ( !FormatHelper.isEmpty(results.bf_m0_ym) ) {
+            results['date_use_ratio_m0'] = DateHelper.getCurrentMonth(results.bf_m0_ym);
+            results['date_use_ratio_m1'] = (results['date_use_ratio_m0'] === 1 ? 12 : results['date_use_ratio_m0'] - 1);
+            results['date_use_ratio_m2'] = (results['date_use_ratio_m1'] === 1 ? 12 : results['date_use_ratio_m1'] - 1);
+          }
 
           // 가져온 user profile key의 값을 추천 결과에 넣는다.
-          return Observable.of(Object.assign(recommendProduct, {reason_details: resp.results}));
+          return Observable.of(Object.assign(recommendProduct, {reason_details: results}));
         } else {
-          throw Error(MLS_ERROR.MLS0001);
-            // 오류 화면으로 render
+          throw MLS_ERROR.MLS0001;
         }
       }).subscribe((resp) => {
-        console.log('[렌더링 파라미터]\n', resp);
+        this.logger.debug(this, '[내게 맞는 추천 요금제]\n', JSON.stringify(resp));
         res.render('recommend/main.recommend.product.html', { svcInfo, pageInfo, resp });
       }, (err) => {
-        throw err;
-        // 오류 화면으로 render
+        this.error.render(res, {
+          svcInfo: svcInfo,
+          code: err.code,
+          msg: err.msg
+        });
       });
     }
   }

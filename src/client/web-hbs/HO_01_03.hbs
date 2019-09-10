@@ -17,99 +17,87 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz"><!-- border 없을 경우 .noborder / 배경색 없을 경우 .bgnone -->
                 <ul class="tod-plan-bene-list">
+                    {{#if data.hasMemberShip}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico01.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">VIP 멤버십</dt>
                                 <dd class="bene-desc">
-                                    연 72,000원 상당의 연 6회
+                                    연 {{data.membership}}원 상당의 연 6회
                                     <span class="bene-desc-sub">CU, 스타벅스, 영화 무료 혜택 제공</span>
                                 </dd>
                             </dl>
                         </div>
                     </li>
+                    {{/if}}
+                    {{#if data.hasPooq}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico02.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">POOQ 앤 데이터</dt>
                                 <dd class="bene-desc">
-                                    연 118,000원 상당의 POOQ 월정액
+                                    연 {{data.pooq}}원 상당의 POOQ 월정액
                                     <span class="bene-desc-sub">무료영화, 공중파 VOD, 실시간 TV</span>
                                 </dd>
                             </dl>
                         </div>
                     </li>
+                    {{/if}}
+                    {{#if data.hasFlo}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">FLO 앤 데이터</dt>
                                 <dd class="bene-desc">
-                                    연 94,800원 상당의 FLO 월정액
-                                    <span class="bene-desc-sub">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>
+                                    {{{data.flo}}}
                                 </dd>
                             </dl>
                         </div>
                     </li>
+                    {{/if}}
+                    {{#if data.hasInsurance}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico04.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">휴대폰 분실/파손</dt>
                                 <dd class="bene-desc">
-                                    연 67,200원 상당의 휴대폰 단말보험
+                                    연 {{data.insurance}}원 상당의 휴대폰 단말보험
                                     <span class="bene-desc-sub">최신 휴대폰 교체 지원 및 분실/파손 보험</span>
                                 </dd>
                             </dl>
                         </div>
                     </li>
+                    {{/if}}
+                    {{#if data.hasData}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico05.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">데이터</dt>
                                 <dd class="bene-desc">
-                                    월 데이터 100GB 제공
+                                    {{{data.data}}}
                                 </dd>
                             </dl>
                         </div>
                     </li>
-                    <li class="item">
-                        <div class="bene-wrap">
-                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico03.png" alt=""></span>
-                            <dl class="description-wrap">
-                                <dt class="bene-tit">FLO 앤 데이터</dt>
-                                <dd class="bene-desc">
-                                    연 47,400원 상당의 FLO 월정액 할인
-                                </dd>
-                            </dl>
-                        </div>
-                    </li>
-                    <li class="item">
-                        <div class="bene-wrap">
-                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico06.png" alt=""></span>
-                            <dl class="description-wrap">
-                                <dt class="bene-tit">데이터</dt>
-                                <dd class="bene-desc">
-                                    월 118,000원 상당의 심야 데이터 제공
-                                    <span class="bene-desc-sub">00~07시 데이터 4배</span>
-                                </dd>
-                            </dl>
-                        </div>
-                    </li>
+                    {{/if}}
+                    {{#if data.hasSafe}}
                     <li class="item">
                         <div class="bene-wrap">
                             <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico07.png" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">안심옵션</dt>
                                 <dd class="bene-desc">
-                                    연 66,000원 상당의 안심옵션 무료제공
+                                    연 {{data.safe}}원 상당의 안심옵션 무료제공
                                 </dd>
                             </dl>
                         </div>
                     </li>
+                    {{/if}}
                 </ul>
             </div>
             <!-- //.cont-box -->

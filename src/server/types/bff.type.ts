@@ -674,7 +674,7 @@ export const MLS_PRODUCT_BENEFIT = {
   NA00006539: {
     data: 0,
     membership: 72000,
-    flo: 94800,
+    flo: '연 94,800원 상당의 FLO 월정액<span class=\\\"bene-desc-sub\\\">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>',
     pooq: 118000,
     insurance: 67200,
     safe: 0,
@@ -684,25 +684,25 @@ export const MLS_PRODUCT_BENEFIT = {
   NA00006538: {
     data: 0,
     membership: 72000,
-    flo: 94800,
-    pooq: 0,
+    flo: 0,
+    pooq: 118000,
     insurance: 33600,
     safe: 0,
     total: 224400
   },
   // T플랜 에센스
   NA00006537: {
-    data: 0,
-    membership: 72000,
-    flo: 0,
+    data: '월 데이터 100GB 제공',
+    membership: 0,
+    flo: '연 47,400원 상당의 FLO 월정액',
     pooq: 0,
-    insurance: 47400,
+    insurance: 0,
     safe: 0,
     total: 47400
   },
   // T플랜 안심4G
   NA00006536: {
-    data: 2160000,
+    data: '월 180,000원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
     membership: 0,
     flo: 0,
     pooq: 0,
@@ -712,7 +712,7 @@ export const MLS_PRODUCT_BENEFIT = {
   },
   // T플랜 안심2.5G
   NA00006535: {
-    data: 1350000,
+    data: '월 112,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
     membership: 0,
     flo: 0,
     pooq: 0,
@@ -722,7 +722,7 @@ export const MLS_PRODUCT_BENEFIT = {
   },
   // T플랜 세이브
   NA00006534: {
-    data: 810000,
+    data: '월 67,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
     membership: 0,
     flo: 0,
     pooq: 0,
@@ -732,139 +732,115 @@ export const MLS_PRODUCT_BENEFIT = {
   }
 };
 
-// 내게 맞는 요금제 추천 페이지 내 영역 컨트롤
-export const MLS_CATEGORY_MAPPING = {
-    'prcpln_01': 'data',
-    'prcpln_02': 'data',
-    'prcpln_03': 'data',
-    'prcpln_04': 'video',
-    'prcpln_05': 'video',
-    'prcpln_06': 'video',
-    'prcpln_07': 'music',
-    'prcpln_08': 'music',
-    'prcpln_09': 'music',
-    'prcpln_10': 'insurance',
-    'prcpln_14': 'membership'
-};
-
-// TODO: scrb 유형 값들 데이터 포맷 확인 필요 (paid / free / ???)
-// TODO: 호출 결과가 null 또는 'N/A' 형태로 오는 경우가 있음, 결과값 형태 확인 필요
 export const MLS_DETAIL_MAPPING = {
   prcpln_01: {
-    bas_ofr_data_gb_qty_val : 'GB',
-    data_use_ratio_max : 'ratio',
-    data_use_ratio_bf_m0 : 'ratio',
-    data_use_ratio_bf_m1 : 'ratio',
-    data_use_ratio_bf_m2 : 'ratio',
-    bf_m0_ym : 'YYYYMM'
+    type: 'data',
+    profile_key: {
+      bas_ofr_data_gb_qty_val : {type: 'GB', name: '고객 기본제공 데이터', required: false},
+      data_use_ratio_max : {type: 'ratio', name: '데이터 최대 사용 비율', required: true},
+      data_use_ratio_bf_m0 : {type: 'ratio', name: '1개월 전 데이터 사용 비율', required: true},
+      data_use_ratio_bf_m1 : {type: 'ratio', name: '2개월 전 데이터 사용 비율', required: true},
+      data_use_ratio_bf_m2 : {type: 'ratio', name: '3개월 전 데이터 사용 비율', required: true},
+      bf_m0_ym : {type: 'YYYYMM', name: '전월의 연월', required: true}
+    }
   },
   prcpln_02: {
-    data_use_night_ratio : 'ratio',
-    data_use_night_ratio_median : 'ratio',
-    data_use_night_ratio_median_yn : 'Y/N'
+    type: 'data',
+    profile_key: {
+      data_use_night_ratio : {type: 'ratio', name: '심야시간 데이터 사용 비율', required: true},
+      data_use_night_ratio_median : {type: 'ratio', name: '심야시간 데이터 사용 비율 중간값', required: true},
+      data_use_night_ratio_median_yn : {type: 'Y/N', name: '심야시간 데이터 사용 비율 중간값 이상 여부', required: true},
+    }
   },
   prcpln_03: {
-    additional_svc_ansim_option_scrb_type : 'paid'
+    type: 'data',
+    profile_key: {
+      additional_svc_ansim_option_scrb_type : {type: 'P/F', name: '안심옵션 가입 형태', required: false}
+    }
   },
   prcpln_04: {
-    additional_svc_oksusu_scrb_type : 'paid',
-    additional_svc_pooq_scrb_type : 'paid'
+    type: 'video',
+    profile_key: {
+      additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
+      additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false}
+    }
   },
   prcpln_05: {
-    app_use_traffic_video_ratio : 'ratio',
-    app_use_traffic_video_ratio_median : 'ratio',
-    app_use_traffic_video_ratio_median_yn : 'Y/N'
+    type: 'video',
+    profile_key: {
+      app_use_traffic_video_ratio : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율', required: true},
+      app_use_traffic_video_ratio_median : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값', required: true},
+      app_use_traffic_video_ratio_median_yn : {type: 'Y/N', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값 이상 여부', required: false}
+    }
   },
   prcpln_06: {
-    additional_svc_oksusu_scrb_type : 'paid',
-    additional_svc_pooq_scrb_type : 'paid'
+    type: 'video',
+    profile_key: {
+      additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
+      additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false},
+    }
   },
   prcpln_07: {
-    additional_svc_flo_scrb_type : 'paid',
-    additional_svc_melon_scrb_type : 'paid',
-    additional_svc_bugs_scrb_type : 'paid'
+    type: 'music',
+    profile_key: {
+      additional_svc_flo_scrb_type : {type: 'ratio', name: 'FLO 가입 형태', required: false},
+      additional_svc_melon_scrb_type : {type: 'ratio', name: 'Melon 가입 형태', required: false},
+      additional_svc_bugs_scrb_type : {type: 'ratio', name: 'Bugs 가입 형태', required: false}
+    }
   },
   prcpln_08: {
-    app_use_trafic_music_ratio : 'ratio',
-    app_use_trafic_music_ratio_median : 'ratio',
-    app_use_trafic_music_ratio_median_yn : 'Y/N'
+    type: 'music',
+    profile_key: {
+      app_use_traffic_music_ratio : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용량 비율', required: true},
+      app_use_traffic_music_ratio_median : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용비율 중간값', required: true},
+      app_use_traffic_music_ratio_median_yn : {type: 'Y/N', name: '전체 데이터 대비 음악 데이터 사용비율 중간값 이상 여부', required: false}
+    }
   },
   prcpln_09: {
-    additional_svc_flo_scrb_type : 'paid',
-    additional_svc_melon_scrb_type : 'paid',
-    additional_svc_bugs_scrb_type : 'paid'
+    type: 'music',
+    profile_key: {
+      additional_svc_flo_scrb_type : {type: 'P/F', name: 'FLO 가입 형태', required: false},
+      additional_svc_melon_scrb_type : {type: 'P/F', name: 'Melon 가입 형태', required: false},
+      additional_svc_bugs_scrb_type : {type: 'P/F', name: 'Bugs 가입 형태', required: false}
+    }
   },
   prcpln_10: {
-    additional_svc_allcare_scrb_type : 'paid'
+    type: 'insurance',
+    profile_key: {
+      additional_svc_allcare_scrb_type : {type: 'P/F', name: 'T All 케어 가입 형태', required: false}
+    }
+  },
+  prcpln_12: {
+    type: 'insurance',
+    profile_key: {
+      additional_svc_allcare_scrb_type : {type: 'P/F', name: 'T All 케어 가입 형태', required: false}
+    }
   },
   prcpln_14: {
-    membership_vip_yn : 'Y/N',
-    membership_cnt_ratio_median_yn : 'Y/N',
-    membership_amt_ratio_median_yn : 'Y/N',
-    mbr_use_discount_amt_cum : 'amt',
-    mbr_discount_amt_cum_chocolate : 'amt',
-    mbr_discount_amt_cum_bakery : 'amt',
-    mbr_discount_amt_cum_sports : 'amt',
-    mbr_discount_amt_cum_jeju : 'amt',
-    mbr_discount_amt_cum_food_and_beverage : 'amt',
-    mbr_discount_amt_cum_education : 'amt',
-    mbr_discount_amt_cum_transportation : 'amt',
-    mbr_discount_amt_cum_mobile_and_media : 'amt',
-    mbr_discount_amt_cum_beauty_and_fashion : 'amt',
-    mbr_discount_amt_cum_shopping : 'amt',
-    mbr_discount_amt_cum_movie : 'amt',
-    mbr_discount_amt_cum_coffee : 'amt',
-    mbr_discount_amt_cum_family_restaurant : 'amt',
-    mbr_discount_amt_cum_pizza : 'amt',
-    mbr_discount_amt_cum_convenience_store : 'amt',
-    mbr_discount_amt_cum_theme_park : 'amt'
+    type: 'membership',
+    profile_key: {
+      membership_vip_yn : {type: 'Y/N', name: '멤버십VIP여부', required: false},
+      membership_cnt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용건수 중간값 이상 여부', required: false},
+      membership_amt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용금액 중간값 이상 여부', required: false},
+      mbr_use_discount_amt_cum : {type: 'amt', name: '연간 누적 멤버십 할인금액', title: '총계', required: true},
+      mbr_discount_amt_cum_chocolate : {type: 'amt', name: '멤버십- T멤버십 초콜릿 카테고리 연간 누적 할인금액', title: '초콜릿', required: false},
+      mbr_discount_amt_cum_bakery : {type: 'amt', name: '멤버십-베이커리 카테고리 연간 누적 할인금액', title: '베이커리', required: false},
+      mbr_discount_amt_cum_sports : {type: 'amt', name: '멤버십-스포츠 카테고리 연간 누적 할인금액', title: '스포츠', required: false},
+      mbr_discount_amt_cum_jeju : {type: 'amt', name: '멤버십-제주도 카테고리 연간 누적 할인금액', title: '제주도', required: false},
+      mbr_discount_amt_cum_food_and_beverage : {type: 'amt', name: '멤버십- F&B카테고리 연간 누적 할인금액', title: 'F&B', required: false},
+      mbr_discount_amt_cum_education : {type: 'amt', name: '멤버십-교육 카테고리 연간 누적 할인금액', title: '교육', required: false},
+      mbr_discount_amt_cum_transportation : {type: 'amt', name: '멤버십-교통 카테고리 연간 누적 할인금액', title: '교통', required: false},
+      mbr_discount_amt_cum_mobile_and_media : {type: 'amt', name: '멤버십-모바일&미디어 카테고리 연간 누적 할인금액', title: '모바일&미디어', required: false},
+      mbr_discount_amt_cum_beauty_and_fashion : {type: 'amt', name: '멤버십-뷰티&패션 카테고리 연간 누적 할인금액', title: '뷰티&패션', required: false},
+      mbr_discount_amt_cum_shopping : {type: 'amt', name: '멤버십-쇼핑 카테고리 연간 누적 할인금액', title: '쇼핑', required: false},
+      mbr_discount_amt_cum_movie : {type: 'amt', name: '멤버십-영화관 카테고리 연간 누적 할인금액', title: '영화관', required: false},
+      mbr_discount_amt_cum_coffee : {type: 'amt', name: '멤버십-커피 카테고리 연간 누적 할인금액', title: '커피', required: false},
+      mbr_discount_amt_cum_family_restaurant : {type: 'amt', name: '멤버십-패밀리레스토랑 카테고리 연간 누적 할인금액', title: '패밀리레스토랑', required: false},
+      mbr_discount_amt_cum_pizza : {type: 'amt', name: '멤버십-피자 카테고리 연간 누적 할인금액', title: '피자', required: false},
+      mbr_discount_amt_cum_convenience_store : {type: 'amt', name: '멤버십-편의점 카테고리 연간 누적 할인금액', title: '편의점', required: false},
+      mbr_discount_amt_cum_theme_park : {type: 'amt', name: '멤버십-테마파크 카테고리 연간 누적 할인금액', title: '테마파크', required: false}
+    }
   }
-};
-
-// API 호출 결과의 Format 작업용 Mapping 자료
-export const MLS_DETAIL_FORMAT = {
-  bas_ofr_data_gb_qty_val : 'GB',
-  data_use_ratio_max : 'ratio',
-  data_use_ratio_bf_m0 : 'ratio',
-  data_use_ratio_bf_m1 : 'ratio',
-  data_use_ratio_bf_m2 : 'ratio',
-  bf_m0_ym : 'YYYYMM',
-  data_use_night_ratio : 'ratio',
-  data_use_night_ratio_median : 'ratio',
-  data_use_night_ratio_median_yn : 'Y/N',
-  additional_svc_ansim_option_scrb_type : 'paid',
-  additional_svc_oksusu_scrb_type : 'paid',
-  additional_svc_pooq_scrb_type : 'paid',
-  app_use_traffic_video_ratio : 'ratio',
-  app_use_traffic_video_ratio_median : 'ratio',
-  app_use_traffic_video_ratio_median_yn : 'Y/N',
-  additional_svc_flo_scrb_type : 'paid',
-  additional_svc_melon_scrb_type : 'paid',
-  additional_svc_bugs_scrb_type : 'paid',
-  app_use_trafic_music_ratio : 'ratio',
-  app_use_trafic_music_ratio_median : 'ratio',
-  app_use_trafic_music_ratio_median_yn : 'Y/N',
-  additional_svc_allcare_scrb_type : 'paid',
-  membership_vip_yn : 'Y/N',
-  membership_cnt_ratio_median_yn : 'Y/N',
-  membership_amt_ratio_median_yn : 'Y/N',
-  mbr_use_discount_amt_cum : 'amt',
-  mbr_discount_amt_cum_chocolate : 'amt',
-  mbr_discount_amt_cum_bakery : 'amt',
-  mbr_discount_amt_cum_sports : 'amt',
-  mbr_discount_amt_cum_jeju : 'amt',
-  mbr_discount_amt_cum_food_and_beverage : 'amt',
-  mbr_discount_amt_cum_education : 'amt',
-  mbr_discount_amt_cum_transportation : 'amt',
-  mbr_discount_amt_cum_mobile_and_media : 'amt',
-  mbr_discount_amt_cum_beauty_and_fashion : 'amt',
-  mbr_discount_amt_cum_shopping : 'amt',
-  mbr_discount_amt_cum_movie : 'amt',
-  mbr_discount_amt_cum_coffee : 'amt',
-  mbr_discount_amt_cum_family_restaurant : 'amt',
-  mbr_discount_amt_cum_pizza : 'amt',
-  mbr_discount_amt_cum_convenience_store : 'amt',
-  mbr_discount_amt_cum_theme_park : 'amt'
 };
 
 // Exceptional MLS Return Values
@@ -873,5 +849,5 @@ export const MLS_EMPTY_CASE = [null, 'N/A'];
 export const MLS_PRCPLN_RC_TYP = 'GNRL';
 
 export const MLS_ERROR = {
-  MLS0001: '나에게 꼭 맞는 추천 요금제가 없습니다.'
+  MLS0001: {code: 'MLS0001', msg: '나에게 꼭 맞는 추천 요금제가 없습니다.'}
 };
