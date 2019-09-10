@@ -163,6 +163,9 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
 
+    // 추천 요금제 TIP 버튼 팝업 이벤트
+    this.$container.on('click', '#fe-bt-recommend-prods-guide', $.proxy(this._onClickRecommendProdsGuide, this));
+
     // 광고성 정보 수신동의 배너 이벤트
     this.$container.on('click', '#fe-bt-close-ad-rcv-agree-banner', $.proxy( function() { this.$adRcvAgreeBanner.addClass('none'); }, this ));
     this.$container.on('click', '#fe-bt-on-ad-rcv-agree-banner', $.proxy(this._onClickAgreeAdRcv, this));
@@ -527,6 +530,30 @@ Tw.MainHome.prototype = {
    */
   _onClickGoBillGuide: function () {
     this._historyService.goLoad('/myt-fare/billguide/guide');
+  },
+
+  /**
+   * @function
+   * @desc 추천 요금제 TIP 버튼 팝업 오픈
+   * @return {void}
+   * @private
+   */
+  _onClickRecommendProdsGuide: function () {
+    this._popupService.open({
+      hbs:'HO_01_02'
+    }, $.proxy(this._onOpenRecommendProdsGuidePopup, this));
+  },
+
+  /**
+   * @function
+   * @desc 추천 요금제 TIP 버튼 팝업 이벤트 Bind
+   * @return {void}
+   * @private
+   */
+  _onOpenRecommendProdsGuidePopup: function ($popupContainer) {
+    $popupContainer.on('click', '.bt-red1', $.proxy(function() {
+      this._historyService.goLoad('/main/recommend/product');
+    }, this));
   },
 
   /**
@@ -2311,11 +2338,11 @@ Tw.MainHome.prototype = {
             prcplnRcTyp: 'GNRL', 
             prcplnChlTyp: Tw.BrowserHelper.isApp() ? 'MOBILE' : 'WEB'
           })
-        .done($.proxy(this._successRecommendProdsData, this, element))
+        .done($.proxy(this._handleRecommendProds, this, element))
         .fail($.proxy(this._failRecommendProdsData, this));
 
     } else {
-      this._drawRecommendProduct(element, storeRecommendProds.data);
+      this._handleRecommendProds(element, storeRecommendProds.data);
     }
   },
 
@@ -2325,21 +2352,22 @@ Tw.MainHome.prototype = {
    * @param resp
    * @private
    */
-  _successRecommendProdsData: function (element, resp) {
+  // TODO: 별도 페이지로 분리되어 호출되지 않음
+  // _successRecommendProdsData: function (element, resp) {
 
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var storeData = {
-        data: resp,
-        expired: Tw.DateHelper.add5min(new Date()),
-        svcMgmtNum: this._svcMgmtNum
-      };
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS, JSON.stringify(storeData));
+  //   if ( resp.code === Tw.API_CODE.CODE_00 ) {
+  //     var storeData = {
+  //       data: resp,
+  //       expired: Tw.DateHelper.add5min(new Date()),
+  //       svcMgmtNum: this._svcMgmtNum
+  //     };
+  //     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECOMMEND_PRODS, JSON.stringify(storeData));
 
-      if(!Tw.FormatHelper.isEmpty(resp.result)) {
-        this._drawRecommendProduct(element, resp);
-      }
-    }
-  },
+  //     if(!Tw.FormatHelper.isEmpty(resp.result)) {
+  //       this._drawRecommendProduct(element, resp);
+  //     }
+  //   }
+  // },
 
   /**
    * @function
@@ -2357,11 +2385,12 @@ Tw.MainHome.prototype = {
    * @param data
    * @private
    */
-  _drawRecommendProduct: function (element, resp) {
-    $.ajax(Tw.Environment.cdn + '/hbs/recommend_prods.hbs', {})
-      .done($.proxy(this._handleRecommendProds, this, element, resp.result.items[0].prodId, this._parseRecommendProdsData(resp)))
-      .fail($.proxy(null, this, null));
-  },
+  // TODO: 별도 페이지로 분리되어 호출되지 않음
+  // _drawRecommendProduct: function (element, resp) {
+  //   $.ajax(Tw.Environment.cdn + '/hbs/recommend_prods.hbs', {})
+  //     .done($.proxy(this._handleRecommendProds, this, element, resp.result.items[0].prodId, this._parseRecommendProdsData(resp)))
+  //     .fail($.proxy(null, this, null));
+  // },
 
   /**
    * @function
@@ -2370,48 +2399,49 @@ Tw.MainHome.prototype = {
    * @returns {*}
    * @private
    */
-  _parseRecommendProdsData: function (resp) {
+  // TODO: 별도 페이지로 분리되어 호출되지 않음
+  // _parseRecommendProdsData: function (resp) {
 
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+  //   if ( resp.code === Tw.API_CODE.CODE_00 ) {
 
-      var cdn = Tw.Environment.cdn;
-      var item = resp.result.items[0];
-      var list = [];
+  //     var cdn = Tw.Environment.cdn;
+  //     var item = resp.result.items[0];
+  //     var list = [];
 
-      _.map(item.props, $.proxy(function (card) {
+  //     _.map(item.props, $.proxy(function (card) {
 
-        if(card.reasonCode !== '#') {
-          var addInfo = {
-            prodId: item.prodId, 
-            prodNm: item.prodNm,
-            prodType: item.prodType,
-            hasData: card.reasonTyp === 'data'? true : false,
-            hasInsurance: card.reasonTyp === 'insurance'? true : false,
-            hasMembership: card.reasonTyp === 'membership'? true : false,
-            hasMusic: card.reasonTyp === 'music'? true : false,
-            hasVideo: card.reasonTyp === 'video'? true : false,
-            mbrNm: this.mbrNm, 
-            priority: parseInt(Tw.RECOMMEND_PRODS_PRIORITY[card.reasonTyp], 10),
-            CDN: cdn,
-          }
+  //       if(card.reasonCode !== '#') {
+  //         var addInfo = {
+  //           prodId: item.prodId, 
+  //           prodNm: item.prodNm,
+  //           prodType: item.prodType,
+  //           hasData: card.reasonTyp === 'data'? true : false,
+  //           hasInsurance: card.reasonTyp === 'insurance'? true : false,
+  //           hasMembership: card.reasonTyp === 'membership'? true : false,
+  //           hasMusic: card.reasonTyp === 'music'? true : false,
+  //           hasVideo: card.reasonTyp === 'video'? true : false,
+  //           mbrNm: this.mbrNm, 
+  //           priority: parseInt(Tw.RECOMMEND_PRODS_PRIORITY[card.reasonTyp], 10),
+  //           CDN: cdn,
+  //         }
 
-          addInfo[card.reasonCode] = true;
-          card.reasonPreText = card.reasonPreText === '#' ? '' : card.reasonPreText;
-          card.reasonPostText = card.reasonPostText === '#' ? '' : card.reasonPostText;
+  //         addInfo[card.reasonCode] = true;
+  //         card.reasonPreText = card.reasonPreText === '#' ? '' : card.reasonPreText;
+  //         card.reasonPostText = card.reasonPostText === '#' ? '' : card.reasonPostText;
 
-          list.push(_.extend(addInfo, card));
-        }
+  //         list.push(_.extend(addInfo, card));
+  //       }
 
-      }, this));
+  //     }, this));
 
-      return list.sort(function(a, b) {
-        return a.priority - b.priority;
-      });
+  //     return list.sort(function(a, b) {
+  //       return a.priority - b.priority;
+  //     });
 
-    } else {
-      return {};
-    }
-  },
+  //   } else {
+  //     return {};
+  //   }
+  // },
 
   /**
    * @desc after get hbs
@@ -2421,39 +2451,17 @@ Tw.MainHome.prototype = {
    * @param {string} hbs 
    * @private
    */
-  _handleRecommendProds: function(element, prodId, result, hbs) { 
-
+  _handleRecommendProds: function(element, result) { 
     if ( !Tw.FormatHelper.isEmpty(result) ) {
-      this._recommendProdsTempl = Handlebars.compile(hbs);
-      element.find('.intro-area-1').after(this._recommendProdsTempl({result: result, CDN:Tw.Environment.cdn}));
-      element.find('.tod-mls-link').children('.link-plan').attr('href', '/product/callplan?prod_id=' + prodId);
+      var time = 2000;
 
-      var widget = $(element).find('.slider7');
-      $(widget).each(function(){
-        var $parent = $(this).closest('.section-box'),
-            $card = $parent.find('.tod-mls-card'),
-            time = 2000;
+      // 찾는 중 카드 Fade out
+      $('.tod-mls-cont > div').eq(0).fadeOut(time);
+      $('.tod-mls-ft > div').eq(0).fadeOut(time);
 
-        if ($parent.data('action') === undefined) {
-          $parent.data('action', true);
-          $card.eq(1).show();
-          $('.tod-mls-slider.slider').slick({
-              dots: true,
-              infinite: true,
-              speed: 300,
-              slidesToShow: 1,
-              adaptiveHeight: true
-          });
-          $card.eq(1).hide();
-
-          $card.eq(0).fadeOut(time);
-          $card.eq(1).fadeIn(time);
-
-          $('.tod-mls-ft > div').eq(0).fadeOut(time);
-          $('.tod-mls-ft > div').eq(1).fadeIn(time);
-        }
-      });
-
+      // 완료 카드 Fade in
+      $('.tod-mls-cont > div').eq(1).fadeIn(time);
+      $('.tod-mls-ft > div').eq(1).fadeIn(time);
     } else {
       element.hide();
     }
