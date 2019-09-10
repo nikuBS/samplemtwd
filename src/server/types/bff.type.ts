@@ -1,4 +1,3 @@
-import { MY_BENEFIT } from "./title.type";
 
 export enum SVC_ATTR_NAME {
   M1 = '휴대폰',
