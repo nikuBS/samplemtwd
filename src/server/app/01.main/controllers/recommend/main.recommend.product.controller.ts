@@ -72,10 +72,11 @@ export default class MainRecommendProduct extends TwViewController {
 
             // 추천에 대한 세부 근거(profile)를 호출을 위한 데이터 생성
             list.map((target) => {
+
               // # 뿐 아니라 SB 상 정의되지 않은 reasonCode 넘어올 경우에도 Skip
               if ( (target.reasonCode !== '#') && !FormatHelper.isEmpty(MLS_DETAIL_MAPPING[target.reasonCode]) ) {
-                // 해당 Category 영역 표시여부
 
+                // 해당 Category 영역 표시여부
                 let tooltip = MLS_DETAIL_MAPPING[target.reasonCode]['tooltip'];
                 if ( typeof tooltip !== 'string') {
                   tooltip = '';
@@ -187,6 +188,7 @@ export default class MainRecommendProduct extends TwViewController {
 
           // 최소 4개의 데이터가 없으면 멤버십카드를 출력하지 않는다.(Total 데이터 수신 여부는 상위 공통 로직에서 체크)
           if ( membershipDatas.length > 4) {
+            
             let total: any;
             membershipDatas.some((obj, idx) => {
               if ( obj.key === 'mbr_use_discount_amt_cum') {
@@ -226,6 +228,7 @@ export default class MainRecommendProduct extends TwViewController {
                 obj['percent'] = percent;
                 obj['amt'] = FormatHelper.addComma(String(amt));
 
+                // 0번 index는 합계임
                 if ( index !== 0) {
                   remainder = Number(remainder) - Number(percent);
                 }

@@ -25,49 +25,20 @@ Tw.MainRecommendProduct = function (rootEl, resp) {
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
 
+  this._now = 0;
+  this._timer = null;
+
   this._cachedElement();
   this._bindEvent();
-  // this._initScroll();
-
-  var $box = $('.di-box'),
-      $pbox = $('.cont-box').not('.nogaps-hoz'),
-      $list = $('.txt-list > li'),
-      index = 0,
-      now = 0,
-      timer = null,
-      color = '',
-      boxTop = $box.offset().top - $('#header').height() - 10;
-
-  function toolTipAnimate(idx) {
-    if (idx !== now) {
-        color = $list.eq(idx).data('bgColor');
-        $('.di-box-container').css('background', color);
-        $('.tail').css('border-top-color', color);
-        $list.eq(now).fadeOut(300).end().eq(idx).fadeIn(300);
-        now = idx;
-    }
-  }
-
-  $(window).on('scroll', function () {
-    $box.toggleClass('fixed', boxTop <= $(window).scrollTop());
-
-    clearTimeout(timer);
-    timer = null;
-    timer = setTimeout(function () {
-        index = 0;
-        $.each($pbox, function (idx, element) {
-            index = ($(element).offset().top < ($(window).scrollTop() + 140)) ? idx + 1 : index;
-        });
-        toolTipAnimate(index);
-    }, 200);
-  });
-
+  this._initScroll();
 };
 
 Tw.MainRecommendProduct.prototype = {
   _cachedElement: function() {
-    // this.$detailsBtn = this.$container.find('#fe-btn-details');
-    // this.$joinBtn = this.$container.find('#fe-btn-join');
+    this.$box = $('.di-box');
+    this.$pbox = $('.cont-box').not('.nogaps-hoz');
+    this.$list = $('.txt-list > li');
+    this._boxTop = this.$box.offset().top - $('#header').height() - 10;
   },
 
   _bindEvent: function() {
@@ -77,39 +48,44 @@ Tw.MainRecommendProduct.prototype = {
 
   _initScroll: function () {
 
-    this.$box = $('.di-box'),
-    this.$pbox = $('.cont-box').not('.nogaps-hoz'),
-    this.$list = $('.txt-list > li'),
-    this._index = 0,
-    this._now = 0,
-    this._timer = null,
-    this._color = '',
-    this._boxTop = this.$box.offset().top - $('#header').height() - 10;
-
     $(window).scroll($.proxy(function () {
-      this.$box.toggleClass('fixed', this._boxTop <= $(window).scrollTop());
-
-      if ( !Tw.FormatHelper.isEmpty(this._timer) ) {
-        clearTimeout(this._timer);
-      }
-
-      this._timer = setTimeout(function () {
-        this._index = 0;
-          $.each(this.$pbox, function (idx, element) {
-            this._index = ($(element).offset().top < ($(window).scrollTop() + 140)) ? idx + 1 : this._index;
-          });
-          this._toolTipAnimate(this._index);
-      }, 200);
+      this._checkScroll();
     }, this));
   },
 
-  _toolTipAnimate: function(idx) {
-    if (idx !== this._now) {
-      this._color = this.$list.eq(idx).data('bgColor');
-      $('.di-box-container').css('background', this._color);
-      $('.tail').css('border-top-color', this._color);
-      this.$list.eq(this._now).fadeOut(300).end().eq(idx).fadeIn(300);
-      this._now = idx;
+  /**
+   * @function
+   * @desc 스크롤 이동 체크
+   * @private
+   */
+  _checkScroll: function () {
+    this.$box.toggleClass('fixed', this._boxTop <= $(window).scrollTop());
+
+    if ( !Tw.FormatHelper.isEmpty(this._timer) ) {
+      clearTimeout(this._timer);
+    }
+
+    this._timer = setTimeout(this._toolTipAnimate, 200, this);
+  },
+
+  /**
+   * @function
+   * @desc ToolTip 변경
+   * @private
+   */
+  _toolTipAnimate: function(_$context) {
+
+    var index = 0;
+    $.each(_$context.$pbox, function (idx, element) {
+      index = ($(element).offset().top < ($(window).scrollTop() + 140)) ? idx + 1 : index;
+    });
+
+    if (index !== _$context._now) {
+      color = _$context.$list.eq(index).data('bgColor');
+      $('.di-box-container').css('background', color);
+      $('.tail').css('border-top-color', color);
+      _$context.$list.eq(_$context._now).fadeOut(300).end().eq(index).fadeIn(300);
+      _$context._now = index;
     }
   },
 
