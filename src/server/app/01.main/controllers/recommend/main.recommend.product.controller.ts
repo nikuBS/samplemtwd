@@ -71,6 +71,7 @@ export default class MainRecommendProduct extends TwViewController {
             });
 
             // 추천에 대한 세부 근거(profile)를 호출을 위한 데이터 생성
+            let validPropCnt = 0;
             list.map((target) => {
 
               // # 뿐 아니라 SB 상 정의되지 않은 reasonCode 넘어올 경우에도 Skip
@@ -98,8 +99,15 @@ export default class MainRecommendProduct extends TwViewController {
 
                 profileKeys = Object.assign(profileKeys, MLS_DETAIL_MAPPING[target.reasonCode]['profile_key']);
                 keys = keys.concat(Object.keys(MLS_DETAIL_MAPPING[target.reasonCode]['profile_key']));
+
+                validPropCnt++;
               }
             });
+
+            // 추천 항목이 없을 경우는 오류페이지로 랜딩 시킨다.
+            if ( validPropCnt === 0) {
+              throw MLS_ERROR.MLS0001;
+            }
 
             recommendProduct['category_validation'] = categoryValidation;
             recommendProduct['reason_codes'] = reasonCode;
@@ -188,7 +196,7 @@ export default class MainRecommendProduct extends TwViewController {
 
           // 최소 4개의 데이터가 없으면 멤버십카드를 출력하지 않는다.(Total 데이터 수신 여부는 상위 공통 로직에서 체크)
           if ( membershipDatas.length > 4) {
-            
+
             let total: any;
             membershipDatas.some((obj, idx) => {
               if ( obj.key === 'mbr_use_discount_amt_cum') {
