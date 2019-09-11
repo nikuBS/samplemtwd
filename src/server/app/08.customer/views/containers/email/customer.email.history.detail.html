@@ -83,8 +83,8 @@
                 <% if ( inquiryInfo.inqClCd === 'B' || inquiryInfo.inqClCd === 'Q'  ) { %>
                     <% if (inquiryInfo.answYn == 'Y') { %>
                         <ul class="bt-slice item-two full">
-                            <li class="bt-gray1">
-                                <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                            <li>
+                                <button class="fe-btn_retry_inquiry btn-floating btn-style2" data-inqId="<%-inquiryInfo.inqId%>"
                                         data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
                                 </button>
                             </li>
@@ -96,8 +96,8 @@
                         </ul>
                     <% } else { %>
                         <ul class="bt-slice full">
-                            <li class="bt-gray1">
-                                <button class="fe-btn_retry_inquiry" data-inqId="<%-inquiryInfo.inqId%>"
+                            <li>
+                                <button class="fe-btn_retry_inquiry btn-floating btn-style2" data-inqId="<%-inquiryInfo.inqId%>"
                                         data-inqClCd="<%-inquiryInfo.inqClCd%>">재문의하기
                                 </button>
                             </li>
