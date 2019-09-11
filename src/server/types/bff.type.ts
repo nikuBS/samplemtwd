@@ -671,69 +671,91 @@ export const EXPERIMENT_EXPS_SCRN_ID = {
 export const MLS_PRODUCT_BENEFIT = {
   // T플랜 맥스
   NA00006539: {
-    data: 0,
-    membership: 72000,
-    flo: '연 94,800원 상당의 FLO 월정액<span class=\\\"bene-desc-sub\\\">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>',
-    pooq: 118000,
-    insurance: 67200,
-    safe: 0,
-    total: 352800
+    data: {
+      desc: 0,
+      img: '/img/t_myPlan/plan_bene_ico05.png'
+    },
+    membership: {
+      desc: 72000,
+      img: ''
+    },
+    flo: {desc: '연 94,800원 상당의 FLO 월정액<span class=\\\"bene-desc-sub\\\">FLO 음악콘텐츠, FLO 전용 데이터 3GB</span>'},
+    pooq: {desc: 118000},
+    insurance: {desc: 67200},
+    safe: {desc: 0},
+    total: {desc: 352000}
   },
   // T플랜 스페셜
   NA00006538: {
-    data: 0,
-    membership: 72000,
-    flo: 0,
-    pooq: 118000,
-    insurance: 33600,
-    safe: 0,
-    total: 224400
+    data: {
+      desc: 0,
+      img: '/img/t_myPlan/plan_bene_ico05.png'
+    },
+    membership: {desc: 72000},
+    flo: {desc: 0},
+    pooq: {desc: 118000},
+    insurance: {desc: 33600},
+    safe: {desc: 0},
+    total: {desc: 223600}
   },
   // T플랜 에센스
   NA00006537: {
-    data: '월 데이터 100GB 제공',
-    membership: 0,
-    flo: '연 47,400원 상당의 FLO 월정액',
-    pooq: 0,
-    insurance: 0,
-    safe: 0,
-    total: 47400
+    data: {
+      desc: '월 데이터 100GB 제공',
+      img: '/img/t_myPlan/plan_bene_ico05.png'
+    },
+    membership: {desc: 0},
+    flo: {desc: '연 47,400원 상당의 FLO 월정액'},
+    pooq: {desc: 0},
+    insurance: {desc: 0},
+    safe: {desc: 0},
+    total: {desc: 47400}
   },
   // T플랜 안심4G
   NA00006536: {
-    data: '월 180,000원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
-    membership: 0,
-    flo: 0,
-    pooq: 0,
-    insurance: 0,
-    safe: 0,
-    total: 2160000
+    data: {
+      desc: '월 180,000원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
+      img: '/img/t_myPlan/plan_bene_ico06.png'
+    },
+    membership: {desc: 0},
+    flo: {desc: 0},
+    pooq: {desc: 0},
+    insurance: {desc: 0},
+    safe: {desc: 0},
+    total: {desc: 2160000}
   },
   // T플랜 안심2.5G
   NA00006535: {
-    data: '월 112,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
-    membership: 0,
-    flo: 0,
-    pooq: 0,
-    insurance: 0,
-    safe: 66600,
-    total: 1416000
+    data: {
+      desc: '월 112,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
+      img: '/img/t_myPlan/plan_bene_ico06.png'
+    },
+    membership: {desc: 0},
+    flo: {desc: 0},
+    pooq: {desc: 0},
+    insurance: {desc: 0},
+    safe: {desc: 66600},
+    total: {desc: 1416000}
   },
   // T플랜 세이브
   NA00006534: {
-    data: '월 67,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
-    membership: 0,
-    flo: 0,
-    pooq: 0,
-    insurance: 0,
-    safe: 0,
-    total: 810000
+    data: {
+      desc: '월 67,500원 상당의 심야 데이터 제공<span class=\\\"bene-desc-sub\\\">00~07시 데이터 4배</span>',
+      img: '/img/t_myPlan/plan_bene_ico06.png'
+    },
+    membership: {desc: 0},
+    flo: {desc: 0},
+    pooq: {desc: 0},
+    insurance: {desc: 0},
+    safe: {desc: 0},
+    total: {desc: 810000}
   }
 };
 
 export const MLS_DETAIL_MAPPING = {
   prcpln_01: {
     type: 'data',
+    tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요',
     profile_key: {
       bas_ofr_data_gb_qty_val : {type: 'GB', name: '고객 기본제공 데이터', required: false},
       data_use_ratio_max : {type: 'ratio', name: '데이터 최대 사용 비율', required: true},
@@ -745,6 +767,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_02: {
     type: 'data',
+    tooltip: '추천요금제는 <strong>심야시간에 기본 데이터를 4배 더</strong> 드려요',
     profile_key: {
       data_use_night_ratio : {type: 'ratio', name: '심야시간 데이터 사용 비율', required: true},
       data_use_night_ratio_median : {type: 'ratio', name: '심야시간 데이터 사용 비율 중간값', required: true},
@@ -753,12 +776,14 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_03: {
     type: 'data',
+    tooltip: '추천요금제는 <strong>데이터 걱정없이</strong> 편하게 이용할 수 있어요.',
     profile_key: {
       additional_svc_ansim_option_scrb_type : {type: 'P/F', name: '안심옵션 가입 형태', required: false}
     }
   },
   prcpln_04: {
     type: 'video',
+    tooltip: '추천요금제는 <strong>POOQ을 무료로</strong> 즐길 수 있어요',
     profile_key: {
       additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
       additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false}
@@ -766,6 +791,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_05: {
     type: 'video',
+    tooltip: '추천요금제는 <strong>데이터 걱정없이 POOQ을 무료로</strong> 이용할 수 있어요',
     profile_key: {
       app_use_traffic_video_ratio : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율', required: true},
       app_use_traffic_video_ratio_median : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값', required: true},
@@ -774,6 +800,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_06: {
     type: 'video',
+    tooltip: '추천요금제로 <strong>스포츠 생중계를 무료로</strong> 즐겨보세요',
     profile_key: {
       additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
       additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false},
@@ -781,6 +808,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_07: {
     type: 'music',
+    tooltip: '추천요금제는 <strong>FLO를 무료로</strong> 즐길 수 있어요',
     profile_key: {
       additional_svc_flo_scrb_type : {type: 'ratio', name: 'FLO 가입 형태', required: false},
       additional_svc_melon_scrb_type : {type: 'ratio', name: 'Melon 가입 형태', required: false},
@@ -789,6 +817,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_08: {
     type: 'music',
+    tooltip: '추천요금제는 <strong>FLO를 데이터 걱정없이</strong> 이용할 수 있어요',
     profile_key: {
       app_use_traffic_music_ratio : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용량 비율', required: true},
       app_use_traffic_music_ratio_median : {type: 'ratio', name: '전체 데이터 대비 음악 데이터 사용비율 중간값', required: true},
@@ -797,6 +826,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_09: {
     type: 'music',
+    tooltip: '추천요금제로 <strong>FLO 할인 받고</strong>, 새로운 음악을 찾아보세요',
     profile_key: {
       additional_svc_flo_scrb_type : {type: 'P/F', name: 'FLO 가입 형태', required: false},
       additional_svc_melon_scrb_type : {type: 'P/F', name: 'Melon 가입 형태', required: false},
@@ -805,18 +835,37 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_10: {
     type: 'insurance',
+    tooltip: {
+      paid: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
+      free: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+    },
     profile_key: {
-      additional_svc_allcare_scrb_type : {type: 'P/F', name: 'T All 케어 가입 형태', required: false}
+      additional_svc_allcare_scrb_type : {
+        type: 'P/F', 
+        name: 'T All 케어 가입 형태', 
+        required: true,
+      }
     }
   },
   prcpln_12: {
     type: 'insurance',
+    tooltip: {
+      paid: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
+      free: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+    },
     profile_key: {
-      additional_svc_allcare_scrb_type : {type: 'P/F', name: 'T All 케어 가입 형태', required: false}
+      additional_svc_allcare_scrb_type : {
+        type: 'P/F', 
+        name: 'T All 케어 가입 형태', 
+        required: true,
+        paid_tooltip: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
+        free_tooltip: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'
+      }
     }
   },
   prcpln_14: {
     type: 'membership',
+    tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는추천요금제 어떠세요?',
     profile_key: {
       membership_vip_yn : {type: 'Y/N', name: '멤버십VIP여부', required: false},
       membership_cnt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용건수 중간값 이상 여부', required: false},

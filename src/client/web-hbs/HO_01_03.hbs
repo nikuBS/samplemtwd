@@ -24,7 +24,7 @@
                             <dl class="description-wrap">
                                 <dt class="bene-tit">VIP 멤버십</dt>
                                 <dd class="bene-desc">
-                                    연 {{data.membership}}원 상당의 연 6회
+                                    연 {{data.membership.desc}}원 상당의 연 6회
                                     <span class="bene-desc-sub">CU, 스타벅스, 영화 무료 혜택 제공</span>
                                 </dd>
                             </dl>
@@ -38,7 +38,7 @@
                             <dl class="description-wrap">
                                 <dt class="bene-tit">POOQ 앤 데이터</dt>
                                 <dd class="bene-desc">
-                                    연 {{data.pooq}}원 상당의 POOQ 월정액
+                                    연 {{data.pooq.desc}}원 상당의 POOQ 월정액
                                     <span class="bene-desc-sub">무료영화, 공중파 VOD, 실시간 TV</span>
                                 </dd>
                             </dl>
@@ -52,7 +52,7 @@
                             <dl class="description-wrap">
                                 <dt class="bene-tit">FLO 앤 데이터</dt>
                                 <dd class="bene-desc">
-                                    {{{data.flo}}}
+                                    {{{data.flo.desc}}}
                                 </dd>
                             </dl>
                         </div>
@@ -65,7 +65,7 @@
                             <dl class="description-wrap">
                                 <dt class="bene-tit">휴대폰 분실/파손</dt>
                                 <dd class="bene-desc">
-                                    연 {{data.insurance}}원 상당의 휴대폰 단말보험
+                                    연 {{data.insurance.desc}}원 상당의 휴대폰 단말보험
                                     <span class="bene-desc-sub">최신 휴대폰 교체 지원 및 분실/파손 보험</span>
                                 </dd>
                             </dl>
@@ -75,11 +75,11 @@
                     {{#if data.hasData}}
                     <li class="item">
                         <div class="bene-wrap">
-                            <span class="ico"><img src="{{cdn}}/img/t_myPlan/plan_bene_ico05.png" alt=""></span>
+                            <span class="ico"><img src="{{cdn}}{{data.data.img}}" alt=""></span>
                             <dl class="description-wrap">
                                 <dt class="bene-tit">데이터</dt>
                                 <dd class="bene-desc">
-                                    {{{data.data}}}
+                                    {{{data.data.desc}}}
                                 </dd>
                             </dl>
                         </div>
@@ -92,7 +92,7 @@
                             <dl class="description-wrap">
                                 <dt class="bene-tit">안심옵션</dt>
                                 <dd class="bene-desc">
-                                    연 {{data.safe}}원 상당의 안심옵션 무료제공
+                                    연 {{data.safe.desc}}원 상당의 안심옵션 무료제공
                                 </dd>
                             </dl>
                         </div>
