@@ -33253,18 +33253,20 @@ body.apphome .section-box {
   float: none;
   height: 2.5rem; }
 
-.tab-area.new01 .tab-linker ul li a {
+.tab-area.new01 .tab-linker ul li a,
+.tab-area.new01 .tab-linker ul li button {
   font-size: 0.94rem;
   color: #959595;
   font-weight: 400 !important;
   height: 2.5rem;
-  line-height: 2.38rem; }
+  line-height: 2.38rem; }/* 190831 리디자인 : button 추가 */
 
 .tab-area.new01 .tab-linker ul li[aria-selected="true"] {
   border-bottom: 2px solid #ef4b49; }
 
-.tab-area.new01 .tab-linker ul li[aria-selected="true"] a {
-  color: #ef4b49 !important; }
+.tab-area.new01 .tab-linker ul li[aria-selected="true"] a,
+.tab-area.new01 .tab-linker ul li[aria-selected="true"] button {
+  color: #ef4b49 !important; }/* 190831 리디자인 : button 추가 */
 
 .tab-area.new02 .tab-linker ul {
   width: 100%;
