@@ -5558,3 +5558,6 @@ body.apphome .main-membershop-box {
 .tod-mls-comp.tod-second-box .tod-mls-hd .btn-tip{vertical-align:middle} 
 .tod-mls-comp.tod-second-box .tod-mls-msg-bx{padding:30px 22px 0; width:100%; box-sizing:border-box }
 .tod-mls-comp.tod-second-box .tod-mls-msg-bx .txt-wrap{letter-spacing:-2px; font-weight:300 }
+
+/* 190910 [OP002-3846] 브랜드변경 */
+.charge-product.type-list .bt-cont-box.category-add07:before {background: url(/img/main/icon_category_add_07.png) no-repeat;  background-size: 100%;}
