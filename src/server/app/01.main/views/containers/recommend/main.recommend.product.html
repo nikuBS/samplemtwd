@@ -27,7 +27,7 @@
                     <img src="<%= CDN %>/img/t_myPlan/keyvisual_mobile.png" alt="" class="keyvisual-mobile">
                     <p class="plan-comment">
                         <span class="name"><%= svcInfo.mbrNm %>님</span>
-                        <strong>연 <%= resp.benefit.total %>원</strong><br> 상당의 혜택을<br> 받을 수 있는<br><strong><%= resp.prodNm %></strong>요금제<br>어떠세요?
+                        <strong>연 <%= resp.benefit.total.desc %>원</strong><br> 상당의 혜택을<br> 받을 수 있는<br><strong><%= resp.prodNm %></strong>요금제<br>어떠세요?
                     </p>
                     <!-- <p class="benefit-comment">현재 요금제 연 예상 혜택 <strong>47,400</strong>원</p> -->
                 </div>
@@ -42,38 +42,59 @@
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico1.png" alt="">
                                     </span>
-                                    <span class="txt"><%= svcInfo.mbrNm %>님께<br><strong><%= resp.prodNm %></strong>을 추천해드리는 이유!</span>
+                                    <span class="txt"><%= svcInfo.mbrNm %>님께<br><strong><%= resp.prodNm %></strong>요금제를 추천해드리는 이유!</span>
                                 </li>
+                                <!-- data tooltip -->
+                                <% if(resp.category_validation.data && resp.category_validation.data.isShow) { %>
                                 <li data-bg-color="#3583e3" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico2.png" alt="">
                                     </span>
-                                    <span class="txt">추천 요금제는 <strong>데이터 걱정없이</strong> 편하게 이용 가능해요!</span>
+                                    <span class="txt">
+                                        <%-resp.category_validation.data.tooltip %>
+                                    </span>
                                 </li>
+                                <% } %>
+                                <% if(resp.category_validation.video && resp.category_validation.video.isShow) { %>
                                 <li data-bg-color="#912ccb" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico3.png" alt=""> 
                                     </span>
-                                    <span class="txt">추천 요금제는 <strong>데이터 걱정없이 POOQ</strong> 이용이 가능해요!</span>
+                                    <span class="txt">
+                                            <%- resp.category_validation.video.tooltip %>
+                                    </span>
                                 </li>
+                                <% } %>
+                                <% if(resp.category_validation.music && resp.category_validation.music.isShow) { %>
                                 <li data-bg-color="#4655e3" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico4.png" alt="">
                                     </span>
-                                    <span class="txt">추천 요금제는 <strong>데이터 걱정없이 FLO</strong>를 이용이 가능해요!</span>
+                                    <span class="txt">
+                                            <%- resp.category_validation.music.tooltip %>
+                                    </span>
                                 </li>
+                                <% } %>
+                                <% if(resp.category_validation.insurance && resp.category_validation.insurance.isShow) { %>
                                 <li data-bg-color="#058d78" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico5.png" alt="">
                                     </span>
-                                    <span class="txt">추천요금제는 휴대폰 파손시 <strong>최대 100만원까지</strong> 비용이 제공되요! </span>
+                                    <span class="txt">
+                                        <%- resp.category_validation.insurance.tooltip %>
+                                    </span>
                                 </li>
+                                <% } %>
+                                <% if(resp.category_validation.membership && resp.category_validation.membership.isShow) { %>
                                 <li data-bg-color="#ef4b49" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico6.png" alt="">
                                     </span>
-                                    <span class="txt">추천요금제는 <strong>멤버십 VIP</strong>로 스타벅스, 영화 예매 등 <strong>무료로 이용</strong> 가능해요!</span>
+                                    <span class="txt">
+                                        <%- resp.category_validation.membership.tooltip %>
+                                    </span>
                                 </li>
+                                <% } %>
                                 <!-- <li data-bg-color="#3e4b69" style="display: none;">
                                     <span class="img">
                                         <img src="<%= CDN %>/img/t_myPlan/d_ico7.png" alt="">
@@ -90,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <% if (resp.category_validation.data) { %>
+                <% if (resp.category_validation.data && resp.category_validation.data.isShow) { %>
                 <div class="cont-box first fe-recommend-data">
                     <% if (resp.reason_codes.prcpln_01) { %>
                     <div class="plan-item fe-prcpln_01">
@@ -143,7 +164,7 @@
                     <div class="plan-item fe-prcpln_02">
                         <p class="comment">
                             <span class="cate">데이터</span>
-                            데이터 사용량이 평소 <em class="em">0~7시 심야시간</em>에 가장 높으시네요.
+                            <em class="em">0~7시 심야시간</em>에 데이터 사용량이 다른고객 대비 높으시네요.
                         </p>
                         <div class="plan-chart-wrap">
                             <div class="tod-pie-chart-wrap">
@@ -216,7 +237,7 @@
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
-                <% if (resp.category_validation.video) { %>
+                <% if (resp.category_validation.video && resp.category_validation.video.isShow) { %>
                 <div class="cont-box fe-recommend-video">
                     <% if (resp.reason_codes.prcpln_04) { %>
                     <div class="plan-item fe-prcpln_04">
@@ -264,7 +285,7 @@
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left type02 blue" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
+                                        <div class="part left type02 blue txt-up" id="target1"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
@@ -274,7 +295,7 @@
                                                 <%- resp.reason_details.app_use_traffic_video_ratio_median * 100 %>%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
+                                        <div class="part right type02 txt-up" id="target2"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
@@ -297,7 +318,7 @@
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
-                <% if (resp.category_validation.music) { %>
+                <% if (resp.category_validation.music && resp.category_validation.music.isShow) { %>
                 <div class="cont-box fe-recommend-music">
                     <% if (resp.reason_codes.prcpln_08) { %>  
                     <div class="plan-item fe-prcpln_08" >
@@ -319,7 +340,7 @@
                                         </div>
                                     </div>
                                     <div class="val_wrap">
-                                        <div class="part left blue type02" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
+                                        <div class="part left blue type02 txt-up" id="target3"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
@@ -329,7 +350,7 @@
                                                 <%- resp.reason_details.app_use_traffic_music_ratio_median * 100 %>%
                                             </span>
                                         </div>
-                                        <div class="part right type02" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
+                                        <div class="part right type02 txt-up" id="target4"> <!-- polygon의 points의 첫번째 y값을 top값에 넣어주세요 --> <!-- 텍스트가 너무 밑에 붙으면 txt-up클래스 추가 -->
                                             <span class="pointer">
                                                 <span class="cir"></span> 
                                                 <span class="line"></span> 
@@ -378,19 +399,28 @@
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
-                <% if (resp.category_validation.insurance) { %>
+                <% if (resp.category_validation.insurance && resp.category_validation.insurance.isShow) { %>
                 <div class="cont-box fe-recommend-insurance">
-                    <% if (resp.reason_codes.prcpln_10) { %>
+                    <% if (resp.reason_codes.prcpln_10 || resp.reason_codes.prcpln_12) { %>
                     <div class="plan-item fe-prcpln_10">
                         <p class="comment">
                             <span class="cate">보험</span>
+                            <% if (resp.reason_details.insurance.isFree) { %>
+                            휴대폰 파손 시 최대 100만원 까지 파손 비용을 <em class="em">무료로 제공</em>해드려요.
+                            <% } else { %>
                             휴대폰 파손 시 최대 100만원 까지 파손 비용을 <em class="em">50% 제공</em>해드려요.
+                            <% } %>
                         </p>
                         <div class="plan-img-wrap">
+                            <% if (resp.reason_details.insurance.isFree) { %>
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img07.png" alt=" ">
+                            <% } else { %>
                             <img src="<%= CDN %>/img/t_myPlan/item_plan_img06.png" alt=" ">
+                            <% } %>
                         </div>
                     </div><!-- //plan-item -->
                     <% } %>
+                    <% /* %>
                     <% if (resp.reason_codes.prcpln_12) { %>
                     <div class="plan-item fe-prcpln_12">
                         <p class="comment">
@@ -402,10 +432,11 @@
                         </div>
                     </div><!-- //plan-item -->
                     <% } %>
+                    <% */ %>
                 </div><!-- //cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true">
                 <% } %>
-                <% if (resp.category_validation.membership) { %>
+                <% if (resp.category_validation.membership && resp.category_validation.membership.isShow) { %>
                 <div class="cont-box fe-recommend-membership">
                     <% if (resp.reason_codes.prcpln_14) { %>
                     <div class="plan-item fe-prcpln_14" >
@@ -419,16 +450,22 @@
                                     <div class="widget-box chart" data-type="pie">
                                         <svg id="svg" xmlns="http://www.w3.org/2000/svg" width="300" height="300"  viewbox="0 0 600 600"  ><!--  -->
                                             <g> <!-- 최대값이 처음 / 두번째부터는 작은 값부터 객체를 그려준다. 컬러값은 항목값에 따라 고정되 있으므로 같이 변경해줘야한다. -->
-                                                <path class="chart-arc" fill="#FF6563" data-percent="<%= resp.reason_details.membership.first.percent %>" data-offset-height="0"></path>
-                                                <path class="chart-arc" fill="#7E77C5" data-percent="<%= resp.reason_details.membership.etc.percent %>" data-offset-height="-30"></path>
-                                                <path class="chart-arc" fill="#08C2BA" data-percent="<%= resp.reason_details.membership.third.percent %>" data-offset-height="-20"></path>
-                                                <path class="chart-arc" fill="#1DA6F8" data-percent="<%= resp.reason_details.membership.second.percent %>" data-offset-height="-10"></path>
+                                                <path class="chart-arc" fill="#FF6563" data-percent="<%= resp.reason_details.membership.first.percent / 100 %>" data-offset-height="0"></path>
+                                                <path class="chart-arc" fill="#7E77C5" data-percent="<%= resp.reason_details.membership.etc.percent / 100%>" data-offset-height="-30"></path>
+                                                <path class="chart-arc" fill="#08C2BA" data-percent="<%= resp.reason_details.membership.third.percent / 100%>" data-offset-height="-20"></path>
+                                                <path class="chart-arc" fill="#1DA6F8" data-percent="<%= resp.reason_details.membership.second.percent / 100%>" data-offset-height="-10"></path>
                                             </g>
                                             <g>
-                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan><%= resp.reason_details.membership.first.percent * 100 %>%</tspan></text>
-                                                <text class="chart-txt" fill="white" style="font-size:21px;"><%= resp.reason_details.membership.second.percent * 100 %>%</text>
-                                                <text class="chart-txt" fill="white" style="font-size:24px;"><%= resp.reason_details.membership.third.percent * 100 %>%</text>
-                                                <text class="chart-txt" fill="white" style="font-size:27px;"><%= resp.reason_details.membership.etc.percent * 100 %>%</text>
+                                                <text class="chart-txt" fill="white" style="font-size:40px;"><tspan><%= resp.reason_details.membership.first.percent %>%</tspan></text>
+                                                <% if(resp.reason_details.membership.etc.percent !== 0) { %>
+                                                <text class="chart-txt" fill="white" style="font-size:21px;"><%= resp.reason_details.membership.etc.percent %>%</text>
+                                                <% } %>
+                                                <% if(resp.reason_details.membership.third.percent !== 0) { %>
+                                                <text class="chart-txt" fill="white" style="font-size:24px;"><%= resp.reason_details.membership.third.percent %>%</text>
+                                                <% } %>
+                                                <% if(resp.reason_details.membership.second.percent !== 0) { %>
+                                                <text class="chart-txt" fill="white" style="font-size:27px;"><%= resp.reason_details.membership.second.percent %>%</text>
+                                                <% } %>
                                             </g>
                                         </svg>
                                     </div>
