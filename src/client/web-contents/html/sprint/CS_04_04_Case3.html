@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>-->
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap noborder"><!-- 190831 리디자인_01 -->
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>이메일 상담</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <!-- .component -->
+                        <div class="component">
+                            <div class="component-box tabs">
+                                <div class="tab-area new01"><!-- 타입별 탭형태 변환 --><!-- 190831 리디자인_02 : new01 -->
+                                    <div class="tab-linker">
+                                        <ul role="tablist">
+                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">서비스 문의</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">통화품질 상담</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- 190607 [OP002-414] 추가_01 -->
+                                    <hr class="cont-sp type1" aria-hidden="true">
+                                    
+                                    <div class="cont-box nogaps b-line1">
+                                        <ul class="announcement-notice bg-space">
+                                            <li>문의 글 작성 시 20분 동안 페이지 이동이 없으면 자동으로 로그아웃 됩니다.</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <hr class="cont-sp type1" aria-hidden="true">
+                                    <!-- // 190607 [OP002-414] 추가_01 -->
+                                    
+                                    <div class="tab-contents">
+                                        <div role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+
+                                            <!-- .cont-box -->
+                                            <div class="cont-box"><!-- 190909 [OP002-3668] 수정_01 : nogaps-btm 삭제 -->
+                                                <h3 class="tit-type2">
+                                                    <span class="tx-bold">휴대폰</span> 서비스의<br /><span class="tx-bold">변경∙해지</span> 에 대해<br />문의합니다.
+                                                </h3>
+                                                <!-- 190909 [OP002-3668] 삭제_01 -->
+                                                <!--
+                                                <div class="link-long questionbox-wrap">
+                                                    <a href="" class="disabled" title="자주 찾는 질문으로 이동">자주 찾는 질문을 먼저 살펴보세요.
+                                                        <span class="tx-sub">
+                                                            <span class="ico"><span class="blind">더보기</span></span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                -->
+                                                <!-- //190909 [OP002-3668] 삭제_01 -->
+                                            </div>
+                                            <!--// .cont-box -->
+
+                                            <hr class="cont-sp type1" aria-hidden="true" />
+
+                                            <div class="cont-box nogaps-btm">
+                                                <div class="inquiryform-wrap">
+                                                    <p class="title">지난 문의 내용입니다.</p>
+                                                
+                                                <!-- 190909 [OP002-3668] 삭제_02 -->
+                                                    <!--
+                                                    <div class="inputbox">
+                                                        <div class="input">
+                                                            <input type="text" value="010-22**-57**" title="지난 문의 휴대폰 번호" readonly="">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </div>
+                                                    </div>
+                                                    -->
+                                                <!-- //190909 [OP002-3668] 삭제_02 -->    
+                                                </div>
+                                                <div class="cont-box-gapstyle01">
+                                                    <div class="widget">
+                                                        <div class="widget-box accordion">
+                                                            <div class="acco-cover">
+                                                                <div class="acco-style btn-hold">
+                                                                    <ul class="acco-list">
+                                                                        <li class="acco-box">
+                                                                            <div class="acco-tit servicecenter-inqbox">
+                                                                                <p class="title">USIM 기변관련하여 문의 드립니다.</p>
+                                                                                <div class="date-state"><em class="date">2018.7.16.</em> <span class="state">접수</span></div>
+                                                                                <button role="button" aria-pressed="false"><span class="blind">문의내역</span></button><!-- 웹접근성 수정 -->
+                                                                            </div>
+                                                                            <div class="servicecenter-inbox">
+                                                                                <p class="text-wrap">
+                                                                                    USIM 기변방법이 궁금해요.기변방법에 대해 알려주세요.
+                                                                                </p>
+                                                                                <div class="emainbox-wrap">
+                                                                                    답변 받을 이메일
+                                                                                    <span class="name">ma**************</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr class="cont-sp type1" aria-hidden="true">
+
+                                            <div class="cont-box">
+                                                <div class="inquiryform-wrap">
+                                                    <p class="title">추가로 문의할 내용을 적어 주세요.</p>
+                                                    <div class="inputbox">
+                                                        <div class="input">
+                                                            <input type="text" placeholder="제목 입력" title="추가 문의내용 제목 입력" value="">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </div>
+                                                        <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자(최대)</span>
+                                                    </div>
+                                                    <div class="option-box">
+                                                        <div class="inputbox textarea-type">
+                                                            <div class="input">
+                                                                <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="내용 입력" maxlength="12000" title="추가 문의내용 입력"></textarea>
+                                                                <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                                            </div>
+                                                            <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <hr class="cont-sp type1" aria-hidden="true">
+
+                                            <div class="cont-box">
+                                                <div class="inquiryform-wrap">
+                                                    <p class="title">연락 받으실 수 있는 번호를 적어 주세요.</p>
+                                                    <div class="widget formradio-style01">
+                                                        <div class="widget-box radio">
+                                                            <ul class="select-list" role="radiogroup">
+                                                                <li class="radiobox type01 checked" role="radio" aria-checked="true" id="aria-comp-radio1"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                    <input type="radio" name="radio1" value="" title="연락 가능한 기기 선택" aria-labelledby="aria-comp-radio1" checked=""><!-- 체크상태일 경우 checked="checked" --><!-- 웹접근성 수정 -->
+                                                                    휴대폰
+                                                                </li>
+                                                                <li class="radiobox type01 ml30" role="radio" aria-checked="false" id="aria-comp-radio2"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                    <input type="radio" name="radio1" value="" title="연락 가능한 기기 선택" aria-labelledby="aria-comp-radio2"><!-- 체크상태일 경우 checked="false" --><!-- 웹접근성 수정 -->
+                                                                    일반전화
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <!-- 2019-01-17 inp-btn 추가 -->
+                                                    <div class="inputbox bt-add inp-btn error">
+                                                        <span class="input">
+                                                            <input type="text" placeholder="받으실분 번호" title="받으실분 번호입력" value="010-1234-85" aria-describedby="aria-phone-tx1">
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </span>
+                                                        <!-- 190831 리디자인_03 -->
+                                                        <span class="bt-box3">
+                                                            <button type="button" class="btn-round2 btn-style3">주소록</button>
+                                                        </span>
+                                                        <!-- // 190831 리디자인_03 -->
+                                                    </div>
+                                                    <span class="tx-box">
+                                                        <span id="aria-phone-tx1" class="error-txt">잘못된 형식입니다.</span>
+                                                    </span>
+                                                    <div class="widget formradio-style02">
+                                                        <div class="widget-box check">
+                                                            <ul class="select-list" role="group">
+                                                                <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox1"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                    <input type="checkbox" name="checkbox01" value="" aria-labelledby="aria-comp-checkbox1" ><!-- 체크상태일 경우 checked="checked" --><!-- 웹접근성 수정 -->
+                                                                    답변이 등록되면 문자 알림을 받습니다.
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="title">답변 받으실 이메일 주소를 적어 주세요.</p>
+                                                    <div class="inputbox error">
+                                                        <div class="input">
+                                                            <input type="email" placeholder="답변 받으실 이메일" title="답변 받으실 이메일 입력" value=""><!-- 190607 [OP002-414] 수정_01 -->
+                                                            <button class="cancel"><span class="blind">삭제</span></button>
+                                                        </div>
+                                                        <span id="aria-email-tx1" class="error-txt">잘못된 형식입니다.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <hr class="cont-sp type1" aria-hidden="true">
+
+                                            <div class="cont-box nogaps-btm">
+                                                <div class="inquiryform-wrap">
+                                                    <p class="title"><button class="bt-link-tx underline">개인정보</button> 이용에 동의해 주세요.</p>
+
+                                                    <ul class="termboxlist-wrap">
+                                                        <li>
+                                                            <div class="termboxs-wrap">
+                                                                <div class="widget">
+                                                                    <div class="widget-box check">
+                                                                        <div class="infoviewic-wrap">
+                                                                            <ul class="select-list" role="group">
+                                                                                <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox2"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                                    <input type="checkbox" name="checkbox02" value="" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="checked" --><!-- 웹접근성 수정 -->
+                                                                                    개인정보 수집이용에 대한 동의(필수)
+                                                                                </li>
+                                                                            </ul>
+                                                                            <button class="btn-detail-view" title="개인정보 수집이용에 대한 동의(필수) 상세 보기"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="termboxscroll-wrap">
+                                                                    <div class="termboxscroll">
+                                                                        개인정보 수집, 이용목적<br>SK텔레콤의 서비스(이동전화, 인터넷, 결합상품, <br>집전화, 인터넷 전화 WiBro, 멤버십 등) 관련 상담
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="termboxs-wrap">
+                                                                <div class="widget">
+                                                                    <div class="widget-box check">
+                                                                        <div class="infoviewic-wrap">
+                                                                            <ul class="select-list" role="group">
+                                                                                <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox3"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                                    <input type="checkbox" name="checkbox03" value="" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="checked" --><!-- 웹접근성 수정 -->
+                                                                                    개인정보 처리 위탁에 대한 동의(필수)
+                                                                                </li>
+                                                                            </ul>
+                                                                            <button class="btn-detail-view" title="개인정보 처리 위탁에 대한 동의(필수) 상세 보기"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="termboxscroll-wrap">
+                                                                    <div class="termboxscroll">
+                                                                        개인정보 처 리위탁을 받는자(“수탁자”)<br>㈜서비스 에이스, ㈜서비스 탑<br>개인정보 처리위탁을 하는 업무의 내용
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div role="tabpanel" id="tab2-tab" aria-labelledby="tab2"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .component -->
+                    </div>
+                    <!--// .cont-box -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>등록하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>

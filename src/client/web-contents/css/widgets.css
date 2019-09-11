@@ -1818,14 +1818,19 @@ li.checkbox.type01 {
 .tod-plan-wrap .cont-box .plan-item .gh-comment .article.red .article-txt::before{background:#f76252}
 .tod-plan-wrap .cont-box .plan-item .gh-comment .article.green .article-txt::before{background:#12b5aa}
 .tod-plan-wrap .cont-box .plan-item .gh-comment .article.purple .article-txt::before{background:#6d5fbf}
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership{margin:0 3.125rem  }
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 1.5625rem)/2); width:calc((100% - 1.5625rem)/2); float:left; text-align:left}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership{margin:0 0  }
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 1.25rem)/2); width:calc((100% - 1.25rem)/2); float:left; text-align:left}
 
 .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .best{color:#666; font-weight:500}
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{margin:0.1875rem 0 0.1875rem 1.5625rem }
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{margin:0.1875rem 0 0.1875rem 1.25rem }
+@media screen and (max-width:320px){
+  .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{margin:0.1875rem 0 0.1875rem 0.625rem }
+  .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article{width:-webkit-calc((100% - 0.625rem)/2); width:calc((100% - 0.625rem)/2); float:left; text-align:left}
+}
 .tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article:nth-child(odd){margin-left:0}
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .bene-item{display:inline-block; float:left; width:50%}
-.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .price{display:inline-block; float:left; width:50%; text-align:right}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .article-txt{width:100%; box-sizing:border-box}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .bene-item{display:inline-block; float:left; width:60%; white-space:nowrap}
+.tod-plan-wrap .cont-box .plan-item .gh-comment.membership .article .price{display:inline-block; float:left; width:40%; text-align:right}
 .tod-plan-wrap .cont-box .plan-item .plan-img-wrap img{width:100%; height:auto; vertical-align:top; }
 
 .tod-plan-wrap .cont-box.tod-plan-last{background:#f3f3f3; padding-bottom:1.875rem}
@@ -1861,7 +1866,7 @@ li.checkbox.type01 {
 .tod-plan-wrap .tod-bar-chart-wrap{padding:0.625rem 0.9375rem 1.5625rem; position:relative;}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list{width:100%; position:relative}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period{height:2.1875rem; display:flex; align-items: center; flex-wrap:nowrap}
-.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.875rem; color:#858585; line-height:1rem}
+.tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .month{width:1.875rem; display:block; font-size:0.875rem; color:#858585; line-height:1rem }
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-wrap{height:100%; width:calc(100% - 1.125rem); width:-webkit-calc(100% - 1.125rem); display:flex; align-items: center; border-bottom:0.0625rem solid #e6e6e6; padding-right:1.25rem; box-sizing:border-box}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .bar-chart-hoz{width:100%}
 .tod-plan-wrap .tod-bar-chart-wrap .month-data-list .period .alert-percent{display:inline-block; background:#f7f7f8; border-radius:0.3125rem; width:2.6875rem; height:1.4375rem; line-height:1.4375rem; text-align:center; color:#666; font-size:0.8125rem; box-shadow:0 0.3125rem 0.4375rem rgba(00,00,00,0.2); font-weight:700; position:absolute; right:-1.1875rem; bottom:0.5rem; box-sizing:border-box; margin-top:0.0625rem }

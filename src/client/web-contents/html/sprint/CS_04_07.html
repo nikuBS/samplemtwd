@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <div class="popup-page tw-popup fixed-bottom ">
+            <!-- #header -->
+            <div id="header" class="header-wrap noborder">
+                <div class="page-header noborder">
+                    <div class="header-ti">
+                        <h1>이메일 상담 상세내역</h1>
+                    </div>
+                    
+                    <div class="header-mask">
+                       <button type="button" class="btn-mask fe-bt-masking"><span class="blind">개인정보 보호모드 마스킹 해제하기</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+                    </div>
+                    
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- #contents -->
+            <div id="contents" class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true">
+                    <div class="email-details-box">
+                        <!-- .cont-box -->
+                        <div class="cont-box">
+                            <div class="details-top">
+                                <strong class="tit">이메일 상담 제목(최대2줄) 이메일 상담 제목 (최대2줄) 이메일 상담 제목(최대2줄)</strong>
+                                <p><em class="date">2018.7.26.</em> <span class="state">답변 완료</span></p>
+                            </div>
+                        </div>
+                        <!--// .cont-box -->
+
+                        <hr class="cont-sp type1" aria-hidden="true">
+
+                        <!-- .cont-box -->
+                        <div class="cont-box nogaps-hoz">
+                            <div class="details-btm">
+                                <div class="details-info">
+                                    <div class="tit"><strong>답변 이메일</strong><em>ma***********</em></div>
+                                </div>
+                                <div class="details-cont">
+                                    case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출
+                                    case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출
+                                    case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출 case 별  상담내용 정보 모두 노출
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .cont-box -->
+
+                    </div>
+                </div>
+
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <!-- 190831 리디자인_01 -->
+                    <ul class="bt-slice item-two full">
+                        <li>
+                            <button class="btn-floating btn-style2">재문의하기</button>
+                        </li>
+                        <li class="bt-red1">
+                            <button >삭제하기</button>
+                        </li>
+                    </ul>
+                    <!-- 초콜릿 Case 
+                    <ul class="bt-slice full">
+                        <li>
+                            <button class="btn-floating btn-style2">재문의하기</button>
+                        </li>
+                    </ul>
+                    -->
+                    <!-- //190831 리디자인_01 -->
+                </div>
+                <!--// .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+
+            </div>
+            <!--// #contents -->
+
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+
+        </div>
+    </div>    
+</body>
+
+</html>
