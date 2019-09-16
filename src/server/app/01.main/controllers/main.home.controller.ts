@@ -9,7 +9,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, SESSION_CMD } from '../../../types/api-command.type';
-import { EXPERIMENT_EXPS_SCRN_ID } from '../../../types/bff.type';
+import { EXPERIMENT_EXPS_SCRN_ID, MLS_PRCPLN_RC_TYP } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
   HOME_SMART_CARD,
@@ -572,11 +572,12 @@ class MainHome extends TwViewController {
     };
 
     if (BrowserHelper.isApp(req)) {
-      return this.apiService.request(API_CMD.BFF_10_0178, {
+      return this.apiService.requestStore(SESSION_CMD.BFF_10_0178, {
         experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
-        prcplnRcTyp: 'GNRL', 
+        prcplnRcTyp: MLS_PRCPLN_RC_TYP, 
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
       }).map((resp) => {
+
         if ( resp.code === API_CODE.CODE_00 ) {
           if ( FormatHelper.isEmpty(resp.result) ) {
             return defaultRetVal;

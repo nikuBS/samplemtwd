@@ -102,6 +102,7 @@ Tw.API_CMD = {
   BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: Tw.API_METHOD.GET },
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: Tw.API_METHOD.GET },
   BFF_10_0178: { path: '/core-product/:version/mobiles/mls/recommend-product', method: Tw.API_METHOD.POST },
+  BFF_05_0212: { path: '/core-bill/:version/bill/mls/recommend-product', method: Tw.API_METHOD.POST },
 
 
   // MYT

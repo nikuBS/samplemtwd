@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>-->
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>주문번호 조회</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+
+                    <hr class="cont-sp type1" aria-hidden="true"><!-- 190607 [OP002-414] 추가_01 -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="basic-text">
+                            <p class="top-tx-m">주문 관련 문의는<br>고객님이 주문한 상품이 있는 경우에만<br>문의하실 수 있으며, 주문번호를 입력해 주셔야 합니다.</p>
+                        </div>
+                    </div>
+
+                    <hr class="cont-sp type1" aria-hidden="true">
+
+                    <div class="cont-box nogaps">
+                        <!-- .component -->
+                        <div class="component">
+                            <div class="component-box tabs">
+                                <div class="tab-area new01"><!-- 타입별 탭형태 변환 --><!-- 190831 리디자인_01 : new01 -->
+                                    <div class="tab-linker">
+                                        <ul role="tablist">
+                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">쇼핑내역</a></li>
+                                            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">외산∙중고기기</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-contents">
+                                        <div role="tabpanel" id="tab1-tab"><!--웹접근성 수정 -->
+
+                                            <div class="list-comp-input">
+                                                <div class="widget">
+                                                    <div class="widget-box check">
+                                                        <ul class="select-list" role="group">
+                                                            <li class="checkbox type01 checked" role="checkbox" aria-checked="true">
+                                                                <input type="checkbox" name="checkbox" value="" checked="" aria-labelledby="aria-comp-checkbox1"><!-- 웹접근성 수정 -->
+                                                                <div class="comp-list-layout gaptype01" id="aria-comp-checkbox1">
+                                                                    <div class="shoppingbox-wrap">
+                                                                        <p class="title tx-bold">SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정</p>
+                                                                        <div class="shoppinginfo-wrap">
+                                                                            <div class="info">
+                                                                                <dl class="detail">
+                                                                                    <dt>주문번호</dt>
+                                                                                    <dd>201604019876</dd>
+                                                                                    <dt>주문일자</dt>
+                                                                                    <dd>2016.04.04</dd>
+                                                                                    <dt>주문/배송상태</dt>
+                                                                                    <dd>주문접수</dd>
+                                                                                </dl>
+                                                                            </div>
+                                                                            <div class="imgbox">
+                                                                                <img src="/img/dummy/img_products.png">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox2"><!-- 웹접근성 수정 -->
+                                                                <div class="comp-list-layout gaptype01" id="aria-comp-checkbox2">
+                                                                    <div class="shoppingbox-wrap">
+                                                                        <p class="title tx-bold">SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정</p>
+                                                                        <div class="shoppinginfo-wrap">
+                                                                            <div class="info">
+                                                                                <dl class="detail">
+                                                                                    <dt>주문번호</dt>
+                                                                                    <dd>201604019876</dd>
+                                                                                    <dt>주문일자</dt>
+                                                                                    <dd>2016.04.04</dd>
+                                                                                    <dt>주문/배송상태</dt>
+                                                                                    <dd>주문접수</dd>
+                                                                                </dl>
+                                                                            </div>
+                                                                            <div class="imgbox">
+                                                                                <img src="/img/dummy/img_products.png">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox3"><!-- 웹접근성 수정 -->
+                                                                <div class="comp-list-layout gaptype01" id="aria-comp-checkbox3">
+                                                                    <div class="shoppingbox-wrap">
+                                                                        <p class="title tx-bold">SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정</p>
+                                                                        <div class="shoppinginfo-wrap">
+                                                                            <div class="info">
+                                                                                <dl class="detail">
+                                                                                    <dt>주문번호</dt>
+                                                                                    <dd>201604019876</dd>
+                                                                                    <dt>주문일자</dt>
+                                                                                    <dd>2016.04.04</dd>
+                                                                                    <dt>주문/배송상태</dt>
+                                                                                    <dd>주문접수</dd>
+                                                                                </dl>
+                                                                            </div>
+                                                                            <div class="imgbox">
+                                                                                <img src="/img/dummy/img_products.png">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <!-- 190831 리디자인_02 -->
+                                                    <div class="btn-more ml16 mr16">
+                                                        <button>더 보기</button>
+                                                    </div>
+                                                    <!-- //190831 리디자인_02 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div role="tabpanel" id="tab2-tab"></div><!--웹접근성 수정 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--// .cont-box -->
+
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>선택하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>
