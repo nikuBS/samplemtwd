@@ -69,7 +69,7 @@ Tw.CommonMemberLoginRoute.prototype = {
     } else {
 
       // 로그인 상태가 아니면, sessionStorage의 TWM 값을 초기화 한다.
-      if(Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y') {
+      if(Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) !== 'Y') {
       	Tw.CommonHelper.removeSessionStorage(Tw.SSTORE_KEY.PRE_TWM);
       }
 
