@@ -52,7 +52,7 @@ Tw.CustomerEmail.prototype = {
    */
   _bindEvent: function () {
     var inputKeyUps = 'keyup input blur'; // 입력 이벤트 목록
-    this.$btn_faq.on('click', $.proxy(this._openFaq, this)); // 자주하는 질문 클릭 -> 질문 리스트 팝업열림
+    this.$btn_faq.on('click', $.proxy(this._openFaq, this)); // 자주하는 질문 클릭 -> 질문 리스트 팝업열림 - 문구 변경 : 혹시 이런 서비스를 찾고 계신가요?
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this)); // 인풋내 삭제버튼 클릭 -> 인풋 내용 지움
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this)); // 제목입력 인풋 입력 이벤트
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this)); // 내용입력 인풋 입력 이벤트

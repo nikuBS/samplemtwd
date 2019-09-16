@@ -24,9 +24,11 @@
                 <button class="cancel fe-text-cancel" style="display: none;"><span class="blind">삭제</span></button>
             </span>
             <% if ( isApp ) { %>
-            <span class="bt-box">
-                <button type="button" class="fe-btn_addr">주소록</button>
+            <!-- 190831 리디자인_04 -->
+            <span class="bt-box3">
+                <button type="button" class="btn-round2 btn-style3 fe-btn_addr">주소록</button>
             </span>
+            <!-- // 190831 리디자인_04 -->
             <% } %>
         </div>
         <span class="error-txt fe-error-phone blind" aria-hidden="true">잘못된 형식입니다.</span>
@@ -135,7 +137,7 @@
     <li data-hashFile="/{{path}}{{name}}">
         <p class="text">{{name}}</p>
         <div class="bt-alone">
-            <button class="bt-line-gray1 fe-remove-file">삭제하기</button>
+            <button class="btn-round3 btn-style3 fe-remove-file">삭제</button>
         </div>
     </li>
     {{/each}}
