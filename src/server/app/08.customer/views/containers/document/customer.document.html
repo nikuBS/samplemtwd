@@ -23,7 +23,7 @@
                 <!-- .component -->
                 <div class="component">
                     <div class="component-box tabs">
-                        <div class="tab-area type1 required-doc"><!-- 타입별 탭형태 변환 -->
+                        <div class="tab-area new01 required-doc"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
                                     <% if (isEtc) { %>
@@ -31,18 +31,23 @@
                                         <a role="tab">휴대폰</a>
                                     </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <li role="presentation" aria-selected="true" aria-controls="tab2-tab" id="tab2">
-                                        <a role="tab">인터넷/집전화/IPTV</a>
+                                        <a role="tab">인터넷/전화/IPTV</a>
                                     </li>
                                     <% } else { %>
                                     <li role="presentation" aria-selected="true" aria-controls="tab1-tab" id="tab1">
                                         <a role="tab">휴대폰</a>
                                     </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <li role="presentation" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a role="tab">인터넷/집전화/IPTV</a>
+                                        <a role="tab">인터넷/전화/IPTV</a>
                                     </li>
                                     <% } %>
                                 </ul>
                             </div>
+
+                            <!-- 190831 리디자인_03 -->
+                            <hr class="cont-sp type1" aria-hidden="true" />
+                            <!-- //190831 리디자인_03 -->
+
                             <div class="tab-contents">
                                 <ul>
                                     <!-- 휴대폰 -->

@@ -13,7 +13,9 @@
 Tw.MyTFareBillSms = function (rootEl) {
   this.$container = rootEl;
   this.$accountSelector = this.$container.find('.fe-account-selector');
+  this.$hpSelector = this.$container.find('.fe-hp-selector');
   this.$accountList = this.$container.find('.fe-account-list');
+  this.$hpList = this.$container.find('.fe-hp-list');
   this.$payBtn = this.$container.find('.fe-pay');
 
   this._apiService = Tw.Api;
@@ -35,6 +37,7 @@ Tw.MyTFareBillSms.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '.fe-account-selector', $.proxy(this._selectAccountList, this));
+    this.$container.on('click', 'button.fe-hp-selector', $.proxy(this._selectHpList, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$payBtn.click(_.debounce($.proxy(this._pay, this), 500));
   },
@@ -50,6 +53,21 @@ Tw.MyTFareBillSms.prototype = {
       hbs: 'actionsheet01',
       layer: true,
       data: this._getAccountList(),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
+    }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
+  },
+  /**
+   * @function
+   * @desc 문자받는번호 list 조회
+   * @param event
+   */
+  _selectHpList: function (event) {
+    var $target = $(event.currentTarget);
+    this._popupService.open({
+      url: '/hbs/',
+      hbs: 'actionsheet01',
+      layer: true,
+      data: this._getHpList(),
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target), null, null, $target);
   },
@@ -106,6 +124,29 @@ Tw.MyTFareBillSms.prototype = {
   },
   /**
    * @function
+   * @desc 문자받는번호 리스트 만들기
+   * @returns {Array}
+   */
+  _getHpList: function () {
+    var hpList = [];
+    var listObj = {
+      'list': []
+    };
+    this.$hpList.find('li').each(function () {
+      var $this = $(this);
+      var obj = {
+        'label-attr': 'id="' + $this.attr('id') + '"',
+        'radio-attr': 'id="' + $this.attr('id') + '" name="r2"',
+        'txt': $this.text()
+      };
+      listObj.list.push(obj);
+    });
+    hpList.push(listObj);
+
+    return hpList;
+  },
+  /**
+   * @function
    * @desc x 버튼 클릭 시 공통 confirm 노출
    */
   _onClose: function () {
@@ -149,8 +190,10 @@ Tw.MyTFareBillSms.prototype = {
    */
   _pay: function (e) {
     var $target = $(e.currentTarget);
-    this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: $.trim(this.$accountSelector.text()) })
-      .done($.proxy(this._paySuccess, this, $target))
+    this._apiService.request(Tw.API_CMD.BFF_07_0027, {
+      msg: $.trim(this.$accountSelector.text()),
+      svcMgmtNum: $.trim(this.$hpSelector.data('svcMgmtNum') || this.$hpSelector.attr('id'))
+    }).done($.proxy(this._paySuccess, this, $target))
       .fail($.proxy(this._payFail, this, $target));
   },
   /**
