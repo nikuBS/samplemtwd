@@ -783,7 +783,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_04: {
     type: 'video',
-    tooltip: '추천요금제는 <strong>POOQ을 무료로</strong> 즐길 수 있어요',
+    tooltip: '추천요금제는 <strong>wavve을 무료로</strong> 즐길 수 있어요',
     profile_key: {
       additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
       additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false}
@@ -791,7 +791,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_05: {
     type: 'video',
-    tooltip: '추천요금제는 <strong>데이터 걱정없이 POOQ을 무료로</strong> 이용할 수 있어요',
+    tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve을 무료로</strong> 이용할 수 있어요',
     profile_key: {
       app_use_traffic_video_ratio : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율', required: true},
       app_use_traffic_video_ratio_median : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값', required: true},
@@ -865,7 +865,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_14: {
     type: 'membership',
-    tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는추천요금제 어떠세요?',
+    tooltip: '1년에 영화 6회 무료! T멤버십 VIP 혜택을 드리는 추천요금제 어떠세요?',
     profile_key: {
       membership_vip_yn : {type: 'Y/N', name: '멤버십VIP여부', required: false},
       membership_cnt_ratio_median_yn : {type: 'Y/N', name: '멤버십 사용건수 중간값 이상 여부', required: false},
