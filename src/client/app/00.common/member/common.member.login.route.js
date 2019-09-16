@@ -67,6 +67,12 @@ Tw.CommonMemberLoginRoute.prototype = {
     if ( isLogin ) {
       this._historyService.goBack();
     } else {
+
+      // 로그인 상태가 아니면, sessionStorage의 TWM 값을 초기화 한다.
+      if(Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.TWM_LOGIN) === 'Y') {
+      	Tw.CommonHelper.removeSessionStorage(Tw.SSTORE_KEY.PRE_TWM);
+      }
+
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {
         tokenId: tidResp.id_token,
         state: state

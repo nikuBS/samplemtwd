@@ -8,6 +8,9 @@
         </div>
     </div>
     <!--// #header -->
+
+    <hr class="cont-sp type1" aria-hidden="true"><!-- 190831 리디자인_01 -->
+
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -18,22 +21,21 @@
                     {{#each inputfile_num}}
                         <div class="widget mt10">
                             <div class="widget-box file">
-                            <span class="inputbox bt-add" data-index={{@index}}>
+                            <span class="inputbox bt-add inp-btn" data-index={{@index}}>
                                 <span class="input">
                                     <input class="fileview" type="text" placeholder="파일 첨부"
                                            title="첨부파일 {{ @index }}" style="pointer-events: none;" value={{oldFile.name}} >
                                 </span>
                                 <span class="space"></span>
-                                <span class="bt-box">
+                                <span class="bt-box tod-type1">
                                     {{#if oldFile.name}}
-                                        <button type="button" class="fe-file-button del" >삭제하기</button>
+                                        <button type="button" class="fe-file-button btn-round2 btn-style3" >삭제</button>
                                         <input class="file" type="file" value="파일찾기" disabled
                                                style="pointer-events: none;" {{{attr}}} />
                                     {{else}}
-                                        <button type="button" class="fe-file-button del">파일 찾기</button>
+                                        <button type="button" class="fe-file-button btn-round2 btn-style3">파일 찾기</button>
                                         <input class="file" type="file" value="파일찾기" title="파일 찾기" {{{attr}}} />
                                     {{/if}}
-
                                 </span>
                             </span>
                             </div>

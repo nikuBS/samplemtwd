@@ -1512,7 +1512,7 @@ Tw.UPLOAD_FILE = {
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf, png)파일을 첨부하실 수 있습니다.',
   BUTTON_ADD: '파일 찾기',
-  BUTTON_DELETE: '삭제하기',
+  BUTTON_DELETE: '삭제',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해 주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해 주세요.',
   EMAILINFO_01: '첨부파일 용량은 1개 파일당 3MB 첨부가능합니다.',
