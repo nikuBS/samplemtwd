@@ -84,6 +84,10 @@ $.extend(Tw.CommonSearchMore.prototype,
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
     new Tw.XtractorService(this.$container);
+
+    if(this._platForm!=='app'){
+      $('#fe-post-bnnr').show();
+    }
   },
 
   /**

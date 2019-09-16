@@ -65,7 +65,7 @@ Tw.CommonSearch.prototype = {
     this._bpcpService.setData(this.$container, this._nowUrl);
     if(this._searchInfo.totalcount===0){
       return;
-    }
+    }    
     var keyName,contentsCnt;
     for(var i=0;i<this._searchInfo.search.length;i++){
       keyName =  Object.keys(this._searchInfo.search[i])[0];
@@ -118,6 +118,10 @@ Tw.CommonSearch.prototype = {
       this._requestRealTimeFee(0);
     }
     this.$container.find('.container').removeClass('none');
+
+    if(this._platForm!=='app'){
+      $('#fe-post-bnnr').show();
+    }
   },
   /**
    * @function
