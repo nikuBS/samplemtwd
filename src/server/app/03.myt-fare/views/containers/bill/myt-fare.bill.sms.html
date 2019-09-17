@@ -7,7 +7,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <div id="myt-fare-bill-sms" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <div class="popup-page tw-popup fixed-bottom h60">
+        <div class="popup-page tw-popup fixed-bottom h60 nobg">
             <!-- #header (공통 component 사용) -->
             <%- include('../components/header.component.html', { title: '입금전용계좌 문자 신청', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
@@ -15,6 +15,7 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- 미납 정보가 존재하는 경우 -->
                     <% if (!isAllPaid) { %>
                     <!-- .cont-box -->
