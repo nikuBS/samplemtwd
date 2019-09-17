@@ -50,7 +50,7 @@ Tw.ProductWireplanJoinOcb.prototype = {
    */
   _requestJoin: function () {
     // 무선 부가상품 가입 처리
-    Tw.CommonHelper.startLoading('.wrap', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0035, { /*addCd: '2'*/ }, {}, [this.PROD_ID])
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
