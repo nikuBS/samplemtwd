@@ -64,7 +64,7 @@ class MytDataSubmainController extends TwViewController {
       eParam: req.query.eParam || '',
     };
 
-    this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
+    this.isPPS = data.svcInfo.svcAttrCd === 'M2';
     Observable.combineLatest(
       this._getRemnantData(data.svcInfo),
       this._getDataPresent(),
@@ -123,26 +123,31 @@ class MytDataSubmainController extends TwViewController {
         }
       }
 
+      // 자녀 회선 추가 수정 [DV001-15520]
       if ( child && child.length > 0 ) {
-        // 자녀 회선 추가 수정 [DV001-15520]
         const convertedChildLines = this.convertChildLines(child);
         if (convertedChildLines && convertedChildLines.length > 0) {
           data.otherLines = convertedChildLines.concat(data.otherLines);
         }
         // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
+
       // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
       if ( data.svcInfo.svcAttrCd === 'M2' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
         data.otherLines = [];
       }
+
       // SP9 즉시충전버튼 무조건 노출로 변경
-      /*if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
+      /*
+      if ( svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' /!* 기본 DATA 제공량이 없는 경우*!/ ) {
         // 비노출 조건 T-pocketFi or T-Login 인 경우와 기본제공량이 없는경우
         // 즉시충전버튼 영역
         data.immCharge = false;
-      }*/
+      }
+      */
+
+      // 데이터혜택/활용하기 영역
       if ( data.svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
-        // 데이터혜택/활용하기 영역
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
         // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
@@ -153,13 +158,14 @@ class MytDataSubmainController extends TwViewController {
         // }
       }
 
+      // T끼리 데이터선물버튼 영역
       if ( data.svcInfo.svcAttrCd === 'M2' || present ) {
         // PPS 인 경우에 자동알람서비스 우
-        // T끼리 데이터선물버튼 영역
         data.present = true;
       }
+
+      // 리필쿠폰
       if ( refill && refill.length > 0 ) {
-        // 리필쿠폰
         data.refill = refill;
       }
 
@@ -170,7 +176,7 @@ class MytDataSubmainController extends TwViewController {
 
       // 다른 페이지를 찾고 계신가요 통계코드 추가
       this.getXtEid(data);
-      const reqBkdArr = new Array();
+      const reqBkdArr: Array<any> = [];
 
       // 충전,선물 이력 건수 조회 후 이력이 있는 경우에만 해당 이력 API 호출(성능 개선건 반영)[DV001-13474]
       // PPS인 경우 데이터한도요금제 충전내역, 팅/쿠키즈/안심음성 충전내역만 조회
@@ -214,14 +220,16 @@ class MytDataSubmainController extends TwViewController {
         return this._render(res, data);
       }
 
+      // 최근 충전 및 선물 내역
       Observable.combineLatest(reqBkdArr).subscribe(histories => {
-        // 최근 충전 및 선물 내역
         // 충전/선불내역 페이지와 동일한 순서(myt-data.history.controller.ts)
-        const breakdownList: any = [];
-        if (histories && histories.length > 0) {
-          for (let i = 0; i < histories.length; i++) {
+        const lengthHistory = histories && histories.length || 0;
+        if (lengthHistory > 0) {
+          const breakdownList: Array<any> = [];
+          for (let i = 0; i < lengthHistory; i += 1) {
             const history = histories[i];
-              if ( history && history.cmd === 'BFF_06_0018') {
+            switch (history.cmd) {
+              case 'BFF_06_0018': {
                 // T끼리 선물하기 내역
                 // type: 1 send, 2 recharge
                 const dpBkd = history.result;
@@ -242,8 +250,9 @@ class MytDataSubmainController extends TwViewController {
                   item['unit'] = dataQty.unit;
                 });
                 breakdownList.push(dpBkd);
+                break;
               }
-              if ( history && history.cmd === 'BFF_06_0042' ) {
+              case 'BFF_06_0042': {
                 // 데이터한도요금제 충전내역
                 const dcBkd = history.result;
                 dcBkd.map((item) => {
@@ -273,16 +282,18 @@ class MytDataSubmainController extends TwViewController {
                   }
                 });
                 breakdownList.push(dcBkd);
+                break;
               }
-
-              if ( history && history.cmd === 'BFF_06_0032' ) {
+              case 'BFF_06_0032': {
                 // 팅/쿠키즈/안심요금 충전 내역
                 // 자동충전취소내역 제거
-                let etcBkd = history.result;
+                let etcBkd;
                 if ( !this.isPPS ) {
-                  etcBkd = etcBkd.filter((item) => {
+                  etcBkd = history.result.filter((item) => {
                     return item.opTypCd !== '4';
                   });
+                } else {
+                  etcBkd = history.result;
                 }
                 etcBkd.map((item) => {
                   if ( this.isPPS ) {
@@ -312,11 +323,10 @@ class MytDataSubmainController extends TwViewController {
                     item['unit'] = CURRENCY_UNIT.WON;
                   }
                 });
-
                 breakdownList.push(etcBkd);
+                break;
               }
-
-              if ( history && history.cmd === 'BFF_06_0026' ) {
+              case 'BFF_06_0026': {
                 // 팅요금 선물하기 내역
                 // opTypCd: 1 send, 2 recharge
                 const tpBkd = history.result;
@@ -332,9 +342,9 @@ class MytDataSubmainController extends TwViewController {
                   item['unit'] = CURRENCY_UNIT.WON;
                 });
                 breakdownList.push(tpBkd);
+                break;
               }
-
-              if ( history && history.cmd === 'BFF_06_0002' ) {
+              case 'BFF_06_0002': {
                 // 리필쿠폰 사용이력조회
                 const refuBkd = history.result;
                 refuBkd.map((item) => {
@@ -348,9 +358,9 @@ class MytDataSubmainController extends TwViewController {
                   item['unit'] = '';
                 });
                 breakdownList.push(refuBkd);
+                break;
               }
-
-              if ( history && history.cmd === 'BFF_06_0003' ) {
+              case 'BFF_06_0003': {
                 // 리필쿠폰 선물 내역
                 const refpBkd = history.result;
                 refpBkd.map((item) => {
@@ -364,15 +374,19 @@ class MytDataSubmainController extends TwViewController {
                   item['unit'] = '';
                 });
                 breakdownList.push(refpBkd);
+                break;
               }
-              if ( breakdownList.length > 0 ) {
-                data.breakdownList = this.sortBreakdownItems(breakdownList).slice(0, 3);
-              }
-
+              default:
+                break;
+            }
+            // TODO: breakdownList를 for-loop 후에 처리해도될 것 같음
+            if ( breakdownList.length > 0 ) {
+              data.breakdownList = this.sortBreakdownItems(breakdownList).slice(0, 3);
             }
           }
-          this._render(res, data);
-        });
+        }
+        this._render(res, data);
+      });
     });
   }
 
@@ -423,14 +437,6 @@ class MytDataSubmainController extends TwViewController {
 
   parseRemnantData(remnant: any, svcInfo: any): any {
     // 실시간잔여량 데이터 parse
-    const GDATA = remnant['gnrlData'] || [];
-    const SDATA = remnant['spclData'] || [];
-    const VOICE = remnant['voice'] || [];
-    const SMS = remnant['sms'] || [];
-    let tmoaRemained = 0;
-    let tmoaTotal = 0;
-    let etcRemained = 0;
-    let etcTotal = 0;
     const result: any = {
       gdata: [],
       sdata: [],
@@ -453,9 +459,20 @@ class MytDataSubmainController extends TwViewController {
       }
       return result;
     }
-    if ( GDATA.length > 0 ) {
-      GDATA.filter((item) => {
-        if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
+    // 범용 데이터
+    const gnrlData = remnant['gnrlData'] || [];
+    // 특수 데이터
+    const spclData = remnant['spclData'] || [];
+    const voiceData = remnant['voice'] || [];
+    const smsData = remnant['sms'] || [];
+    let tmoaRemained = 0;
+    let tmoaTotal = 0;
+    let etcRemained = 0;
+    let etcTotal = 0;
+    // if ( gnrlData.length > 0 ) {
+      gnrlData.filter((item) => {
+        // 반복해서 값을 비교할 필요가 없도록 개선
+        if ( !result.totalLimit && item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
           result.totalLimit = true;
         }
         this.convShowData(item);
@@ -471,35 +488,35 @@ class MytDataSubmainController extends TwViewController {
           etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
         }
       });
-      if ( !result.totalLimit ) {
-        result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
-      } else {
+      if ( result.totalLimit ) {
         result.total = {
           etcRemainedRatio: 100,
           totalRemainedRatio: 0
         };
+      } else {
+        result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
       }
-    }
-    if ( SDATA.length > 0 ) {
-      SDATA.filter((item) => {
+    // }
+    // if ( spclData.length > 0 ) {
+      spclData.filter((item) => {
         this.convShowData(item);
         // if ( skipIdList.indexOf(item.skipId) === -1 ) {
         result['sdata'].push(item);
         // }
       });
-    }
-    if ( VOICE.length > 0 ) {
-      VOICE.filter((item) => {
+    // }
+    // if ( voiceData.length > 0 ) {
+      voiceData.filter((item) => {
         this.convShowData(item);
         result['voice'].push(item);
       });
-    }
-    if ( SMS.length > 0 ) {
-      SMS.filter((item) => {
+    // }
+    // if ( smsData.length > 0 ) {
+      smsData.filter((item) => {
         this.convShowData(item);
         result['sms'].push(item);
       });
-    }
+    // }
     return result;
   }
 
@@ -584,6 +601,34 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
       const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
+        // XXX: 개발을 위해 가짜 데이터 추가
+        // 1. 시간권 설정 ON
+        resp.result.gnrlData.push({
+            "prodId": "NA00006731",
+            "prodNm": "Data 시간권 8시간 - 시간권으로 표시",
+            "skipId": "DD4J3",
+            "skipNm": "5GX 시간권",
+            "unlimit": "0",
+            "total": "9437184",
+            "used": "0",
+            "remained": "9437184",
+            "unit": "240",
+            "rgstDtm": "",
+            "exprDtm": ""
+          },
+          {
+            "prodId": "DSGK1",
+            "prodNm": "시간권 데이터 - 사용중/안오면 몇시간 남음...",
+            "skipId": "DSGK1",
+            "skipNm": "5GX 시간권",
+            "unlimit": "0",
+            "total": "9437184",
+            "used": "0",
+            "remained": "9437184",
+            "unit": "240",
+            "rgstDtm": "",
+            "exprDtm": ""
+          });
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
           return resp.result;
         }
