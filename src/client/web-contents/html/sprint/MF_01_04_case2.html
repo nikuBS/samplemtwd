@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- 팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+    <!-- #skip_navigation -->
+    <!-- <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div> -->
+    <!--// #skip_navigation -->
+    <!-- //팝업일 경우 skipNav는 삭제 하거나 aria-hidden="true" 처리 -->
+
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>입금전용계좌 문자 신청</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="plan-pay-title pt0 pb10">
+                            <h3 class="tit">
+                                <span class="pay-name">휴대폰</span>
+                                <span class="pay-line">010-93**-78** 외 1개 회선</span>
+                                <span class="pay-fee"><span>109,860</span>원</span>
+                            </h3>
+                            <div class="tod-fright"><button class="btn-round2 btn-style3">납부요금 선택</button></div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder">
+                        <div class="user-info-form" role="group">
+                            <div class="info-form-box">
+                                <p class="form-label">문자 받는 번호</p>
+								<button class="bt-dropdown big" title="문자 받는 번호 선택" aria-haspopup="true">010-50**-84**<span class="ico"></span></button>
+                            </div>
+                            <div class="info-form-box">
+                                <p class="form-label" >입금하실 계좌번호 <button title="입금하실 계좌번호" aria-haspopup="true" class="tip-view">TIP</button></p>
+                                <button class="bt-dropdown big" title="입금하실 은행 계좌번호" aria-haspopup="true">KEB하나(구외환) 920-49-23630-82<span class="ico"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <div class="announcement-box">
+                            <p class="announcement-bullet type01 mt18">타은행에서 입금 시에는 이체수수료가 부가될 수 있습니다.</p>
+                        </div>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">청구요금 정보확인<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">이용시간 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">입금전용계좌 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">통합청구이용고객 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>SMS 보내기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
