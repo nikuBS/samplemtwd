@@ -92,7 +92,7 @@ class MyTFareSubmainController extends TwViewController {
             }
 
             // 청구요금
-            if ( claim && claim.invDt.length > 0 ) {
+            if ( claim && claim.invDt && claim.invDt.length > 0 ) {
               data.claim = claim;
               data.claimFirstDay = DateHelper.getShortFirstDate(claim.invDt);
               data.claimLastDay = DateHelper.getShortLastDate(claim.invDt);
@@ -411,7 +411,7 @@ class MyTFareSubmainController extends TwViewController {
   _getUsageFee() {
     return this.apiService.request(API_CMD.BFF_05_0204, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result.invDt.length === 0 ) {
+        if ( !resp.result.invDt || resp.result.invDt.length === 0 ) {
           // no data
           return null;
         }

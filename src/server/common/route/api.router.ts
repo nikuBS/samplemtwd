@@ -431,7 +431,10 @@ class ApiRouter {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
           if ( resp.result.isLogin ) {
             resp.result.userInfo = svcInfo;
-            resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
+            // null 객체 접근 방지
+            if ( !!allSvcInfo && !!allSvcInfo.m ) {
+              resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
+            }
             resp.result.userInfo.canSendFreeSMS = svcInfo.loginType === 'T';
             resp.result.userInfo.pps = svcInfo.svcGr === 'P';
             // resp.result.userInfo.pps = false;
