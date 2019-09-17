@@ -838,7 +838,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: '인터넷/집전화/IPTV',
+    title: '인터넷/전화/IPTV',
     category: 'INTERNET',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000141' },
@@ -875,7 +875,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
   { title: '휴대폰', category: 'cell' },
-  { title: '인터넷/집전화/IPTV', category: 'internet' }
+  { title: '인터넷/전화/IPTV', category: 'internet' }
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
