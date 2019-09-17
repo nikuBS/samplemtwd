@@ -362,14 +362,34 @@ class LoginService {
    */
   public setNoticeType(req, noticeType: string): Observable<any> {
     return Observable.create((observer) => {
-      if ( !FormatHelper.isEmpty(req) ) {
+      if ( !FormatHelper.isEmpty(req) && !FormatHelper.isEmpty(req.session) ) {
         if ( FormatHelper.isEmpty(req.session.noticeType) ) {
           req.session.noticeType = '';
         }
         req.session.noticeType = noticeType;
-        req.session.save(() => {
-          this.logger.debug(this, '[setNoticeType]', req.session, req.session.noticeType);
-          observer.next(req.session.noticeType);
+
+        // req.session undefined 오류 분석용 log (req.session deep copy)
+        let unsavedSession = Object.assign({}, req.session);
+
+        req.session.save((err) => {
+          // err 값이 return 되는 case
+          if ( !FormatHelper.isEmpty(err) ) {
+            this.logger.error(this, '[OP002-3955] - CASE01', err);
+          }
+
+          // save 후 session 값이 달라지는 case
+          let beforeSaveStr = JSON.stringify(unsavedSession);
+          let afterSaveStr: any = JSON.stringify(req.session);
+          if ( beforeSaveStr !== afterSaveStr ) {
+            this.logger.error(this, '[OP002-3955] - CASE02', '[BEFORE]' + beforeSaveStr, '[AFTER]' + afterSaveStr);
+          }
+
+          this.logger.debug(this, '[setNoticeType]', req.session);
+          if ( !FormatHelper.isEmpty(req.session) && !FormatHelper.isEmpty(req.session.noticeType) ) {
+            observer.next(req.session.noticeType);
+          } else {
+            observer.next({});
+          }
           observer.complete();
         });
       }
@@ -540,7 +560,7 @@ class LoginService {
    */
   public getFullPath(req: any): string {
     const request = req; // || this.request;
-    if ( !FormatHelper.isEmpty(request) ) {
+    if ( !FormatHelper.isEmpty(request) && !FormatHelper.isEmpty(request.baseUrl) ){
       const baseUrl = request.baseUrl;
       if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||
         baseUrl.indexOf('native') !== -1 || baseUrl.indexOf('store') !== -1 ) {

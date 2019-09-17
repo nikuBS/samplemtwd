@@ -99,7 +99,7 @@ export default class MyTDataFamily extends TwViewController {
         total: Number(resp.result.total) > 0 ? FormatHelper.convDataFormat(resp.result.total, DATA_UNIT.GB) : DATA_ZERO,
         used: FormatHelper.addComma(resp.result.used),
         remained: FormatHelper.addComma(resp.result.remained),
-        isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
+        isRepresentation: !!representation ? representation.svcMgmtNum === svcInfo.svcMgmtNum : false,
         mine: {
           ...mine,
           ratio: data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(remained / total * 100),
