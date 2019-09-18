@@ -11,6 +11,46 @@ import {
 import FormatHelper from './format.helper';
 import DateHelper from './date.helper';
 
+// 기본제공 데이터: (사용중인 요금제에 해당하는 공제항목으로 존재할경우 공제항목 최상단에 노출)
+//  - usageData.gnrlData[n] 중에 svcInfo.prodId와 같은 prodId를 가진 공제항목
+// 통합공유 데이터: (t가족모아, t끼리 데이터 선물하기, 데이터함께쓰기)
+//  - 기본제공데이터가 있는 경우 기본제공 데이터 하단에 노출
+//    - t가족모아 이용중인 경우 (usageData.spclData[n]중 TOTAL_SHARE_DATA_SKIP_ID에 속하는 데이터가 있는경우)
+//      - 가능량: usageData.spclData[n].showRemained
+//      - 사용량: usageData.spclData[n].showUsed
+//    - 아닌 경우
+//      - 가능량: 기본제공데이터.showRemaineds,
+//      - 사용량: T끼리 데이터 선물하기 + 데이터 함께쓰기 사용량
+//    - 기본제공 데이터가 있지만 기본제공 데이터량이 무제한인 경우(INFINITY_DATA_PROD_ID에 속하는 경우)엔 표시 안함[DV001-18235]
+//  - 기본제공데이터가 없는 경우 표시안함
+const kinds = [
+  MYT_DATA_USAGE.DATA_TYPE.DATA,
+  MYT_DATA_USAGE.DATA_TYPE.VOICE,
+  MYT_DATA_USAGE.DATA_TYPE.SMS,
+  MYT_DATA_USAGE.DATA_TYPE.ETC
+];
+
+/**
+ * dataArray중 target의 공제ID에 해당하는 데이터 반환
+ * @param {Array} target
+ * @param {Array} data
+ * @private
+ * return data
+ */
+function getDataInTarget(target: Array<any>, data: Array<any>): any {
+  let found;
+  // TODO: 구문이 find last가 되며, mapping할 필요가 없다.
+  // data.map(item => {
+  data.forEach(item => {
+    if (target.indexOf(item.skipId) !== -1) {
+      found = item;
+    }
+  });
+  return found;
+  // TODO: 구문이 find first라면, 아래와 같이 한다.
+  // return data.find(item => (target.indexOf(item.skipId) > -1));
+}
+
 class MyTHelper {
 
   /**
@@ -45,18 +85,12 @@ class MyTHelper {
    * @public
    */
   static parseUsageData(usageData: any): any {
-    const kinds = [
-      MYT_DATA_USAGE.DATA_TYPE.DATA,
-      MYT_DATA_USAGE.DATA_TYPE.VOICE,
-      MYT_DATA_USAGE.DATA_TYPE.SMS,
-      MYT_DATA_USAGE.DATA_TYPE.ETC
-    ];
     MyTHelper.setTotalRemained(usageData);
     usageData.data = usageData.gnrlData || [];
 
-    kinds.map((kind) => {
+    kinds.forEach((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].map((data) => {
+        usageData[kind].forEach((data) => {
           MyTHelper.convShowData(data);
         });
       }
@@ -71,45 +105,9 @@ class MyTHelper {
    * @public
    */
   static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
-
-    /**
-     * dataArray중 target의 공제ID에 해당하는 데이터 반환
-     * @param target
-     * @param dataArray
-     * @private
-     * return data
-     */
-    function getDataInTarget(target: any, dataArray: any): any {
-      let data;
-      dataArray.map((_data) => {
-        if ( target.indexOf(_data.skipId) !== -1 ) {
-          data = _data;
-        }
-      });
-      return data;
-    }
-
-    // 기본제공 데이터: (사용중인 요금제에 해당하는 공제항목으로 존재할경우 공제항목 최상단에 노출)
-    //  - usageData.gnrlData[n] 중에 svcInfo.prodId와 같은 prodId를 가진 공제항목
-    // 통합공유 데이터: (t가족모아, t끼리 데이터 선물하기, 데이터함께쓰기)
-    //  - 기본제공데이터가 있는 경우 기본제공 데이터 하단에 노출
-    //    - t가족모아 이용중인 경우 (usageData.spclData[n]중 TOTAL_SHARE_DATA_SKIP_ID에 속하는 데이터가 있는경우)
-    //      - 가능량: usageData.spclData[n].showRemained
-    //      - 사용량: usageData.spclData[n].showUsed
-    //    - 아닌 경우
-    //      - 가능량: 기본제공데이터.showRemaineds,
-    //      - 사용량: T끼리 데이터 선물하기 + 데이터 함께쓰기 사용량
-    //    - 기본제공 데이터가 있지만 기본제공 데이터량이 무제한인 경우(INFINITY_DATA_PROD_ID에 속하는 경우)엔 표시 안함[DV001-18235]
-    //  - 기본제공데이터가 없는 경우 표시안함
-    const kinds = [
-      MYT_DATA_USAGE.DATA_TYPE.DATA,
-      MYT_DATA_USAGE.DATA_TYPE.VOICE,
-      MYT_DATA_USAGE.DATA_TYPE.SMS,
-      MYT_DATA_USAGE.DATA_TYPE.ETC
-    ];
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목 (합산 가능한 공제항목)
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
-    let dataArr = new Array();
+    let dataArr: Array<any> = [];
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
@@ -169,7 +167,7 @@ class MyTHelper {
     });
 
     if ( pas.length > 0 ) {
-      pas.map((pa) => {
+      pas.forEach((pa) => {
         dataArr = dataArr.filter((_data) => {
           return !(_data.skipId === SKIP_NAME.DAILY && _data.prodId === pa.prodId);
         });
@@ -183,9 +181,9 @@ class MyTHelper {
 
     usageData.data = dataArr;
 
-    kinds.map((kind) => {
+    kinds.forEach((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].map((data) => {
+        usageData[kind].forEach((data) => {
           MyTHelper.convShowData(data);
         });
       }
@@ -199,12 +197,6 @@ class MyTHelper {
    * @public
    */
   static parseChildCellPhoneUsageData(usageData: any): any {
-    const kinds = [
-      MYT_DATA_USAGE.DATA_TYPE.DATA,
-      MYT_DATA_USAGE.DATA_TYPE.VOICE,
-      MYT_DATA_USAGE.DATA_TYPE.SMS,
-      MYT_DATA_USAGE.DATA_TYPE.ETC
-    ];
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let dataArr = gnrlData.concat(spclData);
@@ -233,9 +225,9 @@ class MyTHelper {
 
     usageData.data = dataArr;
 
-    kinds.map((kind) => {
+    kinds.forEach((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].map((data) => {
+        usageData[kind].forEach((data) => {
           MyTHelper.convShowData(data);
         });
       }

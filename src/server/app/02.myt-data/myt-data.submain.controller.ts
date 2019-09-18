@@ -30,12 +30,17 @@ import {
   UNIT_E,
   UNLIMIT_CODE,
   TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
-  TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E //  T가족모아 가입 가능 요금제
+  TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E, //  T가족모아 가입 가능 요금제
+  _5GX_PROD_ID, // 5GX 데이터 시간권/장소권
+  _5GXTICKET_PROD_ID, _5GXTICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 // 실시간잔여량 공제항목
-const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+
+// 5GX 시간권 사용 여부
+const use5GXTicket: Array<string> = ['DSGK1'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -82,7 +87,7 @@ class MytDataSubmainController extends TwViewController {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
-        data.remnantData = this.parseRemnantData(remnant, data.svcInfo);
+        data.remnantData = this.parseRemnantData(remnant, data);
         if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
           data.isDataShow = true;
         }
@@ -121,6 +126,15 @@ class MytDataSubmainController extends TwViewController {
           // T가족모아 공유가능한 요금제
           data.isTmoaProdId = TPLAN_SHARE_ID.indexOf(data.svcInfo.prodId) > -1;
         }
+        /*
+        // [OP002-3871] 5GX 데이터 시간권/장소권
+        if (_5GX_PROD_ID.indexOf(data.svcInfo.prodId) > -1) {
+          // 시간권(0 ~ 2, 그외는 장소권)
+          if (_5GXTICKET_PROD_ID.indexOf(data.svcInfo.prodId) < 3) {
+            data.is5GXTimeTicketProdId = true;
+          }
+        }
+        */
       }
 
       // 자녀 회선 추가 수정 [DV001-15520]
@@ -435,14 +449,16 @@ class MytDataSubmainController extends TwViewController {
     return '';
   }
 
-  parseRemnantData(remnant: any, svcInfo: any): any {
+  parseRemnantData(remnant: any, data: any): any {
     // 실시간잔여량 데이터 parse
+    const svcInfo = data.svcInfo;
     const result: any = {
       gdata: [],
       sdata: [],
       voice: [],
       sms: [],
       tmoa: [],
+      // _5gxTicket: null,
       totalLimit: false,
       total: null
     };
@@ -470,51 +486,72 @@ class MytDataSubmainController extends TwViewController {
     let etcRemained = 0;
     let etcTotal = 0;
     // if ( gnrlData.length > 0 ) {
-      gnrlData.filter((item) => {
+      gnrlData.filter(item => {
+        let excludeTotal;
+        this.convShowData(item);
         // 반복해서 값을 비교할 필요가 없도록 개선
         if ( !result.totalLimit && item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
           result.totalLimit = true;
         }
-        this.convShowData(item);
+        // TODO: 지금은 gnrlData로 온다고 가정
+        // 5GX 시간권/장소권 사용 여부 확인
+        if (!data._5gxTicket) {
+          const index5GXTicket = _5GXTICKET_PROD_ID.indexOf(item.prodId);
+          if (index5GXTicket > -1) {
+            data._5gxTicket = {};
+            // 시간권 여부
+            if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
+              data._5gxTicket.time = true;
+              if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+                // data._5gxTicket.total = this.convFormat(item.total, item.unit);
+                data._5gxTicket.remained = this.convFormat(item.remained, item.unit);
+              }
+            }
+            excludeTotal = true;
+          }
+        }
         // POT10, POT20
         if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
-          result['tmoa'].push(item);
-          tmoaRemained += parseInt(item.remained || 0, 10);
-          tmoaTotal += parseInt(item.total || 0, 10);
+          result.tmoa.push(item);
+          // totalLimit가 true면 개산 필요없음
+          // [OP002-3871] 5GX 시간권/장소권은 tmoa에 포함될 수 없어 보인다.
+          if (!result.totalLimit && !excludeTotal) {
+            tmoaRemained += parseInt(item.remained || 0, 10);
+            tmoaTotal += parseInt(item.total || 0, 10);
+          }
         } else {
-          result['gdata'].push(item);
+          result.gdata.push(item);
           // 차감중인 공제 항목에 데이터의 합 [DVI001-15208] 참고
-          etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
-          etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
+          // totalLimit가 true면 개산 필요없음
+          if (!result.totalLimit && !excludeTotal) {
+            etcRemained += parseInt(item.remained || 0, 10);
+            etcTotal += parseInt(item.total || 0, 10);
+          }
         }
       });
-      if ( result.totalLimit ) {
-        result.total = {
-          etcRemainedRatio: 100,
-          totalRemainedRatio: 0
-        };
-      } else {
-        result.total = this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
-      }
+      result.total = result.totalLimit ? {
+        etcRemainedRatio: 100,
+        totalRemainedRatio: 0
+      } : this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
     // }
     // if ( spclData.length > 0 ) {
-      spclData.filter((item) => {
+      spclData.filter(item => {
         this.convShowData(item);
         // if ( skipIdList.indexOf(item.skipId) === -1 ) {
-        result['sdata'].push(item);
+        result.sdata.push(item);
         // }
       });
     // }
     // if ( voiceData.length > 0 ) {
-      voiceData.filter((item) => {
+      voiceData.filter(item => {
         this.convShowData(item);
-        result['voice'].push(item);
+        result.voice.push(item);
       });
     // }
     // if ( smsData.length > 0 ) {
       smsData.filter((item) => {
         this.convShowData(item);
-        result['sms'].push(item);
+        result.sms.push(item);
       });
     // }
     return result;
@@ -601,34 +638,50 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
       const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
-        // XXX: 개발을 위해 가짜 데이터 추가
-        // 1. 시간권 설정 ON
-        resp.result.gnrlData.push({
-            "prodId": "NA00006731",
-            "prodNm": "Data 시간권 8시간 - 시간권으로 표시",
-            "skipId": "DD4J3",
-            "skipNm": "5GX 시간권",
-            "unlimit": "0",
-            "total": "9437184",
-            "used": "0",
-            "remained": "9437184",
-            "unit": "240",
-            "rgstDtm": "",
-            "exprDtm": ""
-          },
-          {
-            "prodId": "DSGK1",
-            "prodNm": "시간권 데이터 - 사용중/안오면 몇시간 남음...",
-            "skipId": "DSGK1",
-            "skipNm": "5GX 시간권",
-            "unlimit": "0",
-            "total": "9437184",
-            "used": "0",
-            "remained": "9437184",
-            "unit": "240",
-            "rgstDtm": "",
-            "exprDtm": ""
-          });
+        // XXX: 5GX 개발을 위해 가짜 데이터 추가
+        resp.result.gnrlData.push(
+            // 1. 시간권
+            {
+              'prodId': 'NA00006731', // 'NA00006732', 'NA00006733'
+              'prodNm': 'Data 시간권 8시간',
+              'skipId': 'DSGK1',
+              'skipNm': '시간권 데이터',
+              'unlimit': '0',
+              'total': '9000',
+              'used': '0',
+              'remained': '7200',
+              'unit': '240',
+              'rgstDtm': '',
+              'exprDtm': ''
+            },
+            // 2. 장소권 (부스트 파크 옵션)
+            /* {
+              'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
+              'prodNm': 'BoostPark 데이터통화 10GB',
+              'skipId': 'DXXXX',
+              'skipNm': 'BoostPark 장소권',
+              'unlimit': '0',
+              'total': '9437184',
+              'used': '0',
+              'remained': '9437184',
+              'unit': '140',
+              'rgstDtm': '',
+              'exprDtm': ''
+            },
+            // 설정 ON: "사용중",  설정 OFF(안오면): "남은 시간 표시"
+            {
+              'prodId': 'DSGK1',
+              'prodNm': '시간권 데이터',
+              'skipId': 'DSGK1',
+              'skipNm': '시간권 데이터',
+              'unlimit': '0',
+              'total': '9000',
+              'used': '0',
+              'remained': '7200',
+              'unit': '240',
+              'rgstDtm': '',
+              'exprDtm': ''
+            } */);
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
           return resp.result;
         }

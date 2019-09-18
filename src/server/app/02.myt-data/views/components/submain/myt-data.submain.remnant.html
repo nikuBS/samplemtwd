@@ -298,20 +298,20 @@
                         </li>
                         <%_ }
                         // 5GX 시간권/장소권
-                        if (true || data.is5GXTicketData) {
+                        if (data._5gxTicket) {
                         _%>
                         <li>
                             <span class="tit">5GX 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span></span>
                             <%_
                             // 부스트파크 옵션 이용자가 아닌 경우
-                            if (true || !data.is5GXTicketBoostPark) {
+                            if (data._5gxTicket.time) {
                             _%>
                                 <span class="value type2">
                                     <%_
-                                    if (true || data.is5GXTicketTimeSet) {
+                                    if (data._5gxTicket.remained) {
                                     // 시간 설정 OFF
                                     _%>
-                                    <strong><%- '10' + '시간' %></strong> 남음
+                                    <strong><%- data._5gxTicket.remained.data + data._5gxTicket.remained.unit %></strong> 남음
                                     <%_
                                     } else {
                                     // 시간 설정 ON

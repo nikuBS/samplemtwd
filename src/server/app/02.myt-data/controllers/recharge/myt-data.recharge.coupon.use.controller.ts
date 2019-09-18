@@ -11,6 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, TIME_UNIT, MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
+import { TPLAN_LARGE_PROD_ID } from '../../../../types/bff.type';
 
 interface Option {
   dataVoiceClCd: string;
@@ -232,13 +233,17 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         if (this.planType.get(plan) === 0) {
           option.qttText = '0';
           return option;
-        } else if (option.dataVoiceClCd === 'D') {
+        }
+        if (option.dataVoiceClCd === 'D') {
           const converted = FormatHelper.convDataFormat(this.planType.get(plan), DATA_UNIT.GB);
           option.qttText = converted.data + ' ' + converted.unit;
           // Tplan large/family의 경우 '최대' 삽입, 0Plan large, T플랜 에센스, T플랜 스페셜 포함
-          if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157' ||
+          /*
+           if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157' ||
               plan === 'NA00006403' || plan === 'NA00006404' || plan === 'NA00006405' ||
               plan === 'NA00006537' || plan === 'NA00006538' || plan === 'NA00006401' ) {
+          */
+          if (TPLAN_LARGE_PROD_ID.indexOf(plan) > -1) {
             option.qttText = '최대 ' + option.qttText;
             option.copnDtlClNm = option.copnDtlClNm.replace('100%', '');
             option.isTplan = true;
