@@ -783,7 +783,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_04: {
     type: 'video',
-    tooltip: '추천요금제는 <strong>wavve을 무료로</strong> 즐길 수 있어요',
+    tooltip: '추천요금제는 <strong>wavve를 무료로</strong> 즐길 수 있어요',
     profile_key: {
       additional_svc_oksusu_scrb_type : {type: 'P/F', name: 'OKSUSU 가입 형태', required: false},
       additional_svc_pooq_scrb_type : {type: 'P/F', name: 'POOQ 가입 형태', required: false}
@@ -791,7 +791,7 @@ export const MLS_DETAIL_MAPPING = {
   },
   prcpln_05: {
     type: 'video',
-    tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve을 무료로</strong> 이용할 수 있어요',
+    tooltip: '추천요금제는 <strong>데이터 걱정없이 wavve를 무료로</strong> 이용할 수 있어요',
     profile_key: {
       app_use_traffic_video_ratio : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율', required: true},
       app_use_traffic_video_ratio_median : {type: 'ratio', name: '전체 데이터 대비 동영상 데이터 사용비율 중간값', required: true},
