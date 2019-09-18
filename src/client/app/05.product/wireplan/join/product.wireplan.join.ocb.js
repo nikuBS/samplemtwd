@@ -50,7 +50,7 @@ Tw.ProductWireplanJoinOcb.prototype = {
    */
   _requestJoin: function () {
     // 무선 부가상품 가입 처리
-    Tw.CommonHelper.startLoading('.wrap', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0035, { /*addCd: '2'*/ }, {}, [this.PROD_ID])
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
@@ -78,7 +78,32 @@ Tw.ProductWireplanJoinOcb.prototype = {
    */
   _bindSuccessPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._historyService.goBack, this));
+    $popupContainer.on('click', '.bt-link-tx', $.proxy(this._onClickCharge, this));
   },
+
+   /**
+   * @function
+   * @desc 과금 팝업 오픈 후 외부 브라우저 랜딩 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickCharge: function ($event) {
+    Tw.CommonHelper.showDataCharge($.proxy(this._onClickExternal, this, $event));
+  },
+
+  /**
+   * @function
+   * @desc 외부 브라우저 랜딩 처리
+   * @param $event 이벤트 객체
+   * @return {void}
+   * @private
+   */
+  _onClickExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openUrlExternal(url);
+  },
+
   /**
    * @function
    * @desc 실패 콜백
