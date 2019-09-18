@@ -15,7 +15,7 @@ import MyTHelper from '../../../../utils/myt.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
 import { S_FLAT_RATE_PROD_ID, SVC_ATTR_E, SVC_CDGROUP } from '../../../../types/bff.type';
 
-const VIEW = {
+const TEMPLATE = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
   BAR: 'usage/myt-data.usage.html',         // PPS, T-Pocket fi, T-login
   ERROR: 'usage/myt-data.usage.error.html'
@@ -67,10 +67,6 @@ class MyTDataHotdata extends TwViewController {
     });
   }
 
-
-
-
-
   /**
    * 회선 타입에 따른 화면 렌더링
    * @param res
@@ -81,7 +77,7 @@ class MyTDataHotdata extends TwViewController {
    * @private
    */
   private _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extraDataResp?: any) {
-    let view = VIEW.BAR;
+    let template;
     const option = {
       svcInfo,
       pageInfo,
@@ -91,27 +87,30 @@ class MyTDataHotdata extends TwViewController {
       isWireLess: false
     };
 
-    switch ( svcInfo.svcAttrCd ) {
-      case SVC_ATTR_E.MOBILE_PHONE :
+    switch (svcInfo.svcAttrCd) {
+        // 휴대폰
+      case SVC_ATTR_E.MOBILE_PHONE:
         option['usageData'] = MyTHelper.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
-        if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
+        if (extraDataResp && extraDataResp['code'] === API_CODE.CODE_00) {
           option['balanceAddOns'] = extraDataResp['result'];
         }
-        view = VIEW.CIRCLE;
+        template = TEMPLATE.CIRCLE;
         break;
-      case SVC_ATTR_E.PPS :
+        // 선불카드(폰)
+      case SVC_ATTR_E.PPS:
         option['usageData'] = MyTHelper.parseUsageData(usageDataResp.result);
         // PPS 정보
-        if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
+        if (extraDataResp && extraDataResp['code'] === API_CODE.CODE_00) {
           const extraData = extraDataResp['result'];
           extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
           extraData.showInbEndDt = DateHelper.getShortDate(extraData.inbEndDt);
           extraData.showNumEndDt = DateHelper.getShortDate(extraData.numEndDt);
           option['ppsInfo'] = extraData;
         }
+        template = TEMPLATE.BAR;
         break;
-      // 유선 집전화
-      case SVC_ATTR_E.TELEPHONE :
+        // 유선 집전화
+      case SVC_ATTR_E.TELEPHONE: {
         const result = usageDataResp.result;
         if (result.balance) {
           if (result.balance[0]) {
@@ -124,18 +123,20 @@ class MyTDataHotdata extends TwViewController {
           }
         }
         option['usageData'] = MyTHelper.parseUsageData(result);
-        view = VIEW.CIRCLE;
+        template = TEMPLATE.CIRCLE;
         break;
+      }
       default:
         option['usageData'] = MyTHelper.parseUsageData(usageDataResp.result);
+        template = TEMPLATE.BAR;
         break;
     }
 
-    if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
+    if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1) {
       option['isWireLess'] = true;
     }
 
-    res.render(view, option);
+    res.render(template, option);
   }
 
   /**
@@ -159,7 +160,7 @@ class MyTDataHotdata extends TwViewController {
     if (SVC_CDGROUP.WIRE.indexOf(svcInfo.svcAttrCd) !== -1 && (error.code === 'BLN0004' || error.code === 'BLN0007')) {
       error.contents = MYT_DATA_USAGE.ERROR['BLN0004_S'].contents;
     }
-    res.render(VIEW.ERROR, {
+    res.render(TEMPLATE.ERROR, {
       svcInfo,
       pageInfo,
       error
