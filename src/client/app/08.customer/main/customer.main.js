@@ -15,14 +15,19 @@ Tw.CustomerMain = function (rootEl) {
   this._popupService = Tw.Popup;
 
   this._history = new Tw.HistoryService();
-
+  
   this._cachedElement();
   this._bindEvent();
   this._init();
+
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.CustomerMain.prototype = {
   _init: function () {
+    if(!Tw.BrowserHelper.isApp()){
+      $('#fe-post-bnnr').show();
+    }
   },
 
   /**

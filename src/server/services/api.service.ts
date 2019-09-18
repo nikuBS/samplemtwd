@@ -196,7 +196,7 @@ class ApiService {
       this.setServerSession(resp.headers, req, res, command).subscribe((data) => {
         if ( contentType.includes('json') ) {
           // client에서 API를 직접 호출하지 않는 경우(server에서 API를 호출하는 경우)
-          if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+          if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
             // BFF server session이 변경되었을 경우
             if ( data && data.code === API_CODE.NODE_1005) {
               this.redirectInvalidSession(req, res, data);
@@ -255,7 +255,7 @@ class ApiService {
         this.setServerSession(headers, req, res, command).subscribe((resp) => {
           if ( contentType.includes('json') ) {
             // client에서 API를 직접 호출하지 않는 경우(페이지 로드되면서 server에서 API를 호출하는 경우)
-            if ( !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+            if ( !!req.baseUrl && !(req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
             
               // BFF server session이 변경되었을 경우
               if ( resp && resp.code === API_CODE.NODE_1005) {
@@ -375,7 +375,7 @@ class ApiService {
               tplaceUseAgreeYn: resp.result.tplaceUseAgreeYn,
               loginType: type
             }),
-            this.loginService.setNoticeType(this.req, resp.result.noticeTypCd)
+            this.loginService.setNoticeType(this.req, resp.result.noticeTypCd || '')
             // this.loginService.setNoticeType(this.req, '05')
           ]);
         } else {

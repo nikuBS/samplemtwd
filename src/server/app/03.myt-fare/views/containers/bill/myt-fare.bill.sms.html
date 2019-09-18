@@ -7,7 +7,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <div id="myt-fare-bill-sms" class="wrap" data-menuId="<%= pageInfo.menuId %>">
-        <div class="popup-page tw-popup fixed-bottom h60">
+        <div class="popup-page tw-popup fixed-bottom h60 nobg">
             <!-- #header (공통 component 사용) -->
             <%- include('../components/header.component.html', { title: '입금전용계좌 문자 신청', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
@@ -15,6 +15,7 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
                     <!-- 미납 정보가 존재하는 경우 -->
                     <% if (!isAllPaid) { %>
                     <!-- .cont-box -->
@@ -29,16 +30,35 @@
                     <% if (virtualBankList.length > 0) { %>
                     <div class="cont-box noborder">
                         <div class="user-info-form" role="group">
+                            <!--현재 회선이 모바일 회선인 경우-->
+                            <%if(svcInfo.svcAttrCd === 'M1'){%>
                             <div class="info-form-box">
                                 <p class="form-label">문자 받는 번호</p>
                                 <span class="inputbox">
                                     <span class="input">
-                                      <input type="text" placeholder="핸드폰 번호" title="문자 받는 핸드폰 번호" value="<%= svcInfo.svcNumber %>"
+                                      <input class="fe-hp-selector" type="text" placeholder="핸드폰 번호" title="문자 받는 핸드폰 번호" value="<%= mobileList[0].svcNum %>"
+                                             data-svc-mgmt-num="<%= mobileList[0].svcMgmtNum%>"
                                              maxlength="13" readonly>
                                       <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                             </div>
+                            <%}%>
+                            <!--OP002-3464 현재 회선이 유선 회선이면서, 모바일회선(문자받는번호) 있는 경우만 노출-->
+                            <%if(svcInfo.svcAttrCd !== 'M1' &&mobileList.length > 0){%>
+                            <div class="info-form-box">
+                                <p class="form-label">문자 받는 번호</p>
+                                <button id="<%= mobileList[0].svcMgmtNum %>"
+                                        class="bt-dropdown big fe-hp-selector"
+                                        title="문자 받는 핸드폰 번호" aria-haspopup="true"><%= mobileList[0].svcNum %><span class="ico"></span>
+                                </button>
+                                <ul class="fe-hp-list none">
+                                    <% for (var i = 0; i < mobileList.length; i++) { %>
+                                    <li id="<%= mobileList[i].svcMgmtNum %>"><%= mobileList[i].svcNum %></li>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <%}%>
                             <div class="info-form-box">
                                 <p class="form-label">
                                     입금하실 계좌번호 <button id="MF_01_04_tip_01" class="tip-view" title="입금하실 계좌번호" aria-haspopup="true" type="button">TIP</button>
@@ -88,9 +108,11 @@
                         </ul>
                     </div>
                     <!--// .cont-box -->
+                    <% } %>
 
                 </div>
                 <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <% if (virtualBankList.length > 0 && mobileList.length > 0) { %>
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">

@@ -92,7 +92,7 @@ Tw.QuickMenuEditComponent.prototype = {
     this._popupService.close();
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU_DEFAULT, {})
       .done($.proxy(this._successQuickMenuDefault, this))
-      .done($.proxy(this._failQuickMenuDefault, this));
+      .fail($.proxy(this._failQuickMenuDefault, this));
   },
 
   /**

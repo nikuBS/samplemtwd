@@ -246,7 +246,7 @@
                             현재 <em class="em">유료 동영상 서비스</em>를 이용하고 계시네요.
                         </p>
                         <div class="plan-img-wrap">
-                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img02.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img02.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(wavve 앤 테이터 무료) ">
                             <ul class="gh-comment">
                                 <li class="blue article line-block"><span class="article-txt">추천요금제로 변경 시</span></li>
                                 <li class="red article line-block"><span class="article-txt">현재 유지 시</span></li>
@@ -261,7 +261,7 @@
                             실시간 TV, 영화, 지상파 VOD 22만편을 <em class="em">무료로 제공</em>합니다.
                         </p>
                         <div class="plan-img-wrap">
-                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img03.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(POOQ 앤 테이터, oksusu) ">
+                            <img src="<%= CDN %>/img/t_myPlan/item_plan_img03.png" alt="현재 유지시 유료 추천 요금제로 변경시 무료(wavve 앤 테이터 월 9,900원) ">
                         </div>
                     </div><!-- //plan-item -->
                     <% } %>
@@ -488,6 +488,13 @@
                                 <li class="green article"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.third.title %></span><span class="price"><%= resp.reason_details.membership.third.amt %>원</span></span></li>
                                 <li class="purple article"><span class="article-txt"><span class="bene-item"><%= resp.reason_details.membership.etc.title %></span><span class="price"><%= resp.reason_details.membership.etc.amt %>원</span></span></li>
                             </ul>
+                            <!-- 190916 [OP002-3769] 수정_04 -->
+                            <div class="cont-noti mt12">
+                                <ul class="bullet-type">
+                                    <li class="tod-txcolor4">멤버십 그래프 백분율의 경우 소수점 비율로 인해 금액 환산 시 오차가 있을 수 있습니다.</li>
+                                </ul>
+                            </div>
+                            <!-- //190916 [OP002-3769] 수정_04 -->
                         </div>
                     </div><!-- //plan-item -->
                     <% } %>
