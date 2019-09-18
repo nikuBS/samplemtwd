@@ -38,6 +38,7 @@ Tw.MainRecommendProduct.prototype = {
     this.$box = $('.di-box');
     this.$pbox = $('.cont-box').not('.nogaps-hoz');
     this.$list = $('.txt-list > li');
+    this._notFixedTop = this.$box.position().top;
     // this._boxTop = this.$box.offset().top - $('#header').height() - 10;
   },
 
@@ -59,18 +60,14 @@ Tw.MainRecommendProduct.prototype = {
    * @private
    */
   _checkScroll: function () {
-    // this.$box.toggleClass('fixed', this._boxTop <= $(window).scrollTop());
-
-    if ( $(window).scrollTop() >= $('.tod-myplan-visual').height() - 10 ) {
+    if ( $(window).scrollTop() >= $('.tod-myplan-visual').height() + this._notFixedTop ) {
       this.$box.addClass('fixed');
     } else {
       this.$box.removeClass('fixed');
     }
-
     if ( !Tw.FormatHelper.isEmpty(this._timer) ) {
       clearTimeout(this._timer);
     }
-
     this._timer = setTimeout(this._toolTipAnimate, 200, this);
   },
 
