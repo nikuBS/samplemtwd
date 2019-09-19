@@ -39,8 +39,19 @@ import StringHelper from '../../utils/string.helper';
 // 실시간잔여량 공제항목
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
-// 5GX 시간권 사용 여부
-const use5GXTicket: Array<string> = ['DSGK1'];
+// TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
+const parceTimesString = (times: any) => {
+  // 시간과 분이 서로 의무적으로 존재해야 하는 것은 아니므로, 각각의 조건문으로 분리하여 처리한다.
+  if (times.hours) {
+    times.string = `${times.hours}시`;
+  } else {
+    times.string = '';
+  }
+  if (times.min) {
+    times.string = `${times.string} ${times.min}분`;
+  }
+  return times;
+};
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -126,15 +137,6 @@ class MytDataSubmainController extends TwViewController {
           // T가족모아 공유가능한 요금제
           data.isTmoaProdId = TPLAN_SHARE_ID.indexOf(data.svcInfo.prodId) > -1;
         }
-        /*
-        // [OP002-3871] 5GX 데이터 시간권/장소권
-        if (_5GX_PROD_ID.indexOf(data.svcInfo.prodId) > -1) {
-          // 시간권(0 ~ 2, 그외는 장소권)
-          if (_5GXTICKET_PROD_ID.indexOf(data.svcInfo.prodId) < 3) {
-            data.is5GXTimeTicketProdId = true;
-          }
-        }
-        */
       }
 
       // 자녀 회선 추가 수정 [DV001-15520]
@@ -238,7 +240,7 @@ class MytDataSubmainController extends TwViewController {
       Observable.combineLatest(reqBkdArr).subscribe(histories => {
         // 충전/선불내역 페이지와 동일한 순서(myt-data.history.controller.ts)
         const lengthHistory = histories && histories.length || 0;
-        if (lengthHistory > 0) {
+        // if (lengthHistory > 0) {
           const breakdownList: Array<any> = [];
           for (let i = 0; i < lengthHistory; i += 1) {
             const history = histories[i];
@@ -398,7 +400,7 @@ class MytDataSubmainController extends TwViewController {
               data.breakdownList = this.sortBreakdownItems(breakdownList).slice(0, 3);
             }
           }
-        }
+        // }
         this._render(res, data);
       });
     });
@@ -477,6 +479,8 @@ class MytDataSubmainController extends TwViewController {
     }
     // 범용 데이터
     const gnrlData = remnant['gnrlData'] || [];
+    // 5GX 데이터
+    const data5gx = remnant._5gxData || [];
     // 특수 데이터
     const spclData = remnant['spclData'] || [];
     const voiceData = remnant['voice'] || [];
@@ -485,37 +489,39 @@ class MytDataSubmainController extends TwViewController {
     let tmoaTotal = 0;
     let etcRemained = 0;
     let etcTotal = 0;
+    // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
+    data5gx.forEach(item => {
+      if (!data._5gxTicket) {
+        const index5GXTicket = _5GXTICKET_PROD_ID.indexOf(item.prodId);
+        if (index5GXTicket > -1) {
+          data._5gxTicket = {};
+          // 시간권 여부
+          if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
+            data._5gxTicket.time = true;
+            // 공제코드(skipId)가 "DSGK1"이 없으면, 남은 시간 표시
+            if (!_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+              // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
+              // 시간으로 오는 것이 SB(20190919) v0.91 까지는 고정
+              // data._5gxTicket.total = parceTimesString(this.convFormat(item.total, item.unit));
+              data._5gxTicket.remained = parceTimesString(this.convFormat(item.remained, item.unit));
+            }
+          }
+        }
+      }
+    });
     // if ( gnrlData.length > 0 ) {
-      gnrlData.filter(item => {
-        let excludeTotal;
+      gnrlData.forEach(item => {
         this.convShowData(item);
         // 반복해서 값을 비교할 필요가 없도록 개선
         if ( !result.totalLimit && item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
           result.totalLimit = true;
-        }
-        // TODO: 지금은 gnrlData로 온다고 가정
-        // 5GX 시간권/장소권 사용 여부 확인
-        if (!data._5gxTicket) {
-          const index5GXTicket = _5GXTICKET_PROD_ID.indexOf(item.prodId);
-          if (index5GXTicket > -1) {
-            data._5gxTicket = {};
-            // 시간권 여부
-            if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
-              data._5gxTicket.time = true;
-              if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
-                // data._5gxTicket.total = this.convFormat(item.total, item.unit);
-                data._5gxTicket.remained = this.convFormat(item.remained, item.unit);
-              }
-            }
-            excludeTotal = true;
-          }
         }
         // POT10, POT20
         if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
           result.tmoa.push(item);
           // totalLimit가 true면 개산 필요없음
           // [OP002-3871] 5GX 시간권/장소권은 tmoa에 포함될 수 없어 보인다.
-          if (!result.totalLimit && !excludeTotal) {
+          if (!result.totalLimit) {
             tmoaRemained += parseInt(item.remained || 0, 10);
             tmoaTotal += parseInt(item.total || 0, 10);
           }
@@ -523,7 +529,7 @@ class MytDataSubmainController extends TwViewController {
           result.gdata.push(item);
           // 차감중인 공제 항목에 데이터의 합 [DVI001-15208] 참고
           // totalLimit가 true면 개산 필요없음
-          if (!result.totalLimit && !excludeTotal) {
+          if (!result.totalLimit) {
             etcRemained += parseInt(item.remained || 0, 10);
             etcTotal += parseInt(item.total || 0, 10);
           }
@@ -535,7 +541,7 @@ class MytDataSubmainController extends TwViewController {
       } : this.calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
     // }
     // if ( spclData.length > 0 ) {
-      spclData.filter(item => {
+      spclData.forEach(item => {
         this.convShowData(item);
         // if ( skipIdList.indexOf(item.skipId) === -1 ) {
         result.sdata.push(item);
@@ -543,13 +549,13 @@ class MytDataSubmainController extends TwViewController {
       });
     // }
     // if ( voiceData.length > 0 ) {
-      voiceData.filter(item => {
+      voiceData.forEach(item => {
         this.convShowData(item);
         result.voice.push(item);
       });
     // }
     // if ( smsData.length > 0 ) {
-      smsData.filter((item) => {
+      smsData.forEach((item) => {
         this.convShowData(item);
         result.sms.push(item);
       });
@@ -640,11 +646,11 @@ class MytDataSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         // XXX: 5GX 개발을 위해 가짜 데이터 추가
         resp.result.gnrlData.push(
-            // 1. 시간권
+            // 1. 시간권, 설정 ON: "사용중" 표시
             {
               'prodId': 'NA00006731', // 'NA00006732', 'NA00006733'
               'prodNm': 'Data 시간권 8시간',
-              'skipId': 'DSGK1',
+              'skipId': 'DSGK1', // DD4J3, DD4J2, DD4J1
               'skipNm': '시간권 데이터',
               'unlimit': '0',
               'total': '9000',
@@ -653,27 +659,30 @@ class MytDataSubmainController extends TwViewController {
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''
-            },
-            // 2. 장소권 (부스트 파크 옵션)
-            /* {
+            }
+            /*
+            // 1. 시간권, 설정 OFF: 남은 시간("00시간[ 00분] 남음") 표시
+            {
+              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
+              'prodNm': 'Data 시간권 60시간',
+              'skipId': 'DD4J2', // DD4J2, DD4J1
+              'skipNm': 'YT55_시간권',
+              'unlimit': '0',
+              'total': '9000',
+              'used': '0',
+              'remained': '7200',
+              'unit': '240',
+              'rgstDtm': '',
+              'exprDtm': ''
+            }
+            */
+            /*
+            // 2. 장소권 (부스트 파크 옵션): 표시 없음
+            {
               'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
               'prodNm': 'BoostPark 데이터통화 10GB',
-              'skipId': 'DXXXX',
-              'skipNm': 'BoostPark 장소권',
-              'unlimit': '0',
-              'total': '9437184',
-              'used': '0',
-              'remained': '9437184',
-              'unit': '140',
-              'rgstDtm': '',
-              'exprDtm': ''
-            },
-            // 설정 ON: "사용중",  설정 OFF(안오면): "남은 시간 표시"
-            {
-              'prodId': 'DSGK1',
-              'prodNm': '시간권 데이터',
-              'skipId': 'DSGK1',
-              'skipNm': '시간권 데이터',
+              'skipId': 'DD4J6', // DD4J5, DD4J4
+              'skipNm': 'YT55_장소권',
               'unlimit': '0',
               'total': '9000',
               'used': '0',
@@ -681,7 +690,20 @@ class MytDataSubmainController extends TwViewController {
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''
-            } */);
+            }
+            */);
+        // [OP002-3871] 5GX 항목은 별도 항목으로 추출
+        const gnrlData = resp.result.gnrlData;
+        const _5gxData = gnrlData.reduce((acc, item, index) => {
+          if (_5GXTICKET_PROD_ID.includes(item.prodId)) {
+            acc.push(item);
+            gnrlData.splice(index, 1);
+          }
+          return acc;
+        }, []);
+        if (_5gxData.length > 0) {
+          resp.result._5gxData = _5gxData;
+        }
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
           return resp.result;
         }

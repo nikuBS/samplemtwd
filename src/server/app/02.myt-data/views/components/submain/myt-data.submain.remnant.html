@@ -4,8 +4,6 @@
 * @since 2018.09.17
 * Update: 2018.11.26
 %>
-
-
 <% if (data.svcInfo.svcAttrCd === 'M1') { %>
 <!-- Phone -->
 <!-- .cont-box -->
@@ -311,7 +309,7 @@
                                     if (data._5gxTicket.remained) {
                                     // 시간 설정 OFF
                                     _%>
-                                    <strong><%- data._5gxTicket.remained.data + data._5gxTicket.remained.unit %></strong> 남음
+                                    <strong><%- data._5gxTicket.remained.string %></strong> 남음
                                     <%_
                                     } else {
                                     // 시간 설정 ON

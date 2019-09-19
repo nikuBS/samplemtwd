@@ -35,14 +35,14 @@ const kinds = [
  * @param {Array} target
  * @param {Array} data
  * @private
- * return data
+ * return {Object} data
  */
-function getDataInTarget(target: Array<any>, data: Array<any>): any {
+function filterBySkipId(target: Array<any>, data: Array<any>): any {
   let found;
   // TODO: 구문이 find last가 되며, mapping할 필요가 없다.
   // data.map(item => {
   data.forEach(item => {
-    if (target.indexOf(item.skipId) !== -1) {
+    if (target.indexOf(item.skipId) > -1) {
       found = item;
     }
   });
@@ -59,7 +59,9 @@ class MyTHelper {
    * @private
    */
   static setTotalRemained(usageData: any) {
-    const gnrlData = usageData.gnrlData || [];
+    const gnrlData = usageData.gnrlData || []; // 범용 데이터 공제항목
+    // [OP002-3871] 개산식을 단순화하고, 반복회수를 가능한 줄임
+    /*
     let totalRemainUnLimited = false;
     // 범용데이터 중 무제한 데이터가 있는지 확인
     gnrlData.map((_data) => {
@@ -67,13 +69,15 @@ class MyTHelper {
         totalRemainUnLimited = true;
       }
     });
+    */
+    const totalRemainUnLimited = gnrlData.findIndex((_data) => (UNLIMIT_CODE.indexOf(_data.unlimit) > -1)) > -1;
     // 무제한 데이터가 있으면 무제한 표시, 없으면 합산 잔여량 표시
     if ( totalRemainUnLimited ) {
       usageData.totalRemainUnLimited = true;
       usageData.totalRemained = SKIP_NAME.UNLIMIT;
     } else {
-      const totalRemained = gnrlData.reduce((_memo, _data) => {
-        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo + 0;
+      const totalRemained = gnrlData.reduce((rem, item) => {
+        return rem + (item.remained ? parseInt(item.remained, 10) : 0);
       }, 0);
       usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
     }
@@ -107,7 +111,7 @@ class MyTHelper {
   static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목 (합산 가능한 공제항목)
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
-    let dataArr: Array<any> = [];
+    let ordered: Array<any> = [];
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
@@ -116,18 +120,14 @@ class MyTHelper {
       MyTHelper.setTotalRemained(usageData);
 
       // 기본제공데이터
-      defaultData = gnrlData.find((_data) => {
-        return _data.prodId === svcInfo.prodId && FormatHelper.isEmpty(_data.rgstDtm);
-      }) || {};
+      defaultData = gnrlData.find((item) => (item.prodId === svcInfo.prodId && FormatHelper.isEmpty(item.rgstDtm))) || {};
 
       // 기본제공데이터를 제외한 데이터 배열 취합
-      dataArr = dataArr.concat(gnrlData.filter((_data) => {
-        return _data.skipId !== defaultData.skipId;
-      }));
+      ordered = ordered.concat(gnrlData.filter(item => (item.skipId !== defaultData.skipId)));
 
       // 기본제공데이터가 있는 경우 최상위 노출
       if ( !FormatHelper.isEmpty(defaultData.skipId) ) {
-        dataArr.unshift(defaultData);
+        ordered.unshift(defaultData);
         usageData.hasDefaultData = true;
       } else {
         usageData.hasDefaultData = false;
@@ -136,12 +136,10 @@ class MyTHelper {
 
     if ( spclData ) {
       // 통합공유데이터
-      tOPlanSharedData = getDataInTarget(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
+      tOPlanSharedData = filterBySkipId(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
 
       // 통합공유데이터 제외한 데이터 배열 취합
-      dataArr = dataArr.concat(spclData.filter((_data) => {
-        return _data.skipId !== tOPlanSharedData.skipId;
-      }));
+      ordered = ordered.concat(spclData.filter(item => (item.skipId !== tOPlanSharedData.skipId)));
 
       // 기본제공 데이터 존재
       if ( usageData.hasDefaultData ) {
@@ -150,7 +148,7 @@ class MyTHelper {
           defaultData.tOPlanSharedData = tOPlanSharedData;
         } else {
           // [DV001-18235] 기본데이터가 무제한으로 무제한 공유 가능으로 표기되면 안되는 항목들 통합공유데이터 표시안함
-          if ( INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) !== -1 ) {
+          if ( INFINITY_DATA_PROD_ID.indexOf(defaultData.prodId) > -1 ) {
             defaultData.sharedData = false;
           } else { // T끼리 데이터 선물 사용량 + 데이터 함께쓰기 사용량 표시를 위한 키값
             defaultData.sharedData = true;
@@ -161,33 +159,24 @@ class MyTHelper {
 
     // 당일 사용량(PA) DDZ25, DDZ23, DD0PB 에 해당하는 공제항목이 있으면
     // 해당 항목의 prodId와 같고 && skipId가 'PA'인 항목은 노출 제외
+    const pas = ordered.filter(item => (DAY_BTN_STANDARD_SKIP_ID.indexOf(item.skipId) > -1));
 
-    const pas = dataArr.filter((_data) => {
-      return DAY_BTN_STANDARD_SKIP_ID.indexOf(_data.skipId) !== -1;
-    });
-
-    if ( pas.length > 0 ) {
+    // if ( pas.length > 0 ) {
       pas.forEach((pa) => {
-        dataArr = dataArr.filter((_data) => {
-          return !(_data.skipId === SKIP_NAME.DAILY && _data.prodId === pa.prodId);
-        });
+        ordered = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || item.prodId !== pa.prodId));
       });
-    }
+    // }
 
     // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
-    dataArr = dataArr.filter((_data) => {
-      return !(_data.skipId === SKIP_NAME.DAILY && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
-    });
+    usageData.data = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || (UNLIMIT_CODE.indexOf(item.unlimit) > -1)));
 
-    usageData.data = dataArr;
-
-    kinds.forEach((kind) => {
-      if ( !FormatHelper.isEmpty(usageData[kind]) ) {
-        usageData[kind].forEach((data) => {
-          MyTHelper.convShowData(data);
-        });
+    kinds.forEach(kind => {
+      const usageItems: Array<any> = usageData[kind];
+      if ( !FormatHelper.isEmpty(usageItems) ) {
+        usageItems.forEach(item => (MyTHelper.convShowData(item)));
       }
     });
+
     return usageData;
   }
 
