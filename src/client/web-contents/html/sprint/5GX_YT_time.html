@@ -44,7 +44,7 @@
                     <div class="h-menu"><!-- 알림이 있을 경우 .on -->
                         <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
                     </div>
-                    <h1 class="h-tit">5GX 시간권 설정</h1><!-- 190909 [OP002-3626] 수정_01 -->
+                    <h1 class="h-tit">데이터 시간권 설정</h1><!-- 190917 명칭변경 --><!-- 190909 [OP002-3626] 수정_01 -->
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
@@ -60,7 +60,7 @@
 				<div class="og-banner-tip">
 					<p class="tip-alert">
 						<strong class="st1">정기 점검 안내</strong>
-						<strong class="st2">5GX 시간권 서비스 이용이 제한됩니다.</strong>
+						<strong class="st2">데이터 시간권 서비스 이용이 제한됩니다.</strong><!-- 190917 명칭변경 -->
 						<span class="st3">2019.01.20. 00:00 ~ 2019.01.20. 06:00 (6시간)</span>
 						<span class="st4">이용에 불편을 드려 죄송합니다.</span>
 					</p>
@@ -69,9 +69,10 @@
 
 				<hr class="cont-sp type1" aria-hidden="true" />
 				<!-- .cont-box -->
-				<div class="cont-box og-timeConf-wrap" data-type="0" data-hour="0" data-minute="0" data-max-hour="8" data-max-minute="30"><!-- js : 다이얼 설정 시작시 class="active" 추가 --> <!-- 최대 설정 시간 값 개발에서 등록 -->
+				<div class="cont-box og-timeConf-wrap disabled" data-type="0" data-hour="0" data-minute="0" data-max-hour="8" data-max-minute="30"><!-- js : 조회중(비활성화) 상태시 class="disabled", 조회완료(활성화) 상태시 class="disabled" 삭제, 다이얼 설정 시작시 class="active" 추가 --><!-- 최대 설정 시간 값 개발에서 등록 --><!-- 190916 조회중(비활성화) Case 추가_01 -->
 					<div class="og-time-picked">
-						<p class="time-last notice_case1"><span class="comment-time">사용할 시간을 다이얼로 설정해 주세요.</span></p><!-- Default 상태시 노출 -->
+						<p class="time-last notice_case0"><span class="comment-time">조회 중입니다. 잠시만 기다려 주세요.</span></p><!-- 조회중(비활성화) 상태시 노출, 조회 실패시 '사용 가능 시간을 다시 조회해 주세요.' 문구 변경 --><!-- 190916 조회중(비활성화) Case 추가_02 -->
+						<p class="time-last notice_case1" style="display:none;"><span class="comment-time">사용할 시간을 다이얼로 설정해 주세요.</span></p><!-- Default 상태시 노출 -->
                         <p class="time-last notice_case2" style="display:none;"><span class="comment-time">8시간 30분까지 선택가능</span></p><!-- 설정 가능 시간일 경우 노출 - 개발에서 가능 사용 시간 계산하여 표시 -->
                         <p class="time-last notice_case3" style="display:none;"><strong class="overflowed">사용 가능 시간을 초과 하였습니다.</strong></p><!-- 설정 불가능 시간일 경우(사용 가능 시간 초과 시) 노출 - 개발에서 사용 가능 시간 계산하여 표시 -->
 					</div>
@@ -120,17 +121,23 @@
 
 					<div class="og-time-setdata">
 						<p class="tit">사용 가능 시간</p>
+						<!-- 190916 조회중(비활성화) Case 추가_03 -->
 						<div class="data-deduct">
-							<span class="val-ue-wrap"><b>8</b>시간 <b>15</b>분</span>
+							<span class="val-ue-wrap">
+								<span class="block">조회 중입니다</span>
+								<button class="bt-link-tx underline">조회하기</button><!-- 190918 조회실패시 '조회하기' 버튼 노출 -->
+							</span>
+							<span class="val-ue-wrap" style="display:none;"><b>8</b>시간 <b>30</b>분</span>
 						</div>
 						<div class="btns">
-							<button type="button" class="btn-round3">10분</button>
-							<button type="button" class="btn-round3">1시간</button>
-							<button type="button" class="btn-round3">전체</button>
+							<button type="button" class="btn-round3" disabled>10분</button>
+							<button type="button" class="btn-round3" disabled>1시간</button>
+							<button type="button" class="btn-round3" disabled>전체</button><!-- 한번 누르면 전체 적용, 다시 누르면 초기화-->
 						</div>
+						<!-- //190916 조회중(비활성화) Case 추가_03 -->
 					</div>
 					<div class="og-start5G line">
-						<button type="button" class="btn-round1 btn-style1" disabled>5GX 시간권 사용</button><!-- 사용 가능 시간 내 사용할 시간 설정 시, 버튼 활성화 -->
+						<button type="button" class="btn-round1 btn-style1" disabled>데이터 시간권 사용</button><!-- 사용 가능 시간 내 사용할 시간 설정 시, 버튼 활성화 --><!-- 190917 명칭변경 -->
 					</div>
 				</div>
 				<!-- //.cont-box -->
@@ -189,6 +196,8 @@
 				$timePicker = $('.og-time-display-init > .time-count > a'),
 				$timePicked = $('.og-timeConf-wrap > .og-time-picked > p'),
 				$timeButton = $('.og-time-setdata > .btns > button'),
+				$timeSetButton = $('.og-start5G > button'),
+				$usedTime = $('.data-deduct > span'),
 				maxHour = $timeConf.data('maxHour'),
 				maxMinute = $timeConf.data('maxMinute'),
 				$hour = $('.ti-me'),
@@ -236,14 +245,17 @@
 
 				// 시간 변경에 따른 디자인 및 텍스트 변경
 				if (parseInt($hour.html(), 10) === 0 && parseInt($minute.html(), 10) === 0) {
+					$timeSetButton.prop('disabled', true);
 					$timeConf.removeClass('active');
-					$timePicked.hide().eq(0).show();
+					$timePicked.hide().eq(1).show();
 				} else {
 					$timeConf.addClass('active');
 					if (parseInt($hour.html(), 10) > maxHour || (parseInt($hour.html(), 10) === maxHour && parseInt($minute.html(), 10) > maxMinute)) {
-						$timePicked.hide().eq(2).show();
+						$timeSetButton.prop('disabled', true);
+						$timePicked.hide().eq(3).show();
 					} else {
-						$timePicked.hide().eq(1).show();
+						$timeSetButton.prop('disabled', false);
+						$timePicked.hide().eq(2).show();
 					}
 				}
 			});
@@ -269,14 +281,33 @@
 						break;
                     default :
 					    // 전체 시간 설정 클릭시
-                        $timeConf.data('minute', (maxMinute / 10) * minutePi);
-                        $timeConf.data('hour', maxHour * hourPi);
-                        $hour.html(addZero(maxHour));
-                        $minute.html(maxMinute);
+						if ($(this).data('type') === 'ALL') {
+							$(this).data('type', '').html('전체');
+							$timeConf.data('minute', 0);
+							$timeConf.data('hour', 0);
+							$hour.html('00');
+							$minute.html('00');
+						} else {
+							$(this).data('type', 'ALL').html('초기화');
+							$timeConf.data('minute', (maxMinute / 10) * minutePi);
+							$timeConf.data('hour', maxHour * hourPi);
+							$hour.html(addZero(maxHour));
+							$minute.html(maxMinute);
+						}
                         togglePicker(idx);
 						break;
 				}
 			});
+
+
+			// 초기 Disabled 상태에서 사용 가능하도록 상태 변경
+			setTimeout(function () {
+				$timeConf.removeClass('disabled');
+				$timePicked.hide().eq(1).show();
+				$usedTime.hide().eq(1).show();
+				$timeButton.prop('disabled', false);
+				//$('.og-start5G > button').prop('disabled', false);
+			}, 3000);
 		});
 	</script>
 	<!-- //스크립트 샘플입니다. FE에서 참조하셔서 개발 부탁 드립니다. -->

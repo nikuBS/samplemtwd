@@ -44,86 +44,106 @@
                     <div class="h-menu"><!-- 알림이 있을 경우 .on -->
                         <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
                     </div>
-                    <h1 class="h-tit">데이터 시간권 설정</h1><!-- 190917 명칭변경 -->
+                    <h1 class="h-tit">데이터 시간권 이용내역</h1><!-- 190917 명칭변경 --><!-- 190909 [OP002-3626] 수정_01 -->
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
                 </div>
-            </div>
+			</div>			
         </div>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
+            <!-- 190909 [OP002-3626] 수정_02 -->
 			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
 			<div class="container">
-				<div class="og-promo-banner">
-					<a href="#"><img src="/img/t_m5g/temp/banner_720_128.jpg" alt="프로모션 배너"></a>
-				</div>
-				
-				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- 190429 추가_01-->
+				<div class="cont-box nogaps noborder">
+					<div class="ti-caption-blue">
+						<div class="num">
+							총 <em>32</em>건
+						</div>
+						<button class="bt-select" title="조회기간 선택" aria-haspopup="true">2019년 2월</button>
+					</div>
+				</div>				
+				<!-- //190429 추가_01 -->
+
 				<!-- .cont-box -->
-				<div class="cont-box nogaps-hoz">
-					<div class="og-my5G-wrap">
-						<div class="og-my5G-txt">
-							<div class="logo"><span class="blind">SKT 5GX</span></div>
-							<p><span class="tod-txcolor6">데이터 부스트파크권</span> 옵션을<br> 이용하고 계십니다.</p><!-- 190917 명칭변경 -->
-							<div class="mt10">
-								<button class="btn-round2 btn-style3">데이터 부스트파크권 잔여량 확인</button><!-- 190917 명칭변경 -->
+				<div class="cont-box og-my-wrap">
+					<!-- 조회 내역 있을 경우 -->
+					<div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
+						<p class="type-only">총 사용 시간 <span class="og-time"><b>2</b>시간 <b>30</b>분</span></p>
+					</div>
+					<div class="og-timeline type2">
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.30</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list"><!-- on , off -->
+											<div class="acco-title">
+												<span class="og-time">1시간</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">10분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-						<img class="tod-w100 vt mt24" src="/img/t_m5g/og_5gx_boostpark.png" alt="">
-						<div class="og-my5G-txt">
-							<p class="txt-s fs13">사용량 걱정 없이 원하는 시간만큼 데이터를 쓸 수 있는<br> 데이터 시간권으로 변경 가능합니다.</p><!-- 190917 명칭변경 -->
-							<ul class="bt-slice item-two mt12">
-								<li><button type="button" class="btn-round1 btn-style1">옵션 변경</button></li>
-							</ul>
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.20</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list"><!-- on , off -->
+											<div class="acco-title">
+												<span class="og-time">1시간 20분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">30분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.10</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">2시간 10분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
+					<div class="btn-more">
+						<button type="button">더보기</button>
+					</div>
+					<!-- //조회 내역 있을 경우 -->
 				</div>
 				<!-- //.cont-box -->
-
-				<hr class="cont-sp type1" aria-hidden="true" />
-				<div class="cont-box nogaps">
-					<ul class="full-link-list type02">
-						<li>
-							<button>
-								<span class="inner">
-									<span class="tit">이용내역</span>
-								</span>
-							</button>
-						</li>
-					</ul>
-				</div>
-
-				<hr class="cont-sp type1" aria-hidden="true" />
-				<div class="cont-box nogaps">
-					<ul class="full-link-list type02">
-						<li>
-							<button>
-								<span class="inner">
-									<span class="tit">나의 요금제</span>
-									<span class="text">5GX</span>
-								</span>
-							</button>
-						</li>
-					</ul>
-				</div>
-				<!-- //.cont-box -->
-
-				<!-- .cont-box -->
-				<div class="cont-box noborder bgnone">
-					<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-					<ul class="pg-chk-list02">
-						<li><button type="button" class="btn-tip" aria-haspopup="true">유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-						<li><button type="button" class="btn-tip" aria-haspopup="true">무제한 5G 이용 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-					</ul>
-				</div>
-				<!-- //.cont-box -->
-				
             </div>
+			<!-- //190909 [OP002-3626] 수정_02 -->
         </div>
         <!--// #contents -->
     </div>
-	
+
 </body>
 </html>
