@@ -480,7 +480,7 @@ class MytDataSubmainController extends TwViewController {
     // 범용 데이터
     const gnrlData = remnant['gnrlData'] || [];
     // 5GX 데이터
-    const data5gx = remnant._5gxData || [];
+    const data5gx = remnant._5gxData || []; // 5GX 시간권/장소권 공제항목
     // 특수 데이터
     const spclData = remnant['spclData'] || [];
     const voiceData = remnant['voice'] || [];
@@ -490,25 +490,24 @@ class MytDataSubmainController extends TwViewController {
     let etcRemained = 0;
     let etcTotal = 0;
     // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
-    data5gx.forEach(item => {
-      if (!data._5gxTicket) {
+    if (data5gx.length > 0) {
+      data._5gxTicket = {};
+      data5gx.forEach(item => {
         const index5GXTicket = _5GXTICKET_PROD_ID.indexOf(item.prodId);
-        if (index5GXTicket > -1) {
-          data._5gxTicket = {};
-          // 시간권 여부
-          if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
-            data._5gxTicket.time = true;
-            // 공제코드(skipId)가 "DSGK1"이 없으면, 남은 시간 표시
-            if (!_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
-              // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
-              // 시간으로 오는 것이 SB(20190919) v0.91 까지는 고정
-              // data._5gxTicket.total = parceTimesString(this.convFormat(item.total, item.unit));
-              data._5gxTicket.remained = parceTimesString(this.convFormat(item.remained, item.unit));
-            }
-          }
+        // Data 시간권인 여부
+        if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
+          data._5gxTicket.time = true;
         }
-      }
-    });
+        // Data 시간권인 경우, 사용 여부
+        if (data._5gxTicket.time && !_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+          // 공제코드(skipId: "DSGK1") "시간권 데이터"가 없으면, 남은 시간 표시 ("사용중"이 아님)
+          // 시간으로 오는 것이 SB(20190919) v0.91 까지는 고정
+          // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
+          // data._5gxTicket.total = parceTimesString(this.convFormat(item.total, item.unit));
+          data._5gxTicket.remained = parceTimesString(this.convFormat(item.remained, item.unit));
+        }
+      });
+    }
     // if ( gnrlData.length > 0 ) {
       gnrlData.forEach(item => {
         this.convShowData(item);
@@ -648,29 +647,42 @@ class MytDataSubmainController extends TwViewController {
         resp.result.gnrlData.push(
             // 1. 시간권, 설정 ON: "사용중" 표시
             {
-              'prodId': 'NA00006731', // 'NA00006732', 'NA00006733'
-              'prodNm': 'Data 시간권 8시간',
-              'skipId': 'DSGK1', // DD4J3, DD4J2, DD4J1
-              'skipNm': '시간권 데이터',
+              'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
+              'prodNm': '스탠다드0 시간권',
+              'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
+              'skipNm': 'Data 시간권 60시간',
               'unlimit': '0',
-              'total': '9000',
-              'used': '0',
-              'remained': '7200',
+              'total': '108000',
+              'used': '4920',
+              'remained': '103080',
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''
+            },
+            {
+              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
+              'prodNm': '스탠다드0 시간권',
+              'skipId': 'DSGK1',
+              'skipNm': '시간권 데이터',
+              'unlimit': '1',
+              'total': '499999999',
+              'used': '0',
+              'remained': '499999999',
+              'unit': '140',
+              'rgstDtm': '20190918172423',
+              'exprDtm': '20190918174423'
             }
             /*
             // 1. 시간권, 설정 OFF: 남은 시간("00시간[ 00분] 남음") 표시
             {
-              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
-              'prodNm': 'Data 시간권 60시간',
-              'skipId': 'DD4J2', // DD4J2, DD4J1
-              'skipNm': 'YT55_시간권',
+              'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
+              'prodNm': '스탠다드0 시간권',
+              'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
+              'skipNm': 'Data 시간권 60시간',
               'unlimit': '0',
-              'total': '9000',
-              'used': '0',
-              'remained': '7200',
+              'total': '108000',
+              'used': '4920',
+              'remained': '103080',
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''

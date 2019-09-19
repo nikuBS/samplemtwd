@@ -110,12 +110,13 @@ class MyTHelper {
    */
   static parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목 (합산 가능한 공제항목)
+    const data5gx = usageData._5gxData || [];   // 5GX 시간권/장소권 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let ordered: Array<any> = [];
     let defaultData;                            // 기본제공데이터
     let tOPlanSharedData;                       // 통합공유데이터
 
-    if ( gnrlData ) {
+    // if ( gnrlData ) {
       // 총데이터 잔여량 표시 데이터 세팅
       MyTHelper.setTotalRemained(usageData);
 
@@ -132,9 +133,9 @@ class MyTHelper {
       } else {
         usageData.hasDefaultData = false;
       }
-    }
+    // }
 
-    if ( spclData ) {
+    // if ( spclData ) {
       // 통합공유데이터
       tOPlanSharedData = filterBySkipId(TOTAL_SHARE_DATA_SKIP_ID, spclData) || {};
 
@@ -155,7 +156,7 @@ class MyTHelper {
           }
         }
       }
-    }
+    // }
 
     // 당일 사용량(PA) DDZ25, DDZ23, DD0PB 에 해당하는 공제항목이 있으면
     // 해당 항목의 prodId와 같고 && skipId가 'PA'인 항목은 노출 제외
@@ -169,6 +170,34 @@ class MyTHelper {
 
     // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
     usageData.data = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || (UNLIMIT_CODE.indexOf(item.unlimit) > -1)));
+
+    // [OP002-3817] 5GX 시간권/장소권 정보 표시
+    if (data5gx.length > 0) {
+      // 시간권인 경우, 노출 순서
+      // 1. "시간권 데이터(skipId: DSGK1), 무제한(skipNm)"
+      // 2. "데이터 시간권 00시간, 00시간 00분 남음 | 00분 사용"
+      // 장소권인 경우, 노출 순서
+      // 1. "프라임0 데이터부스트파크권 00GB, 00GB 남음 | 00GB 사용"
+      // NOTE: 현재는 1개만 오는 것으로 확정되어 있어서, 바로 사용
+      /*
+      const item5gx = data5gx[0];
+      if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item5gx.skipId)) {
+        usageData.data.push({
+          prodId: item5gx.prodId,
+          prodNm: item5gx.prodNm,
+          skipId: item5gx.skipId,
+          skipNm: item5gx.skipNm,
+          total: '무제한',
+          remanded: '무제한',
+          used: '무제한',
+          unit: '240', // 초
+          unlimit: '1'
+        });
+      }
+      usageData.data.push(item5gx);
+      */
+      usageData.data.push(...data5gx);
+    }
 
     kinds.forEach(kind => {
       const usageItems: Array<any> = usageData[kind];

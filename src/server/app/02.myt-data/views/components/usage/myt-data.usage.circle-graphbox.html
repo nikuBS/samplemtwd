@@ -13,7 +13,7 @@
             <% if(usageData.totalRemainUnLimited) { %>
                 <%= usageData.totalRemained %>
             <% } else { %>
-                <%= usageData.totalRemained.data %><%= usageData.totalRemained.unit %>
+                <%- usageData.totalRemained.data + usageData.totalRemained.unit %>
             <% } %>
             </em>
         </p>
@@ -21,6 +21,7 @@
     </div>
     <ul class="date-graph-list">
         <% for (var i = 0; i < items.length; i++) { %>
+        <div><%= JSON.stringify(items[i]); %></div>
         <li style="display: block;height: auto;">
             <div style="display: table;height: 5.75rem;position: relative;">
                 <div class="left">
@@ -113,7 +114,6 @@
                 <% } %>
             <% } %>
         </li>
-
         <% } %>
     </ul>
 </div>
