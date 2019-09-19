@@ -6,10 +6,11 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
-import {DATA_UNIT} from '../../../../types/string.type';
 import {API_CMD} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import moment = require('moment');
+import DateHelper from '../../../../utils/date.helper';
+import {VOICE_UNIT} from '../../../../types/bff.type';
 
 /**
  * @class
@@ -19,39 +20,56 @@ class MyTData5gSettingHistory extends TwViewController {
     super();
   }
 
-  /* 접근이 허용되는 모바일 요금제 상품코드 */
-  private readonly _prodIdList = ['NA00006402', 'NA00006403', 'NA00006404', 'NA00006405'];
-
   // @TODO api mockdata 확인 후 삭제
   private readonly mock84 = {
     'code': '00',
     'msg': 'success',
     'result': {
       'totUseTime': '135',
-      'totConvtdData': '2024',
-      'conversionHist': [{
-        'rsvYn': 'N',
+      'conversionHist': [
+        {
         'convStaDtm': '20190301100101',
-        'convEndDtm': '20190301115959',
-        'cnvtdData': '512',
+        'convEndDtm': '20190301215959',
         'cnvtdTime': '110',
-        'rtndData': '0'
-      }, {
-        'rsvYn': 'Y',
-        'convStaDtm': '20190301120101',
-        'convEndDtm': '20190301135959',
-        'cnvtdData': '1024',
-        'cnvtdTime': '30',
-        'rtndData': '20'
-      }
+        }, {
+          'convStaDtm': '20190301120101',
+          'convEndDtm': '20190301135959',
+          'cnvtdTime': '30',
+        }
         , {
-          'rsvYn': 'Y',
           'convStaDtm': '20190303120101',
           'convEndDtm': '20190303135959',
-          'cnvtdData': '2352',
+          'cnvtdTime': '120',
+        }, {
+          'convStaDtm': '20190304120101',
+          'convEndDtm': '20190304135959',
           'cnvtdTime': '160',
-          'rtndData': '436'
-        }]
+        }, {
+          'convStaDtm': '20190305120101',
+          'convEndDtm': '20190305135959',
+          'cnvtdTime': '160',
+        }, {
+          'convStaDtm': '20190306120101',
+          'convEndDtm': '20190306135959',
+          'cnvtdTime': '160',
+        }, {
+          'convStaDtm': '20190307120101',
+          'convEndDtm': '20190307135959',
+          'cnvtdTime': '160',
+        }, {
+          'convStaDtm': '20190308120101',
+          'convEndDtm': '20190308135959',
+          'cnvtdTime': '160',
+        }, {
+          'convStaDtm': '20190309120101',
+          'convEndDtm': '20190309135959',
+          'cnvtdTime': '160',
+        }, {
+          'convStaDtm': '20190310120101',
+          'convEndDtm': '20190310135959',
+          'cnvtdTime': '160',
+        }
+      ]
     }
   };
 
@@ -66,21 +84,16 @@ class MyTData5gSettingHistory extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = svcInfo.prodId || null,
-      renderCommonInfo = {
+    const renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: svcInfo
       };
-
-    if (this._prodIdList.indexOf(prodId) === -1) {
-      return this.error.render(res, renderCommonInfo);
-    }
 
     const brwsDt = req.query.brwsDt || moment().format('YYYYMM');
 
     this.apiService.request(API_CMD.BFF_06_0084, {brwsDt}).subscribe((historyInfo) => {
       // @TODO api mockdata 확인 후 삭제
-      historyInfo = this.mock84;
+      // historyInfo = this.mock84;
 
       const apiError = this.error.apiError([historyInfo]);
 
@@ -100,8 +113,7 @@ class MyTData5gSettingHistory extends TwViewController {
         historyInfo: {
           brwsDt, conversionHist, searchDateList,
           totalCount: historyInfo.result.conversionHist.length,
-          totUseTime: FormatHelper.convVoiceFormat(historyInfo.result.totUseTime * 60),
-          totConvtdData: this.convDataFormat(historyInfo.result.totConvtdData),
+          totUseTime: FormatHelper.convVoiceFormat(historyInfo.result.totUseTime * 60)
         }
       });
     });
@@ -111,16 +123,21 @@ class MyTData5gSettingHistory extends TwViewController {
    * @desc 예약내역 목록 변환
    * @param conversionHist
    */
-  convHistoryList(conversionHist) {
+  private convHistoryList(conversionHist) {
+    const convertTime = (time) => {
+      let timeText = time.hours > 0 ? time.hours + VOICE_UNIT.HOURS : '';
+      timeText += time.min > 0 ? ' ' + time.min + VOICE_UNIT.MIN : '';
+      return timeText;
+    };
+
+
     const result: Array<any> = [];
     conversionHist.forEach((item) => {
-      const convStaDtm = moment(item.convStaDtm, 'YYYYMMDDhhmmss');
+      const convStaDtm = moment(item.convStaDtm, 'YYYYMMDDHHmmss');
       const data = {
-        rsvYn: item.rsvYn === 'Y' ? '예약' : '즉시',
-        startTime: convStaDtm.format('hh:mm'),
-        endTime: moment(item.convEndDtm, 'YYYYMMDDhhmmss').format('hh:mm'),
-        cnvtdData: this.convDataFormat(item.cnvtdData),
-        rtndData: item.rtndData > 0 ? this.convDataFormat(item.rtndData) : '',
+        usedTime: convertTime(FormatHelper.convVoiceFormat(item.cnvtdTime * 60)),
+        startTime: convStaDtm.format('MM/DD HH:mm'),  // 시작 시간
+        endTime: moment(item.convEndDtm, 'YYYYMMDDHHmmss').format('MM/DD HH:mm'), // 종료 시간
       };
       const date = convStaDtm.format('YYYYMMDD');
 
@@ -130,8 +147,7 @@ class MyTData5gSettingHistory extends TwViewController {
       } else {
         result.push({
           date,
-          monthShortName: this.getMonthShortName(convStaDtm.toDate()),
-          day: convStaDtm.format('DD'),
+          useDate: DateHelper.getShortDateWithFormat(convStaDtm, 'MM.DD'),
           histList: [data]
         });
       }
@@ -142,37 +158,18 @@ class MyTData5gSettingHistory extends TwViewController {
   /**
    * @desc 검색옵션 현재로부터 세달전까지 YYYYMM
    */
-  convSearchDate() {
+  private convSearchDate() {
     const searchDateList: Array<any> = [];
     const searchDate = moment();
     for (let i = 0; i < 3; i++) {
       searchDateList.push({
-        text: searchDate.format('YYYY년 MM월'),
+        text: searchDate.format('YYYY년 M월'),
         value: searchDate.format('YYYYMM')
       });
       searchDate.subtract(1, 'months');
     }
     return searchDateList;
   }
-
-  /**
-   * @desc 데이터 포멧 변환
-   * @param data
-   */
-  convDataFormat(data) {
-    data = FormatHelper.convDataFormat(data, DATA_UNIT.MB);
-    return FormatHelper.addComma(data.data) + data.unit;
-  }
-
-  /**
-   * @desc get month short name
-   * @param data
-   */
-  getMonthShortName(data) {
-    data = new Date(data);
-    return data.toLocaleString('en-us', {month: 'short'});
-  }
-
 }
 
 export default MyTData5gSettingHistory;

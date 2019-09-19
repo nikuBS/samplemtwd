@@ -1,7 +1,7 @@
 /**
  * 5g 시간설정
- * @author anklebreaker
- * @since 2019-04-15
+ * @author 양정규
+ * @since 2019-09-17
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
@@ -9,8 +9,6 @@ import {NextFunction, Request, Response} from 'express';
 import {Observable} from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import {API_CMD} from '../../../../types/api-command.type';
-import DateHelper from '../../../../utils/date.helper';
-import {DATA_UNIT} from '../../../../types/string.type';
 import moment = require('moment');
 
 /**
@@ -21,87 +19,29 @@ class MyTData5gSetting extends TwViewController {
     super();
   }
 
-  /* 배너 부가서비스ID 목록 */
-  private readonly _bannerIds = {
-    POOQ: 'NA00006516',
-    OKSUSU: 'NA00005876',
-    FLO: 'NA00006520',
-  };
-
-  /* 접근이 허용되는 모바일 요금제 상품코드 */
-  private readonly _prodIdList = ['NA00006402', 'NA00006403', 'NA00006404', 'NA00006405'];
-
   // @TODO api mockdata 확인 후 삭제
   private readonly mock78 = {
     code: '00',
     'msg': 'success',
     'result': [
       {
-        'currUseYn': 'N',
-        'rsvYn': 'Y',
-        'convRgstDtm': '20190301100100',
-        'convStaDtm': '20190301100100',
-        'convEndDtm': '20190301103100',
-        'cnvtdData': '1024',
+        'currUseYn': 'N', // 현재 이용중 여부
+        'convRgstDtm': '20190301100100', // 등록일시
+        'convStaDtm': '20190916152409', // 시작일시
+        'convEndDtm': '20190919153409', // 종료일시
         'cnvtdTime': '60',
-        'remTime': '60'
+        'remTime': '60' // 요청 시간중 남은시간 (분단위)
       }
-      // ,
-      // {
-      //   'currUseYn': 'N',
-      //   'rsvYn': 'Y',
-      //   'convRgstDtm': '20190301100100',
-      //   'convStaDtm': '20190301110000',
-      //   'convEndDtm': '20190301133000',
-      //   'cnvtdData': '1024',
-      //   'cnvtdTime': '60',
-      //   'remTime': '60'
-      // }
     ]
   };
 
-  private readonly mock79 = {
-    'code': '00',
-    'msg': 'success',
-    'result': {
-      'brwsPsblYn': 'Y',
-      'cnvtPsblYn': 'Y',
-      'dataRemQty': '2323',
-      'reqCnt': '1'
-    }
-  };
-
-  private readonly mock84 = {
-    'code': '00',
-    'msg': 'success',
-    'result': {
-      'totUseTime': '135',
-      'totConvtdData': '2024',
-      'conversionHist': [{
-        'rsvYn': 'N',
-        'convStaDtm': '20190301100101',
-        'convEndDtm': '20190301115959',
-        'cnvtdData': '512',
-        'cnvtdTime': '110',
-        'rtndData': '0'
-      }, {
-        'rsvYn': 'Y',
-        'convStaDtm': '20190301120101',
-        'convEndDtm': '20190301135959',
-        'cnvtdData': '1024',
-        'cnvtdTime': '30',
-        'rtndData': '20'
-      }
-        , {
-          'rsvYn': 'Y',
-          'convStaDtm': '20190303120101',
-          'convEndDtm': '20190303135959',
-          'cnvtdData': '2352',
-          'cnvtdTime': '160',
-          'rtndData': '436'
-        }]
-    }
-  };
+  private _renderCommonInfo: any;
+  private get renderCommonInfo() {
+    return this._renderCommonInfo;
+  }
+  private set renderCommonInfo(_renderCommonInfo) {
+    this._renderCommonInfo = _renderCommonInfo;
+  }
 
   /**
    * @desc 화면 렌더링
@@ -114,28 +54,22 @@ class MyTData5gSetting extends TwViewController {
    * @param pageInfo
    */
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const prodId = svcInfo.prodId || null,
-      renderCommonInfo = {
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      };
-
-    if (this._prodIdList.indexOf(prodId) === -1) {
-      return this.error.render(res, renderCommonInfo);
-    }
+    this.renderCommonInfo = {
+      pageInfo,
+      svcInfo,
+      param : req.query
+    };
+    const renderCommonInfo = this.renderCommonInfo;
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0137, {}),
-      this.apiService.request(API_CMD.BFF_06_0078, {}),
-      this.apiService.request(API_CMD.BFF_06_0079, {}),
-      this.apiService.request(API_CMD.BFF_06_0084, {brwsDt: DateHelper.getCurrentShortDate()})
-    ).subscribe(([mobileaddInfo, conversionsInfo, dataInfo, historyInfo]) => {
+      this.getConversionsInfo(),  // 시간권 사용중 정보
+      this.getMuliAddition()
+    ).subscribe(([conversionsInfo, multiAddition]) => {
       // @TODO api 확인 후 삭제
-      conversionsInfo = this.mock78;
-      dataInfo = this.mock79;
+      // conversionsInfo = this.mock78;
 
-      const apiError = this.error.apiError([mobileaddInfo, conversionsInfo, dataInfo, historyInfo]);
-
+      const apiError = this.error.apiError([conversionsInfo, multiAddition]);
+      // 에러 인 경우
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: apiError.code,
@@ -144,71 +78,102 @@ class MyTData5gSetting extends TwViewController {
         }));
       }
 
-      conversionsInfo.result.forEach((item) => {
-        item.startTime = moment(item.convStaDtm, 'YYYYMMDDHHmmss').format('HH:mm');
-        item.endTime = moment(item.convEndDtm, 'YYYYMMDDHHmmss').format('HH:mm');
-      });
-      const options = {
-        ...renderCommonInfo,
-        usingInfo: conversionsInfo.result.filter((item) => item.currUseYn === 'Y')[0] || {},
-        reservationInfo: conversionsInfo.result.filter((item) => item.currUseYn === 'N')[0] || {},
-        dataInfo: dataInfo.result,
-        historyTotalCount: historyInfo.result.conversionHist.length,
-        viewInfo: {
-          bannerId: this.getBannerId(mobileaddInfo.result.addProdList),
-          remainTime: this.convertHourMinFormat(Math.floor((dataInfo.result.dataRemQty - 170) / 17)),
-          remainData: FormatHelper.convDataFormat(dataInfo.result.dataRemQty, DATA_UNIT.MB).data
-        }
-      };
-
-      // 상태별 화면 분기
-      if (dataInfo.result.dataRemQty < 170) {
-        return res.render('5g-setting/myt-data.5g-setting.main.notenough.html', options); // 데이터 부족
-      } else if (conversionsInfo.result.some((item) => item.currUseYn === 'Y')) {
-        return res.render('5g-setting/myt-data.5g-setting.main.inuse.html', options); // 현재 이용중
-      }
-      return res.render('5g-setting/myt-data.5g-setting.main.html', options); // 기본 시간설정
+      // todo : result 값 없을때 고려하기..
+      this.parseData(renderCommonInfo, conversionsInfo, multiAddition);
+      return res.render('5g-setting/myt-data.5g-setting.main.html', renderCommonInfo); // 기본 시간설정
     });
   }
 
   /**
-   * @desc get remained time in korean
-   * @param {number} target minutes
-   * @returns {string} HH시간 mm분
-   * @public
+   * @param data
+   * @param resp
+   * @desc 수신한 데이터 파싱
    */
-  convertHourMinFormat(target: number) {
-    const hour = Math.floor(target / 60);
-    const min = target % 60;
-    return (hour < 10 ? '0' + hour : hour) + '시간 ' + (min < 10 ? '0' + min : min) + '분';
+  private parseData(data: any, conversionsInfo: any, multiAddition: any): void {
+    data.conversionsInfo = conversionsInfo.result[0];
+
+    let pageType = 'NO_USE';  // default 미이용
+
+    // 이용중인 경우
+    if (conversionsInfo.currUseYn === 'Y' && +conversionsInfo.remTime > 0) {
+      pageType = 'IN_USE';
+      // 종료예정시각 설정
+      const time = moment(conversionsInfo.convEndDtm, 'YYYYMMDDhhmmss').format('LT').split(' '); // 종료시간 (format: 오후 1:10)
+      data.duedate = {
+        amPm: time[0],  // 오전/오후
+        hour: time[1].split(':')[0],
+        min: time[1].split(':')[1]
+      };
+
+      // 사용 가능시간 포맷팅
+      data.remainTime = FormatHelper.convVoiceFormat(data.param.remainTime) || {
+        hours: 0,
+        min: 0
+      };
+    } else { // 미 이용중
+      // 이용시간 전부 소진
+      if (+data.param.remainTime < 1) {
+        pageType = 'END';
+      }
+      // 부스트 파크 사용자일때
+      if (this.isBoostPark(multiAddition)) {
+        pageType = 'BOOST_PARK';
+      }
+    }
+    data.pageType = pageType;
+    // --> 페이지 설정 끝
+
   }
 
   /**
-   * @desc get banner info
-   * @param {array} 부가서바스 리스트
-   * @returns {any} 배너ID
-   * @public
+   * @desc 부가서비스 이용 조회
    */
-  getBannerId(addProdList) {
-    const isJoinedPooq = addProdList.some((item) => item.prodId === this._bannerIds.POOQ);
-    const isJoinedOksusu = addProdList.some((item) => item.prodId === this._bannerIds.OKSUSU);
-    const isJoinedFlo = addProdList.some((item) => item.prodId === this._bannerIds.FLO);
-    if (isJoinedPooq && isJoinedOksusu && isJoinedFlo) {
-      // 7. 셋 다 가입인 경우 비노출
-      return '';
-    } else if (isJoinedPooq) {
-      if (isJoinedOksusu) {
-        // 5. 가,나 가입일 경우 C배너
-        return this._bannerIds.FLO;
-      }
-      // 2. 가 만 가입일 경우 B베너
-      // 6. 가,다 가입일 경우 B배너
-      return this._bannerIds.OKSUSU;
+  private getMuliAddition(): Observable<any> {
+    const prodIds: Array<string> = [];
+    for (let i = 1; i < 7; i++) {
+      prodIds.push('NA0000673' + i);
     }
-    // 1. 세상품 모두 가입 안되어있을 경우 A배너
-    // 3. 나 만 가입일 경우 A배너
-    // 4. 다 만 가입일 경우 A배너
-    return this._bannerIds.POOQ;
+    return this.apiService.request(API_CMD.BFF_10_0183, {}, {}, [prodIds.join('~')]);
+
+    // Mock 데이타
+    /*return Observable.of({
+      code: '00',
+      result: {
+        NA00006734: 'N'
+        // NA00006734: '20190919'
+      }
+    });*/
+  }
+
+  /**
+   * @desc 시간권 이용중 정보 조회
+   */
+  private getConversionsInfo(): Observable<any> {
+    if (this.renderCommonInfo.param.conversionsInfo) {
+      return Observable.of(JSON.parse(this.renderCommonInfo.param.conversionsInfo));
+    }
+
+    return this.apiService.request(API_CMD.BFF_06_0078, {});
+  }
+
+  /**
+   * @desc 장소권(부스트 파크) 인지 여부
+   * @param resp
+   */
+  private isBoostPark(resp: any): any {
+    // 입력한 상품코드 전체가 미사용일경우
+    if (resp.code === 'ICAS4003') {
+      return false;
+    }
+    const boostParkProdIds = ['NA00006734', 'NA00006735', 'NA00006736'];  // 부스트파크(장소권)
+    let res = false;
+    for (const key in resp.result) {
+      if (resp.result[key] !== 'N' && boostParkProdIds.indexOf(key) !== -1) {
+        res = true;
+        break;
+      }
+    }
+    return res;
   }
 }
 

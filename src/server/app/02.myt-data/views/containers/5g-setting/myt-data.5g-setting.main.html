@@ -1,7 +1,7 @@
 <%#
 * @file myt-data.5g-setting.main.html
-* @author anklebreaker
-* @since 2019-04-15
+* @author 양정규 (skt.P130715@partner.sk.com)
+* @since 2019.09.10
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -15,75 +15,41 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: 'T 5G 시간설정', svcInfo: svcInfo }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 설정', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
+        <!-- 190909 [OP002-3626] 수정_02 -->
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <% include ../../components/5g-setting/myt-data.5g-setting.pm.html %>
-            <% include ../../components/5g-setting/myt-data.5g-setting.banner.html %>
-            <hr class="cont-sp type1" aria-hidden="true" />
-            <!-- .cont-box -->
-            <div class="cont-box og-timeConf-wrap"><!-- js : 설정하는 동안에는 .active를 추가, 넘쳤을때는 .overflowed 를 추가 -->
-                <div class="og-time-picked">
-                    <p class="time-last notice_case1"><span class="comment-time">이용할 시간을 아래 컨트롤러로 설정해 주세요.</span></p>
-                    <p class="time-last notice_case2" style="display: none;"><span class="comment-time"><%= viewInfo.remainTime %>까지 선택가능</span></p> <!-- 개발에서 가능 사용 시간 계산하여 표시 -->
-                    <p class="time-last notice_case3" style="display: none;"><strong class="overflowed">넘치셨어요!</strong> <span class="comment-time"><%= viewInfo.remainTime %>까지 선택가능</span></p> <!-- 개발에서 사용 가능 시간 계산하여 표시 -->
-                </div>
-                <div class="circle-out-box" style="position: relative; width:300px; height:300px; margin:0 auto; touch-action: none;">
-                    <input type="hidden" name="circle_pi" id="circle_pi" value="0" />
-                    <svg width="300" height="300" class="circle-datepicker">
-                        <defs>
-                            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#FE6A5B" />
-                                <stop offset="100%" stop-color="#D74141" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="150" cy="150" r="115" stroke="#F3F3F3" stroke-width="30" fill="none" />
-                        <path class="shape" fill="#E8E8E8" stroke="#D6D6D6" d="M 150, 120 m 0 -100 a 130 130 0 1 0 1 0 z m 0 30 a 100 100 0 1 1 -1 0 Z" /> <!-- 기본 회색 도넛 -->
-                        <path class="circle-datepicker__path" stroke-linecap="round" stroke="url(#gradient)" stroke-width="30" fill="none" d="" /> <!-- 버튼 이동시 생성되는 주황색 도넛 -->
-                        <!-- circle class="circle-datepicker__start" cx="150" cy="10" r="9" stroke="#ED4747" stroke-width="1"  fill="#F5D8D5" / -->
-                        <circle class="circle-datepicker__endBack" cx="150" cy="35" r="23" fill="#E3E3E3" /> <!-- 최외각 1px 라인용 서클 -->
-                        <circle class="circle-datepicker__end" cx="150" cy="35" r="16" stroke="#fff" stroke-width="12" fill="#EF4B49" /> <!-- 흰색 및 주황색 서클 -->
-                    </svg>
-                    <p class="og-time-display-init">
-                        <span class="time-for-5g">이용할 시간</span>
-                        <strong class="time-count"><span class="ti-me">00</span><span class="di-v">:</span><span class="mi-n">00</span></strong>
-                        <span class="time-is-gb">1GB=1시간</span>
-                        <a href="#" target="_blank" class="og-hide-btn fe-btn_time-setting">버튼으로 시간 선택하기</a>
-                    </p>
-                </div>
-
-                <div class="og-data-compare">
-                    <p class="data-deduct be-fore">
-                        <span class="tit-le">데이터 차감</span>
-                        <span class="val-ue-wrap"><strong class="val-ue" data-used-data="0">0</strong>GB</span>
-                    </p>
-                    <p class="data-deduct af-ter">
-                        <span class="tit-le">데이터 차감후</span>
-                        <span class="val-ue-wrap"><strong class="val-ue" data-have-data="<%= dataInfo.dataRemQty %>"><%= viewInfo.remainData %></strong>GB</span> <!-- 개발에서 사용자 데이터 등록 필요 data-have-data는 MB단위 strong tag안의 단위는 GB -->
-                    </p>
-                </div>
-                <!-- js: 시간이 0이 아닌경우에는  .og-timeConf-wrap 에 .active를 추가해 주세요 -->
-
-                <div class="og-start5G">
-                    <button type="button" class="btn-round1 btn-style1 fe-btn_5g-start" disabled>무제한 5G 시작</button><!-- button의 활성화 조건: 시간 선택 & 잔여데이터가 170MB이상 & 초과선택 아님 -->
-                </div>
-                <% include ../../components/5g-setting/myt-data.5g-setting.reservation.html %>
-            </div>
-            <!-- //.cont-box -->
-
+            <%
+                const pages = {
+                    'IN_USE':       '../../components/5g-setting/myt-data.5g-setting.inuse.html',     // 이용중
+                    'NO_USE':       '../../components/5g-setting/myt-data.5g-setting.set.html',       // 미이용
+                    'END':          '../../components/5g-setting/myt-data.5g-setting.end.html',       // 사용시간 모두 소진
+                    'BOOST_PARK':   '../../components/5g-setting/myt-data.5g-setting.boostpark.html'  // 부스트 파크
+                };
+            %>
+            <%- include(pages[pageType]); %>
             <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
         </div>
+        <!-- //190909 [OP002-3626] 수정_02 -->
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
-
 <% include ../../components/javascript.component.html %>
 <script type="text/javascript">
   $(document).ready(function () {
-    new Tw.MyTData5gSetting($('.wrap'), '<%- escape(JSON.stringify(reservationInfo)) %>');
-    new Tw.MyTData5gSettingMain($('.wrap'));
+    var pageType = '<%=pageType%>';
+    new Tw.MyTData5gSetting($('.wrap'));
+    if (pageType === 'NO_USE') {
+        new Tw.MyTData5gSettingMain($('.wrap'));
+    }
+    else if (pageType === 'IN_USE') {
+        new Tw.MyTData5gSettingMainInuse($('.wrap'), '<%- escape(JSON.stringify(conversionsInfo)) %>'); // 이용중일 때만 생성하기
+    }
   });
 </script>
 <% include ../../components/end.component.html %>

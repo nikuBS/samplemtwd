@@ -1,7 +1,7 @@
 <%#
 * @file myt-data.5g-setting.history.html
-* @author anklebreaker
-* @since 2019-04-15
+* @author 양정규
+* @since 2019-09-19
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
@@ -15,10 +15,12 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: 'T 5G 시간 이용내역', svcInfo: svcInfo }); %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 이용내역', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
+        <!-- 190909 [OP002-3626] 수정_02 -->
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
             <div class="cont-box nogaps">
                 <div class="ti-caption-blue">
@@ -31,55 +33,52 @@
 
             <!-- .cont-box -->
             <div class="cont-box og-my-wrap">
-                <div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
-                    <p>총 이용시간 <span class="og-time">
-                        <% if(historyInfo.totUseTime.hours > 0) { %><span class=""><%= historyInfo.totUseTime.hours %></span>시간<% } %>
-                        <% if(historyInfo.totUseTime.min > 0 || historyInfo.totUseTime.hours === 0) { %><span class=""><%= historyInfo.totUseTime.min %></span>분<% } %>
-                    </span></p>
-                    <p>총 차감 데이터 <span class="og-data"><span class=""><%= historyInfo.totConvtdData %></span></span></p>
-                </div>
-
                 <% if(historyInfo.totalCount === 0) { %>
                 <!-- 조회기간에 내역이 없을 경우 -->
-                <div class="result-none">T 5G 시간 이용내역이 없습니다.</div>
+                <div class="cont-box nogaps-hoz">
+                    <div class="result-none bt0">데이터 시간권 설정 내역이 없습니다.</div><!-- 190917 명칭변경 -->
+                </div>
                 <!-- //조회기간에 내역이 없을 경우 -->
                 <% } else { %>
                 <!-- 조회 내역 있을 경우 -->
-                <div class="og-timeline">
-                    <% for(const item of historyInfo.conversionHist) { %>
-                    <div class="widget og-timeline-div">
-                        <div class="widget-box accordion2">
-                            <strong class="og-timeline-date"><span class="og-mon"><%= item.monthShortName %></span> <span class="og-day"><%= item.day %></span></strong>
-                            <div class="acco-style og-timeline-list"><!-- 스타일별 클래스 추가 -->
+                <div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
+                    <p class="type-only">총 사용 시간
+                        <span class="og-time">
+                            <% if(historyInfo.totUseTime.hours > 0) { %><b><%= historyInfo.totUseTime.hours %></b>시간<% } %>
+                            <% if(historyInfo.totUseTime.min > 0 || historyInfo.totUseTime.hours === 0) { %><b><%= historyInfo.totUseTime.min %></b>분<% } %>
+                        </span>
+                    </p>
+                </div>
+                <div class="og-timeline type2 fe-time-line <%= historyInfo.totalCount > 20 ? 'more':'';%>"><!-- 190920 더보기 버튼 노출시 class="more" 추가, 더보기 버튼 비노출시 class="more" 삭제 -->
+                    <%
+                        let cnt = 1;
+                        historyInfo.conversionHist.forEach((item, idx) => {
+                    %>
+                    <div class="og-timeline-div fe-hist-list <%= cnt > 20 ? 'none':'';%>">
+                        <div class="box">
+                            <strong class="og-timeline-date"><span class="og-date"><%= item.useDate%></span></strong>
+                            <div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
                                 <ul class="acco-box">
                                     <% item.histList.forEach(function(histItem) { %>
-                                    <li class="acco-list"><!-- on , off -->
+                                    <li class="acco-list fe-sublist <%= cnt > 20 ? 'none':'';%>"><!-- on , off -->
                                         <div class="acco-title">
-                                            <span class="og-time"><%= histItem.startTime %> ~ <%= histItem.endTime %></span>
-                                            <span class="og-data"><span><%= histItem.cnvtdData %></span> <% if(histItem.rtndData) { %><span class="og-data-return">- <%= histItem.rtndData %></span><% } %></span>
-                                            <button role="button" aria-pressed="false">상세보기</button>
-                                        </div>
-                                        <div class="acco-content">
-                                            <div class="acco-content-innr">
-                                                <div class="og-txt-list">
-                                                    <p><span>이용방법</span> <span class="og-txt-r">무제한 5G (<%= histItem.rsvYn %>이용)</span></p>
-                                                    <p><span>이용시간</span> <span class="og-txt-r"><%= histItem.startTime %> ~ <%= histItem.endTime %></span></p>
-                                                    <p><span>차감 데이터</span> <span class="og-txt-r"><%= histItem.cnvtdData %></span></p>
-                                                    <% if(histItem.rtndData) { %><p><span>반환 데이터</span> <span class="og-txt-r og-data-return"><%= histItem.rtndData %></span></p><% } %>
-                                                </div>
-                                            </div>
+                                            <span class="og-time"><%=histItem.usedTime%></span>
+                                            <span class="og-data">사용 시간 <span class="block tod-txcolor4"><%=histItem.startTime%> ~ <%=histItem.endTime%></span></span>
                                         </div>
                                     </li>
-                                    <% }); %>
+                                    <%
+                                        cnt++;
+                                        });
+                                    %>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <% } %>
+                    <% }); %>
                 </div>
-                <!--<div class="btn-more">
+                <div class="btn-more fe-more <%= historyInfo.totalCount <= 20 ? 'none':'';%>">
                     <button type="button">더보기</button>
-                </div>-->
+                </div>
                 <!-- //조회 내역 있을 경우 -->
                 <% } %>
             </div>

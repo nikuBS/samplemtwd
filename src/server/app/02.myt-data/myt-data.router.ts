@@ -29,7 +29,6 @@ import MyTDataFamilyHistory from './controllers/familydata/myt-data.familydata.h
 import MyTDataPrepaidAlarmComplete from './controllers/prepaid/myt-data.prepaid.alarm-complete.controller';
 import MyTDataPrepaidVoiceInfo from './controllers/prepaid/myt-data.prepaid.voice-info.controller';
 import MyTData5gSetting from './controllers/5g-setting/myt-data.5g-setting.controller';
-import MyTData5gSettingReservation from './controllers/5g-setting/myt-data.5g-setting.reservation.controller';
 import MyTData5gSettingHistory from './controllers/5g-setting/myt-data.5g-setting.history.controller';
 import MyTDataPrepaidSKpayResult from './controllers/prepaid/myt-data.prepaid.skpay.result.controller';
 
@@ -70,7 +69,6 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/prepaid/skpay/result', controller: MyTDataPrepaidSKpayResult, post: true });
 
     this.controllers.push({ url: '/5g-setting', controller: MyTData5gSetting });
-    this.controllers.push({ url: '/5g-setting/reservation', controller: MyTData5gSettingReservation });
     this.controllers.push({ url: '/5g-setting/history', controller: MyTData5gSettingHistory });
   }
 }

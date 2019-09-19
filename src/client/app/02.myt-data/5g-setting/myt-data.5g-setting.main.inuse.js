@@ -35,6 +35,7 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
     this.$time = this.$container.find('.ti-me');
     this.$min = this.$container.find('.mi-n');
+    this.startTime = Tw.DateHelper.convDateFormat(this._usingInfo.convStaDtm);
   },
 
   /**
@@ -50,6 +51,24 @@ Tw.MyTData5gSettingMainInuse.prototype = {
    * @desc 사용종료 confirm
    */
   _onClickTerminate: function (e) {
+    // 정기점검 중이면 토스트 띄움
+    if (!this.$container.find('.fe-pm').hasClass('none')) {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_5G.TOAST_PM);
+      return;
+    }
+
+    // 시간권 사용시작 후 1분 이내 종료 불가
+    if (Tw.DateHelper.getDiffByUnit(new Date(), this.startTime, 'minutes') < 1) {
+      this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A2);
+      return;
+    }
+
+    // 사용가능 시간이 1분이내 인 경우 종료불가
+    if (this.remTime < 2) {
+      this._popupService.openAlert(Tw.ALERT_MSG_5G.ALERT_A3);
+      return;
+    }
+
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_5G.CONFIRM_TERMINATE.MSG, Tw.ALERT_MSG_5G.CONFIRM_TERMINATE.TITLE,
       $.proxy(this._procConfirm, this), null, Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_5G.CONFIRM_TERMINATE.BUTTON, e);
@@ -77,7 +96,35 @@ Tw.MyTData5gSettingMainInuse.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
-    this._historyService.reload();
+
+    this._intervalReload();
+  },
+
+  /**
+   * @function
+   * @desc BE 처리하는데 시간 걸려서 요청 후 1초 주기로 재요청 하여 상태값 변경되면 페이지 이동한다.
+   */
+  _intervalReload: function () {
+    var reqCnt = 0;
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    var interval = window.setInterval(function () {
+      var callBack = function (res) {
+        if (res.result.length > 0 && res.result[0].currUseYn === 'N') {
+          this._historyService.replaceURL('/myt-data/5g-setting?conversionsInfo='+JSON.stringify(res));
+          return;
+        }
+      };
+
+      // 최대 회수만큼 호출 후 그만호출
+      if (reqCnt++ > 2){
+        window.clearInterval(interval);
+      }
+
+      this._apiService.request(Tw.API_CMD.BFF_06_0078, {})
+        .done($.proxy(callBack, this))
+        .fail($.proxy(Tw.CommonHelper.endLoading('.container'), this));
+
+    }.bind(this), 1000);
   },
 
   /**
@@ -90,31 +137,15 @@ Tw.MyTData5gSettingMainInuse.prototype = {
 
   /**
    * @function
-   * @desc 사용중 timer
+   * @desc 남은시간 차감(1분에 한번씩 실행)
    */
   _startTimer: function () {
-    this.remTime = Number(this._usingInfo.remTime);
-    this._updateTime(this.remTime);
-    this.$time.removeClass('none');
-    this.$min.removeClass('none');
-
-    this.usingTimer = window.setInterval($.proxy(function () {
-      this.remTime--;
-      if (this.remTime <= 0) {
-        this.remTime = 0;
+    this.remTime = this._usingInfo.remTime; // 요청 시간중의 잔여시간
+    this.usingTimer = window.setInterval(function () {
+      if (--this.remTime < 1) {
         window.clearInterval(this.usingTimer);
       }
-      this._updateTime(this.remTime);
-    }, this), 60 * 1000);
-  },
-
-  /**
-   * @function
-   * @desc 화면 시간표시 update
-   */
-  _updateTime: function (remTime) {
-    this.$time.text(this._addZero(Math.floor(remTime / 60)));
-    this.$min.text(this._addZero(remTime % 60));
+    }.bind(this), 1000 * 60);
   }
 
 };

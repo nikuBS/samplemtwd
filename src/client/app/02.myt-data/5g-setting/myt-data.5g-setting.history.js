@@ -1,7 +1,7 @@
 /**
- * @file 5g 시간설정 내역
- * @author anklebreaker
- * @since 2019-04-05
+ * @file 데이터 시간권 설정 > 이용내역
+ * @author 양정규
+ * @since 2019-09-24
  */
 
 /**
@@ -30,6 +30,9 @@ Tw.MyTData5gSettingHistory.prototype = {
    */
   _cachedElement: function () {
     this.$btnSelect = this.$container.find('.bt-select');
+    this.$timeLine = this.$container.find('.fe-time-line');
+    this.$btnMoreView = this.$container.find('.fe-more');
+
   },
 
   /**
@@ -38,6 +41,21 @@ Tw.MyTData5gSettingHistory.prototype = {
    */
   _bindEvent: function () {
     this.$btnSelect.on('click', $.proxy(this._search, this));
+    this.$btnMoreView.on('click', $.proxy(this._showMore, this));
+  },
+
+  /**
+   * @function
+   * @desc 더보기
+   */
+  _showMore: function () {
+    var $currrSublist = this.$container.find('.fe-sublist.none').slice(0, 20).removeClass('none');
+    $currrSublist.closest('.fe-hist-list').removeClass('none');
+
+    if (this.$container.find('.fe-sublist.none').length < 1){
+      this.$btnMoreView.hide();
+      this.$timeLine.removeClass('more');
+    }
   },
 
   /**

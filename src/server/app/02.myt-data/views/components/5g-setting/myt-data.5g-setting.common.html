@@ -6,21 +6,32 @@
 
 <hr class="cont-sp type1" aria-hidden="true" />
 <!-- .cont-box -->
-<div class="cont-box nogaps-hoz">
-    <div class="og-fullLink">
-        <span class="tit-le">이용내역</span>
-        <button type="button" class="fullbtn arr-right fe-btn_history"><span class="og-color1"><%= historyTotalCount %>건</span></button>
-    </div>
+<div class="cont-box nogaps">
+    <ul class="full-link-list type02">
+        <li>
+            <button>
+                <span class="inner">
+                    <span class="tit fe-btn_history">이용내역</span>
+                </span>
+            </button>
+        </li>
+    </ul>
 </div>
 <!-- //.cont-box -->
 
 <hr class="cont-sp type1" aria-hidden="true" />
 <!-- .cont-box -->
-<div class="cont-box nogaps-hoz">
-    <div class="og-fullLink">
-        <span class="tit-le">나의 요금제</span>
-        <button type="button" class="fullbtn arr-right fe-btn_mytdata"><span><%= svcInfo.prodNm %></span></button>
-    </div>
+<div class="cont-box nogaps">
+    <ul class="full-link-list type02">
+        <li>
+            <button>
+                <span class="inner">
+                    <span class="tit">나의 요금제</span>
+                    <span class="text fe-btn_mytdata"><%= svcInfo.prodNm %></span>
+                </span>
+            </button>
+        </li>
+    </ul>
 </div>
 <!-- //.cont-box -->
 
