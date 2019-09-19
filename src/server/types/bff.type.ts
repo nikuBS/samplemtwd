@@ -1,3 +1,18 @@
+// array 내 값 확인을 도와주도록 확장하는 함수
+const bindIncludes = (Array.prototype as any).includes ? (target => target) : ((target: any) => {
+  target.includes = function includes(searchElement: any, fromIndex?: number) {
+    return this.indexOf(searchElement, fromIndex) > -1;
+  };
+  return target;
+});
+/*
+// NOTE: Array의 경우에는 prototype 확장은 권장되지 않아서 보류한다.
+if (!(Array.prototype as any).includes) {
+  (Array.prototype as any).includes = function includes(searchElement: any, fromIndex?: number) {
+    return this.indexOf(searchElement, fromIndex) > -1;
+  };
+}
+*/
 
 export enum SVC_ATTR_NAME {
   M1 = '휴대폰',
@@ -60,8 +75,8 @@ export enum LINE_NAME {
 }
 
 export const SVC_CDGROUP = {
-  WIRELESS: ['M1', 'M2', 'M3', 'M4', 'M5'],
-  WIRE: ['S1', 'S2', 'S3']
+  WIRELESS: bindIncludes(['M1', 'M2', 'M3', 'M4', 'M5']),
+  WIRE: bindIncludes(['S1', 'S2', 'S3'])
 };
 
 export const UNIT = {
@@ -550,21 +565,6 @@ export const TPLAN_LARGE_PROD_ID = ['NA00005957', 'NA00005958', 'NA00006157', 'N
   'NA00006538'
 ];
 
-// array 내 값 확인을 도와주도록 확장하는 함수
-const bindIncludes = (Array.prototype as any).includes ? () => {} : target => {
-  target.includes = function includes(searchElement: any, fromIndex?: number) {
-    return this.indexOf(searchElement, fromIndex) > -1;
-  };
-};
-/*
-// NOTE: Array의 경우에는 prototype 확장은 권장되지 않아서 보류한다.
-if (!(Array.prototype as any).includes) {
-  (Array.prototype as any).includes = function includes(searchElement: any, fromIndex?: number) {
-    return this.indexOf(searchElement, fromIndex) > -1;
-  };
-}
-*/
-
 // [OP002-3871] 5GX
 export const _5GX_PROD_ID: any = [
   'NA00006728', // 5G YT 95
@@ -572,20 +572,18 @@ export const _5GX_PROD_ID: any = [
   'NA00006730'  // 5G YT 55
 ];
 // [OP002-3871] 5GX 시간권/장소권
-export const _5GXTICKET_PROD_ID: any = [
+export const _5GXTICKET_PROD_ID: any = bindIncludes([
   'NA00006731', // Data 시간권 8시간 (YT55_시간권)
   'NA00006732', // Data 시간권 60시간 (YT75_시간권)
   'NA00006733', // Data 시간권 120시간 (YT95_시간권)
   'NA00006734', // BoostPark 데이터통화 10GB (YT55_장소권)
   'NA00006735', // BoostPark 데이터통화 200GB (YT75_장소권)
   'NA00006736'  // BoostPark 데이터통화 무제한 (YT95_장소권)
-];
-bindIncludes(_5GXTICKET_PROD_ID);
+]);
 // [OP002-3871] 5GX 시간권 여부
 _5GXTICKET_PROD_ID.isTimeTicket = index => (index < 3);
 // [OP002-3871] 5GX 시간권 사용중
-export const _5GXTICKET_TIME_SET_SKIP_ID: any = ['DSGK1'];
-bindIncludes(_5GXTICKET_TIME_SET_SKIP_ID);
+export const _5GXTICKET_TIME_SET_SKIP_ID: any = bindIncludes(['DSGK1']);
 
 export const TOTAL_SHARE_DATA_SKIP_ID = [
   // 통합공유 데이터 표시 상품 리스트
@@ -610,11 +608,11 @@ export const INFINITY_DATA_PROD_ID = [
 ];
 
 // 집전화 정액제 상품
-export const S_FLAT_RATE_PROD_ID = [
+export const S_FLAT_RATE_PROD_ID = bindIncludes([
   'NP00000620', 'NP00000020', 'NP00000021', 'NP00000022', 'NP00000023', 'NP00000024',
   'NP00000794', 'NP00000795', 'NP00000863', 'NP00000870', 'NP00000681', 'NP00000189',
   'NP00000775'
-];
+]);
 
 // 실시간 채팅 상담 추가 상품
 export const LIVE_CHAT_CHECK_PROD_ID = [
