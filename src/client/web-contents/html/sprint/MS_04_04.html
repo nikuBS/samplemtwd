@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정 
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    -->
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page nobg tw-popup fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>설치장소 변경</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- 190831 리디자인_01 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- //190831 리디자인_01 -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="myinfo-wrap">
+                            <div class="myinfo-cont">
+                                <div class="subtitle">
+                                    <span class="name">현재 설치장소</span>
+                                </div>
+                                <div class="title">
+                                    <span>서울시 도봉구<br />도봉동 *******************</span>
+                                </div>
+                                <span class="subtitle2">
+                                    <span class="elem">홍*동</span>
+                                    <span class="elem">인터넷</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- 190831 리디자인_02 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="ti-caption-gray tod-caption-white">
+                        <h3 class="tit">설치 장소 변경 신청</h3>
+                    </div>
+                    <!-- 190831 리디자인_02 -->
+
+                    <div class="cont-box">
+                        <div class="form-type">
+                            <h3 class="form-title">건물 유형</h3>
+                            <button class="bt-dropdown big" title="건물 유형 선택" aria-haspopup="true">유형 선택<span class="ico"></span></button>
+                            <h3 class="form-title">변경 설치장소</h3>
+                            <div class="form-box">
+                                <!-- 2019-01-17 inp-btn 추가 -->
+                                <div class="inputbox bt-add inp-btn">
+                                    <span class="input">
+                                        <input type="text" title="우편번호" value="13494">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                <!-- 190831 리디자인_03 -->
+                                    <span class="bt-box3">
+                                        <button type="button" class="btn-round2 btn-style3">우편번호&nbsp;검색</button>
+                                    </span>
+                                <!-- //190831 리디자인_03 -->    
+                                </div>
+                                <div class="inputbox mt10">
+                                    <span class="input">
+                                        <input type="text" title="상세 주소" placeholder="상세주소 입력">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </div>
+                            </div>      
+                            <h3 class="form-title"><label for="formInput01">이사 날짜</label></h3>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="date" title="이사 날짜 선택" id="formInput01" />
+                                </span>
+                            </span>
+                            <h3 class="form-title"><label for="formInput02">중단 희망 날짜</label></h3>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="date" title="중단 희망 날짜 오늘 이후로 선택" placeholder="오늘 이후로 선택" id="formInput02" />
+                                </span>
+                            </span>
+                            <h3 class="form-title"><label for="formInput03">설치 희망 날짜</label><button class="tip-view" title="설치 희망 날짜 TIP보기" aria-haspopup="true">TIP</button></h3>
+                            <span class="inputbox">
+                                <span class="input">
+                                    <input type="date" title="설치 희망 날짜 오늘 이후로 선택" placeholder="오늘 이후로 선택" id="formInput03" />
+                                </span>
+                            </span>
+                            <h3 class="form-title">휴대폰 번호</h3>
+                            <div class="form-box">
+                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input type="number" placeholder="숫자만 입력" title="휴대폰 번호 숫자만 입력"/>
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                            <h3 class="form-title">일반전화(선택)</h3>
+                            <div class="form-box">
+                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                    <span class="input">
+                                        <input type="number" placeholder="숫자만 입력" title="일반전화(선택) 숫자만 입력"/>
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 190831 리디자인_04 : 삭제 <hr class="cont-sp type1" aria-hidden="true"/> -->
+                    
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_04 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">서비스 제한<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">설치장소 변경 접수<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">서비스 불가지역<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">추가비용<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!-- // 190831 리디자인_04 -->
+                    <!--// .cont-box -->
+
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>신청하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>

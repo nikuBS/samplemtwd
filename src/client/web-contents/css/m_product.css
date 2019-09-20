@@ -1134,3 +1134,9 @@
 .chatbot-wrap .chat-txt .b-color {color:#59bbf4;}
 .chatbot-wrap .chat-txt {position:absolute; line-height:2.5rem; background:#5d5d5d; width:100%;; height:100%; right:0; border-radius:1.25rem; opacity:0.9; text-align: center; letter-spacing:-1px; z-index:-1;}
 
+/* 190919 [OP002-4004] qna 수정 */
+.prCont-txt .faq-answer {padding-top:0 !important; width:100%; display:table; }
+.prCont-txt .faq-answer h3 {padding-top:25px !important; width:1.2rem; display:table-cell; vertical-align:top; text-align:left;}
+.prCont-txt .faq-answer ul {display:table-cell; vertical-align:top; text-align:left;}
+.prCont-txt .faq-answer > ul > li,
+.prCont-txt .faq-answer > ol > li {padding-left:0 !important;}
