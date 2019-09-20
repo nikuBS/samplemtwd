@@ -582,6 +582,19 @@ export const _5GXTICKET_PROD_ID: any = bindIncludes([
 ]);
 // [OP002-3871] 5GX 시간권 여부
 _5GXTICKET_PROD_ID.isTimeTicket = index => (index < 3);
+// [OP002-3871] 5GX 시간권/장소권
+export const _5GXTICKET_SKIP_ID: any = bindIncludes([
+  'DD4J3', // 스탠다드0 시간권(8)
+  'DD4J2', // 스탠다드0 시간권(60)
+  'DD4J1', // 스탠다드0 시간권(120)
+  'DD4J6', // BoostPark 데이터통화 10GB (YT55_장소권)
+  'DD4J5', // BoostPark 데이터통화 200GB (YT75_장소권)
+  'DD4J4'  // BoostPark 데이터통화 무제한 (YT95_장소권)
+]);
+// [OP002-3871] 5GX 시간권 여부
+// _5GXTICKET_SKIP_ID.isTimeTicket = index => (index < 3);
+_5GXTICKET_SKIP_ID.isTimeTicket = skipId => (_5GXTICKET_SKIP_ID.indexOf(skipId) < 3);
+_5GXTICKET_SKIP_ID.isPlaceTicket = skipId => (_5GXTICKET_SKIP_ID.indexOf(skipId) > 2);
 // [OP002-3871] 5GX 시간권 사용중
 export const _5GXTICKET_TIME_SET_SKIP_ID: any = bindIncludes(['DSGK1']);
 

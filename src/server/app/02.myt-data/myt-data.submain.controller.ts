@@ -32,7 +32,7 @@ import {
   TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
   TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E, //  T가족모아 가입 가능 요금제
   _5GX_PROD_ID, // 5GX 데이터 시간권/장소권
-  _5GXTICKET_PROD_ID, _5GXTICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
+  _5GXTICKET_SKIP_ID, _5GXTICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -40,15 +40,15 @@ import StringHelper from '../../utils/string.helper';
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
-const parceTimesString = (times: any) => {
+const parseTimesWithString = (times: any) => {
   // 시간과 분이 서로 의무적으로 존재해야 하는 것은 아니므로, 각각의 조건문으로 분리하여 처리한다.
   if (times.hours) {
-    times.string = `${times.hours}시`;
+    times.formatted = `${times.hours}시`;
   } else {
-    times.string = '';
+    times.formatted = '';
   }
   if (times.min) {
-    times.string = `${times.string} ${times.min}분`;
+    times.formatted = `${times.string} ${times.min}분`;
   }
   return times;
 };
@@ -490,23 +490,68 @@ class MytDataSubmainController extends TwViewController {
     let etcRemained = 0;
     let etcTotal = 0;
     // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
+    /*
     if (data5gx.length > 0) {
       data._5gxTicket = {};
       data5gx.forEach(item => {
-        const index5GXTicket = _5GXTICKET_PROD_ID.indexOf(item.prodId);
+        const index5GXTicket = _5GXTICKET_SKIP_ID.indexOf(item.skipId);
         // Data 시간권인 여부
-        if (_5GXTICKET_PROD_ID.isTimeTicket(index5GXTicket)) {
+        if (!data._5gxTicket.time && _5GXTICKET_SKIP_ID.isTimeTicket(index5GXTicket)) {
+          this.convShowData(item);
+          data._5gxTicket = item;
           data._5gxTicket.time = true;
         }
         // Data 시간권인 경우, 사용 여부
+        /!*
         if (data._5gxTicket.time && !_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
           // 공제코드(skipId: "DSGK1") "시간권 데이터"가 없으면, 남은 시간 표시 ("사용중"이 아님)
           // 시간으로 오는 것이 SB(20190919) v0.91 까지는 고정
           // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
-          // data._5gxTicket.total = parceTimesString(this.convFormat(item.total, item.unit));
-          data._5gxTicket.remained = parceTimesString(this.convFormat(item.remained, item.unit));
+          // data._5gxTicket.total = parseTimesWithString(this.convFormat(item.total, item.unit));
+          data._5gxTicket.remained = parseTimesWithString(this.convFormat(item.remained, item.unit));
+        }
+        *!/
+        if (data._5gxTicket.time && _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+          // 실시간데이터 잔여량 표기 방법 표시
+          /!*
+          item.isUnlimit = !isFinite(item.total);
+          item.remainedRatio = 100;
+          item.showUsed = this.convFormat(item.used, item.unit);
+          if ( !item.isUnlimit ) {
+            item.showTotal = this.convFormat(item.total, item.unit);
+            item.showRemained = this.convFormat(item.remained, item.unit);
+            item.remainedRatio = Math.round(item.remained / item.total * 100);
+          }
+          *!/
+          item.showRemained = {
+            data: '사용중',
+            unit: ''
+          };
         }
       });
+    }
+    */
+    if (data5gx.length > 0) {
+      const item5gx = data5gx.find(item => _5GXTICKET_SKIP_ID.isTimeTicket(item.skipId));
+      if (item5gx) {
+        data._5gxTicket = this.convShowData(item5gx);
+        data._5gxTicket.time = true;
+        if (data5gx.findIndex(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) > -1) {
+          // "사용중"
+          data._5gxTicket.showRemained = {
+            data: '사용중',
+            unit: ''
+          };
+        } /* else {
+          // 남음
+        } */
+      } else {
+        data._5gxTicket = this.convShowData(data5gx.find(item => _5GXTICKET_SKIP_ID.isPlaceTicket(item.skipId)));
+        data._5gxTicket.showRemained = {
+          data: '',
+          unit: ''
+        };
+      }
     }
     // if ( gnrlData.length > 0 ) {
       gnrlData.forEach(item => {
@@ -643,8 +688,23 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
       const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
-        // XXX: 5GX 개발을 위해 가짜 데이터 추가
+        // XXX: [OP002-3871] 5GX 개발을 위해 가짜 데이터 추가
         resp.result.gnrlData.push(
+            // 1. 시간권, 설정 ON: "사용중" 표시
+            {
+              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
+              'prodNm': '스탠다드0 시간권',
+              'skipId': 'DSGK1',
+              'skipNm': '시간권 데이터',
+              'unlimit': '1',
+              'total': '무제한',
+              'used': '무제한',
+              'remained': '무제한',
+              'unit': '140',
+              'rgstDtm': '20190918141637',
+              'exprDtm': '20190919155843'
+            });
+        resp.result.voice.push(
             // 1. 시간권, 설정 ON: "사용중" 표시
             {
               'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
@@ -652,69 +712,50 @@ class MytDataSubmainController extends TwViewController {
               'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
               'skipNm': 'Data 시간권 60시간',
               'unlimit': '0',
-              'total': '108000',
-              'used': '4920',
-              'remained': '103080',
-              'unit': '240',
-              'rgstDtm': '',
-              'exprDtm': ''
-            },
-            {
-              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
-              'prodNm': '스탠다드0 시간권',
-              'skipId': 'DSGK1',
-              'skipNm': '시간권 데이터',
-              'unlimit': '1',
-              'total': '499999999',
-              'used': '0',
-              'remained': '499999999',
-              'unit': '140',
-              'rgstDtm': '20190918172423',
-              'exprDtm': '20190918174423'
-            }
-            /*
-            // 1. 시간권, 설정 OFF: 남은 시간("00시간[ 00분] 남음") 표시
-            {
-              'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
-              'prodNm': '스탠다드0 시간권',
-              'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
-              'skipNm': 'Data 시간권 60시간',
-              'unlimit': '0',
-              'total': '108000',
-              'used': '4920',
-              'remained': '103080',
+              'total': '93600',
+              'used': '6180',
+              'remained': '87420',
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''
             }
-            */
             /*
             // 2. 장소권 (부스트 파크 옵션): 표시 없음
             {
               'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
-              'prodNm': 'BoostPark 데이터통화 10GB',
+              'prodNm': '프라임0 데이터부스트파크권 10GB',
               'skipId': 'DD4J6', // DD4J5, DD4J4
-              'skipNm': 'YT55_장소권',
+              'skipNm': 'BoostPark 데이터통화 10GB',
               'unlimit': '0',
-              'total': '9000',
-              'used': '0',
-              'remained': '7200',
-              'unit': '240',
+              'total': '10000000',
+              'used': '1000000',
+              'remained': '9000000',
+              'unit': '140',
               'rgstDtm': '',
               'exprDtm': ''
             }
             */);
         // [OP002-3871] 5GX 항목은 별도 항목으로 추출
-        const gnrlData = resp.result.gnrlData;
-        const _5gxData = gnrlData.reduce((acc, item, index) => {
-          if (_5GXTICKET_PROD_ID.includes(item.prodId)) {
+        // 음성 통환.영상 통화로 수신됨
+        const voice = resp.result.voice;
+        const data5gx = voice.reduce((acc, item, index) => {
+          if (_5GXTICKET_SKIP_ID.includes(item.skipId)) {
             acc.push(item);
-            gnrlData.splice(index, 1);
+            voice.splice(index, 1);
           }
           return acc;
         }, []);
-        if (_5gxData.length > 0) {
-          resp.result._5gxData = _5gxData;
+        if (data5gx.length > 0) {
+          // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
+          const gnrlData = resp.result.gnrlData;
+          const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
+            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.prodId)) {
+              acc.push(item);
+              gnrlData.splice(index, 1);
+            }
+            return acc;
+          }, []);
+          resp.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         }
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
           return resp.result;
