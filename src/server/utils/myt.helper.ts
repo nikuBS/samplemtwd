@@ -171,7 +171,7 @@ class MyTHelper {
     // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
     usageData.data = ordered.filter(item => (item.skipId !== SKIP_NAME.DAILY || (UNLIMIT_CODE.indexOf(item.unlimit) > -1)));
 
-    // [OP002-3817] 5GX 시간권/장소권 정보 표시
+    // [OP002-3871] 5GX 시간권/장소권 정보 표시
     if (data5gx.length > 0) {
       // 시간권인 경우, 노출 순서
       // 1. "시간권 데이터(skipId: DSGK1), 무제한(skipNm)"

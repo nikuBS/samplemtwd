@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import DateHelper from '../../../../utils/date.helper';
 import MyTHelper from '../../../../utils/myt.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
-import { S_FLAT_RATE_PROD_ID, SVC_ATTR_E, SVC_CDGROUP, _5GXTICKET_PROD_ID } from '../../../../types/bff.type';
+import {S_FLAT_RATE_PROD_ID, SVC_ATTR_E, SVC_CDGROUP, _5GXTICKET_PROD_ID, _5GXTICKET_TIME_SET_SKIP_ID} from '../../../../types/bff.type';
 
 const TEMPLATE = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
@@ -135,74 +135,70 @@ class MyTDataHotdata extends TwViewController {
         respUsedData.result.gnrlData.push(
             // 1. 시간권, 설정 ON: "사용중" 표시
             {
-              'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
-              'prodNm': '스탠다드0 시간권',
-              'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
-              'skipNm': 'Data 시간권 60시간',
-              'unlimit': '0',
-              'total': '108000',
-              'used': '4920',
-              'remained': '103080',
-              'unit': '240',
-              'rgstDtm': '',
-              'exprDtm': ''
-            },
-            {
               'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
               'prodNm': '스탠다드0 시간권',
               'skipId': 'DSGK1',
               'skipNm': '시간권 데이터',
               'unlimit': '1',
-              'total': '499999999',
-              'used': '0',
-              'remained': '499999999',
+              'total': '무제한',
+              'used': '무제한',
+              'remained': '무제한',
               'unit': '140',
-              'rgstDtm': '20190918172423',
-              'exprDtm': '20190918174423'
-            }
-            /*
-            // 1. 시간권, 설정 OFF: 남은 시간("00시간[ 00분] 남음") 표시
+              'rgstDtm': '20190918141637',
+              'exprDtm': '20190919155843'
+            });
+        respUsedData.result.voice.push(
+            // 1. 시간권, 설정 ON: "사용중" 표시
             {
               'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
               'prodNm': '스탠다드0 시간권',
               'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
               'skipNm': 'Data 시간권 60시간',
               'unlimit': '0',
-              'total': '108000',
-              'used': '4920',
-              'remained': '103080',
+              'total': '93600',
+              'used': '6180',
+              'remained': '87420',
               'unit': '240',
               'rgstDtm': '',
               'exprDtm': ''
             }
-            */
             /*
             // 2. 장소권 (부스트 파크 옵션): 표시 없음
             {
               'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
-              'prodNm': 'BoostPark 데이터통화 10GB',
+              'prodNm': '프라임0 데이터부스트파크권 10GB',
               'skipId': 'DD4J6', // DD4J5, DD4J4
-              'skipNm': 'YT55_장소권',
+              'skipNm': 'BoostPark 데이터통화 10GB',
               'unlimit': '0',
-              'total': '9000',
-              'used': '0',
-              'remained': '7200',
-              'unit': '240',
+              'total': '10000000',
+              'used': '1000000',
+              'remained': '9000000',
+              'unit': '140',
               'rgstDtm': '',
               'exprDtm': ''
             }
             */);
-        // [OP002-3871] 5GX 항목은 별도 항목으로 추출
-        const gnrlData = respUsedData.result.gnrlData;
-        const _5gxData = gnrlData.reduce((acc, item, index) => {
+        // [OP002-3871] 5GX 항목은 범융 별도 항목으로 추출
+        // 음성 통환.영상 통화로 수신됨
+        const voice = respUsedData.result.voice;
+        const data5gx = voice.reduce((acc, item, index) => {
           if (_5GXTICKET_PROD_ID.includes(item.prodId)) {
             acc.push(item);
-            gnrlData.splice(index, 1);
+            voice.splice(index, 1);
           }
           return acc;
         }, []);
-        if (_5gxData.length > 0) {
-          respUsedData.result._5gxData = _5gxData;
+        if (data5gx.length > 0) {
+          // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
+          const gnrlData = respUsedData.result.gnrlData;
+          const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
+            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.prodId)) {
+              acc.push(item);
+              gnrlData.splice(index, 1);
+            }
+            return acc;
+          }, []);
+          respUsedData.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         }
         if (SVC_CDGROUP.WIRELESS.includes(svcInfo.svcAttrCd)) {
           let reqExtraData;
