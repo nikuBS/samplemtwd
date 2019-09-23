@@ -75,12 +75,20 @@ Tw.CommonSearch.prototype = {
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
         if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]){
-          if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===5){
+          if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===5){  // T멤버십
             this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
-          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===2){
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===2){  // 데이터 잔여량
             this._calculdateRemainData(this._searchInfo.search[i][keyName].data[0].subData);
-          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===3&&this._nowUser!=='logOutUser'){
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===3&&this._nowUser!=='logOutUser'){  // 실시간 요금
             this._requestRealTimeFeeFlag = true;
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===7){  // 부가서비스
+            this._calculateAdditionsFee(this._searchInfo.search[i][keyName].data[0].subData);
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===8){  // 음성 잔여량
+            this._calculateRemainVoice(this._searchInfo.search[i][keyName].data[0].subData);
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===9){  // 요금약정할인
+            this._requestFeeAgrmntDiscountInfo(this._searchInfo.search[i][keyName].data[0].subData);
+          }else if(Number(this._searchInfo.search[i][keyName].data[0].DOCID)===10){  // 단말기 할부금
+            this._requestEqpInstallmentInfo(this._searchInfo.search[i][keyName].data[0].subData);
           }
         }
         if(keyName==='smart'){
@@ -812,6 +820,36 @@ Tw.CommonSearch.prototype = {
   /**
    * @function
    * @member
+   * @desc 유료부가서비스 개수 및 금액 계산, 출력( 즉답검색 case 7 , 부가서비스 관련 검색시)
+   * @param {Object} usingAdditions - 이용중인 부가서비스 리스트 객체
+   * @returns {void}
+   */
+  _calculateAdditionsFee : function (usingAdditions) {
+    var addProdList = usingAdditions.addProdList || []; // 이용중인 부가서비스 리스트
+    var totalPaidAdditionsCnt = 0;
+    var totalUnpaidAdditionsCnt = 0;
+    var returnStr1 = '';
+    var returnStr2 = '';
+
+    if(addProdList.length > 0) {
+      addProdList.map(function(_data){
+        if(_data.payFreeYn !== 'Y'){
+          totalPaidAdditionsCnt++;
+        } else {
+          totalUnpaidAdditionsCnt++;
+        }
+      });
+    }
+
+    returnStr1 = totalUnpaidAdditionsCnt + '건';
+    returnStr2 = totalPaidAdditionsCnt + '건';
+
+    this.$container.find('.fe-unpaid-additions-cnt').text(returnStr1);
+    this.$container.find('.fe-paid-additions-cnt').text(returnStr2);
+  },
+  /**
+   * @function
+   * @member
    * @desc 남은데이터 계산, 출력( 즉답검색 case 2 , 데이터 관련 검색시)
    * @param {Object} usageData - 데이터 잔여량 객체
    * @returns {void}
@@ -838,6 +876,133 @@ Tw.CommonSearch.prototype = {
       returnStr = usageData.totalRemained.data+usageData.totalRemained.unit;
     }
     this.$container.find('.fe-data-remaind').text(returnStr);
+  },
+  /**
+   * @function
+   * @member
+   * @desc 남은음성잔여량 계산, 출력( 즉답검색 case 8 , 음성잔여량 관련 검색시)
+   * @param {Object} usageData - 음성잔여량 객체
+   * @returns {void}
+   */
+  _calculateRemainVoice : function (usageData) {
+    var voice = usageData.voice || [];
+    var totalRemainUnLimited = false;
+    var returnStr = '';
+    var whitespace = ' ';
+    voice.map(function(_data){
+      if ( Tw.UNLIMIT_CODE.indexOf(_data.unlimit) !== -1 ) {
+        totalRemainUnLimited = true;
+      }
+    });
+    if ( totalRemainUnLimited ) {
+      returnStr = Tw.COMMON_STRING.UNLIMIT;
+    } else {
+      var totalRemained = 0;
+      for(var idx in voice){
+        if(!Tw.FormatHelper.isEmpty(voice[idx].remained)){
+          totalRemained+= parseInt(voice[idx].remained);
+        }
+      }
+      usageData.totalRemained = Tw.FormatHelper.convVoiceFormat(totalRemained);
+
+      if (usageData.totalRemained.hours > 0) {
+        returnStr = usageData.totalRemained.hours + '시간';
+
+        if (usageData.totalRemained.min > 0) {
+          returnStr += whitespace + usageData.totalRemained.min + '분';
+
+          if (usageData.totalRemained.sec > 0) {
+            returnStr += whitespace + usageData.totalRemained.sec + '초';
+          }
+        } 
+      } else {
+        if (usageData.totalRemained.min > 0) {
+          returnStr = usageData.totalRemained.min + '분';
+
+          if (usageData.totalRemained.sec > 0) {
+            returnStr += whitespace + usageData.totalRemained.sec + '초';
+          }
+        } else {
+          if (usageData.totalRemained.sec > 0) {
+            returnStr = usageData.totalRemained.sec + '초';
+          } else {
+            returnStr = '0분';  // 음성잔여량 모두 소진시 0분 노출
+          }
+        }
+      }
+    }
+    this.$container.find('.fe-voice-remaind').text(returnStr);
+  },
+  /**
+   * @function
+   * @member
+   * @desc 요금약정할인 정보 출력( 즉답검색 case 9 , 요금약정할인 관련 검색시)
+   * @param {Object} usageData - 요금약정할인 정보 객체
+   * @returns {void}
+   */
+  _requestFeeAgrmntDiscountInfo : function (feeAgrmntDiscountData) {
+    var priceList = feeAgrmntDiscountData.priceList || [];
+    var feeAgrmntDcCnt = 0;
+    var feeAgrmntDcNm = '';
+    var feeAgrmntDcEndDt = '';
+
+    if (priceList.length > 0) {
+      feeAgrmntDcCnt = priceList.length;
+
+      if (feeAgrmntDcCnt === 1){
+        priceList.map(function(_data){
+          feeAgrmntDcNm = _data.disProdNm;
+          feeAgrmntDcEndDt = _data.agrmtDcEndDt
+        });
+
+        this.$container.find('.fe-fee-agrmnt-name').text(feeAgrmntDcNm);
+        this.$container.find('.fe-fee-agrmnt-end-dt').text(Tw.DateHelper.getShortDateNoDot(feeAgrmntDcEndDt));
+
+        $('#fe-fee-agrmnt-info-case1').show();
+      } else {
+        this.$container.find('.fe-fee-agrmnt-cnt').text(feeAgrmntDcCnt + '건');
+
+        $('#fe-fee-agrmnt-info-case2').show();
+      }
+    }
+  },
+/**
+   * @function
+   * @member
+   * @desc 단말할부정보 출력( 즉답검색 case 10 , 단말기 할부금 관련 검색시)
+   * @param {Object} usageData - 단말할부 정보 객체
+   * @returns {void}
+   */
+  _requestEqpInstallmentInfo : function (eqpInstallmentData) {
+    var installmentList = eqpInstallmentData.installmentList || [];
+    var eqpInstallmentPlanCnt = 0;  // 단말할부 건수
+    var remainEqpInstallmentAmt = '';   // 잔여 단말할부금
+    var remainEqpInstallmentMonth = '';    // 잔여 할부개월수
+
+    if (installmentList.length > 0) {
+      eqpInstallmentPlanCnt = installmentList.length;
+
+      if (eqpInstallmentPlanCnt > 1) {
+        // 할부시작일을 기준으로 내림차순 정렬
+        installmentList.sort(function(a, b) {
+          return parseFloat(b.allotStaDt) - parseFloat(a.allotStaDt);
+          // return parseFloat(a.allotStaDt) - parseFloat(b.allotStaDt);
+        });
+      }
+
+      remainEqpInstallmentAmt = installmentList[0].invBamt;
+      remainEqpInstallmentMonth = installmentList[0].invRmn;
+
+      this.$container.find('.fe-remain-eqp-installment-amt').text(Tw.FormatHelper.convNumFormat(Number(remainEqpInstallmentAmt)) + Tw.CURRENCY_UNIT.WON);
+      this.$container.find('.fe-remain-eqp-installment-month').text(remainEqpInstallmentMonth + Tw.DATE_UNIT.MONTH);
+
+      if (eqpInstallmentPlanCnt === 1) {
+        $('#fe-eqp-installment-info-case1').show();
+      } else {
+        this.$container.find('.fe-remain-eqp-installment-cnt').text((eqpInstallmentPlanCnt-1) + '건');
+        $('#fe-eqp-installment-info-case2').show();
+      }
+    }
   },
   /**
    * @function
