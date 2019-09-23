@@ -9607,3 +9607,9 @@ button:focus span {
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.back:before {content:''; display:inline-block; vertical-align:middle; width:0.4375rem; height:0.8125rem; margin:0 0.375rem 0.1875rem 0; background:url(/img/benefit/sp-eventpop.png) no-repeat 0 -2.25rem; background-size:3.563rem auto;}
 .popup .popup-info.tod-eventpop-type1 .bt-box .btn-floating.btn-style-blue.disagree {font-size:0.8125rem; color:rgba(255,255,255,.7);}
 .popup .popup-info.tod-eventpop-type1 .bt-box.bt-slice>li {height:auto; padding:0;}
+
+/* 190909 [OP002-3773] 즉답검색 아이템 추가 */
+.paymentcharge-box.type06 {background-image: url("/img/search/bg_number_06.png");}
+.paymentcharge-box .money {font-size: 1.56rem; word-break: break-all; line-height: 1.75rem;text-decoration: underline;}
+.paymentcharge-box .s_money {font-size: 0.88rem; word-break: break-all; line-height: 1.75rem;text-decoration: underline;}
+.paymentcharge-box .fb{font-size: 1.56rem;}
