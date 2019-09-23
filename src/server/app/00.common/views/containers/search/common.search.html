@@ -86,79 +86,179 @@
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
+<!--즉답검색결과[S]-->
             <% if(searchInfo.search[0].immediate.data.length>0){ %>
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
-                <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
-                <p class="paymentcharge-box type01">
+            <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
+            <p class="paymentcharge-box type01">
+                이용하고 계신
+                <a href="/myt-join/submain" class="phonnumber list-data"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <%= searchInfo.search[0].immediate.data[0].mainData %>
+                </a>회선의<br>요금제는<span class="str">
+                <a class="list-data" href="/myt-join/myplan"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong>
+                </a>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
+            <p class="paymentcharge-box type02">
+                이용하고 계신
+                <a href="/myt-join/submain" class="phonnumber list-data"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <%= searchInfo.search[0].immediate.data[0].mainData %>
+                </a>회선의<br>총 데이터 잔여량은<span class="str">
+                <a class="list-data" href="/myt-data/hotdata"><strong class="money fe-data-remaind"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    </strong>
+                </a>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
+            <p class="paymentcharge-box type03 none">
+                이용하고 계신
+                <a href="/myt-join/submain" class="phonnumber list-data"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <%= searchInfo.search[0].immediate.data[0].mainData %>
+                </a>회선의<br>실시간 이용요금은<span class="str">
+                <a class="list-data" href="/myt-fare/bill/hotbill"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <strong class="money fe-realtime-fee"></strong>
+                </a>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
+            <p class="paymentcharge-box type04">
+                이용하고 계신
+                <a href="/myt-join/submain" class="phonnumber list-data"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <%= searchInfo.search[0].immediate.data[0].mainData %>
+                </a>회선의<br>소액결제 이용요금은<span class="str">
+                <a class="list-data" href="/myt-fare/bill/small"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
+                </a>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
+            <p class="paymentcharge-box type05">
+                고객님의 T멤버십 등급은
+                <a class="list-data" href="/membership/my"><span class="phonnumber"
+                  data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>"><%=
+                searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
+                searchInfo.search[0].immediate.data[0].mainData === 'G'?'Gold':
+                searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
+                %></span></a>
+                이며<br>올해 받으신 총 혜택은<span class="str">
+                <a class="list-data" href="/membership/my"
+                   data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
+                    <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
+                </a>입니다.</span>
+            </p>
+            <div class="search-barcode">
+                <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
+                <p class="bar-code-num"></p>
+            </div>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==7){ %>
+                <p class="paymentcharge-box type06"><!-- 190910 [OP002-3773] 추가_01 부가서비스유형 -->
                     이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                         <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>회선의<br>요금제는<span class="str">
-                    <a class="list-data" href="/myt-join/myplan"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong>
-                    </a>입니다.</span>
+                    </a>
+                    회선의<br>이용 중인 부가서비스는<br>
+                    <span class="str">
+                        무료 
+                        <a class="list-data" href="/myt-join/additions">
+                            <strong class="money fe-unpaid-additions-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        </a>
+                        , 유료 
+                        <a class="list-data" href="/myt-join/additions">
+                            <strong class="money fe-paid-additions-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        </a>
+                        <br>입니다.
+                    </span>
                 </p>
-                <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
-                <p class="paymentcharge-box type02">
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==8){ %>
+                <p class="paymentcharge-box type02"><!-- 190910 [OP002-3773] 추가_02 음성잔여량 유형 -->
                     이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                         <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>회선의<br>총 데이터 잔여량은<span class="str">
-                    <a class="list-data" href="/myt-data/hotdata"><strong class="money fe-data-remaind"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        </strong>
-                    </a>입니다.</span>
+                    </a>
+                    회선의<br>총 음성 잔여량은
+                    <span class="str">
+                        <a class="list-data" href="/myt-data/hotdata">
+                            <strong class="money fe-voice-remaind" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        </a>
+                        입니다.
+                    </span>
                 </p>
-                <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
-                <p class="paymentcharge-box type03 none">
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==9){ %>
+                <p class="paymentcharge-box type03" id="fe-fee-agrmnt-info-case1" style="display: none;"><!-- 190910 [OP002-3773] 추가_03 요금약정 할인 유형 - 1개의 약정 -->
                     이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                         <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>회선의<br>실시간 이용요금은<span class="str">
-                    <a class="list-data" href="/myt-fare/bill/hotbill"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <strong class="money fe-realtime-fee"></strong>
-                    </a>입니다.</span>
+                    </a>
+                    회선은<br>
+                    <a class="list-data" href="/myt-join/myplancombine/infodiscount">
+                        <strong class="money fe-fee-agrmnt-name" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                    </a>
+                    <br>사용 중이며 약정종료일은
+                    <strong class="fe-fee-agrmnt-end-dt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                    입니다.
+                    
                 </p>
-                <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
-                <p class="paymentcharge-box type04">
+
+                <p class="paymentcharge-box type03" id="fe-fee-agrmnt-info-case2" style="display: none;"><!-- 190910 [OP002-3773] 가_03 요금약정 할인 유형 - 2개 이상인 경우 -->
                     이용하고 계신
-                    <a href="/myt-join/submain" class="phonnumber list-data"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                         <%= searchInfo.search[0].immediate.data[0].mainData %>
-                    </a>회선의<br>소액결제 이용요금은<span class="str">
-                    <a class="list-data" href="/myt-fare/bill/small"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
-                        <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
-                    </a>입니다.</span>
+                    </a>
+                    회선은<br>
+                    <a class="s_money" href="/myt-join/myplancombine/infodiscount">
+                        <strong class="fb fe-fee-agrmnt-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                    </a>
+                   의 요금약정 정보가 있습니다.
                 </p>
-                <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
-                <p class="paymentcharge-box type05">
-                    고객님의 T멤버십 등급은
-                    <a class="list-data" href="/membership/my"><span class="phonnumber"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>"><%=
-                    searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
-                    searchInfo.search[0].immediate.data[0].mainData === 'G'?'Gold':
-                    searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
-                    %></span></a>
-                    이며<br>올해 받으신 총 혜택은<span class="str">
-                    <a class="list-data" href="/membership/my"
-                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].BNNR_BOT_BTN_NM1 %>">
-                        <strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>
-                    </a>입니다.</span>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==10){ %>
+                <p class="paymentcharge-box type03" id="fe-eqp-installment-info-case1" style="display: none;"><!-- 190910 [OP002-3773] 추가_04 단말기 할부금 유형 - 1개의 단말기 -->
+                    이용하고 계신
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                        <%= searchInfo.search[0].immediate.data[0].mainData %>
+                    </a>
+                    회선의<br>단말기 총 잔여 할부금은<br>
+                    <span class="str">
+                        <a class="list-data" href="/myt-join/myplancombine/infodiscount">
+                            <strong class="money fe-remain-eqp-installment-amt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        </a>
+                        이며<br>
+                        <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        남았습니다.
+                    </span>
                 </p>
-                <div class="search-barcode">
-                    <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
-                    <p class="bar-code-num"></p>
-                </div>
-                <% } %>
+               
+                <p class="paymentcharge-box type03" id="fe-eqp-installment-info-case2" style="display: none;"><!-- 190910 [OP002-3773] 추가_04 단말기 할부금 유형 - 2개 이상인 경우 02-->
+                    이용하고 계신
+                    <a href="/myt-join/submain" class="phonnumber list-data" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
+                        <%= searchInfo.search[0].immediate.data[0].mainData %>
+                    </a>
+                    회선의<br>가장 최근 구매한 단말기 총 잔여 할부금은<br>
+                    <a class="list-data" href="/myt-join/myplancombine/infodiscount">
+                        <strong class="money fe-remain-eqp-installment-amt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                    </a>
+                    이며<br>
+                    <span class="str">
+                        <strong class="fe-remain-eqp-installment-month" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                        남았습니다.
+                    </span>
+                    <br>
+                    그 외 기기상환정보 : 
+                    <a class="list-data s_money" href="/myt-join/myplancombine/infodiscount">
+                        <strong class="fe-remain-eqp-installment-cnt" data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>"></strong>
+                    </a>
+                </p>
             <% } %>
+            <% } %>
+<!--즉답검색결과[E]-->
 
 
+<!--스마트검색결과[S]-->
             <!--// .cont-box -->
             <% if(searchInfo.search[1].smart.data.length>0){ %>
             <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
@@ -176,15 +276,25 @@
                 </ul>
             </div>
             <% } %>
+<!--스마트검색결과[E]-->
 
-            
+
 
 
             <!--// #contents -->
         </div>
 
+        <!-- 배너 -->
+        <!--<hr class="cont-sp type1" aria-hidden="true">-->
+        <div class="search-banner" id="fe-post-bnnr" style="display: none;">
+            <a href="https://post.naver.com/smartful" target="_blank" title="새창열림" data-xt_eid="MWMA_A11_B4-41" data-xt_csid="NO" data-xt_action="BC">
+                <img src="<%= CDN %>/img/search/img_banner_post01.png" alt="더 많은 유용한 검색결과를 찾고 계신다면, SKT 고객센터 포스트에 방문해보세요. 고객님들이 많이 찾는 정보만 모아 쉽고 정확하게 알려드리고 있습니다.">
+            </a>
+        </div>
+        <!-- // 배너 -->
 
     </div>
+<!--바로가기검색결과[S]-->
     <script type="text/x-handlebars-template" id="smart_template">
         <li class="last-line">
             <a class="list-data smart-element" href="{{data.link}}" data-require-pay="{{data.payInfo}}"
@@ -218,8 +328,10 @@
         </div>
         <hr class="cont-sp type1 shortcut" aria-hidden="true">
     </script>
+<!--바로가기검색결과[E]-->
 
 
+<!--요금제 검색결과[S]-->
     <script type="text/x-handlebars-template" id="rate_base">
         <hr class="cont-sp type1 rate" aria-hidden="true"/>
         <div class="cont-box bgnone noborder nogaps-btm rate">
@@ -245,6 +357,9 @@
         </div>
         <hr class="cont-sp type1 rate" aria-hidden="true"/>
     </script>
+<!--요금제 검색결과[E]-->
+
+<!--부가서비스 검색결과[S]-->
     <script type="text/x-handlebars-template" id="service_base">
         <hr class="cont-sp type1 service" aria-hidden="true"/>
         <div class="cont-box bgnone noborder nogaps-btm service">
@@ -270,6 +385,9 @@
         </div>
         <hr class="cont-sp type1 service" aria-hidden="true">
     </script>
+<!--부가서비스 검색결과[E]-->
+
+<!--TV인터넷 검색결과[S]-->
     <script type="text/x-handlebars-template" id="tv_internet_base">
         <hr class="cont-sp type1 tv_internet_list" aria-hidden="true"/>
         <div class="cont-box bgnone noborder nogaps-btm tv_internet">
@@ -295,6 +413,9 @@
         </div>
         <hr class="cont-sp type1 tv_internet_list" aria-hidden="true"/>
     </script>
+<!--TV인터넷 검색결과[E]-->
+
+<!--T로밍 검색결과[S]-->
     <script type="text/x-handlebars-template" id="troaming_base">
         <hr class="cont-sp type1 troaming" aria-hidden="true"/>
         <div class="cont-box bgnone noborder nogaps-btm troaming">
@@ -320,7 +441,9 @@
         </div>
         <hr class="cont-sp type1 troaming" aria-hidden="true"/>
     </script>
+<!--T로밍 검색결과[E]-->
 
+<!--T앱 검색결과[S]-->
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="tapp_base">
         <hr class="cont-sp type1 tapp" aria-hidden="true">
@@ -342,8 +465,10 @@
         </div>
         <hr class="cont-sp type1 tapp" aria-hidden="true">
     </script>
+<!--T앱 검색결과[E]-->
 
 
+<!--다이렉트샵 검색결과[S]-->
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="direct_base">
         <hr class="cont-sp type1 direct" aria-hidden="true">
@@ -373,9 +498,11 @@
         <hr class="cont-sp type1 direct" aria-hidden="true">
     </script>
     <!--// .cont-box -->
+<!--다이렉트샵 검색결과[E]-->
 
 
 
+<!--T멤버십 검색결과[S]-->
     <!-- .cont-box -->
     <script  type="text/x-handlebars-template" id="tmembership_base" >
         <hr class="cont-sp type1 tmembership" aria-hidden="true">
@@ -402,7 +529,9 @@
         <hr class="cont-sp type1 tmembership" aria-hidden="true">
     </script>
     <!--// .cont-box -->
+<!--T멤버십 검색결과[E]-->
 
+<!--진행중인이벤트 검색결과[S]-->
     <!-- .cont-box -->
     <script type="text/x-handlebars-template" id="event_base">
         <hr class="cont-sp type1 event" aria-hidden="true">
@@ -429,7 +558,9 @@
         <hr class="cont-sp type1 event" aria-hidden="true">
     </script>
     <!--// .cont-box -->
+<!--진행중인이벤트 검색결과[E]-->
 
+<!--혜택/할인 검색결과[S]-->
     <!-- 혜택 · 할인 -->
     <script type="text/x-handlebars-template" id="sale_base">
         <hr class="cont-sp type1 sale" aria-hidden="true">
@@ -455,12 +586,14 @@
 
         <hr class="cont-sp type1 sale" aria-hidden="true">
     </script>
+<!--혜택/할인 검색결과[E]-->
     <!--<div class="search-banner">-->
     <!--<a href=""><img src="http://localhost:3001/img/search/img_banner02.png" alt="내게 맞는 요금제 찾기"></a>-->
     <!--</div>-->
 
     <!--<hr class="cont-sp type1" aria-hidden="true">-->
 
+<!--지점/대리점 검색결과[S]-->
     <!-- 지점 · 대리점, A/S센터 -->
     <script id="as_outlet_base" type="text/x-handlebars-template">
         <hr class="cont-sp type1 as_outlet" aria-hidden="true">
@@ -485,7 +618,9 @@
         <hr class="cont-sp type1 as_outlet" aria-hidden="true">
     </script>
     <!-- //지점 · 대리점, A/S센터 -->
+<!--지점/대리점 검색결과[E]-->
 
+<!--자주하는질문 검색결과[S]-->
     <!-- 자주하는 질문 -->
     <script type="text/x-handlebars-template" id="question_base">
         <hr class="cont-sp type1 question" aria-hidden="true">
@@ -511,7 +646,9 @@
 
         <hr class="cont-sp type1 question" aria-hidden="true">
     </script>
+<!--자주하는질문 검색결과[E]-->
 
+<!--공지사항 검색결과[S]-->
     <!-- 공지사항 -->
     <script type="text/x-handlebars-template" id="notice_base">
         <hr class="cont-sp type1 notice" aria-hidden="true">
@@ -537,7 +674,9 @@
 
         <hr class="cont-sp type1 notice" aria-hidden="true">
     </script>
+<!--공지사항 검색결과[E]-->
 
+<!--이용자 피해예방 주의보 검색결과[S]-->
     <script type="text/x-handlebars-template" id="prevent_base">
         <!-- 이용자 피해예방 주의보 -->
         <hr class="cont-sp type1 prevent" aria-hidden="true">
@@ -563,7 +702,9 @@
 
         <hr class="cont-sp type1 prevent" aria-hidden="true">
     </script>
+<!--이용자 피해예방 주의보 검색결과[E]-->
 
+<!--이럴 땐 이렇게 하세요 검색결과[S]-->
     <script id="manner_base" type="text/x-handlebars-template">
         <!-- 이럴 땐 이렇게 하세요 -->
         <hr class="cont-sp type1 manner" aria-hidden="true">
@@ -589,7 +730,9 @@
 
         <hr class="cont-sp type1 manner" aria-hidden="true">
     </script>
+<!--이럴 땐 이렇게 하세요 검색결과[E]-->
 
+<!--서비스 이용안내 검색결과[S]-->
     <!-- 서비스 이용안내 -->
     <script type="text/x-handlebars-template" id="serviceInfo_base">
         <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
@@ -615,7 +758,9 @@
 
         <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
     </script>
+<!--서비스 이용안내 검색결과[E]-->
 
+<!--사이트 이용안내 검색결과[S]-->
     <script id="siteInfo_base" type="text/x-handlebars-template">
         <!-- 사이트 이용안내 -->
         <hr class="cont-sp type1 siteInfo" aria-hidden="true">
@@ -638,16 +783,9 @@
             </ul>
         </div>
         <!-- //사이트 이용안내 -->
-        <hr class="cont-sp type1 siteInfo" aria-hidden="true">
-        <!-- 배너 -->
-        <hr class="cont-sp type1" aria-hidden="true">
-        <div class="search-banner" id="fe-post-bnnr" style="display: none;">
-            <a href="https://post.naver.com/smartful" target="_blank" title="새창열림" data-xt_eid="MWMA_A11_B4-41" data-xt_csid="NO" data-xt_action="BC">
-                <img src="<%= CDN %>/img/search/img_banner_post01.png" alt="더 많은 유용한 검색결과를 찾고 계신다면, SKT 고객센터 포스트에 방문해보세요. 고객님들이 많이 찾는 정보만 모아 쉽고 정확하게 알려드리고 있습니다.">
-            </a>
-        </div>
-        <!-- // 배너 -->
-    </script>    
+        <hr class="cont-sp type1 siteInfo" aria-hidden="true">        
+    </script>
+<!--사이트 이용안내 검색결과[E]-->
 </div>
 
 <% include ../../components/javascript.component.html %>

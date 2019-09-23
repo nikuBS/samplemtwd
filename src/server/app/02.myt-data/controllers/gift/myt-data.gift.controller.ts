@@ -78,7 +78,7 @@ class MyTDataGift extends TwViewController {
         if ( res.code === API_CODE.CODE_00 ) {
           return res.result;
         } else {
-          return null;
+          return res; // OP002-3718 [myT] (W-1909-016-01) [개발] 선물하기 에러 상황 안내 메시지 수정 OP002-3817
         }
       });
   }
