@@ -13,7 +13,14 @@ import { Observable } from 'rxjs/Observable';
 import DateHelper from '../../../../utils/date.helper';
 import MyTHelper from '../../../../utils/myt.helper';
 import { MYT_DATA_USAGE } from '../../../../types/string.type';
-import {S_FLAT_RATE_PROD_ID, SVC_ATTR_E, SVC_CDGROUP, _5GXTICKET_PROD_ID, _5GXTICKET_TIME_SET_SKIP_ID} from '../../../../types/bff.type';
+import {
+  S_FLAT_RATE_PROD_ID,
+  SVC_ATTR_E,
+  SVC_CDGROUP,
+  _5GXTICKET_PROD_ID,
+  _5GXTICKET_TIME_SET_SKIP_ID,
+  _5GXTICKET_SKIP_ID
+} from '../../../../types/bff.type';
 
 const TEMPLATE = {
   CIRCLE: 'usage/myt-data.hotdata.html',    // 휴대폰
@@ -135,7 +142,7 @@ class MyTDataHotdata extends TwViewController {
         // 음성 통환.영상 통화로 수신됨
         const voice = respUsedData.result.voice;
         const data5gx = voice.reduce((acc, item, index) => {
-          if (_5GXTICKET_PROD_ID.includes(item.prodId)) {
+          if (_5GXTICKET_SKIP_ID.includes(item.skipId)) {
             acc.push(item);
             voice.splice(index, 1);
           }
@@ -218,5 +225,6 @@ class MyTDataHotdata extends TwViewController {
   private reqPpsCard(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0013, {});
   }
+}
 
-}export default MyTDataHotdata;
+export default MyTDataHotdata;
