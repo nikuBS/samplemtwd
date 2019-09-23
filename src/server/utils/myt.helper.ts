@@ -178,24 +178,6 @@ class MyTHelper {
       // 2. "데이터 시간권 00시간, 00시간 00분 남음 | 00분 사용"
       // 장소권인 경우, 노출 순서
       // 1. "프라임0 데이터부스트파크권 00GB, 00GB 남음 | 00GB 사용"
-      // NOTE: 현재는 1개만 오는 것으로 확정되어 있어서, 바로 사용
-      /*
-      const item5gx = data5gx[0];
-      if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item5gx.skipId)) {
-        usageData.data.push({
-          prodId: item5gx.prodId,
-          prodNm: item5gx.prodNm,
-          skipId: item5gx.skipId,
-          skipNm: item5gx.skipNm,
-          total: '무제한',
-          remanded: '무제한',
-          used: '무제한',
-          unit: '240', // 초
-          unlimit: '1'
-        });
-      }
-      usageData.data.push(item5gx);
-      */
       // {{ TODO: 지금은 "시간권 데이터(무제한)" 권의 쿠폰 등록일 표시되는데, 이경우는, 만료 시간(일+시간)의 표시가 필요함
       const item5gx = data5gx.find(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId));
       if (item5gx) {

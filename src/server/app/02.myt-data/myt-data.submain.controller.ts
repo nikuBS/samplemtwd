@@ -31,7 +31,6 @@ import {
   UNLIMIT_CODE,
   TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
   TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E, //  T가족모아 가입 가능 요금제
-  _5GX_PROD_ID, // 5GX 데이터 시간권/장소권
   _5GXTICKET_SKIP_ID, _5GXTICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -40,6 +39,7 @@ import StringHelper from '../../utils/string.helper';
 const skipIdList: Array<string> = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
+/*
 const parseTimesWithString = (times: any) => {
   // 시간과 분이 서로 의무적으로 존재해야 하는 것은 아니므로, 각각의 조건문으로 분리하여 처리한다.
   if (times.hours) {
@@ -52,6 +52,7 @@ const parseTimesWithString = (times: any) => {
   }
   return times;
 };
+*/
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -460,6 +461,7 @@ class MytDataSubmainController extends TwViewController {
       voice: [],
       sms: [],
       tmoa: [],
+      // [OP002-3871] 5GX 시간권/장소권 사용 여부
       // _5gxTicket: null,
       totalLimit: false,
       total: null
@@ -490,47 +492,6 @@ class MytDataSubmainController extends TwViewController {
     let etcRemained = 0;
     let etcTotal = 0;
     // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
-    /*
-    if (data5gx.length > 0) {
-      data._5gxTicket = {};
-      data5gx.forEach(item => {
-        const index5GXTicket = _5GXTICKET_SKIP_ID.indexOf(item.skipId);
-        // Data 시간권인 여부
-        if (!data._5gxTicket.time && _5GXTICKET_SKIP_ID.isTimeTicket(index5GXTicket)) {
-          this.convShowData(item);
-          data._5gxTicket = item;
-          data._5gxTicket.time = true;
-        }
-        // Data 시간권인 경우, 사용 여부
-        /!*
-        if (data._5gxTicket.time && !_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
-          // 공제코드(skipId: "DSGK1") "시간권 데이터"가 없으면, 남은 시간 표시 ("사용중"이 아님)
-          // 시간으로 오는 것이 SB(20190919) v0.91 까지는 고정
-          // TODO: 단위 변환등은 모두 취합하여 한 함수로 이동 static으로구현 해보자!
-          // data._5gxTicket.total = parseTimesWithString(this.convFormat(item.total, item.unit));
-          data._5gxTicket.remained = parseTimesWithString(this.convFormat(item.remained, item.unit));
-        }
-        *!/
-        if (data._5gxTicket.time && _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
-          // 실시간데이터 잔여량 표기 방법 표시
-          /!*
-          item.isUnlimit = !isFinite(item.total);
-          item.remainedRatio = 100;
-          item.showUsed = this.convFormat(item.used, item.unit);
-          if ( !item.isUnlimit ) {
-            item.showTotal = this.convFormat(item.total, item.unit);
-            item.showRemained = this.convFormat(item.remained, item.unit);
-            item.remainedRatio = Math.round(item.remained / item.total * 100);
-          }
-          *!/
-          item.showRemained = {
-            data: '사용중',
-            unit: ''
-          };
-        }
-      });
-    }
-    */
     if (data5gx.length > 0) {
       const item5gx = data5gx.find(item => _5GXTICKET_SKIP_ID.includes(item.skipId));
       this.convShowData(item5gx);
@@ -541,28 +502,8 @@ class MytDataSubmainController extends TwViewController {
         if (data5gx.findIndex(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) > -1) {
           // "사용중"
           data._5gxTicket.ticketSet = true;
-          /*
-          data._5gxTicket.showRemained = {
-            data: '사용중',
-            unit: ''
-          };
-          */
         }
-        /*
-        else {
-          // 남음
-        }
-        */
       }
-      /*
-      else {
-        // 장소권
-        data._5gxTicket.showRemained = {
-          data: '',
-          unit: ''
-        };
-      }
-      */
     }
     // if ( gnrlData.length > 0 ) {
       gnrlData.forEach(item => {

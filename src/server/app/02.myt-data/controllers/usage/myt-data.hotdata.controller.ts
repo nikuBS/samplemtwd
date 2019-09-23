@@ -17,7 +17,6 @@ import {
   S_FLAT_RATE_PROD_ID,
   SVC_ATTR_E,
   SVC_CDGROUP,
-  _5GXTICKET_PROD_ID,
   _5GXTICKET_TIME_SET_SKIP_ID,
   _5GXTICKET_SKIP_ID
 } from '../../../../types/bff.type';
