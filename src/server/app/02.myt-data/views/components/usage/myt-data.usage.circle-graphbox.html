@@ -20,8 +20,7 @@
         <% } %>
     </div>
     <ul class="date-graph-list">
-        <% for (var i = 0; i < items.length; i++) { %>
-        <div><%= JSON.stringify(items[i]); %></div>
+        <%_ for (var i = 0, length = items.length; i < length; i += 1) { _%>
         <li style="display: block;height: auto;">
             <div style="display: table;height: 5.75rem;position: relative;">
                 <div class="left">
@@ -44,11 +43,11 @@
                     <span class="txt1"><%= items[i].skipNm %></span>
                     <div class="date">
                         <span class="remain">
-                            <% if(items[i].isRemainUnlimited) { %>
-                            <strong><%= items[i].remained %></strong>
-                            <% } else { %>
-                                <% for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
-                                <strong><%= items[i].showRemaineds[j].data %><%= items[i].showRemaineds[j].unit %></strong>
+                            <%_ if (items[i].isRemainUnlimited) { _%>
+                            <strong><%- items[i].remained %></strong>
+                            <% } else {
+                                for (var j = 0; j < items[i].showRemaineds.length; j++) { %>
+                                <strong><%- items[i].showRemaineds[j].data + items[i].showRemaineds[j].unit %></strong>
                                 <% } %> 남음
                             <% } %>
                         </span>
@@ -58,24 +57,26 @@
                             오늘사용
                         </span>
                         <button class="bt-link-tx underline ml6 fe-btn-daily-used" data-prodid="<%= items[i].prodId %>">당일 사용량 조회</button>
-                        <% } else { %>
-                            <% if (!items[i].isUsedUnlimited) { %>
+                        <% } else {
+                            if (!items[i].isUsedUnlimited) { %>
                             <span class="use">
-                                <% for (var j = 0; j < items[i].showUseds.length; j++) { %>
+                                <%_ for (var j = 0; j < items[i].showUseds.length; j++) { _%>
                                 <strong><%= items[i].showUseds[j].data %><%= items[i].showUseds[j].unit %></strong>
-                                <% } %>
-                                <% if (items[i].isDailyUsed) { %>
+                                <%_
+                                }
+                                if (items[i].isDailyUsed) {
+                                _%>
                                     오늘
                                 <% } %>
                                 사용
                             </span>
-                            <% } %>
-                        <% } %>
+                            <%_ }
+                        } _%>
                     </div>
                     <% if (items[i].rgstDtm !== '') { %>
+                    <%# TODO: [OP002-3871] 5GX 시간권인 경우, 만료일시를 출력해야 한다. %>
                     <span class="txt2">쿠폰 등록일: <%= items[i].rgstDtm  %></span>
                     <% } %>
-
                 </div>
             </div>
 
