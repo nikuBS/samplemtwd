@@ -699,53 +699,6 @@ class MytDataSubmainController extends TwViewController {
     return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((_resp) => {
       const resp = JSON.parse(JSON.stringify(_resp));
       if ( resp.code === API_CODE.CODE_00 ) {
-        // XXX: [OP002-3871] 5GX 개발을 위해 가짜 데이터 추가
-        resp.result.gnrlData.push(
-            // 1. 시간권, 설정 ON: "사용중" 표시
-            {
-              'prodId': 'NA00006732', // 'NA00006731', 'NA00006733'
-              'prodNm': '스탠다드0 시간권',
-              'skipId': 'DSGK1',
-              'skipNm': '시간권 데이터',
-              'unlimit': '1',
-              'total': '무제한',
-              'used': '무제한',
-              'remained': '무제한',
-              'unit': '140',
-              'rgstDtm': '20190918141637',
-              'exprDtm': '20190919155843'
-            });
-        resp.result.voice.push(
-            // 1. 시간권, 설정 ON: "사용중" 표시
-            {
-              'prodId': 'NA00006732', // 'NA00006732', 'NA00006733'
-              'prodNm': '스탠다드0 시간권',
-              'skipId': 'DD4J2', // DD4J3, DD4J2, DD4J1
-              'skipNm': 'Data 시간권 60시간',
-              'unlimit': '0',
-              'total': '93600',
-              'used': '6180',
-              'remained': '87420',
-              'unit': '240',
-              'rgstDtm': '',
-              'exprDtm': ''
-            }
-            /*
-            // 2. 장소권 (부스트 파크 옵션): 표시 없음
-            {
-              'prodId': 'NA00006734', // 'NA00006735', 'NA00006736'
-              'prodNm': '프라임0 데이터부스트파크권 10GB',
-              'skipId': 'DD4J6', // DD4J5, DD4J4
-              'skipNm': 'BoostPark 데이터통화 10GB',
-              'unlimit': '0',
-              'total': '10000000',
-              'used': '1000000',
-              'remained': '9000000',
-              'unit': '140',
-              'rgstDtm': '',
-              'exprDtm': ''
-            }
-            */);
         // [OP002-3871] 5GX 항목은 별도 항목으로 추출
         // 음성 통환.영상 통화로 수신됨
         const voice = resp.result.voice;
