@@ -299,7 +299,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
     var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 1, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();
     Tw.Logger.info('[설치희망날짜]', tempDt, sttDt, endDt);
 
