@@ -719,6 +719,7 @@ class MytDataSubmainController extends TwViewController {
             }
             return acc;
           }, []);
+          // 자료 정리 순서: 0. "시간권 데이터(무제한)", 1. "Data 시간권..."
           resp.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         }
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
