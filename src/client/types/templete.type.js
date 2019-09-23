@@ -316,7 +316,7 @@ Tw.POPUP_TPL = {
       TYPE: '요금 충전',
       VALUE: {
         LIMIT: '데이터 한도 요금제',
-        ETC: '팅 쿠키즈 안심 음성 요금',
+        ETC: '팅 ZEM 플랜 안심 음성 요금', // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
         TING: '팅요금제 충전 선물'
       }
     }
@@ -758,7 +758,7 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   { max: '전체', 'radio-attr': 'data-type="5"', 'label-attr': ' ' },
   { max: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"', 'label-attr': ' ' },
   { max: '데이터 한도 충전', 'radio-attr': 'data-type="1"', 'label-attr': ' ' },
-  { max: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' },
+  { max: '팅/ZEM 플랜/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' }, // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
   { max: '팅 요금 선물', 'radio-attr': 'data-type="3"', 'label-attr': ' ' },
   { max: '데이터 음성 리필', 'radio-attr': 'data-type="4"', 'label-attr': ' ' }
 ];
