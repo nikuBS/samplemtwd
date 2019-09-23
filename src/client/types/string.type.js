@@ -1451,7 +1451,8 @@ Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
     {
       id: 'S1',
       type: ['인터넷'],
-      child: [['표준요금제 광랜', '표준요금제 스피드', '스마트요금제 광랜', '스마트요금제 스피드', '오피스']]
+      child: [['T_스마트광랜(다이렉트)','T_스마트스피드(다이렉트)','T_광랜+WiFi','T_Giga인터넷라이트','T_Giga인터넷','T_Giga 프리미엄','T_Giga라이트+WiFi',
+      'T_Giga+WiFi','T_Giga프리미엄+WiFi 1.7G','T_Giga프리미엄X2.5','T_Giga프리미엄X5','T_Giga프리미엄X10']]
     },
     {
       id: 'S2',

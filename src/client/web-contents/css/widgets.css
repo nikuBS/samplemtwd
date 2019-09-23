@@ -181,7 +181,7 @@
   bottom: 0;
   left: 1rem;
   right: 1rem;
-  border-bottom: 1px solid #e1e1e1; }
+  border-bottom: 1px solid #f2f2f2; /* 190831 [리디자인] - 디자인가이드에 맞춘 개선 작업 */}
 
 .accordion .acco-list .acco-box:last-child:after {
   display: none; }
@@ -201,8 +201,7 @@
   display: block;
   position: relative;
   width: 100%;
-  /*padding:rem(19px 30px 15px 20px);*/
-  padding: 1.38rem 2.5rem 1.38rem 1rem;
+  padding: 1.19rem 1.88rem 0.94rem 1.25rem; /* 190831 [리디자인] - 디자인가이드에 맞춘 개선 작업 */
   font-size: 0.94rem;
   text-align: left; }
 
@@ -233,9 +232,9 @@
   visibility: hidden; }
 
 .accordion .acco-list .acco-box.on:after,
-.accordion .acco-list .acco-box.imp-view:after {
-  left: 0;
-  right: 0; }
+.accordion .acco-list .acco-box.imp-view:after {/* 190831 [리디자인] - 디자인가이드에 맞춘 개선 작업 */
+  left: 1rem;
+  right: 1rem; }
 
 .accordion .acco-list .acco-box.on > .acco-tit button:after,
 .accordion .acco-list .acco-box.imp-view > .acco-tit button:after {
@@ -260,7 +259,7 @@
 .accordion .acco-list .acco-box.on > .acco-tit + .acco-cont,
 .accordion .acco-list .acco-box.imp-view > .acco-tit + .acco-cont {
   padding: 1.69rem 1rem;
-  background-color: #f0eeeb; }
+  background-color: #f8f8f9; /* 190831 [리디자인] - 디자인가이드에 맞춘 개선 작업 */}
 
 .accordion .acco-style.btn-hold .acco-list .acco-box .acco-tit {
   display: block;
@@ -789,7 +788,7 @@ li.checkbox.type01 {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
-  background: url(/img/form/ico-radio-style01-default.png) no-repeat 0 0;
+  background: url(/img/form/ico-radio-style01-default.png) no-repeat 0 0; 
   background-size: 1.5rem auto;
   vertical-align: middle;
   margin-right: 0.31rem;
@@ -1131,7 +1130,7 @@ li.checkbox.type01 {
   font-size: 1.13rem; }
 
 .radio-slide .select-list .radiobox.checked {
-  background-color: #f44333; }
+  background-color: #f76252; }/* 190831 [리디자인] : 컬러 변경  */
 
 .radio-slide .select-list .radiobox.checked .radio-txt {
   font-weight: 700;
@@ -1398,11 +1397,11 @@ li.checkbox.type01 {
 
 .widget-box.tube .tube-list li.checked {
   z-index: 2;
-  background: #e22f26;
-  -webkit-box-shadow: 0 0 0 1px #e22f26;
-          box-shadow: 0 0 0 1px #e22f26;
+  background: #f76252;
+  -webkit-box-shadow: 0 0 0 1px #f76252;
+          box-shadow: 0 0 0 1px #f76252;
   color: #fff;
-  font-weight: 400; }
+  font-weight: 400; }/* 190831 [리디자인] : 컬러 변경  */
 
 .widget-box.tube .tube-list li.checked .date {
   color: #98a6d6;

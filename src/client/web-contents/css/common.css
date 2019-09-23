@@ -555,8 +555,8 @@ input[type=tel] {
 .inputbox.error .error-txt {
   display: block;
   margin: 0.38rem 0 0;
-  color: #e84f01;
-  font-size: 0.75rem; }
+  color: #ef4b49;
+  font-size: 0.75rem; }/* 190831 [리디자인] : 컬러 변경  */
 
 .inputbox.bt-add {
   display: -webkit-box;
@@ -726,8 +726,8 @@ input[type=tel] {
 .inputbox .error-txt {
   display: block;
   margin: 0.38rem 0 0;
-  color: #e84f01;
-  font-size: 0.75rem; }
+  color: #ef4b49;
+  font-size: 0.75rem; }/* 190831 [리디자인] : 컬러 변경  */
 
 @media (max-width: 320px) {
   .inputbox.bt-add .input {
@@ -750,8 +750,8 @@ input[type=tel] {
 .error-txt {
   display: block;
   margin: 0.38rem 0 0;
-  color: #e84f01;
-  font-size: 0.75rem; }
+  color: #ef4b49;
+  font-size: 0.75rem; }/* 190831 [리디자인] : 컬러 변경  */
 
 .txfield-combined {
   position: relative;
@@ -6102,7 +6102,7 @@ a.ui-button:active,
   border-radius: 0.25rem; }
 
 .bar-chart-hoz .data-bar.red {
-  background-color: #f44333; }
+  background-color: #f76252; }/* 190831 [리디자인] 수정 : 컬러변경 */
 
 .bar-chart-hoz .data-bar.red-stripe {
   background-color: #f44333;
@@ -6113,7 +6113,7 @@ a.ui-button:active,
   background: repeating-linear-gradient(-45deg, #ebf5fe, #ebf5fe 4px, #f1f8fe, #f1f8fe 8px); }
 
 .bar-chart-hoz .data-bar.blue1 {
-  background-color: #3f8cff; }
+  background-color: #59bcf5; }/* 190831 [리디자인] 수정 : 컬러변경 */
 
 .bar-chart-hoz .data-bar.blue2 {
   background-color: #90caf9; }
@@ -7510,9 +7510,9 @@ a.ui-button:active,
   padding: 0.19rem 0 0.13rem 1.19rem; }
 
 .btn-more {
-  border-top: 1px solid #f2f2f2;
+  border-top: 1px solid #e5e5e5;
   font-size: 0;
-  text-align: center; }
+  text-align: center; }/* 190831 [리디자인] : 컬러 변경  */
 
 .btn-more button,
 .btn-more a {
@@ -9586,6 +9586,10 @@ button:focus span {
 .address-wrap.inputbox.tod-type1 .input{width:auto}
 .address-wrap.inputbox.tod-type1 .dongho.first{width:9.54%}
 .address-wrap.inputbox.tod-type1 .dongho{width:6.06%;padding-left:0.43rem;vertical-align:middle}
+/* 190831 [리디자인] 추가 */
+.tod-caption-white{background: #fff; font-size: 1rem;}
+.tod-caption-white .tit{font-size: 1rem;}
+.tod-bgwhite{background-color:#fff;}
 
 /* 190820 추가 [OP002-2772] 모바일앱 광고정보수신동의 팝업 */
 .tod-txcolor-normal {color:inherit !important;}

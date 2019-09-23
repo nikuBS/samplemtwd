@@ -27,6 +27,7 @@ import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/p
 import ProductMobileplanSetting0planSh from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sh.controller';
 import ProductMobileplanSetting0planSm from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sm.controller';
 import ProductMobileplanSetting5gxStandardPromotion from './controllers/mobileplan/setting/product.mobileplan.setting.5gx-standard-promotion.controller';
+import ProductMobileplanSetting5gxYt from './controllers/mobileplan/setting/product.mobileplan.setting.5gx-yt.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
 
@@ -126,6 +127,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/setting/location-only', controller: ProductMobileplanSettingLocation });
     this.controllers.push({ url: '/mobileplan/setting/no-limit', controller: ProductMobileplanSettingBandYT });
     this.controllers.push({ url: '/mobileplan/setting/5gx-standard-promotion', controller: ProductMobileplanSetting5gxStandardPromotion });
+    this.controllers.push({ url: '/mobileplan/setting/5gx-yt', controller: ProductMobileplanSetting5gxYt });
     this.controllers.push({ url: '/mobileplan/lookup/couple', controller: ProductMobileplanSettingCouple });
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting', controller: ProductMobileplanLookupTing });
