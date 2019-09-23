@@ -1,6 +1,6 @@
 // array 내 값 확인을 도와주도록 확장하는 함수
 const bindIncludes = (Array.prototype as any).includes ? (target => target) : ((target: any) => {
-  target.includes = function includes(searchElement: any, fromIndex?: number) {
+  target.includes = function includes(searchElement, fromIndex) {
     return this.indexOf(searchElement, fromIndex) > -1;
   };
   return target;

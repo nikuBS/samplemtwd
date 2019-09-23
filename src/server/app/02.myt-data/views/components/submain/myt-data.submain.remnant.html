@@ -294,33 +294,46 @@
                                 해보세요!
                             </span>
                         </li>
-                        <%_ }
+                        <%_
+                        }
                         // 5GX 시간권/장소권
                         if (data._5gxTicket) {
                         _%>
                         <li>
-                            <span class="tit">5GX 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span></span>
                             <%_
-                            // 부스트파크 옵션 이용자가 아닌 경우
-                            if (data._5gxTicket.time) {
+                            // 데이터 시간권 이용자인(부스트파크 옵션 이용자가 아닌) 경우
+                            if (data._5gxTicket.timeTicket) {
                             _%>
-                                <span class="value type2">
-                                    <%_
-                                    if (data._5gxTicket.remained) {
-                                    // 시간 설정 OFF
-                                    _%>
-                                    <strong><%- JSON.stringify(data._5gxTicket) %></strong>
-                                    <!--<strong><%- data._5gxTicket.remained.data %></strong> 남음-->
-                                    <%_
-                                    } else {
+                            <span class="tit">5GX 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="//myt-data/5g-setting?remainTime=<%- data._5gxTicket.remained %>">자세히</a></span></span>
+                                <%_
+                                if (data._5gxTicket.ticketSet) {
                                     // 시간 설정 ON
-                                    _%>
-                                    <strong>사용중</strong>
-                                    <%_ } _%>
-                                </span>
-                            <%_ } _%>
+                                _%>
+                                <span class="value type2"><strong>사용중</strong></span>
+                                <%_
+                                } else if (data._5gxTicket.showRemained.hours > 0 || data._5gxTicket.showRemained.min > 0) {
+                                    // 시간 설정 OFF 혹은 남은 시간이 없음
+                                    var remained = '';
+                                    if (data._5gxTicket.showRemained.hours > 0) {
+                                        remained = data._5gxTicket.showRemained.hours + '시간';
+                                    }
+                                    if (data._5gxTicket.showRemained.min > 0) {
+                                        remained = (remained ? remained + ' ' : '') + data._5gxTicket.showRemained.min + '분';
+                                    }
+                                _%>
+                                <span class="value type2"><strong><%- remained %></strong> 남음</span>
+                                <%_
+                                }
+                            } else {
+                            _%>
+                            <span class="tit">5GX 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="//myt-data/5g-setting">자세히</a></span></span>
+                            <%_
+                            }
+                            _%>
                         </li>
-                        <%_ } _%>
+                        <%_
+                        }
+                        _%>
                     </ul>
                 </div>
             </div>

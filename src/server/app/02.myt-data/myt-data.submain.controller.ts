@@ -532,26 +532,37 @@ class MytDataSubmainController extends TwViewController {
     }
     */
     if (data5gx.length > 0) {
-      const item5gx = data5gx.find(item => _5GXTICKET_SKIP_ID.isTimeTicket(item.skipId));
-      if (item5gx) {
-        data._5gxTicket = this.convShowData(item5gx);
-        data._5gxTicket.time = true;
+      const item5gx = data5gx.find(item => _5GXTICKET_SKIP_ID.includes(item.skipId));
+      this.convShowData(item5gx);
+      data._5gxTicket = item5gx;
+      if (_5GXTICKET_SKIP_ID.isTimeTicket(item5gx.skipId)) {
+        // 시간권
+        data._5gxTicket.timeTicket = true;
         if (data5gx.findIndex(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) > -1) {
           // "사용중"
+          data._5gxTicket.ticketSet = true;
+          /*
           data._5gxTicket.showRemained = {
             data: '사용중',
             unit: ''
           };
-        } /* else {
+          */
+        }
+        /*
+        else {
           // 남음
-        } */
-      } else {
-        data._5gxTicket = this.convShowData(data5gx.find(item => _5GXTICKET_SKIP_ID.isPlaceTicket(item.skipId)));
+        }
+        */
+      }
+      /*
+      else {
+        // 장소권
         data._5gxTicket.showRemained = {
           data: '',
           unit: ''
         };
       }
+      */
     }
     // if ( gnrlData.length > 0 ) {
       gnrlData.forEach(item => {
@@ -749,7 +760,7 @@ class MytDataSubmainController extends TwViewController {
           // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
           const gnrlData = resp.result.gnrlData;
           const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
-            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.prodId)) {
+            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
               acc.push(item);
               gnrlData.splice(index, 1);
             }
