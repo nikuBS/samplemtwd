@@ -315,7 +315,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     } else {
       Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
-      tempDt = (tempDt > endDt ? endDt : sttDt);
+      tempDt = (tempDt >= endDt ? endDt : sttDt);
       this.$select_install_input.val(tempDt);
       this.addressFormData.setPrefrDt = tempDt;
     }
