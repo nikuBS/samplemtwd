@@ -31,7 +31,7 @@ import {
   UNLIMIT_CODE,
   TPLAN_SHARE_ID, //  T가족모아 공유 가능 요금제
   TPLAN_PROD_ID, S_FLAT_RATE_PROD_ID, SVC_CDGROUP, SVC_ATTR_E, //  T가족모아 가입 가능 요금제
-  _5GXTICKET_SKIP_ID, _5GXTICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
+  PRODUCT_5GX_TICKET_SKIP_ID, PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID // 5GX 데이터 시간권/장소권
 } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -493,13 +493,13 @@ class MytDataSubmainController extends TwViewController {
     let etcTotal = 0;
     // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
     if (data5gx.length > 0) {
-      const item5gx = data5gx.find(item => _5GXTICKET_SKIP_ID.includes(item.skipId));
+      const item5gx = data5gx.find(item => (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1));
       this.convShowData(item5gx);
       data._5gxTicket = item5gx;
-      if (_5GXTICKET_SKIP_ID.isTimeTicket(item5gx.skipId)) {
+      if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item5gx.skipId) < 3) {
         // 시간권
         data._5gxTicket.timeTicket = true;
-        if (data5gx.findIndex(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) > -1) {
+        if (data5gx.findIndex(item => (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1)) > -1) {
           // "사용중"
           data._5gxTicket.ticketSet = true;
         }
@@ -644,7 +644,7 @@ class MytDataSubmainController extends TwViewController {
         // 음성 통환.영상 통화로 수신됨
         const voice = resp.result.voice;
         const data5gx = voice.reduce((acc, item, index) => {
-          if (_5GXTICKET_SKIP_ID.includes(item.skipId)) {
+          if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1) {
             acc.push(item);
             voice.splice(index, 1);
           }
@@ -654,7 +654,7 @@ class MytDataSubmainController extends TwViewController {
           // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
           const gnrlData = resp.result.gnrlData;
           const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
-            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+            if (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1) {
               acc.push(item);
               gnrlData.splice(index, 1);
             }

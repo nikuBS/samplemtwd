@@ -6,7 +6,7 @@ import {
   INFINITY_DATA_PROD_ID,
   DAY_BTN_STANDARD_SKIP_ID,
   TPLAN_SHARE_LIST,
-  TOTAL_SHARE_DATA_SKIP_ID, _5GXTICKET_TIME_SET_SKIP_ID
+  TOTAL_SHARE_DATA_SKIP_ID, PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID
 } from '../types/bff.type';
 import FormatHelper from './format.helper';
 import DateHelper from './date.helper';
@@ -179,7 +179,7 @@ class MyTHelper {
       // 장소권인 경우, 노출 순서
       // 1. "프라임0 데이터부스트파크권 00GB, 00GB 남음 | 00GB 사용"
       // {{ TODO: 지금은 "시간권 데이터(무제한)" 권의 쿠폰 등록일 표시되는데, 이경우는, 만료 시간(일+시간)의 표시가 필요함
-      const item5gx = data5gx.find(item => _5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId));
+      const item5gx = data5gx.find(item => (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1));
       if (item5gx) {
         item5gx.rgstDtm = '';
       }

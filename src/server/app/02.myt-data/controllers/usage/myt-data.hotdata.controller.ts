@@ -17,8 +17,8 @@ import {
   S_FLAT_RATE_PROD_ID,
   SVC_ATTR_E,
   SVC_CDGROUP,
-  _5GXTICKET_TIME_SET_SKIP_ID,
-  _5GXTICKET_SKIP_ID
+  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
+  PRODUCT_5GX_TICKET_SKIP_ID
 } from '../../../../types/bff.type';
 
 const TEMPLATE = {
@@ -141,7 +141,7 @@ class MyTDataHotdata extends TwViewController {
         // 음성 통환.영상 통화로 수신됨
         const voice = respUsedData.result.voice;
         const data5gx = voice.reduce((acc, item, index) => {
-          if (_5GXTICKET_SKIP_ID.includes(item.skipId)) {
+          if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > 0) {
             acc.push(item);
             voice.splice(index, 1);
           }
@@ -151,7 +151,7 @@ class MyTDataHotdata extends TwViewController {
           // 범용 데이터 공제항목에 "시간권 데이터" 사용 여부 수신됨
           const gnrlData = respUsedData.result.gnrlData;
           const _5gxTimeTicketData = gnrlData.reduce((acc, item, index) => {
-            if (_5GXTICKET_TIME_SET_SKIP_ID.includes(item.skipId)) {
+            if (PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(item.skipId) > -1) {
               acc.push(item);
               gnrlData.splice(index, 1);
             }
@@ -160,7 +160,7 @@ class MyTDataHotdata extends TwViewController {
           // 자료 정리 순서: 0. "시간권 데이터(무제한)", 1. "Data 시간권..."
           respUsedData.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
         }
-        if (SVC_CDGROUP.WIRELESS.includes(svcInfo.svcAttrCd)) {
+        if (SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) > -1) {
           let reqExtraData;
           switch ( svcInfo.svcAttrCd ) {
             case SVC_ATTR_E.MOBILE_PHONE :
@@ -182,7 +182,7 @@ class MyTDataHotdata extends TwViewController {
           }
         } else {
           // 집전화 정액제 상품을 제외하고 에러처리
-          if (svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.includes(svcInfo.prodId)) {
+          if (svcInfo.svcAttrCd === 'S3' && S_FLAT_RATE_PROD_ID.indexOf(svcInfo.prodId) > -1) {
             _render(res, svcInfo, pageInfo, respUsedData);
           } else {
             _renderError(res, svcInfo, pageInfo, {
