@@ -33,10 +33,7 @@ class CommonAutoSmsCert extends TwViewController {
     }
     if ( FormatHelper.isEmpty(encParam) ) {
 
-      const reqLog: any = req;
-      this.logger.error(this, 'CommonAutoSmsCert Referer ====>', req.header('Referer'));
-      this.logger.error(this, 'CommonAutoSmsCert Referer ====>', reqLog.session);
-      
+      const reqLog: any = req;      
       this.error.render(res, {
         code: '',
         msg: NODE_API_ERROR['01'],
