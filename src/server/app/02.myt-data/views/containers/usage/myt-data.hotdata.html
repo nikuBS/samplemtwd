@@ -204,16 +204,16 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
-            <% } else { %>
-                <% if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
+            <% } else {
+                if (balanceAddOns && balanceAddOns.troamingData === 'Y') { %>
                 <div class="cont-box calling-plan">
                     <a role="button" href="/product/roaming/my-use" class="wrap-link" style="padding: 0;">
                         <span class="stit">T로밍 데이터 잔여량</span>
                     </a>
                 </div>
                 <hr class="cont-sp type1" aria-hidden="true" />
-                <% } %>
-            <% } %>
+                <% }
+            } %>
 
             <% if (usageData && usageData.dataTopUp === 'Y') { %>
             <!-- .cont-box -->
@@ -298,7 +298,6 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <% } %>
 
-
             <% if (balanceAddOns && balanceAddOns.bandDataSharing === 'Y') { %>
             <!-- .cont-box -->
             <div class="cont-box pb0">
@@ -332,41 +331,28 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
-            <% } %>
-
-
-
-            <% if (usageData && usageData.voice && usageData.voice.length > 0) { %>
+            <% }
+            if (usageData && usageData.voice && usageData.voice.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'voice', color: 'green', typeStr: '음성통화·영상통화', items: usageData.voice }); %>
-            <% } %>
-
-            <% if (usageData && usageData.sms && usageData.sms.length > 0) { %>
+            <% }
+            if (usageData && usageData.sms && usageData.sms.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'sms', color: 'yellow', typeStr: '문자', items: usageData.sms }); %>
-            <% } %>
-
-            <% if (usageData && usageData.etc && usageData.etc.length > 0) { %>
+            <% }
+            if (usageData && usageData.etc && usageData.etc.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'etc', color: 'blue', typeStr: '기타', items: usageData.etc }); %>
             <% } %>
-
-
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <% if (isWireLess) { %>
-                    <!--접근성 수정-->
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_01">실시간 사용량 조회 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_02">실시간 사용량 조회가 불가능한 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_03">월중 요금상품 변경, 일시정지 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_04">마이벨 서비스/다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <!--접근성 수정-->
+                    <% if (isWireLess) { %>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_07">사용량 조회 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_05">이용제한/자동해지 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_06">유심 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <!-- //접근성 수정-->
-                    <% } else { %>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_01">실시간 사용량 조회 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_02">실시간 사용량 조회가 불가능한 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_03">월중 요금상품 변경, 일시정지 시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_04">마이벨 서비스/다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <% } %>
                 </ul>
             </div>
