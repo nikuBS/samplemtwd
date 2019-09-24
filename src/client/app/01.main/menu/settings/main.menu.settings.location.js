@@ -27,8 +27,51 @@ Tw.MainMenuSettingsLocation.prototype = {
   _bindEvents: function () {
     this.$term.on('change', $.proxy(this._onTermChanged, this));
     this.$container.on('click', '#fe-view', $.proxy(this._onLink, this));
+    this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
+    this.$container.on('click', '#fe-chatbot', $.proxy(this._onChatBotClick, this));
+    this.$container.on('click', '#fe-esim', $.proxy(this._onEsimClick, this));
   },
+    /**
+   * @function
+   * @desc 임시로 챗봇으로 이동
+   */
+  _onChatBotClick: function(e){
+    new Tw.MainMenuSettingsTempChatbot({
+      $element: this.$container
+      // , data : {
+      //   _svcMgmtNum: this._svcMgmtNum,
+      //   _custNum: this._custNum,
+      //   _mbrChlId: this._mbrChlId,
+      // }
+    }).goChatbot(e);
+  },
+    /**
+   * @function
+   * @desc 임시로 eSim으로 이동
+   */
+  _onEsimClick: function(){
+    // this._historyService.goLoad('/main/menu/settings/tplaces');
+  },
+   // To remove
+   _onKidding: function () {
+    if (!this._kiddingCount || this._kiddingCount === 0) {
+      this._kiddingCount = 1;
+    }
 
+    if (this._timer) {
+      clearTimeout(this._timer);
+    }
+
+    this._kiddingCount += 1;
+    if (this._kiddingCount === 10) {
+      this.$container.find('#fe-tplace-div').removeClass('none');
+      return;
+    }
+
+    this._timer = setTimeout($.proxy(function () {
+      this._kiddingCount = 0;
+    }, this), 500);
+  },
   /**
    * @function
    * @desc 이용동의 on/off 변경시 BFF로 요청
