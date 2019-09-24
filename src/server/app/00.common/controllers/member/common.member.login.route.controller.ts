@@ -30,7 +30,7 @@ class CommonMemberLoginRoute extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
     const params = this.getParams(req.query.target);
-    this.logger.error('[TID login param]', params);
+    // this.logger.error('[TID login param]', params);
 
     if ( !FormatHelper.isEmpty(query.error) ) {
       if ( query.error === '3541' || query.error === '3602' || query.error === '4503' ) {
@@ -46,6 +46,11 @@ class CommonMemberLoginRoute extends TwViewController {
         // 회원가입 클릭
         res.redirect('/common/member/signup-guide');
       } else {
+        // TID에서 오류가 return 되었을 경우 log
+        // this.loginService.printErrorLog(this, '[TID login]', req, res, params, {
+        //   code: FormatHelper.isEmpty(query) ? '' : query.error,
+        //   message: FormatHelper.isEmpty(query) ? '' : query.error_description
+        // });
         res.redirect('/common/member/login/fail?errorCode=' + query.error_description);
       }
     } else {

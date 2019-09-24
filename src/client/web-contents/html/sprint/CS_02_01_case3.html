@@ -66,7 +66,7 @@
                     <!-- .component -->
                     <div class="component">
                         <div class="component-box tabs" data-header-noborder="true"> <!-- //190625 [OP002-403]_수정 01 : 최상단에 탭이 있는 경우 data-header-noborder attr 추가 -->
-                            <div class="tab-area new01"><!-- //190520_리디자인 01 :클래스 수정 --> 
+                            <div class="tab-area new01"><!-- //190520_리디자인 01 :클래스 수정 -->
                                 <div class="tab-linker">
                                     <ul role="tablist">
                                         <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">매장명</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
@@ -83,7 +83,7 @@
                                                 <!-- .cont-box -->
                                                 <div class="cont-box nogaps-btm">
                                                     <!-- .inputbox -->
-                                                    <span class="inputbox mb20"><!-- //190520_수정 01 --> 
+                                                    <span class="inputbox mb20"><!-- //190520_수정 01 -->
                                                         <span class="input">
                                                             <input type="text" title="지점/대리점명" placeholder="지점/대리점명" value="을지로대리점"/><!-- 웹접근성 수정 -->
                                                             <button class="cancel"><span class="blind">삭제</span></button>
@@ -143,7 +143,7 @@
                 </div> -->
                 <!-- // .ti-caption-gray -->
                 <!-- //190520 [OP002-403] 삭제02 -->
-                
+
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
                     <!-- .search-point -->
@@ -160,7 +160,7 @@
                 <!-- // .cont-box -->
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
+                <div class="cont-box nogaps-hoz"> <!-- 190920 [OP002-3790] 수정_01 nogaps-hoz으로 class명 수정-->
                     <!-- .search-point -->
                     <div class="search-point">
                         <!-- .bn-search -->
@@ -188,49 +188,75 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="cont-sp type1 tod-hr-line01" aria-hidden="true">
+                        <!-- <hr class="cont-sp type1 tod-hr-line01" aria-hidden="true"> --> <!-- 190920 [OP002-3790] 삭제_01 --> 
                         <!-- //case2 : 14세 이하 -->
                         <!-- //190708 [OP002-2267] 수정_01 : case1, 2 중 하나만 나옴 -->
                         <!-- // .bn-search -->
-                        <!-- .hours-of-business -->
-                        <!-- 2019.03.07 컨텐츠 내용 수정 -->
-                        <div class="hours-of-business">
-                            <div class="tit">업무시간 안내</div>
-                            <div class="as-time-list">
-                                <dl>
-                                    <dt>일반지점</dt>
-                                    <dd>(월~금) 09:00 ~ 18:00</dd>
-                                </dl>
-                                <!-- 190703 [OP002-2107] 수정_01 -->
-                                <dl>
-                                    <dt>대리점 복합형 지점</dt>
-                                    <dd>(월~금) 10:00 ~ 19:00</dd>
-                                </dl>
-                                <!-- // 190703 [OP002-2107] 수정_01 -->
-                                <p class="stitle">특수상권</p>
-                                <dl class="subtext-dl">
-                                    <dt class="title">테크노마트</dt>
-                                    <dd class="text">(월~금) 09:00 ~ 18:00</dd>
-                                </dl>
-                                <p class="stitle">소형지점</p>
-                                <!-- 190703 [OP002-2107] 삭제_01 -->
-                                <!--
-                                <dl class="subtext-dl">
-                                    <dt class="title">경주, 거제</dt>
-                                    <dd class="text">(월~금) 09:30 ~ 18:30</dd>
-                                </dl>
-                                -->
-                                <!-- // 190703 [OP002-2107] 삭제_01 -->
-                                <dl class="subtext-dl">
-                                    <dt class="title">부천, 구미, 충주, 서산, 순천, 군산</dt>
-                                    <dd class="text">(월~금) 09:00 ~ 18:00</dd>
-                                </dl>
+                        <!-- 190920 [OP002-3790] 수정_02 -->                    
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style office_hours">
+                                        <ul class="acco-list pd0"><!-- .on: 열기 -->
+                                            <li class="acco-box on">                                                   
+                                                <div class="acco-tit">
+                                                    <button role="button" aria-pressed="false">
+                                                        <span class="ico-wrap"><img src="/img/customer/ico_office_hours.png" alt=""></span>
+                                                        <div class="txt">
+                                                            <p>업무시간 안내</p>
+                                                            <span>대리점 업무시간은 매장마다 다릅니다. <br>토, 일요일 및 공휴일 휴무</span>
+                                                        </div>
+                                                    </button>
+                                                </div>
+                                                <div class="acco-cont hours-of-business">
+                                                    <div class="inner">                                                        
+                                                        <div class="time-list">
+                                                            <dl>
+                                                                <dt>일반지점</dt>
+                                                                <dd>(월~금) 09:00 ~ 18:00</dd>
+                                                            </dl>
+                                                            <dl>
+                                                                <dt>대리점 복합형 지점</dt>
+                                                                <dd>(월~금) 10:00 ~ 19:00</dd>
+                                                            </dl>
+                                                            <p class="stitle">특수상권</p>
+                                                            <dl class="subtext-dl">
+                                                                <dt class="title">테크노마트</dt>
+                                                                <dd class="text">(월~금) 09:00 ~ 18:00</dd>
+                                                            </dl>
+                                                            <p class="stitle">소형지점</p>
+                                                            <dl class="subtext-dl">
+                                                                <dt class="title">부천, 구미, 충주, 서산, 순천, 군산</dt>
+                                                                <dd class="text">(월~금) 09:00 ~ 18:00</dd>
+                                                            </dl>
+                                                        </div>
+                                                      
+                                                        <div class="link-long">
+                                                            <a href="https://tbooking.svctop.co.kr" class="disabled" aria-haspopup="true" target="_blank" title="지점 방문 예약 바로가기">
+                                                                <span class="ico-wrap">
+                                                                    <img src="/img/ico/ico_reserve.png" alt="" style=" width: 2.75rem;height: 2.75rem;">
+                                                                </span>
+                                                                <div class="txt">
+                                                                    <p>지점 방문 예약</p>
+                                                                    <span>지점 방문 예약 후 방문하시면<br>대기시간 없이 바로 상담 받으실 수 있습니다.</span>
+                                                                </div>
+                                                                
+                                                                <span class="tx-sub">
+                                                                    <span class="ico"><span class="blind">더보기</span></span>
+                                                                </span>
+                                                            </a>
+                                                        </div>  
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="dot">대리점 업무시간은 매장마다 다릅니다.</p>
-                            <p class="dot">토, 일요일 및 공휴일 휴무</p>
                         </div>
-                        <!-- //2019.03.07 컨텐츠 내용 수정 -->
-                        <!-- // .hours-of-business -->
+                        <!--// .widget --> 
+                        <!-- //190920 [OP002-3790] 수정_02 -->  
                     </div>
                     <!-- // .search-point -->
                 </div>
