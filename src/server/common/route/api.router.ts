@@ -1158,6 +1158,8 @@ class ApiRouter {
       this.logger.info(this, '[TID login]', resp);
       res.json(resp);
     }, (error) => {
+      const loginService = new LoginService();
+      loginService.printLoginErrorLog(this, '[TID login]', req, res, params, error);
       res.json(error);
     });
   }
@@ -1192,7 +1194,7 @@ class ApiRouter {
   }
 
   /**
-   * 신규 세션 생
+   * 신규 세션 생성
    * @param req
    * @param res
    * @param next
@@ -1235,6 +1237,9 @@ class ApiRouter {
     apiService.requestEasyLoginAos(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
+      const loginService = new LoginService();
+      // log
+      loginService.printLoginErrorLog(this, '[AOS Easy login]', req, res, params, error);
       res.json(error);
     });
   }
@@ -1252,6 +1257,9 @@ class ApiRouter {
     apiService.requestEasyLoginIos(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
+      const loginService = new LoginService();
+      // log
+      loginService.printLoginErrorLog(this, '[IOS Easy login]', req, res, params, error);
       res.json(error);
     });
   }
@@ -1330,7 +1338,7 @@ class ApiRouter {
       res.json(error);
     });
   }
-
+  
 }
 
 export default ApiRouter;

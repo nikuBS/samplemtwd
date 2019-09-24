@@ -635,6 +635,49 @@ class LoginService {
     }
     return '';
   }
+
+  /***
+   * 로그인 시 오류 발생시 오류 출력
+   */
+  public printLoginErrorLog(context, prefix: string, req: any, res: any, params?: any, error?: any) {
+
+    try {
+      const svcInfo = FormatHelper.isEmpty(req.session) ? {} : (req.session.svcInfo || {});
+      let referer = '';
+
+      if ( !FormatHelper.isEmpty(req.baseUrl)
+          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 
+              || req.baseUrl.indexOf('store') !== -1 || req.baseUrl.indexOf('api') !== -1) ) {  
+        referer = this.getReferer(req);
+      }
+
+      const device = BrowserHelper.isApp(req) ? (BrowserHelper.isAndroid(req) ? 'A' : (BrowserHelper.isIos(req) ? 'I' : 'N')) : 'W';
+      const baseUrl = FormatHelper.isEmpty(referer) ? this.getFullPath(req) : req.baseUrl;
+      error = FormatHelper.isEmpty(error) ? {} : error;
+
+      /**
+       * 식별자
+       * 오류코드
+       * API를 호출한 URL(서버에서의 호출은 제외)
+       * 호출한 URL
+       * referer(서버에서의 호출은 공백)
+       * parameters
+       * 접속 방식
+       * error
+       */
+      this.logger.error(context, 
+        prefix,
+        '\n code :', error.code || '', 
+        '\n base url :', baseUrl, 
+        '\n referer :', referer, 
+        '\n params :', params, 
+        '\n device: ', device,
+        '\n error: ', error
+      );
+    } catch (err) {
+      this.logger.error(context, 'Fail to write login fail log');
+    }
+  }
 }
 
 export default LoginService;

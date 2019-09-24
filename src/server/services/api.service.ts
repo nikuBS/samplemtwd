@@ -13,6 +13,7 @@ import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 import { SvcInfoModel } from '../models/svc-info.model';
 import DateHelper from '../utils/date.helper';
 import CommonHelper from '../utils/common.helper';
+import BrowserHelper from '../utils/browser.helper';
 
 /**
  * @desc API 요청을 위한 service
@@ -58,8 +59,8 @@ class ApiService {
 
     return Observable.create((observer) => {
       axios(options)
-        .then(this.apiCallback.bind(this, observer, command, req, res, startTime))
-        .catch(this.handleError.bind(this, observer, command, req, res));
+        .then(this.apiCallback.bind(this, observer, command, req, res, options, startTime))
+        .catch(this.handleError.bind(this, observer, command, req, res, options));
     });
   }
 
@@ -186,7 +187,7 @@ class ApiService {
    * @param startTime
    * @param resp
    */
-  private apiCallback(observer, command, req, res, startTime, resp) {
+  private apiCallback(observer, command, req, res, options, startTime, resp) {
     const contentType = resp.headers['content-type'];
 
     let respData = resp.data;
@@ -203,7 +204,8 @@ class ApiService {
             }
             if ( respData.code === API_CODE.BFF_0003 ) {
               const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
-              this.logger.error(this, '[API RESP] Need Login', respData.code, respData.msg, this.loginService.getFullPath(req));
+              // this.logger.error(this, '[API RESP] Need Login', respData.code, respData.msg, this.loginService.getFullPath(req));
+              this.printErrorLog('[API RESP] Need Login', req, command, options, resp);
               if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                 this.logger.info(this, '[Session expired]');
                 res.clearCookie(COOKIE_KEY.TWM_LOGIN);
@@ -215,7 +217,8 @@ class ApiService {
               return;
 
             } else if ( respData.code === API_CODE.BFF_0006 || respData.code === API_CODE.BFF_0011 ) {
-              this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+              // this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+              this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
               const path = this.loginService.getFullPath(req);
               if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
                 this.checkServiceBlock(resp.result);
@@ -244,11 +247,12 @@ class ApiService {
    * @param res
    * @param err
    */
-  private handleError(observer, command, req, res, err) {
+  private handleError(observer, command, req, res, options, err) {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       let error = err.response.data;
       const headers = err.response.headers;
-      this.logger.error(this, '[API ERROR]', command.path, error, req.baseUrl);
+      // this.logger.error(this, '[API ERROR]', command.path, error, req.baseUrl);
+      this.printErrorLog('[API ERROR]', req, command, options, error);
 
       if ( command.server === API_SERVER.BFF ) {
         const contentType = headers['content-type'];
@@ -264,7 +268,8 @@ class ApiService {
 
               if ( !FormatHelper.isEmpty(error.code) && error.code === API_CODE.BFF_0003 ) {
                 const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
-                this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
+                // this.logger.error(this, '[API RESP] Need Login', error.code, error.msg, this.loginService.getFullPath(req));
+                this.printErrorLog('[API RESP] Need Login', req, command, options, resp);
                 if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
                   this.logger.info(this, '[Session expired]');
                   res.clearCookie(COOKIE_KEY.TWM_LOGIN);
@@ -277,6 +282,7 @@ class ApiService {
 
               } else if ( !FormatHelper.isEmpty(error.code) && (error.code === API_CODE.BFF_0006 || error.code === API_CODE.BFF_0011) ) {
                 this.logger.error(this, '[API RESP] BFF Block', resp.code, resp.msg);
+                this.printErrorLog('[API RESP] BFF Block', req, command, options, resp);
                 const path = this.loginService.getFullPath(req);
                 if ( !(/\/main\/home/.test(path) || /\/main\/store/.test(path) || /\/submain/.test(path)) ) {
                   this.checkServiceBlock(resp.result);
@@ -293,11 +299,13 @@ class ApiService {
           observer.complete();
         });
       } else {
+        this.printErrorLog('[API ERROR]', req, command, options, err);
         observer.next(error);
         observer.complete();
       }
     } else {
-      this.logger.error(this, '[API ERROR] Exception', err);
+      this.printErrorLog('[API ERROR] Exception', req, command, options, err);
+      // this.logger.error(this, '[API ERROR] Exception', err);
       observer.next({ code: API_CODE.CODE_500 });
       observer.complete();
     }
@@ -379,6 +387,7 @@ class ApiService {
             // this.loginService.setNoticeType(this.req, '05')
           ]);
         } else {
+          // console.log(resp);
           throw resp;
         }
       })
@@ -805,6 +814,56 @@ class ApiService {
                 + '&target=' + resp.result.target;
 
     res.redirect('/common/member/logout/expire?' + params);
+  }
+
+  /***
+   * API 오류 발생시 오류 출력
+   */
+  private printErrorLog(prefix: string, req: any, command: any, options: any, error?: any) {
+
+    try {
+      const svcInfo = FormatHelper.isEmpty(req.session) ? {} : (req.session.svcInfo || {});
+      let referer = '';
+
+      if ( !FormatHelper.isEmpty(req.baseUrl)
+          && (req.baseUrl.indexOf('bypass') !== -1 || req.baseUrl.indexOf('native') !== -1 || req.baseUrl.indexOf('store') !== -1) ) {  
+        referer = this.loginService.getReferer(req);
+      }
+
+      const baseUrl = FormatHelper.isEmpty(referer) ? this.loginService.getFullPath(req) : req.baseUrl;
+      const device = BrowserHelper.isApp(req) ? (BrowserHelper.isAndroid(req) ? 'A' : (BrowserHelper.isIos(req) ? 'I' : 'N')) : 'W';
+      const userInfo = {device: device};
+      Object.assign(userInfo, FormatHelper.isEmpty(svcInfo) ? {} : {
+        userId: svcInfo.userId || '',
+        loginType: svcInfo.loginType || '',
+        svcMgmtNum: svcInfo.svcMgmtNum || '',
+        mbrChlId: svcInfo.mbrChlId || '',
+      });
+      error = FormatHelper.isEmpty(error) ? {} : error;
+
+      /**
+       * 식별자
+       * 오류코드
+       * API를 호출한 URL
+       * referer(서버에서의 호출은 공백)
+       * API Path
+       * API options
+       * 사용자 정보(사용자ID, 로그인 type, 서비스관리번호, 멤버채널ID, 접속방식)
+       * error
+       */
+      this.logger.error(this, 
+        prefix,
+        '\n code :', error.code || '',
+        '\n base url :', baseUrl,
+        '\n referer :', referer, 
+        '\n command.path :', FormatHelper.isEmpty(command) ? {} : (command.path || ''),
+        '\n options :', options,
+        '\n userInfo: ', userInfo,
+        '\n error: ', error
+      );
+    } catch (err) {
+      this.logger.error(this, 'Fail to write API error log');
+    }
   }
 }
 
