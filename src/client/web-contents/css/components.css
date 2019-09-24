@@ -35632,3 +35632,24 @@ body.apphome .section-box {
 .tod-faq-link-txt:after{content:''; display:inline-block; position:absolute; right:0; top:3px; width: 4.5rem; height: 2.94rem; background:url(/img/ico/ico-mail-faq-145.png) no-repeat 0 0; background-size: 100%;}
 .tod-faq-link-txt em{color: #f76252;}
 .link-long.tod-faq-link a .tx-sub, .link-long.tod-faq-link button .tx-sub{top: 1.65rem;}
+
+/* 190920 [OP002-3790] 지점 검색 메뉴 내 지점 방문 예약하기 링크 추가 */
+.office_hours {position:relative;}
+.office_hours button{padding:1.25rem 1rem 1.25rem 5.25rem !important;}
+.office_hours button:after{right:-0.25rem !important}
+.office_hours .ico-wrap{position:absolute; display:block;left:0; top: 50%; -webkit-transform: translate(0, -50%);transform: translate(0, -50%);}
+.office_hours .ico-wrap img{width:4.25rem;height:3.31rem}
+.office_hours .txt {line-height:1rem;}
+.office_hours .txt p{font-size:0.938rem; font-weight:500; padding-bottom:0.75rem;}
+.office_hours .txt span{font-size:0.813rem;}
+.office_hours .acco-cont {padding:0!important;background:#fff!important; overflow: hidden!important;}
+.office_hours .acco-cont.hours-of-business .inner .time-list{padding:1.875rem 0;border-top:1px solid #f2f2f2; border-bottom: 1px solid #f2f2f2; color:#000;}
+.office_hours .acco-cont.hours-of-business .inner .time-list dl{padding: 0.75rem 0 0;display: table; width: 100%;}
+.office_hours .acco-cont.hours-of-business .inner .time-list dl:first-child{padding-top:0;}
+.office_hours .acco-cont.hours-of-business .inner .time-list dt{font-size: 0.88rem; display: table-cell;text-align: left; font-weight:500;}
+.office_hours .acco-cont.hours-of-business .inner .time-list dd{font-size: 0.81rem;  text-align: right; font-weight: 500;}
+.office_hours .acco-cont.hours-of-business .inner .time-list .subtext-dl .title {color: #858585; font-size: 0.81rem; font-weight:400;}
+.office_hours .acco-cont.hours-of-business .inner .time-list .stitle {padding: 0.75rem 0 0; font-size: 0.88rem;font-weight: 500;}
+.office_hours .acco-cont.hours-of-business .inner .link-long {padding:1.875rem 1rem 1.875rem 3.438rem}
+.office_hours .acco-cont.hours-of-business .inner .link-long a{padding:0; color:#000;}
+.office_hours .acco-cont.hours-of-business .inner .link-long a .tx-sub{top: 50%; -webkit-transform: translate(0, -50%);transform: translate(0, -50%);}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <!-- Grand open 접근성 수정 -->
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+        <!-- // Grand open 접근성 수정 -->
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">상세내역</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+				<!-- payment-detail-wrap -->
+				<div class="payment-detail-wrap">
+					<div class="payment-detail-box">
+						<div class="detail-inner">
+							<div class="detail-list">
+								<ul>
+									<li>
+									   <div>
+											<span class="title">서비스업체</span> <!-- //190604_수정01 -->
+											<span class="tx-cont">멜론</span>
+									   </div>
+									   <div>
+											<ul class="inner-list">
+												<li>
+													<span class="title">이용서비스</span><!-- //190604_수정02 -->
+													<span class="tx-cont">카카오뮤직</span>
+												</li>
+												<li>
+													<span class="title">구분</span>
+													<span class="tx-cont">구글플레이콘텐츠*</span>
+												</li>
+											</ul>
+									   </div>
+									</li>
+									<li>
+										<span class="title">결제금액</span><!-- //190604_수정03 -->
+										<span class="tx-cont">27,000 <span class="tx-regular">원</span></span>
+                                    </li>
+                                    <!-- 190604_수정04 -->
+                                    <li>
+                                        <span class="title">이용내역문의처</span>
+                                        <span class="tx-cont">1234-1234</span>
+                                    </li>
+                                    <!-- //190604_수정04 -->
+									<li>
+										<span class="title">일시</span>
+										<span class="tx-cont">2018.5.23. 12:40:10</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+                <!--// payment-detail-wrap -->
+                <p class="payment-detail-btm-info">
+                        콘텐츠이용료 주요 고객센터 안내
+                </p>
+                <ul class="custom-guide">
+                    <li>
+                        <dl>
+                            <dt>구글플레이스토어</dt>
+                            <dd>080-234-0051(무료)</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>원스토어</dt>
+                            <dd>1600-6573(유료)</dd> <!-- 190517 수정 -->
+                        </dl>
+                    </li>
+                    <!-- 190919 [OP002-4011] 삭제_01 -->
+                    <!--
+                    <li>
+                        <dl>
+                            <dt>삼성스토어</dt>
+                            <dd>1588-3366(유료)</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>옥수수</dt>
+                            <dd>080-8282-106(무료)</dd>
+                        </dl>
+                    </li>
+                    -->
+                    <!-- // 190919 [OP002-4011] 삭제_01 -->
+                    <li>
+                        <dl>
+                            <dt>멜론</dt>
+                            <dd>1566-7727(유료)</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>유튜브 프리미엄</dt><!-- //190604_수정05 -->
+                            <dd>유튜브(YouTube)하단 도움말→의견 보내기
+                                <a href="#">고객센터 바로가기</a>
+                            </dd>
+                        </dl>
+                    </li>
+                    <!-- 190604_추가01 -->
+                    <li>
+                        <dl>
+                            <dt>Apple</dt>
+                            <dd>http://iTunes.com/bill</dd>
+                        </dl>
+                    </li>
+                    <!-- //190604_추가01 -->
+                </ul>
+                <!-- 190604_삭제01 -->
+				<!-- <p class="payment-detail-btm-info">
+                    고객정보보호를 위해 서비스 명의 일부가 *로 표시되며, *로 가려진 정보는 사용처에서 확인하실 수 있습니다.
+				</p> -->
+                <!-- //190604_삭제01 -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
