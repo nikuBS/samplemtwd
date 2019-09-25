@@ -76,7 +76,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     this.$container.on('change', '[data-target="select_stop_input"]', $.proxy(this.select_stop_input_changeEvt, this));
 
-    this.$container.on('change', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
+    this.$container.on('change keyup input', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
