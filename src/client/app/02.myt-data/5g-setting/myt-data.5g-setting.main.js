@@ -114,20 +114,27 @@ Tw.MyTData5gSettingMain.prototype = {
     // 응답 받은 후 로직..
     this.remainTime = resp.result.dataRemQty * 60;
     this.loadTime = new Date();
-    var availableTime = Tw.FormatHelper.convVoiceFormat(resp.result.dataRemQty * 60);
-    var $usableTime = this.$usedTime; // 사용 가능시간 영역
-    var timeText = '';
+    var availableTime = Tw.FormatHelper.convVoiceFormat(this.remainTime);
+    var isOverTime = +resp.result.dataRemQty > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
+    var maxHour = isOverTime ? 12 : availableTime.hours, maxMin = isOverTime ? 0 : availableTime.min;
+
+    var $usableTime = this.$usedTime; // 다이얼 밑에 "사용가능시간" 영역
+    // 사용가능 최대 시간 입력 부분 (사용가능 시간이 12시간 초과이면 12시간 까지만 입력)
+    var timeText = maxHour > 0 ? maxHour + Tw.VOICE_UNIT.HOURS + ' ' : '';
+    timeText += maxMin > 0 ? maxMin + Tw.VOICE_UNIT.MIN : '';
+    timeText = timeText.trim();
+
+    // 다이얼 사용 가능시간 세팅
+    this.$timeConf.data('maxHour', maxHour).data('maxMinute',maxMin);
+    this.$timePicked.hide().eq(1).show().siblings().eq(1).find('span').prepend(timeText); // timeText="HH시간 MM분까지 선택가능"
+
+    // 다이얼 밑에 "사용가능시간" 영역
     if (availableTime.hours > 0) {
-      timeText += availableTime.hours + Tw.VOICE_UNIT.HOURS;
       $usableTime.find('b:first').text(availableTime.hours).parent().removeClass('none');
     }
     if (availableTime.min > 0) {
-      timeText += (availableTime.hours > 0 ? ' ':'') + availableTime.min + Tw.VOICE_UNIT.MIN;
       $usableTime.find('b:eq(1)').text(availableTime.min).parent().removeClass('none');
     }
-    // 다이얼 사용 가능시간 세팅
-    this.$timeConf.data('maxHour', availableTime.hours).data('maxMinute',availableTime.min);
-    this.$timePicked.hide().eq(2).show().find('span').prepend(timeText); // timeText="HH시간 MM분까지 선택가능"
 
     // 하단 사용가능시간 영역 텍스트 ("조회 중입니다." 비노출 & 사용 가능시간 노출)
     $usableTime.eq(0).hide().next().removeClass('none');
@@ -553,7 +560,6 @@ Tw.MyTData5gSettingMain.prototype = {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
-    this._historyService.replaceURL('/myt-data/5g-setting?remainTime='+this.remainTime);
     this._intervalReload();
   },
 
