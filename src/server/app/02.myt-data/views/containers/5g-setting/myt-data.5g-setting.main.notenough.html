@@ -1,0 +1,56 @@
+<%#
+* @file myt-data.5g-setting.main.notenough.html
+* @author anklebreaker
+* @since 2019-04-15
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: 'T 5G 시간설정', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <% include ../../components/5g-setting/myt-data.5g-setting.pm.html %>
+            <% include ../../components/5g-setting/myt-data.5g-setting.banner.html %>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="og-my5G-wrap">
+                    <p class="og-my5G-txt">T 5G 시간설정을 이용하실<br><b class="tx-bold">데이터가 부족하시네요!</b></p>
+                    <div class="og-my5G-data">
+                        잔여 데이터
+                        <strong class="og-data-count">
+                            <span class="da-ta"><%= dataInfo.dataRemQty %></span><span class="data-mb">MB</span>
+                        </strong>
+                    </div>
+                    <div class="og-my5G-btm">
+                        <p>리필쿠폰을 사용하시거나 선불쿠폰을 구매해보세요.</p>
+                        <p class="txt-s mt14">T 5G 시간설정은 기본제공 데이터로만 가능합니다.<br>(다음 달 이용 가능)</p>
+                    </div>
+                </div>
+                <% include ../../components/5g-setting/myt-data.5g-setting.reservation.html %>
+            </div>
+            <!-- //.cont-box -->
+            <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.MyTData5gSetting($('.wrap'), '<%- escape(JSON.stringify(reservationInfo)) %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

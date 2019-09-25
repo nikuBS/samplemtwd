@@ -1,0 +1,97 @@
+<%#
+* @file myt-data.5g-setting.history.html
+* @author 양정규
+* @since 2019-09-19
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 이용내역', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <!-- 190909 [OP002-3626] 수정_02 -->
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <div class="cont-box nogaps">
+                <div class="ti-caption-blue">
+                    <div class="num">
+                        총 <em><%= historyInfo.totalCount %></em>건
+                    </div>
+                    <button class="bt-select" title="월별 선택" aria-haspopup="true"><%= historyInfo.searchDateList.find((item)=>item.value===historyInfo.brwsDt).text %></button>
+                </div>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box og-my-wrap">
+                <% if(historyInfo.totalCount === 0) { %>
+                <!-- 조회기간에 내역이 없을 경우 -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="result-none bt0">데이터 시간권 설정 내역이 없습니다.</div><!-- 190917 명칭변경 -->
+                </div>
+                <!-- //조회기간에 내역이 없을 경우 -->
+                <% } else { %>
+                <!-- 조회 내역 있을 경우 -->
+                <div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
+                    <p class="type-only">총 사용 시간
+                        <span class="og-time">
+                            <% if(historyInfo.totUseTime.hours > 0) { %><b><%= historyInfo.totUseTime.hours %></b>시간<% } %>
+                            <% if(historyInfo.totUseTime.min > 0 || historyInfo.totUseTime.hours === 0) { %><b><%= historyInfo.totUseTime.min %></b>분<% } %>
+                        </span>
+                    </p>
+                </div>
+                <div class="og-timeline type2 fe-time-line <%= historyInfo.totalCount > 20 ? 'more':'';%>"><!-- 190920 더보기 버튼 노출시 class="more" 추가, 더보기 버튼 비노출시 class="more" 삭제 -->
+                    <%
+                        let cnt = 1;
+                        historyInfo.conversionHist.forEach((item, idx) => {
+                    %>
+                    <div class="og-timeline-div fe-hist-list <%= cnt > 20 ? 'none':'';%>">
+                        <div class="box">
+                            <strong class="og-timeline-date"><span class="og-date"><%= item.useDate%></span></strong>
+                            <div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+                                <ul class="acco-box">
+                                    <% item.histList.forEach(function(histItem) { %>
+                                    <li class="acco-list fe-sublist <%= cnt > 20 ? 'none':'';%>"><!-- on , off -->
+                                        <div class="acco-title">
+                                            <span class="og-time"><%=histItem.usedTime%></span>
+                                            <span class="og-data">사용 시간 <span class="block tod-txcolor4"><%=histItem.startTime%> ~ <%=histItem.endTime%></span></span>
+                                        </div>
+                                    </li>
+                                    <%
+                                        cnt++;
+                                        });
+                                    %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                <div class="btn-more fe-more <%= historyInfo.totalCount <= 20 ? 'none':'';%>">
+                    <button type="button">더보기</button>
+                </div>
+                <!-- //조회 내역 있을 경우 -->
+                <% } %>
+            </div>
+            <!-- //.cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.MyTData5gSettingHistory($('.wrap'), '<%- escape(JSON.stringify(historyInfo)) %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

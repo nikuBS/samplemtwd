@@ -1,0 +1,48 @@
+<%#
+* @file myt-data.5g-setting.common.html
+* @author anklebreaker
+* @since 2019-04-15
+%>
+
+<hr class="cont-sp type1" aria-hidden="true" />
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <ul class="full-link-list type02">
+        <li>
+            <button>
+                <span class="inner">
+                    <span class="tit fe-btn_history">이용내역</span>
+                </span>
+            </button>
+        </li>
+    </ul>
+</div>
+<!-- //.cont-box -->
+
+<hr class="cont-sp type1" aria-hidden="true" />
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <ul class="full-link-list type02">
+        <li>
+            <button>
+                <span class="inner">
+                    <span class="tit">나의 요금제</span>
+                    <span class="text fe-btn_mytdata"><%= svcInfo.prodNm %></span>
+                </span>
+            </button>
+        </li>
+    </ul>
+</div>
+<!-- //.cont-box -->
+
+<!-- .cont-box -->
+<div class="cont-box noborder bgnone">
+    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+    <ul class="pg-chk-list02">
+        <li>유의사항 <button type="button" class="tip-view" id="TC000046" page-id="<%= pageInfo.menuId %>" aria-haspopup="true"></button></li>
+        <li>무제한 5G 예약 이용 안내 <button type="button" class="tip-view" id="TC000047" page-id="<%= pageInfo.menuId %>" aria-haspopup="true"></button></li>
+        <!--<li><button type="button" class="btn-tip" id="TC000046" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">5G 무제한 이용시 유의사항<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button type="button" class="btn-tip" id="TC000047" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">5G 무제한 이용한도 설정안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>-->
+    </ul>
+</div>
+<!-- //.cont-box -->
