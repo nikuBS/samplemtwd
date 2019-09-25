@@ -141,7 +141,7 @@ class MyTDataHotdata extends TwViewController {
         // 음성 통환.영상 통화로 수신됨
         const voice = respUsedData.result.voice;
         const data5gx = voice.reduce((acc, item, index) => {
-          if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > 0) {
+          if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1) {
             acc.push(item);
             voice.splice(index, 1);
           }
