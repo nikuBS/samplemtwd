@@ -49,7 +49,9 @@ Tw.NTV_CMD = {
   READY_SMS: 'readySMS',
   GET_ADID: 'getAdId',
   TPLACE_TERMS: 'tplaceTerms',
-  WIDGET_SETTING: 'widgetSettings'
+  WIDGET_SETTING: 'widgetSettings',
+  ALARM_5G_CONVERSION: 'alarm5gConversion',
+  SEND_CALENDAR: 'sendCalendar'
 };
 
 Tw.NTV_CODE = {

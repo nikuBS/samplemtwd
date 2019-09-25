@@ -5,7 +5,8 @@ Tw.COMMON_STRING = {
   UNLIMIT: '무제한',
   TERM: '이용약관',
   STANDARD: '기본제공',
-  OPEN_NEW_TAB: '새창열림'
+  OPEN_NEW_TAB: '새창열림',
+  RESET: '초기화'
 };
 
 Tw.DATA_UNIT = {
@@ -2040,7 +2041,34 @@ Tw.ALERT_MSG_5G = {
   CARDBOARD_END: {
     TITLE: 'VR기기 재고 소진으로<br> 5GX VR 팩 카드보드 부가서비스 가입이 종료되었습니다.',
     MSG: ''
-  }
+  },
+  ALERT_A1: '시스템 사정으로 서비스를 일시적으로 이용하실 수 없습니다.잠시 후 다시 확인해 주십시오',
+  ALERT_A2: '데이터 시간권 사용 1분 내 종료가 불가능합니다.',
+  ALERT_A3: '데이터 시간권 잔여 시간 1분 이내로 종료가 불가능합니다.',
+  CONFIRM_RESERVATION: {
+    TITLE: '예약을 진행하시겠습니까?',
+    MSG: '예약과 동시에 데이터가 차감됩니다.<br>(차감데이터 : ${data})<br><br>설정한 시간보다 50% 적게 이용 시 일부 데이터는 반환됩니다.',
+    BUTTON: '예약'
+  },
+  CONFIRM_RESERVATION_DELETE: {
+    TITLE: '예약을 삭제하시겠습니까?',
+    MSG: '반환 데이터 : ${data} <br>(즉시 반환되며, 1분 뒤 재예약 가능합니다.)',
+    BUTTON: '삭제'
+  },
+  CONFIRM_START: {
+    TITLE: '지금부터 데이터 시간권을 사용하시겠습니까?',
+    MSG: '데이터를 마음껏 이용하세요!<br>설정한 시간 이전에 종료 시, 남은 시간은 반환됩니다.<br><br>*정기점검 시간에는 시간설정 서비스 이용이 제한됩니다.'
+  },
+  CONFIRM_TIME_OVER: {
+    TITLE : '',
+    MSG: '조회 요청 시간을 초과하였습니다.<br>재조회 이후 계속 진행됩니다.'
+  },
+  CONFIRM_TERMINATE: {
+    TITLE: '데이터 시간권 사용을 종료하시겠습니까?',
+    MSG: '설정한 시간 이전에 종료 시, 남은 시간은 반환됩니다.',
+    BUTTON: '종료'
+  },
+  TOAST_PM: '정기점검 시간에는 데이터 시간권 이용이 제한됩니다. 잠시 후 다시 이용해주세요.'
 };
 
 Tw.WEB_ACCESSBILITY = {

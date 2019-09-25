@@ -1,0 +1,55 @@
+<%#
+* @file myt-data.5g-setting.main.html
+* @author 양정규 (skt.P130715@partner.sk.com)
+* @since 2019.09.10
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: '데이터 시간권 설정', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <!-- 190909 [OP002-3626] 수정_02 -->
+        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <div class="container">
+            <% include ../../components/5g-setting/myt-data.5g-setting.pm.html %>
+            <%
+                const pages = {
+                    'IN_USE':       '../../components/5g-setting/myt-data.5g-setting.inuse.html',     // 이용중
+                    'NO_USE':       '../../components/5g-setting/myt-data.5g-setting.set.html',       // 미이용
+                    'END':          '../../components/5g-setting/myt-data.5g-setting.end.html',       // 사용시간 모두 소진
+                    'BOOST_PARK':   '../../components/5g-setting/myt-data.5g-setting.boostpark.html'  // 부스트 파크
+                };
+            %>
+            <%- include(pages[pageType]); %>
+            <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
+        </div>
+        <!-- //190909 [OP002-3626] 수정_02 -->
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var pageType = '<%=pageType%>';
+    new Tw.MyTData5gSetting($('.wrap'));
+    if (pageType === 'NO_USE') {
+        new Tw.MyTData5gSettingMain($('.wrap'));
+    }
+    else if (pageType === 'IN_USE') {
+        new Tw.MyTData5gSettingMainInuse($('.wrap'), '<%- escape(JSON.stringify(conversionsInfo)) %>'); // 이용중일 때만 생성하기
+    }
+  });
+</script>
+<% include ../../components/end.component.html %>

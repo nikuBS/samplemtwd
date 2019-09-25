@@ -298,6 +298,14 @@ Tw.API_CMD = {
   BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: Tw.API_METHOD.POST },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
   BFF_06_0076: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.DELETE },
+  BFF_06_0078: { path: '/core-recharge/:version/5g-data-conversions', method: Tw.API_METHOD.GET },
+  BFF_06_0079: { path: '/core-recharge/:version/5g-convertible-data', method: Tw.API_METHOD.GET },
+  BFF_06_0080: { path: '/core-recharge/:version/5g-data-conversions', method: Tw.API_METHOD.POST },
+  BFF_06_0081: { path: '/core-recharge/:version/5g-data-conversions', method: Tw.API_METHOD.DELETE },
+  BFF_06_0082: { path: '/core-recharge/:version/5g-data-reservations', method: Tw.API_METHOD.POST },
+  BFF_06_0083: { path: '/core-recharge/:version/5g-data-reservations', method: Tw.API_METHOD.DELETE },
+  BFF_06_0084: { path: '/core-recharge/:version/5g-data-conversion-histories', method: Tw.API_METHOD.GET},
+
   BFF_06_0085: { path: '/core-bill/:version/skpay-pps/auth-grant', method: Tw.API_METHOD.POST },
   BFF_06_0086: { path: '/core-bill/:version/skpay-pps/pps-recharge', method: Tw.API_METHOD.POST },
   BFF_06_0087: { path: '/core-bill/:version/skpay-pps/pps-data', method: Tw.API_METHOD.POST },
@@ -423,7 +431,7 @@ Tw.API_CMD = {
   BFF_08_0078: { path: '/core-modification/v1/region-subway-line-info', method: Tw.API_METHOD.GET },
   BFF_08_0079: { path: '/core-modification/v1/region-happy-list', method: Tw.API_METHOD.GET },
   BFF_08_0080: { path: '/core-modification/v1/customer-age/calculation', method: Tw.API_METHOD.GET },
-  
+
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
@@ -504,7 +512,7 @@ Tw.API_CMD = {
   BFF_10_0175: { path: '/core-product/:version/roaming/fee-plans/:args0/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0176: { path: '/core-product/:version/mobiles/additions-sets/addressid-sets', method: Tw.API_METHOD.POST },
   BFF_10_0181: { path: '/core-product/:version/mobiles/additions/:args0/send-sms', method: Tw.API_METHOD.GET },
-  
+
   BFF_10_0183: { path: '/core-product/:version/services/wireless/multi-addition/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0184: { path: '/core-product/:version/mobiles/additions/flocheck', method: Tw.API_METHOD.GET },
 
