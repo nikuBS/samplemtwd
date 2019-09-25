@@ -90,7 +90,7 @@ class MyTData5gSetting extends TwViewController {
    * @desc 수신한 데이터 파싱
    */
   private parseData(data: any, conversionsInfo: any, multiAddition: any): void {
-    data.conversionsInfo = conversionsInfo.result[0];
+    data.conversionsInfo = conversionsInfo = conversionsInfo.result[0];
 
     let pageType = 'NO_USE';  // default 미이용
 
