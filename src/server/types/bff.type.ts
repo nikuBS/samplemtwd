@@ -577,6 +577,13 @@ export const PRODUCT_5GX_TICKET_SKIP_ID: any = [
 // [OP002-3871] 5GX 시간권 사용중
 export const PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID: any = ['DSGK1'];
 
+// [OP002-4108] 5GX 시간권 SKIP ID
+export const PRODUCT_5GX_TICKET_TIME_SKIP_ID: any = [
+  'DD4J3', // 스탠다드0 시간권(8)
+  'DD4J2', // 스탠다드0 시간권(60)
+  'DD4J1' // 스탠다드0 시간권(120)
+];
+
 export const TOTAL_SHARE_DATA_SKIP_ID = [
   // 통합공유 데이터 표시 상품 리스트
   'DD3CX',  // NA00005959	인피니티	통합공유 데이터 40GB

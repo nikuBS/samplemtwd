@@ -22,7 +22,9 @@ import {
   TPLAN_SHARE_LIST,
   UNIT,
   UNIT_E,
-  UNLIMIT_CODE
+  UNLIMIT_CODE,
+  PRODUCT_5GX_TICKET_TIME_SKIP_ID,
+  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID
 } from '../../../types/bff.type';
 import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
@@ -430,7 +432,8 @@ class MainHome extends TwViewController {
     const result = {
       data: { isShow: false },
       voice: { isShow: false },
-      sms: { isShow: false }
+      sms: { isShow: false },
+      fivegxTicketTime: { isShow: false },
     };
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
@@ -440,8 +443,8 @@ class MainHome extends TwViewController {
 
     etcKinds.map((kind, index) => {
       const findData = usageData[kind].find((usage) => {
-        return !FormatHelper.isEmpty(usage) &&
-          (UNLIMIT_CODE.indexOf(usage.unlimit) !== -1 || (UNLIMIT_CODE.indexOf(usage.unlimit) === -1 && +usage.remained > 0));
+        return !FormatHelper.isEmpty(usage) && PRODUCT_5GX_TICKET_TIME_SKIP_ID.indexOf(usage.skipId) === -1
+          && (UNLIMIT_CODE.indexOf(usage.unlimit) !== -1 || (UNLIMIT_CODE.indexOf(usage.unlimit) === -1 && +usage.remained > 0));
       });
       if ( !FormatHelper.isEmpty(findData) ) {
         result[kind] = findData;
@@ -449,6 +452,16 @@ class MainHome extends TwViewController {
       } else if ( !FormatHelper.isEmpty(usageData[kind][0]) ) {
         result[kind] = usageData[kind][0];
         this.convShowData(result[kind]);
+      }
+
+      // 5GX 데이터 시긴권 설정
+      const fivegxTicketTime = usageData[kind].find((usage) => {
+        return PRODUCT_5GX_TICKET_TIME_SKIP_ID.indexOf(usage.skipId) !== -1;
+      });
+
+      if ( !FormatHelper.isEmpty(fivegxTicketTime) ) {
+        this.convShowData(fivegxTicketTime);
+        result.fivegxTicketTime = fivegxTicketTime;
       }
     });
     return result;
@@ -468,6 +481,7 @@ class MainHome extends TwViewController {
     data.shareRemained = 0;
     data.myRemainedRatio = 100;
     data.shareRemainedRatio = 100;
+    data.linkUrl = '/myt-data/hotdata';
 
     list.map((target) => {
       if ( UNLIMIT_CODE.indexOf(target.unlimit) !== -1 ) {
@@ -479,6 +493,12 @@ class MainHome extends TwViewController {
         data.shareTotal += +target.total;
         data.shareRemained += +target.remained;
         data.isTplanUse = true;
+      }
+
+      // 5GX 데이터 시간권 사용중
+      if ( PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(target.skipId) !== -1 ) {
+        data.showUsingFiveGxTicketTimeRemainedText = DateHelper.getKoreanTime(target.exprDtm);
+        // data.usingFivegxTicketTime = true;
       }
     });
     data.showShareRemained = this.convFormat(data.shareRemained, UNIT_E.DATA);
@@ -499,6 +519,10 @@ class MainHome extends TwViewController {
       data.showMyRemained = this.convFormat(data.myRemained, UNIT_E.DATA);
       data.myRemainedRatio = Math.round(data.myRemained / data.addTotal * 100);
       data.shareRemainedRatio = Math.round(data.addRemained / data.addTotal * 100);
+    }
+
+    if ( data.usingFivegxTicketTime) {
+      data.linkUrl = '/myt-data/5g-setting';
     }
   }
 
