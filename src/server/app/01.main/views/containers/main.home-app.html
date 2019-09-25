@@ -92,7 +92,7 @@
                                 <div class="widget">
                                     <div class="widget-box donutchart">
                                         <!-- .donut-chart -->
-                                        <a href="/myt-data/hotdata" class="donut-chart data-type" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
+                                        <a href="<%=homeData.usageData.data.linkUrl %>" class="donut-chart data-type" data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><!-- 데이터 경우 data-type 추가 -->
                                             <div class="donut-chart-area">
                                                 <% if(homeData.usageData.shareTotal !== 0) { %>
                                                 <!-- loop 공유데이터 -->
@@ -127,15 +127,26 @@
                                                 </div>
                                                 <!-- // loop -->
                                             </div>
+                                            <!-- 5GX 데이터 시간권 사용중-->
+                                            <% if(homeData.usageData.data.usingFivegxTicketTime) { %>
+                                            <span class="ti-data">
+                                                <strong class="ti">데이터 시간권</strong>
+                                                <em class="data"><span>사용중</span></em>
+                                            </span>
+                                            <span class="tx-add tod-txcolor6"><%= homeData.usageData.data.showUsingFiveGxTicketTimeRemainedText %> 종료</span>
+                                            <% } else { %>
                                             <span class="ti-data">
                                                 <strong class="ti">남은 데이터</strong>
                                                 <em class="data">
                                                     <span class="ff-tg-medium"><%= homeData.usageData.data.showAddRemained %></span>
                                                 </em>
                                             </span>
+                                            <% } %>
                                         </a>
                                         <!-- // .donut-chart -->
+                                        <% if(!homeData.usageData.data.usingFivegxTicketTime) { %>
                                         <button id="fe-bt-data-link" class="data-add fe-coach-data-target" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
+                                        <% } %>
                                         <!--<span id="fe-coach-data" class="coach-mark fe-coach-data none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>-->
                                     </div>
                                 </div>
@@ -158,6 +169,13 @@
                                             <a href="/myt-data/hotdata" class="tod-link-flydata">
                                                 <span class="sp-tit"><i class="tod-icon-flydata" data-xt_eid="CMMA_A2_B6-229" data-xt_csid="NO" data-xt_action="BC"></i>T가족모아데이터</span>
                                                 <span class="sp-data"><%= homeData.usageData.data.showShareRemained %></span>
+                                            </a>
+                                        </div>
+                                    <% } %>
+                                    <% if(homeData.usageData.fivegxTicketTime.isShow) { %>
+                                        <div class="tod-flydata-wrap">
+                                            <a href="/myt-data/hotdata" class="bt-5gx" data-xt_eid="CMMA_A2_B6-286" data-xt_csid="NO" data-xt_action="BC">
+                                                <i class="icon-time-34"></i> 데이터 시간권 <span class="remain"><%= homeData.usageData.fivegxTicketTime.showRemainedText %></span>
                                             </a>
                                         </div>
                                     <% } %>

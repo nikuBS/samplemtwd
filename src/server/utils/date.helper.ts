@@ -439,6 +439,16 @@ class DateHelper {
   static isUnderAge(targetAge, birthday) {
     return targetAge > moment(this.getCurrentShortDate()).diff(birthday, 'year');
   }
+
+  /** 
+   * @desc Get time in korean
+   * @param {Date or string} date YYYYMMDDhhmmss
+   * @returns {string} : 오후 2시 11분
+   * @public
+   */
+  static getKoreanTime(date: any) {
+    return moment(this.convDateFormat(date)).format('a h시 m분');
+  };
 }
 
 export default DateHelper;
