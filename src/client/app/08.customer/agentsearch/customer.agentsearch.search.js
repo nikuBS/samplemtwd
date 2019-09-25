@@ -682,20 +682,25 @@ Tw.CustomerAgentsearch.prototype = {
    * @param  {Object} e - click event
    */
   _onExternalLink: function (e) {
-    var confirmed = false;
-    Tw.CommonHelper.showDataCharge(
-        function () {
-          confirmed = true;
-        },
-        $.proxy(function () {
-          if (confirmed) {
-            var url = $(e.currentTarget).attr('href');
-            Tw.CommonHelper.openUrlExternal(url);
-          }
-        }, this)
-    );
+    if(Tw.BrowserHelper.isApp()) {
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
+          function () {
+            confirmed = true;
+          },
+          $.proxy(function () {
+            if (confirmed) {
+              var url = $(e.currentTarget).attr('href');
+              Tw.CommonHelper.openUrlExternal(url);
+            }
+          }, this)
+      );
 
-    return false;
+      return false;
+    } else {
+      var url = $(e.currentTarget).attr('href');
+      Tw.CommonHelper.openUrlExternal(url);
+    }
   },
 
 
