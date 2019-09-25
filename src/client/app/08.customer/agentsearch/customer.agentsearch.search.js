@@ -696,11 +696,13 @@ Tw.CustomerAgentsearch.prototype = {
           }, this)
       );
 
-      return false;
+      // return false;
     } else {
       var url = $(e.currentTarget).attr('href');
       Tw.CommonHelper.openUrlExternal(url);
     }
+
+    return false;
   },
 
 
