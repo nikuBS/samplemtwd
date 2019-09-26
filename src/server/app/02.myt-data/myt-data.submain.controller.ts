@@ -492,7 +492,7 @@ class MytDataSubmainController extends TwViewController {
     let etcRemained = 0;
     let etcTotal = 0;
     // [OP002-3871] 5GX 시간권/장소권 사용 여부 확인
-    if (data5gx.length > 0) {
+    if (!data5gx.isBoostPark && data5gx.length > 0) {
       const item5gx = data5gx.find(item => (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1));
       this.convShowData(item5gx);
       data._5gxTicket = item5gx;
@@ -504,6 +504,8 @@ class MytDataSubmainController extends TwViewController {
           data._5gxTicket.ticketSet = true;
         }
       }
+    } else if (data5gx.isBoostPark) { // 양정규 : 장소권 인경우
+      data._5gxTicket = true;
     }
     // if ( gnrlData.length > 0 ) {
       gnrlData.forEach(item => {
@@ -662,6 +664,20 @@ class MytDataSubmainController extends TwViewController {
           }, []);
           // 자료 정리 순서: 0. "시간권 데이터(무제한)", 1. "Data 시간권..."
           resp.result._5gxData = [..._5gxTimeTicketData, ...data5gx];
+        } else {
+          // 양정규 : 장소권 여부 추가
+          const spclData = resp.result.spclData || [];
+          let isBoostPark = false;
+          spclData.forEach((item) => {
+            if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > 2) {
+              isBoostPark = true;
+            }
+          });
+          resp.result = Object.assign(resp.result, {
+            _5gxData : {
+              isBoostPark: isBoostPark
+            }
+          });
         }
         if ( SVC_CDGROUP.WIRELESS.indexOf(svcInfo.svcAttrCd) !== -1 ) {
           return resp.result;

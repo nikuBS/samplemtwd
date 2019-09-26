@@ -112,7 +112,7 @@ Tw.MyTData5gSettingMain.prototype = {
     }
 
     // 응답 받은 후 로직..
-    this.remainTime = resp.result.dataRemQty * 60;
+    this.remainTime = resp.result.dataRemQty * 60;  // 단위변경 분 -> 초
     this.loadTime = new Date();
     var availableTime = Tw.FormatHelper.convVoiceFormat(this.remainTime);
     var isOverTime = +resp.result.dataRemQty > 720; // 사용가능시간이 최대 시간인 12시간을 초과한 경우 유무
@@ -361,7 +361,11 @@ Tw.MyTData5gSettingMain.prototype = {
     // 시간
     if ($timeConf.data('type') === 0) {
       time = parseInt((data[0] / hourPi), 10);
-      if (time === 12) $minute.html('00');
+      // 시간이 12시간 이상이면 분설정 0 설정
+      if (time === 12) {
+        $minute.html('00');
+        $timeConf.data('minute', 0);
+      }
       $hour.html(this._addZero(time));
       $timeConf.data('hour', data[0]);
       this.hour = time;
@@ -569,6 +573,8 @@ Tw.MyTData5gSettingMain.prototype = {
    */
   _intervalReload: function () {
     var reqCnt = 0;
+    // 사용가능 시간에서 시간권 요청 한 시간을 빼준다.
+    this.remainTime -= (this.hour * 60 + this.min) * 60;
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     var interval = window.setInterval(function () {
       var callBack = function (res) {
