@@ -4557,7 +4557,7 @@ body.hidden {
 .og-timeline.type2 .og-timeline-list .acco-title:before {content:none;}
 .og-timeline.type2 .og-timeline-list .acco-title {height:3.5625rem; padding:0 0 0 1rem;}
 .og-timeline.type2 .og-timeline-list .acco-title >span.og-time {padding-right:0.5rem; font-weight:bold;}
-.og-timeline.type2 .og-timeline-list .acco-title >span.og-data {width:9.625rem; text-align:left; font-size:0.75rem;}
+.og-timeline.type2 .og-timeline-list .acco-title >span.og-data {width:11.25rem; text-align:left; font-size:0.75rem;}
 .og-timeline.type2 .og-timeline-date {position:relative; z-index:1; width:auto; margin:1.375rem 0; padding:0 0 0 0.875rem; text-align:left;}
 .og-timeline.type2 .og-timeline-date:before {content:''; position:absolute; left:0; top:50%; margin-top:-0.375rem; width:0.625rem; height:0.625rem; background:url('/img/t_m5g/og_sp_timeline.png') no-repeat 0 -2.375rem; background-size:4.6875rem auto;}
 .og-timeline.type2 .og-timeline-date .og-date {padding:0; font-weight:normal;}
