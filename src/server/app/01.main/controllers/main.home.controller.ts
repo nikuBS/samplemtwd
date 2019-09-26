@@ -498,6 +498,8 @@ class MainHome extends TwViewController {
       // 5GX 데이터 시간권 사용중
       if ( PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID.indexOf(target.skipId) !== -1 ) {
         data.showUsingFiveGxTicketTimeRemainedText = DateHelper.getKoreanTime(target.exprDtm);
+        // API 5분 cache를 사용하고 있어서, 실시간으로 데이터를 출력할 수 없음.
+        // 일단, 해당 기능 노출 안 함.
         // data.usingFivegxTicketTime = true;
       }
     });
