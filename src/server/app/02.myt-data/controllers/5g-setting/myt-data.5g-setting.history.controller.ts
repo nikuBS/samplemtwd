@@ -136,8 +136,8 @@ class MyTData5gSettingHistory extends TwViewController {
       const convStaDtm = moment(item.convStaDtm, 'YYYYMMDDHHmmss');
       const data = {
         usedTime: convertTime(FormatHelper.convVoiceFormat(item.cnvtdTime * 60)),
-        startTime: convStaDtm.format('MM/DD HH:mm'),  // 시작 시간
-        endTime: moment(item.convEndDtm, 'YYYYMMDDHHmmss').format('MM/DD HH:mm'), // 종료 시간
+        startTime: convStaDtm.format('MM/DD HH:mm:ss'),  // 시작 시간
+        endTime: moment(item.convEndDtm, 'YYYYMMDDHHmmss').format('MM/DD HH:mm:ss'), // 종료 시간
       };
       const date = convStaDtm.format('YYYYMMDD');
 
