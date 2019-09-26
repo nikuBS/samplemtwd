@@ -787,8 +787,7 @@ export const ROAMING_RECEIVE_CENTER = {
   '4': '제주공항 국제선 1층 로밍 센터',
   '5': '김해공항 3층 로밍 센터',
   '6': '대구공항 2층 로밍 센터',
-  '7': '부산항 국제여객터미널 2층 로밍센터',
-  '8': '대구 SKT 황금점 매장'
+  '7': '대구 SKT 황금점 매장'
 };
 
 export const NODE_API_ERROR = {
