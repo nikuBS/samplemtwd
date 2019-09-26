@@ -515,7 +515,9 @@ Tw.API_CMD = {
 
   BFF_10_0183: { path: '/core-product/:version/services/wireless/multi-addition/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0184: { path: '/core-product/:version/mobiles/additions/flocheck', method: Tw.API_METHOD.GET },
-
+  BFF_10_0185: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-infos', method: Tw.API_METHOD.GET },
+  BFF_10_0186: { path: '/core-product/:version/mobiles/additions-sets/smartcallpick-sets', method: Tw.API_METHOD.POST },
+  
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
   BFF_10_0058: { path: '/core-product/:version/roaming/country-rate', method: Tw.API_METHOD.GET },

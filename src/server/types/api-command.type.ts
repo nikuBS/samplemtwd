@@ -932,7 +932,14 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/additions/flocheck',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
-
+  BFF_10_0185: {
+    path: '/core-product/:version/mobiles/additions-sets/smartcallpick-infos',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0186: {
+    path: '/core-product/:version/mobiles/additions-sets/smartcallpick-sets',
+    method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
