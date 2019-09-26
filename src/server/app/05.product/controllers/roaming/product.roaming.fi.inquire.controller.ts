@@ -27,7 +27,7 @@ export default class ProductRoamingFiInquire extends TwViewController {
           pageInfo: pageInfo
         });
       }
-      svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum); //마스킹된 번호에 '-' 처리
+      svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum); // 마스킹된 번호에 '-' 처리
 
       res.render('roaming/product.roaming.fi.inquire.html', {
         countryCode: countryCode,
