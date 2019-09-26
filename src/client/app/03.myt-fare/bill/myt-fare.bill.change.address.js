@@ -40,7 +40,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
-    this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this));
+    // this.$container.on('click', '.fe-detail-address', $.proxy(this._deleteAddress, this)); // 19-09-26. OP002-4155 read only로 되면서 기능 제거
     this.$changeBtn.click(_.debounce($.proxy(this._changeAddress, this), 500));
   },
   /**

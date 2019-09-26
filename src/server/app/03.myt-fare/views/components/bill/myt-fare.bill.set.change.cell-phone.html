@@ -5,7 +5,7 @@
 %>
 
 <!--<p class="con-txt0 pt6">휴대폰 번호</p>-->
-<span class="inputbox bt-add inp-btn pt10">
+<span class="inputbox bt-add inp-btn pt12">
     <span class="input">
         <%
             let placeholder = name === 'ccurNotiSvcNum' ? '법정대리인 휴대폰번호':'숫자만 입력';
@@ -23,8 +23,8 @@
         <button class="cancel"><span class="blind">삭제</span></button>
     </span>
     <%if(data.isApp){%>
-    <span class="bt-box">
-        <button class="fe-btn-addr" type="button" data-el="<%= name%>">주소록</button>
+    <span class="bt-box3">
+        <button class="btn-round2 btn-style3 fe-btn-addr" type="button" data-el="<%= name%>">주소록</button>
     </span>
     <%}%>
 </span>

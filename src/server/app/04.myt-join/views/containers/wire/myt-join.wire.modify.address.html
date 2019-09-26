@@ -54,7 +54,7 @@
                         <div class="form-box">
                             <div class="inputbox bt-add inp-btn">
                                 <span class="input">
-                                    <input type="text" class="fe-zip" title="우편번호" disabled/>
+                                    <input type="text" class="fe-zip" title="우편번호" readonly/>
                                 </span>
                                 <span class="bt-box3">
                                     <button type="button" id="btnPostSearch" class="btn-round2 btn-style3">우편번호 검색</button>
@@ -62,13 +62,12 @@
                             </div>
                             <div class="inputbox mt10">
                                 <span class="input">
-                                    <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="" disabled>
+                                    <input class="fe-main-address" type="text" title="기본주소" value="" placeholder="" readonly>
                                 </span>
                             </div>
                             <div class="inputbox mt10">
                                 <span class="input">
-                                    <input class="fe-detail-address" type="text" title="" value="" placeholder="상세주소 입력">
-                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                    <input class="fe-detail-address" type="text" title="" value="" readonly>
                                 </span>
                             </div>
                             <span class="error-txt" style="display: none;" id="fe-err-no-location" aria-hidden="true">변경 설치 장소를 입력해 주세요.</span>
