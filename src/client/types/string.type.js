@@ -1801,7 +1801,9 @@ Tw.ROAMING_RETURN_CODE = {
   'A200130000': { name: '김해공항 1층 로밍센터', img: 'place-img-05-1',
                   officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
   'C399900000': { name: '대구공항 2층 로밍센터', img: 'place-img-06',
-                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' }
+                  officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
+  'C299910000': { name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
+                  officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' }
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
@@ -1819,6 +1821,8 @@ Tw.ROAMING_RECEIVE_CODE = {
                 officeHour: '<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)' },
   1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06',
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00' },
+  1430471483: { code: 'C299910000', name: '부산항 국제여객터미널 2층 로밍센터', img: 'place-img-08',
+                officeHour: '<strong>업무시간</strong> | 06:30 ~ 19:30' },
   1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02-de',
                 officeHour: '<strong>업무시간</strong> | 06:00 ~ 22:00<br><span>업무시간 외에는 1층 3번 출구 로밍센터(24시간)에서 수령 가능</span>' }
 };
