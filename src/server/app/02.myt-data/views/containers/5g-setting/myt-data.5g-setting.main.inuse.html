@@ -1,0 +1,58 @@
+<%#
+* @file myt-data.5g-setting.main.inuse.html
+* @author anklebreaker
+* @since 2019-04-15
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- #header -->
+    <%- include('../../../../common/views/components/header.component.html', { title: 'T 5G 시간설정', svcInfo: svcInfo }); %>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+            <% include ../../components/5g-setting/myt-data.5g-setting.pm.html %>
+            <% include ../../components/5g-setting/myt-data.5g-setting.banner.html %>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="og-start5G-wrap">
+                    <p class="og-start5G-txt"><span class="blind">5GX</span> <b class="tx-bold">무제한 5G</b><br> 마음껏 이용중</p>
+                    <div class="og-start5G-time">
+                        남은시간
+                        <strong class="og-time-count">
+                            <span class="ti-me none">00</span>
+                            <span class="di-v">:</span>
+                            <span class="mi-n none">00</span>
+                        </strong>
+                    </div>
+                    <div class="og-start5G-btn">
+                        <button type="button" class="btn-round1 fe-btn_terminate">종료하기</button>
+                    </div>
+                </div>
+                <% include ../../components/5g-setting/myt-data.5g-setting.reservation.html %>
+            </div>
+            <!-- //.cont-box -->
+            <% include ../../components/5g-setting/myt-data.5g-setting.common.html %>
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script type="text/javascript">
+  $(document).ready(function () {
+    new Tw.MyTData5gSetting($('.wrap'), '<%- escape(JSON.stringify(reservationInfo)) %>');
+    new Tw.MyTData5gSettingMainInuse($('.wrap'), '<%- escape(JSON.stringify(usingInfo)) %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

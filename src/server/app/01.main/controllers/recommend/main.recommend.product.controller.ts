@@ -116,7 +116,7 @@ export default class MainRecommendProduct extends TwViewController {
   
             // MLS 추천 없음
             if (keys.length === 0) {
-              this.logger.error(this, '[내게 맞는 추천 요금제-1]\n', JSON.stringify(resp));
+              // this.logger.error(this, '[내게 맞는 추천 요금제-1]\n', JSON.stringify(resp));
               throw MLS_ERROR.MLS0001;
             } else {
               // console.log('************ 근거 조회 호출 *****************');
@@ -124,7 +124,7 @@ export default class MainRecommendProduct extends TwViewController {
               return this.apiService.request(API_CMD.BFF_05_0212, {keys});
             }
           } else {
-            this.logger.error(this, '[내게 맞는 추천 요금제-1]\n', JSON.stringify(resp));
+            // this.logger.error(this, '[내게 맞는 추천 요금제-1]\n', JSON.stringify(resp));
             throw MLS_ERROR.MLS0001;
           }
         } else {
@@ -279,7 +279,7 @@ export default class MainRecommendProduct extends TwViewController {
         this.logger.debug(this, '[내게 맞는 추천 요금제-2]\n', JSON.stringify(resp));
         res.render('recommend/main.recommend.product.html', { svcInfo, pageInfo, resp });
       }, (err) => {
-        this.logger.error(this, '[내게 맞는 추천 요금제]\n', JSON.stringify(err));
+        // this.logger.error(this, '[내게 맞는 추천 요금제]\n', JSON.stringify(err));
         this.error.render(res, {
           svcInfo: svcInfo,
           code: err.code,

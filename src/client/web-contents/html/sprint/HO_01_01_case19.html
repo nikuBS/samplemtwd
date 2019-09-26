@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap home"><!-- .home : 홈 -->
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-logo"><button class="icon-gnb-home"><span class="blind">홈으로</span></button></div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <!-- .home-tab -->
+                <div class="home-tab">
+                    <div class="home-tab-belt">
+                        <ul>
+                            <li class="tab"><div><button class="icon-home-tab-my on"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                            <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- // .home-tab -->
+                <!-- .home-slider -->
+                <div class="home-slider">
+                    <!-- .home-slider-belt -->
+                    <div class="home-slider-belt">
+                        <!-- .home-slider-my -->
+                        <div class="home-slider-my">
+
+                            <div class="main-top-group">
+                                <!-- 모바일 회선_잔여 데이터 -->
+                                <div class="main-chart-box">
+                                    <em class="line"><button class="bt ff-tg-light">010-12**-34**</button></em>
+                                    <strong class="ti"><button class="bt">5GX 프라임0</button></strong>
+
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box donutchart">
+                                            <!-- .donut-chart -->
+                                            <button class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
+                                                <div class="donut-chart-area">
+                                                    <!-- loop -->
+                                                    <div class="c100 p0" data-percent="100"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="red"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // loop -->
+                                                </div>
+                                                <span class="ti-data">
+                                                    <strong class="ti">데이터 시간권</strong><!-- 190917 명칭변경 -->
+                                                    <em class="data"><span>사용중</span></em>
+                                                </span>
+												<span class="tx-add tod-txcolor6">오후 4시 56분 종료</span>
+                                            </button>
+                                            <!-- // .donut-chart -->
+                                        </div>
+                                    </div>
+                                    <!-- // .widget -->
+
+                                    <div class="call-message">
+                                        <div class="tod-flydata-wrap">
+                                            <a href="#" class="tod-link-flydata">
+                                                <span class="sp-tit"><i class="tod-icon-flydata"></i>T가족모아데이터</span>
+                                                <span class="sp-data"><em>20.56</em>GB</span>
+                                            </a>
+                                        </div>
+                                        <div class="tod-flydata-wrap">
+											<button class="bt-5gx"><i class="icon-time-34"></i> 데이터 시간권 <span class="remain">10시간 남음</span></button><!-- 190917 명칭변경 -->
+										</div>
+                                        <button class="bt-call"><i class="icon-call-34"><span class="blind">통화</span></i> <span class="ff-tg-light">1</span>시간 <span class="ff-tg-light">45</span>분 남음</button>
+                                        <button class="bt-message"><i class="icon-sms-37"><span class="blind">문자</span></i> 기본제공</button>
+                                    </div>
+                                </div>
+                                <!-- //모바일 회선_잔여 데이터 -->
+
+                                <!-- MY 바로가기 -->
+                                <ul class="quick-menu-list">
+                                    <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                    <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 / 할인</button></li>
+                                    <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                </ul>
+                                <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                                <!-- //MY 바로가기 -->
+                            </div>
+
+                        </div>
+                        <!-- // .home-slider-my -->
+                        <!-- .home-slider-store -->
+                        <div class="home-slider-store">
+                            <div style="height:1500px;background:yellow;">
+                            </div>
+                        </div>
+                        <!-- // .home-slider-store -->
+                    </div>
+                    <!-- // .home-slider-belt -->
+                </div>
+                <!-- // .home-slider -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <script>
+        $(document).on('ready',function(){
+            skt_landing.action.home_slider({
+                initialSlide: 0
+            });
+            skt_landing.widgets.widget_slider1();
+            skt_landing.widgets.widget_slider2();
+        });
+    </script>
+</body>
+</html>

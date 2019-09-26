@@ -1,0 +1,89 @@
+<%#
+* @file product.mobileplan.setting.5gx-yt.html
+* @author Dong HA Shin
+* @since 2019.09.19
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="product-select-wrap">
+                        <span class="data-tit"><%= prodInfo.title %> 혜택 선택<button class="tip-view" id="TC000084" title="<%= prodInfo.title %> 혜택 선택 정보보기" aria-haspopup="true">TIP</button></span>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="list-comp-input tod-type2">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="<%= prodInfo.value1 %>" title="<%= prodInfo.time %> 데이터 시간권 (완전 무제한)" aria-labelledby="aria-comp-radio1">
+                                        <div class="comp-list-layout" id="aria-comp-radio1">
+                                            <p class="layout-text">
+                                                <span class="mtext" aria-hidden="true"><%= prodInfo.time %> 데이터 시간권 (완전 무제한)</span>
+                                                <span class="stext01">기본제공 <%= prodInfo.data %> 외에도 <%= prodInfo.time %> 동안 데이터 완전 무제한 이용 가능<br>*시간권 이용중 테더링/P2P 데이터 사용은 불가합니다.</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="<%= prodInfo.value2 %>" title="부스트파크 ZONE 전용 <%= prodInfo.data %>" aria-labelledby="aria-comp-radio2">
+                                        <div class="comp-list-layout" id="aria-comp-radio2">
+                                            <p class="layout-text">
+                                                <span class="mtext" aria-hidden="true">부스트파크 ZONE 전용 <%= prodInfo.data %></span>
+                                                <span class="stext01">SKT 5GX 부스트파크 ZONE 내에서 사용할 수 있는 <%= prodInfo.data %> 추가 제공<br>*부스트파크 전용 데이터는 테더링/P2P 사용이 불가합니다.</span>
+                                                <button class="bt-link-tx underline small fe-home-external" title="새창" data-url="https://m.sktelecom5gx.com/html/sprint/5gmkt_life_1.html">부스트파크 ZONE 확인하기</button>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <div class="announcement-box">
+                        <div class="announcement-bullet type02">2개의 옵션 중 1가지를 선택할 수 있으며, 변경일을 기준으로 30일 이내에는 다른 옵션으로 변경하실 수 없습니다.</div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled="disabled">변경 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>$(function () {
+  new Tw.ProductMobileplanSetting5gxYt($('.wrap'), '<%= prodId %>', '<%- JSON.stringify(settingInfo) %>');
+});</script>
+<% include ../../../components/end.component.html %>

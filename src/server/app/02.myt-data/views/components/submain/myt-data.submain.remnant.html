@@ -4,8 +4,6 @@
 * @since 2018.09.17
 * Update: 2018.11.26
 %>
-
-
 <% if (data.svcInfo.svcAttrCd === 'M1') { %>
 <!-- Phone -->
 <!-- .cont-box -->
@@ -242,17 +240,15 @@
                             <span class="txt1" id="aria-comp-bt13"><%= sdata.skipNm %></span>
                             <div class="date">
                                 <span class="remain">
-                                    <strong>
-                                        <% if (sdata.isUnlimit) { %>
-                                        무제한 </strong>
-                                        <% } else { %>
-                                            <% if (sdata.showRemained.data) { %>
-                                             <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>
-                                            <% } else { %>
-                                             <%= sdata.showRemained %>원
-                                            <% } %>
-                                            </strong>남음
-                                        <% } %>
+                                    <%_ if (sdata.isUnlimit) { _%>
+                                        <strong>무제한 </strong>
+                                    <%_ } else { _%>
+                                        <strong><%_ if (sdata.showRemained.data) { _%>
+                                                <%- sdata.showRemained.data + sdata.showRemained.unit %>
+                                            <%_ } else { _%>
+                                                <%- sdata.showRemained %>원
+                                            <%_ } _%></strong>남음
+                                    <%_ } _%>
                                 </span>
                             </div>
                         </div>
@@ -264,22 +260,21 @@
             <div class="user-month-bill mt16">
                 <div class="detail-bill type1">
                     <ul>
-                        <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                        <% var rdata = data.remnantData.total %>
+                        <%_ if (data.remnantData && data.remnantData.gdata.length > 0) {
+                            var rdata = data.remnantData.total; _%>
                         <li>
                             <span class="tit">나의 데이터</span>
                             <span class="value type1">
                                 <% if (data.remnantData.totalLimit) { %>
                                 <strong>무제한</strong>
                                 <% } else { %>
-                                <strong><%= rdata.showEtcmoaRemained.data %><%= rdata.showEtcmoaRemained.unit %></strong> 남음
+                                <strong><%- rdata.showEtcmoaRemained.data + rdata.showEtcmoaRemained.unit %></strong> 남음
                                 <% } %>
                             </span>
                         </li>
-                        <% } %>
-                        <!-- (T가족모아옵션)  -->
-                        <!-- -->
-                        <% if (data.isTmoaData) { %>
+                        <%_ }
+                        // (T가족모아옵션)
+                        if (data.isTmoaData) { _%>
                         <li>
                             <span class="tit">
                                 T가족모아데이터
@@ -289,46 +284,82 @@
                                 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span>
                                 <% } %>
                             </span>
-                            <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
+                            <span class="value type2"><strong><%- data.family.remained + (data.family.remained === '0'? 'KB' : '') %></strong> 남음</span>
                         </li>
-                        <% } else { %>
-                            <% if (data.isTmoaInsProdId) { %>
-                            <li>
-                                <span class="tit">
-                                    T가족모아데이터를
-                                    <a class="bt-link-tx underline" href="/product/callplan?prod_id=NA00006031">가입</a>
-                                    해보세요!
-                                </span>
-                            </li>
-                            <% } %>
-                        <% } %>
+                        <%_ } else if (data.isTmoaInsProdId) { _%>
+                        <li>
+                            <span class="tit">
+                                T가족모아데이터를
+                                <a class="bt-link-tx underline" href="/product/callplan?prod_id=NA00006031">가입</a>
+                                해보세요!
+                            </span>
+                        </li>
+                        <%_
+                        }
+                        // 5GX 시간권/장소권
+                        if (data._5gxTicket) {
+                        _%>
+                        <li>
+                            <%_
+                            // 데이터 시간권 이용자인(부스트파크 옵션 이용자가 아닌) 경우
+                            if (data._5gxTicket.timeTicket) {
+                            _%>
+                            <span class="tit">데이터 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/5g-setting?remainTime=<%- data._5gxTicket.remained %>">자세히</a></span></span>
+                                <%_
+                                if (data._5gxTicket.ticketSet) {
+                                    // 시간 설정 ON
+                                _%>
+                                <span class="value type2"><strong>사용중</strong></span>
+                                <%_
+                                } else if (data._5gxTicket.showRemained.hours > 0 || data._5gxTicket.showRemained.min > 0) {
+                                    // 시간 설정 OFF 혹은 남은 시간이 없음
+                                    var remained = '';
+                                    if (data._5gxTicket.showRemained.hours > 0) {
+                                        remained = data._5gxTicket.showRemained.hours + '시간';
+                                    }
+                                    if (data._5gxTicket.showRemained.min > 0) {
+                                        remained = (remained ? remained + ' ' : '') + data._5gxTicket.showRemained.min + '분';
+                                    }
+                                _%>
+                                <span class="value type2"><strong><%- remained %></strong> 남음</span>
+                                <%_
+                                }
+                            } else {
+                            _%>
+                            <span class="tit">데이터 시간권 <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/5g-setting">자세히</a></span></span>
+                            <%_
+                            }
+                            _%>
+                        </li>
+                        <%_
+                        }
+                        _%>
                     </ul>
                 </div>
             </div>
-
-            <% var twoItem = data.immCharge && data.present; %>
-            <% if(data.immCharge || data.present) { %>
+            <%_ if (data.immCharge || data.present) {
+            var twoItem = data.immCharge && data.present; _%>
             <ul class="bt-slice <%= twoItem? 'item-two': 'solid' %> pt20">
-                <% if(data.immCharge) { %>
+                <%_ if(data.immCharge) { _%>
                 <li data-id="immCharge">
                     <button class="btn-round1 btn-style1">즉시 충전</button>
                 </li>
-                <% } %>
-                <% if(data.present) { %>
+                <%_ }
+                if (data.present) { _%>
                 <li data-id="present">
                     <button class="btn-round1 btn-style1">T끼리 데이터 선물</button>
                 </li>
-                <% } %>
+                <%_ } _%>
             </ul>
-            <% } %>
+            <%_ } _%>
         </div>
-        <% if (data.isDataShow) { %>
-            <% if (data.isVoiceShow || data.isSmsShow) { %>
+        <%_ if (data.isDataShow) {
+            if (data.isVoiceShow || data.isSmsShow) { _%>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box nogaps-hoz">
                 <ul class="date-graph-list">
-                    <% if (data.isVoiceShow && data.voiceItemToShow) { %>
-                    <% var rvoice = data.voiceItemToShow; %>
+                    <%_ if (data.isVoiceShow && data.voiceItemToShow) {
+                    var rvoice = data.voiceItemToShow; _%>
                     <li>
                         <!-- 2019.02.10 링크 영역 확대 -->
                         <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
@@ -679,28 +710,32 @@
                 </li>
                 <% } %>
             </ul>
-            <% } %>
-            <% if (!data.emptyData) { %>
+            <%_
+            }
+            if (!data.emptyData) {
+            _%>
             <div class="user-month-bill mt16">
                 <div class="detail-bill type1">
                     <ul>
-                        <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                        <% var rdata = data.remnantData.total %>
+                        <%_ if (data.remnantData && data.remnantData.gdata.length > 0) {
+                        var rdata = data.remnantData.total _%>
                         <li>
                             <span class="tit">나의 데이터</span>
                             <span class="value type1">
-                                <% if (data.remnantData.totalLimit) { %>
+                                <%_ if (data.remnantData.totalLimit) { _%>
                                 <strong>무제한</strong>
-                                <% } else { %>
-                                <strong><%= rdata.showEtcmoaRemained.data %><%= rdata.showEtcmoaRemained.unit %></strong> 남음
-                                <% } %>
+                                <%_ } else { _%>
+                                <strong><%- rdata.showEtcmoaRemained.data %><%- rdata.showEtcmoaRemained.unit %></strong> 남음
+                                <%_ } _%>
                             </span>
                         </li>
                         <% } %>
                     </ul>
                 </div>
             </div>
-            <% } %>
+            <%_
+            }
+            _%>
             <ul class="bt-slice solid mt20">
                 <li data-id="immCharge">
                     <button class="btn-round1 btn-style1">선불폰 충전</button>

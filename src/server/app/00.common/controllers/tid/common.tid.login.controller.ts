@@ -56,7 +56,7 @@ class CommonTidLogin extends TwViewController {
           internal_proc_yn: 'N'
         };
         const url = this.apiService.getServerUri(API_CMD.OIDC, req) + API_CMD.OIDC.path + ParamsHelper.setQueryParams(params);
-        this.logger.error(this, '[TID redirect]', url);
+        // this.logger.error(this, '[TID redirect]', url);
         res.redirect(url);
       } else {
         res.redirect('/common/member/login/fail?errorCode=' + resp.code);

@@ -154,6 +154,7 @@ Tw.CustomerAgentsearch.prototype = {
     this.$container.on('click', '#fe-select-area', $.proxy(this._onTubeArea, this));
     this.$container.on('click', '#fe-select-line', $.proxy(this._onTubeLine, this));
     this.$container.on('click', '#fe-select-name', $.proxy(this._onTubeName, this));
+    this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
   },
 
   /**
@@ -674,7 +675,38 @@ Tw.CustomerAgentsearch.prototype = {
     this._historyService.goLoad('/customer/agentsearch/detail?code=' + code);
   },
 
+
   /**
+   * @function
+   * @desc 외부 링크 클릭 시 과금팝업 발생 후 동의 시 외부 브라우저로 이동
+   * @param  {Object} e - click event
+   */
+  _onExternalLink: function (e) {
+    if(Tw.BrowserHelper.isApp()) {
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
+          function () {
+            confirmed = true;
+          },
+          $.proxy(function () {
+            if (confirmed) {
+              var url = $(e.currentTarget).attr('href');
+              Tw.CommonHelper.openUrlExternal(url);
+            }
+          }, this)
+      );
+
+      // return false;
+    } else {
+      var url = $(e.currentTarget).attr('href');
+      Tw.CommonHelper.openUrlExternal(url);
+    }
+
+    return false;
+  },
+
+
+/**
    * @function
    * @desc 필요한 경우 호출하여 과금 팝업 발생, 동의 시 콜백 실행
    * @param  {Function} onConfirm - 동의 시 실행할 callback

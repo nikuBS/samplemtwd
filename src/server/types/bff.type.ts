@@ -545,6 +545,44 @@ export const TPLAN_PROD_ID = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005
   'NA00006536', // T플랜 안심4G
   'NA00006537', // T플랜 베이직
 ];
+// Tplan large/family: 0Plan large, T플랜 에센스, T플랜 스페셜 포함
+export const TPLAN_LARGE_PROD_ID = ['NA00005957', 'NA00005958', 'NA00006157', 'NA00006401', 'NA00006403', 'NA00006404', 'NA00006405', 'NA00006537',
+  'NA00006538'
+];
+
+// [OP002-3871] 5GX
+export const _5GX_PROD_ID = [
+  'NA00006728', // 5G YT 95
+  'NA00006729', // 5G YT 75
+  'NA00006730'  // 5G YT 55
+];
+// [OP002-3871] 5GX 시간권/장소권
+export const PRODUCT_5GX_TICKET_PROD_ID = [
+  'NA00006731', // Data 시간권 8시간 (YT55_시간권)
+  'NA00006732', // Data 시간권 60시간 (YT75_시간권)
+  'NA00006733', // Data 시간권 120시간 (YT95_시간권)
+  'NA00006734', // BoostPark 데이터통화 10GB (YT55_장소권)
+  'NA00006735', // BoostPark 데이터통화 200GB (YT75_장소권)
+  'NA00006736'  // BoostPark 데이터통화 무제한 (YT95_장소권)
+];
+// [OP002-3871] 5GX 시간권/장소권
+export const PRODUCT_5GX_TICKET_SKIP_ID: any = [
+  'DD4J3', // 스탠다드0 시간권(8)
+  'DD4J2', // 스탠다드0 시간권(60)
+  'DD4J1', // 스탠다드0 시간권(120)
+  'DD4J6', // BoostPark 데이터통화 10GB (YT55_장소권)
+  'DD4J5', // BoostPark 데이터통화 200GB (YT75_장소권)
+  'DD4J4'  // BoostPark 데이터통화 무제한 (YT95_장소권)
+];
+// [OP002-3871] 5GX 시간권 사용중
+export const PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID: any = ['DSGK1'];
+
+// [OP002-4108] 5GX 시간권 SKIP ID
+export const PRODUCT_5GX_TICKET_TIME_SKIP_ID: any = [
+  'DD4J3', // 스탠다드0 시간권(8)
+  'DD4J2', // 스탠다드0 시간권(60)
+  'DD4J1' // 스탠다드0 시간권(120)
+];
 
 export const TOTAL_SHARE_DATA_SKIP_ID = [
   // 통합공유 데이터 표시 상품 리스트
@@ -841,8 +879,8 @@ export const MLS_DETAIL_MAPPING = {
     },
     profile_key: {
       additional_svc_allcare_scrb_type : {
-        type: 'P/F', 
-        name: 'T All 케어 가입 형태', 
+        type: 'P/F',
+        name: 'T All 케어 가입 형태',
         required: true,
       }
     }
@@ -855,8 +893,8 @@ export const MLS_DETAIL_MAPPING = {
     },
     profile_key: {
       additional_svc_allcare_scrb_type : {
-        type: 'P/F', 
-        name: 'T All 케어 가입 형태', 
+        type: 'P/F',
+        name: 'T All 케어 가입 형태',
         required: true,
         paid_tooltip: '스페셜에 가입하면 휴대폰 분실/파손 보험을 반값에 이용할 수 있어요',
         free_tooltip: '맥스에 가입하면 휴대폰 분실/파손 보험이 무료에요'

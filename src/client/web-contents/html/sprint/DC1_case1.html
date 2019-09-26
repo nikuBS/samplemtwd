@@ -21,17 +21,12 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-
-    
-    
-
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
@@ -1227,7 +1222,82 @@
                     </ul>
                 </div>
 				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
 
+				<!-- 190911 5GX 시간권 노출 Case 추가 -->
+				<!-- .cont-box -->
+				<div class="cont-box pt0">
+					<ul class="date-graph-list b-line">
+						<li>
+							<a class="r-btn" href=""><!-- 190822 웹접근성 수정_03 (aria-labelledby 속성 삭제) -->
+								<div class="left">
+									<!-- .donut-chart.small -->
+									<div class="donut-chart small">
+										<div class="donut-chart-area">
+											<!-- loop -->
+											<div class="c100 p70"><!-- .p+(0~100) // -->
+												<div class="red"><!-- red, yellow, green, blue, comet // -->
+													<div class="slice">
+														<div class="bar"></div>
+														<div class="fill"></div>
+													</div>
+												</div>
+											</div>
+											<!-- // loop -->
+										</div>
+									</div>
+									<!-- // .donut-chart.small -->
+								</div>
+								<div class="cont">
+									<span class="txt1">남은 데이터</span><!-- 190822 웹접근성 수정_04 (aria-labelledby와 매칭된 id값 삭제) -->
+									<div class="date">
+										<span class="remain"><strong>무제한</strong></span>
+									</div>
+								</div>
+							</a>
+						</li>
+					</ul>
+					<div class="user-month-bill mt16">
+                        <div class="detail-bill type1">
+                            <ul>
+                                <li>
+                                    <span class="tit">나의 데이터</span>
+                                    <span class="value type1"><strong>무제한</strong></span>
+                                </li>
+                                <li>
+                                    <span class="tit">T가족모아데이터<span class="ml8"><a class="bt-link-tx small underline" href="">자세히</a></span></span>
+                                    <span class="value type2"><strong>29.21GB</strong> 남음</span>
+                                </li>
+								<!-- 190911 [OP002-3626] 추가_01 (5GX 시간권 노출 Case) -->
+								<!-- 5GX 시간권 노출 Case1 - 시간설정 OFF -->
+								<li>
+                                    <span class="tit">데이터 시간권<span class="ml8"><a class="bt-link-tx small underline" href="">자세히</a></span></span><!-- 190917 명칭변경 -->
+                                    <span class="value type2"><strong>10시간</strong> 남음</span>
+                                </li>
+								<!-- //5GX 시간권 노출 Case1 - 시간설정 OFF -->
+								<!-- 5GX 시간권 노출 Case2 - 시간설정 ON -->
+								<li>
+                                    <span class="tit">데이터 시간권<span class="ml8"><a class="bt-link-tx small underline" href="">자세히</a></span></span><!-- 190917 명칭변경 -->
+                                    <span class="value type1"><strong>사용중</strong></span>
+                                </li>
+								<!-- //5GX 시간권 노출 Case2 - 시간설정 ON -->
+								<!-- 5GX 시간권 노출 Case3 - 부스트파크 옵션 이용자 -->
+								<li>
+                                    <span class="tit">데이터 시간권<span class="ml8"><a class="bt-link-tx small underline" href="">자세히</a></span></span><!-- 190917 명칭변경 -->
+                                </li>
+								<!-- //5GX 시간권 노출 Case3 - 부스트파크 옵션 이용자 -->
+								<!-- //190911 [OP002-3626] 추가_01 (5GX 시간권 노출 Case) -->
+                            </ul>
+                        </div>
+                    </div>
+                    <ul class="bt-slice item-two mt20">
+                        <li><button type="button" class="btn-round1 btn-style1">즉시 충전</button></li>
+                        <li><button type="button" class="btn-round1 btn-style1">T끼리 데이터 선물</button></li>
+                    </ul>
+				</div>
+				<!--// .cont-box -->
+				<!-- //190911 5GX 시간권 노출 Case 추가 -->
+			
 			</div>
         </div>
         <!--// #contents -->

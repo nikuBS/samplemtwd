@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu"><!-- 알림이 있을 경우 .on -->
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <h1 class="h-tit">데이터 시간권 이용내역</h1><!-- 190917 명칭변경 --><!-- 190909 [OP002-3626] 수정_01 -->
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+			</div>			
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <!-- 190909 [OP002-3626] 수정_02 -->
+			<h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+			<div class="container">
+				<!-- 190429 추가_01-->
+				<div class="cont-box nogaps noborder">
+					<div class="ti-caption-blue">
+						<div class="num">
+							총 <em>32</em>건
+						</div>
+						<button class="bt-select" title="조회기간 선택" aria-haspopup="true">2019년 2월</button>
+					</div>
+				</div>				
+				<!-- //190429 추가_01 -->
+
+				<!-- .cont-box -->
+				<div class="cont-box og-my-wrap">
+					<!-- 조회 내역 있을 경우 -->
+					<div class="og-mydata-result"><!-- 이용내역 없을 경우 class="og-nodata" 추가 -->
+						<p class="type-only">총 사용 시간 <span class="og-time"><b>2</b>시간 <b>30</b>분</span></p>
+					</div>
+					<div class="og-timeline type2 more"><!-- 190920 더보기 버튼 노출시 class="more" 추가, 더보기 버튼 비노출시 class="more" 삭제 -->
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.30</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list"><!-- on , off -->
+											<div class="acco-title">
+												<span class="og-time">1시간</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">10분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.20</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list"><!-- on , off -->
+											<div class="acco-title">
+												<span class="og-time">1시간 20분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">30분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="og-timeline-div">
+							<div class="box">
+								<strong class="og-timeline-date"><span class="og-date">08.10</span></strong>
+								<div class="og-timeline-list"><!-- 스타일별 클래스 추가 -->
+									<ul class="acco-box">
+										<li class="acco-list">
+											<div class="acco-title">
+												<span class="og-time">2시간 10분</span>
+												<span class="og-data">사용 시간 <span class="block tod-txcolor4">08/30 23:30 ~ 08/31 00:26</span></span>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="btn-more">
+						<button type="button">더보기</button>
+					</div>
+					<!-- //조회 내역 있을 경우 -->
+				</div>
+				<!-- //.cont-box -->
+            </div>
+			<!-- //190909 [OP002-3626] 수정_02 -->
+        </div>
+        <!--// #contents -->
+    </div>
+
+</body>
+</html>

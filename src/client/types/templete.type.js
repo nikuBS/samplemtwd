@@ -316,7 +316,7 @@ Tw.POPUP_TPL = {
       TYPE: '요금 충전',
       VALUE: {
         LIMIT: '데이터 한도 요금제',
-        ETC: '팅 쿠키즈 안심 음성 요금',
+        ETC: '팅 쿠키즈 안심 음성 요금', // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
         TING: '팅요금제 충전 선물'
       }
     }
@@ -568,6 +568,10 @@ Tw.POPUP_TPL = {
           'label-attr':'id="05" data-center="C399900000" data-img="place-img-06" value="대구공항 2층 로밍센터"' +
           ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00"',
           txt: '대구공항 2층 로밍센터' },
+        { 'radio-attr': 'id="06" name="r2"',
+          'label-attr':'id="06" data-center="C299910000" data-img="place-img-08" value="부산항 국제여객터미널 2층 로밍센터"' +
+              ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 19:30"',
+          txt: '부산항 국제여객터미널 2층 로밍센터' },
       ]
     }
   ],
@@ -619,7 +623,12 @@ Tw.POPUP_TPL = {
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00"',
           txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'name="r2"',
-          'label-attr':'id="13" data-center="1430452300" data-booth="1430452300"' +
+          'label-attr':'id="13" data-center="C299910000" data-booth="1430471483"' +
+              ' data-img="place-img-08" value="부산항 국제여객터미널 2층 로밍센터"' +
+              ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 19:30"',
+          txt: '부산항 국제여객터미널 2층 로밍센터' },
+        { 'radio-attr': 'name="r2"',
+          'label-attr':'id="14" data-center="1430452300" data-booth="1430452300"' +
             ' data-img="place-img-10" value="대구 SKT 황금점 매장"' +
             ' data-officehour="<strong>업무시간</strong> | 09:00 ~ 18:00 (일요일 휴무)"' +
             ' return-set="1"' +
@@ -749,7 +758,7 @@ Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   { max: '전체', 'radio-attr': 'data-type="5"', 'label-attr': ' ' },
   { max: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"', 'label-attr': ' ' },
   { max: '데이터 한도 충전', 'radio-attr': 'data-type="1"', 'label-attr': ' ' },
-  { max: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' },
+  { max: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' }, // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
   { max: '팅 요금 선물', 'radio-attr': 'data-type="3"', 'label-attr': ' ' },
   { max: '데이터 음성 리필', 'radio-attr': 'data-type="4"', 'label-attr': ' ' }
 ];

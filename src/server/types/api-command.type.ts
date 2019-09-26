@@ -421,16 +421,17 @@ export const API_CMD = {
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0076: { path: '/core-bill/v1/pps-alram', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0077: { path: '/core-recharge/v1/refill-gift-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_06_0078: { path: '/core-recharge/v1/5g-data-conversions', method: API_METHOD.GET, server: API_SERVER.BFF, native: true },
-  BFF_06_0079: { path: '/core-recharge/v1/5g-convertible-data', method: API_METHOD.GET, server: API_SERVER.BFF, native: true },
-  BFF_06_0080: { path: '/core-recharge/v1/5g-data-conversions', method: API_METHOD.POST, server: API_SERVER.BFF, native: true },
-  BFF_06_0081: { path: '/core-recharge/v1/5g-data-conversions', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true },
-  BFF_06_0082: { path: '/core-recharge/v1/5g-data-reservations', method: API_METHOD.POST, server: API_SERVER.BFF, native: true },
-  BFF_06_0083: { path: '/core-recharge/v1/5g-data-reservations', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true },
-  BFF_06_0084: { path: '/core-recharge/v1/5g-data-conversion-histories', method: API_METHOD.GET, server: API_SERVER.BFF, native: true},
+  BFF_06_0078: { path: '/core-recharge/:version/5g-data-conversions', method: API_METHOD.GET, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0079: { path: '/core-recharge/:version/5g-convertible-data', method: API_METHOD.GET, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0080: { path: '/core-recharge/:version/5g-data-conversions', method: API_METHOD.POST, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0081: { path: '/core-recharge/:version/5g-data-conversions', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0082: { path: '/core-recharge/:version/5g-data-reservations', method: API_METHOD.POST, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0083: { path: '/core-recharge/:version/5g-data-reservations', method: API_METHOD.DELETE, server: API_SERVER.BFF, native: true, bypass: true },
+  BFF_06_0084: { path: '/core-recharge/:version/5g-data-conversion-histories', method: API_METHOD.GET, server: API_SERVER.BFF, native: true, bypass: true },
   BFF_06_0085: { path: '/core-bill/:version/skpay-pps/auth-grant', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0086: { path: '/core-bill/:version/skpay-pps/pps-recharge', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0087: { path: '/core-bill/:version/skpay-pps/pps-data', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0005: { path: '/core-bill/:version/point-autopays-history/cashback', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -796,11 +797,11 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0116: { path: '/core-product/:version/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0118: { 
+  BFF_10_0118: {
     path: '/core-product/:version/mobiles/additions-sets/:args0/numberplus-list',
-    method: API_METHOD.GET, 
-    server: API_SERVER.BFF, 
-    bypass: true 
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
   },
   BFF_10_0119: {
     path: '/core-product/:version/services/combinations/:args0/scrbcheck',
@@ -922,7 +923,7 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/additions/:args0/send-sms',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
-  
+
   BFF_10_0183: {
     path: '/core-product/:version/services/wireless/multi-addition/:args0',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true

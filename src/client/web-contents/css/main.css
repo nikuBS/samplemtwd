@@ -5560,4 +5560,10 @@ body.apphome .main-membershop-box {
 .tod-mls-comp.tod-second-box .tod-mls-msg-bx .txt-wrap{letter-spacing:-2px; font-weight:300 }
 
 /* 190910 [OP002-3846] 브랜드변경 */
-.charge-product.type-list .bt-cont-box.category-add07:before {background: url(/img/main/icon_category_add_07.png) no-repeat;  background-size: 100%;}
+.charge-product.type-list .bt-cont-box.category-add07:before {background: url(/img/main/icon_category_add_07.png) no-repeat; background-size: 100%;}
+
+/* 190909 [OP002-3626] 5GX 시간권 설정 */
+.main-chart-box .call-message [class^="bt-"] i.icon-time-34 {top:0.125rem; display:inline-block; width:1.0625rem; height:1.0625rem; background:url(/img/ico/icon_34px_time.png) no-repeat 0 0; background-size:100% 100%;}
+.main-chart-box .call-message [class^="bt-"].bt-5gx {padding-left:1.31rem;}
+.main-chart-box .call-message [class^="bt-"].bt-5gx .remain {display:inline-block; min-width:7rem; text-align:right; color:#178bce;}
+.main-chart-box .donutchart .donut-chart.data-type .tx-add {position:absolute; top:58%; left:2.625rem; right:2.625rem; font-size:0.75rem;}

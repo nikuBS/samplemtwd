@@ -289,6 +289,7 @@ Tw.ProductMobileplanJoin.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
+        basicTxt: this._getBasicText(),
         isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
@@ -297,6 +298,20 @@ Tw.ProductMobileplanJoin.prototype = {
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     this._apiService.request(Tw.NODE_CMD.DELETE_SESSION_STORE, {});
+  },
+
+  /**
+   * 5G YT 상품 가입 완료 페이지 텍스트 문자열 산출
+   * @returns {string}
+   */
+  _getBasicText: function() {
+    var txt = null;
+
+    if (Tw.FIVE_GX_YT_PROD_ID.indexOf(this._prodId) !== -1) {
+      txt = '나의 가입정보에서 혜택변경이 가능합니다.<br>(부스트파크 전용 데이터 / 단말 보험 할인)';
+    }
+
+    return txt;
   },
 
   /**

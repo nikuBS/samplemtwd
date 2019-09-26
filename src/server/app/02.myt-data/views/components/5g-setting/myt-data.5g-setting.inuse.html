@@ -1,0 +1,25 @@
+<hr class="cont-sp type1" aria-hidden="true" />
+<div class="cont-box nogaps noborder">
+    <div class="og-start5G-wrap">
+        <p class="og-start5G-txt"><span class="blind">5GX</span> <b class="tx-bold">데이터 시간권을</b><br> 사용중</p>
+        <div class="og-start5G-time">
+            <div class="time-count">
+                종료 예정 시각
+                <strong class="val-time-wrap"><%=duedate.amPm%> <b><%=duedate.hour%></b>시 <b><%=duedate.min%></b>분</strong>
+            </div>
+            <div class="data-deduct">
+                사용 가능 시간
+                <span class="val-ue-wrap">
+                    <%if(remainTime.hours > 0) {%>
+                        <b><%=remainTime.hours%></b>시간
+                    <%}%>
+                    <%if(remainTime.min > 0) {%>
+                    <b><%=remainTime.min%></b>분</span>
+                    <%}%>
+            </div>
+        </div>
+        <div class="og-start5G-btn">
+            <button type="button" class="btn-round1 fe-btn_terminate">종료하기</button>
+        </div>
+    </div>
+</div>

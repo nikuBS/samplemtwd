@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE, API_VERSION} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
@@ -165,6 +165,54 @@ class CommonSearch extends TwViewController {
                 searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
                 searchResult.result.search[0].immediate.data[0].barcode = FormatHelper.addCardSpace(resultData.result.mbrCardNum);
+              }
+              showSearchResult(searchResult, relatedKeyword , this);
+            });
+            break;
+          case 7:
+            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 부가서비스 검색 ❖❖❖❖❖❖❖❖❖❖❖');
+            this.apiService.request(API_CMD.BFF_05_0137, {}, {})
+            .subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult = removeImmediateData(searchResult);
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+              }
+              showSearchResult(searchResult, relatedKeyword , this);
+            });
+            break;
+          case 8:
+            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 음성잔여량 검색 ❖❖❖❖❖❖❖❖❖❖❖');
+            this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult = removeImmediateData(searchResult);
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+              }
+              showSearchResult(searchResult, relatedKeyword , this);
+            });
+            break;
+          case 9:
+            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 요금약정할인 검색 ❖❖❖❖❖❖❖❖❖❖❖');
+            this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult = removeImmediateData(searchResult);
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
+              }
+              showSearchResult(searchResult, relatedKeyword , this);
+            });
+            break;
+          case 10:
+            // console.log('❖❖❖❖❖❖❖❖❖❖❖ 단말기 할부금 검색 ❖❖❖❖❖❖❖❖❖❖❖');
+            this.apiService.request(API_CMD.BFF_05_0063, {}, null, [], API_VERSION.V2).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult = removeImmediateData(searchResult);
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result;
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });

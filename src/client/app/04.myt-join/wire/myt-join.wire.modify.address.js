@@ -76,7 +76,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     this.$container.on('change', '[data-target="select_stop_input"]', $.proxy(this.select_stop_input_changeEvt, this));
 
-    this.$container.on('change', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
+    this.$container.on('change keyup input', '[data-target="select_install_input"]', $.proxy(this.select_install_input_changeEvt, this));
 
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
     this.$container.on('keyup', '[data-target="input_phone"]', $.proxy(this.input_phoneEvt, this));
@@ -299,7 +299,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
     var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 1, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
-    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();
     Tw.Logger.info('[설치희망날짜]', tempDt, sttDt, endDt);
 
@@ -315,7 +315,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
     } else {
       Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
-      tempDt = (tempDt > endDt ? endDt : sttDt);
+      tempDt = (tempDt >= endDt ? endDt : sttDt);
       this.$select_install_input.val(tempDt);
       this.addressFormData.setPrefrDt = tempDt;
     }
