@@ -1,5 +1,5 @@
 /**
- * @file 데이터 시간권 설정
+ * @file 데이터 시간권 설정 (미이용중)
  * @author 양정규
  * @since 2019-09-17
  */
@@ -19,6 +19,11 @@ Tw.MyTData5gSettingMain = function (rootEl) {
   this._cachedElement();
   this._loadRemainTime();
   this._bindEvent();
+  if ( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openIntro, this));
+  } else {
+    this._openIntro();
+  }
 };
 
 Tw.MyTData5gSettingMain.prototype = {
@@ -29,8 +34,6 @@ Tw.MyTData5gSettingMain.prototype = {
   _cachedElement: function () {
     this.$btnTimeSetting = this.$container.find('.fe-btn_time-setting');
     this.$timeSetButton = this.$container.find('.fe-btn_5g-start');
-    // this.$btnUseAll = this.$container.find('.fe-use-all');
-
     this.$datePicker = this.$container.find('.circle-datepicker');
     this.$timeConf = this.$container.find('.og-timeConf-wrap');
     this.$timePicker = this.$container.find('.og-time-display-init > .time-count > a');
@@ -56,6 +59,36 @@ Tw.MyTData5gSettingMain.prototype = {
     this.$timeButton.on('click', $.proxy(this._addTime, this));
     this.$datePicker.circle_datepicker().on('timer', _.debounce($.proxy(this._onTimer, this), 10));
     this.$container.on('click','.fe-time-search', _.debounce($.proxy(this._loadRemainTime, this), 10));
+  },
+
+  /**
+   * @function
+   * @desc open intro popup
+   */
+  _openIntro: function () {
+    if (localStorage['dont.again'] === 'do not again') {
+      return;
+    }
+    this._popupService.open({
+      url: '/hbs/',
+      hbs: 'popup',
+      'notice_has':'og-popup-intro',
+      'cont_align':'tc',
+      'contents': '<img src="'+ Tw.Environment.cdn+'/img/t_m5g/og_pop_intro.png" alt="5GX 0Plan 시간권으로 데이터를 이용하세요! 사용량 걱정 없이 원하는 시간만큼 쓰는 방법!" style="max-width:100%;">',
+      'bt_b': [{
+        style_class: 'pos-left',
+        txt: '다시보지 않기'
+      },{
+        style_class: 'bt-red1 pos-right',
+        txt: '시작하기'
+      }]
+    }, $.proxy(function () {
+      $('.pos-left').on('click', function () {
+        localStorage['dont.again'] = 'do not again';
+        Tw.Popup.close();
+      });
+      $('.pos-right').on('click', Tw.Popup.close);
+    }, this));
   },
 
   /**
@@ -438,7 +471,7 @@ Tw.MyTData5gSettingMain.prototype = {
    * @desc 숫자 한자리인 경우 0 추가
    */
   _addZero: function (n) {
-    return (String(n).length < 2) ? '0' + n : n;
+    return (String(n).length < 2) ? '0' + n : n.toString();
   },
 
   /**
