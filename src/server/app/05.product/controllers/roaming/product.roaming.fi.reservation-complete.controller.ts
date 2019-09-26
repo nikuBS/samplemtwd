@@ -46,6 +46,10 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
         centerImg = 'place-img-06';
         break;
       case '7' :
+        // 부산항 국제여객터미널 2층 로밍센터
+        centerImg = 'place-img-08';
+        break;
+      case '8' :
         // 대구 SKT 황금점 매장
         centerImg = 'place-img-10';
         break;
