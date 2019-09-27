@@ -573,7 +573,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       RM_11_01_01_02_tip_03_33: {
         tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE,
-        target : ['NA00003196','NA00005049','NA00005501','NA00006486']
+        target : ['NA00003196','NA00005049','NA00005501','NA00006486', 'NA00006744']
       },
       RM_11_01_01_02_tip_03_34: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
@@ -585,7 +585,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       },
       TC000033: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE,
-        target : ['NA00006486','NA00006487','NA00006488']
+        target : ['NA00006486','NA00006487','NA00006488', 'NA00006744', 'NA00006745', 'NA00006746']
       },
       TC000034: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
@@ -610,7 +610,15 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       TC000041: {
         tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
         target : ['NA00006226']
-      }
+      },
+      TC000082: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006744', 'NA00006745', 'NA00006746']
+      },
+      TC000083: {
+        tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE,
+        target : ['NA00006745', 'NA00006746']
+      },
     };
 
     var tooltipArr = [];
