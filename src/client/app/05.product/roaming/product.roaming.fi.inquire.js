@@ -44,7 +44,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _bindEvent: function() {
     this.$inquire.on('click', $.proxy(this._getTfiResponse, this));
-    // this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
+    this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
