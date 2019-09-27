@@ -35699,14 +35699,3 @@ body.apphome .section-box {
 .rm-autosafe-qna dt{float:left;width:4.56rem;font-weight:bold;position:relative;color:#333}
 .rm-autosafe-qna dt:after{content:'';display:block;position:absolute;top:0.16rem;right:0;width:.0625rem;height:.75rem;background-color:#000}
 .rm-autosafe-qna dd{float:left;margin-left:1rem}
-
-/* 190925 추가 [OP002-4052] 나의 부가서비스 리스트 스마트콜픽 */
-.add-prd-wrap .list-comp-lineinfo li .show-data {display: table; width: 100%;padding: 1.25rem 0;}
-.add-prd-wrap .list-comp-lineinfo li .show-data dt {display: table-cell; width: 35%; font-size: 0.88rem;}
-.add-prd-wrap .list-comp-lineinfo li .show-data dd {display: table-cell; width: 65%; font-size: 0.94rem; text-align: right;}
-.add-prd-wrap .list-comp-lineinfo li .show-data dd .number {vertical-align: baseline;}
-.add-prd-wrap .list-comp-lineinfo li .show-data.detail {padding: 0.19rem 0;}
-/* 옵션 아이템 가장 첫번째 */
-.add-prd-wrap .list-comp-lineinfo li .show-data.detail:nth-child(3) {margin-top: 1rem;}
-.add-prd-wrap .list-comp-lineinfo li .show-data.detail dt {color: #666;}
-.add-prd-wrap .list-comp-lineinfo li .show-data.detail dd {color: #666;}
