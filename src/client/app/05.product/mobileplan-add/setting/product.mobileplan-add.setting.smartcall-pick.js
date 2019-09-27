@@ -13,7 +13,7 @@
  * @param {String} displayId 화면ID
  * @param {String} mobileplanId 요금제ID
  */
-Tw.ProductMobileplanAddSettingSmartCallPick = function (rootEl, prodId, vasPackCnt, smartCallPick) {
+Tw.ProductMobileplanAddSettingSmartCallPick = function (rootEl, prodId, smartCallPick) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -22,7 +22,6 @@ Tw.ProductMobileplanAddSettingSmartCallPick = function (rootEl, prodId, vasPackC
 
   this.$container = rootEl;
   this._prodId = prodId;
-  this._vas_pack_cnt = vasPackCnt;
   this._smartCallPick = JSON.parse(window.unescape(smartCallPick));
 
   this._cachedElement();
