@@ -75,11 +75,10 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
    */
   _selectRecommendProd: function () {
     this._selectedProdCancel();
-    this.$container.find('.sub_prod01').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
-    this.$container.find('.sub_prod02').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
-    this.$container.find('.sub_prod03').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
-    this.$container.find('.sub_prod06').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
-    this.$container.find('.sub_prod10').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
+    var bestPick = ['NA00004343','NA00000282','NA00000288','NA00000273','NA00001350'];
+    for (var i=0; i < bestPick.length; i++) {
+      this.$container.find('input[value='+bestPick[i]+']').prop('checked', true).parent().addClass('checked').prop('aria-checked', true);
+    }
     this._checkBoxCnt();
   },
 
