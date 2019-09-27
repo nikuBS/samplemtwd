@@ -40,7 +40,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
   _cachedElement: function () {
     this.$selectGroup1 = this.$container.find('.select_group1');
     this.$selectGroup2 = this.$container.find('.select_group2');
-    this.$clickCheckBox = this.$container.find('input[type=checkbox]');
+    this.$clickCheckBox = this.$container.find('input[name=subprod]');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$selectedCnt = this.$container.find('#selectedCnt');
 
@@ -88,7 +88,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
    * @desc 체크박스 해제
    */
   _selectedProdCancel: function () {
-    this.$container.find('input[type=checkbox]:checked').prop('checked', false).parent().removeClass('checked').prop('aria-checked', false);
+    this.$container.find('input[name=subprod]:checked').prop('checked', false).parent().removeClass('checked').prop('aria-checked', false);
     this._checkBoxCnt();
   },
 
@@ -109,7 +109,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
    * @desc 스마트콜Pick 개별상품 체크박스 선택 값 카운팅
    */
   _checkBoxCnt: function () {
-    var checkBoxCnt = $('input[type=checkbox]:checked').length;
+    var checkBoxCnt = $('input[name=subprod]:checked').length;
     this.$selectedCnt.text(checkBoxCnt);
   },
 
@@ -151,7 +151,7 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
    */
   _procConfirm: function () {
     this.$btnSetupOk.prop('disabled', true);
-    var checkBoxCnt = $('input[type=checkbox]:checked').length;
+    var checkBoxCnt = $('input[name=subprod]:checked').length;
     
     if(checkBoxCnt !== 5){
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A102.MSG,
@@ -191,10 +191,9 @@ Tw.ProductMobileplanAddJoinSmartCallPick.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     var checkProd = [];
-    $('input[type=checkbox]:checked').each(function(){
+    $('input[name=subprod]:checked').each(function(){
       checkProd.push($(this).val());
     });
-
     var smartKitProdList = checkProd.map(function(e){
       return {
         prodAddOpCtt1: e

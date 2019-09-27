@@ -38,7 +38,7 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
    * @desc dom caching
    */
   _cachedElement: function () {
-    this.$clickCheckBox = this.$container.find('input[type=checkbox]');
+    this.$clickCheckBox = this.$container.find('input[name=subprod]');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$selectedCnt = this.$container.find('#selectedCnt');
   },
@@ -77,7 +77,7 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
    * @desc 스마트콜Pick 개별상품 체크박스 선택 값 카운팅
    */
   _checkBoxCnt: function () {
-    var checkBoxCnt = $('input[type=checkbox]:checked').length;
+    var checkBoxCnt = $('input[name=subprod]:checked').length;
     this.$selectedCnt.text(checkBoxCnt);
 
   },
@@ -88,7 +88,7 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
    */
   _procConfirm: function () {
     this.$btnSetupOk.prop('disabled', true);
-    var checkBoxCnt = $('input[type=checkbox]:checked').length;
+    var checkBoxCnt = $('input[name=subprod]:checked').length;
     
     if(checkBoxCnt !== 5){
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A102.MSG,
@@ -99,7 +99,7 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
     this.$btnSetupOk.prop('disabled', false);
 
     //스마트콜Pick으로 사용중인 부가서비스와 체크한 부가서비스를 비교하여 추가/삭제 에 대한 설정API 요청
-    var checkedProd = $('input[type=checkbox]:checked').map(function(e){return this.value}).toArray();
+    var checkedProd = $('input[name=subprod]:checked').map(function(e){return this.value}).toArray();
     var usedProd = this._smartCallPick.filter(function(e) { return e.checked}).map(function(e){ return e.value});
 
     var addProd = checkedProd.filter(function(c){return usedProd.indexOf(c) === -1});
