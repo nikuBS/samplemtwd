@@ -77,23 +77,15 @@ class MyTJoinMyPlanAdd extends TwViewController {
         });
       }
       // 부가상품에 스마트콜Pick이 있는 경우
-      const smartCpProd = wirelessAddProd.additions.find(item => item.prodId === 'NA00006399');
-      if (smartCpProd) {
-        // 스마트콜Pick 하위 상품 목록
-        const spliceSmartCpProds: any = [];
+      if (wirelessAddProd.additions.filter(item => item.prodId === 'NA00006399').length > 0) {
+        // 스마트콜Pick 하위 상품 목록 - 하위 상품 목록은 노출 할 필요가 없어 하위 아이템 추가하는 로직 제거
         // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
         smartCallPickProd.forEach((pProd) => {
           const smtCpItemIdx = wirelessAddProd.additions.findIndex(wProd => wProd.prodId === pProd.prod_id);
           if (smtCpItemIdx > -1) {
-            spliceSmartCpProds.push(wirelessAddProd.additions[smtCpItemIdx]);
             wirelessAddProd.additions.splice(smtCpItemIdx, 1);
           }
         });
-        // 스마트 CallPick 아이템에 하위로 옵션상품 추가
-        const smartCpProdIndex = wirelessAddProd.additions.findIndex(item => item.prodId === 'NA00006399');
-        if (smartCpProdIndex > -1) {
-          wirelessAddProd.additions[smartCpProdIndex].childItems = spliceSmartCpProds;
-        }
       }
       res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...wirelessAddProd });
     });
@@ -156,6 +148,11 @@ class MyTJoinMyPlanAdd extends TwViewController {
     return 0;
   }
 
+  /**
+   * 스마트콜 Pick 상품 조회
+   * @param svcInfo
+   * @private
+   */
   private _smartCallPickProduct(svcInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0185, {}, {
       svcMgmtNum: svcInfo.svcMgmtNum,
