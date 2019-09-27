@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="cont-box nogaps">
-                    <div class="add-prd-wrap">
+                    <div class="add-prd-wrap ex-service">
                         <div class="contents-empty fe-empty <%= additions.length > 0 ? 'none' : '' %>" aria-hidden="<%= additions.length > 0 %>">
                             <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                             <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
@@ -76,8 +76,9 @@
                                     </span>
                                 <% } %>
                                 <% if (addition.childItems) { %>
+                                    <div class="detail">
                                     <% for (var idx = 0; idx < addition.childItems.length; idx++) { %>
-                                    <dl class="show-data detail">
+                                    <dl class="show-data">
                                         <% var additionChild = addition.childItems[idx]; %>
                                         <dt><%= additionChild.prodNm %></dt>
                                         <dd>
@@ -89,6 +90,7 @@
                                         </dd>
                                     </dl>
                                     <% } %>
+                                    </div>
                                 <% } %>
                             </li>
                             <% }); %>
