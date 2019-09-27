@@ -1,0 +1,285 @@
+<%#
+* @file product.mobileplan-add.join.smartcall-pick.html
+* @author
+* @since 2019.09.30 
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60 txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
+                        <h3 class="tit-big"><%= prodRedisInfo.summary.prodNm %></h3>
+                    </div>
+                    <div class="list-comp-input type01 production-pick-wrap ">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01-big select_group1" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="" title="인피니티 상품 혜택" aria-labelledby="aria-comp-radio1">
+                                        <div class="comp-list-layout" id="aria-comp-radio1">
+                                            <span class="ico ico-recommend"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">Best Pick!</span>
+                                                <span class="stext">콜키퍼 / 컬러링 / 착신전환일반 / <br>통화가능통보플러스 / 개별통화수신거부</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01-big select_group2" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="" title="인피니티 상품 혜택" aria-labelledby="aria-comp-radio2">
+                                        <div class="comp-list-layout" id="aria-comp-radio2">
+                                            <span class="ico ico-desired"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">내맘대로 상품 선택</span>
+                                                <span class="stext">원하는 상품 5개 선택</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ti-caption-gray">
+                    <h3 class="tit">상품선택</h3>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz callPick">
+                    <div class="list-comp-input-agree type01">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <div class="check-count">
+                                    <span class="tit">(부가세포함)</span><span class="byte"><span id='selectedCnt' class="byte-current">0</span>/<span class="byte-total">5</span>건 선택</span>
+                                </div>
+                                <ul class="select-list list-comp-thumnail" role="group">
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod01' value="NA00004343" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">콜키퍼
+                                                    <% if(multiAdditionInfo1.NA00004343 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">미처 못 받은 전화 연락을 문자로 받아볼 수 있어요</span>
+                                                    <span class="btext">정상가 : <strong>500원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod02' value="NA00000282" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">컬러링
+
+                                                    <% if(multiAdditionInfo1.NA00000282 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">나만의 통화 연결음을 설정할 수 있어요</span>
+                                                    <span class="btext">정상가 : <strong>990원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>                                        
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod03' value="NA00000288" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">통화가능통보플러스
+                                                    <% if(multiAdditionInfo1.NA00000288 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">상대방 통화가 끝나면 알려드리니 걱정 없어요</span>
+                                                    <span class="btext">정상가 : <strong>770원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod04' value="NA00001509" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">안심문자
+                                                    <% if(multiAdditionInfo1.NA00001509 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">내가 보낸 문자가 잘 도착했는지 확인할 수 있어요</span>
+                                                    <span class="btext">정상가 : <strong>990원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod05' value="NA00004689" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">T안심콜
+                                                    <% if(multiAdditionInfo1.NA00004689 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">050 안심번호 3개로 개인정보를 철저히 보호하세요</span>
+                                                    <span class="btext">정상가 : <strong>2,200원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod06' value="NA00000273" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">개별통화수신거부
+                                                    <% if(multiAdditionInfo1.NA00000273 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">원치 않는 전화나 문자는 차단하세요</span>
+                                                    <span class="btext">정상가 : <strong>2,200원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod07' value="NA00005172" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">T ARS
+                                                    <% if(multiAdditionInfo1.NA00005172 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">나만의 자동 응답 사서함을 직접 만들어보세요</span>
+                                                    <span class="btext">정상가 : <strong>1,650원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod08' value="NA00000278" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">자동연결(유료)
+                                                    <% if(multiAdditionInfo1.NA00000278 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">전화를 못 받는 상황에 다른 번호로 연결해드려요</span>
+                                                    <span class="btext">정상가 : <strong>990원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod09' value="NA00003708" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">친구찾기(앱정액제)
+                                                    <% if(multiAdditionInfo1.NA00003708 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">친구나 가족의 위치가 궁금할 때 사용하세요</span>
+                                                    <span class="btext">정상가 : <strong>1,650원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod10' value="NA00001350" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">착신전환일반
+                                                    <% if(multiAdditionInfo1.NA00001350 !== 'N'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                    <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">전화가 오면 다른 번호로 돌려 받을 수 있어요</span>
+                                                    <span class="btext">정상가 : <strong>1,650원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="checkbox" class='sub_prod11' value="NA00004195" title="상품 선택" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit">T메모링
+                                                        <% if(multiAdditionInfo2.isAdditionUse === 'Y'){ %>
+                                                        <span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span>
+                                                        <% } %>
+                                                    </span></span>
+                                                    <span class="ptext">중요한 일정과 메모를 들려 드려요</span>
+                                                    <span class="btext">정상가 : <strong>990원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip" aria-haspopup="true" id="TC000080">서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok">설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+<% include ../../../components/mobileplan-add/product.line.onlynumber.component.html %>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoinSmartCallPick($('.wrap'), '<%= prodId %>', 'PROD_SELECT');
+  });
+</script>
+<% include ../../../components/end.component.html %>

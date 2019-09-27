@@ -35627,6 +35627,28 @@ body.apphome .section-box {
 .pg-link-list + .pg-link-list {border-top:1px solid #d7d7d7; margin-top:1rem; padding-top:0.5rem;}
 .pg-link-list li.tod-linktype2 .stxt {display:inline-block; padding-left:0.125rem; font-size:0.75rem; color:#858585;}
 
+/* 190904 [OP002-3539] T통화꾸러미(가칭) */
+.production-pick-wrap .select-list > li.type01-big:before {position: absolute;top: 50%!important; right: 1rem;-webkit-transform: translate(0, -50%);transform: translate(0, -50%);}
+.production-pick-wrap .comp-list-layout {padding: 0.938rem 2rem 0.938rem 4.4rem!important;}
+.production-pick-wrap .comp-list-layout .ico-recommend {position: absolute; display: inline-block;top: 1.9rem;left:0; width: 3.75rem;height: 3.75rem;background: url(/img/ico/ico-best-pick.png);background-size: 3.75rem;}
+.production-pick-wrap .comp-list-layout .ico-desired {position: absolute; display: inline-block;top: 1.2rem;left:0; width: 3.75rem;height: 3.75rem;background: url(/img/ico/ico-goods.png);background-size: 3.75rem;} 
+.callPick  .list-comp-input-agree.type01 .select-list > li .ptext{margin: 0;font-size:0.81rem; color:#666;}
+.callPick  .list-comp-input-agree.type01 .select-list > li .btext{display: block; font-size:0.88rem;}
+.callPick .list-comp-input-agree.type01 .select-list > li .checkbox.type01:before{top:35%;}
+.callPick .badge {display: inline-block; overflow: hidden; background: url(/img/ico/badge-use.png) no-repeat center; background-size: 100% 100%; width: 3.25rem; height: 1rem;} /* 190920 [OP002-3539] 수정_01 */
+.callPick .badge-pic {display: inline-block; overflow: hidden; background: url(/img/ico/badge-pick-use.png) no-repeat center; background-size: 100% 100%; width: 5.438rem; height: 1rem;} /* 190920 [OP002-3539] 추가_01 */
+.callPick .check-count{padding:0.844rem 0;}
+.callPick .check-count .tit {font-size:0.813rem;color:#959595;}
+.callPick .check-count .byte {display: inline-block;float: right; padding:0;}
+.callPick .check-count .byte-current{color:#f76252;}
+.callPick .check-count .byte-total{color:#000;}
+.ex-service li .lineinfo-user .info-title {font-size:1rem;}
+.ex-service .list-comp-lineinfo li button .lineinfo-data, .ex-service .list-comp-lineinfo li a.link .lineinfo-data{padding-right:0;}           
+.ex-service .detail{padding-top:1.38rem;}
+.ex-service .detail dl.show-data{display:table;width:100%;font-size: 0.88rem;color:#666; padding: 0.19rem 0;}
+.ex-service .detail dl.show-data dt{display:table-cell;}
+.ex-service .detail dl.show-data dd{display:table-cell;text-align: right;}
+
 /* 190909 [OP002-3626] 5GX 시간권 설정 */
 .user-month-bill .detail-bill.type1 .bt-link-tx {padding:0 !important; margin:0 !important;}
 
