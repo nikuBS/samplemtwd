@@ -1300,3 +1300,83 @@ export const HAPPYCOM_SEARCH_OPTIONS = {
 export const MYT_JOIN_WIRE_NUMBER_CHANGE = {
   TITLE: '전화 번호변경'
 };
+
+export const SMART_CALL_PICK = [
+  {
+    prodNm: '콜키퍼',
+    descri: '미처 못 받은 전화 연락을 문자로 받아볼 수 있어요',
+    amount: '500',
+    value: 'NA00004343',
+    checked: false
+  },
+  {
+    prodNm: '컬러링',
+    descri: '나만의 통화 연결음을 설정할 수 있어요',
+    amount: '990',
+    value: 'NA00000282',
+    checked: false
+  },
+  {
+    prodNm: '통화가능통보플러스',
+    descri: '상대방 통화가 끝나면 알려드리니 걱정 없어요',
+    amount: '770',
+    value: 'NA00000288',
+    checked: false
+  },
+  {
+    prodNm: '안심문자',
+    descri: '내가 보낸 문자가 잘 도착했는지 확인할 수 있어요',
+    amount: '990',
+    value: 'NA00001509',
+    checked: false
+  },
+  {
+    prodNm: 'T안심콜',
+    descri: '050 안심번호 3개로 개인정보를 철저히 보호하세요',
+    amount: '2,200',
+    value: 'NA00004689',
+    checked: false
+  },
+  {
+    prodNm: '개별통화수신거부',
+    descri: '원치 않는 전화나 문자는 차단하세요',
+    amount: '2,200',
+    value: 'NA00000273',
+    checked: false
+  },
+  {
+    prodNm: 'T ARS',
+    descri: '나만의 자동 응답 사서함을 직접 만들어보세요',
+    amount: '1,650',
+    value: 'NA00005172',
+    checked: false
+  },
+  {
+    prodNm: '자동연결(유료)',
+    descri: '전화를 못 받는 상황에 다른 번호로 연결해드려요',
+    amount: '990',
+    value: 'NA00000278',
+    checked: false
+  },
+  {
+    prodNm: '친구찾기_앱정액제',
+    descri: '친구나 가족의 위치가 궁금할 때 사용하세요',
+    amount: '1,650',
+    value: 'NA00003708',
+    checked: false
+  },
+  {
+    prodNm: '착신전환일반',
+    descri: '전화가 오면 다른 번호로 돌려 받을 수 있어요',
+    amount: '1,650',
+    value: 'NA00001350',
+    checked: false
+  },
+  {
+    prodNm: 'T메모링',
+    descri: '중요한 일정과 메모를 들려 드려요',
+    amount: '990',
+    value: 'NA00004195',
+    checked: false
+  }
+];

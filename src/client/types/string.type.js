@@ -828,6 +828,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A99: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지 후 사용하시던 번호는 당일 재사용이 불가합니다. 서비스를 해지 하시겠습니까?', BUTTON: '해지하기' },
   ALERT_3_A100: { TITLE: '미성년자 옵션 선택 안내', MSG: 'FLO 앤 데이터 월정액 무료 / wavve 앤 데이터 월정액 무료 이용을 원하실 경우 고객센터 또는 대리점을 통해 법정대리인 동의 후 이용해주시기 바랍니다.\n(이미 해당 상품을 유료로 이용중인 고객님께서는 옵션 선택이 가능합니다.)' },
   ALERT_3_A101: { TITLE: '', MSG: '미성년자 고객님께서는 고객센터 또는 대리점을 통해 법정대리인 동의 후 해당 옵션 선택이 가능합니다.' },
+  ALERT_3_A102: { TITLE: '알림', MSG: '5개의 상품을 선택해주세요.' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -1003,7 +1004,8 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   INFO_SETTING_SUCCESS: '정보 입력 완료',
   NA00004073_02: '희망번호',
   nApp_7476_01: '결합회선',
-  nApp_7475_01: '배송정보 등록완료'
+  nApp_7475_01: '배송정보 등록완료',
+  PROD_SELECT: '상품 선택'
 };
 
 Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {

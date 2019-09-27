@@ -43,10 +43,12 @@ import ProductMobileplanAddJoinTFamily from './controllers/mobileplan-add/join/p
 import ProductMobileplanAddJoin5gxWatchtab from './controllers/mobileplan-add/join/product.mobileplan-add.join.5gx-watchtab.controller';
 import ProductMobileplanAddJoin5gxVRpack from './controllers/mobileplan-add/join/product.mobileplan-add.join.5gx-vrpack.controller';
 import ProductMobileplanAddJoinNumberPlus2nd from './controllers/mobileplan-add/join/product.mobileplan-add.join.number-plus2nd.controller';
+import ProductMobileplanAddJoinSmartCallPick from './controllers/mobileplan-add/join/product.mobileplan-add.join.smartcall-pick.controller';
 import ProductMobileplanAddSettingCombineLine from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.combine-line.controller';
 import ProductMobileplanAddSettingSignatureLine from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.signature-line.controller';
 import ProductMobileplanAddSetting5gxWatchtab from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.5gx-watchtab.controller';
 import ProductMobileplanAddSettingNumberPlus2nd from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.number-plus2nd.controller';
+import ProductMobileplanAddSettingSmartCallPick from './controllers/mobileplan-add/setting/product.mobileplan-add.setting.smartcall-pick.controller';
 import ProductMobileplanAddLookupPayment from './controllers/mobileplan-add/lookup/product.mobileplan-add.lookup.payment.controller';
 
 import ProductWire from './controllers/wireplan/product.wireplan.controller';
@@ -143,11 +145,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan-add/join/5gx-watchtab', controller: ProductMobileplanAddJoin5gxWatchtab });
     this.controllers.push({ url: '/mobileplan-add/join/5gx-vrpack', controller: ProductMobileplanAddJoin5gxVRpack });
     this.controllers.push({ url: '/mobileplan-add/join/number-plus2nd', controller: ProductMobileplanAddJoinNumberPlus2nd });
+    this.controllers.push({ url: '/mobileplan-add/join/smartcall-pick', controller: ProductMobileplanAddJoinSmartCallPick });
     this.controllers.push({ url: '/mobileplan-add/join', controller: ProductMobileplanAddJoin });
     this.controllers.push({ url: '/mobileplan-add/setting/signature-line', controller: ProductMobileplanAddSettingSignatureLine });
     this.controllers.push({ url: '/mobileplan-add/setting/combine-line', controller: ProductMobileplanAddSettingCombineLine });
     this.controllers.push({ url: '/mobileplan-add/setting/5gx-watchtab', controller: ProductMobileplanAddSetting5gxWatchtab });
     this.controllers.push({ url: '/mobileplan-add/setting/number-plus2nd', controller: ProductMobileplanAddSettingNumberPlus2nd });
+    this.controllers.push({ url: '/mobileplan-add/setting/smartcall-pick', controller: ProductMobileplanAddSettingSmartCallPick });
     this.controllers.push({ url: '/mobileplan-add/lookup/payment', controller: ProductMobileplanAddLookupPayment });
     this.controllers.push({ url: '/mobileplan-add/terminate', controller: ProductMobileplanAddTerminate });
 
