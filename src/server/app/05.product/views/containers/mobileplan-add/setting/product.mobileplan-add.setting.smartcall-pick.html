@@ -10,9 +10,9 @@
         <ul></ul>
     </div>
 <!--// #skip_navigation -->
-<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup nobg h60 popup-static txt-screed"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
@@ -34,7 +34,6 @@
                                 </div>
                                 <!-- 2019.01.23 title값 수정 -->
                                 <ul class="select-list list-comp-thumnail" role="group">
-                                    <%= JSON.stringify(smartCallPick) %>
                                     <% smartCallPick.forEach(function(row){ %>
                                     <li>
                                         <div class="checkbox type01 <%= row.checked ? 'checked' : null %>" role="checkbox" aria-checked="<%= row.checked ? true : false %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
@@ -90,7 +89,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddSettingSmartCallPick($('.wrap'), '<%= prodId %>', '<%= vasPackCnt %>', '<%- escape(JSON.stringify(smartCallPick)) %>');
+    new Tw.ProductMobileplanAddSettingSmartCallPick($('.wrap'), '<%= prodId %>', '<%- escape(JSON.stringify(smartCallPick)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
