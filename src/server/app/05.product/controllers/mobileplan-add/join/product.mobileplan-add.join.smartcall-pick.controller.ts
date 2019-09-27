@@ -78,14 +78,29 @@ class ProductMobileplanAddJoinSmartCallPick extends TwViewController {
             }));
           }
       }
+      const result = multiAdditionInfo1.result,
+            usedProd: any[] = [];
+      for ( const key in result ) {
+        if ( result [key] !== 'N') {
+          usedProd.push(key);
+        }
+      }
+      if (multiAdditionInfo2.result.isAdditionUse === 'Y') {
+        usedProd.push('NA00004195');
+      }
+      let smartCallPick = SMART_CALL_PICK.map(function(e) {
+        let row = Object.assign({}, e);
+        row.checked = usedProd.filter(p => row.value === p).length > 0;
+        return row;
+      });
+
 
       res.render('mobileplan-add/join/product.mobileplan-add.join.smartcall-pick.html', {
         ...renderCommonInfo, prodId,
         isApp: BrowserHelper.isApp(req),
         basicInfo: basicInfo.result,
-        multiAdditionInfo1: multiAdditionInfo1.result,
-        multiAdditionInfo2: multiAdditionInfo2.result,
         prodRedisInfo: prodRedisInfo.result,
+        smartCallPick: smartCallPick
       });
     });
   }
