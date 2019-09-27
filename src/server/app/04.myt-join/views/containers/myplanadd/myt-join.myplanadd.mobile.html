@@ -75,6 +75,21 @@
                                         <% }); %>
                                     </span>
                                 <% } %>
+                                <% if (addition.childItems) { %>
+                                    <% for (var idx = 0; idx < addition.childItems.length; idx++) { %>
+                                    <dl class="show-data detail">
+                                        <% var additionChild = addition.childItems[idx]; %>
+                                        <dt><%= additionChild.prodNm %></dt>
+                                        <dd>
+                                            <% if (/^[0-9,]+$/.test(additionChild.basFeeTxt)) { %>
+                                            <span class="number tx-bold"><%= additionChild.basFeeTxt %>원</span>
+                                            <% } else { %>
+                                            <span class="number tx-bold"><%= additionChild.basFeeTxt || '무료' %></span>
+                                            <% } %>
+                                        </dd>
+                                    </dl>
+                                    <% } %>
+                                <% } %>
                             </li>
                             <% }); %>
                         </ul>
