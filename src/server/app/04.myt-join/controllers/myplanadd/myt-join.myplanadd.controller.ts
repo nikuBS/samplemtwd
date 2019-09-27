@@ -1,10 +1,12 @@
 /**
  * @file 나의 부가서비스 < 나의 가입 정보 < MyT
  * @author Jiyoung Jo
+ * @editor Kim InHwan
  * @since 2018.09.19
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
+import { Observable } from 'rxjs/Observable';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
@@ -27,7 +29,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
     super();
   }
-  
+
   /**
    * @desc 화면 랜더링
    * @param  {Request} _req
@@ -40,18 +42,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
    */
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     if (svcInfo.svcAttrCd.includes('M')) {  // 모바일 회선일 경우
-      this._getMobileAdditions().subscribe(mobile => {
-        if (mobile.code) {
-          return this.error.render(res, {
-            ...mobile,
-            svcInfo: svcInfo,
-            pageInfo: pageInfo,
-            title: '나의 부가서비스'
-          });
-        }
-
-        res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...mobile });
-      });
+      this._getMobileAdditions.apply(this, [res, svcInfo, pageInfo]);
     } else {  // 유선 회선일 경우
       this._getWireAdditions().subscribe(wire => {
         if (wire.code) {
@@ -72,23 +63,39 @@ class MyTJoinMyPlanAdd extends TwViewController {
    * @desc 무선 부가서비스 가져오기
    * @private
    */
-  private _getMobileAdditions = () => {  // 무선 가입 부가서비스 가져오기
-    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
+  private _getMobileAdditions = (res, svcInfo, pageInfo) => {  // 무선 가입 부가서비스 가져오기
+    Observable.combineLatest(
+        this._wirelessAdditionProduct(),
+        this._smartCallPickProduct(svcInfo)
+    ).subscribe(([wirelessAddProd, smartCallPickProd]) => {
+      if (wirelessAddProd.code) {
+        return this.error.render(res, {
+          ...wirelessAddProd,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo,
+          title: '나의 부가서비스'
+        });
       }
-
-      return {
-        additions: (resp.result.addProdList || []).map(this._convertAdditions),
-        roaming: resp.result.roamingProd ? // 가입된 로밍 요금제가 있을 경우
-          {
-            ...resp.result.roamingProd,
-            addRoamingProdCnt: resp.result.roamingProd.recentlyJoinsProdNm ?
-              Number(resp.result.roamingProd.addRoamingProdCnt) - 1 :
-              Number(resp.result.roamingProd.addRoamingProdCnt)
-          } :
-          {}
-      };
+      // 부가상품에 스마트콜Pick이 있는 경우
+      const smartCpProd = wirelessAddProd.additions.find(item => item.prodId === 'NA00006399');
+      if (smartCpProd) {
+        // 스마트콜Pick 하위 상품 목록
+        const spliceSmartCpProds: any = [];
+        // 부가 상품에 조회된 항목에서 스마트콜Pick 옵션 상품 분리
+        smartCallPickProd.forEach((pProd) => {
+          const smtCpItemIdx = wirelessAddProd.additions.findIndex(wProd => wProd.prodId === pProd.prod_id);
+          if (smtCpItemIdx > -1) {
+            spliceSmartCpProds.push(wirelessAddProd.additions[smtCpItemIdx]);
+            wirelessAddProd.additions.splice(smtCpItemIdx, 1);
+          }
+        });
+        // 스마트 CallPick 아이템에 하위로 옵션상품 추가
+        const smartCpProdIndex = wirelessAddProd.additions.findIndex(item => item.prodId === 'NA00006399');
+        if (smartCpProdIndex > -1) {
+          wirelessAddProd.additions[smartCpProdIndex].childItems = spliceSmartCpProds;
+        }
+      }
+      res.render('myplanadd/myt-join.myplanadd.mobile.html', { svcInfo, pageInfo, ...wirelessAddProd });
     });
   }
 
@@ -118,14 +125,14 @@ class MyTJoinMyPlanAdd extends TwViewController {
     return {
       ...addition,  // 추가작업 불필요한 속성들 스프레드
       ...(addition.btnList && addition.btnList.length > 0 ? // 버튼 리스트가 있을 경우
-        {
-          btnList: addition.btnList
-            .filter(btn => {
-              return btn.btnTypCd === PLAN_BUTTON_TYPE.SET && addition.prodSetYn === 'Y'; // 설정 버튼이 있고, 어드민에서 설정버튼 노출 Y일 경우(가입, 해지버튼 미노출)
-            })
-          // .sort(this._sortButtons) // 해지버튼을 제일 뒤에 노출해달라는 요구사항이 있어 추가 -> 설정 버튼 외 미노출로 변경되어 삭제
-        } :
-        {}),
+          {
+            btnList: addition.btnList
+                .filter(btn => {
+                  return btn.btnTypCd === PLAN_BUTTON_TYPE.SET && addition.prodSetYn === 'Y'; // 설정 버튼이 있고, 어드민에서 설정버튼 노출 Y일 경우(가입, 해지버튼 미노출)
+                })
+            // .sort(this._sortButtons) // 해지버튼을 제일 뒤에 노출해달라는 요구사항이 있어 추가 -> 설정 버튼 외 미노출로 변경되어 삭제
+          } :
+          {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       // [OP002-3974] 신규 변경사항 - 유료만 보기 탭 선택시 유료 및 상세참조 부가서비스 카운팅 개수 출력
       isNotFree: addition.payFreeYn === 'N' || addition.payFreeYn === 'Y' && PRODUCT_CALLPLAN.SEE_CONTENTS.includes(addition.basFeeTxt),
@@ -133,7 +140,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
     };
   }
 
-  
+
   /**
    * @desc 등록일 오름차순으로 보이도록 설정
    * @private
@@ -147,6 +154,42 @@ class MyTJoinMyPlanAdd extends TwViewController {
     }
 
     return 0;
+  }
+
+  private _smartCallPickProduct(svcInfo: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0185, {}, {
+      svcMgmtNum: svcInfo.svcMgmtNum,
+      svcNum: svcInfo.svcNum,
+      custNum: svcInfo.custNum
+    }).map( resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+      return resp.result.listSmartPick;
+    });
+  }
+
+  /**
+   * @desc 무선 부가서비스 상품 조회
+   * @private
+   */
+  private _wirelessAdditionProduct(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+      return {
+        additions: (resp.result.addProdList || []).map(this._convertAdditions),
+        roaming: resp.result.roamingProd ? // 가입된 로밍 요금제가 있을 경우
+            {
+              ...resp.result.roamingProd,
+              addRoamingProdCnt: resp.result.roamingProd.recentlyJoinsProdNm ?
+                  Number(resp.result.roamingProd.addRoamingProdCnt) - 1 :
+                  Number(resp.result.roamingProd.addRoamingProdCnt)
+            } :
+            {}
+      };
+    });
   }
 }
 
