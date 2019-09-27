@@ -43,7 +43,7 @@
                         <ul class="list-comp-lineinfo">
                             <% additions.map(addition => { 
                                 const hasButtons = addition.btnList && addition.btnList.length > 0, hasLink = addition.prodLinkYn === "Y"; %>
-                            <li class="<%= hasButtons?'add-con':''%>" data-isFree="<%= addition.payFreeYn === 'Y' %>">
+                            <li class="<%= hasButtons?'add-con':''%>" data-isFree="<%= !addition.isNotFree %>">
                                 <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
                                 <% if (hasLink) { %>
                                 <a href="/product/callplan?prod_id=<%= addition.linkProdId || addition.prodId %>" class="link">
@@ -52,7 +52,7 @@
                                 <% } %>
                                     <div class="lineinfo-user">
                                         <span class="info-title"><%= addition.prodNm %></span>
-                                        <span class="info-sub2">가입일 <%= addition.scrbDt %></span>    
+                                        <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
                                     </div>
                                     <div class="lineinfo-data">
                                         <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
@@ -74,6 +74,21 @@
                                             <button class="bt-tx-blue fe-btn-link" data-url="<%= btn.btnLinkUrl %>" data-prod-id="<%= addition.linkProdId || addition.prodId %>"><%= btn.btnNm %></button>
                                         <% }); %>
                                     </span>
+                                <% } %>
+                                <% if (addition.childItems) { %>
+                                    <% for (var idx = 0; idx < addition.childItems.length; idx++) { %>
+                                    <dl class="show-data detail">
+                                        <% var additionChild = addition.childItems[idx]; %>
+                                        <dt><%= additionChild.prodNm %></dt>
+                                        <dd>
+                                            <% if (/^[0-9,]+$/.test(additionChild.basFeeTxt)) { %>
+                                            <span class="number tx-bold"><%= additionChild.basFeeTxt %>원</span>
+                                            <% } else { %>
+                                            <span class="number tx-bold"><%= additionChild.basFeeTxt || '무료' %></span>
+                                            <% } %>
+                                        </dd>
+                                    </dl>
+                                    <% } %>
                                 <% } %>
                             </li>
                             <% }); %>
@@ -97,13 +112,13 @@
                                         <span class="info-title">
                                         <% if (roaming.recentlyJoinsProdNm) { %>
                                             <%= roaming.recentlyJoinsProdNm %>
-                                            <% if (roaming.addRoamingProdCnt > 0) { %> 
+                                            <% if (roaming.addRoamingProdCnt > 0) { %>
                                                 <span class="etc-num">외 <%= roaming.addRoamingProdCnt %>건</span>
                                             <% } %>
                                         <% } else { %>
                                             <%= roaming.addRoamingProdCnt %>건
                                         <% } %>
-                                        <span class="ico"><span class="blind">자세히 보기</span></span>
+                                        <span class="ico"><span class="blind">자세히 보기</span></span></span>
                                     </div>
                                 </a>
                             </li>

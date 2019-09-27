@@ -24,7 +24,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @desc 초기화
    * @private
    */
-  _init: function() {  
+  _init: function() {
     this._totalCount = Number(this.$container.find('span.counts > em').text()); // 가입 부가서비스 총 갯수 저장
     this._getSvcInfo();
   },
@@ -56,12 +56,12 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    */
   _getSvcInfo: function() {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._successGetSvcInfo, this));
+        .done($.proxy(this._successGetSvcInfo, this));
   },
 
   /**
    * @desc service info 저장
-   * @param {object} resp 
+   * @param {object} resp
    * @private
    */
   _successGetSvcInfo: function(resp) {
@@ -75,7 +75,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @param {Event} e 클릭 이벤트 객체
    * @private
    */
-  _handleShowAllAdditions: function(e) {  
+  _handleShowAllAdditions: function() {
     if (this._totalCount === 0 || this.$all.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
       return;
     }
@@ -98,7 +98,7 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @param {Event} e 클릭 이벤트 객체
    * @private
    */
-  _handleShowPayAdditions: function(e) {  
+  _handleShowPayAdditions: function() {
     if (this._totalCount === 0 || this.$pay.hasClass('on')) { // 가입 부가서비스의 총 갯수가 0 이거나, 이미 전체 보기 상태인 경우 return
       return;
     }
@@ -125,8 +125,8 @@ Tw.MyTJoinMyPlanAdd.prototype = {
    * @private
    */
   _handleClickLink: function(e) {
-    var link = e.currentTarget.getAttribute('data-url'), 
-      prodId = e.currentTarget.getAttribute('data-prod-id');
+    var link = e.currentTarget.getAttribute('data-url'),
+        prodId = e.currentTarget.getAttribute('data-prod-id');
 
     if (this._bpcpService.isBpcp(link)) {
       return this._bpcpService.open(link, this._svcInfo ? this._svcInfo.svcMgmtNum : null, null);
