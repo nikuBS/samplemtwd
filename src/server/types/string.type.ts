@@ -1305,7 +1305,7 @@ export const SMART_CALL_PICK = [
   {
     prodNm: '콜키퍼',
     descri: '미처 못 받은 전화 연락을 문자로 받아볼 수 있어요',
-    amount: '500',
+    amount: '550',
     value: 'NA00004343',
     checked: false
   },
