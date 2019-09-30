@@ -94,9 +94,6 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A102.TITLE);
       return this.$btnSetupOk.prop('disabled', false);
     }
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this.$btnSetupOk.prop('disabled', false);
-
     //스마트콜Pick으로 사용중인 부가서비스와 체크한 부가서비스를 비교하여 추가/삭제 에 대한 설정API 요청
     var checkedProd = $('input[name=subprod]:checked').map(function(e){return this.value}).toArray();
     var usedProd = this._smartCallPick.filter(function(e) { return e.checked}).map(function(e){ return e.value});
@@ -114,6 +111,15 @@ Tw.ProductMobileplanAddSettingSmartCallPick.prototype = {
         prodId: e
       };
     }));
+
+    if(smartKitProdSetList.length === 0){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A103.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A103.TITLE);
+      return this.$btnSetupOk.prop('disabled', false);
+    }
+
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this.$btnSetupOk.prop('disabled', false);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0186, {
       vasPackCnt: '0'+smartKitProdSetList.length,
