@@ -51,8 +51,7 @@ Tw.NTV_CMD = {
   TPLACE_TERMS: 'tplaceTerms',
   WIDGET_SETTING: 'widgetSettings',
   ALARM_5G_CONVERSION: 'alarm5gConversion',
-  SEND_CALENDAR: 'sendCalendar',
-  OPEN_ESIMURL: 'openEsimUrl'
+  SEND_CALENDAR: 'sendCalendar'
 };
 
 Tw.NTV_CODE = {

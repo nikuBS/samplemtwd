@@ -29,7 +29,7 @@ Tw.MainMenuSettingsLocation.prototype = {
     this.$container.on('click', '#fe-view', $.proxy(this._onLink, this));
     this.$container.on('click', '#fe-kidding', $.proxy(this._onKidding, this));
     this.$container.on('click', '#fe-chatbot', $.proxy(this._onChatBotClick, this));
-    this.$container.on('click', '#fe-dsds', $.proxy(this._onDsdsClick, this));
+    this.$container.on('click', '#fe-esim', $.proxy(this._onEsimClick, this));
   },
     /**
    * @function
@@ -47,12 +47,10 @@ Tw.MainMenuSettingsLocation.prototype = {
   },
     /**
    * @function
-   * @desc 임시로 dsds으로 이동
+   * @desc 임시로 eSim으로 이동
    */
-  _onDsdsClick: function(e){
-    new Tw.MainMenuSettingsTempDsds({
-      $element: this.$container
-    }).goNative(e);
+  _onEsimClick: function(){
+    // this._historyService.goLoad('/main/menu/settings/tplaces');
   },
    // To remove
    _onKidding: function () {
