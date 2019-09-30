@@ -1,0 +1,124 @@
+<%#
+* @file product.mobileplan-add.join.smartcall-pick.html
+* @author
+* @since 2019.09.30 
+%>
+<%- include('../../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi" aria-hidden="true">
+    <ul></ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '가입', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
+                        <h3 class="tit-big"><%= prodRedisInfo.summary.prodNm %></h3>
+                    </div>
+                    <div class="list-comp-input type01 production-pick-wrap ">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01-big select_group1" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="" title="인피니티 상품 혜택" aria-labelledby="aria-comp-radio1">
+                                        <div class="comp-list-layout" id="aria-comp-radio1">
+                                            <span class="ico ico-recommend"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">Best Pick!</span>
+                                                <span class="stext">콜키퍼 / 컬러링 / 착신전환일반 / <br>통화가능통보플러스 / 개별통화수신거부</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01-big select_group2" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="" title="인피니티 상품 혜택" aria-labelledby="aria-comp-radio2">
+                                        <div class="comp-list-layout" id="aria-comp-radio2">
+                                            <span class="ico ico-desired"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">내맘대로 상품 선택</span>
+                                                <span class="stext">원하는 상품 5개 선택</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ti-caption-gray">
+                    <h3 class="tit">상품선택</h3>
+                </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz callPick">
+                    <div class="list-comp-input-agree type01">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <div class="check-count">
+                                    <span class="byte"><span id='selectedCnt' class="byte-current">0</span>/<span class="byte-total">5</span>개 선택</span>
+                                </div>
+                                <ul class="select-list list-comp-thumnail" role="group">
+                                    <% smartCallPick.forEach(function(row){ %>
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                            <input type="checkbox" name="subprod" value="<%= row.value %>" title="상품 선택" aria-labelledby="aria-comp-checkbox1"/><!-- 체크상태일 경우 checked="false" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                <div class="layout-text fusion-family ">
+                                                    <span class="mtext"><span class="stit"><%= row.prodNm %>
+                                                            <% if(row.checked){ %><span class="badge badge-merge ml6"><span class="blind">상품 이용중</span></span><% } %>
+                                                    </span></span>
+                                                    <span class="ptext"><%= row.descri %></span>
+                                                    <span class="btext">정상가 : <strong><%= row.amount %>원</strong></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <% }) %>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip" aria-haspopup="true" id="TC000080">서비스 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok">설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+<% include ../../../components/mobileplan-add/product.line.onlynumber.component.html %>
+<% include ../../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoinSmartCallPick($('.wrap'), '<%= prodId %>', 'PROD_SELECT');
+  });
+</script>
+<% include ../../../components/end.component.html %>

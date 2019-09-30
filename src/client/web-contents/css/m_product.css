@@ -1140,3 +1140,6 @@
 .prCont-txt .faq-answer ul {display:table-cell; vertical-align:top; text-align:left;}
 .prCont-txt .faq-answer > ul > li,
 .prCont-txt .faq-answer > ol > li {padding-left:0 !important;}
+
+/* 190926 [OP002-3539] table 수정 */
+.callP_wrap table td{vertical-align: middle!important;}

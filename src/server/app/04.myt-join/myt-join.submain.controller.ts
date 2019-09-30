@@ -5,15 +5,15 @@
  *
  */
 
-import { NextFunction, Request, Response } from 'express';
+import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE, API_NEW_NUMBER_ERROR, API_VERSION, SESSION_CMD} from '../../types/api-command.type';
 import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
-import { NEW_NUMBER_MSG, MYT_SUSPEND_STATE_EXCLUDE } from '../../types/string.type';
-import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import {SVC_ATTR_NAME, MYT_SUSPEND_REASON_CODE, MYT_SUSPEND_MILITARY_RECEIVE_CD, SVC_ATTR_E, SVC_CDGROUP} from '../../types/bff.type';
+import {MYT_SUSPEND_STATE_EXCLUDE, NEW_NUMBER_MSG} from '../../types/string.type';
+import {MYT_JOIN_SUBMAIN_TITLE} from '../../types/title.type';
+import {MYT_SUSPEND_MILITARY_RECEIVE_CD, MYT_SUSPEND_REASON_CODE, SVC_ATTR_E, SVC_ATTR_NAME, SVC_CDGROUP} from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 import BrowserHelper from '../../utils/browser.helper';
 
@@ -78,11 +78,13 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState(),
       this._getLongPausedState(),
+      this._getChangeNumInfoService(),
+      this._wirelessAdditionProduct(),
+      this._smartCallPickProduct(svcInfo)
       // this._getWireFreeCall(data.svcInfo.svcNum), // 성능개선건으로 해당 API 호출 하지 않도록 변경[DV001-15523]
       // this._getOldNumberInfo(), // 성능이슈로 해당 API 호출 하지 않도록 변경 (DV001-14167)
-      this._getChangeNumInfoService()
       // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, /*wirefree,*/ /*oldnum,*/ numSvc/*, banner*/]) => {
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, numSvc, wilp, smcp/*wirefree,*/ /*oldnum,*/ /*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {
         if ( myhs.info ) {
@@ -172,6 +174,11 @@ class MyTJoinSubmainController extends TwViewController {
               data.myAddProduct = data.myAddProduct.productCntInfo;
             }
             data.myAddProduct.addTotCnt = parseInt(data.myAddProduct.addProdPayCnt, 10) + parseInt(data.myAddProduct.addProdPayFreeCnt, 10);
+            // 스마트콜Pick 상품이 있는 경우
+            if (smcp.length > 0) {
+              // 가입된 부가상품모두에서 스마트콜pick 옵션상품 제외
+              data.myAddProduct.addTotCnt = wilp.length - smcp.length;
+            }
             break;
         }
       }
@@ -523,6 +530,37 @@ class MyTJoinSubmainController extends TwViewController {
         // error
         return null;
       }
+    });
+  }
+
+  /**
+   * 스마트콜 Pick 상품 조회
+   * @param svcInfo
+   * @private
+   */
+  private _smartCallPickProduct(svcInfo: any): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_10_0185, {}, {
+      svcMgmtNum: svcInfo.svcMgmtNum,
+      svcNum: svcInfo.svcNum,
+      custNum: svcInfo.custNum
+    }).map( resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return [];
+      }
+      return resp.result.listSmartPick || [];
+    });
+  }
+
+  /**
+   * @desc 무선 부가서비스 상품 조회
+   * @private
+   */
+  private _wirelessAdditionProduct(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_05_0137, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return [];
+      }
+      return resp.result.addProdList || [];
     });
   }
 
