@@ -161,8 +161,9 @@ Tw.ProductRoamingFiInquire.prototype = {
     // 서버에서 내려오는 데이터를 가공
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
-      res[x].show_rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id].name;
-      res[x].impbranch = this._receiveObj[res[x].rental_booth_org_id].code;
+      // res[x].show_rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id].name;
+      res[x].show_rtn_sale_org_id = this._returnObj[res[x].impbranch].name;
+      res[x].expbranch = this._receiveObj[res[x].rental_booth_org_id].code;
       res[x].show_rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
       if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){ // 예약 시작 당일에 예약 취소/수정 버튼 비활성화
@@ -193,7 +194,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     // 핸들바에 바인딩할 데이터를 하나의 필드로 압축(romlist). romlist에 없는 데이터 파싱
     for(var x in list){
       list[x].rental_schd_end_dtm = res.roamTpieList[x].rental_schd_end_dtm;
-      list[x].expbranch = res.roamTpieList[x].rtn_sale_org_id;
+      // list[x].expbranch = res.roamTpieList[x].rtn_sale_org_id;
+      list[x].impbranch = res.roamTpieList[x].rtn_sale_org_id;
       list[x].boothcode = res.roamTpieList[x].rental_booth_org_id;
     }
 
@@ -387,7 +389,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       res.result.rominfo.receive_center_officeHour = this._receiveObj[res.result.rominfo.rental_booth_org_id].officeHour;
       res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rental_sale_org_id].img;
       res.result.rominfo.return_center_officeHour = this._returnObj[res.result.rominfo.rental_sale_org_id].officeHour;
-      res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rental_sale_org_id].name;
+      res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id].name;
       res.result.rominfo.show_rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
       res.result.rominfo.changeCountry = changeCountry;
       res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
@@ -645,8 +647,10 @@ Tw.ProductRoamingFiInquire.prototype = {
     var expbranchnm = this.$inputReturn.text();
     var boothcode = this.$inputReceive.attr('data-booth');
     var boothnm = this.$inputReceive.text();
-    var impbranch = this.$inputReceive.attr('data-center');
-    var expbranch = this.$inputReturn.attr('data-center');
+    // var impbranch = this.$inputReceive.attr('data-center');
+    // var expbranch = this.$inputReturn.attr('data-center');
+    var expbranch = this.$inputReceive.attr('data-center');
+    var impbranch = this.$inputReturn.attr('data-center');
     var rentFrom = this.$inputEditSdate.val().replace(/\-/gi, '');
     var rentTo = this.$inputEditEdate.val().replace(/\-/gi, '');
     var contphonenum = this.$inputPhone.val().replace(/\-/gi, '');
