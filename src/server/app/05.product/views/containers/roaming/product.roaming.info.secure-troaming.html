@@ -20,138 +20,354 @@
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: '자동안심 T 로밍이란?', svcInfo: svcInfo }); %>
     <!--// #header -->
+
+    <!--    신규소스 OP002-0423 - 1 -->
+
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+        <h2 class="blind">내용</h2>
         <div class="container">
-
             <div class="cont-box">
-                <h3 class="tit-type5"><span class="str">로밍,</span><br />하나부터 열까지 새로고침</h3>
-                <div class="loaming-visual mt26">
-                    <img src="<%= CDN %>/img/product/vi-explain-loaming01.png" alt="TBD">
+                <p>해외 여행, 이제 즐거움만 챙겨가세요.</p>
+                <h3 class="tit-type5 mt12">요금 안심에 혜택 안심까지!<br><strong>자동안심 T로밍</strong>이<br>있으니까요.</h3>
+                <div class="loaming-visual">
+                    <img src="<%= CDN %>/img/product/vi-explain-loaming02.png" alt="">
                 </div>
-                <p class="article-type1 bk mt12"><span class="tx-bold">'기간'과 '데이터'만 결정하면 요금제 선택 완료!</span><br>나라 상관 없이 해외 나갈 땐 baro 요금제 하나면 끝!<br>baro 3/4/7GB, baro OnePass 300/500/VIP(기본형, 기간형)</p>
-                <p class="article-type1 mt20">앗! 요금제 가입을 깜빡하셨다고요? 걱정하지 마세요!<br />자동안심 T로밍 음성&middot;데이터 서비스로 요금 걱정 없이<br />안심하고 마음껏 사용하실 수 있습니다.</p>
-                <div class="recommend-charge mt6 rm-autosafe-recomm">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide slide-nopd">
-                                <ul class="horizontal-list useful-goods">
-                                    <li class="fe-roaming-baro3gb">
-                                        <div class="box-wrap">
-                                            <div class="bg1"> <!-- 녹색 -->
-												<button class="txt-tit">baro 3GB</button>
-												<span class="ico"><img src="<%= CDN %>/img/product/rm-baro-exp-banner1.png" alt="baro 3GB"></span>
-												<span class="txt-type1">데이터 3GB + 속도제어</span>
-												<strong class="sum mt40 iblock">29,000원/7일</strong>
-												<span class="txt-type2 iblock">(부가세 포함)</span>
-											</div>
-										</div>
-                                    </li>
-                                    <li class="fe-roaming-baro4gb">
-										<div class="box-wrap">
-											<div class="bg2"> <!-- 보라색 -->
-												<button class="txt-tit">baro 4GB</button>
-												<span class="ico"><img src="<%= CDN %>/img/product/rm-baro-exp-banner3.png" alt="baro 4GB"></span>
-												<span class="txt-type1">데이터 4GB + 속도제어</span>
-												<strong class="sum mt40 iblock">39,000원/30일</strong>
-												<span class="txt-type2 iblock">(부가세 포함)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="fe-roaming-baro7gb">
-                                        <div class="box-wrap">
-                                            <div class="bg1"> <!-- 녹색 -->
-                                                <button class="txt-tit">baro 7GB</button>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/rm-baro-exp-banner5.png" alt="baro 7GB"></span>
-                                                <span class="txt-type1">데이터 7GB + 속도제어</span>
-                                                <strong class="sum mt40 iblock">59,000원/30일</strong>
-                                                <span class="txt-type2 iblock">(부가세 포함)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="fe-roaming-baroOp300">
-                                        <div class="box-wrap">
-                                            <div class="bg2"> <!-- 보라색 -->
-                                                <button class="txt-tit">baro OnePass 300 기본형</button>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/rm-card-onepass300.png" alt="baro OnePass 300 기본형"></span>
-                                                <span class="txt-type1">데이터 300MB + 속도제어</span>
-                                                <strong class="sum mt40 iblock">9,900원/1일</strong>
-                                                <span class="txt-type2 iblock">(부가세 포함)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="fe-roaming-baroOp500">
-                                        <div class="box-wrap">
-                                            <div class="bg1"> <!-- 녹색 -->
-                                                <button class="txt-tit">baro OnePass 500 기본형</button>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/rm-card-onepass500.png" alt="baro OnePass 500 기본형"></span>
-                                                <span class="txt-type1">데이터 500MB + 속도제어</span>
-                                                <strong class="sum mt40 iblock">16,500원/1일</strong>
-                                                <span class="txt-type2 iblock">(부가세 포함)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="fe-roaming-baroOpVip">
-                                        <div class="box-wrap">
-                                            <div class="bg2"> <!-- 보라색 -->
-                                                <button class="txt-tit">baro OnePass VIP 기본형</button>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/rm-card-onepassvip.png" alt="baro OnePass VIP"></span>
-                                                <span class="txt-type1">데이터 무제한/음성 30분/문자 30건</span>
-                                                <strong class="sum mt40 iblock">19,000원/1일</strong>
-                                                <span class="txt-type2 iblock">(부가세 포함)</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                <p class="article-type1 bk">‘자동안심 T로밍’은 해외 로밍 통화, 데이터 이용 시<br>과도한 요금이 청구되지 않도록 이용요금을 제어해주는<br>SK텔레콤만의 서비스입니다.</p>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="rm-autosafe-ct">
+                <div class="rm-autosafe-q q1">
+                    <p>‘잘 도착했어요＇<br>한마디하고 1일 로밍 요금을<br>고스란히 다 낸 적이 있었죠.</p>
+                    <span class="rm-autosafe-arr"></span>
+                </div>
+                <div class="cont-box">
+                    <div class="mt28">
+                        <h4 class="tit-type2">모든 고객님께<br>매일 3분 무료 통화 제공!</h4>
+                        <div class="loaming-visual">
+                            <img src="<%= CDN %>/img/product/rm-autosafe-ct1.png" alt="">
+                        </div>
+                        <ul class="bul-list type2 fs13">
+                            <li>로밍 요금제에 가입하지 않아도 매일 3분까지 해외 음성 통화를 무료로 이용하실 수 있습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="rm-autosafe-q q2">
+                    <p>휴대폰 자동 업데이트 때문에<br>쓰지도 않은 데이터 요금<br>어마어마하게 내고<br>앓아 누울 뻔 했지 뭐야.</p>
+                    <span class="rm-autosafe-arr"></span>
+                </div>
+                <div class="cont-box">
+                    <div class="mt28">
+                        <h4 class="tit-type2">하루 종일 사용해도<br>데이터 요금 무조건 5천 원!</h4>
+                        <div class="loaming-visual">
+                            <img src="<%= CDN %>/img/product/rm-autosafe-ct2.png" alt="">
+                        </div>
+                        <ul class="bul-list type2 fs13">
+                            <li>로밍요금제에 가입하지 않고 로밍 데이터를 이용하시더라도, 얼마를 사용하든 1일 최대 5천 원만 청구됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="rm-autosafe-q q3">
+                    <p>지갑 잃어버려서<br>국내 카드사에 연락하느라<br>통화 요금이 엄청 나왔었죠.</p>
+                    <span class="rm-autosafe-arr"></span>
+                </div>
+                <div class="cont-box">
+                    <div class="mt28">
+                        <h4 class="tit-type2">해외 로밍 통화,<br>어디서든 30분까지 최대 1만 원!</h4>
+                        <div class="loaming-visual">
+                            <img src="<%= CDN %>/img/product/rm-autosafe-ct3.png" alt="">
+                        </div>
+                        <ul class="bul-list type2 fs13">
+                            <li>어디에 있든 매일 30분 이내로 통화하시면 하루 통화료는 1만 원만 청구됩니다.<br>(30분 초과 시 요금은 초당 계산되어 쓰신 만큼만 청구됩니다.)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="rm-autosafe-q q4">
+                    <p>비행기가 연착돼서 꼬인 일정 때문에<br>검색하고 통화하고…<br>요금 신경 쓸 겨를도 없었어요.</p>
+                    <span class="rm-autosafe-arr"></span>
+                </div>
+                <div class="cont-box">
+                    <div class="mt28">
+                        <h4 class="tit-type2">데이터 요금 대폭 할인!<br>음성 요금은 초당 계산!</h4>
+                        <div class="loaming-visual">
+                            <img src="<%= CDN %>/img/product/rm-autosafe-ct4.png" alt="TBD">
+                        </div>
+                        <ul class="bul-list type2 fs13">
+                            <li>기존 데이터 요금에 비해 87.5% 할인된 요금이 적용됩니다.</li>
+                            <li>음성 통화는 초당 계산되어 쓴 만큼만 합리적으로 청구됩니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box nogaps">
+                <ul class="link-long-list">
+                    <li>
+                        <div class="link-long">
+                            <a id="fe-reaming-qanda" href="">‘자동안심 T로밍’에 대해 자주 하는 질문과 답변	<span class="ico"><span class="blind">팝업 열림</span></span></a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box">
+                <strong class="tit-type4 bk block">해외 통화와 로밍 데이터, 더 실속 있고 빠르게 이용하고 싶으시다면?</strong>
+                <p class="article-type1 mt12">같은 비용이지만 더 많은 혜택을 누리는 상품을 선택하세요.<br>추가 요금 걱정 없이 더 빠른 속도를 누리실 수 있는 로밍 정액요금 상품을 추천합니다.</p>
+                <div class="rm-main-recomm mt16">
+                    <div class="productinfoscroll-box" style="display:block">
+                        <div class="widget">
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide slide-nopd">
+                                    <ul class="horizontal-list" style="width: 3901px;">
+                                        <li data-url="/product/callplan?prod_id=NA00006489" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro 3GB</h5>
+                                                    <p class="info"><span class="money money-noleft">29,000</span>원/7일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">3</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006493" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro 4GB</h5>
+                                                    <p class="info"><span class="money money-noleft">39,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">4</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006497" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro 7GB</h5>
+                                                    <p class="info"><span class="money money-noleft">59,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">7</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006491" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro YT 4GB</h5>
+                                                    <p class="info"><span class="money money-noleft">29,000</span>원/7일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">4</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006495" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro YT 5GB</h5>
+                                                    <p class="info"><span class="money money-noleft">39,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">5</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006499" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro YT 8GB</h5>
+                                                    <p class="info"><span class="money money-noleft">59,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">8</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00003196" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro OnePass 300 기본형</h5>
+                                                    <p class="info"><span class="money money-noleft">9,900</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">300</span>MB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005049" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro OnePass 500 기본형</h5>
+                                                    <p class="info"><span class="money money-noleft">16,500</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">500</span>MB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006486" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro OnePass VIP 기본형</h5>
+                                                    <p class="info"><span class="money money-noleft">19,000</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">데이터 무제한</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006226" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T괌사이판 국내처럼</h5>
+                                                    <p class="info"><span class="money money-noleft">무료</span>/30일</p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">국내 데이터</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00006229" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T괌사이판 5천원</h5>
+                                                    <p class="info"><span class="money money-noleft">5,000</span>원/10일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">500</span>MB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005690" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 함께쓰기 3GB</h5>
+                                                    <p class="info"><span class="money money-noleft">55,000</span>원/10일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">3</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005693" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 함께쓰기 6GB</h5>
+                                                    <p class="info"><span class="money money-noleft">77,000</span>원/10일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">6</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005300" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 LongPass 2GB</h5>
+                                                    <p class="info"><span class="money money-noleft">40,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">2</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005505" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 LongPass 3GB</h5>
+                                                    <p class="info"><span class="money money-noleft">50,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">3</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005252" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 LongPass 5GB</h5>
+                                                    <p class="info"><span class="money money-noleft">65,000</span>원/30일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">5</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005632" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro Box 글로벌 기간형</h5>
+                                                    <p class="info"><span class="money money-noleft">7,700</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">1</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005634" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro Box 일본, 미국, 캐나다</h5>
+                                                    <p class="info"><span class="money money-noleft">3,700</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">1</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00005635" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">baro Box 아시아</h5>
+                                                    <p class="info"><span class="money money-noleft">4,700</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">1</span>GB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00004942" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">내집처럼 T로밍 중국 플러스</h5>
+                                                    <p class="info"><span class="money money-noleft">11,000</span>원<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">300</span>MB
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li data-url="/product/callplan?prod_id=NA00004299" class="fe-link-internal">
+                                            <button type="button" class="product-info">
+                                                <div class="product-info-btn">
+                                                    <h5 class="title">T로밍 팅 + 무한톡</h5>
+                                                    <p class="info"><span class="money money-noleft">5,500</span>원/1일<i>(부가세 포함)</i></p>
+                                                </div>
+                                                <div class="type">
+                                                    <span class="str">소용량 콘텐츠 전용</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- .widget -->
                 </div>
             </div>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <div class="cont-box">
-                <h5 class="con-tit0">자동안심 T로밍이란?</h5>
-                <strong class="tit-type3 bk block mt22">SK텔레콤 고객님들에게 제공되는 특별한 혜택!</strong>
-                <p class="article-type1 mt6">음성통화 매일 3분 무료에 음성 하루 30분까지 1만원!<br />국내 이동통신사 최초로 음성요금 초당 적용!</p>
-                <p class="article-type1 mt20">데이터 일 상한 5,000원(부가세 포함)에 이용하실 수 있는 서비스입니다.</p>
-                <div class="loaming-box mt28">
-                    <h4 class="tit-type2">자동안심 T로밍 음성</h4>
-                    <div class="loaming-visual">
-                        <img src="<%= CDN %>/img/product/vi-explain-loaming02.png" alt="TBD">
-                    </div>
-                    <ul class="bul-list type2 fs13">
-                        <li>전고객 매일 3분 음성무료통화로 해외에서 도난 및 분실, 신변 안전 등의 위험 상황에서도 안심하고 통화 가능</li>
-                        <li>무료통화 3분 포함, 하루 최대 30분까지 최대 10,000원(부가세 포함) 부과</li>
-                        <li>음성 수/발신 1분당 과금 기준에서 1초당 과금 기준으로 변경</li>
-                    </ul>
-                </div>
-                <div class="loaming-box mt28">
-                    <h4 class="tit-type2">자동안심 T로밍 데이터</h4>
-                    <div class="loaming-visual">
-                        <img src="<%= CDN %>/img/product/vi-explain-loaming03.png" alt="TBD">
-                    </div>
-                    <ul class="bul-list type2 fs13 mt12">
-                        <li>기존 데이터 종량요금 대비 87.5% 저렴한 파격적인 요금(1패킷당 2.2원에서 0.275원으로 인하 / 1MB = 563원 / 10MB=5,630원 / 부가세 포함)</li>
-                        <li>하루 최대 5,000원(부가세 포함)까지, 데이터를 마음껏 사용</li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
+            <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <!-- Grand open 접근성 수정 -->
                 <ul class="noti-list02">
-                    <li><button type="button" id="RM_16_03_tip_01" class="tip-view-btn" aria-haspopup="true">자동안심 T로밍 음성 <span class="tip-view">TIP</span></button></li>
-                    <li><button type="button" id="RM_16_03_tip_02" class="tip-view-btn" aria-haspopup="true">자동안심 T로밍 데이터 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="RM_16_03_tip_01" aria-haspopup="true" class="tip-view-btn">자동안심 T로밍 음성<span class="tip-view">TIP</span></button></li>
+                    <li><button id="RM_16_03_tip_02" aria-haspopup="true" class="tip-view-btn">자동안심 T로밍 데이터<span class="tip-view">TIP</span></button></li>
                 </ul>
+                <!--// Grand open 접근성 수정 -->
             </div>
-
         </div>
         <!-- #footer -->
         <footer id="fe-all-menu">
@@ -160,13 +376,17 @@
         <!--// #footer -->
     </div>
     <!--// #contents -->
+
+
+    <!--   end of 신규소스 OP002-0423 - 1 -->
+
 </div>
 </body>
 
 <% include ../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.ProductRoamingSecureTroaming($('.wrap'));
-  });
+    $(document).ready(function () {
+        new Tw.ProductRoamingSecureTroaming($('.wrap'));
+    });
 </script>
 <% include ../../components/end.component.html %>
