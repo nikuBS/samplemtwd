@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <!-- Grand open 접근성 수정 -->
+            <li><a href="#contents">본문 바로가기</a></li>
+            <!-- // Grand open 접근성 수정 -->
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom"><!-- 2019.03.25 fixed-btn -> fixed-bottom 변경--><!-- 2018-10-30 클래스변경 -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>팅/ZEM 플랜/안심음성요금</h1><!-- 190826 [OP002-3406] 수정_01 -->
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+
+                	<hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <ul class="link-long-list">
+                            <li>
+                                <div class="link-long">
+                                    <button>팅 선물 조르기
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">팅 선물 조르기 자세히보기</span></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="link-long">
+                                    <button>충전 권한 변경 내역
+                                        <span class="tx-sub">
+                                            <span class="ico"><span class="blind">충전 권한 변경 내역 자세히보기</span></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps">
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new"><!-- 190831 리디자인_01 : class="tab-area new" --><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">이번 달 충전</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a href="">매달 자동충전</a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+												<div class="cont-box">
+													당월 충전 내용입니다.
+												</div>
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+												<div class="cont-box">
+                                                    <!--접근성 수정-->
+													<p class="tabcon-title0">충전 금액<button aria-haspopup="true" class="tip-view" title="충전 금액 정보보기">TIP</button></p> <!-- 2018-10-30 tip 추가 -->
+                                                    <!-- //접근성 수정-->
+                                                    
+                                                    <!-- 190831 리디자인_02 -->
+                                                    <div class="discount-look-ahead type01"><!-- 190831 리디자인_02 :  <div class="discount-look-ahead type01"> 추가 -->
+                                                        <!-- .widget -->
+                                                        <div class="widget">
+    														<div class="widget-box radio">
+    															<!-- <div class="radio-slide"> 190831 리디자인_02 : 삭제 -->
+    																<ul class="select-list" role="radiogroup">
+                                                                        <!-- 190831 리디자인_02 :  
+                                                                            기본 class="radiobox btn-type02"
+                                                                            비활성화 상태일 경우  class="radiobox btn-type02 disabled" 
+                                                                            체크상태일경우 class="radiobox btn-type02 checked"
+                                                                            class="radio-txt ff-tb"
+                                                                        -->
+
+                                                                        <!--접근성 수정-->
+    																	<li class="radiobox btn-type02 disabled" role="radio"><!-- 비활성화 상태일 경우 .disabled 클래스 추가 -->
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio1" disabled /><!-- 비활성화 상태일 경우 disabled -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio1">
+    																			<!-- <span>20,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                20,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02 checked" role="radio"><!-- 체크 상태일 경우 .checked 클래스 추가 -->
+
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio2" checked/><!-- 체크상태일 경우 checked -->
+
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio2">
+    																			<!-- <span>19,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                19,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02" role="radio">
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio3"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio3">
+    																			<!-- <span>18,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                18,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02" role="radio">
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio4" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio4">
+    																			<!-- <span>17,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                17,000원
+    																		</span>
+                                                                        </li>
+                                                                        <!-- //접근성 수정-->
+    																</ul>
+    															<!-- </div> 190831 리디자인_02 : 삭제 -->
+    														</div>
+    													</div>
+                                                        <!-- //.widget -->
+                                                    </div>
+                                                    <!-- //190831 리디자인_02 -->
+
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<!-- 190831 리디자인_03 : 삭제 <hr class="cont-sp type1" aria-hidden="true"/> -->
+
+                    <!-- 2018-10-30 추가 -->
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_03 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">상한금액 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">매달 자동 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">충전 허용금액 변경 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!-- //190831 리디자인_03 -->
+                    <!--// .cont-box -->
+                    <!--// 2018-10-30 추가 -->
+
+                </div>
+                <!-- 2019.03.25 하단버튼 div class="bt-fixed-area"로 감싸고 container 영역 밖으로 이동 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button>충전하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>

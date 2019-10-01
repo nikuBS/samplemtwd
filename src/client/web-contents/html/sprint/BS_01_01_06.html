@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, address=no, email=no" />
+		<link rel="shortcut icon" href="/img/common/favicon.ico" />
+		<link rel="shortcut icon" href="/img/common/favicon.png" />
+		<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+		<meta name="description" content="페이지설명" />
+		<meta name="keywords" content="서비스키워드" />
+		<meta property="og:title" content="SKT 홈페이지" />
+		<meta property="og:site_name" content="SKT" />
+		<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+		<meta property="og:description" content="SKT framework" />
+		<title>SKT</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+		<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+		<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+		<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+		<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+		<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+		<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+		<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+		<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+	</head>
+	<body class="bg-gray">
+		<!-- Grand open 접근성 수정 -->  
+		<!-- #skip_navigation -->
+		<div id="skipNav" class="skip_navi">
+			<ul>
+				<li><a href="#contents">본문 바로가기</a></li>
+			</ul>
+		</div>
+		<!--// #skip_navigation -->
+		<!--// Grand open 접근성 수정 -->
+		<div class="wrap">
+			<!-- #header -->
+			<div id="header" class="header-wrap">
+				<div class="h-belt">
+					<div class="h-default">
+						<div class="h-menu">
+							<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+						</div>
+						<div class="h-tit">ZEM플랜/팅포인트</div><!-- 190923 [OP002-3406] 수정_01 -->
+						<div class="h-serarch">
+							<button class="icon-gnb-search"><span class="blind">검색</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- #contents -->
+			<div id="contents" class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<!-- 190831 리디자인_01 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- //190831 리디자인_01 -->
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="charge-guide-wrap">
+							<div class="cont-noti">
+								<span class="type3">ZEM플랜 워치/주말엔 팅 요금제를 유지하는 동안 매달 3,000 포인트가 12개월/24개월간 적립됩니다.</span><!-- 190923 [OP002-3406] 수정_02 -->
+							</div>
+							<div class="charge-cont mt30">
+								<span class="sub-disc05">ZEM플랜/팅포인트</span><!-- 190923 [OP002-3406] 수정_03 -->
+								<span class="tit tod-txcolor1"><span class="charge-txt">1,642</span>점</span><!-- 190831 리디자인_02 : tx-blue 에서 tod-txcolor1 변경 -->
+							</div>
+
+							<div class="charge-cont">
+								<div class="basic-list bg-type">
+									<ul>
+										<li>
+											<span class="title">총 적립</span>
+											<span class="tx-cont">3,000 점</span>
+										</li>
+										<li>
+											<span class="title">총 사용</span>
+											<span class="tx-cont">1,274 점</span>
+										</li>
+										<li>
+											<span class="title">총 소멸</span>
+											<span class="tx-cont">400 점</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="ti-caption-gray">
+                        <h4 class="tit">상세내역</h4>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                    	<ul class="list-comp-lineinfo type5 no-bt">
+	                        <li>
+	                            <div class="lineinfo-user">
+	                                <span class="info-title">적립</span>
+	                                <span class="info-sub">
+	                                	<span class="elem">기본포인트 적립</span>
+	                                	<span class="elem">2018.10.23.</span>
+	                                </span>
+	                            </div>
+	                            <div class="lineinfo-data">
+	                                <span class="info-title">
+	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
+	                                </span>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="lineinfo-user">
+	                                <span class="info-title">사용</span>
+	                                <span class="info-sub">
+	                                	<span class="elem">요금납부</span>
+	                                	<span class="elem">2018.10.20.</span>
+	                                </span>
+	                            </div>
+	                            <div class="lineinfo-data">
+	                                <span class="info-title">
+	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
+	                                </span>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="lineinfo-user">
+	                                <span class="info-title">사용</span>
+	                                <span class="info-sub">
+	                                	<span class="elem">요금납부</span>
+	                                	<span class="elem">2018.10.10.</span>
+	                                </span>
+	                            </div>
+	                            <div class="lineinfo-data">
+	                                <span class="info-title">
+	                                	<span class="num ff-tg-black">2,000</span><span class="unit ff-tg-medium">점</span>
+	                                </span>
+	                            </div>
+	                        </li>
+	                    </ul>
+
+	                    <div class="btn-more ml16 mr16"><!-- 190831 리디자인_03 : btn-more ml16 mr16 변경 -->
+	                        <button>더 보기</button>
+	                    </div>
+                    </div>
+					<!--// .cont-box -->
+					
+					<!-- .cont-box -->
+					<!-- 190831 리디자인_04 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button type="button" class="btn-tip" aria-haspopup="true">이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!-- //190831 리디자인_04 -->
+					<!--// .cont-box -->
+
+				</div>
+			</div>
+			<!--// #contents -->
+		</div>
+	</body>
+
+</html>

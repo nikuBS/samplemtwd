@@ -25,12 +25,12 @@
         <div id="contents" class="container-wrap">
             <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
             <div class="container noscroll">
-                <% const TYPE_NAMES = ['T끼리 데이터 선물', '데이터 한도 요금', '팅 쿠키즈 안심요금', '팅 요금 선물', '데이터 음성 리필', '전체']; // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
+                <% const TYPE_NAMES = ['T끼리 데이터 선물', '데이터 한도 요금', '팅/ZEM 플랜/안심요금', '팅 요금 선물', '데이터 음성 리필', '전체']; // OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882
                 const list = filterIdx === 5 ? chargeData.all : chargeData.display, DEFALUT_LIST_COUNT = 20; %>
                 <div class="cont-box nogaps">
                     <div class="ti-caption-blue">
                         <div class="num">총 <em><%= list.length %></em>건</div>
-                        <button class="bt-select" id="fe-type" title="최근 충전/선물 내역 보기유형 선택" aria-haspopup="true"> <%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
+                        <button class="bt-select" id="fe-type" title="최근 충전/선물 내역 보기유형 선택" aria-haspopup="true"><%= list.length === 0 ? 'disabled' : '' %><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
                     <div class="cont-box pt0 pb0">
@@ -76,7 +76,7 @@
                         <li><button id="DC_07_tip_04" type="button" class="btn-tip" aria-haspopup="true">T끼리 데이터 선물 내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <li><button id="DC_07_tip_05" type="button" class="btn-tip" aria-haspopup="true">리필 쿠폰 사용내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         <li><button id="DC_07_tip_01" type="button" class="btn-tip" aria-haspopup="true">팅 요금제 충전 선물 내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                        <li><button id="DC_07_tip_02" type="button" class="btn-tip" aria-haspopup="true">>T팅/쿠키즈 요금한도 충전 내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li> <!-- OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882 -->
+                        <li><button id="DC_07_tip_02" type="button" class="btn-tip" aria-haspopup="true">팅/ZEM 플랜 요금한도 충전 내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li> <!-- OP002-3195 [myT] (W-1908-027-03) 쿠키즈 요금제 변경 요청 OP002-3882 -->
                         <li><button id="DC_07_tip_03" type="button" class="btn-tip" aria-haspopup="true">데이터 한도 요금제 충전 내역 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     </ul>
                 </div>
