@@ -44,7 +44,7 @@
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>팅/쿠키즈/안심음성요금</h1>
+                        <h1>팅/ZEM 플랜/안심음성요금</h1><!-- 190826 [OP002-3406] 수정_01 -->
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
 					<div class="cont-box nogaps">
 						<div class="component">
 							<div class="component-box tabs">
-								<div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+								<div class="tab-area new"><!-- 190831 리디자인_01 : class="tab-area new" --><!-- 타입별 탭형태 변환 -->
 									<div class="tab-linker">
 										<ul role="tablist">
 											<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">이번 달 충전</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
@@ -106,40 +106,61 @@
                                                     <!--접근성 수정-->
 													<p class="tabcon-title0">충전 금액<button aria-haspopup="true" class="tip-view" title="충전 금액 정보보기">TIP</button></p> <!-- 2018-10-30 tip 추가 -->
                                                     <!-- //접근성 수정-->
-                                                    <div class="widget">
-														<div class="widget-box radio">
-															<div class="radio-slide">
-																<ul class="select-list" role="radiogroup">
-                                                                    <!--접근성 수정-->
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio1" disabled /><!-- 체크상태일 경우 checked="checked" -->
-																		<span class="radio-txt" id="aria-comp-radio1">
-																			<span>20,000</span><span class="unit">원</span>
-																		</span>
-																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio2" checked/><!-- 체크상태일 경우 checked="false" -->
-																		<span class="radio-txt" id="aria-comp-radio2">
-																			<span>19,000</span><span class="unit">원</span>
-																		</span>
-																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio3"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-																		<span class="radio-txt" id="aria-comp-radio3">
-																			<span>18,000</span><span class="unit">원</span>
-																		</span>
-																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio4" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-																		<span class="radio-txt" id="aria-comp-radio4"></span>
-																			<span>17,000</span><span class="unit">원</span>
-																		</span>
-                                                                    </li>
-                                                                    <!-- //접근성 수정-->
-																</ul>
-															</div>
-														</div>
-													</div>
+                                                    
+                                                    <!-- 190831 리디자인_02 -->
+                                                    <div class="discount-look-ahead type01"><!-- 190831 리디자인_02 :  <div class="discount-look-ahead type01"> 추가 -->
+                                                        <!-- .widget -->
+                                                        <div class="widget">
+    														<div class="widget-box radio">
+    															<!-- <div class="radio-slide"> 190831 리디자인_02 : 삭제 -->
+    																<ul class="select-list" role="radiogroup">
+                                                                        <!-- 190831 리디자인_02 :  
+                                                                            기본 class="radiobox btn-type02"
+                                                                            비활성화 상태일 경우  class="radiobox btn-type02 disabled" 
+                                                                            체크상태일경우 class="radiobox btn-type02 checked"
+                                                                            class="radio-txt ff-tb"
+                                                                        -->
+
+                                                                        <!--접근성 수정-->
+    																	<li class="radiobox btn-type02 disabled" role="radio"><!-- 비활성화 상태일 경우 .disabled 클래스 추가 -->
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio1" disabled /><!-- 비활성화 상태일 경우 disabled -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio1">
+    																			<!-- <span>20,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                20,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02 checked" role="radio"><!-- 체크 상태일 경우 .checked 클래스 추가 -->
+
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio2" checked/><!-- 체크상태일 경우 checked -->
+
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio2">
+    																			<!-- <span>19,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                19,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02" role="radio">
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio3"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio3">
+    																			<!-- <span>18,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                18,000원
+    																		</span>
+    																	</li>
+    																	<li class="radiobox btn-type02" role="radio">
+    																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio4" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+    																		<span class="radio-txt ff-tb" id="aria-comp-radio4">
+    																			<!-- <span>17,000</span><span class="unit">원</span> 190831 리디자인_02 : 삭제 -->
+                                                                                17,000원
+    																		</span>
+                                                                        </li>
+                                                                        <!-- //접근성 수정-->
+    																</ul>
+    															<!-- </div> 190831 리디자인_02 : 삭제 -->
+    														</div>
+    													</div>
+                                                        <!-- //.widget -->
+                                                    </div>
+                                                    <!-- //190831 리디자인_02 -->
+
 												</div>
 											</li>
 										</ul>
@@ -150,21 +171,21 @@
 					</div>
 					<!--// .cont-box -->
 
-					<hr class="cont-sp type1" aria-hidden="true"/>
+					<!-- 190831 리디자인_03 : 삭제 <hr class="cont-sp type1" aria-hidden="true"/> -->
 
                     <!-- 2018-10-30 추가 -->
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-btm">
-                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list02">
-                            <!--접근성 수정-->
-                            <li><button aria-haspopup="true" class="tip-view-btn" title="상한금액 안내 정보보기">상한금액 안내<span class="tip-view"></span>TIP</button></li>
-                            <li><button aria-haspopup="true" class="tip-view-btn" title="요금제 안내 정보보기">요금제 안내<span class="tip-view"></span>TIP</button></li>
-                            <li><button aria-haspopup="true" class="tip-view-btn" title="매달 자동 충전 안내 정보보기">매달 자동 충전 안내<span class="tip-view"></span>TIP</button></li>
-                            <li><button aria-haspopup="true" class="tip-view-btn" title="충전 허용금액 변경 안내 정보보기">충전 허용금액 변경 안내<span class="tip-view"></span>TIP</button></li>
-                            <!-- //접근성 수정-->
+                    <!-- 190831 리디자인_03 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">상한금액 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">매달 자동 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button class="btn-tip" aria-haspopup="true">충전 허용금액 변경 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         </ul>
                     </div>
+                    <!-- //190831 리디자인_03 -->
                     <!--// .cont-box -->
                     <!--// 2018-10-30 추가 -->
 
