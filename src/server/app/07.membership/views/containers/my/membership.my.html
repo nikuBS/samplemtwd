@@ -175,7 +175,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipMy($('.wrap'), '<%= myInfoData.cardReqDt %>');
+    new Tw.MembershipMy($('.wrap'), '<%= myInfoData.cardReqDt %>', JSON.parse('<%- JSON.stringify(myInfoData) %>'));
   });
 </script>
 

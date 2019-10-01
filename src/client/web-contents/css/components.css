@@ -35496,11 +35496,11 @@ body.apphome .section-box {
 .user-month-bill .tod-pay-txt{font-size:1.125rem; margin-bottom:2.5rem; line-height:1.375rem }
 
 /* 190718 [] */
-.rm-main-recomm .productinfoscroll-box ul li{width:11rem}
-.rm-main-recomm .productinfoscroll-box ul li .product-info{width:11rem}
+.rm-main-recomm .productinfoscroll-box ul li{width:13rem}<!-- 190930 수정 -->
+.rm-main-recomm .productinfoscroll-box ul li .product-info{width:13rem}<!-- 190930 수정 -->
 .rm-main-recomm .productinfoscroll-box ul li .product-info .info i{display:block}
-.rm-prd-info .productinfoscroll-box .horizontal-list li{width:11rem}
-.rm-prd-info .productinfoscroll-box .horizontal-list li .product-info{width:11rem}
+.rm-prd-info .productinfoscroll-box .horizontal-list li{width:13rem}<!-- 190930 수정 -->
+.rm-prd-info .productinfoscroll-box .horizontal-list li .product-info{width:13rem}<!-- 190930 수정 -->
 .rm-autosafe-recomm .useful-goods li{width:15.2rem;min-width:15.2rem}
 
 /* 190717 [OP002-2397] Pooq/Flo 100원 프로모션 해지방어 재오퍼링 */
