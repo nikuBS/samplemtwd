@@ -5,7 +5,7 @@
  * @since 2018.12.17
  */
 
-Tw.MembershipMy = function(rootEl, cardReqDt) {
+Tw.MembershipMy = function(rootEl, cardReqDt, myInfoData) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._dateHelper = Tw.DateHelper;
@@ -14,6 +14,7 @@ Tw.MembershipMy = function(rootEl, cardReqDt) {
   this._init();
   this._totoalList = [];
   this._cardReqDt = cardReqDt;
+  this._myInfoData = myInfoData;
 };
 
 Tw.MembershipMy.prototype = {
@@ -284,10 +285,12 @@ Tw.MembershipMy.prototype = {
   _requestReissueInfo: function(e) {
     // 카드 발급 후 2주이내 알럿
     if(this._cardReqDt !== ''){
+      // 발급 받은 날짜 + 15하여 YYMMDD로 리턴, moment.js 사용
       var reissueLimitDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._cardReqDt, 15, 'day', 'YYYYMMDD', 'YYYYMMDD');
       var getDiffDate = Tw.DateHelper.getDifference(reissueLimitDate);
-      
-      if(getDiffDate > 0 ){ // getDiffDate 값이 0보다크면 카드 발급 후 2주 이내
+
+      // getDiffDate 값이 0보다크면 카드 발급 후 2주 이내, this._myInfoData.cardIsueTypCd - 카드정보가 플라스틱 인경우
+      if(getDiffDate > 0 && this._myInfoData.cardIsueTypCd.indexOf('0') !== -1){
         var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
         this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, null, null, $(e.currentTarget));
         return;
