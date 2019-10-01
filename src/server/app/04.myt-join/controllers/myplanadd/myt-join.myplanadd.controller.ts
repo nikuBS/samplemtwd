@@ -126,7 +126,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           } :
           {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
-      // [OP002-3974] 신규 변경사항 - 유료만 보기 탭 선택시 유료 및 상세참조 부가서비스 카운팅 개수 출력
+      // [OP002-4115] 신규 변경사항 - 유료만 보기 탭 선택시 유료 및 상세참조 부가서비스 카운팅 개수 출력
       isNotFree: addition.payFreeYn === 'N' || addition.payFreeYn === 'Y' && PRODUCT_CALLPLAN.SEE_CONTENTS.includes(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDate(addition.scrbDt)
     };
