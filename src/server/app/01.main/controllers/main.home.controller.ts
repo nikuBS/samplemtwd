@@ -6,31 +6,31 @@
  */
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
-import { NextFunction, Request, Response } from 'express';
-import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, SESSION_CMD } from '../../../types/api-command.type';
-import { EXPERIMENT_EXPS_SCRN_ID, MLS_PRCPLN_RC_TYP } from '../../../types/bff.type';
-import FormatHelper from '../../../utils/format.helper';
+import {NextFunction, Request, Response} from 'express';
+import {Observable} from 'rxjs/Observable';
+import {API_CMD, API_CODE, SESSION_CMD} from '../../../types/api-command.type';
 import {
-  HOME_SMART_CARD,
-  LINE_NAME,
-  LOGIN_TYPE,
-  MEMBERSHIP_GROUP,
-  MYT_FARE_BILL_CO_TYPE,
-  SVC_ATTR_E,
-  TPLAN_PROD_ID,
-  TPLAN_SHARE_LIST,
-  UNIT,
-  UNIT_E,
-  UNLIMIT_CODE,
-  PRODUCT_5GX_TICKET_TIME_SKIP_ID,
-  PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID
+    EXPERIMENT_EXPS_SCRN_ID,
+    HOME_SMART_CARD,
+    LINE_NAME,
+    LOGIN_TYPE,
+    MEMBERSHIP_GROUP,
+    MLS_PRCPLN_RC_TYP,
+    MYT_FARE_BILL_CO_TYPE,
+    PRODUCT_5GX_TICKET_TIME_SET_SKIP_ID,
+    PRODUCT_5GX_TICKET_TIME_SKIP_ID,
+    SVC_ATTR_E,
+    TPLAN_PROD_ID,
+    TPLAN_SHARE_LIST,
+    UNIT,
+    UNIT_E,
+    UNLIMIT_CODE
 } from '../../../types/bff.type';
-import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
+import FormatHelper from '../../../utils/format.helper';
+import {SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME} from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
+import {CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY} from '../../../types/redis.type';
 import BrowserHelper from '../../../utils/browser.helper';
-import { SvcInfoModel } from '../../../models/svc-info.model';
 
 /**
  * @desc 메인화면-MY 초기화를 위한 class
@@ -83,9 +83,16 @@ class MainHome extends TwViewController {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             recommendProdsData = recommendProdsResult;
-
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
-            res.render(`main.home-${flag}.html`, renderData);
+            res.render(`main.home-${flag}.html`, {
+              svcInfo,
+              svcType,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType,
+              recommendProdsData,
+              isAdRcvAgreeBannerShown
+            });
           });
         } else {
           // 모바일 - 휴대폰 외 회선
@@ -95,8 +102,16 @@ class MainHome extends TwViewController {
             this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
           ).subscribe(([usageData, redisData, isAdRcvAgreeBannerShown]) => {
             homeData.usageData = usageData;
-            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
-            res.render(`main.home-${flag}.html`, renderData);
+            res.render(`main.home-${flag}.html`, {
+              svcInfo,
+              svcType,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType,
+              recommendProdsData,
+              isAdRcvAgreeBannerShown
+            });
           });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
@@ -107,8 +122,16 @@ class MainHome extends TwViewController {
           this.getIsAdRcvAgreeBannerShown(svcInfo.loginType)
         ).subscribe(([billData, redisData, isAdRcvAgreeBannerShown]) => {
           homeData.billData = billData;
-          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType, recommendProdsData, isAdRcvAgreeBannerShown };
-          res.render(`main.home-${flag}.html`, renderData);
+          res.render(`main.home-${flag}.html`, {
+            svcInfo,
+            svcType,
+            homeData,
+            redisData,
+            pageInfo,
+            noticeType: svcInfo.noticeType,
+            recommendProdsData,
+            isAdRcvAgreeBannerShown
+          });
         });
       }
     } else {
@@ -252,18 +275,16 @@ class MainHome extends TwViewController {
    */
   private parseHelpData(cicntsList: any): any {
     const resultArr = <any>[];
-    var scrnTypCd = cicntsList[0].scrnTypCd||'F';
-    
-    cicntsList.sort(function(prev, next){
+    const scrnTypCd = cicntsList[0].scrnTypCd || 'F';
 
-      if(scrnTypCd === 'R'){
-        return Math.floor(Math.random() * 3) -1;
-      }else{
+    cicntsList.sort((prev, next) => {
+      if (scrnTypCd === 'R') {
+        return Math.floor(Math.random() * 3) - 1;
+      } else {
         return prev.mainExpsSeq - next.mainExpsSeq;
-      }          
+      }
     });
-    cicntsList[0].rollYn = cicntsList[0].rollYn||'Y';
-
+    cicntsList[0].rollYn = cicntsList[0].rollYn || 'Y';
     for ( let i = 0; i < cicntsList.length; i += 3 ) {
       resultArr.push(cicntsList.slice(i, i + 3));
     }
@@ -599,8 +620,8 @@ class MainHome extends TwViewController {
 
     if (BrowserHelper.isApp(req)) {
       return this.apiService.requestStore(SESSION_CMD.BFF_10_0178, {
-        experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS, 
-        prcplnRcTyp: MLS_PRCPLN_RC_TYP, 
+        experimentExpsScrnId: EXPERIMENT_EXPS_SCRN_ID.RECOMMEND_PRODS,
+        prcplnRcTyp: MLS_PRCPLN_RC_TYP,
         prcplnChlTyp: BrowserHelper.isApp(req) ? 'MOBILE' : 'WEB'
       }).map((resp) => {
 
@@ -630,7 +651,7 @@ class MainHome extends TwViewController {
                   hasRecommendProds: true,
                   nowDate: DateHelper.getShortDateNoDot(new Date(parseFloat(resp.result.timestamp) * 1000))
                 };
-              }  
+              }
             }
           }
         }
@@ -646,8 +667,8 @@ class MainHome extends TwViewController {
    * @return {boolean}
    */
   private getIsAdRcvAgreeBannerShown(loginType): Observable<any> {
-    
-    if (FormatHelper.isEmpty(loginType) || loginType != 'T') {
+
+    if (FormatHelper.isEmpty(loginType) || loginType !== 'T') {
       return Observable.of(false);
     }
 
