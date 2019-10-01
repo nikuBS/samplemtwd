@@ -146,11 +146,14 @@ Tw.ProductRoamingFiReservation.prototype = {
    * @private
    */
   _handleFiReservation: function(countryArr) {
-    var expbranchnm = this.$inputReturn.text();
+    // var expbranchnm = this.$inputReturn.text();
+    var expbranchnm = this.$inputReceive.text();
     var boothcode = this.$inputReceive.attr('data-booth');
     var boothnm = this.$inputReceive.text();
-    var impbranch = this.$inputReceive.attr('data-center');
-    var expbranch = this.$inputReturn.attr('data-center');
+    // var impbranch = this.$inputReceive.attr('data-center');
+    // var expbranch = this.$inputReturn.attr('data-center');
+    var expbranch = this.$inputReceive.attr('data-center');
+    var impbranch = this.$inputReturn.attr('data-center');
     var nationCode = countryArr;
     var rentFrom = this.$inputSdate.val().replace(/\-/gi, '');
     var rentTo = this.$inputEdate.val().replace(/\-/gi, '');
@@ -161,13 +164,15 @@ Tw.ProductRoamingFiReservation.prototype = {
     // 수령장소 기본 값(인천공항 1터미널 3층 F카운터) 세팅
     if(boothcode === null || boothcode === undefined){
       boothcode = '1000004045';
-      impbranch = 'A100110000';
+      // impbranch = 'A100110000';
+      expbranch = 'A100110000';
       this.selectIdx = 0;
     }
 
     // 반납장소 기본 값(인천공항 1터미널 1층) 세팅
     if(expbranch === null || expbranch === undefined){
-      expbranch = 'A100110000';
+      // expbranch = 'A100110000';
+      impbranch = 'A100110000';
     }
 
     var params = {
