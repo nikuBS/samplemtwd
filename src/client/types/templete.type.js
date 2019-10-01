@@ -623,7 +623,7 @@ Tw.POPUP_TPL = {
             ' data-officehour="<strong>업무시간</strong> | 06:00 ~ 22:00"',
           txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'name="r2"',
-          'label-attr':'id="13" data-center="C299910000" data-booth="1430471483"' +
+          'label-attr':'id="13" data-center="C299910000" data-booth="C299910000"' +
               ' data-img="place-img-08" value="부산항 국제여객터미널 2층 로밍센터"' +
               ' data-officehour="<strong>업무시간</strong> | 06:30 ~ 19:30"',
           txt: '부산항 국제여객터미널 2층 로밍센터' },

@@ -387,7 +387,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
       res.result.rominfo.receive_center_img =  this._receiveObj[res.result.rominfo.rental_booth_org_id].img;
       res.result.rominfo.receive_center_officeHour = this._receiveObj[res.result.rominfo.rental_booth_org_id].officeHour;
-      res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rental_sale_org_id].img;
+      res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rtn_sale_org_id].img;
       res.result.rominfo.return_center_officeHour = this._returnObj[res.result.rominfo.rental_sale_org_id].officeHour;
       res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id].name;
       res.result.rominfo.show_rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
@@ -395,7 +395,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
       res.result.maxDate = this._dateHelper.getEndOfMonSubtractDate(undefined,-6,'YYYY-MM-DD');
       // 수령/반납장소 모두 대구황금점일 경우 반납장소 Disabled 처리
-      res.result.isDisabled = (res.result.rominfo.rental_booth_org_id === '1430452300' && res.result.rominfo.rental_sale_org_id === '1430452300');
+      res.result.isDisabled = (res.result.rominfo.rental_booth_org_id === '1430452300' && res.result.rominfo.rtn_sale_org_id === '1430452300');
 
       var data = res.result;
 
