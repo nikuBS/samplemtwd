@@ -8,7 +8,7 @@
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="page popup-page tw-popup fixed-bottom h60">
+    <div class="page popup-page tw-popup fixed-bottom h60 nobg">
         <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '요금안내서 변경', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -17,6 +17,7 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <p class="con-tit0">요금안내서 유형</p>
@@ -49,11 +50,12 @@
                 </div>
                 <%}%>
                 <!--// .cont-box -->
-                <hr class="cont-sp type1 none" aria-hidden="true"/>
+
                 <!-- .cont-box -->
                 <div id="fe-section3" class="cont-box nogaps">
                     <!-- 이메일 area -->
-                    <div id="fe-email-area" class="cont-box pb0 none">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div id="fe-email-area" class="cont-box pb0 btm-line none">
                         <p class="con-tit0 pb12">이메일 주소</p>
                         <span class="inputbox">
                             <span class="input">
@@ -87,49 +89,49 @@
 
                     <% if( '1' === data.changeBillInfo.cd ) { %>
                         <!--기타(우편) area-->
-                        <div class="cont-box pb0">
+                        <hr class="cont-sp type1" aria-hidden="true"/>
+                        <div class="cont-box btm-line">
                             <p class="con-tit0 pb12">우편 주소</p>
 
                             <!--주소가 있을 때-->
                             <div id="fe-addr-area" class="none">
-                            <span class="inputbox bt-add inp-btn">
-                                <span class="input">
-                                    <input type="text" class="fe-zip" name="zip" title="우편번호"
-                                           data-inactive-target data-valid-type="addr" disabled/>
+                                <span class="inputbox bt-add inp-btn">
+                                    <span class="input">
+                                        <input type="text" class="fe-zip" name="zip" title="우편번호"
+                                               data-valid-type="addr" readonly/>
+                                    </span>
+                                    <span class="bt-box3">
+                                        <button type="button" class="btn-round2 btn-style3 fe-search-zip">우편번호 검색</button>
+                                    </span>
                                 </span>
-                                <span class="bt-box">
-                                    <button type="button" class="fe-search-zip">우편번호 검색</button>
+                                    <span class="inputbox mt6">
+                                    <span class="input">
+                                        <input type="text" class="fe-main-address" name="basAddr" title="기본 주소"
+                                               data-valid-type="addr" readonly/>
+                                    </span>
                                 </span>
-                            </span>
-                                <span class="inputbox mt6">
-                                <span class="input">
-                                    <input type="text" class="fe-main-address" name="basAddr" title="기본 주소"
-                                           data-inactive-target data-valid-type="addr" disabled/>
+                                    <span class="inputbox mt6">
+                                    <span class="input">
+                                        <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
+                                               title="상세 주소" data-valid-type="addr" data-state="true" readonly/>
+                                    </span>
                                 </span>
-                            </span>
-                                <span class="inputbox mt6">
-                                <span class="input">
-                                    <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
-                                           title="상세 주소" data-inactive-target data-valid-type="addr" data-state="true"/>
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
                             </div>
                             <!--// 주소가 있을 때-->
 
                             <!--주소 없을 때는 우편번호 검색 만 보임-->
                             <ul id="fe-no-addr-area" class="bt-slice none">
-                                <li class="bt-blue1">
-                                    <button class="fe-search-zip">우편번호 검색</button>
+                                <li>
+                                    <button class="btn-round1 btn-style1 fe-search-zip">우편번호 검색</button>
                                 </li>
                             </ul>
                             <!--// 주소 없을 때는 우편번호 검색 만 보임-->
-
                         </div>
 
                         <!--우편물 발송주기 area-->
                         <% if(data.billSndCyclYn === 'Y') { %>
-                        <div class="cont-box nogaps pt36">
+                        <hr class="cont-sp type1" aria-hidden="true"/>
+                        <div class="cont-box nogaps-ver btm-line">
                             <p class="con-tit0 pb14 pl16">우편물 발송주기</p>
                             <div class="list-comp-input">
                                 <div class="widget">
@@ -193,7 +195,8 @@
                     %>
                     <!--노출 CASE : 우편, 유선 ( Bill Letter, 문자 )-->
                     <!--휴대폰번호 area-->
-                    <div class="cont-box pb0">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box btm-line">
                         <p class="con-tit0"><%=teltitleName%></p>
                         <%- include( '../../components/bill/myt-fare.bill.set.change.cell-phone.html', data.hpParam) %>
                     </div>
@@ -208,6 +211,7 @@
                         !('P' === data.changeBillInfo.cd &&
                         (('M' === data.lineType && 'N' === data.isusimchk) || 'S' === data.lineType))
                     ) {%>
+                    <hr class="cont-sp type1" aria-hidden="true"/>
                     <div id="fe-option-list" class="cont-box pb0 none">
                         <p class="con-tit0 pb14">옵션설정</p>
                         <ul class="on-off-list new">
@@ -301,7 +305,6 @@
                 </div>
                 <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/><!-- 2018-11-02 수정 -->
                 <!-- .cont-box -->
                 <div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
@@ -313,13 +316,13 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
-            </div>
-            <div class="bt-fixed-area">
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button id="fe-submit" disabled>변경하기</button>
-                    </li>
-                </ul>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button id="fe-submit" disabled>변경하기</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <!--// .container-wrap -->
