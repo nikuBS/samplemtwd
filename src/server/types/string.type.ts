@@ -162,7 +162,7 @@ export enum TIME_UNIT {
 export enum MYT_DATA_CHARGE_TYPE_NAMES {
   DATA_GIFT = 'T끼리 데이터 선물',
   LIMIT_CHARGE = '데이터 한도 요금',
-  TING_CHARGE = '팅 쿠키즈 안심요금',
+  TING_CHARGE = '팅 ZEM 플랜 안심요금',
   TING_GIFT = '팅 요금 선물',
   REFILL_USAGE = '리필쿠폰 사용',
   REFILL_GIFT = '리필쿠폰 선물',
