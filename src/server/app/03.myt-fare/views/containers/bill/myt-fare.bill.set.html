@@ -22,10 +22,21 @@
     <div id="contents" class="container-wrap">
         <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
         <div class="container">
-            <div class="ti-caption-gray datail-veiw">
-                <span class="tit" id="aria-comp-bt1"><%=svcInfo.prodNm%></span>
-                <a class="detail-view" href="/product/callplan?prod_id=<%=svcInfo.prodId%>" aria-labelledby="aria-comp-bt1" role="button"></a>
+            <hr class="cont-sp type1" aria-hidden="true"/> <!--리디자인-->
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <a class="wrap-link" href="/product/callplan?prod_id=<%=svcInfo.prodId%>">
+                        <!-- 2019.03.20 뱃지 수정 : 이용중 -> MY : use class 삭제 -->
+                        <i class="badge icon-badge-plan-my"><span class="blind">MY</span></i>
+                        <span class="stit"><%=svcInfo.prodNm%></span>
+                    </a>
+                </div>
             </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- //190831 리디자인_01 -->
+
             <!-- .cont-box -->
             <div class="cont-box now-fee-box">
                 <p class="tit">
@@ -141,7 +152,7 @@
                     let params = 'isChangeInfo=Y&billType='+ data.billInfo[0].cd + (data.billInfo.length > 1 ? '&subBillType=' + data.billInfo[1].cd : '');
                 %>
                 <div class="bt-alone">
-                    <a class="bt-bg-blue1" href="/myt-fare/billsetup/change?<%=params%>">정보변경</a>
+                    <a class="btn-round2 btn-style3" href="/myt-fare/billsetup/change?<%=params%>">정보변경</a>
                 </div>
                 <%}%>
 
@@ -151,13 +162,13 @@
                     let _itemClassNm = 'P' !== data.curBillType ? 'item-two' : '';
                 %>
                 <ul class="bt-slice pt40 <%=_itemClassNm%>">
-                    <li class="bt-blue1">
-                        <a href="/myt-fare/billsetup/historyreturn">반송내역</a>
+                    <li>
+                        <button class="btn-round1 btn-style4" data-url="/myt-fare/billsetup/historyreturn">반송내역</button>
                     </li>
                     <!--T world 확인은 재발행 기능 없음-->
                     <% if ( 'P' !== data.curBillType ) { %>
-                    <li class="bt-blue1">
-                        <a href="/myt-fare/billsetup/reissue">재발행</a>
+                    <li>
+                        <button class="btn-round1 btn-style1" data-url="/myt-fare/billsetup/reissue">재발행</button>
                     </li>
                     <%}%>
                 </ul>

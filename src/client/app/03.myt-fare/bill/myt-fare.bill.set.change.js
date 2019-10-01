@@ -404,6 +404,7 @@ Tw.MyTFareBillSetChange.prototype = {
   _toggleElement: function (context, state) {
     context = (typeof context === 'string') ? this.$container.find('#' + context) : context;
     context.toggleClass('none', !state).find('input').data('state', state);
+    context.prev('.cont-sp').toggleClass('none', !state);
     this._onDisableSubmitButton();
   },
 
