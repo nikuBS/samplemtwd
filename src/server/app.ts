@@ -39,7 +39,6 @@ import LoggerService from './services/logger.service';
 import VERSION from './config/version.config';
 import Axios from 'axios';
 import { timer } from '../../node_modules/rxjs/observable/timer';
-import ErrorService from './services/error.service';
 
 module.exports = require('../../nodejs-exporter');
 
@@ -49,12 +48,10 @@ class App {
   public app: Application = express();
   public redisService: RedisService;
   private logger = new LoggerService();
-  private errorService: ErrorService;
 
 
   constructor() {
     this.redisService = RedisService.getInstance();
-    this.errorService = new ErrorService();
     this.config();
   }
 
@@ -76,7 +73,6 @@ class App {
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.exceptionHandler();
-    this.checkTargetValidationn();
     this.setViewPath();
     this.setRoutes();
     this.setApis();
@@ -241,14 +237,6 @@ class App {
       '"' + tokens['user-agent'](req) + '"'
     ].join(' ');
   }
-
-  /***
-   * target parameter이 있을 경우 값이 실제 페이지 인지를 체크하는 middleware
-   */
-  private checkTargetValidationn() {
-    this.app.use(this.errorService.checkTargetValidation);
-  }
-
 }
 
 export = App.bootstrap().app;
