@@ -94,7 +94,7 @@
                                 <!-- 2019-01-17 inp-btn 추가 -->
                                 <div class="inputbox bt-add inp-btn">
                                     <span class="input">
-                                        <input type="text" title="우편번호" value="13494">
+                                        <input type="text" title="우편번호" value="13494" readonly><!-- 190925 [OP002-4128] 수정_01 : readonly -->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 <!-- 190831 리디자인_03 -->
@@ -105,7 +105,13 @@
                                 </div>
                                 <div class="inputbox mt10">
                                     <span class="input">
-                                        <input type="text" title="상세 주소" placeholder="상세주소 입력">
+                                        <input type="text" title="기본 주소" value="경기 성남시 분당구 판교역로 231" readonly/><!-- 190925 [OP002-4128] 수정_02 : readonly -->
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </div>
+                                <div class="inputbox mt10">
+                                    <span class="input">
+                                        <input type="text" title="상세 주소" value="101동 2101호"  readonly/><!-- 190925 [OP002-4128] 수정_03 : readonly -->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </div>

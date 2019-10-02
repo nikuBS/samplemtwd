@@ -95,7 +95,7 @@
                                 <!-- 2019-01-17 inp-btn 추가 -->
                                 <div class="inputbox bt-add inp-btn"><!-- 2019.02.19 배경 흰색 삭제[클래스제거:bg-white] -->
                                     <span class="input">
-                                        <input type="text" title="우편번호" value="13494">
+                                        <input type="text" title="우편번호" value="13494" readonly><!-- 190925 [OP002-4128] 수정_01 : readonly -->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 <!-- 190831 리디자인_03 -->
@@ -104,9 +104,15 @@
                                     </span>
                                 <!-- //190831 리디자인_03 --> 
                                 </div>
-                                <div class="inputbox mt10 bg-white">
+                                <div class="inputbox mt10">
                                     <span class="input">
-                                        <input type="text" title="상세 주소" placeholder="상세주소 입력">
+                                        <input type="text" title="기본주소" value="기본주소 내용" readonly><!-- 190925 [OP002-4128] 수정_01 : readonly -->
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </div>
+                                <div class="inputbox mt10">
+                                    <span class="input">
+                                        <input type="text" title="상세 주소" value="101동 2101호"  readonly/><!-- 190925 [OP002-4128] 수정_03 : readonly -->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </div>
