@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    -->
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 190831 리디자인_01 : nobg 추가 --><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>요금안내서 변경</h1>
+                    </div>
+                    <div class="header-mask">
+                    	<button type="button" class="btn-mask"><span class="blind">개인정보 보호모드 마스킹 해제하기</span></button>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                	<!-- 190831 리디자인_02 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- //190831 리디자인_02 -->
+
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<p class="con-tit0">요금안내서 유형</p>
+						<p class="con-b-txt0 pt2">기타(우편)</p>
+					</div>
+					<hr class="cont-sp type1" aria-hidden="true"/><!-- 2018-11-02 수정 -->
+					<!-- .cont-box -->
+					<div class="cont-box nogaps">
+						<div class="cont-box btm-line"><!-- 190831 리디자인_03 : class="cont-box btm-line" -->
+							<p class="con-tit0 pb12">우편 주소</p>
+							<!-- 2019-01-17 inp-btn 추가 -->
+							<!--접근성 수정-->
+							<span class="inputbox bt-add inp-btn">
+								<span class="input">
+									<input type="text" title="우편번호" value="13494" readonly/><!-- 190925 [OP002-4128] 수정_01 : readonly -->
+									<button class="cancel"><span class="blind">삭제</span></button>
+								</span>
+								<!-- 190831 리디자인_04 -->
+								<span class="bt-box3">
+									<button type="button" class="btn-round2 btn-style3">우편번호&nbsp;검색</button>
+								</span>
+								<!-- //190831 리디자인_04 -->
+							</span>
+							<span class="inputbox mt6">
+								<span class="input">
+									<input type="text" title="기본 주소" value="경기 성남시 분당구 판교역로 231" readonly/><!-- 190925 [OP002-4128] 수정_02 : readonly -->
+									<button class="cancel"><span class="blind">삭제</span></button>
+								</span>
+							</span>
+							<span class="inputbox mt6">
+								<span class="input">
+									<input type="text" title="상세 주소" value="101동 2101호" readonly/><!-- 190925 [OP002-4128] 수정_03 : readonly -->
+									<button class="cancel"><span class="blind">삭제</span></button>
+								</span>
+							</span>
+							<!-- //접근성 수정-->
+						</div>
+
+						<!-- 190831 리디자인_05 -->
+	                    <hr class="cont-sp type1" aria-hidden="true"/>
+	                    <!-- //190831 리디자인_05 -->
+
+						<div class="cont-box nogaps-ver btm-line"><!-- 190831 리디자인_06 : class="cont-box nogaps-ver btm-line" -->
+							<p class="con-tit0 pb14 pl16">우편물 발송주기</p>
+							<div class="list-comp-input">
+								<div class="widget">
+									<div class="widget-box radio">
+										<!--접근성 수정-->
+										<ul class="select-list" role="group">
+											<li class="radiobox type01-big mid-top checked" role="radio" aria-checked="true">
+												<input type="radio" name="radio" value="" title="우편물 발송주기" aria-labelledby="aria-comp-radio1" checked="" />
+												<div class="comp-list-layout" id="aria-comp-radio1">
+													<p class="layout-text">
+														<span class="mtext">매달</span>
+													</p>
+												</div>
+											</li>
+											<li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+												<input type="radio" name="radio" value="" title="우편물 발송주기" aria-labelledby="aria-comp-radio2" />
+												<div class="comp-list-layout" id="aria-comp-radio2">
+													<p class="layout-text">
+														<span class="mtext">격월</span>
+													</p>
+												</div>
+											</li>
+											<li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+												<input type="radio" name="radio" value="" title="우편물 발송주기" aria-labelledby="aria-comp-radio3" />
+												<div class="comp-list-layout" id="aria-comp-radio3">
+													<p class="layout-text">
+														<span class="mtext">분기</span>
+													</p>
+												</div>
+											</li>
+											<li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+												<input type="radio" name="radio" value="" title="우편물 발송주기" aria-labelledby="aria-comp-radio4" />
+												<div class="comp-list-layout" id="aria-comp-radio4">
+													<p class="layout-text">
+														<span class="mtext">반기</span>
+													</p>
+												</div>
+											</li>
+										</ul>
+										<!-- //접근성 수정-->
+									</div>
+								</div>
+							</div>
+							<ul class="con-dot-txt0 pl16 pt20">
+								<li>월 요금안내서와 미발송 청구내역이 함께 발송됩니다.</li>
+								<li>격월 : 2 / 4 / 6 / 8 / 10 / 12월</li>
+								<li>분기 : 3 / 6 / 9 / 12월</li>
+								<li>반기 : 6 / 12월</li>
+							</ul>
+						</div>
+
+						<!-- 190831 리디자인_07 -->
+	                    <hr class="cont-sp type1" aria-hidden="true"/>
+	                    <!-- //190831 리디자인_07 -->
+
+						<div class="cont-box btm-line"><!-- 190831 리디자인_08 : class="cont-box btm-line" -->
+							<p class="con-tit0">휴대폰번호</p><!-- 190831 리디자인_09 : pt6 삭제 -->
+							<!-- 2019-01-17 inp-btn 추가 -->
+							<span class="inputbox bt-add inp-btn pt12">
+								<span class="input">
+									<!--접근성 수정-->
+									<input type="text" title="휴대폰번호 숫자만 입력해 주세요" value="" placeholder="숫자만 입력" />
+									<!-- //접근성 수정-->
+									<button class="cancel"><span class="blind">삭제</span></button>
+								</span>
+								<!-- 190831 리디자인_10 -->
+								<span class="bt-box3">
+									<button type="button" class="btn-round2 btn-style3">주소록</button>
+								</span>
+								<!-- //190831 리디자인_10 -->
+							</span>
+						</div>
+
+						<!-- 190831 리디자인_11 -->
+	                    <hr class="cont-sp type1" aria-hidden="true"/>
+	                    <!-- //190831 리디자인_11 -->
+
+						<div class="cont-box pb0">
+							<p class="con-tit0 pb14">옵션설정</p><!-- 190831 리디자인_12 : pt16 삭제 -->
+							<ul class="on-off-list new">
+								<li>
+									휴대폰번호 전체 표시<br/>
+									<span class="sub-tx">일부 별표 표시 없이 전체 휴대폰번호를<br/>표시합니다.</span>
+									<span class="widget">
+										<span class="widget-box switch">
+											<span class="btn-switch type1 on">
+												<span class="switch-style" role="checkbox" aria-checked="false">
+													<span class="off-tx">꺼짐</span>
+													<!--접근성 수정-->
+													<input type="checkbox" title="휴대폰번호 전체 표시" />
+													<!-- //접근성 수정-->
+													<span class="on-tx">켜짐</span>
+												</span>
+											</span>
+										</span>
+									</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<!-- 190831 리디자인_13 : 삭제 <hr class="cont-sp type1" aria-hidden="true"/> -->
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_13 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">요금안내서 재발행 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!-- //190831 리디자인_13 -->
+                    <!--// .cont-box -->
+
+					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+						<ul class="bt-slice full">
+							<li class="bt-red1">
+								<button>변경하기</button>
+							</li>
+						</ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="prev-step">취소</button> 190925 [OP002-4128] 삭제_01 --> 
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
