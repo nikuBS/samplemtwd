@@ -80,9 +80,10 @@ class ErrorService {
    * @param next
    */
   public checkTargetValidation(req: any, res: any, next: any) {
-    const target = decodeURIComponent(req.query.target || '');
+    let target = decodeURIComponent(req.query.target || '');
     const path = req.path || '';
     const domain = req.protocol + '://' + req.headers.host;
+    const targetCriteria = '_type_back_state';
 
     // 요청 type이 html이고, target parameter이 존재하고, check URL인 경우만 유효성을 체크한다..
     if (req.accepts(['html', 'json']) === 'html' && !FormatHelper.isEmpty(target)) {
@@ -94,6 +95,9 @@ class ErrorService {
 
       // 유효성 체크 대상인 경우는 redis에서 target parameter의 정보 확인 
       const redisService = ErrorService.instance.redisService;
+      if (target.indexOf(targetCriteria) !== -1) {
+        target = target.substring(0, target.indexOf('_type_back_state'));
+      }
       redisService.getData(REDIS_KEY.URL_META + target.replace(domain, '')).subscribe((resp) => {
         if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
           res.status(404).render('error.page-not-found.html', { svcInfo: null, code: 404 });
