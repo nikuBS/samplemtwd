@@ -180,20 +180,3 @@ export const URL = {
   '/tevent/detail': { login: false, id: 'EV_01_02', title: '진행중 이벤트/지난 이벤트 상세' },
   '/tevent/win/detail': { login: false, id: 'EV_01_04', title: '당첨자 발표 상세' }
 };
-
-/**
- * target parameter가 포함되는 URL(target 값이 내부 URL인 경우)
- */
-export const TARGET_PARAM_VALIDATION_CHECK_URL = [
-  '/common/member/login/route',
-  '/common/member/login/cust-pwd',
-  '/common/member/login/reactive',
-  '/common/member/login/lost',
-  '/common/member/slogin/aos',
-  '/common/member/slogin/ios',
-  '/common/tid/login',
-  '/common/tid/change-pw',
-  '/common/tid/find-id',
-  '/common/tid/change-pw',
-  '/common/tid/route'
-];
