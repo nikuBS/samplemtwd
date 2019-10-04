@@ -81,7 +81,7 @@ class ErrorService {
     let target = decodeURIComponent(req.query.target || '');
     const path = req.path || '';
     const domain = req.protocol + '://' + req.headers.host;
-    const regExp = new RegExp('_type_(.)+_state_');
+    const unnecessaryTargetStr = '_type_back_state';
 
     // 요청 type이 html이고, target parameter이 존재하고, check URL인 경우만 유효성을 체크한다..
     if (req.accepts(['html', 'json']) === 'html' && !FormatHelper.isEmpty(target)) {
@@ -91,10 +91,10 @@ class ErrorService {
         next();
       }
 
-      // "_type_xxxxxxxx_state"의 앞까지만 target로 인식
+      // "_type_back_state"의 앞까지만 target로 인식
       const redisService = ErrorService.instance.redisService;
-      if (target.search(regExp) !== -1) {
-        target = target.substring(0, target.search(regExp));
+      if (target.indexOf(unnecessaryTargetStr) !== -1) {
+        target = target.substring(0, target.indexOf('_type_back_state'));
       }
 
       // target에서 parameter 부분 제거
