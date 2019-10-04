@@ -186,6 +186,7 @@ export const URL = {
  */
 export const TARGET_PARAM_VALIDATION_CHECK_URL = [
   '/common/member/login/route',
+  '/common/member/logout/route',
   '/common/member/login/cust-pwd',
   '/common/member/login/reactive',
   '/common/member/login/lost',
