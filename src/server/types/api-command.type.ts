@@ -133,6 +133,7 @@ export const API_CMD = {
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0032: { path: '/core-auth/:version/tworld-terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0034: { path: '/core-auth/:version/tworld-term-agreements-icas', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MainHome T-Notify
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_04_0002: { path: '/core-product/:version/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
@@ -1035,7 +1036,6 @@ export const API_CODE = {
   NODE_1003: '1003',  // 처리 완료
   NODE_1004: '1004',  // 세션 만료
   NODE_1005: '1005',  // 세션 변경
-  NODE_1006: '1006',  // 잘못된 redirect 경로(parameter : target)
 
   CODE_200: '200',
   CODE_400: '400',

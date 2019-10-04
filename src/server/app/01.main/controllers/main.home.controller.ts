@@ -672,7 +672,7 @@ class MainHome extends TwViewController {
       return Observable.of(false);
     }
 
-    return this.apiService.request(API_CMD.BFF_03_0021, null).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_03_0034, null).map((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
         return false;
       }
