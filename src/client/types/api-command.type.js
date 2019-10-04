@@ -692,7 +692,6 @@ Tw.API_CODE = {
   NODE_1003: '1003',  // 처리 완료
   NODE_1004: '1004',  // 세션 만료
   NODE_1005: '1005',  // 세션 변경
-  NODE_1006: '1006',  // 잘못된 redirect 경로(parameter : target)
 
   NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
   RECEIVER_LIMIT: 'ZNGME0000', // 쿠폰 받는 사람 횟수 초과
