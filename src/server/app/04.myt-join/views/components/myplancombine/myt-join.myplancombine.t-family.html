@@ -13,7 +13,7 @@
         <h3 class="tit">T끼리온가족할인</h3>
         <div class="subtxt">
             <em class="txt">총 할인금액</em>
-            <p class="val"><span class="str">-<%= groupInfo.totBasFeeDcTx %></span>원</p>
+            <p class="val tod-txcolor6"><span class="str">-<%= groupInfo.totBasFeeDcTx %></span>원</p>
         </div>
     </div>
     <div class="basic-list bg-type mt10">
@@ -23,7 +23,10 @@
                 <span class="tx-cont"><%= combination.combinationWirelessMemberList[0].auditDtm || groupInfo.combStaDt %></span>
             </li>
             <li>
-                <span class="title">총 가입기간</span>
+                <span class="title">가족 합산 총 가입기간
+                    <!--상세정보 는 추후개발-->
+                    <!--<a class="bt-link-tx underline ml4" href="/myt-join/combinations/joinperiod" aria-haspopup="true">상세정보</a>-->
+                </span>
                 <span class="tx-cont"><%= groupInfo.totUseYy %>년</span>
             </li>
             <li>
@@ -91,8 +94,9 @@
                                                 </dd>
                                             </dl>
                                         </li>
-                                        <li><dl><dt>휴대폰 가입 연수</dt><dd><%= member.useYySum %>년</dd></dl></li>
+                                        <li><dl><dt>휴대폰 가입기간</dt><dd><%= member.useYySum %>년</dd></dl></li>
                                         <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYySum + '년' : '-' %></dd></dl></li>
+                                        <li><dl><dt>제외기간</dt><dd><%= Number(member.totMYy || 0) > 0 ? member.totMYy+'년' : '-' %></dd></dl></li>
                                         <li><dl><dt>월정액 할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
                                         <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         <li><dl><dt>할인 전 금액</dt><dd><%= member.basFeeAmtTx %> 원</dd></dl></li>
@@ -112,17 +116,17 @@
 </div>
 <!--// .cont-box -->
 
-<hr class="cont-sp type1" aria-hidden="true" />
+<!--<hr class="cont-sp type1" aria-hidden="true" />-->
 <!-- .cont-box --><!-- 2018-11-02 수정 -->
-<div class="cont-box nogaps-btm">
-    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-    <ul class="noti-list02">
-        <li><button id="MS_07_01_01_tip_01" type="button" class="tip-view-btn" title="band 데이터 요금제 TIP보기" aria-haspopup="true">band 데이터 요금제<span class="tip-view">TIP</span></button></li>
-        <li><button id="MS_07_01_01_tip_02" type="button" class="tip-view-btn" title="실제 할인 금액 TIP보기" aria-haspopup="true">실제 할인 금액<span class="tip-view">TIP</span></button></li>
-        <li><button id="MS_07_01_01_tip_03" type="button" class="tip-view-btn" title="통화료 내역 제외 TIP보기" aria-haspopup="true">통화료 내역 제외<span class="tip-view">TIP</span></button></li>
-        <li><button id="MS_07_01_01_tip_04" type="button" class="tip-view-btn" title="더블할인 혜택 이용 고객 TIP보기" aria-haspopup="true">더블할인 혜택 이용 고객<span class="tip-view">TIP</span></button></li>
-        <li><button id="MS_07_01_01_tip_05" type="button" class="tip-view-btn" title="가입연수 산정 TIP보기" aria-haspopup="true">가입연수 산정<span class="tip-view">TIP</span></button></li>
-        <li><button id="MS_07_01_01_tip_06" type="button" class="tip-view-btn" title="가족그룹의 해지 TIP보기" aria-haspopup="true">가족그룹의 해지<span class="tip-view">TIP</span></button></li>
+<div class="cont-box noborder bgnone">
+    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+    <ul class="pg-chk-list02">
+        <li><button id="MS_07_01_01_tip_01" class="btn-tip" aria-haspopup="true">band데이터 요금제<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button id="MS_07_01_01_tip_02" class="btn-tip" aria-haspopup="true">실제 할인금액<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button id="MS_07_01_01_tip_03" class="btn-tip" aria-haspopup="true">통화료 내역 제외<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button id="MS_07_01_01_tip_04" class="btn-tip" aria-haspopup="true">더블할인 혜택 이용 고객<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button id="MS_07_01_01_tip_05" class="btn-tip" aria-haspopup="true">가입연수 산정<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+        <li><button id="MS_07_01_01_tip_06" class="btn-tip" aria-haspopup="true">가족그룹의 해지<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
     </ul>
 </div>
 <!--// .cont-box -->
