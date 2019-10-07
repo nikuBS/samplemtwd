@@ -30,7 +30,7 @@ const wireMembers = (combination.combinationWireMemberList || []).filter(member 
                     <!--T+B인터넷(패밀리형) 인경우만 노출-->
                     <%if(type === '2' && ['NH00000039','TW00000062'].indexOf(prodId) > -1 ){%>
                         <!--상세정보 는 추후개발-->
-                        <!--<a class="bt-link-tx underline ml4" href="/myt-join/combinations/joinperiod" aria-haspopup="true">상세정보</a>-->
+                        <a class="bt-link-tx underline ml4" href=<%=`/myt-join/combinations/joinperiod?prodId=${prodId}&type=${type}`%> aria-haspopup="true">상세정보</a>
                     <%}%>
                 </span>
                 <span class="tx-cont">결합완료</span>
