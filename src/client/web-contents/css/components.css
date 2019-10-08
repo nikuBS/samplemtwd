@@ -14659,7 +14659,7 @@ a.bt-link-tx.underline.small {
 .suggest-tag-titlebox .suggest-tag-link .text .textnumber {
   display: inline-block;
   margin-left: 0.13rem;
-  color: #f76252; }
+  color: #ef4b49; }/* 191007 [OP002-4182] 수정_01 */
 
 .suggest-tag-titlebox .suggest-tag-link .taglist-wrap {
   white-space: nowrap;
