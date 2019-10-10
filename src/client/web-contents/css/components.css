@@ -8541,7 +8541,7 @@ a.bt-link-tx.underline.small {
 
 .link-caption-type li button .tit, .link-caption-type li a .tit {
   display: block;
-  font-size: 0.81rem; }
+  font-size: 1rem; }/* 191008 [OP002-4231] 수정_01 */
 
 .link-caption-type li button .txt, .link-caption-type li a .txt {
   margin-top: 0.38rem;
