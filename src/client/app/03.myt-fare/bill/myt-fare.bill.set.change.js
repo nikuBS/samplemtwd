@@ -97,6 +97,7 @@ Tw.MyTFareBillSetChange.prototype = {
    * @param {Object} e - 이벤트
    */
   _searchZip: function (e) {
+    this.$container.find('.fe-zip').trigger('keyup'); // 2019-10-10 bug fix : AS IS 주소창 터치시 수정으로 간주하였는데. TO BE 에서 read only로 변경되어서 우편번호 검색 버튼 클릭 시 해당 이벤트 먹도록 변경함.
     new Tw.CommonPostcodeMain(this.$container, $(e.currentTarget), $.proxy(this._callBackSearchZip, this));
   },
 
@@ -647,7 +648,7 @@ Tw.MyTFareBillSetChange.prototype = {
       if (e.type === 'focusin') {
         // 우편주소 일경우 우편번호, 기본주소, 상세주소 3개 초기화
         if (_validType === 'addr') {
-          this.$container.find('[data-valid-type="addr"]').data('isChange', true).val('');
+          this.$container.find('[data-valid-type="addr"]').data('isChange', true);
         } else {
           $target.val('');
         }
