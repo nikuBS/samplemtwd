@@ -139,7 +139,8 @@ class MyTDataHotdata extends TwViewController {
       if ( respUsedData.code === API_CODE.CODE_00 ) {
         // [OP002-3871] 5GX 항목은 범융 별도 항목으로 추출
         // 음성 통환.영상 통화로 수신됨
-        const voice = respUsedData.result.voice;
+        // [OP002-4419] 디지털(집) 전화 회선으로 화면진입시 502 오류 수정
+        const voice = respUsedData.result.voice || [];
         const data5gx = voice.reduce((acc, item, index) => {
           if (PRODUCT_5GX_TICKET_SKIP_ID.indexOf(item.skipId) > -1) {
             acc.push(item);
