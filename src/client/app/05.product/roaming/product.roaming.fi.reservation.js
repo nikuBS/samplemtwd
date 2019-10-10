@@ -170,7 +170,8 @@ Tw.ProductRoamingFiReservation.prototype = {
     }
 
     // 반납장소 기본 값(인천공항 1터미널 1층) 세팅
-    if(expbranch === null || expbranch === undefined){
+    if(impbranch === null || impbranch === undefined){
+    // if(expbranch === null || expbranch === undefined){
       // expbranch = 'A100110000';
       impbranch = 'A100110000';
     }
