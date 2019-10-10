@@ -244,7 +244,8 @@ class MytDataSubmainController extends TwViewController {
         // if (lengthHistory > 0) {
           const breakdownList: Array<any> = [];
           for (let i = 0; i < lengthHistory; i += 1) {
-            const history = histories[i];
+            // history 가 null 인 경우도 있어 예외처리 추가 > before: const history = histories[i];
+            const history = histories[i] || {};
             switch (history.cmd) {
               case 'BFF_06_0018': {
                 // T끼리 선물하기 내역
