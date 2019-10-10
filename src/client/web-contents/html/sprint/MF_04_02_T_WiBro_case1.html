@@ -29,7 +29,6 @@
 </head>
 <body>
     <!-- #skip_navigation -->
-    <!-- Grand open 접근성 수정
     <div id="skipNav" class="skip_navi">
         <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
@@ -37,16 +36,15 @@
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
-    -->
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- .popup hbs -->
-        <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+        <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
             <!-- #header -->
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>청구지 주소/연락처 변경</h1>
+                        <h1>요금안내서 변경</h1>
                     </div>
                 </div>
             </div>
@@ -55,63 +53,34 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-                    <hr class="cont-sp type1" aria-hidden="true"> <!-- //190729 [OP002-2796] 추가01 : 리디자인 적용 -->
+                    <!-- 190831 리디자인_01 -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- //190831 리디자인_01 -->
+
 					<!-- .cont-box -->
-					<div class="cont-box noborder">
-						<ul class="form-data-list">
-							<li>
-                                <!--접근성 수정-->
-								<label class="tit" for="flab01">연락 가능한 번호</label> <!-- //190729 [OP002-2796] 수정01 -->
-								<span class="inputbox">
-									<span class="input">
-										<input id="flab01" type="text" value="010-12**-56**" aria-describedby="id-helper1" />
-										<button class="cancel"><span class="blind">삭제</span></button>
-                                    </span>
-                                    <span id="id-helper1">
-                                        <span class="error-txt">휴대폰 번호가 올바르지 않습니다.</span>
-                                        <span class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span>
-                                    </span>
-                                </span>
-                                <!-- //접근성 수정-->
-                            </li>
-                            <!--접근성 수정-->
-							<li>
-                                <label class="tit" for="flab02">우편 주소</label>
-                                <!-- 2019-01-17 inp-btn 추가 -->
-							    <span class="inputbox bt-add inp-btn">
-									<span class="input">
-										<input type="text" title="우편번호" value="13494" readonly />
-										<button class="cancel"><span class="blind">삭제</span></button>
-									</span>
-									<!-- 190729 [OP002-2796] 수정02 : 리디자인 적용 -->
-                                    <span class="bt-box3">
-                                        <button type="button" class="btn-round2 btn-style3">우편번호&nbsp;검색</button>
-                                    </span>
-                                    <!-- //190729 [OP002-2796] 수정02 : 리디자인 적용 -->
-								</span>
-								<span class="inputbox mt10">
-									<span class="input">
-										<input type="text" title="기본 주소" value="경기 성남시 분당구 판교역로 231" readonly />
-										<button class="cancel"><span class="blind">삭제</span></button>
-									</span>
-								</span>
-								<span class="inputbox mt10">
-									<span class="input">
-										<input type="text" value="14층" title="상세 주소" readonly /><!-- 190925 [OP002-4128] 수정_01 : readonly 추가 -->
-										<button class="cancel"><span class="blind">삭제</span></button>
-									</span>
-								</span>
-                            </li>
-                            <!-- //접근성 수정-->
-						</ul>
-						<p class="exp-txt">* 변경된 주소로 요금납부 지로가 발송 됩니다.</p>
+					<div class="cont-box">
+						<p class="con-tit0">요금안내서 유형</p>
+						<p class="con-b-txt0 pt2">T월드 확인</p>
 					</div>
-					<!--// .cont-box -->
+					
+                    <!-- 190831 리디자인_02 : 삭제 <hr class="cont-sp type1" aria-hidden="true"/> -->
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_02 -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li><button class="btn-tip" aria-haspopup="true">요금안내서 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                        </ul>
+                    </div>
+                    <!-- //190831 리디자인_02 -->
+                    <!--// .cont-box -->
+
+
 					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                     <div class="bt-fixed-area">
 						<ul class="bt-slice full">
 							<li class="bt-red1">
-								<button disabled="disabled">변경하기</button><!--기본 상태 비활성화 disabled 모든 정보입력시 disabled 속성 제거 -->
+								<button>변경하기</button>
 							</li>
 						</ul>
                     </div>

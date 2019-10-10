@@ -15,6 +15,7 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"> <!--리디자인 적용-->
                     <!-- .cont-box -->
                     <div class="cont-box noborder">
                         <ul class="form-data-list">
@@ -34,23 +35,20 @@
                                 <span class="inputbox bt-add inp-btn">
                                     <span class="input">
                                         <input type="text" title="우편번호" value="<%= addrInfo.zipCode %>" class="fe-zip" readonly />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="bt-box type01">
-                                        <button type="button" class="fe-post">우편번호</button>
+                                    <span class="bt-box3"> <!--리디자인 적용-->
+                                        <button type="button" class="btn-round2 btn-style3 fe-post">우편번호</button>
                                     </span>
                                 </span>
                                 <span class="inputbox mt10">
                                     <span class="input">
                                         <input type="text" class="fe-main-address" title="기본 주소" value="<%= addrInfo.basAddr %>" readonly />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                                 <span class="inputbox mt10">
                                     <span class="input">
                                         <input type="text" class="fe-detail-address required-input-field" value="<%= addrInfo.dtlAddr %>"
-                                               data-origin-value="<%= addrInfo.dtlAddr %>" placeholder="상세주소 입력" title="상세 주소" readonly />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                               data-origin-value="<%= addrInfo.dtlAddr %>" title="상세 주소" readonly />
                                     </span>
                                 </span>
                             </li>

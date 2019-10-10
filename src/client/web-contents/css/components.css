@@ -14659,7 +14659,7 @@ a.bt-link-tx.underline.small {
 .suggest-tag-titlebox .suggest-tag-link .text .textnumber {
   display: inline-block;
   margin-left: 0.13rem;
-  color: #f76252; }
+  color: #ef4b49; }/* 191007 [OP002-4182] 수정_01 */
 
 .suggest-tag-titlebox .suggest-tag-link .taglist-wrap {
   white-space: nowrap;
@@ -35701,3 +35701,6 @@ body.apphome .section-box {
 .rm-autosafe-qna dt{float:left;width:4.56rem;font-weight:bold;position:relative;color:#333}
 .rm-autosafe-qna dt:after{content:'';display:block;position:absolute;top:0.16rem;right:0;width:.0625rem;height:.75rem;background-color:#000}
 .rm-autosafe-qna dd{float:left;margin-left:1rem}
+
+/* 191004 [OP002-4203] 관련 로밍 수정 */
+.rm-main-recomm .productinfoscroll-box .product-info .type{font-size:.75rem}

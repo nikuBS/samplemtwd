@@ -92,6 +92,7 @@ Tw.API_CMD = {
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: Tw.API_METHOD.GET },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: Tw.API_METHOD.GET },
   BFF_03_0032: { path: '/core-auth/:version/tworld-terms', method: Tw.API_METHOD.GET },
+  BFF_03_0034: { path: '/core-auth/:version/tworld-term-agreements-icas', method: Tw.API_METHOD.GET },
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET },

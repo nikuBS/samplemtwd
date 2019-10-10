@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <div class="wrap">        
+        <div class="popup-page tw-popup txt2-popup">
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>‘자동안심 T로밍’에 대해<br>자주 하는 질문과 답변</h1>
+                    </div>
+				</div>
+			</div>
+			<div class="container-wrap">
+				<div class="container">
+                   	<div class="rm-autosafe-qna">
+						<div class="qna-item">
+							<h2><span>Q1.</span> 자동안심 T로밍을 이용하려면 어떻게 해야 하나요? 가입 신청을 해야 하나요?</h2>
+							<p class="mt14">자동안심 T로밍을 이용하기 위해 별도의 가입 신청은 필요 없습니다. 로밍 요금제에 가입하지 않아도 해외에서 로밍 서비스를 이용하시면 ‘자동안심 T로밍’ 서비스가 자동으로 적용됩니다.</p>
+							<p class="tx_bu mt14">음성통화: 1일 기준 이용 시간에 따라 자동으로 3분 무료 통화, 30분 최대 10,000원 서비스 적용</p>
+							<p class="tx_bu">데이터 안심 서비스: 1일 이용료가 5,000원(부가세 포함)을 초과할 때 자동으로 데이터 안심 서비스 가입. 이후 24시간동안 속도제어 상태에서 무제한 사용(단, 비제휴국일 경우 5,000원 초과 시 데이터 자동 차단)</p>
+						</div>
+						<div class="qna-item mt20">
+							<h2><span>Q2.</span> 3분 무료통화는 해외에서 한국으로 통화할 때만 적용되나요?</h2>
+							<p class="mt14">수신/발신지와 상관없이 3분 무료 통화 혜택을 이용 하실 수 있습니다. 방문국에서 한국 또는 다른 나라로 통화는 물론, 현지로 통화 시에도 이용 가능합니다.<br><br>수신/발신지의 현지 서비스망 사정에 따라 별도의 요금이 발생할 수 있습니다.</p>									
+						</div>		
+						<div class="qna-item mt20">
+							<h2><span>Q3.</span> 통화 시간이 3분, 30분이 넘을 경우, 요금은 어떻게 청구되나요?</h2>
+							<p class="mt14">3분이 넘어갈 경우 초과한 시간(초)만큼 해당 국가의 초당 요금으로 계산되어 청구됩니다.<br><br>예: 홍콩에서 홍콩으로 3분 10초간 통화 시<br>10초(3분 초과 시간) × 6.4원(현지 통화 시 초당 통화 요금)=64원 청구<br>단, 1일 총 음성 통화 시간이 30분을 넘지 않은 경우 10,000원만 청구됩니다.<br>1일 총 통화 시간이 30분을 초과할 경우에도 위와 같이 초당 계산되어 청구됩니다.</p><!-- 191001 수정 -->
+						</div>		
+						<div class="qna-item mt20">
+							<h2><span>Q4.</span> 하루의 기준은 어떻게 되나요?</h2>
+							<p class="mt14">한국 시간 기준으로 00시~24시입니다.</p>
+						</div>		
+						<div class="qna-item mt20">
+							<h2><span>Q5.</span> 속도 제어 이후 더 빠른 속도로 데이터를 사용하려면 어떻게 해야 하나요?</h2>
+							<p class="mt14">속도가 제한된 이후 더 빠른 속도로 데이터를 사용 하시려면 baro 3/4/7GB, baro OnePass 300/500/VIP(기본형, 기간형) 등의 로밍 요금제를 신청하세요. 해외에서도 가입 후 바로 사용하실 수 있습니다.</p>
+							<dl class="clearfix mt12">
+								<dt>온라인 신청</dt>
+								<dd>m.troaming.co.kr</dd>
+							</dl>
+							<dl class="clearfix">
+								<dt>전&nbsp;화&nbsp;&nbsp;&nbsp;신&nbsp;청</dt>
+								<dd>국내 02-6343-9000(무료)<br>해외 +82-2-6343-9000(무료)</dd>
+							</dl>								
+						</div>
+					</div>
+				</div>
+			</div>
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+		</div>
+		<!-- // 자주 하는 질문과 답변 팝업 -->
+    </div>
+</body>
+</html>

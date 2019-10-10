@@ -13,6 +13,7 @@
 Tw.MyTFareBillSet = function (rootEl, integrateList) {
   this.$container = rootEl;
   this._moreViewSvc = new Tw.MoreViewComponent();
+  this._historyService = new Tw.HistoryService();
   this._integrateList = integrateList;
   this._init();
 };
@@ -40,6 +41,16 @@ Tw.MyTFareBillSet.prototype = {
    */
   _bindEvent: function () {
     this.$container.on('click', '#fe-app-down', $.proxy(this._onDownload, this));
+    this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
+  },
+
+  /**
+   * @function
+   * @param e
+   * @desc url 이동
+   */
+  _goUrl: function (e) {
+    this._historyService.goLoad($(e.currentTarget).data('url'));
   },
 
   /**
