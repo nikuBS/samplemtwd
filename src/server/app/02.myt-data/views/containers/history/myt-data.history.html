@@ -30,7 +30,8 @@
                 <div class="cont-box nogaps">
                     <div class="ti-caption-blue">
                         <div class="num">총 <em><%= list.length %></em>건</div>
-                        <button class="bt-select" id="fe-type" title="최근 충전/선물 내역 보기유형 선택" aria-haspopup="true"><%= list.length === 0 ? 'disabled' : '' %><%= TYPE_NAMES[filterIdx] %></button>
+                        <!-- [OP002-4410] 최근 충전/선물 내역 필터링 항목값 표기 오류 수정 -->
+                        <button class="bt-select" id="fe-type" title="최근 충전/선물 내역 보기유형 선택" aria-haspopup="true"<%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
                     <div class="cont-box pt0 pb0">
