@@ -14,7 +14,7 @@
 Tw.MyTFareBillPrepayMainSKpay = function (params) {
   this.$container = params.$element;
   this._callbackSKpay = params.callbackSKpay;
-  this._callbackCard = params.callbackCard;
+  this._callbackPrepay = params.callbackPrepay;
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService(this.$container);
@@ -23,7 +23,6 @@ Tw.MyTFareBillPrepayMainSKpay = function (params) {
 Tw.MyTFareBillPrepayMainSKpay.prototype = {
   openPaymentOption: function (e) {
     var data = Tw.POPUP_TPL.FARE_PAYMENT_PREPAY_SKPAY;
-
     this._popupService.open({
       url: '/hbs/',
       hbs: 'MF_07_04',// hbs의 파일명
@@ -43,8 +42,8 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
   _closePayment: function (e, $layer) {
     if(this.skpay === 'skpay') {
       this._checkAgree(e);
-    }else if(this.skpay === 'card') {
-      this._callbackCard();
+    } else {
+      this._callbackPrepay(this.skpay);
     }
   },
   /**
@@ -53,15 +52,12 @@ Tw.MyTFareBillPrepayMainSKpay.prototype = {
    */
   _bindEventPayment: function (e, $layer) {
     this.skpay = '';
-    $layer.on('click', '.fe-skpay', $.proxy(this._clickSKpay, this, e));
-    $layer.on('click', '.fe-card', $.proxy(this._clickCard, this, e));
+    $layer.on('click', '.fe-skpay', $.proxy(this._clickPayment, this, 'skpay'));
+    $layer.on('click', '.fe-card', $.proxy(this._clickPayment, this, 'card'));
+    $layer.on('click', '.fe-account', $.proxy(this._clickPayment, this, 'account'));
   },
-  _clickSKpay: function (e, $layer) {
-    this.skpay = 'skpay';
-    this._popupService.close();
-  },
-  _clickCard: function (e, $layer) {
-    this.skpay = 'card';
+  _clickPayment: function (payName) {
+    this.skpay = payName;
     this._popupService.close();
   },
   _checkAgree: function (e) {

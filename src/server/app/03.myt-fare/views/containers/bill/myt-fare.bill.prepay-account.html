@@ -1,0 +1,158 @@
+<%#
+* @file myt-fare.bill.prepay-account.html
+* @author 양정규
+* @since 2019.09.27
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body>
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+        <!--// #contents -->
+        <div class="popup-page tw-popup nobg fixed-bottom">
+            <!-- #header (공통 component 사용) -->
+            <%- include('../components/header.component.html', { title: '선결제', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+            <!--// #header -->
+            <!-- #contents -->
+            <div id="contents" class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="user-month-bill mt0">
+                            <div class="this-month-bill">
+                                <p class="stit">선결제 가능 최대금액</p>
+                                <p class="data price"><em class="fe-max-amount">0</em><span>원</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box">
+                        <ul class="form-data-list">
+                            <li>
+                                <label class="tit" for="flab01">선결제 금액</label>
+                                <span class="inputbox">
+                                <span class="input">
+                                    <input id="flab01" class="fe-prepay-amount required-input-field fe-only-number" type="number"
+                                           inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8" data-valid-label="prepay"
+                                           title="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" placeholder="1,000원부터 10원단위 선결제 가능합니다. (숫자만 입력)" />
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="error-txt fe-error-msg" id="id-helper1" aria-hidden="true" style="display:none;">선결제 가능 최대금액을 초과하였습니다.</span>
+                            </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="base-list">
+                            <ul>
+                                <li class="thin">
+                                    <span class="title-type1">예금주명</span>
+                                    <span class="tx-cont fe-name"><%= svcInfo.mbrNm %></span>
+                                </li>
+                                <li>
+                                    <span class="title-type1">계좌정보</span>
+                                    <div class="tx-cont2">
+                                        <div class="input-list">
+                                            <ul class="fe-account-info">
+                                                <!-- 자동납부계좌가 존재할 경우 -->
+                                                <% if (autoInfo.isAuto) { %>
+                                                <li class="fe-auto-info">
+                                                    <span class="custom-form"><input type="radio" id="radio1" name="radio" checked=""><span class="r-type1"></span></span>
+                                                    <label for="radio1">
+                                                        <span class="tx-tit">자동납부계좌와 동일</span>
+                                                        <span class="tx-sub">
+                                                            <span class="fe-auto-account-bank" data-code="<%= autoInfo.bankCode %>" data-name="<%= autoInfo.bankFullName %>">
+                                                                <%= autoInfo.bankName %>
+                                                            </span> <span class="fe-auto-account-number"><%= autoInfo.bankNum %></span>
+                                                        </span>
+                                                    </label>
+                                                </li>
+                                                <%}%>
+                                                <li class="fe-manual-input fe-account-input fe-bank-wrap">
+                                                    <span class="custom-form"><input type="radio" id="radio2" name="radio"><span class="r-type1"></span></span>
+                                                    <label for="radio2">
+                                                        <span class="tx-tit">직접입력</span>
+                                                        <span class="form-wrap half-type mt14">
+                                                            <span class="select">
+                                                                <button class="bt-dropdown big select-bank fe-select-bank fe-account-bank fe-required-select"
+                                                                        disabled="" title="계좌정보 은행 선택" aria-haspopup="true">
+                                                                    은행 선택<span class="ico"></span>
+                                                                </button>
+                                                            </span>
+                                                            <span class="inputbox ml8">
+                                                                <span class="input">
+                                                                    <input type="tel" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
+                                                                           title="계좌정보 숫자만 입력" disabled="" class="fe-account-number required-input-field fe-only-number"
+                                                                           data-valid-label="account" />
+                                                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                        <span class="error-txt fe-bank-error-msg" aria-hidden="true" style="display:none;">은행을 선택해 주세요.</span>
+                                                        <span class="error-txt fe-error-msg" aria-hidden="true" style="display:none;">계좌번호를 입력해 주세요.</span>
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <%
+                                <!--tool tip id 생성-->
+                                const tipId1 = path === 'small' ? 'MF_06_03_tip_01':'MF_07_03_tip_01',
+                                        tipId2 = path === 'small' ? 'MF_06_03_tip_02':'MF_07_03_tip_02';
+                            %>
+                            <li>
+                                <button id="<%=tipId1%>" class="btn-tip" aria-haspopup="true">
+                                    결제안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="<%=tipId2%>" class="btn-tip" aria-haspopup="true">
+                                    환불안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                </div>
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-check-pay" disabled="disabled">결제하기</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step fe-popup-close"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareBillPrepayAccount($('.wrap'), '<%=path%>');
+  });
+</script>
+<% include ../../components/end.component.html %>
