@@ -21,6 +21,9 @@ Tw.MyTJoinSuspendTemporary = function (tabEl, params) {
   this._bindEvent();
   this._params = params;
   this._defaultDate = this.$dateTo.val();
+  // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+  this.toDate = this.$dateTo.val();
+  this.fromDate = this.$dateFrom.val();
 
   new Tw.InputFocusService(tabEl, this.$btSuspend);
 };
@@ -44,6 +47,8 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$inputEmail = this.$container.find('[data-id="fe-input-email"]');
     this.$inputTel = this.$container.find('[data-id="fe-input-tel"]');
     this.$btSuspend = this.$container.find('[data-id="fe-bt-suspend"]');
+    // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+    this.$inputDateSelect = this.$container.find('[data-role="fe-date-select"]');
   },
   /**
    * @function
@@ -58,6 +63,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$btSuspend.on('click', $.proxy(this._onClickBtnSuspend, this));
     this.$inputEmail.on('change', $.proxy(this._checkSuspendable, this, true));
     this.$inputTel.on('change', $.proxy(this._checkSuspendable, this, true));
+    // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+    this.$inputDateSelect.on('focus', 'input[type="date"]', $.proxy(this._onFocusDateSelect, this));
+    this.$inputDateSelect.on('change', 'input[type="date"]', $.proxy(this._onChangeDateSelect, this));
   },
   /**
    * @function
@@ -253,5 +261,52 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       this._defaultDate !== this.$dateTo.val();
     return changed;
 
+  },
+
+  /**
+   * @function
+   * @desc 일시정지 기간 선택 시 값 저장 [OP002-4422]
+   * @param event
+   * @private
+   */
+  _onFocusDateSelect: function(event) {
+    var role = event.target.getAttribute('data-role');
+    var value = event.target.value;
+    if (role === 'fe-date-to') {
+      this.toDate = value;
+    } else {
+      this.fromDate = value;
+    }
+  },
+
+  /**
+   * @function
+   * @desc 일시정지 기간 변경 시 기간 체크 [OP002-4422]
+   * @param event
+   * @private
+   */
+  _onChangeDateSelect: function(event) {
+    //validation check
+    var from, to, diff, msg;
+    var targetRole = event.target.getAttribute('data-role');
+    // duration check
+    from = this.$container.find('[data-role="fe-date-from"]').val().replace(/-/g, '');
+    to = this.$container.find('[data-role="fe-date-to"]').val().replace(/-/g, '');
+    diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
+    if ( diff < 0 ) {// 시작일이 오늘 이전일 경우
+      msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
+    } else if ( to < from ) {// 종료일자가 시작일 이전일 경우
+      msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
+    } else if (diff > 93 ) {// -일시정지는 1회 최대 93일 까지 신청 가능
+      msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02;
+    }
+    if (msg) {
+      if (targetRole === 'fe-date-from') {
+        event.target.value = this.fromDate;
+      } else {
+        event.target.value = this.toDate;
+      }
+      this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
+    }
   }
 };
