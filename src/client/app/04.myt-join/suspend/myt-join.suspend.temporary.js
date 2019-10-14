@@ -169,25 +169,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
         return;
       }
     }
-
-    // duration check
-    this.$dateFrom = this.$container.find('[data-role="fe-date-from"]');
-    this.$dateTo = this.$container.find('[data-role="fe-date-to"]');
-    var diff = Tw.DateHelper.getDiffByUnit(this.$dateFrom.val(), Tw.DateHelper.getCurrentShortDate(), 'days');
-    if ( diff < 0 ) {// 시작일이 오늘 이전일 경우
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
-        null, null, null, null, $(event.currentTarget));
-      return;
-    } else if ( this.$dateTo.val() < this.$dateFrom.val() ) {// 종료일자가 시작일 이전일 경우
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
-        null, null, null, null, $(event.currentTarget));
-      return;
-    } else if (Tw.DateHelper.getDiffByUnit(this.$dateTo.val(), this.$dateFrom.val(), 'days') > 93 ) {// -일시정지는 1회 최대 93일 까지 신청 가능
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_02,
-        null, null, null, null, $(event.currentTarget));
-      return;
-    }
-
+    // 사용자 입력으로 기한을 체크하기 때문에 접수하기 버튼 입력 이후 처리하는 부분 제거
     this._requestSuspend();
   },
   /**

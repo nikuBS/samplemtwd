@@ -301,43 +301,16 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    *  2. USCAN 전송(BFF_01_0046)
    *  3. 장기일시정지 신청(BFF_05_0197)
    */
-  _onClickSuspend: function (event) {
+  _onClickSuspend: function (/* event */) {
     var option = {};
-    var from, to, diff, $period;
+      // 사용자 입력으로 기한을 체크하기 때문에 접수하기 버튼 입력 이후 처리하는 부분 제거
     if ( this.$optionType.filter('[checked]').val() === 'military' ) { // 군입대
-      //validation check
-      $period = this.$container.find('.fe-military.fe-period');
-      from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
-      if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
-          null, null, null, null, $(event.currentTarget));
-        return;
-      } else if ( diff > 24 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      }
+      var $period = this.$container.find('.fe-military.fe-period');
       option.svcChgRsnCd = this.$militaryType.prop('checked') ?
         Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_: Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
-      option.fromDt = from;
-      option.toDt = to;
+      option.fromDt = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');;
+      option.toDt = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
     } else { // 해외체류
-      //validation check
-      from = Tw.DateHelper.getCurrentShortDate();
-      $period = this.$container.find('.fe-abroad.fe-date');
-      to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
-      if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      } else if ( diff > 30 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      }
       option.svcChgRsnCd = Tw.MYT_SUSPEND_REASON_CODE.OVERSEAS;
       option.fromDt = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val().replace(/-/g, '');
     }
