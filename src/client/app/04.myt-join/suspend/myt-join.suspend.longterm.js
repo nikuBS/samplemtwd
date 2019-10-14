@@ -28,7 +28,10 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
 
   this._defaultMilitaryToDate = this.$container.find('.fe-military [data-role="fe-to-dt"]').val();
   this._defaulAbroadFromeDate = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
-
+  // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+  this.militaryToDate = this.$container.find('.fe-military [data-role="fe-to-dt"]').val();
+  this.militaryFromDate = this.$container.find('.fe-military [data-role="fe-from-dt"]').val();
+  this.abroadFromeDate = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
   new Tw.InputFocusService(tabEl, this.$btSuspend);
 };
 
@@ -48,6 +51,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$inputEmail = this.$container.find('[data-id="fe-input-email"]');
     this.$btnNativeContactList = this.$container.find('.fe-btn_native_contact');
     this.$militaryType = this.$container.find('[data-id="fe-military-type"]');
+    // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+    this.$inputDateSelect = this.$container.find('[data-role="fe-date-select"]');
   },
   /**
    * @function
@@ -60,6 +65,9 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this.$btRelation.on('click', $.proxy(this._onClickRelation, this));
     this.$btSuspend.on('click', _.debounce($.proxy(this._onClickSuspend, this), 500));
     this.$btnNativeContactList.on('click', $.proxy(this._onClickBtnAddr, this));
+    // [OP002-4422] 일시정지 기간 입력 시 vaildation check
+    this.$inputDateSelect.on('focus', 'input[type="date"]', $.proxy(this._onFocusDateSelect, this));
+    this.$inputDateSelect.on('change', 'input[type="date"]', $.proxy(this._onChangeDateSelect, this));
     this._changeSuspendType('military');
   },
   /**
@@ -293,43 +301,16 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    *  2. USCAN 전송(BFF_01_0046)
    *  3. 장기일시정지 신청(BFF_05_0197)
    */
-  _onClickSuspend: function (event) {
+  _onClickSuspend: function (/* event */) {
     var option = {};
-    var from, to, diff, $period;
+      // 사용자 입력으로 기한을 체크하기 때문에 접수하기 버튼 입력 이후 처리하는 부분 제거
     if ( this.$optionType.filter('[checked]').val() === 'military' ) { // 군입대
-      //validation check
-      $period = this.$container.find('.fe-military.fe-period');
-      from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
-      if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01,
-          null, null, null, null, $(event.currentTarget));
-        return;
-      } else if ( diff > 24 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      }
+      var $period = this.$container.find('.fe-military.fe-period');
       option.svcChgRsnCd = this.$militaryType.prop('checked') ?
         Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_: Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
-      option.fromDt = from;
-      option.toDt = to;
+      option.fromDt = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');;
+      option.toDt = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
     } else { // 해외체류
-      //validation check
-      from = Tw.DateHelper.getCurrentShortDate();
-      $period = this.$container.find('.fe-abroad.fe-date');
-      to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
-      if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      } else if ( diff > 30 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01,
-          null, null, null, null,  $(event.currentTarget));
-        return;
-      }
       option.svcChgRsnCd = Tw.MYT_SUSPEND_REASON_CODE.OVERSEAS;
       option.fromDt = this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val().replace(/-/g, '');
     }
@@ -457,5 +438,79 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _isLowerVersionAndroid: function () {
     var androidVersion = Tw.BrowserHelper.getAndroidVersion();
     return androidVersion && androidVersion.indexOf('4.4') !== -1;
+  },
+
+  /**
+   * @function
+   * @desc 일시정지 기간 선택 시 값 저장 [OP002-4422]
+   * @param event
+   * @private
+   */
+  _onFocusDateSelect: function(event) {
+    var role = event.target.getAttribute('data-role');
+    var isMilitary = this.$optionType.filter('[checked]').val() === 'military';
+    var value = event.target.value;
+    switch (role) {
+      case 'fe-to-dt':
+        if (isMilitary) {
+          this.militaryToDate = value;
+        }
+        break;
+      case 'fe-from-dt':
+        if (isMilitary) {
+          this.militaryFromDate = value;
+        } else {
+          this.abroadFromeDate = value;
+        }
+        break;
+      default:
+        break;
+    }
+  },
+
+  /**
+   * @function
+   * @desc 일시정지 기간 변경 시 기간 체크 [OP002-4422]
+   * @param event
+   * @private
+   */
+  _onChangeDateSelect: function(event) {
+    //validation check
+    var from, to, diff, $period, msg;
+    var targetRole = event.target.getAttribute('data-role');
+    if ( this.$optionType.filter('[checked]').val() === 'military' ) {// 군입대
+      $period = this.$container.find('.fe-military.fe-period');
+      from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
+      diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
+      if ( diff < 0 ) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
+      } else if ( diff > 24 ) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
+      }
+      if (msg) {
+        if (targetRole === 'fe-from-dt') {
+          event.target.value = this.militaryFromDate;
+        } else {
+          event.target.value = this.militaryToDate;
+        }
+      }
+    } else { // 해외체류
+      $period = this.$container.find('.fe-abroad.fe-date');
+      from = Tw.DateHelper.getCurrentShortDate();
+      to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
+      if (diff < 0) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
+      } else if (diff > 30) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01;
+      }
+      if (msg && targetRole === 'fe-from-dt') {
+        event.target.value = this.abroadFromeDate;
+      }
+    }
+    if (msg) {
+      this._popupService.openAlert(msg, null, null, null, null, $(event.currentTarget));
+    }
   }
 };
