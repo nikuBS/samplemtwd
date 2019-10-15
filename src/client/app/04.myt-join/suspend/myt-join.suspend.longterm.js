@@ -478,13 +478,16 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     //validation check
     var from, diff, $period, msg;
     var targetRole = event.target.getAttribute('data-role');
+    var curDate = Tw.DateHelper.getDateCustomFormat('YYYYMMDD');
     var to = Tw.DateHelper.getCurrentShortDate();
     if ( this.$optionType.filter('[checked]').val() === 'military' ) {// 군입대
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      // to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
+      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
-      if ( diff < 0 ) {
+      if (from < curDate) {
+        msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
+      } else if ( diff < 0 ) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
       } else if ( diff > 24 ) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD;
