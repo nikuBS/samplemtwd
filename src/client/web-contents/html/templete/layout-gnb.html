@@ -450,17 +450,19 @@
                     <li><button type="button"><i class="icon-gnb-next-n"><span class="blind">next</span></i></button></li>
                     <li class="mark-lock on"><!-- .on이 있어야 보임 -->
                         <button type="button"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button>
-                        <div class="coach-mark">
-                            <strong class="coach-txt"><span class="point">가려진 정보(*)를<br> 볼 수 있어요</span></strong><!-- 2019.03.18 문구수정-->
-                            <button type="button" class="close">닫기</button>
-                        </div>
+                        <!-- 190926[OP002-4000] 수정01 --> 
+                        <span class="tod-coach-mark downarr">
+                            <strong class="point">가려진 정보(*)를<br>볼 수 있어요</strong>
+                            <button class="close"><span class="blind">닫기</span></button>
+                        </span>
+                        <!-- //190926[OP002-4000] 수정01 --> 
                     </li>
                     <li class="mark-pin on">
                         <button type="button"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button>
-                        <div class="coach-mark">
-                            <strong class="coach-txt"><span class="point">MY 바로가기</span><br>추가</strong>
-                            <button type="button" class="close">닫기</button>
-                        </div>
+                        <!-- <span class="tod-coach-mark downarr">
+                            <strong class="point">MY 바로가기</strong><br>추가
+                            <button class="close"><span class="blind">닫기</span></button>
+                        </span> -->
                     </li>
                     <li><button type="button"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
                 </ul>

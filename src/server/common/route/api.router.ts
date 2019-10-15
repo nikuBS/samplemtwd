@@ -219,8 +219,6 @@ class ApiRouter {
    * @param next
    */
   private checkHealth(req: Request, res: Response, next: NextFunction) {
-    this.redisService.setData('healthCheck', 'OK');
-    this.redisService.getData('healthCheck');
     res.json({
       description: 'NODE Health Check',
       status: 'UP'
