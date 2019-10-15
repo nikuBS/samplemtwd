@@ -42,7 +42,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get remain days to the given date
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {number} : 30
    * @public
    */
@@ -51,7 +51,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDD
+   * @param {Date|string} date YYYYMMDD
    * @returns {string} : 20180601
    * @public
    */
@@ -60,7 +60,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDD
+   * @param {Date|string} date YYYYMMDD
    * @returns {string} : 2018.06.01 12:00:00
    * @public
    */
@@ -78,7 +78,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss or none
+   * @param {Date|string} date YYYYMMDDhhmmss|none
    * @returns {string} : 2018
    * @public
    */
@@ -87,7 +87,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDD
+   * @param {Date|string} date YYYYMMDD
    * @returns {string} : currentDateTime - 1 year
    * @public
    */
@@ -96,7 +96,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1.
    * @public
    */
@@ -105,7 +105,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1
    * @public
    */
@@ -114,7 +114,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 (first date of this month)
    * @public
    */
@@ -123,7 +123,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. (first date of this month)
    * @public
    */
@@ -132,7 +132,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00
    * @public
    */
@@ -140,7 +140,7 @@ Tw.DateHelper = (function () {
     return moment(convDateFormat(date)).format('YYYY.M.D. hh:mm');
   };
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00:00
    * @public
    */
@@ -149,7 +149,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1. 12:00:00
    * @public
    */
@@ -158,7 +158,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018-06-02 11:59
    * @public
    */
@@ -195,7 +195,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 2018년 12월 31일
    * @public
    */
@@ -205,7 +205,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get next month in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 11월 | 18년12월
    * @public
    */
@@ -219,21 +219,18 @@ Tw.DateHelper = (function () {
 
   /**
    * * @desc Get month in korean
-   * @param {Date or string} date YYYYMMDD
+   * @param {Date|string} date YYYYMMDD
+   * @param {boolean} incYear include year number to result
    * @returns {string} : 12월 | 18년12월
    * @public
    */
-  var getShortKoreanMonth = function (date, isYear) {
-    var opt = 'M월';
-    if ( isYear ) {
-      opt = 'YY년M월';
-    }
-    return moment(convDateFormat(date)).format(opt);
+  var getShortKoreanMonth = function (date, incYear) {
+    return moment(convDateFormat(date)).format(incYear ? 'YY년M월' : 'M월');
   };
 
   /**
    * @desc Get date in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 10월 9일 화요일
    * @public
    */
@@ -241,9 +238,9 @@ Tw.DateHelper = (function () {
     return moment(this.convDateFormat(date)).locale('ko').format('MMM Do dddd');
   };
 
-  /** 
+  /**
    * @desc Get time in korean
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 오후 2시 11분
    * @public
    */
@@ -251,9 +248,9 @@ Tw.DateHelper = (function () {
     return moment(this.convDateFormat(date)).locale('ko').format('a h시 m분');
   };
 
-  /** 
+  /**
    * @desc Get day of week
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : 월
    */
   var getDayOfWeek = function (date) {
@@ -262,9 +259,9 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get difference between start date and end date
-   * @param {Date or string} sdate start date
-   * @param {Date or string} edate end date
-   * @param {string} unit 
+   * @param {Date|string} sdate start date
+   * @param {Date|string} edate end date
+   * @param {string} unit
    * @public
    */
   var getDiffByUnit = function (sdate, edate, unit) {
@@ -272,8 +269,8 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @desc whether is valid or not
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @desc whether is valid|not
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @public
    */
   var isValid = function (date) {
@@ -286,7 +283,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get difference between end date and start date
-   * @param {Date or string} endDate YYYYMMDDhhmmss
+   * @param {Date|string} endDate YYYYMMDDhhmmss
    * @returns {number} milliseconds
    * @public
    */
@@ -295,7 +292,7 @@ Tw.DateHelper = (function () {
   };
 
   /**
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : YYYYMMDD
    * @public
    */
@@ -307,7 +304,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc whether is before of not
-   * @param {Date or string} date YYYYMMDDhhmmss
+   * @param {Date|string} date YYYYMMDDhhmmss
    * @returns {string} : YYYYMMDD
    * @public
    */
@@ -326,7 +323,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc get date with format
-   * @param {string} format 
+   * @param {string} format
    * @returns {string} formatted date
    * @public
    */
@@ -336,7 +333,7 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc add 5 minutes
-   * @param {Date or string} date 
+   * @param {Date|string} date
    * @returns {string} : YYYYMMDD
    * @public
    */
@@ -346,8 +343,8 @@ Tw.DateHelper = (function () {
 
   /**
    * @desc Get remained seconds
-   * @param {Date} startTime 
-   * @param {number} diff 
+   * @param {Date} startTime
+   * @param {number} diff
    * @returns {number} milliseconds
    * @public
    */
