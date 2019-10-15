@@ -763,6 +763,10 @@ Tw.MenuComponent.prototype = { // 각 menu 사이에 padding이 필요한 항목
           item.xtrCode = this.XTRACTOR_CODE[item.menuId];
         }
 
+        // OP002-4354 H/C
+        // item.isNew = item.isNewImgUseYn === 'Y' ? true : false;
+        item.isNew = item.menuId === 'M001962' ? true : false;
+
         if(this.TRACKER_CODES.indexOf(item.menuId) > -1){
           item.tracker = {
             menuId: item.menuId,
