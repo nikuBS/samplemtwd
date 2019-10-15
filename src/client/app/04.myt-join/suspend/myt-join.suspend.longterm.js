@@ -308,7 +308,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       var $period = this.$container.find('.fe-military.fe-period');
       option.svcChgRsnCd = this.$militaryType.prop('checked') ?
         Tw.MYT_SUSPEND_REASON_CODE.SEMI_MILITARY_: Tw.MYT_SUSPEND_REASON_CODE.MILITARY;
-      option.fromDt = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');;
+      option.fromDt = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
       option.toDt = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
     } else { // 해외체류
       option.svcChgRsnCd = Tw.MYT_SUSPEND_REASON_CODE.OVERSEAS;
@@ -476,12 +476,13 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
    */
   _onChangeDateSelect: function(event) {
     //validation check
-    var from, to, diff, $period, msg;
+    var from, diff, $period, msg;
     var targetRole = event.target.getAttribute('data-role');
+    var to = Tw.DateHelper.getCurrentShortDate();
     if ( this.$optionType.filter('[checked]').val() === 'military' ) {// 군입대
       $period = this.$container.find('.fe-military.fe-period');
       from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
+      // to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
       if ( diff < 0 ) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01;
@@ -497,9 +498,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       }
     } else { // 해외체류
       $period = this.$container.find('.fe-abroad.fe-date');
-      from = Tw.DateHelper.getCurrentShortDate();
-      to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
+      from = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
+      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days');
       if (diff < 0) {
         msg = Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE;
       } else if (diff > 30) {
