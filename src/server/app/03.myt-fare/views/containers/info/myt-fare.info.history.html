@@ -39,9 +39,15 @@
                 <!--// .cont-box -->
                 <% } %>
 
-                <div class="sort-area">
+                <div class="sort-area tod-sort-area">
                     <span class="total-qnt">총 <span class="num"><%=data.listData.mergedListData.length%></span>건</span>
-                    <button class="btn-select" aria-hashpopup='true' id="fe-type-trigger" title="납부내역 유형 선택"><%=currentString%></button>
+                    <span class="tod-select-wrap">
+                        <button class="btn-select fe-coach-change-target" aria-hashpopup='true' id="fe-type-trigger" title="납부내역 유형 선택"><%=currentString%></button>
+                        <span class="tod-coach-mark fe-coach-change none">
+                            <strong class="point">조회 항목</strong>을<br>변경할 수 있어요
+                            <button class="close"><span class="blind">닫기</span></button>
+                        </span>
+                    </span>
                 </div>
 
                 <div id="fe-list-wrapper">

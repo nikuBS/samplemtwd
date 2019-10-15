@@ -1,0 +1,158 @@
+<%#
+* @file customer.useguide.app.html
+* @author HJH
+* @since 2019.10.11
+%>
+
+<%- include('../../components/start-idpt.component.html', { pageInfo: locals.pageInfo }); %>
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents-area" class="fe-replace-history">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <%- include('../../../../common/views/components/header.component.html', { title: 'App 이용가이드', svcInfo: svcInfo }); %>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 id="contents-area" tabindex="-1"><span class="blind">본문시작</span></h2>
+            <div class="container">
+                <%- content %>
+            </div>
+        </div>
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
+    </div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+    // $(document).ready(function () {
+    //     $('.idpt-tab').each(function () {
+    //         var tabBtn = $(this).find('li');
+    //         $(tabBtn).click(function () {
+    //             var i = $(this).index();
+    //             $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+    //             $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
+    //         });
+    //     });
+
+    //     // popup
+    //     $('.idpt-popup-open').click(function () {
+    //         var popId = $(this).attr('data-popup');
+    //         window.history.pushState(null, null, '#' + popId);
+    //         $('.idpt-popup-wrap').removeClass('show');
+    //         $('#' + popId).addClass('show');
+    //         $('.idpt-popup').show().attr('tabindex', -1).focus();
+    //         $('body, .wrap').css('height', '100%');
+    //         skt_landing.action.checkScroll.lockScroll();
+    //     });
+    //     $('.idpt-popup-close').click(function () {
+    //         var chgHash = location.hash;
+    //         var focusReturn = chgHash.replace(/#/, "");
+    //         var focusElement = $('a[data-popup=' + focusReturn + ']');
+    //         $('.idpt-popup').hide();
+    //         focusElement.focus();
+    //         $('body, .wrap').css('height', '');
+    //         skt_landing.action.checkScroll.unLockScroll();
+    //     });
+    //     window.addEventListener('hashchange', function () {
+    //         var chgHash = location.hash;
+    //         if (chgHash == "") {
+    //             $('.idpt-popup').hide();
+    //             $('body, .wrap').css('height', '');
+    //             skt_landing.action.checkScroll.unLockScroll();
+    //         }
+    //     });
+
+    //     $('input[type=radio][name=call]').on('click', function () {
+    //         var chkValue = $('input[type=radio][name=call]:checked').val();
+    //         if (chkValue == '1') {
+    //             $('.call-cont01').css('display', 'block');
+    //             $('.call-cont02').css('display', 'none');
+    //         } else if (chkValue == '2') {
+    //             $('.call-cont01').css('display', 'none');
+    //             $('.call-cont02').css('display', 'block');
+    //         }
+    //     });
+
+    //     $('input[type=radio][name=center]').on('click', function () {
+    //         var chkValue = $('input[type=radio][name=center]:checked').val();
+    //         if (chkValue == '1') {
+    //             $('.center-cont01').css('display', 'block');
+    //             $('.center-cont02').css('display', 'none');
+    //         } else if (chkValue == '2') {
+    //             $('.center-cont01').css('display', 'none');
+    //             $('.center-cont02').css('display', 'block');
+    //         }
+    //     });
+
+    //     $('.btn-tooltip-open').click(function () {
+    //         var toolpopId = $(this).attr('href');
+    //         $('.popup-info').removeClass('show');
+    //         $(toolpopId).addClass('show');
+    //         $('.idpt-tooltip-popup').show();
+    //     });
+    //     $('.btn_confirm').click(function () {
+    //         $('.idpt-tooltip-popup').hide();
+    //     });
+
+    //     //accordian
+    //     $('.idpt-accordian > li > a').on('click', function () {
+    //         $('.idpt-accordian > li > a').removeClass('open').attr('aria-pressed', 'false');
+    //         $('.idpt-accordian-cont').slideUp();
+    //         if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')) {
+    //             $(this).addClass('open');
+    //             $(this).parent().find('.idpt-accordian-cont').slideDown();
+    //             $(this).attr('aria-pressed', 'true');
+    //         }
+    //     });
+
+    //     //toggle (FAQ)
+    //     $('.idpt-toggle-btn').each(function () {
+    //         $(this).click(function () {
+    //             $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+    //             if ($(this).hasClass('open')) {
+    //                 $(this).attr('aria-pressed', 'true');
+    //             } else {
+    //                 $(this).attr('aria-pressed', 'false');
+    //             }
+    //         })
+    //     });
+
+    //     $('.idpt-tab-wrap .tab-menu > li').click(function () {
+    //         var i = $(this).index();
+    //         $('.idpt-tab-wrap .tab-menu li').removeClass('on').eq(i).addClass('on');
+    //         $('.idpt-tab-wrap .tab-contents').removeClass('show').eq(i).addClass('show');
+    //     });
+
+    //     $('.idpt-tab').each(function () {
+    //         var tabBtn = $(this).find('li');
+    //         $(tabBtn).click(function () {
+    //             var i = $(this).index();
+    //             $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+    //             $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
+    //         });
+    //     });
+
+    //     $('.fe-link-external').on('click', function (e) {
+    //         var url = $(e.currentTarget).attr('href');
+    //         if (Tw.BrowserHelper.isApp()) {
+    //             Tw.CommonHelper.showDataCharge(function () {
+    //                 Tw.CommonHelper.openUrlExternal(url);
+    //             });
+    //         } else {
+    //             Tw.CommonHelper.openUrlExternal(url);
+    //         }
+    //         return false;
+    //     })
+    // });
+</script>
+<% include ../../components/end.component.html %>
