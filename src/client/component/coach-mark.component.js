@@ -32,8 +32,7 @@ Tw.CoachMark.prototype = {
    */
   _setCoachMark: function () {
     if ( this.$coachView.length > 0 ) {
-      this.$coachView.removeClass('none');
-      // this._nativeService.send(Tw.NTV_CMD.LOAD, { key: this._nativeCmd }, $.proxy(this._onLoadCoach, this));
+      this._nativeService.send(Tw.NTV_CMD.LOAD, { key: this._nativeCmd }, $.proxy(this._onLoadCoach, this));
     }
   },
 
