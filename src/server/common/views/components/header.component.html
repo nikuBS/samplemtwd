@@ -230,7 +230,13 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
+                        <li>
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}
+                                {{#if isNew}}
+                                <i class="tod-ico-new"><span class="tod-blind">new</span></i>
+                                {{/if}}
+                            </button>
+                        </li>
                         {{/if}}
                         {{/each}}
                     </ul>
@@ -239,7 +245,13 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
+                        <li>
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}
+                                {{#if isNew}}
+                                <i class="tod-ico-new"><span class="tod-blind">new</span></i>
+                                {{/if}}
+                            </button>
+                        </li>
                         {{/if}}
                     </ul>
                     {{/if}}
@@ -252,7 +264,13 @@
                         {{#if loginNeed}}
                         <li><button class="bt fe-bt-login">{{menuNm}}</button></li>
                         {{else}}
-                        <li><button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}</button></li>
+                        <li>
+                            <button class="bt fe-menu-link" value="{{menuUrl}}" {{#if isExternalLink}}title="모바일웹 새창"{{/if}} data-xt_eid="{{xtrCode}}" data-xt_csid="NO" data-xt_action="BC" data-tracker="C" data-tracker_tw_menu_id="{{ menuId }}" data-tracker_tw_menu_nm="{{ menuNm }}">{{menuNm}}
+                                {{#if isNew}}
+                                <i class="tod-ico-new"><span class="tod-blind">new</span></i>
+                                {{/if}}
+                            </button>
+                        </li>
                         {{/if}}
                         {{/each}}
                     </ul>

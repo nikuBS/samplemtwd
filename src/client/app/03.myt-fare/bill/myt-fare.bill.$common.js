@@ -18,6 +18,7 @@ Tw.MyTFareBillCommon = function (rootEl) {
   this._historyService.init();
 
   this._init();
+  this._setCoachMark();
 };
 
 Tw.MyTFareBillCommon.prototype = {
@@ -348,5 +349,14 @@ Tw.MyTFareBillCommon.prototype = {
       this._setBillList($target);
       this._setBillDetailList($target);
     }
+  },
+
+  /**
+   * @function
+   * @desc 코치마크 처리
+   * @private
+   */
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, '.fe-coach-select', '.fe-coach-select-target', Tw.NTV_STORAGE.COACH_MYTFARE_BILL_SELECT);
   }
 };
