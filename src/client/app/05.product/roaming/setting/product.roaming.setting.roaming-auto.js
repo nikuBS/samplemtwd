@@ -48,7 +48,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       // this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
       //   Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
       this._dateSelectRange = 60; //60일로 시작일 선택 범위 변경
-      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH); //시작일 선택 문구
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.SIXTY_DAY); //시작일 선택 문구
     }else{
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH); //시작일 선택 문구
     }
