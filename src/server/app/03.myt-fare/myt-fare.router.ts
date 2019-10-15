@@ -58,7 +58,6 @@ import MyTFareBillContentsPrepay from './controllers/billcontents/myt-fare.bill.
 import MyTFareBillSmallSKpay from './controllers/billsmall/myt-fare.bill.small.skpay.controller';
 import MyTFareBillContentsSKpay from './controllers/billcontents/myt-fare.bill.contents.skpay.controller';
 import MyTFareBillSkpayResultPrepay from './controllers/bill/myt-fare.bill.skpay.result.prepay.controller';
-import MyTFareBillPrepayAccount from './controllers/bill/myt-fare.bill.prepay-account.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -90,7 +89,6 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/small/auto/info', controller: MyTFareBillSmallAutoInfo });
     this.controllers.push({ url: '/bill/small/auto/change', controller: MyTFareBillSmallAutoChange });
     this.controllers.push({ url: '/bill/small/skpay', controller: MyTFareBillSmallSKpay });
-    this.controllers.push({ url: '/bill(/:page)?/prepay-account', controller: MyTFareBillPrepayAccount });
 
     // 콘텐츠이용내역
     this.controllers.push({ url: '/bill/contents', controller: MyTFareBillContents });

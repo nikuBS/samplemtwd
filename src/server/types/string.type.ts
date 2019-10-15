@@ -1380,3 +1380,19 @@ export const SMART_CALL_PICK = [
     checked: false
   }
 ];
+
+export const ROAMING_CUSTOMIZED_MESSAGE = {
+  
+  SIXTY_DAY: '60일 안의 날짜를 선택하세요.'
+}
+
+export const ROAMING_PRODUCT_CUSTOMIZE_DATA = {
+  NA00006487:{ // baro OnePass VIP 기간형
+    selectableStartDateRange: 60,
+    selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
+  },
+  NA00006745:{ // baro OnePass Data VIP 기간형
+    selectableStartDateRange: 60,
+    selectableStartDate: ROAMING_CUSTOMIZED_MESSAGE.SIXTY_DAY
+  }
+}

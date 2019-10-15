@@ -18,7 +18,13 @@
             <span class="fe-amount" data-value="<%= unpaidList.sumUnpaid %>"><%= formatHelper.addComma(unpaidList.sumUnpaid.toString()) %></span>원
         </p>
         <% if (unpaidList.cnt > 1) { %>
-        <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부요금 선택</button></span>
+        <span class="btn-wrap">
+            <button type="button" class="fe-select-line fe-coach-select-target btn-round2 btn-style3">납부요금 선택</button>
+            <span class="tod-coach-mark fe-coach-select none">
+                <strong class="point">납부하실 요금</strong>을<br>선택/해제할 수 있어요   
+                <button class="close"><span class="blind">닫기</span></button>
+            </span>
+        </span>
         <% } %>
     </div>
 

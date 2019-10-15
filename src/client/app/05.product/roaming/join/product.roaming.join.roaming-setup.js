@@ -15,7 +15,7 @@
  * @param {boolean} isPromotion - 프로모션 상품 구분
  * @returns {void}
  */
-Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,svcNum,prodId,isPromotion) {
+Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,svcNum,prodId,isPromotion,isCustomGuidedProd,customGuide) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -28,6 +28,8 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodTypeInfo,prodApiInfo,sv
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
   this._isPromotion = isPromotion;
+  this._isCustomGuidedProd = isCustomGuidedProd;
+  this._customGuide = customGuide;
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
@@ -166,9 +168,10 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       return;
     }
     var $currentTarget = $(eventObj.currentTarget);
+    var selectableStartDateRange = this._customGuide.selectableStartDateRange || 30; // 기본 설정 가능한 시작일자 범위
     var nowTargetId = $currentTarget.attr('id');
     var nowValue = $currentTarget.text().trim();
-    var dateArr = this._getDateArrFromToDay(nowTargetId==='end_date'?60:30);
+    var dateArr = this._getDateArrFromToDay( nowTargetId === 'end_date' ? selectableStartDateRange + 30 : selectableStartDateRange );
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+nowTargetId+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
