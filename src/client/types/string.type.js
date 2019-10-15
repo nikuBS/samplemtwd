@@ -1937,7 +1937,8 @@ Tw.ROAMING_RESERVATION_STATE = {
 
 Tw.ROAMING_RANGE_OPTION_STR = {
   ONE_MONTH: '1개월 이내의 날짜를 선택하세요.',
-  TWO_MONTH: '2개월 이내의 날짜를 선택하세요.'
+  TWO_MONTH: '2개월 이내의 날짜를 선택하세요.',
+  SIXTY_DAY: '60일 안의 날짜를 선택하세요.'
 };
 
 Tw.BENEFIT_TBCOMBINATION_ERROR = {

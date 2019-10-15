@@ -48,7 +48,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       // this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
       //   Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
       this._dateSelectRange = 60;
-      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.SIXTY_DAY);
     }else{
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
     }
@@ -482,29 +482,29 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
    */
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
-      case 'NA00006493':
-      case 'NA00006494':
-      case 'NA00006495':
-      case 'NA00006496':
-      case 'NA00006497':
-      case 'NA00006498':
-      case 'NA00006499':
-      case 'NA00006500':
+      case 'NA00006493': // baro 4GB
+      case 'NA00006494': // baro 4GB 2
+      case 'NA00006495': // baro YT 5GB
+      case 'NA00006496': // baro YT 5GB 2
+      case 'NA00006497': // baro 7GB
+      case 'NA00006498': // baro 7GB 2
+      case 'NA00006499': // baro YT 8GB
+      case 'NA00006500': // baro YT 8GB 2
         $tooltipHead.find('button').attr('id','TC000037');
         this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;
         break;
-      case 'NA00006489':
-      case 'NA00006490':
-      case 'NA00006491':
-      case 'NA00006492':
+      case 'NA00006489': // baro 3GB
+      case 'NA00006490': // baro 3GB 2
+      case 'NA00006491': // baro YT 4GB
+      case 'NA00006492': // baro YT 4GB 2
         $tooltipHead.find('button').attr('id','TC000038');
         this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;
         break;
-      case 'NA00005300':
-      case 'NA00005505':
-      case 'NA00005252':
+      case 'NA00005300': // T로밍 LongPass 2GB
+      case 'NA00005505': // T로밍 LongPass 3GB
+      case 'NA00005252': // T로밍 LongPass 5GB
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
         this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;
@@ -519,18 +519,18 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
         this.$container.find('.tip_body_container').hide();
         break;
-      case 'NA00006046':
-      case 'NA00006048':
-      case 'NA00006038':
-      case 'NA00006040':
+      case 'NA00006046': // T로밍 유럽패스 3GB
+      case 'NA00006048': // T로밍 유럽패스 6GB
+      case 'NA00006038': // T로밍 미주패스 3GB
+      case 'NA00006040': // T로밍 미주패스 6GB
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
         this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;
         break;
-      case 'NA00006050':
-      case 'NA00006052':
-      case 'NA00006042':
-      case 'NA00006044':
+      case 'NA00006050': // T로밍 유럽패스YT 4GB
+      case 'NA00006052': // T로밍 유럽패스YT 7GB
+      case 'NA00006042': // T로밍 미주패스YT 4GB
+      case 'NA00006044': // T로밍 미주패스YT 7GB
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
         this.$container.find('.tip_body_container').hide();
         this._twoMonthFlag = true;

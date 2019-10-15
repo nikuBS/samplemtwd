@@ -13,13 +13,15 @@
  * @param {String} prodId - 상품 id
  * @returns {void}
  */
-Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodTypeInfo,prodBffInfo,prodId) {
+Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodTypeInfo,prodBffInfo,prodId,isCustomGuidedProd,customGuide) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._prodId = prodId;
+  this._isCustomGuidedProd = isCustomGuidedProd;
+  this._customGuide = customGuide;
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
@@ -164,9 +166,10 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       return;
     }
     var $currentTarget = $(eventObj.currentTarget);
+    var selectableStartDateRange = this._customGuide.selectableStartDateRange || 30; // 기본 설정 가능한 시작일자 범위
     var nowTargetId = $currentTarget.attr('id');
     var nowValue = $currentTarget.text().trim();
-    var dateArr = this._getDateArrFromToDay(nowTargetId==='end_date'?60:30);
+    var dateArr = this._getDateArrFromToDay( nowTargetId === 'end_date' ? selectableStartDateRange + 30 : selectableStartDateRange );
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+nowTargetId+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
