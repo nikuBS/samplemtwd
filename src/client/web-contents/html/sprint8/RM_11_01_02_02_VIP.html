@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- Grand open 접근성 수정 -->
+    <!-- #skip_navigation -->
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>-->
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>설정</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <div class="ti-caption-gray">
+                        <h3 class="tit">로밍 서비스 기간 설정</h3>
+                        <button type="button" class="tip-view" title="로밍 서비스 기간 설정 정보보기" aria-haspopup="true">TIP</button>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="set-roaming-time">
+                            <div class="set">
+                                <h4 class="tit">개시일</h4>
+                                <div class="btn-wrap">
+                                    <div class="unit" aria-describedby="aria-dateset1">
+                                        <span class="subtit">날짜</span>
+                                        <button class="bt-dropdown big" title="로밍 서비스 기간 설정 개시일 날짜 선택" aria-haspopup="true">2018-09-12<span class="ico"></span></button>
+                                        <!-- 2019.01.23 title값 변경 -->
+                                    </div>
+                                    <div class="unit" aria-describedby="aria-timeset1">
+                                        <span class="subtit">시각</span>
+                                        <button class="bt-dropdown big" title="로밍 서비스 기간 설정 개시일 시각 선택" aria-haspopup="true">00<span class="ico"></span></button>
+                                        <!-- 2019.01.23 title값 변경 -->
+                                    </div>
+                                </div>
+                                <ul class="announcement-box">
+                                    <li id="aria-dateset1" class="announcement-bullet type01">60일 안의 날짜를 선택하세요.</li><!-- 191015 수정 [OP002-4482] -->
+                                    <li id="aria-timeset1" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
+                                </ul>
+                            </div>
+                            <div class="set">
+                                <h4 class="tit">종료일</h4>
+                                <div class="btn-wrap">
+                                    <div class="unit" aria-describedby="aria-dateset2">
+                                        <span class="subtit">날짜</span>
+                                        <button class="bt-dropdown big" title="로밍 서비스 기간 설정 종료일 날짜 선택" aria-haspopup="true">2018-09-12<span class="ico"></span></button>
+                                        <!-- 2019.01.23 title값 변경 -->
+                                    </div>
+                                    <div class="unit" aria-describedby="aria-timeset2">
+                                        <span class="subtit">시각</span>
+                                        <button class="bt-dropdown big" title="로밍 서비스 기간 설정 종료일 시각 선택" aria-haspopup="true">12<span class="ico"></span></button>
+                                        <!-- 2019.01.23 title값 변경 -->
+                                    </div>
+                                </div>
+                                <ul class="announcement-box">
+                                    <li id="aria-dateset2" class="announcement-bullet type01">서비스 개시일 30일 안의 날짜를 선택하세요.</li><!-- 191015 수정 [OP002-4482] -->
+                                    <li id="aria-timeset2" class="announcement-bullet type01">한국시각 기준 00시~23시입니다.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder bgnone">
+                        <ul class="announcement-box">
+                            <li class="announcement-bullet type01">신청하신 시각부터 <strong>한국시각 기준으로 24시간 단위로 신청</strong>하실 수 있으며, 서비스가 종료되면 데이터가 자동으로 차단됩니다.</li>
+                            <li class="announcement-bullet type01">다시 이용하시려면 <strong>로밍 고객센터(02-6343-9000)</strong>으로 문의해 주세요.</li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list02">
+                            <!-- Grand open 접근성 수정 -->
+                            <li><button aria-haspopup="true" class="tip-view-btn">로밍 이용 전 설정 사항<span class="tip-view">TIP</span></button></li>
+                            <!--// Grand open 접근성 수정 -->
+                            <!-- 2019.01.24 title값 수정 -->
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button disabled>변경 완료</button><!-- 활성화시 disabled 속성 삭제 -->
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>
