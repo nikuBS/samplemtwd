@@ -42,24 +42,60 @@ Tw.MyTJoinSuspendStatus.prototype = {
    * @function
    * @desc Event listener for the button click on [data-id="bt-resuspend"] 재신청 버튼
    */
-  _onClickResuspend: function () {
+  _onClickResuspend: function (event) {
     this._popupService.open({
-      hbs: 'MS_03_05_04',
-      data: {
-        svcInfo: this._svcInfo,
-        period: this._params.status.period,
-        reason: this._params.reason
-      }
-    }, $.proxy(this._onOpenResuspendPopup, this), null, 'resuspend');
+          hbs: 'MS_03_05_04',
+          data: {
+            svcInfo: this._svcInfo,
+            period: this._params.status.period,
+            reason: this._params.reason
+          }
+        }, $.proxy(this._onOpenResuspendPopup, this), $.proxy(this._onCloseResuspendPopup, this),
+        'resuspend', $(event.currentTarget));
   },
   /**
    * @function
-   * @desc Resuspend(장기일시정지 재신청) 요청
+   * @desc Resuspend(장기일시정지 재신청) 요청 - open callback
    * @param $popup Resuspend(장기일시정지 재신청) popup element
    */
   _onOpenResuspendPopup: function ($popup) {
-    $popup.find('input[type="date"]').val(Tw.DateHelper.getAddDay(null, 'YYYY-MM-DD'));
-    $popup.find('#fe-resuspend').on('click', _.debounce($.proxy(this._requestResuspend, this, $popup), 500));
+    this._popupDate = $popup.find('input[type="date"]');
+    this._popupResuspendBtn = $popup.find('#fe-resuspend');
+    this._popupDefaultValue = Tw.DateHelper.getDateCustomFormat('YYYY-MM-DD');
+    this._popupDate.val(this._popupDefaultValue);
+    this._popupDate.on('change', $.proxy(this._onChangeDateSelect, this));
+    this._popupResuspendBtn.on('click', _.debounce($.proxy(this._requestResuspend, this, $popup), 500));
+  },
+  /**
+   * @function
+   * @desc Resuspend(장기일시정지 재신청) 팝업 close Callback
+   */
+  _onCloseResuspendPopup: function() {
+    // 초기화
+    this._popupDate.off();
+    this._popupResuspendBtn.off();
+    this._popupDate = null;
+    this._popupResuspendBtn = null;
+    this._popupDefaultValue = null;
+  },
+  /**
+   * @function
+   * @desc 일시정지 기한 변경 시 체크 [OP002-4422]
+   * @param event
+   */
+  _onChangeDateSelect: function (event) {
+    var value = event.target.value;
+    var from = this._popupDate.val().replace(/-/g, '');
+    var diff = Tw.DateHelper.getDiffByUnit(from,  Tw.DateHelper.getCurrentShortDate(), 'days');
+    if (!value) {
+      event.target.value = this._popupDefaultValue;
+      return false;
+    }
+    if (diff < 0) {// 시작일이 오늘 이전일 경우
+      event.target.value = this._popupDefaultValue;
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE,
+          null, null, null, null, $(event.currentTarget));
+    }
   },
   /**
    * @function
