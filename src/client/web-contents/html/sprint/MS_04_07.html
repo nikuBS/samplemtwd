@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <!-- Grand open 접근성 수정 
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    -->
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>명의변경 신청방법 안내</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- 190831 리디자인_01 -->
+                    <hr class="cont-sp type1" aria-hidden="true" />
+                    <!-- //190831 리디자인_01 -->
+
+
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_02 : 삭제 -->
+                    <!--
+                    <div class="cont-box">
+                        <div class="guide-words">
+                            <ol>
+                                <li>
+                                    <p class="title"><span class="num">01</span>전화로 신청</p>
+                                    <div class="cont-noti mt14">
+                                       <ul class="bullet-type">
+                                           <li>1600-2000(유료)<br />또는 080-816-2000(무료)로 전화 신청</li>
+                                       </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p class="title"><span class="num">02</span>서류 준비 후 팩스로 발송</p>
+                                    <div class="cont-noti mt14">
+                                       <ul class="bullet-type">
+                                           <li>이용권승계신청서, 양수/양도인 또는 사업자등록증</li>
+                                       </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p class="title"><span class="num">03</span>상담사 통화</p>
+                                    <div class="cont-noti mt14">
+                                       <ul class="bullet-type">
+                                           <li>상담사가 양수/양도인 통화 후 변경 처리</li>
+                                       </ul>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    -->
+                    <!-- //190831 리디자인_02 : 삭제 -->
+                    <!--// .cont-box -->
+                    
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_03 : 개선 -->
+                    <div class="cont-box">
+                        <div class="guide-words">
+                            <ol>
+                                <li>
+                                    <p class="title"><span class="num tod-txcolor6">STEP 01</span>전화로 신청</p>
+                                    <div class="cont-noti tod-txcolor5 mt10">
+                                       <ul>
+                                           <li class="fs13">1600-2000(유료)<br />또는 080-816-2000(무료)로 전화 신청</li>
+                                       </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p class="title"><span class="num tod-txcolor6">STEP 02</span>서류 준비 후 팩스로 발송<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">서류 준비 후 팩스로 발송 tip</span></i></button></p>
+                                    <div class="cont-noti tod-txcolor5 mt10">
+                                        <ul>
+                                           <li class="fs13">1. 이용권승계 신청서, 양수/양도인 신분증 앞면 또는 사업자등록증</li>
+                                           <li class="fs13 mt10">2. 팩스번호는 전화 신청 시 상담사를 통해 안내</li>
+                                        </ul>
+                                        <ul class="bullet-type mt10">
+                                           <li>필요서류는 3개월 이내에 발급받은 것이어야 함</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <p class="title"><span class="num tod-txcolor6">STEP 03</span>상담사 통화</p>
+                                    <div class="cont-noti tod-txcolor5 mt10">
+                                        <ul>
+                                           <li class="fs13">상담사가 양수/양도인 통화 후 변경 처리</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- //190831 리디자인_03 -->
+                    <!-- //.cont-box -->
+
+
+                    <!-- .cont-box -->
+                    <!-- 190831 리디자인_04 : 삭제
+                    <div class="cont-box bgtype noborder">
+                        <div class="box-suggest">
+                            <div class="suggest-info">
+                                <ul class="suggest-list type2 mt0">
+                                    <li>이용권 승계 신청서, 양수/양도인 신분증 앞면 또는 사업자등록증(신분증의 경우 주민등록번호 뒷자리는 가려 주세요.)</li>
+                                    <li>양수인의 주소와 유선서비스 설치 장소의 주소가 동일하지 않을 경우에는 설치장소가 동일함을 확인할 수 있는 서류 필요</li>
+                                    <li>이용권 승계 신청서는 상담사를 통해 팩스로 받거나, 해당 페이지 상단의 [이용권 승계 신청서 다운로드] 이용</li>
+                                </ul>
+                                <ul class="suggest-list nodot">
+                                    <li>단, 필요서류는 최근 3개월 이내에 발급받은 것이어야 함.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+					
+                    <!-- .cont-box -->
+					<div class="cont-box noborder bgnone">
+                        <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                        <ul class="pg-chk-list02">
+                            <li>
+                                <button type="button" class="btn-tip" aria-haspopup="true" id="MS_04_07_tip_01">
+                                    승계안내<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-tip" aria-haspopup="true" id="MS_04_07_tip_02">
+                                    기존 서비스<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-tip" aria-haspopup="true" id="MS_04_07_tip_03">
+                                    전화번호<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-tip" aria-haspopup="true" id="MS_04_07_tip_04">
+                                    이용요금<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="btn-tip" aria-haspopup="true" id="MS_04_07_tip_05">
+                                    TB끼리 온 가족<i class="icon-badge-tip"><span class="blind">tip</span></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>
