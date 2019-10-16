@@ -18,7 +18,6 @@ Tw.MyTFareBillCommon = function (rootEl) {
   this._historyService.init();
 
   this._init();
-  this._setCoachMark();
 };
 
 Tw.MyTFareBillCommon.prototype = {
@@ -168,6 +167,10 @@ Tw.MyTFareBillCommon.prototype = {
     } else {
       this._isClicked = true;
       this._popupService.close();
+    }
+
+    if(this._isfirstPop) {
+      this._setCoachMark();
     }
   },
   /**
